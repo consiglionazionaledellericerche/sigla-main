@@ -30,8 +30,19 @@ public class Rpt  implements Serializable {
     private String dataOraMessaggioRichiesta;
     @JsonProperty("autenticazioneSoggetto")
     private String autenticazioneSoggetto;
+
+    public DatiVersamento getDatiVersamento() {
+        return datiVersamento;
+    }
+
+    public void setDatiVersamento(DatiVersamento datiVersamento) {
+        this.datiVersamento = datiVersamento;
+    }
+
     @JsonProperty("ccp")
     private String ccp;
+    @JsonProperty("datiVersamento")
+    private DatiVersamento datiVersamento;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

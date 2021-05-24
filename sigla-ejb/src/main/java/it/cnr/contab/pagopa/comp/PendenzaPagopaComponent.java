@@ -46,14 +46,17 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PendenzaPagopaComponent extends CRUDComponent {
 	private static final long serialVersionUID = 1L;
@@ -91,7 +94,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
 				for (RiscossioneMovimentoCassaPagopa riscossione : movimentoCassaPagopa.getRiscossioni()){
 					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, riscossione.getIur());
-					pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA);
+					pagamentoPagopaBulk.setStato(PagamentoPagopaBulk.STATO_INCASSATO);
 					pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
 					pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
 				}
@@ -398,20 +401,29 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			return null;
 		}
 
-		PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
-		PagamentoPagopaBulk pagamentoPagopaBulk = new PagamentoPagopaBulk();
-		Riscossione riscossione = notificaPagamento.getRiscossioni().get(0);
-		pagamentoPagopaBulk.setDtPagamento(new Timestamp(riscossione.getData().getTime()));
-		pagamentoPagopaBulk.setCcp(notificaPagamento.getRpt().getCcp());
-		pagamentoPagopaBulk.setIur(riscossione.getIur());
-		pagamentoPagopaBulk.setPendenzaPagopa(pendenzaPagopaBulk);
-		pagamentoPagopaBulk.setStato(riscossione.getStato());
-		pagamentoPagopaBulk.setImporto(riscossione.getImporto());
-		pagamentoPagopaBulk.setRpp(riscossione.getRpp());
-		pagamentoPagopaBulk.setCausale(notificaPagamento.getRt().getIdentificativoMessaggioRicevuta());
-		pagamentoPagopaBulk.setToBeCreated();
-		pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
-		return notificaPagamento;
+		try {
+			PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
+			PagamentoPagopaBulk pagamentoPagopaBulk = new PagamentoPagopaBulk();
+			pagamentoPagopaBulk.setDtPagamento(new Timestamp(notificaPagamento.getRpt().getDatiVersamento().getDataEsecuzionePagamento().getTime()));
+			pagamentoPagopaBulk.setCcp(notificaPagamento.getRpt().getDatiVersamento().getCodiceContestoPagamento());
+			pagamentoPagopaBulk.setPendenzaPagopa(pendenzaPagopaBulk);
+			pagamentoPagopaBulk.setStato(PagamentoPagopaBulk.STATO_ATTESA_INCASSO);
+			for (DatiSingoloVersamento datiSingoloVersamento : notificaPagamento.getRpt().getDatiVersamento().getDatiSingoloVersamento()){
+				pagamentoPagopaBulk.setImporto(datiSingoloVersamento.getImportoSingoloVersamento());
+				pagamentoPagopaBulk.setCausale(datiSingoloVersamento.getCausaleVersamento());
+			}
+			pagamentoPagopaBulk.setToBeCreated();
+			pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
+			return notificaPagamento;
+		} catch (Exception ex ){
+			logger.error("Errore durante l'elaborazione della notifica di pagamento Iuv: "+iuv);
+			String msg = Arrays.stream(ex.getStackTrace())
+					.map(Objects::toString)
+					.collect(Collectors.joining("\n"));
+			String subject = "PagoPA: Errore durante l'elaborazione della notifica di pagamento. Iuv: "+iuv;
+			SendMail.sendErrorMail(subject, msg);
+			throw handleException(ex);
+		}
 	}
 
 }

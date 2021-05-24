@@ -27,13 +27,13 @@
 			propertyName="iur"
 			sqlTypeName="VARCHAR"
 			columnSize="50"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 				columnName="RPP"
 				propertyName="rpp"
 				sqlTypeName="VARCHAR"
 				columnSize="50"
-				nullable="false" />
+				nullable="true" />
 		<columnMapping
 				columnName="CCP"
 				propertyName="ccp"

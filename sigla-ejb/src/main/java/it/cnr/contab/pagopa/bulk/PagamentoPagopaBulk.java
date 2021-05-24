@@ -23,6 +23,10 @@ import java.util.Optional;
 
 public class PagamentoPagopaBulk extends PagamentoPagopaBase {
 	private static final long serialVersionUID = 1L;
+	public static final String STATO_APERTA = "APE";
+	public static final String STATO_CHIUSO = "CHI";
+	public static final String STATO_ATTESA_INCASSO = "ATT";
+	public static final String STATO_INCASSATO = "INC";
 
 	private PendenzaPagopaBulk pendenzaPagopa;
 

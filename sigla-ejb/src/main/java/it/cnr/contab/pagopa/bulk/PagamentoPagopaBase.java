@@ -59,7 +59,7 @@ public class PagamentoPagopaBase extends PagamentoPagopaKey implements Keyed {
 
 	private String ccp;
 
-	private Riscossione.StatoEnum stato = null;
+	private String stato = null;
 
 	public PagamentoPagopaBase() {
 		super();
@@ -117,19 +117,19 @@ public class PagamentoPagopaBase extends PagamentoPagopaKey implements Keyed {
 		this.rpp = rpp;
 	}
 
-	public Riscossione.StatoEnum getStato() {
-		return stato;
-	}
-
-	public void setStato(Riscossione.StatoEnum stato) {
-		this.stato = stato;
-	}
-
 	public String getCcp() {
 		return ccp;
 	}
 
 	public void setCcp(String ccp) {
 		this.ccp = ccp;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 }

@@ -63,23 +63,23 @@ public class NotificaPagamentoResource implements NotificaPagamentoLocal {
 										   @PathParam("iuv") String iuv,
 										   String base64) throws Exception {
 		NotificaPagamento pagamento = null;
+		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
 		logger.info("Ricevuta Notifica Pagamento Iuv: "+iuv);
 		try{
 			byte [] payload = Base64.getDecoder().decode(base64);
 			com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
 			pagamento = mapper.readValue(payload, NotificaPagamento.class);
-			CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
 			Optional.ofNullable(iuv).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il codice iuv."));
-			pendenzaPagopaComponentSession.notificaPagamento(userContext, pagamento, iuv);
 		} catch (Exception ex) {
-			logger.error("Errore durante l'elaborazione della notifica di pagamento Iuv: "+iuv+ " - IdPendenza: "+pagamento.getIdPendenza());
+			logger.error("Errore durante l'elaborazione della notifica di pagamento Iuv: "+iuv);
 			String msg = Arrays.stream(ex.getStackTrace())
 					.map(Objects::toString)
 					.collect(Collectors.joining("\n"));
-			String subject = "PagoPA: Errore durante l'elaborazione della notifica di pagamento. Iuv: "+iuv+ " - IdPendenza: "+pagamento.getIdPendenza();
+			String subject = "PagoPA: Errore durante l'elaborazione della notifica di pagamento. Iuv: "+iuv;
 			SendMail.sendErrorMail(subject, msg);
 			throw new RestException(Status.BAD_REQUEST, msg);
 		}
+		pendenzaPagopaComponentSession.notificaPagamento(userContext, pagamento, iuv);
 		return Response.status(Status.OK).entity(pagamento).build();
 	}
 }
