@@ -20,8 +20,7 @@ package it.cnr.contab.web.rest.local.pagopa;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import it.cnr.contab.pagopa.model.NotificaPagamento;
-import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.pagamento.NotificaPagamento;
 import it.cnr.contab.web.rest.config.SIGLARoles;
 
 import javax.annotation.security.RolesAllowed;

@@ -21,8 +21,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.contab.pagopa.comp.PendenzaPagopaComponent;
-import it.cnr.contab.pagopa.model.NotificaPagamento;
 import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.pagamento.NotificaPagamento;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -31,7 +31,6 @@ import it.cnr.jada.persistency.PersistencyException;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 /**

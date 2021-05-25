@@ -20,12 +20,8 @@ package it.cnr.contab.web.rest.local.pagopa;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
-import it.cnr.contab.pagopa.model.NotificaPagamento;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.web.rest.config.SIGLARoles;
-import it.cnr.contab.web.rest.config.SIGLASecurityContext;
-import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;

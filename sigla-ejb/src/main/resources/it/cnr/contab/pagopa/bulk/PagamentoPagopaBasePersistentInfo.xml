@@ -32,7 +32,7 @@
 				columnName="RPP"
 				propertyName="rpp"
 				sqlTypeName="VARCHAR"
-				columnSize="50"
+				columnSize="100"
 				nullable="true" />
 		<columnMapping
 				columnName="CCP"

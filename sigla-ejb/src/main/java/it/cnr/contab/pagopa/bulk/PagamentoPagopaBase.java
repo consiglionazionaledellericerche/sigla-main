@@ -17,8 +17,6 @@
 
 package it.cnr.contab.pagopa.bulk;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.contab.pagopa.model.Riscossione;
 import it.cnr.jada.persistency.Keyed;
 

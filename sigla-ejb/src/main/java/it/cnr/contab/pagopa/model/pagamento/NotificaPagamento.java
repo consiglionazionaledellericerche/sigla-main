@@ -1,5 +1,5 @@
 
-package it.cnr.contab.pagopa.model;
+package it.cnr.contab.pagopa.model.pagamento;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "riscossioni"
 })
 @Generated("jsonschema2pojo")
-public class NotificaPagamento implements Serializable {
+public class NotificaPagamento  implements Serializable {
 
     @JsonProperty("idA2A")
     private String idA2A;
@@ -33,7 +33,7 @@ public class NotificaPagamento implements Serializable {
     @JsonProperty("rt")
     private Rt rt;
     @JsonProperty("riscossioni")
-    private List<Riscossione> riscossioni = null;
+    private List<Riscossioni> riscossioni = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -78,12 +78,12 @@ public class NotificaPagamento implements Serializable {
     }
 
     @JsonProperty("riscossioni")
-    public List<Riscossione> getRiscossioni() {
+    public List<Riscossioni> getRiscossioni() {
         return riscossioni;
     }
 
     @JsonProperty("riscossioni")
-    public void setRiscossioni(List<Riscossione> riscossioni) {
+    public void setRiscossioni(List<Riscossioni> riscossioni) {
         this.riscossioni = riscossioni;
     }
 

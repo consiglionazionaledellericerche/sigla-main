@@ -19,7 +19,6 @@ package it.cnr.contab.web.rest.resource.pagopa;
 
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.pagopa.ejb.PendenzaPagopaComponentSession;
-import it.cnr.contab.pagopa.model.NotificaPagamento;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.web.rest.exception.RestException;

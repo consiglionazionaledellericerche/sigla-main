@@ -4374,4 +4374,7 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="modify-rpp-pagamento_pagopa">
+        <modifyDataType tableName="pagamento_pagopa" columnName="rpp" newDataType="VARCHAR(100)"/>
+    </changeSet>
 </databaseChangeLog>
