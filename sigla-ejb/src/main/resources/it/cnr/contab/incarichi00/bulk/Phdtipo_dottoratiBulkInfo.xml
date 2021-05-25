@@ -16,7 +16,7 @@
 		property="name"
 		inputType="TEXTAREA"
 		maxLength="250"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Name" />
 	<form

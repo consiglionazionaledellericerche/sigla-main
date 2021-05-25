@@ -16,21 +16,21 @@
 		property="numero"
 		inputType="TEXT"
 		maxLength="38"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Numero" />
 	<fieldProperty
 		name="annoInizio"
 		property="annoInizio"
 		inputType="TEXT"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Anno Inizio" />
 	<fieldProperty
 		name="annoFine"
 		property="annoFine"
 		inputType="TEXT"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Anno Fine" />
 	<form

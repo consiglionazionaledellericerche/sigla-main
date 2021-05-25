@@ -18,7 +18,7 @@
 		cols="60"
 		rows="5"
 		maxLength="250"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		nullable="false"
 		label="Name" />
 	<form
