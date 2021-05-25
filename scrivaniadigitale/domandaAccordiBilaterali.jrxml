@@ -181,55 +181,6 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="impegni_json" uuid="43718d59-fac1-44c4-8e31-33ea348b2df2">
-		<queryString language="json">
-			<![CDATA[]]>
-		</queryString>
-		<field name="descrizione" class="java.lang.String">
-			<fieldDescription><![CDATA[descrizione]]></fieldDescription>
-		</field>
-		<field name="vocedispesa" class="java.lang.String">
-			<fieldDescription><![CDATA[vocedispesa]]></fieldDescription>
-		</field>
-		<field name="uo" class="java.lang.String">
-			<fieldDescription><![CDATA[uo]]></fieldDescription>
-		</field>
-		<field name="gae" class="java.lang.String">
-			<fieldDescription><![CDATA[gae]]></fieldDescription>
-		</field>
-		<field name="uo_label" class="java.lang.String">
-			<fieldDescription><![CDATA[uo_label]]></fieldDescription>
-		</field>
-	</subDataset>
-	<subDataset name="ditteInvitate_json" uuid="eef62cf4-2b7b-484b-8ffe-88dc754bde57">
-		<queryString language="json">
-			<![CDATA[]]>
-		</queryString>
-		<field name="ragioneSocialeDittaInvitata" class="java.lang.String">
-			<fieldDescription><![CDATA[ragioneSocialeDittaInvitata]]></fieldDescription>
-		</field>
-		<field name="pIvaCodiceFiscaleDittaInvitata" class="java.lang.String">
-			<fieldDescription><![CDATA[pIvaCodiceFiscaleDittaInvitata]]></fieldDescription>
-		</field>
-		<field name="valutazioneDittaInvitata" class="java.lang.String">
-			<fieldDescription><![CDATA[valutazioneDittaInvitata]]></fieldDescription>
-		</field>
-		<field name="offertaPresentataDittaInvitata" class="java.lang.String">
-			<fieldDescription><![CDATA[offertaPresentataDittaInvitata]]></fieldDescription>
-		</field>
-	</subDataset>
-	<subDataset name="ditteRTI_json" uuid="219b88f3-c360-4469-8343-3d58e24a749b">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="domandaAccordiBilaterali"/>
-		<queryString language="json">
-			<![CDATA[]]>
-		</queryString>
-		<field name="ragioneSocialeDittaInvitata" class="java.lang.String">
-			<fieldDescription><![CDATA[ragioneSocialeDittaInvitata]]></fieldDescription>
-		</field>
-		<field name="pIvaCodiceFiscaleDittaInvitata" class="java.lang.String">
-			<fieldDescription><![CDATA[pIvaCodiceFiscaleDittaInvitata]]></fieldDescription>
-		</field>
-	</subDataset>
 	<parameter name="ANN_IMAGE" class="java.io.InputStream"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\CNR\\1_PROGETTI\\OIV\\PDF - JASPER REPORT\\print\\"]]></defaultValueExpression>
