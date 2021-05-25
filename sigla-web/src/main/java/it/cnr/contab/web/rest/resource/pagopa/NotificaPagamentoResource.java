@@ -66,7 +66,7 @@ public class NotificaPagamentoResource implements NotificaPagamentoLocal {
 		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
 		logger.info("Ricevuta Notifica Pagamento Iuv: "+iuv);
 		try{
-			byte [] payload = Base64.getDecoder().decode(base64);
+			byte [] payload = Base64.getMimeDecoder().decode(base64);
 			com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
 			pagamento = mapper.readValue(payload, NotificaPagamento.class);
 			Optional.ofNullable(iuv).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il codice iuv."));
