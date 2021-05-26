@@ -407,17 +407,25 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
 					PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
 					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, pendenzaPagopaBulk.getId());
-					if (pagamentoPagopaBulk != null){
-						Riscossioni riscossioni = notificaPagamento.getRiscossioni().get(0);
-						pagamentoPagopaBulk.setDtPagamento(new Timestamp(riscossioni.getData().getTime()));
-						pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getDatiPagamento().getCodiceContestoPagamento());
-						pagamentoPagopaBulk.setIur(riscossioni.getIur());
-						pagamentoPagopaBulk.setStato(riscossioni.getStato().getValue());
-						pagamentoPagopaBulk.setImporto(riscossioni.getImporto());
-						pagamentoPagopaBulk.setRpp(riscossioni.getRpp());
-						DatiSingoloPagamento singoloPagamento = notificaPagamento.getRt().getDatiPagamento().getDatiSingoloPagamento().get(0);
+					boolean pagamentoNonTrovato = false;
+					if (pagamentoPagopaBulk == null){
+						pagamentoNonTrovato = true;
+						pagamentoPagopaBulk = new PagamentoPagopaBulk();
+					}
 
-						pagamentoPagopaBulk.setCausale(singoloPagamento.getCausaleVersamento());
+					Riscossioni riscossioni = notificaPagamento.getRiscossioni().get(0);
+					pagamentoPagopaBulk.setDtPagamento(new Timestamp(riscossioni.getData().getTime()));
+					pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getDatiPagamento().getCodiceContestoPagamento());
+					pagamentoPagopaBulk.setIur(riscossioni.getIur());
+					pagamentoPagopaBulk.setStato(riscossioni.getStato().getValue());
+					pagamentoPagopaBulk.setImporto(riscossioni.getImporto());
+					pagamentoPagopaBulk.setRpp(riscossioni.getRpp());
+					DatiSingoloPagamento singoloPagamento = notificaPagamento.getRt().getDatiPagamento().getDatiSingoloPagamento().get(0);
+					pagamentoPagopaBulk.setCausale(singoloPagamento.getCausaleVersamento());
+					if (pagamentoNonTrovato){
+						pagamentoPagopaBulk.setToBeCreated();
+						pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
+					} else {
 						pagamentoPagopaBulk.setToBeUpdated();
 						pagamentoPagopaBulk = (PagamentoPagopaBulk) super.modificaConBulk(userContext, pagamentoPagopaBulk);
 					}
