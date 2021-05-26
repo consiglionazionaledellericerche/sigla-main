@@ -56,8 +56,9 @@ public class Riscossione {
   **/
   private String rpp = null;
   public enum StatoEnum {
-    RISCOSSA("RISCOSSA"),
-    INCASSATA("INCASSATA");
+      PRENOTATA("PRENOTATA"),
+      RISCOSSA("RISCOSSA"),
+      INCASSATA("INCASSATA");
 
     private String value;
 

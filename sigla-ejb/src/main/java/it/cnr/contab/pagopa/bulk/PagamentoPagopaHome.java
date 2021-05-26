@@ -84,6 +84,20 @@ public class PagamentoPagopaHome extends BulkHome {
 		}
 		return null;
 	}
+	public PagamentoPagopaBulk findPagamentoPagopa(UserContext userContext, Long idPendenza) throws PersistencyException
+	{
+		SQLBuilder sql = this.createSQLBuilder();
 
+		sql.addSQLClause(FindClause.AND, "id_pendenza_pagopa", SQLBuilder.EQUALS, idPendenza);
+		List lista =  this.fetchAll(sql);
+		if (lista != null){
+			if (lista.size() == 1){
+				return (PagamentoPagopaBulk) lista.get(0);
+			} else {
+				throw new PersistencyException("Esistono sull'archivio pagamenti PagoPA diverse righe con id Perndenza "+idPendenza);
+			}
+		}
+		return null;
+	}
 
 }

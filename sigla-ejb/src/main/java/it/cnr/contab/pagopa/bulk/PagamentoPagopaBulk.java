@@ -17,6 +17,7 @@
 
 package it.cnr.contab.pagopa.bulk;
 
+import it.cnr.contab.pagopa.model.Riscossione;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.Optional;
@@ -25,8 +26,9 @@ public class PagamentoPagopaBulk extends PagamentoPagopaBase {
 	private static final long serialVersionUID = 1L;
 	public static final String STATO_APERTA = "APE";
 	public static final String STATO_CHIUSO = "CHI";
-	public static final String STATO_ATTESA_INCASSO = "ATT";
-	public static final String STATO_INCASSATO = "INC";
+	public static final String STATO_PRENOTATO = Riscossione.StatoEnum.PRENOTATA.getValue();
+	public static final String STATO_INCASSATO = Riscossione.StatoEnum.INCASSATA.getValue();
+	public static final String STATO_RISCOSSO = Riscossione.StatoEnum.RISCOSSA.getValue();
 
 	private PendenzaPagopaBulk pendenzaPagopa;
 

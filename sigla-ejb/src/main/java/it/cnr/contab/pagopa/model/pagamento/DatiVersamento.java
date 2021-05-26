@@ -2,6 +2,7 @@
 package it.cnr.contab.pagopa.model.pagamento;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class DatiVersamento  implements Serializable {
 
     @JsonProperty("dataEsecuzionePagamento")
-    private String dataEsecuzionePagamento;
+    private Date dataEsecuzionePagamento;
     @JsonProperty("importoTotaleDaVersare")
     private String importoTotaleDaVersare;
     @JsonProperty("tipoVersamento")
@@ -50,12 +51,12 @@ public class DatiVersamento  implements Serializable {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("dataEsecuzionePagamento")
-    public String getDataEsecuzionePagamento() {
+    public Date getDataEsecuzionePagamento() {
         return dataEsecuzionePagamento;
     }
 
     @JsonProperty("dataEsecuzionePagamento")
-    public void setDataEsecuzionePagamento(String dataEsecuzionePagamento) {
+    public void setDataEsecuzionePagamento(Date dataEsecuzionePagamento) {
         this.dataEsecuzionePagamento = dataEsecuzionePagamento;
     }
 

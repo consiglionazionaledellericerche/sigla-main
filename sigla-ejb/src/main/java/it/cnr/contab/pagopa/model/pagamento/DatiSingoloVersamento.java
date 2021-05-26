@@ -2,6 +2,7 @@
 package it.cnr.contab.pagopa.model.pagamento;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
@@ -29,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class DatiSingoloVersamento  implements Serializable {
 
     @JsonProperty("importoSingoloVersamento")
-    private String importoSingoloVersamento;
+    private BigDecimal importoSingoloVersamento;
     @JsonProperty("commissioneCaricoPA")
     private Object commissioneCaricoPA;
     @JsonProperty("ibanAccredito")
@@ -52,12 +53,12 @@ public class DatiSingoloVersamento  implements Serializable {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("importoSingoloVersamento")
-    public String getImportoSingoloVersamento() {
+    public BigDecimal getImportoSingoloVersamento() {
         return importoSingoloVersamento;
     }
 
     @JsonProperty("importoSingoloVersamento")
-    public void setImportoSingoloVersamento(String importoSingoloVersamento) {
+    public void setImportoSingoloVersamento(BigDecimal importoSingoloVersamento) {
         this.importoSingoloVersamento = importoSingoloVersamento;
     }
 

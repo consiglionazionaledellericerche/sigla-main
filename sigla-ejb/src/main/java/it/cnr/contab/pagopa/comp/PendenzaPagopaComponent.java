@@ -391,7 +391,6 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		return sql;
 	}
 	public NotificaPagamento notificaPagamento(UserContext userContext, NotificaPagamento notificaPagamento, String iuv) throws ComponentException, IntrospectionException, PersistencyException {
-		if (notificaPagamento.getRt() != null){
 			SQLBuilder sql = (SQLBuilder) super.select( userContext, null, new PendenzaPagopaBulk() );
 			sql.addSQLClause(FindClause.AND, "CD_IUV", SQLBuilder.EQUALS, iuv);
 
@@ -403,31 +402,47 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				return null;
 			}
 
-			try {
-				PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
-				PagamentoPagopaBulk pagamentoPagopaBulk = new PagamentoPagopaBulk();
-				Riscossioni riscossioni = notificaPagamento.getRiscossioni().get(0);
-				pagamentoPagopaBulk.setDtPagamento(new Timestamp(riscossioni.getData().getTime()));
-				pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getDatiPagamento().getCodiceContestoPagamento());
-				pagamentoPagopaBulk.setIur(riscossioni.getIur());
-				pagamentoPagopaBulk.setPendenzaPagopa(pendenzaPagopaBulk);
-				pagamentoPagopaBulk.setStato(riscossioni.getStato().getValue());
-				pagamentoPagopaBulk.setImporto(riscossioni.getImporto());
-				pagamentoPagopaBulk.setRpp(riscossioni.getRpp());
-				DatiSingoloPagamento singoloPagamento = notificaPagamento.getRt().getDatiPagamento().getDatiSingoloPagamento().get(0);
+		try {
+			if (notificaPagamento.getRt() != null){
+					PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
+					PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
+					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, pendenzaPagopaBulk.getId());
+					if (pagamentoPagopaBulk != null){
+						Riscossioni riscossioni = notificaPagamento.getRiscossioni().get(0);
+						pagamentoPagopaBulk.setDtPagamento(new Timestamp(riscossioni.getData().getTime()));
+						pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getDatiPagamento().getCodiceContestoPagamento());
+						pagamentoPagopaBulk.setIur(riscossioni.getIur());
+						pagamentoPagopaBulk.setStato(riscossioni.getStato().getValue());
+						pagamentoPagopaBulk.setImporto(riscossioni.getImporto());
+						pagamentoPagopaBulk.setRpp(riscossioni.getRpp());
+						DatiSingoloPagamento singoloPagamento = notificaPagamento.getRt().getDatiPagamento().getDatiSingoloPagamento().get(0);
 
-				pagamentoPagopaBulk.setCausale(singoloPagamento.getCausaleVersamento());
-				pagamentoPagopaBulk.setToBeCreated();
-				pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
-			} catch (Exception ex ){
-				logger.error("Errore durante l'elaborazione della notifica di pagamento Iuv: "+iuv);
-				String msg = Arrays.stream(ex.getStackTrace())
-						.map(Objects::toString)
-						.collect(Collectors.joining("\n"));
-				String subject = "PagoPA: Errore durante l'elaborazione della notifica di pagamento. Iuv: "+iuv;
-				SendMail.sendErrorMail(subject, msg);
-				throw handleException(ex);
+						pagamentoPagopaBulk.setCausale(singoloPagamento.getCausaleVersamento());
+						pagamentoPagopaBulk.setToBeUpdated();
+						pagamentoPagopaBulk = (PagamentoPagopaBulk) super.modificaConBulk(userContext, pagamentoPagopaBulk);
+					}
+			} else {
+					PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
+					PagamentoPagopaBulk pagamentoPagopaBulk = new PagamentoPagopaBulk();
+					pagamentoPagopaBulk.setDtPagamento(new Timestamp(notificaPagamento.getRpt().getDatiVersamento().getDataEsecuzionePagamento().getTime()));
+					pagamentoPagopaBulk.setCcp(notificaPagamento.getRpt().getDatiVersamento().getCodiceContestoPagamento());
+					pagamentoPagopaBulk.setPendenzaPagopa(pendenzaPagopaBulk);
+					pagamentoPagopaBulk.setStato(PagamentoPagopaBulk.STATO_PRENOTATO);
+					for (it.cnr.contab.pagopa.model.pagamento.DatiSingoloVersamento datiSingoloVersamento : notificaPagamento.getRpt().getDatiVersamento().getDatiSingoloVersamento()){
+						pagamentoPagopaBulk.setImporto(datiSingoloVersamento.getImportoSingoloVersamento());
+						pagamentoPagopaBulk.setCausale(datiSingoloVersamento.getCausaleVersamento());
+					}
+					pagamentoPagopaBulk.setToBeCreated();
+					pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
 			}
+		} catch (Exception ex ){
+			logger.error("Errore durante l'elaborazione della notifica di pagamento Iuv: "+iuv);
+			String msg = Arrays.stream(ex.getStackTrace())
+					.map(Objects::toString)
+					.collect(Collectors.joining("\n"));
+			String subject = "PagoPA: Errore durante l'elaborazione della notifica di pagamento. Iuv: "+iuv;
+			SendMail.sendErrorMail(subject, msg);
+			throw handleException(ex);
 		}
 		return notificaPagamento;
 	}
