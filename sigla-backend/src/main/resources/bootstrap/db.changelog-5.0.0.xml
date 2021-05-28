@@ -3913,6 +3913,9 @@ TRASPORTO_AEREO"/>
             <column name="id_tipocorso_dottorati" remarks="Identificativo del tipocorso_dottorati." type="INT">
                 <constraints nullable="false"/>
             </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addPrimaryKey columnNames="id" constraintName="anagrafica_dottorati_pkey" tableName="anagrafica_dottorati"/>
@@ -3923,6 +3926,9 @@ TRASPORTO_AEREO"/>
                 <constraints nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -3943,6 +3949,9 @@ TRASPORTO_AEREO"/>
             <column name="anno_fine" type="DATE">
                 <constraints nullable="false"/>
             </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addPrimaryKey columnNames="id" constraintName="ciclo_dottorati_pkey" tableName="ciclo_dottorati"/>
@@ -3953,6 +3962,9 @@ TRASPORTO_AEREO"/>
                 <constraints nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -4393,6 +4405,11 @@ TRASPORTO_AEREO"/>
     <changeSet author="valerio.diego" id="alter_anno_inizio_e_fine">
         <modifyDataType tableName="ciclo_dottorati" columnName="anno_inizio" newDataType="INT"/>
         <modifyDataType tableName="ciclo_dottorati" columnName="anno_fine" newDataType="INT"/>
+    </changeSet>
+
+    <!-- Tabella in piu per dottorati da usare se dovesse servire altra tabella-->
+    <changeSet author="valerio.diego" id="alter_tipo_corso_dottorati_null">
+        <dropNotNullConstraint tableName="anagrafica_dottorati" columnName="id_tipocorso_dottorati"></dropNotNullConstraint>
     </changeSet>
 
 </databaseChangeLog>

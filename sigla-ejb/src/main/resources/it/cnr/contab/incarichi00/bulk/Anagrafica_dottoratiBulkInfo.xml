@@ -173,7 +173,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="nome del tipo dottorati" />
+		label="Tipologia di Dottorato" />
 	<fieldProperty
 		name="find_CicloDottorati"
 		property="cicloDottorati"

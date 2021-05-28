@@ -149,6 +149,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="38"
 			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="regione" />
@@ -198,4 +204,6 @@
 		name="idCicloDottorati" />
 	<persistentProperty
 		name="idTipocorsoDottorati" />
+	<persistentProperty
+		name="pg_ver_rec"/>
 </SQLPersistentInfo>
