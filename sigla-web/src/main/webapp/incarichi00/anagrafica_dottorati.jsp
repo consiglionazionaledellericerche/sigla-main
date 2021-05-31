@@ -113,6 +113,14 @@
     			     <td><% bp.getController().writeFormLabel(out, "numeroCicliFinanziati"); %></td>
                      <td><% bp.getController().writeFormInput(out, "numeroCicliFinanziati"); %></td>
     			 </tr>
+    			 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "totaleBorseFinanziate"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "totaleBorseFinanziate"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "importoTotaleBorsa"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "importoTotaleBorsa"); %></td>
+                 </tr>
             </table>
         </fieldset>
         <fieldset>
@@ -151,6 +159,10 @@
     			    <td><% bp.getController().writeFormLabel(out, "dataStipulaConvenzione"); %></td>
                     <td><% bp.getController().writeFormInput(out, "dataStipulaConvenzione"); %></td>
     			</tr>
+    			<tr>
+                    <td><% bp.getController().writeFormLabel(out, "nomeDottorato"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "nomeDottorato"); %></td>
+                </tr>
     			<tr>
     			    <td><% bp.getController().writeFormLabel(out, "note"); %></td>
                     <td><% bp.getController().writeFormInput(out, "note"); %></td>

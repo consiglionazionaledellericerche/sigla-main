@@ -126,6 +126,24 @@
 				columnSize="250"
 				nullable="true" />
 		<columnMapping
+				columnName="TOTALE_BORSE_FINANZIATE"
+				propertyName="totaleBorseFinanziate"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPORTO_TOTALE_BORSA"
+				propertyName="importoTotaleBorsa"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="NOME_DOTTORATO"
+				propertyName="nomeDottorato"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
 			columnName="NOTE"
 			propertyName="note"
 			sqlTypeName="VARCHAR"
@@ -196,6 +214,12 @@
 		name="descrInfraEuropea" />
 	<persistentProperty
 		name="numeroBorseFinanziate" />
+	<persistentProperty
+			name="totaleBorseFinanziate" />
+	<persistentProperty
+			name="importoTotaleBorsa" />
+	<persistentProperty
+			name="nomeDottorato" />
 	<persistentProperty
 		name="note" />
 	<persistentProperty

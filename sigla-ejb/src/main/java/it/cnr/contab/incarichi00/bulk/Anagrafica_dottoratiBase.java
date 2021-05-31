@@ -57,6 +57,9 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	private String nomeInfraEuropea;
 	private String descrInfraEuropea;
 	private Integer numeroBorseFinanziate;
+	private Integer totaleBorseFinanziate;
+	private Double importoTotaleBorsa;
+	private String nomeDottorato;
  
 //    ID_PHDTIPO_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idPhdtipoDottorati;
@@ -323,6 +326,30 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 
 	public void setNumeroBorseFinanziate(Integer numeroBorseFinanziate) {
 		this.numeroBorseFinanziate = numeroBorseFinanziate;
+	}
+
+	public Integer getTotaleBorseFinanziate() {
+		return totaleBorseFinanziate;
+	}
+
+	public void setTotaleBorseFinanziate(Integer totaleBorseFinanziate) {
+		this.totaleBorseFinanziate = totaleBorseFinanziate;
+	}
+
+	public Double getImportoTotaleBorsa() {
+		return importoTotaleBorsa;
+	}
+
+	public void setImportoTotaleBorsa(Double totaleBorsa) {
+		this.importoTotaleBorsa = totaleBorsa;
+	}
+
+	public String getNomeDottorato() {
+		return nomeDottorato;
+	}
+
+	public void setNomeDottorato(String nomeDottorato) {
+		this.nomeDottorato = nomeDottorato;
 	}
 
 	/**

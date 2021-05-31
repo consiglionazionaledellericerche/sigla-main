@@ -155,8 +155,26 @@
 			name="numeroBorseFinanziate"
 			property="numeroBorseFinanziate"
 			inputType="TEXT"
-			enabledOnEdit="false"
+			enabledOnEdit="true"
 			label="Numero di borse finanziate per ciclo corso" />
+	<fieldProperty
+			name="totaleBorseFinanziate"
+			property="totaleBorseFinanziate"
+			inputType="TEXT"
+			enabledOnEdit="true"
+			label="Totale Borse Finanziate" />
+	<fieldProperty
+			name="importoTotaleBorsa"
+			property="importoTotaleBorsa"
+			inputType="TEXT"
+			enabledOnEdit="true"
+			label="Importo Totale Borsa" />
+	<fieldProperty
+			name="nomeDottorato"
+			property="nomeDottorato"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Nome Dottorato" />
 	<fieldProperty
 		name="note"
 		property="note"
@@ -238,6 +256,12 @@
 	<formFieldProperty
 		name="numeroBorseFinanziate" />
 	<formFieldProperty
+			name="totaleBorseFinanziate" />
+	<formFieldProperty
+			name="importoTotaleBorsa" />
+	<formFieldProperty
+			name="nomeDottorato" />
+	<formFieldProperty
 		name="note" />
 	<formFieldProperty
 			name="find_PhdtipoDottorati" />
@@ -290,6 +314,12 @@
 	<findFieldProperty
 		name="numeroBorseFinanziate" />
 	<findFieldProperty
+			name="totaleBorseFinanziate" />
+	<findFieldProperty
+			name="importoTotaleBorsa" />
+	<findFieldProperty
+			name="nomeDottorato" />
+	<findFieldProperty
 		name="idCicloDottorati" />
 	<findFieldProperty
 		name="idTipocorsoDottorati" />
@@ -335,6 +365,12 @@
 			name="descrInfraEuropea" />
 	<columnFieldProperty
 			name="numeroBorseFinanziate" />
+	<columnFieldProperty
+			name="totaleBorseFinanziate" />
+	<columnFieldProperty
+			name="importoTotaleBorsa" />
+	<columnFieldProperty
+			name="nomeDottorato" />
 	<columnFieldProperty
 		name="note" />
 	<columnFieldProperty

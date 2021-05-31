@@ -4412,4 +4412,17 @@ TRASPORTO_AEREO"/>
         <dropNotNullConstraint tableName="anagrafica_dottorati" columnName="id_tipocorso_dottorati"></dropNotNullConstraint>
     </changeSet>
 
+    <changeSet id="add_borse_importo_nome_dottorato" author="valerio.diego">
+        <addColumn tableName="anagrafica_dottorati">
+            <column name="totale_borse_finanziate" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="importo_totale_borsa" type="numeric(15, 2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="nome_dottorato" type="VARCHAR(250)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
