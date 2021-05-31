@@ -287,6 +287,17 @@
             <groupId>it.cnr.si</groupId>
             <artifactId>perlapa-client</artifactId>
             <version>${perlapa.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
