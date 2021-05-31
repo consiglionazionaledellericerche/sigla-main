@@ -62,10 +62,10 @@
     			<td><% bp.getController().writeFormLabel(out, "altreUniversita"); %></td>
                 <td><% bp.getController().writeFormInput(out, "altreUniversita"); %></td>
     		</tr>
-    		<tr>
+    		<!--<tr>
                 <td><% bp.getController().writeFormLabel(out, "find_TipocorsoDottorati"); %></td>
                 <td><% bp.getController().writeFormInput(out, "find_TipocorsoDottorati"); %></td>
-            </tr>
+            </tr>-->
     	</table>
     	</fieldset>
         <fieldset>
