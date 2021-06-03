@@ -177,9 +177,6 @@
   </businessProcess>
 <!--
 Anagrafica Dottorati
-da dare il nome corretto al business process
-
-e creare action
 -->
     <businessProcess
             name="CRUDAnagraficaDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
