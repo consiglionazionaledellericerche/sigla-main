@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="idAnagraficaDottorati"
+		property="idAnagraficaDottorati"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo anagrafica dottorati." />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgImpegno"
+		property="pgImpegno"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="pgImpegno" />
+	<fieldProperty
+		name="dtRegistrazione"
+		property="dtRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtRegistrazione" />
+	<fieldProperty
+		name="dsScadDott"
+		property="dsScadDott"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="dsScadDott" />
+	<fieldProperty
+		name="tiAnagrafico"
+		property="tiAnagrafico"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiAnagrafico" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdTerzo" />
+	<fieldProperty
+		name="ragioneSociale"
+		property="ragioneSociale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="ragioneSociale" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codiceFiscale" />
+	<fieldProperty
+		name="partitaIva"
+		property="partitaIva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="partitaIva" />
+	<fieldProperty
+		name="cdTerminiPag"
+		property="cdTerminiPag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdTerminiPag" />
+	<fieldProperty
+		name="cdModalitaPag"
+		property="cdModalitaPag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdModalitaPag" />
+	<fieldProperty
+		name="pgBanca"
+		property="pgBanca"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgBanca" />
+	<fieldProperty
+		name="cdTipoRapporto"
+		property="cdTipoRapporto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdTipoRapporto" />
+	<fieldProperty
+		name="cdTrattamento"
+		property="cdTrattamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdTrattamento" />
+	<fieldProperty
+		name="imTotaleScadDott"
+		property="imTotaleScadDott"
+		inputType="TEXT"
+		formatName="it.jada.stone.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imTotaleScadDott" />
+	<fieldProperty
+		name="numeroRate"
+		property="numeroRate"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="numeroRate" />
+	<fieldProperty
+		name="tiAnticipoPosticipo"
+		property="tiAnticipoPosticipo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiAnticipoPosticipo" />
+	<fieldProperty
+		name="mesiAnticipoPosticipo"
+		property="mesiAnticipoPosticipo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="mesiAnticipoPosticipo" />
+	<fieldProperty
+		name="dtInizioScadDott"
+		property="dtInizioScadDott"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtInizioScadDott" />
+	<fieldProperty
+		name="dtFineScadDott"
+		property="dtFineScadDott"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtFineScadDott" />
+	<fieldProperty
+		name="statoAssCompenso"
+		property="statoAssCompenso"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="statoAssCompenso" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="stato" />
+	<fieldProperty
+		name="dtSospensione"
+		property="dtSospensione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtSospensione" />
+	<fieldProperty
+		name="dtRipristino"
+		property="dtRipristino"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtRipristino" />
+	<fieldProperty
+		name="dtRinnovo"
+		property="dtRinnovo"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtRinnovo" />
+	<fieldProperty
+		name="dtCessazione"
+		property="dtCessazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCessazione" />
+	<fieldProperty
+		name="cdCdsScadDottOri"
+		property="cdCdsScadDottOri"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cds scadenzario dottorati" />
+	<fieldProperty
+		name="cdUoScadDottOri"
+		property="cdUoScadDottOri"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="uo scadenzario dottorati" />
+	<fieldProperty
+		name="esercizioScadDottOri"
+		property="esercizioScadDottOri"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio scadenzario dottorati" />
+	<fieldProperty
+		name="tiIstituzCommerc"
+		property="tiIstituzCommerc"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="tiIstituzCommerc" />
+	<fieldProperty
+		name="flTassazioneSeparata"
+		property="flTassazioneSeparata"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flTassazioneSeparata" />
+	<fieldProperty
+		name="imponibileIrpefEseprec2"
+		property="imponibileIrpefEseprec2"
+		inputType="TEXT"
+		formatName="it.jada.stone.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imponibileIrpefEseprec2" />
+	<fieldProperty
+		name="imponibileIrpefEseprec1"
+		property="imponibileIrpefEseprec1"
+		inputType="TEXT"
+		formatName="it.jada.stone.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imponibileIrpefEseprec1" />
+	<fieldProperty
+		name="aliquotaIrpefMedia"
+		property="aliquotaIrpefMedia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="aliquotaIrpefMedia" />
+	<fieldProperty
+		name="flEscludiQvariaDeduzione"
+		property="flEscludiQvariaDeduzione"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flEscludiQvariaDeduzione" />
+	<fieldProperty
+		name="esercizioRep"
+		property="esercizioRep"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioRep" />
+	<fieldProperty
+		name="pgRepertorio"
+		property="pgRepertorio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="pgRepertorio" />
+	<fieldProperty
+		name="tiPrestazione"
+		property="tiPrestazione"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="tiPrestazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgImpegno" />
+	<formFieldProperty
+		name="dtRegistrazione" />
+	<formFieldProperty
+		name="dsScadDott" />
+	<formFieldProperty
+		name="tiAnagrafico" />
+	<formFieldProperty
+		name="ragioneSociale" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="partitaIva" />
+	<formFieldProperty
+		name="cdTerminiPag" />
+	<formFieldProperty
+		name="cdModalitaPag" />
+	<formFieldProperty
+		name="pgBanca" />
+	<formFieldProperty
+		name="cdTipoRapporto" />
+	<formFieldProperty
+		name="cdTrattamento" />
+	<formFieldProperty
+		name="imTotaleScadDott" />
+	<formFieldProperty
+		name="numeroRate" />
+	<formFieldProperty
+		name="tiAnticipoPosticipo" />
+	<formFieldProperty
+		name="mesiAnticipoPosticipo" />
+	<formFieldProperty
+		name="dtInizioScadDott" />
+	<formFieldProperty
+		name="dtFineScadDott" />
+	<formFieldProperty
+		name="statoAssCompenso" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="dtSospensione" />
+	<formFieldProperty
+		name="dtRipristino" />
+	<formFieldProperty
+		name="dtRinnovo" />
+	<formFieldProperty
+		name="dtCessazione" />
+	<formFieldProperty
+		name="cdCdsScadDottOri" />
+	<formFieldProperty
+		name="cdUoScadDottOri" />
+	<formFieldProperty
+		name="esercizioScadDottOri" />
+	<formFieldProperty
+		name="tiIstituzCommerc" />
+	<formFieldProperty
+		name="flTassazioneSeparata" />
+	<formFieldProperty
+		name="imponibileIrpefEseprec2" />
+	<formFieldProperty
+		name="imponibileIrpefEseprec1" />
+	<formFieldProperty
+		name="aliquotaIrpefMedia" />
+	<formFieldProperty
+		name="flEscludiQvariaDeduzione" />
+	<formFieldProperty
+		name="esercizioRep" />
+	<formFieldProperty
+		name="pgRepertorio" />
+	<formFieldProperty
+		name="tiPrestazione" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="idAnagraficaDottorati" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgImpegno" />
+	<findFieldProperty
+		name="dtRegistrazione" />
+	<findFieldProperty
+		name="dsScadDott" />
+	<findFieldProperty
+		name="tiAnagrafico" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="ragioneSociale" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="partitaIva" />
+	<findFieldProperty
+		name="cdTerminiPag" />
+	<findFieldProperty
+		name="cdModalitaPag" />
+	<findFieldProperty
+		name="pgBanca" />
+	<findFieldProperty
+		name="cdTipoRapporto" />
+	<findFieldProperty
+		name="cdTrattamento" />
+	<findFieldProperty
+		name="imTotaleScadDott" />
+	<findFieldProperty
+		name="numeroRate" />
+	<findFieldProperty
+		name="tiAnticipoPosticipo" />
+	<findFieldProperty
+		name="mesiAnticipoPosticipo" />
+	<findFieldProperty
+		name="dtInizioScadDott" />
+	<findFieldProperty
+		name="dtFineScadDott" />
+	<findFieldProperty
+		name="statoAssCompenso" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="dtSospensione" />
+	<findFieldProperty
+		name="dtRipristino" />
+	<findFieldProperty
+		name="dtRinnovo" />
+	<findFieldProperty
+		name="dtCessazione" />
+	<findFieldProperty
+		name="cdCdsScadDottOri" />
+	<findFieldProperty
+		name="cdUoScadDottOri" />
+	<findFieldProperty
+		name="esercizioScadDottOri" />
+	<findFieldProperty
+		name="tiIstituzCommerc" />
+	<findFieldProperty
+		name="flTassazioneSeparata" />
+	<findFieldProperty
+		name="imponibileIrpefEseprec2" />
+	<findFieldProperty
+		name="imponibileIrpefEseprec1" />
+	<findFieldProperty
+		name="aliquotaIrpefMedia" />
+	<findFieldProperty
+		name="flEscludiQvariaDeduzione" />
+	<findFieldProperty
+		name="esercizioRep" />
+	<findFieldProperty
+		name="pgRepertorio" />
+	<findFieldProperty
+		name="tiPrestazione" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="idAnagraficaDottorati" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgImpegno" />
+	<columnFieldProperty
+		name="dtRegistrazione" />
+	<columnFieldProperty
+		name="dsScadDott" />
+	<columnFieldProperty
+		name="tiAnagrafico" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="ragioneSociale" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="partitaIva" />
+	<columnFieldProperty
+		name="cdTerminiPag" />
+	<columnFieldProperty
+		name="cdModalitaPag" />
+	<columnFieldProperty
+		name="pgBanca" />
+	<columnFieldProperty
+		name="cdTipoRapporto" />
+	<columnFieldProperty
+		name="cdTrattamento" />
+	<columnFieldProperty
+		name="imTotaleScadDott" />
+	<columnFieldProperty
+		name="numeroRate" />
+	<columnFieldProperty
+		name="tiAnticipoPosticipo" />
+	<columnFieldProperty
+		name="mesiAnticipoPosticipo" />
+	<columnFieldProperty
+		name="dtInizioScadDott" />
+	<columnFieldProperty
+		name="dtFineScadDott" />
+	<columnFieldProperty
+		name="statoAssCompenso" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="dtSospensione" />
+	<columnFieldProperty
+		name="dtRipristino" />
+	<columnFieldProperty
+		name="dtRinnovo" />
+	<columnFieldProperty
+		name="dtCessazione" />
+	<columnFieldProperty
+		name="cdCdsScadDottOri" />
+	<columnFieldProperty
+		name="cdUoScadDottOri" />
+	<columnFieldProperty
+		name="esercizioScadDottOri" />
+	<columnFieldProperty
+		name="tiIstituzCommerc" />
+	<columnFieldProperty
+		name="flTassazioneSeparata" />
+	<columnFieldProperty
+		name="imponibileIrpefEseprec2" />
+	<columnFieldProperty
+		name="imponibileIrpefEseprec1" />
+	<columnFieldProperty
+		name="aliquotaIrpefMedia" />
+	<columnFieldProperty
+		name="flEscludiQvariaDeduzione" />
+	<columnFieldProperty
+		name="esercizioRep" />
+	<columnFieldProperty
+		name="pgRepertorio" />
+	<columnFieldProperty
+		name="tiPrestazione" />
+</bulkInfo>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="idScadenzarioDottorati"
+		property="idScadenzarioDottorati"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo scadenzario dottorati." />
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgRata"
+		property="pgRata"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgRata" />
+	<fieldProperty
+		name="pgMandato"
+		property="pgMandato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="pgMandato" />
+	<fieldProperty
+		name="dtInizioRata"
+		property="dtInizioRata"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtInizioRata" />
+	<fieldProperty
+		name="dtFineRata"
+		property="dtFineRata"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtFineRata" />
+	<fieldProperty
+		name="dtScadenza"
+		property="dtScadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dtScadenza" />
+	<fieldProperty
+		name="imRata"
+		property="imRata"
+		inputType="TEXT"
+		formatName="it.jada.stone.util.EuroFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="imRata" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgRata" />
+	<formFieldProperty
+		name="pgMandato" />
+	<formFieldProperty
+		name="dtInizioRata" />
+	<formFieldProperty
+		name="dtFineRata" />
+	<formFieldProperty
+		name="dtScadenza" />
+	<formFieldProperty
+		name="imRata" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="idScadenzarioDottorati" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgRata" />
+	<findFieldProperty
+		name="pgMandato" />
+	<findFieldProperty
+		name="dtInizioRata" />
+	<findFieldProperty
+		name="dtFineRata" />
+	<findFieldProperty
+		name="dtScadenza" />
+	<findFieldProperty
+		name="imRata" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="idScadenzarioDottorati" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgRata" />
+	<columnFieldProperty
+		name="pgMandato" />
+	<columnFieldProperty
+		name="dtInizioRata" />
+	<columnFieldProperty
+		name="dtFineRata" />
+	<columnFieldProperty
+		name="dtScadenza" />
+	<columnFieldProperty
+		name="imRata" />
+</bulkInfo>
