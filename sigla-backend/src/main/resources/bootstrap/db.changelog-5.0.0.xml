@@ -4425,4 +4425,235 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet author="valerio.diego" id="create-table-scadenzario-dottorati">
+        <createTable tableName="scadenzario_dottorati" remarks="Tabella contenente scadenzario dottorati." >
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_anagrafica_dottorati" remarks="Identificativo anagrafica dottorati." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" type="numeric(4,0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_impegno" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_registrazione" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ds_scad_dott" type="VARCHAR(300)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_anagrafico" type="CHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_terzo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ragione_sociale" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="nome" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cognome" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="codice_fiscale" type="VARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="partita_iva" type="VARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_termini_pag" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_modalita_pag" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_banca" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_tipo_rapporto" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_trattamento" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_totale_scad_dott" type="numeric(15,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_rate" type="numeric(3,0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_anticipo_posticipo" type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mesi_anticipo_posticipo" type="numeric(3,0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_inizio_scad_dott" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_fine_scad_dott" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stato_ass_compenso" type="CHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="stato" type="CHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_sospensione" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_ripristino" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_rinnovo" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_cessazione" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dacr" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds_scad_dott_ori" type="VARCHAR(30)" remarks="cds scadenzario dottorati">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_uo_scad_dott_ori" type="VARCHAR(30)" remarks="uo scadenzario dottorati">
+                <constraints nullable="true"/>
+            </column>
+            <column name="esercizio_scad_dott_ori" type="numeric(4,0)" remarks="esercizio scadenzario dottorati">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_istituz_commerc" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_tassazione_separata" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="imponibile_irpef_eseprec2" type="numeric(15,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="imponibile_irpef_eseprec1" type="numeric(15,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aliquota_irpef_media" type="numeric(10,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_escludi_qvaria_deduzione" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_rep" type="numeric(4,0)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="pg_repertorio" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_prestazione" type="VARCHAR(5)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="scad_dott_pkey" tableName="scadenzario_dottorati"/>
+    </changeSet>
+
+    <changeSet author="valerio.diego" id="create-table-scadenzario_dottorati-rata">
+        <createTable tableName="scadenzario_dottorati_rata" remarks="Tabella contenente scadenzario dottorati rate">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_scadenzario_dottorati" remarks="Identificativo scadenzario dottorati." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds" type="VARCHAR(30)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="cd_unita_organizzativa" type="VARCHAR(30)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="esercizio" type="INT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="pg_rata" type="INT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="pg_mandato" type="INT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="dt_inizio_rata" type="DATE">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="dt_fine_rata" type="DATE">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="dt_scadenza" type="DATE">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="im_rata" type="numeric(15,2)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="dacr" type="DATE">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="duva" type="DATE">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="scad_dott_rata_pkey" tableName="scadenzario_dottorati_rata"/>
+    </changeSet>
+
+    <changeSet author="valerio.diego" id="relazioni-anagrafica-scadenzario" >
+        <addForeignKeyConstraint
+                baseColumnNames="id_anagrafica_dottorati"
+                baseTableName="scadenzario_dottorati"
+                constraintName="fk_anagrafica_dottorati"
+                referencedColumnNames="id"
+                referencedTableName="anagrafica_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="id_scadenzario_dottorati"
+                baseTableName="scadenzario_dottorati_rata"
+                constraintName="fk_scadenzario_dottorati"
+                referencedColumnNames="id"
+                referencedTableName="scadenzario_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="cd_terzo"
+                baseTableName="scadenzario_dottorati"
+                constraintName="fk_terzo"
+                referencedColumnNames="cd_terzo"
+                referencedTableName="terzo"/>
+    </changeSet>
+
 </databaseChangeLog>
