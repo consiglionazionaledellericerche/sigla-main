@@ -4651,7 +4651,7 @@ TRASPORTO_AEREO"/>
         <addForeignKeyConstraint
                 baseColumnNames="cd_terzo"
                 baseTableName="scadenzario_dottorati"
-                constraintName="fk_terzo"
+                constraintName="fk_scadenzario_terzo"
                 referencedColumnNames="cd_terzo"
                 referencedTableName="terzo"/>
     </changeSet>
