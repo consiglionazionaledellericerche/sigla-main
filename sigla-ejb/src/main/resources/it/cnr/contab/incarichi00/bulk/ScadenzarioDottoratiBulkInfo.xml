@@ -184,7 +184,7 @@
 		name="imTotaleScadDott"
 		property="imTotaleScadDott"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imTotaleScadDott" />
@@ -319,7 +319,7 @@
 		name="imponibileIrpefEseprec2"
 		property="imponibileIrpefEseprec2"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imponibileIrpefEseprec2" />
@@ -327,7 +327,7 @@
 		name="imponibileIrpefEseprec1"
 		property="imponibileIrpefEseprec1"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imponibileIrpefEseprec1" />

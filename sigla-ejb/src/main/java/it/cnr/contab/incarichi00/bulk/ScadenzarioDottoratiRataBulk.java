@@ -4,29 +4,29 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-public class Scadenzario_dottoratirataBulk extends Scadenzario_dottoratirataBase {
+public class ScadenzarioDottoratiRataBulk extends ScadenzarioDottoratiRataBase {
 	/**
 	 * [SCADENZARIO_DOTTORATI ]
 	 **/
-	private Scadenzario_dottoratiBulk scadenzarioDottorati =  new Scadenzario_dottoratiBulk();
+	private ScadenzarioDottoratiBulk scadenzarioDottorati =  new ScadenzarioDottoratiBulk();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI_RATA
 	 **/
-	public Scadenzario_dottoratirataBulk() {
+	public ScadenzarioDottoratiRataBulk() {
 		super();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI_RATA
 	 **/
-	public Scadenzario_dottoratirataBulk(Long id) {
+	public ScadenzarioDottoratiRataBulk(Long id) {
 		super(id);
 	}
-	public Scadenzario_dottoratiBulk getScadenzarioDottorati() {
+	public ScadenzarioDottoratiBulk getScadenzarioDottorati() {
 		return scadenzarioDottorati;
 	}
-	public void setScadenzarioDottorati(Scadenzario_dottoratiBulk scadenzarioDottorati)  {
+	public void setScadenzarioDottorati(ScadenzarioDottoratiBulk scadenzarioDottorati)  {
 		this.scadenzarioDottorati=scadenzarioDottorati;
 	}
 	/**
@@ -34,7 +34,7 @@ public class Scadenzario_dottoratirataBulk extends Scadenzario_dottoratirataBase
 	 * Restituisce il valore di: [Identificativo scadenzario dottorati.]
 	 **/
 	public Long getIdScadenzarioDottorati() {
-		Scadenzario_dottoratiBulk scadenzarioDottorati = this.getScadenzarioDottorati();
+		ScadenzarioDottoratiBulk scadenzarioDottorati = this.getScadenzarioDottorati();
 		if (scadenzarioDottorati == null)
 			return null;
 		return getScadenzarioDottorati().getId();

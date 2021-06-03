@@ -4,7 +4,7 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.jada.persistency.Keyed;
-public class Scadenzario_dottoratirataBase extends Scadenzario_dottoratirataKey implements Keyed {
+public class ScadenzarioDottoratiRataBase extends ScadenzarioDottoratiRataKey implements Keyed {
 //    ID_SCADENZARIO_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idScadenzarioDottorati;
  
@@ -39,10 +39,10 @@ public class Scadenzario_dottoratirataBase extends Scadenzario_dottoratirataKey 
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI_RATA
 	 **/
-	public Scadenzario_dottoratirataBase() {
+	public ScadenzarioDottoratiRataBase() {
 		super();
 	}
-	public Scadenzario_dottoratirataBase(Long id) {
+	public ScadenzarioDottoratiRataBase(Long id) {
 		super(id);
 	}
 	/**

@@ -4,7 +4,7 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.jada.persistency.Keyed;
-public class Scadenzario_dottoratiBase extends Scadenzario_dottoratiKey implements Keyed {
+public class ScadenzarioDottoratiBase extends ScadenzarioDottoratiKey implements Keyed {
 //    ID_ANAGRAFICA_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idAnagraficaDottorati;
  
@@ -138,10 +138,10 @@ public class Scadenzario_dottoratiBase extends Scadenzario_dottoratiKey implemen
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI
 	 **/
-	public Scadenzario_dottoratiBase() {
+	public ScadenzarioDottoratiBase() {
 		super();
 	}
-	public Scadenzario_dottoratiBase(Long id) {
+	public ScadenzarioDottoratiBase(Long id) {
 		super(id);
 	}
 	/**

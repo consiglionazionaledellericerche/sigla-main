@@ -5,23 +5,23 @@
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
-public class Scadenzario_dottoratirataKey extends OggettoBulk implements KeyedPersistent {
+public class ScadenzarioDottoratiKey extends OggettoBulk implements KeyedPersistent {
 	private Long id;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Table name: SCADENZARIO_DOTTORATI_RATA
+	 * Table name: SCADENZARIO_DOTTORATI
 	 **/
-	public Scadenzario_dottoratirataKey() {
+	public ScadenzarioDottoratiKey() {
 		super();
 	}
-	public Scadenzario_dottoratirataKey(Long id) {
+	public ScadenzarioDottoratiKey(Long id) {
 		super();
 		this.id=id;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this== o) return true;
-		if (!(o instanceof Scadenzario_dottoratirataKey)) return false;
-		Scadenzario_dottoratirataKey k = (Scadenzario_dottoratirataKey) o;
+		if (!(o instanceof ScadenzarioDottoratiKey)) return false;
+		ScadenzarioDottoratiKey k = (ScadenzarioDottoratiKey) o;
 		if (!compareKey(getId(), k.getId())) return false;
 		return true;
 	}

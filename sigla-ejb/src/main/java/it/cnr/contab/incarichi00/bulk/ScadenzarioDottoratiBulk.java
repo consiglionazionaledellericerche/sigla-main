@@ -6,7 +6,7 @@ package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 
-public class Scadenzario_dottoratiBulk extends Scadenzario_dottoratiBase {
+public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	/**
 	 * [ANAGRAFICA_DOTTORATI ]
 	 **/
@@ -19,14 +19,14 @@ public class Scadenzario_dottoratiBulk extends Scadenzario_dottoratiBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI
 	 **/
-	public Scadenzario_dottoratiBulk() {
+	public ScadenzarioDottoratiBulk() {
 		super();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI
 	 **/
-	public Scadenzario_dottoratiBulk(Long id) {
+	public ScadenzarioDottoratiBulk(Long id) {
 		super(id);
 	}
 	public Anagrafica_dottoratiBulk getAnagraficaDottorati() {

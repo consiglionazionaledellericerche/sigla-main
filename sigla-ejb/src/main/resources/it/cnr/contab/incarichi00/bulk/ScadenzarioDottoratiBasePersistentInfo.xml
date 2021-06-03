@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.util.bulk.ScadenzarioDottoratiBase"
-	keyClassName="it.cnr.contab.util.bulk.ScadenzarioDottoratiKey"
-	homeClassName="it.cnr.contab.util.bulk.ScadenzarioDottoratiHome">
+	persistentClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiHome">
 	<defaultColumnMap
 		tableName="SCADENZARIO_DOTTORATI">
 		<columnMapping

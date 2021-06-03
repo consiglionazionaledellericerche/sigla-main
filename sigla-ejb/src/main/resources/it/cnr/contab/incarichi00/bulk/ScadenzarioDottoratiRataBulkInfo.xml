@@ -97,7 +97,7 @@
 		name="imRata"
 		property="imRata"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.EuroFormat"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
 		label="imRata" />
