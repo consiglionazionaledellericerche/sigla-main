@@ -84,7 +84,7 @@ import java.util.stream.Stream;
  */
 public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, Fattura_passivaBulk> implements
         IDocumentoAmministrativoBP, IGenericSearchDocAmmBP, VoidableBP,
-        IDefferedUpdateSaldiBP, FatturaPassivaElettronicaBP {
+        IDefferedUpdateSaldiBP, FatturaPassivaElettronicaBP, IDocAmmEconomicaBP {
 
     private final SimpleDetailCRUDController crudRiferimentiBanca = new SimpleDetailCRUDController(
             "RifBanca", Fattura_passiva_rigaBulk.class, "riferimenti_bancari",
@@ -115,6 +115,29 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     return false;
                 }
             };
+    private final SimpleDetailCRUDController movimentiDare =
+            new SimpleDetailCRUDController(
+                    "MovimentiDare",
+                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
+                    "scrittura_partita_doppia.movimentiDareColl",
+                    this){
+                @Override
+                public boolean isEnabled() {
+                    return false;
+                }
+            };
+    private final SimpleDetailCRUDController movimentiAvere =
+            new SimpleDetailCRUDController(
+                    "MovimentiAvere",
+                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
+                    "scrittura_partita_doppia.movimentiAvereColl",
+                    this){
+                @Override
+                public boolean isEnabled() {
+                    return false;
+                }
+            };
+
 
     //variabile inizializzata in fase di caricamento Nota da fattura elettronica
     //utilizzata per ritornare sulla fattura elettronica
@@ -911,6 +934,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public void resetTabs() {
         setTab("tab", "tabFatturaPassiva");
+        setTab("tabEconomica", "tabDare");
     }
 
     public void riportaAvanti(ActionContext context)
@@ -1594,6 +1618,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private static final String[] TAB_FATTURA_PASSIVA_ACCERTAMENTI = new String[]{"tabFatturaPassivaAccertamenti", "Accertamenti", "/docamm00/tab_fattura_passiva_accertamenti.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_DOCUMENTI_1210 = new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_INTRASTAT = new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ECONOMICA = new String[]{"tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI = new String[]{"tabEleAllegati", "Allegati Ricevuti", "/docamm00/tab_fatt_ele_allegati.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI = new String[]{"tabAllegati", "Allegati Aggiunti", "/util00/tab_allegati.jsp"};
 
@@ -1648,6 +1673,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
             pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
         }
+        pages.put(i++, TAB_FATTURA_PASSIVA_ECONOMICA);
         if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
@@ -1807,5 +1833,13 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public CollapsableDetailCRUDController getCrudDocEleAcquistoColl() {
         return crudDocEleAcquistoColl;
+    }
+
+    public SimpleDetailCRUDController getMovimentiDare() {
+        return movimentiDare;
+    }
+
+    public SimpleDetailCRUDController getMovimentiAvere() {
+        return movimentiAvere;
     }
 }

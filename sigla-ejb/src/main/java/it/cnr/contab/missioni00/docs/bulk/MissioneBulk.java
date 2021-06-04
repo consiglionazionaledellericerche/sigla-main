@@ -32,6 +32,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -3037,6 +3038,14 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 * Il metodo imposta il valore dell'attributo 'isDeleting'
 	 */
 	public void setIsDeleting(boolean deletingStatus) {}
+
+	private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
+	@Override
+	public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+		return scrittura_partita_doppia;
+	}
+
 	/**
 	 * Il metodo inizializza alcuni campi della missione che la rendono DEFINITIVA
 	 */

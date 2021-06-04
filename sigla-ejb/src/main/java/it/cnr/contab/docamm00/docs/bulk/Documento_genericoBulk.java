@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
@@ -1521,6 +1522,14 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	 * setIsDeleting method comment.
 	 */
 	public void setIsDeleting(boolean deletingStatus) {}
+
+	private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
+	@Override
+	public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+		return scrittura_partita_doppia;
+	}
+
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (09/07/2002 16.29.09)

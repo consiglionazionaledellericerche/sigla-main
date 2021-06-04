@@ -39,6 +39,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
@@ -266,6 +267,8 @@ public abstract class Fattura_passivaBulk
     private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
     private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
     private java.sql.Timestamp dt_termine_creazione_docamm = null;
+
+    private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
 
     public Fattura_passivaBulk() {
         super();
@@ -3516,4 +3519,11 @@ public abstract class Fattura_passivaBulk
                 .orElse(Collections.emptyList());
     }
 
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        return scrittura_partita_doppia;
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
 }
