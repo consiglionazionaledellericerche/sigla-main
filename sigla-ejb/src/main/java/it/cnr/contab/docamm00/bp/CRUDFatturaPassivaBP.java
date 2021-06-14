@@ -18,9 +18,6 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
-import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
-import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
@@ -118,8 +115,28 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     return false;
                 }
             };
-    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
-    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+    private final SimpleDetailCRUDController movimentiDare =
+            new SimpleDetailCRUDController(
+                    "MovimentiDare",
+                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
+                    "scrittura_partita_doppia.movimentiDareColl",
+                    this){
+                @Override
+                public boolean isEnabled() {
+                    return false;
+                }
+            };
+    private final SimpleDetailCRUDController movimentiAvere =
+            new SimpleDetailCRUDController(
+                    "MovimentiAvere",
+                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
+                    "scrittura_partita_doppia.movimentiAvereColl",
+                    this){
+                @Override
+                public boolean isEnabled() {
+                    return false;
+                }
+            };
 
 
     //variabile inizializzata in fase di caricamento Nota da fattura elettronica
@@ -135,7 +152,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean ribaltato;
     private boolean isDetailDoubling = false;
     private boolean attivoOrdini = false;
-    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDAnagraficaBP constructor comment.
@@ -526,7 +542,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
         try {
             attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
-            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             super.init(config, context);
 
             int solaris = Fattura_passivaBulk.getDateCalendar(
@@ -1603,6 +1618,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private static final String[] TAB_FATTURA_PASSIVA_ACCERTAMENTI = new String[]{"tabFatturaPassivaAccertamenti", "Accertamenti", "/docamm00/tab_fattura_passiva_accertamenti.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_DOCUMENTI_1210 = new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_INTRASTAT = new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ECONOMICA = new String[]{"tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI = new String[]{"tabEleAllegati", "Allegati Ricevuti", "/docamm00/tab_fatt_ele_allegati.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI = new String[]{"tabAllegati", "Allegati Aggiunti", "/util00/tab_allegati.jsp"};
 
@@ -1657,9 +1673,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
             pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
         }
-        if (attivaEconomicaParallela) {
-            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
-        }
+        pages.put(i++, TAB_FATTURA_PASSIVA_ECONOMICA);
         if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
