@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="speseAltre" pageWidth="524" pageHeight="802" whenNoDataType="NoPages" columnWidth="524" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="511b4f54-a834-44fd-aa94-c84429234118">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="json_Gianluca"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bold" mode="Transparent" fontName="Times New Roman" isItalic="true" isUnderline="true" isStrikeThrough="true" pdfFontName="Times-Bold"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<field name="descrizione" class="java.lang.String">
+		<fieldDescription><![CDATA[descrizione]]></fieldDescription>
+	</field>
+	<field name="dettaglio" class="java.lang.String">
+		<fieldDescription><![CDATA[dettaglio]]></fieldDescription>
+	</field>
+	<field name="importoPrevisto" class="java.lang.String">
+		<fieldDescription><![CDATA[importoPrevisto]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="22">
+			<textField textAdjust="StretchHeight">
+				<reportElement mode="Transparent" x="0" y="0" width="407" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement mode="Transparent" x="407" y="0" width="63" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dettaglio}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="470" y="0" width="54" height="22" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoPrevisto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
