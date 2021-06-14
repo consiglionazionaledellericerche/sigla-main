@@ -2434,4 +2434,11 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
         return scrittura_partita_doppia;
     }
 
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        if ("C".equals(this.getTi_fattura()))
+            return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA);
+        if ("D".equals(this.getTi_fattura()))
+            return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA);
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+    }
 }

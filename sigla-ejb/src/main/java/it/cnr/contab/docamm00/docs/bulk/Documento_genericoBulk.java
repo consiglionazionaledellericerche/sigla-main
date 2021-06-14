@@ -1962,5 +1962,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public void setIdTipoDocumentoGenerico(Integer idTipoDocumentoGenerico) {
 		Optional.ofNullable(getTipoDocumentoGenerico()).ifPresent(el->el.setId(idTipoDocumentoGenerico));
 	}
-	
+
+	public TipoDocumentoEnum getTipoDocumentoEnum() {
+		return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+	}
 }

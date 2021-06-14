@@ -1514,4 +1514,8 @@ public class OrdineAcqBulk extends OrdineAcqBase
     public void setUnicoMagazzinoAbilitato(MagazzinoBulk unicoMagazzinoAbilitato) {
         this.unicoMagazzinoAbilitato = unicoMagazzinoAbilitato;
     }
+
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+    }
 }

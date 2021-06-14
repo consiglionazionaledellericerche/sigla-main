@@ -19,7 +19,25 @@ package it.cnr.contab.coepcoan00.comp;
 
 import it.cnr.contab.coepcoan00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
+
+import java.math.BigDecimal;
 import java.util.*;
+
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBase;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceHome;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import java.sql.*;
@@ -29,12 +47,12 @@ import it.cnr.contab.coepcoan00.core.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
+import it.cnr.si.service.AuthService;
 
 import java.io.Serializable;
+import java.util.stream.Collectors;
 
 
 public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDComponent implements IScritturaPartitaDoppiaMgr,ICRUDMgr, Cloneable, Serializable,IPrintMgr{
@@ -867,5 +885,164 @@ public SQLBuilder selectCdsForPrintByClause (UserContext userContext, Stampa_ele
 	return sql;
 			
 }
+
+	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException, PersistencyException {
+		Ass_tipo_cori_voce_epHome aEffCoriHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
+
+		Scrittura_partita_doppiaBulk scritturaPartitaDoppiaBulk = new Scrittura_partita_doppiaBulk();
+		scritturaPartitaDoppiaBulk.setEsercizio(docamm.getEsercizio());
+		scritturaPartitaDoppiaBulk.setEsercizio_documento_amm(docamm.getEsercizio());
+		scritturaPartitaDoppiaBulk.setCd_cds_documento(docamm.getCd_cds());
+		scritturaPartitaDoppiaBulk.setCd_tipo_documento(docamm.getCd_tipo_doc_amm());
+		scritturaPartitaDoppiaBulk.setPg_numero_documento(docamm.getPg_doc_amm());
+
+		if (docamm.getTipoDocumentoEnum().isDocumentoPassivo()) {
+			Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
+			List<IDocumentoAmministrativoRigaBulk> righeDocamm = docamm.getChildren();
+
+			Map<Integer, Map<Timestamp, Map<Timestamp, List<IDocumentoAmministrativoRigaBulk>>>> mapTerzo =
+					righeDocamm.stream().collect(Collectors.groupingBy(IDocumentoAmministrativoRigaBulk::getCd_terzo,
+							Collectors.groupingBy(IDocumentoAmministrativoRigaBulk::getDt_da_competenza_coge,
+									Collectors.groupingBy(IDocumentoAmministrativoRigaBulk::getDt_a_competenza_coge))));
+
+			if (fatpas.isIstituzionale()) {
+				//Registrazione IVA
+				boolean registraIva = false;
+				if (Bene_servizioBulk.BENE.equalsIgnoreCase(fatpas.getTi_bene_servizio())) {
+					if (fatpas.isSanMarinoSenzaIVA() || fatpas.getFl_intra_ue().booleanValue() || fatpas.getFl_merce_intra_ue().booleanValue())
+						registraIva = true;
+				}
+				if (!registraIva && Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(fatpas.getTi_bene_servizio())) {
+					if (fatpas.getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())
+						registraIva = true;
+				}
+				if (!registraIva && fatpas.getFl_split_payment().booleanValue())
+					registraIva = true;
+
+				if (registraIva) {
+					Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), CompensoBulk.CODICE_IVA, Contributo_ritenutaBulk.TIPO_ENTE, Movimento_cogeBulk.SEZIONE_DARE);
+
+					String aCdVoceIvaEp = Optional.ofNullable(aEffCori).flatMap(el -> Optional.ofNullable(el.getVoce_ep_contr())).flatMap(el -> Optional.ofNullable(el.getCd_voce_ep()))
+								.orElseThrow(() -> new ApplicationRuntimeException("Conto ep di contropartita non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
+										" - Codice Contributo: " + CompensoBulk.CODICE_IVA + " - Tipe E/P: " + Contributo_ritenutaBulk.TIPO_ENTE + " - Sezione: " + Movimento_cogeBulk.SEZIONE_DARE + ")"));
+
+					String aSezioneContoIva = fatpas.getTipoDocumentoEnum().isNotaCreditoPassiva() ? Movimento_cogeBulk.SEZIONE_DARE : Movimento_cogeBulk.SEZIONE_AVERE;
+
+					mapTerzo.keySet().stream().forEach(aCdTerzo -> {
+						mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> {
+							mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
+								//Registrazione IVA
+								List<IDocumentoAmministrativoRigaBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
+								BigDecimal imIva = righeDocammTerzo.stream().map(IDocumentoAmministrativoRigaBulk::getIm_iva)
+										.reduce(BigDecimal.ZERO, BigDecimal::add);
+								Movimento_cogeBulk movimentoIva = new Movimento_cogeBulk();
+								movimentoIva.setCd_cds(fatpas.getCd_cds_origine());
+								movimentoIva.setEsercizio(fatpas.getEsercizio());
+								movimentoIva.setCd_unita_organizzativa(fatpas.getCd_uo_origine());
+								movimentoIva.setCd_voce_ep(aCdVoceIvaEp);
+								movimentoIva.setSezione(aSezioneContoIva);
+								movimentoIva.setIm_movimento(imIva.abs());
+								movimentoIva.setTi_istituz_commerc(fatpas.getTi_istituz_commerc());
+								movimentoIva.setCd_terzo(aCdTerzo);
+								movimentoIva.setDt_da_competenza_coge(aDtDaCompCoge);
+								movimentoIva.setDt_a_competenza_coge(aDtACompCoge);
+								movimentoIva.setStato(Movimento_cogeBulk.STATO_DEFINITIVO);
+
+								if (aSezioneContoIva.equals(Movimento_cogeBulk.SEZIONE_DARE))
+									scritturaPartitaDoppiaBulk.addToMovimentiDareColl(movimentoIva);
+								else
+									scritturaPartitaDoppiaBulk.addToMovimentiAvereColl(movimentoIva);
+
+							});
+						});
+					});
+				}
+
+				//Registrazione COSTO
+				String aSezioneContoEp = findSezioneContoEp(userContext, docamm);
+
+				mapTerzo.keySet().stream().forEach(aCdTerzo -> {
+					mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> {
+						mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
+							List<IDocumentoAmministrativoRigaBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
+							Map<Integer, Map<String, Map<String, Map<String, List<IDocumentoAmministrativoRigaBulk>>>>> mapVoce =
+									righeDocammTerzo.stream().collect(Collectors.groupingBy(rigaDoc->rigaDoc.getScadenzaDocumentoContabile().getFather().getEsercizio(),
+											Collectors.groupingBy(rigaDoc2->rigaDoc2.getScadenzaDocumentoContabile().getFather().getTi_appartenenza(),
+													Collectors.groupingBy(rigaDoc3->rigaDoc3.getScadenzaDocumentoContabile().getFather().getTi_gestione(),
+															Collectors.groupingBy(rigaDoc4->rigaDoc4.getScadenzaDocumentoContabile().getFather().getCd_elemento_voce())))));
+
+							mapVoce.keySet().stream().forEach(aEseVoce -> {
+								mapVoce.get(aEseVoce).keySet().forEach(aTiAppartenenza -> {
+									mapVoce.get(aEseVoce).get(aTiAppartenenza).keySet().forEach(aTiGestione -> {
+										mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).keySet().forEach(aCdVoce -> {
+											try {
+												List<IDocumentoAmministrativoRigaBulk> righeDocammVoce = mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).get(aCdVoce);
+												BigDecimal imImponibile = righeDocammVoce.stream().map(IDocumentoAmministrativoRigaBulk::getIm_imponibile)
+														.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+												Voce_epBulk aCdContoEp = findContoEp(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
+												String aSezioneRigheContoEp = imImponibile.compareTo(BigDecimal.ZERO)>0
+														?aSezioneContoEp
+														:(Movimento_cogeBulk.SEZIONE_DARE.equals(aSezioneContoEp)?Movimento_cogeBulk.SEZIONE_AVERE:Movimento_cogeBulk.SEZIONE_DARE);
+
+												Movimento_cogeBulk movimentoContoEp = new Movimento_cogeBulk();
+												movimentoContoEp.setCd_cds(fatpas.getCd_cds_origine());
+												movimentoContoEp.setEsercizio(fatpas.getEsercizio());
+												movimentoContoEp.setCd_unita_organizzativa(fatpas.getCd_uo_origine());
+												movimentoContoEp.setCd_voce_ep(aCdContoEp.getCd_voce_ep());
+												movimentoContoEp.setSezione(aSezioneRigheContoEp);
+												movimentoContoEp.setIm_movimento(imImponibile.abs());
+												movimentoContoEp.setTi_istituz_commerc(fatpas.getTi_istituz_commerc());
+												movimentoContoEp.setCd_terzo(aCdTerzo);
+												movimentoContoEp.setDt_da_competenza_coge(aDtDaCompCoge);
+												movimentoContoEp.setDt_a_competenza_coge(aDtACompCoge);
+												movimentoContoEp.setStato(Movimento_cogeBulk.STATO_DEFINITIVO);
+
+												if (aSezioneRigheContoEp.equals(Movimento_cogeBulk.SEZIONE_DARE))
+													scritturaPartitaDoppiaBulk.addToMovimentiDareColl(movimentoContoEp);
+												else
+													scritturaPartitaDoppiaBulk.addToMovimentiAvereColl(movimentoContoEp);
+											} catch (ComponentException|PersistencyException e) {
+												throw new ApplicationRuntimeException(e);
+											}
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			} //end fatpas.isIstituzionale()
+		}
+
+		return scritturaPartitaDoppiaBulk;
+	}
+
+	private Voce_epBulk findContoEp(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
+		Ass_ev_voceepHome assEvVoceEpHome = (Ass_ev_voceepHome) getHome(userContext, Ass_ev_voceepBulk.class);
+		List<Ass_ev_voceepBulk> listAss = assEvVoceEpHome.findVociEpAssociateVoce(voceBilancio);
+		if (listAss.isEmpty())
+			throw new ApplicationException("Associazione tra voce del piano finanziario " + voceBilancio.getEsercizio() + "/" +
+					voceBilancio.getTi_appartenenza() + "/" +
+					voceBilancio.getTi_gestione() + "/" +
+					voceBilancio.getCd_elemento_voce() + " ed economica non trovata.");
+		else if (listAss.size() > 1)
+			throw new ApplicationException("Troppi conti economici risultano associati alla voce " + voceBilancio.getEsercizio() + "/" +
+					voceBilancio.getTi_appartenenza() + "/" +
+					voceBilancio.getTi_gestione() + "/" +
+					voceBilancio.getCd_elemento_voce() + ".");
+
+		return listAss.get(0).getVoce_ep();
+	}
+
+	private String findSezioneContoEp(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException, PersistencyException {
+		Tipo_documento_ammHome tipoDocHome = (Tipo_documento_ammHome)getHome(userContext, Tipo_documento_ammBulk.class);
+		Tipo_documento_ammBulk tipoDoc = (Tipo_documento_ammBulk)tipoDocHome.findByPrimaryKey(docamm.getCd_tipo_doc_amm());
+
+		if (docamm.getTipoDocumentoEnum().isNotaCreditoPassiva() || docamm.getTipoDocumentoEnum().isNotaCreditoAttiva())
+			return Elemento_voceHome.GESTIONE_SPESE.equals(tipoDoc.getTi_entrata_spesa())?Movimento_cogeBulk.SEZIONE_AVERE:Movimento_cogeBulk.SEZIONE_DARE;
+		else
+			return Elemento_voceHome.GESTIONE_SPESE.equals(tipoDoc.getTi_entrata_spesa())?Movimento_cogeBulk.SEZIONE_DARE:Movimento_cogeBulk.SEZIONE_AVERE;
+	}
 
 }

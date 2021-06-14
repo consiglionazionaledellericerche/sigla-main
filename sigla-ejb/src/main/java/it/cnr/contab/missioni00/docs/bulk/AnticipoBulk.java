@@ -26,6 +26,7 @@ import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
@@ -1332,6 +1333,11 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
     @Override
     public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
         return scrittura_partita_doppia;
+    }
+
+    @Override
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }
 
     /**

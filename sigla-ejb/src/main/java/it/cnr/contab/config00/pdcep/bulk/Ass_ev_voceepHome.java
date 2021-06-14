@@ -17,10 +17,13 @@
 
 package it.cnr.contab.config00.pdcep.bulk;
 
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.util.List;
 
 /**
  * Home che gestisce elementi voce associati a voci economico patrimoniali.
@@ -51,4 +54,13 @@ public Ass_ev_voceepHome(java.sql.Connection conn) {
 public Ass_ev_voceepHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Ass_ev_voceepBulk.class,conn,persistentCache);
 }
+
+	public List<Ass_ev_voceepBulk> findVociEpAssociateVoce(Elemento_voceBulk elem) throws PersistencyException{
+		it.cnr.jada.persistency.sql.SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,elem.getEsercizio());
+		sql.addSQLClause(FindClause.AND,"TI_APPARTENENZA",SQLBuilder.EQUALS,elem.getTi_appartenenza());
+		sql.addSQLClause(FindClause.AND,"TI_GESTIONE",SQLBuilder.EQUALS,elem.getTi_gestione());
+		sql.addSQLClause(FindClause.AND,"CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,elem.getCd_elemento_voce());
+		return fetchAll(sql);
+	}
 }

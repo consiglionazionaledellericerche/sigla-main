@@ -198,4 +198,6 @@ public interface IDocumentoAmministrativoBulk {
     void setIsDeleting(boolean deletingStatus);
 
 	Scrittura_partita_doppiaBulk getScrittura_partita_doppia();
+
+    TipoDocumentoEnum getTipoDocumentoEnum();
 }

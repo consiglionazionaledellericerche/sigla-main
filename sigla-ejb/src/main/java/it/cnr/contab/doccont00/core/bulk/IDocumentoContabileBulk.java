@@ -21,6 +21,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (2/7/2002 3:24:48 PM)
@@ -61,4 +63,10 @@ public interface IDocumentoContabileBulk {
 	 * @return boolean
 	 */
 	boolean isTemporaneo();
+
+	java.lang.String getTi_gestione();
+
+	java.lang.String getTi_appartenenza();
+
+	java.lang.String getCd_elemento_voce();
 }

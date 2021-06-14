@@ -1443,7 +1443,7 @@ public abstract class Fattura_passivaBulk
      *
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getRiferimenti_bancari() {
+    public it.cnr.jada.bulk.BulkList getRiferimenti_tbancari() {
         return riferimenti_bancari;
     }
 
@@ -3525,5 +3525,13 @@ public abstract class Fattura_passivaBulk
 
     public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
         this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        if ("C".equals(this.getTi_fattura()))
+            return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA);
+        if ("D".equals(this.getTi_fattura()))
+            return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA);
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }
 }

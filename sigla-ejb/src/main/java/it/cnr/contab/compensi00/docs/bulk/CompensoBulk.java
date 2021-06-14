@@ -3356,4 +3356,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
                 .orElse(Collections.emptyList());
     }
 
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+    }
+
 }

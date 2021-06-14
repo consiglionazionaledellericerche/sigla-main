@@ -41,6 +41,7 @@ import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
@@ -3044,6 +3045,11 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	@Override
 	public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
 		return scrittura_partita_doppia;
+	}
+
+	@Override
+	public TipoDocumentoEnum getTipoDocumentoEnum() {
+		return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
 	}
 
 	/**

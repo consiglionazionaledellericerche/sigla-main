@@ -543,4 +543,9 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 				.concat("/")
 				.concat(String.valueOf(this.getRiga()));
 	}
+
+	@Override
+	public Integer getCd_terzo() {
+		return this.getOrdineAcq().getCdTerzo();
+	}
 }

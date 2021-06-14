@@ -140,6 +140,21 @@ public class Configurazione_cnrHome extends BulkHome {
 
     /**
      * Ritorna il record richiesto sulla base dei parametri indicati.
+     * <p>ATTENZIONE: in questo metodo viene ricercato sempre il record con esercizio =0</p>
+     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer,String,String,String)}</p>
+     *
+     * @param unita_funzionale Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
+     * @param chiave_primaria Chiave Primaria - Campo Obbligatorio
+     * @param chiave_secondaria Chiave Secondaria - Lasciare vuoto per ricercare il parametro generale (chiave_secondaria='*')
+     * @return il record ConfigurazioneCNR richiesto sulla base dei parametri indicati
+     * @throws PersistencyException
+     */
+    public Configurazione_cnrBulk getConfigurazione(String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
+        return getConfigurazione(ANNI_ALL,unita_funzionale,chiave_primaria, chiave_secondaria);
+    }
+
+    /**
+     * Ritorna il record richiesto sulla base dei parametri indicati.
      * <p>ATTENZIONE: in questo metodo viene ricercato prima il record con l'esercizio indicato e, in caso di assenza, viene ricercato il record con esercizio=0</p>
      * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer,String,String,String)}</p>
      *
@@ -252,5 +267,17 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
-
+    /**
+     * Ritorna il codice cds della SAC
+     * <p><b>chiave_primaria: CDS_SPECIALE</b>
+     * <p><b>chiave_secondaria: CDS_SAC</b>
+     *
+     * @throws PersistencyException
+     */
+    public String getBeneServScontoAbbuono() throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(null,Configurazione_cnrBulk.PK_BENE_SERVIZIO_SPECIALE, Configurazione_cnrBulk.SK_SCONTO_ABBUONO))
+                .map(Configurazione_cnrBulk::getVal01)
+                .orElse(null);
+    }
 }
