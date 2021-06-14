@@ -548,4 +548,16 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public Integer getCd_terzo() {
 		return this.getOrdineAcq().getCdTerzo();
 	}
+
+	@Override
+	public Timestamp getDt_da_competenza_coge() {
+		// TODO: 14/06/21 Da implementare 
+		return null;
+	}
+
+	@Override
+	public Timestamp getDt_a_competenza_coge() {
+		// TODO: 14/06/21 Da implementare 
+		return null;
+	}
 }
