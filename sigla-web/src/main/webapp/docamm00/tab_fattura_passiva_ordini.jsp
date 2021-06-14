@@ -15,6 +15,7 @@
 %>
 
 <% bp.getCrudDocEleAcquistoColl().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
+<% bp.getCrudDocEleAcquistoColl().closeHTMLTable(pageContext);%>
 <div class="card">
     <fieldset class="fieldset mt-1 mb-1">
         <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di fattura</legend>

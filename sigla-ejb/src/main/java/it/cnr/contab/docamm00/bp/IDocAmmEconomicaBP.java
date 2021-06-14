@@ -20,6 +20,7 @@ package it.cnr.contab.docamm00.bp;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.bulk.FieldValidationMap;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -29,9 +30,9 @@ public interface IDocAmmEconomicaBP {
 
     FormController getController();
 
-    SimpleDetailCRUDController getMovimentiDare();
+    CollapsableDetailCRUDController getMovimentiDare();
 
-    SimpleDetailCRUDController getMovimentiAvere();
+    CollapsableDetailCRUDController getMovimentiAvere();
 
     int getStatus();
 

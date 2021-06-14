@@ -115,9 +115,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     return false;
                 }
             };
-    private final SimpleDetailCRUDController movimentiDare =
-            new SimpleDetailCRUDController(
-                    "MovimentiDare",
+    private final CollapsableDetailCRUDController movimentiDare =
+            new CollapsableDetailCRUDController(
+                    "Movimenti Dare",
                     it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
                     "scrittura_partita_doppia.movimentiDareColl",
                     this){
@@ -125,10 +125,20 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 public boolean isEnabled() {
                     return false;
                 }
+
+                @Override
+                protected String getBorderClass() {
+                    return "border-danger";
+                }
+
+                @Override
+                protected String getTextClass() {
+                    return "text-danger";
+                }
             };
-    private final SimpleDetailCRUDController movimentiAvere =
-            new SimpleDetailCRUDController(
-                    "MovimentiAvere",
+    private final CollapsableDetailCRUDController movimentiAvere =
+            new CollapsableDetailCRUDController(
+                    "Movimenti Avere",
                     it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
                     "scrittura_partita_doppia.movimentiAvereColl",
                     this){
@@ -1835,11 +1845,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         return crudDocEleAcquistoColl;
     }
 
-    public SimpleDetailCRUDController getMovimentiDare() {
+    public CollapsableDetailCRUDController getMovimentiDare() {
         return movimentiDare;
     }
 
-    public SimpleDetailCRUDController getMovimentiAvere() {
+    public CollapsableDetailCRUDController getMovimentiAvere() {
         return movimentiAvere;
     }
 }

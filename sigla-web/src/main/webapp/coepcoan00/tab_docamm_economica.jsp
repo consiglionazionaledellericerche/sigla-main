@@ -25,17 +25,47 @@
     <tr><% scrittura.writeFormField(out, "attiva", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
     <tr><% scrittura.writeFormField(out, "pg_scrittura_annullata", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
 </table>
-<%
-    JSPUtils.tabbed(
-        pageContext,
-        "tabEconomica",
-        new String[][] {
-                { "tabDare","Dare","/coepcoan00/tab_docamm_dare.jsp" },
-                { "tabAvere","Avere","/coepcoan00/tab_docamm_avere.jsp" }
-        },
-        bp.getTab("tabEconomica"),
-        "center",
-        "100%",
-        null
-    );
-%>
+<% bp.getMovimentiDare().writeHTMLTable(pageContext, "scrittura", false, false, false,"100%","100px", true); %>
+<% if (!bp.getMovimentiDare().isCollapsed()) { %>
+    <table class="Panel mt-1 p-2 card card-shadow">
+        <tr><% bp.getMovimentiDare().writeFormField(out, "find_voce_ep_searchtool"); %></tr>
+        <tr>
+            <td><% bp.getMovimentiDare().writeFormLabel(out, "ti_istituz_commerc");%></td>
+            <td><% bp.getMovimentiDare().writeFormInput(out, "ti_istituz_commerc");%></td>
+        </tr>
+        <tr>
+            <td><% bp.getMovimentiDare().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
+            <td><% bp.getMovimentiDare().writeFormInput(out, "dt_da_competenza_coge");
+                   bp.getMovimentiDare().writeFormLabel(out, "dt_a_competenza_coge");
+                   bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%></td>
+        </tr>
+        <tr>
+            <td><% bp.getMovimentiDare().writeFormLabel(out, "im_movimento"); %></td>
+            <td><% bp.getMovimentiDare().writeFormInput(out, "im_movimento");%></td>
+        </tr>
+    </table>
+<% } %>
+<% bp.getMovimentiDare().closeHTMLTable(pageContext);%>
+<div class="mt-1">
+    <% bp.getMovimentiAvere().writeHTMLTable(pageContext,"scrittura", false, false, false,"100%","100px", true); %>
+    <% if (!bp.getMovimentiAvere().isCollapsed()) { %>
+    <table class="Panel mt-1 p-2 card card-shadow">
+        <tr><% bp.getMovimentiAvere().writeFormField(out, "find_voce_ep_searchtool"); %></tr>
+        <tr>
+            <td><% bp.getMovimentiAvere().writeFormLabel(out, "ti_istituz_commerc");%></td>
+            <td><% bp.getMovimentiAvere().writeFormInput(out, "ti_istituz_commerc");%></td>
+        </tr>
+        <tr>
+            <td><% bp.getMovimentiAvere().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
+            <td><% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
+                   bp.getMovimentiAvere().writeFormLabel(out, "dt_a_competenza_coge");
+                   bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%></td>
+        </tr>
+        <tr>
+            <td><% bp.getMovimentiAvere().writeFormLabel(out, "im_movimento"); %></td>
+            <td><% bp.getMovimentiAvere().writeFormInput(out, "im_movimento");%></td>
+        </tr>
+    </table>
+    <% } %>
+    <% bp.getMovimentiAvere().closeHTMLTable(pageContext);%>
+</div>
