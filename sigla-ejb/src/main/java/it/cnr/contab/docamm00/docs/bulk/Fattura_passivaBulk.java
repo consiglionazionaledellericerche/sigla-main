@@ -1443,7 +1443,7 @@ public abstract class Fattura_passivaBulk
      *
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getRiferimenti_tbancari() {
+    public it.cnr.jada.bulk.BulkList getRiferimenti_bancari() {
         return riferimenti_bancari;
     }
 
