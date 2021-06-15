@@ -4,7 +4,7 @@
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="json_Gianluca2"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gianluca_preventivo_new"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -21,44 +21,29 @@
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
-	<field name="anno" class="java.lang.String">
-		<fieldDescription><![CDATA[anno]]></fieldDescription>
+	<field name="annoInizio" class="java.lang.String">
+		<fieldDescription><![CDATA[annoInizio]]></fieldDescription>
 	</field>
-	<field name="annotre" class="java.lang.String">
-		<fieldDescription><![CDATA[annotre]]></fieldDescription>
+	<field name="annoFine" class="java.lang.String">
+		<fieldDescription><![CDATA[annoFine]]></fieldDescription>
 	</field>
-	<field name="nPreventivo" class="java.lang.String">
-		<fieldDescription><![CDATA[nPreventivo]]></fieldDescription>
-	</field>
-	<field name="tipo" class="java.lang.String">
-		<fieldDescription><![CDATA[tipo]]></fieldDescription>
-	</field>
-	<field name="title" class="java.lang.String">
-		<fieldDescription><![CDATA[title]]></fieldDescription>
-	</field>
-	<field name="cup" class="java.lang.String">
-		<fieldDescription><![CDATA[cup]]></fieldDescription>
+	<field name="contabilita" class="java.lang.String">
+		<fieldDescription><![CDATA[contabilita]]></fieldDescription>
 	</field>
 	<field name="respItaliano" class="java.lang.String">
 		<fieldDescription><![CDATA[respItaliano]]></fieldDescription>
-	</field>
-	<field name="respStraniero" class="java.lang.String">
-		<fieldDescription><![CDATA[respStraniero]]></fieldDescription>
-	</field>
-	<field name="totPreventivoCaricoCNR" class="java.lang.String">
-		<fieldDescription><![CDATA[totPreventivoCaricoCNR]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="80" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<image isUsingCache="true">
 				<reportElement x="174" y="2" width="202" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement x="23" y="39" width="521" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<reportElement x="23" y="39" width="521" height="51" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -69,20 +54,22 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["LABORATORI:  " + $F{anno}+
-"\n"+$F{nPreventivo}+"° Preventivo di Spesa:"+$F{tipo}+": "+$F{anno}+" - "+$F{annotre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["MODELLO DI PREVENTIVO DELLE VOCI DI SPESA:  " + $F{contabilita}+"\n"+
+$F{annoInizio} +"-"+  $F{annoFine}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="461" splitType="Stretch">
 			<staticText>
-				<reportElement x="27" y="100" width="212" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef"/>
+				<reportElement x="14" y="49" width="212" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SPESE A CARICO DEL CNR]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="45" width="473" height="15" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<reportElement x="26" y="10" width="124" height="15" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -93,52 +80,12 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Nominativi dei Responsabili (Italiano e Straniero): "]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="30" width="54" height="15" uuid="74117d72-654e-4e44-89ee-1894aa15483a"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="11" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["CUP:  "]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="10" width="114" height="20" uuid="def45739-8b09-4fae-94b2-6e799bf687f7"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="11" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Denominazione:  " + $F{title}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="80" width="289" height="15" uuid="5c783038-a0c4-490c-aa74-c31837a8279b"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="11" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Totale importo Preventivo a carico del CNR:  " + $F{totPreventivoCaricoCNR}+" €"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["CNR Coordinator: "]]></textFieldExpression>
 			</textField>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="21" y="122" width="524" height="13" uuid="d86635d9-7008-4064-b688-3ece16735a9a"/>
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="d86635d9-7008-4064-b688-3ece16735a9a">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseCNR")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseCNR.jasper"]]></subreportExpression>
 			</subreport>
@@ -146,21 +93,7 @@
 				<reportElement x="0" y="180" width="96" height="1" uuid="5982f598-eb5e-4ce1-9bde-bd85bf712eeb"/>
 			</break>
 			<textField isBlankWhenNull="false">
-				<reportElement x="143" y="10" width="353" height="20" uuid="374f20ec-cffc-4a66-afea-6076f1188b13"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="11" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement x="80" y="30" width="394" height="15" uuid="914b3229-6ed6-4cee-8b66-c490372ed0a6"/>
+				<reportElement x="150" y="10" width="333" height="15" uuid="f749511a-9b60-4617-815c-d560b35deff7"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -171,45 +104,19 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cup}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="64" width="473" height="15" uuid="f749511a-9b60-4617-815c-d560b35deff7"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="11" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{respItaliano}+" - "+ $F{respStraniero}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement x="318" y="80" width="190" height="15" uuid="a6d995d0-d3b8-4a83-9974-09ef7b1238c9"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="11" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{totPreventivoCaricoCNR}+" €"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{respItaliano}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="27" y="188" width="212" height="20" uuid="913d0988-8d06-4304-8558-75eaedc34524"/>
+				<reportElement x="14" y="188" width="212" height="20" uuid="913d0988-8d06-4304-8558-75eaedc34524">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SPESE PARTNER]]></text>
 			</staticText>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="21" y="210" width="524" height="13" uuid="493a5908-4c24-4b8c-85e2-8a3cd91bd074"/>
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="210" width="524" height="13" uuid="493a5908-4c24-4b8c-85e2-8a3cd91bd074"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spesePartner")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "spesePartner.jasper"]]></subreportExpression>
 			</subreport>
@@ -217,14 +124,18 @@
 				<reportElement x="0" y="230" width="95" height="1" uuid="a6a66064-83d5-404e-8425-24576e05704e"/>
 			</break>
 			<staticText>
-				<reportElement x="27" y="238" width="363" height="20" uuid="c60f3c39-377b-4cd2-a5f2-a68d4427affd"/>
+				<reportElement x="14" y="238" width="363" height="20" uuid="c60f3c39-377b-4cd2-a5f2-a68d4427affd">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SPESE ALTRE ISTITUZIONI ITALIANE]]></text>
 			</staticText>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="21" y="260" width="524" height="13" uuid="ee6de089-0037-4f1f-bd1b-3678aec3e385"/>
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="260" width="524" height="13" uuid="ee6de089-0037-4f1f-bd1b-3678aec3e385">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseAltreIstituzioniItaliane")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltreIstituzioniItaliane.jasper"]]></subreportExpression>
 			</subreport>
