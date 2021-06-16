@@ -1,13 +1,17 @@
-## Release 6.3.30  -- _June 15, 2021_ 
+## Release 6.3.31  -- _June 16, 2021_ 
 **Changes**
 
->**Gestita registrazione nota credito con diverse riche di fattura ed un unico bene**
+>**Corretto recupero mandati per consultazione pagamenti**
 >
->[5a36ed92082141b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a36ed92082141b) gianfranco.gasparro *June 15, 2021*
+>[06b7664b39a2760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06b7664b39a2760) gianfranco.gasparro *June 16, 2021*
 
->**Progetti: aggiunta possibilità di allegare più file di tipo generico**
+>**Add api rest docs**
 >
->[f82676d1e16f287](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f82676d1e16f287) salvatorepagano *June 10, 2021*
+>[7bb392888aebc29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bb392888aebc29) marco.spasiano *June 16, 2021*
+
+>**Change email message to error on log**
+>
+>[c6c3ce13deb3890](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c6c3ce13deb3890) marco.spasiano *May 31, 2021*
 
 >**Update liquidazione_iva.rst**
 >
@@ -971,6 +975,18 @@
 > * In Apache Commons IO before 2.7, When invoking the method FileNameUtils.normalize with an improper input string, like &quot;//../foo&quot;, or &quot;\..\foo&quot;, the result would be the same value, thus possibly providing access to files in the parent directory, but not further above (thus &quot;limited&quot; path traversal), if the calling code would use the result to construct a path value.
 >
 >[fc9d14eb7fd77ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc9d14eb7fd77ca) marco.spasiano *May 31, 2021*
+
+
+## Release 6.3.30  -- _June 15, 2021_ 
+**Changes**
+
+>**Gestita registrazione nota credito con diverse riche di fattura ed un unico bene**
+>
+>[5a36ed92082141b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a36ed92082141b) gianfranco.gasparro *June 15, 2021*
+
+>**Progetti: aggiunta possibilità di allegare più file di tipo generico**
+>
+>[f82676d1e16f287](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f82676d1e16f287) salvatorepagano *June 10, 2021*
 
 
 ## Release 6.3.29  -- _May 21, 2021_ 
