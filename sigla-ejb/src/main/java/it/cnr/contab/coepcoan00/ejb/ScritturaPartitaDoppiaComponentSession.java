@@ -16,8 +16,14 @@
  */
 
 package it.cnr.contab.coepcoan00.ejb;
+
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.jada.UserContext;
+
 import javax.ejb.Remote;
 
 @Remote
-public interface ScritturaPartitaDoppiaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession , it.cnr.jada.ejb.PrintComponentSession {
+public interface ScritturaPartitaDoppiaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession {
+    Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 }
