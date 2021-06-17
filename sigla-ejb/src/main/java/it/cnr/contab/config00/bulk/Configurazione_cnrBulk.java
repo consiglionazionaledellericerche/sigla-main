@@ -148,6 +148,9 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_BLOCCO_RESIDUI = "BLOCCO_RESIDUI";
 	public final static String SK_NATURA_FINANZIAMENTO = "NATURA_FINANZIAMENTO";
 
+	public final static String PK_CORI_SPECIALE = "CORI_SPECIALE";
+	public final static String SK_IVA = "IVA";
+
 	public Configurazione_cnrBulk() {
 	super();
 }
