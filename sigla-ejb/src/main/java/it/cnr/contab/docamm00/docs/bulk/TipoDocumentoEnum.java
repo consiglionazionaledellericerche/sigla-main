@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 
 public enum TipoDocumentoEnum {
@@ -82,5 +83,28 @@ public enum TipoDocumentoEnum {
 			}
 		}
 		throw new IllegalArgumentException(v);
+	}
+
+	public String getSezioneCostoRicavo() {
+		if (this.isFatturaPassiva())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isNotaCreditoPassiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isFatturaAttiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isNotaCreditoAttiva())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		return null;
+	}
+
+	public String getSezioneIva() {
+		String sezioneCosto = this.getSezioneCostoRicavo();
+		if (sezioneCosto!=null)
+			return sezioneCosto.equals(Movimento_cogeBulk.SEZIONE_DARE)?Movimento_cogeBulk.SEZIONE_AVERE:Movimento_cogeBulk.SEZIONE_DARE;
+		return null;
+	}
+
+	public String getSezionePatrimoniale() {
+		return this.getSezioneIva();
 	}
 }

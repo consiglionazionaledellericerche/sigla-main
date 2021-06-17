@@ -557,7 +557,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 
 	@Override
 	public Timestamp getDt_a_competenza_coge() {
-		// TODO: 14/06/21 Da implementare 
+		// TODO: 14/06/21 Da implementare
 		return null;
 	}
 }

@@ -20,10 +20,13 @@ package it.cnr.contab.coepcoan00.core.bulk;
 import it.cnr.contab.config00.pdcep.bulk.*;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.math.BigDecimal;
 
 public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
 
@@ -86,8 +89,7 @@ public int addToMovimentiDareColl( Movimento_cogeBulk movimento )
  * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
  * bulk da rendere persistenti insieme al ricevente.
  * L'implementazione standard restituisce <code>null</code>.
- * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
- */ 
+ */
 public BulkCollection[] getBulkLists() {
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
 			movimentiAvereColl,
@@ -146,13 +148,13 @@ public java.math.BigDecimal getImTotaleDare()
 /**
  * @return it.cnr.jada.bulk.BulkList
  */
-public it.cnr.jada.bulk.BulkList getMovimentiAvereColl() {
+public it.cnr.jada.bulk.BulkList<Movimento_cogeBulk> getMovimentiAvereColl() {
 	return movimentiAvereColl;
 }
 /**
  * @return it.cnr.jada.bulk.BulkList
  */
-public it.cnr.jada.bulk.BulkList getMovimentiDareColl() {
+public it.cnr.jada.bulk.BulkList<Movimento_cogeBulk> getMovimentiDareColl() {
 	return movimentiDareColl;
 }
 /**
@@ -236,6 +238,8 @@ public void setCd_terzo(java.lang.Integer cd_terzo) {
 	this.getTerzo().setCd_terzo(cd_terzo);
 }
 public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
+	if ( this.getUo() == null )
+		this.setUo( new Unita_organizzativaBulk());
 	this.getUo().setCd_unita_organizzativa(cd_unita_organizzativa);
 }
 /**
@@ -289,4 +293,12 @@ public void validate() throws ValidationException
 		((Movimento_cogeBulk)i.next()).validate();
 		
 }
+
+	public BigDecimal getTotaleDare() {
+		return this.getMovimentiDareColl().stream().map(el->el.getIm_movimento()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal getTotaleAvere() {
+		return this.getMovimentiAvereColl().stream().map(el->el.getIm_movimento()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
 }
