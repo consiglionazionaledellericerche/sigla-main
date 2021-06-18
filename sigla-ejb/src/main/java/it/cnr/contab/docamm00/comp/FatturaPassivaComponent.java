@@ -6056,7 +6056,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (original == null || fatturaPassiva == null)
             return;
 
-        if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isElettronica() || fatturaPassiva.isGenerataDaCompenso()) {
+        if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isGenerataDaCompenso()) {
             //ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
             //ora eseguito anche se la sola autofattura è stampata sui registri IVA
 
