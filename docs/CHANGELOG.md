@@ -1,3 +1,15 @@
+## Release 6.3.32  -- _June 18, 2021_ 
+**Changes**
+
+>**Rimosso controllo sulla consuntività per le fatture elettroniche su cui non sono ancora stampati i registri IVA**
+>
+>[2e91f90ab2a684c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e91f90ab2a684c) marco.spasiano *June 18, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[64154baa27d787d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64154baa27d787d) marco.spasiano *June 18, 2021*
+
+
 ## Release 6.3.31  -- _June 16, 2021_ 
 **Changes**
 
