@@ -3534,4 +3534,20 @@ public abstract class Fattura_passivaBulk
             return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA);
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }
+
+    public boolean registraIvaCoge() {
+        if (this.isIstituzionale()) {
+            if (Bene_servizioBulk.BENE.equalsIgnoreCase(this.getTi_bene_servizio())) {
+                if (this.isSanMarinoSenzaIVA() || this.getFl_intra_ue().booleanValue() || this.getFl_merce_intra_ue().booleanValue())
+                    return true;
+            }
+            if (Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(this.getTi_bene_servizio())) {
+                if (this.getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())
+                    return true;
+            }
+            if (this.getFl_split_payment().booleanValue())
+                return true;
+        }
+        return false;
+    }
 }

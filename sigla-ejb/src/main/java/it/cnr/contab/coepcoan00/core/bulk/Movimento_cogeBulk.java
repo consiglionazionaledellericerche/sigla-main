@@ -260,4 +260,8 @@ public void validate() throws ValidationException
 	if ( getDt_da_competenza_coge().compareTo( getDt_a_competenza_coge()) > 0 )
 		throw new ValidationException( "Il \"Periodo Competenza Da\" deve essere inferiore al \"Periodo Competenza A\" per ogni movimento inserito");	
 }
+
+	public static String getControSezione(String sezione) {
+		return Movimento_cogeBulk.SEZIONE_DARE.equals(sezione)?Movimento_cogeBulk.SEZIONE_AVERE:Movimento_cogeBulk.SEZIONE_DARE;
+	}
 }
