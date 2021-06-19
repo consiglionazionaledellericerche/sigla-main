@@ -115,36 +115,36 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 		if (this.isGenerico()) {
 			name.add("GEN");
 
-			name.add(
-				Optional.ofNullable(this.getNome())
-						.filter(el->!el.isEmpty())
-						.filter(el->el.indexOf("GEN")>=0)
-						.map(el->el.substring(el.length() - 3, el.length()))
-						.orElseGet(()->{
-							return Optional.ofNullable(this.getRimodulazione())
-							    .flatMap(el->Optional.ofNullable(el.getArchivioAllegati()))
-								.map(el->el.stream())
-								.orElse(Stream.empty())
-								.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
-								.map(AllegatoProgettoRimodulazioneBulk.class::cast)
-								.filter(AllegatoProgettoRimodulazioneBulk::isGenerico)
-								.filter(el->Optional.ofNullable(el.getNome()).isPresent())
-								.map(AllegatoProgettoRimodulazioneBulk::getNome)
-								.map(el->el.substring(el.length() - 3, el.length()))
-								.filter(el->{
-									try {
-										Integer.valueOf(el);
-										return true;
-									}catch (NumberFormatException e){
-										return false;
-									}
-								})
-								.map(Integer::valueOf)
-								.max(Comparator.comparing(Integer::valueOf))
-								.map(el->el+1)
-								.map(el->StringUtils.leftPad(el.toString(), 3, "0"))
-								.orElse("001");
-						}));
+		name.add(
+			Optional.ofNullable(this.getNome())
+					.filter(el->!el.isEmpty())
+					.filter(el->el.indexOf("GEN")>=0)
+					.map(el->el.substring(el.length() - 3, el.length()))
+					.orElseGet(()->{
+						return Optional.ofNullable(this.getRimodulazione())
+						    .flatMap(el->Optional.ofNullable(el.getArchivioAllegati()))
+							.map(el->el.stream())
+							.orElse(Stream.empty())
+							.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+							.map(AllegatoProgettoRimodulazioneBulk.class::cast)
+							.filter(AllegatoProgettoRimodulazioneBulk::isGenerico)
+							.filter(el->Optional.ofNullable(el.getNome()).isPresent())
+							.map(AllegatoProgettoRimodulazioneBulk::getNome)
+							.map(el->el.substring(el.length() - 3, el.length()))
+							.filter(el->{
+								try {
+									Integer.valueOf(el);
+									return true;
+								}catch (NumberFormatException e){
+									return false;
+								}
+							})
+							.map(Integer::valueOf)
+							.max(Comparator.comparing(Integer::valueOf))
+							.map(el->el+1)
+							.map(el->StringUtils.leftPad(el.toString(), 3, "0"))
+							.orElse("001");
+					}));
 		}
 		return name.toString();
 	}

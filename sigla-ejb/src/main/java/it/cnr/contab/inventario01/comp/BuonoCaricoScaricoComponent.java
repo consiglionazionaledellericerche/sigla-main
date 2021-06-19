@@ -28,8 +28,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.ejb.EJBException;
 
@@ -1963,7 +1962,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 		
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
-		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
+//		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
 		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS,riga_fattura.getTi_istituz_commerc()); // Beni dello stesso tipo della riga di Fattura
 		/* r.p. eliminato selezione bene associati alla fattura di origine
 		sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getEsercizio());
@@ -6931,6 +6930,7 @@ try{
 			
 		}
 	}else if (buonoS.getDettagliFatturaColl().size()!=0 && buonoS.getDettagliFatturaColl().get(0) instanceof Nota_di_credito_rigaBulk){
+		Set<Inventario_beniBulk> beniScelti = new HashSet<>();
 		for (Iterator i = buonoS.getDettagliFatturaColl().iterator(); i.hasNext();){
 			SQLBuilder sql=home.createSQLBuilder();
 			Nota_di_credito_rigaBulk riga_fattura = (Nota_di_credito_rigaBulk)i.next(); 
@@ -6946,6 +6946,18 @@ try{
 			for (Iterator iteratore=beni.iterator();iteratore.hasNext();){
 				Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)iteratore.next();
 				totale_alienazione=totale_alienazione.add(bene_apg.getVariazione_meno());
+				Inventario_beniBulk inventario_beniBulk = new Inventario_beniBulk(bene_apg.getNr_inventario(), bene_apg.getPg_inventario(), bene_apg.getProgressivo());
+				if (beniScelti.isEmpty() || !beniScelti.contains(inventario_beniBulk)){
+					inventario_beniBulk.setValore_iniziale(bene_apg.getVariazione_meno());
+					beniScelti.add(inventario_beniBulk);
+				} else {
+					Inventario_beniBulk beneScelto = beniScelti.stream()
+	 						.filter(bene -> inventario_beniBulk.equals(bene))
+							.findAny()
+							.orElse(null);
+					beneScelto.setValore_iniziale(beneScelto.getValoreBene().add(bene_apg.getVariazione_meno()));
+					beneScelto.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
+				}
 			}
 			if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
 				im_fattura = im_fattura.add(riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva()));
@@ -6959,6 +6971,17 @@ try{
 						riga_fattura.getDs_riga_fattura() + "' non corrisponde con il totale dei beni ad essa associati.\n " +
 						"Il valore previsto è " + im_fattura);
 			
+		}
+		for (Inventario_beniBulk inv : beniScelti) {
+			Inventario_beniHome homeInv=(Inventario_beniHome)getHome(userContext, Inventario_beniBulk.class);
+			if (inv.isToBeUpdated()){
+				Inventario_beniBulk beneDB = (Inventario_beniBulk)homeInv.findByPrimaryKey(userContext, new Inventario_beniBulk(inv.getNr_inventario(), inv.getPg_inventario(), inv.getProgressivo()));
+				if (beneDB.getValoreBene().compareTo(inv.getValoreBene()) < 0){
+					throw new ApplicationException(
+							"Attenzione: il bene " + beneDB.getNr_inventario()+"-"+beneDB.getPg_inventario()+
+									" è stato scaricato per un importo maggiore del suo valore.");
+				}
+			}
 		}
 	}
 	else if (buonoS.getDettagliDocumentoColl().size()!=0 && buonoS.getDettagliDocumentoColl().get(0) instanceof Documento_generico_rigaBulk){
