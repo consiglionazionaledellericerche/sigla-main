@@ -17,13 +17,18 @@
 
 package it.cnr.contab.docamm00.actions;
 
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDAction;
+import it.cnr.jada.util.action.FormBP;
 
+import java.rmi.RemoteException;
 import java.util.Optional;
 
 public abstract class EconomicaAction extends CRUDAction {
@@ -36,7 +41,16 @@ public abstract class EconomicaAction extends CRUDAction {
                 .filter(IDocumentoAmministrativoBulk.class::isInstance)
                 .map(IDocumentoAmministrativoBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Modello di business non compatibile!"));
-
+        try {
+            documentoAmministrativoBulk.setScrittura_partita_doppia(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(
+                    actionContext.getUserContext(),
+                    documentoAmministrativoBulk)
+            );
+            bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
+            bp.setDirty(true);
+        } catch (ComponentException|RemoteException e) {
+            return handleException(actionContext, e);
+        }
         return actionContext.findDefaultForward();
     }
 }

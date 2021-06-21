@@ -1176,8 +1176,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	//			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
 	//
 	//		}
-
-			return this.generaScrittura(docamm, testataPrimaNotaList);
+			return this.generaScrittura(userContext, docamm, testataPrimaNotaList);
 		} catch (Exception e) {
 			throw handleException(e);
 		}
@@ -1234,7 +1233,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						voceBilancio.getCd_elemento_voce() + "."));
 	}
 
-	private Scrittura_partita_doppiaBulk generaScrittura(IDocumentoAmministrativoBulk docamm, List<TestataPrimaNota> testataPrimaNota) {
+	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoAmministrativoBulk docamm, List<TestataPrimaNota> testataPrimaNota) throws ComponentException, PersistencyException {
 		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = new Scrittura_partita_doppiaBulk();
 		scritturaPartitaDoppia.setEsercizio(docamm.getEsercizio());
 		scritturaPartitaDoppia.setEsercizio_documento_amm(docamm.getEsercizio());
