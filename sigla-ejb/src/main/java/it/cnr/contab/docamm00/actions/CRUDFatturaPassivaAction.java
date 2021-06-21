@@ -122,7 +122,7 @@ import it.cnr.jada.util.action.Selection;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
-public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction {
+public class CRUDFatturaPassivaAction extends EconomicaAction {
     private transient static final Logger logger = LoggerFactory.getLogger(CRUDFatturaPassivaAction.class);
     public CRUDFatturaPassivaAction() {
         super();

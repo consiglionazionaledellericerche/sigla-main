@@ -1387,6 +1387,11 @@ public class OrdineAcqBulk extends OrdineAcqBase
         return scrittura_partita_doppia;
     }
 
+    @Override
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
     public void addToOrdineAss_totaliMap(
             Obbligazione_scadenzarioBulk obbligazione, java.math.BigDecimal totale) {
 

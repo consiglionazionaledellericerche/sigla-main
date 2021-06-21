@@ -1988,8 +1988,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      */
     public boolean isRODtACompetenzaCoge() {
 
-		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
-	}
+        return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
+    }
 
     /**
      * Se il compenso è associato a Missione, Minicarriera o Conguaglio la Data
@@ -1999,8 +1999,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      */
     public boolean isRODtDaCompetenzaCoge() {
 
-		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
-	}
+        return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
+    }
 
     /**
      * Se il compenso è associato a Missione, Minicarriera o Conguaglio la Data
@@ -2010,8 +2010,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      */
     public boolean isRODtRegistrazione() {
 
-		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
-	}
+        return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
+    }
 
     /**
      * Insert the method's description here. Creation date: (25/02/2002
@@ -2052,8 +2052,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      */
     public boolean isROFlagSenzaCalcoli() {
 
-		return isDaMissione() || isDaMinicarriera() || isDaConguaglio() || isDaBonus() || isROPerChiusura() || (isDaFatturaPassiva() && !isUserAbilitatoSenzaCalcolo());
-	}
+        return isDaMissione() || isDaMinicarriera() || isDaConguaglio() || isDaBonus() || isROPerChiusura() || (isDaFatturaPassiva() && !isUserAbilitatoSenzaCalcolo());
+    }
 
     /**
      * Insert the method's description here. Creation date: (25/02/2002
@@ -2066,8 +2066,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     }
 
     public boolean isROImportoNoFiscale() {
-		return isAssociatoADocumento() || isROPerChiusura();
-	}
+        return isAssociatoADocumento() || isROPerChiusura();
+    }
 
     /**
      * Insert the method's description here. Creation date: (25/02/2002
@@ -2126,12 +2126,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     }
 
     public boolean isROQuotaEsente() {
-		return isAssociatoADocumento() || isROPerChiusura();
-	}
+        return isAssociatoADocumento() || isROPerChiusura();
+    }
 
     public boolean isROQuotaEsenteNoIva() {
-		return isAssociatoADocumento() || isROPerChiusura();
-	}
+        return isAssociatoADocumento() || isROPerChiusura();
+    }
 
     /**
      * Insert the method's description here. Creation date: (25/02/2002
@@ -2189,8 +2189,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      */
     public boolean isROTi_istituz_commerc() {
 
-		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
-	}
+        return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva() != null;
+    }
 
     /**
      * Insert the method's description here. Creation date: (25/02/2002
@@ -2578,6 +2578,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         return scrittura_partita_doppia;
     }
 
+    @Override
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
     public void setStatoCompensoToContabilizzaCofi() {
 
         setStatoCompenso(STATO_COMPENSO_CONTABILIZZA_COFI);
@@ -2955,34 +2960,34 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     }
 
     public boolean isIncaricoEnabled() {
-		return !this.isDaMissione() && !this.isSenzaCalcoli() && this.getTipoPrestazioneCompenso() != null
-				/*
-				 * || (this.getTipoTrattamento() != null &&
-				 * this.getTipoTrattamento().getFl_incarico() != null && !this
-				 * .getTipoTrattamento().getFl_incarico())
-				 */
-				/*
-				 * || (this.getTerzo() != null && this.getTerzo().isStudioAssociato() &&
-				 * (this .getTi_prestazione() == null || this
-				 * .getTi_prestazione().equals( CompensoBulk.TIPO_PRESTAZIONE_SERVIZI)))
-				 */
-				&& (!this.isPrestazioneCompensoEnabled() || this.getTipoPrestazioneCompenso() == null
-				|| this.getTipoPrestazioneCompenso().getFl_incarico() == null
-				|| this.getTipoPrestazioneCompenso().getFl_incarico());
-	}
+        return !this.isDaMissione() && !this.isSenzaCalcoli() && this.getTipoPrestazioneCompenso() != null
+                /*
+                 * || (this.getTipoTrattamento() != null &&
+                 * this.getTipoTrattamento().getFl_incarico() != null && !this
+                 * .getTipoTrattamento().getFl_incarico())
+                 */
+                /*
+                 * || (this.getTerzo() != null && this.getTerzo().isStudioAssociato() &&
+                 * (this .getTi_prestazione() == null || this
+                 * .getTi_prestazione().equals( CompensoBulk.TIPO_PRESTAZIONE_SERVIZI)))
+                 */
+                && (!this.isPrestazioneCompensoEnabled() || this.getTipoPrestazioneCompenso() == null
+                || this.getTipoPrestazioneCompenso().getFl_incarico() == null
+                || this.getTipoPrestazioneCompenso().getFl_incarico());
+    }
 
     public boolean isContrattoEnabled() {
-		return !this.isDaMissione() && !this.isSenzaCalcoli() && this.getTipoPrestazioneCompenso() != null
-				&& (!this.isPrestazioneCompensoEnabled() || this.getTipoPrestazioneCompenso() == null
-				|| this.getTipoPrestazioneCompenso().getFl_contratto() == null
-				|| this.getTipoPrestazioneCompenso().getFl_contratto());
-	}
+        return !this.isDaMissione() && !this.isSenzaCalcoli() && this.getTipoPrestazioneCompenso() != null
+                && (!this.isPrestazioneCompensoEnabled() || this.getTipoPrestazioneCompenso() == null
+                || this.getTipoPrestazioneCompenso().getFl_contratto() == null
+                || this.getTipoPrestazioneCompenso().getFl_contratto());
+    }
 
     public boolean isPrestazioneCompensoEnabled() {
-		return !this.isDaMissione() && !this.isSenzaCalcoli()
-				&& (this.getTipoTrattamento() == null || this.getTipoTrattamento().getFl_tipo_prestazione_obbl() == null
-				|| this.getTipoTrattamento().getFl_tipo_prestazione_obbl());
-	}
+        return !this.isDaMissione() && !this.isSenzaCalcoli()
+                && (this.getTipoTrattamento() == null || this.getTipoTrattamento().getFl_tipo_prestazione_obbl() == null
+                || this.getTipoTrattamento().getFl_tipo_prestazione_obbl());
+    }
 
     public java.lang.String getIncarichi_oggetto() {
         if (this.getIncarichi_repertorio_anno() == null
@@ -3260,7 +3265,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
     public boolean isGestione_doc_ele() {
         if (this.getDt_registrazione() != null && this.getDataInizioFatturaElettronica() != null) {
-			return this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica()) >= 0;
+            return this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica()) >= 0;
         }
         return true; // non dovrebbe mai verificarsi
     }
@@ -3282,8 +3287,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     }
 
     public boolean isElettronica() {
-		return getFl_documento_ele() != null && getFl_documento_ele();
-	}
+        return getFl_documento_ele() != null && getFl_documento_ele();
+    }
 
     public boolean isTrattamentoSoloEnte() {
         return trattamentoSoloEnte;

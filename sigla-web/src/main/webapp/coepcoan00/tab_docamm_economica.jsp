@@ -19,6 +19,18 @@
                     .map(IDocumentoAmministrativoBulk::getScrittura_partita_doppia)
                     .orElse(new Scrittura_partita_doppiaBulk());
 %>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group">
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-bolt" : "img/bringback24.gif",
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-bolt" : "img/bringback24.gif",
+				"Genera scrittura",
+				"javascript:submitForm('doGeneraScritturaEconomica')",
+				"btn-outline-primary btn-title",
+				true,
+				bp.getParentRoot().isBootstrap()); %>
+    </div>
+</div>
 <table class="Panel card p-2 mb-2 card-shadow">
     <tr><% scrittura.writeFormField(out, "dt_contabilizzazione", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
     <tr><% scrittura.writeFormField(out, "ds_scrittura", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
