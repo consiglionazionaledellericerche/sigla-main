@@ -7846,9 +7846,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 }
 
                 if (currentMap.get(key) != null)
-                    currentMap.put(key, currentMap.get(key).add(checkIVA ? rigaEle.getAliquotaIva() :rigaEle.getImponibileImporto()));
+                    currentMap.put(key, currentMap.get(key).add(checkIVA ? rigaEle.getImposta() :rigaEle.getImponibileImporto()));
                 else
-                    currentMap.put(key, checkIVA ? rigaEle.getAliquotaIva() : rigaEle.getImponibileImporto());
+                    currentMap.put(key, checkIVA ? rigaEle.getImposta() : rigaEle.getImponibileImporto());
             }
         }
 
