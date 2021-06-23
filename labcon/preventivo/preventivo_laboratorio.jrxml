@@ -21,10 +21,10 @@
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
-	<field name="annoInizio" class="java.lang.String">
+	<field name="annoInizio" class="java.lang.Integer">
 		<fieldDescription><![CDATA[annoInizio]]></fieldDescription>
 	</field>
-	<field name="annoFine" class="java.lang.String">
+	<field name="annoFine" class="java.lang.Integer">
 		<fieldDescription><![CDATA[annoFine]]></fieldDescription>
 	</field>
 	<field name="contabilita" class="java.lang.String">
