@@ -20,6 +20,12 @@
 	<field name="dettaglio" class="java.lang.String">
 		<fieldDescription><![CDATA[dettaglio]]></fieldDescription>
 	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="costoUnitario" class="java.lang.String">
+		<fieldDescription><![CDATA[costoUnitario]]></fieldDescription>
+	</field>
 	<field name="importoPrevisto" class="java.lang.String">
 		<fieldDescription><![CDATA[importoPrevisto]]></fieldDescription>
 	</field>
@@ -27,9 +33,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="22">
+		<band height="27">
 			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="0" y="0" width="407" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<reportElement mode="Transparent" x="0" y="0" width="287" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -44,7 +50,7 @@
 				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="407" y="0" width="63" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<reportElement mode="Transparent" x="287" y="0" width="63" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -72,6 +78,36 @@
 					<paragraph leftIndent="5" rightIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{importoPrevisto}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement mode="Transparent" x="350" y="0" width="56" height="22" backcolor="#FFFFFF" uuid="a6eb86f0-2a84-43f9-9531-38ae2218760c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement mode="Transparent" x="406" y="0" width="63" height="22" backcolor="#FFFFFF" uuid="12319f98-ab4d-4f27-b95c-cc8d5b4acf8b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costoUnitario}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
