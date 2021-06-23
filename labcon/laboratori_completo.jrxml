@@ -1025,9 +1025,9 @@
                 <textFieldExpression><![CDATA[$F{pcSurname}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="23" y="39" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                <reportElement x="23" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1043,7 +1043,7 @@
                 <textFieldExpression><![CDATA["CV PRINCIPAL INVESTIGATOR: "]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="false">
-                <reportElement x="23" y="60" width="521" height="20" uuid="ce592b04-3b5c-4b98-b7a9-599b1681a7b9">
+                <reportElement x="23" y="35" width="521" height="20" uuid="ce592b04-3b5c-4b98-b7a9-599b1681a7b9">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1059,9 +1059,9 @@
                 <textFieldExpression><![CDATA[$F{cvPi}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="22" y="39" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                <reportElement x="22" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1077,7 +1077,7 @@
                 <textFieldExpression><![CDATA["CV COORDINATOR: "]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="false">
-                <reportElement x="23" y="60" width="521" height="20" uuid="c4020344-c0d5-4f12-9cfd-80d1677d3bd4">
+                <reportElement x="23" y="35" width="521" height="20" uuid="c4020344-c0d5-4f12-9cfd-80d1677d3bd4">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1093,7 +1093,7 @@
                 <textFieldExpression><![CDATA[$F{cvCo}]]></textFieldExpression>
             </textField>
             <break>
-                <reportElement x="0" y="270" width="94" height="1" uuid="e439919a-b6de-480c-9cc0-65dc02676341"/>
+                <reportElement x="0" y="40" width="94" height="1" uuid="e439919a-b6de-480c-9cc0-65dc02676341"/>
             </break>
         </band>
         <band height="250" splitType="Stretch">
@@ -1323,7 +1323,7 @@
                 <reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
             </break>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="21" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1357,7 +1357,7 @@
                 <textFieldExpression><![CDATA[$F{abstractz}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="20" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1391,7 +1391,7 @@
                 <textFieldExpression><![CDATA[$F{objective}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="27" y="4" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1425,7 +1425,7 @@
                 <textFieldExpression><![CDATA[$F{workplan}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="26" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1459,7 +1459,7 @@
                 <textFieldExpression><![CDATA[$F{expectedResults}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="26" y="10" width="521" height="14" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1493,7 +1493,7 @@
                 <textFieldExpression><![CDATA[$F{collaboration}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="300" splitType="Stretch">
+        <band height="75" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="26" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
