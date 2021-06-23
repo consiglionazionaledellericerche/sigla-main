@@ -120,7 +120,7 @@ Previsto]]></text>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="531" y="216" width="1" height="165" uuid="dad8eddc-23f3-4cde-86d5-3196576e818e">
+				<reportElement x="529" y="215" width="1" height="165" uuid="dad8eddc-23f3-4cde-86d5-3196576e818e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
@@ -138,15 +138,36 @@ Previsto]]></text>
 				<reportElement x="5" y="380" width="525" height="1" uuid="10cc1588-e8f7-421f-9157-6cea1d781a78"/>
 			</line>
 			<staticText>
-				<reportElement x="412" y="216" width="63" height="17" uuid="cb95933d-981d-4911-bb1b-1ed90c22d4de"/>
+				<reportElement x="315" y="215" width="63" height="17" uuid="4c72a2b6-7f19-4705-ba10-86dd8802976b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dettaglio]]></text>
 			</staticText>
 			<line>
-				<reportElement x="411" y="216" width="1" height="18" uuid="507166de-c8ea-44c8-b738-6e3041add51e"/>
+				<reportElement x="314" y="215" width="1" height="18" uuid="ccd221f2-49ec-4a5b-ba7a-76b1960a25bf"/>
 			</line>
+			<line>
+				<reportElement x="377" y="215" width="1" height="18" uuid="bd32d0a3-57eb-405b-b8c8-a40aaa5a356f"/>
+			</line>
+			<staticText>
+				<reportElement x="375" y="215" width="50" height="17" uuid="86faf3be-7607-4497-98b8-64018a2050be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<line>
+				<reportElement x="427" y="215" width="1" height="18" uuid="950dcb96-5d53-433c-98f0-3929a5600f61"/>
+			</line>
+			<staticText>
+				<reportElement x="424" y="212" width="52" height="25" uuid="ee48a530-44c9-43ba-a3a2-c0bd8099ccd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo 
+Unitario]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>

@@ -78,7 +78,7 @@ Previsto]]></text>
 				<reportElement x="4" y="318" width="525" height="1" uuid="a5336ec5-fa70-4ee2-9a4c-26835529af15"/>
 			</line>
 			<staticText>
-				<reportElement x="4" y="300" width="473" height="18" uuid="db3bcd60-4a1f-4f42-9bdf-7821c6108e3a"/>
+				<reportElement x="4" y="300" width="306" height="18" uuid="db3bcd60-4a1f-4f42-9bdf-7821c6108e3a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -209,7 +209,7 @@ Previsto]]></text>
 				<reportElement x="301" y="-8" width="1" height="18" uuid="4b6b8ff0-d189-4af7-bcb0-f4283a780b4a"/>
 			</line>
 			<staticText>
-				<reportElement x="412" y="301" width="63" height="17" uuid="92cdee0d-bd8a-44b8-af92-89c40f5da872">
+				<reportElement x="311" y="300" width="63" height="17" uuid="92cdee0d-bd8a-44b8-af92-89c40f5da872">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -219,7 +219,28 @@ Previsto]]></text>
 				<text><![CDATA[Dettaglio]]></text>
 			</staticText>
 			<line>
-				<reportElement x="411" y="301" width="1" height="18" uuid="1fb5e872-2c69-4d63-8db0-20c0f027c5aa"/>
+				<reportElement x="424" y="301" width="1" height="18" uuid="1fb5e872-2c69-4d63-8db0-20c0f027c5aa"/>
+			</line>
+			<line>
+				<reportElement x="310" y="301" width="1" height="18" uuid="6a446f13-1ffc-4251-842d-d8a097b69158"/>
+			</line>
+			<staticText>
+				<reportElement x="377" y="300" width="50" height="17" uuid="e2ccfb14-9ec9-4738-977b-55323a72122e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="297" width="52" height="25" uuid="00b34bd2-94e2-49f4-8756-6f711c710a43"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo 
+Unitario]]></text>
+			</staticText>
+			<line>
+				<reportElement x="375" y="301" width="1" height="18" uuid="db89021c-0a17-434d-80c0-30e878533a18"/>
 			</line>
 		</band>
 	</detail>
