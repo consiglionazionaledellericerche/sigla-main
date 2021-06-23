@@ -1025,7 +1025,7 @@
                 <textFieldExpression><![CDATA[$F{pcSurname}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="600" splitType="Stretch">
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="23" y="39" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1042,27 +1042,8 @@
                 </textElement>
                 <textFieldExpression><![CDATA["CV PRINCIPAL INVESTIGATOR: "]]></textFieldExpression>
             </textField>
-            <textField isBlankWhenNull="false">
-                <reportElement x="22" y="300" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
-                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
-                </reportElement>
-                <box>
-                    <pen lineWidth="0.0" lineStyle="Dashed"/>
-                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
-                </box>
-                <textElement textAlignment="Justified" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA["CV COORDINATOR: "]]></textFieldExpression>
-            </textField>
-            <break>
-                <reportElement x="0" y="570" width="94" height="1" uuid="e439919a-b6de-480c-9cc0-65dc02676341"/>
-            </break>
-            <textField isBlankWhenNull="false">
-                <reportElement x="23" y="60" width="521" height="228" uuid="ce592b04-3b5c-4b98-b7a9-599b1681a7b9">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="23" y="60" width="521" height="20" uuid="ce592b04-3b5c-4b98-b7a9-599b1681a7b9">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1077,8 +1058,26 @@
                 </textElement>
                 <textFieldExpression><![CDATA[$F{cvPi}]]></textFieldExpression>
             </textField>
+        </band>
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="23" y="320" width="521" height="234" uuid="c4020344-c0d5-4f12-9cfd-80d1677d3bd4">
+                <reportElement x="22" y="39" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["CV COORDINATOR: "]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="23" y="60" width="521" height="20" uuid="c4020344-c0d5-4f12-9cfd-80d1677d3bd4">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1093,6 +1092,9 @@
                 </textElement>
                 <textFieldExpression><![CDATA[$F{cvCo}]]></textFieldExpression>
             </textField>
+            <break>
+                <reportElement x="0" y="270" width="94" height="1" uuid="e439919a-b6de-480c-9cc0-65dc02676341"/>
+            </break>
         </band>
         <band height="250" splitType="Stretch">
             <frame>
@@ -1321,7 +1323,7 @@
                 <reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
             </break>
         </band>
-        <band height="730" splitType="Stretch">
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="21" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1338,27 +1340,8 @@
                 </textElement>
                 <textFieldExpression><![CDATA["ABSTRACT: "]]></textFieldExpression>
             </textField>
-            <textField isBlankWhenNull="false">
-                <reportElement x="20" y="220" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
-                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
-                </reportElement>
-                <box>
-                    <pen lineWidth="0.0" lineStyle="Dashed"/>
-                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
-                </box>
-                <textElement textAlignment="Justified" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA["OBJECTIVE: "]]></textFieldExpression>
-            </textField>
-            <break>
-                <reportElement x="0" y="590" width="94" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
-            </break>
-            <textField isBlankWhenNull="false">
-                <reportElement x="21" y="30" width="521" height="180" uuid="16a58442-392d-49ff-98f5-cc16accc7545">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="21" y="30" width="521" height="30" uuid="16a58442-392d-49ff-98f5-cc16accc7545">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1373,8 +1356,26 @@
                 </textElement>
                 <textFieldExpression><![CDATA[$F{abstractz}]]></textFieldExpression>
             </textField>
+        </band>
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="21" y="236" width="521" height="350" uuid="1a10db4d-2f1b-4a53-ab8a-07caad5ae621">
+                <reportElement x="20" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["OBJECTIVE: "]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="21" y="30" width="521" height="30" uuid="1a10db4d-2f1b-4a53-ab8a-07caad5ae621">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1390,7 +1391,7 @@
                 <textFieldExpression><![CDATA[$F{objective}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="730" splitType="Stretch">
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
                 <reportElement x="27" y="4" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -1407,27 +1408,8 @@
                 </textElement>
                 <textFieldExpression><![CDATA["workplan: "]]></textFieldExpression>
             </textField>
-            <textField isBlankWhenNull="false">
-                <reportElement x="26" y="335" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
-                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
-                </reportElement>
-                <box>
-                    <pen lineWidth="0.0" lineStyle="Dashed"/>
-                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
-                </box>
-                <textElement textAlignment="Justified" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA["RESULTS: " ]]></textFieldExpression>
-            </textField>
-            <break>
-                <reportElement x="0" y="710" width="92" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
-            </break>
-            <textField isBlankWhenNull="false">
-                <reportElement x="27" y="24" width="521" height="306" uuid="2c2cb100-2ab4-421b-9250-0b5d5c0e2267">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement style="table" x="27" y="30" width="521" height="30" uuid="2c2cb100-2ab4-421b-9250-0b5d5c0e2267">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1442,8 +1424,26 @@
                 </textElement>
                 <textFieldExpression><![CDATA[$F{workplan}]]></textFieldExpression>
             </textField>
+        </band>
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="27" y="355" width="521" height="334" uuid="1e540d06-793c-4c8c-86f9-489e814390a1">
+                <reportElement x="26" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["RESULTS: "]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="27" y="30" width="521" height="30" uuid="1e540d06-793c-4c8c-86f9-489e814390a1">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1459,9 +1459,9 @@
                 <textFieldExpression><![CDATA[$F{expectedResults}]]></textFieldExpression>
             </textField>
         </band>
-        <band height="600" splitType="Stretch">
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="26" y="183" width="521" height="14" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                <reportElement x="26" y="10" width="521" height="14" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1476,8 +1476,8 @@
                 </textElement>
                 <textFieldExpression><![CDATA["COLLABORATION: "]]></textFieldExpression>
             </textField>
-            <textField isBlankWhenNull="false">
-                <reportElement x="26" y="197" width="521" height="204" uuid="2ab1393d-8567-44de-aae1-61875ba8c684">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="26" y="30" width="521" height="30" uuid="2ab1393d-8567-44de-aae1-61875ba8c684">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1492,24 +1492,10 @@
                 </textElement>
                 <textFieldExpression><![CDATA[$F{collaboration}]]></textFieldExpression>
             </textField>
+        </band>
+        <band height="300" splitType="Stretch">
             <textField isBlankWhenNull="false">
-                <reportElement x="26" y="50" width="521" height="116" uuid="e71e6dd0-f11d-4922-a99d-fbfb28e07916">
-                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
-                </reportElement>
-                <box>
-                    <pen lineWidth="0.0" lineStyle="Dashed"/>
-                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
-                </box>
-                <textElement textAlignment="Justified" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="9" isBold="false"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{bibliography}]]></textFieldExpression>
-            </textField>
-            <textField isBlankWhenNull="false">
-                <reportElement x="26" y="34" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                <reportElement x="26" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <box>
@@ -1523,6 +1509,22 @@
                     <font fontName="Times New Roman" size="12" isBold="true"/>
                 </textElement>
                 <textFieldExpression><![CDATA["BIBLIOGRAPHY: "]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="false">
+                <reportElement x="26" y="30" width="521" height="30" uuid="e71e6dd0-f11d-4922-a99d-fbfb28e07916">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="9" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{bibliography}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
