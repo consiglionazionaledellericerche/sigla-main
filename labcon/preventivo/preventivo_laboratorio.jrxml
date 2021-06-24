@@ -16,7 +16,7 @@
 	</parameter>
 	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/labcon/preventivo/"]]></defaultValueExpression>
 	</parameter>
 	<queryString language="json">
 		<![CDATA[]]>
