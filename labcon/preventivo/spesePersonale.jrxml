@@ -34,7 +34,7 @@
 	<detail>
 		<band height="18">
 			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="0" y="0" width="305" height="18" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1">
+				<reportElement mode="Transparent" x="0" y="0" width="307" height="18" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -52,7 +52,7 @@
 				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="305" y="0" width="69" height="18" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="307" y="0" width="69" height="18" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -71,7 +71,7 @@
 				<textFieldExpression><![CDATA[$F{dettaglio}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="374" y="0" width="44" height="18" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="376" y="0" width="44" height="18" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -89,7 +89,7 @@
 				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="418" y="0" width="50" height="18" backcolor="#FFFFFF" uuid="a07362ba-ef03-469b-a1b1-7853e8310265">
+				<reportElement mode="Opaque" x="420" y="0" width="50" height="18" backcolor="#FFFFFF" uuid="a07362ba-ef03-469b-a1b1-7853e8310265">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -107,7 +107,7 @@
 				<textFieldExpression><![CDATA[$F{costoUnitario}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="468" y="0" width="55" height="18" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264">
+				<reportElement mode="Opaque" x="470" y="0" width="55" height="18" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
