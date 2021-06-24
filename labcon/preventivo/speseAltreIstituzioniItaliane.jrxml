@@ -106,7 +106,7 @@ Previsto]]></text>
 				<reportElement x="474" y="1" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="4" y="19" width="524" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418"/>
+				<reportElement stretchType="RelativeToBandHeight" x="4" y="20" width="524" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseMissioniPersonale")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseMissioniPersonale.jasper"]]></subreportExpression>
 			</subreport>
