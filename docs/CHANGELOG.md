@@ -1,3 +1,23 @@
+## Release 6.3.34  -- _June 29, 2021_ 
+**Changes**
+
+>**Corretta GET per Consultazioni REST**
+>
+>[362806bcd2ab572](https://github.com/consiglionazionaledellericerche/sigla-main/commit/362806bcd2ab572) gianfranco.gasparro *June 29, 2021*
+
+>**Closed Issue #80**
+>
+>[c45b43db2000f28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45b43db2000f28) marco.spasiano *June 25, 2021*
+
+>**FIX carica fattua elettronica**
+>
+>[ce34b95642c29db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce34b95642c29db) marco.spasiano *June 21, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[6640ffeababf78d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6640ffeababf78d) marco.spasiano *June 21, 2021*
+
+
 ## Release 6.3.32  -- _June 18, 2021_ 
 **Changes**
 
