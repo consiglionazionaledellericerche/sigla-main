@@ -1217,18 +1217,20 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							//Nel caso dei compensi rilevo subito il costo prelevando le informazioni dalla riga del compenso stesso
 							//Registrazione conto COSTO COMPENSO
 							BigDecimal imCostoCompenso = compenso.getIm_lordo_percipiente();
-							Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
-							testataPrimaNota.addDettaglioCostoRicavo(compenso.getTipoDocumentoEnum(), aContoCosto.getCd_voce_ep(), imCostoCompenso);
+							if (imCostoCompenso.compareTo(BigDecimal.ZERO)!=0) {
+								Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
+								testataPrimaNota.addDettaglioCostoRicavo(compenso.getTipoDocumentoEnum(), aContoCosto.getCd_voce_ep(), imCostoCompenso);
 
-							Voce_epBulk aContoPatr = findContoAnag(userContext, compenso, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
-							testataPrimaNota.addDettaglioPatrimoniale(compenso.getTipoDocumentoEnum(), aContoPatr.getCd_voce_ep(), imCostoCompenso);
+								Voce_epBulk aContoPatr = findContoAnag(userContext, compenso, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
+								testataPrimaNota.addDettaglioPatrimoniale(compenso.getTipoDocumentoEnum(), aContoPatr.getCd_voce_ep(), imCostoCompenso);
+							}
 
 							righeDocammTerzo.stream().filter(Contributo_ritenutaBulk.class::isInstance).map(Contributo_ritenutaBulk.class::cast)
 								.filter(Contributo_ritenutaBulk::isContributoEnte)
 								.forEach(cori->{
 									try {
 										BigDecimal imCostoCori = cori.getAmmontare();
-										Voce_epBulk aContoCori = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), compenso.getEsercizio(), cori.getSezioneCostoRicavo(), Contributo_ritenutaBulk.TIPO_PERCEPIENTE);
+										Voce_epBulk aContoCori = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), compenso.getEsercizio(), cori.getSezioneCostoRicavo(), cori.getTi_ente_percipiente());
 										testataPrimaNota.addDettaglioCostoRicavo(compenso.getTipoDocumentoEnum(), aContoCori.getCd_voce_ep(), imCostoCori);
 
 										Voce_epBulk aContoContropartitaCori = this.findContoContropartitaCosto(userContext, aContoCori);
@@ -1313,9 +1315,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Voce_epBulk findContoCosto(UserContext userContext, Tipo_contributo_ritenutaBulk tipoContributoRitenuta, int esercizio, String sezione, String tipoEntePercipiente) throws ComponentException, PersistencyException {
 		Ass_tipo_cori_voce_epHome assTipoCoriVoceEpHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
 		Ass_tipo_cori_voce_epBulk assTipoCori = assTipoCoriVoceEpHome.getAssCoriEp(esercizio, tipoContributoRitenuta.getCd_contributo_ritenuta(), tipoEntePercipiente, sezione);
-		return Optional.ofNullable(assTipoCori).map(Ass_tipo_cori_voce_epBulk::getVoce_ep).orElseThrow(()->new ApplicationException("Associazione tra tipo contributo/ritenuta ed economica non trovata (" +
-				"Tipo Cori: " + tipoContributoRitenuta +
-				" - Esercizio" + esercizio +
+		return Optional.ofNullable(assTipoCori).map(Ass_tipo_cori_voce_epBulk::getVoce_ep)
+				.orElseThrow(()->new ApplicationException("Associazione tra tipo contributo/ritenuta ed economica non trovata (" +
+				"Tipo Cori: " + tipoContributoRitenuta.getCd_contributo_ritenuta() +
+				" - Esercizio: " + esercizio +
 				" - Tipo Ente Percipiente: " + tipoEntePercipiente +
 				" - Sezione: " + sezione + ")."));
 	}
@@ -1405,6 +1408,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private void addMovimentoCoge(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppia, IDocumentoAmministrativoBulk docamm, TestataPrimaNota testata, String aSezione, String aCdConto, BigDecimal aImporto) throws ComponentException{
 		try {
+			if (aImporto.compareTo(BigDecimal.ZERO)==0)
+				return;
+
 			Movimento_cogeBulk movimentoCoge = new Movimento_cogeBulk();
 
 			ContoHome contoHome = (ContoHome) getHome(userContext, ContoBulk.class);
