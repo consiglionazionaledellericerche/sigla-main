@@ -38,6 +38,8 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.BonusHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -2682,7 +2684,28 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
-		
+		Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+				.filter(Scrittura_partita_doppiaHome.class::isInstance)
+				.map(Scrittura_partita_doppiaHome.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+		try {
+			final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(compenso);
+			if (scritturaOpt.isPresent()) {
+				Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+				scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+						.findMovimentiDareColl(userContext, scrittura)));
+				scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+						.findMovimentiAvereColl(userContext, scrittura)));
+				compenso.setScrittura_partita_doppia(scrittura);
+			}
+		} catch (PersistencyException e) {
+			throw handleException(compenso, e);
+		}
+		try {
+			Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, compenso);
+		} catch (Exception e) {
+			throw handleException(compenso, e);
+		}
 		return compenso;
 	}
 
