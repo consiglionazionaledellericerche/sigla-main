@@ -97,7 +97,12 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 * @return codice del cds
 	 */
 	public static String getCd_cds(it.cnr.jada.UserContext userContext) {
-		return (String) userContext.getAttributes().get(CD_CDS);
+		return Optional.ofNullable(userContext)
+				.flatMap(userContext1 -> Optional.ofNullable(userContext1.getAttributes()))
+				.map(attr -> attr.get(CD_CDS))
+				.filter(String.class::isInstance)
+				.map(String.class::cast)
+				.orElseGet(() -> null);
 	}
 
 	/**
@@ -123,7 +128,12 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 */
 	public static String getCd_unita_organizzativa(
 			it.cnr.jada.UserContext userContext) {
-		return (String) userContext.getAttributes().get(CD_UNITA_ORGANIZZATIVA);
+		return Optional.ofNullable(userContext)
+				.flatMap(userContext1 -> Optional.ofNullable(userContext1.getAttributes()))
+				.map(attr -> attr.get(CD_UNITA_ORGANIZZATIVA))
+				.filter(String.class::isInstance)
+				.map(String.class::cast)
+				.orElseGet(() -> null);
 	}
 
 	/**

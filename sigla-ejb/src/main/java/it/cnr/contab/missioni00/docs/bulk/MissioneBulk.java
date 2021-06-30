@@ -3046,6 +3046,10 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
 		return scrittura_partita_doppia;
 	}
+	@Override
+	public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+		this.scrittura_partita_doppia = scrittura_partita_doppia;
+	}
 
 	@Override
 	public TipoDocumentoEnum getTipoDocumentoEnum() {

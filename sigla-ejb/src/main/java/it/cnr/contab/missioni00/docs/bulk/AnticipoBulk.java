@@ -1336,6 +1336,11 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
     }
 
     @Override
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
+    @Override
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }

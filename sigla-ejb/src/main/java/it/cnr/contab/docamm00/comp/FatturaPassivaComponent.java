@@ -21,7 +21,6 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.config00.bulk.CigBulk;
@@ -4569,13 +4568,18 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(fattura_passiva);
             if (scritturaOpt.isPresent()) {
                 Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                scrittura.setMovimentiDareColl( new BulkList( ((Scrittura_partita_doppiaHome) getHome( userContext, scrittura.getClass()))
-                        .findMovimentiDareColl( userContext, scrittura )));
-                scrittura.setMovimentiAvereColl( new BulkList( ((Scrittura_partita_doppiaHome) getHome( userContext, scrittura.getClass()))
-                        .findMovimentiAvereColl( userContext, scrittura )));
+                scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                        .findMovimentiDareColl(userContext, scrittura)));
+                scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                        .findMovimentiAvereColl(userContext, scrittura)));
                 fattura_passiva.setScrittura_partita_doppia(scrittura);
             }
         } catch (PersistencyException e) {
+            throw handleException(fattura_passiva, e);
+        }
+        try {
+            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, fattura_passiva);
+        } catch (Exception e) {
             throw handleException(fattura_passiva, e);
         }
         return fattura_passiva;
@@ -6071,7 +6075,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (original == null || fatturaPassiva == null)
             return;
 
-        if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isElettronica() || fatturaPassiva.isGenerataDaCompenso()) {
+        if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isGenerataDaCompenso()) {
             //ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
             //ora eseguito anche se la sola autofattura è stampata sui registri IVA
 
@@ -7800,125 +7804,131 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             }
 
             if (!hasAccesso && checkRiepilogativo) {
-                Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
-                for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
-                    Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
-                    String key = null;
-                    Hashtable<String, BigDecimal> currentMap = null;
-                    if (Optional.ofNullable(riga)
-                            .flatMap(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva()))
-                            .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_autofattura()))
-                            .map(flAutoFattura -> !flAutoFattura)
-                            .orElse(Boolean.FALSE)) {
-                        if (riga.getVoce_iva().getNaturaOperNonImpSdi() != null) {
-                            key = riga.getVoce_iva().getNaturaOperNonImpSdi();
-                            currentMap = mapNatura;
-                        } else {
-                            key = riga.getVoce_iva().getPercentuale().toString();
-                            currentMap = mapIva;
-                        }
-                    }
-                    if (key != null) {
-                        if (currentMap.get(key) != null)
-                            currentMap.put(key, currentMap.get(key).add(riga.getIm_iva()));
-                        else
-                            currentMap.put(key, riga.getIm_iva());
-                    }
-                }
-
-                Hashtable<String, BigDecimal> mapNaturaEle = new Hashtable<String, BigDecimal>(), mapIvaEle = new Hashtable<String, BigDecimal>();
-                for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
-                    DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
-                    String key = null;
-                    Hashtable<String, BigDecimal> currentMap = null;
-                    if (rigaEle.getImponibileImporto() != null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0) {
-                        if (rigaEle.getNatura() != null) {
-                            key = rigaEle.getNatura();
-                            currentMap = mapNaturaEle;
-                        } else {
-                            key = rigaEle.getAliquotaIva().toString();
-                            currentMap = mapIvaEle;
-                        }
-
-                        if (currentMap.get(key) != null)
-                            currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
-                        else
-                            currentMap.put(key, rigaEle.getImposta());
-                    }
-                }
-
-                Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();
-                for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
-                    DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
-                    String key = null;
-                    Hashtable<String, BigDecimal> currentMap = null;
-                    if (rigaEle.getNatura() != null) {
-                        key = rigaEle.getNatura();
-                        currentMap = mapNaturaEleArr;
-                    } else {
-                        key = rigaEle.getAliquotaIva().toString();
-                        currentMap = mapIvaEleArr;
-                    }
-
-                    if (currentMap.get(key) != null)
-                        currentMap.put(key, currentMap.get(key).add(Utility.nvl(rigaEle.getArrotondamento())));
-                    else
-                        currentMap.put(key, Utility.nvl(rigaEle.getArrotondamento()));
-                }
-
-                StringBuffer codiciNaturaSqu = new StringBuffer();
-                for (Iterator i = mapNatura.keySet().iterator(); i.hasNext(); ) {
-                    String key = (String) i.next();
-                    BigDecimal value = mapNatura.get(key);
-                    BigDecimal valueEle = mapNaturaEle.get(key);
-                    if (noSegno)
-                        valueEle = Optional.ofNullable(valueEle)
-                                .map(BigDecimal::abs)
-                                .orElse(null);
-                    BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
-                    if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
-                        if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
-                                (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
-                                (value == null && valueEle != null) || (value != null && valueEle == null))
-                            codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
-                    mapNaturaEle.remove(key);
-                }
-
-                for (Iterator i = mapNaturaEle.keySet().iterator(); i.hasNext(); )
-                    codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + i.next());
-
-                StringBuffer codiciIvaSqu = new StringBuffer();
-                for (Iterator i = mapIva.keySet().iterator(); i.hasNext(); ) {
-                    String key = (String) i.next();
-                    BigDecimal value = mapIva.get(key);
-                    BigDecimal valueEle = mapIvaEle.get(key);
-                    if (noSegno)
-                        valueEle = valueEle.abs();
-                    BigDecimal valueEleArr = Utility.nvl(mapIvaEleArr.get(key));
-                    if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
-                        if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
-                                (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
-                                (value == null && valueEle != null) || (value != null && valueEle == null))
-                            codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + key);
-                    mapIvaEle.remove(key);
-                }
-
-                for (Iterator i = mapIvaEle.keySet().iterator(); i.hasNext(); )
-                    codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + i.next());
-
-                if (verificaGenerazioneAutofattura(aUC, fatturaPassiva) &&
-                        (codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0))
-                    codiciNaturaSqu = new StringBuffer();
-
-                if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
-                            (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
-                            (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
-                            (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+                controllaQuadaraturaNatura(aUC, noSegno, fatturaPassiva, true);
+                controllaQuadaraturaNatura(aUC, noSegno, fatturaPassiva, false);
             }
         } catch (RemoteException e) {
             throw handleException(e);
         }
+    }
+
+    private void controllaQuadaraturaNatura(UserContext aUC, boolean noSegno, Fattura_passivaBulk fatturaPassiva, boolean checkIVA) throws ComponentException {
+        Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
+        for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
+            Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
+            String key = null;
+            Hashtable<String, BigDecimal> currentMap = null;
+            if (Optional.ofNullable(riga)
+                    .flatMap(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva()))
+                    .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_autofattura()))
+                    .map(flAutoFattura -> !flAutoFattura)
+                    .orElse(Boolean.FALSE)) {
+                if (riga.getVoce_iva().getNaturaOperNonImpSdi() != null) {
+                    key = riga.getVoce_iva().getNaturaOperNonImpSdi();
+                    currentMap = mapNatura;
+                } else {
+                    key = riga.getVoce_iva().getPercentuale().toString();
+                    currentMap = mapIva;
+                }
+            }
+            if (key != null) {
+                if (currentMap.get(key) != null)
+                    currentMap.put(key, currentMap.get(key).add(checkIVA ? riga.getIm_iva() : riga.getIm_imponibile()));
+                else
+                    currentMap.put(key, checkIVA ? riga.getIm_iva() : riga.getIm_imponibile());
+            }
+        }
+
+        Hashtable<String, BigDecimal> mapNaturaEle = new Hashtable<String, BigDecimal>(), mapIvaEle = new Hashtable<String, BigDecimal>();
+        for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+            DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+            String key = null;
+            Hashtable<String, BigDecimal> currentMap = null;
+            if (rigaEle.getImponibileImporto() != null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0) {
+                if (rigaEle.getNatura() != null) {
+                    key = rigaEle.getNatura();
+                    currentMap = mapNaturaEle;
+                } else {
+                    key = rigaEle.getAliquotaIva().toString();
+                    currentMap = mapIvaEle;
+                }
+
+                if (currentMap.get(key) != null)
+                    currentMap.put(key, currentMap.get(key).add(checkIVA ? rigaEle.getImposta() : rigaEle.getImponibileImporto()));
+                else
+                    currentMap.put(key, checkIVA ? rigaEle.getImposta() : rigaEle.getImponibileImporto());
+            }
+        }
+
+        Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();
+        for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+            DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+            String key = null;
+            Hashtable<String, BigDecimal> currentMap = null;
+            if (rigaEle.getNatura() != null) {
+                key = rigaEle.getNatura();
+                currentMap = mapNaturaEleArr;
+            } else {
+                key = rigaEle.getAliquotaIva().toString();
+                currentMap = mapIvaEleArr;
+            }
+
+            if (currentMap.get(key) != null)
+                currentMap.put(key, currentMap.get(key).add(Utility.nvl(rigaEle.getArrotondamento())));
+            else
+                currentMap.put(key, Utility.nvl(rigaEle.getArrotondamento()));
+        }
+
+        StringBuffer codiciNaturaSqu = new StringBuffer();
+        for (Iterator i = mapNatura.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            BigDecimal value = mapNatura.get(key);
+            BigDecimal valueEle = mapNaturaEle.get(key);
+            if (noSegno)
+                valueEle = Optional.ofNullable(valueEle)
+                        .map(BigDecimal::abs)
+                        .orElse(null);
+            BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
+            if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
+                if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
+                        (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
+                        (value == null && valueEle != null) || (value != null && valueEle == null))
+                    codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
+            mapNaturaEle.remove(key);
+        }
+
+        for (Iterator i = mapNaturaEle.keySet().iterator(); i.hasNext(); )
+            codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + i.next());
+
+        StringBuffer codiciIvaSqu = new StringBuffer();
+        for (Iterator i = mapIva.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            BigDecimal value = mapIva.get(key);
+            BigDecimal valueEle = mapIvaEle.get(key);
+            if (noSegno)
+                valueEle = valueEle.abs();
+            BigDecimal valueEleArr = Utility.nvl(mapIvaEleArr.get(key));
+            if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
+                if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
+                        (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
+                        (value == null && valueEle != null) || (value != null && valueEle == null))
+                    codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + key);
+            mapIvaEle.remove(key);
+        }
+
+        for (Iterator i = mapIvaEle.keySet().iterator(); i.hasNext(); )
+            codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + i.next());
+
+        if (verificaGenerazioneAutofattura(aUC, fatturaPassiva) &&
+                (codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0))
+            codiciNaturaSqu = new StringBuffer();
+
+        if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0)
+            throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
+                    (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
+                    (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
+                    (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+
     }
 
     public void aggiornaObblSuCancPerCompenso(

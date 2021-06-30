@@ -25,17 +25,13 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
-import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.missioni00.comp.MissioneComponent;
-import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import java.sql.*;
@@ -48,7 +44,6 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 
@@ -130,10 +125,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 
 		private void addDettaglio(String tipoDettaglio, String sezione, String cdConto, BigDecimal importo) {
-			if (importo.compareTo(BigDecimal.ZERO)!=0) {
-				String mySezione = importo.compareTo(BigDecimal.ZERO)<0?Movimento_cogeBulk.getControSezione(sezione):sezione;
-				dett.add(new DettaglioPrimaNota(tipoDettaglio, mySezione, cdConto, importo.abs()));
-			}
+			String mySezione = importo.compareTo(BigDecimal.ZERO)<0?Movimento_cogeBulk.getControSezione(sezione):sezione;
+			dett.add(new DettaglioPrimaNota(tipoDettaglio, mySezione, cdConto, importo.abs()));
 		}
 
 		public Pair<String, BigDecimal> getSaldoIva(String cdConto) {
@@ -1089,301 +1082,106 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return sql;
 
 	}
-/*
-	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
-//		return proposeScritturaPartitaDoppia2(userContext, docamm);
 
-		try {
-			Fattura_passivaHome fatHome = (Fattura_passivaHome)getHome(userContext, Fattura_passiva_IBulk.class);
-			SQLBuilder sql = fatHome.createSQLBuilder();
-			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, 2020 );
-			sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, "044");
-			sql.addSQLClause("AND", "TI_FATTURA", sql.EQUALS, "F");
-			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, "044.000");
-			sql.addSQLClause("AND", "TO_CHAR(DT_DA_COMPETENZA_COGE,'YYYY')=2020");
-			sql.addSQLClause("AND", "TO_CHAR(DT_A_COMPETENZA_COGE,'YYYY')=2020");
-			sql.addSQLClause("AND", "PG_FATTURA_PASSIVA not in (59,111,231,348,354)");
-			sql.addSQLClause("AND", "PG_FATTURA_PASSIVA = 11");
-
-			for ( Iterator<Fattura_passivaBulk> i = list.iterator(); i.hasNext(); ) {
-				Fattura_passivaBulk fatpas = i.next();
-				logger.info("Fattura: " +fatpas.getCd_cds()+" - "+fatpas.getPg_fattura_passiva());
-				final Fattura_passivaBulk fatpas2 = (Fattura_passivaBulk)Utility.createFatturaPassivaComponentSession().inizializzaBulkPerModifica(userContext, fatpas);
-				Scrittura_partita_doppiaBulk scrittDoppia = proposeScritturaPartitaDoppia2(userContext, fatpas2);
-				if (fatpas2.getScrittura_partita_doppia()!=null && scrittDoppia!=null) {
-					fatpas2.getScrittura_partita_doppia().getMovimentiDareColl().stream().forEach(el -> {
-						scrittDoppia.getMovimentiDareColl().stream().filter(el2 -> el2.getConto().getCd_voce_ep().equals(el.getConto().getCd_voce_ep()))
-								.filter(el2 -> el2.getIm_movimento().compareTo(el.getIm_movimento()) == 0).findAny()
-								.orElseThrow(() -> new ApplicationRuntimeException("Errore: " + fatpas2.getCd_cds() + " - " + fatpas2.getPg_fattura_passiva()));
-					});
-					fatpas2.getScrittura_partita_doppia().getMovimentiAvereColl().stream().forEach(el -> {
-						scrittDoppia.getMovimentiAvereColl().stream().filter(el2 -> el2.getConto().getCd_voce_ep().equals(el.getConto().getCd_voce_ep()))
-								.filter(el2 -> el2.getIm_movimento().compareTo(el.getIm_movimento()) == 0).findAny()
-								.orElseThrow(() -> new ApplicationRuntimeException("Errore: " + fatpas2.getCd_cds() + " - " + fatpas2.getPg_fattura_passiva()));
-					});
-				} else if (!(fatpas2.getScrittura_partita_doppia()==null && scrittDoppia==null)) {
-					throw new ApplicationRuntimeException("Errore: " + fatpas2.getCd_cds() + " - " + fatpas2.getPg_fattura_passiva());
-				}
-				logger.info("Fattura: " +fatpas.getCd_cds()+" - "+fatpas.getPg_fattura_passiva() + " - OK OK OK OK");
-			}
-
-			CompensoHome compensoHome = (CompensoHome)getHome(userContext, CompensoBulk.class);
-			SQLBuilder sql = compensoHome.createSQLBuilder();
-			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, 2020 );
-			sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, "044");
-			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, "044.000");
-			sql.addSQLClause("AND", "TO_CHAR(DT_DA_COMPETENZA_COGE,'YYYY')=2020");
-			sql.addSQLClause("AND", "TO_CHAR(DT_A_COMPETENZA_COGE,'YYYY')=2020");
-			sql.addSQLClause("AND", "PG_FATTURA_PASSIVA = 11");
-
-			List<CompensoBulk> list = compensoHome.fetchAll(sql);
-
-			for ( Iterator<CompensoBulk> i = list.iterator(); i.hasNext(); ) {
-				CompensoBulk compenso = i.next();
-				logger.info("Compenso: " +compenso.getCd_cds()+" - "+compenso.getPg_compenso());
-				CompensoComponentSession session = (CompensoComponentSession) EJBCommonServices.createEJB("CNRCOMPENSI00_EJB_CompensoComponentSession", CompensoComponentSession.class);
-				final CompensoBulk compenso2 = (CompensoBulk)session.inizializzaBulkPerModifica(userContext, compenso);
-				Scrittura_partita_doppiaBulk scrittDoppia = proposeScritturaPartitaDoppia2(userContext, compenso2);
-				if (compenso2.getScrittura_partita_doppia()!=null && scrittDoppia!=null) {
-					compenso2.getScrittura_partita_doppia().getMovimentiDareColl().stream().forEach(el -> {
-						scrittDoppia.getMovimentiDareColl().stream().filter(el2 -> el2.getConto().getCd_voce_ep().equals(el.getConto().getCd_voce_ep()))
-								.filter(el2 -> el2.getIm_movimento().compareTo(el.getIm_movimento()) == 0).findAny()
-								.orElseThrow(() -> new ApplicationRuntimeException("Errore: " + compenso2.getCd_cds() + " - " + compenso2.getPg_compenso()));
-					});
-					compenso2.getScrittura_partita_doppia().getMovimentiAvereColl().stream().forEach(el -> {
-						scrittDoppia.getMovimentiAvereColl().stream().filter(el2 -> el2.getConto().getCd_voce_ep().equals(el.getConto().getCd_voce_ep()))
-								.filter(el2 -> el2.getIm_movimento().compareTo(el.getIm_movimento()) == 0).findAny()
-								.orElseThrow(() -> new ApplicationRuntimeException("Errore: " + compenso2.getCd_cds() + " - " + compenso2.getPg_compenso()));
-					});
-				} else if (!(compenso2.getScrittura_partita_doppia()==null && scrittDoppia==null)) {
-					throw new ApplicationRuntimeException("Errore: " + compenso2.getCd_cds() + " - " + compenso2.getPg_compenso());
-				}
-				logger.info("Fattura: " +compenso2.getCd_cds()+" - "+compenso2.getPg_compenso() + " - OK OK OK OK");
-			}
-
-			return null;
-		} catch (Exception e) {
-			throw handleException(e);
-		}
-	}
-*/
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
 		try {
 			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
 
-//			if (docamm.getTipoDocumentoEnum().isCompenso())
-//				return makeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk)docamm);
-
 			if (docamm.getTipoDocumentoEnum().isDocumentoPassivo()) {
 				Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
+
 				//Le fatture generate da compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
 				if (fatpas.isGenerataDaCompenso())
 					return null;
-			}
 
-			final boolean isCommercialeWithAutofattura = this.hasAutofattura(userContext, docamm);
-			final boolean registraIva = this.registraIvaCoge(userContext, docamm) || isCommercialeWithAutofattura;
+				List<IDocumentoAmministrativoRigaBulk> righeDocamm = docamm.getChildren();
+				boolean isCommercialeWithAutofattura = fatpas.isCommerciale() && this.hasAutofattura(userContext, fatpas);
 
-			List<IDocumentoAmministrativoRigaCogeBulk> righeDocamm = docamm.getChildren();
-			Map<Integer, Map<Timestamp, Map<Timestamp, List<IDocumentoAmministrativoRigaCogeBulk>>>> mapTerzo =
-				righeDocamm.stream().collect(Collectors.groupingBy(IDocumentoAmministrativoRigaCogeBulk::getCd_terzo,
-					Collectors.groupingBy(IDocumentoAmministrativoRigaCogeBulk::getDt_da_competenza_coge,
-						Collectors.groupingBy(IDocumentoAmministrativoRigaCogeBulk::getDt_a_competenza_coge))));
+				Map<Integer, Map<Timestamp, Map<Timestamp, List<IDocumentoAmministrativoRigaBulk>>>> mapTerzo =
+						righeDocamm.stream().collect(Collectors.groupingBy(IDocumentoAmministrativoRigaBulk::getCd_terzo,
+								Collectors.groupingBy(IDocumentoAmministrativoRigaBulk::getDt_da_competenza_coge,
+										Collectors.groupingBy(IDocumentoAmministrativoRigaBulk::getDt_a_competenza_coge))));
 
-			mapTerzo.keySet().stream().forEach(aCdTerzo -> {
-				mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> {
-					mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
-						try {
-							List<IDocumentoAmministrativoRigaCogeBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
+				mapTerzo.keySet().stream().forEach(aCdTerzo -> {
+					mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> {
+						mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
+							try {
+								List<IDocumentoAmministrativoRigaBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
 
-							TestataPrimaNota testataPrimaNota = new TestataPrimaNota(aCdTerzo, aDtDaCompCoge, aDtACompCoge);
-							testataPrimaNotaList.add(testataPrimaNota);
+								TestataPrimaNota testataPrimaNota = new TestataPrimaNota(aCdTerzo, aDtDaCompCoge, aDtACompCoge);
+								testataPrimaNotaList.add(testataPrimaNota);
 
-							//Registrazione IVA
-							if (registraIva) {
-								Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, docamm.getTipoDocumentoEnum());
-								BigDecimal imIva = righeDocammTerzo.stream().filter(IDocumentoAmministrativoRigaBulk.class::isInstance)
-										.map(IDocumentoAmministrativoRigaBulk.class::cast)
-										.map(IDocumentoAmministrativoRigaBulk::getIm_iva)
-										.reduce(BigDecimal.ZERO, BigDecimal::add);
-								testataPrimaNota.addDettaglioIva(docamm.getTipoDocumentoEnum(), aContoIvaDebito.getCd_voce_ep(), imIva);
+								//Registrazione IVA
+								if (fatpas.registraIvaCoge() || isCommercialeWithAutofattura) {
+									Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, fatpas.getTipoDocumentoEnum());
+									BigDecimal imIva = righeDocammTerzo.stream().map(IDocumentoAmministrativoRigaBulk::getIm_iva)
+											.reduce(BigDecimal.ZERO, BigDecimal::add);
+									testataPrimaNota.addDettaglioIva(docamm.getTipoDocumentoEnum(), aContoIvaDebito.getCd_voce_ep(), imIva);
 
-								if (isCommercialeWithAutofattura) {
-									Voce_epBulk aContoIvaCredito = this.findContoIvaCredito(userContext, docamm.getTipoDocumentoEnum());
-									testataPrimaNota.addDettaglio(DettaglioPrimaNota.TIPO_IVA, Movimento_cogeBulk.getControSezione(docamm.getTipoDocumentoEnum().getSezioneIva()),
-											aContoIvaCredito.getCd_voce_ep(), imIva);
+									if (isCommercialeWithAutofattura) {
+										Voce_epBulk aContoIvaCredito = this.findContoIvaCredito(userContext, fatpas.getTipoDocumentoEnum());
+										testataPrimaNota.addDettaglio(DettaglioPrimaNota.TIPO_IVA, Movimento_cogeBulk.getControSezione(fatpas.getTipoDocumentoEnum().getSezioneIva()),
+												aContoIvaCredito.getCd_voce_ep(), imIva);
+									}
 								}
-							}
 
-							Map<Integer, Map<String, Map<String, Map<String, List<IDocumentoAmministrativoRigaCogeBulk>>>>> mapVoce =
-								righeDocammTerzo.stream().collect(Collectors.groupingBy(rigaDoc->rigaDoc.getScadenzaDocumentoContabile().getFather().getEsercizio(),
-									Collectors.groupingBy(rigaDoc2->rigaDoc2.getScadenzaDocumentoContabile().getFather().getTi_appartenenza(),
-										Collectors.groupingBy(rigaDoc3->rigaDoc3.getScadenzaDocumentoContabile().getFather().getTi_gestione(),
-											Collectors.groupingBy(rigaDoc4->rigaDoc4.getScadenzaDocumentoContabile().getFather().getCd_elemento_voce())))));
+								Map<Integer, Map<String, Map<String, Map<String, List<IDocumentoAmministrativoRigaBulk>>>>> mapVoce =
+									righeDocammTerzo.stream().collect(Collectors.groupingBy(rigaDoc->rigaDoc.getScadenzaDocumentoContabile().getFather().getEsercizio(),
+										Collectors.groupingBy(rigaDoc2->rigaDoc2.getScadenzaDocumentoContabile().getFather().getTi_appartenenza(),
+											Collectors.groupingBy(rigaDoc3->rigaDoc3.getScadenzaDocumentoContabile().getFather().getTi_gestione(),
+												Collectors.groupingBy(rigaDoc4->rigaDoc4.getScadenzaDocumentoContabile().getFather().getCd_elemento_voce())))));
 
-							mapVoce.keySet().stream().forEach(aEseVoce -> {
-								mapVoce.get(aEseVoce).keySet().forEach(aTiAppartenenza -> {
-									mapVoce.get(aEseVoce).get(aTiAppartenenza).keySet().forEach(aTiGestione -> {
-										mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).keySet().forEach(aCdVoce -> {
-											try {
-												List<IDocumentoAmministrativoRigaCogeBulk> righeDocammVoce = mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).get(aCdVoce);
+								mapVoce.keySet().stream().forEach(aEseVoce -> {
+									mapVoce.get(aEseVoce).keySet().forEach(aTiAppartenenza -> {
+										mapVoce.get(aEseVoce).get(aTiAppartenenza).keySet().forEach(aTiGestione -> {
+											mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).keySet().forEach(aCdVoce -> {
+												try {
+													List<IDocumentoAmministrativoRigaBulk> righeDocammVoce = mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).get(aCdVoce);
 
-												//Registrazione conto COSTO
-												BigDecimal imCosto = BigDecimal.ZERO;
-												if (docamm.getTipoDocumentoEnum().isCompenso())
-													imCosto = ((CompensoBulk) docamm).getIm_lordo_percipiente();
-												else
-													imCosto = righeDocammVoce.stream().filter(IDocumentoAmministrativoRigaBulk.class::isInstance)
-														.map(IDocumentoAmministrativoRigaBulk.class::cast)
-														.map(el->{
-															if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast)
-																	.filter(Fattura_passivaBulk::isIstituzionale).isPresent())
-																return el.getIm_imponibile().add(el.getIm_iva());
-															return el.getIm_imponibile();
-														}).reduce(BigDecimal.ZERO, BigDecimal::add);
+													//Registrazione conto COSTO
+													BigDecimal imCosto = righeDocammVoce.stream().map(el->{
+														if (fatpas.isIstituzionale())
+															return el.getIm_imponibile().add(el.getIm_iva());
+														return el.getIm_imponibile();
+													}).reduce(BigDecimal.ZERO, BigDecimal::add);
+													Voce_epBulk aCdContoCosto = findContoCostoRicavo(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
 
-												Voce_epBulk aCdContoCosto = findContoCostoRicavo(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
+													testataPrimaNota.addDettaglioCostoRicavo(docamm.getTipoDocumentoEnum(), aCdContoCosto.getCd_voce_ep(), imCosto);
 
-												testataPrimaNota.addDettaglioCostoRicavo(docamm.getTipoDocumentoEnum(), aCdContoCosto.getCd_voce_ep(), imCosto);
+													//Registrazione conto PATRIMONIALE
+													BigDecimal imPatrimoniale = righeDocammVoce.stream().map(el->el.getIm_imponibile())
+															.reduce(BigDecimal.ZERO, BigDecimal::add);
+													Voce_epBulk aContoPatr = findContoAnag(userContext, docamm, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
 
-												//Registrazione conto PATRIMONIALE
-												BigDecimal imPatrimoniale = righeDocammVoce.stream().filter(IDocumentoAmministrativoRigaBulk.class::isInstance)
-														.map(IDocumentoAmministrativoRigaBulk.class::cast)
-														.map(el->{
-															if (Optional.of(docamm).filter(Fattura_attivaBulk.class::isInstance).isPresent())
-																return el.getIm_imponibile().add(el.getIm_iva());
-															return el.getIm_imponibile();
-														}).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-												Voce_epBulk aContoPatr = this.findContoEp(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
-
-												testataPrimaNota.addDettaglioPatrimoniale(docamm.getTipoDocumentoEnum(), aContoPatr.getCd_voce_ep(), imPatrimoniale);
-											} catch (ComponentException|PersistencyException e) {
-												throw new ApplicationRuntimeException(e);
-											}
+													testataPrimaNota.addDettaglioPatrimoniale(docamm.getTipoDocumentoEnum(), aContoPatr.getCd_voce_ep(), imPatrimoniale);
+												} catch (ComponentException|PersistencyException e) {
+													throw new ApplicationRuntimeException(e);
+												}
+											});
 										});
 									});
 								});
-							});
-						} catch (ComponentException|PersistencyException|RemoteException e) {
-							throw new ApplicationRuntimeException(e);
-						}
+							} catch (ComponentException|PersistencyException|RemoteException e) {
+								throw new ApplicationRuntimeException(e);
+							}
+						});
 					});
 				});
-			});
+			} // end if (docamm.getTipoDocumentoEnum().isDocumentoPassivo())
+
+
 
 
 	//		if (!docamm.getTipoDocumentoEnum().isFatturaAttiva() || !((Fattura_attivaBulk)docamm).getFl_liquidazione_differita().booleanValue()) {
 	//			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
 	//
 	//		}
-
 			return this.generaScrittura(userContext, docamm, testataPrimaNotaList);
 		} catch (Exception e) {
 			throw handleException(e);
 		}
 	}
-/*
-	public Scrittura_partita_doppiaBulk makeScritturaPartitaDoppiaCompenso(UserContext userContext, CompensoBulk compenso) throws ComponentException {
-		List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
 
-		List<IDocumentoAmministrativoRigaCogeBulk> righeDocamm = compenso.getChildren();
-		Map<Integer, Map<Timestamp, Map<Timestamp, List<IDocumentoAmministrativoRigaCogeBulk>>>> mapTerzo =
-				righeDocamm.stream().collect(Collectors.groupingBy(IDocumentoAmministrativoRigaCogeBulk::getCd_terzo,
-						Collectors.groupingBy(IDocumentoAmministrativoRigaCogeBulk::getDt_da_competenza_coge,
-								Collectors.groupingBy(IDocumentoAmministrativoRigaCogeBulk::getDt_a_competenza_coge))));
-
-		mapTerzo.keySet().stream().forEach(aCdTerzo -> {
-			mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> {
-				mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
-					try {
-						List<IDocumentoAmministrativoRigaCogeBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
-
-						TestataPrimaNota testataPrimaNota = new TestataPrimaNota(aCdTerzo, aDtDaCompCoge, aDtACompCoge);
-						testataPrimaNotaList.add(testataPrimaNota);
-
-						//Registrazione IVA
-						if (registraIva) {
-							Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, docamm.getTipoDocumentoEnum());
-							BigDecimal imIva = righeDocammTerzo.stream().filter(IDocumentoAmministrativoRigaBulk.class::isInstance)
-									.map(IDocumentoAmministrativoRigaBulk.class::cast)
-									.map(IDocumentoAmministrativoRigaBulk::getIm_iva)
-									.reduce(BigDecimal.ZERO, BigDecimal::add);
-							testataPrimaNota.addDettaglioIva(docamm.getTipoDocumentoEnum(), aContoIvaDebito.getCd_voce_ep(), imIva);
-
-							if (isCommercialeWithAutofattura) {
-								Voce_epBulk aContoIvaCredito = this.findContoIvaCredito(userContext, docamm.getTipoDocumentoEnum());
-								testataPrimaNota.addDettaglio(DettaglioPrimaNota.TIPO_IVA, Movimento_cogeBulk.getControSezione(docamm.getTipoDocumentoEnum().getSezioneIva()),
-										aContoIvaCredito.getCd_voce_ep(), imIva);
-							}
-						}
-
-						Map<Integer, Map<String, Map<String, Map<String, List<IDocumentoAmministrativoRigaCogeBulk>>>>> mapVoce =
-								righeDocammTerzo.stream().collect(Collectors.groupingBy(rigaDoc->rigaDoc.getScadenzaDocumentoContabile().getFather().getEsercizio(),
-										Collectors.groupingBy(rigaDoc2->rigaDoc2.getScadenzaDocumentoContabile().getFather().getTi_appartenenza(),
-												Collectors.groupingBy(rigaDoc3->rigaDoc3.getScadenzaDocumentoContabile().getFather().getTi_gestione(),
-														Collectors.groupingBy(rigaDoc4->rigaDoc4.getScadenzaDocumentoContabile().getFather().getCd_elemento_voce())))));
-
-						mapVoce.keySet().stream().forEach(aEseVoce -> {
-							mapVoce.get(aEseVoce).keySet().forEach(aTiAppartenenza -> {
-								mapVoce.get(aEseVoce).get(aTiAppartenenza).keySet().forEach(aTiGestione -> {
-									mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).keySet().forEach(aCdVoce -> {
-										try {
-											List<IDocumentoAmministrativoRigaCogeBulk> righeDocammVoce = mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).get(aCdVoce);
-
-											//Registrazione conto COSTO
-											BigDecimal imCosto = BigDecimal.ZERO;
-											if (docamm.getTipoDocumentoEnum().isCompenso())
-												imCosto = ((CompensoBulk) docamm).getIm_lordo_percipiente();
-											else
-												imCosto = righeDocammVoce.stream().filter(IDocumentoAmministrativoRigaBulk.class::isInstance)
-														.map(IDocumentoAmministrativoRigaBulk.class::cast)
-														.map(el->{
-															if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast)
-																	.filter(Fattura_passivaBulk::isIstituzionale).isPresent())
-																return el.getIm_imponibile().add(el.getIm_iva());
-															return el.getIm_imponibile();
-														}).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-											Voce_epBulk aCdContoCosto = findContoCostoRicavo(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
-
-											testataPrimaNota.addDettaglioCostoRicavo(docamm.getTipoDocumentoEnum(), aCdContoCosto.getCd_voce_ep(), imCosto);
-
-											//Registrazione conto PATRIMONIALE
-											BigDecimal imPatrimoniale = righeDocammVoce.stream().map(el->{
-												if (Optional.of(docamm).filter(Fattura_attivaBulk.class::isInstance).isPresent())
-													return el.getIm_imponibile().add(el.getIm_iva());
-												return el.getIm_imponibile();
-											}).reduce(BigDecimal.ZERO, BigDecimal::add);
-											Voce_epBulk aContoPatr = this.findContoEp(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
-
-											testataPrimaNota.addDettaglioPatrimoniale(docamm.getTipoDocumentoEnum(), aContoPatr.getCd_voce_ep(), imPatrimoniale);
-										} catch (ComponentException|PersistencyException e) {
-											throw new ApplicationRuntimeException(e);
-										}
-									});
-								});
-							});
-						});
-					} catch (ComponentException|PersistencyException|RemoteException e) {
-						throw new ApplicationRuntimeException(e);
-					}
-				});
-			});
-		});
-
-
-		//		if (!docamm.getTipoDocumentoEnum().isFatturaAttiva() || !((Fattura_attivaBulk)docamm).getFl_liquidazione_differita().booleanValue()) {
-		//			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
-		//
-		//		}
-
-		return this.generaScrittura(docamm, testataPrimaNotaList);
-	} catch (Exception e) {
-		throw handleException(e);
-	}
-}
-*/
 	private Ass_ev_voceepBulk findAssEvVoceep(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
 		Ass_ev_voceepHome assEvVoceEpHome = (Ass_ev_voceepHome) getHome(userContext, Ass_ev_voceepBulk.class);
 		List<Ass_ev_voceepBulk> listAss = assEvVoceEpHome.findVociEpAssociateVoce(voceBilancio);
@@ -1400,65 +1198,23 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		return listAss.get(0);
 	}
-/*
-	private Ass_tipo_cori_voce_epBulk findAssTipoCoriVoceep(UserContext userContext, Contributo_ritenutaBulk contributoRitenuta) throws ComponentException, PersistencyException {
-		Ass_tipo_cori_voce_epHome assTipoCoriVoceEpHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
-		Ass_tipo_cori_voce_epBulk assCori = assTipoCoriVoceEpHome.getAssCoriEp(contributoRitenuta.getEsercizio(), contributoRitenuta.getCd_contributo_ritenuta(), contributoRitenuta.getTi_ente_percipiente(),
-				contributoRitenuta.getSezioneContoEp());
-		if (!Optional.ofNullable(assCori).isPresent())
-			throw new ApplicationException("Associazione tra il codice contributo " + contributoRitenuta.getCd_contributo_ritenuta() + " a carico " +
-					(contributoRitenuta.getTi_ente_percipiente().equals(Contributo_ritenutaBulk.TIPO_ENTE)?"ente": "percipiente") + " ed economica non trovata.");
-		return assCori;
-	}
-*/
+
 	private Voce_epBulk findContoIvaDebito(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
-		if (tipoDocumento.isDocumentoAttivo())
-			return findContoIvaDebitoCori(userContext, tipoDocumento);
-
-		Configurazione_cnrBulk configIva = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_IVA_DEBITO);
-
-		Voce_epHome voce_epHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
-		Voce_epBulk voceEpBulk = (Voce_epBulk)voce_epHome.findByPrimaryKey(new Voce_epBulk(configIva.getVal01(), CNRUserContext.getEsercizio(userContext)));
-
-		return Optional.ofNullable(voceEpBulk).filter(el -> Optional.ofNullable(el.getCd_voce_ep()).isPresent())
-				.orElseThrow(() -> new ApplicationRuntimeException("Conto Iva Debito indicato in Configurazione non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
-						" - Codice Contributo: " + configIva.getVal01() + ")"));
-	}
-
-	private Voce_epBulk findContoIvaCredito(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
-		if (tipoDocumento.isDocumentoAttivo())
-			return findContoIvaCreditoCori(userContext, tipoDocumento);
-
-		Configurazione_cnrBulk configIva = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_IVA_CREDITO);
-
-		Voce_epHome voce_epHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
-		Voce_epBulk voceEpBulk = (Voce_epBulk)voce_epHome.findByPrimaryKey(new Voce_epBulk(configIva.getVal01(), CNRUserContext.getEsercizio(userContext)));
-
-		return Optional.ofNullable(voceEpBulk).filter(el -> Optional.ofNullable(el.getCd_voce_ep()).isPresent())
-				.orElseThrow(() -> new ApplicationRuntimeException("Conto Iva Credito indicato in Configurazione non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
-						" - Codice Contributo: " + configIva.getVal01() + ")"));
-	}
-
-	private Voce_epBulk findContoIvaDebitoCori(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
 		Configurazione_cnrBulk configIva = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, null, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA);
 
-		String sezioneDocumento = tipoDocumento.isDocumentoPassivo()?TipoDocumentoEnum.FATTURA_PASSIVA.getSezioneCostoRicavo():
-				tipoDocumento.isDocumentoAttivo()?TipoDocumentoEnum.FATTURA_ATTIVA.getSezioneCostoRicavo():tipoDocumento.getSezioneCostoRicavo();
 		Ass_tipo_cori_voce_epHome aEffCoriHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
-		Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), configIva.getVal01(), Contributo_ritenutaBulk.TIPO_ENTE, sezioneDocumento);
+		Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), configIva.getVal01(), Contributo_ritenutaBulk.TIPO_ENTE, tipoDocumento.getSezioneCostoRicavo());
 
 		return Optional.ofNullable(aEffCori).flatMap(el -> Optional.ofNullable(el.getVoce_ep_contr())).filter(el -> Optional.ofNullable(el.getCd_voce_ep()).isPresent())
 				.orElseThrow(() -> new ApplicationRuntimeException("Conto ep di contropartita non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
 						" - Codice Contributo: " + configIva.getVal01() + " - Tipe E/P: " + Contributo_ritenutaBulk.TIPO_ENTE + " - Sezione: " + tipoDocumento.getSezioneCostoRicavo() + ")"));
 	}
 
-	private Voce_epBulk findContoIvaCreditoCori(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
+	private Voce_epBulk findContoIvaCredito(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
 		Configurazione_cnrBulk configIva = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, null, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA);
 
-		String sezioneDocumento = tipoDocumento.isDocumentoPassivo()?TipoDocumentoEnum.FATTURA_PASSIVA.getSezioneCostoRicavo():
-				tipoDocumento.isDocumentoAttivo()?TipoDocumentoEnum.FATTURA_ATTIVA.getSezioneCostoRicavo():tipoDocumento.getSezioneCostoRicavo();
 		Ass_tipo_cori_voce_epHome aEffCoriHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
-		Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), configIva.getVal01(), Contributo_ritenutaBulk.TIPO_ENTE, sezioneDocumento);
+		Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), configIva.getVal01(), Contributo_ritenutaBulk.TIPO_ENTE, tipoDocumento.getSezioneCostoRicavo());
 
 		return Optional.ofNullable(aEffCori).flatMap(el -> Optional.ofNullable(el.getVoce_ep())).filter(el -> Optional.ofNullable(el.getCd_voce_ep()).isPresent())
 				.orElseThrow(() -> new ApplicationRuntimeException("Conto ep di contropartita non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
@@ -1469,22 +1225,15 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.findAssEvVoceep(userContext, voceBilancio).getVoce_ep();
 	}
 
-	private Voce_epBulk findContoEp(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
+	private Voce_epBulk findContoAnag(UserContext userContext, IDocumentoAmministrativoBulk docamm, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
 		return Optional.ofNullable(this.findAssEvVoceep(userContext, voceBilancio).getVoce_ep_contr())
 				.orElseThrow(()->new ApplicationRuntimeException("Conto di contropartita mancante in associazione con la voce del piano finanziario " +
 						voceBilancio.getEsercizio() + "/" + voceBilancio.getTi_appartenenza() + "/"  +
 						voceBilancio.getTi_gestione() + "/" +
 						voceBilancio.getCd_elemento_voce() + "."));
 	}
-/*
-	private Voce_epBulk findContoEp(UserContext userContext, Contributo_ritenutaBulk contributoRitenuta) throws ComponentException, PersistencyException {
-		return Optional.ofNullable(this.findAssTipoCoriVoceep(userContext, contributoRitenuta).getVoce_ep_contr())
-				.orElseThrow(()->new ApplicationRuntimeException("Associazione tra il codice contributo " + contributoRitenuta.getCd_contributo_ritenuta() +
-						" a carico " + (contributoRitenuta.getTi_ente_percipiente().equals(Contributo_ritenutaBulk.TIPO_ENTE)?"ente": "percipiente") +
-						" ed economica non trovata."));
-	}
-*/
-	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoAmministrativoBulk docamm, List<TestataPrimaNota> testataPrimaNota) throws ComponentException {
+
+	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoAmministrativoBulk docamm, List<TestataPrimaNota> testataPrimaNota) throws ComponentException, PersistencyException {
 		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = new Scrittura_partita_doppiaBulk();
 		scritturaPartitaDoppia.setEsercizio(docamm.getEsercizio());
 		scritturaPartitaDoppia.setEsercizio_documento_amm(docamm.getEsercizio());
@@ -1492,44 +1241,47 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		scritturaPartitaDoppia.setCd_tipo_documento(docamm.getCd_tipo_doc_amm());
 		scritturaPartitaDoppia.setPg_numero_documento(docamm.getPg_doc_amm());
 
-		testataPrimaNota.stream().forEach(testata->{
-			List<String> contiPatrimoniali = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale).map(DettaglioPrimaNota::getCdConto).distinct().collect(Collectors.toList());
+		if (docamm instanceof Fattura_passivaBulk) {
+			Fattura_passivaBulk fatpas = (Fattura_passivaBulk)docamm;
 
-			contiPatrimoniali.stream().forEach(aContoPatrimoniale -> {
-				try {
-					Pair<String, BigDecimal> saldoPatrimoniale = testata.getSaldoPatrimoniale(aContoPatrimoniale);
-					addMovimentoCoge(userContext, scritturaPartitaDoppia, docamm, testata, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond());
-					logger.info("Conto: " + aContoPatrimoniale + " - Sezione: " + saldoPatrimoniale.getFirst() + " - Importo: " + saldoPatrimoniale.getSecond());
-				} catch (ComponentException e) {
-					throw new ApplicationRuntimeException(e);
-				}
+			testataPrimaNota.stream().forEach(testata->{
+				List<String> contiPatrimoniali = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale).map(DettaglioPrimaNota::getCdConto).distinct().collect(Collectors.toList());
+
+				contiPatrimoniali.stream().forEach(aContoPatrimoniale -> {
+					try {
+						Pair<String, BigDecimal> saldoPatrimoniale = testata.getSaldoPatrimoniale(aContoPatrimoniale);
+						addMovimentoCoge(userContext, scritturaPartitaDoppia, fatpas, testata, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond());
+						logger.info("Conto: " + aContoPatrimoniale + " - Sezione: " + saldoPatrimoniale.getFirst() + " - Importo: " + saldoPatrimoniale.getSecond());
+					} catch (ComponentException e) {
+						throw new ApplicationRuntimeException(e);
+					}
+				});
+
+				List<String> contiIva = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioIva).map(DettaglioPrimaNota::getCdConto).distinct().collect(Collectors.toList());
+
+				contiIva.stream().forEach(aContoIva -> {
+					try {
+						Pair<String, BigDecimal> saldoIva = testata.getSaldoIva(aContoIva);
+						addMovimentoCoge(userContext, scritturaPartitaDoppia, fatpas, testata, saldoIva.getFirst(), aContoIva, saldoIva.getSecond());
+						logger.info("Conto: " + aContoIva + " - Sezione: " + saldoIva.getFirst() + " - Importo: " + saldoIva.getSecond());
+					} catch (ComponentException e) {
+						throw new ApplicationRuntimeException(e);
+					}
+				});
+
+				List<String> contiCostoRicavo = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioCostoRicavo).map(DettaglioPrimaNota::getCdConto).distinct().collect(Collectors.toList());
+
+				contiCostoRicavo.stream().forEach(aContoCostoRicavo -> {
+					try {
+						Pair<String, BigDecimal> saldoCostoRicavo = testata.getSaldoCostoRicavo(aContoCostoRicavo);
+						addMovimentoCoge(userContext, scritturaPartitaDoppia, fatpas, testata, saldoCostoRicavo.getFirst(), aContoCostoRicavo, saldoCostoRicavo.getSecond());
+						logger.info("Conto: " + aContoCostoRicavo + " - Sezione: " + saldoCostoRicavo.getFirst() + " - Importo: " + saldoCostoRicavo.getSecond());
+					} catch (ComponentException e) {
+						throw new ApplicationRuntimeException(e);
+					}
+				});
 			});
-
-			List<String> contiIva = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioIva).map(DettaglioPrimaNota::getCdConto).distinct().collect(Collectors.toList());
-
-			contiIva.stream().forEach(aContoIva -> {
-				try {
-					Pair<String, BigDecimal> saldoIva = testata.getSaldoIva(aContoIva);
-					addMovimentoCoge(userContext, scritturaPartitaDoppia, docamm, testata, saldoIva.getFirst(), aContoIva, saldoIva.getSecond());
-					logger.info("Conto: " + aContoIva + " - Sezione: " + saldoIva.getFirst() + " - Importo: " + saldoIva.getSecond());
-				} catch (ComponentException e) {
-					throw new ApplicationRuntimeException(e);
-				}
-			});
-
-			List<String> contiCostoRicavo = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioCostoRicavo).map(DettaglioPrimaNota::getCdConto).distinct().collect(Collectors.toList());
-
-			contiCostoRicavo.stream().forEach(aContoCostoRicavo -> {
-				try {
-					Pair<String, BigDecimal> saldoCostoRicavo = testata.getSaldoCostoRicavo(aContoCostoRicavo);
-					addMovimentoCoge(userContext, scritturaPartitaDoppia, docamm, testata, saldoCostoRicavo.getFirst(), aContoCostoRicavo, saldoCostoRicavo.getSecond());
-					logger.info("Conto: " + aContoCostoRicavo + " - Sezione: " + saldoCostoRicavo.getFirst() + " - Importo: " + saldoCostoRicavo.getSecond());
-				} catch (ComponentException e) {
-					throw new ApplicationRuntimeException(e);
-				}
-			});
-		});
-
+		}
 		return scritturaPartitaDoppia;
 	}
 
@@ -1571,33 +1323,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
-	private boolean hasAutofattura(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
+	private boolean hasAutofattura(UserContext userContext, Fattura_passivaBulk fatpas) throws ComponentException {
 		try {
-			if (docamm.getTipoDocumentoEnum().isDocumentoPassivo()) {
-				Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
-				if (!fatpas.isCommerciale())
-					return false;
-				if (!fatpas.getFl_autofattura().booleanValue()) {
-					AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
-					AutofatturaBulk autof = autofatturaHome.findFor(fatpas);
-					return Optional.ofNullable(autof).isPresent();
-				}
-				return fatpas.getFl_autofattura();
+			if (!fatpas.getFl_autofattura().booleanValue()) {
+				AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
+				AutofatturaBulk autof = autofatturaHome.findFor(fatpas);
+				return Optional.ofNullable(autof).isPresent();
 			}
-			return false;
+			return fatpas.getFl_autofattura();
 		} catch (Exception e) {
 			throw handleException(e);
 		}
-	}
-
-	private boolean registraIvaCoge(UserContext userContext, IDocumentoAmministrativoBulk docamm) {
-		if (docamm.getTipoDocumentoEnum().isDocumentoPassivo()) {
-			Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
-			return fatpas.registraIvaCoge();
-		} else if (docamm.getTipoDocumentoEnum().isDocumentoAttivo()) {
-			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
-			return fatatt.registraIvaCoge();
-		}
-		return false;
 	}
 }

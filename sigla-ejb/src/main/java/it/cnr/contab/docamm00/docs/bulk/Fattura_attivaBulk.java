@@ -2434,6 +2434,11 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
         return scrittura_partita_doppia;
     }
 
+    @Override
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         if ("C".equals(this.getTi_fattura()))
             return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA);

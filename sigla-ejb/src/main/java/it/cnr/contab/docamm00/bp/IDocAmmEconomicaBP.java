@@ -41,4 +41,8 @@ public interface IDocAmmEconomicaBP {
     BusinessProcess getParentRoot();
 
     OggettoBulk getModel();
+
+    void setDirty(boolean dirty);
+
+    void setMessage(int status, String message);
 }
