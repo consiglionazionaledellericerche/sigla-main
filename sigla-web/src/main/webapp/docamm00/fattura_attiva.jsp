@@ -57,9 +57,8 @@ function doRistampaFatturaElettronica() {
 					{ "tabFatturaAttivaDettaglio","Dettaglio","/docamm00/tab_fattura_attiva_dettaglio.jsp" }, 
 					{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" },
 					{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" },
-					{ "tabFatturaAttivaObbligazioni","Impegni","/docamm00/tab_fattura_attiva_obbligazioni.jsp" }
-					//,{ "tabFatturaAttivaAllegati","Allegati Aggiunti","/docamm00/tab_fattura_attiva_allegati.jsp" }
-					//,{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" }
+					{ "tabFatturaAttivaObbligazioni","Impegni","/docamm00/tab_fattura_attiva_obbligazioni.jsp" },
+                    { "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp" }
 				};
 
 		if (ndc == null) {
@@ -86,7 +85,9 @@ function doRistampaFatturaElettronica() {
 					{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" },
 					{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" },
 					{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" },
-					{ "tabFatturaAttivaAllegati","Allegati Aggiunti","/docamm00/tab_fattura_attiva_allegati.jsp" }
+					{ "tabFatturaAttivaAllegati","Allegati Aggiunti","/docamm00/tab_fattura_attiva_allegati.jsp" },
+					{ "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp" }
+
 				};
 		}else {
 			pages = new String[][] {
@@ -95,7 +96,8 @@ function doRistampaFatturaElettronica() {
 					{ "tabFatturaAttivaDettaglio","Dettaglio","/docamm00/tab_fattura_attiva_dettaglio.jsp" }, 
 					{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" },
 					{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" },
-					{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" }
+					{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" },
+					{ "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp" }
 				};
 		}
 	}
