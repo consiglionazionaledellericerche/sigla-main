@@ -306,4 +306,9 @@ public void setTipoContributoRitenuta(it.cnr.contab.compensi00.tabrif.bulk.Tipo_
 			return this.getObbligazioneScadenzario();
 		return new Accertamento_scadenzarioBulk(this.getCd_cds_accertamento(),this.getEsercizio_accertamento(),this.getEsercizio_ori_accertamento(),this.getPg_accertamento(),this.getPg_accertamento_scadenzario());
 	}
+
+	public String getSezioneCostoRicavo() {
+		String mySezione = this.getCompenso().getTipoDocumentoEnum().getSezioneCostoRicavo();
+		return this.getAmmontare().compareTo(BigDecimal.ZERO)<0?Movimento_cogeBulk.getControSezione(mySezione):mySezione;
+	}
 }

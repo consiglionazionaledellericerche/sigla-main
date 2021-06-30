@@ -94,6 +94,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isCompenso())
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}
 
@@ -117,6 +119,8 @@ public enum TipoDocumentoEnum {
 		if (this.isFatturaAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isNotaCreditoAttiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isCompenso())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}

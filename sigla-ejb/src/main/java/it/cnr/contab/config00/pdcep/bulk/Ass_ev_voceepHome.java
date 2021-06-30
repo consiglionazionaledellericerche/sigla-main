@@ -63,4 +63,11 @@ public Ass_ev_voceepHome(java.sql.Connection conn,PersistentCache persistentCach
 		sql.addSQLClause(FindClause.AND,"CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,elem.getCd_elemento_voce());
 		return fetchAll(sql);
 	}
+
+	public List<Ass_ev_voceepBulk> findVociEpAssociateConto(Voce_epBulk contoEp) throws PersistencyException{
+		it.cnr.jada.persistency.sql.SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,contoEp.getEsercizio());
+		sql.addSQLClause(FindClause.AND,"CD_VOCE_EP",SQLBuilder.EQUALS,contoEp.getCd_voce_ep());
+		return fetchAll(sql);
+	}
 }
