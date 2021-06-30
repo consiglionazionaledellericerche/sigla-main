@@ -151,6 +151,10 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_CORI_SPECIALE = "CORI_SPECIALE";
 	public final static String SK_IVA = "IVA";
 
+	public final static String PK_VOCEEP_SPECIALE = "VOCEEP_SPECIALE";
+	public final static String SK_IVA_CREDITO = "IVA_CREDITO";
+	public final static String SK_IVA_DEBITO = "IVA_DEBITO";
+
 	public Configurazione_cnrBulk() {
 	super();
 }

@@ -22,7 +22,7 @@ package it.cnr.contab.docamm00.docs.bulk;
  * Creation date: (12/13/2001 4:02:04 PM)
  * @author: Roberto Peli
  */
-public interface IDocumentoAmministrativoRigaBulk {
+public interface IDocumentoAmministrativoRigaBulk extends IDocumentoAmministrativoRigaCogeBulk {
 	public enum tipo {
 		GEN_CORA_E, GEN_CORV_E
 	}
@@ -81,10 +81,4 @@ public it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk getVoce_iva();
 public boolean isDirectlyLinkedToDC();
 public boolean isRiportata();
 public void setIm_diponibile_nc(java.math.BigDecimal im_diponibile_nc);
-
-public java.lang.Integer getCd_terzo();
-
-java.sql.Timestamp getDt_da_competenza_coge();
-
-java.sql.Timestamp getDt_a_competenza_coge();
 }

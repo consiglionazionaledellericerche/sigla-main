@@ -2441,4 +2441,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
             return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA);
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }
+
+    public boolean registraIvaCoge() {
+        return !this.getFl_liquidazione_differita();
+    }
 }

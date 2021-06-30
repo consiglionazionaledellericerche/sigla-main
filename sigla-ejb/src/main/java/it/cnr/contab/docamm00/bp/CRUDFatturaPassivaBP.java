@@ -613,7 +613,10 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     setErrorMessage("Attenzione: sebbene il salvataggio sia stato effettuato correttamente, si ricorda che sono stati eliminati beni inventariati. Provvedere all'aggiornamento dell'inventario!");
                 }
             }
-            return super.initializeModelForEdit(context, bulk);
+            bulk = super.initializeModelForEdit(context, bulk);
+
+            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(context.getUserContext(), (Fattura_passivaBulk)bulk);
+            return bulk;
         } catch (Throwable e) {
             throw new it.cnr.jada.action.BusinessProcessException(e);
         }

@@ -17,9 +17,18 @@
 
 package it.cnr.contab.compensi00.docs.bulk;
 
+import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaCogeBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.jada.bulk.*;
 
-public class Contributo_ritenutaBulk extends Contributo_ritenutaBase {
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Optional;
+
+public class Contributo_ritenutaBulk extends Contributo_ritenutaBase implements IDocumentoAmministrativoRigaCogeBulk {
 
 	private java.util.Collection dettagli;
 	private it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBulk tipoContributoRitenuta;
@@ -49,7 +58,6 @@ public java.math.BigDecimal getAliquotaEnte() {
 /**
  * Insert the method's description here.
  * Creation date: (05/03/2002 12.31.32)
- * @param newAliquotaEnte java.lang.Long
  */
 public java.math.BigDecimal getAliquotaPercepiente() {
 
@@ -269,4 +277,33 @@ public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scaden
 public void setTipoContributoRitenuta(it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBulk newTipoContributoRitenuta) {
 	tipoContributoRitenuta = newTipoContributoRitenuta;
 }
+
+	public boolean isContributoEnte() {
+		return Contributo_ritenutaBulk.TIPO_ENTE.equals(this.getTi_ente_percipiente());
+	}
+	public boolean isContributoPercipiente() {
+		return Contributo_ritenutaBulk.TIPO_PERCEPIENTE.equals(this.getTi_ente_percipiente());
+	}
+
+	@Override
+	public Integer getCd_terzo() {
+		return Optional.ofNullable(this.getCompenso()).map(CompensoBulk::getCd_terzo).orElse(null);
+	}
+
+	@Override
+	public Timestamp getDt_a_competenza_coge() {
+		return Optional.ofNullable(this.getCompenso()).map(CompensoBulk::getDt_a_competenza_coge).orElse(null);
+	}
+
+	@Override
+	public Timestamp getDt_da_competenza_coge() {
+		return Optional.ofNullable(this.getCompenso()).map(CompensoBulk::getDt_da_competenza_coge).orElse(null);
+	}
+
+	@Override
+	public IScadenzaDocumentoContabileBulk getScadenzaDocumentoContabile() {
+		if (Optional.ofNullable(this.getObbligazioneScadenzario()).isPresent())
+			return this.getObbligazioneScadenzario();
+		return new Accertamento_scadenzarioBulk(this.getCd_cds_accertamento(),this.getEsercizio_accertamento(),this.getEsercizio_ori_accertamento(),this.getPg_accertamento(),this.getPg_accertamento_scadenzario());
+	}
 }

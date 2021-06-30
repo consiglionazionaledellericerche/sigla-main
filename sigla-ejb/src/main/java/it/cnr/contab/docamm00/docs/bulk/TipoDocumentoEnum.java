@@ -98,13 +98,26 @@ public enum TipoDocumentoEnum {
 	}
 
 	public String getSezioneIva() {
-		String sezioneCosto = this.getSezioneCostoRicavo();
-		if (sezioneCosto!=null)
-			return sezioneCosto.equals(Movimento_cogeBulk.SEZIONE_DARE)?Movimento_cogeBulk.SEZIONE_AVERE:Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isFatturaPassiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isNotaCreditoPassiva())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isFatturaAttiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isNotaCreditoAttiva())
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}
 
 	public String getSezionePatrimoniale() {
-		return this.getSezioneIva();
+		if (this.isFatturaPassiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isNotaCreditoPassiva())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isFatturaAttiva())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isNotaCreditoAttiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		return null;
 	}
 }
