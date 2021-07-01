@@ -1085,6 +1085,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				return this.proposeScritturaPartitaDoppiaAnticipo(userContext, (AnticipoBulk) docamm);
 			else if (docamm.getTipoDocumentoEnum().isCompenso())
 				return this.proposeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk) docamm);
+			else if (docamm.getTipoDocumentoEnum().isMissione())
+				return this.proposeScritturaPartitaDoppiaMissione(userContext, (MissioneBulk) docamm);
 			return null;
 		} catch (Exception e) {
 			throw handleException(e);
@@ -1260,6 +1262,30 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
+	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException {
+		try {
+			//Le missioni pagate con compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
+			if (missione.getFl_associato_compenso())
+				return null;
+
+			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
+
+			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(missione.getCd_terzo(), missione.getDt_inizio_missione(), missione.getDt_fine_missione());
+			testataPrimaNotaList.add(testataPrimaNota);
+
+			//Registrazione conto COSTO MISSIONE
+			BigDecimal imCostoMissione = missione.getIm_totale_missione();
+			if (imCostoMissione.compareTo(BigDecimal.ZERO)!=0) {
+				Pair<Voce_epBulk, Voce_epBulk> pairContoCostoMissione = this.findPairCosto(userContext, missione);
+				testataPrimaNota.openDettaglioCostoRicavo(missione.getTipoDocumentoEnum(), pairContoCostoMissione.getFirst().getCd_voce_ep(), imCostoMissione);
+				testataPrimaNota.openDettaglioPatrimoniale(missione.getTipoDocumentoEnum(), pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoMissione);
+			}
+			return this.generaScrittura(userContext, missione, testataPrimaNotaList, false);
+		} catch (Exception e) {
+			throw handleException(e);
+		}
+	}
+
 	/**
 	 * Ritorna il record Ass_ev_voceepBulk che risulta associato alla voce di bilancio indicata.
 	 */
@@ -1334,6 +1360,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, AnticipoBulk anticipo) throws ComponentException, PersistencyException {
 		Voce_epBulk voceCosto = this.findAssEvVoceep(userContext, anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce()).getVoce_ep();
 		Voce_epBulk voceContropartita = this.findContoAnag(userContext, anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce());
+		return Pair.of(voceCosto, voceContropartita);
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, MissioneBulk missione) throws ComponentException, PersistencyException {
+		Voce_epBulk voceCosto = this.findAssEvVoceep(userContext, missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce()).getVoce_ep();
+		Voce_epBulk voceContropartita = this.findContoAnag(userContext, missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce());
 		return Pair.of(voceCosto, voceContropartita);
 	}
 

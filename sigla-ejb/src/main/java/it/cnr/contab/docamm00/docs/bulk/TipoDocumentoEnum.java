@@ -56,6 +56,10 @@ public enum TipoDocumentoEnum {
 		return Numerazione_doc_ammBulk.TIPO_COMPENSO.equals(this.value);
 	}
 
+	public boolean isMissione() {
+		return Numerazione_doc_ammBulk.TIPO_MISSIONE.equals(this.value);
+	}
+
 	public boolean isFatturaAttiva() {
 		return Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA.equals(this.value);
 	}
@@ -110,6 +114,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isMissione())
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}
 
@@ -137,6 +143,8 @@ public enum TipoDocumentoEnum {
 		if (this.isCompenso())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isAnticipo())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
