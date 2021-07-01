@@ -58,9 +58,11 @@
 	<tr><td>
 		<%	JSPUtils.tabbed(	pageContext, "tab",
 								new String[][] {
-								{ "tabAnagrafico","Anagrafico","/missioni00/tab_anticipo_anagrafico.jsp" },
-								{ "tabAnticipo","Anticipo","/missioni00/tab_anticipo.jsp" },
-								{ "tabRimborsoAnticipo","Rimborso","/missioni00/tab_rimborso_anticipo.jsp" }},								
+                                    { "tabAnagrafico","Anagrafico","/missioni00/tab_anticipo_anagrafico.jsp" },
+                                    { "tabAnticipo","Anticipo","/missioni00/tab_anticipo.jsp" },
+                                    { "tabRimborsoAnticipo","Rimborso","/missioni00/tab_rimborso_anticipo.jsp" },
+                                    { "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp"}
+								},
 								bp.getTab("tab"),
 								"center", "100%", null, 
 								true);

@@ -27,10 +27,12 @@
 					pageContext,
 					"tab",
 					new String[][] {
-					{ "tabDocumentoPassivo","Documento Generico","/docamm00/tab_documento_passivo.jsp" },
-					{ "tabDocumentoPassivoDettaglio","Dettaglio","/docamm00/tab_documento_passivo_dettaglio.jsp" }, 
-					{ "tabDocumentoGenericoObbligazioni","Impegni","/docamm00/tab_documento_generico_obbligazioni.jsp" },
-					{ "tabLetteraPagamentoEstero","Documento 1210","/docamm00/tab_generico_lettera_pagam_estero.jsp"}},
+                        { "tabDocumentoPassivo","Documento Generico","/docamm00/tab_documento_passivo.jsp" },
+                        { "tabDocumentoPassivoDettaglio","Dettaglio","/docamm00/tab_documento_passivo_dettaglio.jsp" },
+                        { "tabDocumentoGenericoObbligazioni","Impegni","/docamm00/tab_documento_generico_obbligazioni.jsp" },
+                        { "tabLetteraPagamentoEstero","Documento 1210","/docamm00/tab_generico_lettera_pagam_estero.jsp"},
+                        {"tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp"}
+					},
 					bp.getTab("tab"),
 					"center",
 					"100%",

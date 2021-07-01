@@ -27,9 +27,11 @@
 					pageContext,
 					"tab",
 					new String[][] {
-					{ "tabDocumentoAttivo","Documento Generico","/docamm00/tab_documento_attivo.jsp" },
-					{ "tabDocumentoAttivoDettaglio","Dettaglio","/docamm00/tab_documento_attivo_dettaglio.jsp" },
-					{ "tabDocumentoGenericoAccertamenti","Accertamenti","/docamm00/tab_documento_generico_accertamenti.jsp" }},
+                        { "tabDocumentoAttivo","Documento Generico","/docamm00/tab_documento_attivo.jsp" },
+                        { "tabDocumentoAttivoDettaglio","Dettaglio","/docamm00/tab_documento_attivo_dettaglio.jsp" },
+                        { "tabDocumentoGenericoAccertamenti","Accertamenti","/docamm00/tab_documento_generico_accertamenti.jsp" },
+                        { "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp"}
+					},
 					bp.getTab("tab"),
 					"center",
 					"100%",

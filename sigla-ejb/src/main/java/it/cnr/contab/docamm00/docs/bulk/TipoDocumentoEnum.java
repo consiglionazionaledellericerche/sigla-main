@@ -28,7 +28,14 @@ public enum TipoDocumentoEnum {
 	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA),
 	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA),
 	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA),
-	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA);
+	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA),
+	GEN_CORA_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
+	GEN_CORV_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
+	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E),
+	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON),
+	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON),
+	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S),
+	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E);
 
 	private final String value;
 
