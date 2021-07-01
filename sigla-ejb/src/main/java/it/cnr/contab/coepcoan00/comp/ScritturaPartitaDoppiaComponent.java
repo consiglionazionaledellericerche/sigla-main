@@ -1179,10 +1179,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					});
 				});
 			});
-			//		if (!docamm.getTipoDocumentoEnum().isFatturaAttiva() || !((Fattura_attivaBulk)docamm).getFl_liquidazione_differita().booleanValue()) {
-			//			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
-			//
-			//		}
 			return this.generaScrittura(userContext, fatpas, testataPrimaNotaList, true);
 		} catch (Exception e) {
 			throw handleException(e);
@@ -1191,13 +1187,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompenso(UserContext userContext, CompensoBulk compenso) throws ComponentException {
 		try {
-			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
-
 			List<Contributo_ritenutaBulk> righeCori = compenso.getChildren();
 			Optional<AnticipoBulk> optAnticipo = Optional.ofNullable(compenso.getMissione()).flatMap(el->Optional.ofNullable(el.getAnticipo()));
 
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(compenso.getCd_terzo(), compenso.getDt_da_competenza_coge(), compenso.getDt_a_competenza_coge());
-			testataPrimaNotaList.add(testataPrimaNota);
 
 			//Nel caso dei compensi rilevo subito il costo prelevando le informazioni dalla riga del compenso stesso
 			//Registrazione conto COSTO COMPENSO
@@ -1236,7 +1229,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				}
 			});
 
-			return this.generaScrittura(userContext, compenso, testataPrimaNotaList, false);
+			return this.generaScrittura(userContext, compenso, Arrays.asList(testataPrimaNota), false);
 		} catch (Exception e) {
 			throw handleException(e);
 		}
@@ -1244,10 +1237,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAnticipo(UserContext userContext, AnticipoBulk anticipo) throws ComponentException {
 		try {
-			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
-
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(anticipo.getCd_terzo(), anticipo.getDt_da_competenza_coge(), anticipo.getDt_a_competenza_coge());
-			testataPrimaNotaList.add(testataPrimaNota);
 
 			//Registrazione conto COSTO ANTICIPO
 			BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
@@ -1256,7 +1246,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				testataPrimaNota.openDettaglioCostoRicavo(anticipo.getTipoDocumentoEnum(), pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
 				testataPrimaNota.openDettaglioPatrimoniale(anticipo.getTipoDocumentoEnum(), pairContoCostoAnticipo.getSecond().getCd_voce_ep(), imCostoAnticipo);
 			}
-			return this.generaScrittura(userContext, anticipo, testataPrimaNotaList, false);
+			return this.generaScrittura(userContext, anticipo, Arrays.asList(testataPrimaNota), false);
 		} catch (Exception e) {
 			throw handleException(e);
 		}
@@ -1268,10 +1258,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (missione.getFl_associato_compenso())
 				return null;
 
-			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
-
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(missione.getCd_terzo(), missione.getDt_inizio_missione(), missione.getDt_fine_missione());
-			testataPrimaNotaList.add(testataPrimaNota);
 
 			//Registrazione conto COSTO MISSIONE
 			BigDecimal imCostoMissione = missione.getIm_totale_missione();
@@ -1280,7 +1267,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				testataPrimaNota.openDettaglioCostoRicavo(missione.getTipoDocumentoEnum(), pairContoCostoMissione.getFirst().getCd_voce_ep(), imCostoMissione);
 				testataPrimaNota.openDettaglioPatrimoniale(missione.getTipoDocumentoEnum(), pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoMissione);
 			}
-			return this.generaScrittura(userContext, missione, testataPrimaNotaList, false);
+
+			//se esiste anticipo devo fare registrazioni inverse
+			Optional.ofNullable(missione.getAnticipo()).ifPresent(anticipo->{
+				try {
+					BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
+					Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = this.findPairCosto(userContext, anticipo);
+					testataPrimaNota.closeDettaglioCostoRicavo(anticipo.getTipoDocumentoEnum(), pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
+					testataPrimaNota.closeDettaglioPatrimoniale(anticipo.getTipoDocumentoEnum(), pairContoCostoAnticipo.getSecond().getCd_voce_ep(), imCostoAnticipo);
+				} catch (ComponentException|PersistencyException e) {
+					throw new ApplicationRuntimeException(e);
+				}
+			});
+			return this.generaScrittura(userContext, missione, Arrays.asList(testataPrimaNota), false);
 		} catch (Exception e) {
 			throw handleException(e);
 		}

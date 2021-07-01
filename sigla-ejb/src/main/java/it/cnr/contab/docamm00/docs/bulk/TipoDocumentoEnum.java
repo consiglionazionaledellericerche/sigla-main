@@ -22,6 +22,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 
 public enum TipoDocumentoEnum {
 	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO),
+	MISSIONE(Numerazione_doc_ammBulk.TIPO_MISSIONE),
 	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO),
 	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA),
 	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA),
