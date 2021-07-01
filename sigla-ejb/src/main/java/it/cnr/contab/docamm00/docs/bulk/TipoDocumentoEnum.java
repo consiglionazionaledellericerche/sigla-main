@@ -21,6 +21,7 @@ import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 
 public enum TipoDocumentoEnum {
+	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO),
 	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO),
 	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA),
 	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA),
@@ -38,6 +39,10 @@ public enum TipoDocumentoEnum {
 
 	TipoDocumentoEnum(String value) {
 		this.value = value;
+	}
+
+	public boolean isAnticipo() {
+		return Numerazione_doc_ammBulk.TIPO_ANTICIPO.equals(this.value);
 	}
 
 	public boolean isCompenso() {
@@ -96,6 +101,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isCompenso())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isAnticipo())
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}
 
@@ -121,6 +128,8 @@ public enum TipoDocumentoEnum {
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isCompenso())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isAnticipo())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
