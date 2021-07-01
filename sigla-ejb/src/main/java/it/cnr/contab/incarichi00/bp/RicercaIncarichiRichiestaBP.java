@@ -738,15 +738,26 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementRichiesta.appendChild(elementDataInizio);
 
 		Element elementDataFine = xmldoc.createElement(getTagRadice()+":datafine");
-		String dataf=null;
+		java.sql.Timestamp tsDataFine = null;
 		if(incarico.getIncaricoVariazione()!=null && incarico.getIncaricoVariazione().getDt_fine_validita()!=null)
-			dataf = formatter.format(incarico.getIncaricoVariazione().getDt_fine_validita()).toString();
+			tsDataFine = incarico.getIncaricoVariazione().getDt_fine_validita();
 		else if(incarico.getDt_fine_validita()!=null)
-			dataf = formatter.format(incarico.getDt_fine_validita()).toString();
-		dato = dataf; 
+			tsDataFine = incarico.getDt_fine_validita();
+		dato = formatter.format(tsDataFine);
 		Node nodeDataFine = xmldoc.createTextNode(dato!=null?dato:"");
 		elementDataFine.appendChild(nodeDataFine);
 		elementRichiesta.appendChild(elementDataFine);
+
+		Element elementDataProroga = xmldoc.createElement(getTagRadice()+":dataproroga");
+		String datap=null;
+		if(incarico.getDt_proroga()!=null) {
+			if (tsDataFine == null || incarico.getDt_proroga().compareTo(tsDataFine) > 0)
+				datap = formatter.format(incarico.getDt_proroga());
+		}
+		dato = datap;
+		Node nodeDataProroga = xmldoc.createTextNode(dato!=null?dato:"");
+		elementDataProroga.appendChild(nodeDataProroga);
+		elementRichiesta.appendChild(elementDataProroga);
 
 		Element elementDataStipula = xmldoc.createElement(getTagRadice()+":datastipula");
 		String datas=null;
