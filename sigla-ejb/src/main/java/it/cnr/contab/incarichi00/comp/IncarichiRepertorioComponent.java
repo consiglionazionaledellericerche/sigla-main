@@ -426,6 +426,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                 if (!estensioneFile.equalsIgnoreCase("pdf")) {
                     if (allegato.isCurriculumVincitore())
                         throw new ApplicationException("File non valido!\nIl formato del file consentito per il Curriculum Vitae è il pdf.");
+                    if (allegato.isConflittoInteressi())
+                        throw new ApplicationException("File non valido!\nIl formato del file consentito per l'Attestazione Insussistenza Conflitto Interessi è il pdf.");
                     if (allegato.isAggiornamentoCurriculumVincitore())
                         throw new ApplicationException("File non valido!\nIl formato del file consentito per l'aggiornamento del Curriculum Vitae è il pdf.");
                 }
@@ -963,7 +965,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                     }
 					if (nodeAllegato!=null) {
 						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
@@ -1012,7 +1014,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                     }
 					if (nodeAllegato!=null) {
 						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);

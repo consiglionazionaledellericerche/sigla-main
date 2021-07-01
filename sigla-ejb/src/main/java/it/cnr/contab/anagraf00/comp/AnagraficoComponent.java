@@ -2586,7 +2586,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                     for (RapportoBulk rapportoBulk : rapportiValidi){
                         if (rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.BORSA_DI_STUDIO) ||
                                 rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.ASSEGNI_DI_RICERCA)){
-                            SendMail.sendErrorMail("Invio Dati ACE: Codice fiscale "  + anagraficoBulk.getCodice_fiscale() +" non trovato.", "Per il codice fiscale: "  + anagraficoBulk.getCodice_fiscale() +" non è stata trovata la persona in ACE");
+                            logger.error("Invio Dati ACE: Codice fiscale {} non trovato. Per il codice fiscale: {} non è stata trovata la persona in ACE", anagraficoBulk.getCodice_fiscale(), anagraficoBulk.getCodice_fiscale());
                             break;
                         }
                     }

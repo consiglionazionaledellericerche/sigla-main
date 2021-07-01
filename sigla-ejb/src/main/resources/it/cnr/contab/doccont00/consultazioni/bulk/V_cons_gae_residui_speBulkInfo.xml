@@ -725,7 +725,7 @@
 			<columnFieldProperty name="rimasti_da_pagare"/>
 			<columnFieldProperty name="pagato_totale"/>		
 		</columnSet>
-		
+
 		<columnSet name="SPEGAEVOCVARP">
              <columnFieldProperty name="esercizio" />
              <columnFieldProperty name="cd_centro_responsabilita" />
@@ -933,7 +933,37 @@
 			<columnFieldProperty name="rimasti_da_pagare"/>
 			<columnFieldProperty name="pagato_totale"/>		
 		</columnSet>
-		
+		<columnSet name="SPEGAE2ESRESVOC">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="esercizio_res" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="ds_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="ds_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="ds_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="ds_elemento_voce" />
+			<columnFieldProperty name="im_stanz_res_improprio" />
+			<columnFieldProperty name="var_piu_stanz_res_imp" />
+			<columnFieldProperty name="var_meno_stanz_res_imp" />
+			<columnFieldProperty name="im_obbl_res_imp" />
+			<columnFieldProperty name="im_obbl_res_pro" />
+			<columnFieldProperty name="var_piu_obbl_res_pro" />
+			<columnFieldProperty name="var_meno_obbl_res_pro" />
+			<columnFieldProperty name="im_mandati_reversali_pro" />
+			<columnFieldProperty name="im_mandati_reversali_imp" />
+			<columnFieldProperty name="ass_res_imp"/>
+			<columnFieldProperty name="iniziale"/>
+			<columnFieldProperty name="disp_res"/>
+			<columnFieldProperty name="rimasti_da_pagare"/>
+			<columnFieldProperty name="pagato_totale"/>
+		</columnSet>
+
 		<columnSet name="SPEGAE2VOCVARP">
              <columnFieldProperty name="esercizio" />
              <columnFieldProperty name="cd_centro_responsabilita" />
@@ -1131,6 +1161,35 @@
 			<findFieldProperty name="disp_res"/>
 			<findFieldProperty name="rimasti_da_pagare"/>
 			<findFieldProperty name="pagato_totale"/>			
+		</freeSearchSet>
+		<freeSearchSet name="SPEGAE2ESRESVOC">
+			<findFieldProperty name="esercizio_res" />
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="ds_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />
+			<findFieldProperty name="ds_progetto" />
+			<findFieldProperty name="cd_commessa" />
+			<findFieldProperty name="ds_commessa" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="ds_elemento_voce" />
+			<findFieldProperty name="im_stanz_res_improprio" />
+			<findFieldProperty name="var_piu_stanz_res_imp" />
+			<findFieldProperty name="var_meno_stanz_res_imp" />
+			<findFieldProperty name="im_obbl_res_imp" />
+			<findFieldProperty name="im_obbl_res_pro" />
+			<findFieldProperty name="var_piu_obbl_res_pro" />
+			<findFieldProperty name="var_meno_obbl_res_pro" />
+			<findFieldProperty name="im_mandati_reversali_pro" />
+			<findFieldProperty name="im_mandati_reversali_imp" />
+			<findFieldProperty name="ass_res_imp"/>
+			<findFieldProperty name="iniziale"/>
+			<findFieldProperty name="disp_res"/>
+			<findFieldProperty name="rimasti_da_pagare"/>
+			<findFieldProperty name="pagato_totale"/>
 		</freeSearchSet>
 		<freeSearchSet name="SPEGAEVOCVARP">
 			<findFieldProperty name="cd_centro_responsabilita" />

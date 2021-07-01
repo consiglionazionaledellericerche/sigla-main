@@ -119,196 +119,200 @@ public class ConsDispCompetenzaResiduoIstitutoBP extends ConsultazioniBP {
 	}
 
 	protected void init(it.cnr.jada.action.Config config,ActionContext context) throws BusinessProcessException {
-		   Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
-		   String cds = CNRUserContext.getCd_cds(context.getUserContext());
-		   CompoundFindClause clauses = new CompoundFindClause();
-		   String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(context.getUserContext());
-		  
-		   Unita_organizzativaBulk uo = new Unita_organizzativaBulk(uo_scrivania);
-		   if (this instanceof ConsDispCompResIstCdrGaeBP||this instanceof ConsDispCompResIstVoceBP
-				   ||this instanceof ConsDispCompResEntIstCdrGaeBP||this instanceof ConsDispCompResEntIstVoceBP	   )
-		   {
-   
-			   if(!isUoEnte(context) && !uo.isUoCds())	 {					
+		if (context.getUserContext() != null){
+			Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
+			String cds = CNRUserContext.getCd_cds(context.getUserContext());
+			CompoundFindClause clauses = new CompoundFindClause();
+			String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(context.getUserContext());
+
+			Unita_organizzativaBulk uo = new Unita_organizzativaBulk(uo_scrivania);
+			if (this instanceof ConsDispCompResIstCdrGaeBP||this instanceof ConsDispCompResIstVoceBP
+					||this instanceof ConsDispCompResEntIstCdrGaeBP||this instanceof ConsDispCompResEntIstVoceBP	   )
+			{
+
+				if(!isUoEnte(context) && !uo.isUoCds())	 {
 					clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
 					clauses.addClause("AND", "uo",SQLBuilder.EQUALS, uo_scrivania);
 				}
-			   if (!isUoEnte(context) && uo.isUoCds()) {
-			   	clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-			   }
-			   if (isUoEnte(context))
+				if (!isUoEnte(context) && uo.isUoCds()) {
 					clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-				
-				setBaseclause(clauses);	
-		   	
+				}
+				if (isUoEnte(context))
+					clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+
+				setBaseclause(clauses);
+
 				if (getPathConsultazione()==null && (this instanceof ConsDispCompResIstCdrGaeBP||this instanceof ConsDispCompResIstVoceBP)) {
-					setPathConsultazione(this.LIV_BASECDS);					
+					setPathConsultazione(this.LIV_BASECDS);
 					setLivelloConsultazione(this.LIV_BASECDS);
-				} 
-					
+				}
+
 				if (getPathConsultazione()==null && (this instanceof ConsDispCompResEntIstCdrGaeBP||this instanceof ConsDispCompResEntIstVoceBP)) {
-					setPathConsultazione(this.LIV_ENTCDS);					
+					setPathConsultazione(this.LIV_ENTCDS);
 					setLivelloConsultazione(this.LIV_ENTCDS);
-				} 
-		   	
-		   }
-				if (this instanceof ConsDispCompResDipIstBP){
-					
-					   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-					   
-						setBaseclause(clauses);	
-						if (getPathConsultazione()==null) {
-							setPathConsultazione(this.LIV_DIP);					
-							setLivelloConsultazione(this.LIV_DIP);
-					} 	   
-				 }
-				
-				if (this instanceof ConsDispCompResVoceNatBP){
-					
-					  clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-					   
-					  setBaseclause(clauses);	
-						if (getPathConsultazione()==null) {
-							setPathConsultazione(this.LIV_VOCE);					
-							setLivelloConsultazione(this.LIV_VOCE);
-					} 	   
-				 }
-				
+				}
+
+			}
+			if (this instanceof ConsDispCompResDipIstBP){
+
+				clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+
+				setBaseclause(clauses);
+				if (getPathConsultazione()==null) {
+					setPathConsultazione(this.LIV_DIP);
+					setLivelloConsultazione(this.LIV_DIP);
+				}
+			}
+
+			if (this instanceof ConsDispCompResVoceNatBP){
+
+				clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+
+				setBaseclause(clauses);
+				if (getPathConsultazione()==null) {
+					setPathConsultazione(this.LIV_VOCE);
+					setLivelloConsultazione(this.LIV_VOCE);
+				}
+			}
+		}
+
 			super.init(config,context);
 			initVariabili(context,null,getPathConsultazione()); 
 		}
 
 	   public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
-		   try {
-		   	if (this instanceof ConsDispCompResIstVoceBP){
-		   			if ((pathProvenienza==null) && (livello_destinazione.equals(this.LIV_BASECDSVOCE))) {
-		   				setPathConsultazione(this.LIV_BASECDSVOCE);
-		   				setLivelloConsultazione(this.LIV_BASECDSVOCE);
-		   			}
-			   		if (pathConsultazione.equals(this.LIV_BASECDSVOCE) && (livello_destinazione.equals(this.LIV_BASECDSVOCEPROG))){
-					 		setPathConsultazione(this.LIV_BASECDSVOCEPROG);
+			if (context.getUserContext() != null){
+				try {
+					if (this instanceof ConsDispCompResIstVoceBP){
+						if ((pathProvenienza==null) && (livello_destinazione.equals(this.LIV_BASECDSVOCE))) {
+							setPathConsultazione(this.LIV_BASECDSVOCE);
+							setLivelloConsultazione(this.LIV_BASECDSVOCE);
+						}
+						if (pathConsultazione.equals(this.LIV_BASECDSVOCE) && (livello_destinazione.equals(this.LIV_BASECDSVOCEPROG))){
+							setPathConsultazione(this.LIV_BASECDSVOCEPROG);
 							setLivelloConsultazione(this.LIV_BASECDSVOCEPROG);
+						}
+						if (pathConsultazione.equals(this.LIV_BASECDSVOCE) && (livello_destinazione.equals(this.LIV_BASECDSVOCECDR))){
+							setPathConsultazione(this.LIV_BASECDSVOCECDR);
+							setLivelloConsultazione(this.LIV_BASECDSVOCECDR);
+						}
+						if (pathProvenienza!=null){
+							setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+							setLivelloConsultazione(livello_destinazione);
+						}
 					}
-			   		if (pathConsultazione.equals(this.LIV_BASECDSVOCE) && (livello_destinazione.equals(this.LIV_BASECDSVOCECDR))){
-			   			setPathConsultazione(this.LIV_BASECDSVOCECDR);
-						setLivelloConsultazione(this.LIV_BASECDSVOCECDR);
-			   		}
-			   		if (pathProvenienza!=null){
-		   		 		setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-		   		 		setLivelloConsultazione(livello_destinazione);
-		   		 	}
-		   	}
-		   	if (this instanceof ConsDispCompResIstCdrGaeBP || this instanceof ConsDispCompResEntIstCdrGaeBP){
-		   		
-		   		 if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_BASECDSPROG))){
-		   		 		setPathConsultazione(this.LIV_BASECDSPROG);
-		   		 		setLivelloConsultazione(this.LIV_BASECDSPROG);
-		   		 	}
-		   		 if ((pathProvenienza == null) &&  (livello_destinazione.equals(this.LIV_BASECDSCDR))){
-				 		setPathConsultazione(this.LIV_BASECDSCDR);
-						setLivelloConsultazione(this.LIV_BASECDSCDR);
-		   		 	}
-		   		 if (pathProvenienza!=null){
-		   		 		setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-		   		 		setLivelloConsultazione(livello_destinazione);
-		   		 	}
-		   	}
+					if (this instanceof ConsDispCompResIstCdrGaeBP || this instanceof ConsDispCompResEntIstCdrGaeBP){
 
-		   	if (this instanceof ConsDispCompResDipIstBP){
-		   		
-		   		 if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_DIPCDS))){
-		   		 		setPathConsultazione(this.LIV_DIPCDS);
-		   		 		setLivelloConsultazione(this.LIV_DIPCDS);
-		   		 	}
-		   		 if ((pathProvenienza == null) &&  (livello_destinazione.equals(this.LIV_DIPCDSCDR))){
-				 		setPathConsultazione(this.LIV_DIPCDSCDR);
-						setLivelloConsultazione(this.LIV_DIPCDSCDR);
-		   		 	}
-		   		 if (pathProvenienza!=null){
-		   		 		setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-		   		 		setLivelloConsultazione(livello_destinazione);
-		   		 	}
-		   	}
-		   	
-		   	if (this instanceof ConsDispCompResVoceNatBP){
-		   		
-		   		 if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_VOCENAT))){
-		   		 		setPathConsultazione(this.LIV_VOCENAT);
-		   		 		setLivelloConsultazione(this.LIV_VOCENAT);
-		   		 	}
-		   		 if (pathProvenienza!=null){
-		   		 		setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-		   		 		setLivelloConsultazione(livello_destinazione);
-		   		 	}
-		   	}
-		   	
-		   	if (this instanceof  ConsDispCompResEntIstVoceBP){
-	   			if ((pathProvenienza==null) && (livello_destinazione.equals(this.LIV_ENTCDSVOCE))) {
-	   				setPathConsultazione(this.LIV_ENTCDSVOCE);
-	   				setLivelloConsultazione(this.LIV_ENTCDSVOCE);
-	   			}
-		   		if (pathConsultazione.equals(this.LIV_ENTCDSVOCE) && (livello_destinazione.equals(this.LIV_ENTCDSVOCEPROG))){
-				 		setPathConsultazione(this.LIV_ENTCDSVOCEPROG);
-						setLivelloConsultazione(this.LIV_ENTCDSVOCEPROG);
+						if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_BASECDSPROG))){
+							setPathConsultazione(this.LIV_BASECDSPROG);
+							setLivelloConsultazione(this.LIV_BASECDSPROG);
+						}
+						if ((pathProvenienza == null) &&  (livello_destinazione.equals(this.LIV_BASECDSCDR))){
+							setPathConsultazione(this.LIV_BASECDSCDR);
+							setLivelloConsultazione(this.LIV_BASECDSCDR);
+						}
+						if (pathProvenienza!=null){
+							setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+							setLivelloConsultazione(livello_destinazione);
+						}
+					}
+
+					if (this instanceof ConsDispCompResDipIstBP){
+
+						if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_DIPCDS))){
+							setPathConsultazione(this.LIV_DIPCDS);
+							setLivelloConsultazione(this.LIV_DIPCDS);
+						}
+						if ((pathProvenienza == null) &&  (livello_destinazione.equals(this.LIV_DIPCDSCDR))){
+							setPathConsultazione(this.LIV_DIPCDSCDR);
+							setLivelloConsultazione(this.LIV_DIPCDSCDR);
+						}
+						if (pathProvenienza!=null){
+							setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+							setLivelloConsultazione(livello_destinazione);
+						}
+					}
+
+					if (this instanceof ConsDispCompResVoceNatBP){
+
+						if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_VOCENAT))){
+							setPathConsultazione(this.LIV_VOCENAT);
+							setLivelloConsultazione(this.LIV_VOCENAT);
+						}
+						if (pathProvenienza!=null){
+							setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+							setLivelloConsultazione(livello_destinazione);
+						}
+					}
+
+					if (this instanceof  ConsDispCompResEntIstVoceBP){
+						if ((pathProvenienza==null) && (livello_destinazione.equals(this.LIV_ENTCDSVOCE))) {
+							setPathConsultazione(this.LIV_ENTCDSVOCE);
+							setLivelloConsultazione(this.LIV_ENTCDSVOCE);
+						}
+						if (pathConsultazione.equals(this.LIV_ENTCDSVOCE) && (livello_destinazione.equals(this.LIV_ENTCDSVOCEPROG))){
+							setPathConsultazione(this.LIV_ENTCDSVOCEPROG);
+							setLivelloConsultazione(this.LIV_ENTCDSVOCEPROG);
+						}
+						if (pathConsultazione.equals(this.LIV_ENTCDSVOCE) && (livello_destinazione.equals(this.LIV_ENTCDSVOCECDR))){
+							setPathConsultazione(this.LIV_ENTCDSVOCECDR);
+							setLivelloConsultazione(this.LIV_ENTCDSVOCECDR);
+						}
+						if (pathProvenienza!=null){
+							setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+							setLivelloConsultazione(livello_destinazione);
+						}
+
+						if (this instanceof ConsDispCompResIstCdrGaeBP || this instanceof ConsDispCompResEntIstCdrGaeBP){
+
+							if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_ENTCDSPROG))){
+								setPathConsultazione(this.LIV_ENTCDSPROG);
+								setLivelloConsultazione(this.LIV_ENTCDSPROG);
+							}
+							if ((pathProvenienza == null) &&  (livello_destinazione.equals(this.LIV_ENTCDSCDR))){
+								setPathConsultazione(this.LIV_ENTCDSCDR);
+								setLivelloConsultazione(this.LIV_ENTCDSCDR);
+							}
+							if (pathProvenienza!=null){
+								setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+								setLivelloConsultazione(livello_destinazione);
+							}
+						}
+					}
+					setSearchResultColumnSet(getPathConsultazione());
+					setFreeSearchSet(getPathConsultazione());
+					setTitle();
+
+					if (this instanceof ConsDispCompResIstCdrGaeBP)	 {
+						if (livello_destinazione.equals(this.LIV_BASECDSPROGCOMMMODCDRGAEDET)||livello_destinazione.equals(this.LIV_BASECDSCDRGAEDET))
+							setMultiSelection(false);
+					}
+					if (this instanceof ConsDispCompResIstVoceBP)	{
+						if (livello_destinazione.equals(this.LIV_BASECDSVOCEPROGCOMMMODCDRGAE)||livello_destinazione.equals(this.LIV_BASECDSVOCECDRGAE))
+							setMultiSelection(false);
+					}
+					if (this instanceof ConsDispCompResDipIstBP)	 {
+						if (livello_destinazione.equals(this.LIV_DIPCDSPROGCOMMMODCDRGAEDET)||livello_destinazione.equals(this.LIV_DIPCDSCDRGAEDET))
+							setMultiSelection(false);
+					}
+					if (this instanceof ConsDispCompResVoceNatBP)	 {
+						if (livello_destinazione.equals(this.LIV_VOCENATMODCDRGAE))
+							setMultiSelection(false);
+					}
+					if (this instanceof ConsDispCompResEntIstCdrGaeBP)	 {
+						if (livello_destinazione.equals(this.LIV_ENTCDSPROGCOMMMODCDRGAEDET)||livello_destinazione.equals(this.LIV_ENTCDSCDRGAEDET))
+							setMultiSelection(false);
+					}
+					if (this instanceof  ConsDispCompResEntIstVoceBP)	{
+						if (livello_destinazione.equals(this.LIV_ENTCDSVOCEPROGCOMMMODCDRGAE)||livello_destinazione.equals(this.LIV_ENTCDSVOCECDRGAE))
+							setMultiSelection(false);
+					}
 				}
-		   		if (pathConsultazione.equals(this.LIV_ENTCDSVOCE) && (livello_destinazione.equals(this.LIV_ENTCDSVOCECDR))){
-		   			setPathConsultazione(this.LIV_ENTCDSVOCECDR);
-					setLivelloConsultazione(this.LIV_ENTCDSVOCECDR);
-		   		}
-		   		if (pathProvenienza!=null){
-	   		 		setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-	   		 		setLivelloConsultazione(livello_destinazione);
-	   		 	}
-		   		
-		   	if (this instanceof ConsDispCompResIstCdrGaeBP || this instanceof ConsDispCompResEntIstCdrGaeBP){
-			   		
-			   		 if ((pathProvenienza == null) && (livello_destinazione.equals(this.LIV_ENTCDSPROG))){
-			   		 		setPathConsultazione(this.LIV_ENTCDSPROG);
-			   		 		setLivelloConsultazione(this.LIV_ENTCDSPROG);
-			   		 	}
-			   		 if ((pathProvenienza == null) &&  (livello_destinazione.equals(this.LIV_ENTCDSCDR))){
-					 		setPathConsultazione(this.LIV_ENTCDSCDR);
-							setLivelloConsultazione(this.LIV_ENTCDSCDR);
-			   		 	}
-			   		 if (pathProvenienza!=null){
-			   		 		setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-			   		 		setLivelloConsultazione(livello_destinazione);
-			   		 	}
-			   }
-	   	}
-			   setSearchResultColumnSet(getPathConsultazione());
-			   setFreeSearchSet(getPathConsultazione());
-			   setTitle();
-			   
-		if (this instanceof ConsDispCompResIstCdrGaeBP)	 {
-			if (livello_destinazione.equals(this.LIV_BASECDSPROGCOMMMODCDRGAEDET)||livello_destinazione.equals(this.LIV_BASECDSCDRGAEDET))
-				setMultiSelection(false);
-		}
-		if (this instanceof ConsDispCompResIstVoceBP)	{
-			if (livello_destinazione.equals(this.LIV_BASECDSVOCEPROGCOMMMODCDRGAE)||livello_destinazione.equals(this.LIV_BASECDSVOCECDRGAE))
-				setMultiSelection(false);
-		}  
-		if (this instanceof ConsDispCompResDipIstBP)	 {
-			if (livello_destinazione.equals(this.LIV_DIPCDSPROGCOMMMODCDRGAEDET)||livello_destinazione.equals(this.LIV_DIPCDSCDRGAEDET))
-					setMultiSelection(false);
-		}
-		if (this instanceof ConsDispCompResVoceNatBP)	 {
-			if (livello_destinazione.equals(this.LIV_VOCENATMODCDRGAE))
-					setMultiSelection(false);
-		}
-		if (this instanceof ConsDispCompResEntIstCdrGaeBP)	 {
-			if (livello_destinazione.equals(this.LIV_ENTCDSPROGCOMMMODCDRGAEDET)||livello_destinazione.equals(this.LIV_ENTCDSCDRGAEDET))
-				setMultiSelection(false);
-		}
-		if (this instanceof  ConsDispCompResEntIstVoceBP)	{
-			if (livello_destinazione.equals(this.LIV_ENTCDSVOCEPROGCOMMMODCDRGAE)||livello_destinazione.equals(this.LIV_ENTCDSVOCECDRGAE))
-				setMultiSelection(false);
-		}  
-	}
-		
-		 catch(Throwable e) {
-		   	throw new BusinessProcessException(e);
-	   }   
+
+				catch(Throwable e) {
+					throw new BusinessProcessException(e);
+				}
+			}
 	   }
 	   
 	public boolean isUoEnte(ActionContext context){	

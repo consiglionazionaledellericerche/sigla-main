@@ -108,7 +108,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 			FileSdIConMetadatiTypeBulk fileSdIConMetadatiTypeBulk = (FileSdIConMetadatiTypeBulk) caricaPassivaElettronicaBP.getModel();
 			UploadedFile file = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.file");
 			UploadedFile fileMetadata = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.metadati");
-			if (file.getFile() == null || (fileMetadata.getFile() == null && fileSdIConMetadatiTypeBulk.getIdentificativoSdI() == null)){
+			if (file.getFile() == null || (!Optional.ofNullable(fileMetadata).map(UploadedFile::getFile).isPresent() && fileSdIConMetadatiTypeBulk.getIdentificativoSdI() == null)){
 				caricaPassivaElettronicaBP.setMessage("Valorizzare i campi obbligatori!");
 				return actioncontext.findDefaultForward();
 			}	
@@ -116,7 +116,8 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    			FatturazioneElettronicaClient.class);
 
 			fileSdIConMetadatiTypeBulk.setIdentificativoSdI(
-					Optional.ofNullable(fileMetadata.getFile())
+					Optional.ofNullable(fileMetadata)
+							.map(UploadedFile::getFile)
 							.map(file1 -> new StreamSource(file1))
 							.map(streamSource -> {
 								try {

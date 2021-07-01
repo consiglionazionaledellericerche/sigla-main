@@ -314,9 +314,18 @@ public class ProgettoHome extends BulkHome {
 		sql.addSQLJoin("V_ABIL_PROGETTI.PG_PROGETTO","V_PROGETTO_PADRE.PG_PROGETTO");
 		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_PROGETTO","V_PROGETTO_PADRE.TIPO_FASE");
 		return sql;    	
-	}	
-	public SQLBuilder abilitazioniCommesse(it.cnr.jada.UserContext aUC) throws PersistencyException{
-		SQLBuilder sql = abilitazioni(aUC);    	
+	}
+
+	public SQLBuilder abilitazioniCommesse(it.cnr.jada.UserContext userContext) throws PersistencyException{
+		return abilitazioniCommesse(
+				CNRUserContext.getEsercizio(userContext),
+				CNRUserContext.getCd_unita_organizzativa(userContext),
+				CNRUserContext.getCd_cds(userContext)
+		);
+	}
+
+	public SQLBuilder abilitazioniCommesse(Integer esercizio, String cdUnitaOrganizzativa, String cdCdS) throws PersistencyException{
+		SQLBuilder sql = abilitazioni(esercizio, cdUnitaOrganizzativa, cdCdS);
 		sql.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_COMMESSA","V_PROGETTO_PADRE.ESERCIZIO");
 		sql.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA","V_PROGETTO_PADRE.PG_PROGETTO");
 		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_COMMESSA","V_PROGETTO_PADRE.TIPO_FASE");
@@ -334,10 +343,19 @@ public class ProgettoHome extends BulkHome {
 		SQLBuilder sql = abilitazioni(aUC);    	
 		sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO",campo);
 		return sql;    	
-	}	    
+	}
 
-	private SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC) throws PersistencyException{
-		Unita_organizzativaBulk uo = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(aUC)));
+	private SQLBuilder abilitazioni(UserContext userContext) throws PersistencyException {
+		return abilitazioni(
+				CNRUserContext.getEsercizio(userContext),
+				CNRUserContext.getCd_unita_organizzativa(userContext),
+				CNRUserContext.getCd_cds(userContext)
+		);
+	}
+
+	private SQLBuilder abilitazioni(Integer esercizio, String cdUnitaOrganizzativa, String cdCdS) throws PersistencyException {
+		Unita_organizzativaBulk uo = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class)
+				.findByPrimaryKey(new Unita_organizzativaBulk(cdUnitaOrganizzativa));
 		ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_ABIL_PROGETTI");    	
 		SQLBuilder sql = progettohome.createSQLBuilder();
 		sql.addTableToHeader("UNITA_ORGANIZZATIVA");
@@ -346,25 +364,25 @@ public class ProgettoHome extends BulkHome {
 
 		Parametri_enteBulk parEnte = ((Parametri_enteHome)getHomeCache().getHome(Parametri_enteBulk.class)).getParametriEnteAttiva();
 		boolean abilProgettoUO = parEnte.isAbilProgettoUO();
-		Optional<String> abilProgetti = ((Parametri_cdsHome) getHomeCache().getHome(Parametri_cdsBulk.class)).getAbilProgetti(aUC, CNRUserContext.getCd_cds(aUC));
+		Optional<String> abilProgetti = ((Parametri_cdsHome) getHomeCache().getHome(Parametri_cdsBulk.class)).getAbilProgetti(esercizio, cdCdS);
 		if (abilProgetti.isPresent()) {
 			abilProgettoUO = abilProgetti.get().equalsIgnoreCase(V_struttura_organizzativaHome.LIVELLO_UO);
 		}
 		if (abilProgettoUO)
-			sql.addSQLClause(FindClause.AND,"V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(aUC));
+			sql.addSQLClause(FindClause.AND,"V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,cdUnitaOrganizzativa);
 		else
-			sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+			sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,cdCdS);
 
 		if (uo.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
 			PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
-			Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(aUC)));
+			Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(esercizio));
 			if (!parCNR.getFl_nuovo_pdg()) {
 				SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
 				sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
 				sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
 				sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
-				sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
-				sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+				sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,cdCdS);
+				sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS, esercizio);
 				sql.addSQLExistsClause("OR",sqlArea);
 			}
 		}

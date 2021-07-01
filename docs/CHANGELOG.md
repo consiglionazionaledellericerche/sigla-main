@@ -1,9 +1,109 @@
-## Release 6.3.25  -- _April 19, 2021_ 
+## Release 6.3.34  -- _June 29, 2021_ 
 **Changes**
 
->**Progetti: corretta anomalia visualizzazione allegati nelle rimodulazioni.**
+>**Corretta GET per Consultazioni REST**
 >
->[d9c9b50cf34a584](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9c9b50cf34a584) raffaele.pagano *April 19, 2021*
+>[362806bcd2ab572](https://github.com/consiglionazionaledellericerche/sigla-main/commit/362806bcd2ab572) gianfranco.gasparro *June 29, 2021*
+
+>**Closed Issue #80**
+>
+>[c45b43db2000f28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45b43db2000f28) marco.spasiano *June 25, 2021*
+
+>**FIX carica fattua elettronica**
+>
+>[ce34b95642c29db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce34b95642c29db) marco.spasiano *June 21, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[6640ffeababf78d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6640ffeababf78d) marco.spasiano *June 21, 2021*
+
+
+## Release 6.3.32  -- _June 18, 2021_ 
+**Changes**
+
+>**Rimosso controllo sulla consuntività per le fatture elettroniche su cui non sono ancora stampati i registri IVA**
+>
+>[2e91f90ab2a684c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e91f90ab2a684c) marco.spasiano *June 18, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[64154baa27d787d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64154baa27d787d) marco.spasiano *June 18, 2021*
+
+
+## Release 6.3.31  -- _June 16, 2021_ 
+**Changes**
+
+>**Corretto recupero mandati per consultazione pagamenti**
+>
+>[06b7664b39a2760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06b7664b39a2760) gianfranco.gasparro *June 16, 2021*
+
+>**Add api rest docs**
+>
+>[7bb392888aebc29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bb392888aebc29) marco.spasiano *June 16, 2021*
+
+>**Change email message to error on log**
+>
+>[c6c3ce13deb3890](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c6c3ce13deb3890) marco.spasiano *May 31, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[7eebea6674e5bcf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7eebea6674e5bcf) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[53db458360e0985](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53db458360e0985) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[4ecf4eb11cf7e25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ecf4eb11cf7e25) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[0512557baed8bb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0512557baed8bb5) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[71ceca940c17cab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/71ceca940c17cab) patriziavillani *May 19, 2021*
+
+>**Update partite_giro.rst**
+>
+>[f6bcb091f3251a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f6bcb091f3251a5) patriziavillani *April 21, 2021*
+
+>**Update partite_giro.rst**
+>
+>[034201b186fe2c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/034201b186fe2c4) patriziavillani *April 21, 2021*
+
+>**Update residuo_proprio.rst**
+>
+>[f82a073429f4de2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f82a073429f4de2) patriziavillani *April 21, 2021*
+
+>**Update residuo_improprio.rst**
+>
+>[82760b6f672ba02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/82760b6f672ba02) patriziavillani *April 21, 2021*
+
+>**Create partite_giro.rst**
+>
+>[f1d039e3aae9d81](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f1d039e3aae9d81) patriziavillani *April 21, 2021*
+
+>**Create residuo_improprio.rst**
+>
+>[1a6a9615ba52b41](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a6a9615ba52b41) patriziavillani *April 21, 2021*
+
+>**Update index.rst**
+>
+>[7a4cf4619433eaa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a4cf4619433eaa) patriziavillani *April 21, 2021*
+
+>**Create residuo_proprio.rst**
+>
+>[e4017087dcd69d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4017087dcd69d4) patriziavillani *April 21, 2021*
+
+>**Update index.rst**
+>
+>[e8a2e6940cb5654](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e8a2e6940cb5654) patriziavillani *April 21, 2021*
+
+>**Rimosso controllo per la visibilità dei Curriculum del vincitore**
+>
+>[78dfefd8c82ed72](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78dfefd8c82ed72) marco.spasiano *April 20, 2021*
 
 >**Aggiunto controllo per la visibilità dei Curriculum del vincitore**
 >
@@ -897,6 +997,93 @@
 >**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
 >
 >[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
+
+
+### Jira CVE-2021 
+
+>**CVE-2021-29425**
+> * Vulnerable versions: &lt; 2.7
+> * Patched version: 2.7
+> * In Apache Commons IO before 2.7, When invoking the method FileNameUtils.normalize with an improper input string, like &quot;//../foo&quot;, or &quot;\..\foo&quot;, the result would be the same value, thus possibly providing access to files in the parent directory, but not further above (thus &quot;limited&quot; path traversal), if the calling code would use the result to construct a path value.
+>
+>[fc9d14eb7fd77ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc9d14eb7fd77ca) marco.spasiano *May 31, 2021*
+
+
+## Release 6.3.30  -- _June 15, 2021_ 
+**Changes**
+
+>**Gestita registrazione nota credito con diverse riche di fattura ed un unico bene**
+>
+>[5a36ed92082141b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a36ed92082141b) gianfranco.gasparro *June 15, 2021*
+
+>**Progetti: aggiunta possibilità di allegare più file di tipo generico**
+>
+>[f82676d1e16f287](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f82676d1e16f287) salvatorepagano *June 10, 2021*
+
+
+## Release 6.3.29  -- _May 21, 2021_ 
+**Changes**
+
+>**Aggiunta nella consultazione per GAE/Residuo Voce la colonna esercizio residuo**
+>
+>[3b0df912dd43da4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b0df912dd43da4) gianfranco.gasparro *May 21, 2021*
+
+
+## Release 6.3.28  -- _May 18, 2021_ 
+**Changes**
+
+>**Perla: aggiornamento Perla-Service**
+>
+>[b2140c16a105182](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2140c16a105182) raffaele.pagano *May 18, 2021*
+
+>**Variazioni: gestita la possibilità di approvare trasferimenti alla Ragioneria da progetti attivi su FES a stesso progetto su stessa Fonte**
+>
+>[54ee368a3d1853d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54ee368a3d1853d) raffaele.pagano *May 18, 2021*
+
+>**Fix Progetti: corretta anomalia visualizzazione allegati**
+>
+>[896a9bf01e7af8f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/896a9bf01e7af8f) raffaele.pagano *May 13, 2021*
+
+
+## Release 6.3.27  -- _May 12, 2021_ 
+**Changes**
+
+>**Rilascio consultazione GAE Residui Spesa con dettaglio VOCE**
+>
+>[d48dc16066a317b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d48dc16066a317b) gianfranco.gasparro *May 12, 2021*
+
+>**Fix Stampa Progetti: corretto funzionamento flag 'Stampa solo Gae Movimentate'**
+>
+>[8c7d5a1c7b3751b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c7d5a1c7b3751b) raffaele.pagano *May 12, 2021*
+
+>**Fix Incarichi - Allineata view v_incarichi_elenco_fp alle modifiche apportate a v_incarichi_elenco**
+>
+>[e09a119195da173](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e09a119195da173) raffaele.pagano *April 29, 2021*
+
+
+## Release 6.3.26  -- _April 28, 2021_ 
+**Changes**
+
+>**Fix Incarichi:**
+> * 1) non pubblicava gli attestati di insussistenza.
+> * 2) spostato il controllo dei 3 mesi della data di stipula alla data di fine pubblicazione.
+>
+>[6d093c95237e031](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d093c95237e031) raffaele.pagano *April 28, 2021*
+
+>**Comunicazione PerlaPa: adeguamento procedure per gestire la comunicazione al nuovo sistema Perla attivo dal 2018.**
+> * 1) eliminata obbligatorietà della Dichiarazione Altri rapporti anche per Occasionali in quanto già compresa nella Dichiarazione Insussistenza Conflitti Interesse;
+> * 3) limitata al pdf la tipologia di file allegabili per Curriculum e Dichiarazione Insussistenza Conflitti Interesse;
+> * 4) inserito limite di 1MB per Curriculum e Dichiarazione Insussistenza Conflitti Interesse;
+>
+>[d0fa900ab5f8dd0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d0fa900ab5f8dd0) raffaele.pagano *April 23, 2021*
+
+
+## Release 6.3.25  -- _April 19, 2021_ 
+**Changes**
+
+>**Progetti: corretta anomalia visualizzazione allegati nelle rimodulazioni.**
+>
+>[d9c9b50cf34a584](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9c9b50cf34a584) raffaele.pagano *April 19, 2021*
 
 
 ## Release 6.3.18  -- _April 07, 2021_ 

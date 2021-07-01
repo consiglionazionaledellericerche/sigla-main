@@ -415,7 +415,18 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		else if (tipoInc.equals("5"))
 			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_TIROCINIO);
 
-		sql.addSQLClause(FindClause.AND,"to_char(DT_STIPULA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNULL, null);
+		sql.addSQLClause(FindClause.AND,"dt_fine_validita", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_FINE_VALIDITA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_PROROGA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+
 		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
 		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
 	}
@@ -424,7 +435,19 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		V_incarichi_elencoHome home = (V_incarichi_elencoHome)getHome(userContext, V_incarichi_elencoBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addSQLClause(FindClause.AND,"to_number(to_char(DT_STIPULA,'yyyy')) >= to_number('2013')");
-		sql.addSQLClause(FindClause.AND,"to_char(DT_STIPULA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+
+		sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNULL, null);
+		sql.addSQLClause(FindClause.AND,"dt_fine_validita", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_FINE_VALIDITA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_PROROGA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+
 		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
 		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
 	}

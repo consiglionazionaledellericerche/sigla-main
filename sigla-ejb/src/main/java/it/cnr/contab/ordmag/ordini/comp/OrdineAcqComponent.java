@@ -346,7 +346,6 @@ public class OrdineAcqComponent
 										throw new ApplicationException ("Contratto dell'impegno "+obb.getEsercizio_originale()+"/"+obb.getPg_obbligazione()+" diverso dal contratto indicato sull'ordine.");
 									}
 								}
-								controlloCongruenzaVoceCategoriaGruppo(userContext, h, riga, obb);
 								controlloCongruenzaUoImpegno(userContext, cons, obb);
 							}
 						} catch (PersistencyException e) {

@@ -3075,10 +3075,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.map(CtrlPianoEcoDett::getImporto)
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
+				boolean isVariazioneMonoProgetto = listCtrlPianoEco.stream().map(CtrlPianoEco::getProgetto)
+						.map(ProgettoBulk::getPg_progetto).distinct().count()==1;
+
 				{
 					/**
 					 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o
-					 *    al CDR Personale o alla UO Ragioneria solo su GAE Natura 6
+					 *    al CDR Personale o alla UO Ragioneria su GAE Natura 6 se variazione multiprogetto o su GAE natura FES se variazione monoprogetto
 					 */
 					if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
 						//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
@@ -3089,7 +3092,15 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.flatMap(List::stream)
 								.filter(el->el.isUoArea()||el.isCdrPersonale()||el.isUoRagioneria())
 								.filter(el->el.isUoArea()?el.isNaturaFonteEsterna():Boolean.TRUE)
-								.filter(el->el.isUoRagioneria()?el.isNaturaReimpiego():Boolean.TRUE)
+								.filter(el->{
+									if (el.isUoRagioneria()) {
+										if (!isVariazioneMonoProgetto)
+											return el.isNaturaReimpiego();
+										else
+											return el.isNaturaFonteEsterna();
+									}
+									return Boolean.TRUE;
+								})
 								.map(CtrlPianoEcoDett::getImporto)
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
@@ -3098,7 +3109,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
 									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
 									+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
-									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE di natura 6 ("
+									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE "
+									+ (isVariazioneMonoProgetto?"Fonte Esterna":"di natura 6") + " ("
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviCashFund.abs())+").");						
 					}
 				}

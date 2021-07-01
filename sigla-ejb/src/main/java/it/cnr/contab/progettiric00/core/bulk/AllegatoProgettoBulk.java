@@ -17,16 +17,14 @@
 
 package it.cnr.contab.progettiric00.core.bulk;
 
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Optional;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.jada.bulk.ValidationException;
+import org.apache.commons.lang.StringUtils;
 
 public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	private static final long serialVersionUID = 1L;
@@ -115,8 +113,40 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 				name.add("CTRD");
 			if (this.isFinalStatementPayment())	
 				name.add("FSP");
-			if (this.isGenerico())	
+			if (this.isGenerico()) {
 				name.add("GEN");
+
+				name.add(
+						Optional.ofNullable(this.getNome())
+								.filter(el -> !el.isEmpty())
+								.filter(el -> el.indexOf("GEN") >= 0)
+								.map(el -> el.substring(el.length() - 3, el.length()))
+								.orElseGet(() -> {
+									return Optional.ofNullable(this.getProgetto())
+											.flatMap(el -> Optional.ofNullable(el.getArchivioAllegati()))
+											.map(el -> el.stream())
+											.orElse(Stream.empty())
+											.filter(AllegatoProgettoBulk.class::isInstance)
+											.map(AllegatoProgettoBulk.class::cast)
+											.filter(AllegatoProgettoBulk::isGenerico)
+											.filter(el -> Optional.ofNullable(el.getNome()).isPresent())
+											.map(AllegatoProgettoBulk::getNome)
+											.map(el -> el.substring(el.length() - 3, el.length()))
+											.filter(el -> {
+												try {
+													Integer.valueOf(el);
+													return true;
+												} catch (NumberFormatException e) {
+													return false;
+												}
+											})
+											.map(Integer::valueOf)
+											.max(Comparator.comparing(Integer::valueOf))
+											.map(el -> el + 1)
+											.map(el -> StringUtils.leftPad(el.toString(), 3, "0"))
+											.orElse("001");
+								}));
+			}
 			this.setNome(name.toString());
 		}
 	}
