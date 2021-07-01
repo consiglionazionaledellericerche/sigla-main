@@ -24,6 +24,10 @@ function doVisualizzaAvvisoPagamento() {
 	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/AvvisoPagamento<%=bulk.getCdAvviso()%>.html?methodName=visualizzaAvvisoPagamento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
 			'Avviso', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
+function doVisualizzaRt() {
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Rt<%=bulk.getCdIuv()%>.html?methodName=visualizzaRt&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Ricevuta Pagamento', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+}
 </script>
 </head>
 	<title>Posizioni Debitorie PagoPA</title>

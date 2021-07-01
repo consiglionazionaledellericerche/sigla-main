@@ -4377,4 +4377,46 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
     <changeSet author="gianfranco.gasparro" id="modify-rpp-pagamento_pagopa">
         <modifyDataType tableName="pagamento_pagopa" columnName="rpp" newDataType="VARCHAR(100)"/>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-pagamento_pagopa">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPAGAMENTOPAGOPA"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Incassi PagoPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPAGAMENTOPAGOPA"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPagamentoPagopaBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons_pagamento_pagopa">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSPAGPAGOPA"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione Incassi PagoPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSPAGPAGOPA"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDConsPagamentoPagopaBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

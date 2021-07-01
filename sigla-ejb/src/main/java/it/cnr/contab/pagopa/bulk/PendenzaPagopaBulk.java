@@ -34,8 +34,9 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public static final String TIPO_POSIZIONE_DEBITORIA = "D";
 	public static final String STATO_APERTA = "APE";
 	public static final String STATO_CHIUSO = "CHI";
-	public static final String STATO_ASSOCIATO = "ASS";
+	public static final String STATO_INCASSATA = "INC";
 	public static final String STATO_IN_PAGAMENTO = "INP";
+	public static final String STATO_RISCOSSA = "RIS";
 	public static final String STATO_ANNULLATO = "ANN";
 	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce;
 	private Unita_organizzativaBulk unitaOrganizzativa;
@@ -45,7 +46,8 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	static {
 		statoKeys = new it.cnr.jada.util.OrderedHashtable();
 		statoKeys.put(STATO_APERTA,"Aperta");
-		statoKeys.put(STATO_ASSOCIATO,"Associata");
+		statoKeys.put(STATO_INCASSATA,"Incassata");
+		statoKeys.put(STATO_RISCOSSA,"Riscossa");
 		statoKeys.put(STATO_IN_PAGAMENTO,"In Pagamento");
 		statoKeys.put(STATO_ANNULLATO,"Annullata");
 		statoKeys.put(STATO_CHIUSO,"Chiusa");
@@ -176,7 +178,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 				.orElse(null);
 	}
 	public Boolean isPendenzaNonModificabile(){
-		if (getStato() != null && (getStato().equals(STATO_IN_PAGAMENTO) || getStato().equals(STATO_CHIUSO) || getStato().equals(STATO_ASSOCIATO))){
+		if (getStato() != null && (getStato().equals(STATO_IN_PAGAMENTO) || getStato().equals(STATO_RISCOSSA) || getStato().equals(STATO_CHIUSO) || getStato().equals(STATO_INCASSATA))){
 			return true;
 		}
 		return false;
@@ -184,6 +186,20 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 
 	public Boolean isPendenzaAnnullata(){
 		if (getStato() != null && (getStato().equals(STATO_ANNULLATO))){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean isPendenzaRiscossa(){
+		if (getStato() != null && (getStato().equals(STATO_RISCOSSA))){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean isPendenzaIncassata(){
+		if (getStato() != null && (getStato().equals(STATO_INCASSATA))){
 			return true;
 		}
 		return false;
@@ -210,7 +226,8 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 			stato.put(STATO_ANNULLATO,"Annullata");
 		} else {
 			stato.put(STATO_APERTA,"Aperta");
-			stato.put(STATO_ASSOCIATO,"Associata");
+			stato.put(STATO_INCASSATA,"Incassata");
+			stato.put(STATO_RISCOSSA,"Riscossa");
 			stato.put(STATO_IN_PAGAMENTO,"In Pagamento");
 			stato.put(STATO_ANNULLATO,"Annullata");
 			stato.put(STATO_CHIUSO,"Chiusa");

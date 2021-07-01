@@ -154,8 +154,33 @@ public void update(ActionContext context) throws BusinessProcessException
 		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
 		return (pendenzaPagopaBulk == null || pendenzaPagopaBulk.getCdAvviso() == null);
 	}
+	public void visualizzaRt(ActionContext actioncontext) throws Exception {
+		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
+		byte [] stampaRt = ((PendenzaPagopaComponentSession)createComponentSession()).stampaRt(actioncontext.getUserContext(), pendenzaPagopaBulk);
+		ByteArrayInputStream is = new ByteArrayInputStream(stampaRt);
+		if (is != null){
+			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer,0,buflength);
+			}
+			is.close();
+			os.flush();
+		}
+	}
+	public boolean isVisualizzaRtButtonHidden() {
+		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
+		return !(pendenzaPagopaBulk.isPendenzaRiscossa() || pendenzaPagopaBulk.isPendenzaIncassata());
+	}
+	public boolean isVisualizzaIncassiButtonHidden() {
+		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
+		return !(pendenzaPagopaBulk.isPendenzaRiscossa() || pendenzaPagopaBulk.isPendenzaIncassata());
+	}
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[10];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[12];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.search");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.startSearch");
@@ -167,6 +192,8 @@ public void update(ActionContext context) throws BusinessProcessException
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.undoBringBack");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.print");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.avviso");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.rt");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.incassi");
 
 		return toolbar;
 	}

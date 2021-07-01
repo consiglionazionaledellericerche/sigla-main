@@ -26,6 +26,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.RemoteIterator;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
@@ -69,6 +70,24 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         }
     }
 
+    public byte[] stampaRt(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (byte[]) invoke("stampaRt", new Object[]{
+                    userContext,
+                    pendenzaPagopaBulk});
+        } catch (RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
     public Pendenza getPendenza(UserContext userContext, String numeroAvviso) throws RemoteException, ComponentException, IntrospectionException, PersistencyException {
         try {
             return (Pendenza) invoke("getPendenza", new Object[]{
@@ -93,6 +112,23 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
                         userContext,
                         notificaPagamento,
                         iuv});
+            } catch (RemoteException e) {
+                throw e;
+            } catch (java.lang.reflect.InvocationTargetException e) {
+                try {
+                    throw e.getTargetException();
+                } catch (it.cnr.jada.comp.ComponentException ex) {
+                    throw ex;
+                } catch (Throwable ex) {
+                    throw new RemoteException("Uncaugth exception", ex);
+                }
+            }
+        }
+    public RemoteIterator cercaPagamenti(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, ComponentException{
+            try {
+                return (RemoteIterator) invoke("cercaPagamenti", new Object[]{
+                        userContext,
+                        pendenzaPagopaBulk});
             } catch (RemoteException e) {
                 throw e;
             } catch (java.lang.reflect.InvocationTargetException e) {

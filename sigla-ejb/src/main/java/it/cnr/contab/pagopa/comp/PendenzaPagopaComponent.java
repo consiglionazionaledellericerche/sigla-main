@@ -26,8 +26,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.pagopa.bulk.*;
@@ -49,6 +48,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -183,7 +183,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 		PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
 		Pendenza pendenza = getPendenza(userContext, pendenzaPagopaBulk);
-		if (pendenzaPagopaBulk.getStato().equals(PendenzaPagopaBulk.STATO_ASSOCIATO) || pendenzaPagopaBulk.getStato().equals(PendenzaPagopaBulk.STATO_APERTA)){
+		if (pendenzaPagopaBulk.getStato().equals(PendenzaPagopaBulk.STATO_APERTA)){
 			pendenza.setStato(StatoPendenzaVerificata.NON_ESEGUITA);
 		} else if (pendenzaPagopaBulk.getStato().equals(PendenzaPagopaBulk.STATO_CHIUSO) || pendenzaPagopaBulk.getStato().equals(PendenzaPagopaBulk.STATO_IN_PAGAMENTO)){
 			pendenza.setStato(StatoPendenzaVerificata.DUPLICATA);
@@ -335,6 +335,56 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		return tipoPendenzaPagopaBulk;
 	}
 
+	public byte[] stampaRt(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException{
+
+		TerzoBulk terzoCnr = null;
+		try {
+			terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+
+		PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
+		PagamentoPagopaBulk pagamentoPagopaBulk = null;
+		try {
+			pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, pendenzaPagopaBulk.getId());
+		} catch (PersistencyException e) {
+			logger.info(e.getMessage());
+			throw handleException(e);
+		}
+
+
+		try {
+			return pagopaService.getRt(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdIuv(), pagamentoPagopaBulk.getCcp());
+		} catch (Throwable t) {
+			logger.info(t.getMessage());
+			throw handleException(t);
+		}
+	}
+
+	public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException{
+
+		TerzoBulk terzoCnr = null;
+		try {
+			terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+
+		try {
+			return pagopaService.getAvviso(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
+		} catch (Throwable t) {
+			logger.info(t.getMessage());
+			throw handleException(t);
+		}
+	}
+
+	protected Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	{
+		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
+		sql.addOrderBy("id");
+		return sql;
+	}
 	private String generaIuv(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataOdierna, Numerazione_doc_ammBulk numerazioneProgressivoUnivoco,
 							 TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk, String inizialiCodiceAvviso) throws PersistencyException, ComponentException {
 		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
@@ -367,29 +417,18 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			throw new ComponentException(e);
 		}
 	}
-	public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException{
 
-		TerzoBulk terzoCnr = null;
-		try {
-			terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		}
+	public RemoteIterator cercaPagamenti(UserContext aUC, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException {
 
-		try {
-			return pagopaService.getAvviso(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
-		} catch (Throwable t) {
-			logger.info(t.getMessage());
-			throw handleException(t);
-		}
+		if (pendenzaPagopaBulk == null) return null;
+		PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(aUC, PagamentoPagopaBulk.class);
+		return iterator(aUC,
+				home.searchPagamenti(pendenzaPagopaBulk.getId()),
+				PagamentoPagopaBulk.class,
+				"dafault");
 	}
 
-	protected Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException
-	{
-		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
-		sql.addOrderBy("id");
-		return sql;
-	}
+
 	public NotificaPagamento notificaPagamento(UserContext userContext, NotificaPagamento notificaPagamento, String iuv) throws ComponentException, IntrospectionException, PersistencyException {
 			SQLBuilder sql = (SQLBuilder) super.select( userContext, null, new PendenzaPagopaBulk() );
 			sql.addSQLClause(FindClause.AND, "CD_IUV", SQLBuilder.EQUALS, iuv);
@@ -403,8 +442,8 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			}
 
 		try {
+			PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
 			if (notificaPagamento.getRt() != null){
-					PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
 					PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
 					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, pendenzaPagopaBulk.getId());
 					boolean pagamentoNonTrovato = false;
@@ -429,8 +468,8 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 						pagamentoPagopaBulk.setToBeUpdated();
 						pagamentoPagopaBulk = (PagamentoPagopaBulk) super.modificaConBulk(userContext, pagamentoPagopaBulk);
 					}
+					pendenzaPagopaBulk.setStato(PendenzaPagopaBulk.STATO_RISCOSSA);
 			} else {
-					PendenzaPagopaBulk pendenzaPagopaBulk = listPendenze.get(0);
 					PagamentoPagopaBulk pagamentoPagopaBulk = new PagamentoPagopaBulk();
 					pagamentoPagopaBulk.setDtPagamento(new Timestamp(notificaPagamento.getRpt().getDatiVersamento().getDataEsecuzionePagamento().getTime()));
 					pagamentoPagopaBulk.setCcp(notificaPagamento.getRpt().getDatiVersamento().getCodiceContestoPagamento());
@@ -442,7 +481,10 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					}
 					pagamentoPagopaBulk.setToBeCreated();
 					pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
+					pendenzaPagopaBulk.setStato(PendenzaPagopaBulk.STATO_IN_PAGAMENTO);
 			}
+			pendenzaPagopaBulk.setToBeUpdated();
+			super.modificaConBulk(userContext, pendenzaPagopaBulk);
 		} catch (Exception ex ){
 			logger.error("Errore durante l'elaborazione della notifica di pagamento Iuv: "+iuv);
 			String msg = Arrays.stream(ex.getStackTrace())

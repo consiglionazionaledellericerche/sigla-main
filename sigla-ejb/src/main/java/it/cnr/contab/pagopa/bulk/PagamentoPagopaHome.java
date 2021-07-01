@@ -86,9 +86,7 @@ public class PagamentoPagopaHome extends BulkHome {
 	}
 	public PagamentoPagopaBulk findPagamentoPagopa(UserContext userContext, Long idPendenza) throws PersistencyException
 	{
-		SQLBuilder sql = this.createSQLBuilder();
-
-		sql.addSQLClause(FindClause.AND, "id_pendenza_pagopa", SQLBuilder.EQUALS, idPendenza);
+		SQLBuilder sql = searchPagamenti(idPendenza);
 		List lista =  this.fetchAll(sql);
 		if (lista != null){
 			if (lista.size() == 1){
@@ -98,6 +96,13 @@ public class PagamentoPagopaHome extends BulkHome {
 			}
 		}
 		return null;
+	}
+
+	public SQLBuilder searchPagamenti(Long idPendenza) {
+		SQLBuilder sql = this.createSQLBuilder();
+
+		sql.addSQLClause(FindClause.AND, "id_pendenza_pagopa", SQLBuilder.EQUALS, idPendenza);
+		return sql;
 	}
 
 }

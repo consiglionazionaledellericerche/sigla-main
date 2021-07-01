@@ -108,6 +108,9 @@ public class PagopaService {
     public byte[] getAvviso(String idDominio, String numeroAvviso){
         return pagopaDownloadClient.stampaAvviso(idDominio, numeroAvviso);
     }
+    public byte[] getRt(String idDominio, String iuv, String ccp){
+        return pagopaDownloadClient.stampaRt(idDominio, iuv, ccp, true);
+    }
     public MovimentoCassaPagopa riconciliaIncasso(String idDominio, MovimentoCassaPagopa movimentoCassaPagopa){
         return pagopaClient.riconciliaIncasso(idDominio, movimentoCassaPagopa);
     }

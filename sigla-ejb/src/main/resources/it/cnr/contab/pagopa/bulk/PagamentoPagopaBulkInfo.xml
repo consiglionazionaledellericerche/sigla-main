@@ -100,6 +100,30 @@
 			enabledOnFreeSearch="false"
 			nullable="false"
 			label="Stato" />
+	<fieldProperty
+			name="id_pendenza"
+			property="pendenzaPagopa.id"
+			label="Pendenza PagoPA"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+	/>
+	<fieldProperty
+			name="iuv"
+			property="pendenzaPagopa.cdIuv"
+			label="IUV"
+			inputSize="20"
+			maxLength="20"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+	/>
+	<formFieldProperty
+			name="iuv" />
 	<formFieldProperty
 			name="iur" />
 	<formFieldProperty
@@ -119,6 +143,8 @@
 	<columnFieldProperty
 			name="dtPagamento" />
 	<columnFieldProperty
+			name="iuv" />
+	<columnFieldProperty
 		name="iur" />
 	<columnFieldProperty
 		name="ccp" />
@@ -128,6 +154,8 @@
 			name="causale" />
 	<columnFieldProperty
 			name="stato" />
+	<findFieldProperty
+			name="iuv" />
 	<findFieldProperty
 			name="stato" />
 	<findFieldProperty
@@ -140,6 +168,8 @@
 			name="rpp" />
 	<findFieldProperty
 			name="iur" />
+	<findFieldProperty
+			name="id_pendenza" />
 	<findFieldProperty
 		name="stato" />
 	<findFieldProperty

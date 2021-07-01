@@ -5575,7 +5575,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     private void gestionePagopa(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ComponentException {
-        try {
+/*        try {
             if (fatturaAttiva.isToBeUpdated() || fatturaAttiva.isToBeDeleted()) {
                     Fattura_attivaBulk fatturaDB = (Fattura_attivaBulk) getTempHome(aUC, fatturaAttiva.getClass())
                             .findByPrimaryKey(fatturaAttiva);
@@ -5593,7 +5593,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             }
         } catch (PersistencyException e) {
             throw handleException(e);
-        }
+        }*/
     }
 
     private void cambiaStatoPendenza(UserContext aUC, Fattura_attivaBulk fattura, String statoValido) throws ComponentException, PersistencyException {
