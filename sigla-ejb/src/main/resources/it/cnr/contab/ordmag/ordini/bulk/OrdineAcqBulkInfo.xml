@@ -558,7 +558,7 @@
         property="tipoOrdine"
         inputType="SEARCHTOOL"
         formName="searchtool"
-        nullable="false"
+        nullable="true"
         enabledOnSearch="false"
         label="Tipo Ordine" />
     <fieldProperty
@@ -567,7 +567,7 @@
         inputType="TEXT"
         inputSize="5"
         maxLength="5"
-        nullable="false"
+        nullable="true"
         label="Tipo Ordine" />
         <fieldProperty
                 name="procedura_amministrativa"
