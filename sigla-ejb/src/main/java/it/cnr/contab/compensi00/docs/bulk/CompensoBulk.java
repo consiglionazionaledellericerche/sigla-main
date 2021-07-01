@@ -164,7 +164,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     private boolean visualizzaCodici_attivita_inps = false;
     private Codici_altra_forma_ass_inpsBulk codici_altra_forma_ass_inps;
     private boolean visualizzaCodici_altra_forma_ass_inps = false;
-    private java.util.Collection contributi;
+    private java.util.Collection<Contributo_ritenutaBulk> contributi;
     private it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario;
     // Unità Organizzativa
     private Unita_organizzativaBulk unitaOrganizzativa;
@@ -241,13 +241,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         return new java.sql.Timestamp(gc.getTime().getTime());
     }
 
-    /**
-     * Insert the method's description here. Creation date: (24/05/2002
-     * 13.01.57)
-     *
-     * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     * @param map     java.util.Map
-     */
     public static java.sql.Timestamp getDataOdierna() throws it.cnr.jada.action.BusinessProcessException {
         try {
             return getDataOdierna(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
@@ -256,13 +249,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         }
     }
 
-    /**
-     * Insert the method's description here. Creation date: (24/05/2002
-     * 13.01.57)
-     *
-     * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     * @param map     java.util.Map
-     */
     public static java.sql.Timestamp getDataOdierna(java.sql.Timestamp dataOdierna) {
 
         java.util.Calendar gc = java.util.Calendar.getInstance();
@@ -293,7 +279,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      * 13.01.57)
      *
      * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     * @param map     java.util.Map
+     * @param values  java.util.Map
      */
     public void addToDefferredSaldi(IDocumentoContabileBulk docCont, java.util.Map values) {
 
@@ -634,8 +620,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      *
      * @return it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
      */
-    public java.util.List getChildren() {
-        return (java.util.List) contributi;
+    public java.util.List<Contributo_ritenutaBulk> getChildren() {
+        return (java.util.List<Contributo_ritenutaBulk>) contributi;
     }
 
     /**
@@ -664,7 +650,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      *
      * @return java.util.Collection
      */
-    public java.util.Collection getContributi() {
+    public java.util.Collection<Contributo_ritenutaBulk> getContributi() {
         return contributi;
     }
 
@@ -674,7 +660,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      *
      * @param newContributi java.util.Collection
      */
-    public void setContributi(java.util.Collection newContributi) {
+    public void setContributi(java.util.Collection<Contributo_ritenutaBulk> newContributi) {
         contributi = newContributi;
     }
 
@@ -1779,12 +1765,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         return !(getTerzo() != null && getModalitaPagamento() != null && !isROModalitaPagamento());
     }
 
-    /**
-     * Insert the method's description here. Creation date: (24/05/2002
-     * 12.55.59)
-     *
-     * @param bulk it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     */
     public boolean isAnnullato() {
         return Optional.ofNullable(getStato_cofi()).map(x -> x.equals(STATO_ANNULLATO)).orElse(false);
     }
@@ -1797,12 +1777,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         return isDaMinicarriera() && getAperturaDaMinicarriera().booleanValue();
     }
 
-    /**
-     * Insert the method's description here. Creation date: (24/05/2002
-     * 12.55.59)
-     *
-     * @param bulk it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     */
     public boolean isAssegnatoAFondoEconomale() {
         return ASSEGNATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco());
     }
@@ -1891,12 +1865,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         return Optional.ofNullable(getImportoObbligazione()).map(x -> x.compareTo(BigDecimal.ZERO) > 0).orElse(false);
     }
 
-    /**
-     * Insert the method's description here. Creation date: (24/05/2002
-     * 12.55.59)
-     *
-     * @param bulk it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     */
     public boolean isPagato() {
 
         return (STATO_PAGATO.equals(getStato_cofi()) || (REGISTRATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco())
@@ -2413,7 +2381,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      * Insert the method's description here. Creation date: (24/05/2002
      * 12.55.59)
      *
-     * @param bulk it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
+     * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
      */
     public void removeFromDefferredSaldi(it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk docCont) {
 
