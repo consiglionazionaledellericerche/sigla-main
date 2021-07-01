@@ -1192,6 +1192,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
 
 			List<Contributo_ritenutaBulk> righeCori = compenso.getChildren();
+			Optional<AnticipoBulk> optAnticipo = Optional.ofNullable(compenso.getMissione()).flatMap(el->Optional.ofNullable(el.getAnticipo()));
 
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(compenso.getCd_terzo(), compenso.getDt_da_competenza_coge(), compenso.getDt_a_competenza_coge());
 			testataPrimaNotaList.add(testataPrimaNota);
@@ -1205,8 +1206,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				testataPrimaNota.openDettaglioPatrimoniale(compenso.getTipoDocumentoEnum(), pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCompenso);
 			}
 
-			//Registrazione conto CONTIRBUTI-RITENUTE
-			righeCori.stream().filter(Contributo_ritenutaBulk::isContributoEnte)
+			//Registrazione conto CONTRIBUTI-RITENUTE
+			//Vengono registrati tutti i CORI a carico Ente
+			//Se anticipo risulta maggiore/uguale al compenso allora vengono registrati anche i CORI carico percipiente perchè il mandato non verrà emesso
+			boolean isCompensoMaggioreAnticipo = compenso.getIm_netto_percipiente().compareTo(optAnticipo.map(AnticipoBulk::getIm_anticipo).orElse(BigDecimal.ZERO))>0;
+			righeCori.stream().filter(el->!isCompensoMaggioreAnticipo || el.isContributoEnte())
 				.forEach(cori->{
 					try {
 						BigDecimal imCostoCori = cori.getAmmontare();
@@ -1219,7 +1223,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				});
 
 			//se esiste anticipo devo fare registrazioni inverse
-			Optional.ofNullable(compenso.getMissione()).flatMap(el->Optional.ofNullable(el.getAnticipo())).ifPresent(anticipo->{
+			optAnticipo.ifPresent(anticipo->{
 				try {
 					BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
 					Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = this.findPairCosto(userContext, anticipo);
