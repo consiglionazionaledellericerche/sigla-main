@@ -108,9 +108,13 @@ public class Parametri_cdsHome extends BulkHome {
 	
 	}
 
-	public Optional<String> getAbilProgetti(it.cnr.jada.UserContext userContext, String cd_cds) throws PersistencyException {
-		Parametri_cdsBulk parametri = (Parametri_cdsBulk)findByPrimaryKey( new Parametri_cdsBulk(cd_cds,CNRUserContext.getEsercizio(userContext)));
+	public Optional<String> getAbilProgetti(Integer esercizio, String cd_cds) throws PersistencyException {
+		Parametri_cdsBulk parametri = (Parametri_cdsBulk)findByPrimaryKey( new Parametri_cdsBulk(cd_cds, esercizio));
 		return Optional.ofNullable(parametri)
-					.map(Parametri_cdsBase::getAbil_progetto_strorg);
+				.map(Parametri_cdsBase::getAbil_progetto_strorg);
+	}
+
+	public Optional<String> getAbilProgetti(it.cnr.jada.UserContext userContext, String cd_cds) throws PersistencyException {
+		return getAbilProgetti(CNRUserContext.getEsercizio(userContext), cd_cds);
 	}
 }
