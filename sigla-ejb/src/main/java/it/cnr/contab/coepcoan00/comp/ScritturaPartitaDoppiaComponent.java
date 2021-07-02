@@ -1113,69 +1113,54 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			mapTerzo.keySet().stream().forEach(aCdTerzo -> {
 				mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> {
 					mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
-						try {
-							List<IDocumentoAmministrativoRigaBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
+						List<IDocumentoAmministrativoRigaBulk> righeDocammTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
 
-							TestataPrimaNota testataPrimaNota = new TestataPrimaNota(aCdTerzo, aDtDaCompCoge, aDtACompCoge);
-							testataPrimaNotaList.add(testataPrimaNota);
+						TestataPrimaNota testataPrimaNota = new TestataPrimaNota(aCdTerzo, aDtDaCompCoge, aDtACompCoge);
+						testataPrimaNotaList.add(testataPrimaNota);
 
-							//Registrazione IVA
-							if (registraIva) {
-								Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, fatpas.getTipoDocumentoEnum());
-								BigDecimal imIva = righeDocammTerzo.stream()
-										.map(IDocumentoAmministrativoRigaBulk::getIm_iva)
-										.reduce(BigDecimal.ZERO, BigDecimal::add);
+						Map<Integer, Map<String, Map<String, Map<String, List<IDocumentoAmministrativoRigaBulk>>>>> mapVoce =
+							righeDocammTerzo.stream().collect(Collectors.groupingBy(rigaDoc->rigaDoc.getScadenzaDocumentoContabile().getFather().getEsercizio(),
+								Collectors.groupingBy(rigaDoc2->rigaDoc2.getScadenzaDocumentoContabile().getFather().getTi_appartenenza(),
+									Collectors.groupingBy(rigaDoc3->rigaDoc3.getScadenzaDocumentoContabile().getFather().getTi_gestione(),
+										Collectors.groupingBy(rigaDoc4->rigaDoc4.getScadenzaDocumentoContabile().getFather().getCd_elemento_voce())))));
 
-								testataPrimaNota.openDettaglioIva(fatpas.getTipoDocumentoEnum(), aContoIvaDebito.getCd_voce_ep(), imIva);
+						mapVoce.keySet().stream().forEach(aEseVoce -> {
+							mapVoce.get(aEseVoce).keySet().forEach(aTiAppartenenza -> {
+								mapVoce.get(aEseVoce).get(aTiAppartenenza).keySet().forEach(aTiGestione -> {
+									mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).keySet().forEach(aCdVoce -> {
+										try {
+											List<IDocumentoAmministrativoRigaBulk> righeDocammVoce = mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).get(aCdVoce);
 
-								if (isCommercialeWithAutofattura) {
-									Voce_epBulk aContoIvaCredito = this.findContoIvaCredito(userContext, fatpas.getTipoDocumentoEnum());
-									testataPrimaNota.addDettaglio(DettaglioPrimaNota.TIPO_IVA, Movimento_cogeBulk.getControSezione(fatpas.getTipoDocumentoEnum().getSezioneIva()),
-											aContoIvaCredito.getCd_voce_ep(), imIva);
-								}
-							}
+											BigDecimal imImponibile = righeDocammVoce.stream().map(IDocumentoAmministrativoRigaBulk::getIm_imponibile)
+													.reduce(BigDecimal.ZERO, BigDecimal::add);
+											BigDecimal imIva = righeDocammVoce.stream().map(IDocumentoAmministrativoRigaBulk::getIm_iva)
+													.reduce(BigDecimal.ZERO, BigDecimal::add);
 
-							Map<Integer, Map<String, Map<String, Map<String, List<IDocumentoAmministrativoRigaBulk>>>>> mapVoce =
-									righeDocammTerzo.stream().collect(Collectors.groupingBy(rigaDoc->rigaDoc.getScadenzaDocumentoContabile().getFather().getEsercizio(),
-											Collectors.groupingBy(rigaDoc2->rigaDoc2.getScadenzaDocumentoContabile().getFather().getTi_appartenenza(),
-													Collectors.groupingBy(rigaDoc3->rigaDoc3.getScadenzaDocumentoContabile().getFather().getTi_gestione(),
-															Collectors.groupingBy(rigaDoc4->rigaDoc4.getScadenzaDocumentoContabile().getFather().getCd_elemento_voce())))));
-
-							mapVoce.keySet().stream().forEach(aEseVoce -> {
-								mapVoce.get(aEseVoce).keySet().forEach(aTiAppartenenza -> {
-									mapVoce.get(aEseVoce).get(aTiAppartenenza).keySet().forEach(aTiGestione -> {
-										mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).keySet().forEach(aCdVoce -> {
-											try {
-												List<IDocumentoAmministrativoRigaBulk> righeDocammVoce = mapVoce.get(aEseVoce).get(aTiAppartenenza).get(aTiGestione).get(aCdVoce);
-
-												//Registrazione conto COSTO
-												BigDecimal imCosto = righeDocammVoce.stream()
-														.map(el -> {
-															if (fatpas.isIstituzionale())
-																return el.getIm_imponibile().add(el.getIm_iva());
-															return el.getIm_imponibile();
-														}).reduce(BigDecimal.ZERO, BigDecimal::add);
-												Voce_epBulk aCdContoCosto = findContoCostoRicavo(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
-
-												testataPrimaNota.openDettaglioCostoRicavo(fatpas.getTipoDocumentoEnum(), aCdContoCosto.getCd_voce_ep(), imCosto);
-
-												//Registrazione conto PATRIMONIALE
-												BigDecimal imPatrimoniale = righeDocammVoce.stream()
-														.map(IDocumentoAmministrativoRigaBulk::getIm_imponibile)
-														.reduce(BigDecimal.ZERO, BigDecimal::add);
-												Voce_epBulk aContoPatr = findContoAnag(userContext, new Elemento_voceBulk(aCdVoce, aEseVoce, aTiAppartenenza, aTiGestione));
-
-												testataPrimaNota.openDettaglioPatrimoniale(fatpas.getTipoDocumentoEnum(), aContoPatr.getCd_voce_ep(), imPatrimoniale);
-											} catch (ComponentException|PersistencyException e) {
-												throw new ApplicationRuntimeException(e);
+											//Registrazione IVA
+											if (registraIva) {
+												if (isCommercialeWithAutofattura) {
+													Pair<Voce_epBulk, Voce_epBulk> pairContoIva = this.findPairAutofatturaIva(userContext, (Fattura_passiva_rigaBulk) righeDocammVoce.stream().findAny().get());
+													testataPrimaNota.openDettaglioIva(fatpas.getTipoDocumentoEnum(), pairContoIva.getFirst().getCd_voce_ep(), imIva);
+													testataPrimaNota.closeDettaglioIva(fatpas.getTipoDocumentoEnum(), pairContoIva.getSecond().getCd_voce_ep(), imIva);
+												} else {
+													Pair<Voce_epBulk, Voce_epBulk> pairContoIva = this.findPairIva(userContext, (Fattura_passiva_rigaBulk) righeDocammVoce.stream().findAny().get());
+													testataPrimaNota.openDettaglioIva(fatpas.getTipoDocumentoEnum(), pairContoIva.getFirst().getCd_voce_ep(), imIva);
+													testataPrimaNota.openDettaglioCostoRicavo(fatpas.getTipoDocumentoEnum(), pairContoIva.getSecond().getCd_voce_ep(), imIva);
+												}
 											}
-										});
+
+											//Registrazione conto COSTO
+											BigDecimal imCosto = registraIva?imImponibile:imImponibile.add(imIva);
+											Pair<Voce_epBulk, Voce_epBulk> pairContoCosto = this.findPairCosto(userContext, (Fattura_passiva_rigaBulk) righeDocammVoce.stream().findAny().get());
+											testataPrimaNota.openDettaglioCostoRicavo(fatpas.getTipoDocumentoEnum(), pairContoCosto.getFirst().getCd_voce_ep(), imCosto);
+											testataPrimaNota.openDettaglioPatrimoniale(fatpas.getTipoDocumentoEnum(), pairContoCosto.getSecond().getCd_voce_ep(), imCosto);
+										} catch (ComponentException|PersistencyException|RemoteException e) {
+											throw new ApplicationRuntimeException(e);
+										}
 									});
 								});
 							});
-						} catch (ComponentException|PersistencyException|RemoteException e) {
-							throw new ApplicationRuntimeException(e);
-						}
+						});
 					});
 				});
 			});
@@ -1357,21 +1342,37 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, AnticipoBulk anticipo) throws ComponentException, PersistencyException {
-		Voce_epBulk voceCosto = this.findAssEvVoceep(userContext, anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce()).getVoce_ep();
-		Voce_epBulk voceContropartita = this.findContoAnag(userContext, anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce());
-		return Pair.of(voceCosto, voceContropartita);
+		return this.findPairCosto(userContext, anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce());
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, MissioneBulk missione) throws ComponentException, PersistencyException {
-		Voce_epBulk voceCosto = this.findAssEvVoceep(userContext, missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce()).getVoce_ep();
-		Voce_epBulk voceContropartita = this.findContoAnag(userContext, missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce());
-		return Pair.of(voceCosto, voceContropartita);
+		return this.findPairCosto(userContext, missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce());
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, CompensoBulk compenso) throws ComponentException, PersistencyException {
-		Voce_epBulk voceCosto = this.findContoCostoRicavo(userContext, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
-		Voce_epBulk voceContropartita = this.findContoAnag(userContext, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
-		return Pair.of(voceCosto, voceContropartita);
+		return this.findPairCosto(userContext, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairIva(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga) throws ComponentException, RemoteException, PersistencyException {
+		Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, fatturaPassivaRiga.getFattura_passiva().getTipoDocumentoEnum());
+		Voce_epBulk aContoContropartita = this.findContoCostoRicavo(userContext, fatturaPassivaRiga.getObbligazione_scadenziario().getObbligazione().getElemento_voce());
+		return Pair.of(aContoIvaDebito, aContoContropartita);
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairAutofatturaIva(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga) throws ComponentException, RemoteException, PersistencyException {
+		Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, fatturaPassivaRiga.getFattura_passiva().getTipoDocumentoEnum());
+		Voce_epBulk aContoIvaCredito = this.findContoIvaCredito(userContext, fatturaPassivaRiga.getFattura_passiva().getTipoDocumentoEnum());
+		return Pair.of(aContoIvaDebito, aContoIvaCredito);
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga) throws ComponentException, PersistencyException {
+		return this.findPairCosto(userContext, fatturaPassivaRiga.getObbligazione_scadenziario().getObbligazione().getElemento_voce());
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, Elemento_voceBulk elementoVoce) throws ComponentException, PersistencyException {
+		Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, elementoVoce);
+		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, elementoVoce);
+		return Pair.of(aContoCosto, aContoContropartita);
 	}
 
 	/**
