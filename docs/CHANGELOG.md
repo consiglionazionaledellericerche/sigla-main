@@ -1,5 +1,13 @@
-## Release 6.3.36  -- _July 02, 2021_ 
+## Release 6.3.37  -- _July 05, 2021_ 
 **Changes**
+
+>**Upgrade version of siopeplus artifact**
+>
+>[9e7e7218e8891e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e7e7218e8891e8) marco.spasiano *July 05, 2021*
+
+>**Fix valorizzazione data e quantità di carico sui lotti**
+>
+>[c213d22f6186281](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c213d22f6186281) gianfranco.gasparro *July 03, 2021*
 
 >**Gestito controllo imponibile natura nel caso di Bollo non indicato come riga di fattura elettronica ma messo solo in testata**
 >
