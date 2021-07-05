@@ -1,3 +1,31 @@
+## Release 6.3.36  -- _July 02, 2021_ 
+**Changes**
+
+>**Gestito controllo imponibile natura nel caso di Bollo non indicato come riga di fattura elettronica ma messo solo in testata**
+>
+>[91e2d08717f6be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91e2d08717f6be4) gianfranco.gasparro *July 02, 2021*
+
+
+## Release 6.3.35  -- _July 01, 2021_ 
+**Changes**
+
+>**FIX rest select progetti**
+>
+>[cb105345d0758e3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb105345d0758e3) marco.spasiano *July 01, 2021*
+
+>**Trasparenza Incarichi: aggiunto nel file xml anche la data proroga dell'incarico.**
+>
+>[306ee2629673ea3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/306ee2629673ea3) raffaelepagano *July 01, 2021*
+
+>**Update OrdineAcqComponent.java**
+>
+>[91571df5897a65c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91571df5897a65c) GASPARRO GIANFRANCO *June 30, 2021*
+
+>**Update OrdineAcqBulkInfo.xml**
+>
+>[575e4cf30be7e4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/575e4cf30be7e4f) GASPARRO GIANFRANCO *June 30, 2021*
+
+
 ## Release 6.3.34  -- _June 29, 2021_ 
 **Changes**
 
