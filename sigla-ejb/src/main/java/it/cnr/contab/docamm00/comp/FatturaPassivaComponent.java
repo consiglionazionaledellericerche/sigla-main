@@ -7814,8 +7814,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     private void controllaQuadaraturaNatura(UserContext aUC, boolean noSegno, Fattura_passivaBulk fatturaPassiva, boolean checkIVA) throws ComponentException {
         Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
+        BigDecimal bollo = BigDecimal.ZERO;
+        String naturaBollo = null;
         for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
             Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
+            if (riga.getBene_servizio().getFl_bollo()){
+                bollo = riga.getIm_imponibile();
+            }
             String key = null;
             Hashtable<String, BigDecimal> currentMap = null;
             if (Optional.ofNullable(riga)
@@ -7825,6 +7830,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     .orElse(Boolean.FALSE)) {
                 if (riga.getVoce_iva().getNaturaOperNonImpSdi() != null) {
                     key = riga.getVoce_iva().getNaturaOperNonImpSdi();
+                    if (riga.getBene_servizio().getFl_bollo()){
+                        naturaBollo = key;
+                    }
                     currentMap = mapNatura;
                 } else {
                     key = riga.getVoce_iva().getPercentuale().toString();
@@ -7892,8 +7900,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
                 if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
                         (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
-                        (value == null && valueEle != null) || (value != null && valueEle == null))
-                    codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
+                        (value == null && valueEle != null) || (value != null && valueEle == null)){
+                    if (!checkIVA && valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) > 0){
+                        BigDecimal diff = value.subtract(valueEle);
+                        if (diff.compareTo(bollo) != 0 || !naturaBollo.equals(key)){
+                            codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
+                        }
+                    } else {
+                        codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
+                    }
+                }
             mapNaturaEle.remove(key);
         }
 
