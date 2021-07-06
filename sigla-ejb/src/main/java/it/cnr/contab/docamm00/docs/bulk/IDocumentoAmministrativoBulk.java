@@ -18,6 +18,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 
@@ -27,7 +28,7 @@ import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
  *
  * @author: Roberto Peli
  */
-public interface IDocumentoAmministrativoBulk {
+public interface IDocumentoAmministrativoBulk extends IDocumentoCogeBulk {
 
     String NON_RIPORTATO = "N";
     String PARZIALMENTE_RIPORTATO = "Q";
@@ -200,6 +201,4 @@ public interface IDocumentoAmministrativoBulk {
 	Scrittura_partita_doppiaBulk getScrittura_partita_doppia();
 
     void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia);
-
-    TipoDocumentoEnum getTipoDocumentoEnum();
 }

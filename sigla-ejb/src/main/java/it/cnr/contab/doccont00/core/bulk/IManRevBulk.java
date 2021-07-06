@@ -17,12 +17,14 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (10/07/2002 12.22.24)
  * @author: Simonetta Costa
  */
-public interface IManRevBulk {
+public interface IManRevBulk extends IDocumentoCogeBulk {
 String getCd_cds();
 String getCd_tipo_documento_cont();
 Integer getEsercizio();

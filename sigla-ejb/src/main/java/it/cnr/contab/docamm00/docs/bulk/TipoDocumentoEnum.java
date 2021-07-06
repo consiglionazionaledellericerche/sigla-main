@@ -19,6 +19,8 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
 
 public enum TipoDocumentoEnum {
 	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO),
@@ -36,7 +38,9 @@ public enum TipoDocumentoEnum {
 	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON),
 	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON),
 	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S),
-	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E);
+	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E),
+	MANDATO(Numerazione_doc_contBulk.TIPO_MAN),
+	REVERSALE(Numerazione_doc_contBulk.TIPO_REV);
 
 	private final String value;
 
@@ -59,6 +63,10 @@ public enum TipoDocumentoEnum {
 
 	public boolean isMissione() {
 		return Numerazione_doc_ammBulk.TIPO_MISSIONE.equals(this.value);
+	}
+
+	public boolean isRimborso() {
+		return Numerazione_doc_ammBulk.TIPO_RIMBORSO.equals(this.value);
 	}
 
 	public boolean isFatturaAttiva() {
@@ -85,12 +93,20 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA.equals(this.value);
 	}
 
-	public boolean isDocumentoPassivo() {
+	public boolean isDocumentoAmministrativoPassivo() {
 		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva();
 	}
 
-	public boolean isDocumentoAttivo() {
+	public boolean isDocumentoAmministrativoAttivo() {
 		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva();
+	}
+
+	public boolean isMandato() {
+		return TipoDocumentoEnum.MANDATO.equals(this.value);
+	}
+
+	public boolean isReversale() {
+		return TipoDocumentoEnum.REVERSALE.equals(this.value);
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {

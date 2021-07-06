@@ -18,8 +18,10 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
@@ -1113,5 +1115,25 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
                 Optional.ofNullable(this.getCdUoScrivania())
                   .map(uo->!uo.equals(this.getCd_uo_origine()))
                   .orElse(Boolean.FALSE);
+    }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_documento_cont();
+    }
+
+    @Override
+    public String getCd_uo() {
+        return this.getCd_unita_organizzativa();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_documento_cont();
+    }
+
+    @Override
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
     }
 }

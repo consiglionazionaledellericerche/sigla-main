@@ -1966,13 +1966,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
         return (Fattura_attiva_rigaBulk) fattura_attiva_dettColl.remove(indiceDiLinea);
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (5/15/2002 10:50:29 AM)
-     * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-     */
     public void resetDefferredSaldi() {
-
         deferredSaldi = null;
     }
 
@@ -2449,5 +2443,15 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 
     public boolean registraIvaCoge() {
         return !this.getFl_liquidazione_differita();
+    }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_doc_amm();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_doc_amm();
     }
 }

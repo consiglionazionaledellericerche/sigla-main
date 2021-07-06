@@ -18,6 +18,7 @@
 package it.cnr.contab.coepcoan00.core.bulk;
 
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -30,6 +31,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Scrittura_partita_doppiaHome extends BulkHome {
     public Scrittura_partita_doppiaHome(java.sql.Connection conn) {
@@ -77,6 +79,17 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
 				.map(Scrittura_partita_doppiaBulk.class::cast)
 				.findAny();
 	}
+
+	public List<Scrittura_partita_doppiaBulk> findByDocumentoCoge(IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException {
+        SQLBuilder sql = this.createSQLBuilder();
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, documentoCogeBulk.getEsercizio());
+        sql.addClause("AND", "cd_cds_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_cds());
+        sql.addClause("AND", "cd_uo_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_uo());
+        sql.addClause("AND", "pg_numero_documento", SQLBuilder.EQUALS, documentoCogeBulk.getPg_doc());
+        sql.addClause("AND", "cd_tipo_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_tipo_doc());
+        return fetchAll(sql);
+    }
+
     /**
      * Imposta il pg_scrittura di un oggetto <code>Scrittura_partita_doppiaBulk</code>.
      *

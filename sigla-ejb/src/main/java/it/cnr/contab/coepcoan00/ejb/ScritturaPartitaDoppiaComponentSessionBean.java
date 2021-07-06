@@ -18,6 +18,7 @@
 package it.cnr.contab.coepcoan00.ejb;
 
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.UserContext;
@@ -77,7 +78,7 @@ public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.
     }
 
 	@Override
-	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext param0, IDocumentoAmministrativoBulk param1) throws ComponentException, RemoteException {
+	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
 		pre_component_invocation(param0, componentObj);
 		try {
 			Scrittura_partita_doppiaBulk result = ((ScritturaPartitaDoppiaComponent) componentObj).proposeScritturaPartitaDoppia(param0, param1);

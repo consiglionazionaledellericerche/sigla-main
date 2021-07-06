@@ -32,6 +32,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -75,7 +76,7 @@ import it.cnr.jada.util.action.CRUDBP;
 
 @StorageType(name="D:emppay:missione", parentName="D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
-public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk,AllegatoParentBulk, AllegatoStorePath
+public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk, AllegatoParentBulk, AllegatoStorePath
 {
 	// Testata Missione
 	@JsonIgnore
@@ -3768,5 +3769,15 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	public static boolean isAbilitatoCancellazioneMissioneFromGemis(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 		return Utility.getRuoloComponentSession().isAbilitatoCancellazioneMissioneGemis(param0);
+	}
+
+	@Override
+	public String getCd_tipo_doc() {
+		return this.getCd_tipo_doc_amm();
+	}
+
+	@Override
+	public Long getPg_doc() {
+		return this.getPg_doc_amm();
 	}
 }

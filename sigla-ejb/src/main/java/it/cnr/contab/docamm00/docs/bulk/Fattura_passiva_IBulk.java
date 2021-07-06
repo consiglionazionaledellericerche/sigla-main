@@ -490,6 +490,5 @@ public class Fattura_passiva_IBulk
 
         setPg_fattura_passiva(newPg);
     }
-
 }
 

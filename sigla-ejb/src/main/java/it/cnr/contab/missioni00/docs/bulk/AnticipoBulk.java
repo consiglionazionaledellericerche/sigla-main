@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
@@ -1443,4 +1444,13 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
         //	e nell creaConBulk
     }
 
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_doc_amm();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_doc_amm();
+    }
 }

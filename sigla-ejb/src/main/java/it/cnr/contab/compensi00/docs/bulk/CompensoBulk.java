@@ -23,6 +23,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -3327,6 +3328,16 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         return Optional.ofNullable(missione)
                 .map(MissioneBulk::getStorePath)
                 .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_doc_amm();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_doc_amm();
     }
 
     public TipoDocumentoEnum getTipoDocumentoEnum() {

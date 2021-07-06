@@ -4272,4 +4272,15 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_movimento_coge_add_columns">
+        <addColumn tableName="movimento_coge">
+            <column name="ti_riga" remarks="Tipologia della riga.
+IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CRE = CREDITO; DEB = DEBITO; COS = COSTO; CSP = CESPITE; IVVS = IVA VENDITE SPLIT; IVAV = IVA VENDITA" type="VARCHAR(4)"/>
+            <column name="cd_tipo_documento" remarks="Codice del tipo di documento" type="VARCHAR(10)"/>
+            <column name="cd_cds_documento" remarks="Codice identificativo dell'unità organizzativa o CDS" type="VARCHAR(30)"/>
+            <column name="cd_uo_documento" remarks="Codice identificativo dell'unità organizzativa o CDS" type="VARCHAR(30)"/>
+            <column name="esercizio_documento" remarks="Esercizio del documento amministrativo" type="SMALLINT"/>
+            <column name="pg_numero_documento" remarks="Progressivo del documento" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

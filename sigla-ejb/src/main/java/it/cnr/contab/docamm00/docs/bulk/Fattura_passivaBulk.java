@@ -39,6 +39,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
@@ -3549,5 +3550,15 @@ public abstract class Fattura_passivaBulk
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_doc_amm();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_doc_amm();
     }
 }

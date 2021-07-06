@@ -424,11 +424,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 
 		return calendar;
 	}
-	/**
-	 * Insert the method's description here.
-	 * Creation date: (5/15/2002 10:50:29 AM)
-	 * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-	 */
+
 	public it.cnr.jada.bulk.PrimaryKeyHashMap getDefferredSaldi() {
 		return deferredSaldi;
 	}
@@ -1347,11 +1343,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		} else
 			addToDocumentiContabiliCancellati(riga.getObbligazione_scadenziario());
 	}
-	/**
-	 * Insert the method's description here.
-	 * Creation date: (5/15/2002 10:50:29 AM)
-	 * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-	 */
+
 	public void resetDefferredSaldi() {
 
 		deferredSaldi = null;	
@@ -1443,11 +1435,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public void setDocumentiContabiliCancellati(java.util.Vector newDocumentiContabiliCancellati) {
 		documentiContabiliCancellati = newDocumentiContabiliCancellati;
 	}
-	/**
-	 * Insert the method's description here.
-	 * Creation date: (03/12/2001 14.10.38)
-	 * @param newDocumento_generico_obbligazioniHash it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
-	 */
+
 	public void setDocumento_generico_accertamentiHash(AccertamentiTable newDocumento_generico_accertamentiHash) {
 		documento_generico_accertamentiHash = newDocumento_generico_accertamentiHash;
 	}
@@ -1497,7 +1485,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (03/12/2001 16.04.00)
-	 * @param newImportoTotalePerObbligazione java.math.BigDecimal
+	 * @param newImportoTotalePerAccertamento java.math.BigDecimal
 	 */
 	public void setImportoTotalePerAccertamento(java.math.BigDecimal newImportoTotalePerAccertamento) {
 		importoTotalePerAccertamento = newImportoTotalePerAccertamento;
@@ -1969,5 +1957,15 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 
 	public TipoDocumentoEnum getTipoDocumentoEnum() {
 		return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+	}
+
+	@Override
+	public String getCd_tipo_doc() {
+		return this.getCd_tipo_doc_amm();
+	}
+
+	@Override
+	public Long getPg_doc() {
+		return this.getPg_doc_amm();
 	}
 }

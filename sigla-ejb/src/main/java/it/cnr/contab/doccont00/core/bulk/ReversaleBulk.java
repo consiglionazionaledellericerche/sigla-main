@@ -18,6 +18,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
@@ -858,5 +859,25 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     public void setPg_reversale_riemissione(Long pg_reversale_riemissione) {
         if (getV_man_rev() != null)
             getV_man_rev().setPg_documento_cont(pg_reversale_riemissione);
+    }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_documento_cont();
+    }
+
+    @Override
+    public String getCd_uo() {
+        return this.getCd_unita_organizzativa();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_documento_cont();
+    }
+
+    @Override
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
     }
 }

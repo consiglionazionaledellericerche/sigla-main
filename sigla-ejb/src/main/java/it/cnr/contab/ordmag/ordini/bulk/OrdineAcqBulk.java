@@ -1523,4 +1523,14 @@ public class OrdineAcqBulk extends OrdineAcqBase
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_doc_amm();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_doc_amm();
+    }
 }
