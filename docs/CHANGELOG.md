@@ -1,3 +1,11 @@
+## Release 6.3.39  -- _July 06, 2021_ 
+**Changes**
+
+>**Upgrade siopeplus artifact to 1.0.0**
+>
+>[774bdc9ff5f9947](https://github.com/consiglionazionaledellericerche/sigla-main/commit/774bdc9ff5f9947) marco.spasiano *July 06, 2021*
+
+
 ## Release 6.3.38  -- _July 06, 2021_ 
 **Changes**
 
