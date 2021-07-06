@@ -66,19 +66,18 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
         return result;
     }
 
-    public Optional<Scrittura_partita_doppiaBulk> findByDocumentoAmministrativo(IDocumentoAmministrativoBulk documentoAmministrativoBulk) throws PersistencyException {
-		SQLBuilder sql = this.createSQLBuilder();
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, documentoAmministrativoBulk.getEsercizio());
-		sql.addClause("AND", "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_cds());
-		sql.addClause("AND", "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_uo());
-		sql.addClause("AND", "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getPg_doc_amm());
-		sql.addClause("AND", "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_tipo_doc_amm());
-		return fetchAll(sql)
-				.stream()
-				.filter(Scrittura_partita_doppiaBulk.class::isInstance)
-				.map(Scrittura_partita_doppiaBulk.class::cast)
-				.findAny();
-	}
+    /**
+     *
+     * @param documentoCogeBulk
+     * @return la prima scrittura generata dal documento
+     * @throws PersistencyException
+     */
+    public Optional<Scrittura_partita_doppiaBulk> findByDocumentoAmministrativo(IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException {
+        return findByDocumentoCoge(documentoCogeBulk)
+                .stream()
+                .sorted((t1, t2) -> t1.getPg_scrittura().compareTo(t2.getPg_scrittura()))
+                .findFirst();
+    }
 
 	public List<Scrittura_partita_doppiaBulk> findByDocumentoCoge(IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException {
         SQLBuilder sql = this.createSQLBuilder();
