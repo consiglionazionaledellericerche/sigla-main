@@ -1,5 +1,9 @@
-## Release 6.3.37  -- _July 05, 2021_ 
+## Release 6.3.38  -- _July 06, 2021_ 
 **Changes**
+
+>**Aggiunto controllo sul codice CIG**
+>
+>[96cf2fa819f79b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cf2fa819f79b7) marco.spasiano *July 06, 2021*
 
 >**Upgrade version of siopeplus artifact**
 >
