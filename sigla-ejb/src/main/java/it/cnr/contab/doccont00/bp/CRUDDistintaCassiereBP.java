@@ -273,8 +273,11 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
                     .map(s -> Boolean.valueOf(s))
                     .orElse(Boolean.FALSE);
-
-            this.setFlusso(new Boolean(config.getInitParameter("flusso")));
+            if (!attivoSiopeplus) {
+                this.setFlusso(Boolean.TRUE);
+            } else {
+                this.setFlusso(new Boolean(config.getInitParameter("flusso")));
+            }
             this.setSepa(new Boolean(config.getInitParameter("sepa")));
             this.setAnnulli(new Boolean(config.getInitParameter("annulli")));
 
