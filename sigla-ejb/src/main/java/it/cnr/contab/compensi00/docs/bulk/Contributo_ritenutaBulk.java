@@ -245,7 +245,7 @@ public class Contributo_ritenutaBulk extends Contributo_ritenutaBase {
 	}
 
 	public String getSezioneCostoRicavo() {
-		String mySezione = this.getCompenso().getTipoDocumentoEnum().getSezioneCostoRicavo();
+		String mySezione = this.getCompenso().getTipoDocumentoEnum().getSezioneEconomica();
 		return this.getAmmontare().compareTo(BigDecimal.ZERO)<0?Movimento_cogeBulk.getControSezione(mySezione):mySezione;
 	}
 }

@@ -118,7 +118,52 @@ public enum TipoDocumentoEnum {
 		throw new IllegalArgumentException(v);
 	}
 
-	public String getSezioneCostoRicavo() {
+	/**
+	 * Indica quale tipo di conto di economica (costo/ricavo) viene movimentato dalla scrittura PN del tipo documento
+	 */
+	public String getTipoEconomica() {
+		if (this.isFatturaPassiva())
+			return Movimento_cogeBulk.TIPO_COSTO;
+		if (this.isNotaCreditoPassiva())
+			return Movimento_cogeBulk.TIPO_COSTO;
+		if (this.isFatturaAttiva())
+			return Movimento_cogeBulk.TIPO_RICAVO;
+		if (this.isNotaCreditoAttiva())
+			return Movimento_cogeBulk.TIPO_RICAVO;
+		if (this.isCompenso())
+			return Movimento_cogeBulk.TIPO_COSTO;
+		if (this.isAnticipo())
+			return Movimento_cogeBulk.TIPO_COSTO;
+		if (this.isMissione())
+			return Movimento_cogeBulk.TIPO_COSTO;
+		return null;
+	}
+
+	/**
+	 * Indica quale tipo di conto patrimoniale (debito/credito) viene movimentato dalla scrittura PN del tipo documento
+	 */
+	public String getTipoPatrimoniale() {
+		if (this.isFatturaPassiva())
+			return Movimento_cogeBulk.TIPO_DEBITO;
+		if (this.isNotaCreditoPassiva())
+			return Movimento_cogeBulk.TIPO_DEBITO;
+		if (this.isFatturaAttiva())
+			return Movimento_cogeBulk.TIPO_CREDITO;
+		if (this.isNotaCreditoAttiva())
+			return Movimento_cogeBulk.TIPO_CREDITO;
+		if (this.isCompenso())
+			return Movimento_cogeBulk.TIPO_DEBITO;
+		if (this.isAnticipo())
+			return Movimento_cogeBulk.TIPO_DEBITO;
+		if (this.isMissione())
+			return Movimento_cogeBulk.TIPO_DEBITO;
+		return null;
+	}
+
+	/**
+	 * Indica quale sezione (Dare/Avere) per il conto di tipo economica viene movimentato dalla scrittura PN del tipo documento
+	 */
+	public String getSezioneEconomica() {
 		if (this.isFatturaPassiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isNotaCreditoPassiva())
@@ -136,6 +181,9 @@ public enum TipoDocumentoEnum {
 		return null;
 	}
 
+	/**
+	 * Indica quale sezione (Dare/Avere) per il conto di tipo iva viene movimentato dalla scrittura PN del tipo documento
+	 */
 	public String getSezioneIva() {
 		if (this.isFatturaPassiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
@@ -148,6 +196,9 @@ public enum TipoDocumentoEnum {
 		return null;
 	}
 
+	/**
+	 * Indica quale sezione (Dare/Avere) per il conto di tipo patrimoniale viene movimentato dalla scrittura PN del tipo documento
+	 */
 	public String getSezionePatrimoniale() {
 		if (this.isFatturaPassiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
