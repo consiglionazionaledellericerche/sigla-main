@@ -30,7 +30,19 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
 	protected ContoBulk conto = new ContoBulk();
 	protected Scrittura_partita_doppiaBulk scrittura = new Scrittura_partita_doppiaBulk();
 	public java.lang.Long pgScritturaAnnullata;
-	
+
+	public final static String TIPO_IVA_ACQUISTO = "IVAA";
+	public final static String TIPO_IVA_ACQUISTO_SPLIT = "IVAS";
+	public final static String TIPO_IVA_VENDITE = "IVAV";
+	public final static String TIPO_IVA_VENDITE_SPLIT = "IVVS";
+	public final static String TIPO_COSTO = "COS";
+	public final static String TIPO_RICAVO = "RIC";
+	public final static String TIPO_DEBITO = "DEB";
+	public final static String TIPO_CREDITO = "CRE";
+	public final static String TIPO_CESPITE = "CSP";
+	public final static String TIPO_GENERICO = "GEN";
+
+
 	// sezione
 	public final static String SEZIONE_DARE  = "D";
 	public final static String SEZIONE_AVERE = "A";
