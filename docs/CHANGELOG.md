@@ -1,3 +1,11 @@
+## Release 6.3.40  -- _July 07, 2021_ 
+**Changes**
+
+>**Se siopeplus non è attivo, le distinte sono sempre da flusso**
+>
+>[7cb414925f23df2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cb414925f23df2) marco.spasiano *July 07, 2021*
+
+
 ## Release 6.3.39  -- _July 06, 2021_ 
 **Changes**
 
