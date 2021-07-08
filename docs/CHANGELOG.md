@@ -1,5 +1,9 @@
-## Release 6.3.41  -- _July 08, 2021_ 
+## Release 6.3.42  -- _July 08, 2021_ 
 **Changes**
+
+>**Aggiunto controllo sulle modalità di pagamento, può esistere solo una tra "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A" e "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"**
+>
+>[69ffc800d01c588](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69ffc800d01c588) marco.spasiano *July 08, 2021*
 
 >**Se siopeplus non è attivo, genera sempre il flusso OPI**
 >
