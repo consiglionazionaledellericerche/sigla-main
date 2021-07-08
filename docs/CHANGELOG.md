@@ -1,5 +1,45 @@
-## Release 6.3.36  -- _July 02, 2021_ 
+## Release 6.3.42  -- _July 08, 2021_ 
 **Changes**
+
+>**Aggiunto controllo sulle modalità di pagamento, può esistere solo una tra "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A" e "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"**
+>
+>[69ffc800d01c588](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69ffc800d01c588) marco.spasiano *July 08, 2021*
+
+>**Se siopeplus non è attivo, genera sempre il flusso OPI**
+>
+>[a474d599a074633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a474d599a074633) marco.spasiano *July 08, 2021*
+
+
+## Release 6.3.40  -- _July 07, 2021_ 
+**Changes**
+
+>**Se siopeplus non è attivo, le distinte sono sempre da flusso**
+>
+>[7cb414925f23df2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cb414925f23df2) marco.spasiano *July 07, 2021*
+
+
+## Release 6.3.39  -- _July 06, 2021_ 
+**Changes**
+
+>**Upgrade siopeplus artifact to 1.0.0**
+>
+>[774bdc9ff5f9947](https://github.com/consiglionazionaledellericerche/sigla-main/commit/774bdc9ff5f9947) marco.spasiano *July 06, 2021*
+
+
+## Release 6.3.38  -- _July 06, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sul codice CIG**
+>
+>[96cf2fa819f79b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cf2fa819f79b7) marco.spasiano *July 06, 2021*
+
+>**Upgrade version of siopeplus artifact**
+>
+>[9e7e7218e8891e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e7e7218e8891e8) marco.spasiano *July 05, 2021*
+
+>**Fix valorizzazione data e quantità di carico sui lotti**
+>
+>[c213d22f6186281](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c213d22f6186281) gianfranco.gasparro *July 03, 2021*
 
 >**Gestito controllo imponibile natura nel caso di Bollo non indicato come riga di fattura elettronica ma messo solo in testata**
 >

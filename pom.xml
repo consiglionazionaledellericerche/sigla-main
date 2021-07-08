@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr.si.sigla</groupId>
-	<version>6.3.38-SNAPSHOT</version>
+	<version>6.3.43-SNAPSHOT</version>
 	<artifactId>sigla-parent</artifactId>
 	<description>Sistema Informativo per la Gestione delle Linee di Attività</description>
 	<packaging>pom</packaging>
@@ -40,7 +40,7 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
-		<siopeplus.version>0.0.13</siopeplus.version>
+		<siopeplus.version>1.0.0</siopeplus.version>
 		<sdi.fatturapa.version>0.0.1</sdi.fatturapa.version>
 		<ws.client.version>0.0.5</ws.client.version>
 		<spring.version>5.2.5.RELEASE</spring.version>

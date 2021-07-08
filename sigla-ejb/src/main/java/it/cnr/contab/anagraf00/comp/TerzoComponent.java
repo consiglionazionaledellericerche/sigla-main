@@ -26,6 +26,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -39,6 +40,7 @@ import it.cnr.jada.util.RemoteIterator;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Questa classe svolge le operazioni fondamentali di lettura, scrittura e filtro dei dati
@@ -332,10 +334,25 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
      * @param param it.cnr.contab.anagraf00.core.bulk.TerzoBulk
      */
     private void validaCreaModificaBanche(TerzoBulk terzo) throws ComponentException {
-
-
         try {
-            BulkList banche = terzo.getBanche();
+            BulkList<BancaBulk> banche = terzo.getBanche();
+            final BulkList<Modalita_pagamentoBulk> modalita_pagamento = terzo.getModalita_pagamento();
+            if (modalita_pagamento
+                    .stream()
+                    .map(Modalita_pagamentoBulk::getRif_modalita_pagamento)
+                    .filter(rif_modalita_pagamentoBulk -> !rif_modalita_pagamentoBulk.getFl_cancellato())
+                    .map(Rif_modalita_pagamentoBulk::getTipo_pagamento_siope)
+                    .filter(s -> s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value()) ||
+                            s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value()))
+                    .collect(Collectors.groupingBy(s -> s))
+                    .keySet().size() > 1){
+                throw new ApplicationMessageFormatException(
+                        "Attenzione: è possibile definire solamente una Modalità di pagamento tra \"{0}\" e \"{1}\".",
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value(),
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value());
+            }
+
+
             boolean isCcd = false;
             boolean isBancaItalia = false;
 
