@@ -1,3 +1,11 @@
+## Release 6.3.41  -- _July 08, 2021_ 
+**Changes**
+
+>**Se siopeplus non è attivo, genera sempre il flusso OPI**
+>
+>[a474d599a074633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a474d599a074633) marco.spasiano *July 08, 2021*
+
+
 ## Release 6.3.40  -- _July 07, 2021_ 
 **Changes**
 
