@@ -273,11 +273,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
                     .map(s -> Boolean.valueOf(s))
                     .orElse(Boolean.FALSE);
-            if (!attivoSiopeplus) {
-                this.setFlusso(Boolean.TRUE);
-            } else {
-                this.setFlusso(new Boolean(config.getInitParameter("flusso")));
-            }
+            this.setFlusso(new Boolean(config.getInitParameter("flusso")));
             this.setSepa(new Boolean(config.getInitParameter("sepa")));
             this.setAnnulli(new Boolean(config.getInitParameter("annulli")));
 
@@ -1956,7 +1952,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     ((CNRUserInfo) context.getUserInfo()).getUtente()
             );
         }
-        if (!this.isFlusso() && !this.isAnnulli()) {
+        if (!this.isFlusso() && !this.isAnnulli() && isAttivoSiopeplus()) {
             Distinta_cassiereBulk distintaProvvisoria = (Distinta_cassiereBulk) getModel();
             // spostato nel salva definitivo anche in questo caso
             StorageObject distintaStorageObject = Optional.ofNullable(distintaProvvisoria.getPg_distinta_def())
