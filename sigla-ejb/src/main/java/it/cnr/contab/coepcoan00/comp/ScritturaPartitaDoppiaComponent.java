@@ -340,6 +340,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		public void setTipoDocumentoEnum(TipoDocumentoEnum tipoDocumentoEnum) {
 			this.tipoDocumentoEnum = tipoDocumentoEnum;
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			Partita partita = (Partita) o;
+			return Objects.equals(cd_tipo_doc, partita.cd_tipo_doc) && Objects.equals(cd_cds, partita.cd_cds) && Objects.equals(cd_uo, partita.cd_uo) && Objects.equals(esercizio, partita.esercizio) && Objects.equals(pg_doc, partita.pg_doc) && tipoDocumentoEnum == partita.tipoDocumentoEnum;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(cd_tipo_doc, cd_cds, cd_uo, esercizio, pg_doc, tipoDocumentoEnum);
+		}
 	}
 		/**
 	 * ScritturaPartitaDoppiaComponent constructor comment.
@@ -1404,7 +1417,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					try {
 						if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() ||
 							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() ||
-							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo())
+							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo() ||
+							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isMissione())
 							addDettagliPrimaNotaMandatoDocumentiVari(userContext, testataPrimaNota, rigaMandato);
 					} catch (ComponentException|PersistencyException|RemoteException e) {
 						throw new ApplicationRuntimeException(e);
@@ -1510,9 +1524,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private void addDettagliPrimaNotaMandatoDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Mandato_rigaBulk rigaMandato) throws ComponentException, PersistencyException, RemoteException {
 		if (!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() &&
 			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() &&
-			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo())
+			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo() &&
+			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isMissione())
 			throw new ApplicationException("La riga del mandato " + rigaMandato.getEsercizio() + "/" + rigaMandato.getCd_cds() + "/" + rigaMandato.getPg_mandato() +
-					" non risulta pagare un documento/anticipo. Proposta di prima nota non possibile.");
+					" non risulta pagare un documento/anticipo/missione. Proposta di prima nota non possibile.");
 
 		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
 
