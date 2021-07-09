@@ -1403,8 +1403,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				mandato.getMandato_rigaColl().stream().forEach(rigaMandato -> {
 					try {
 						if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() ||
-							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo())
-							addDettagliPrimaNotaMandatoDocumento(userContext, testataPrimaNota, rigaMandato);
+							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() ||
+							TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo())
+							addDettagliPrimaNotaMandatoDocumentiVari(userContext, testataPrimaNota, rigaMandato);
 					} catch (ComponentException|PersistencyException|RemoteException e) {
 						throw new ApplicationRuntimeException(e);
 					}
@@ -1506,11 +1507,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.generaScrittura(userContext, mandato, Arrays.asList(testataPrimaNota), true);
 	}
 
-	private void addDettagliPrimaNotaMandatoDocumento(UserContext userContext, TestataPrimaNota testataPrimaNota, Mandato_rigaBulk rigaMandato) throws ComponentException, PersistencyException, RemoteException {
+	private void addDettagliPrimaNotaMandatoDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Mandato_rigaBulk rigaMandato) throws ComponentException, PersistencyException, RemoteException {
 		if (!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() &&
-				!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo())
+			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() &&
+			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo())
 			throw new ApplicationException("La riga del mandato " + rigaMandato.getEsercizio() + "/" + rigaMandato.getCd_cds() + "/" + rigaMandato.getPg_mandato() +
-					" non risulta pagare un documento. Proposta di prima nota non possibile.");
+					" non risulta pagare un documento/anticipo. Proposta di prima nota non possibile.");
 
 		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
 
