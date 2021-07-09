@@ -18,9 +18,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
 
 public enum TipoDocumentoEnum {
 	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO),
@@ -79,27 +77,27 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isNotaCreditoPassiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA.equals(this.value);
+		return TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA.equals(this);
 	}
 
 	public boolean isNotaDebitoPassiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA.equals(this.value);
+		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA.equals(this);
 	}
 
 	public boolean isNotaCreditoAttiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA.equals(this.value);
+		return TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA.equals(this);
 	}
 
 	public boolean isNotaDebitoAttiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA.equals(this.value);
+		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA.equals(this);
 	}
 
 	public boolean isDocumentoAmministrativoPassivo() {
-		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva();
+		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva() || this.isGenericoSpesa();
 	}
 
 	public boolean isDocumentoAmministrativoAttivo() {
-		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva();
+		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva() || this.isGenericoEntrata();
 	}
 
 	public boolean isMandato() {
@@ -107,19 +105,27 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isReversale() {
-		return TipoDocumentoEnum.REVERSALE.equals(this.value);
+		return TipoDocumentoEnum.REVERSALE.equals(this);
 	}
 
 	public boolean isAperturaFondo() {
-		return TipoDocumentoEnum.GEN_AP_FON.equals(this.value);
+		return TipoDocumentoEnum.GEN_AP_FON.equals(this);
 	}
 
 	public boolean isChiusuraFondo() {
-		return TipoDocumentoEnum.GEN_CH_FON.equals(this.value);
+		return TipoDocumentoEnum.GEN_CH_FON.equals(this);
 	}
 
 	public boolean isGenericoCoriVersamentoSpesa() {
-		return TipoDocumentoEnum.GEN_CORI_VER_SPESA.equals(this.value);
+		return TipoDocumentoEnum.GEN_CORI_VER_SPESA.equals(this);
+	}
+
+	public boolean isGenericoSpesa() {
+		return TipoDocumentoEnum.GENERICO_S.equals(this);
+	}
+
+	public boolean isGenericoEntrata() {
+		return TipoDocumentoEnum.GENERICO_E.equals(this);
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {
@@ -227,6 +233,10 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isGenericoSpesa())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isGenericoEntrata())
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}
 }
