@@ -18,6 +18,8 @@
 package it.cnr.contab.missioni00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -54,38 +56,8 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean riportaAvantiIndietro = false;
     private boolean carryingThrough = false;
     private boolean ribaltato;
-	private final CollapsableDetailCRUDController movimentiDare =
-			new CollapsableDetailCRUDController(
-					"Movimenti Dare",
-					it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-					"scrittura_partita_doppia.movimentiDareColl",
-					this){
-				@Override
-				public boolean isEnabled() {
-					return false;
-				}
-
-				@Override
-				protected String getBorderClass() {
-					return "border-danger";
-				}
-
-				@Override
-				protected String getTextClass() {
-					return "text-danger";
-				}
-			};
-	private final CollapsableDetailCRUDController movimentiAvere =
-			new CollapsableDetailCRUDController(
-					"Movimenti Avere",
-					it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-					"scrittura_partita_doppia.movimentiAvereColl",
-					this){
-				@Override
-				public boolean isEnabled() {
-					return false;
-				}
-			};
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 
 	/**
      * CRUDAnticipoBP constructor comment.

@@ -22,6 +22,8 @@ package it.cnr.contab.docamm00.bp;
  */
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
@@ -51,38 +53,9 @@ public class CRUDDocumentoGenericoPassivoBP
     private final ObbligazioniCRUDController obbligazioniController =
             new ObbligazioniCRUDController("Obbligazioni", it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk.class, "documento_generico_obbligazioniHash", this);
     private final SimpleDetailCRUDController dettaglioObbligazioneController;
-	private final CollapsableDetailCRUDController movimentiDare =
-			new CollapsableDetailCRUDController(
-					"Movimenti Dare",
-					it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-					"scrittura_partita_doppia.movimentiDareColl",
-					this){
-				@Override
-				public boolean isEnabled() {
-					return false;
-				}
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 
-				@Override
-				protected String getBorderClass() {
-					return "border-danger";
-				}
-
-				@Override
-				protected String getTextClass() {
-					return "text-danger";
-				}
-			};
-	private final CollapsableDetailCRUDController movimentiAvere =
-			new CollapsableDetailCRUDController(
-					"Movimenti Avere",
-					it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-					"scrittura_partita_doppia.movimentiAvereColl",
-					this){
-				@Override
-				public boolean isEnabled() {
-					return false;
-				}
-			};
     protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
     private boolean isDeleting = false;
     private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;

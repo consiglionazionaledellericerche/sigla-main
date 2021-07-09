@@ -31,51 +31,48 @@
 				bp.getParentRoot().isBootstrap()); %>
     </div>
 </div>
-<table class="Panel card p-2 mb-2 card-shadow">
-    <tr><% scrittura.writeFormField(out, "dt_contabilizzazione", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
-    <tr><% scrittura.writeFormField(out, "ds_scrittura", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
-    <tr><% scrittura.writeFormField(out, "attiva", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
-    <tr><% scrittura.writeFormField(out, "pg_scrittura_annullata", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
+<table class="Panel card p-2 mb-2 card-shadow" cellpadding="2">
+    <tr>
+        <% scrittura.writeFormField(out, "dt_contabilizzazione", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+        <% scrittura.writeFormField(out, "ds_scrittura", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+    </tr>
+    <% if (Optional.ofNullable(scrittura.getPg_scrittura_annullata()).isPresent()) { %>
+        <tr><% scrittura.writeFormField(out, "pg_scrittura_annullata", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
+    <% } %>
 </table>
 <% bp.getMovimentiDare().writeHTMLTable(pageContext, "scrittura", false, false, false,"100%","100px", true); %>
-<% if (!bp.getMovimentiDare().isCollapsed()) { %>
-    <table class="Panel mt-1 p-2 card card-shadow">
-        <tr><% bp.getMovimentiDare().writeFormField(out, "find_voce_ep_searchtool"); %></tr>
+<% if (!bp.getMovimentiDare().isCollapsed() && Optional.ofNullable(bp.getMovimentiDare().getModel()).isPresent()) { %>
+    <table class="Panel mt-1 p-2 card card-shadow" cellpadding="2">
         <tr>
-            <td><% bp.getMovimentiDare().writeFormLabel(out, "ti_istituz_commerc");%></td>
-            <td><% bp.getMovimentiDare().writeFormInput(out, "ti_istituz_commerc");%></td>
+            <td><% bp.getMovimentiDare().writeFormLabel(out, "find_voce_ep_searchtool"); %></td>
+            <td colspan="7" class="w-100"><% bp.getMovimentiDare().writeFormInput(out, "find_voce_ep_searchtool"); %></td>
         </tr>
         <tr>
+            <% bp.getMovimentiDare().writeFormField(out, "ti_istituz_commerc");%>
+            <% bp.getMovimentiDare().writeFormField(out, "im_movimento");%>
             <td><% bp.getMovimentiDare().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
             <td><% bp.getMovimentiDare().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiDare().writeFormLabel(out, "dt_a_competenza_coge");
                    bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%></td>
-        </tr>
-        <tr>
-            <td><% bp.getMovimentiDare().writeFormLabel(out, "im_movimento"); %></td>
-            <td><% bp.getMovimentiDare().writeFormInput(out, "im_movimento");%></td>
         </tr>
     </table>
 <% } %>
 <% bp.getMovimentiDare().closeHTMLTable(pageContext);%>
 <div class="mt-1">
     <% bp.getMovimentiAvere().writeHTMLTable(pageContext,"scrittura", false, false, false,"100%","100px", true); %>
-    <% if (!bp.getMovimentiAvere().isCollapsed()) { %>
-    <table class="Panel mt-1 p-2 card card-shadow">
-        <tr><% bp.getMovimentiAvere().writeFormField(out, "find_voce_ep_searchtool"); %></tr>
+    <% if (!bp.getMovimentiAvere().isCollapsed() && Optional.ofNullable(bp.getMovimentiAvere().getModel()).isPresent()) { %>
+    <table class="Panel mt-1 p-2 card card-shadow" cellpadding="2">
         <tr>
-            <td><% bp.getMovimentiAvere().writeFormLabel(out, "ti_istituz_commerc");%></td>
-            <td><% bp.getMovimentiAvere().writeFormInput(out, "ti_istituz_commerc");%></td>
+            <td><% bp.getMovimentiAvere().writeFormLabel(out, "find_voce_ep_searchtool"); %></td>
+            <td colspan="7" class="w-100"><% bp.getMovimentiAvere().writeFormInput(out, "find_voce_ep_searchtool"); %></td>
         </tr>
         <tr>
+            <% bp.getMovimentiAvere().writeFormField(out, "ti_istituz_commerc");%>
+            <% bp.getMovimentiAvere().writeFormField(out, "im_movimento");%>
             <td><% bp.getMovimentiAvere().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
             <td><% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiAvere().writeFormLabel(out, "dt_a_competenza_coge");
                    bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%></td>
-        </tr>
-        <tr>
-            <td><% bp.getMovimentiAvere().writeFormLabel(out, "im_movimento"); %></td>
-            <td><% bp.getMovimentiAvere().writeFormInput(out, "im_movimento");%></td>
         </tr>
     </table>
     <% } %>

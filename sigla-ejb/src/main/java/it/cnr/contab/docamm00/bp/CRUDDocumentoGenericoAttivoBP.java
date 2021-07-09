@@ -27,6 +27,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
@@ -55,38 +57,8 @@ public class CRUDDocumentoGenericoAttivoBP
 
     private final SimpleDetailCRUDController dettaglioAccertamentoController;
     private final AccertamentiCRUDController accertamentiController = new AccertamentiCRUDController("Accertamenti", it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk.class, "documento_generico_accertamentiHash", this);
-    private final CollapsableDetailCRUDController movimentiDare =
-            new CollapsableDetailCRUDController(
-                    "Movimenti Dare",
-                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-                    "scrittura_partita_doppia.movimentiDareColl",
-                    this) {
-                @Override
-                public boolean isEnabled() {
-                    return false;
-                }
-
-                @Override
-                protected String getBorderClass() {
-                    return "border-danger";
-                }
-
-                @Override
-                protected String getTextClass() {
-                    return "text-danger";
-                }
-            };
-    private final CollapsableDetailCRUDController movimentiAvere =
-            new CollapsableDetailCRUDController(
-                    "Movimenti Avere",
-                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-                    "scrittura_partita_doppia.movimentiAvereColl",
-                    this) {
-                @Override
-                public boolean isEnabled() {
-                    return false;
-                }
-            };
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 
     protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
     private boolean isDeleting = false;

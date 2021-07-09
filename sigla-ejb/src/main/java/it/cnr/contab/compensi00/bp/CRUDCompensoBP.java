@@ -19,6 +19,8 @@ package it.cnr.contab.compensi00.bp;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -120,38 +122,8 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         }
     };
     private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
-    private final CollapsableDetailCRUDController movimentiDare =
-            new CollapsableDetailCRUDController(
-                    "Movimenti Dare",
-                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-                    "scrittura_partita_doppia.movimentiDareColl",
-                    this){
-                @Override
-                public boolean isEnabled() {
-                    return false;
-                }
-
-                @Override
-                protected String getBorderClass() {
-                    return "border-danger";
-                }
-
-                @Override
-                protected String getTextClass() {
-                    return "text-danger";
-                }
-            };
-    private final CollapsableDetailCRUDController movimentiAvere =
-            new CollapsableDetailCRUDController(
-                    "Movimenti Avere",
-                    it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class,
-                    "scrittura_partita_doppia.movimentiAvereColl",
-                    this){
-                @Override
-                public boolean isEnabled() {
-                    return false;
-                }
-            };
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 
     //	Variabili usate per la gestione del "RIPORTA" documento ad esercizio precedente/successivo
     private boolean annoSolareInScrivania = true;

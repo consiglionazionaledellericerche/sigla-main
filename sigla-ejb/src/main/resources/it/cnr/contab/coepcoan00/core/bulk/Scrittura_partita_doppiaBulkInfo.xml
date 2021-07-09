@@ -68,6 +68,7 @@
 		maxLength="250"
 		inputSize="100"
 		inputType="TEXT"
+		inputCssClass="w-100"
 		label="Descrizione"
 		enabledOnSearch="true"		
 		caseSensitiveSearch="false" 
