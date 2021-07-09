@@ -276,4 +276,16 @@ public void validate() throws ValidationException
 	public static String getControSezione(String sezione) {
 		return Movimento_cogeBulk.SEZIONE_DARE.equals(sezione)?Movimento_cogeBulk.SEZIONE_AVERE:Movimento_cogeBulk.SEZIONE_DARE;
 	}
+
+	public boolean isSezioneDare() {
+		return Movimento_cogeBulk.SEZIONE_DARE.equals(this.getSezione());
+	}
+
+	public boolean isSezioneAvere() {
+		return Movimento_cogeBulk.SEZIONE_AVERE.equals(this.getSezione());
+	}
+
+	public boolean isRigaTipoDebito() {
+		return Movimento_cogeBulk.TIPO_DEBITO.equals(this.getTi_riga());
+	}
 }

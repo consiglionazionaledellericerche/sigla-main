@@ -27,6 +27,7 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
 
@@ -300,5 +301,12 @@ public void validate() throws ValidationException
 
 	public BigDecimal getTotaleAvere() {
 		return this.getMovimentiAvereColl().stream().map(el->el.getIm_movimento()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public List<Movimento_cogeBulk> getAllMovimentiColl() {
+		BulkList<Movimento_cogeBulk> list = new BulkList<>();
+		list.addAll(this.getMovimentiDareColl());
+		list.addAll(this.getMovimentiAvereColl());
+		return list;
 	}
 }

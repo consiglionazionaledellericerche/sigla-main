@@ -34,6 +34,7 @@ public enum TipoDocumentoEnum {
 	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA),
 	GEN_CORA_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
 	GEN_CORV_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
+	GEN_CORI_VER_SPESA("GEN_CORV_S"),
 	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E),
 	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON),
 	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON),
@@ -102,11 +103,23 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isMandato() {
-		return TipoDocumentoEnum.MANDATO.equals(this.value);
+		return TipoDocumentoEnum.MANDATO.equals(this);
 	}
 
 	public boolean isReversale() {
 		return TipoDocumentoEnum.REVERSALE.equals(this.value);
+	}
+
+	public boolean isAperturaFondo() {
+		return TipoDocumentoEnum.GEN_AP_FON.equals(this.value);
+	}
+
+	public boolean isChiusuraFondo() {
+		return TipoDocumentoEnum.GEN_CH_FON.equals(this.value);
+	}
+
+	public boolean isGenericoCoriVersamentoSpesa() {
+		return TipoDocumentoEnum.GEN_CORI_VER_SPESA.equals(this.value);
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {

@@ -3784,6 +3784,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
+        try {
+            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(aUC, mandato);
+        } catch (Exception e) {
+            throw handleException(mandato, e);
+        }
         return mandato;
 
     }
