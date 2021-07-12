@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--   Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laboratori" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
     <property name="ireport.zoom" value="3.0"/>
     <property name="ireport.x" value="0"/>
@@ -1238,7 +1238,9 @@
                     <rightPen lineWidth="1.0"/>
                 </box>
                 <staticText>
-                    <reportElement style="bold" positionType="Float" mode="Transparent" x="0" y="1" width="77" height="25" uuid="559e4cc3-21e6-4300-8a89-df972ecfdf75"/>
+                    <reportElement style="bold" positionType="Float" mode="Transparent" x="0" y="0" width="100" height="25" uuid="559e4cc3-21e6-4300-8a89-df972ecfdf75">
+                        <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    </reportElement>
                     <box>
                         <pen lineWidth="0.5"/>
                         <topPen lineWidth="0.5"/>
@@ -1252,12 +1254,12 @@
                     <text><![CDATA[Name]]></text>
                 </staticText>
                 <subreport runToBottom="false">
-                    <reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="26" width="531" height="13" uuid="8a89671f-4de8-4e84-afae-02ccd0ae7cf9"/>
+                    <reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="531" height="13" uuid="8a89671f-4de8-4e84-afae-02ccd0ae7cf9"/>
                     <dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("resTeam")]]></dataSourceExpression>
                     <subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_laboratori_resTeam_sub.jasper"]]></subreportExpression>
                 </subreport>
                 <staticText>
-                    <reportElement style="bold" positionType="Float" mode="Transparent" x="351" y="1" width="180" height="25" uuid="8abe4c38-9a81-4aa8-a614-00ea8e05e5c5">
+                    <reportElement style="bold" positionType="Float" mode="Transparent" x="351" y="0" width="180" height="25" uuid="8abe4c38-9a81-4aa8-a614-00ea8e05e5c5">
                         <property name="com.jaspersoft.studio.unit.height" value="px"/>
                     </reportElement>
                     <box>
@@ -1273,8 +1275,9 @@
                     <text><![CDATA[Role in the project]]></text>
                 </staticText>
                 <staticText>
-                    <reportElement style="bold" positionType="Float" mode="Transparent" x="77" y="1" width="274" height="25" uuid="2c7c9b97-8cf6-44dc-ac00-b9be65d7c046">
+                    <reportElement style="bold" positionType="Float" mode="Transparent" x="100" y="0" width="251" height="25" uuid="2c7c9b97-8cf6-44dc-ac00-b9be65d7c046">
                         <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                        <property name="com.jaspersoft.studio.unit.x" value="px"/>
                     </reportElement>
                     <box>
                         <pen lineWidth="0.5"/>
@@ -1311,7 +1314,7 @@
                     <rightPen lineWidth="1.0"/>
                 </box>
                 <staticText>
-                    <reportElement style="bold" positionType="Float" mode="Transparent" x="0" y="1" width="77" height="25" uuid="c27754cc-80a6-4d28-b27e-3e3f7594d11e"/>
+                    <reportElement style="bold" positionType="Float" mode="Transparent" x="0" y="0" width="77" height="25" uuid="c27754cc-80a6-4d28-b27e-3e3f7594d11e"/>
                     <box>
                         <pen lineWidth="0.5"/>
                         <topPen lineWidth="0.5"/>
@@ -1325,12 +1328,12 @@
                     <text><![CDATA[Tipo]]></text>
                 </staticText>
                 <subreport runToBottom="false">
-                    <reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="26" width="531" height="13" uuid="8a89671f-4de8-4e84-afae-02ccd0ae7cf9"/>
+                    <reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="531" height="13" uuid="8a89671f-4de8-4e84-afae-02ccd0ae7cf9"/>
                     <dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("member")]]></dataSourceExpression>
                     <subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_laboratori_member_sub.jasper"]]></subreportExpression>
                 </subreport>
                 <staticText>
-                    <reportElement style="bold" positionType="Float" mode="Transparent" x="440" y="1" width="91" height="25" uuid="d939e2a4-a17c-43f8-b1b5-dba0389f42e5"/>
+                    <reportElement style="bold" positionType="Float" mode="Transparent" x="440" y="0" width="91" height="25" uuid="d939e2a4-a17c-43f8-b1b5-dba0389f42e5"/>
                     <box>
                         <pen lineWidth="0.5"/>
                         <topPen lineWidth="0.5"/>
@@ -1344,7 +1347,7 @@
                     <text><![CDATA[Number of position]]></text>
                 </staticText>
                 <staticText>
-                    <reportElement style="bold" positionType="Float" mode="Transparent" x="77" y="1" width="363" height="25" uuid="3fe90662-5063-490e-80f7-e182de7c937c"/>
+                    <reportElement style="bold" positionType="Float" mode="Transparent" x="77" y="0" width="363" height="25" uuid="3fe90662-5063-490e-80f7-e182de7c937c"/>
                     <box>
                         <pen lineWidth="0.5"/>
                         <topPen lineWidth="0.5"/>
