@@ -119,12 +119,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		private void addDettaglioIva(IDocumentoCogeBulk docamm, String cdConto, BigDecimal importo, boolean isOpen) {
 			String tipoDettaglio = null;
 			if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoAttivo()) {
-				tipoDettaglio = Movimento_cogeBulk.TIPO_IVA_VENDITE;
+				tipoDettaglio = Movimento_cogeBulk.TipoRiga.IVA_VENDITE.value();
 			} else if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo()) {
 				if (((Fattura_passivaBulk)docamm).getFl_split_payment())
-					tipoDettaglio = Movimento_cogeBulk.TIPO_IVA_ACQUISTO_SPLIT;
+					tipoDettaglio = Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value();
 				else
-					tipoDettaglio = Movimento_cogeBulk.TIPO_IVA_ACQUISTO;
+					tipoDettaglio = Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value();
 			}
 			if (isOpen)
 				this.addDettaglio(tipoDettaglio, docamm.getTipoDocumentoEnum().getSezioneIva(), cdConto, importo);
@@ -229,20 +229,20 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 
 		public boolean isDettaglioIva() {
-			return Movimento_cogeBulk.TIPO_IVA_ACQUISTO.equals(this.getTipoDett()) ||
-					Movimento_cogeBulk.TIPO_IVA_VENDITE.equals(this.getTipoDett()) ||
-					Movimento_cogeBulk.TIPO_IVA_ACQUISTO_SPLIT.equals(this.getTipoDett()) ||
-					Movimento_cogeBulk.TIPO_IVA_VENDITE_SPLIT.equals(this.getTipoDett());
+			return Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value().equals(this.getTipoDett()) ||
+					Movimento_cogeBulk.TipoRiga.IVA_VENDITE.value().equals(this.getTipoDett()) ||
+					Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value().equals(this.getTipoDett()) ||
+					Movimento_cogeBulk.TipoRiga.IVA_VENDITE_SPLIT.value().equals(this.getTipoDett());
 		}
 
 		public boolean isDettaglioCostoRicavo() {
-			return Movimento_cogeBulk.TIPO_COSTO.equals(this.getTipoDett()) ||
-					Movimento_cogeBulk.TIPO_RICAVO.equals(this.getTipoDett());
+			return Movimento_cogeBulk.TipoRiga.COSTO.value().equals(this.getTipoDett()) ||
+					Movimento_cogeBulk.TipoRiga.RICAVO.value().equals(this.getTipoDett());
 		}
 
 		public boolean isDettaglioPatrimoniale() {
-			return Movimento_cogeBulk.TIPO_DEBITO.equals(this.getTipoDett()) ||
-					Movimento_cogeBulk.TIPO_CREDITO.equals(this.getTipoDett());
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value().equals(this.getTipoDett()) ||
+					Movimento_cogeBulk.TipoRiga.CREDITO.value().equals(this.getTipoDett());
 		}
 
 		public boolean isSezioneDare() {
@@ -1483,7 +1483,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Scrittura_partita_doppiaBulk scritturaCompenso = this.proposeScritturaPartitaDoppiaCompenso(userContext, compenso);
 
 		BigDecimal imSaldoPatrimoniale = scritturaCompenso.getAllMovimentiColl().stream()
-				.filter(el->Movimento_cogeBulk.TIPO_DEBITO.equals(el.getTi_riga()))
+				.filter(el->Movimento_cogeBulk.TipoRiga.DEBITO.value().equals(el.getTi_riga()))
 				.map(el->el.isSezioneAvere()?el.getIm_movimento():el.getIm_movimento().negate())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -1503,7 +1503,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
 		Voce_epBulk contoPatrimonialePartita = this.findPairCosto(userContext, compenso).getSecond();
 		testataPrimaNota.closeDettaglioPatrimoniale(compenso, contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato, true);
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TIPO_GENERICO, compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.GENERICO.value(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
 
 		//Registrazione conto CONTRIBUTI-RITENUTE
 		righeCori.stream().forEach(cori->{
@@ -1539,8 +1539,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		//La partita non deve essere registrata in caso di versamento ritenute
 		Partita partita = !TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoCoriVersamentoSpesa()?new Partita(rigaMandato):null;
 
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TIPO_DEBITO, Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato, partita);
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TIPO_GENERICO, TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato, partita);
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.GENERICO.value(), TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
 	}
 
 	private Ass_ev_voceepBulk findAssEvVoceep(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {

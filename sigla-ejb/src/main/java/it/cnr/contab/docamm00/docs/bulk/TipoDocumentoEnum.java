@@ -149,19 +149,19 @@ public enum TipoDocumentoEnum {
 	 */
 	public String getTipoEconomica() {
 		if (this.isFatturaPassiva())
-			return Movimento_cogeBulk.TIPO_COSTO;
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isNotaCreditoPassiva())
-			return Movimento_cogeBulk.TIPO_COSTO;
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isFatturaAttiva())
-			return Movimento_cogeBulk.TIPO_RICAVO;
+			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
 		if (this.isNotaCreditoAttiva())
-			return Movimento_cogeBulk.TIPO_RICAVO;
+			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
 		if (this.isCompenso())
-			return Movimento_cogeBulk.TIPO_COSTO;
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isAnticipo())
-			return Movimento_cogeBulk.TIPO_COSTO;
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isMissione())
-			return Movimento_cogeBulk.TIPO_COSTO;
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		return null;
 	}
 
@@ -170,19 +170,19 @@ public enum TipoDocumentoEnum {
 	 */
 	public String getTipoPatrimoniale() {
 		if (this.isFatturaPassiva())
-			return Movimento_cogeBulk.TIPO_DEBITO;
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isNotaCreditoPassiva())
-			return Movimento_cogeBulk.TIPO_DEBITO;
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isFatturaAttiva())
-			return Movimento_cogeBulk.TIPO_CREDITO;
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isNotaCreditoAttiva())
-			return Movimento_cogeBulk.TIPO_CREDITO;
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isCompenso())
-			return Movimento_cogeBulk.TIPO_DEBITO;
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isAnticipo())
-			return Movimento_cogeBulk.TIPO_DEBITO;
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isMissione())
-			return Movimento_cogeBulk.TIPO_DEBITO;
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		return null;
 	}
 
