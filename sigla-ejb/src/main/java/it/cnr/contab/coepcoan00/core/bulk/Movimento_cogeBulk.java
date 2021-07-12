@@ -47,7 +47,7 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
 
     static {
         for (TipoRiga tipoRiga : TipoRiga.values()) {
-            tipoRigaKeys.put(tipoRiga.value, tipoRiga.value);
+            tipoRigaKeys.put(tipoRiga.value, tipoRiga.label);
         }
     }
 
