@@ -4577,11 +4577,6 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         } catch (PersistencyException e) {
             throw handleException(fattura_passiva, e);
         }
-        try {
-            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, fattura_passiva);
-        } catch (Exception e) {
-            throw handleException(fattura_passiva, e);
-        }
         return fattura_passiva;
     }
 

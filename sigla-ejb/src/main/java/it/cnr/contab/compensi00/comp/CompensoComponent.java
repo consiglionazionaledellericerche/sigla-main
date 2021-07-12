@@ -2701,11 +2701,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		} catch (PersistencyException e) {
 			throw handleException(compenso, e);
 		}
-		try {
-			Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, compenso);
-		} catch (Exception e) {
-			throw handleException(compenso, e);
-		}
 		return compenso;
 	}
 

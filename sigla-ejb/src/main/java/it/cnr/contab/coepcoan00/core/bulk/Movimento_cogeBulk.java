@@ -23,9 +23,10 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.si.spring.storage.StorageDriver;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Movimento_cogeBulk extends Movimento_cogeBase {
 
@@ -273,6 +274,19 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
 
     }
 
+    /**
+     *
+     * @return La rappresentazione a video della partita
+     */
+    public String getPartita() {
+        return Arrays.asList(
+                getCd_tipo_documento(),
+                Optional.ofNullable(getEsercizio_documento()).map(String::valueOf).orElse(null),
+                Optional.ofNullable(getPg_numero_documento()).map(String::valueOf).orElse(null)
+        ).stream().filter(Objects::nonNull).collect(
+                Collectors.joining("/")
+        );
+    }
     /**
      * Effettua una validazione formale del contenuto dello stato dell'oggetto
      * bulk. Viene invocato da <code>CRUDBP</code> in

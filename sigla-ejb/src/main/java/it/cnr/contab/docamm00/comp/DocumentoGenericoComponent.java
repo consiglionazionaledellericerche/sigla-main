@@ -3529,11 +3529,6 @@ public class DocumentoGenericoComponent
         } catch (PersistencyException e) {
             throw handleException(generico, e);
         }
-        try {
-            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, generico);
-        } catch (Exception e) {
-            throw handleException(generico, e);
-        }
         return generico;
     }
 //^^@@

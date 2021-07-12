@@ -55,6 +55,11 @@
                    bp.getMovimentiDare().writeFormLabel(out, "dt_a_competenza_coge");
                    bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%></td>
         </tr>
+        <tr>
+            <% bp.getMovimentiDare().writeFormField(out, "ti_riga");%>
+            <% bp.getMovimentiDare().writeFormField(out, "partita");%>
+            <% bp.getMovimentiDare().writeFormField(out, "terzo_movimento");%>
+        </tr>
     </table>
 <% } %>
 <% bp.getMovimentiDare().closeHTMLTable(pageContext);%>
@@ -73,6 +78,11 @@
             <td><% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiAvere().writeFormLabel(out, "dt_a_competenza_coge");
                    bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%></td>
+        </tr>
+        <tr>
+            <% bp.getMovimentiAvere().writeFormField(out, "ti_riga");%>
+            <% bp.getMovimentiAvere().writeFormField(out, "partita");%>
+            <% bp.getMovimentiAvere().writeFormField(out, "terzo_movimento");%>
         </tr>
     </table>
     <% } %>

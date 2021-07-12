@@ -17,7 +17,6 @@
 
 package it.cnr.contab.docamm00.actions;
 
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.util.Utility;
@@ -46,9 +45,11 @@ public abstract class EconomicaAction extends CRUDAction {
                     actionContext.getUserContext(),
                     documentoAmministrativoBulk)
             );
+            bp.getMovimentiAvere().reset(actionContext);
+            bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
             bp.setDirty(true);
-        } catch (ComponentException|RemoteException e) {
+        } catch (ComponentException | RemoteException e) {
             return handleException(actionContext, e);
         }
         return actionContext.findDefaultForward();

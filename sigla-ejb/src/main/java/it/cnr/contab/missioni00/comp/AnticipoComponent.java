@@ -1243,11 +1243,6 @@ public class AnticipoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			} catch (PersistencyException e) {
 				throw handleException(anticipo, e);
 			}
-			try {
-				Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, anticipo);
-			} catch (Exception e) {
-				throw handleException(anticipo, e);
-			}
 		} catch (Throwable e) {
             throw handleException(e);
         }

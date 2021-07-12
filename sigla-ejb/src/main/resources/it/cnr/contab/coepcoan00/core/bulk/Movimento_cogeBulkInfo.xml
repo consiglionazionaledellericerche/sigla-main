@@ -212,6 +212,27 @@
 		enabledOnSearch="true"						
 		caseSensitiveSearch="false"
 		nullable="false"/>
+	<fieldProperty
+		name="ti_riga"
+		property="ti_riga"
+		inputType="SELECT"
+		keysProperty="tipoRigaKeys"
+		label="Tipologia"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita"
+		property="partita"
+		inputType="ROTEXT"
+		label="Partita"
+	/>
+	<fieldProperty
+		name="terzo_movimento"
+		property="scrittura.terzo"
+		formName="searchtool"
+		label="Terzo"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"/>
 
 	<formFieldProperty
 		name="cd_unita_organizzativa" />
@@ -259,6 +280,12 @@
 		name="dt_a_competenza_coge" />
 	<formFieldProperty
 		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="ti_riga" />
+	<formFieldProperty
+		name="partita" />
+	<formFieldProperty
+		name="terzo_movimento" />
 
 
 	<columnFieldProperty

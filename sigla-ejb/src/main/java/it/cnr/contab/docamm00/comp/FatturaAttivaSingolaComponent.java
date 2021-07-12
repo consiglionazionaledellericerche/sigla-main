@@ -3900,11 +3900,6 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         } catch (PersistencyException e) {
             throw handleException(fattura, e);
         }
-        try {
-            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, fattura);
-        } catch (Exception e) {
-            throw handleException(fattura, e);
-        }
         return fattura;
     }
 //^^@@
