@@ -32,14 +32,17 @@ public enum TipoDocumentoEnum {
 	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA),
 	GEN_CORA_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
 	GEN_CORV_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
-	GEN_CORI_VER_SPESA("GEN_CORV_S"),
+	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S"),
+	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S"),
 	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E),
 	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON),
 	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON),
+	GEN_REINTEGRO_FONDO("GEN_RE_FON"),
 	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S),
 	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E),
 	MANDATO(Numerazione_doc_contBulk.TIPO_MAN),
-	REVERSALE(Numerazione_doc_contBulk.TIPO_REV);
+	REVERSALE(Numerazione_doc_contBulk.TIPO_REV),
+	GEN_STIPENDI_SPESA("GEN_STIP_S");
 
 	private final String value;
 
@@ -117,7 +120,11 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isGenericoCoriVersamentoSpesa() {
-		return TipoDocumentoEnum.GEN_CORI_VER_SPESA.equals(this);
+		return TipoDocumentoEnum.GEN_CORI_VERSAMENTO_SPESA.equals(this);
+	}
+
+	public boolean isGenericoCoriAccantonamentoSpesa() {
+		return TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_SPESA.equals(this);
 	}
 
 	public boolean isGenericoSpesa() {
