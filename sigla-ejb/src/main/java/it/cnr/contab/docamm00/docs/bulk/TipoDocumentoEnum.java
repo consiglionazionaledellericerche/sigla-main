@@ -237,6 +237,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isGenericoEntrata())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isGenericoCoriVersamentoSpesa())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
 }
