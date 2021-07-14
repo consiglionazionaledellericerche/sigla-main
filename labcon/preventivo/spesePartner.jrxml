@@ -21,6 +21,12 @@
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
+	<field name="totaleMissioniPartner" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totaleMissioniPartner]]></fieldDescription>
+	</field>
+	<field name="totaleAltrespesePartner" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totaleAltrespesePartner]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -30,10 +36,10 @@
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
 			<line>
-				<reportElement x="530" y="2" width="1" height="178" uuid="9fa62e2e-94f3-454e-8a70-000769346966"/>
+				<reportElement x="530" y="1" width="1" height="58" uuid="9fa62e2e-94f3-454e-8a70-000769346966"/>
 			</line>
 			<line>
-				<reportElement x="4" y="1" width="1" height="178" uuid="85585c34-a21f-42c6-ad21-4a0ed669925b"/>
+				<reportElement x="5" y="2" width="1" height="58" uuid="85585c34-a21f-42c6-ad21-4a0ed669925b"/>
 			</line>
 			<staticText>
 				<reportElement x="5" y="1" width="305" height="17" uuid="5393071d-e25d-47d4-80dc-b78facbfe9ed"/>
@@ -54,7 +60,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Costo 
+				<text><![CDATA[Costo
 Unitario]]></text>
 			</staticText>
 			<staticText>
@@ -117,18 +123,15 @@ Previsto]]></text>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltre.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement x="5" y="380" width="525" height="1" uuid="10cc1588-e8f7-421f-9157-6cea1d781a78"/>
+				<reportElement x="4" y="59" width="526" height="1" uuid="183875a9-ac99-48c2-8b2b-f33f20d9895f"/>
 			</line>
 			<line>
-				<reportElement x="4" y="179" width="526" height="1" uuid="183875a9-ac99-48c2-8b2b-f33f20d9895f"/>
-			</line>
-			<line>
-				<reportElement x="4" y="193" width="1" height="188" uuid="436e05c0-e1f9-4c8b-8d8e-e8647ec72834">
+				<reportElement x="4" y="193" width="1" height="58" uuid="436e05c0-e1f9-4c8b-8d8e-e8647ec72834">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="530" y="193" width="1" height="188" uuid="dad8eddc-23f3-4cde-86d5-3196576e818e">
+				<reportElement x="530" y="193" width="1" height="58" uuid="dad8eddc-23f3-4cde-86d5-3196576e818e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
@@ -166,7 +169,7 @@ Previsto]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Costo 
+				<text><![CDATA[Costo
 Unitario]]></text>
 			</staticText>
 			<line>
@@ -178,6 +181,53 @@ Unitario]]></text>
 				<reportElement x="424" y="192" width="1" height="18" uuid="c9296c05-13ce-4cc9-805e-f62b1d3a711c">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
+			</line>
+			<line>
+				<reportElement x="4" y="40" width="526" height="1" uuid="970a7acb-a5d3-41f3-8b20-e61202f64cec"/>
+			</line>
+			<line>
+				<reportElement x="474" y="40" width="1" height="18" uuid="31b71192-78cb-4c40-8714-c4044ca2f8ee">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="475" y="40" width="53" height="17" uuid="492627ed-f453-46d0-8959-6fb2f67b14f8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[$F{totaleMissioniPartner}]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="40" width="469" height="17" uuid="d1132de4-070b-453c-813b-b60ea2ac9ce2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totale]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="231" width="526" height="1" uuid="0ea801a9-89cd-4a96-a3b7-ebb9b8ebd15b"/>
+			</line>
+			<line>
+				<reportElement x="476" y="231" width="1" height="18" uuid="44c8f684-a698-4692-b97a-726793e1e5e3">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="476" y="231" width="53" height="17" uuid="f45db148-10d8-4600-9384-d25f1ba50318"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[$F{totaleAltrespesePartner}]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="231" width="469" height="17" uuid="8c6992c0-1dbf-4fed-8bb3-6e941bdcfed6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totale]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="250" width="526" height="1" uuid="bb3616f4-3a0a-47f0-b454-781542b38fbd"/>
 			</line>
 		</band>
 	</detail>
