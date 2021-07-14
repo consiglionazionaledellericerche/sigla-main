@@ -2772,8 +2772,6 @@ REVERSALE
                 if (man_rev != null)
                     reversale.setV_man_rev(man_rev);
             }
-
-            Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(aUC, reversale);
         } catch (Exception e) {
             throw handleException(reversale, e);
         }
