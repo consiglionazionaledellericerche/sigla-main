@@ -273,13 +273,20 @@ Unitario]]></text>
 				</textElement>
 				<text><![CDATA[Totale]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="475" y="34" width="53" height="17" uuid="53bf2f09-28c4-461e-8695-fbe548509817"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="475" y="34" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
-			</staticText>
+			</textField>
 			<line>
 				<reportElement x="474" y="33" width="1" height="18" uuid="3ed6daf2-3b7a-44f6-8b7a-d27371c520d6">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -298,13 +305,20 @@ Unitario]]></text>
 			<line>
 				<reportElement x="4" y="202" width="524" height="1" uuid="722457ff-c8b4-447a-a717-d6628bf35f3b"/>
 			</line>
-			<staticText>
-				<reportElement x="474" y="203" width="53" height="17" uuid="132c21bb-14cc-47af-816d-4d77799c38c3"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="474" y="203" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{totaleMissioniCNR}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="4" y="340" width="469" height="17" uuid="2a9cfaaf-4c20-4d82-b61f-9918979188d3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -318,13 +332,20 @@ Unitario]]></text>
 			<line>
 				<reportElement x="4" y="339" width="524" height="1" uuid="0d8d9e37-0252-4bf8-bd4e-e99ccbc07ca9"/>
 			</line>
-			<staticText>
-				<reportElement x="474" y="340" width="53" height="17" uuid="c49266e3-f57a-4855-90a2-1fbb4737e07b"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="474" y="340" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{totaleAltrespeseCNR}]]></textFieldExpression>
+			</textField>
 			<line>
 				<reportElement x="474" y="202" width="1" height="18" uuid="532def6f-f0b1-42bf-900f-83443750dd1e">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>

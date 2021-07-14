@@ -196,13 +196,20 @@ Unitario]]></text>
 			<line>
 				<reportElement x="4" y="41" width="526" height="1" uuid="19768d65-cfec-45a8-8071-0ddb70429cec"/>
 			</line>
-			<staticText>
-				<reportElement x="476" y="41" width="53" height="17" uuid="c2c436df-e50c-4540-b106-c4c44dce013b"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="476" y="41" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totaleMissioniAltreIst}]]></textFieldExpression>
-			</staticText>
+			</textField>
 			<line>
 				<reportElement x="475" y="255" width="1" height="18" uuid="655f7b3b-b88a-46ec-8093-cb444d3d8bb6">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -221,13 +228,20 @@ Unitario]]></text>
 			<line>
 				<reportElement x="3" y="255" width="526" height="1" uuid="88123881-8797-4371-a020-e4d448b24902"/>
 			</line>
-			<staticText>
-				<reportElement x="475" y="255" width="53" height="17" uuid="222ad647-4997-40ae-8940-f616ac9dec91"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="475" y="255" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totaleAltrespeseAltreIst}]]></textFieldExpression>
-			</staticText>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
