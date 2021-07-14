@@ -21,6 +21,12 @@
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
+	<field name="totaleMissioniAltreIst" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totaleMissioniAltreIst]]></fieldDescription>
+	</field>
+	<field name="totaleAltrespeseAltreIst" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totaleAltrespeseAltreIst]]></fieldDescription>
+	</field>
 	<background>
 		<band height="22" splitType="Stretch"/>
 	</background>
@@ -30,10 +36,10 @@
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
 			<line>
-				<reportElement x="530" y="1" width="1" height="179" uuid="9fa62e2e-94f3-454e-8a70-000769346966"/>
+				<reportElement x="530" y="1" width="1" height="59" uuid="9fa62e2e-94f3-454e-8a70-000769346966"/>
 			</line>
 			<line>
-				<reportElement x="4" y="1" width="1" height="180" uuid="85585c34-a21f-42c6-ad21-4a0ed669925b"/>
+				<reportElement x="4" y="1" width="1" height="60" uuid="85585c34-a21f-42c6-ad21-4a0ed669925b"/>
 			</line>
 			<staticText>
 				<reportElement x="5" y="1" width="305" height="17" uuid="5393071d-e25d-47d4-80dc-b78facbfe9ed"/>
@@ -54,7 +60,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Costo 
+				<text><![CDATA[Costo
 Unitario]]></text>
 			</staticText>
 			<staticText>
@@ -116,15 +122,12 @@ Previsto]]></text>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltre.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement x="4" y="180" width="526" height="1" uuid="183875a9-ac99-48c2-8b2b-f33f20d9895f"/>
-			</line>
-			<line>
-				<reportElement x="4" y="215" width="1" height="166" uuid="436e05c0-e1f9-4c8b-8d8e-e8647ec72834">
+				<reportElement x="3" y="215" width="1" height="59" uuid="436e05c0-e1f9-4c8b-8d8e-e8647ec72834">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="529" y="215" width="1" height="165" uuid="dad8eddc-23f3-4cde-86d5-3196576e818e">
+				<reportElement x="529" y="215" width="1" height="59" uuid="dad8eddc-23f3-4cde-86d5-3196576e818e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
@@ -138,9 +141,6 @@ Previsto]]></text>
 				</textElement>
 				<text><![CDATA[Dettaglio]]></text>
 			</staticText>
-			<line>
-				<reportElement x="5" y="380" width="525" height="1" uuid="10cc1588-e8f7-421f-9157-6cea1d781a78"/>
-			</line>
 			<staticText>
 				<reportElement x="311" y="215" width="67" height="17" uuid="4c72a2b6-7f19-4705-ba10-86dd8802976b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -175,8 +175,58 @@ Previsto]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Costo 
+				<text><![CDATA[Costo
 Unitario]]></text>
+			</staticText>
+			<line>
+				<reportElement x="476" y="41" width="1" height="18" uuid="9c0bc0ae-33e2-4d4e-8474-ac84bdcd94ae">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="4" y="41" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totale]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="60" width="526" height="1" uuid="512596eb-e3a1-4c8f-af54-af89b510463f"/>
+			</line>
+			<line>
+				<reportElement x="4" y="41" width="526" height="1" uuid="19768d65-cfec-45a8-8071-0ddb70429cec"/>
+			</line>
+			<staticText>
+				<reportElement x="476" y="41" width="53" height="17" uuid="c2c436df-e50c-4540-b106-c4c44dce013b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[$F{totaleMissioniAltreIst}]]></text>
+			</staticText>
+			<line>
+				<reportElement x="475" y="255" width="1" height="18" uuid="655f7b3b-b88a-46ec-8093-cb444d3d8bb6">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="3" y="255" width="469" height="17" uuid="814d1e0f-9a53-4bc4-b674-f8e991392790"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totale]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="274" width="526" height="1" uuid="62c4abbb-5f71-47ce-893d-0176a91e093e"/>
+			</line>
+			<line>
+				<reportElement x="3" y="255" width="526" height="1" uuid="88123881-8797-4371-a020-e4d448b24902"/>
+			</line>
+			<staticText>
+				<reportElement x="475" y="255" width="53" height="17" uuid="222ad647-4997-40ae-8940-f616ac9dec91"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[$F{totaleAltrespeseAltreIst}]]></text>
 			</staticText>
 		</band>
 	</detail>
