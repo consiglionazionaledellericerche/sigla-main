@@ -17,6 +17,7 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 
 /**
@@ -25,8 +26,17 @@ import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
  * @author: Simonetta Costa
  */
 public interface IManRevBulk extends IDocumentoCogeBulk {
-String getCd_cds();
-String getCd_tipo_documento_cont();
-Integer getEsercizio();
-Long getPg_documento_cont();
+    String getCd_cds();
+
+    String getCd_tipo_documento_cont();
+
+    Integer getEsercizio();
+
+    Long getPg_manrev();
+
+    Long getPg_documento_cont();
+
+    TerzoBulk getTerzo();
+
+    boolean isAnnullato();
 }

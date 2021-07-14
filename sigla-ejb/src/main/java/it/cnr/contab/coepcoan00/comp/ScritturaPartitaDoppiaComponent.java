@@ -1198,6 +1198,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				return this.proposeScritturaPartitaDoppiaRimborso(userContext, (RimborsoBulk) doccoge);
 			else if (doccoge.getTipoDocumentoEnum().isMandato())
 				return this.proposeScritturaPartitaDoppiaMandato(userContext, (MandatoBulk) doccoge);
+			else if (doccoge.getTipoDocumentoEnum().isReversale())
+				return this.proposeScritturaPartitaDoppiaReversale(userContext, (ReversaleBulk) doccoge);
 			return null;
 		} catch (Exception e) {
 			throw handleException(e);
@@ -1402,7 +1404,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		try {
 			//Il documento deve essere annullato o esitato altrimenti esce
 			if (mandato.isAnnullato())
-				return this.proposeScritturaPartitaDoppiaMandatoAnnullato(userContext, mandato);
+				return this.proposeScritturaPartitaDoppiaManRevAnnullato(userContext, mandato);
 			else if (mandato.isPagato()) {
 				if (mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
 						.filter(el->TipoDocumentoEnum.fromValue(el).isCompenso()).findAny().isPresent())
@@ -1433,16 +1435,17 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoAnnullato(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException {
-		if (!mandato.isAnnullato())
-			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCds() + "/" + mandato.getPg_mandato() +
-					" non risulta annullato. Proposta di prima nota non possibile.");
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaManRevAnnullato(UserContext userContext, IManRevBulk manrev) throws ComponentException, PersistencyException {
+		boolean isMandato = manrev instanceof MandatoBulk;
+		if (!manrev.isAnnullato())
+			throw new ApplicationException((isMandato?"Il mandato ":"La reversale") + manrev.getEsercizio() + "/" + manrev.getCd_cds() + "/" + manrev.getPg_manrev() +
+					" non risulta " + (isMandato?"annullato":"annullata")+". Proposta di prima nota non possibile.");
 
-		TestataPrimaNota testataPrimaNota = new TestataPrimaNota(mandato.getMandato_terzo().getCd_terzo(), null, null);
+		TestataPrimaNota testataPrimaNota = new TestataPrimaNota(manrev.getTerzo().getCd_terzo(), null, null);
 
 		//devo stornare scrittura prima nota del mandato
 		//prendo tutte le prime note e scrivo registrazioni di senso inverso
-		List<Scrittura_partita_doppiaBulk> scritturePd = ((Scrittura_partita_doppiaHome) getHome(userContext, Scrittura_partita_doppiaBulk.class)).findByDocumentoCoge(mandato);
+		List<Scrittura_partita_doppiaBulk> scritturePd = ((Scrittura_partita_doppiaHome) getHome(userContext, Scrittura_partita_doppiaBulk.class)).findByDocumentoCoge(manrev);
 		scritturePd.stream().forEach(scrittura -> {
 			try {
 				List<Movimento_cogeBulk> movimentiCoge = new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, Scrittura_partita_doppiaBulk.class))
@@ -1459,7 +1462,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				throw new ApplicationRuntimeException(e);
 			}
 		});
-		return this.generaScrittura(userContext, mandato, Arrays.asList(testataPrimaNota), true);
+		return this.generaScrittura(userContext, manrev, Arrays.asList(testataPrimaNota), true);
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoCompenso(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {
@@ -1522,6 +1525,30 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.generaScrittura(userContext, mandato, Arrays.asList(testataPrimaNota), true);
 	}
 
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversale(UserContext userContext, ReversaleBulk reversale) throws ComponentException {
+		try {
+			//Il documento deve essere annullato o esitato altrimenti esce
+			if (reversale.isAnnullato())
+				return this.proposeScritturaPartitaDoppiaManRevAnnullato(userContext, reversale);
+			else if (reversale.isIncassato()) {
+				TestataPrimaNota testataPrimaNota = new TestataPrimaNota(reversale.getReversale_terzo().getCd_terzo(), null, null);
+
+				reversale.getReversale_rigaColl().stream().forEach(rigaReversale -> {
+					try {
+						if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo())
+							addDettagliPrimaNotaReversaleDocumentiVari(userContext, testataPrimaNota, rigaReversale);
+					} catch (ComponentException|PersistencyException|RemoteException e) {
+						throw new ApplicationRuntimeException(e);
+					}
+				});
+				return this.generaScrittura(userContext, reversale, Arrays.asList(testataPrimaNota), true);
+			}
+			return null;
+		} catch (Exception e) {
+			throw handleException(e);
+		}
+	}
+
 	private void addDettagliPrimaNotaMandatoDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Mandato_rigaBulk rigaMandato) throws ComponentException, PersistencyException, RemoteException {
 		if (!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() &&
 			!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() &&
@@ -1541,6 +1568,23 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato, partita);
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.GENERICO.value(), TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
+	}
+
+	private void addDettagliPrimaNotaReversaleDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Reversale_rigaBulk rigaReversale) throws ComponentException, PersistencyException, RemoteException {
+		if (!TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo())
+			throw new ApplicationException("La riga della reversale " + rigaReversale.getEsercizio() + "/" + rigaReversale.getCd_cds() + "/" + rigaReversale.getPg_reversale() +
+					" non risulta pagare un documento. Proposta di prima nota non possibile.");
+
+		BigDecimal imReversale = rigaReversale.getIm_reversale_riga();
+
+		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
+		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaReversale.getElemento_voce());
+
+		//La partita non deve essere registrata in caso di versamento ritenute
+		Partita partita = new Partita(rigaReversale);
+
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imReversale, partita);
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.GENERICO.value(), TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imReversale);
 	}
 
 	private Ass_ev_voceepBulk findAssEvVoceep(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {

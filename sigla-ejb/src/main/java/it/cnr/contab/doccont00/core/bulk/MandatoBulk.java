@@ -1136,4 +1136,14 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
     }
+
+    @Override
+    public TerzoBulk getTerzo() {
+        return Optional.ofNullable(this.getMandato_terzo()).flatMap(el->Optional.ofNullable(el.getTerzo())).orElse(null);
+    }
+
+    @Override
+    public java.lang.Long getPg_manrev() {
+        return this.getPg_mandato();
+    }
 }
