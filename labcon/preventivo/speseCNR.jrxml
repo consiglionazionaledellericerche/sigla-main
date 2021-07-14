@@ -192,7 +192,7 @@ Previsto]]></text>
 				<reportElement x="474" y="160" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="179" width="524" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
+				<reportElement stretchType="RelativeToBandHeight" x="5" y="179" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -200,15 +200,16 @@ Previsto]]></text>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseMissioniPersonale.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="11" width="524" height="22" uuid="fb290a34-ecb1-46f4-94c4-065e89d13791">
+				<reportElement stretchType="RelativeToBandHeight" x="5" y="11" width="525" height="22" uuid="fb290a34-ecb1-46f4-94c4-065e89d13791">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spesePersonale")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "spesePersonale.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="319" width="524" height="21" uuid="c0007593-2894-49e9-8059-2995fe0a54a7">
+				<reportElement stretchType="RelativeToBandHeight" x="5" y="319" width="525" height="21" uuid="c0007593-2894-49e9-8059-2995fe0a54a7">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseAltre")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltre.jasper"]]></subreportExpression>
