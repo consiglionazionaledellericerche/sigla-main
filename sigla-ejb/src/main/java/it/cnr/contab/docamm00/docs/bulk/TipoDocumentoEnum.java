@@ -80,19 +80,19 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isNotaCreditoPassiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA.equals(this);
+		return TipoDocumentoEnum.NOTA_CREDITO_PASSIVA.equals(this);
 	}
 
 	public boolean isNotaDebitoPassiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA.equals(this);
+		return TipoDocumentoEnum.NOTA_DEBITO_PASSIVA.equals(this);
 	}
 
 	public boolean isNotaCreditoAttiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA.equals(this);
+		return TipoDocumentoEnum.NOTA_CREDITO_ATTIVA.equals(this);
 	}
 
 	public boolean isNotaDebitoAttiva() {
-		return TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA.equals(this);
+		return TipoDocumentoEnum.NOTA_DEBITO_ATTIVA.equals(this);
 	}
 
 	public boolean isDocumentoAmministrativoPassivo() {
