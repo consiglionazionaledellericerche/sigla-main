@@ -190,13 +190,20 @@ Unitario]]></text>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
-			<staticText>
-				<reportElement x="475" y="40" width="53" height="17" uuid="492627ed-f453-46d0-8959-6fb2f67b14f8"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="475" y="40" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totaleMissioniPartner}]]></textFieldExpression>
-			</staticText>
+			</textField>
 			<staticText>
 				<reportElement x="3" y="40" width="469" height="17" uuid="d1132de4-070b-453c-813b-b60ea2ac9ce2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -212,13 +219,20 @@ Unitario]]></text>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
-			<staticText>
-				<reportElement x="476" y="231" width="53" height="17" uuid="f45db148-10d8-4600-9384-d25f1ba50318"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="476" y="231" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totaleAltrespesePartner}]]></textFieldExpression>
-			</staticText>
+			</textField>
 			<staticText>
 				<reportElement x="4" y="231" width="469" height="17" uuid="8c6992c0-1dbf-4fed-8bb3-6e941bdcfed6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
