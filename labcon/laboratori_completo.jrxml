@@ -673,7 +673,7 @@
                 <text><![CDATA[Partner Institution]]></text>
             </staticText>
             <textField isBlankWhenNull="false">
-                <reportElement x="50" y="35" width="470" height="15" uuid="71e83914-7d89-4f9c-ad47-c2c7abcbaa54">
+                <reportElement x="55" y="35" width="470" height="15" uuid="71e83914-7d89-4f9c-ad47-c2c7abcbaa54">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -705,7 +705,7 @@
                 <textFieldExpression><![CDATA[$F{researchArea}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="100" y="65" width="420" height="15" uuid="d01a074a-b637-476c-aae6-cd481c42536a">
+                <reportElement x="90" y="65" width="420" height="15" uuid="d01a074a-b637-476c-aae6-cd481c42536a">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -721,7 +721,7 @@
                 <textFieldExpression><![CDATA[$F{keywords}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="400" y="80" width="78" height="15" uuid="f47901f8-2409-49ee-b60b-ad64b970eb13">
+                <reportElement x="370" y="80" width="78" height="15" uuid="f47901f8-2409-49ee-b60b-ad64b970eb13">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -737,7 +737,7 @@
                 <textFieldExpression><![CDATA[$F{annualFundingA} +"€"]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="340" y="95" width="139" height="15" uuid="2e327671-1a1e-41d2-bfcd-6a9c61ffa6b1">
+                <reportElement x="310" y="95" width="139" height="15" uuid="2e327671-1a1e-41d2-bfcd-6a9c61ffa6b1">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -753,7 +753,7 @@
                 <textFieldExpression><![CDATA[$F{partnerFundingB} + "€"]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="430" y="110" width="49" height="15" uuid="8b2f20bb-852d-4cd5-b23c-a29013fe0493">
+                <reportElement x="400" y="110" width="49" height="15" uuid="8b2f20bb-852d-4cd5-b23c-a29013fe0493">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -769,7 +769,7 @@
                 <textFieldExpression><![CDATA[$F{otherFundingC} + "€"]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="340" y="125" width="139" height="15" uuid="4e508ed4-1656-4555-8bd6-dcd1cbbb5159">
+                <reportElement x="310" y="125" width="139" height="15" uuid="4e508ed4-1656-4555-8bd6-dcd1cbbb5159">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -785,7 +785,7 @@
                 <textFieldExpression><![CDATA[$F{totalFundingABC} + "€"]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="93" y="200" width="388" height="15" uuid="018681a0-0498-4067-bafe-5c14f96c6f60">
+                <reportElement x="73" y="200" width="388" height="15" uuid="018681a0-0498-4067-bafe-5c14f96c6f60">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
@@ -945,7 +945,7 @@
                 <textFieldExpression><![CDATA[$F{piTelephone}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="160" y="403" width="325" height="15" uuid="a3af89ea-0266-41ed-8e25-10dba23349b4">
+                <reportElement x="145" y="403" width="325" height="15" uuid="a3af89ea-0266-41ed-8e25-10dba23349b4">
                     <property name="com.jaspersoft.studio.unit.x" value="px"/>
                 </reportElement>
                 <box>
