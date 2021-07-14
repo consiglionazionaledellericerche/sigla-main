@@ -195,7 +195,7 @@ Unitario]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[$F{totaleMissioniPartner}]]></text>
+				<textFieldExpression><![CDATA[$F{totaleMissioniPartner}]]></textFieldExpression>
 			</staticText>
 			<staticText>
 				<reportElement x="3" y="40" width="469" height="17" uuid="d1132de4-070b-453c-813b-b60ea2ac9ce2"/>
@@ -217,7 +217,7 @@ Unitario]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[$F{totaleAltrespesePartner}]]></text>
+				<textFieldExpression><![CDATA[$F{totaleAltrespesePartner}]]></textFieldExpression>
 			</staticText>
 			<staticText>
 				<reportElement x="4" y="231" width="469" height="17" uuid="8c6992c0-1dbf-4fed-8bb3-6e941bdcfed6"/>

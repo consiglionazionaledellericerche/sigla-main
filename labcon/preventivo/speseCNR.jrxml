@@ -278,7 +278,7 @@ Unitario]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[$F{totalePersonaleCNR}]]></text>
+				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
 			</staticText>
 			<line>
 				<reportElement x="474" y="33" width="1" height="18" uuid="3ed6daf2-3b7a-44f6-8b7a-d27371c520d6">
@@ -303,7 +303,7 @@ Unitario]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[$F{totalePersonaleCNR}]]></text>
+				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
 			</staticText>
 			<staticText>
 				<reportElement x="4" y="340" width="469" height="17" uuid="2a9cfaaf-4c20-4d82-b61f-9918979188d3"/>
@@ -323,7 +323,7 @@ Unitario]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[$F{totalePersonaleCNR}]]></text>
+				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
 			</staticText>
 			<line>
 				<reportElement x="474" y="202" width="1" height="18" uuid="532def6f-f0b1-42bf-900f-83443750dd1e">
