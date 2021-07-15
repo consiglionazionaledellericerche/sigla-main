@@ -132,6 +132,7 @@ import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -3033,7 +3034,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		compenso.setFl_senza_calcoli(Boolean.TRUE);
 		compenso.setBonus(bonus);
 		compenso
-				.setTi_istituz_commerc(CompensoBulk.TIPO_COMPENSO_ISTITUZIONALE);
+				.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 		compenso.setStatoCompensoToEseguiCalcolo();
 		compenso.setToBeCreated();
 		compenso.setUser(bonus.getUser());
@@ -4231,13 +4232,13 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				 bulk.getFatturaPassiva() != null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
 				 compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0 && 
 				 (!compenso.getFl_split_payment().booleanValue() ||(compenso.getFl_split_payment().booleanValue() &&  
-						   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.ISTITUZIONALE)==0 )) 
+						   compenso.getTi_istituz_commerc().compareTo(TipoIVA.ISTITUZIONALE.value())==0 ))
 				 && !compenso.isSenzaCalcoli()))
 				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_fattura());
 			
 			if (compenso !=null && compenso.getIm_totale_compenso()!=null && bulk.getFatturaPassiva() != null  &&
 					   compenso.getFl_split_payment().booleanValue() &&  
-					   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.COMMERCIALE)==0  &&
+					   compenso.getTi_istituz_commerc().compareTo(TipoIVA.COMMERCIALE.value())==0  &&
 					   bulk.getFatturaPassiva().getIm_totale_imponibile()!=null &&
 					   compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_imponibile())!=0 && !compenso.isSenzaCalcoli())
 						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_imponibile());
@@ -5157,12 +5158,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				compenso.getFatturaPassiva() != null && compenso.getFatturaPassiva().getIm_totale_fattura()!=null &&
 				 compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_fattura())!=0 && 
 				 (!compenso.getFl_split_payment().booleanValue() ||(compenso.getFl_split_payment().booleanValue() &&  
-						   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.ISTITUZIONALE)==0 ))))
+						   compenso.getTi_istituz_commerc().compareTo(TipoIVA.ISTITUZIONALE.value())==0 ))))
 				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_fattura());
 			
 			if (compenso !=null && compenso.getIm_totale_compenso()!=null && compenso.getFatturaPassiva() != null  &&
 					   compenso.getFl_split_payment().booleanValue() &&  
-					   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.COMMERCIALE)==0  &&
+					   compenso.getTi_istituz_commerc().compareTo(TipoIVA.COMMERCIALE.value())==0  &&
 							   compenso.getFatturaPassiva().getIm_totale_imponibile()!=null &&
 					   compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_imponibile())!=0)
 						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_imponibile());

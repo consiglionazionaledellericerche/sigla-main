@@ -34,6 +34,7 @@
 <table class="Panel card p-2 mb-2 card-shadow" cellpadding="2">
     <tr>
         <% scrittura.writeFormField(out, "dt_contabilizzazione", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+        <% scrittura.writeFormField(out, "ti_istituz_commerc", FormController.VIEW, bp.getFieldValidationMap(), true); %>
         <% scrittura.writeFormField(out, "ds_scrittura", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
     </tr>
     <% if (Optional.ofNullable(scrittura.getPg_scrittura_annullata()).isPresent()) { %>

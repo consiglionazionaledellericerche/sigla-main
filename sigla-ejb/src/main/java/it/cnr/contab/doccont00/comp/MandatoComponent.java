@@ -60,6 +60,7 @@ import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.ejb.ProcedureComponentSession;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -2675,7 +2676,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             documento.setCd_uo_origine(mandato.getCd_uo_origine());
             documento.setTipo_documento(new Tipo_documento_ammBulk(
                     Numerazione_doc_ammBulk.TIPO_TRASF_S));
-            documento.setTi_istituz_commerc(Documento_genericoBulk.ISTITUZIONALE);
+            documento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
             documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
             documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
             // documento.setFl_modifica_coge(new Boolean( false));

@@ -61,6 +61,7 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
@@ -109,8 +110,6 @@ public abstract class Fattura_passivaBulk
     public final static String NON_ASSOCIATO_A_MANDATO = "N";
     public final static String PARZIALMENTE_ASSOCIATO_A_MANDATO = "P";
     public final static String ASSOCIATO_A_MANDATO = "T";
-    public final static String COMMERCIALE = "C";
-    public final static String ISTITUZIONALE = "I";
     public final static String PROMISCUA = "P";
     public final static String TIPO_FATTURA_PASSIVA = "F";
     public final static String TIPO_NOTA_DI_CREDITO = "C";
@@ -139,8 +138,9 @@ public abstract class Fattura_passivaBulk
 
     static {
         TIPO = new it.cnr.jada.util.OrderedHashtable();
-        TIPO.put(COMMERCIALE, "Commerciale");
-        TIPO.put(ISTITUZIONALE, "Istituzionale");
+        for (TipoIVA tipoIVA : TipoIVA.values()) {
+            TIPO.put(tipoIVA.value(), tipoIVA.label());
+        }
         TIPO.put(PROMISCUA, "Promiscua");
 
         STATO = new it.cnr.jada.util.OrderedHashtable();
@@ -405,7 +405,7 @@ public abstract class Fattura_passivaBulk
         }
         nuovoRigo.setTi_istituz_commerc(
                 PROMISCUA.equalsIgnoreCase(getTi_istituz_commerc()) ?
-                        nuovoRigo.COMMERCIALE : getTi_istituz_commerc());
+                        TipoIVA.COMMERCIALE.value() : getTi_istituz_commerc());
 
         long max = 0;
         for (Iterator i = fattura_passiva_dettColl.iterator(); i.hasNext(); ) {
@@ -1509,14 +1509,14 @@ public abstract class Fattura_passivaBulk
             setFl_san_marino_senza_iva(Boolean.FALSE);
             setFl_bolla_doganale(Boolean.FALSE);
             setFl_spedizioniere(Boolean.FALSE);
-            if (getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+            if (getTi_istituz_commerc() != null && TipoIVA.COMMERCIALE.value().equalsIgnoreCase(getTi_istituz_commerc()) &&
                     getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
                     getFl_merce_extra_ue() != null && getFl_merce_extra_ue()) {
                 setFl_merce_extra_ue(Boolean.TRUE);
                 setFl_merce_intra_ue(Boolean.FALSE);
                 setFl_autofattura(Boolean.FALSE);
                 setAutoFatturaNeeded(true);
-            } else if (getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+            } else if (getTi_istituz_commerc() != null && TipoIVA.COMMERCIALE.value().equalsIgnoreCase(getTi_istituz_commerc()) &&
                     getTi_bene_servizio() != null && FATTURA_DI_SERVIZI.equalsIgnoreCase(getTi_bene_servizio())) {
                 setFl_merce_extra_ue(Boolean.FALSE);
                 setFl_merce_intra_ue(Boolean.FALSE);
@@ -1525,7 +1525,7 @@ public abstract class Fattura_passivaBulk
             } else {
                 setFl_merce_extra_ue(Boolean.FALSE);
                 setFl_merce_intra_ue(Boolean.FALSE);
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 if (autoFatt)
                     setFl_autofattura(Boolean.TRUE);
@@ -1542,10 +1542,10 @@ public abstract class Fattura_passivaBulk
             setFl_spedizioniere(Boolean.FALSE);
             setFl_merce_extra_ue(Boolean.FALSE);
             //??? solo commerciale
-            if (getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+            if (getTi_istituz_commerc() != null && TipoIVA.COMMERCIALE.value().equalsIgnoreCase(getTi_istituz_commerc()) &&
                     getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
                     getFl_merce_intra_ue() != null && getFl_merce_intra_ue()) {
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 if (autoFatt)
                     setFl_autofattura(Boolean.TRUE);
@@ -1583,7 +1583,7 @@ public abstract class Fattura_passivaBulk
             setFl_merce_intra_ue(Boolean.FALSE);
             if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                 ((Fattura_passiva_IBulk) this).setFattura_estera(null);
-            boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+            boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
             //setAutoFatturaNeeded(autoFatt);
             if (autoFatt && (getTi_bene_servizio() != null && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()))) {
                 setFl_autofattura(Boolean.TRUE);
@@ -1663,7 +1663,7 @@ public abstract class Fattura_passivaBulk
                 setFl_merce_intra_ue(Boolean.FALSE);
                 if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                     ((Fattura_passiva_IBulk) this).setFattura_estera(null);
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 break;
             }
@@ -1711,7 +1711,7 @@ public abstract class Fattura_passivaBulk
                 setFl_merce_intra_ue(Boolean.FALSE);
                 if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                     ((Fattura_passiva_IBulk) this).setFattura_estera(null);
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 break;
             }
@@ -2240,7 +2240,7 @@ public abstract class Fattura_passivaBulk
      */
 
     public boolean isCommerciale() {
-        return COMMERCIALE.equals(getTi_istituz_commerc());
+        return TipoIVA.COMMERCIALE.value().equals(getTi_istituz_commerc());
     }
 
     /**
@@ -2372,7 +2372,7 @@ public abstract class Fattura_passivaBulk
      */
 
     public boolean isIstituzionale() {
-        return ISTITUZIONALE.equals(getTi_istituz_commerc());
+        return TipoIVA.ISTITUZIONALE.value().equals(getTi_istituz_commerc());
     }
 
     /**

@@ -65,6 +65,7 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -3349,7 +3350,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                 .findTipiSezionali(
                         fatturaAttiva.getEsercizio(),
                         fatturaAttiva.getCd_uo_origine(),
-                        it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.COMMERCIALE,
+                        TipoIVA.COMMERCIALE.value(),
                         it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.VENDITE,
                         fatturaAttiva.getTi_fattura(),
                         options);
@@ -3382,7 +3383,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                 .findTipiSezionaliPerRistampa(
                         fatturaAttiva.getEsercizio(),
                         fatturaAttiva.getCd_uo_origine(),
-                        it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.COMMERCIALE,
+                        TipoIVA.COMMERCIALE.value(),
                         it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.VENDITE,
                         fatturaAttiva.getTi_fattura(),
                         options);

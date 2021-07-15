@@ -18,6 +18,8 @@
 package it.cnr.contab.compensi00.tabrif.bulk;
 
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
+
 /**
  * Insert the type's description here.
  * Creation date: (24/09/2002 10.08.08)
@@ -117,10 +119,10 @@ public java.lang.Boolean getFlTassazioneSeparata() {
  */
 public String getTiCommerciale() {
 
-	if (MinicarrieraBulk.TIPO_COMPENSO_ISTITUZIONALE.equals(getTiIstituzionaleCommerciale()))
+	if (TipoIVA.ISTITUZIONALE.value().equals(getTiIstituzionaleCommerciale()))
 		return Tipo_trattamentoBulk.ATT_NON_COMMERCIALE;
 
-	if (MinicarrieraBulk.TIPO_COMPENSO_COMMERCIALE.equals(getTiIstituzionaleCommerciale()))
+	if (TipoIVA.COMMERCIALE.value().equals(getTiIstituzionaleCommerciale()))
 		return Tipo_trattamentoBulk.ATT_COMMERCIALE;
 
 	return null;

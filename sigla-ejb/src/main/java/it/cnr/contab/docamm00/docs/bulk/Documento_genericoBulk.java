@@ -31,6 +31,7 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
@@ -58,8 +59,6 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public final static String STATO_CONTABILIZZATO= "C";
 	public final static String GENERICO_E= Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E;
 	public final static String GENERICO_S= Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S;
-	public final static String ISTITUZIONALE= "I";
-	public final static String COMMERCIALE= "C";
 	public final static Dictionary STATO;
 	public final static String ASSOCIATO_A_MANDATO= "T";
 	public final static String NON_ASSOCIATO_A_MANDATO= "N";
@@ -129,8 +128,9 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 
 	static {
 		TIPO = new it.cnr.jada.util.OrderedHashtable();
-		TIPO.put(COMMERCIALE,"Commerciale");
-		TIPO.put(ISTITUZIONALE,"Istituzionale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			TIPO.put(tipoIVA.value(), tipoIVA.label());
+		}
 
 		STATO= new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INIZIALE, "Iniziale");
@@ -1767,7 +1767,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		}
 
 		if (getTi_istituz_commerc()==null)
-			setTi_istituz_commerc(ISTITUZIONALE);
+			setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
 		if (getIm_totale()==null)
 			setIm_totale(new java.math.BigDecimal(0));

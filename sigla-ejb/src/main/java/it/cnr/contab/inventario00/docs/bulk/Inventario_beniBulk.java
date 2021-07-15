@@ -21,6 +21,7 @@ import java.util.*;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.*;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 
 public class Inventario_beniBulk extends Inventario_beniBase {
@@ -72,19 +73,11 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	private Boolean contab;
 	//private java.lang.String ti_istituzionale_commerciale;
 		
-	public final static java.util.Dictionary ISTITUZIONALE_COMMERCIALE;
-	public final static String ISTITUZIONALE      = "I";
-	public final static String COMMERCIALE      = "C";
+	public final static java.util.Dictionary ISTITUZIONALE_COMMERCIALE = TipoIVA.TipoIVAKeys;
 
 	public final static String ISTOTALMENTESCARICATO = "Y";
 	public final static String ISNOTTOTALMENTESCARICATO = "N";
 
-	static {
-		
-		ISTITUZIONALE_COMMERCIALE = new it.cnr.jada.util.OrderedHashtable();
-		ISTITUZIONALE_COMMERCIALE.put(ISTITUZIONALE,"Istituzionale");
-		ISTITUZIONALE_COMMERCIALE.put(COMMERCIALE,"Commerciale");
-	};
 	private Id_inventarioBulk inventario;
 	protected final static java.text.Format FORMAT = new java.text.DecimalFormat("000");;
 	private java.math.BigDecimal valoreBene;
@@ -480,7 +473,7 @@ public OggettoBulk initializeForFreeSearch(it.cnr.jada.util.action.CRUDBP bp,it.
 public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 
 	condizioneBene = new Condizione_beneBulk();
-	setTi_commerciale_istituzionale(ISTITUZIONALE);
+	setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 	return this;
 }
 /**
@@ -524,7 +517,7 @@ public boolean isCancellabile() {
 */
 
 public boolean isIstituzionale() {
-	return ISTITUZIONALE.equals(getTi_commerciale_istituzionale());
+	return TipoIVA.ISTITUZIONALE.value().equals(getTi_commerciale_istituzionale());
 }
 /**
 * Restituisce <code>true</code> se il bene deriva da una operazione di migrazione,

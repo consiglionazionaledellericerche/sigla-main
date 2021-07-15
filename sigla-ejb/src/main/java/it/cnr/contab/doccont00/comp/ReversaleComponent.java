@@ -49,6 +49,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -2152,7 +2153,7 @@ REVERSALE
             documento.setCd_cds_origine(reversale.getCd_cds_origine());
             documento.setCd_uo_origine(reversale.getCd_uo_origine());
             documento.setTipo_documento(new Tipo_documento_ammBulk(cd_tipo_documento_amm));
-            documento.setTi_istituz_commerc(Documento_genericoBulk.ISTITUZIONALE);
+            documento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
             documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
             documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
             documento.setData_registrazione(reversale.getDt_emissione());

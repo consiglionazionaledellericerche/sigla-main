@@ -31,6 +31,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_passivoBulk;
 import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 
 public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
@@ -159,7 +160,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 		}
 		setTi_mandato( TIPO_PAGAMENTO );
 		Documento_generico_passivoBulk docPassivo = new Documento_generico_passivoBulk();
-		docPassivo.setTi_istituz_commerc(Documento_genericoBulk.COMMERCIALE);
+		docPassivo.setTi_istituz_commerc(TipoIVA.COMMERCIALE.value());
 		setModelloDocumento(docPassivo);
 		return this;
 	}

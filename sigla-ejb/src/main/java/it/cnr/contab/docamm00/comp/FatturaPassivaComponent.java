@@ -61,6 +61,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -3900,7 +3901,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     fatturaPassiva.getEsercizio(),
                     fatturaPassiva.getCd_uo_origine(),
                     (fatturaPassiva.isPromiscua()) ?
-                            Fattura_passivaBulk.COMMERCIALE :
+                            TipoIVA.COMMERCIALE.value() :
                             fatturaPassiva.getTi_istituz_commerc(),
                     it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.ACQUISTI,
                     fatturaPassiva.getTi_fattura(),
@@ -4388,7 +4389,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         //Come da richiesta 101 gestione errori CNR imposto come default
         //istituzionale (09/09/2002 RP)
         //Originale: fattura.setTi_istituz_commerc(fattura.COMMERCIALE);
-        fattura.setTi_istituz_commerc(Fattura_passivaBulk.ISTITUZIONALE);
+        fattura.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
         fattura = setChangeDataToEur(userContext, fattura);
 
@@ -6324,7 +6325,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
             Fattura_passiva_rigaBulk riga_fattura = (Fattura_passiva_rigaBulk) i.next();
             if (riga_fattura.isInventariato()) {
-                if (riga_fattura.getTi_istituz_commerc().equals(Fattura_passiva_rigaBulk.ISTITUZIONALE))
+                if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
                     im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
                 else
                     im_riga_fattura = riga_fattura.getIm_imponibile();

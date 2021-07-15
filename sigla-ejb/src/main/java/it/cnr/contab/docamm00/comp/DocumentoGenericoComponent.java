@@ -47,6 +47,7 @@ import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.contab.inventario01.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -3266,7 +3267,7 @@ public class DocumentoGenericoComponent
             throw handleException(bulk, e);
         }
 
-        documento.setTi_istituz_commerc(Documento_genericoBulk.ISTITUZIONALE);
+        documento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
         documento.setIm_totale(new BigDecimal(0));
         if (documento.isGenericoAttivo()) {

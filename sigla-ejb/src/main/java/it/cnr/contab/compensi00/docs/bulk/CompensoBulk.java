@@ -38,6 +38,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
@@ -80,8 +81,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     public final static java.util.Dictionary STATO_COFI;
     public final static Dictionary STATI_RIPORTO;
     // Tipo compenso
-    public final static String TIPO_COMPENSO_COMMERCIALE = "C";
-    public final static String TIPO_COMPENSO_ISTITUZIONALE = "I";
     public final static java.util.Dictionary TIPI_COMPENSO;
     public final static Dictionary STATO_LIQUIDAZIONE;
     public final static Dictionary CAUSALE;
@@ -130,8 +129,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         STATI_RIPORTO.put(COMPLETAMENTE_RIPORTATO, "Completamente riportata");
 
         TIPI_COMPENSO = new it.cnr.jada.util.OrderedHashtable();
-        TIPI_COMPENSO.put(TIPO_COMPENSO_COMMERCIALE, "Commerciale");
-        TIPI_COMPENSO.put(TIPO_COMPENSO_ISTITUZIONALE, "Istituzionale");
+        for (TipoIVA tipoIVA : TipoIVA.values()) {
+            TIPI_COMPENSO.put(tipoIVA.value(), tipoIVA.label());
+        }
+
         /*
          * TIPI_PRESTAZIONE = new it.cnr.jada.util.OrderedHashtable();
          * TIPI_PRESTAZIONE .put(TIPO_PRESTAZIONE_SERVIZI,
@@ -2524,7 +2525,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
         setStato_pagamento_fondo_eco(LIBERO_FONDO_ECO);
         setTi_associato_manrev(NON_ASSOCIATO_MANREV);
         setTi_anagrafico(Tipo_rapportoBulk.ALTRO);
-        setTi_istituz_commerc(MinicarrieraBulk.TIPO_COMPENSO_ISTITUZIONALE);
+        setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
     }
 
     public void resetStatoCogeCoan() {

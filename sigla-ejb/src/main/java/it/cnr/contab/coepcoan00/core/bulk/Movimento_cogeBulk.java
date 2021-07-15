@@ -20,6 +20,7 @@ package it.cnr.contab.coepcoan00.core.bulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
@@ -30,8 +31,6 @@ import java.util.stream.Collectors;
 
 public class Movimento_cogeBulk extends Movimento_cogeBase {
 
-    public final static Dictionary tipoRigaKeys = new OrderedHashtable();
-
     // sezione
     public final static String SEZIONE_DARE = "D";
     public final static String SEZIONE_AVERE = "A";
@@ -39,12 +38,14 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     public final static Dictionary naturaContoKeys = Voce_epBulk.natura_voce_Keys;
     public final static String STATO_DEFINITIVO = "D";
     // tipo
-    public final static String COMMERCIALE = "C";
-    public final static String ISTITUZIONALE = "I";
-    public final static Dictionary tipoKeys;
+
     public final static java.util.Dictionary STATO_ATTIVA;
     public final static String ATTIVA_YES = "Y";
     public final static String ATTIVA_NO = "N";
+
+    public final static Dictionary
+            tipoRigaKeys = new OrderedHashtable(),
+            tipoKeys = TipoIVA.TipoIVAKeys;
 
     static {
         for (TipoRiga tipoRiga : TipoRiga.values()) {
@@ -56,12 +57,6 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
         sezioneKeys = new Hashtable();
         sezioneKeys.put(SEZIONE_DARE, "Dare");
         sezioneKeys.put(SEZIONE_AVERE, "Avere");
-    }
-
-    static {
-        tipoKeys = new it.cnr.jada.util.OrderedHashtable();
-        tipoKeys.put(COMMERCIALE, "Commerciale");
-        tipoKeys.put(ISTITUZIONALE, "Istituzionale");
     }
 
     static {

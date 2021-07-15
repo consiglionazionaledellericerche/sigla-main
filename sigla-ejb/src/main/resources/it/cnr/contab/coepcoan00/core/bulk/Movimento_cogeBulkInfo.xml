@@ -318,9 +318,7 @@
 		<columnFieldProperty
 			name="ds_voce_ep" />
 		<columnFieldProperty
-			name="tipo_conto_ep" />
-		<columnFieldProperty
-			name="ti_istituz_commerc" />
+			name="ti_riga" />
 		<columnFieldProperty
 			name="dt_da_competenza_coge" />
 		<columnFieldProperty

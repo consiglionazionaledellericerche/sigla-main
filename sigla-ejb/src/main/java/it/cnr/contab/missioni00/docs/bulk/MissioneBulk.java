@@ -52,6 +52,7 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -96,8 +97,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	protected Tipo_missioneBulk tipo_missione;
 	@JsonIgnore
 	private java.util.Collection tipi_missione;
-	public final static String TIPO_ISTITUZIONALE = "I";
-	public final static String TIPO_COMMERCIALE = "C";		
 	public final static Dictionary<String, String> ti_istituz_commKeys;
 	@JsonIgnore
 	private MissioneBulk missioneIniziale;
@@ -263,8 +262,9 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	static
 	{
 		ti_istituz_commKeys = new OrderedHashtable();
-		ti_istituz_commKeys.put("C", "Commerciale");
-		ti_istituz_commKeys.put("I", "Istituzionale");		
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ti_istituz_commKeys.put(tipoIVA.value(), tipoIVA.label());
+		}
 
 		STATO_FONDO_ECO = new it.cnr.jada.util.OrderedHashtable();
 		STATO_FONDO_ECO.put(NO_FONDO_ECO,"Non usare fondo economale");
@@ -1742,7 +1742,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		setTi_provvisorio_definitivo(MissioneBulk.SALVA_TEMPORANEO);
 		setV_terzo(new V_terzo_per_compensoBulk());
 		setTi_anagrafico(ANAG_DIPENDENTE);
-		setTi_istituz_commerc(TIPO_ISTITUZIONALE);
+		setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
 		setStato_cofi(STATO_INIZIALE_COFI);
 		setStato_coge(STATO_INIZIALE_COGE);

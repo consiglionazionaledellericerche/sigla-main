@@ -284,8 +284,20 @@
 		inputSize="10"
 		inputType="TEXT"
 		label="UO documento"
-		caseSensitiveSearch="false" />	
-		
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		maxLength="1"
+		inputSize="1"
+		inputCssClass="form-control"
+		inputType="SELECT"
+		keysProperty = "tipoKeys"
+		label="Tipo"
+		enabledOnSearch="false"
+		caseSensitiveSearch="false"
+		nullable="true"/>
 
 	<formFieldProperty
 		name="cd_cds" />
@@ -353,7 +365,9 @@
 		name="cd_cds_documento" />
 	<formFieldProperty
 		name="cd_uo_documento" />
-		
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+
 
 	<columnFieldProperty
 		name="esercizio" />

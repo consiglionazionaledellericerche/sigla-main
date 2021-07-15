@@ -58,6 +58,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.bp.CRUDVirtualAccertamentoBP;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -1634,7 +1635,7 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 					rigaNdC.copyFrom(dettaglio);
 					//rigaNdC.setModalita(((FatturaPassivaComponentSession)bp.createComponentSession()).findModalita(context.getUserContext(),rigaNdC));
 				 if (rigaNdC.getRiga_fattura_origine()!=null && rigaNdC.getRiga_fattura_origine().getFattura_passiva().getDt_fattura_fornitore()==null ||
-						(rigaNdC.getTi_istituz_commerc().compareTo(rigaNdC.ISTITUZIONALE)==0)||
+						(rigaNdC.getTi_istituz_commerc().compareTo(TipoIVA.ISTITUZIONALE.value())==0)||
 					  (rigaNdC.getRiga_fattura_origine()!=null && rigaNdC.getRiga_fattura_origine().getFattura_passiva().getDt_fattura_fornitore()!=null && 
 					   it.cnr.jada.util.DateUtils.daysBetweenDates(new Date(rigaNdC.getRiga_fattura_origine().getFattura_passiva().getDt_fattura_fornitore().getTime()),new Date(rigaNdC.getFattura_passiva().getDt_fattura_fornitore().getTime()))<366))
 						   notaDiCredito.setIvaRecuperabile(true);

@@ -31,6 +31,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -47,8 +48,6 @@ public abstract class Fattura_passiva_rigaBulk
     public final static String STATO_ANNULLATO = "A";
     public final static String NON_ASSOCIATO_A_MANDATO = "N";
     public final static String ASSOCIATO_A_MANDATO = "T";
-    public final static String COMMERCIALE = "C";
-    public final static String ISTITUZIONALE = "I";
     public final static Dictionary TIPO;
     public final static Dictionary STATO;
     public final static Dictionary STATO_MANDATO;
@@ -56,8 +55,9 @@ public abstract class Fattura_passiva_rigaBulk
 
     static {
         TIPO = new it.cnr.jada.util.OrderedHashtable();
-        TIPO.put(COMMERCIALE, "Commerciale");
-        TIPO.put(ISTITUZIONALE, "Istituzionale");
+        for (TipoIVA tipoIVA : TipoIVA.values()) {
+            TIPO.put(tipoIVA.value(), tipoIVA.label());
+        }
 
         STATO = new it.cnr.jada.util.OrderedHashtable();
         STATO.put(STATO_INIZIALE, "Iniziale");
@@ -244,7 +244,7 @@ public abstract class Fattura_passiva_rigaBulk
      */
     public java.math.BigDecimal getIm_totale_inventario() {
 
-        if (Fattura_passivaBulk.ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()))
+        if (TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()))
             return getIm_imponibile().add(getIm_iva());
         return getIm_imponibile();
     }
@@ -732,7 +732,7 @@ public abstract class Fattura_passiva_rigaBulk
     }
 
     public boolean isCommerciale() {
-        return COMMERCIALE.equals(getTi_istituz_commerc());
+        return TipoIVA.COMMERCIALE.value().equals(getTi_istituz_commerc());
     }
 
     public BulkList<FatturaOrdineBulk> getFatturaOrdineColl() {
