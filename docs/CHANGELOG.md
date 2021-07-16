@@ -1,3 +1,15 @@
+## Release 6.3.43  -- _July 13, 2021_ 
+**Changes**
+
+>**Eliminata la data scadenza pagamento per F24EP**
+>
+>[c02eff84f7ddd8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c02eff84f7ddd8d) marco.spasiano *July 13, 2021*
+
+>**FIX NPE on controlla quadratura per natura**
+>
+>[f4bfbdd9895ec75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4bfbdd9895ec75) marco.spasiano *July 12, 2021*
+
+
 ## Release 6.3.42  -- _July 08, 2021_ 
 **Changes**
 
