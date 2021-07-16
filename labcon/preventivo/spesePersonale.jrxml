@@ -107,7 +107,7 @@
 				<textFieldExpression><![CDATA[$F{costoUnitario}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="469" y="0" width="56" height="18" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="469" y="0" width="56" height="18" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
