@@ -30,12 +30,31 @@
 		<fieldDescription><![CDATA[importoPrevisto]]></fieldDescription>
 	</field>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="6" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="375" y="-12" width="44" height="18" backcolor="#FFFFFF" uuid="a6eb86f0-2a84-43f9-9531-38ae2218760c">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+		</band>
 	</background>
 	<detail>
 		<band height="18">
 			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="0" y="0" width="307" height="18" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="306" height="18" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -52,8 +71,9 @@
 				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="307" y="0" width="69" height="18" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="306" y="0" width="69" height="18" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -69,7 +89,7 @@
 				<textFieldExpression><![CDATA[$F{dettaglio}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="470" y="0" width="55" height="18" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="469" y="0" width="55" height="18" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -87,24 +107,7 @@
 				<textFieldExpression><![CDATA[$F{importoPrevisto}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="376" y="0" width="44" height="18" backcolor="#FFFFFF" uuid="a6eb86f0-2a84-43f9-9531-38ae2218760c">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="8" isBold="false"/>
-					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement mode="Transparent" x="420" y="0" width="50" height="18" backcolor="#FFFFFF" uuid="12319f98-ab4d-4f27-b95c-cc8d5b4acf8b">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="419" y="0" width="50" height="18" backcolor="#FFFFFF" uuid="12319f98-ab4d-4f27-b95c-cc8d5b4acf8b">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
