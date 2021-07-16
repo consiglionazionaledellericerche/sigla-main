@@ -149,6 +149,14 @@
 
 	<columnSet name="elaborazione_flussi">
 		<columnFieldProperty name="cd_contributo_ritenuta"/>
+		<columnFieldProperty name="ds_contributo_ritenuta"
+							 property="ds_contributo_ritenuta"
+							 label="Descrizione"
+							 inputType="TEXT"/>
+		<columnFieldProperty name="cd_classificazione_cori"
+							 property="cd_classificazione_cori"
+							 label="Classificazione"
+							 inputType="TEXT"/>
 		<columnFieldProperty name="ti_ente_percipiente"/>
 		<columnFieldProperty name="ammontare"/>
 		<columnFieldProperty name="dt_da_competenza_coge"/>
