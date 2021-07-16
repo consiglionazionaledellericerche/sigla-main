@@ -30,26 +30,7 @@
 		<fieldDescription><![CDATA[importoPrevisto]]></fieldDescription>
 	</field>
 	<background>
-		<band height="6" splitType="Stretch">
-			<textField textAdjust="StretchHeight">
-				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="375" y="-12" width="44" height="18" backcolor="#FFFFFF" uuid="a6eb86f0-2a84-43f9-9531-38ae2218760c">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="8" isBold="false"/>
-					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="6" splitType="Stretch"/>
 	</background>
 	<detail>
 		<band height="18">
@@ -122,6 +103,25 @@
 					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{costoUnitario}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="375" y="0" width="44" height="18" backcolor="#FFFFFF" uuid="a6eb86f0-2a84-43f9-9531-38ae2218760c">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
