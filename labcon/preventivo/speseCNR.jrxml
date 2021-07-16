@@ -114,7 +114,9 @@ Previsto]]></text>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
+				<reportElement x="5" y="0" width="465" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -140,10 +142,16 @@ Previsto]]></text>
 				<textFieldExpression><![CDATA[$F{totalePersonaleCNR}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="530" y="0" width="1" height="17" uuid="c710d731-1a3f-450d-bfff-22ab4887e3ba"/>
+				<reportElement x="530" y="0" width="1" height="17" uuid="c710d731-1a3f-450d-bfff-22ab4887e3ba">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 			</line>
 			<line>
-				<reportElement x="5" y="0" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65"/>
+				<reportElement x="5" y="0" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 			</line>
 			<line>
 				<reportElement x="5" y="0" width="526" height="1" uuid="ee9dd04d-6ab4-4f47-983e-21a673340bad">
@@ -231,7 +239,9 @@ Previsto]]></text>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
+				<reportElement x="5" y="0" width="465" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -263,7 +273,7 @@ Previsto]]></text>
 				<reportElement x="5" y="0" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65"/>
 			</line>
 			<line>
-				<reportElement x="6" y="0" width="526" height="1" uuid="145e449a-8445-4852-b6bb-d70766ed70a0">
+				<reportElement x="5" y="0" width="526" height="1" uuid="145e449a-8445-4852-b6bb-d70766ed70a0">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
@@ -348,7 +358,9 @@ Previsto]]></text>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
+				<reportElement x="5" y="0" width="465" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
