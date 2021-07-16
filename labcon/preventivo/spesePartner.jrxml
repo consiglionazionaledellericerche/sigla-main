@@ -31,7 +31,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="80" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<line>
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
@@ -86,7 +86,7 @@ Previsto]]></text>
 				<reportElement x="474" y="1" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -103,25 +103,27 @@ Previsto]]></text>
 				</textElement>
 				<text><![CDATA[Dettaglio]]></text>
 			</staticText>
+		</band>
+		<band height="50" splitType="Stretch">
 			<line>
-				<reportElement x="474" y="42" width="1" height="18" uuid="9c0bc0ae-33e2-4d4e-8474-ac84bdcd94ae">
+				<reportElement x="474" y="0" width="1" height="18" uuid="9c0bc0ae-33e2-4d4e-8474-ac84bdcd94ae">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="5" y="42" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
+				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Totale]]></text>
 			</staticText>
 			<line>
-				<reportElement x="5" y="59" width="526" height="1" uuid="512596eb-e3a1-4c8f-af54-af89b510463f">
+				<reportElement x="5" y="17" width="526" height="1" uuid="512596eb-e3a1-4c8f-af54-af89b510463f">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement x="475" y="42" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<reportElement x="475" y="0" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -135,13 +137,13 @@ Previsto]]></text>
 				<textFieldExpression><![CDATA[$F{totaleMissioniPartner}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="530" y="42" width="1" height="17" uuid="c710d731-1a3f-450d-bfff-22ab4887e3ba"/>
+				<reportElement x="530" y="0" width="1" height="17" uuid="c710d731-1a3f-450d-bfff-22ab4887e3ba"/>
 			</line>
 			<line>
-				<reportElement x="5" y="42" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65"/>
+				<reportElement x="5" y="0" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65"/>
 			</line>
 		</band>
-		<band height="80" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<line>
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
@@ -196,7 +198,7 @@ Previsto]]></text>
 				<reportElement x="474" y="1" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -213,25 +215,27 @@ Previsto]]></text>
 				</textElement>
 				<text><![CDATA[Dettaglio]]></text>
 			</staticText>
+		</band>
+		<band height="50" splitType="Stretch">
 			<line>
-				<reportElement x="474" y="42" width="1" height="18" uuid="9c0bc0ae-33e2-4d4e-8474-ac84bdcd94ae">
+				<reportElement x="474" y="0" width="1" height="18" uuid="9c0bc0ae-33e2-4d4e-8474-ac84bdcd94ae">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="5" y="42" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
+				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Totale]]></text>
 			</staticText>
 			<line>
-				<reportElement x="5" y="59" width="526" height="1" uuid="512596eb-e3a1-4c8f-af54-af89b510463f">
+				<reportElement x="5" y="17" width="526" height="1" uuid="512596eb-e3a1-4c8f-af54-af89b510463f">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement x="475" y="42" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<reportElement x="475" y="0" width="53" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -245,10 +249,10 @@ Previsto]]></text>
 				<textFieldExpression><![CDATA[$F{totaleAltrespesePartner}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="530" y="42" width="1" height="17" uuid="c710d731-1a3f-450d-bfff-22ab4887e3ba"/>
+				<reportElement x="530" y="0" width="1" height="17" uuid="c710d731-1a3f-450d-bfff-22ab4887e3ba"/>
 			</line>
 			<line>
-				<reportElement x="5" y="42" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65"/>
+				<reportElement x="5" y="0" width="1" height="17" uuid="996c4488-e322-48d8-83b7-736043ab0e65"/>
 			</line>
 		</band>
 	</detail>
