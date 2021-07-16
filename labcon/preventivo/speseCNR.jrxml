@@ -34,7 +34,7 @@
 		<band height="11" splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<line>
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
@@ -89,12 +89,13 @@ Previsto]]></text>
 				<reportElement x="474" y="1" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="20" width="525" height="18" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseMissioniPersonale")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseMissioniPersonale.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spesePersonale")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "spesePersonale.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
 				<reportElement x="311" y="1" width="1" height="18" uuid="23faa764-53f2-4e93-b5be-3ebed6b1c2e1"/>
@@ -159,7 +160,7 @@ Previsto]]></text>
 				</reportElement>
 			</line>
 		</band>
-		<band height="41" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<line>
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
@@ -214,12 +215,13 @@ Previsto]]></text>
 				<reportElement x="474" y="1" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="20" width="525" height="18" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseAltre")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltre.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseMissioniPersonale")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseMissioniPersonale.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
 				<reportElement x="311" y="1" width="1" height="18" uuid="23faa764-53f2-4e93-b5be-3ebed6b1c2e1"/>
@@ -278,7 +280,7 @@ Previsto]]></text>
 				</reportElement>
 			</line>
 		</band>
-		<band height="41" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<line>
 				<reportElement x="5" y="1" width="525" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
 			</line>
@@ -333,9 +335,10 @@ Previsto]]></text>
 				<reportElement x="474" y="1" width="1" height="18" uuid="588d046d-e387-4be9-94c1-53c82274fa62"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="20" width="525" height="21" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="20" width="525" height="18" uuid="5b5dddc4-a0bd-45a7-8ec2-177fa5689418">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseAltre")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltre.jasper"]]></subreportExpression>
