@@ -291,7 +291,6 @@
 		property="ti_istituz_commerc"
 		maxLength="1"
 		inputSize="1"
-		inputCssClass="form-control"
 		inputType="SELECT"
 		keysProperty = "tipoKeys"
 		label="Tipo"

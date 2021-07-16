@@ -17,6 +17,7 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -70,6 +71,8 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     public java.lang.String attiva;
     protected ContoBulk conto = new ContoBulk();
     protected Scrittura_partita_doppiaBulk scrittura = new Scrittura_partita_doppiaBulk();
+    protected TerzoBulk terzo;
+
     public Movimento_cogeBulk() {
         super();
     }
@@ -118,14 +121,15 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     }
 
     public Integer getCd_terzo() {
-        it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk scrittura = this.getScrittura();
-        if (scrittura == null)
-            return null;
-        return scrittura.getCd_terzo();
+        return Optional.ofNullable(terzo)
+                .map(TerzoBulk::getCd_terzo)
+                .orElse(null);
     }
 
     public void setCd_terzo(Integer cd_terzo) {
-        this.getScrittura().setCd_terzo(cd_terzo);
+        Optional.ofNullable(terzo)
+                .orElse(new TerzoBulk())
+                .setCd_terzo(cd_terzo);
     }
 
     public java.lang.String getCd_unita_organizzativa() {
@@ -317,6 +321,14 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
 
     public boolean isRigaTipoDebito() {
         return TipoRiga.DEBITO.value().equals(this.getTi_riga());
+    }
+
+    public TerzoBulk getTerzo() {
+        return terzo;
+    }
+
+    public void setTerzo(TerzoBulk terzo) {
+        this.terzo = terzo;
     }
 
     public enum TipoRiga {

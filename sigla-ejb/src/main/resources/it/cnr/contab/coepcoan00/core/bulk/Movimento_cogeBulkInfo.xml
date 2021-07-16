@@ -228,7 +228,7 @@
 	/>
 	<fieldProperty
 		name="terzo_movimento"
-		property="scrittura.terzo"
+		property="terzo"
 		formName="searchtool"
 		label="Terzo"
 		enabledOnSearch="true"

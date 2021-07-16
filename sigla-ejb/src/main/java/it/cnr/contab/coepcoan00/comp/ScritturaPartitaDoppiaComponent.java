@@ -1929,7 +1929,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			movimentoCoge.setConto(contoBulk);
 			movimentoCoge.setIm_movimento(aImporto);
-			movimentoCoge.setCd_terzo(testata.getCdTerzo());
+			movimentoCoge.setTerzo(
+					Optional.ofNullable(testata.getCdTerzo())
+							.map(cdTerzo -> {
+								try {
+									return findByPrimaryKey(userContext, new TerzoBulk(cdTerzo));
+								} catch (ComponentException e) {
+									return handleException(e);
+								}
+							})
+							.filter(TerzoBulk.class::isInstance)
+							.map(TerzoBulk.class::cast)
+							.orElse(null)
+			);
 			movimentoCoge.setDt_da_competenza_coge(testata.getDtDa());
 			movimentoCoge.setDt_a_competenza_coge(testata.getDtA());
 			movimentoCoge.setStato(Movimento_cogeBulk.STATO_DEFINITIVO);
