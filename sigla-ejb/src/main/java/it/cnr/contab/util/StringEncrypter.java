@@ -99,15 +99,7 @@ public final class StringEncrypter  {
 			throw new EncryptionException( e );
 		}
 	}
-
-	public static void main(String[] args) {
-		try {
-			System.out.println(encrypt("isin-udg@legalmail.it", "GioISINGlo.7383"));
-		} catch (EncryptionException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	public static String decrypt( String encryptionKey, String encryptedString ) throws EncryptionException
 	{
 		KeySpec keySpec = getKeySpec(Utility.lpad(encryptionKey, 24, '0'));
