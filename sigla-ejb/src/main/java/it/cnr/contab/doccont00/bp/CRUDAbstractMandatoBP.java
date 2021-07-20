@@ -17,6 +17,9 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.doccont00.core.bulk.CompensoOptionRequestParameter;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
@@ -40,6 +43,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -55,7 +59,7 @@ import java.util.Optional;
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
  */
 
-public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDocAmmEconomicaBP {
 
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_uscBulk.class,"sospeso_det_uscColl",this);
 	private final SimpleDetailCRUDController reversaliMan = new SimpleDetailCRUDController("Reversali",V_ass_doc_contabiliBulk.class,"doc_contabili_collColl",this);
@@ -64,6 +68,9 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	private DocumentiContabiliService documentiContabiliService;
 	private String nodeRefDocumento;
 	private boolean supervisore = false;
+
+	private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 
 	public CRUDAbstractMandatoBP() {}
 	public CRUDAbstractMandatoBP( String function ) 
@@ -492,5 +499,13 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 	public Boolean isAttivoSiopeplus() {
 		return attivoSiopeplus;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiDare() {
+		return movimentiDare;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiAvere() {
+		return movimentiAvere;
 	}
 }

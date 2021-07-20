@@ -197,8 +197,4 @@ public interface IDocumentoAmministrativoBulk extends IDocumentoCogeBulk {
     int removeFromDocumentiContabiliCancellati(IScadenzaDocumentoContabileBulk dettaglio);
 
     void setIsDeleting(boolean deletingStatus);
-
-	Scrittura_partita_doppiaBulk getScrittura_partita_doppia();
-
-    void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia);
 }

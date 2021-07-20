@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -33,6 +35,7 @@ import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleCupBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleCupIBulk;
@@ -62,6 +65,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
@@ -69,7 +73,7 @@ import it.cnr.jada.util.jsp.Button;
  * Business Process che gestisce le attività di CRUD per l'entita' Reversale
  */
 
-public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDocAmmEconomicaBP {
 	private final SimpleDetailCRUDController documentiAttivi = new SimpleDetailCRUDController("DocumentiAttivi",it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk.class,"docAttiviColl",this);
 	private final CRUDReversaleRigaController documentiAttiviSelezionati = new CRUDReversaleRigaController("DocumentiAttiviSelezionati",it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk.class,"reversale_rigaColl",this);
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_etrBulk.class,"sospeso_det_etrColl",this);
@@ -93,6 +97,8 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private ContabiliService contabiliService;
 	private boolean isReversaleIncassoAbilitata = false;
 	protected boolean attivoSiopeplus;
+	private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 
 	public CRUDReversaleBP() {
 		super();
@@ -781,5 +787,13 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
 	public boolean isAttivoSiopeplus() {
 		return attivoSiopeplus;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiDare() {
+		return movimentiDare;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiAvere() {
+		return movimentiAvere;
 	}
 }

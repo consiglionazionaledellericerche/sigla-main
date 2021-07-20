@@ -19,6 +19,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
@@ -121,6 +122,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     private java.util.Dictionary tipoDocumentoPerRicercaKeys;
     private java.math.BigDecimal im_residuo_reversale;
     private boolean siopeDaCompletare = false;
+    private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
 
     public ReversaleBulk() {
         super();
@@ -888,4 +890,13 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     public java.lang.Long getPg_manrev() {
         return this.getPg_reversale();
     }
+
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        return scrittura_partita_doppia;
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
 }

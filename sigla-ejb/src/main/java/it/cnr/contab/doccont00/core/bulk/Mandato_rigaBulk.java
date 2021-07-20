@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -639,4 +640,13 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
     }
+
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        throw new IllegalStateException();
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        throw new IllegalStateException();
+    }
+
 }

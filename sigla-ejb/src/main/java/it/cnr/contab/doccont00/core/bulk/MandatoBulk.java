@@ -19,6 +19,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
@@ -127,6 +128,9 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     private java.util.Dictionary tipoDocumentoPerRicercaKeys;
     private java.math.BigDecimal im_disp_cassa_cds;
     private java.math.BigDecimal im_disp_cassa_CNR;
+
+    private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
     public MandatoBulk() {
         super();
     }
@@ -1146,4 +1150,13 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     public java.lang.Long getPg_manrev() {
         return this.getPg_mandato();
     }
+
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        return scrittura_partita_doppia;
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
 }

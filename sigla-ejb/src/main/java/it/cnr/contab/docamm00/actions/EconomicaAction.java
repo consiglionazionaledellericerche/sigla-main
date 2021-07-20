@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.actions;
 
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.util.Utility;
@@ -36,14 +37,14 @@ public abstract class EconomicaAction extends CRUDAction {
                 .filter(IDocAmmEconomicaBP.class::isInstance)
                 .map(IDocAmmEconomicaBP.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Business process non compatibile!"));
-        final IDocumentoAmministrativoBulk documentoAmministrativoBulk = Optional.ofNullable(bp.getModel())
-                .filter(IDocumentoAmministrativoBulk.class::isInstance)
-                .map(IDocumentoAmministrativoBulk.class::cast)
+        final IDocumentoCogeBulk documentoCogeBulk = Optional.ofNullable(bp.getModel())
+                .filter(IDocumentoCogeBulk.class::isInstance)
+                .map(IDocumentoCogeBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Modello di business non compatibile!"));
         try {
-            documentoAmministrativoBulk.setScrittura_partita_doppia(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(
+            documentoCogeBulk.setScrittura_partita_doppia(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(
                     actionContext.getUserContext(),
-                    documentoAmministrativoBulk)
+                    documentoCogeBulk)
             );
             bp.getMovimentiAvere().reset(actionContext);
             bp.getMovimentiDare().reset(actionContext);

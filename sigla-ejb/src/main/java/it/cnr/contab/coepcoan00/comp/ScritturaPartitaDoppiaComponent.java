@@ -255,7 +255,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private static class Partita implements IDocumentoCogeBulk {
-		public Partita(IDocumentoCogeBulk documentoCogeBulk) {
+		public Partita(IDocumentoCogeBulk documentoCogeBulk, Scrittura_partita_doppiaBulk scrittura_partita_doppiaBulk) {
 			super();
 			this.cd_tipo_doc = documentoCogeBulk.getCd_tipo_doc();
 			this.cd_cds = documentoCogeBulk.getCd_cds();
@@ -263,9 +263,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			this.esercizio = documentoCogeBulk.getEsercizio();
 			this.pg_doc = documentoCogeBulk.getPg_doc();
 			this.tipoDocumentoEnum = documentoCogeBulk.getTipoDocumentoEnum();
+			this.scrittura_partita_doppia = scrittura_partita_doppiaBulk;
 		}
 
-		public Partita(Movimento_cogeBulk movimentoCoge) {
+		public Partita(Movimento_cogeBulk movimentoCoge, Scrittura_partita_doppiaBulk scrittura_partita_doppiaBulk) {
 			super();
 			this.cd_tipo_doc = movimentoCoge.getCd_tipo_documento();
 			this.cd_cds = movimentoCoge.getCd_cds_documento();
@@ -273,6 +274,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			this.esercizio = movimentoCoge.getEsercizio_documento();
 			this.pg_doc = movimentoCoge.getPg_numero_documento();
 			this.tipoDocumentoEnum = TipoDocumentoEnum.fromValue(movimentoCoge.getCd_tipo_documento());
+			this.scrittura_partita_doppia = scrittura_partita_doppiaBulk;
 		}
 
 		String cd_tipo_doc;
@@ -286,6 +288,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Long pg_doc;
 
 		TipoDocumentoEnum tipoDocumentoEnum;
+
+		Scrittura_partita_doppiaBulk scrittura_partita_doppia;
 
 		@Override
 		public String getCd_tipo_doc() {
@@ -339,6 +343,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		public void setTipoDocumentoEnum(TipoDocumentoEnum tipoDocumentoEnum) {
 			this.tipoDocumentoEnum = tipoDocumentoEnum;
+		}
+
+		public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+			return scrittura_partita_doppia;
+		}
+
+		public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+			this.scrittura_partita_doppia = scrittura_partita_doppia;
 		}
 
 		@Override
@@ -1455,7 +1467,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 				movimentiCoge.stream().forEach(movimento -> {
 				Partita partita = Optional.of(movimento).filter(mov -> Optional.ofNullable(mov.getCd_tipo_documento()).isPresent())
-							.map(mov -> new Partita(mov)).orElse(null);
+							.map(mov -> new Partita(mov, scrittura)).orElse(null);
 				testataPrimaNota.addDettaglio(movimento.getTi_riga(), Movimento_cogeBulk.getControSezione(movimento.getSezione()), movimento.getSezione(), movimento.getIm_movimento(), partita);
 				});
 			} catch (ComponentException | PersistencyException e) {
@@ -1564,7 +1576,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaMandato.getElemento_voce());
 
 		//La partita non deve essere registrata in caso di versamento ritenute
-		Partita partita = !TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoCoriVersamentoSpesa()?new Partita(rigaMandato):null;
+		Partita partita = !TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoCoriVersamentoSpesa()?new Partita(rigaMandato, null):null;
 
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato, partita);
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.GENERICO.value(), TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
@@ -1581,7 +1593,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaReversale.getElemento_voce());
 
 		//La partita non deve essere registrata in caso di versamento ritenute
-		Partita partita = new Partita(rigaReversale);
+		Partita partita = new Partita(rigaReversale, null);
 
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imReversale, partita);
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.GENERICO.value(), TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imReversale);
