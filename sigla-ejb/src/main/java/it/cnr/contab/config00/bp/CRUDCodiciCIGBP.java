@@ -60,6 +60,7 @@ public class CRUDCodiciCIGBP extends SimpleCRUDBP {
 	@Override
 	public void validate(ActionContext actioncontext)
 			throws ValidationException {
+		super.validate(actioncontext);
 		CigBulk bulk=(CigBulk)this.getModel();
 		if ( bulk.getCdCig()==null) 
 			throw new ValidationException("E' necessario inserire il Codice");

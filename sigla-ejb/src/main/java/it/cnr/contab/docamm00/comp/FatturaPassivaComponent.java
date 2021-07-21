@@ -7810,7 +7810,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         String naturaBollo = null;
         for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
             Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
-            if (riga.getBene_servizio().getFl_bollo()){
+            if (Optional.ofNullable(riga.getBene_servizio())
+                    .flatMap(bene_servizioBulk -> Optional.ofNullable(bene_servizioBulk.getFl_bollo())).orElse(Boolean.FALSE)){
                 bollo = riga.getIm_imponibile();
             }
             String key = null;

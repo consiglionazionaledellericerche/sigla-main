@@ -16,333 +16,340 @@
   -->
 
 <action-mappings>
-  <action 
-      path="/CRUDAction" actionClass="it.cnr.jada.util.action.CRUDAction">
-  </action>
-  <action 
-      path="/CRUDPdGAction" actionClass="it.cnr.contab.pdg00.action.CRUDPdGAction">
-  </action>
-  <action 
-      path="/PdGAction" actionClass="it.cnr.contab.pdg00.action.PdGAction">
-  </action>
-  <action 
-      path="/PdGVariazioneAction" actionClass="it.cnr.contab.pdg00.action.PdGVariazioneAction">
-  </action>  
-  <action 
-      path="/PdGStampePreventivoAction" actionClass="it.cnr.contab.pdg00.action.PdGStampePreventivoAction">
-  </action>
-  <action 
-      path="/CostiDipendenteAction" actionClass="it.cnr.contab.pdg00.action.CostiDipendenteAction">
-  </action>
-  <action 
-      path="/CRUDCostoDelDipendenteAction" actionClass="it.cnr.contab.pdg00.action.CRUDCostoDelDipendenteAction">
-  </action>
-  <action
-      path="/CostiStipendialiMensiliAction" actionClass="it.cnr.contab.pdg00.action.CostiStipendialiMensiliAction">
-  </action>
-  <action
-      path="/ContabilizzazioneFlussoStipendialeMensileAction" actionClass="it.cnr.contab.pdg00.action.ContabilizzazioneFlussoStipendialeMensileAction">
-  </action>
-  <action
-      path="/ElaboraFileStipendiAction" actionClass="it.cnr.contab.pdg00.action.ElaboraFileStipendiAction">  
-  </action>   
-  <action
-      path="/DettagliFileStipendiAction" actionClass="it.cnr.contab.pdg00.action.DettagliFileStipendiAction">  
-  </action>   
-  <action 
-      path="/SelezionatoreListaAction" actionClass="it.cnr.jada.util.action.SelezionatoreListaAction">
-  </action>
-  <action 
-      path="/CRUDRicostruzioneResiduiAction" actionClass="it.cnr.contab.pdg00.action.CRUDRicostruzioneResiduiAction">
-  </action>
-  <action 
-      path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
-  </action>
-  <action 
-      path="/PdGConsultazioneAssestatoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
-  </action>
-  <action 
-      path="/CRUDPdgPianoRipSpeseAccentAction" actionClass="it.cnr.contab.prevent00.action.CRUDPdgPianoRipSpeseAccentAction">
-  </action>
-  <action 
-      path="/PdgVarSelezionatoreListaAction" actionClass="it.cnr.contab.pdg00.action.PdgVarSelezionatoreListaAction">
-  </action>
     <action
-      path="/StipendiCofiObbAction" actionClass="it.cnr.contab.pdg00.action.StipendiCofiObbAction">  
-  </action>   
-  <action
-      path="/ElaboraStralcioMensileStipendiAction" actionClass="it.cnr.contab.pdg00.action.ElaboraStralcioMensileStipendiAction">  
-  </action>
-  
-  <businessProcess
-      name="CRUDSpeDetPdGBP" className="it.cnr.contab.pdg00.bp.CRUDSpeDetPdGBP">
-    <forward name="default" path="/pdg00/preventivo_spe.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
-	<init-param name="defaultAction" value="CRUDPdGAction"/>
-  </businessProcess>
+            path="/CRUDAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+    </action>
+    <action
+            path="/CRUDPdGAction" actionClass="it.cnr.contab.pdg00.action.CRUDPdGAction">
+    </action>
+    <action
+            path="/PdGAction" actionClass="it.cnr.contab.pdg00.action.PdGAction">
+    </action>
+    <action
+            path="/PdGVariazioneAction" actionClass="it.cnr.contab.pdg00.action.PdGVariazioneAction">
+    </action>
+    <action
+            path="/PdGStampePreventivoAction" actionClass="it.cnr.contab.pdg00.action.PdGStampePreventivoAction">
+    </action>
+    <action
+            path="/CostiDipendenteAction" actionClass="it.cnr.contab.pdg00.action.CostiDipendenteAction">
+    </action>
+    <action
+            path="/CRUDCostoDelDipendenteAction" actionClass="it.cnr.contab.pdg00.action.CRUDCostoDelDipendenteAction">
+    </action>
+    <action
+            path="/CostiStipendialiMensiliAction"
+            actionClass="it.cnr.contab.pdg00.action.CostiStipendialiMensiliAction">
+    </action>
+    <action
+            path="/ContabilizzazioneFlussoStipendialeMensileAction"
+            actionClass="it.cnr.contab.pdg00.action.ContabilizzazioneFlussoStipendialeMensileAction">
+    </action>
+    <action
+            path="/ElaboraFileStipendiAction" actionClass="it.cnr.contab.pdg00.action.ElaboraFileStipendiAction">
+    </action>
+    <action
+            path="/DettagliFileStipendiAction" actionClass="it.cnr.contab.pdg00.action.DettagliFileStipendiAction">
+    </action>
+    <action
+            path="/SelezionatoreListaAction" actionClass="it.cnr.jada.util.action.SelezionatoreListaAction">
+    </action>
+    <action
+            path="/CRUDRicostruzioneResiduiAction"
+            actionClass="it.cnr.contab.pdg00.action.CRUDRicostruzioneResiduiAction">
+    </action>
+    <action
+            path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+    </action>
+    <action
+            path="/PdGConsultazioneAssestatoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+    </action>
+    <action
+            path="/CRUDPdgPianoRipSpeseAccentAction"
+            actionClass="it.cnr.contab.prevent00.action.CRUDPdgPianoRipSpeseAccentAction">
+    </action>
+    <action
+            path="/PdgVarSelezionatoreListaAction"
+            actionClass="it.cnr.contab.pdg00.action.PdgVarSelezionatoreListaAction">
+    </action>
+    <action
+            path="/StipendiCofiObbAction" actionClass="it.cnr.contab.pdg00.action.StipendiCofiObbAction">
+    </action>
+    <action
+            path="/ElaboraStralcioMensileStipendiAction"
+            actionClass="it.cnr.contab.pdg00.action.ElaboraStralcioMensileStipendiAction">
+    </action>
 
-  <businessProcess
-      name="CRUDEtrDetPdGBP" className="it.cnr.contab.pdg00.bp.CRUDEtrDetPdGBP">
-    <forward name="default" path="/pdg00/preventivo_etr.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
-	<init-param name="defaultAction" value="CRUDPdGAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDSpeDetPdGBP" className="it.cnr.contab.pdg00.bp.CRUDSpeDetPdGBP">
+        <forward name="default" path="/pdg00/preventivo_spe.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDPdGAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDCostiCaricatiBP" className="it.cnr.contab.pdg00.bp.CRUDCostiCaricatiBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGCostiAltruiComponentSession"/>
-	<init-param name="defaultAction" value="CRUDListaAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDEtrDetPdGBP" className="it.cnr.contab.pdg00.bp.CRUDEtrDetPdGBP">
+        <forward name="default" path="/pdg00/preventivo_etr.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDPdGAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDEntrateFigurativeBP" className="it.cnr.contab.pdg00.bp.CRUDEntrateFigurativeBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGEntrateFigurativeComponentSession"/>
-	<init-param name="defaultAction" value="CRUDListaAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDCostiCaricatiBP" className="it.cnr.contab.pdg00.bp.CRUDCostiCaricatiBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGCostiAltruiComponentSession"/>
+        <init-param name="defaultAction" value="CRUDListaAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDCostiScaricatiEtrBP" className="it.cnr.contab.pdg00.bp.CRUDCostiScaricatiEtrBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGCostiScaricatiEtrComponentSession"/>
-	<init-param name="defaultAction" value="CRUDListaAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDEntrateFigurativeBP" className="it.cnr.contab.pdg00.bp.CRUDEntrateFigurativeBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGEntrateFigurativeComponentSession"/>
+        <init-param name="defaultAction" value="CRUDListaAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDCostiScaricatiSpeBP" className="it.cnr.contab.pdg00.bp.CRUDCostiScaricatiSpeBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGCostiScaricatiSpeComponentSession"/>
-	<init-param name="defaultAction" value="CRUDListaAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDCostiScaricatiEtrBP" className="it.cnr.contab.pdg00.bp.CRUDCostiScaricatiEtrBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGCostiScaricatiEtrComponentSession"/>
+        <init-param name="defaultAction" value="CRUDListaAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="PdGPreventivoBP" className="it.cnr.contab.pdg00.bp.PdGPreventivoBP">
-    <forward name="default" path="/pdg00/pdg_main.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
-	<init-param name="defaultAction" value="PdGAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDCostiScaricatiSpeBP" className="it.cnr.contab.pdg00.bp.CRUDCostiScaricatiSpeBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGCostiScaricatiSpeComponentSession"/>
+        <init-param name="defaultAction" value="CRUDListaAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="PdGVariazioneBP" className="it.cnr.contab.pdg00.bp.PdGVariazioneBP">
-    <forward name="default" path="/pdg00/pdg_variazione.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGVariazioniComponentSession"/>
-	<init-param name="defaultAction" value="PdGVariazioneAction"/>
-  </businessProcess>
-  
-  <businessProcess
-      name="EliminazionePerLineaAttivitaBP" className="it.cnr.contab.pdg00.bp.PdGPreventivoBP">
-    <forward name="default" path="/pdg00/del_per_linea_attivita.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
-	<init-param name="defaultAction" value="PdGAction"/>
-  </businessProcess>
+    <businessProcess
+            name="PdGPreventivoBP" className="it.cnr.contab.pdg00.bp.PdGPreventivoBP">
+        <forward name="default" path="/pdg00/pdg_main.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+        <init-param name="defaultAction" value="PdGAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="PdGStampePreventivoBP" className="it.cnr.contab.pdg00.bp.PdGStampePreventivoBP">
-    <forward name="default" path="/pdg00/pdg_stampe.jsp"/>
-	<init-param name="defaultAction" value="PdGStampePreventivoAction"/>
-	<init-param name="printbp" value="OfflineReportPrintBP" />
-  </businessProcess>
+    <businessProcess
+            name="PdGVariazioneBP" className="it.cnr.contab.pdg00.bp.PdGVariazioneBP">
+        <forward name="default" path="/pdg00/pdg_variazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGVariazioniComponentSession"/>
+        <init-param name="defaultAction" value="PdGVariazioneAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="PdgStampaStatoBP" className="it.cnr.contab.pdg00.bp.PdgStampaStatoBP">
-    <forward name="default" path="/breports/offline_print_report.jsp"/>
-	<init-param name="defaultAction" value="OfflineReportPrintAction"/>
-  </businessProcess>
+    <businessProcess
+            name="EliminazionePerLineaAttivitaBP" className="it.cnr.contab.pdg00.bp.PdGPreventivoBP">
+        <forward name="default" path="/pdg00/del_per_linea_attivita.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+        <init-param name="defaultAction" value="PdGAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CostiDipendenteBP" className="it.cnr.contab.pdg00.bp.CostiDipendenteBP">
-    <forward name="default" path="/pdg00/costi_dipendente.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CostiDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CostiDipendenteAction"/>
-  </businessProcess>
+    <businessProcess
+            name="PdGStampePreventivoBP" className="it.cnr.contab.pdg00.bp.PdGStampePreventivoBP">
+        <forward name="default" path="/pdg00/pdg_stampe.jsp"/>
+        <init-param name="defaultAction" value="PdGStampePreventivoAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CostiDipendenteMensiliBP" className="it.cnr.contab.pdg00.bp.CostiDipendenteBP">
-    <forward name="default" path="/pdg00/costi_dipendente_mensile.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CostiDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CostiDipendenteAction"/>
-  </businessProcess>
+    <businessProcess
+            name="PdgStampaStatoBP" className="it.cnr.contab.pdg00.bp.PdgStampaStatoBP">
+        <forward name="default" path="/breports/offline_print_report.jsp"/>
+        <init-param name="defaultAction" value="OfflineReportPrintAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="ConsultazioneAssestatoSpeseModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-		<init-param name="searchResultColumnSet" value="assestatoSpese"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
-  </businessProcess>  
+    <businessProcess
+            name="CostiDipendenteBP" className="it.cnr.contab.pdg00.bp.CostiDipendenteBP">
+        <forward name="default" path="/pdg00/costi_dipendente.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CostiDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CostiDipendenteAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="ConsultazioneAssestatoCostiModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-		<init-param name="searchResultColumnSet" value="assestatoCosti"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
-  </businessProcess>  
+    <businessProcess
+            name="CostiDipendenteMensiliBP" className="it.cnr.contab.pdg00.bp.CostiDipendenteBP">
+        <forward name="default" path="/pdg00/costi_dipendente_mensile.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CostiDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CostiDipendenteAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="ConsultazioneAssestatoEntrateModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-		<init-param name="searchResultColumnSet" value="assestatoEntrate"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
-  </businessProcess>  
+    <businessProcess
+            name="ConsultazioneAssestatoSpeseModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="searchResultColumnSet" value="assestatoSpese"/>
+        <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="ConsultazioneAssestatoRicaviModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-		<init-param name="searchResultColumnSet" value="assestatoRicavi"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
-  </businessProcess>  
+    <businessProcess
+            name="ConsultazioneAssestatoCostiModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="searchResultColumnSet" value="assestatoCosti"/>
+        <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDCostoDelDipendenteBP" className="it.cnr.contab.pdg00.bp.CRUDCostoDelDipendenteBP">
-    <forward name="default" path="/pdg00/costo_del_dipendente.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CRUDCostoDelDipendenteAction"/>
-  </businessProcess>
+    <businessProcess
+            name="ConsultazioneAssestatoEntrateModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="searchResultColumnSet" value="assestatoEntrate"/>
+        <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDCostiStipendialiMensiliBP" className="it.cnr.contab.pdg00.bp.CRUDCostoDelDipendenteBP">
-    <forward name="default" path="/pdg00/costo_del_dipendente.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CRUDCostoDelDipendenteAction"/>
-	<init-param name="mensile" value="true"/>
-	<init-param name="freeSearchSet" value="costiStipendialiMensili"/>
-	<init-param name="searchResultColumnSet" value="costiStipendialiMensili"/>
-  </businessProcess>
+    <businessProcess
+            name="ConsultazioneAssestatoRicaviModuloPdgBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="searchResultColumnSet" value="assestatoRicavi"/>
+        <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CostiStipendialiMensiliBP" className="it.cnr.contab.pdg00.bp.CostiStipendialiMensiliBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_cdp_analiticaBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CostiStipendialiMensiliAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDCostoDelDipendenteBP" className="it.cnr.contab.pdg00.bp.CRUDCostoDelDipendenteBP">
+        <forward name="default" path="/pdg00/costo_del_dipendente.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CRUDCostoDelDipendenteAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="ContabilizzazioneFlussoStipendialeMensileBP" className="it.cnr.contab.pdg00.bp.ContabilizzazioneFlussoStipendialeMensileBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="ContabilizzazioneFlussoStipendialeMensileAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDCostiStipendialiMensiliBP" className="it.cnr.contab.pdg00.bp.CRUDCostoDelDipendenteBP">
+        <forward name="default" path="/pdg00/costo_del_dipendente.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CRUDCostoDelDipendenteAction"/>
+        <init-param name="mensile" value="true"/>
+        <init-param name="freeSearchSet" value="costiStipendialiMensili"/>
+        <init-param name="searchResultColumnSet" value="costiStipendialiMensili"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDStipendiCofiCoriBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/pdg00/stipendi_cofi_cori.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_coriBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CRUDAction"/>
-  </businessProcess>
+    <businessProcess
+            name="CostiStipendialiMensiliBP" className="it.cnr.contab.pdg00.bp.CostiStipendialiMensiliBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_cdp_analiticaBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CostiStipendialiMensiliAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDStipendiCofiObbScadBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/pdg00/stipendi_cofi_obb_scad.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="CRUDAction"/>
-  </businessProcess>
-  
-  <businessProcess
-      name="StipendiCofiObbBP" className="it.cnr.contab.pdg00.bp.StipendiCofiObbBP">
-    <forward name="default" path="/pdg00/stipendi_cofi_obb.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiVirtualBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
-	<init-param name="defaultAction" value="StipendiCofiObbAction"/>
-  </businessProcess>
-    
-  <businessProcess
-      name="ElaboraFileStipendiBP" className="it.cnr.contab.pdg00.bp.ElaboraFileStipendiBP">
-    <forward name="default" path="/pdg00/elabora_file_stipendi.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_stipendi_cofi_dettBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_ElaboraFileStipendiComponentSession"/>
-	<init-param name="defaultAction" value="ElaboraFileStipendiAction"/>
-  </businessProcess>
+    <businessProcess
+            name="ContabilizzazioneFlussoStipendialeMensileBP"
+            className="it.cnr.contab.pdg00.bp.ContabilizzazioneFlussoStipendialeMensileBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="ContabilizzazioneFlussoStipendialeMensileAction"/>
+    </businessProcess>
 
-  <businessProcess
-		name="DettagliFileStipendiBP" className="it.cnr.contab.pdg00.bp.DettagliFileStipendiBP">
-		<forward name="default" path="/pdg00/dettagli_file_stipendi.jsp"/>
-			<init-param name="defaultAction" value="DettagliFileStipendiAction" />
-  </businessProcess>
+    <businessProcess
+            name="CRUDStipendiCofiCoriBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/pdg00/stipendi_cofi_cori.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_coriBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDRicostruzioneResiduiBP" className="it.cnr.contab.pdg00.bp.CRUDRicostruzioneResiduiBP">
-    <forward name="default" path="/pdg00/main_ricostruzione_residui.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_residuoBulk" />
-		<init-param name="componentSessionName" value="CNRPDG00_EJB_RicostruzioneResiduiComponentSession" />								
-	    <init-param name="defaultAction" value="CRUDRicostruzioneResiduiAction" />
-		<init-param name="freeSearchSet" value="residuo"/>
-		<init-param name="searchResultColumnSet" value="residuo"/>
-  </businessProcess>
+    <businessProcess
+            name="CRUDStipendiCofiObbScadBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/pdg00/stipendi_cofi_obb_scad.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="CRUDPdgPianoRipSpeseAccentBP" className="it.cnr.contab.prevent00.bp.CRUDPdgPianoRipSpeseAccentBP">
-    <forward name="default" path="/pdg00/piano_riparto_spese_accentrate.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk" />
-		<init-param name="componentSessionName" value="CNRPDG00_EJB_PdgPianoRipartoComponentSession" />
-		<init-param name="freeSearchSet" value="searchtool"/>
-		<init-param name="searchResultColumnSet" value="searchtool"/>
-	    <init-param name="defaultAction" value="CRUDPdgPianoRipSpeseAccentAction" />
-  </businessProcess>
+    <businessProcess
+            name="StipendiCofiObbBP" className="it.cnr.contab.pdg00.bp.StipendiCofiObbBP">
+        <forward name="default" path="/pdg00/stipendi_cofi_obb.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiVirtualBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_CRUDCostoDelDipendenteComponentSession"/>
+        <init-param name="defaultAction" value="StipendiCofiObbAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="PdGVarSelezionatoreListaBP" className="it.cnr.contab.pdg00.bp.PdGVarSelezionatoreListaBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-	    <init-param name="defaultAction" value="PdgVarSelezionatoreListaAction" />	    
-        <init-param name="multiSelezione" value="Y" />
-  </businessProcess>
+    <businessProcess
+            name="ElaboraFileStipendiBP" className="it.cnr.contab.pdg00.bp.ElaboraFileStipendiBP">
+        <forward name="default" path="/pdg00/elabora_file_stipendi.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_stipendi_cofi_dettBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_ElaboraFileStipendiComponentSession"/>
+        <init-param name="defaultAction" value="ElaboraFileStipendiAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="PdgVarApponiVistoListaBP" className="it.cnr.contab.pdg00.bp.PdgVarApponiVistoListaBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-	    <init-param name="defaultAction" value="PdgVarSelezionatoreListaAction" />	    
-        <init-param name="multiSelezione" value="Y" />
-  </businessProcess>
-  
-  <businessProcess
-      name="ElaboraStralcioMensileStipendiBP" className="it.cnr.contab.pdg00.bp.ElaboraStralcioMensileStipendiBP">
-    <forward name="default" path="/pdg00/elabora_stralcio_mensile_stipendi.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_cnr_estrazione_coriBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_ElaboraFileStipendiComponentSession"/>
-	<init-param name="defaultAction" value="ElaboraStralcioMensileStipendiAction"/>
-  </businessProcess>  
-  <businessProcess
-      name="DettagliStralcioMensileStipendiBP" className="it.cnr.jada.util.action.ConsultazioniBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_cnr_estrazione_coriBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-	    <init-param name="defaultAction" value="ConsultazioniAction" />	    
-  </businessProcess>  
+    <businessProcess
+            name="DettagliFileStipendiBP" className="it.cnr.contab.pdg00.bp.DettagliFileStipendiBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="defaultAction" value="DettagliFileStipendiAction"/>
+    </businessProcess>
 
-  <businessProcess name="StampaPdgRendicontoBP" className="it.cnr.contab.prevent01.bp.StampaPdgpBilancioBP">
-	<forward name="default" path="/prevent01/stampa_pdgp_bilancio.jsp"/>
-	<init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk" />
-	<init-param name="printbp" value="OfflineReportPrintBP"/>
-	<init-param name="defaultAction" value="StampaPdgpBilancioAction" />
-    <init-param name="componentSessionName" value="CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession" />               
-	<init-param name="reportName" value="/preventivo/preventivo/stampa_pdg_renddec.jasper" />
-  </businessProcess> 
+    <businessProcess
+            name="CRUDRicostruzioneResiduiBP" className="it.cnr.contab.pdg00.bp.CRUDRicostruzioneResiduiBP">
+        <forward name="default" path="/pdg00/main_ricostruzione_residui.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_residuoBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_RicostruzioneResiduiComponentSession"/>
+        <init-param name="defaultAction" value="CRUDRicostruzioneResiduiAction"/>
+        <init-param name="freeSearchSet" value="residuo"/>
+        <init-param name="searchResultColumnSet" value="residuo"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDPdgPianoRipSpeseAccentBP" className="it.cnr.contab.prevent00.bp.CRUDPdgPianoRipSpeseAccentBP">
+        <forward name="default" path="/pdg00/piano_riparto_spese_accentrate.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_PdgPianoRipartoComponentSession"/>
+        <init-param name="freeSearchSet" value="searchtool"/>
+        <init-param name="searchResultColumnSet" value="searchtool"/>
+        <init-param name="defaultAction" value="CRUDPdgPianoRipSpeseAccentAction"/>
+    </businessProcess>
+
+    <businessProcess
+            name="PdGVarSelezionatoreListaBP" className="it.cnr.contab.pdg00.bp.PdGVarSelezionatoreListaBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="PdgVarSelezionatoreListaAction"/>
+        <init-param name="multiSelezione" value="Y"/>
+    </businessProcess>
+
+    <businessProcess
+            name="PdgVarApponiVistoListaBP" className="it.cnr.contab.pdg00.bp.PdgVarApponiVistoListaBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="PdgVarSelezionatoreListaAction"/>
+        <init-param name="multiSelezione" value="Y"/>
+    </businessProcess>
+
+    <businessProcess
+            name="ElaboraStralcioMensileStipendiBP" className="it.cnr.contab.pdg00.bp.ElaboraStralcioMensileStipendiBP">
+        <forward name="default" path="/pdg00/elabora_stralcio_mensile_stipendi.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_cnr_estrazione_coriBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG00_EJB_ElaboraFileStipendiComponentSession"/>
+        <init-param name="defaultAction" value="ElaboraStralcioMensileStipendiAction"/>
+    </businessProcess>
+    <businessProcess
+            name="DettagliStralcioMensileStipendiBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_cnr_estrazione_coriBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="ConsultazioniAction"/>
+    </businessProcess>
+
+    <businessProcess name="StampaPdgRendicontoBP" className="it.cnr.contab.prevent01.bp.StampaPdgpBilancioBP">
+        <forward name="default" path="/prevent01/stampa_pdgp_bilancio.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="defaultAction" value="StampaPdgpBilancioAction"/>
+        <init-param name="componentSessionName" value="CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession"/>
+        <init-param name="reportName" value="/preventivo/preventivo/stampa_pdg_renddec.jasper"/>
+    </businessProcess>
 </action-mappings>
