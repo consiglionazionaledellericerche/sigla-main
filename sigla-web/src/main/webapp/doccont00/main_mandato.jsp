@@ -46,7 +46,7 @@ function doVisualizzaMandato() {
 								{ "tabDettaglioMandato","Dettaglio","/doccont00/tab_dettaglio_mandato.jsp" },
 								{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" },
 								{ "tabReversali","Doc.Contabili associati","/doccont00/tab_mandato_reversali.jsp" },
-								{ "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp" }
+								{ "tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp" }
 								},
 						bp.getTab("tab"),
 						"center",
@@ -60,7 +60,7 @@ function doVisualizzaMandato() {
 								{ "tabDettaglioMandato","Dettaglio","/doccont00/tab_dettaglio_mandato.jsp" },
 								{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" },
 								{ "tabReversali","Doc.Contabili associati","/doccont00/tab_mandato_reversali.jsp" },
-							    { "tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp" },
+							    { "tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp" },
                         },
 						bp.getTab("tab"),
 						"center",

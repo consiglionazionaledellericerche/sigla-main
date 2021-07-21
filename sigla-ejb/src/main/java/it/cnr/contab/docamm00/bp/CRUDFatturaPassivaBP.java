@@ -1600,7 +1600,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private static final String[] TAB_FATTURA_PASSIVA_ACCERTAMENTI = new String[]{"tabFatturaPassivaAccertamenti", "Accertamenti", "/docamm00/tab_fattura_passiva_accertamenti.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_DOCUMENTI_1210 = new String[]{"tabLetteraPagamentoEstero", "Documento 1210", "/docamm00/tab_lettera_pagam_estero.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_INTRASTAT = new String[]{"tabFatturaPassivaIntrastat", "Intrastat", "/docamm00/tab_fattura_passiva_intrastat.jsp"};
-    private static final String[] TAB_FATTURA_PASSIVA_ECONOMICA = new String[]{"tabFatturaPassivaEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_docamm_economica.jsp"};
+    private static final String[] TAB_FATTURA_PASSIVA_ECONOMICA = new String[]{"tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI = new String[]{"tabEleAllegati", "Allegati Ricevuti", "/docamm00/tab_fatt_ele_allegati.jsp"};
     private static final String[] TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI = new String[]{"tabAllegati", "Allegati Aggiunti", "/util00/tab_allegati.jsp"};
 
