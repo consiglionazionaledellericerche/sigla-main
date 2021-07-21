@@ -32,4 +32,24 @@
 	<persistentProperty
 		name="stipendi_cofi"
 		partOfOid="true" />
+	<columnMap
+			name="V_STIPENDI_COFI_CORI_CONTRIBUTO_RITENUTA"
+			tableName="STIPENDI_COFI_CORI"
+			extends="default">
+		<columnMapping
+			columnName="TIPO_CONTRIBUTO_RITENUTA.DS_CONTRIBUTO_RITENUTA"
+			propertyName="ds_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		<columnMapping
+			columnName="TIPO_CONTRIBUTO_RITENUTA.CD_CLASSIFICAZIONE_CORI"
+			propertyName="cd_classificazione_cori"
+			sqlTypeName="VARCHAR"
+			columnSize="2"/>
+	</columnMap>
+	<persistentProperty
+		name="ds_contributo_ritenuta"/>
+	<persistentProperty
+		name="cd_classificazione_cori" />
+
 </SQLPersistentInfo>

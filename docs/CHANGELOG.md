@@ -1,3 +1,15 @@
+## Release 6.3.44  -- _July 16, 2021_ 
+**Changes**
+
+>**Aggiunta delle colonne "descrizione" e  "classificazione cori" dei codici di ritenuta Co.Ri nella fase di estrazione excel.**
+>
+>[5d2f300584bfd0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d2f300584bfd0b) marco.spasiano *July 16, 2021*
+
+>**Aggiunto controllo sulle modalità di pagamento, il conto deve essere di 7 caratteri numerici.**
+>
+>[0d5c4b9bba929ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d5c4b9bba929ad) marco.spasiano *July 16, 2021*
+
+
 ## Release 6.3.43  -- _July 13, 2021_ 
 **Changes**
 
