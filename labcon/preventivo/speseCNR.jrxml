@@ -14,7 +14,7 @@
 	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+	<parameter name="DIR_SUBREPORT" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["/labcon/preventivo/"]]></defaultValueExpression>
 	</parameter>
@@ -30,11 +30,15 @@
 	<field name="totaleAltrespeseCNR" class="java.lang.Integer">
 		<fieldDescription><![CDATA[totaleAltrespeseCNR]]></fieldDescription>
 	</field>
+	<field name="laboratorio" class="java.lang.String">
+		<fieldDescription><![CDATA[laboratorio]]></fieldDescription>
+	</field>
 	<background>
 		<band height="11" splitType="Stretch"/>
 	</background>
 	<detail>
 		<band height="38" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{laboratorio}.equals("TEMATICO")]]></printWhenExpression>
 			<staticText>
 				<reportElement x="5" y="0" width="306" height="20" uuid="5393071d-e25d-47d4-80dc-b78facbfe9ed">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -69,7 +73,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Costo 
+				<text><![CDATA[Costo
 Unitario]]></text>
 			</staticText>
 			<staticText>
@@ -109,6 +113,7 @@ Previsto]]></text>
 			</staticText>
 		</band>
 		<band height="50" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{laboratorio}.equals("TEMATICO")]]></printWhenExpression>
 			<staticText>
 				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>

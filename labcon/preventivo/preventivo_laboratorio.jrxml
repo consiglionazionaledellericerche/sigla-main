@@ -14,7 +14,7 @@
 	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+	<parameter name="DIR_SUBREPORT" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["/labcon/preventivo/"]]></defaultValueExpression>
 	</parameter>
@@ -32,6 +32,9 @@
 	</field>
 	<field name="respItaliano" class="java.lang.String">
 		<fieldDescription><![CDATA[respItaliano]]></fieldDescription>
+	</field>
+	<field name="laboratorio" class="java.lang.String">
+		<fieldDescription><![CDATA[laboratorio]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -55,10 +58,11 @@
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["MODELLO DI PREVENTIVO DELLE VOCI DI SPESA:  " + $F{contabilita}+"\n"+
-$F{annoInizio} +"-"+  $F{annoFine}]]></textFieldExpression>
+$F{annoInizio} +"-"+  $F{annoFine} +"-"+  $F{laboratorio}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="461" splitType="Stretch">
+		<band height="90" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
 				<reportElement x="14" y="49" width="212" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -90,7 +94,7 @@ $F{annoInizio} +"-"+  $F{annoFine}]]></textFieldExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseCNR.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="180" width="96" height="1" uuid="5982f598-eb5e-4ce1-9bde-bd85bf712eeb"/>
+				<reportElement x="0" y="80" width="96" height="1" uuid="5982f598-eb5e-4ce1-9bde-bd85bf712eeb"/>
 			</break>
 			<textField isBlankWhenNull="false">
 				<reportElement x="150" y="10" width="333" height="15" uuid="f749511a-9b60-4617-815c-d560b35deff7"/>
@@ -106,8 +110,10 @@ $F{annoInizio} +"-"+  $F{annoFine}]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{respItaliano}]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="90" splitType="Stretch">
 			<staticText>
-				<reportElement x="14" y="188" width="212" height="20" uuid="913d0988-8d06-4304-8558-75eaedc34524">
+				<reportElement x="14" y="10" width="212" height="20" uuid="913d0988-8d06-4304-8558-75eaedc34524">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -116,15 +122,18 @@ $F{annoInizio} +"-"+  $F{annoFine}]]></textFieldExpression>
 				<text><![CDATA[SPESE PARTNER]]></text>
 			</staticText>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="14" y="210" width="524" height="13" uuid="493a5908-4c24-4b8c-85e2-8a3cd91bd074"/>
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="493a5908-4c24-4b8c-85e2-8a3cd91bd074"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spesePartner")]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "spesePartner.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="230" width="95" height="1" uuid="a6a66064-83d5-404e-8425-24576e05704e"/>
+				<reportElement x="0" y="80" width="95" height="1" uuid="a6a66064-83d5-404e-8425-24576e05704e"/>
 			</break>
+		</band>
+		<band height="90" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{laboratorio}.equals("TEMATICO")]]></printWhenExpression>
 			<staticText>
-				<reportElement x="14" y="238" width="363" height="20" uuid="c60f3c39-377b-4cd2-a5f2-a68d4427affd">
+				<reportElement x="14" y="10" width="363" height="20" uuid="c60f3c39-377b-4cd2-a5f2-a68d4427affd">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -133,7 +142,7 @@ $F{annoInizio} +"-"+  $F{annoFine}]]></textFieldExpression>
 				<text><![CDATA[SPESE ALTRE ISTITUZIONI ITALIANE]]></text>
 			</staticText>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="14" y="260" width="524" height="13" uuid="ee6de089-0037-4f1f-bd1b-3678aec3e385">
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="ee6de089-0037-4f1f-bd1b-3678aec3e385">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseAltreIstituzioniItaliane")]]></dataSourceExpression>
