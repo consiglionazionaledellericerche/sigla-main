@@ -179,7 +179,7 @@ Previsto]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Costo 
+				<text><![CDATA[Costo
 Unitario]]></text>
 			</staticText>
 			<staticText>
@@ -222,7 +222,7 @@ Previsto]]></text>
 		</band>
 		<band height="50" splitType="Stretch">
 			<staticText>
-				<reportElement x="5" y="0" width="471" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd">
+				<reportElement x="5" y="0" width="469" height="17" uuid="073b421a-79cd-45e1-8340-2c2754b92dfd">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -234,8 +234,9 @@ Previsto]]></text>
 				<text><![CDATA[Totale]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement x="476" y="0" width="54" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb">
+				<reportElement x="474" y="0" width="56" height="17" uuid="cdc55d32-c51a-421c-8768-3105713ffadb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="0.5" lineStyle="Solid"/>
