@@ -30,6 +30,7 @@ import it.cnr.jada.util.OrderedHashtable;
 import java.math.BigDecimal;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
@@ -340,6 +341,7 @@ public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
     public String getTi_istituz_commerc() {
 		return getAllMovimentiColl()
 				.stream()
+                .filter(m -> Optional.ofNullable(m.getTi_istituz_commerc()).isPresent())
 				.map(Movimento_cogeBase::getTi_istituz_commerc)
 				.distinct()
 				.findAny()

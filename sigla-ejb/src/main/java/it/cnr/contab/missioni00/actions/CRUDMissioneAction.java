@@ -28,6 +28,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.docamm00.actions.EconomicaAction;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
@@ -63,7 +64,7 @@ import java.util.Optional;
  *
  * @author: Paola sala
  */
-public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
+public class CRUDMissioneAction extends EconomicaAction {
 
     public static final String I_DETTAGLI_DELLA_MISSIONE_VERRANNO_CANCELLATI_PROSEGUIRE = "I dettagli della missione verranno cancellati. Proseguire ??";
 
