@@ -4787,4 +4787,11 @@ TRASPORTO_AEREO"/>
         </insert>
     </changeSet>
 
+    <changeSet id="change_albero_main_ordinamento_scadenzario" author="valerio.diego">
+        <update tableName="albero_main">
+            <column name="pg_ordinamento" value='15' type="BIGINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.SCAD'</where>
+        </update>
+    </changeSet>
+
 </databaseChangeLog>
