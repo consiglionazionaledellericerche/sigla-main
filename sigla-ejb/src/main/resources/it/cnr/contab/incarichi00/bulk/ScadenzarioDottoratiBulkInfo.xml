@@ -10,15 +10,13 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Chiave Primaria." />
+		label="Id" />
 	<fieldProperty
-		name="idAnagraficaDottorati"
-		property="idAnagraficaDottorati"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
+		name="find_AnagraficaDottorati"
+		property="anagraficaDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
 		label="Identificativo anagrafica dottorati." />
 	<fieldProperty
@@ -380,6 +378,8 @@
 	<formFieldProperty
 		name="id" />
 	<formFieldProperty
+			name="find_AnagraficaDottorati" />
+	<formFieldProperty
 		name="cdCds" />
 	<formFieldProperty
 		name="cdUnitaOrganizzativa" />
@@ -464,7 +464,7 @@
 	<findFieldProperty
 		name="id" />
 	<findFieldProperty
-		name="idAnagraficaDottorati" />
+		name="find_AnagraficaDottorati" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
