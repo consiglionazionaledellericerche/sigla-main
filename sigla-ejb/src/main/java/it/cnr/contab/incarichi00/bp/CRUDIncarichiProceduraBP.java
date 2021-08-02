@@ -556,7 +556,6 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									.filter(Incarichi_archivioBulk.class::isInstance)
 									.map(Incarichi_archivioBulk.class::cast)
 									.filter(el->el.isToBeCreated())
-									.filter(el->el.isAllegatoGenerico())
 									.isPresent();
 			}
 			super.writeHTMLToolbar(context, false, false, innerDelete, false, false);
