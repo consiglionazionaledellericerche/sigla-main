@@ -22,11 +22,13 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.reports.bulk.Print_priorityBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramKey;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
 import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
+import it.cnr.contab.reports.util.UtilReports;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -112,6 +114,9 @@ public class PrintService implements InitializingBean {
         HttpClient httpclient = HttpClientBuilder.create().build();
         HttpPost method = null;
         try {
+            //per i report on line va
+            Print_priorityBulk print_priority = offlineReportComponent.findPrintPriority(userContext,printSpooler.getReport());
+            printSpooler.setReport(UtilReports.getReportNameToRun(print_priority,printSpooler));
             method = getHttPostExecute(userContext, printSpooler);
             HttpResponse httpResponse = httpclient.execute(method);
             int status = httpResponse.getStatusLine().getStatusCode();
@@ -161,7 +166,8 @@ public class PrintService implements InitializingBean {
 
             if (Optional.ofNullable(printSpooler).isPresent()) {
                 PrintDataSourceOffline jsonDataSource = this.getPrintDsOfflineImplemented().get(printSpooler.getReport());
-                printSpooler = jsonDataSource.getPrintSpooler(printSpooler);
+                //printSpooler = jsonDataSource.getPrintSpooler(userContextCal,printSpooler);
+                printSpooler = offlineReportComponent.getPrintSpoolerDsOffLine( userContextCal,printSpooler,jsonDataSource);
                 executeReportDs(userContextCal, printSpooler);
             }
         } catch (Exception e) {

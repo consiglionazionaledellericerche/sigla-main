@@ -28,10 +28,7 @@ import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
-import it.cnr.contab.config00.bulk.Codici_siopeBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
@@ -4646,6 +4643,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     mandato = (MandatoBulk) super.modificaConBulk(userContext, bulk);
                 }
             }
+            /**
+             * Verifica CIG su fatture
+             */
+            if (bulk instanceof MandatoIBulk) {
+                verificaCIGSUFatture(userContext, (MandatoIBulk) bulk);
+            }
             return mandato;
         } catch (Exception e) {
             throw handleException(bulk, e);
@@ -5386,6 +5389,28 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 }
             }
             codiciCIG = codiciCIG.stream().distinct().collect(Collectors.toList());
+            /**
+             * Validazione del codice CIG
+             */
+            for(CigBulk cigBulk : codiciCIG.stream()
+                    .map(s -> new CigBulk(s))
+                    .map(cigBulk -> {
+                        try {
+                            return findByPrimaryKey(userContext, cigBulk);
+                        } catch (ComponentException e) {
+                            throw new DetailedRuntimeException("Cannot find CIG:" + cigBulk.getCdCig());
+                        }
+                    })
+                    .filter(CigBulk.class::isInstance)
+                    .map(CigBulk.class::cast)
+                    .collect(Collectors.toList())){
+                try {
+                    cigBulk.validate();
+                } catch (ValidationException e) {
+                    throw new ApplicationMessageFormatException("Il CIG {0} indicato sul documento amministrativo collegato non è valido!", cigBulk.getCdCig());
+                }
+            }
+
             motiviAssenzaCIG = motiviAssenzaCIG.stream().distinct().collect(Collectors.toList());
             if (isExistsFatturaEstera) {
                 if (codiciCIG.isEmpty() && motiviAssenzaCIG.isEmpty()) {

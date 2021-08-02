@@ -37,7 +37,7 @@
 	if (allegato!=null && ((allegato.isContratto() && (bp.isSuperUtente() || bp.isUtenteAbilitatoModificaAllegatoContratto())) ||
 						    allegato.isAllegatoGenerico() ||
 						    allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isProgetto() ||
-						    allegato.isConflittoInteressi())) {
+						    allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore())) {
 		isRODettaglio = procedura==null||allegato==null||!allegato.isToBeCreated()||
 						!allegato.isAllegatoValido()||
 						procedura.getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==0||

@@ -1,3 +1,46 @@
+## Release 6.3.46  -- _July 30, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sul codice CIG in fase di emissione e modifica del mandato di pagamento**
+>
+>[51083ae40c2b65a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51083ae40c2b65a) marco.spasiano *July 30, 2021*
+
+
+## Release 6.3.45  -- _July 28, 2021_ 
+**Changes**
+
+>**Refactor generator class**
+>
+>[72afaa1907fe76d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72afaa1907fe76d) marco.spasiano *July 27, 2021*
+
+>**Upgrade version of storage cloud**
+>
+>[bb20be882ac07ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bb20be882ac07ec) marco.spasiano *July 22, 2021*
+
+>**Add main for StringEncrypter**
+>
+>[f9c98c1dc6a07f0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9c98c1dc6a07f0) marco.spasiano *July 20, 2021*
+
+>**Update StringEncrypter.java**
+>
+>[6c8bd08263ca0b5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c8bd08263ca0b5) Marco Spasiano *July 19, 2021*
+
+>**Rimosso valore N6.2**
+>
+>[fa6fc1f6a43e05a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa6fc1f6a43e05a) marco.spasiano *July 19, 2021*
+
+>**Rimossa jsp**
+>
+>[e282130d613ae70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e282130d613ae70) marco.spasiano *July 17, 2021*
+
+
+### Jira ORA-00907 
+
+>**FIX ORA-00907 on search incarichi**
+>
+>[ca865b2c45b22d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca865b2c45b22d3) marco.spasiano *July 28, 2021*
+
+
 ## Release 6.3.44  -- _July 16, 2021_ 
 **Changes**
 

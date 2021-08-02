@@ -3,6 +3,7 @@ package it.cnr.contab.reports.service.dataSource;
 import com.google.gson.GsonBuilder;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.util.Optional;
@@ -11,7 +12,7 @@ public abstract class AbstractDataSourceOffline implements PrintDataSourceOfflin
 
 
     @Override
-    public Print_spoolerBulk getPrintSpooler(Print_spoolerBulk printSpooler) throws ComponentException {
+    public Print_spoolerBulk getPrintSpooler(UserContext userContext,Print_spoolerBulk printSpooler) throws ComponentException {
         if (Optional.of(printSpooler).isPresent()){
             String ds =getDataSourceOffline(printSpooler);
             //String jsonDs ="ciao";

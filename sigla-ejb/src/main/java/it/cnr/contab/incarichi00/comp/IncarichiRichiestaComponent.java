@@ -64,6 +64,7 @@ import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -453,6 +454,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 	}
 
 	public SQLBuilder addFiltriListaIncarichiElenco(SQLBuilder sql,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
+		strRicerca = Optional.ofNullable(strRicerca).map(s -> s.replace("'", "''")).orElse(null);
 		if(dominio.equalsIgnoreCase("data"))
 			if (Constants.RICHIESTE_IN_CORSO.equalsIgnoreCase(query)) {
 				sql.addSQLClause(FindClause.AND,"to_number(to_char(sysdate,'yyyy')) = to_number(to_char(DT_STIPULA,'yyyy'))");
@@ -465,7 +467,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		if(cdCds!=null)
 			sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,cdCds);
 
-		if(strRicerca!=null) {
+		if(Optional.ofNullable(strRicerca).isPresent()) {
 			sql.openParenthesis(FindClause.AND);
 			sql.addSQLClause(FindClause.OR,"instr(ESERCIZIO||'/'||PG_REPERTORIO,'"+strRicerca+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(UPPER(DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");

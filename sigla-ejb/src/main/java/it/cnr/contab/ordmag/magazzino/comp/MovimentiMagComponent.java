@@ -31,27 +31,18 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
+import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk;
+import it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_entrate_pgiroBulk;
+import it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_accertamentiBulk;
 import it.cnr.contab.ordmag.anag00.*;
-import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoHome;
-import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagHome;
-import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.CaricoMagazzinoBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.CaricoMagazzinoRigaBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.LottoMagHome;
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoRigaLottoBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
@@ -63,14 +54,8 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.OutdatedResourceException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.CRUDComponent;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -79,7 +64,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 
-public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cloneable, Serializable {
+public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IPrintMgr,Cloneable, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public final static String TIPO_TOTALE_COMPLETO = "C";
@@ -827,4 +812,37 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     		throw new ComponentException(e);
     	}
     }
+
+	/**
+	 * inizializzaBulkPerStampa method comment.
+	 */
+	public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+		try{
+			EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class).findAll().get(0);
+
+//			if (bulk instanceof Stampa_registro_accertamentiBulk)
+//				inizializzaBulkPerStampa(userContext, (Stampa_registro_accertamentiBulk)bulk);
+//			else if (bulk instanceof Stampa_registro_annotazione_entrate_pgiroBulk)
+//				inizializzaBulkPerStampa(userContext, (Stampa_registro_annotazione_entrate_pgiroBulk)bulk);
+//			else if (bulk instanceof Stampa_scadenzario_accertamentiBulk)
+//				inizializzaBulkPerStampa(userContext, (Stampa_scadenzario_accertamentiBulk)bulk);
+		//	inizializzaBulkPerStampa(userContext, bulk);
+			return bulk;
+		} catch (it.cnr.jada.persistency.PersistencyException pe){
+			throw new ComponentException(pe);
+		}
+	}
+
+	@Override
+	public OggettoBulk stampaConBulk(UserContext userContext, OggettoBulk oggettoBulk) throws ComponentException {
+		//if (oggettoBulk instanceof Stampa_registro_accertamentiBulk)
+		//	validateBulkForPrint(userContext, (Stampa_registro_accertamentiBulk)bulk);
+		//else if (bulk instanceof Stampa_registro_annotazione_entrate_pgiroBulk)
+		//	validateBulkForPrint(userContext, (Stampa_registro_annotazione_entrate_pgiroBulk)bulk);
+		//else if (bulk instanceof Stampa_scadenzario_accertamentiBulk)
+		//	validateBulkForPrint(userContext, (Stampa_scadenzario_accertamentiBulk)bulk);
+
+		return oggettoBulk;
+	}
+
 }

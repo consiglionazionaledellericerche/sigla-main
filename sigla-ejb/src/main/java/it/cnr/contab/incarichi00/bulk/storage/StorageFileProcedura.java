@@ -110,6 +110,7 @@ public class StorageFileProcedura extends StorageFile implements StorageTypeName
     								archivio.isAttoEsitoControllo()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_ATTO_ESITO_CONTROLLO.value():
     									archivio.isProgetto()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_PROGETTO.value():
 											archivio.isConflittoInteressi()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_CONFLITTO_INTERESSI.value():
+												archivio.isAttestazioneDirettore()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_ATTESTAZIONE_DIRETTORE.value():
     				StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_ALLEGATO_GENERICO.value();
     	return "cmis:document";
 	}
