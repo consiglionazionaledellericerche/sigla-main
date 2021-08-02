@@ -18,8 +18,10 @@
 package it.cnr.contab.reports.ejb;
 import java.rmi.RemoteException;
 
+import it.cnr.contab.reports.bulk.Print_priorityBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.comp.OfflineReportComponent;
+import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
 import it.cnr.contab.utente00.comp.RuoloComponent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -184,4 +186,46 @@ public class OfflineReportComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
+
+	@Override
+	public Print_priorityBulk findPrintPriority(UserContext userContext, String reportName) throws RemoteException, ComponentException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			Print_priorityBulk result = componentObj.findPrintPriority(userContext,reportName);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	@Override
+	public Print_spoolerBulk getPrintSpoolerDsOffLine(UserContext userContext, Print_spoolerBulk printSpoller, PrintDataSourceOffline printDsOffLine) throws ComponentException, RemoteException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			Print_spoolerBulk result = componentObj.getPrintSpoolerDsOffLine(userContext,printSpoller,printDsOffLine);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+
 }

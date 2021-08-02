@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="reportName"
+		property="reportName"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1500"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nome del report es./preventivo/pdg/pdgdett_voce_funzione_natura.jasper" />
+	<fieldProperty
+		name="priority"
+		property="priority"
+		inputType="SELECT"
+		keysProperty="PRIORITY"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Priorità" />
+	<fieldProperty
+		name="dsReport"
+		property="dsReport"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Descrizione del report" />
+	<fieldProperty
+		name="reportNameEnte"
+		property="reportNameEnte"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1500"
+		label="Nome del report per l'ENTE es./preventivo/pdg/pdgdett_voce_funzione_natura.jasper" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="reportName" />
+	</form>
+	<formFieldProperty
+		name="reportName" />
+	<formFieldProperty
+		name="priority" />
+	<formFieldProperty
+		name="dsReport" />
+	<formFieldProperty
+		name="reportNameEnte" />
+	<findFieldProperty
+		name="reportName" />
+	<findFieldProperty
+		name="priority" />
+	<findFieldProperty
+		name="dsReport" />
+	<findFieldProperty
+		name="reportNameEnte" />
+	<columnFieldProperty
+		name="reportName" />
+	<columnFieldProperty
+		name="priority" />
+	<columnFieldProperty
+		name="dsReport" />
+	<columnFieldProperty
+		name="reportNameEnte" />
+</bulkInfo>

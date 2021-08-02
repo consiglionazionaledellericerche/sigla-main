@@ -485,7 +485,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileOrdineOut);
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setFlEmail(false);
-			print.setReport("/ordmag/ordini/iss/" + jasperOrdineName);
+			print.setReport("/ordmag/ordini/" + jasperOrdineName);
 			print.setNomeFile(nomeFileOrdineOut);
 			print.setUtcr(userContext.getUser());
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
