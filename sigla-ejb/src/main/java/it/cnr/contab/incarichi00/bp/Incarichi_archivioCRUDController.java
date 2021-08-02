@@ -147,4 +147,8 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 		add(actioncontext);
 		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_CONFLITTO_INTERESSI);
 	}
+	public void addAttestazioneDirettore(ActionContext actioncontext) throws BusinessProcessException {
+		add(actioncontext);
+		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE);
+	}
 }

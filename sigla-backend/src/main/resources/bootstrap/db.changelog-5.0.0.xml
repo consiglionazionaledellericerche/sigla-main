@@ -4272,4 +4272,10 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="incarichi-parametri-add-column-allega-attestazione-direttore">
+        <addColumn tableName="incarichi_parametri">
+            <column name="allega_attestazione_direttore" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

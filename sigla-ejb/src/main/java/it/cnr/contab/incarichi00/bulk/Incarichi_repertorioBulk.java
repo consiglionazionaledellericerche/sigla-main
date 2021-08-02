@@ -492,6 +492,15 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		}
 		return null;
 	}
+	public Incarichi_repertorio_archivioBulk getAttestazioneDirettore(){
+		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
+			Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk)i.next();
+			if (allegato.isAttestazioneDirettore()) {
+				return allegato;
+			}
+		}
+		return null;
+	}
 	public void validaDateContratto() throws ValidationException {
 //		if (this.getDt_stipula()!=null && this.getDt_provv()==null) 
 //		    throw new ValidationException( "Non \350 possibile indicare la \"Data di stipula\" senza indicare la \"Data di protocollo\" del provvedimento di nomina.");
