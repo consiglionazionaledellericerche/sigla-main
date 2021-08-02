@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_priorityBulk"
+	homeClassName="it.cnr.contab.reports.bulk.Print_priorityHome">
+	<defaultColumnMap
+		tableName="PRINT_PRIORITY">
+	</defaultColumnMap>
+</SQLPersistentInfo>

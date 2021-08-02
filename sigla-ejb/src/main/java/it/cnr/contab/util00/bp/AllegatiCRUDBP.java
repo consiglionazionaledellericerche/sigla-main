@@ -198,10 +198,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                 allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                 allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                allegato.setLastModificationDate(
-                        storageObject.<Calendar>getPropertyValue("cmis:lastModificationDate")
-                            .getTime()
-                );
+                    allegato.setLastModificationDate(
+                            storageObject.<Calendar>getPropertyValue(StoragePropertyNames.LAST_MODIFIED.value())
+                                    .getTime());
+
                 allegato.setRelativePath(
                         Optional.ofNullable(storageObject.getPath())
                                 .map(s -> s.substring(s.indexOf(primaryPath) + primaryPath.length()))
