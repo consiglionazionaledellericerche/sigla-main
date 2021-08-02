@@ -27,7 +27,12 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
+import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
+import it.cnr.contab.ordmag.anag00.TipoMovimentoMagHome;
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.reports.bulk.*;
+import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
+import it.cnr.contab.reports.util.UtilReports;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
@@ -68,105 +73,82 @@ public class OfflineReportComponent extends GenericComponent implements
             } catch (ValidationException e) {
                 throw new ApplicationException(e.getMessage());
             }
-            LoggableStatement stm = new LoggableStatement(
-                    getConnection(userContext),
-                    "SELECT PRIORITY,DS_REPORT FROM "
-                            + it.cnr.jada.util.ejb.EJBCommonServices
-                            .getDefaultSchema()
-                            + "PRINT_PRIORITY WHERE REPORT_NAME = ?", true,
-                    this.getClass());
-            try {
-                print_spooler.setPriorita(new Integer(0));
-                stm.setString(1, print_spooler.getReport());
-                java.sql.ResultSet rs = stm.executeQuery();
-                try {
-                    if (!rs.next())
-                        throw new ApplicationException(
-                                "La stampa non è stata configurata correttamente. Avvisare il supporto tecnico.");
-                    if (print_spooler.getIntervallo() != null && print_spooler.getTiIntervallo() != null) {
-                        /**
-                         * Per le stampe schedulate viene impostata un priorità fissa a 4
-                         */
-                        print_spooler.setPrioritaServer(4);
-                    } else {
-                        print_spooler.setPrioritaServer(new Integer(rs.getInt(1)));
-                    }
-                    print_spooler.setUser(userContext.getUser());
 
-                    print_spooler.setDsStampa(rs.getString(2));
-                    if ( !Optional.ofNullable(print_spooler.getStato()).isPresent())
-                        print_spooler.setStato(print_spooler.STATO_IN_CODA);
-                    print_spooler.setDtProssimaEsecuzione(print_spooler
-                            .getDtPartenza());
+            Print_priorityBulk print_priority=findPrintPriority(userContext,print_spooler.getReport());
+            print_spooler.setPriorita(new Integer(0));
 
-                    if (print_spooler.getDtPartenza() != null
-                            && print_spooler.getEmailCc() != null)
-                        throw new ApplicationException(
-                                "Non è possibile inserire il campo E-Mail Cc per le stampe programmate in batch.");
-                    if (print_spooler.getDtPartenza() != null
-                            && print_spooler.getEmailCcn() != null)
-                        throw new ApplicationException(
-                                "Non è possibile inserire il campo E-Mail Ccn per le stampe programmate in batch.");
-
-                    if (Print_spoolerBulk.TI_VISIBILITA_UTENTE
-                            .equals(print_spooler.getTiVisibilita()))
-                        print_spooler.setVisibilita(userContext.getUser());
-                    else if (Print_spoolerBulk.TI_VISIBILITA_CDR
-                            .equals(print_spooler.getTiVisibilita())) {
-                        UtenteBulk utente = (UtenteBulk) getHome(userContext,
-                                UtenteBulk.class).findByPrimaryKey(
-                                new UtenteKey(CNRUserContext
-                                        .getUser(userContext)));
-                        if (utente == null
-                                || it.cnr.contab.utenze00.bp.CNRUserContext
-                                .getCd_cdr(userContext) == null)
-                            throw new ApplicationException(
-                                    "L'utente non è stato assegnato a nessun CDR quindi non è possibile impostare questo livello di visibilità.");
-                        print_spooler
-                                .setVisibilita(it.cnr.contab.utenze00.bp.CNRUserContext
-                                        .getCd_cdr(userContext));
-                    } else if (Print_spoolerBulk.TI_VISIBILITA_UNITA_ORGANIZZATIVA
-                            .equals(print_spooler.getTiVisibilita())) {
-                        if (CNRUserContext
-                                .getCd_unita_organizzativa(userContext) == null)
-                            throw new ApplicationException(
-                                    "L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
-                        print_spooler.setVisibilita(CNRUserContext
-                                .getCd_unita_organizzativa(userContext));
-                    } else if (Print_spoolerBulk.TI_VISIBILITA_CDS
-                            .equals(print_spooler.getTiVisibilita())) {
-                        if (CNRUserContext.getCd_cds(userContext) == null)
-                            throw new ApplicationException(
-                                    "L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
-                        print_spooler.setVisibilita(CNRUserContext
-                                .getCd_cds(userContext));
-                    }
-
-                    checkSQLConstraints(userContext, print_spooler, false, true);
-                    insertBulk(userContext, print_spooler);
-                    for (Iterator i = reportProperties.iterator(); i.hasNext(); ) {
-                        Print_spooler_paramBulk param = (Print_spooler_paramBulk) i
-                                .next();
-                        param.setPgStampa(print_spooler.getPgStampa());
-                        param.setUser(userContext.getUser());
-                        insertBulk(userContext, param);
-                    }
-                } finally {
-                    try {
-                        rs.close();
-                    } catch (java.sql.SQLException e) {
-                    }
-                    ;
-                }
-            } finally {
-                try {
-                    stm.close();
-                } catch (java.sql.SQLException e) {
-                }
-                ;
+            if ( print_priority==null)
+                throw new ApplicationException(
+                        "La stampa non è stata configurata correttamente. Avvisare il supporto tecnico.");
+            print_spooler.setReport(UtilReports.getReportNameToRun(print_priority,print_spooler));
+            if (print_spooler.getIntervallo() != null && print_spooler.getTiIntervallo() != null) {
+                /**
+                 * Per le stampe schedulate viene impostata un priorità fissa a 4
+                 */
+                print_spooler.setPrioritaServer(4);
+            } else {
+                print_spooler.setPrioritaServer(print_priority.getPriority());
             }
-        } catch (java.sql.SQLException e) {
-            throw handleException(e);
+            print_spooler.setUser(userContext.getUser());
+            print_spooler.setDsStampa(print_priority.getDsReport());
+            if ( !Optional.ofNullable(print_spooler.getStato()).isPresent())
+                print_spooler.setStato(print_spooler.STATO_IN_CODA);
+            print_spooler.setDtProssimaEsecuzione(print_spooler
+                    .getDtPartenza());
+
+            if (print_spooler.getDtPartenza() != null
+                    && print_spooler.getEmailCc() != null)
+                throw new ApplicationException(
+                        "Non è possibile inserire il campo E-Mail Cc per le stampe programmate in batch.");
+            if (print_spooler.getDtPartenza() != null
+                    && print_spooler.getEmailCcn() != null)
+                throw new ApplicationException(
+                        "Non è possibile inserire il campo E-Mail Ccn per le stampe programmate in batch.");
+
+            if (Print_spoolerBulk.TI_VISIBILITA_UTENTE
+                    .equals(print_spooler.getTiVisibilita()))
+                print_spooler.setVisibilita(userContext.getUser());
+            else if (Print_spoolerBulk.TI_VISIBILITA_CDR
+                    .equals(print_spooler.getTiVisibilita())) {
+                UtenteBulk utente = (UtenteBulk) getHome(userContext,
+                        UtenteBulk.class).findByPrimaryKey(
+                        new UtenteKey(CNRUserContext
+                                .getUser(userContext)));
+                if (utente == null
+                        || it.cnr.contab.utenze00.bp.CNRUserContext
+                        .getCd_cdr(userContext) == null)
+                    throw new ApplicationException(
+                            "L'utente non è stato assegnato a nessun CDR quindi non è possibile impostare questo livello di visibilità.");
+                print_spooler
+                        .setVisibilita(it.cnr.contab.utenze00.bp.CNRUserContext
+                                .getCd_cdr(userContext));
+            } else if (Print_spoolerBulk.TI_VISIBILITA_UNITA_ORGANIZZATIVA
+                    .equals(print_spooler.getTiVisibilita())) {
+                if (CNRUserContext
+                        .getCd_unita_organizzativa(userContext) == null)
+                    throw new ApplicationException(
+                            "L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
+                print_spooler.setVisibilita(CNRUserContext
+                        .getCd_unita_organizzativa(userContext));
+            } else if (Print_spoolerBulk.TI_VISIBILITA_CDS
+                    .equals(print_spooler.getTiVisibilita())) {
+                if (CNRUserContext.getCd_cds(userContext) == null)
+                    throw new ApplicationException(
+                            "L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
+                print_spooler.setVisibilita(CNRUserContext
+                        .getCd_cds(userContext));
+            }
+
+            checkSQLConstraints(userContext, print_spooler, false, true);
+            insertBulk(userContext, print_spooler);
+            for (Iterator i = reportProperties.iterator(); i.hasNext(); ) {
+                Print_spooler_paramBulk param = (Print_spooler_paramBulk) i
+                        .next();
+                param.setPgStampa(print_spooler.getPgStampa());
+                param.setUser(userContext.getUser());
+                insertBulk(userContext, param);
+            }
+
         } catch (PersistencyException e) {
             throw handleException(e);
         }
@@ -264,6 +246,18 @@ public class OfflineReportComponent extends GenericComponent implements
             return (Print_spoolerBulk) getHome(userContext,
                     Print_spoolerBulk.class).findByPrimaryKey(
                     new Print_spoolerBulk(pgStampa));
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+    public Print_priorityBulk findPrintPriority(
+            it.cnr.jada.UserContext userContext, String reportName)
+            throws ComponentException {
+        try {
+            return ( Print_priorityBulk) getHome(userContext,
+                    Print_priorityBulk.class).findByPrimaryKey(
+                    new Print_priorityBulk(reportName));
+
         } catch (PersistencyException e) {
             throw handleException(e);
         }
@@ -403,9 +397,8 @@ public class OfflineReportComponent extends GenericComponent implements
         return false;
     }
 
-	@Override
-	public Print_spoolerBulk getJobWaitToJsoDS(UserContext userContext) throws ComponentException {
-		Print_spoolerHome printHome = (Print_spoolerHome) getHome(userContext, Print_spoolerBulk.class);
+    public Print_spoolerBulk getJobWaitToJsoDS(UserContext userContext) throws ComponentException {
+        Print_spoolerHome printHome = (Print_spoolerHome) getHome(userContext, Print_spoolerBulk.class);
         try {
 
 
@@ -417,7 +410,8 @@ public class OfflineReportComponent extends GenericComponent implements
         } catch (PersistencyException | BusyResourceException e) {
             throw handleException(e);
         }
-
-	}
-
+    }
+    public Print_spoolerBulk getPrintSpoolerDsOffLine(UserContext userContext, Print_spoolerBulk printSpoller, PrintDataSourceOffline printDsOffLine) throws ComponentException, RemoteException {
+        return printDsOffLine.getPrintSpooler(userContext,printSpoller);
+    }
 }
