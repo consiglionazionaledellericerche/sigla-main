@@ -19,7 +19,6 @@ package it.cnr.contab.coepcoan00.ejb;
 
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 

@@ -77,7 +77,6 @@ public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.
         }
     }
 
-	@Override
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
 		pre_component_invocation(param0, componentObj);
 		try {
