@@ -26,12 +26,7 @@
 		JSPUtils.tabbed(
 					pageContext,
 					"tab",
-					new String[][] {
-                        { "tabDocumentoAttivo","Documento Generico","/docamm00/tab_documento_attivo.jsp" },
-                        { "tabDocumentoAttivoDettaglio","Dettaglio","/docamm00/tab_documento_attivo_dettaglio.jsp" },
-                        { "tabDocumentoGenericoAccertamenti","Accertamenti","/docamm00/tab_documento_generico_accertamenti.jsp" },
-                        { "tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp"}
-					},
+					bp.getTabs(),
 					bp.getTab("tab"),
 					"center",
 					"100%",

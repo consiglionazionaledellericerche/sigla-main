@@ -21,11 +21,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
@@ -99,6 +97,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	protected boolean attivoSiopeplus;
 	private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
 	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+	private boolean attivaEconomicaParallela = false;
 
 	public CRUDReversaleBP() {
 		super();
@@ -760,6 +759,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 		try {
 			Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
 					.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+			attivaEconomicaParallela = sess.isAttivaEconomicaParallela(actioncontext.getUserContext());
 
 			this.attivoSiopeplus = Optional.ofNullable(sess.getVal01(
 					actioncontext.getUserContext(),
@@ -796,4 +796,30 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	public CollapsableDetailCRUDController getMovimentiAvere() {
 		return movimentiAvere;
 	}
+
+	private static final String[] TAB_TESTATA = new String[]{ "tabReversale","Reversale","/doccont00/tab_reversale.jsp" };
+	private static final String[] TAB_RICERCA = new String[]{ "tabRicercaDocAttivi","Ricerca documenti","/doccont00/tab_ricerca_doc_attivi.jsp" };
+	private static final String[] TAB_DETTAGLIO = new String[]{ "tabDettaglioReversale","Dettaglio","/doccont00/tab_dettaglio_reversale.jsp" };
+	private static final String[] TAB_SOSPESI = new String[]{ "tabSospesi","Sospesi","/doccont00/tab_reversale_sospesi.jsp" };
+	private static final String[] TAB_MANDATI = new String[]{ "tabMandati","Doc.Contabili associati","/doccont00/tab_reversale_mandati.jsp" };
+
+	public String[][] getTabs() {
+		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+		int i = 0;
+		pages.put(i++, TAB_TESTATA);
+		if (isInserting()) {
+			pages.put(i++, TAB_RICERCA);
+		}
+		pages.put(i++, TAB_DETTAGLIO);
+		pages.put(i++, TAB_SOSPESI);
+		pages.put(i++, TAB_MANDATI);
+		if (attivaEconomicaParallela) {
+			pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+		}
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+		return tabs;
+	}
+
 }

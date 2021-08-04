@@ -146,6 +146,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     private boolean carryingThrough = false;
     private boolean ribaltato;
     private MissioniCMISService missioniCMISService;
+
     private final SimpleDetailCRUDController dettaglioSpesaAllegatiController = new SimpleDetailCRUDController("AllegatiDettaglioSpesa", AllegatoMissioneDettaglioSpesaBulk.class, "dettaglioSpesaAllegati", spesaController) {
         @Override
         protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -187,6 +188,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     };
     private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
     private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDMissioneBP constructor comment.
@@ -1217,11 +1219,11 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     protected void init(Config config, ActionContext context) throws BusinessProcessException {
         try {
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             verificoUnitaENTE(context);
         } catch (Throwable e) {
             throw handleException(e);
         }
-
         super.init(config, context);
     }
 
@@ -2916,7 +2918,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                 ) {
             pages.put(i++, TAB_ALLEGATI);
         }
-        if (optionalMissioneBulk
+        if (attivaEconomicaParallela && optionalMissioneBulk
                 .map(missioneBulk -> !Optional.ofNullable(missioneBulk.getFl_associato_compenso()).orElse(Boolean.TRUE))
                 .orElse(Boolean.FALSE)
         ) {

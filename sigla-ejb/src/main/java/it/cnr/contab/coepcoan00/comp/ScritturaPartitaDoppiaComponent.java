@@ -48,6 +48,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 
@@ -1758,9 +1759,26 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) throws ComponentException, PersistencyException {
 		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = new Scrittura_partita_doppiaBulk();
+
+		scritturaPartitaDoppia.setToBeCreated();
+		scritturaPartitaDoppia.setDt_contabilizzazione(EJBCommonServices.getServerTimestamp());
+		scritturaPartitaDoppia.setUser(userContext.getUser());
+		scritturaPartitaDoppia.setCd_unita_organizzativa(doccoge.getCd_uo());
+		scritturaPartitaDoppia.setCd_cds(doccoge.getCd_cds());
+		scritturaPartitaDoppia.setTi_scrittura(Scrittura_partita_doppiaBulk.TIPO_PRIMA_SCRITTURA);
+		scritturaPartitaDoppia.setStato(Scrittura_partita_doppiaBulk.STATO_DEFINITIVO);
+		scritturaPartitaDoppia.setDs_scrittura(
+				"Contabilizzazione: "
+						.concat(doccoge.getCd_tipo_doc()).concat(": ")
+						.concat(doccoge.getCd_uo()).concat("\\")
+						.concat(String.valueOf(doccoge.getEsercizio())).concat("\\")
+						.concat(String.valueOf(doccoge.getPg_doc()))
+		);
+
 		scritturaPartitaDoppia.setEsercizio(doccoge.getEsercizio());
 		scritturaPartitaDoppia.setEsercizio_documento_amm(doccoge.getEsercizio());
 		scritturaPartitaDoppia.setCd_cds_documento(doccoge.getCd_cds());
+		scritturaPartitaDoppia.setCd_uo_documento(doccoge.getCd_uo());
 		scritturaPartitaDoppia.setCd_tipo_documento(doccoge.getCd_tipo_doc());
 		scritturaPartitaDoppia.setPg_numero_documento(doccoge.getPg_doc());
 
@@ -1922,6 +1940,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				}
 			}
 		});
+		scritturaPartitaDoppia.setIm_scrittura( scritturaPartitaDoppia.getImTotaleAvere());
 		return scritturaPartitaDoppia;
 	}
 
@@ -1938,7 +1957,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			ContoHome contoHome = (ContoHome) getHome(userContext, ContoBulk.class);
 			ContoBulk contoBulk = (ContoBulk)contoHome.findByPrimaryKey(new ContoBulk(aCdConto, CNRUserContext.getEsercizio(userContext)));
-
+			movimentoCoge.setToBeCreated();
+			movimentoCoge.setUser(userContext.getUser());
 			movimentoCoge.setConto(contoBulk);
 			movimentoCoge.setIm_movimento(aImporto);
 			movimentoCoge.setTerzo(

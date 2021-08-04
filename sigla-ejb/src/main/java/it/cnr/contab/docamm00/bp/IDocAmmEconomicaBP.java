@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.bulk.FieldValidationMap;
 import it.cnr.jada.bulk.OggettoBulk;

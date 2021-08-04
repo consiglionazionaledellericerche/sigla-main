@@ -20,13 +20,11 @@ package it.cnr.contab.config00.bulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 public class Configurazione_cnrHome extends BulkHome {
@@ -90,26 +88,26 @@ public class Configurazione_cnrHome extends BulkHome {
     /**
      * Indica se la uo indicata è proprio quella speciale tutta sac
      *
-     * @param esercizio l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
+     * @param esercizio            l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
      * @param cdUnitaOrganizzativa l'unità organizzativa di cui si chiede se si tratta della Uo Speciale Tutta SAC
      * @return boolean
      * @throws PersistencyException
      */
     public boolean isUOSpecialeDistintaTuttaSAC(Integer esercizio, String cdUnitaOrganizzativa) throws PersistencyException {
         return Optional.ofNullable(this.getUoDistintaTuttaSac(esercizio))
-                    .filter(uoDistintaTuttaSac -> uoDistintaTuttaSac.equals(cdUnitaOrganizzativa))
-                    .isPresent();
+                .filter(uoDistintaTuttaSac -> uoDistintaTuttaSac.equals(cdUnitaOrganizzativa))
+                .isPresent();
     }
 
     /**
      * Ritorna il record puntuale richiesto sulla base dei parametri indicati.
      * <p>ATTENZIONE: in questo metodo viene ricercato puntualmente il record con l'esercizio indicato</p>
-     * <p>Se si desidera avere, in caso di assenza, il record con esercizio=0 utilizzare il metodo {@link #getConfigurazione(UserContext,String,String,String)} o il
-     * metodo {@link #getConfigurazione(Integer,String,String,String)}</p>
+     * <p>Se si desidera avere, in caso di assenza, il record con esercizio=0 utilizzare il metodo {@link #getConfigurazione(UserContext, String, String, String)} o il
+     * metodo {@link #getConfigurazione(Integer, String, String, String)}</p>
      *
-     * @param esercizio l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
-     * @param unita_funzionale Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
-     * @param chiave_primaria Chiave Primaria - Campo Obbligatorio
+     * @param esercizio         l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
+     * @param unita_funzionale  Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
+     * @param chiave_primaria   Chiave Primaria - Campo Obbligatorio
      * @param chiave_secondaria Chiave Secondaria - Lasciare vuoto per ricercare il parametro generale (chiave_secondaria='*')
      * @return il record ConfigurazioneCNR richiesto sulla base dei parametri indicati
      * @throws PersistencyException
@@ -125,42 +123,42 @@ public class Configurazione_cnrHome extends BulkHome {
      * Ritorna il record richiesto sulla base dei parametri indicati.
      * <p>ATTENZIONE: in questo metodo viene ricercato prima il record con esercizio di scrivania prelevato dallo Usercontext e,
      * in caso di assenza, viene ricercato il record con anno=0</p>
-     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer,String,String,String)}</p>
+     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer, String, String, String)}</p>
      *
-     * @param userContext lo UserContext da cui recupera l'esercizio di scrivania
-     * @param unita_funzionale Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
-     * @param chiave_primaria Chiave Primaria - Campo Obbligatorio
+     * @param userContext       lo UserContext da cui recupera l'esercizio di scrivania
+     * @param unita_funzionale  Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
+     * @param chiave_primaria   Chiave Primaria - Campo Obbligatorio
      * @param chiave_secondaria Chiave Secondaria - Lasciare vuoto per ricercare il parametro generale (chiave_secondaria='*')
      * @return il record ConfigurazioneCNR richiesto sulla base dei parametri indicati
      * @throws PersistencyException
      */
     public Configurazione_cnrBulk getConfigurazione(UserContext userContext, String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
-        return getConfigurazione(CNRUserContext.getEsercizio(userContext),unita_funzionale,chiave_primaria, chiave_secondaria);
+        return getConfigurazione(CNRUserContext.getEsercizio(userContext), unita_funzionale, chiave_primaria, chiave_secondaria);
     }
 
     /**
      * Ritorna il record richiesto sulla base dei parametri indicati.
      * <p>ATTENZIONE: in questo metodo viene ricercato sempre il record con esercizio =0</p>
-     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer,String,String,String)}</p>
+     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer, String, String, String)}</p>
      *
-     * @param unita_funzionale Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
-     * @param chiave_primaria Chiave Primaria - Campo Obbligatorio
+     * @param unita_funzionale  Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
+     * @param chiave_primaria   Chiave Primaria - Campo Obbligatorio
      * @param chiave_secondaria Chiave Secondaria - Lasciare vuoto per ricercare il parametro generale (chiave_secondaria='*')
      * @return il record ConfigurazioneCNR richiesto sulla base dei parametri indicati
      * @throws PersistencyException
      */
     public Configurazione_cnrBulk getConfigurazione(String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
-        return getConfigurazione(ANNI_ALL,unita_funzionale,chiave_primaria, chiave_secondaria);
+        return getConfigurazione(ANNI_ALL, unita_funzionale, chiave_primaria, chiave_secondaria);
     }
 
     /**
      * Ritorna il record richiesto sulla base dei parametri indicati.
      * <p>ATTENZIONE: in questo metodo viene ricercato prima il record con l'esercizio indicato e, in caso di assenza, viene ricercato il record con esercizio=0</p>
-     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer,String,String,String)}</p>
+     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer, String, String, String)}</p>
      *
-     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
-     * @param unita_funzionale Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
-     * @param chiave_primaria Chiave Primaria - Campo Obbligatorio
+     * @param esercizio         l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @param unita_funzionale  Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
+     * @param chiave_primaria   Chiave Primaria - Campo Obbligatorio
      * @param chiave_secondaria Chiave Secondaria - Lasciare vuoto per ricercare il parametro generale (chiave_secondaria='*')
      * @return il record ConfigurazioneCNR richiesto sulla base dei parametri indicati
      * @throws PersistencyException
@@ -168,9 +166,9 @@ public class Configurazione_cnrHome extends BulkHome {
     public Configurazione_cnrBulk getConfigurazione(Integer esercizio, String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
         Configurazione_cnrBulk config = null;
         if (Optional.ofNullable(esercizio).isPresent())
-            config = getConfigurazioneCnrBulk(esercizio,unita_funzionale,chiave_primaria,chiave_secondaria);
-        if (!Optional.ofNullable(config).isPresent() && Optional.ofNullable(esercizio).filter(ese->!ese.equals(ANNI_ALL)).isPresent())
-            config = getConfigurazioneCnrBulk(ANNI_ALL,unita_funzionale,chiave_primaria,chiave_secondaria);
+            config = getConfigurazioneCnrBulk(esercizio, unita_funzionale, chiave_primaria, chiave_secondaria);
+        if (!Optional.ofNullable(config).isPresent() && Optional.ofNullable(esercizio).filter(ese -> !ese.equals(ANNI_ALL)).isPresent())
+            config = getConfigurazioneCnrBulk(ANNI_ALL, unita_funzionale, chiave_primaria, chiave_secondaria);
         return config;
     }
 
@@ -185,7 +183,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getUoRagioneria(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA))
+                        this.getConfigurazione(esercizio, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -201,7 +199,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getCdrPersonale(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_PERSONALE))
+                        this.getConfigurazione(esercizio, null, Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_PERSONALE))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -217,7 +215,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getCdrServizioEnte(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_SERVIZIO_ENTE))
+                        this.getConfigurazione(esercizio, null, Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_SERVIZIO_ENTE))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -233,7 +231,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getUoAccreditamentoSac(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_ACCREDITAMENTO_SAC))
+                        this.getConfigurazione(esercizio, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_ACCREDITAMENTO_SAC))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -249,10 +247,11 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getUoDistintaTuttaSac(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_DISTINTA_TUTTA_SAC))
+                        this.getConfigurazione(esercizio, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_DISTINTA_TUTTA_SAC))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
+
     /**
      * Ritorna il codice cds della SAC
      * <p><b>chiave_primaria: CDS_SPECIALE</b>
@@ -263,10 +262,11 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getCdsSAC(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDS_SPECIALE, Configurazione_cnrBulk.SK_CDS_SAC))
+                        this.getConfigurazione(esercizio, null, Configurazione_cnrBulk.PK_CDS_SPECIALE, Configurazione_cnrBulk.SK_CDS_SAC))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
+
     /**
      * Ritorna il codice cds della SAC
      * <p><b>chiave_primaria: CDS_SPECIALE</b>
@@ -276,8 +276,43 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getBeneServScontoAbbuono() throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(null,Configurazione_cnrBulk.PK_BENE_SERVIZIO_SPECIALE, Configurazione_cnrBulk.SK_SCONTO_ABBUONO))
+                        this.getConfigurazione(null, Configurazione_cnrBulk.PK_BENE_SERVIZIO_SPECIALE, Configurazione_cnrBulk.SK_SCONTO_ABBUONO))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale parallela
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomicaParallela(UserContext userContext) throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .orElse(Boolean.FALSE);
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attivo il blocco delle scritture di economica
+     * @throws PersistencyException
+     */
+    public boolean isBloccoScrittureProposte(UserContext userContext) throws PersistencyException{
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
+                )
+                .map(Configurazione_cnrBulk::getVal02)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .orElse(Boolean.TRUE);
+    }
+
 }

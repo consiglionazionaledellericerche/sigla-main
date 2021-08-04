@@ -135,6 +135,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean ribaltato;
     private boolean isDetailDoubling = false;
     private boolean attivoOrdini = false;
+    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDAnagraficaBP constructor comment.
@@ -525,6 +526,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
         try {
             attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             super.init(config, context);
 
             int solaris = Fattura_passivaBulk.getDateCalendar(
@@ -1655,7 +1657,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
             pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
         }
-        pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
         if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);

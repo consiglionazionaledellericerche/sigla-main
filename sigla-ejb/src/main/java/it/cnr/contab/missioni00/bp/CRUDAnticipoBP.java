@@ -18,6 +18,7 @@
 package it.cnr.contab.missioni00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
@@ -32,6 +33,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.missioni00.ejb.AnticipoComponentSession;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -39,6 +41,7 @@ import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
 import java.util.Iterator;
+import java.util.TreeMap;
 import java.util.Vector;
 
 /**
@@ -58,6 +61,7 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean ribaltato;
     private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
     private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+    private boolean attivaEconomicaParallela = false;
 
 	/**
      * CRUDAnticipoBP constructor comment.
@@ -391,10 +395,10 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     protected void init(Config config, ActionContext context) throws BusinessProcessException {
         try {
             verificoUnitaENTE(context);
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
         } catch (Throwable e) {
             throw handleException(e);
         }
-
         super.init(config, context);
     }
 
@@ -1011,7 +1015,27 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
             }
         }
     }
-	public CollapsableDetailCRUDController getMovimentiDare() {
+
+    private static final String[] TAB_ANAGRAFICO = new String[]{ "tabAnagrafico","Anagrafico","/missioni00/tab_anticipo_anagrafico.jsp" };
+    private static final String[] TAB_ANTICIPO = new String[]{ "tabAnticipo","Anticipo","/missioni00/tab_anticipo.jsp" };
+    private static final String[] TAB_RIMBORSO = new String[]{ "tabRimborsoAnticipo","Rimborso","/missioni00/tab_rimborso_anticipo.jsp" };
+
+    public String[][] getTabs() {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        pages.put(i++, TAB_ANAGRAFICO);
+        pages.put(i++, TAB_ANTICIPO);
+        pages.put(i++, TAB_RIMBORSO);
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
+        String[][] tabs = new String[i][3];
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
+    }
+
+    public CollapsableDetailCRUDController getMovimentiDare() {
 		return movimentiDare;
 	}
 

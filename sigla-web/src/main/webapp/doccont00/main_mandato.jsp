@@ -23,7 +23,6 @@
 <title>Gestione Mandato</title>
 <%  
 		CRUDMandatoBP bp = (CRUDMandatoBP)BusinessProcess.getBusinessProcess(request);
-		bp.openFormWindow(pageContext); 
 %>
 <script language="JavaScript">
 function doVisualizzaContabile() {	
@@ -35,37 +34,15 @@ function doVisualizzaMandato() {
 </script>
 
 <body class="Form">
-	<%
-		if ( bp.isInserting())
-			JSPUtils.tabbed(
-						pageContext,
-						"tab",
-						new String[][] {
-								{ "tabMandato","Mandato","/doccont00/tab_mandato.jsp" },
-								{ "tabRicercaDocPassivi","Ricerca documenti","/doccont00/tab_ricerca_doc_passivi.jsp" },
-								{ "tabDettaglioMandato","Dettaglio","/doccont00/tab_dettaglio_mandato.jsp" },
-								{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" },
-								{ "tabReversali","Doc.Contabili associati","/doccont00/tab_mandato_reversali.jsp" },
-								{ "tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp" }
-								},
-						bp.getTab("tab"),
-						"center",
-						"100%","100%");
-		else
-			JSPUtils.tabbed(
-						pageContext,
-						"tab",
-						new String[][] {
-								{ "tabMandato","Mandato","/doccont00/tab_mandato.jsp" },
-								{ "tabDettaglioMandato","Dettaglio","/doccont00/tab_dettaglio_mandato.jsp" },
-								{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" },
-								{ "tabReversali","Doc.Contabili associati","/doccont00/tab_mandato_reversali.jsp" },
-							    { "tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp" },
-                        },
-						bp.getTab("tab"),
-						"center",
-						"100%","100%");
-		
-	%>
-<%	bp.closeFormWindow(pageContext); %>
+<%
+    bp.openFormWindow(pageContext);
+    JSPUtils.tabbed(
+                pageContext,
+                "tab",
+                bp.getTabs(),
+                bp.getTab("tab"),
+                "center",
+                "100%","100%");
+    bp.closeFormWindow(pageContext);
+%>
 </body>

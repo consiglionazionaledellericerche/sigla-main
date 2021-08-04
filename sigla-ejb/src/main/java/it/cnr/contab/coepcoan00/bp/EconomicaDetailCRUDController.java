@@ -30,4 +30,10 @@ public abstract class EconomicaDetailCRUDController extends CollapsableDetailCRU
     public EconomicaDetailCRUDController(String s, Class class1, String s1, FormController formcontroller, boolean flag) {
         super(s, class1, s1, formcontroller, flag);
     }
+
+    @Override
+    public boolean isInputReadonly() {
+        return Boolean.TRUE;
+    }
+
 }

@@ -2779,19 +2779,24 @@ REVERSALE
         } catch (Exception e) {
             throw handleException(reversale, e);
         }
-        Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                .map(Scrittura_partita_doppiaHome.class::cast)
-                .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
         try {
-            final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(reversale);
-            if (scritturaOpt.isPresent()) {
-                Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                        .findMovimentiDareColl(userContext, scrittura)));
-                scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                        .findMovimentiAvereColl(userContext, scrittura)));
-                reversale.setScrittura_partita_doppia(scrittura);
+            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                        .map(Scrittura_partita_doppiaHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(reversale);
+                if (scritturaOpt.isPresent()) {
+                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiDareColl(userContext, scrittura)));
+                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiAvereColl(userContext, scrittura)));
+                    reversale.setScrittura_partita_doppia(scrittura);
+                }
             }
         } catch (PersistencyException e) {
             throw handleException(reversale, e);

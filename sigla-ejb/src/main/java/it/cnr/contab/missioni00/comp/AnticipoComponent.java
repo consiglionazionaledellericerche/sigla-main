@@ -23,6 +23,7 @@ import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -1226,20 +1227,26 @@ public class AnticipoComponent extends it.cnr.jada.comp.CRUDComponent implements
             if (anticipo.isAnticipoConMissione())
                 loadMissione(userContext, anticipo);
 
-			Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-					.filter(Scrittura_partita_doppiaHome.class::isInstance)
-					.map(Scrittura_partita_doppiaHome.class::cast)
-					.orElseThrow(() -> handleException(new ApplicationException("Partita doppia Home not found")));
 			try {
-				final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(anticipo);
-				if (scritturaOpt.isPresent()) {
-					Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-					scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-							.findMovimentiDareColl(userContext, scrittura)));
-					scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-							.findMovimentiAvereColl(userContext, scrittura)));
-					anticipo.setScrittura_partita_doppia(scrittura);
-				}
+                if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                        .filter(Configurazione_cnrHome.class::isInstance)
+                        .map(Configurazione_cnrHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+                    Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                            .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                            .map(Scrittura_partita_doppiaHome.class::cast)
+                            .orElseThrow(() -> handleException(new ApplicationException("Partita doppia Home not found")));
+
+                    final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(anticipo);
+                    if (scritturaOpt.isPresent()) {
+                        Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                        scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                                .findMovimentiDareColl(userContext, scrittura)));
+                        scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                                .findMovimentiAvereColl(userContext, scrittura)));
+                        anticipo.setScrittura_partita_doppia(scrittura);
+                    }
+                }
 			} catch (PersistencyException e) {
 				throw handleException(anticipo, e);
 			}

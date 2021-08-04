@@ -27,6 +27,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -43,12 +44,16 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.JSPUtils;
 
+import javax.ejb.EJBException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.TreeMap;
 
 public class CRUDDocumentoGenericoAttivoBP
         extends SimpleCRUDBP
@@ -70,6 +75,7 @@ public class CRUDDocumentoGenericoAttivoBP
     private boolean carryingThrough = false;
     private boolean ribaltato;
     private boolean contoEnte;
+    private boolean attivaEconomicaParallela = false;
 
     public CRUDDocumentoGenericoAttivoBP() {
         super();
@@ -382,6 +388,7 @@ public class CRUDDocumentoGenericoAttivoBP
         try {
             int solaris = Documento_genericoBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.YEAR);
             int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue();
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             setAnnoSolareInScrivania(solaris == esercizioScrivania);
             setRibaltato(initRibaltato(context));
             if (!isAnnoSolareInScrivania()) {
@@ -396,7 +403,7 @@ public class CRUDDocumentoGenericoAttivoBP
                 }
             } else
                 setRiportaAvantiIndietro(false);
-        } catch (javax.ejb.EJBException e) {
+        } catch (EJBException | RemoteException | ComponentException e) {
             setAnnoSolareInScrivania(false);
         }
 
@@ -1112,6 +1119,24 @@ public class CRUDDocumentoGenericoAttivoBP
 
     public void setContoEnte(boolean contoEnte) {
         this.contoEnte = contoEnte;
+    }
+    private static final String[] TAB_TESTATA = new String[]{ "tabDocumentoAttivo","Documento Generico","/docamm00/tab_documento_attivo.jsp" };
+    private static final String[] TAB_DETTAGLIO = new String[]{ "tabDocumentoAttivoDettaglio","Dettaglio","/docamm00/tab_documento_attivo_dettaglio.jsp" };
+    private static final String[] TAB_ACCERTAMENTI = new String[]{ "tabDocumentoGenericoAccertamenti","Accertamenti","/docamm00/tab_documento_generico_accertamenti.jsp" };
+
+    public String[][] getTabs() {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        pages.put(i++, TAB_TESTATA);
+        pages.put(i++, TAB_DETTAGLIO);
+        pages.put(i++, TAB_ACCERTAMENTI);
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
+        String[][] tabs = new String[i][3];
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
     }
 
     public CollapsableDetailCRUDController getMovimentiDare() {

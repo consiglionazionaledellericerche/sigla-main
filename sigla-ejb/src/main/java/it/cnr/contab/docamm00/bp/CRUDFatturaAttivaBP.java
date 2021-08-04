@@ -18,6 +18,7 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -68,10 +69,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -107,6 +105,7 @@ public abstract class CRUDFatturaAttivaBP
     private boolean isGestoreBancaFatturaAttiva;
     private boolean contoEnte;
     private DocumentiCollegatiDocAmmService docCollService;
+    private boolean attivaEconomicaParallela = false;
 
     public CRUDFatturaAttivaBP() {
         this(Fattura_attiva_rigaBulk.class);
@@ -418,6 +417,7 @@ public abstract class CRUDFatturaAttivaBP
         try {
             int solaris = Fattura_attivaBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.YEAR);
             int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue();
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             setAnnoSolareInScrivania(solaris == esercizioScrivania);
             setRibaltato(initRibaltato(context));
             if (!isAnnoSolareInScrivania()) {
@@ -432,7 +432,7 @@ public abstract class CRUDFatturaAttivaBP
                 }
             } else
                 setRiportaAvantiIndietro(false);
-        } catch (javax.ejb.EJBException e) {
+        } catch (EJBException | RemoteException | ComponentException e) {
             setAnnoSolareInScrivania(false);
         }
 
@@ -1366,6 +1366,83 @@ public abstract class CRUDFatturaAttivaBP
         } finally {
             setUserConfirm(null);
         }
+    }
+
+    private static final String[] TAB_FATTURA_ATTIVA = new String[]{ "tabFatturaAttiva","Testata","/docamm00/tab_fattura_attiva.jsp" };
+    private static final String[] TAB_CLIENTE = new String[]{ "tabCliente","Cliente","/docamm00/tab_cliente.jsp" };
+    private static final String[] TAB_FATTURA_DETTAGLIO = new String[]{ "tabFatturaAttivaDettaglio","Dettaglio","/docamm00/tab_fattura_attiva_dettaglio.jsp" };
+    private static final String[] TAB_CONSUNTIVO = new String[]{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" };
+    private static final String[] TAB_ACCERTAMENTI = new String[]{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" };
+    private static final String[] TAB_OBBLIGAZIONI = new String[]{ "tabFatturaAttivaObbligazioni","Impegni","/docamm00/tab_fattura_attiva_obbligazioni.jsp" };
+    private static final String[] TAB_INTRASTAT = new String[]{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" };
+    private static final String[] TAB_ALLEGATI = new String[]{ "tabFatturaAttivaAllegati","Allegati Aggiunti","/docamm00/tab_fattura_attiva_allegati.jsp" };
+
+    public String[][] getTabs() {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        final Optional<Nota_di_credito_attivaBulk> nota_di_credito_attivaBulk = Optional.ofNullable(getModel())
+                .filter(Nota_di_credito_attivaBulk.class::isInstance)
+                .map(Nota_di_credito_attivaBulk.class::cast);
+
+        if (nota_di_credito_attivaBulk.isPresent()) {
+            boolean hasAccertamenti = Optional.ofNullable(nota_di_credito_attivaBulk.get().getFattura_attiva_accertamentiHash())
+                    .map(accertamentiTable -> !accertamentiTable.isEmpty())
+                    .orElse(Boolean.FALSE);
+            boolean hasObbligazioni = Optional.ofNullable(nota_di_credito_attivaBulk.get().getObbligazioniHash())
+                    .map(obbligazioniTable -> !obbligazioniTable.isEmpty())
+                    .orElse(Boolean.FALSE);
+            if (!hasObbligazioni && !hasAccertamenti) {
+                pages.put(i++, TAB_FATTURA_ATTIVA);
+                pages.put(i++, TAB_CLIENTE);
+                pages.put(i++, TAB_FATTURA_DETTAGLIO);
+                pages.put(i++, TAB_CONSUNTIVO);
+                pages.put(i++, TAB_ACCERTAMENTI);
+                pages.put(i++, TAB_OBBLIGAZIONI);
+            } else {
+                if (hasAccertamenti){
+                    pages.put(i++, TAB_FATTURA_ATTIVA);
+                    pages.put(i++, TAB_CLIENTE);
+                    pages.put(i++, TAB_FATTURA_DETTAGLIO);
+                    pages.put(i++, TAB_CONSUNTIVO);
+                    pages.put(i++, TAB_ACCERTAMENTI);
+                }
+                if (hasObbligazioni) {
+                    pages.put(i++, TAB_FATTURA_ATTIVA);
+                    pages.put(i++, TAB_CLIENTE);
+                    pages.put(i++, TAB_FATTURA_DETTAGLIO);
+                    pages.put(i++, TAB_CONSUNTIVO);
+                    pages.put(i++, TAB_OBBLIGAZIONI);
+                }
+            }
+        } else {
+            final Optional<Fattura_attiva_IBulk> fattura_attiva_iBulk1 = Optional.ofNullable(getModel())
+                    .filter(Fattura_attiva_IBulk.class::isInstance)
+                    .map(Fattura_attiva_IBulk.class::cast)
+                    .filter(fattura_attiva_iBulk -> Optional.ofNullable(fattura_attiva_iBulk.getPg_fattura_attiva()).isPresent());
+            if (fattura_attiva_iBulk1.isPresent()) {
+                pages.put(i++, TAB_FATTURA_ATTIVA);
+                pages.put(i++, TAB_CLIENTE);
+                pages.put(i++, TAB_FATTURA_DETTAGLIO);
+                pages.put(i++, TAB_CONSUNTIVO);
+                pages.put(i++, TAB_ACCERTAMENTI);
+                pages.put(i++, TAB_INTRASTAT);
+                pages.put(i++, TAB_ALLEGATI);
+            } else {
+                pages.put(i++, TAB_FATTURA_ATTIVA);
+                pages.put(i++, TAB_CLIENTE);
+                pages.put(i++, TAB_FATTURA_DETTAGLIO);
+                pages.put(i++, TAB_CONSUNTIVO);
+                pages.put(i++, TAB_ACCERTAMENTI);
+                pages.put(i++, TAB_INTRASTAT);
+            }
+        }
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
+        String[][] tabs = new String[i][3];
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
     }
 
     public CollapsableDetailCRUDController getMovimentiDare() {

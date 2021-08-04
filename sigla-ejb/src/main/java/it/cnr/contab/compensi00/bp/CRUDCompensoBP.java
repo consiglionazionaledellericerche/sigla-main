@@ -19,6 +19,7 @@ package it.cnr.contab.compensi00.bp;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.*;
@@ -63,6 +64,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  * Insert the type's description here.
@@ -133,8 +135,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean nocompenso = true;
 
     private Boolean isGestioneIncarichiEnabled = null;
-
-    //private Boolean isGestionePrestazioneCompensoEnabled = null;
+    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDCompensoBP constructor comment.
@@ -688,12 +689,12 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
         try {
             setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {
             throw handleException(ex);
         }
-
         resetTabs(context);
     }
 
@@ -1791,6 +1792,31 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
                             .isPresent());
                 })
                 .orElse(super.isInputReadonlyFieldName(fieldName));
+    }
+
+    private static final String[] TAB_TESTATA = new String[]{ "tabCompenso","Compenso","/compensi00/tab_compenso.jsp" };
+    private static final String[] TAB_TERZO = new String[]{ "tabCompensoTerzo","Terzo","/compensi00/tab_compenso_terzo.jsp" };
+    private static final String[] TAB_DATI_LIQUIDAZIONE = new String[]{ "tabCompensoDatiLiquidazione","Dati Liquidazione","/compensi00/tab_compenso_dati_liquidazione.jsp" };
+    private static final String[] TAB_CONTRIBUTI_RITENUTE = new String[]{ "tabCompensoContributiRitenute","Contributi e Ritenute","/compensi00/tab_compenso_contributi_ritentute.jsp" };
+    private static final String[] TAB_OBBLIGAZIONI = new String[]{ "tabCompensoObbligazioni","Impegni","/compensi00/tab_compenso_obbligazioni.jsp" };
+    private static final String[] TAB_DOCUMENTI_ASSOCIATI = new String[]{ "tabCompensoDocumentiAssociati","Documenti Associati","/compensi00/tab_compenso_documenti_associati.jsp" };
+
+    public String[][] getTabs() {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        pages.put(i++, TAB_TESTATA);
+        pages.put(i++, TAB_TERZO);
+        pages.put(i++, TAB_DATI_LIQUIDAZIONE);
+        pages.put(i++, TAB_CONTRIBUTI_RITENUTE);
+        pages.put(i++, TAB_OBBLIGAZIONI);
+        pages.put(i++, TAB_DOCUMENTI_ASSOCIATI);
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
+        String[][] tabs = new String[i][3];
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
     }
 
     public CollapsableDetailCRUDController getMovimentiDare() {
