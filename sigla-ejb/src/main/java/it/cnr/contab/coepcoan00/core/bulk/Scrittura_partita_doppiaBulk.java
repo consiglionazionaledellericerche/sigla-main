@@ -339,12 +339,12 @@ public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
     }
 
     public String getTi_istituz_commerc() {
-		return getAllMovimentiColl()
-				.stream()
+        return getAllMovimentiColl()
+                .stream()
                 .filter(m -> Optional.ofNullable(m.getTi_istituz_commerc()).isPresent())
-				.map(Movimento_cogeBase::getTi_istituz_commerc)
-				.distinct()
-				.findAny()
-				.orElse(null);
-	}
+                .map(Movimento_cogeBase::getTi_istituz_commerc)
+                .distinct()
+                .findAny()
+                .orElse(null);
+    }
 }

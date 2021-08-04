@@ -1759,6 +1759,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) throws ComponentException, PersistencyException {
 		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = new Scrittura_partita_doppiaBulk();
+
 		scritturaPartitaDoppia.setToBeCreated();
 		scritturaPartitaDoppia.setDt_contabilizzazione(EJBCommonServices.getServerTimestamp());
 		scritturaPartitaDoppia.setUser(userContext.getUser());
@@ -1956,6 +1957,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			ContoBulk contoBulk = (ContoBulk)contoHome.findByPrimaryKey(new ContoBulk(aCdConto, CNRUserContext.getEsercizio(userContext)));
 			movimentoCoge.setToBeCreated();
 			movimentoCoge.setUser(userContext.getUser());
+
 			movimentoCoge.setConto(contoBulk);
 			movimentoCoge.setIm_movimento(aImporto);
 			movimentoCoge.setTerzo(
