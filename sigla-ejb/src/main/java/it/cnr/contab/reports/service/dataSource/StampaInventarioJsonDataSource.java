@@ -10,9 +10,9 @@ import it.cnr.jada.comp.ComponentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestJsonDataSource extends AbstractDataSourceOffline {
+public class StampaInventarioJsonDataSource extends AbstractDataSourceOffline {
+    private final static Logger _log = LoggerFactory.getLogger(StampaInventarioJsonDataSource.class);
 
-    private final static Logger _log = LoggerFactory.getLogger(TestJsonDataSource.class);
     protected  String getJson( Object o){
         return new GsonBuilder().create().toJson(o );
     }

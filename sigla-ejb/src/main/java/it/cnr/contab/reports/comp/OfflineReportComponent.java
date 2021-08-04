@@ -17,31 +17,34 @@
 
 package it.cnr.contab.reports.comp;
 
-import java.rmi.RemoteException;
-import java.util.*;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagHome;
-import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
-import it.cnr.contab.reports.bulk.*;
+import it.cnr.contab.reports.bulk.Print_priorityBulk;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Print_spoolerHome;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
 import it.cnr.contab.reports.util.UtilReports;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.GenericComponent;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.rmi.RemoteException;
+import java.util.*;
 
 public class OfflineReportComponent extends GenericComponent implements
         IOfflineReportMgr {
@@ -412,6 +415,7 @@ public class OfflineReportComponent extends GenericComponent implements
         }
     }
     public Print_spoolerBulk getPrintSpoolerDsOffLine(UserContext userContext, Print_spoolerBulk printSpoller, PrintDataSourceOffline printDsOffLine) throws ComponentException, RemoteException {
-        return printDsOffLine.getPrintSpooler(userContext,printSpoller);
+        return printDsOffLine.getPrintSpooler(userContext,printSpoller,
+                getHome( userContext,printDsOffLine.getBulkClass()));
     }
 }

@@ -20,19 +20,20 @@ package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistencyException;
 
 /**
  * Insert the type's description here.
  * Creation date: (23/01/2003 16.03.39)
  * @author: Roberto Fantino
  */
-public class Stampa_consumiHome extends BulkHome {
+public class Stampa_inventarioHome extends BulkHome {
 	/**
 	 * Stampa_consumiHome constructor comment.
 	 * @param clazz java.lang.Class
 	 * @param conn java.sql.Connection
 	 */
-	public Stampa_consumiHome(Class clazz, java.sql.Connection conn) {
+	public Stampa_inventarioHome(Class clazz, java.sql.Connection conn) {
 		super(clazz, conn);
 	}
 	/**
@@ -41,14 +42,14 @@ public class Stampa_consumiHome extends BulkHome {
 	 * @param conn java.sql.Connection
 	 * @param persistentCache it.cnr.jada.persistency.PersistentCache
 	 */
-	public Stampa_consumiHome(Class clazz, java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
+	public Stampa_inventarioHome(Class clazz, java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
 		super(clazz, conn, persistentCache);
 	}
 	/**
 	 * Stampa_consumiHome constructor comment.
 	 * @param conn java.sql.Connection
 	 */
-	public Stampa_consumiHome(java.sql.Connection conn) {
+	public Stampa_inventarioHome(java.sql.Connection conn) {
 		super(Stampa_consumiBulk.class, conn);
 	}
 	/**
@@ -56,11 +57,19 @@ public class Stampa_consumiHome extends BulkHome {
 	 * @param conn java.sql.Connection
 	 * @param persistentCache it.cnr.jada.persistency.PersistentCache
 	 */
-	public Stampa_consumiHome(java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
+	public Stampa_inventarioHome(java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
 		super(Stampa_consumiBulk.class, conn, persistentCache);
 	}
 	public String getJsonDataSource(UserContext uc, Print_spoolerBulk print_spoolerBulk){
-		return null;
-	}
 
+		MovimentiMagBulk movimentoMag = new MovimentiMagBulk();
+		MovimentiMagHome movMagHome= ( MovimentiMagHome)getHomeCache().getHome(MovimentiMagBulk.class);
+		MovimentiMagBulk m = null;
+		try {
+			m =(MovimentiMagBulk)movMagHome.findByPrimaryKey(new MovimentiMagBulk(11L));
+		} catch (PersistencyException e) {
+			e.printStackTrace();
+		}
+		return "Ciao";
+	}
 }
