@@ -1939,6 +1939,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				}
 			}
 		});
+		scritturaPartitaDoppia.setIm_scrittura( scritturaPartitaDoppia.getImTotaleAvere());
 		return scritturaPartitaDoppia;
 	}
 
