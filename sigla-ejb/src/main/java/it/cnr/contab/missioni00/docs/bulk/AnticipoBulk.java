@@ -1341,7 +1341,6 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
         this.scrittura_partita_doppia = scrittura_partita_doppia;
     }
 
-    @Override
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
     }

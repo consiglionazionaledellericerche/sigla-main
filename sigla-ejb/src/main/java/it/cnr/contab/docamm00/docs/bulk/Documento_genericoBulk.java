@@ -1968,4 +1968,5 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public Long getPg_doc() {
 		return this.getPg_doc_amm();
 	}
+
 }

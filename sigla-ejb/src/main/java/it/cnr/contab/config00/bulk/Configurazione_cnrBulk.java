@@ -17,11 +17,6 @@
 
 package it.cnr.contab.config00.bulk;
 
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.UserContext;
-
-import java.util.Optional;
-
 public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
     public final static String SK_SDI = "SDI";
