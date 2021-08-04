@@ -1778,6 +1778,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		scritturaPartitaDoppia.setEsercizio(doccoge.getEsercizio());
 		scritturaPartitaDoppia.setEsercizio_documento_amm(doccoge.getEsercizio());
 		scritturaPartitaDoppia.setCd_cds_documento(doccoge.getCd_cds());
+		scritturaPartitaDoppia.setCd_uo_documento(doccoge.getCd_uo());
 		scritturaPartitaDoppia.setCd_tipo_documento(doccoge.getCd_tipo_doc());
 		scritturaPartitaDoppia.setPg_numero_documento(doccoge.getPg_doc());
 
