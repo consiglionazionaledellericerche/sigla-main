@@ -3,24 +3,22 @@
 	<fieldProperty
 		name="id"
 		property="id"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="38"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
-		label="Chiave Primaria." />
+		label="Id" />
 	<fieldProperty
-		name="idScadenzarioDottorati"
-		property="idScadenzarioDottorati"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
+		name="find_ScadenzarioDottorati"
+		property="scadenzarioDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
-		label="Identificativo scadenzario dottorati." />
+		label="Identificativo scadenzario dottorati."/>
 	<fieldProperty
 		name="cdCds"
 		property="cdCds"
@@ -109,6 +107,8 @@
 	<formFieldProperty
 		name="id" />
 	<formFieldProperty
+		name="find_ScadenzarioDottorati" />
+	<formFieldProperty
 		name="cdCds" />
 	<formFieldProperty
 		name="cdUnitaOrganizzativa" />
@@ -129,7 +129,7 @@
 	<findFieldProperty
 		name="id" />
 	<findFieldProperty
-		name="idScadenzarioDottorati" />
+		name="find_ScadenzarioDottorati" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

@@ -3,12 +3,12 @@
 	<fieldProperty
 		name="id"
 		property="id"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="38"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
 		label="Id" />
 	<fieldProperty
@@ -82,14 +82,13 @@
 		label="tiAnagrafico" />
 	<fieldProperty
 		name="cdTerzo"
-		property="cdTerzo"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
-		nullable="false"
-		label="cdTerzo" />
+		property="terzo"
+		inputType="SEARCHTOOL"
+		formName="searchtool_small"
+		label="Codice Terzo"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		nullable="false"/>
 	<fieldProperty
 		name="ragioneSociale"
 		property="ragioneSociale"
@@ -393,6 +392,8 @@
 		name="dsScadDott" />
 	<formFieldProperty
 		name="tiAnagrafico" />
+	<formFieldProperty
+			name="cdTerzo" />
 	<formFieldProperty
 		name="ragioneSociale" />
 	<formFieldProperty
