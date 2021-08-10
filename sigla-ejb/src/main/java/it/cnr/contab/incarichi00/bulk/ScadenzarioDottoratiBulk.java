@@ -5,6 +5,12 @@
 package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+
+import java.util.Iterator;
 
 public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	/**
@@ -15,6 +21,10 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	 * [TERZO ]
 	 **/
 	private TerzoBulk terzo =  new TerzoBulk();
+	/**
+	 *
+	 */
+	private BulkList scadenzarioDottoratiRate = new BulkList();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI
@@ -75,4 +85,27 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	public void setCdTerzo(Integer cdTerzo)  {
 		this.getTerzo().setCd_terzo(cdTerzo);
 	}
+
+	public BulkList getScadenzarioDottoratiRate() {
+		return scadenzarioDottoratiRate;
+	}
+
+	public void setScadenzarioDottoratiRate(BulkList scadenzarioDottoratiRate) {
+		this.scadenzarioDottoratiRate = scadenzarioDottoratiRate;
+	}
+
+	public BulkCollection[] getBulkLists() {
+		return new it.cnr.jada.bulk.BulkCollection[] {
+				getScadenzarioDottoratiRate() };
+	}
+	public int addToScadenzarioDottoratiRate(ScadenzarioDottoratiRataBulk dett) {
+		dett.setScadenzarioDottorati(this);
+		getScadenzarioDottoratiRate().add(dett);
+		return getScadenzarioDottoratiRate().size()-1;
+	}
+	public ScadenzarioDottoratiRataBulk removeFromScadenzarioDottoratiRate(int index) {
+		ScadenzarioDottoratiRataBulk dett = (ScadenzarioDottoratiRataBulk) getScadenzarioDottoratiRate().remove(index);
+		return dett;
+	}
+
 }

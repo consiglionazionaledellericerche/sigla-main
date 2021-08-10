@@ -214,7 +214,7 @@ Anagrafica Dottorati
 Scadenzario Dottorati
 -->
     <businessProcess
-            name="CRUDScadenzarioDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+            name="CRUDScadenzarioDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDScadenzarioDottoratiBP">
         <forward name="default" path="/incarichi00/scadenzariodottorati.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
