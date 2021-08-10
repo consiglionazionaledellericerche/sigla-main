@@ -67,7 +67,7 @@ public class CRUDScadenzarioDottoratiBP
     }
 
     protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
-            setTab("tab","tabScadenzarioDottorati");
+            setTab("tab","tabScadenzariodottorati");
             super.init(config, actioncontext);
     }
 

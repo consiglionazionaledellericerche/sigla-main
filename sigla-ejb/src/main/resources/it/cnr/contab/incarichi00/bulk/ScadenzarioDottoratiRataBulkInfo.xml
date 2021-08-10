@@ -18,7 +18,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Identificativo scadenzario dottorati."/>
+		label="IdScadenzarioDottorati."/>
 	<fieldProperty
 		name="cdCds"
 		property="cdCds"
@@ -150,8 +150,6 @@
 		name="imRata" />
 	<columnFieldProperty
 		name="id" />
-	<columnFieldProperty
-		name="idScadenzarioDottorati" />
 	<columnFieldProperty
 		name="cdCds" />
 	<columnFieldProperty
