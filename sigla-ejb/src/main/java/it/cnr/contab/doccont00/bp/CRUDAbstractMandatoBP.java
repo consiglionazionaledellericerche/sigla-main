@@ -17,7 +17,6 @@
 
 package it.cnr.contab.doccont00.bp;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import it.cnr.contab.doccont00.core.bulk.CompensoOptionRequestParameter;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;

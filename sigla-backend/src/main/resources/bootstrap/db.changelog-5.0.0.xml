@@ -4796,6 +4796,14 @@ TRASPORTO_AEREO"/>
 
     <changeSet id="change_ordinamento_scadenzario_dottorati" author="valerio.diego">
         <update tableName="albero_main">
+            <column name="cd_nodo_padre" value="" type="VARCHAR(100)"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.ANA.M'</where>
+        </update>
+        <update tableName="albero_main">
+            <column name="cd_nodo_padre" value="" type="VARCHAR(100)"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.ANA.V'</where>
+        </update>
+        <update tableName="albero_main">
             <column name="cd_nodo" value="0.CFG.DOTTORATI.ANA" type="VARCHAR(100)"/>
             <column name="cd_nodo_padre" value="0.CFG.DOTTORATI" type="VARCHAR(100)"/>
             <column name="livello" value="4" type="SMALLINT"/>
@@ -4814,6 +4822,14 @@ TRASPORTO_AEREO"/>
             <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.ANA.V'</where>
         </update>
 
+        <update tableName="albero_main">
+            <column name="cd_nodo_padre" value="" type="VARCHAR(100)"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.SCAD.M'</where>
+        </update>
+        <update tableName="albero_main">
+            <column name="cd_nodo_padre" value="" type="VARCHAR(100)"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.SCAD.V'</where>
+        </update>
         <update tableName="albero_main">
             <column name="cd_nodo" value="0.CFG.DOTTORATI.SCAD" type="VARCHAR(100)"/>
             <column name="cd_nodo_padre" value="0.CFG.DOTTORATI" type="VARCHAR(100)"/>
