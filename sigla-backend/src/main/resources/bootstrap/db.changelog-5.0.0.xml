@@ -4794,4 +4794,44 @@ TRASPORTO_AEREO"/>
         </update>
     </changeSet>
 
+    <changeSet id="change_ordinamento_scadenzario_dottorati" author="valerio.diego">
+        <update tableName="albero_main">
+            <column name="cd_nodo" value="0.CFG.DOTTORATI.ANA" type="VARCHAR(100)"/>
+            <column name="cd_nodo_padre" value="0.CFG.DOTTORATI" type="VARCHAR(100)"/>
+            <column name="livello" value="4" type="SMALLINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.ANA'</where>
+        </update>
+        <update tableName="albero_main">
+            <column name="cd_nodo" value="0.CFG.DOTTORATI.ANA.M" type="VARCHAR(100)"/>
+            <column name="cd_nodo_padre" value="0.CFG.DOTTORATI.ANA" type="VARCHAR(100)"/>
+            <column name="livello" value="5" type="SMALLINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.ANA.M'</where>
+        </update>
+        <update tableName="albero_main">
+            <column name="cd_nodo" value="0.CFG.DOTTORATI.ANA.V" type="VARCHAR(100)"/>
+            <column name="cd_nodo_padre" value="0.CFG.DOTTORATI.ANA" type="VARCHAR(100)"/>
+            <column name="livello" value="5" type="SMALLINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.ANA.V'</where>
+        </update>
+
+        <update tableName="albero_main">
+            <column name="cd_nodo" value="0.CFG.DOTTORATI.SCAD" type="VARCHAR(100)"/>
+            <column name="cd_nodo_padre" value="0.CFG.DOTTORATI" type="VARCHAR(100)"/>
+            <column name="livello" value="4" type="SMALLINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.SCAD'</where>
+        </update>
+        <update tableName="albero_main">
+            <column name="cd_nodo" value="0.CFG.DOTTORATI.SCAD.M" type="VARCHAR(100)"/>
+            <column name="cd_nodo_padre" value="0.CFG.DOTTORATI.SCAD" type="VARCHAR(100)"/>
+            <column name="livello" value="5" type="SMALLINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.SCAD.M'</where>
+        </update>
+        <update tableName="albero_main">
+            <column name="cd_nodo" value="0.CFG.DOTTORATI.SCAD.V" type="VARCHAR(100)"/>
+            <column name="cd_nodo_padre" value="0.CFG.DOTTORATI.SCAD" type="VARCHAR(100)"/>
+            <column name="livello" value="5" type="SMALLINT"/>
+            <where>cd_nodo = '0.CFG.DOTTORATI.TABRIF.SCAD.V'</where>
+        </update>
+    </changeSet>
+
 </databaseChangeLog>
