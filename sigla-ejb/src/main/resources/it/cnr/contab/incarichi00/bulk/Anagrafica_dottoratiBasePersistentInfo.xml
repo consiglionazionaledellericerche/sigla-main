@@ -161,12 +161,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="38"
 			nullable="false" />
-		<columnMapping
+	<!--	<columnMapping
 			columnName="ID_TIPOCORSO_DOTTORATI"
 			propertyName="idTipocorsoDottorati"
 			sqlTypeName="DECIMAL"
 			columnSize="38"
-			nullable="false" />
+			nullable="false" />-->
 		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
@@ -226,8 +226,8 @@
 		name="idPhdtipoDottorati" />
 	<persistentProperty
 		name="idCicloDottorati" />
-	<persistentProperty
-		name="idTipocorsoDottorati" />
+	<!--<persistentProperty
+		name="idTipocorsoDottorati" />-->
 	<persistentProperty
 		name="pg_ver_rec"/>
 </SQLPersistentInfo>

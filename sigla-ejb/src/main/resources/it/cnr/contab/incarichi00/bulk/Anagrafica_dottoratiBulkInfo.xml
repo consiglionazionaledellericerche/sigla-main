@@ -200,14 +200,14 @@
 		enabledOnSearch="true"
 		nullable="false"
 		label="Ciclo di Inizio" />
-	<fieldProperty
+	<!--<fieldProperty
 		name="find_TipocorsoDottorati"
 		property="tipocorsoDottorati"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Tipo Corso Dottorato Delibera 52/2020" />
+		label="Tipo Corso Dottorato Delibera 52/2020" />-->
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -267,8 +267,8 @@
 			name="find_PhdtipoDottorati" />
 	<formFieldProperty
 			name="find_CicloDottorati" />
-	<formFieldProperty
-			name="find_TipocorsoDottorati" />
+	<!--<formFieldProperty
+			name="find_TipocorsoDottorati" />-->
 	<findFieldProperty
 		name="id" />
 	<findFieldProperty
@@ -321,8 +321,8 @@
 			name="nomeDottorato" />
 	<findFieldProperty
 		name="idCicloDottorati" />
-	<findFieldProperty
-		name="idTipocorsoDottorati" />
+	<!--<findFieldProperty
+		name="idTipocorsoDottorati" />-->
 	<columnFieldProperty
 		name="id" />
 	<columnFieldProperty
@@ -377,6 +377,6 @@
 		name="idPhdtipoDottorati" />
 	<columnFieldProperty
 		name="idCicloDottorati" />
-	<columnFieldProperty
-		name="idTipocorsoDottorati" />
+	<!--<columnFieldProperty
+		name="idTipocorsoDottorati" />-->
 </bulkInfo>
