@@ -49,22 +49,14 @@
         <td><% bp.getController().writeFormInput(out,"cdTerzo"); %></td>
       </tr>
       <tr>
-        <td><% bp.getController().writeFormLabel(out,"tiAnagrafico"); %></td>
-        <td><% bp.getController().writeFormInput(out,"tiAnagrafico"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"cdTerzo"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cdTerzo"); %></td>
+        <td><% bp.getController().writeFormLabel(out,"ragioneSociale"); %></td>
+        <td colspan="3"><% bp.getController().writeFormInput(out,"ragioneSociale"); %></td>
       </tr>
       <tr>
-        <td><% bp.getController().writeFormLabel(out,"ragioneSociale"); %></td>
-        <td><% bp.getController().writeFormInput(out,"ragioneSociale"); %></td>
         <td><% bp.getController().writeFormLabel(out,"nome"); %></td>
         <td><% bp.getController().writeFormInput(out,"nome"); %></td>
-      </tr>
-      <tr>
         <td><% bp.getController().writeFormLabel(out,"cognome"); %></td>
         <td><% bp.getController().writeFormInput(out,"cognome"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"cdTerzo"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cdTerzo"); %></td>
       </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"codiceFiscale"); %></td>
