@@ -21,13 +21,12 @@
 		label="Identificativo anagrafica dottorati." />
 	<fieldProperty
 		name="cdCds"
-		property="cdCds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
+		property="cds"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
-		label="cdCds" />
+		label="Centro di Spesa." />
 	<fieldProperty
 		name="cdUnitaOrganizzativa"
 		property="cdUnitaOrganizzativa"

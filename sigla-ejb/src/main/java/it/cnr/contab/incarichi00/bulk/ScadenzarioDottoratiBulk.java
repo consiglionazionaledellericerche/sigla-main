@@ -6,6 +6,7 @@ package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
@@ -21,6 +22,8 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	 * [TERZO ]
 	 **/
 	private TerzoBulk terzo =  new TerzoBulk();
+
+	private CdsBulk cds = new CdsBulk();
 	/**
 	 *
 	 */
@@ -51,6 +54,10 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	public void setTerzo(TerzoBulk terzo)  {
 		this.terzo=terzo;
 	}
+
+	public CdsBulk getCds() { return cds; }
+	public void setCds(CdsBulk cds) { this.cds=cds; }
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Identificativo anagrafica dottorati.]
@@ -84,6 +91,20 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	 **/
 	public void setCdTerzo(Integer cdTerzo)  {
 		this.getTerzo().setCd_terzo(cdTerzo);
+	}
+
+	public String getCdCds(){
+		CdsBulk cds = this.getCds();
+		if (cds == null)
+			return null;
+		return getCds().getCd_unita_padre();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [CdCds]
+	 **/
+	public void setCdCds(String cdCds)  {
+		this.getCds().setCd_unita_padre(cdCds);
 	}
 
 	public BulkList getScadenzarioDottoratiRate() {
