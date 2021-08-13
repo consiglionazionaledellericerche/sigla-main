@@ -29,13 +29,12 @@
 		label="Centro di Spesa." />
 	<fieldProperty
 		name="cdUnitaOrganizzativa"
-		property="cdUnitaOrganizzativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
+		property="uo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
-		label="cdUnitaOrganizzativa" />
+		label="Unità Organizzativa" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"

@@ -22,10 +22,10 @@
             <td><% bp.getController().writeFormLabel(out, "find_AnagraficaDottorati"); %></td>
             <td><% bp.getController().writeFormInput(out, "find_AnagraficaDottorati"); %></td>
       </tr>
-        <tr>
-            <td><% bp.getController().writeFormField(out,"cdCds"); %></td>
-            <td colspan="3"><% bp.getController().writeFormField(out,"cdCds"); %></td>
-        </tr>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"cdCds"); %></td>
+        <td colspan="3"><% bp.getController().writeFormInput(out,"cdCds"); %></td>
+      </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"cdUnitaOrganizzativa"); %></td>
         <td colspan="3"><% bp.getController().writeFormInput(out,"cdUnitaOrganizzativa"); %></td>

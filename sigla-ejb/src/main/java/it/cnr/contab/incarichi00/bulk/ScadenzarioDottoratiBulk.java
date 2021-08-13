@@ -7,6 +7,7 @@ package it.cnr.contab.incarichi00.bulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
@@ -24,6 +25,8 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	private TerzoBulk terzo =  new TerzoBulk();
 
 	private CdsBulk cds = new CdsBulk();
+
+	private Unita_organizzativaBulk uo = new Unita_organizzativaBulk();
 	/**
 	 *
 	 */
@@ -58,6 +61,8 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	public CdsBulk getCds() { return cds; }
 	public void setCds(CdsBulk cds) { this.cds=cds; }
 
+	public Unita_organizzativaBulk getUo() { return uo; }
+	public void setUo(Unita_organizzativaBulk uo) { this.uo=uo; }
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Identificativo anagrafica dottorati.]
@@ -93,6 +98,10 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 		this.getTerzo().setCd_terzo(cdTerzo);
 	}
 
+	/**
+	 *
+	 * @return CdCds
+	 */
 	public String getCdCds(){
 		CdsBulk cds = this.getCds();
 		if (cds == null)
@@ -100,12 +109,29 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 		return getCds().getCd_unita_padre();
 	}
 	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [CdCds]
 	 **/
 	public void setCdCds(String cdCds)  {
 		this.getCds().setCd_unita_padre(cdCds);
 	}
+
+	/**
+	 *
+	 * @return CdUnitaOrganizzativa
+	 */
+	public String getCdUnitaOrganizzativa(){
+		Unita_organizzativaBulk uo = this.getUo();
+		if (uo == null)
+			return null;
+		return getUo().getCd_unita_organizzativa();
+	}
+	/**
+	 * Setta il valore di: [CdUnitaOrganizzativa]
+	 **/
+	public void setCdUnitaOrganizzativa(String cdUnitaOrganizzativa)  {
+		this.getUo().setCd_unita_organizzativa(cdUnitaOrganizzativa);
+	}
+
 
 	public BulkList getScadenzarioDottoratiRate() {
 		return scadenzarioDottoratiRate;
