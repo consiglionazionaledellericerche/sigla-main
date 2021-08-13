@@ -106,7 +106,8 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 		CdsBulk cds = this.getCds();
 		if (cds == null)
 			return null;
-		return getCds().getCd_unita_padre();
+		//return getCds().getCd_unita_padre();
+		return getCds().getCd_ds_cds();
 	}
 	/**
 	 * Setta il valore di: [CdCds]

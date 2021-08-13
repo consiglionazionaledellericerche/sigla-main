@@ -26,7 +26,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Centro di Spesa." />
+		label="Centro di Spesa" />
 	<fieldProperty
 		name="cdUnitaOrganizzativa"
 		property="uo"

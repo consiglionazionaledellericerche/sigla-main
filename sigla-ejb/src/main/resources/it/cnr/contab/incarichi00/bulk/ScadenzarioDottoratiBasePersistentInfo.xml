@@ -15,7 +15,7 @@
 			columnName="CD_CDS"
 			propertyName="cdCds"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
+			columnSize="250"
 			nullable="false" />
 		<columnMapping
 			columnName="CD_UNITA_ORGANIZZATIVA"
