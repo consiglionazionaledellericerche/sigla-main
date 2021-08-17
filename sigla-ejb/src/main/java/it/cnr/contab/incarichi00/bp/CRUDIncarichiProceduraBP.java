@@ -273,6 +273,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			model.setTipo_archivio(Incarichi_repertorio_archivioBulk.TIPO_CONFLITTO_INTERESSI);
 			add(actioncontext, model);
 		}
+		public void addAttestazioneDirettore(ActionContext actioncontext) throws BusinessProcessException {
+			Incarichi_repertorio_archivioBulk model = new Incarichi_repertorio_archivioBulk();
+			model.initializeForInsert(null, actioncontext);
+			model.setTipo_archivio(Incarichi_repertorio_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE);
+			add(actioncontext, model);
+		}
 		public void addAllegatoGenerico(ActionContext actioncontext) throws BusinessProcessException {
 			Incarichi_procedura_archivioBulk model = new Incarichi_procedura_archivioBulk();
 			model.initializeForInsert(null, actioncontext);
@@ -373,10 +379,22 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							if (incarico.getConflittoInteressi()==null) {
 								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 										context,
-										isFromBootstrap?"fa fa-fw fa-user-times-o text-primary":"img/paste16.gif",
+										isFromBootstrap?"fa fa-fw fa-user-times-o text-primary":"img/edit16.gif",
 										"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Attestazione Insussistenza Conflitto Interessi",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
+							}
+						}
+						if (parametri.getAllega_attestazione_direttore()!=null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+							if (incarico.getAttestazioneDirettore()==null) {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap?"fa fa-fw fa-certificate text-primary":"img/properties16.gif",
+										"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Attestazione Direttore",
 										"btn btn-sm btn-secondary btn-outline-secondary",
 										isFromBootstrap);
 							}
@@ -491,10 +509,22 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							if (incarico.getConflittoInteressi() == null) {
 								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 										context,
-										isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/paste16.gif",
+										isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/edit16.gif",
 										"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Attestazione Insussistenza Conflitto Interessi",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
+							}
+						}
+						if (parametri.getAllega_attestazione_direttore()!=null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+							if (incarico.getAttestazioneDirettore()==null) {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap?"fa fa-fw fa-certificate text-primary":"img/properties16.gif",
+										"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Attestazione Direttore",
 										"btn btn-sm btn-secondary btn-outline-secondary",
 										isFromBootstrap);
 							}
@@ -526,7 +556,6 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									.filter(Incarichi_archivioBulk.class::isInstance)
 									.map(Incarichi_archivioBulk.class::cast)
 									.filter(el->el.isToBeCreated())
-									.filter(el->el.isAllegatoGenerico())
 									.isPresent();
 			}
 			super.writeHTMLToolbar(context, false, false, innerDelete, false, false);
@@ -712,10 +741,22 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						if (incarico.getConflittoInteressi() == null) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/paste16.gif",
+									isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/edit16.gif",
 									"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Attestazione Insussistenza Conflitto Interessi",
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
+						}
+					}
+					if (parametri.getAllega_attestazione_direttore()!=null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+						if (incarico.getAttestazioneDirettore()==null) {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap?"fa fa-fw fa-certificate text-primary":"img/properties16.gif",
+									"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Attestazione Direttore",
 									"btn btn-sm btn-secondary btn-outline-secondary",
 									isFromBootstrap);
 						}
@@ -814,10 +855,22 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						if (incarico.getConflittoInteressi() == null) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/paste16.gif",
+									isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/edit16.gif",
 									"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Attestazione Insussistenza Conflitto Interessi",
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
+						}
+					}
+					if (parametri.getAllega_attestazione_direttore()!=null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+						if (incarico.getAttestazioneDirettore()==null) {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap?"fa fa-fw fa-certificate text-primary":"img/properties16.gif",
+									"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Attestazione Direttore",
 									"btn btn-sm btn-secondary btn-outline-secondary",
 									isFromBootstrap);
 						}

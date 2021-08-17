@@ -31,7 +31,8 @@ public enum StorageContrattiAttachment {
 	SIGLA_CONTRATTI_ATTACHMENT_CAPITOLATO("D:sigla_contratti_attachment:capitolato"),
 	SIGLA_CONTRATTI_ATTACHMENT_DICHIARAZIONE_ALTRI_RAPPORTI("D:sigla_contratti_attachment:dichiarazione_altri_rapporti"),
 	SIGLA_CONTRATTI_ATTACHMENT_CONFLITTO_INTERESSI("D:sigla_contratti_attachment:dichiarazione_insussistenza_conflitto_interessi"),
-	SIGLA_CONTRATTI_ATTACHMENT_COMUNICAZIONE_PERLAPA("D:sigla_contratti_attachment:comunicazione_perlapa");
+	SIGLA_CONTRATTI_ATTACHMENT_COMUNICAZIONE_PERLAPA("D:sigla_contratti_attachment:comunicazione_perlapa"),
+	SIGLA_CONTRATTI_ATTACHMENT_ATTESTAZIONE_DIRETTORE("D:sigla_contratti_attachment:attestazione_direttore");
 
 	private final String value;
 
