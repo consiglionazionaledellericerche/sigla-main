@@ -120,6 +120,12 @@
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
+			columnName="ALLEGA_ATTESTAZIONE_DIRETTORE"
+			propertyName="allega_attestazione_direttore"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
 			columnName="INDICA_URL_PROGETTO"
 			propertyName="indica_url_progetto"
 			sqlTypeName="CHAR"
@@ -194,6 +200,8 @@
 		name="allega_progetto" />
 	<persistentProperty
 		name="allega_conflitto_interesse" />
+	<persistentProperty
+		name="allega_attestazione_direttore" />
 	<persistentProperty
 		name="indica_url_progetto" />
 	<persistentProperty

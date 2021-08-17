@@ -47,6 +47,7 @@ import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -1780,7 +1781,10 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             // Per testare la partita iva
             try {
                 if (anagrafico.getPartita_iva() != null && !verificaStrutturaPiva(userContext, anagrafico))
-                    throw new it.cnr.jada.comp.ApplicationException("Verificare la partita Iva non corrisponde al modello della sua nazionalità.");
+                    throw new ApplicationMessageFormatException(
+                            "Verificare la partita Iva non corrisponde al modello della sua nazionalità. " +
+                            "Modello di riferimento: '{0}'", Optional.ofNullable(anagrafico.getNazionalita())
+                            .map(NazioneBulk::getStruttura_piva).orElse(""));
             } catch (ValidationException e) {
                 throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
             }

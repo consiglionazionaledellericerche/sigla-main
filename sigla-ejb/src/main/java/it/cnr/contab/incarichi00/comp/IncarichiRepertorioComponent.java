@@ -645,6 +645,20 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                     }
                 }
 
+                if (incarico.getAttestazioneDirettore() == null) {
+                    if (parametri != null && parametri.getAllega_attestazione_direttore() != null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+                        if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+                            //Istanzio la classe per riempire tipo_archivioKeys
+                            new Incarichi_procedura_archivioBulk();
+                        }
+
+                        if (incarico.getV_terzo() != null && incarico.getV_terzo().getCognome() != null && incarico.getV_terzo().getNome() != null)
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \"" + incarico.getV_terzo().getCognome() + " " + incarico.getV_terzo().getNome() + "\" un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE).toString() + "\".");
+                        else
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE).toString() + "\".");
+                    }
+                }
+
                 if (incarico.getDecretoDiNomina() == null) {
                     if (parametri != null && parametri.getAllega_decreto_nomina() != null && parametri.getAllega_decreto_nomina().equals("Y")) {
                         if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {

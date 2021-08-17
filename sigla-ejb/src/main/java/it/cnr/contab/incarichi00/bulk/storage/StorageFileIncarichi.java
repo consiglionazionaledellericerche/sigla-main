@@ -201,6 +201,7 @@ public class StorageFileIncarichi extends StorageFile implements StorageTypeName
 	   	    							getIncaricoArchivio().isAttoEsitoControllo()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_ATTO_ESITO_CONTROLLO.value():
 	   	    								getIncaricoArchivio().isProgetto()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_PROGETTO.value():
 												getIncaricoArchivio().isConflittoInteressi()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_CONFLITTO_INTERESSI.value():
+													getIncaricoArchivio().isAttestazioneDirettore()? StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_ATTESTAZIONE_DIRETTORE.value():
 	   	    		StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_ALLEGATO_GENERICO.value();
     	return "cmis:document";
 	}

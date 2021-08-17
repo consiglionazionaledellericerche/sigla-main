@@ -1,3 +1,11 @@
+## Release 6.3.46  -- _July 30, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sul codice CIG in fase di emissione e modifica del mandato di pagamento**
+>
+>[51083ae40c2b65a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51083ae40c2b65a) marco.spasiano *July 30, 2021*
+
+
 ## Release 6.3.45  -- _July 28, 2021_ 
 **Changes**
 
