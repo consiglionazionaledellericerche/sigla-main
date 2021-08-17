@@ -22,7 +22,7 @@
 
 <table>
   <tr>
-    Ciao Nuovo
+
     <table >
        <tr>
             <td><% bp.getController().writeFormLabel(out,"findMagazzino"); %></td>
