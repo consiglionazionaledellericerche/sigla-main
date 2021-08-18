@@ -22,6 +22,8 @@
 	    <td><% bp.getController().writeFormInput(out,"default","dt_registrazione", bp.isPublishHidden(),null,null);%></td>
         <td><% bp.getController().writeFormLabel(out,"cd_protocollo");%></td>
         <td><% bp.getController().writeFormInput(out,"cd_protocollo");%></td>
+        <td><% bp.getController().writeFormLabel(out,"tipo_dettaglio_contratto");%></td>
+        <td><% bp.getController().writeFormInput(out,"tipo_dettaglio_contratto");%></td>
       </tr>  	
       <tr><td colspan=4>
 	      <div class="GroupLabel h3 text-primary">Estremi del protocollo informatico</div>          

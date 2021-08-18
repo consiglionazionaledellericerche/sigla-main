@@ -30,7 +30,7 @@
 	   
 		if (contratto.isFromFlussoAcquisti()){
 			   tabs = new String[][] {
-	               { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
+	               { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
 	               { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 	               { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
 	               { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
@@ -40,7 +40,7 @@
 			
 		} else {
 			   tabs = new String[][] {
-	               { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
+	               { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
 	               { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 	               { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
 	               { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
@@ -50,7 +50,7 @@
    } else {
 		if (contratto.isFromFlussoAcquisti()){
 			   tabs = new String[][] {
-		           { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
+		           { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
 		           { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 		           { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
 		           { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
@@ -59,7 +59,7 @@
 			
 		} else {
 			   tabs = new String[][] {
-		           { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
+		           { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
 		           { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 		           { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
 		           { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },

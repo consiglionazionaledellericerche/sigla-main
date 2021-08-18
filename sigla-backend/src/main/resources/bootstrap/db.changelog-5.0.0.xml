@@ -4691,4 +4691,52 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="ciro.salvio" id="addColumn-Tipo_dettaglio_contratto-contratto">
+        <addColumn tableName="contratto">
+            <column name="tipo_dettaglio_contratto" type="VARCHAR(3)"  remarks="Tipo Contratto: CAT=PER CATEGORIA GRUPPO ART=  PER ARTICOLO NULL= SENZA CAT GRUPPO E ARTICOLI">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="create-table-dettaglio-contratto">
+        <createTable remarks="Dettaglio Contratto" tableName="dettaglio_contratto">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_contratto" remarks="Progressivo contratto (cronologico all'interno dell'esercizio)" type="BIGINT"/>
+            <column name="esercizio_contratto" remarks="Esercizio del Contratto." type="SMALLINT"/>
+            <column name="stato_contratto" remarks="Stato del Contratto" type="CHAR(1)"/>
+            <column name="cd_bene_servizio" remarks="Codice identificativo del bene o servizio" type="VARCHAR(15)"/>
+            <column name="cd_unita_misura" remarks="Codice dell'unità di misura di ordine" type="VARCHAR(10)"/>
+            <column name="coef_conv" remarks="Coefficiente di conversione dell'unità di misura" type="numeric(12, 5)"/>
+            <column name="quantita_min" remarks="Quantità Max" type="numeric(15, 2)"/>
+            <column name="quantita_max" remarks="Quantità Max" type="numeric(15, 2)"/>
+            <column name="quantita_ordinata" remarks="Quantità Ordinata" type="numeric(15, 2)"/>
+            <column name="prezzo_unitario" remarks="Prezzo unitario dell'articolo/servizio" type="numeric(20, 6)"/>
+
+            <column name="cd_categoria_gruppo" remarks="Codice Categoria" type="VARCHAR(10)"/>
+            <column name="importo_ordinato" remarks="Importo Ordinato" type="numeric(21, 6)"/>
+
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="dettaglio_contratto_pkey" tableName="dettaglio_contratto"/>
+        <createSequence sequenceName="cnrseq00_dettaglio_contratto"/>
+        <addForeignKeyConstraint baseColumnNames="esercizio_contratto,stato_contratto,pg_contratto" baseTableName="dettaglio_contratto" constraintName="fk_detcont_contratto" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,stato,pg_contratto" referencedTableName="contratto"/>
+        <addForeignKeyConstraint baseColumnNames="cd_bene_servizio" baseTableName="dettaglio_contratto" constraintName="fk_detcont_beneservizio" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_bene_servizio" referencedTableName="bene_servizio"/>
+        <addForeignKeyConstraint baseColumnNames="cd_unita_misura" baseTableName="dettaglio_contratto" constraintName="fk_detcont_unitamisura" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_misura" referencedTableName="unita_misura"/>
+        <addForeignKeyConstraint baseColumnNames="cd_categoria_gruppo" baseTableName="dettaglio_contratto" constraintName="fk_detcont_catgrp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_categoria_gruppo" referencedTableName="categoria_gruppo_invent"/>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO01" tableName="dettaglio_contratto">
+            <column name="esercizio_contratto"/>
+            <column name="stato_contratto"/>
+            <column name="pg_contratto"/>
+        </createIndex>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO02" tableName="dettaglio_contratto">
+            <column name="cd_bene_servizio"/>
+        </createIndex>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO03" tableName="dettaglio_contratto">
+            <column name="CD_UNITA_MISURA"/>
+        </createIndex>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO04" tableName="dettaglio_contratto">
+            <column name="cd_categoria_gruppo"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

@@ -79,6 +79,17 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		ti_natura_contabileKeys.put(NATURA_CONTABILE_ATTIVO_E_PASSIVO,"Attivo e Passivo");
 		ti_natura_contabileKeys.put(NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI,"Senza flussi finanziari");
 	}
+	public static final java.util.Dictionary tipoDettaglioContrattoKeys = new it.cnr.jada.util.OrderedHashtable();
+
+
+	final public static String DETTAGLIO_CONTRATTO_CATGRP = "CAT";
+	final public static String DETTAGLIO_CONTRATTO_ARTICOLI = "ART";
+
+	static {
+		tipoDettaglioContrattoKeys.put(DETTAGLIO_CONTRATTO_CATGRP,"Categoria Gruppo");
+		tipoDettaglioContrattoKeys.put(DETTAGLIO_CONTRATTO_ARTICOLI,"Articoli");
+	}
+
 	private ContrattoBulk contratto_padre;
 	private TerzoBulk figura_giuridica_interna;
 	private TerzoBulk figura_giuridica_esterna;
@@ -238,8 +249,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 */
 	public final java.util.Dictionary getTi_natura_contabileKeys() {
 		return ti_natura_contabileKeys;
-	}		
-	
+	}
+
+	public final java.util.Dictionary getTipoDettaglioContrattoKeys() {
+		return tipoDettaglioContrattoKeys;
+	}
+
 	@StorageProperty(name="sigla_contratti:natura_contabile")
 	public String getDescrizioneNaturaContabile(){
 		return (String) Optional.ofNullable(getNatura_contabile()).map(x -> ti_natura_contabileKeys.get(x)).orElse(null);

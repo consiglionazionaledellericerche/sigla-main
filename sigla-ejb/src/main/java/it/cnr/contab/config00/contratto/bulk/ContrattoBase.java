@@ -156,7 +156,10 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 
 	// PG_PROGETTO DECIMAL(10,0) NOT NULL
 	private java.lang.Integer pg_progetto;
-	
+
+	// PG_PROGETTO VARCHAR2(3)
+	private String tipo_dettaglio_contratto;
+
 	public ContrattoBase() {
 		super();
 	}
@@ -590,5 +593,13 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	}
 	public void setPg_progetto(java.lang.Integer pg_progetto) {
 		this.pg_progetto = pg_progetto;
+	}
+
+	public String getTipo_dettaglio_contratto() {
+		return tipo_dettaglio_contratto;
+	}
+
+	public void setTipo_dettaglio_contratto(String tipo_dettaglio_contratto) {
+		this.tipo_dettaglio_contratto = tipo_dettaglio_contratto;
 	}
 }
