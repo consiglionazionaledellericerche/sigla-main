@@ -43,10 +43,7 @@ import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk;
@@ -81,7 +78,17 @@ implements	IDocumentoAmministrativoBulk,
 	private MagazzinoBulk unicoMagazzinoAbilitato = null;
 	protected BulkList listaRichiesteTrasformateInOrdine= new BulkList();
 	protected BulkList richiesteSelezionate= new BulkList();
+
+	public Boolean getAggiornaImpegniInAutomatico() {
+		return aggiornaImpegniInAutomatico;
+	}
+
+	public void setAggiornaImpegniInAutomatico(Boolean aggiornaImpegniInAutomatico) {
+		this.aggiornaImpegniInAutomatico = aggiornaImpegniInAutomatico;
+	}
+
 	protected BulkList richiesteDaTrasformareInOrdineColl= new BulkList();
+	private Boolean aggiornaImpegniInAutomatico = false;
 	private java.math.BigDecimal importoTotalePerObbligazione = new java.math.BigDecimal(0);
 	/**
 	 * [NOTA_PRECODIFICATA Rappresenta l'anagrafica delle note precodificate.]
@@ -887,16 +894,20 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		return this;
 	}
 	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-		impostaCds(context);
+		impostazioniIniziali(context);
 		return super.initialize(bp,context);
 	}
 	public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 		super.initializeForSearch(bp,context);
-		impostaCds(context);
+		impostazioniIniziali(context);
 		return this;
 	}
-	private void impostaCds(it.cnr.jada.action.ActionContext context) {
+	private void impostazioniIniziali(it.cnr.jada.action.ActionContext context) {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
+		if (isForFirma){
+			setStato(STATO_ALLA_FIRMA);
+		}
 	}
 	public OrdineAcqRigaBulk removeFromRigheOrdineColl(int index) 
 	{
@@ -928,7 +939,24 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		} else 
 			addToDocumentiContabiliCancellati(cons.getObbligazioneScadenzario());
 	}
-	
+
+	public void sostituisciConsegnaFromObbligazioniHash(OrdineAcqConsegnaBulk consegnaAggiornata){
+		Vector consAssociate = (Vector)ordineObbligazioniHash.get(consegnaAggiornata.getObbligazioneScadenzario());
+		OrdineAcqConsegnaBulk consegnaBulk = null;
+		for (Iterator i = consAssociate.iterator(); i.hasNext();){
+			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
+			if (cons.equalsByPrimaryKey(consegnaAggiornata)){
+				consegnaBulk = cons;
+			}
+		}
+
+		if (consegnaBulk != null) {
+			consAssociate.remove(consegnaBulk);
+			consAssociate.add(consegnaAggiornata);
+			ordineObbligazioniHash.put(consegnaAggiornata.getObbligazioneScadenzario(), consAssociate);
+		}
+	}
+
 	public void removeFromOrdineObbligazioniHash(OrdineAcqRigaBulk riga) {
 		for (Object bulk : riga.getRigheConsegnaColl()){
 			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulk;
@@ -1339,6 +1367,9 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 				.concat(this.getCdNumeratore())
 				.concat("/")
 				.concat(String.valueOf(this.getNumero()));
+	}
+	public String getDescrizioneObbligazione() {
+		return "Ordine "+getOrdineString();
 	}
 	public MagazzinoBulk getUnicoMagazzinoAbilitato() {
 		return unicoMagazzinoAbilitato;

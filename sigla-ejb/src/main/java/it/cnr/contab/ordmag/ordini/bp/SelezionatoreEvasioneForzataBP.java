@@ -23,8 +23,6 @@
  */
 package it.cnr.contab.ordmag.ordini.bp;
 
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
-import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.jada.UserContext;

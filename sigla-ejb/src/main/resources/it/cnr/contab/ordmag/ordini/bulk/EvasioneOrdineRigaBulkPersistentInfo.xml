@@ -57,6 +57,9 @@
         <columnMapping
                 columnName="CONSEGNA"
                 propertyName="ordineAcqConsegna.consegna"/>
+        <columnMapping
+                columnName="ID_MOVIMENTI_MAG"
+                propertyName="movimentiMag.pgMovimento"/>
     </defaultColumnMap>
 
     <columnMap
@@ -118,4 +121,6 @@
             partOfOid="true"/>
     <persistentProperty
             name="ordineAcqConsegna"/>
+    <persistentProperty
+            name="movimentiMag"/>
 </SQLPersistentInfo>

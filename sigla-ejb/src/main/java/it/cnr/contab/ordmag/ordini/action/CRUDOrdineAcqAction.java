@@ -969,7 +969,7 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
 
             Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
             filtro.setFornitore(ordine.getFornitore());
-            filtro.setDs_obbligazione("Ordine " + ordine.getOrdineString());
+            filtro.setDs_obbligazione(ordine.getNumero()== null ? "Acquisto" : ordine.getDescrizioneObbligazione());
             filtro.setIm_importo(calcolaTotaleSelezionati(models, false));
             filtro.setListaVociSelezionabili(listaCapitoli);
             filtro.setContratto(ordine.getContratto());

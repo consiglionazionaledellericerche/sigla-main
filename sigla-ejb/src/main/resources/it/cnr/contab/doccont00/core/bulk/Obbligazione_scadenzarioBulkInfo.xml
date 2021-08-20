@@ -61,9 +61,10 @@
 	<fieldProperty
 		name="im_associato_doc_amm"
 		property="im_associato_doc_amm"
-		label="im_associato_doc_amm"
+		label="Importo Associato"
 		inputType="TEXT"
-		enabledOnFreeSearch="false"		
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnFreeSearch="false"
 		/>
 	<fieldProperty
 		name="im_scadenza"

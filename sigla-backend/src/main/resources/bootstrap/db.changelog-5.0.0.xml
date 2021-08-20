@@ -4518,4 +4518,83 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create-table-inventariazione">
+        <createTable remarks="Inventariazione beni da Ordini." tableName="transito_beni_ordini">
+            <column name="id" remarks="Chiave Primaria." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_movimenti_mag" remarks="Identificativo del movimento di carico di magazzino" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PG_INVENTARIO" remarks=" Codice dell''inventario." type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ds_bene" remarks="Descrizione del bene" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_ammortamento" remarks="Tipologia dell'ammortamento.&#10;Il Dominio:&#10;O = Ordinario&#10;A = Accelerato&#10;L = aLtro" type="CHAR(1)"/>
+            <column name="fl_ammortamento" remarks="Indica se il bene deve essere ammortizzato.&#10;Il Dominio:&#10;Y = subisce ammortamento&#10;N = Non subisce ammortamento" type="CHAR(1)"/>
+            <column name="cd_condizione_bene" remarks="Codice della condizione del bene di inventario" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_commerciale_istituzionale" remarks="Flag per identificare se il bene risulta essere commerciale o istituzionale" type="CHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="valore_iniziale" remarks="Valore iniziale" type="numeric(20, 6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="collocazione" remarks="Descrizione della Collocazione (valorizzato in caso il bene sia un libro)" type="VARCHAR(50)"/>
+            <column name="cd_cds" remarks="Codice cds" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Codice dell&quot;unità organizzativa ottenuto per concatenzione del codice del CDS di afferenza e del proprio codice" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_ubicazione" remarks="Codice del'ubicazione completa della gerarchia" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_assegnatario" remarks="Progressivo identificativo del terzo (secondo livello dell'entità anagrafica)" type="INT"/>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="etichetta" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="esercizio_carico_bene" remarks="Indica l'esercizio di competenza del carico del bene nel patrimonio aziendale" type="SMALLINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_acquisizione" remarks="Data di acquisizione del bene" type="${date.type}"/>
+            <column name="cd_barre" remarks="Codice a Barre" type="INT"/>
+            <column name="targa" remarks="Numero targa" type="VARCHAR(8)"/>
+            <column name="seriale" type="VARCHAR(25)"/>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="transito_beni_ordini_pkey" tableName="transito_beni_ordini"/>
+        <createSequence sequenceName="CNRSEQ00_TRANSITO_BENI_ORDINI"/>
+        <addColumn tableName="tipo_carico_scarico">
+            <column name="fl_da_ordini" type="CHAR(1)" defaultValue="N" remarks="Indica se il tipo carico deriva da ordini">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-columns-for-carico-ordine-evasione-forzata">
+        <addColumn tableName="evasione_ordine_riga">
+            <column name="id_movimenti_mag" remarks="Identificativo del movimento di carico di magazzino" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="ordine_acq_consegna">
+            <column name="quantita_orig" remarks="Quantità ordine originale nel caso di evasione forzata in fase di carico ordine" type="numeric(12, 5)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
