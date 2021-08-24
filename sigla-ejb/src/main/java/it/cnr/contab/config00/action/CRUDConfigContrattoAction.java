@@ -70,39 +70,44 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	 * @return it.cnr.jada.action.Forward
 	 * @param context it.cnr.jada.action.ActionContext
 	 */
+
+	private BigDecimal getQuantitaOldCheck(Dettaglio_contrattoBulk riga, boolean originQuantitaMax ){
+		if ( originQuantitaMax)
+			return riga.getQuantitaMax();
+		return riga.getQuantitaMin();
+	}
+	private void setQuantitaOldCheck(Dettaglio_contrattoBulk riga, BigDecimal quantitaOld,boolean originQuantitaMax ){
+		if ( originQuantitaMax)
+			riga.setQuantitaMax(quantitaOld);
+		riga.setQuantitaMin(quantitaOld);
+	}
+	private void checkQuantitaMaxMin(ActionContext context,boolean originQuantitaMax) throws FillException, ApplicationException {
+		CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP) getBusinessProcess(context);
+		ContrattoBulk model=(ContrattoBulk)bp.getModel();
+		Dettaglio_contrattoBulk riga = (Dettaglio_contrattoBulk) bp.getCrudDettaglio_contratto().getModel();
+		BigDecimal quantitaOld=getQuantitaOldCheck(riga,originQuantitaMax);
+		fillModel(context);
+		if ( riga.getQuantitaMin().compareTo(riga.getQuantitaMax())>0) {
+			setQuantitaOldCheck( riga,quantitaOld,originQuantitaMax);
+			if ( originQuantitaMax)
+				throw new ApplicationException("La Quantità Massima deve essere maggiore o uguale della Quantità Minima");
+			throw new ApplicationException("La Quantità Minima deve essere minore o uguale della Quantità Massima");
+		}
+	}
 	public Forward doOnQuantitaMinChange(ActionContext context) {
 		try {
-			CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP) getBusinessProcess(context);
-			ContrattoBulk model=(ContrattoBulk)bp.getModel();
-			Dettaglio_contrattoBulk riga = (Dettaglio_contrattoBulk) bp.getCrudDettaglio_contratto().getModel();
-			BigDecimal quantitaMinOld = riga.getQuantitaMin();
-			fillModel(context);
-			if ( riga.getQuantitaMin().compareTo(riga.getQuantitaMax())>0) {
-				riga.setQuantitaMin(quantitaMinOld);
-				throw new ApplicationException("La Quantità Minima deve essere minore o uguale della Quantità Massima");
-			}
+			checkQuantitaMaxMin(context,false);
 			return context.findDefaultForward();
-
 		} catch (Throwable e) {
 			return handleException(context, e);
 		}
-
 	}
 
 	public Forward doOnQuantitaMaxChange(ActionContext context) {
 
 		try {
-			CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP) getBusinessProcess(context);
-			ContrattoBulk model=(ContrattoBulk)bp.getModel();
-			Dettaglio_contrattoBulk riga = (Dettaglio_contrattoBulk) bp.getCrudDettaglio_contratto().getModel();
-			BigDecimal quantitaMaxOld = riga.getQuantitaMax();
-			fillModel(context);
-			if ( riga.getQuantitaMin().compareTo(riga.getQuantitaMax())>0) {
-				riga.setQuantitaMax(quantitaMaxOld);
-				throw new ApplicationException("La Quantità Massima deve essere maggiore o uguale della Quantità Minima");
-			}
+			checkQuantitaMaxMin( context,true);
 			return context.findDefaultForward();
-
 		} catch (Throwable e) {
 			return handleException(context, e);
 		}
