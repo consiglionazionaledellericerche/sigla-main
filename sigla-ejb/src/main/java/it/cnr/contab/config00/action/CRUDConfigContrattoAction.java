@@ -33,6 +33,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -87,11 +88,19 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 		Dettaglio_contrattoBulk riga = (Dettaglio_contrattoBulk) bp.getCrudDettaglio_contratto().getModel();
 		BigDecimal quantitaOld=getQuantitaOldCheck(riga,originQuantitaMax);
 		fillModel(context);
-		if ( riga.getQuantitaMin().compareTo(riga.getQuantitaMax())>0) {
+		if (Utility.nvl( riga.getQuantitaMax()).compareTo(BigDecimal.ONE)>0 &&
+				Utility.nvl(riga.getQuantitaMin()).compareTo(riga.getQuantitaMax())>0) {
 			setQuantitaOldCheck( riga,quantitaOld,originQuantitaMax);
 			if ( originQuantitaMax)
 				throw new ApplicationException("La Quantità Massima deve essere maggiore o uguale della Quantità Minima");
 			throw new ApplicationException("La Quantità Minima deve essere minore o uguale della Quantità Massima");
+		}
+		if ( originQuantitaMax){
+			//check quantita ordinata
+			if (Utility.nvl( riga.getQuantitaMax()).compareTo(BigDecimal.ONE)>0 &&
+					Utility.nvl(riga.getQuantitaOrdinata()).compareTo(riga.getQuantitaMax())>0) {
+				throw new ApplicationException("La Quantità Massima deve essere maggiore o uguale alla Quantità Ordinata");
+			}
 		}
 	}
 	public Forward doOnQuantitaMinChange(ActionContext context) {
