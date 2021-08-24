@@ -3,12 +3,14 @@
  * Date 19/08/2021
  */
 package it.cnr.contab.config00.contratto.bulk;
+
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.contab.util.Utility;
+
+import java.math.BigDecimal;
+
 public class Dettaglio_contrattoBulk extends Dettaglio_contrattoBase {
 	/**
 	 * [CONTRATTO ]
@@ -173,5 +175,12 @@ public class Dettaglio_contrattoBulk extends Dettaglio_contrattoBase {
 			return false;
 		}
 		return true;
+	}
+	public boolean isNonCancellabile() {
+		if ( ContrattoBulk.DETTAGLIO_CONTRATTO_ARTICOLI.equals(this.getContratto().getTipo_dettaglio_contratto()))
+			return Utility.nvl(this.getQuantitaOrdinata()).compareTo(BigDecimal.ZERO)>0;
+		if ( ContrattoBulk.DETTAGLIO_CONTRATTO_CATGRP.equals(this.getContratto().getTipo_dettaglio_contratto()))
+			return Utility.nvl(this.getImportoOrdinato()).compareTo(BigDecimal.ZERO)>0;
+		return Boolean.FALSE;
 	}
 }

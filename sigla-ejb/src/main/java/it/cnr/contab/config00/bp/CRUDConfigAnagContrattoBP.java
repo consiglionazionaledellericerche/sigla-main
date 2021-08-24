@@ -28,6 +28,8 @@ import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.SIGLAGroups;
@@ -82,7 +84,13 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	protected Date dataStipulaParametri;
 	protected Boolean flagPubblicaContratto;
 	private boolean attivoOrdini = false;
-	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){};
+	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){
+		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+			if (((Dettaglio_contrattoBulk) detail).isNonCancellabile())
+				throw new ValidationException("Non è possibile cancellare dettaglio già utilizzato in un ordine.");
+
+		}
+	};
 
 	public boolean isAttivoOrdini() {
 		return attivoOrdini;
