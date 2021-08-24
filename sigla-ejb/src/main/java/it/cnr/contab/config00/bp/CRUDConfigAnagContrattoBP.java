@@ -82,13 +82,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	protected Date dataStipulaParametri;
 	protected Boolean flagPubblicaContratto;
 	private boolean attivoOrdini = false;
-	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){
-		/*
-		public boolean isShrinkable() {
-			Dettaglio_contrattoBulk Dettaglio_contrattoBulk = (Dettaglio_contrattoBulk) getParentModel();
-			return false;
-		}*/
-	};
+	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){};
 
 	public boolean isAttivoOrdini() {
 		return attivoOrdini;
