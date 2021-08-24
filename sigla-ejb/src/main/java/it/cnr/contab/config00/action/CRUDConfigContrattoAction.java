@@ -99,6 +99,7 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 			//check quantita ordinata
 			if (Utility.nvl( riga.getQuantitaMax()).compareTo(BigDecimal.ONE)>0 &&
 					Utility.nvl(riga.getQuantitaOrdinata()).compareTo(riga.getQuantitaMax())>0) {
+				setQuantitaOldCheck( riga,quantitaOld,originQuantitaMax);
 				throw new ApplicationException("La Quantità Massima deve essere maggiore o uguale alla Quantità Ordinata");
 			}
 		}
