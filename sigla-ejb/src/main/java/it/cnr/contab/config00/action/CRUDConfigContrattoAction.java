@@ -32,10 +32,7 @@ import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
-import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
-import it.cnr.contab.prevent01.bp.CRUDDettagliModuloCostiBP;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -48,6 +45,7 @@ import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.upload.UploadedFile;
+import it.cnr.si.spring.storage.StorageObject;
 
 import java.math.BigDecimal;
 
@@ -72,6 +70,43 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	 * @return it.cnr.jada.action.Forward
 	 * @param context it.cnr.jada.action.ActionContext
 	 */
+	public Forward doOnQuantitaMinChange(ActionContext context) {
+		try {
+			CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP) getBusinessProcess(context);
+			ContrattoBulk model=(ContrattoBulk)bp.getModel();
+			Dettaglio_contrattoBulk riga = (Dettaglio_contrattoBulk) bp.getCrudDettaglio_contratto().getModel();
+			BigDecimal quantitaMinOld = riga.getQuantitaMin();
+			fillModel(context);
+			if ( riga.getQuantitaMin().compareTo(riga.getQuantitaMax())>0) {
+				riga.setQuantitaMin(quantitaMinOld);
+				throw new ApplicationException("La Quantità Minima deve essere minore o uguale della Quantità Massima");
+			}
+			return context.findDefaultForward();
+
+		} catch (Throwable e) {
+			return handleException(context, e);
+		}
+
+	}
+
+	public Forward doOnQuantitaMaxChange(ActionContext context) {
+
+		try {
+			CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP) getBusinessProcess(context);
+			ContrattoBulk model=(ContrattoBulk)bp.getModel();
+			Dettaglio_contrattoBulk riga = (Dettaglio_contrattoBulk) bp.getCrudDettaglio_contratto().getModel();
+			BigDecimal quantitaMaxOld = riga.getQuantitaMax();
+			fillModel(context);
+			if ( riga.getQuantitaMin().compareTo(riga.getQuantitaMax())>0) {
+				riga.setQuantitaMax(quantitaMaxOld);
+				throw new ApplicationException("La Quantità Massima deve essere maggiore o uguale della Quantità Minima");
+			}
+			return context.findDefaultForward();
+
+		} catch (Throwable e) {
+			return handleException(context, e);
+		}
+	}
 	public Forward doOnTipoChange(ActionContext context) {
 
 		try{

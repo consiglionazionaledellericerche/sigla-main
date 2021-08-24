@@ -90,7 +90,8 @@
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		style="text-align: right"
 		enabledOnEdit="true"
-		label="Quantità Max" />
+		command="doOnQuantitaMinChange"
+		label="Quantità Min" />
 	<fieldProperty
 		name="quantitaMax"
 		property="quantitaMax"
@@ -98,6 +99,7 @@
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		style="text-align: right"
 		enabledOnEdit="true"
+		command="doOnQuantitaMaxChange"
 		label="Quantità Max" />
 	<fieldProperty
 		name="quantitaOrdinata"

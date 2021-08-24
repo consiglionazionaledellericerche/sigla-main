@@ -24,41 +24,17 @@
 package it.cnr.contab.config00.bp;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import javax.ejb.EJBException;
-import javax.ejb.RemoveException;
-import javax.servlet.ServletException;
-
 import it.cnr.contab.config00.contratto.bulk.*;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
-import it.cnr.contab.util.SIGLAGroups;
-import it.cnr.jada.action.Config;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -72,7 +48,23 @@ import it.cnr.jada.util.upload.UploadedFile;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.util.RecordFormatException;
+
+import javax.ejb.EJBException;
+import javax.ejb.RemoveException;
+import javax.servlet.ServletException;
+import java.io.*;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author mspasiano
@@ -90,7 +82,13 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	protected Date dataStipulaParametri;
 	protected Boolean flagPubblicaContratto;
 	private boolean attivoOrdini = false;
-	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this);
+	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){
+		/*
+		public boolean isShrinkable() {
+			Dettaglio_contrattoBulk Dettaglio_contrattoBulk = (Dettaglio_contrattoBulk) getParentModel();
+			return false;
+		}*/
+	};
 
 	public boolean isAttivoOrdini() {
 		return attivoOrdini;

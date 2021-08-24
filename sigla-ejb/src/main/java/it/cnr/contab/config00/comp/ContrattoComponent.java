@@ -36,18 +36,8 @@ import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -799,7 +789,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			
 			contratto.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, contratto, Ass_contratto_ditteBulk.LISTA_INVITATE)));
-			
+			contratto.setDettaglio_contratto(new it.cnr.jada.bulk.BulkList(testataHome.findDettaglioContratto(userContext, contratto)));
 			SQLBuilder sql = null;
 			SQLBuilder sql_liq = null;
 			SQLBuilder sql_pag = null;
@@ -1638,7 +1628,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Ass_contratto_uoBulk ass_contratto_uo = (Ass_contratto_uoBulk)j.next();
 				if(ass_contratto_uo.getCrudStatus()== OggettoBulk.NORMAL)
 					ass_contratto_uo.setCrudStatus(OggettoBulk.TO_BE_DELETED);
-			}			
+			}
+			for (java.util.Iterator j=contratto.getDettaglio_contratto().iterator();j.hasNext();){
+				Dettaglio_contrattoBulk dettaglio_contrattoBulk = (Dettaglio_contrattoBulk)j.next();
+				if(dettaglio_contrattoBulk.getCrudStatus()== OggettoBulk.NORMAL)
+					dettaglio_contrattoBulk.setCrudStatus(OggettoBulk.TO_BE_DELETED);
+			}
 			super.eliminaConBulk(userContext,contratto);
 			/* Inserisco il nuovo contratto 
 			   Recupero le uo associate al contratto e le lego a quello definitivo */		
@@ -1652,6 +1647,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				ass_contratto_ditte.setContratto(contrattoClone);
 				ass_contratto_ditte.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 			}
+			for (java.util.Iterator j=contrattoClone.getDettaglio_contratto().iterator();j.hasNext();){
+				Dettaglio_contrattoBulk dettaglio_contrattoBulk = (Dettaglio_contrattoBulk)j.next();
+				dettaglio_contrattoBulk.setContratto(contrattoClone);
+				dettaglio_contrattoBulk.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+			}
+
 			contrattoClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 			contrattoClone.setStato(ContrattoBulk.STATO_DEFINITIVO);
 
