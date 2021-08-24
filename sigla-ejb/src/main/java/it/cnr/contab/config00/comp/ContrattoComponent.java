@@ -116,6 +116,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
+import javax.swing.text.html.Option;
 
 /**
  * @author mspasiano
@@ -520,6 +521,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		if(oggettobulk instanceof ContrattoBulk)
 			try {
 				validaCampiObbligatori(usercontext,(ContrattoBulk)oggettobulk);
+				validaDettaglioContratto( usercontext,(ContrattoBulk)oggettobulk);
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);
 			} catch (IntrospectionException e) {
@@ -548,6 +550,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	public OggettoBulk modificaConBulk(UserContext userContext, ContrattoBulk bulk) throws ComponentException{
 		try {
 			validaCampiObbligatori(userContext,(ContrattoBulk)bulk);
+			validaDettaglioContratto( userContext,(ContrattoBulk)bulk);
 			ContrattoBulk contratto=(ContrattoBulk)bulk;
 			validaAssociazioneContrattoAccertamenti(userContext,(ContrattoBulk)bulk);
 
@@ -691,6 +694,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			testata.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, testata, Ass_contratto_ditteBulk.LISTA_INVITATE)));
 
+			testata.setDettaglio_contratto(new it.cnr.jada.bulk.BulkList(testataHome.findDettaglioContratto(userContext, testata )));
 			if (Optional.ofNullable(testata.getPg_progetto()).isPresent())
 				testata.setProgetto((ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(CNRUserContext.getEsercizio(userContext), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
 			
@@ -2398,5 +2402,23 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		} catch (Throwable e) {
 			throw handleException(e);
 		}
+	}
+	private void validaDettaglioContratto(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if (bulk.getTipo_dettaglio_contratto()!=null)
+			return;
+
+		if ( bulk.DETTAGLIO_CONTRATTO_CATGRP.equals( bulk.getTipo_dettaglio_contratto()))
+			validaRigheDettContrattoArticoli(uc,bulk);
+		if ( bulk.DETTAGLIO_CONTRATTO_CATGRP.equals( bulk.getTipo_dettaglio_contratto()))
+			validaRigheDettContrattoCatGrp(uc,bulk);
+
+	}
+	private void validaRigheDettContrattoArticoli(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if (bulk.getDettaglio_contratto()!=null)
+			throw new ApplicationException("Valida validaRigheDettContrattoArticoli errore");
+	}
+	private void validaRigheDettContrattoCatGrp(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if (bulk.getTipo_dettaglio_contratto()!=null)
+			throw new ApplicationException("Valida validaRigheDettContrattoCatGrp errore");
 	}
 }

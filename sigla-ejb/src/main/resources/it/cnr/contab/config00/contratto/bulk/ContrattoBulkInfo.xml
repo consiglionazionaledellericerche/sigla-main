@@ -674,6 +674,8 @@
                 keysProperty="tipoDettaglioContrattoKeys"
                 nullable="true"
                 enabledOnSearch="true"
+                command="doDefault"
+                readonlyProperty="ROTipoContratto"
                 label="Tipo Dettaglio Contratto" />
 	    <form name="searchtool">
 	          <formFieldProperty

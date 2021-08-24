@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoHome">
+	<defaultColumnMap
+		tableName="DETTAGLIO_CONTRATTO">
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="contratto.esercizio" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="unitaMisura.cdUnitaMisura" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="categoriaGruppoInvent.cd_categoria_gruppo" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="contratto" />
+	<persistentProperty
+		name="beneServizio" />
+	<persistentProperty
+		name="unitaMisura" />
+	<persistentProperty
+		name="categoriaGruppoInvent" />
+</SQLPersistentInfo>

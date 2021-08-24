@@ -8,7 +8,7 @@
 %>
 
 <% 
-	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);	
+	CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP)BusinessProcess.getBusinessProcess(request);
 %>
 <%!     static String[][] tabs = null;
 %>
@@ -49,25 +49,48 @@
 		}
    } else {
 		if (contratto.isFromFlussoAcquisti()){
+		    if (contratto.isPassivo() && bp.isAttivoOrdini() && contratto.getTipo_dettaglio_contratto()!=null){
 			   tabs = new String[][] {
 		           { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
 		           { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 		           { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
+		           { "tabDettaglioContratti","Dettaglio Contratto","/config00/tab_dettaglio_contratto.jsp" },
 		           { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
 	               { "tabAllegatiFlusso","Allegati Flusso","/config00/tab_contratti_allegati_flusso.jsp" },
 		           };
-			
+		    }else{
+		        tabs = new String[][] {
+		            { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
+                   { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
+                   { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
+                   { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
+                   { "tabAllegatiFlusso","Allegati Flusso","/config00/tab_contratti_allegati_flusso.jsp" },
+                  };
+		    }
 		} else {
+		    if (contratto.isPassivo() && bp.isAttivoOrdini() && contratto.getTipo_dettaglio_contratto()!=null){
 			   tabs = new String[][] {
 		           { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
 		           { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 		           { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
+		           { "tabDettaglioContratti","Dettaglio Contratto","/config00/tab_dettaglio_contratto.jsp" },
 		           { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
 		           };
+		    }else{
+		        tabs = new String[][] {
+                   { "tabTestata","Contratto","/config00/tab_contratti_testata.jsp" },
+                   { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
+                   { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
+                   { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
+                   };
+		    }
 		}
-	   
    }
 %>
+<%=contratto.isPassivo()%>
+<%=bp.isAttivoOrdini()%>
+<%=contratto.getTipo_dettaglio_contratto()%>
+
 <table class="Panel" width="100%">
 	<tr>
 		<td width="100%">

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBase"
+	keyClassName="it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoKey"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoHome">
+	<defaultColumnMap
+		tableName="DETTAGLIO_CONTRATTO">
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pgContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizioContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="statoContratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cdBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="cdUnitaMisura"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="COEF_CONV"
+			propertyName="coefConv"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_MIN"
+			propertyName="quantitaMin"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_MAX"
+			propertyName="quantitaMax"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_ORDINATA"
+			propertyName="quantitaOrdinata"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="PREZZO_UNITARIO"
+			propertyName="prezzoUnitario"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="cdCategoriaGruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_ORDINATO"
+			propertyName="importoOrdinato"
+			sqlTypeName="DECIMAL"
+			columnSize="21"
+			columnScale="6"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pgContratto" />
+	<persistentProperty
+		name="esercizioContratto" />
+	<persistentProperty
+		name="statoContratto" />
+	<persistentProperty
+		name="cdBeneServizio" />
+	<persistentProperty
+		name="cdUnitaMisura" />
+	<persistentProperty
+		name="coefConv" />
+	<persistentProperty
+		name="quantitaMin" />
+	<persistentProperty
+		name="quantitaMax" />
+	<persistentProperty
+		name="quantitaOrdinata" />
+	<persistentProperty
+		name="prezzoUnitario" />
+	<persistentProperty
+		name="cdCategoriaGruppo" />
+	<persistentProperty
+		name="importoOrdinato" />
+</SQLPersistentInfo>

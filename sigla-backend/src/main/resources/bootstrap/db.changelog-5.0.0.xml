@@ -4739,4 +4739,10 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="cd_categoria_gruppo"/>
         </createIndex>
     </changeSet>
+    <changeSet author="ciro.salvio" id="alter_quantita_dettaglio_contratto">
+        <modifyDataType tableName="dettaglio_contratto" columnName="quantita_min" newDataType="numeric(17, 5)"/>
+        <modifyDataType tableName="dettaglio_contratto" columnName="quantita_max" newDataType="numeric(17, 5)"/>
+        <modifyDataType tableName="dettaglio_contratto" columnName="quantita_ordinata" newDataType="numeric(17, 5)"/>
+    </changeSet>
+
 </databaseChangeLog>

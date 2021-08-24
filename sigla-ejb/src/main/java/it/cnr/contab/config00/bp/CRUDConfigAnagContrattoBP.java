@@ -42,17 +42,15 @@ import javax.ejb.EJBException;
 import javax.ejb.RemoveException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.config00.contratto.bulk.*;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.util.SIGLAGroups;
+import it.cnr.jada.action.Config;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -90,7 +88,25 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	private String tipoAccesso;
 	protected ContrattoService contrattoService;
 	protected Date dataStipulaParametri;
-	protected Boolean flagPubblicaContratto; 
+	protected Boolean flagPubblicaContratto;
+	private boolean attivoOrdini = false;
+	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this);
+
+	public boolean isAttivoOrdini() {
+		return attivoOrdini;
+	}
+	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		try {
+			attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(actioncontext.getUserContext());
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+		super.init(config, actioncontext);
+	}
+
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);
 	private SimpleDetailCRUDController crudAssUODisponibili = new SimpleDetailCRUDController( "Associazione UO Disponibili", Unita_organizzativaBulk.class, "associazioneUODisponibili", this);
 	private SimpleDetailCRUDController crudAssDitte = new SimpleDetailCRUDController( "ditte Invitate", Ass_contratto_ditteBulk.class, "ditteInvitate", this){
@@ -976,5 +992,9 @@ public SimpleDetailCRUDController getCrudAssDitte() {
 		catch (RecordFormatException e) {
 			throw new ApplicationException("Errore nella lettura del file!");
 		}
+	}
+
+	public SimpleDetailCRUDController getCrudDettaglio_contratto() {
+		return crudDettaglio_contratto;
 	}
 }
