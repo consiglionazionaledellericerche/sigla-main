@@ -83,6 +83,37 @@
 			columnSize="21"
 			columnScale="6"
 			nullable="true" />
+		<columnMapping
+				columnName="PG_VER_REC"
+				propertyName="pg_ver_rec"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="false" />
+		<columnMapping
+				columnName="UTCR"
+				propertyName="utcr"
+				sqlTypeName="VARCHAR"
+				columnSize="20"
+				nullable="false" />
+		<columnMapping
+				columnName="DACR"
+				propertyName="dacr"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="DUVA"
+				propertyName="duva"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="UTUV"
+				propertyName="utuv"
+				sqlTypeName="VARCHAR"
+				columnSize="20"
+				nullable="false" />
+
 	</defaultColumnMap>
 	<persistentProperty
 		name="pgContratto" />
@@ -108,4 +139,14 @@
 		name="cdCategoriaGruppo" />
 	<persistentProperty
 		name="importoOrdinato" />
+	<persistentProperty
+			name="pg_ver_rec" />
+	<persistentProperty
+			name="utcr" />
+	<persistentProperty
+			name="dacr" />
+	<persistentProperty
+			name="duva" />
+	<persistentProperty
+			name="utuv" />
 </SQLPersistentInfo>

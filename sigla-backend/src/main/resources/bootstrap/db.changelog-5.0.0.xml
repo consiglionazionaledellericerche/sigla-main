@@ -4744,5 +4744,24 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
         <modifyDataType tableName="dettaglio_contratto" columnName="quantita_max" newDataType="numeric(17, 5)"/>
         <modifyDataType tableName="dettaglio_contratto" columnName="quantita_ordinata" newDataType="numeric(17, 5)"/>
     </changeSet>
+    <changeSet author="ciro.salvio" id="alter_dettaglio_contratto_base_property">
+        <addColumn tableName="dettaglio_contratto">
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
