@@ -685,9 +685,11 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			testata.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, testata, Ass_contratto_ditteBulk.LISTA_INVITATE)));
 
 			testata.setDettaglio_contratto(new it.cnr.jada.bulk.BulkList(testataHome.findDettaglioContratto(userContext, testata )));
+
+
 			if (Optional.ofNullable(testata.getPg_progetto()).isPresent())
 				testata.setProgetto((ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(CNRUserContext.getEsercizio(userContext), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
-			
+			getHomeCache(userContext).fetchAll(userContext);
 			return calcolaTotDocCont(userContext,testata);
 		} catch(Exception e) {
 				throw handleException(e);
@@ -2405,21 +2407,29 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 	}
 	private void validaDettaglioContratto(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
-		if (bulk.getTipo_dettaglio_contratto()!=null)
-			return;
+		if ( Optional.ofNullable(bulk.getDettaglio_contratto()).filter(e->e.isEmpty()).isPresent())
+			throw new ApplicationException("Bisogna aggiungere almeno un dettaglio Contratto");
 
-		if ( bulk.DETTAGLIO_CONTRATTO_CATGRP.equals( bulk.getTipo_dettaglio_contratto()))
+		if ( bulk.DETTAGLIO_CONTRATTO_ARTICOLI.equals( bulk.getTipo_dettaglio_contratto()))
 			validaRigheDettContrattoArticoli(uc,bulk);
 		if ( bulk.DETTAGLIO_CONTRATTO_CATGRP.equals( bulk.getTipo_dettaglio_contratto()))
 			validaRigheDettContrattoCatGrp(uc,bulk);
 
 	}
 	private void validaRigheDettContrattoArticoli(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
-		if (bulk.getDettaglio_contratto()!=null)
-			throw new ApplicationException("Valida validaRigheDettContrattoArticoli errore");
+		for ( Dettaglio_contrattoBulk dettaglio_contrattoBulk:bulk.getDettaglio_contratto()){
+			if ( dettaglio_contrattoBulk.getCdBeneServizio()==null || dettaglio_contrattoBulk.getCdBeneServizio().isEmpty())
+				throw new ApplicationException("Selezionare il bene per tutti i dettagli Contratti");
+			if ( dettaglio_contrattoBulk.getPrezzoUnitario()==null ||dettaglio_contrattoBulk.getPrezzoUnitario().compareTo(BigDecimal.ZERO)<=0)
+				throw new ApplicationException("Inserire il Prezzo Unitario per tutti i dettagli Contratti");
+		}
+
 	}
 	private void validaRigheDettContrattoCatGrp(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
-		if (bulk.getTipo_dettaglio_contratto()!=null)
-			throw new ApplicationException("Valida validaRigheDettContrattoCatGrp errore");
+		for ( Dettaglio_contrattoBulk dettaglio_contrattoBulk:bulk.getDettaglio_contratto()){
+			if (dettaglio_contrattoBulk.getCdCategoriaGruppo()==null || dettaglio_contrattoBulk.getCdCategoriaGruppo().isEmpty())
+				throw new ApplicationException("Selezionare la Categoria/Gruppo tutti i dettagli Contratti");
+		}
+
 	}
 }

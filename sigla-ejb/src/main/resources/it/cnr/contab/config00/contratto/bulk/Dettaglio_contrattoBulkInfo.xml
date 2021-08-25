@@ -57,7 +57,7 @@
 			property="beneServizio.ds_bene_servizio"
 			maxLength="300"
 			inputSize="40"
-			inputType="ROTEXT"
+			inputType="TEXT"
 			label="Descr. Bene/Servizio"
 			caseSensitiveSearch="false" />
 	<fieldProperty
@@ -159,20 +159,6 @@
 		<formFieldProperty
 			name="id" />
 	</form>
-	<formFieldProperty
-		name="id" />
-	<formFieldProperty
-		name="coefConv" />
-	<formFieldProperty
-		name="quantitaMin" />
-	<formFieldProperty
-		name="quantitaMax" />
-	<formFieldProperty
-		name="quantitaOrdinata" />
-	<formFieldProperty
-		name="prezzoUnitario" />
-	<formFieldProperty
-		name="importoOrdinato" />
 	<findFieldProperty
 		name="id" />
 	<findFieldProperty
@@ -213,8 +199,6 @@
 		name="statoContratto" />
 	<columnFieldProperty
 		name="cdBeneServizio" />
-	<formFieldProperty
-			name="dsBeneServizio"/>
 	<columnFieldProperty
 		name="cdUnitaMisura" />
 	<columnFieldProperty
@@ -231,7 +215,22 @@
 		name="cdCategoriaGruppo" />
 	<columnFieldProperty
 		name="importoOrdinato" />
-
+	<formFieldProperty
+			name="id" />
+	<formFieldProperty
+			name="dsBeneServizio"/>
+	<formFieldProperty
+			name="coefConv" />
+	<formFieldProperty
+			name="quantitaMin" />
+	<formFieldProperty
+			name="quantitaMax" />
+	<formFieldProperty
+			name="quantitaOrdinata" />
+	<formFieldProperty
+			name="prezzoUnitario" />
+	<formFieldProperty
+			name="importoOrdinato" />
 	<formFieldProperty
 			name="findUnitaMisura" />
 	<formFieldProperty
