@@ -2407,6 +2407,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 	}
 	private void validaDettaglioContratto(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if (  bulk.getTipo_dettaglio_contratto() ==null ||  bulk.getTipo_dettaglio_contratto().isEmpty())
+			return;
 		if ( Optional.ofNullable(bulk.getDettaglio_contratto()).filter(e->e.isEmpty()).isPresent())
 			throw new ApplicationException("Bisogna aggiungere almeno un dettaglio Contratto");
 
