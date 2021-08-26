@@ -110,7 +110,7 @@ public class Stampa_inventarioHome extends BulkHome {
 			e.printStackTrace();
 		}
 		//LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class,null,"stampa_inventario");
-		/*LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class);
+		LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class);
 		SQLBuilder sql = lottoMagHome.createSQLBuilder();
 		sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
 		//sql.addTableToHeader("BENE_SERVIZIO");
@@ -123,6 +123,7 @@ public class Stampa_inventarioHome extends BulkHome {
 		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.DT_CARICO",SQLBuilder.LESS_EQUALS, new Timestamp(dt.getTime()));
 		try {
 			List<LottoMagBulk> l=lottoMagHome.fetchAll(sql);
+			getHomeCache().fetchAll(uc);
 			for ( LottoMagBulk m:l){
 				String descrBene=m.getBeneServizio().getDs_bene_servizio();
 				_log.info("Descrizione Bene Servizio="+descrBene);
@@ -131,7 +132,7 @@ public class Stampa_inventarioHome extends BulkHome {
 
 		} catch (PersistencyException e) {
 			e.printStackTrace();
-		}*/
+		}
 		List<StampaInventarioDTO> inventario= new ArrayList<StampaInventarioDTO>();
 		String sqlString="SELECT l.cd_magazzino cd_magazzino," +
 				"l.cd_bene_servizio cod_articolo," +
