@@ -43,6 +43,7 @@
 			formName="searchtool"
 			enabledOnSearch="true"
 			enabledOnEdit="true"
+			readonlyProperty="ROFindBeneServizio"
 			label="Bene/Servizio"/>
 	<fieldProperty
 		name="cdBeneServizio"
@@ -66,6 +67,7 @@
 			inputType="SEARCHTOOL"
 			formName="searchtool"
 			enabledOnSearch="true"
+			readonlyProperty="ROFindUniMisura"
 			label="Unità di Misura" />
 	<fieldProperty
 		name="cdUnitaMisura"
@@ -125,6 +127,7 @@
 			formName="searchtool"
 			enabledOnSearch="true"
 			label="Categoria Gruppo"
+			readonlyProperty="ROFindCatGrp"
 			enabledOnEdit="true" />
 
 	<fieldProperty

@@ -183,4 +183,17 @@ public class Dettaglio_contrattoBulk extends Dettaglio_contrattoBase {
 			return Utility.nvl(this.getImportoOrdinato()).compareTo(BigDecimal.ZERO)>0;
 		return Boolean.FALSE;
 	}
+	public boolean isROFindCatGrp(){
+		return (BigDecimal.ZERO.compareTo(Utility.nvl(this.getImportoOrdinato()))<0);
+	}
+	private boolean isRoBeneServizioUM(){
+		return (BigDecimal.ZERO.compareTo(Utility.nvl(this.getQuantitaOrdinata()))<0);
+	}
+	public boolean isROFindBeneServizio(){
+		return isRoBeneServizioUM();
+	}
+	public boolean isROFindUniMisura(){
+		return isRoBeneServizioUM();
+	}
+
 }
