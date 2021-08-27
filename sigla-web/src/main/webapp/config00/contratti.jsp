@@ -87,9 +87,6 @@
 		}
    }
 %>
-<%=contratto.isPassivo()%>
-<%=bp.isAttivoOrdini()%>
-<%=contratto.getTipo_dettaglio_contratto()%>
 
 <table class="Panel" width="100%">
 	<tr>
