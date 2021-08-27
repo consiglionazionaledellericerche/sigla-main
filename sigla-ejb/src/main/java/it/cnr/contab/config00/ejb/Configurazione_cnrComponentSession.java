@@ -76,5 +76,11 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
 
+    java.lang.Boolean isAssPrgAnagraficoAttiva(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.Boolean isImpegnoPluriennaleAttivo(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.Boolean isAccertamentoPluriennaleAttivo(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
 
 }

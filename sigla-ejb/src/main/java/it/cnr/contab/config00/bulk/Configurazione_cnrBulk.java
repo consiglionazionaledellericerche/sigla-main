@@ -125,6 +125,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_GESTIONE_PROGETTI = "PROGETTI";
     public final static String SK_PROGETTO_PIANO_ECONOMICO = "PIANO_ECONOMICO";
     public final static String SK_NATURA_REIMPIEGO = "NATURA_REIMPIEGO";
+	public final static String SK_ASS_PROGETTI_ANGAGRAFICO = "ASS_PROGETTI_ANGAGRAFICO";
 
 	public final static String PK_FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
 	public final static String SK_CODICE_ABI_BT = "CODICE_ABI_BT";
@@ -144,6 +145,13 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
 	public final static String PK_BLOCCO_RESIDUI = "BLOCCO_RESIDUI";
 	public final static String SK_NATURA_FINANZIAMENTO = "NATURA_FINANZIAMENTO";
+
+	public final static String PK_IMPEGNI = "IMPEGNI";
+	public final static String SK_IMPEGNI_PLURIENNALI = "IMPEGNI_PLURIENNALI";
+
+	public final static String PK_ACCERTAMENTI = "ACCERTAMENTI";
+	public final static String SK_ACCERTAMENTI_PLURIENNALI = "ACCERTAMENTI_PLURIENNALI";
+
 
 	public Configurazione_cnrBulk() {
 	super();
