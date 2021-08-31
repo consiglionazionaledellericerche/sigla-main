@@ -30,6 +30,7 @@ import org.springframework.util.StringUtils;
 
 public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 
+	public final static String AZIONE_DECREMENTA = "D";
 	public final static String AZIONE_AZZERA = "0";
 	public final static String AZIONE_SOSTITUISCE = "S";
 	public final static String AZIONE_SOTTRAE = "-";
@@ -400,6 +401,10 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 
 	public Boolean isMovimentoDiCarico(){
 		return getTipo() != null && (getTipo().equals(CARICO_MANUALE) || getTipo().equals(CARICO_AUTOMATICO) || getTipo().equals(CARICO_TRASFERIMENTO));
+	}
+
+	public Boolean isCaricoDaOrdine(){
+		return getTipo() != null && (getTipo().equals(CARICO_AUTOMATICO));
 	}
 
 	public boolean isROTipoMovimentoMagRifSearchTool(){

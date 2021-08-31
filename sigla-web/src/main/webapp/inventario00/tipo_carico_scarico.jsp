@@ -96,7 +96,15 @@
 				<% bp.getController().writeFormInput(out,null,"fl_vendita",bp.isEditing()||((tipoCS!=null) && tipoCS.isTrasferibile()),null,null);%>
 			  </td>
 		  </tr>	  
-		<% } %>		
+		  <tr>
+			  <td>
+				<% bp.getController().writeFormLabel(out,"fl_da_ordini");%>
+			  </td>
+			  <td>
+				<% bp.getController().writeFormInput(out,null,"fl_da_ordini",bp.isEditing()||((tipoCS!=null) && tipoCS.isTrasferibile()),null,null);%>
+			  </td>
+		  </tr>
+		<% } %>
 		<tr>
 		  <td>
 			<% bp.getController().writeFormLabel(out,"fl_buono_per_trasferimento");%>

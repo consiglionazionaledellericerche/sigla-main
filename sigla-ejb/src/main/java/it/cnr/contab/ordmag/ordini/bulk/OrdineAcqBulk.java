@@ -80,7 +80,16 @@ public class OrdineAcqBulk extends OrdineAcqBase
     protected BulkList<OrdineAcqRigaBulk> righeOrdineColl = new BulkList<OrdineAcqRigaBulk>();
     protected BulkList listaRichiesteTrasformateInOrdine = new BulkList();
     protected BulkList richiesteSelezionate = new BulkList();
+    public Boolean getAggiornaImpegniInAutomatico() {
+        return aggiornaImpegniInAutomatico;
+    }
+
+    public void setAggiornaImpegniInAutomatico(Boolean aggiornaImpegniInAutomatico) {
+        this.aggiornaImpegniInAutomatico = aggiornaImpegniInAutomatico;
+    }
+
     protected BulkList richiesteDaTrasformareInOrdineColl = new BulkList();
+    private Boolean aggiornaImpegniInAutomatico = false;
     protected TerzoBulk fornitore;
     //	private java.util.Collection modalita;
     private java.util.Collection termini;
@@ -982,18 +991,22 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
-        impostaCds(context);
+        impostazioniIniziali(context);
         return super.initialize(bp, context);
     }
 
     public OggettoBulk initializeForSearch(CRUDBP bp, it.cnr.jada.action.ActionContext context) {
         super.initializeForSearch(bp, context);
-        impostaCds(context);
+        impostazioniIniziali(context);
         return this;
     }
 
-    private void impostaCds(it.cnr.jada.action.ActionContext context) {
+    private void impostazioniIniziali(it.cnr.jada.action.ActionContext context) {
         setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
+        setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
+        if (isForFirma){
+            setStato(STATO_ALLA_FIRMA);
+        }
     }
 
     public OrdineAcqRigaBulk removeFromRigheOrdineColl(int index) {
@@ -1003,6 +1016,23 @@ public class OrdineAcqBulk extends OrdineAcqBase
         if (element != null && element.getDspObbligazioneScadenzario() != null)
             removeFromOrdineObbligazioniHash(element);
         return righeOrdineColl.remove(index);
+    }
+
+    public void sostituisciConsegnaFromObbligazioniHash(OrdineAcqConsegnaBulk consegnaAggiornata){
+        Vector consAssociate = (Vector)ordineObbligazioniHash.get(consegnaAggiornata.getObbligazioneScadenzario());
+        OrdineAcqConsegnaBulk consegnaBulk = null;
+        for (Iterator i = consAssociate.iterator(); i.hasNext();){
+            OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
+            if (cons.equalsByPrimaryKey(consegnaAggiornata)){
+                consegnaBulk = cons;
+            }
+        }
+
+        if (consegnaBulk != null) {
+            consAssociate.remove(consegnaBulk);
+            consAssociate.add(consegnaAggiornata);
+            ordineObbligazioniHash.put(consegnaAggiornata.getObbligazioneScadenzario(), consAssociate);
+        }
     }
 
     public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
@@ -1416,7 +1446,7 @@ public class OrdineAcqBulk extends OrdineAcqBase
             righeAssociate.add(cons);
             //Sono costretto alla rimozione della scadenza per evitare disallineamenti sul pg_ver_rec.
             //e quindi errori del tipo RisorsaNonPiuValida in fase di salvataggio
-			ordineObbligazioniHash.remove(obbligazione);
+            ordineObbligazioniHash.remove(obbligazione);
             //fattura_passiva_obbligazioniHash.put(obbligazione, righeAssociate);
         }
         ordineObbligazioniHash.put(obbligazione, righeAssociate);
@@ -1510,6 +1540,10 @@ public class OrdineAcqBulk extends OrdineAcqBase
                 .concat(this.getCdNumeratore())
                 .concat("/")
                 .concat(String.valueOf(this.getNumero()));
+    }
+
+    public String getDescrizioneObbligazione() {
+        return "Ordine "+getOrdineString();
     }
 
     public MagazzinoBulk getUnicoMagazzinoAbilitato() {

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniBase"
+	keyClassName="it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniKey"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniHome" >
+	<defaultColumnMap
+		tableName="TRANSITO_BENI_ORDINI" >
+		<columnMapping
+				columnName="PG_INVENTARIO"
+				propertyName="pg_inventario"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="true"/>
+		<columnMapping
+				columnName="ID_MOVIMENTI_MAG"
+				propertyName="id_movimenti_mag"
+				sqlTypeName="DECIMAL"
+				columnSize="12"
+				nullable="false"/>
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_INIZIALE"
+			propertyName="valore_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="COLLOCAZIONE"
+			propertyName="collocazione"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_UBICAZIONE"
+			propertyName="cd_ubicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_CARICO_BENE"
+			propertyName="esercizio_carico_bene"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_COMMERCIALE_ISTITUZIONALE"
+			propertyName="ti_commerciale_istituzionale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_AMMORTAMENTO"
+			propertyName="fl_ammortamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_AMMORTAMENTO"
+			propertyName="ti_ammortamento"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CONDIZIONE_BENE"
+			propertyName="cd_condizione_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ASSEGNATARIO"
+			propertyName="cd_assegnatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ACQUISIZIONE"
+			propertyName="dt_acquisizione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
+		<columnMapping
+			columnName="CD_BARRE"
+			propertyName="cd_barre"
+			sqlTypeName="DECIMAL"
+			columnSize="6" />	
+		<columnMapping
+			columnName="TARGA"
+			propertyName="targa"
+			sqlTypeName="VARCHAR"
+			columnSize="8" />		
+		<columnMapping
+			columnName="SERIALE"
+			propertyName="seriale"
+			sqlTypeName="VARCHAR"
+			columnSize="25" />				
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="valore_iniziale" />
+	<persistentProperty
+		name="collocazione" />
+	<persistentProperty
+		name="cd_ubicazione" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="etichetta" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="esercizio_carico_bene" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_commerciale_istituzionale" />
+	<persistentProperty
+		name="fl_ammortamento" />
+	<persistentProperty
+		name="ti_ammortamento" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_condizione_bene" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_assegnatario" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="dt_acquisizione" />
+	<persistentProperty
+		name="cd_barre" />
+	<persistentProperty
+		name="targa" />	
+	<persistentProperty
+		name="seriale" />
+	<persistentProperty
+			name="pg_inventario"/>
+	<persistentProperty
+			name="id_movimenti_mag"/>
+</SQLPersistentInfo>

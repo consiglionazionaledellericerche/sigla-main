@@ -107,7 +107,14 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+				columnName="ID_MOVIMENTI_MAG"
+				propertyName="id_movimenti_mag"
+				sqlTypeName="DECIMAL"
+				columnSize="12"/>
 	</defaultColumnMap>
+	<persistentProperty
+			name="id_movimenti_mag" />
 	<persistentProperty
 		name="cdCdsOrdine" />
 	<persistentProperty

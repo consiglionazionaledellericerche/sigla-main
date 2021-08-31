@@ -22,7 +22,6 @@ import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
@@ -30,17 +29,12 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
-import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineKey;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
@@ -116,12 +110,10 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
 
     }
 
-    public boolean checkUnitaOperAndMagazzino(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
+    public boolean checkFiltriObbligatori(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
         if (EVA_FORZATA_ORDINI.equalsIgnoreCase(getTipoSelezione())) {
-            if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent()) {
                 if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
                     return true;
-            }
             return false;
         }
         return true;
@@ -194,7 +186,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
             if (cs == null) return null;
             ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk = (ParametriSelezioneOrdiniAcqBulk) getModel();
             //if (parametriSelezioneOrdiniAcqBulk.isIndicatoAlmenoUnCriterioDiSelezione()){
-            if (!checkUnitaOperAndMagazzino(parametriSelezioneOrdiniAcqBulk))
+            if (!checkFiltriObbligatori(parametriSelezioneOrdiniAcqBulk))
                 throw new ApplicationException("E' necessario indicare Unità Operativa e Magazzino");
             if (isIndicatoAlmenoUnCriterioDiSelezione(parametriSelezioneOrdiniAcqBulk)) {
                 return cs.ricercaOrdiniAcqCons(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk,this.tipoSelezione);

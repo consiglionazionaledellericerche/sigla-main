@@ -29,6 +29,10 @@ import java.util.stream.Stream;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
@@ -171,7 +175,8 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 	    	List<MovimentiMagBulk> listaMovimentiScarico = new ArrayList<>();
 	
 			final List<OrdineAcqConsegnaBulk> consegneColl = evasioneOrdine.getRigheConsegnaSelezionate();
-			
+			OrdineAcqConsegnaHome consegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
+
 			@SuppressWarnings("unchecked")
 			final Supplier<Stream<OrdineAcqConsegnaBulk>> selectedElements = () ->
 			        Optional.ofNullable(consegneColl)
@@ -217,28 +222,61 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 			    				throw new DetailedRuntimeException("La consegna "+ordineConsegnaComp.getConsegnaOrdineString()+" è stata già evasa");
 	
 							//Creo una nuova consegna se richiesto 
-							if (ordineConsegna.isQuantitaEvasaMinoreOrdine() && ordineConsegna.isOperazioneCreaNuovaConsegna()){
-			    				OrdineAcqConsegnaBulk newConsegna = (OrdineAcqConsegnaBulk)ordineConsegna.clone();
-			    				newConsegna = (OrdineAcqConsegnaBulk)newConsegna.inizializza();
-			    				newConsegna.setConsegna(ordineRigaComp.getRigheConsegnaColl().size()+1);
-			    				newConsegna.setVecchiaConsegna(ordineConsegna.getConsegna());
-			    				newConsegna.setQuantita(ordineConsegna.getQuantita().subtract(ordineConsegna.getQuantitaEvasa()));
-			    				newConsegna.setCrudStatus(OggettoBulk.TO_BE_CREATED);
-			    				ordineRigaComp.addToRigheConsegnaColl(newConsegna);
+							if (ordineConsegna.isQuantitaEvasaMinoreOrdine()){
+								if (ordineConsegna.isOperazioneCreaNuovaConsegna()){
+									OrdineAcqConsegnaBulk newConsegna = (OrdineAcqConsegnaBulk)ordineConsegna.clone();
+									try {
+										getHomeCache(userContext).fetchAll(userContext,consegnaHome);
+									} catch (PersistencyException e) {
+										throw new DetailedRuntimeException(e);
+									} catch (ComponentException e) {
+										throw new DetailedRuntimeException(e);
+									}
 
-			    				if (Optional.ofNullable(newConsegna.getObbligazioneScadenzario()).isPresent())
-			    					ordineComp.addToOrdineObbligazioniHash(newConsegna.getObbligazioneScadenzario(), newConsegna);
-			    			}
+									newConsegna = (OrdineAcqConsegnaBulk)newConsegna.inizializza();
+									newConsegna.setConsegna(ordineRigaComp.getRigheConsegnaColl().size()+1);
+									newConsegna.setVecchiaConsegna(ordineConsegna.getConsegna());
+									newConsegna.setQuantita(ordineConsegna.getQuantita().subtract(ordineConsegna.getQuantitaEvasa()));
+									newConsegna.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+									ordineRigaComp.addToRigheConsegnaColl(newConsegna);
 
-							//Aggiorno la vecchia consegna 
+									if (Optional.ofNullable(newConsegna.getObbligazioneScadenzario()).isPresent()){
+										try {
+											Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
+											Obbligazione_scadenzarioBulk obbl = (Obbligazione_scadenzarioBulk)obblHome.findByPrimaryKey(newConsegna.getObbligazioneScadenzario());
+											ordineComp.addToOrdineObbligazioniHash(obbl, newConsegna);
+										} catch (ComponentException | PersistencyException e) {
+											throw new DetailedRuntimeException(e);
+										}
+									}
+								} else {
+									ordineConsegna.setQuantitaOrig(ordineConsegna.getQuantita());
+								}
+							}
+
 							ordineConsegna.setQuantita(ordineConsegna.getQuantitaEvasa());
 							ordineConsegna.setStato(OrdineAcqConsegnaBulk.STATO_EVASA);
 							ordineConsegna.setToBeUpdated();
 	
 							//rimuovo la vecchia consegna
 							ordineRigaComp.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
+
 							//inserisco la nuova consegna
 							ordineRigaComp.getRigheConsegnaColl().add(ordineConsegna);
+							if (ordineConsegna.getQuantitaOrig() != null){
+								ordineComp.sostituisciConsegnaFromObbligazioniHash(ordineConsegna);
+								ordineComp.setAggiornaImpegniInAutomatico(true);
+							}
+							try {
+								Bene_servizioHome bene_servizioHome = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+								Bene_servizioBulk bene_servizioBulk = (Bene_servizioBulk)bene_servizioHome.findByPrimaryKey(ordineRigaComp.getBeneServizio());
+								if (bene_servizioBulk.getFl_gestione_inventario()){
+
+								}
+							} catch (ComponentException | PersistencyException e) {
+								e.printStackTrace();
+							}
+
 							listaConsegneEvase.add(ordineConsegna);
 						});
 					});
@@ -265,12 +303,16 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 					//effettuo la movimentazione di magazzino
 					try {
 						Optional.ofNullable(movimentiMagComponent.caricoDaOrdine(userContext, evasioneOrdineRiga.getOrdineAcqConsegna(), evasioneOrdineRiga))
-							.ifPresent(listaMovimentiScarico::add);
+							.ifPresent(
+									movimentoCarico -> {
+										listaMovimentiScarico.add(movimentoCarico);
+										evasioneOrdineRiga.setMovimentiMag(movimentoCarico);
+									});
 					} catch (ComponentException|RemoteException|PersistencyException e) {
 						throw new DetailedRuntimeException(e);
 					}
 				}
-	
+
 				//rendo permanente l'evasione ordine
 				assegnaProgressivo(userContext, evasioneOrdine);
 				creaConBulk(userContext, evasioneOrdine);

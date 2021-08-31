@@ -20,12 +20,23 @@
  * Date 21/09/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+
 import java.util.Optional;
 
 public class EvasioneOrdineRigaBulk extends EvasioneOrdineRigaBase {
+	public MovimentiMagBulk getMovimentiMag() {
+		return movimentiMag;
+	}
+
+	public void setMovimentiMag(MovimentiMagBulk movimentiMag) {
+		this.movimentiMag = movimentiMag;
+	}
+
 	/**
 	 * [EVASIONE_ORDINE Evasione ordine, con indicazione dei dati della bolla di consegna.]
 	 **/
+	private MovimentiMagBulk movimentiMag;
 	private EvasioneOrdineBulk evasioneOrdine =  new EvasioneOrdineBulk();
 	/**
 	 * [ORDINE_ACQ_CONSEGNA Consegna Ordine d'Acquisto]

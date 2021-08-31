@@ -36,17 +36,9 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
-import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_entrate_pgiroBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_accertamentiBulk;
 import it.cnr.contab.ordmag.anag00.*;
 import it.cnr.contab.ordmag.magazzino.bulk.*;
-import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
@@ -296,7 +288,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 		return caricoMagazzino;
     }
 
-    public void annullaMovimento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare) throws ComponentException, PersistencyException {
+    public void annullaMovimento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare) throws ComponentException, PersistencyException, RemoteException, ApplicationException {
     	controlliAnnullamento(userContext, movimentoDaAnnullare);
     	MovimentiMagBulk movimentoDiStorno = preparaMovimentoDiAnnullamento(userContext, movimentoDaAnnullare);
     	movimentoDaAnnullare = (MovimentiMagBulk)findByPrimaryKey(userContext, movimentoDaAnnullare);
@@ -320,17 +312,49 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     }
 
 	private MovimentiMagBulk effettuaAnnullamento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare,
-			MovimentiMagBulk movimentoDiStorno) throws ComponentException, PersistencyException, ApplicationException {
+			MovimentiMagBulk movimentoDiStorno) throws ComponentException, PersistencyException, ApplicationException, RemoteException {
 		movimentoDiStorno = (MovimentiMagBulk)super.creaConBulk(userContext, movimentoDiStorno);
 		movimentoDaAnnullare.setStato(MovimentiMagBulk.STATO_ANNULLATO);
 		movimentoDaAnnullare.setDtCancellazione(movimentoDiStorno.getDtMovimento());
 		movimentoDaAnnullare.setPgMovimentoAnn(movimentoDiStorno.getPgMovimento());
+		if (movimentoDaAnnullare.getTipoMovimentoMag().isCaricoDaOrdine()){
+			aggiornaOrdineCaricoDaAnnullare(userContext, movimentoDaAnnullare);
+		}
 		movimentoDaAnnullare.setToBeUpdated();
 		modificaConBulk(userContext, movimentoDaAnnullare);
 		if (movimentoDaAnnullare.getBollaScaricoMag() != null && movimentoDaAnnullare.getBollaScaricoMag().getPgBollaSca() != null ){
 			annullaRigaBollaDiScarico(userContext, movimentoDaAnnullare);
 		}
 		return movimentoDiStorno;
+	}
+	private void aggiornaOrdineCaricoDaAnnullare(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare)
+			throws ComponentException, PersistencyException, ApplicationException, RemoteException {
+		OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
+		OrdineAcqConsegnaBulk consegnaDaRipristinare = movimentoDaAnnullare.getLottoMag().getOrdineAcqConsegna();
+		OrdineAcqConsegnaHome home = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
+		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)home.findByPrimaryKey(userContext, consegnaDaRipristinare);
+		OrdineAcqBulk ordine = (OrdineAcqBulk)ordineComponent.inizializzaBulkPerModifica(userContext, consegna.getOrdineAcqRiga().getOrdineAcq());
+
+		ordine.getRigheOrdineColl().stream().forEach(ordineRiga->{
+			OrdineAcqConsegnaBulk ordineConsegnaComp =
+						Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
+								.filter(list -> !list.isEmpty())
+								.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
+								.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
+			consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+			if (consegna.getQuantitaOrig() != null){
+				consegna.setQuantita(consegna.getQuantitaOrig());
+				consegna.setQuantitaOrig(null);
+				ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
+				ordine.setAggiornaImpegniInAutomatico(true);
+			}
+			ordine.setToBeUpdated();
+			//rimuovo la vecchia consegna
+			ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
+			//inserisco la nuova consegna
+			ordineRiga.getRigheConsegnaColl().add(consegna);
+		});
+		ordineComponent.modificaConBulk(userContext, ordine);
 	}
 
 	private void annullaRigaBollaDiScarico(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare)
@@ -361,7 +385,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 				if (lista != null && !lista.isEmpty()){
 					for (Object obj : lista){
 						MovimentiMagBulk mag = (MovimentiMagBulk)obj;
-						if (mag.getPgMovimento().compareTo(movimentoDaAnnullare.getPgMovimento()) != 0 && mag.getPgMovimento().compareTo(movimentoDaAnnullare.getPgMovimentoRif()) != 0){
+						if (movimentoDaAnnullare.getPgMovimentoRif() != null && mag.getPgMovimento().compareTo(movimentoDaAnnullare.getPgMovimento()) != 0 && mag.getPgMovimento().compareTo(movimentoDaAnnullare.getPgMovimentoRif()) != 0){
 							throw new ApplicationException("Impossibile annullare il movimento. Esiste un altro movimento con progressivo "+mag.getPgMovimento() + " per il lotto del movimento per cui si sta chiedendo l'annullamento");
 						}
 					}
@@ -714,8 +738,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     		sql.addSQLClause("AND","CD_TERZO",SQLBuilder.EQUALS,parametri.getTerzo().getCd_terzo());
     	} 
     	if (parametri.getTipoMovimentoMag() != null && parametri.getTipoMovimentoMag().getCdTipoMovimento() != null){
-    		sql.addSQLClause("AND","CD_TIPO_MOVIMENTO",SQLBuilder.EQUALS,parametri.getTipoMovimentoMag().getCdTipoMovimento());
-    	} 
+     	}
         sql.generateJoin("lottoMag", "LOTTO_MAG");
         sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
     	
