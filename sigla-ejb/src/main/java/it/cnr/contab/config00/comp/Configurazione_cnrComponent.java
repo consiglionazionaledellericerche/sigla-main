@@ -21,6 +21,7 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrKey;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
@@ -690,6 +691,57 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         }
     }
 
+    public Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException {
+        try {
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE,
+                    Configurazione_cnrBulk.IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        return Boolean.FALSE;
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale parallela
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomicaParallela(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .isAttivaEconomicaParallela(userContext);
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attivo il blocco delle scritture di economica
+     * @throws PersistencyException
+     */
+    public boolean isBloccoScrittureProposte(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .isBloccoScrittureProposte(userContext);
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
     public Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException {
         try {
             Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
