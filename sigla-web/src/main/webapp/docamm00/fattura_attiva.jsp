@@ -40,72 +40,16 @@ function doRistampaFatturaElettronica() {
 </script>
 </head>
 <body class="Form">
-<%	bp.openFormWindow(pageContext);
-	String[][] pages = null;
-	if (bp.getModel() instanceof Nota_di_credito_attivaBulk) {
-		Nota_di_credito_attivaBulk ndc = (Nota_di_credito_attivaBulk)bp.getModel();
-		int length = 0;
-		int offset = 4;
-		java.util.Hashtable accertamenti = ndc.getFattura_attiva_accertamentiHash();
-		java.util.Hashtable obbligazioni = ndc.getObbligazioniHash();
-		boolean hasAccertamenti = !(accertamenti == null || accertamenti.isEmpty());
-		boolean hasObbligazioni = !(obbligazioni == null || obbligazioni.isEmpty());
-
-		String [][] defaultPages = new String[][] {
-					{ "tabFatturaAttiva","Testata","/docamm00/tab_fattura_attiva.jsp" },
-					{ "tabCliente","Cliente","/docamm00/tab_cliente.jsp" },					
-					{ "tabFatturaAttivaDettaglio","Dettaglio","/docamm00/tab_fattura_attiva_dettaglio.jsp" }, 
-					{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" },
-					{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" },
-					{ "tabFatturaAttivaObbligazioni","Impegni","/docamm00/tab_fattura_attiva_obbligazioni.jsp" }
-					//,{ "tabFatturaAttivaAllegati","Allegati Aggiunti","/docamm00/tab_fattura_attiva_allegati.jsp" }
-					//,{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" }
-				};
-
-		if (ndc == null) {
-			pages = defaultPages;
-		} else {
-			if (!hasObbligazioni && !hasAccertamenti)
-				pages = defaultPages;
-			else {
-				pages = new String[defaultPages.length-1][3];
-				for (int i = 0; i < pages.length-1; i++)
-					pages[i] = defaultPages[i];
-				pages[pages.length-1] = (hasAccertamenti)?
-					new String[] { "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" }:
-					new String[] { "tabFatturaAttivaObbligazioni","Impegni","/docamm00/tab_fattura_attiva_obbligazioni.jsp" };
-					//pages[pages.length-1] = new String[] { "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" };
-			}
-		}
-	} else {
-		if (bp.getModel() instanceof Fattura_attiva_IBulk && ((Fattura_attiva_IBulk)bp.getModel()).getPg_fattura_attiva() != null) {
-			pages = new String[][] {
-					{ "tabFatturaAttiva","Testata","/docamm00/tab_fattura_attiva.jsp" },
-					{ "tabCliente","Cliente","/docamm00/tab_cliente.jsp" },					
-					{ "tabFatturaAttivaDettaglio","Dettaglio","/docamm00/tab_fattura_attiva_dettaglio.jsp" }, 
-					{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" },
-					{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" },
-					{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" },
-					{ "tabFatturaAttivaAllegati","Allegati Aggiunti","/docamm00/tab_fattura_attiva_allegati.jsp" }
-				};
-		}else {
-			pages = new String[][] {
-					{ "tabFatturaAttiva","Testata","/docamm00/tab_fattura_attiva.jsp" },
-					{ "tabCliente","Cliente","/docamm00/tab_cliente.jsp" },					
-					{ "tabFatturaAttivaDettaglio","Dettaglio","/docamm00/tab_fattura_attiva_dettaglio.jsp" }, 
-					{ "tabFatturaAttivaConsuntivo","Consuntivo","/docamm00/tab_fattura_attiva_consuntivo.jsp" },
-					{ "tabFatturaAttivaAccertamenti","Accertamenti","/docamm00/tab_fattura_attiva_accertamenti.jsp" },
-					{ "tabFatturaAttivaIntrastat","Intrastat","/docamm00/tab_fattura_attiva_intrastat.jsp" }
-				};
-		}
-	}
+<%
+    bp.openFormWindow(pageContext);
 	JSPUtils.tabbed(
 					pageContext,
 					"tab",
-					pages,
+					bp.getTabs(),
 					bp.getTab("tab"),
 					"center",
 					"100%",
 					null );
-	bp.closeFormWindow(pageContext); %>
+	bp.closeFormWindow(pageContext);
+%>
 </body>

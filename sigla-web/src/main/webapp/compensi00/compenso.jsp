@@ -45,14 +45,7 @@
 	<td><% JSPUtils.tabbed(
 					pageContext,
 					"tab",
-					new String[][] {
-						{ "tabCompenso","Compenso","/compensi00/tab_compenso.jsp" },
-						{ "tabCompensoTerzo","Terzo","/compensi00/tab_compenso_terzo.jsp" },
-						{ "tabCompensoDatiLiquidazione","Dati Liquidazione","/compensi00/tab_compenso_dati_liquidazione.jsp" },
-						{ "tabCompensoContributiRitenute","Contributi e Ritenute","/compensi00/tab_compenso_contributi_ritentute.jsp" },
-						{ "tabCompensoObbligazioni","Impegni","/compensi00/tab_compenso_obbligazioni.jsp" },
-						{ "tabCompensoDocumentiAssociati","Documenti Associati","/compensi00/tab_compenso_documenti_associati.jsp" },
-					},
+					bp.getTabs(),
 					bp.getTab("tab"),
 					"center",
 					"100%",

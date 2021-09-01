@@ -17,10 +17,14 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -118,6 +122,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     private java.util.Dictionary tipoDocumentoPerRicercaKeys;
     private java.math.BigDecimal im_residuo_reversale;
     private boolean siopeDaCompletare = false;
+    private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
 
     public ReversaleBulk() {
         super();
@@ -194,8 +199,6 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
      * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
      * bulk da rendere persistenti insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
-     *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
      */
     public BulkCollection[] getBulkLists() {
         return new it.cnr.jada.bulk.BulkCollection[]{
@@ -206,8 +209,6 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
      * Restituisce un array di <code>OggettoBulk</code> da rendere persistenti
      * insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
-     *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
      */
     public OggettoBulk[] getBulksForPersistentcy() {
         return new OggettoBulk[]{
@@ -389,7 +390,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     /**
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getReversale_rigaColl() {
+    public it.cnr.jada.bulk.BulkList<Reversale_rigaBulk> getReversale_rigaColl() {
         return reversale_rigaColl;
     }
 
@@ -859,4 +860,43 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
         if (getV_man_rev() != null)
             getV_man_rev().setPg_documento_cont(pg_reversale_riemissione);
     }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_documento_cont();
+    }
+
+    @Override
+    public String getCd_uo() {
+        return this.getCd_unita_organizzativa();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_documento_cont();
+    }
+
+    @Override
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
+    }
+
+    @Override
+    public TerzoBulk getTerzo() {
+        return Optional.ofNullable(this.getReversale_terzo()).flatMap(el->Optional.ofNullable(el.getTerzo())).orElse(null);
+    }
+
+    @Override
+    public java.lang.Long getPg_manrev() {
+        return this.getPg_reversale();
+    }
+
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        return scrittura_partita_doppia;
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
 }

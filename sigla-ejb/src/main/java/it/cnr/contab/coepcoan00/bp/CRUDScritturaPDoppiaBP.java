@@ -26,6 +26,8 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  */
 
 public class CRUDScritturaPDoppiaBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+    public static final String[] TAB_ECONOMICA = new String[]{"tabEconomica", "Economico/Patrimoniale", "/coepcoan00/tab_doc_economica.jsp"};
+
     private final SimpleDetailCRUDController movimentiDare = new SimpleDetailCRUDController("MovimentiDare", it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class, "movimentiDareColl", this);
     private final SimpleDetailCRUDController movimentiAvere = new SimpleDetailCRUDController("MovimentiAvere", it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk.class, "movimentiAvereColl", this);
 

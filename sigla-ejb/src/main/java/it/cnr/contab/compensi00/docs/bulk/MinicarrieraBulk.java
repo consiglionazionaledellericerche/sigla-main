@@ -29,6 +29,7 @@ import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -57,9 +58,6 @@ public class MinicarrieraBulk
 	public static final String TIPO_ANTICIPO = "A";
 	public static final String TIPO_POSTICIPO = "P";
 
-	public final static String TIPO_COMPENSO_COMMERCIALE = "C";
-	public final static String TIPO_COMPENSO_ISTITUZIONALE = "I";
-
 	static {
 		STATI = new it.cnr.jada.util.OrderedHashtable();
 		STATI.put(STATO_ATTIVA, "Attiva");
@@ -74,8 +72,9 @@ public class MinicarrieraBulk
 		STATI_ASS_COMPENSO.put(STATO_TOTALE_ASS_COMPENSO, "Totalmente associata a compenso");
 
 		TIPI_COMPENSO = new it.cnr.jada.util.OrderedHashtable();
-		TIPI_COMPENSO.put(TIPO_COMPENSO_COMMERCIALE,"Commerciale");
-		TIPI_COMPENSO.put(TIPO_COMPENSO_ISTITUZIONALE,"Istituzionale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			TIPI_COMPENSO.put(tipoIVA.value(), tipoIVA.label());
+		}
 	}
 	
 	private java.lang.Long pgMinicarrieraPerClone;
@@ -1050,7 +1049,7 @@ private void reset(it.cnr.jada.action.ActionContext context) {
 	setTi_anagrafico(Tipo_rapportoBulk.ALTRO);
 	setFl_tassazione_separata(Boolean.FALSE);
 	setFl_escludi_qvaria_deduzione(Boolean.FALSE);
-	setTi_istituz_commerc(TIPO_COMPENSO_ISTITUZIONALE);
+	setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 	resetTassazioneSeparataData();
 	
 	setTi_anticipo_posticipo(TIPO_NESSUNO);

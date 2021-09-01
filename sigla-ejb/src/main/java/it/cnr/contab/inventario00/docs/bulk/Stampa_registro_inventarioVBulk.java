@@ -23,6 +23,8 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.inventario00.tabrif.bulk.*;
+import it.cnr.contab.util.enumeration.TipoIVA;
+
 /**
  * Insert the type's description here.
  * Creation date: (21/07/2004 16.55.43)
@@ -67,14 +69,13 @@ public class Stampa_registro_inventarioVBulk extends it.cnr.jada.bulk.OggettoBul
 	private Boolean fl_solo_totali = new Boolean(false);
 	private String ti_commerciale_istituzionale;	
 	public final static java.util.Dictionary ISTITUZIONALE_COMMERCIALE;
-	public final static String ISTITUZIONALE      = "I";
-	public final static String COMMERCIALE      = "C";
 	static {
 		
 		ISTITUZIONALE_COMMERCIALE = new it.cnr.jada.util.OrderedHashtable();
-		ISTITUZIONALE_COMMERCIALE.put(ISTITUZIONALE,"Istituzionale");
-		ISTITUZIONALE_COMMERCIALE.put(COMMERCIALE,"Commerciale");
-		};
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ISTITUZIONALE_COMMERCIALE.put(tipoIVA.value(), tipoIVA.label());
+		}
+	};
 /**
  * Stampa_registro_inventarioVBulk constructor comment.
  */

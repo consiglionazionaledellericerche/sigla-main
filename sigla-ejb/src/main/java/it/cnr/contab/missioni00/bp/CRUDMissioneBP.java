@@ -19,8 +19,12 @@ package it.cnr.contab.missioni00.bp;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
@@ -38,6 +42,7 @@ import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
@@ -77,7 +82,7 @@ import java.util.stream.Collectors;
          */
 
 public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, MissioneBulk>
-        implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP {
+        implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP, IDocAmmEconomicaBP {
     private final SimpleDetailCRUDController tappaController = new SimpleDetailCRUDController("Tappa", Missione_tappaBulk.class, "tappeMissioneColl", this) {
         @Override
         public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
@@ -141,6 +146,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     private boolean carryingThrough = false;
     private boolean ribaltato;
     private MissioniCMISService missioniCMISService;
+
     private final SimpleDetailCRUDController dettaglioSpesaAllegatiController = new SimpleDetailCRUDController("AllegatiDettaglioSpesa", AllegatoMissioneDettaglioSpesaBulk.class, "dettaglioSpesaAllegati", spesaController) {
         @Override
         protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -180,6 +186,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
             return add;
         }
     };
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDMissioneBP constructor comment.
@@ -1210,11 +1219,11 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     protected void init(Config config, ActionContext context) throws BusinessProcessException {
         try {
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             verificoUnitaENTE(context);
         } catch (Throwable e) {
             throw handleException(e);
         }
-
         super.init(config, context);
     }
 
@@ -2876,5 +2885,58 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
         if (!missione.isSalvataggioTemporaneo()) {
             super.gestioneCancellazioneAllegati(allegatoParentBulk);
         }
+    }
+
+    private static final String[] TAB_TESTATA = new String[]{ "tabTestata","Testata","/missioni00/tab_missione_testata.jsp" };
+    private static final String[] TAB_ANAGRAFICO = new String[]{ "tabAnagrafico","Anagrafico","/missioni00/tab_missione_anagrafico.jsp" };
+    private static final String[] TAB_CONFIGURAZIONE_TAPPE = new String[]{ "tabConfigurazioneTappe","Configurazione tappe","/missioni00/tab_missione_configurazione_tappa.jsp" };
+    private static final String[] TAB_DETTAGLIO_SPESE = new String[]{ "tabDettaglioSpese","Dettaglio spese","/missioni00/tab_missione_dettaglio_spese.jsp" };
+    private static final String[] TAB_DETTAGLIO_DIARIA = new String[]{ "tabDettaglioDiaria","Dettaglio diaria","/missioni00/tab_missione_dettaglio_diaria.jsp" };
+    private static final String[] TAB_DETTAGLIO_RIMBORSO = new String[]{ "tabDettaglioRimborso","Dettaglio rimborso","/missioni00/tab_missione_dettaglio_rimborso.jsp" };
+    private static final String[] TAB_OBBLIGAZIONE = new String[]{ "tabObbligazione","Documenti associati","/missioni00/tab_missione_obbligazione.jsp" };
+    private static final String[] TAB_CONSUNTIVO = new String[]{ "tabConsuntivo","Consuntivo","/missioni00/tab_missione_consuntivo.jsp" };
+    private static final String[] TAB_ALLEGATI = new String[]{ "tabAllegati","Allegati","/missioni00/tab_missione_allegati.jsp" };
+
+    public String[][] getTabs() {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        pages.put(i++, TAB_TESTATA);
+        pages.put(i++, TAB_ANAGRAFICO);
+        pages.put(i++, TAB_CONFIGURAZIONE_TAPPE);
+        pages.put(i++, TAB_DETTAGLIO_SPESE);
+        pages.put(i++, TAB_DETTAGLIO_DIARIA);
+        pages.put(i++, TAB_DETTAGLIO_RIMBORSO);
+        pages.put(i++, TAB_OBBLIGAZIONE);
+        pages.put(i++, TAB_CONSUNTIVO);
+        final Optional<MissioneBulk> optionalMissioneBulk = Optional.ofNullable(getModel())
+                .filter(MissioneBulk.class::isInstance)
+                .map(MissioneBulk.class::cast);
+        if (optionalMissioneBulk
+                .filter(missioneBulk -> Optional.ofNullable(missioneBulk.getPg_missione()).isPresent())
+                .filter(missioneBulk -> missioneBulk.getPg_missione().compareTo(new Long(0)) > 0)
+                .isPresent()
+                ) {
+            pages.put(i++, TAB_ALLEGATI);
+        }
+        if (attivaEconomicaParallela && optionalMissioneBulk
+                .map(missioneBulk -> !Optional.ofNullable(missioneBulk.getFl_associato_compenso()).orElse(Boolean.TRUE))
+                .orElse(Boolean.FALSE)
+        ) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
+        String[][] tabs = new String[i][3];
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
+    }
+
+    @Override
+    public CollapsableDetailCRUDController getMovimentiDare() {
+        return movimentiDare;
+    }
+
+    @Override
+    public CollapsableDetailCRUDController getMovimentiAvere() {
+        return movimentiAvere;
     }
 }
