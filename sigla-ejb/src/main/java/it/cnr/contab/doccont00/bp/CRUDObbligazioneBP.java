@@ -1207,6 +1207,12 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         pages.put(i++, new String[]{"tabScadenzario", "Scadenzario", "/doccont00/tab_scadenzario_obbligazione.jsp"});
         pages.put(i++, new String[]{"tabCdrCapitoli", "Cdr", "/doccont00/tab_cdr_capitoli.jsp"});
 
+        ObbligazioneOrdBulk obbligazioneOrdBulk = ( ObbligazioneOrdBulk)this.getModel();
+        if ( obbligazioneOrdBulk.getFl_pluriennale())
+            System.out.println("Pluriennale");
+        else
+            System.out.println("Non Pluriennale");
+
         String[][] tabs = new String[i][3];
 
         for (int j = 0; j < i; j++)

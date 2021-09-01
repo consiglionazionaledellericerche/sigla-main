@@ -255,9 +255,10 @@ public class OfflineReportComponent extends GenericComponent implements
             it.cnr.jada.UserContext userContext, String reportName)
             throws ComponentException {
         try {
-            return ( Print_priorityBulk) getHome(userContext,
-                    Print_priorityBulk.class).findByPrimaryKey(
-                    new Print_priorityBulk(reportName));
+            return ( Print_priorityBulk) (
+                    ( Print_priorityHome)getHome(userContext,
+                    Print_priorityBulk.class))
+                    .findPrintPriorityByReportName(userContext,reportName);
 
         } catch (PersistencyException e) {
             throw handleException(e);

@@ -4806,4 +4806,14 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
         </insert>
     </changeSet>
 
+
+    <changeSet author="ciro.salvio" id="addColumn-Flag_pluriennale_obbligazione">
+        <addColumn tableName="obbligazione">
+            <column name="fl_pluriennale"
+                    defaultValue="N"
+                    remarks="Indica se l'impegno deve essere creato in automatico per gli anni configurati in OBBLIGAZIONE_PLURIENNALE. VALORI: S=Obbligazione Pluriennale; N/= Obbligazione non pluriennale"
+                    type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

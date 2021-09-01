@@ -1554,6 +1554,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			validaModificaConBulk(userContext, contratto);
 			try {
 				validaCampiObbligatori(userContext,contratto);
+				validaDettaglioContratto( userContext,contratto);
 			}catch (IntrospectionException e) {
 				throw new ComponentException(e);
 			} catch (SQLException e) {
