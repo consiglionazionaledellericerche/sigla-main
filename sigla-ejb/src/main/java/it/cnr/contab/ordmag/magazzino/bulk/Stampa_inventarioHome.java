@@ -109,6 +109,7 @@ public class Stampa_inventarioHome extends BulkHome {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
 		//LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class,null,"stampa_inventario");
 		LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class);
 		SQLBuilder sql = lottoMagHome.createSQLBuilder();
