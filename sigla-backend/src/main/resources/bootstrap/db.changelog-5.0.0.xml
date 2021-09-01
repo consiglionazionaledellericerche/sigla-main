@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
   ~
@@ -4606,6 +4606,130 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </addColumn>
         <addColumn tableName="ordine_acq_consegna">
             <column name="quantita_orig" remarks="Quantità ordine originale nel caso di evasione forzata in fase di carico ordine" type="numeric(12, 5)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="addColumn-Tipo_dettaglio_contratto-contratto">
+        <addColumn tableName="contratto">
+            <column name="tipo_dettaglio_contratto" type="VARCHAR(3)"  remarks="Tipo Contratto: CAT=PER CATEGORIA GRUPPO ART=  PER ARTICOLO NULL= SENZA CAT GRUPPO E ARTICOLI">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="create-table-dettaglio-contratto">
+        <createTable remarks="Dettaglio Contratto" tableName="dettaglio_contratto">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_contratto" remarks="Progressivo contratto (cronologico all'interno dell'esercizio)" type="BIGINT"/>
+            <column name="esercizio_contratto" remarks="Esercizio del Contratto." type="SMALLINT"/>
+            <column name="stato_contratto" remarks="Stato del Contratto" type="CHAR(1)"/>
+            <column name="cd_bene_servizio" remarks="Codice identificativo del bene o servizio" type="VARCHAR(15)"/>
+            <column name="cd_unita_misura" remarks="Codice dell'unità di misura di ordine" type="VARCHAR(10)"/>
+            <column name="coef_conv" remarks="Coefficiente di conversione dell'unità di misura" type="numeric(12, 5)"/>
+            <column name="quantita_min" remarks="Quantità Max" type="numeric(15, 2)"/>
+            <column name="quantita_max" remarks="Quantità Max" type="numeric(15, 2)"/>
+            <column name="quantita_ordinata" remarks="Quantità Ordinata" type="numeric(15, 2)"/>
+            <column name="prezzo_unitario" remarks="Prezzo unitario dell'articolo/servizio" type="numeric(20, 6)"/>
+
+            <column name="cd_categoria_gruppo" remarks="Codice Categoria" type="VARCHAR(10)"/>
+            <column name="importo_ordinato" remarks="Importo Ordinato" type="numeric(21, 6)"/>
+
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="dettaglio_contratto_pkey" tableName="dettaglio_contratto"/>
+        <createSequence sequenceName="cnrseq00_dettaglio_contratto"/>
+        <addForeignKeyConstraint baseColumnNames="esercizio_contratto,stato_contratto,pg_contratto" baseTableName="dettaglio_contratto" constraintName="fk_detcont_contratto" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,stato,pg_contratto" referencedTableName="contratto"/>
+        <addForeignKeyConstraint baseColumnNames="cd_bene_servizio" baseTableName="dettaglio_contratto" constraintName="fk_detcont_beneservizio" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_bene_servizio" referencedTableName="bene_servizio"/>
+        <addForeignKeyConstraint baseColumnNames="cd_unita_misura" baseTableName="dettaglio_contratto" constraintName="fk_detcont_unitamisura" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_misura" referencedTableName="unita_misura"/>
+        <addForeignKeyConstraint baseColumnNames="cd_categoria_gruppo" baseTableName="dettaglio_contratto" constraintName="fk_detcont_catgrp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_categoria_gruppo" referencedTableName="categoria_gruppo_invent"/>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO01" tableName="dettaglio_contratto">
+            <column name="esercizio_contratto"/>
+            <column name="stato_contratto"/>
+            <column name="pg_contratto"/>
+        </createIndex>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO02" tableName="dettaglio_contratto">
+            <column name="cd_bene_servizio"/>
+        </createIndex>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO03" tableName="dettaglio_contratto">
+            <column name="CD_UNITA_MISURA"/>
+        </createIndex>
+        <createIndex indexName="FX_DETTAGLIO_CONTRATTO04" tableName="dettaglio_contratto">
+            <column name="cd_categoria_gruppo"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="alter_quantita_dettaglio_contratto">
+        <modifyDataType tableName="dettaglio_contratto" columnName="quantita_min" newDataType="numeric(17, 5)"/>
+        <modifyDataType tableName="dettaglio_contratto" columnName="quantita_max" newDataType="numeric(17, 5)"/>
+        <modifyDataType tableName="dettaglio_contratto" columnName="quantita_ordinata" newDataType="numeric(17, 5)"/>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="alter_dettaglio_contratto_base_property">
+        <addColumn tableName="dettaglio_contratto">
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="configurazione_cnr_esercizio_attivazione_ass_prg_anagrafico">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="PROGETTI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="ASS_PROGETTI_ANGAGRAFICO"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="configurazione_cnr_esercizio_attivazione_imp_pluriennali">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="IMPEGNI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="IMPEGNI_PLURIENNALI"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="configurazione_cnr_esercizio_attivazione_accertamenti_pluriennali">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ACCERTAMENTI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="ACCERTAMENTI_PLURIENNALI"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="ciro.salvio" id="addColumn-Flag_pluriennale_obbligazione">
+        <addColumn tableName="obbligazione">
+            <column name="fl_pluriennale"
+                    defaultValue="N"
+                    remarks="Indica se l'impegno deve essere creato in automatico per gli anni configurati in OBBLIGAZIONE_PLURIENNALE. VALORI: S=Obbligazione Pluriennale; N/= Obbligazione non pluriennale"
+                    type="CHAR(1)"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>
