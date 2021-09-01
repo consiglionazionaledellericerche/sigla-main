@@ -135,6 +135,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_GESTIONE_PROGETTI = "PROGETTI";
 	public final static String SK_PROGETTO_PIANO_ECONOMICO = "PIANO_ECONOMICO";
 	public final static String SK_NATURA_REIMPIEGO = "NATURA_REIMPIEGO";
+	public final static String SK_ASS_PROGETTI_ANGAGRAFICO = "ASS_PROGETTI_ANGAGRAFICO";
 
 	public final static String PK_FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
 	public final static String SK_CODICE_ABI_BT = "CODICE_ABI_BT";
