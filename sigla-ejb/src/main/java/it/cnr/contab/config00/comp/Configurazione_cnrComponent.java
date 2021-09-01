@@ -742,22 +742,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
-    public Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException {
-        try {
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE,
-                    Configurazione_cnrBulk.IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        return Boolean.FALSE;
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-
     public Boolean isAccertamentoPluriennaleAttivo(UserContext userContext) throws ComponentException{
         try{
             Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(

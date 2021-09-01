@@ -97,8 +97,8 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public boolean isUOSpecialeDistintaTuttaSAC(Integer esercizio, String cdUnitaOrganizzativa) throws PersistencyException {
         return Optional.ofNullable(this.getUoDistintaTuttaSac(esercizio))
-                    .filter(uoDistintaTuttaSac -> uoDistintaTuttaSac.equals(cdUnitaOrganizzativa))
-                    .isPresent();
+                .filter(uoDistintaTuttaSac -> uoDistintaTuttaSac.equals(cdUnitaOrganizzativa))
+                .isPresent();
     }
 
     /**
@@ -136,6 +136,21 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public Configurazione_cnrBulk getConfigurazione(UserContext userContext, String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
         return getConfigurazione(CNRUserContext.getEsercizio(userContext),unita_funzionale,chiave_primaria, chiave_secondaria);
+    }
+
+    /**
+     * Ritorna il record richiesto sulla base dei parametri indicati.
+     * <p>ATTENZIONE: in questo metodo viene ricercato sempre il record con esercizio =0</p>
+     * <p>Se si desidera avere il record puntuale per i parametri impostati utilizzare il metodo {@link #getConfigurazioneCnrBulk(Integer,String,String,String)}</p>
+     *
+     * @param unita_funzionale Unità funzionale - Lasciare vuoto per ricercare il parametro generale (unita_funzionale='*').
+     * @param chiave_primaria Chiave Primaria - Campo Obbligatorio
+     * @param chiave_secondaria Chiave Secondaria - Lasciare vuoto per ricercare il parametro generale (chiave_secondaria='*')
+     * @return il record ConfigurazioneCNR richiesto sulla base dei parametri indicati
+     * @throws PersistencyException
+     */
+    public Configurazione_cnrBulk getConfigurazione(String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
+        return getConfigurazione(ANNI_ALL,unita_funzionale,chiave_primaria, chiave_secondaria);
     }
 
     /**
@@ -252,5 +267,51 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
+    /**
+     * Ritorna il codice cds della SAC
+     * <p><b>chiave_primaria: CDS_SPECIALE</b>
+     * <p><b>chiave_secondaria: CDS_SAC</b>
+     *
+     * @throws PersistencyException
+     */
+    public String getBeneServScontoAbbuono() throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(null,Configurazione_cnrBulk.PK_BENE_SERVIZIO_SPECIALE, Configurazione_cnrBulk.SK_SCONTO_ABBUONO))
+                .map(Configurazione_cnrBulk::getVal01)
+                .orElse(null);
+    }
 
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale parallela
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomicaParallela(UserContext userContext) throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                        Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                        Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
+        )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .orElse(Boolean.FALSE);
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attivo il blocco delle scritture di economica
+     * @throws PersistencyException
+     */
+    public boolean isBloccoScrittureProposte(UserContext userContext) throws PersistencyException{
+        return Optional.ofNullable(
+                this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                        Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                        Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
+        )
+                .map(Configurazione_cnrBulk::getVal02)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .orElse(Boolean.TRUE);
+    }
 }
