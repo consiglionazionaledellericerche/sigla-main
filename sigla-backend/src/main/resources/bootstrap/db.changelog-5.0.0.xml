@@ -101,13 +101,13 @@
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="codice" remarks="Codice identificativo dell''atto." type="VARCHAR(3)">
+            <column name="codice" remarks="Codice identificativo dell''atto." type="VARCHAR(3)">
                 <constraints nullable="false"/>
             </column>
             <column name="descrizione" remarks="Descrizione dell''atto." type="VARCHAR(1000)">
                 <constraints nullable="false"/>
             </column>
-            <column name="desc_norma" remarks="Descrizione dell''articolo di  riferimento." type="VARCHAR(1000)">
+            <column name="desc_norma" remarks="Descrizione dell''articolo di  riferimento." type="VARCHAR(1000)">
                 <constraints nullable="false"/>
             </column>
             <column name="im_bollo" remarks="Importo Unitario del Bollo" type="numeric(15, 2)">
@@ -499,7 +499,7 @@
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="codice" remarks="Codice identificativo del tipo documento generico." type="VARCHAR(3)">
+            <column name="codice" remarks="Codice identificativo del tipo documento generico." type="VARCHAR(3)">
                 <constraints nullable="false"/>
             </column>
             <column name="tipo_documento" remarks="Tipo Documento (A=Attivo, P=Passivo)" type="CHAR(1)">
@@ -796,7 +796,7 @@
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="codice" remarks="Codice identificativo dell tipo di finanziamento dominio (
+            <column name="codice" remarks="Codice identificativo dell tipo di finanziamento dominio (
                 'FOE'=FOE,
                 'FOE_PRO'=FOE progetti,
                 'AUT'=Autofinanziamento,
@@ -1695,7 +1695,7 @@ BONIFICO ESTERO EURO"/>
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="esito" remarks="Codice identificativo dell''esito." type="VARCHAR(50)">
+            <column name="esito" remarks="Codice identificativo dell''esito." type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="location" remarks="URL del messaggio" type="VARCHAR(1000)">
@@ -3104,7 +3104,7 @@ TRASPORTO_AEREO"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            
+
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
@@ -4272,6 +4272,17 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_movimento_coge_add_columns">
+        <addColumn tableName="movimento_coge">
+            <column name="ti_riga" remarks="Tipologia della riga.
+IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CRE = CREDITO; DEB = DEBITO; COS = COSTO; CSP = CESPITE; IVVS = IVA VENDITE SPLIT; IVAV = IVA VENDITA" type="VARCHAR(4)"/>
+            <column name="cd_tipo_documento" remarks="Codice del tipo di documento" type="VARCHAR(10)"/>
+            <column name="cd_cds_documento" remarks="Codice identificativo dell'unità organizzativa o CDS" type="VARCHAR(30)"/>
+            <column name="cd_uo_documento" remarks="Codice identificativo dell'unità organizzativa o CDS" type="VARCHAR(30)"/>
+            <column name="esercizio_documento" remarks="Esercizio del documento amministrativo" type="SMALLINT"/>
+            <column name="pg_numero_documento" remarks="Progressivo del documento" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="raffaele.pagano" id="incarichi-parametri-add-column-allega-attestazione-direttore">
         <addColumn tableName="incarichi_parametri">
             <column name="allega_attestazione_direttore" type="CHAR(1)"/>
@@ -4338,179 +4349,6 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="report_name" type="VARCHAR(1500)" value="/ordmag/iss/magazzino/stampa_consumi.jasper"/>
             <column name="priority" type="SMALLINT"  value="1" />
             <column name="ds_report" type="VARCHAR(300)" value="Stampa Consumi"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-    </changeSet>
-    <changeSet author="ciro.salvio" id="alter_print_priority_report_name_ente">
-        <addColumn tableName="PRINT_PRIORITY">
-            <column name="report_name_ente"
-                    remarks="Nome del report per l'ENTE comprensivo di percorso relativo alla cartella reports, nel fomrato UNIX es. /preventivo/pdg/pdgdett_voce_funzione_natura.rpt"
-                    type="VARCHAR(1500)" >
-                 <constraints nullable="true"/>
-            </column>
-        </addColumn>
-    </changeSet>
-    <changeSet id="voce_menu_gestione_stampe" author="ciro.salvio">
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.CFGSTMP"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Configurazione Stampe"/>
-            <column name="pg_ordinamento" type="BIGINT" value="155"/>
-            <column name="fl_terminale" type="CHAR(1)" value="N"/>
-            <column name="livello" type="SMALLINT" value="2"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CFGSTMP"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-    </changeSet>
-    <changeSet id="voce_menu_print_priority" author="ciro.salvio">
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.CFGSTMP.STPPRIORIY"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione Priority"/>
-            <column name="pg_ordinamento" type="BIGINT" value="5"/>
-            <column name="fl_terminale" type="CHAR(1)" value="N"/>
-            <column name="livello" type="SMALLINT" value="5"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="STPPRIORIY"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.CFGSTMP"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-        <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPRTPRIORITYV"/>
-            <column name="ti_accesso" type="CHAR(1)" value="D"/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Print Priority"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-        </insert>
-        <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPRTPRIORITYV"/>
-            <column name="business_process" type="VARCHAR(200)" value="ConfigPrintPriorityBP"/>
-            <column name="ti_funzione" type="CHAR(1)" value="V"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-        </insert>
-
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.CFGSTMP.STPPRIORIY.V"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Visualizzazione"/>
-            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPRTPRIORITYV"/>
-            <column name="business_process" type="VARCHAR(200)" value="ConfigPrintPriorityBP"/>
-            <column name="pg_ordinamento" type="BIGINT" value="5"/>
-            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
-            <column name="livello" type="SMALLINT" value="4"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.CFGSTMP.STPPRIORIY"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-        </insert>
-        <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPRTPRIORITYM"/>
-            <column name="ti_accesso" type="CHAR(1)" value="D"/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Print Priority"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-        </insert>
-        <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPRTPRIORITYM"/>
-            <column name="business_process" type="VARCHAR(200)" value="ConfigPrintPriorityBP"/>
-            <column name="ti_funzione" type="CHAR(1)" value="M"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-        </insert>
-
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.CFGSTMP.STPPRIORIY.M"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione"/>
-            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPRTPRIORITYM"/>
-            <column name="business_process" type="VARCHAR(200)" value="ConfigPrintPriorityBP"/>
-            <column name="pg_ordinamento" type="BIGINT" value="6"/>
-            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
-            <column name="livello" type="SMALLINT" value="4"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.CFGSTMP.STPPRIORIY"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-        </insert>
-    </changeSet>
-    <changeSet id="voce_menu_stampa_mag_inventario" author="ciro.salvio">
-        <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="MAGSTAMPAINV"/>
-            <column name="ti_accesso" type="CHAR(1)" value="D"/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Stampa Inventario"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-        <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="MAGSTAMPAINV"/>
-            <column name="business_process" type="VARCHAR(200)" value="StampaInventarioBP"/>
-            <!--<column name="ti_funzione" type="CHAR(1)" value="M"/>-->
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.MAG.STAMPE.INVENTARIO"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Stampa Inventario"/>
-            <column name="cd_accesso" type="VARCHAR(20)" value="MAGSTAMPAINV"/>
-            <column name="business_process" type="VARCHAR(200)" value="StampaInventarioBP"/>
-            <column name="pg_ordinamento" type="BIGINT" value="10"/>
-            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
-            <column name="livello" type="SMALLINT" value="3"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="INVENTARIO"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.MAG.STAMPE"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-    </changeSet>
-    <changeSet author="ciro.salvio" id="update-table-albero-main-stampa-consumi">
-        <update tableName="albero_main">
-            <column name="cd_proprio_nodo" value='CONSUMI' type="VARCHAR(100)"/>
-            <column name="pg_ordinamento" value="5" type="BIGINT"/>
-            <where>cd_nodo='0.MAG.STAMPE.CONSUMI'</where>
-        </update>
-    </changeSet>
-    <changeSet author="ciro.salvio" id="print_priority_stampa_inventario">
-        <insert tableName="print_priority">
-            <column name="report_name" type="VARCHAR(1500)" value="/ordmag/magazzino/stampa_inventario.jasper"/>
-            <column name="priority" type="SMALLINT"  value="1" />
-            <column name="ds_report" type="VARCHAR(300)" value="Stampa Inventario"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
@@ -4690,6 +4528,85 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create-table-inventariazione">
+        <createTable remarks="Inventariazione beni da Ordini." tableName="transito_beni_ordini">
+            <column name="id" remarks="Chiave Primaria." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_movimenti_mag" remarks="Identificativo del movimento di carico di magazzino" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PG_INVENTARIO" remarks=" Codice dell''inventario." type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ds_bene" remarks="Descrizione del bene" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_ammortamento" remarks="Tipologia dell'ammortamento.&#10;Il Dominio:&#10;O = Ordinario&#10;A = Accelerato&#10;L = aLtro" type="CHAR(1)"/>
+            <column name="fl_ammortamento" remarks="Indica se il bene deve essere ammortizzato.&#10;Il Dominio:&#10;Y = subisce ammortamento&#10;N = Non subisce ammortamento" type="CHAR(1)"/>
+            <column name="cd_condizione_bene" remarks="Codice della condizione del bene di inventario" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_commerciale_istituzionale" remarks="Flag per identificare se il bene risulta essere commerciale o istituzionale" type="CHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="valore_iniziale" remarks="Valore iniziale" type="numeric(20, 6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="collocazione" remarks="Descrizione della Collocazione (valorizzato in caso il bene sia un libro)" type="VARCHAR(50)"/>
+            <column name="cd_cds" remarks="Codice cds" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Codice dell&quot;unità organizzativa ottenuto per concatenzione del codice del CDS di afferenza e del proprio codice" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_ubicazione" remarks="Codice del'ubicazione completa della gerarchia" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_assegnatario" remarks="Progressivo identificativo del terzo (secondo livello dell'entità anagrafica)" type="INT"/>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="etichetta" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="esercizio_carico_bene" remarks="Indica l'esercizio di competenza del carico del bene nel patrimonio aziendale" type="SMALLINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_acquisizione" remarks="Data di acquisizione del bene" type="${date.type}"/>
+            <column name="cd_barre" remarks="Codice a Barre" type="INT"/>
+            <column name="targa" remarks="Numero targa" type="VARCHAR(8)"/>
+            <column name="seriale" type="VARCHAR(25)"/>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="transito_beni_ordini_pkey" tableName="transito_beni_ordini"/>
+        <createSequence sequenceName="CNRSEQ00_TRANSITO_BENI_ORDINI"/>
+        <addColumn tableName="tipo_carico_scarico">
+            <column name="fl_da_ordini" type="CHAR(1)" defaultValue="N" remarks="Indica se il tipo carico deriva da ordini">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-columns-for-carico-ordine-evasione-forzata">
+        <addColumn tableName="evasione_ordine_riga">
+            <column name="id_movimenti_mag" remarks="Identificativo del movimento di carico di magazzino" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="ordine_acq_consegna">
+            <column name="quantita_orig" remarks="Quantità ordine originale nel caso di evasione forzata in fase di carico ordine" type="numeric(12, 5)"/>
+        </addColumn>
     </changeSet>
     <changeSet author="ciro.salvio" id="addColumn-Tipo_dettaglio_contratto-contratto">
         <addColumn tableName="contratto">
@@ -4815,5 +4732,4 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
                     type="CHAR(1)"/>
         </addColumn>
     </changeSet>
-
 </databaseChangeLog>
