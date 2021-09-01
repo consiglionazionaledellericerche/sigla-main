@@ -39,10 +39,10 @@
 		name="esercizio"
 		property="esercizio"
 		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
 		label="esercizio" />
 	<fieldProperty
 		name="pgImpegno"

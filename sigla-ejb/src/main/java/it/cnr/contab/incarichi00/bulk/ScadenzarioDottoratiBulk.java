@@ -26,6 +26,19 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 
 	private CdsBulk cds = new CdsBulk();
 
+
+	/**private Integer esercizio;
+
+	public Integer getEsercizio() {
+		return esercizio;
+	}
+
+	public void setEsercizio(Integer esercizio) {
+		this.esercizio = esercizio;
+	}*/
+
+
+
 	private Unita_organizzativaBulk uo = new Unita_organizzativaBulk();
 	/**
 	 *

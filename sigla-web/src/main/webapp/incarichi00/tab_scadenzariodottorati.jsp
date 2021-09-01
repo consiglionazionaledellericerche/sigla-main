@@ -31,10 +31,10 @@
         <td colspan="3"><% bp.getController().writeFormInput(out,"cdUnitaOrganizzativa"); %></td>
       </tr>
       <tr>
-        <td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-        <td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
+        <!--<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
+        <td><% bp.getController().writeFormInput(out,"esercizio"); %></td>-->
         <td><% bp.getController().writeFormLabel(out,"pgImpegno"); %></td>
-        <td><% bp.getController().writeFormInput(out,"pgImpegno"); %></td>
+        <td colspan="3"><% bp.getController().writeFormInput(out,"pgImpegno"); %></td>
       </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"dtRegistrazione"); %></td>
@@ -186,7 +186,7 @@
       </tr>
     </table>
 </div>
-<div class="Group card p-2" style="width:100%">
+<!-- <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">
         Mini carriera di origine (Vedere se da eliminare)
     </div>
@@ -196,4 +196,4 @@
         <% bp.getController().writeFormField(out,"esercizio_scad_dott_ori"); %>
       </tr>
     </table>
-</div>
+</div> -->
