@@ -314,4 +314,5 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
                 .orElse(Boolean.TRUE);
     }
+
 }
