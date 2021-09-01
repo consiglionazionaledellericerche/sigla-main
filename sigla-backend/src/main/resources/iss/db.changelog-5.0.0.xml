@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
   ~
@@ -41,5 +41,17 @@
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="attivazione-impegni_pluriennali">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="Y"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='IMPEGNI' AND CD_CHIAVE_SECONDARIA='IMPEGNI_PLURIENNALI'</where>
+        </update>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="attivazione-accertamente_pluriennali">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="Y"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='ACCERTAMENTI' AND CD_CHIAVE_SECONDARIA='ACCERTAMENTI_PLURIENNALI'</where>
+        </update>
     </changeSet>
 </databaseChangeLog>
