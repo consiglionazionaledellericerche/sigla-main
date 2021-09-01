@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
@@ -40,9 +41,6 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	public final static String ACQUISTI = "A";
 	public final static String VENDITE  = "V";
 
-	public final static String ISTITUZIONALE = "I";
-	public final static String COMMERCIALE  = "C";
-
 	public final static String BENE_SERVIZIO = Bene_servizioBulk.BENE_SERVIZIO;
 	public final static String SERVIZIO = Bene_servizioBulk.SERVIZIO;
 	public final static String BENE = Bene_servizioBulk.BENE;
@@ -54,8 +52,9 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		ACQUISTI_VENDITE.put(VENDITE,"Vendite");
 
 		ISTITUZIONALE_COMMERCIALE = new it.cnr.jada.util.OrderedHashtable();
-		ISTITUZIONALE_COMMERCIALE.put(ISTITUZIONALE,"Istituzionale");
-		ISTITUZIONALE_COMMERCIALE.put(COMMERCIALE,"Commerciale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ISTITUZIONALE_COMMERCIALE.put(tipoIVA.value(), tipoIVA.label());
+		}
 
 		BENI_SERVIZI = new it.cnr.jada.util.OrderedHashtable();
 		BENI_SERVIZI.put(BENE,"Bene");
@@ -133,7 +132,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		tipo_sezionale_vendita = new Tipo_sezionaleBulk();	
 		attivita_commerciale = new Attivita_commercialeBulk();
 		setTi_acquisti_vendite(ACQUISTI);
-		setTi_istituz_commerc(ISTITUZIONALE);
+		setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
 		if (getFl_autofattura()==null)
 			setFl_autofattura(FALSE);
@@ -202,7 +201,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	 */
 
 	public boolean isIstituzionale() {
-		return ISTITUZIONALE.equals(getTi_istituz_commerc());
+		return TipoIVA.ISTITUZIONALE.value().equals(getTi_istituz_commerc());
 	}
 	public boolean isROTi_bene_servizio() {
 
@@ -246,7 +245,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		if (getFl_autofattura()==null)
 			setFl_autofattura(FALSE);
 
-		if (getTi_acquisti_vendite().equals(VENDITE) && getTi_istituz_commerc().equals(ISTITUZIONALE))
+		if (getTi_acquisti_vendite().equals(VENDITE) && getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 			throw new ValidationException("Non è possibile creare un sezionale di tipo vendite non commerciale");
 		if (getFl_intra_ue().equals(FALSE) &&
 				getFl_extra_ue().equals(FALSE) &&

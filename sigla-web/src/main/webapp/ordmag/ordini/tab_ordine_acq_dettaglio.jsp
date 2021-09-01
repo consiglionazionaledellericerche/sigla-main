@@ -54,6 +54,10 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 				<% bp.getRighe().writeFormLabel(out, "dtPrevConsegna"); %>
 				<% bp.getRighe().writeFormInput(out, "dtPrevConsegna"); %>
 			</td>
+			<td colspan="4">
+				<% bp.getRighe().writeFormLabel(out, "statoConsegne"); %>
+				<% bp.getRighe().writeFormInput(out, "statoConsegne"); %>
+			</td>
 		</tr>
 		<tr>
 			<td><% bp.getRighe().writeFormLabel(out, "findMagazzino");%></td>

@@ -139,7 +139,7 @@
 		maxLength="30"
 		inputSize="3"
 		inputType="ROTEXT"
-		label="Unità Misura Minima"
+		label="U. M. Minima"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cdUnitaMisura"
@@ -148,7 +148,7 @@
 		inputSize="3"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità di Misura" />
+		label="U. M." />
 	<fieldProperty
 		name="coefConv"
 		property="coefConv"
@@ -157,7 +157,7 @@
 		inputSize="3"
 		maxLength="12"
 		enabledOnEdit="true"
-		label="Coefficiente di Conversione" />
+		label="Coeff. di Conv." />
 	<fieldProperty
 		name="voce_iva"
 		property="voceIva"
@@ -314,6 +314,17 @@
 		nullable="false"
 		label="Tipo Consegna" />
 	<fieldProperty
+			name="statoConsegne"
+			property="dspStato"
+			inputType="SELECT"
+			keysProperty="statoKeys"
+			inputSize="20"
+			maxLength="10"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Stato" />
+	<fieldProperty
 		name="dtPrevConsegna"
 		property="dspDtPrevConsegna"
 		inputType="TEXT"
@@ -451,6 +462,8 @@
 		<columnFieldProperty
 			name="imTotaleRiga"/>
 		<columnFieldProperty
+				name="statoConsegne"/>
+		<columnFieldProperty
 			name="dspUopDestinazione"/>
 	</columnSet>
 	<form
@@ -527,6 +540,8 @@
 	<formFieldProperty
 		name="dtPrevConsegna"   
 		command="doOnDspDtPrevConsegnaChange"/>
+	<formFieldProperty
+			name="statoConsegne"/>
 	<formFieldProperty
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
@@ -618,6 +633,8 @@
 		name="prezzoUnitario" />
 	<columnFieldProperty
 		name="dspQuantita" />
+	<columnFieldProperty
+			name="statoConsegne" />
 	<columnFieldProperty
 		name="cdUnitaMisura" />
 	<columnFieldProperty

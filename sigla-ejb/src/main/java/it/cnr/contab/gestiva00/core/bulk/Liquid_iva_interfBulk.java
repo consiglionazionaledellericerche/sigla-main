@@ -16,6 +16,7 @@
  */
 
 package it.cnr.contab.gestiva00.core.bulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -47,8 +48,6 @@ public class Liquid_iva_interfBulk extends Liquid_iva_interfBase{
 	
 	public static java.util.Dictionary TIPI_LIQ;
 		
-	public static final String COMMERCIALE = "C";
-	public static final String ISTITUZIONALE = "I";
 	public static final String SANMARINO = "S";
 
 	
@@ -154,8 +153,9 @@ protected static void initializeHashes() {
 	INT_MESI.put(new Integer(12), DICEMBRE);
 
 	TIPI_LIQ= new OrderedHashtable();
-	TIPI_LIQ.put(ISTITUZIONALE, "Istituzionale");
-	TIPI_LIQ.put(COMMERCIALE, "Commerciale");
+	for (TipoIVA tipoIVA : TipoIVA.values()) {
+		TIPI_LIQ.put(tipoIVA.value(), tipoIVA.label());
+	}
 	TIPI_LIQ.put(SANMARINO, "San Marino");
 }
 	public void setMese(java.lang.String newMese) {

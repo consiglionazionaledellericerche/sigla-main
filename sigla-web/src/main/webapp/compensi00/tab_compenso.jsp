@@ -4,6 +4,7 @@
 		java.util.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.*,
+		it.cnr.contab.util.enumeration.*,
 		it.cnr.contab.compensi00.bp.*,
 		it.cnr.contab.compensi00.docs.bulk.*,
 		it.cnr.contab.docamm00.bp.*"
@@ -190,7 +191,7 @@
 	<td><% bp.getController().writeFormLabel(out,"fl_split_payment"); %></td>
 	<td><% bp.getController().writeFormInput(out,"fl_split_payment");%></td>
 	
-	<% if(compenso!=null &&compenso.getTi_istituz_commerc()!=null && compenso.getTi_istituz_commerc().compareTo(compenso.TIPO_COMPENSO_COMMERCIALE)==0 && compenso.getStato_pagamento_fondo_eco().compareTo(compenso.LIBERO_FONDO_ECO)==0 && compenso.getFl_generata_fattura().booleanValue()) {%>		
+	<% if(compenso!=null &&compenso.getTi_istituz_commerc()!=null && compenso.getTi_istituz_commerc().compareTo(TipoIVA.COMMERCIALE.value())==0 && compenso.getStato_pagamento_fondo_eco().compareTo(compenso.LIBERO_FONDO_ECO)==0 && compenso.getFl_generata_fattura().booleanValue()) {%>
 		<td><% bp.getController().writeFormLabel(out,"fl_liquidazione_differita"); %></td>
 		<td><% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita", bp.isRODatiFatturaPerChiusura(compenso), null, "onClick=\"submitForm('doOnFlLiquidazioneDifferitaChange()')\""); %></td>
 	<%} %>

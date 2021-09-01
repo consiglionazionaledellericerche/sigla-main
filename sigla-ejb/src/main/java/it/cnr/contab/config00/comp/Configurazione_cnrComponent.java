@@ -501,19 +501,19 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     public Boolean isAttivoOrdini(UserContext userContext) throws ComponentException {
         try {
             Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_ORDINI,
-                    Configurazione_cnrBulk.SK_GESTIONE_ORDINI,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
+                Configurazione_cnrBulk.PK_ORDINI,
+                Configurazione_cnrBulk.SK_GESTIONE_ORDINI,
+                ASTERISCO,
+                CNRUserContext.getEsercizio(userContext));
             return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        try {
-                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-                                    .orElse(Boolean.FALSE);
-                        } catch (PersistencyException|ComponentException e) {
-                            throw new PersistencyError(e);
-                        }
-                    });
+                .orElseGet(() -> {
+                    try {
+                        return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                .orElse(Boolean.FALSE);
+                    } catch (PersistencyException|ComponentException e) {
+                        throw new PersistencyError(e);
+                    }
+                });
         } catch (PersistencyException e) {
             throw handleException(e);
         }
@@ -738,53 +738,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                     .map(Configurazione_cnrHome.class::cast)
                     .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
                     .isBloccoScrittureProposte(userContext);
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-    public Boolean isAccertamentoPluriennaleAttivo(UserContext userContext) throws ComponentException{
-        try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_ACCERTAMENTI,
-                    Configurazione_cnrBulk.SK_ACCERTAMENTI_PLURIENNALI,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        return Boolean.FALSE;
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-
-    public Boolean isImpegnoPluriennaleAttivo(UserContext userContext) throws ComponentException{
-        try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_IMPEGNI,
-                    Configurazione_cnrBulk.SK_IMPEGNI_PLURIENNALI,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        return Boolean.FALSE;
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-
-    public Boolean isAssPrgAnagraficoAttiva(UserContext userContext) throws ComponentException{
-        try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_GESTIONE_PROGETTI,
-                    Configurazione_cnrBulk.SK_ASS_PROGETTI_ANGAGRAFICO,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        return Boolean.FALSE;
-                    });
         } catch (PersistencyException e) {
             throw handleException(e);
         }

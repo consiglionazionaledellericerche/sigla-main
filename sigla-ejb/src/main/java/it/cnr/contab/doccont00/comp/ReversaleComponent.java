@@ -19,6 +19,8 @@ package it.cnr.contab.doccont00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
@@ -49,6 +51,8 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -2152,7 +2156,7 @@ REVERSALE
             documento.setCd_cds_origine(reversale.getCd_cds_origine());
             documento.setCd_uo_origine(reversale.getCd_uo_origine());
             documento.setTipo_documento(new Tipo_documento_ammBulk(cd_tipo_documento_amm));
-            documento.setTi_istituz_commerc(Documento_genericoBulk.ISTITUZIONALE);
+            documento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
             documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
             documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
             documento.setData_registrazione(reversale.getDt_emissione());
@@ -2674,7 +2678,7 @@ REVERSALE
      * delle associazioni mandato-reversale( Ass_mandato_reversaleBulk). Vengono caricati i dati del terzo della reversale (Reversale_terzoBulk)
      * e viene verificato il tipo bollo (metodo verificaTipoBollo)
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la reversale da inizializzare per la modifica
      * @return reversale la Reversale inizializzata per la modifica
      */
@@ -2682,58 +2686,58 @@ REVERSALE
 1 - carica le reversali riga
 2 - carica la reversale terzo
 */
-    public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk) throws ComponentException {
-        ReversaleBulk reversale = (ReversaleBulk) super.inizializzaBulkPerModifica(aUC, bulk);
+    public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws ComponentException {
+        ReversaleBulk reversale = (ReversaleBulk) super.inizializzaBulkPerModifica(userContext, bulk);
         try {
             //carico le reversali riga
             Reversale_rigaBulk riga;
-            reversale.setReversale_rigaColl(new BulkList(((ReversaleHome) getHome(aUC, reversale.getClass())).findReversale_riga(aUC, reversale)));
+            reversale.setReversale_rigaColl(new BulkList(((ReversaleHome) getHome(userContext, reversale.getClass())).findReversale_riga(userContext, reversale)));
             for (Iterator i = reversale.getReversale_rigaColl().iterator(); i.hasNext(); ) {
-                riga = (Reversale_rigaBulk) super.inizializzaBulkPerModifica(aUC, (Reversale_rigaBulk) i.next());
+                riga = (Reversale_rigaBulk) super.inizializzaBulkPerModifica(userContext, (Reversale_rigaBulk) i.next());
                 //Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione è attiva
-                if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope().booleanValue()) {
-                    riga.setReversale_siopeColl(new BulkList(((Reversale_rigaHome) getHome(aUC, Reversale_rigaBulk.class)).findCodiciCollegatiSIOPE(aUC, riga)));
-                    setCodiciSIOPECollegabili(aUC, riga);
+                if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_siope().booleanValue()) {
+                    riga.setReversale_siopeColl(new BulkList(((Reversale_rigaHome) getHome(userContext, Reversale_rigaBulk.class)).findCodiciCollegatiSIOPE(userContext, riga)));
+                    setCodiciSIOPECollegabili(userContext, riga);
                 }
 
 
-//			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue() &&
-//					Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()){
-//				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, "DATA_LIMITE_CUP_SIOPE_CUP");
+//			if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_cup().booleanValue() &&
+//					Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_siope_cup().booleanValue()){
+//				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(userContext, "DATA_LIMITE_CUP_SIOPE_CUP");
 //				if(reversale.getDt_emissione().after(dataLimite)){
 //					for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext();){
 //						Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk)j.next();
-//						rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( aUC,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+//						rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( userContext,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(userContext, rigaSiope)));
 //					}
 //				}else
 //				{
-//					riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+//					riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( userContext, Reversale_rigaBulk.class)).findCodiciCupCollegati(userContext, riga)));
 //				}
 //
 //			}else{
-                if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue()) {
-                    riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome(aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+                if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_cup().booleanValue()) {
+                    riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome(userContext, Reversale_rigaBulk.class)).findCodiciCupCollegati(userContext, riga)));
                 } else {
-                    if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()) {
+                    if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_siope_cup().booleanValue()) {
                         for (Iterator j = riga.getReversale_siopeColl().iterator(); j.hasNext(); ) {
                             Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk) j.next();
-                            rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome(aUC, Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+                            rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome(userContext, Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(userContext, rigaSiope)));
                         }
                     }
                 }
 //			}
 
-                inizializzaTi_fattura(aUC, riga);
-                ((Reversale_rigaHome) getHome(aUC, riga.getClass())).initializeElemento_voce(aUC, riga);
+                inizializzaTi_fattura(userContext, riga);
+                ((Reversale_rigaHome) getHome(userContext, riga.getClass())).initializeElemento_voce(userContext, riga);
             }
 
             //carico la reversale terzo
-            reversale.setReversale_terzo(((ReversaleHome) getHome(aUC, reversale.getClass())).findReversale_terzo(aUC, reversale));
-            verificaTipoBollo(aUC, reversale);
+            reversale.setReversale_terzo(((ReversaleHome) getHome(userContext, reversale.getClass())).findReversale_terzo(userContext, reversale));
+            verificaTipoBollo(userContext, reversale);
 
             //carico i sospeso_det_etr
             Sospeso_det_etrBulk sde;
-            reversale.setSospeso_det_etrColl(new BulkList(((ReversaleHome) getHome(aUC, reversale.getClass())).findSospeso_det_etr(aUC, reversale)));
+            reversale.setSospeso_det_etrColl(new BulkList(((ReversaleHome) getHome(userContext, reversale.getClass())).findSospeso_det_etr(userContext, reversale)));
 
             //aggiungo nella deleteList i sospesi annullati
             for (Iterator i = reversale.getSospeso_det_etrColl().iterator(); i.hasNext(); ) {
@@ -2744,39 +2748,60 @@ REVERSALE
             }
 
             // carico il cd uo ente
-            SQLBuilder sql = getHome(aUC, Unita_organizzativa_enteBulk.class).createSQLBuilder();
-            List result = getHome(aUC, Unita_organizzativa_enteBulk.class).fetchAll(sql);
+            SQLBuilder sql = getHome(userContext, Unita_organizzativa_enteBulk.class).createSQLBuilder();
+            List result = getHome(userContext, Unita_organizzativa_enteBulk.class).fetchAll(sql);
             reversale.setCd_uo_ente(((Unita_organizzativa_enteBulk) result.get(0)).getCd_unita_organizzativa());
 
             // carico i mandati associati alla reversale
-/*		sql = getHome( aUC, Ass_mandato_reversaleBulk.class ).createSQLBuilder();
+/*		sql = getHome( userContext, Ass_mandato_reversaleBulk.class ).createSQLBuilder();
 		sql.addClause("AND","esercizio",sql.EQUALS, reversale.getEsercizio() );
 		sql.addClause("AND","cd_cds",sql.EQUALS, reversale.getCds().getCd_unita_organizzativa() );
 		sql.addClause("AND","pg_reversale",sql.EQUALS, reversale.getPg_reversale() );
-		result = getHome( aUC, Ass_mandato_reversaleBulk.class ).fetchAll( sql );
+		result = getHome( userContext, Ass_mandato_reversaleBulk.class ).fetchAll( sql );
 		if ( result.size() == 0 )
 			throw new ApplicationException("Non esiste associazione fra mandati e reversali");
 		reversale.setMandatiColl( new BulkList(result) );
 */
-            reversale.setMandatiColl(new BulkList(((Ass_mandato_reversaleHome) getHome(aUC, Ass_mandato_reversaleBulk.class)).findMandati(aUC, reversale)));
+            reversale.setMandatiColl(new BulkList(((Ass_mandato_reversaleHome) getHome(userContext, Ass_mandato_reversaleBulk.class)).findMandati(userContext, reversale)));
 
             // carico i doc. contabili (mandati/reversali) associati alla reversale
-            reversale.setDoc_contabili_collColl(((V_ass_doc_contabiliHome) getHome(aUC, V_ass_doc_contabiliBulk.class)).findDoc_contabili_coll(reversale));
+            reversale.setDoc_contabili_collColl(((V_ass_doc_contabiliHome) getHome(userContext, V_ass_doc_contabiliBulk.class)).findDoc_contabili_coll(reversale));
 
             if (reversale.getPg_reversale_riemissione() != null) {
-                V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome(aUC, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds_origine(), reversale.getPg_reversale_riemissione()));
+                V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome(userContext, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds_origine(), reversale.getPg_reversale_riemissione()));
                 if (man_rev != null)
                     reversale.setV_man_rev(man_rev);
                 else
-                    man_rev = (V_mandato_reversaleBulk) getHome(aUC, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds(), reversale.getPg_reversale_riemissione()));
+                    man_rev = (V_mandato_reversaleBulk) getHome(userContext, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(reversale.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, reversale.getCd_cds(), reversale.getPg_reversale_riemissione()));
                 if (man_rev != null)
                     reversale.setV_man_rev(man_rev);
             }
         } catch (Exception e) {
             throw handleException(reversale, e);
         }
+        try {
+            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                        .map(Scrittura_partita_doppiaHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(reversale);
+                if (scritturaOpt.isPresent()) {
+                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiDareColl(userContext, scrittura)));
+                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiAvereColl(userContext, scrittura)));
+                    reversale.setScrittura_partita_doppia(scrittura);
+                }
+            }
+        } catch (PersistencyException e) {
+            throw handleException(reversale, e);
+        }
         return reversale;
-
     }
 
     /**

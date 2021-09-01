@@ -25,9 +25,9 @@
     	<% bp.getScadenzario().writeFormInput( out,"default","fl_aggiorna_scad_successiva",!bp.isEditingScadenza(),null,null); %>		
 	</td>
 	</tr>
-	<%} 
-	
-	 else {%> 
+	<%}
+
+	 else {%>
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "dt_scadenza"); %></td>
 	<td>
@@ -39,6 +39,10 @@
 	<tr>
 	<td><% bp.getScadenzario().writeFormLabel( out, "im_scadenza"); %></td>	
 	<td><% bp.getScadenzario().writeFormInput( out,"default","im_scadenza",!bp.isEditingScadenza(),null,null); %></td>
+	<% if ( scadenza != null && scadenza.getFlAssociataOrdine()) {%>
+	<td><% bp.getScadenzario().writeFormLabel( out, "im_associato_doc_amm"); %></td>
+	<td><% bp.getScadenzario().writeFormInput( out,"default","im_associato_doc_amm",true,null,null); %></td>
+	<%}%>
 	</tr>
 	<tr>			
 	<td><% bp.getScadenzario().writeFormLabel( out, "ds_scadenza"); %></td>

@@ -631,7 +631,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 	
 	for ( Iterator i = obbligazione.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
 	{
-		if ( ((Obbligazione_scadenzarioBulk) i.next()).equals( scadenzario ) )
+		if ( ((Obbligazione_scadenzarioBulk) i.next()).equalsByPrimaryKey( scadenzario ) )
 			scadSuccessivaIndex = index + 1;
 		index++;
 	}
@@ -4691,7 +4691,7 @@ public ObbligazioneBulk verificaScadenzarioObbligazione (UserContext aUC,Obbliga
 
 	//segnalo impossibilità di modificare importo se ci sono doc amministrativi associati
 	if ( //!scadenzario.getObbligazione().isFromDocAmm() &&
-		!scadenzario.isFromDocAmm() &&
+		!scadenzario.isFromDocAmm() && !scadenzario.getFlAssociataOrdine() &&
 		scadenzario.getScadenza_iniziale() != null && 
 		scadenzario.getIm_scadenza().compareTo(scadenzario.getScadenza_iniziale().getIm_scadenza()) != 0 &&
 //		scadenzario.getIm_associato_doc_amm().compareTo( new BigDecimal(0)) > 0 &&
@@ -5324,6 +5324,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			throw new ApplicationException("L'importo nuovo da assegnare alla scadenza dell'impegno deve essere inferiore al valore originario!");	
 
 		try {
+			java.math.BigDecimal importoAssociatoScadenzaVecchia = scadenzaVecchia.getIm_associato_doc_amm();
 			java.math.BigDecimal vecchioImportoScadenzaVecchia = scadenzaVecchia.getIm_scadenza();
 			java.math.BigDecimal importoScadenzaNuova = vecchioImportoScadenzaVecchia.subtract(nuovoImportoScadenzaVecchia);
 
@@ -5337,6 +5338,9 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk)s.next();
 				if (os.equalsByPrimaryKey(scadenzaVecchia)) {
 					scadenzaVecchia = os;
+					if (dati.getMantieniImportoAssociatoScadenza()){
+						scadenzaVecchia.setIm_associato_doc_amm(importoAssociatoScadenzaVecchia);
+					}
 					break;
 				}
 			}

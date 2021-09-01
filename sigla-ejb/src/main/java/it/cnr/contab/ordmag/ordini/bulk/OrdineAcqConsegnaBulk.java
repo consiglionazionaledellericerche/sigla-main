@@ -69,9 +69,10 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	private java.lang.Boolean obbligazioneInseritaSuConsegna =  Boolean.FALSE;
 	private java.lang.Boolean autorizzaQuantitaEvasaMaggioreOrdinata = Boolean.FALSE;
 	private String operazioneQuantitaEvasaMinore;
-	
-	
+
+
 	public final static Dictionary OPERAZIONE_EVASIONE_CONSEGNA;
+
 	static{
 		OPERAZIONE_EVASIONE_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
 		OPERAZIONE_EVASIONE_CONSEGNA.put(OPERAZIONE_CREA_NUOVA_CONSEGNA,"Crea nuova Consegna");
@@ -94,7 +95,13 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 		STATO.put(STATO_ANNULLATA,"Annullata");
 		STATO.put(STATO_EVASA_FORZATAMENTE,"Evasa Forzatamente");
 	}
-	
+
+	public boolean isConsegnaImporto0(){
+		if (getStato() != null && (getStato().equals(STATO_ANNULLATA) || getStato().equals(STATO_EVASA_FORZATAMENTE))){
+			return true;
+		}
+		return false;
+	}
 	public final static Dictionary STATO_FATT;
 	static{
 		STATO_FATT = new it.cnr.jada.util.OrderedHashtable();

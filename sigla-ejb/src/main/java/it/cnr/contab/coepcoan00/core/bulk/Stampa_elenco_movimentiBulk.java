@@ -19,6 +19,7 @@ package it.cnr.contab.coepcoan00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 //import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
 //import it.cnr.contab.utenze00.bp.CNRUserContext;
 
@@ -57,13 +58,12 @@ public class Stampa_elenco_movimentiBulk extends it.cnr.jada.bulk.OggettoBulk {
 	private Boolean ragr_mig_beni;
 	private Boolean ragr_stipendi;
 	
-	final public static String TIPO_ISTITUZIONALE = "I";
-	final public static String TIPO_COMMERCIALE = "C";
 	final public static String TIPO_TUTTO = "*";
 
 	static {
-		ti_tipologiaKeys.put(TIPO_ISTITUZIONALE,"Istituzionale");
-		ti_tipologiaKeys.put(TIPO_COMMERCIALE,"Commerciale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ti_tipologiaKeys.put(tipoIVA.value(), tipoIVA.label());
+		}
 		ti_tipologiaKeys.put(TIPO_TUTTO,"Tutto");
 	}
 

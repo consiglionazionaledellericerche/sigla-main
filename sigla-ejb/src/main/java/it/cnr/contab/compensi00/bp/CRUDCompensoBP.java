@@ -19,12 +19,16 @@ package it.cnr.contab.compensi00.bp;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -52,6 +56,7 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 import javax.ejb.EJBException;
@@ -59,6 +64,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  * Insert the type's description here.
@@ -66,7 +72,7 @@ import java.util.Optional;
  *
  * @author: Roberto Fantino
  */
-public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP {
+public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP, IDocAmmEconomicaBP {
     private final SimpleDetailCRUDController contributiCRUDController = new SimpleDetailCRUDController("contributiCRUDController", Contributo_ritenutaBulk.class, "contributi", this, false) {
         @Override
         public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
@@ -118,6 +124,9 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         }
     };
     private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+
     //	Variabili usate per la gestione del "RIPORTA" documento ad esercizio precedente/successivo
     private boolean annoSolareInScrivania = true;
     private boolean riportaAvantiIndietro = false;
@@ -126,8 +135,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean nocompenso = true;
 
     private Boolean isGestioneIncarichiEnabled = null;
-
-    //private Boolean isGestionePrestazioneCompensoEnabled = null;
+    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDCompensoBP constructor comment.
@@ -681,12 +689,12 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
         try {
             setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {
             throw handleException(ex);
         }
-
         resetTabs(context);
     }
 
@@ -1255,8 +1263,8 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
      * Creation date: (22/02/2002 18.28.25)
      */
     public void resetTabs(ActionContext context) {
-
         setTab("tab", "tabCompenso");
+        setTab("tabEconomica", "tabDare");
     }
 
     /**
@@ -1785,4 +1793,38 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
                 })
                 .orElse(super.isInputReadonlyFieldName(fieldName));
     }
+
+    private static final String[] TAB_TESTATA = new String[]{ "tabCompenso","Compenso","/compensi00/tab_compenso.jsp" };
+    private static final String[] TAB_TERZO = new String[]{ "tabCompensoTerzo","Terzo","/compensi00/tab_compenso_terzo.jsp" };
+    private static final String[] TAB_DATI_LIQUIDAZIONE = new String[]{ "tabCompensoDatiLiquidazione","Dati Liquidazione","/compensi00/tab_compenso_dati_liquidazione.jsp" };
+    private static final String[] TAB_CONTRIBUTI_RITENUTE = new String[]{ "tabCompensoContributiRitenute","Contributi e Ritenute","/compensi00/tab_compenso_contributi_ritentute.jsp" };
+    private static final String[] TAB_OBBLIGAZIONI = new String[]{ "tabCompensoObbligazioni","Impegni","/compensi00/tab_compenso_obbligazioni.jsp" };
+    private static final String[] TAB_DOCUMENTI_ASSOCIATI = new String[]{ "tabCompensoDocumentiAssociati","Documenti Associati","/compensi00/tab_compenso_documenti_associati.jsp" };
+
+    public String[][] getTabs() {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        pages.put(i++, TAB_TESTATA);
+        pages.put(i++, TAB_TERZO);
+        pages.put(i++, TAB_DATI_LIQUIDAZIONE);
+        pages.put(i++, TAB_CONTRIBUTI_RITENUTE);
+        pages.put(i++, TAB_OBBLIGAZIONI);
+        pages.put(i++, TAB_DOCUMENTI_ASSOCIATI);
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+        }
+        String[][] tabs = new String[i][3];
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
+    }
+
+    public CollapsableDetailCRUDController getMovimentiDare() {
+        return movimentiDare;
+    }
+
+    public CollapsableDetailCRUDController getMovimentiAvere() {
+        return movimentiAvere;
+    }
+
 }

@@ -18,6 +18,7 @@
 package it.cnr.contab.pdg00.bulk;
 
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.enumeration.TipoIVA;
 
 
 /**
@@ -38,13 +39,12 @@ public class Stampa_libro_giornaleBulk extends it.cnr.jada.bulk.OggettoBulk {
 	private boolean uoForPrintEnabled;
 	private static final java.util.Dictionary ti_tipologiaKeys = new it.cnr.jada.util.OrderedHashtable();
 
-	final public static String TIPO_ISTITUZIONALE = "I";
-	final public static String TIPO_COMMERCIALE = "C";
 	final public static String TIPO_TUTTO = "T";
 
 	static {
-		ti_tipologiaKeys.put(TIPO_ISTITUZIONALE,"Istituzionale");
-		ti_tipologiaKeys.put(TIPO_COMMERCIALE,"Commerciale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ti_tipologiaKeys.put(tipoIVA.value(), tipoIVA.label());
+		}
 		ti_tipologiaKeys.put(TIPO_TUTTO,"Tutto");
 	}
 

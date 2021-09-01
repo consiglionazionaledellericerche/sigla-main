@@ -33,7 +33,7 @@ public class EvasioneOrdineBase extends EvasioneOrdineKey implements Keyed {
  
 //    STATO VARCHAR(3) NOT NULL
 	private java.lang.String stato;
- 
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: EVASIONE_ORDINE

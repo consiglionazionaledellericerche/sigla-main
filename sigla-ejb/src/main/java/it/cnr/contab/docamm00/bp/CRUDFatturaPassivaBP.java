@@ -18,6 +18,9 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
@@ -84,7 +87,7 @@ import java.util.stream.Stream;
  */
 public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, Fattura_passivaBulk> implements
         IDocumentoAmministrativoBP, IGenericSearchDocAmmBP, VoidableBP,
-        IDefferedUpdateSaldiBP, FatturaPassivaElettronicaBP {
+        IDefferedUpdateSaldiBP, FatturaPassivaElettronicaBP, IDocAmmEconomicaBP {
 
     private final SimpleDetailCRUDController crudRiferimentiBanca = new SimpleDetailCRUDController(
             "RifBanca", Fattura_passiva_rigaBulk.class, "riferimenti_bancari",
@@ -115,6 +118,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     return false;
                 }
             };
+    private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+    private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+
 
     //variabile inizializzata in fase di caricamento Nota da fattura elettronica
     //utilizzata per ritornare sulla fattura elettronica
@@ -129,6 +135,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean ribaltato;
     private boolean isDetailDoubling = false;
     private boolean attivoOrdini = false;
+    private boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDAnagraficaBP constructor comment.
@@ -519,10 +526,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
         try {
             attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
+            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             super.init(config, context);
 
             int solaris = Fattura_passivaBulk.getDateCalendar(
-                    it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())
+                            it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())
                     .get(java.util.Calendar.YEAR);
             int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext
                     .getEsercizio(context.getUserContext()).intValue();
@@ -911,6 +919,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public void resetTabs() {
         setTab("tab", "tabFatturaPassiva");
+        setTab("tabEconomica", "tabDare");
     }
 
     public void riportaAvanti(ActionContext context)
@@ -1222,7 +1231,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                         .sdoppiaScadenzaInAutomatico(
                                 context.getUserContext(),
                                 scadenzaVecchia,
-                                    scadenzaVecchia
+                                scadenzaVecchia
                                         .getIm_scadenza()
                                         .subtract(
                                                 dettaglioSelezionato
@@ -1369,21 +1378,21 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
 
     public boolean isCIGVisible(Obbligazione_scadenzarioBulk scad) {
-    	if (scad != null){
+        if (scad != null){
             if( Optional.ofNullable(getModel())
                     .filter(Fattura_passivaBulk.class::isInstance)
                     .map(Fattura_passivaBulk.class::cast)
                     .map(fattura_passivaBulk -> !(
                             fattura_passivaBulk.isEstera() ||
-                            fattura_passivaBulk.isSanMarinoConIVA() ||
-                            fattura_passivaBulk.isSanMarinoSenzaIVA()
+                                    fattura_passivaBulk.isSanMarinoConIVA() ||
+                                    fattura_passivaBulk.isSanMarinoSenzaIVA()
                     ) && (fattura_passivaBulk.hasDettagliContabilizzati()|| fattura_passivaBulk.hasDettagliPagati()))
                     .orElse(Boolean.FALSE)){
-        	if (!(scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) { 
-        		return true;
-        	}
+                if (!(scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) {
+                    return true;
+                }
+            }
         }
-    	}
         return false;
     }
 
@@ -1531,11 +1540,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public String getNomeFileFirmato() {
         return Optional.ofNullable(getModel())
-                    .filter(Fattura_passivaBulk.class::isInstance)
-                    .map(Fattura_passivaBulk.class::cast)
-                    .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()))
-                    .map(DocumentoEleTestataBulk::getNomeFileFirmato)
-                    .orElse(null);
+                .filter(Fattura_passivaBulk.class::isInstance)
+                .map(Fattura_passivaBulk.class::cast)
+                .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()))
+                .map(DocumentoEleTestataBulk::getNomeFileFirmato)
+                .orElse(null);
     }
 
     public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
@@ -1647,6 +1656,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     .orElse(TAB_FATTURA_PASSIVA_OBBLIGAZIONI));
             pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
             pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
+        }
+        if (attivaEconomicaParallela) {
+            pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
         }
         if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
@@ -1807,5 +1819,13 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public CollapsableDetailCRUDController getCrudDocEleAcquistoColl() {
         return crudDocEleAcquistoColl;
+    }
+
+    public CollapsableDetailCRUDController getMovimentiDare() {
+        return movimentiDare;
+    }
+
+    public CollapsableDetailCRUDController getMovimentiAvere() {
+        return movimentiAvere;
     }
 }

@@ -41,6 +41,7 @@ import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceHome;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -1012,7 +1013,7 @@ public Forward doCreaGruppi(ActionContext context) {
 			bp.setIsQuantitaEnabled(true);
 		}		
 		// Assegna il Prezzo unitario: il prezzo è diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
-		if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE)){
+		if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value())){
 			valore_unitario = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 			valore_unitario = valore_unitario.divide(riga_fattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
 			nuovoRigoInventario.setValore_unitario(valore_unitario);

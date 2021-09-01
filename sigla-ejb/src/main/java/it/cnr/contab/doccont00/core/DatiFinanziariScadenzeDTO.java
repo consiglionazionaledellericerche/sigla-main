@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 
 public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 	BigDecimal nuovoImportoScadenzaVecchia;
+	Boolean mantieniImportoAssociatoScadenza = false;
 	String nuovaDescrizione;
 	Timestamp nuovaScadenza;
 	String cdLineaAttivita;
@@ -64,5 +65,13 @@ public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 	}
 	public void setCdCentroResponsabilita(String cdCentroResponsabilita) {
 		this.cdCentroResponsabilita = cdCentroResponsabilita;
+	}
+
+	public Boolean getMantieniImportoAssociatoScadenza() {
+		return mantieniImportoAssociatoScadenza;
+	}
+
+	public void setMantieniImportoAssociatoScadenza(Boolean mantieniImportoAssociatoScadenza) {
+		this.mantieniImportoAssociatoScadenza = mantieniImportoAssociatoScadenza;
 	}
 }

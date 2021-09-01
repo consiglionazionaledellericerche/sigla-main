@@ -23,6 +23,8 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
@@ -57,6 +59,7 @@ import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.ejb.ProcedureComponentSession;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -2672,7 +2675,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             documento.setCd_uo_origine(mandato.getCd_uo_origine());
             documento.setTipo_documento(new Tipo_documento_ammBulk(
                     Numerazione_doc_ammBulk.TIPO_TRASF_S));
-            documento.setTi_istituz_commerc(Documento_genericoBulk.ISTITUZIONALE);
+            documento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
             documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
             documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
             // documento.setFl_modifica_coge(new Boolean( false));
@@ -3607,70 +3610,70 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Ass_mandato_reversaleBulk). Viene caricato i dati del beneficiario del
      * mandato (Mandato_terzoBulk)
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> il mandato da inizializzare per la
      *             modifica
      * @return mandato il Mandato inizializzato per la modifica
      */
-    public OggettoBulk inizializzaBulkPerModifica(UserContext aUC,
+    public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,
                                                   OggettoBulk bulk) throws ComponentException {
         MandatoBulk mandato = (MandatoBulk) super.inizializzaBulkPerModifica(
-                aUC, bulk);
+                userContext, bulk);
         try {
             //Eliminato in quanto sono campi valorizzati ma non utilizzati
-//			mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(aUC,
+//			mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(userContext,
 //					mandato));
-//			mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(aUC,
+//			mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(userContext,
 //					mandato));
 
             // carico i mandati riga
             mandato.setMandato_rigaColl(new BulkList(((MandatoHome) getHome(
-                    aUC, mandato.getClass())).findMandato_riga(aUC, mandato)));
+                    userContext, mandato.getClass())).findMandato_riga(userContext, mandato)));
             Mandato_rigaBulk riga;
             for (Iterator i = mandato.getMandato_rigaColl().iterator(); i
                     .hasNext(); ) {
-                riga = (Mandato_rigaBulk) super.inizializzaBulkPerModifica(aUC,
+                riga = (Mandato_rigaBulk) super.inizializzaBulkPerModifica(userContext,
                         (Mandato_rigaBulk) i.next());
                 // Carico automaticamente i codici SIOPE e visualizzo quelli
                 // ancora collegabili se la gestione è attiva
                 if (Utility.createParametriCnrComponentSession()
-                        .getParametriCnr(aUC, mandato.getEsercizio())
+                        .getParametriCnr(userContext, mandato.getEsercizio())
                         .getFl_siope().booleanValue()) {
                     riga.setMandato_siopeColl(new BulkList(
-                            ((Mandato_rigaHome) getHome(aUC,
+                            ((Mandato_rigaHome) getHome(userContext,
                                     Mandato_rigaBulk.class))
-                                    .findCodiciCollegatiSIOPE(aUC, riga)));
-                    setCodiciSIOPECollegabili(aUC, riga);
+                                    .findCodiciCollegatiSIOPE(userContext, riga)));
+                    setCodiciSIOPECollegabili(userContext, riga);
                 }
 
-                //			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_cup().booleanValue() &&
-                //					Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_siope_cup().booleanValue()){
-                //				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, "DATA_LIMITE_CUP_SIOPE_CUP");
+                //			if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_cup().booleanValue() &&
+                //					Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_siope_cup().booleanValue()){
+                //				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(userContext, "DATA_LIMITE_CUP_SIOPE_CUP");
                 //				if(mandato.getDt_emissione().after(dataLimite)){
                 //					for (Iterator j=riga.getMandato_siopeColl().iterator();j.hasNext();){
                 //						Mandato_siopeIBulk rigaSiope = (Mandato_siopeIBulk)j.next();
-                //						rigaSiope.setMandatoSiopeCupColl(new BulkList(((Mandato_siopeHome) getHome( aUC, Mandato_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+                //						rigaSiope.setMandatoSiopeCupColl(new BulkList(((Mandato_siopeHome) getHome( userContext, Mandato_siopeBulk.class)).findCodiciSiopeCupCollegati(userContext, rigaSiope)));
                 //					}
                 //				}else
                 //				{
-                //					riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome( aUC, Mandato_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+                //					riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome( userContext, Mandato_rigaBulk.class)).findCodiciCupCollegati(userContext, riga)));
                 //				}
                 //
                 //			}else{
-                if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_cup().booleanValue()) {
-                    riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome(aUC, Mandato_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+                if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_cup().booleanValue()) {
+                    riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class)).findCodiciCupCollegati(userContext, riga)));
                 } else {
-                    if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_siope_cup().booleanValue()) {
+                    if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_siope_cup().booleanValue()) {
                         for (Iterator j = riga.getMandato_siopeColl().iterator(); j.hasNext(); ) {
                             Mandato_siopeIBulk rigaSiope = (Mandato_siopeIBulk) j.next();
-                            rigaSiope.setMandatoSiopeCupColl(new BulkList(((Mandato_siopeHome) getHome(aUC, Mandato_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+                            rigaSiope.setMandatoSiopeCupColl(new BulkList(((Mandato_siopeHome) getHome(userContext, Mandato_siopeBulk.class)).findCodiciSiopeCupCollegati(userContext, rigaSiope)));
                         }
                     }
                 }
                 //			}
-                inizializzaTi_fattura(aUC, riga);
-                ((Mandato_rigaHome) getHome(aUC, riga.getClass()))
-                        .initializeElemento_voce(aUC, riga);
+                inizializzaTi_fattura(userContext, riga);
+                ((Mandato_rigaHome) getHome(userContext, riga.getClass()))
+                        .initializeElemento_voce(userContext, riga);
             }
 
             if (mandato instanceof MandatoAccreditamentoBulk) {
@@ -3690,16 +3693,16 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                 .getMandato_rigaColl().get(0))
                                 .getBancaOptions());
                 ((MandatoAccreditamentoBulk) mandato)
-                        .setImpegniSelezionatiColl(findImpegni(aUC,
+                        .setImpegniSelezionatiColl(findImpegni(userContext,
                                 (MandatoAccreditamentoBulk) mandato));
             }
             if (mandato instanceof MandatoIBulk)
-                mandato = inizializzaSospesiDa1210(aUC, (MandatoIBulk) mandato);
+                mandato = inizializzaSospesiDa1210(userContext, (MandatoIBulk) mandato);
             // carico il mandato terzo
-            mandato.setMandato_terzo(((MandatoHome) getHome(aUC, mandato
-                    .getClass())).findMandato_terzo(aUC, mandato));
-            initializeKeysAndOptionsInto(aUC, mandato);
-            verificaTipoBollo(aUC, mandato);
+            mandato.setMandato_terzo(((MandatoHome) getHome(userContext, mandato
+                    .getClass())).findMandato_terzo(userContext, mandato));
+            initializeKeysAndOptionsInto(userContext, mandato);
+            verificaTipoBollo(userContext, mandato);
 
             if (MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato
                     .getTi_mandato())) {
@@ -3711,7 +3714,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
                 if (mandato instanceof MandatoIBulk) {
                     Var_bilancioBulk varBilancio = ((Var_bilancioHome) getHome(
-                            aUC, Var_bilancioBulk.class))
+                            userContext, Var_bilancioBulk.class))
                             .findByMandato(mandato);
                     if (varBilancio != null)
                         ((MandatoIBulk) mandato).setVar_bilancio(varBilancio);
@@ -3722,8 +3725,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             Sospeso_det_uscBulk sdu;
             mandato
                     .setSospeso_det_uscColl(new BulkList(
-                            ((MandatoHome) getHome(aUC, mandato.getClass()))
-                                    .findSospeso_det_usc(aUC, mandato)));
+                            ((MandatoHome) getHome(userContext, mandato.getClass()))
+                                    .findSospeso_det_usc(userContext, mandato)));
             // aggiungo nella deleteList i sospesi annullati
             for (Iterator i = mandato.getSospeso_det_uscColl().iterator(); i
                     .hasNext(); ) {
@@ -3734,9 +3737,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             }
 
             // carico il cd uo ente
-            SQLBuilder sql = getHome(aUC, Unita_organizzativa_enteBulk.class)
+            SQLBuilder sql = getHome(userContext, Unita_organizzativa_enteBulk.class)
                     .createSQLBuilder();
-            List result = getHome(aUC, Unita_organizzativa_enteBulk.class)
+            List result = getHome(userContext, Unita_organizzativa_enteBulk.class)
                     .fetchAll(sql);
             mandato
                     .setCd_uo_ente(((Unita_organizzativa_enteBulk) result
@@ -3745,15 +3748,15 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // carico le reversali associate al mandato di
             // regolarizzazione/accreditamento
             mandato.setReversaliColl(new BulkList(
-                    ((Ass_mandato_reversaleHome) getHome(aUC,
+                    ((Ass_mandato_reversaleHome) getHome(userContext,
                             Ass_mandato_reversaleBulk.class)).findReversali(
-                            aUC, mandato)));
+                            userContext, mandato)));
 
             // carico i doc. contabili (mandati/reversali) associati al mandato
             mandato
                     .setDoc_contabili_collColl(((V_ass_doc_contabiliHome) getHome(
-                            aUC, V_ass_doc_contabiliBulk.class))
-                            .findDoc_contabili_coll(aUC, mandato));
+                            userContext, V_ass_doc_contabiliBulk.class))
+                            .findDoc_contabili_coll(userContext, mandato));
 
             // per mandato di accreditamento inizializzo il codice cds
             if (mandato instanceof MandatoAccreditamentoBulk) {
@@ -3767,22 +3770,43 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // perchè fattura estera istituzuionale di beni intraue o san marino
             if (MandatoBulk.TIPO_REGOLAM_SOSPESO.equals(mandato.getTi_mandato())
                     && mandato.getIm_ritenute().compareTo(new BigDecimal(0)) > 0)
-                mandato = inizializzaFlagFaiReversale(aUC,
+                mandato = inizializzaFlagFaiReversale(userContext,
                         (MandatoIBulk) mandato);
             if (mandato.getPg_mandato_riemissione() != null) {
-                V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome(aUC, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds_origine(), mandato.getPg_mandato_riemissione()));
+                V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome(userContext, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds_origine(), mandato.getPg_mandato_riemissione()));
                 if (man_rev != null)
                     mandato.setV_man_rev(man_rev);
                 else
-                    man_rev = (V_mandato_reversaleBulk) getHome(aUC, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato_riemissione()));
+                    man_rev = (V_mandato_reversaleBulk) getHome(userContext, V_mandato_reversaleBulk.class).findByPrimaryKey(new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato_riemissione()));
                 if (man_rev != null)
                     mandato.setV_man_rev(man_rev);
             }
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
+        try {
+            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                        .map(Scrittura_partita_doppiaHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(mandato);
+                if (scritturaOpt.isPresent()) {
+                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiDareColl(userContext, scrittura)));
+                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiAvereColl(userContext, scrittura)));
+                    mandato.setScrittura_partita_doppia(scrittura);
+                }
+            }
+        } catch (PersistencyException e) {
+            throw handleException(mandato, e);
+        }
         return mandato;
-
     }
 
     /**

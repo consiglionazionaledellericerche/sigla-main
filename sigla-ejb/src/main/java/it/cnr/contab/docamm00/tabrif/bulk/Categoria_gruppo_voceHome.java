@@ -22,6 +22,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.util.List;
+
 public class Categoria_gruppo_voceHome extends BulkHome {
 public Categoria_gruppo_voceHome(java.sql.Connection conn) {
 	super(Categoria_gruppo_voceBulk.class,conn);
@@ -45,5 +47,13 @@ public Categoria_gruppo_voceBulk findCategoria_gruppo_voceforvoce(Elemento_voceB
 		return null;
 	
 }
+	public List<Categoria_gruppo_voceBulk> findCategoriaGruppoForVoce(Elemento_voceBulk elem) throws PersistencyException{
+		it.cnr.jada.persistency.sql.SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,elem.getEsercizio());
+		sql.addSQLClause(FindClause.AND,"TI_APPARTENENZA",SQLBuilder.EQUALS,elem.getTi_appartenenza());
+		sql.addSQLClause(FindClause.AND,"TI_GESTIONE",SQLBuilder.EQUALS,elem.getTi_gestione());
+		sql.addSQLClause(FindClause.AND,"CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,elem.getCd_elemento_voce());
+		return fetchAll(sql);
+	}
 
 }

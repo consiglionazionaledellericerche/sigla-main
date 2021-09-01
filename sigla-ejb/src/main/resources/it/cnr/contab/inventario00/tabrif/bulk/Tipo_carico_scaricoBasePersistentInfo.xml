@@ -117,7 +117,14 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+				columnName="FL_DA_ORDINI"
+				propertyName="fl_da_ordini"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -148,5 +155,7 @@
 	<persistentProperty
 		name="fl_chiude_fondo" />	
 	<persistentProperty
-		name="fl_vendita" />		
+		name="fl_vendita" />
+	<persistentProperty
+			name="fl_da_ordini" />
 </SQLPersistentInfo>

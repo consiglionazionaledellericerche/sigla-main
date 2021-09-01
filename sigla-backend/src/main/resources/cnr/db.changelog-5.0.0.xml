@@ -127,4 +127,19 @@
             <column name="posizione_creditoria" type="CHAR(1)" value="Y"/>
         </update>
     </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione-add-economica-parallela">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" valueNumeric="${esercizio_corrente}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ECONOMICO_PATRIMONIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="ECONOMICO_PATRIMONIALE_PARALLELA"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="val02" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

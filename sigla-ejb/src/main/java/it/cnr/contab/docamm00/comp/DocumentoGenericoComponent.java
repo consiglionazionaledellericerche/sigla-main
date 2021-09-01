@@ -21,7 +21,10 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -37,14 +40,15 @@ import it.cnr.contab.docamm00.tabrif.bulk.CambioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.CambioHome;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.contab.inventario01.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -148,7 +152,7 @@ public class DocumentoGenericoComponent
 
             for (java.util.Iterator iterator = dettagli.iterator(); iterator.hasNext(); ) {
                 Documento_generico_rigaBulk dett = (Documento_generico_rigaBulk) iterator.next();
-                if (dett.getStato_cofi().equals(dett.STATO_ANNULLATO))
+                if (dett.getStato_cofi().equals(Documento_generico_rigaBulk.STATO_ANNULLATO))
                     return true;
             }
         }
@@ -424,14 +428,14 @@ public class DocumentoGenericoComponent
         if (documentoGenericoRiga != null) {
 
             if (documentoGenerico.getDocumento_generico_dettColl().size() > 1) {
-                Documento_generico_rigaBulk rigaPrecedente = (Documento_generico_rigaBulk) documentoGenerico.getDocumento_generico_dettColl().get(documentoGenerico.getDocumento_generico_dettColl().size() - 2);
+                Documento_generico_rigaBulk rigaPrecedente = documentoGenerico.getDocumento_generico_dettColl().get(documentoGenerico.getDocumento_generico_dettColl().size() - 2);
                 documentoGenericoRiga.setModalita_pagamento_uo_cds(findModalitaSelezionate(aUC, rigaPrecedente));
                 documentoGenericoRiga.setTermini_pagamento_uo_cds(findTerminiSelezionati(aUC, rigaPrecedente));
                 documentoGenericoRiga.setTermini_uo_cds(findTermini(aUC, rigaPrecedente));
                 documentoGenericoRiga.setModalita_uo_cds(findModalita(aUC, rigaPrecedente));
                 documentoGenericoRiga.setBanca_uo_cds(rigaPrecedente.getBanca_uo_cds());
             } else {
-                if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
+                if (documentoGenerico.getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
 
                     java.util.Collection coll = findListabanche(aUC, documentoGenericoRiga);
                     documentoGenericoRiga.setBanca_uo_cds((coll == null || coll.isEmpty())
@@ -1098,10 +1102,7 @@ public class DocumentoGenericoComponent
 
         // se il filtro mi passa null come terzo il cliente è diversi
         boolean diversi;
-        if (filtro.getCliente() == null || filtro.getCliente().getCd_terzo() == null)
-            diversi = true;
-        else
-            diversi = false;
+        diversi = filtro.getCliente() == null || filtro.getCliente().getCd_terzo() == null;
 
         it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome home = (it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome) getHome(context, it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
@@ -1115,58 +1116,58 @@ public class DocumentoGenericoComponent
         sql.addSQLJoin("ACCERTAMENTO_SCADENZARIO.PG_ACCERTAMENTO", "ACCERTAMENTO.PG_ACCERTAMENTO");
 
         //imposto i filtri selle scadenze non associate
-        sql.addSQLClause("AND", "ACCERTAMENTO.IM_ACCERTAMENTO-ACCERTAMENTO_SCADENZARIO.IM_ASSOCIATO_DOC_AMM", sql.GREATER_EQUALS, filtro.getIm_importo());
-        sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.IM_SCADENZA-ACCERTAMENTO_SCADENZARIO.IM_ASSOCIATO_DOC_AMM", sql.GREATER, "0");
+        sql.addSQLClause("AND", "ACCERTAMENTO.IM_ACCERTAMENTO-ACCERTAMENTO_SCADENZARIO.IM_ASSOCIATO_DOC_AMM", SQLBuilder.GREATER_EQUALS, filtro.getIm_importo());
+        sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.IM_SCADENZA-ACCERTAMENTO_SCADENZARIO.IM_ASSOCIATO_DOC_AMM", SQLBuilder.GREATER, "0");
         //sql.addSQLClause("AND","ACCERTAMENTO.FL_PGIRO = 'N'");
 
 
         //.. con UO origine = UO origine del documento generico
-        sql.addSQLClause("AND", "ACCERTAMENTO.CD_UO_ORIGINE", sql.EQUALS, filtro.getCd_uo_origine());
-        sql.addSQLClause("AND", "ACCERTAMENTO.CD_UNITA_ORGANIZZATIVA", sql.EQUALS, filtro.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "ACCERTAMENTO.CD_UO_ORIGINE", SQLBuilder.EQUALS, filtro.getCd_uo_origine());
+        sql.addSQLClause("AND", "ACCERTAMENTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, filtro.getCd_unita_organizzativa());
         //.. e che sia un'accertamento non riportato
-        sql.addSQLClause("AND", "ACCERTAMENTO.RIPORTATO", sql.EQUALS, "N");
+        sql.addSQLClause("AND", "ACCERTAMENTO.RIPORTATO", SQLBuilder.EQUALS, "N");
         //che sia un'accertamento non cancellato
-        sql.addSQLClause("AND", "ACCERTAMENTO.DT_CANCELLAZIONE", sql.ISNULL, null);
+        sql.addSQLClause("AND", "ACCERTAMENTO.DT_CANCELLAZIONE", SQLBuilder.ISNULL, null);
 
         //con anno di competenza uguale all'anno di scrivania
-        sql.addSQLClause("AND", "ACCERTAMENTO.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+        sql.addSQLClause("AND", "ACCERTAMENTO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
 //	sql.addSQLClause("AND","ACCERTAMENTO.ESERCIZIO_COMPETENZA", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
 
         //Competenza COGE
         if (filtro.isCompetenzaCOGESuEnte()) {
             if (filtro.hasDocumentoCompetenzaCOGEInAnnoPrecedente()) {
-                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_ACR_RES);
+                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_ACR_RES);
             } else {
 //			sql.addSQLClause("AND","ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_RES);
                 //... e che non siano accertamenti di sistema o pluriennali
-                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_SIST);
-                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_PLUR);
+                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_SIST);
+                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_PLUR);
                 if (!filtro.hasDocumentoCompetenzaCOGESoloInAnnoCorrente())
-                    sql.addSQLClause("AND", "ACCERTAMENTO.FL_PGIRO", sql.EQUALS, "N");
+                    sql.addSQLClause("AND", "ACCERTAMENTO.FL_PGIRO", SQLBuilder.EQUALS, "N");
             }
         } else {
 //		sql.addSQLClause("AND","ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_RES);
             //... e che non siano accertamenti di sistema o pluriennali
-            sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_SIST);
-            sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_PLUR);
+            sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_SIST);
+            sql.addSQLClause("AND", "ACCERTAMENTO.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_ACR_PLUR);
         }
 
         //filtro su DT_SCADENZA
         if (filtro.getFl_data_scadenziario().booleanValue() && filtro.getData_scadenziario() != null)
-            sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.DT_SCADENZA_INCASSO", sql.EQUALS, filtro.getData_scadenziario());
+            sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.DT_SCADENZA_INCASSO", SQLBuilder.EQUALS, filtro.getData_scadenziario());
 
         //filtro su IMPORTO e comunque >0
         if (filtro.getFl_importo().booleanValue() && filtro.getIm_importo() != null)
-            sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.IM_SCADENZA", sql.GREATER_EQUALS, filtro.getIm_importo());
+            sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.IM_SCADENZA", SQLBuilder.GREATER_EQUALS, filtro.getIm_importo());
         else
             sql.addSQLClause("AND", "ACCERTAMENTO_SCADENZARIO.IM_SCADENZA > 0.00 ");
 
         //	filtro su Esercizio originale accertamento
         if (filtro.getFl_nr_accertamento().booleanValue() && filtro.getEsercizio_ori_accertamento() != null)
-            sql.addSQLClause("AND", "ACCERTAMENTO.ESERCIZIO_ORIGINALE", sql.EQUALS, filtro.getEsercizio_ori_accertamento());
+            sql.addSQLClause("AND", "ACCERTAMENTO.ESERCIZIO_ORIGINALE", SQLBuilder.EQUALS, filtro.getEsercizio_ori_accertamento());
         //filtro su Numero obbligazione
         if (filtro.getFl_nr_accertamento().booleanValue() && filtro.getNr_accertamento() != null)
-            sql.addSQLClause("AND", "ACCERTAMENTO.PG_ACCERTAMENTO", sql.EQUALS, filtro.getNr_accertamento());
+            sql.addSQLClause("AND", "ACCERTAMENTO.PG_ACCERTAMENTO", SQLBuilder.EQUALS, filtro.getNr_accertamento());
         //else
         //sql.addSQLClause("AND","ACCERTAMENTO.PG_ACCERTAMENTO",sql.GREATER_EQUALS, new Long(0));
 
@@ -1179,15 +1180,15 @@ public class DocumentoGenericoComponent
             if (!filtro.getFl_cliente().booleanValue()) {
                 //filtro disabilitato sul terzo ho terzo + diversi
                 sql.openParenthesis("AND");
-                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TERZO", sql.EQUALS, filtro.getCliente().getCd_terzo());
-                sql.addSQLClause("OR", "ANAGRAFICO.TI_ENTITA", sql.EQUALS, AnagraficoBulk.DIVERSI);
+                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TERZO", SQLBuilder.EQUALS, filtro.getCliente().getCd_terzo());
+                sql.addSQLClause("OR", "ANAGRAFICO.TI_ENTITA", SQLBuilder.EQUALS, AnagraficoBulk.DIVERSI);
                 sql.closeParenthesis();
             } else
                 //filtro abilitato sul terzo ho solo terzo
-                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TERZO", sql.EQUALS, filtro.getCliente().getCd_terzo());
+                sql.addSQLClause("AND", "ACCERTAMENTO.CD_TERZO", SQLBuilder.EQUALS, filtro.getCliente().getCd_terzo());
         } else {
             //se diverso ho solo diversi
-            sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", sql.EQUALS, AnagraficoBulk.DIVERSI);
+            sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", SQLBuilder.EQUALS, AnagraficoBulk.DIVERSI);
         }
         return iterator(
                 context,
@@ -1369,10 +1370,7 @@ public class DocumentoGenericoComponent
 
         // se il filtro mi passa null come fornitore il fornitore è diversi
         boolean diversi;
-        if (filtro.getFornitore() == null || filtro.getFornitore().getCd_terzo() == null)
-            diversi = true;
-        else
-            diversi = false;
+        diversi = filtro.getFornitore() == null || filtro.getFornitore().getCd_terzo() == null;
 
         it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome home = (it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome) getHome(context, it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
@@ -1386,7 +1384,7 @@ public class DocumentoGenericoComponent
         sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE", "OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
         sql.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE", "OBBLIGAZIONE.PG_OBBLIGAZIONE");
 
-        sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+        sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
 
         //imposto i filtri selle scadenze non associate
         if (!filtro.isPassivo_ente()) {
@@ -1398,12 +1396,12 @@ public class DocumentoGenericoComponent
             sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = 0.00 OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
             sql.closeParenthesis();
         } else
-            sql.addSQLClause("AND", "OBBLIGAZIONE.IM_OBBLIGAZIONE-OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM", sql.GREATER_EQUALS, filtro.getIm_importo());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.IM_OBBLIGAZIONE-OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM", SQLBuilder.GREATER_EQUALS, filtro.getIm_importo());
 
 
         //seleziona solo partite di giro per i documenti per solo partite di giro
         if (filtro.getTipo_documento() != null && filtro.getTipo_documento().getFl_solo_partita_giro().booleanValue()) {
-            sql.addSQLClause("AND", "OBBLIGAZIONE.FL_PGIRO", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "OBBLIGAZIONE.FL_PGIRO", SQLBuilder.EQUALS, "Y");
             if (Numerazione_doc_ammBulk.TIPO_GEN_AP_FON.equalsIgnoreCase(filtro.getTipo_documento().getCd_tipo_documento_amm())) {
                 //Aggiungo clausole per la ricerca delle SOLE obb p.giro TRONCHE
                 sql.addTableToHeader("ASS_OBB_ACR_PGIRO");
@@ -1416,9 +1414,9 @@ public class DocumentoGenericoComponent
                 sql.addSQLJoin("ASS_OBB_ACR_PGIRO.ESERCIZIO", "ACCERTAMENTO.ESERCIZIO");
                 sql.addSQLJoin("ASS_OBB_ACR_PGIRO.ESERCIZIO_ORI_ACCERTAMENTO", "ACCERTAMENTO.ESERCIZIO_ORIGINALE");
                 sql.addSQLJoin("ASS_OBB_ACR_PGIRO.PG_ACCERTAMENTO", "ACCERTAMENTO.PG_ACCERTAMENTO");
-                sql.addSQLClause("AND", "ASS_OBB_ACR_PGIRO.TI_ORIGINE", sql.EQUALS, Ass_obb_acr_pgiroBulk.TIPO_SPESA);
-                sql.addSQLClause("AND", "ACCERTAMENTO.DT_CANCELLAZIONE", sql.ISNOTNULL, null);
-                sql.addSQLClause("AND", "ACCERTAMENTO.IM_ACCERTAMENTO", sql.EQUALS, new BigDecimal(0).setScale(2));
+                sql.addSQLClause("AND", "ASS_OBB_ACR_PGIRO.TI_ORIGINE", SQLBuilder.EQUALS, Ass_obb_acr_pgiroBulk.TIPO_SPESA);
+                sql.addSQLClause("AND", "ACCERTAMENTO.DT_CANCELLAZIONE", SQLBuilder.ISNOTNULL, null);
+                sql.addSQLClause("AND", "ACCERTAMENTO.IM_ACCERTAMENTO", SQLBuilder.EQUALS, new BigDecimal(0).setScale(2));
                 //*************************************************************
             }
         }
@@ -1426,62 +1424,62 @@ public class DocumentoGenericoComponent
         //Competenza COGE
         if (filtro.isCompetenzaCOGESuEnte()) {
             if (filtro.hasDocumentoCompetenzaCOGEInAnnoPrecedente()) {
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
                 //sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO", sql.EQUALS, "Y");
             } else {
 //			sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
                 sql.openParenthesis("AND");
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
-                sql.addSQLClause("OR", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_IMP);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
+                sql.addSQLClause("OR", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_IMP);
                 sql.closeParenthesis();
                 //sql.addSQLClause("AND","OBBLIGAZIONE.FL_PGIRO", sql.EQUALS, "Y");
             }
         } else {
-            sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
+            sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.NOT_EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
             if (!filtro.hasDocumentoCompetenzaCOGESoloInAnnoCorrente())
-                sql.addSQLClause("AND", "OBBLIGAZIONE.FL_PGIRO", sql.EQUALS, "N");
+                sql.addSQLClause("AND", "OBBLIGAZIONE.FL_PGIRO", SQLBuilder.EQUALS, "N");
         }
 
         //.. e in stato definitivo
-        sql.addSQLClause("AND", "OBBLIGAZIONE.STATO_OBBLIGAZIONE", sql.EQUALS, ObbligazioneBulk.STATO_OBB_DEFINITIVO);
+        sql.addSQLClause("AND", "OBBLIGAZIONE.STATO_OBBLIGAZIONE", SQLBuilder.EQUALS, ObbligazioneBulk.STATO_OBB_DEFINITIVO);
 
         //.. con UO origine = UO origine del documento generico
-        sql.addSQLClause("AND", "OBBLIGAZIONE.CD_UO_ORIGINE", sql.EQUALS, filtro.getCd_uo_origine());
-        sql.addSQLClause("AND", "OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA", sql.EQUALS, filtro.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "OBBLIGAZIONE.CD_UO_ORIGINE", SQLBuilder.EQUALS, filtro.getCd_uo_origine());
+        sql.addSQLClause("AND", "OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, filtro.getCd_unita_organizzativa());
 
         //.. e che sia un'obbligazione non riportata
-        sql.addSQLClause("AND", "OBBLIGAZIONE.RIPORTATO", sql.EQUALS, "N");
+        sql.addSQLClause("AND", "OBBLIGAZIONE.RIPORTATO", SQLBuilder.EQUALS, "N");
 
         //che sia un'obbligazione non cancellata
-        sql.addSQLClause("AND", "OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
+        sql.addSQLClause("AND", "OBBLIGAZIONE.DT_CANCELLAZIONE", SQLBuilder.ISNULL, null);
 
         //filtro su DT_SCADENZA
         if (filtro.getFl_data_scadenziario().booleanValue() && filtro.getData_scadenziario() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA", sql.EQUALS, filtro.getData_scadenziario());
+            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA", SQLBuilder.EQUALS, filtro.getData_scadenziario());
         //filtro su IMPORTO e comunque >0
 
         if (!filtro.isPassivo_ente() && filtro.getFl_importo().booleanValue() && filtro.getIm_importo() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.GREATER_EQUALS, filtro.getIm_importo());
+            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", SQLBuilder.GREATER_EQUALS, filtro.getIm_importo());
         else
             sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA > 0.00 ");
 
         //filtro su Tipo obbligazione
         if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getTipo_obbligazione() != null) {
             if (ObbligazioneBulk.TIPO_COMPETENZA.equals(filtro.getTipo_obbligazione()))
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB);
             else if (ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(filtro.getTipo_obbligazione()))
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES);
             else if (ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(filtro.getTipo_obbligazione()))
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
         }
 
         //filtro su Anno Residuo obbligazione
         if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getEsercizio_ori_obbligazione() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO_ORIGINALE", sql.EQUALS, filtro.getEsercizio_ori_obbligazione());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO_ORIGINALE", SQLBuilder.EQUALS, filtro.getEsercizio_ori_obbligazione());
 
         //filtro su Numero obbligazione
         if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getNr_obbligazione() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE.PG_OBBLIGAZIONE", sql.EQUALS, filtro.getNr_obbligazione());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.PG_OBBLIGAZIONE", SQLBuilder.EQUALS, filtro.getNr_obbligazione());
         //else
         //sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE",sql.GREATER_EQUALS, new Long(0));
 
@@ -1501,16 +1499,16 @@ public class DocumentoGenericoComponent
             if (!filtro.getFl_fornitore().booleanValue()) {
                 //filtro disabilitato sul terzo ho terzo + diversi
                 sql.openParenthesis("AND");
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TERZO", sql.EQUALS, filtro.getFornitore().getCd_terzo());
-                sql.addSQLClause("OR", "ANAGRAFICO.TI_ENTITA", sql.EQUALS, AnagraficoBulk.DIVERSI);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TERZO", SQLBuilder.EQUALS, filtro.getFornitore().getCd_terzo());
+                sql.addSQLClause("OR", "ANAGRAFICO.TI_ENTITA", SQLBuilder.EQUALS, AnagraficoBulk.DIVERSI);
                 sql.closeParenthesis();
             } else {
                 //filtro abilitato sul terzo ho solo terzo
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TERZO", sql.EQUALS, filtro.getFornitore().getCd_terzo());
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TERZO", SQLBuilder.EQUALS, filtro.getFornitore().getCd_terzo());
             }
         } else {
             //se diverso ho solo diversi
-            sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", sql.EQUALS, AnagraficoBulk.DIVERSI);
+            sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", SQLBuilder.EQUALS, AnagraficoBulk.DIVERSI);
         }
         return iterator(
                 context,
@@ -1554,15 +1552,15 @@ public class DocumentoGenericoComponent
                 documentoGenericoRiga.setCodice_fiscale(
                         terzo.getAnagrafico().getCodice_fiscale());
                 documentoGenericoRiga.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
-                if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.ENTRATE) {
+                if (documentoGenerico.getTi_entrate_spese() == Documento_genericoBulk.ENTRATE) {
                 }
                 //aggiornaModalita(aUC,documentoGenerico,documentoGenericoRiga,documentoGenerico.getTerzo_uo_cds());
                 else
                     documentoGenericoRiga.setModalita(findModalita(aUC, documentoGenericoRiga));
 
                 //ricontabilizzazione COGE
-                if (oldTerzo != null && terzo != null && !oldTerzo.equalsByPrimaryKey(terzo) && documentoGenericoRiga.getDocumento_generico().REGISTRATO_IN_COGE.equalsIgnoreCase(documentoGenericoRiga.getDocumento_generico().getStato_coge()))
-                    documentoGenericoRiga.getDocumento_generico().setStato_coge(documentoGenericoRiga.getDocumento_generico().DA_RIREGISTRARE_IN_COGE);
+                if (oldTerzo != null && terzo != null && !oldTerzo.equalsByPrimaryKey(terzo) && Documento_genericoBulk.REGISTRATO_IN_COGE.equalsIgnoreCase(documentoGenericoRiga.getDocumento_generico().getStato_coge()))
+                    documentoGenericoRiga.getDocumento_generico().setStato_coge(Documento_genericoBulk.DA_RIREGISTRARE_IN_COGE);
 
                 initializeKeysAndOptionsInto(aUC, documentoGenericoRiga);
             }
@@ -1596,14 +1594,14 @@ public class DocumentoGenericoComponent
                     validaScadenze(doc, accertamentoSelezionato);
 
                     rigaSelected.setAccertamento_scadenziario(accertamentoSelezionato);
-                    rigaSelected.setStato_cofi(rigaSelected.STATO_CONTABILIZZATO);
+                    rigaSelected.setStato_cofi(Documento_generico_rigaBulk.STATO_CONTABILIZZATO);
                     rigaSelected.setToBeUpdated();
                     doc.addToDocumento_generico_accertamentiHash(accertamentoSelezionato, rigaSelected);
                 }
-                if (doc.getStato_cofi() != doc.STATO_PAGATO)
+                if (doc.getStato_cofi() != Documento_genericoBulk.STATO_PAGATO)
                     doc.setStato_cofi((doc.getDocumento_generico_accertamentiHash().isEmpty()) ?
-                            doc.STATO_INIZIALE :
-                            doc.STATO_CONTABILIZZATO);
+                            Documento_genericoBulk.STATO_INIZIALE :
+                            Documento_genericoBulk.STATO_CONTABILIZZATO);
             } else {
                 doc.addToDocumento_generico_accertamentiHash(accertamentoSelezionato, null);
                 doc.setAndVerifyStatus();
@@ -1644,7 +1642,7 @@ public class DocumentoGenericoComponent
                     validaScadenze(doc, obbligazioneSelezionata);
 
                     rigaSelected.setObbligazione_scadenziario(obbligazioneSelezionata);
-                    rigaSelected.setStato_cofi(rigaSelected.STATO_CONTABILIZZATO);
+                    rigaSelected.setStato_cofi(Documento_generico_rigaBulk.STATO_CONTABILIZZATO);
                     rigaSelected.setToBeUpdated();
                     doc.addToDocumento_generico_obbligazioniHash(obbligazioneSelezionata, rigaSelected);
                 }
@@ -1800,13 +1798,13 @@ public class DocumentoGenericoComponent
                 Iterator righeCollegate = ((List) accertamentiHash.get(scadenza)).iterator();
                 if (righeCollegate != null && righeCollegate.hasNext()) {
                     Documento_generico_rigaBulk primaRiga = (Documento_generico_rigaBulk) righeCollegate.next();
-                    java.util.Calendar dtCompetenzaDa = documentoGenerico.getDateCalendar(primaRiga.getDt_da_competenza_coge());
-                    java.util.Calendar dtCompetenzaA = documentoGenerico.getDateCalendar(primaRiga.getDt_a_competenza_coge());
+                    java.util.Calendar dtCompetenzaDa = Documento_genericoBulk.getDateCalendar(primaRiga.getDt_da_competenza_coge());
+                    java.util.Calendar dtCompetenzaA = Documento_genericoBulk.getDateCalendar(primaRiga.getDt_a_competenza_coge());
 
                     while (righeCollegate.hasNext()) {
                         Documento_generico_rigaBulk rigaSuccessiva = (Documento_generico_rigaBulk) righeCollegate.next();
-                        java.util.Calendar dtCompetenzaDaSuccessiva = documentoGenerico.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
-                        java.util.Calendar dtCompetenzaASuccessiva = documentoGenerico.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
+                        java.util.Calendar dtCompetenzaDaSuccessiva = Documento_genericoBulk.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
+                        java.util.Calendar dtCompetenzaASuccessiva = Documento_genericoBulk.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
                         if (!dtCompetenzaDa.equals(dtCompetenzaDaSuccessiva) ||
                                 !dtCompetenzaA.equals(dtCompetenzaASuccessiva))
                             throw new ApplicationException("I dettagli del documento collegati alla scadenza \"" + scadenza.getDs_scadenza() + "\"\nnon hanno lo stesso periodo di competenza! Impossibile salvare.");
@@ -1848,13 +1846,13 @@ public class DocumentoGenericoComponent
                 Iterator righeCollegate = ((List) obbligazioniHash.get(scadenza)).iterator();
                 if (righeCollegate != null && righeCollegate.hasNext()) {
                     Documento_generico_rigaBulk primaRiga = (Documento_generico_rigaBulk) righeCollegate.next();
-                    java.util.Calendar dtCompetenzaDa = documentoGenerico.getDateCalendar(primaRiga.getDt_da_competenza_coge());
-                    java.util.Calendar dtCompetenzaA = documentoGenerico.getDateCalendar(primaRiga.getDt_a_competenza_coge());
+                    java.util.Calendar dtCompetenzaDa = Documento_genericoBulk.getDateCalendar(primaRiga.getDt_da_competenza_coge());
+                    java.util.Calendar dtCompetenzaA = Documento_genericoBulk.getDateCalendar(primaRiga.getDt_a_competenza_coge());
 
                     while (righeCollegate.hasNext()) {
                         Documento_generico_rigaBulk rigaSuccessiva = (Documento_generico_rigaBulk) righeCollegate.next();
-                        java.util.Calendar dtCompetenzaDaSuccessiva = documentoGenerico.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
-                        java.util.Calendar dtCompetenzaASuccessiva = documentoGenerico.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
+                        java.util.Calendar dtCompetenzaDaSuccessiva = Documento_genericoBulk.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
+                        java.util.Calendar dtCompetenzaASuccessiva = Documento_genericoBulk.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
                         if (!dtCompetenzaDa.equals(dtCompetenzaDaSuccessiva) ||
                                 !dtCompetenzaA.equals(dtCompetenzaASuccessiva))
                             throw new ApplicationException("I dettagli del documento collegati alla scadenza \"" + scadenza.getDs_scadenza() + "\"\nnon hanno lo stesso periodo di competenza! Impossibile salvare.");
@@ -2042,8 +2040,7 @@ public class DocumentoGenericoComponent
     }
 
     private void controlloTrovato(UserContext aUC,
-                                  Obbligazione_scadenzarioBulk scadenza) throws ComponentException,
-            ApplicationException {
+                                  Obbligazione_scadenzarioBulk scadenza) throws ComponentException {
         Elemento_voceHome evHome = (Elemento_voceHome) getHome(aUC, Elemento_voceBulk.class);
         SQLBuilder sql = evHome.createSQLBuilder();
 
@@ -2068,8 +2065,7 @@ public class DocumentoGenericoComponent
     }
 
     private void controlloTrovato(UserContext aUC,
-                                  Accertamento_scadenzarioBulk scadenza) throws ComponentException,
-            ApplicationException {
+                                  Accertamento_scadenzarioBulk scadenza) throws ComponentException {
         Elemento_voceHome evHome = (Elemento_voceHome) getHome(aUC, Elemento_voceBulk.class);
         SQLBuilder sql = evHome.createSQLBuilder();
 
@@ -2290,19 +2286,19 @@ public class DocumentoGenericoComponent
                 }
 
                 documento.setAnnullato(dataAnnullamento);
-                if (documento.REGISTRATO_IN_COGE.equalsIgnoreCase(documento.getStato_coge()))
-                    documento.setStato_coge(documento.DA_RIREGISTRARE_IN_COGE);
+                if (Documento_genericoBulk.REGISTRATO_IN_COGE.equalsIgnoreCase(documento.getStato_coge()))
+                    documento.setStato_coge(Documento_genericoBulk.DA_RIREGISTRARE_IN_COGE);
 
                 // Gennaro Borriello - (11/10/2004 16.59.48)
                 //	Aggiunto controllo sullo STATO_COAN, così come avviene per gli altri documenti.
-                if (documento.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(documento.getStato_coan()))
-                    documento.setStato_coan(documento.DA_RICONTABILIZZARE_IN_COAN);
+                if (Documento_genericoBulk.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(documento.getStato_coan()))
+                    documento.setStato_coan(Documento_genericoBulk.DA_RICONTABILIZZARE_IN_COAN);
 
                 documento.setToBeUpdated();
                 updateBulk(userContext, documento);
                 if (documento instanceof Documento_genericoBulk
                         && (documento.getObbligazioniHash() != null || documento.getAccertamentiHash() != null)) {
-                    if (documento.getTi_entrate_spese() == documento.SPESE) {
+                    if (documento.getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
                         aggiornaObbligazioniSuCancellazione(userContext, documento, documento.getObbligazioniHash().keys(), null, null);
                         Lettera_pagam_esteroBulk lettera = documento.getLettera_pagamento_estero();
                         if (lettera != null && lettera.getSospeso() != null && lettera.getSospeso().getCrudStatus() == OggettoBulk.NORMAL)
@@ -2495,7 +2491,7 @@ public class DocumentoGenericoComponent
                 throw new it.cnr.jada.comp.ApplicationException("Impossibile eliminare il documento perchè non risulta riportato nell'esercizio di scrivania!");
         }
 
-        if (documento.STATO_PARZIALE.equalsIgnoreCase(documento.getStato_cofi()))
+        if (Documento_genericoBulk.STATO_PARZIALE.equalsIgnoreCase(documento.getStato_cofi()))
             throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile cancellare un documento in stato parziale.");
 
         if (documento.isPagata())
@@ -2632,8 +2628,8 @@ public class DocumentoGenericoComponent
 
             if (banca == null)
                 return null;
-            sql.addClause("AND", "pg_banca", sql.EQUALS, banca);
-            sql.addClause("AND", "cd_terzo", sql.EQUALS, terzo);
+            sql.addClause("AND", "pg_banca", SQLBuilder.EQUALS, banca);
+            sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, terzo);
 
             it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
             if (!broker.next())
@@ -2728,7 +2724,7 @@ public class DocumentoGenericoComponent
         try {
             TerzoHome home = (TerzoHome) getHome(aUC, TerzoBulk.class);
             Collection modalita = null;
-            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == documentoGenericoRiga.getDocumento_generico().SPESE) {
+            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
                 TerzoBulk terzo = documentoGenericoRiga.getTerzo();
                 if (terzo == null || terzo.getCd_terzo() == null) return null;
                 modalita = home.findRif_modalita_pagamento(terzo, null);
@@ -2770,13 +2766,13 @@ public class DocumentoGenericoComponent
             it.cnr.jada.bulk.BulkHome home = getHome(aUC, Rif_modalita_pagamentoBulk.class);
             it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
-            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == documentoGenericoRiga.getDocumento_generico().SPESE)
+            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == Documento_genericoBulk.SPESE)
                 modalita = documentoGenericoRiga.getCd_modalita_pag();
             else
                 modalita = documentoGenericoRiga.getCd_modalita_pag_uo_cds() != null ? documentoGenericoRiga.getCd_modalita_pag_uo_cds() :
                         (documentoGenericoRiga.getModalita_pagamento_uo_cds() == null ? null : documentoGenericoRiga.getModalita_pagamento_uo_cds().getCd_modalita_pag());
 
-            sql.addClause("AND", "cd_modalita_pag", sql.EQUALS, modalita);
+            sql.addClause("AND", "cd_modalita_pag", SQLBuilder.EQUALS, modalita);
 
             it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
             if (!broker.next())
@@ -2816,7 +2812,7 @@ public class DocumentoGenericoComponent
         try {
             it.cnr.contab.anagraf00.core.bulk.TerzoHome home;
             TerzoBulk terzo;
-            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == documentoGenericoRiga.getDocumento_generico().SPESE) {
+            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
                 terzo = documentoGenericoRiga.getTerzo();
             } else {
                 terzo = findTerzoUO(aUC, documentoGenericoRiga.getDocumento_generico());
@@ -2858,14 +2854,14 @@ public class DocumentoGenericoComponent
             it.cnr.jada.bulk.BulkHome home = getHome(aUC, Rif_termini_pagamentoBulk.class);
             it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
-            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == documentoGenericoRiga.getDocumento_generico().SPESE)
+            if (documentoGenericoRiga.getDocumento_generico().getTi_entrate_spese() == Documento_genericoBulk.SPESE)
                 termini = documentoGenericoRiga.getCd_termini_pag();
             else
                 termini = documentoGenericoRiga.getCd_termini_pag_uo_cds() != null ? documentoGenericoRiga.getCd_termini_pag_uo_cds() :
                         (documentoGenericoRiga.getTermini_pagamento_uo_cds() == null ? null : documentoGenericoRiga.getTermini_pagamento_uo_cds().getCd_termini_pag());
 
             if (termini == null) return null;
-            sql.addClause("AND", "cd_termini_pag", sql.EQUALS, termini);
+            sql.addClause("AND", "cd_termini_pag", SQLBuilder.EQUALS, termini);
 
             it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
             if (!broker.next())
@@ -2897,7 +2893,7 @@ public class DocumentoGenericoComponent
         it.cnr.jada.bulk.BulkHome home = getHome(aUC, TerzoBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, doc.getCd_uo_origine());
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, doc.getCd_uo_origine());
 
         it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
         if (!broker.next())
@@ -2928,16 +2924,16 @@ public class DocumentoGenericoComponent
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
         if (doc.getTipo_documento() != null && doc.getTipo_documento().getCd_tipo_documento_amm() != null) {
-            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, doc.getTipo_documento().getCd_tipo_documento_amm());
+            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, doc.getTipo_documento().getCd_tipo_documento_amm());
         } else {
-            sql.addSQLClause("AND", "TI_ENTRATA_SPESA", sql.EQUALS, String.valueOf(doc.getTi_entrate_spese()));
-            sql.addSQLClause("AND", "FL_DOC_GENERICO", sql.EQUALS, "Y");
-            sql.addSQLClause("AND", "FL_UTILIZZO_DOC_GENERICO", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "TI_ENTRATA_SPESA", SQLBuilder.EQUALS, String.valueOf(doc.getTi_entrate_spese()));
+            sql.addSQLClause("AND", "FL_DOC_GENERICO", SQLBuilder.EQUALS, "Y");
+            sql.addSQLClause("AND", "FL_UTILIZZO_DOC_GENERICO", SQLBuilder.EQUALS, "Y");
             if (doc.getCd_cds_origine().equals(doc.getCds_CNR()))
-                sql.addSQLClause("AND", "FL_SOLO_PARTITA_GIRO", sql.NOT_EQUALS, "Y");
+                sql.addSQLClause("AND", "FL_SOLO_PARTITA_GIRO", SQLBuilder.NOT_EQUALS, "Y");
         }
 
-        tipi = (java.util.Collection) home.fetchAll(sql);
+        tipi = home.fetchAll(sql);
         return tipi;
 
     }
@@ -2960,7 +2956,7 @@ public class DocumentoGenericoComponent
         it.cnr.jada.bulk.BulkHome home = getHome(aUC, Tipo_documento_ammBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
-        sql.addSQLClause("AND", "FL_DOC_GENERICO", sql.EQUALS, "Y");
+        sql.addSQLClause("AND", "FL_DOC_GENERICO", SQLBuilder.EQUALS, "Y");
 
         //if (doc.getTipo_documento() != null && doc.getTipo_documento().getCd_tipo_documento_amm() != null) {
         //sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, doc.getTipo_documento().getCd_tipo_documento_amm());
@@ -2994,12 +2990,12 @@ public class DocumentoGenericoComponent
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
         if (doc.getTipo_documento() != null && doc.getTipo_documento().getCd_tipo_documento_amm() != null) {
-            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, doc.getTipo_documento().getCd_tipo_documento_amm());
+            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, doc.getTipo_documento().getCd_tipo_documento_amm());
         } else {
-            sql.addSQLClause("AND", "TI_ENTRATA_SPESA", sql.EQUALS, String.valueOf(doc.getTi_entrate_spese()));
-            sql.addSQLClause("AND", "FL_DOC_GENERICO", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "TI_ENTRATA_SPESA", SQLBuilder.EQUALS, String.valueOf(doc.getTi_entrate_spese()));
+            sql.addSQLClause("AND", "FL_DOC_GENERICO", SQLBuilder.EQUALS, "Y");
             if (doc.getCd_cds_origine().equals(doc.getCds_CNR()))
-                sql.addSQLClause("AND", "FL_SOLO_PARTITA_GIRO", sql.NOT_EQUALS, "Y");
+                sql.addSQLClause("AND", "FL_SOLO_PARTITA_GIRO", SQLBuilder.NOT_EQUALS, "Y");
         }
 
         return home.fetchAll(sql);
@@ -3174,7 +3170,7 @@ public class DocumentoGenericoComponent
                 it.cnr.jada.bulk.BulkHome home = getHome(userContext, TerzoBulk.class);
                 it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
-                sql.addClause("AND", "cd_terzo", sql.EQUALS, new Long(cd_terzo_default.longValue()).toString());
+                sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, new Long(cd_terzo_default.longValue()).toString());
 
                 it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
                 if (!broker.next())
@@ -3233,7 +3229,7 @@ public class DocumentoGenericoComponent
                     documento.setFlagEnte(true);
                 }
                 documento.setPassivo_ente(true);
-                documento.setStato_pagamento_fondo_eco(documento.NO_FONDO_ECO);
+                documento.setStato_pagamento_fondo_eco(Documento_genericoBulk.NO_FONDO_ECO);
             }
         }
     }
@@ -3255,7 +3251,7 @@ public class DocumentoGenericoComponent
             if (!verificaStatoEsercizio(userContext, new EsercizioBulk(documento.getCd_cds(), documento.getEsercizio())))
                 throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire un documento generico per un esercizio non aperto!");
             java.sql.Timestamp date = EJBCommonServices.getServerDate();
-            int annoSolare = documento.getDateCalendar(date).get(java.util.Calendar.YEAR);
+            int annoSolare = Documento_genericoBulk.getDateCalendar(date).get(java.util.Calendar.YEAR);
             int esercizioInScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue();
             if (annoSolare != esercizioInScrivania)
                 date = new java.sql.Timestamp(new java.text.SimpleDateFormat("dd/MM/yyyy").parse("31/12/" + esercizioInScrivania).getTime());
@@ -3272,7 +3268,7 @@ public class DocumentoGenericoComponent
             throw handleException(bulk, e);
         }
 
-        documento.setTi_istituz_commerc(documento.ISTITUZIONALE);
+        documento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
         documento.setIm_totale(new BigDecimal(0));
         if (documento.isGenericoAttivo()) {
@@ -3292,12 +3288,9 @@ public class DocumentoGenericoComponent
             throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
         }
 
-        documento.setStato_pagamento_fondo_eco(documento.NO_FONDO_ECO);
+        documento.setStato_pagamento_fondo_eco(Documento_genericoBulk.NO_FONDO_ECO);
 
-        if (documento.isGenericoAttivo())
-            documento.setPassivo_ente(true);
-        else
-            documento.setPassivo_ente(false);
+        documento.setPassivo_ente(documento.isGenericoAttivo());
 
         if (!documento.isGenericoAttivo())
             documento.setCd_unita_organizzativa(documento.getCd_uo_origine());
@@ -3308,8 +3301,8 @@ public class DocumentoGenericoComponent
 
                 Unita_organizzativa_enteHome uoEnteHome = (Unita_organizzativa_enteHome) getHome(userContext, Unita_organizzativa_enteBulk.class);
                 if (documento.getCd_uo_origine().equals(
-                                ((Unita_organizzativa_enteBulk) uoEnteHome.fetchAll(uoEnteHome.createSQLBuilder()).get(0))
-                                        .getCd_unita_organizzativa()))
+                        ((Unita_organizzativa_enteBulk) uoEnteHome.fetchAll(uoEnteHome.createSQLBuilder()).get(0))
+                                .getCd_unita_organizzativa()))
                     setEnte(userContext, documento);
             }
 
@@ -3345,7 +3338,7 @@ public class DocumentoGenericoComponent
      * L'OggettoBulk viene aggiornato con tutti gli oggetti collegati e preparato per una operazione di modifica.
      */
 //^^@@
-    public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk) throws ComponentException {
+    public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws ComponentException {
 
         if (bulk == null)
             throw new ComponentException("Attenzione: non esiste alcun documento corrispondente ai criteri di ricerca!");
@@ -3355,14 +3348,14 @@ public class DocumentoGenericoComponent
             throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non è valorizzato! Impossibile proseguire.");
 
         if (generico.getEsercizio().intValue() >
-                it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue())
+                it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
             throw new it.cnr.jada.comp.ApplicationException("Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
 
-        generico = (Documento_genericoBulk) super.inizializzaBulkPerModifica(aUC, generico);
+        generico = (Documento_genericoBulk) super.inizializzaBulkPerModifica(userContext, generico);
 
         try {
-            lockBulk(aUC, generico);
-            //setDt_termine_creazione_docamm(aUC, generico);
+            lockBulk(userContext, generico);
+            //setDt_termine_creazione_docamm(userContext, generico);
         } catch (Throwable t) {
             throw handleException(t);
         }
@@ -3372,7 +3365,7 @@ public class DocumentoGenericoComponent
             if (generico.getCd_tipo_documento_amm() == null && generico.getTipo_documento().getCd_tipo_documento_amm() != null)
                 generico.setCd_tipo_documento_amm(generico.getTipo_documento().getCd_tipo_documento_amm());
             //generico.setCd_tipo_documento_amm(generico.getTipo_documento().getCd_tipo_documento_amm());
-            //it.cnr.jada.bulk.BulkHome homeTD= getHome(aUC, Tipo_documento_ammBulk.class);
+            //it.cnr.jada.bulk.BulkHome homeTD= getHome(userContext, Tipo_documento_ammBulk.class);
             //it.cnr.jada.persistency.sql.SQLBuilder sqlTD= homeTD.createSQLBuilder();
             //sqlTD.addClause("AND", "cd_tipo_documento_amm", sqlTD.EQUALS, generico.getCd_tipo_documento_amm());
             //it.cnr.jada.persistency.Broker brokerTD= homeTD.createBroker(sqlTD);
@@ -3381,16 +3374,16 @@ public class DocumentoGenericoComponent
 
             //brokerTD.close();
             //}
-            //generico =(Documento_genericoBulk) super.inizializzaBulkPerModifica(aUC, generico);
-            it.cnr.jada.bulk.BulkHome home = getHome(aUC, Documento_generico_rigaBulk.class);
+            //generico =(Documento_genericoBulk) super.inizializzaBulkPerModifica(userContext, generico);
+            it.cnr.jada.bulk.BulkHome home = getHome(userContext, Documento_generico_rigaBulk.class);
             it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-            sql.addClause("AND", "pg_documento_generico", sql.EQUALS, generico.getPg_documento_generico());
-            sql.addClause("AND", "cd_cds", sql.EQUALS, generico.getCd_cds());
-            sql.addClause("AND", "esercizio", sql.EQUALS, generico.getEsercizio());
-            sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, generico.getCd_unita_organizzativa());
-            sql.addClause("AND", "cd_tipo_documento_amm", sql.EQUALS, generico.getCd_tipo_documento_amm());
+            sql.addClause("AND", "pg_documento_generico", SQLBuilder.EQUALS, generico.getPg_documento_generico());
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, generico.getCd_cds());
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, generico.getEsercizio());
+            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, generico.getCd_unita_organizzativa());
+            sql.addClause("AND", "cd_tipo_documento_amm", SQLBuilder.EQUALS, generico.getCd_tipo_documento_amm());
 
-            getHomeCache(aUC).fetchAll(aUC);
+            getHomeCache(userContext).fetchAll(userContext);
 
             generico.setDocumento_generico_dettColl(new it.cnr.jada.bulk.BulkList(home.fetchAll(sql)));
 
@@ -3401,10 +3394,10 @@ public class DocumentoGenericoComponent
             //	Corretto Errore interno: questa operazione deve essere fatta DOPO aver impostato il
             //	<code>Ti_entrate_spese</code>, altrimenti la dt_termine_creazione_docamm NON viene impostata e,
             //	in fase di salvataggio, genera un errore di NullPointerException.
-            setDt_termine_creazione_docamm(aUC, generico);
+            setDt_termine_creazione_docamm(userContext, generico);
             try {
                 generico.setDataInizioObbligoRegistroUnico(Utility.createConfigurazioneCnrComponentSession().
-                        getDt01(aUC, new Integer(0), null, "REGISTRO_UNICO_FATPAS", "DATA_INIZIO"));
+                        getDt01(userContext, new Integer(0), null, "REGISTRO_UNICO_FATPAS", "DATA_INIZIO"));
 
             } catch (Exception e) {
                 throw handleException(generico, e);
@@ -3418,11 +3411,11 @@ public class DocumentoGenericoComponent
                 generico.setPassivo_ente(true);
             //try {
             //if (!generico.isGenericoAttivo()) {
-            //it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome uoHome= (it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome) getHome(aUC, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);
+            //it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome uoHome= (it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome) getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);
             //if (generico
             //.getCd_unita_organizzativa()
             //.equals(
-            //((it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk) (getHome(aUC, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class).fetchAll(uoHome.createSQLBuilderEsteso())).get(0))
+            //((it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk) (getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class).fetchAll(uoHome.createSQLBuilderEsteso())).get(0))
             //.getCd_unita_organizzativa()))
             //generico.setPassivo_ente(true);
             //}
@@ -3433,73 +3426,67 @@ public class DocumentoGenericoComponent
 
 
             if (!generico.getCd_uo_origine().equals(generico.getCd_unita_organizzativa()))
-                impostaDatiEnteNelDocumento(aUC, generico, null);
+                impostaDatiEnteNelDocumento(userContext, generico, null);
             else {
-                Unita_organizzativa_enteBulk uoEnte = getUOEnte(aUC);
+                Unita_organizzativa_enteBulk uoEnte = getUOEnte(userContext);
                 if (generico.getCd_unita_organizzativa().equalsIgnoreCase(uoEnte.getCd_unita_organizzativa()))
-                    impostaDatiEnteNelDocumento(aUC, generico, uoEnte);
+                    impostaDatiEnteNelDocumento(userContext, generico, uoEnte);
             }
 
-            if (generico.getValuta().getCd_divisa().equals(getEuro(aUC).getCd_divisa()))
+            if (generico.getValuta().getCd_divisa().equals(getEuro(userContext).getCd_divisa()))
                 generico.setDefaultValuta(true);
 
             if (!generico.isGenericoAttivo())
-                rebuildObbligazioni(aUC, generico);
+                rebuildObbligazioni(userContext, generico);
             if (generico.isGenericoAttivo()) {
-                rebuildAccertamenti(aUC, generico);
-                generico.setTerzo_uo_cds(((Documento_generico_rigaBulk) generico.getDocumento_generico_dettColl().get(0)).getTerzo_uo_cds());
+                rebuildAccertamenti(userContext, generico);
+                generico.setTerzo_uo_cds(generico.getDocumento_generico_dettColl().get(0).getTerzo_uo_cds());
             }
             for (java.util.Iterator i = generico.getDocumento_generico_dettColl().iterator(); i.hasNext(); )
-                initializeKeysAndOptionsInto(aUC, (OggettoBulk) i.next());
+                initializeKeysAndOptionsInto(userContext, (OggettoBulk) i.next());
 
             int dettagliRiportati = 0;
-            generico.setHa_beniColl(ha_beniColl(aUC, generico));
+            generico.setHa_beniColl(ha_beniColl(userContext, generico));
 
             for (java.util.Iterator i = generico.getDocumento_generico_dettColl().iterator(); i.hasNext(); ) {
 
                 OggettoBulk rigabulk = (OggettoBulk) i.next();
                 Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk) rigabulk;
 
-                if (generico.getTi_entrate_spese() == generico.SPESE && riga.getObbligazione_scadenziario() != null && riga.getObbligazione_scadenziario().getObbligazione() != null &&
+                if (generico.getTi_entrate_spese() == Documento_genericoBulk.SPESE && riga.getObbligazione_scadenziario() != null && riga.getObbligazione_scadenziario().getObbligazione() != null &&
                         riga.getObbligazione_scadenziario().getObbligazione().getElemento_voce() != null &&
                         riga.getObbligazione_scadenziario().getObbligazione().getElemento_voce().getFl_inv_beni_patr().booleanValue()) {
                     riga.setInventariato(true);
-                    if (ha_beniColl(aUC, riga).booleanValue())
-                        riga.setInventariato(true);
-                    else
-                        riga.setInventariato(false);
+                    riga.setInventariato(ha_beniColl(userContext, riga).booleanValue());
                 } else {
                     if (riga.getAccertamento_scadenziario() != null && riga.getAccertamento_scadenziario().getAccertamento() != null &&
                             riga.getAccertamento_scadenziario().getAccertamento().getCd_elemento_voce() != null) {
 
-                        Elemento_voceHome Home = (Elemento_voceHome) getHome(aUC, Elemento_voceBulk.class);
+                        Elemento_voceHome Home = (Elemento_voceHome) getHome(userContext, Elemento_voceBulk.class);
                         Elemento_voceBulk elem_voce = (Elemento_voceBulk) Home.findByPrimaryKey(new Elemento_voceBulk(riga.getAccertamento_scadenziario().getAccertamento().getCd_elemento_voce(),
                                 riga.getAccertamento_scadenziario().getAccertamento().getEsercizio(),
                                 riga.getAccertamento_scadenziario().getAccertamento().getTi_appartenenza(),
                                 riga.getAccertamento_scadenziario().getAccertamento().getTi_gestione()));
                         if (elem_voce.getFl_inv_beni_patr().booleanValue())
                             riga.setInventariato(true);
-                        if (ha_beniColl(aUC, riga).booleanValue())
-                            riga.setInventariato(true);
-                        else
-                            riga.setInventariato(false);
+                        riga.setInventariato(ha_beniColl(userContext, riga).booleanValue());
                     }
                 }
 
                 if (generico.isPassivo_ente())
                     riga.setIm_riga_iniziale(riga.getIm_imponibile());
-                if (generico.getTi_entrate_spese() == generico.ENTRATE) {
-                    riga.setModalita_pagamento_uo_cds(findModalitaSelezionate(aUC, riga));
-                    riga.setTermini_pagamento_uo_cds(findTerminiSelezionati(aUC, riga));
-                    riga.setModalita_uo_cds(findModalita(aUC, riga));
-                    riga.setBanca_uo_cds(findBancaSelezionata(aUC, riga));
-                    initializeKeysAndOptionsInto(aUC, (OggettoBulk) riga);
+                if (generico.getTi_entrate_spese() == Documento_genericoBulk.ENTRATE) {
+                    riga.setModalita_pagamento_uo_cds(findModalitaSelezionate(userContext, riga));
+                    riga.setTermini_pagamento_uo_cds(findTerminiSelezionati(userContext, riga));
+                    riga.setModalita_uo_cds(findModalita(userContext, riga));
+                    riga.setBanca_uo_cds(findBancaSelezionata(userContext, riga));
+                    initializeKeysAndOptionsInto(userContext, riga);
                 } else {
-                    riga.setModalita_pagamento(findModalitaSelezionate(aUC, riga));
-                    riga.setTermini_pagamento(findTerminiSelezionati(aUC, riga));
-                    riga.setModalita(findModalita(aUC, riga));
-                    riga.setBanca(findBancaSelezionata(aUC, riga));
-                    initializeKeysAndOptionsInto(aUC, (OggettoBulk) riga);
+                    riga.setModalita_pagamento(findModalitaSelezionate(userContext, riga));
+                    riga.setTermini_pagamento(findTerminiSelezionati(userContext, riga));
+                    riga.setModalita(findModalita(userContext, riga));
+                    riga.setBanca(findBancaSelezionata(userContext, riga));
+                    initializeKeysAndOptionsInto(userContext, riga);
                 }
                 if (riga.checkIfRiportata()) {
                     riga.setRiportata(riga.RIPORTATO);
@@ -3507,24 +3494,47 @@ public class DocumentoGenericoComponent
                     dettagliRiportati++;
                 }
             }
-            generico.setRiportata(getStatoRiporto(aUC, generico));
+            generico.setRiportata(getStatoRiporto(userContext, generico));
 
             /**
              * Gennaro Borriello - (02/11/2004 15.04.39)
              *	Aggiunta gestione dell Stato Riportato all'esercizio di scrivania.
              */
-            generico.setRiportataInScrivania(getStatoRiportoInScrivania(aUC, generico));
+            generico.setRiportataInScrivania(getStatoRiportoInScrivania(userContext, generico));
 
             /**
              * Gennaro Borriello - (08/11/2004 13.35.27)
              *	Aggiunta proprietà <code>esercizioInScrivania</code>, che verrà utilizzata
              *	per la gestione di isRiportataInScrivania(), in alcuni casi.
              */
-            generico.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
+            generico.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 
         } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(generico, e);
         } catch (it.cnr.jada.persistency.IntrospectionException e) {
+            throw handleException(generico, e);
+        }
+        try {
+            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                        .map(Scrittura_partita_doppiaHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+
+                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(generico);
+                if (scritturaOpt.isPresent()) {
+                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiDareColl(userContext, scrittura)));
+                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                            .findMovimentiAvereColl(userContext, scrittura)));
+                    generico.setScrittura_partita_doppia(scrittura);
+                }
+            }
+        } catch (PersistencyException e) {
             throw handleException(generico, e);
         }
         return generico;
@@ -3744,7 +3754,7 @@ public class DocumentoGenericoComponent
 
             cs.executeQuery();
 
-            status = new String(cs.getString(1));
+            status = cs.getString(1);
 
             if (status.compareTo("Y") == 0)
                 return true;
@@ -3945,8 +3955,8 @@ public class DocumentoGenericoComponent
         if (documento.isPagataParzialmente() &&
                 documento.getDettagliPagati().size() == documento.getDocumento_generico_dettColl().size()) {
 
-            documento.setStato_cofi(documento.STATO_PAGATO);
-            documento.setTi_associato_manrev(documento.ASSOCIATO_A_MANDATO);
+            documento.setStato_cofi(Documento_genericoBulk.STATO_PAGATO);
+            documento.setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO);
         }
 
         /*
@@ -3971,7 +3981,7 @@ public class DocumentoGenericoComponent
                                     !Utility.equalsNull(documento_riga.getIm_riga(), documentoDB_riga.getIm_riga()) ||
                                     !Utility.equalsNull(documento_riga.getCd_terzo(), documentoDB_riga.getCd_terzo()) ||
                                     !Utility.equalsBulkNull(documento_riga.getAccertamento_scadenziario(), documentoDB_riga.getAccertamento_scadenziario())
-                                    )
+                            )
                                 aggiornaStatoCoge = true;
                         }
                     }
@@ -3986,7 +3996,7 @@ public class DocumentoGenericoComponent
                         !Utility.equalsNull(documento.getStato_pagamento_fondo_eco(), documentoDB.getStato_pagamento_fondo_eco()) ||
                         !Utility.equalsNull(documento.getEsercizio_lettera(), documentoDB.getEsercizio_lettera()) ||
                         !Utility.equalsNull(documento.getPg_lettera(), documentoDB.getPg_lettera())
-                        )
+                )
                     aggiornaStatoCoge = true;
                 if (!aggiornaStatoCoge && documento.getDocumento_generico_dettColl().size() > 0) {
                     Documento_generico_rigaHome documentoHome = (Documento_generico_rigaHome) getTempHome(aUC, Documento_generico_rigaBulk.class);
@@ -4000,7 +4010,7 @@ public class DocumentoGenericoComponent
                                     !Utility.equalsNull(documento_riga.getIm_riga(), documentoDB_riga.getIm_riga()) ||
                                     !Utility.equalsNull(documento_riga.getCd_terzo(), documentoDB_riga.getCd_terzo()) ||
                                     !Utility.equalsBulkNull(documento_riga.getObbligazione_scadenziario(), documentoDB_riga.getObbligazione_scadenziario())
-                                    )
+                            )
                                 aggiornaStatoCoge = true;
                         }
                     }
@@ -4011,12 +4021,12 @@ public class DocumentoGenericoComponent
         }
         if (aggiornaStatoCoge) {
             if (!(!documento.isDocumentoModificabile() && documento.isDetailDoubled())) {
-                if (documento.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(documento.getStato_coan())) {
-                    documento.setStato_coan(documento.DA_RICONTABILIZZARE_IN_COAN);
+                if (Documento_genericoBulk.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(documento.getStato_coan())) {
+                    documento.setStato_coan(Documento_genericoBulk.DA_RICONTABILIZZARE_IN_COAN);
                     documento.setToBeUpdated();
                 }
-                if (documento.REGISTRATO_IN_COGE.equalsIgnoreCase(documento.getStato_coge())) {
-                    documento.setStato_coge(documento.DA_RIREGISTRARE_IN_COGE);
+                if (Documento_genericoBulk.REGISTRATO_IN_COGE.equalsIgnoreCase(documento.getStato_coge())) {
+                    documento.setStato_coge(Documento_genericoBulk.DA_RIREGISTRARE_IN_COGE);
                     documento.setToBeUpdated();
                 }
             }
@@ -4284,7 +4294,7 @@ public class DocumentoGenericoComponent
                     trovato = true;
                     logicOperator = clause.getLogicalOperator();
                     operator = clause.getOperator();
-                    value = ((Tipo_documento_ammBulk) clause.getValue()) != null ? ((Tipo_documento_ammBulk) clause.getValue()).getCd_tipo_documento_amm() : value;
+                    value = clause.getValue() != null ? ((Tipo_documento_ammBulk) clause.getValue()).getCd_tipo_documento_amm() : value;
                 } else
                     newClauses = CompoundFindClause.and(newClauses, clause);
             }
@@ -4345,7 +4355,7 @@ public class DocumentoGenericoComponent
         }
 
         SQLBuilder sql = bancaHome.createSQLBuilder();
-        sql.addClause("AND", "fl_cancellato", sql.EQUALS, Boolean.FALSE);
+        sql.addClause("AND", "fl_cancellato", SQLBuilder.EQUALS, Boolean.FALSE);
         return sql;
     }
 //^^@@
@@ -4369,61 +4379,61 @@ public class DocumentoGenericoComponent
             it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, sospeso).createSQLBuilder();
 
             sql.openParenthesis("AND");
-            sql.addSQLClause("OR", "IM_ASSOCIATO", sql.EQUALS, new java.math.BigDecimal(0));
-            sql.addSQLClause("OR", "IM_ASSOCIATO", sql.ISNULL, null);
+            sql.addSQLClause("OR", "IM_ASSOCIATO", SQLBuilder.EQUALS, new java.math.BigDecimal(0));
+            sql.addSQLClause("OR", "IM_ASSOCIATO", SQLBuilder.ISNULL, null);
             sql.closeParenthesis();
             sql.openParenthesis("AND");
-            sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.EQUALS, new java.math.BigDecimal(0));
-            sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.ISNULL, null);
+            sql.addSQLClause("OR", "IM_ASS_MOD_1210", SQLBuilder.EQUALS, new java.math.BigDecimal(0));
+            sql.addSQLClause("OR", "IM_ASS_MOD_1210", SQLBuilder.ISNULL, null);
             sql.closeParenthesis();
             sql.openParenthesis("AND");
-            sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
-            sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
+            sql.addSQLClause("OR", "IM_SOSPESO", SQLBuilder.NOT_EQUALS, new java.math.BigDecimal(0));
+            sql.addSQLClause("AND", "IM_SOSPESO", SQLBuilder.ISNOTNULL, null);
             sql.closeParenthesis();
 
 
-            sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
-            sql.addClause("AND", "esercizio", sql.EQUALS, documento.getLettera_pagamento_estero().getEsercizio());
-            sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
-            sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
+            sql.addClause("AND", "fl_stornato", SQLBuilder.EQUALS, Boolean.FALSE);
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, documento.getLettera_pagamento_estero().getEsercizio());
+            sql.addClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS, SospesoBulk.TIPO_SPESA);
+            sql.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
 
             //Questa operazione è possibile perché viene effettuato precedentemente
             //il controllo di compatibilità sulle modalità di pagam
             Rif_modalita_pagamentoBulk aMod = null;
             if (documento.getDocumento_generico_dettColl() != null &&
                     !documento.getDocumento_generico_dettColl().isEmpty())
-                aMod = ((Documento_generico_rigaBulk) documento.getDocumento_generico_dettColl().get(0)).getModalita_pagamento();
+                aMod = documento.getDocumento_generico_dettColl().get(0).getModalita_pagamento();
             if (aMod == null)
-                sql.addClause("AND", "ti_cc_bi", sql.NOT_EQUALS, sospeso.TIPO_BANCA_ITALIA);
+                sql.addClause("AND", "ti_cc_bi", SQLBuilder.NOT_EQUALS, SospesoBulk.TIPO_BANCA_ITALIA);
             else
                 sql.addClause(
                         "AND",
                         "ti_cc_bi",
                         (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(aMod.getTi_pagamento()) ?
-                                sql.EQUALS : sql.NOT_EQUALS),
-                        sospeso.TIPO_BANCA_ITALIA);
+                                SQLBuilder.EQUALS : SQLBuilder.NOT_EQUALS),
+                        SospesoBulk.TIPO_BANCA_ITALIA);
             EnteBulk ente = (EnteBulk) getHome(aUC, EnteBulk.class)
                     .findAll().get(0);
 
             if (!Utility.createParametriCnrComponentSession().getParametriCnr(aUC, documento.getEsercizio()).getFl_tesoreria_unica().booleanValue()) {
-                sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                sql.addClause("AND", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
                 sql.openParenthesis("AND");
-                sql.addClause("OR", "cd_cds_origine", sql.ISNULL, null);
-                sql.addClause("OR", "cd_cds_origine", sql.EQUALS, documento.getCd_cds());
+                sql.addClause("OR", "cd_cds_origine", SQLBuilder.ISNULL, null);
+                sql.addClause("OR", "cd_cds_origine", SQLBuilder.EQUALS, documento.getCd_cds());
                 sql.openParenthesis("OR");
-                sql.addClause("AND", "cd_cds", sql.EQUALS, documento.getCd_cds());
-                sql.addClause("AND", "cd_cds_origine", sql.EQUALS, documento.getCd_cds_origine());
+                sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, documento.getCd_cds());
+                sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, documento.getCd_cds_origine());
                 sql.closeParenthesis();
                 sql.closeParenthesis();
             } else {
-                sql.addClause("AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa());
+                sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ente.getCd_unita_organizzativa());
                 sql.openParenthesis("AND");
-                sql.addClause("OR", "cd_cds_origine", sql.ISNULL, null);
-                sql.addClause("OR", "cd_cds_origine", sql.EQUALS, documento.getCd_cds());
+                sql.addClause("OR", "cd_cds_origine", SQLBuilder.ISNULL, null);
+                sql.addClause("OR", "cd_cds_origine", SQLBuilder.EQUALS, documento.getCd_cds());
                 sql.closeParenthesis();
                 sql.openParenthesis("AND");
-                sql.addClause("OR", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
-                sql.addClause("OR", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+                sql.addClause("OR", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                sql.addClause("OR", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
                 sql.closeParenthesis();
             }
             sql.addClause(clauses);
@@ -4458,18 +4468,18 @@ public class DocumentoGenericoComponent
                 getHome(aUC, fornitore, "V_TERZO_CF_PI").createSQLBuilder();
         sql.addTableToHeader("ANAGRAFICO");
         sql.addSQLJoin("ANAGRAFICO.CD_ANAG", "V_TERZO_CF_PI.CD_ANAG");
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", sql.EQUALS, fornitore.getCd_terzo());
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", sql.EQUALS, fornitore.getCd_precedente());
-        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", sql.STARTSWITH, documento.getCodice_fiscale());
-        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", sql.STARTSWITH, documento.getPartita_iva());
-        sql.addSQLClause("AND", "ANAGRAFICO.NOME", sql.STARTSWITH, documento.getNome());
-        sql.addSQLClause("AND", "ANAGRAFICO.COGNOME", sql.STARTSWITH, documento.getCognome());
-        sql.addSQLClause("AND", "ANAGRAFICO.RAGIONE_SOCIALE", sql.STARTSWITH, documento.getRagione_sociale());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", SQLBuilder.EQUALS, fornitore.getCd_terzo());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", SQLBuilder.EQUALS, fornitore.getCd_precedente());
+        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", SQLBuilder.STARTSWITH, documento.getCodice_fiscale());
+        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", SQLBuilder.STARTSWITH, documento.getPartita_iva());
+        sql.addSQLClause("AND", "ANAGRAFICO.NOME", SQLBuilder.STARTSWITH, documento.getNome());
+        sql.addSQLClause("AND", "ANAGRAFICO.COGNOME", SQLBuilder.STARTSWITH, documento.getCognome());
+        sql.addSQLClause("AND", "ANAGRAFICO.RAGIONE_SOCIALE", SQLBuilder.STARTSWITH, documento.getRagione_sociale());
 
         sql.addSQLClause("AND", "V_TERZO_CF_PI.TI_TERZO",
-                sql.NOT_EQUALS, documento.getDocumento_generico().isGenericoAttivo() ?
-                        fornitore.CREDITORE :
-                        fornitore.DEBITORE);
+                SQLBuilder.NOT_EQUALS, documento.getDocumento_generico().isGenericoAttivo() ?
+                        TerzoBulk.CREDITORE :
+                        TerzoBulk.DEBITORE);
         sql.addSQLClause("AND", "((V_TERZO_CF_PI.DT_FINE_RAPPORTO IS NULL) OR (V_TERZO_CF_PI.DT_FINE_RAPPORTO >= ?))");
         sql.addParameter(documento.getDocumento_generico().getData_registrazione(), java.sql.Types.TIMESTAMP, 0);
 
@@ -4491,9 +4501,9 @@ public class DocumentoGenericoComponent
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param terzo       l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectTerzoByClause(
             UserContext userContext,
@@ -4529,9 +4539,9 @@ public class DocumentoGenericoComponent
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_compensi_per_vpVBulk stampa, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo, CompoundFindClause clauses) throws PersistencyException, ComponentException {
 
@@ -4539,14 +4549,14 @@ public class DocumentoGenericoComponent
         if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa())) {
 
             SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilderEsteso();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
             //sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
             sql.addClause(clauses);
             return sql;
         } else {
-            SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-            sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
+            SQLBuilder sql = getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA").createSQLBuilder();
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "CD_UNITA_PADRE", SQLBuilder.EQUALS, stampa.getCd_cds());
             sql.addClause(clauses);
             return sql;
         }
@@ -4566,9 +4576,9 @@ public class DocumentoGenericoComponent
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_doc_gen_per_vpVBulk stampa, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo, CompoundFindClause clauses) throws PersistencyException, ComponentException {
 
@@ -4576,14 +4586,14 @@ public class DocumentoGenericoComponent
         if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa())) {
 
             SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilderEsteso();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
             //sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
             sql.addClause(clauses);
             return sql;
         } else {
-            SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-            sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
+            SQLBuilder sql = getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA").createSQLBuilder();
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "CD_UNITA_PADRE", SQLBuilder.EQUALS, stampa.getCd_cds());
             sql.addClause(clauses);
             return sql;
         }
@@ -4603,15 +4613,15 @@ public class DocumentoGenericoComponent
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_elenco_fattureVBulk stampa, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException {
 
         Unita_organizzativaHome home = (Unita_organizzativaHome) getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
+        sql.addClause("AND", "CD_UNITA_PADRE", SQLBuilder.EQUALS, stampa.getCd_cds());
         sql.addClause(clauses);
         return sql;
     }
@@ -4630,9 +4640,9 @@ public class DocumentoGenericoComponent
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_fat_pas_per_vpVBulk stampa, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo, CompoundFindClause clauses) throws PersistencyException, ComponentException {
 
@@ -4640,14 +4650,14 @@ public class DocumentoGenericoComponent
         if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa())) {
 
             SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilderEsteso();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
             //sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
             sql.addClause(clauses);
             return sql;
         } else {
-            SQLBuilder sql = ((Unita_organizzativaHome) getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA")).createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-            sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, stampa.getCd_cds());
+            SQLBuilder sql = getHome(userContext, uo, "V_UNITA_ORGANIZZATIVA_VALIDA").createSQLBuilder();
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "CD_UNITA_PADRE", SQLBuilder.EQUALS, stampa.getCd_cds());
             sql.addClause(clauses);
             return sql;
         }
@@ -4666,9 +4676,9 @@ public class DocumentoGenericoComponent
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_situazioni_pag_esteroVBulk stampa, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException {
         try {
@@ -4677,7 +4687,7 @@ public class DocumentoGenericoComponent
             Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
             if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals(ente.getCd_unita_organizzativa())) {
                 sql = home.createSQLBuilder();
-                sql.addClause("AND", "cd_unita_padre", sql.EQUALS, stampa.getCd_cds());
+                sql.addClause("AND", "cd_unita_padre", SQLBuilder.EQUALS, stampa.getCd_cds());
             } else {
                 sql = home.createSQLBuilderEsteso();
             }
@@ -4844,7 +4854,7 @@ public class DocumentoGenericoComponent
      * Pre:  Una richiesta di impostare un savepoint e' stata generata
      * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
      *
-     * @param    userContext lo UserContext che ha generato la richiesta
+     * @param userContext lo UserContext che ha generato la richiesta
      */
     public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -4950,8 +4960,8 @@ public class DocumentoGenericoComponent
                     !Utility.createParametriCnrComponentSession().getParametriCnr(userContext, documento.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()) {
                 it.cnr.jada.bulk.BulkHome home = getHome(userContext, V_disp_cassa_cdsBulk.class);
                 SQLBuilder sql = home.createSQLBuilder();
-                sql.addClause("AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-                sql.addClause("AND", "cd_cds", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
+                sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+                sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
                 List result = null;
                 result = home.fetchAll(sql);
                 if (result.size() == 0)
@@ -5080,9 +5090,9 @@ public class DocumentoGenericoComponent
         //controlla compatibilità dei clienti/fornitori x accertamenti/obbligazioni
         for (java.util.Iterator i = documentoGenerico.getDocumento_generico_dettColl().iterator(); i.hasNext(); ) {
             Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk) i.next();
-            if (riga.getStato_cofi().equals(riga.STATO_INIZIALE))
+            if (riga.getStato_cofi().equals(Documento_generico_rigaBulk.STATO_INIZIALE))
                 throw new it.cnr.jada.comp.ApplicationException("Attenzione la riga " + riga.getDs_riga() + " è in stato iniziale");
-            if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.ENTRATE) {
+            if (documentoGenerico.getTi_entrate_spese() == Documento_genericoBulk.ENTRATE) {
                 if (!riga.getTerzo().getCd_terzo().equals(riga.getAccertamento_scadenziario().getAccertamento().getCd_terzo())
                         && (!riga
                         .getAccertamento_scadenziario()
@@ -5111,13 +5121,13 @@ public class DocumentoGenericoComponent
 
         //controllo obbligazione/accertamento
         if (!documentoGenerico.isPassivo_ente()) {
-            if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
+            if (documentoGenerico.getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
                 controllaQuadraturaObbligazioni(aUC, documentoGenerico);
             } else {
                 controllaQuadraturaAccertamenti(aUC, documentoGenerico);
             }
         } else {
-            if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
+            if (documentoGenerico.getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
                 ObbligazioniTable obbligazioniHash = documentoGenerico.getObbligazioniHash();
                 if (obbligazioniHash != null)
                     for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements(); ) {
@@ -5194,8 +5204,8 @@ public class DocumentoGenericoComponent
         }
 
         Documento_genericoBulk documentoGenerico =
-                (Documento_genericoBulk) documentoGenericoRiga.getDocumento_generico();
-        if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
+                documentoGenericoRiga.getDocumento_generico();
+        if (documentoGenerico.getTi_entrate_spese() == Documento_genericoBulk.SPESE) {
             if (documentoGenericoRiga.getModalita_pagamento() == null)
                 throw new it.cnr.jada.comp.ApplicationException(
                         "Inserire le modalità di pagamento per la riga "
@@ -5351,7 +5361,7 @@ public class DocumentoGenericoComponent
         Elemento_voceHome home = (Elemento_voceHome) getHome(userContext, Elemento_voceBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-        sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, home.GESTIONE_SPESE);
+        sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
         sql.addClause(clauses);
         return sql;
     }
@@ -5360,7 +5370,7 @@ public class DocumentoGenericoComponent
         Elemento_voceHome home = (Elemento_voceHome) getHome(userContext, Elemento_voceBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-        sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, home.GESTIONE_SPESE);
+        sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
         sql.addClause(clauses);
         return sql;
     }
@@ -5369,7 +5379,7 @@ public class DocumentoGenericoComponent
         Elemento_voceHome home = (Elemento_voceHome) getHome(userContext, Elemento_voceBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-        sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, home.GESTIONE_SPESE);
+        sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
         sql.addClause(clauses);
         return sql;
     }
@@ -5424,11 +5434,11 @@ public class DocumentoGenericoComponent
             UserContext userContext,
             Documento_genericoBulk documento) throws ComponentException {
         SQLBuilder sql = getHome(userContext, V_ass_inv_bene_fatturaBulk.class).createSQLBuilder();
-        sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, documento.getCd_cds());
-        sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, documento.getCd_unita_organizzativa());
-        sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, documento.getEsercizio());
-        sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, documento.getCd_tipo_documento_amm());
-        sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, documento.getPg_documento_generico());
+        sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, documento.getCd_cds());
+        sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, documento.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, documento.getEsercizio());
+        sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, documento.getCd_tipo_documento_amm());
+        sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, documento.getPg_documento_generico());
         return iterator(userContext, sql, V_ass_inv_bene_fatturaBulk.class, null);
     }
 
@@ -5437,19 +5447,19 @@ public class DocumentoGenericoComponent
         if (doc instanceof Documento_genericoBulk) {
             Documento_genericoBulk documento = (Documento_genericoBulk) doc;
             // nella view vengono valorizzati gli stessi campi
-            sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, documento.getCd_cds());
-            sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, documento.getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, documento.getEsercizio());
-            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, documento.getCd_tipo_documento_amm());
-            sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, documento.getPg_documento_generico());
+            sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, documento.getCd_cds());
+            sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, documento.getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, documento.getEsercizio());
+            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, documento.getCd_tipo_documento_amm());
+            sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, documento.getPg_documento_generico());
         } else {
             Documento_generico_rigaBulk documento = (Documento_generico_rigaBulk) doc;
-            sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, documento.getCd_cds());
-            sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, documento.getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, documento.getEsercizio());
-            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, documento.getCd_tipo_documento_amm());
-            sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, documento.getPg_documento_generico());
-            sql.addSQLClause("AND", "PROGRESSIVO_RIGA_FATT_PASS", sql.EQUALS, documento.getProgressivo_riga());
+            sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, documento.getCd_cds());
+            sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, documento.getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, documento.getEsercizio());
+            sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, documento.getCd_tipo_documento_amm());
+            sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, documento.getPg_documento_generico());
+            sql.addSQLClause("AND", "PROGRESSIVO_RIGA_FATT_PASS", SQLBuilder.EQUALS, documento.getProgressivo_riga());
         }
         try {
             if (sql.executeCountQuery(getConnection(userContext)) > 0)
@@ -5479,24 +5489,24 @@ public class DocumentoGenericoComponent
 
         sql.setDistinctClause(true);
         sql.addTableToHeader("ASS_INV_BENE_FATTURA");
-        sql.addSQLClause("AND", "CD_CDS_DOC_GEN", sql.EQUALS, documento.getCd_cds());
-        sql.addSQLClause("AND", "CD_UO_DOC_GEN", sql.EQUALS, documento.getCd_unita_organizzativa());
-        sql.addSQLClause("AND", "ESERCIZIO_DOC_GEN", sql.EQUALS, documento.getEsercizio());
-        sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, documento.getCd_tipo_documento_amm());
-        sql.addSQLClause("AND", "PG_DOCUMENTO_GENERICO", sql.EQUALS, documento.getPg_documento_generico());
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO", sql.EQUALS, "ASS_INV_BENE_FATTURA.PG_INVENTARIO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.ESERCIZIO", sql.EQUALS, "ASS_INV_BENE_FATTURA.ESERCIZIO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO", sql.EQUALS, "ASS_INV_BENE_FATTURA.TI_DOCUMENTO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO", sql.EQUALS, "ASS_INV_BENE_FATTURA.NR_INVENTARIO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_BUONO_C_S", sql.EQUALS, "ASS_INV_BENE_FATTURA.PG_BUONO_C_S");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO", sql.EQUALS, "ASS_INV_BENE_FATTURA.PROGRESSIVO");
+        sql.addSQLClause("AND", "CD_CDS_DOC_GEN", SQLBuilder.EQUALS, documento.getCd_cds());
+        sql.addSQLClause("AND", "CD_UO_DOC_GEN", SQLBuilder.EQUALS, documento.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "ESERCIZIO_DOC_GEN", SQLBuilder.EQUALS, documento.getEsercizio());
+        sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, documento.getCd_tipo_documento_amm());
+        sql.addSQLClause("AND", "PG_DOCUMENTO_GENERICO", SQLBuilder.EQUALS, documento.getPg_documento_generico());
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.PG_INVENTARIO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.ESERCIZIO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.ESERCIZIO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.TI_DOCUMENTO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.NR_INVENTARIO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_BUONO_C_S", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.PG_BUONO_C_S");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.PROGRESSIVO");
         try {
             List associazioni = assHome.fetchAll(sql);
             for (Iterator i = associazioni.iterator(); i.hasNext(); ) {
                 Buono_carico_scarico_dettBulk ass = (Buono_carico_scarico_dettBulk) i.next();
                 ass.setBene((Inventario_beniBulk) getHome(auc, Inventario_beniBulk.class).findByPrimaryKey(ass.getBene()));
                 // per gestire l'inventario anche per i generici di reintegro del fondo
-                if (documento.getTipo_documento().getCd_tipo_documento_amm().compareTo(documento.GENERICO_E) == 0)
+                if (documento.getTipo_documento().getCd_tipo_documento_amm().compareTo(Documento_genericoBulk.GENERICO_E) == 0)
                     totale_inv = totale_inv.add(ass.getBene().getValore_alienazione());
                 else
                     totale_inv = totale_inv.add(ass.getValore_unitario());
@@ -5676,7 +5686,7 @@ public class DocumentoGenericoComponent
                         BigDecimal tot_perc_cdr = new BigDecimal(0);
                         for (Iterator f = documento.getDocumento_generico_dettColl().iterator(); (f.hasNext() && !exit); ) {
                             Documento_generico_rigaBulk doc = ((Documento_generico_rigaBulk) f.next());
-                            for (Iterator coll = ((Buono_carico_scaricoBulk) buonoCS).getDettagliDocumentoColl().iterator(); (coll.hasNext() && !exit); ) {
+                            for (Iterator coll = buonoCS.getDettagliDocumentoColl().iterator(); (coll.hasNext() && !exit); ) {
                                 Documento_generico_rigaBulk doc_coll = ((Documento_generico_rigaBulk) coll.next());
                                 if (doc_coll.equalsByPrimaryKey(doc)) {
                                     try {
@@ -5773,10 +5783,10 @@ public class DocumentoGenericoComponent
             Buono_carico_scarico_dettHome home = (Buono_carico_scarico_dettHome) getTempHome(userContext, Buono_carico_scarico_dettBulk.class);
 
             SQLBuilder sql = home.createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, buonoTemporaneo.getEsercizio().toString());
-            sql.addSQLClause("AND", "PG_INVENTARIO", sql.EQUALS, buonoTemporaneo.getPg_inventario().toString());
-            sql.addSQLClause("AND", "TI_DOCUMENTO", sql.EQUALS, buonoTemporaneo.getTi_documento());
-            sql.addSQLClause("AND", "PG_BUONO_C_S", sql.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, buonoTemporaneo.getEsercizio().toString());
+            sql.addSQLClause("AND", "PG_INVENTARIO", SQLBuilder.EQUALS, buonoTemporaneo.getPg_inventario().toString());
+            sql.addSQLClause("AND", "TI_DOCUMENTO", SQLBuilder.EQUALS, buonoTemporaneo.getTi_documento());
+            sql.addSQLClause("AND", "PG_BUONO_C_S", SQLBuilder.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
             List dettagli = home.fetchAll(sql);
 
             definitivo.setPg_buono_c_s(pg);
@@ -5802,7 +5812,7 @@ public class DocumentoGenericoComponent
                             inventario_dett = (Buono_carico_scarico_dettBulk) i.next();
                             bene = inventario_dett.getBene();
                             nuova_associazione = new Ass_inv_bene_fatturaBulk();
-                            nuova_associazione.setRiga_doc_gen((Documento_generico_rigaBulk) riga);
+                            nuova_associazione.setRiga_doc_gen(riga);
                             nuova_associazione.setTest_buono(definitivo);
                             nuova_associazione.setNr_inventario(bene.getNr_inventario());
                             nuova_associazione.setProgressivo(bene.getProgressivo());
@@ -5825,7 +5835,7 @@ public class DocumentoGenericoComponent
         try {
             Inventario_beni_apgHome apgHome = (Inventario_beni_apgHome) getHome(userContext, Inventario_beni_apgBulk.class);
             SQLBuilder sql = apgHome.createSQLBuilder();
-            sql.addSQLClause("AND", "LOCAL_TRANSACTION_ID", sql.EQUALS, buono_temporaneo.getLocal_transactionID());
+            sql.addSQLClause("AND", "LOCAL_TRANSACTION_ID", SQLBuilder.EQUALS, buono_temporaneo.getLocal_transactionID());
             List beniApg = apgHome.fetchAll(sql);
             for (Iterator i = beniApg.iterator(); i.hasNext(); ) {
                 Inventario_beni_apgBulk beneApg = (Inventario_beni_apgBulk) i.next();
@@ -5843,10 +5853,10 @@ public class DocumentoGenericoComponent
         try {
             Buono_carico_scarico_dettHome home = (Buono_carico_scarico_dettHome) getHome(userContext, Buono_carico_scarico_dettBulk.class);
             SQLBuilder sql = home.createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, buonoTemporaneo.getEsercizio().toString());
-            sql.addSQLClause("AND", "PG_INVENTARIO", sql.EQUALS, buonoTemporaneo.getPg_inventario().toString());
-            sql.addSQLClause("AND", "TI_DOCUMENTO", sql.EQUALS, buonoTemporaneo.getTi_documento());
-            sql.addSQLClause("AND", "PG_BUONO_C_S", sql.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, buonoTemporaneo.getEsercizio().toString());
+            sql.addSQLClause("AND", "PG_INVENTARIO", SQLBuilder.EQUALS, buonoTemporaneo.getPg_inventario().toString());
+            sql.addSQLClause("AND", "TI_DOCUMENTO", SQLBuilder.EQUALS, buonoTemporaneo.getTi_documento());
+            sql.addSQLClause("AND", "PG_BUONO_C_S", SQLBuilder.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
             List dettagli = home.fetchAll(sql);
 
             for (Iterator i = dettagli.iterator(); i.hasNext(); ) {
@@ -5900,12 +5910,12 @@ public class DocumentoGenericoComponent
             if (dettaglio != null && dettaglio.isToBeDeleted()) {
                 Ass_inv_bene_fatturaHome asshome = (Ass_inv_bene_fatturaHome) getHome(userContext, Ass_inv_bene_fatturaBulk.class);
                 SQLBuilder sql = asshome.createSQLBuilder();
-                sql.addSQLClause("AND", "CD_CDS_DOC_GEN", sql.EQUALS, dettaglio.getCd_cds());
-                sql.addSQLClause("AND", "ESERCIZIO_DOC_GEN", sql.EQUALS, dettaglio.getEsercizio().intValue());
-                sql.addSQLClause("AND", "CD_UO_DOC_GEN", sql.EQUALS, dettaglio.getCd_unita_organizzativa());
-                sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", sql.EQUALS, dettaglio.getCd_tipo_documento_amm());
-                sql.addSQLClause("AND", "PG_DOCUMENTO_GENERICO", sql.EQUALS, dettaglio.getPg_documento_generico().longValue());
-                sql.addSQLClause("AND", "PROGRESSIVO_RIGA_DOC_GEN", sql.EQUALS, dettaglio.getProgressivo_riga().longValue());
+                sql.addSQLClause("AND", "CD_CDS_DOC_GEN", SQLBuilder.EQUALS, dettaglio.getCd_cds());
+                sql.addSQLClause("AND", "ESERCIZIO_DOC_GEN", SQLBuilder.EQUALS, dettaglio.getEsercizio().intValue());
+                sql.addSQLClause("AND", "CD_UO_DOC_GEN", SQLBuilder.EQUALS, dettaglio.getCd_unita_organizzativa());
+                sql.addSQLClause("AND", "CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, dettaglio.getCd_tipo_documento_amm());
+                sql.addSQLClause("AND", "PG_DOCUMENTO_GENERICO", SQLBuilder.EQUALS, dettaglio.getPg_documento_generico().longValue());
+                sql.addSQLClause("AND", "PROGRESSIVO_RIGA_DOC_GEN", SQLBuilder.EQUALS, dettaglio.getProgressivo_riga().longValue());
                 List associazioni = asshome.fetchAll(sql);
                 for (Iterator i = associazioni.iterator(); i.hasNext(); ) {
                     Ass_inv_bene_fatturaBulk associazione = (Ass_inv_bene_fatturaBulk) i.next();
@@ -6118,7 +6128,7 @@ public class DocumentoGenericoComponent
             if (cd_terzo != null) {
                 it.cnr.jada.bulk.BulkHome homet = getHome(userContext, TerzoBulk.class);
                 it.cnr.jada.persistency.sql.SQLBuilder sql_terzo = homet.createSQLBuilder();
-                sql_terzo.addClause("AND", "cd_terzo", sql.EQUALS, cd_terzo);
+                sql_terzo.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, cd_terzo);
 
                 it.cnr.jada.persistency.Broker broker = homet.createBroker(sql_terzo);
                 if (!broker.next())

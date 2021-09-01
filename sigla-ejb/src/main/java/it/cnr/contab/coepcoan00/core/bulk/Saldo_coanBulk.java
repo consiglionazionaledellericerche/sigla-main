@@ -19,6 +19,7 @@ package it.cnr.contab.coepcoan00.core.bulk;
 
 import java.util.Dictionary;
 
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -29,15 +30,7 @@ public class Saldo_coanBulk extends Saldo_coanBase {
 	protected it.cnr.contab.config00.sto.bulk.CdsBulk cds = new it.cnr.contab.config00.sto.bulk.CdsBulk();
 	protected it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = new it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk();
 	protected it.cnr.contab.config00.latt.bulk.WorkpackageBulk latt = new it.cnr.contab.config00.latt.bulk.WorkpackageBulk();
-	public final static String COMMERCIALE = "C";
-	public final static String ISTITUZIONALE = "I";
-	public final static Dictionary TIPO;
-
-	static{
-		TIPO = new it.cnr.jada.util.OrderedHashtable();
-		TIPO.put(COMMERCIALE,"Commerciale");
-		TIPO.put(ISTITUZIONALE,"Istituzionale");
-	}
+	public final static Dictionary TIPO = TipoIVA.TipoIVAKeys;
 	
 public Saldo_coanBulk() {
 	super();

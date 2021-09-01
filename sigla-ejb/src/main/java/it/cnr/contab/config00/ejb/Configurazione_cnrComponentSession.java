@@ -81,10 +81,4 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean isBloccoScrittureProposte(UserContext userContext) throws ComponentException, RemoteException;
 
-    Boolean isAssPrgAnagraficoAttiva(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
-
-    Boolean isImpegnoPluriennaleAttivo(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
-
-    Boolean isAccertamentoPluriennaleAttivo(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
-
 }
