@@ -1,21 +1,66 @@
-## Release 6.3.46  -- _July 30, 2021_ 
+## Release 6.3.47  -- _September 01, 2021_ 
 **Changes**
+
+>**FIX reset password**
+>
+>[f0842fbc62de04e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f0842fbc62de04e) marco.spasiano *August 31, 2021*
+
+>**Fix valorizzazione data e quantità di carico sui lotti**
+>
+>[2aa562132e562b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2aa562132e562b9) gianfranco.gasparro *August 20, 2021*
+
+>**Update pom.xml**
+>
+>[56f614422e37cba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56f614422e37cba) PAGANO RAFFAELE *August 05, 2021*
+
+>**Aggiunto per i report con DataSource offline il contesto transazionale.Aggiunta stampa inventario.**
+>
+>[853e29216068c7f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/853e29216068c7f) cirosalvio *August 04, 2021*
+
+>**Aggiunto nel messaggio di errore la struttura della partita iva della nazione**
+>
+>[c91b48a3e9c4a64](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c91b48a3e9c4a64) marco.spasiano *August 03, 2021*
+
+>**Nuova Gestione delle stampe pe Ente**
+>
+>[242fb654bcb8eb0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/242fb654bcb8eb0) marco.spasiano *August 02, 2021*
+
+>**Aggiunto campo reportname_ente in cui è possiile ridefinire il report da eseguire per una stampa.**
+> * Aggiunta gestione a menù di Print_Priority.
+>
+>[212828124976c10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/212828124976c10) cirosalvio *August 02, 2021*
+
+>**Adempimenti ex art. 15 D. Lgs.33_2013 - Inserita gestione parametrica per rendere obbligatorio l'inserimento del file di tipo 'Attestazione Direttore' in fase di inserimento incarico**
+>
+>[058c07ad168810c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/058c07ad168810c) raffaelepagano *August 02, 2021*
+
+>**Adempimenti ex art. 15 D. Lgs.33_2013 - Inserita gestione parametrica per rendere obbligatorio l'inserimento del file di tipo 'Attestazione Direttore' in fase di inserimento incarico**
+>
+>[542d663cef990d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/542d663cef990d5) raffaelepagano *August 02, 2021*
 
 >**Aggiunto controllo sul codice CIG in fase di emissione e modifica del mandato di pagamento**
 >
 >[51083ae40c2b65a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51083ae40c2b65a) marco.spasiano *July 30, 2021*
 
-
-## Release 6.3.45  -- _July 28, 2021_ 
-**Changes**
-
->**Refactor generator class**
+>**Cloud Azure Version**
 >
->[72afaa1907fe76d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72afaa1907fe76d) marco.spasiano *July 27, 2021*
+>[5f5c9cdf3638ee5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5f5c9cdf3638ee5) cirosalvio *July 26, 2021*
+
+>**Cloud Azure Version**
+>
+>[e60cc82df18208c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e60cc82df18208c) cirosalvio *July 26, 2021*
 
 >**Upgrade version of storage cloud**
 >
 >[bb20be882ac07ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bb20be882ac07ec) marco.spasiano *July 22, 2021*
+
+>**Stampa Inventario e Consumi**
+>
+>[16e9674b5748dff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16e9674b5748dff) cirosalvio *July 21, 2021*
+
+>**Stampa Inventario e Consumi**
+>
+>[8d276e4828449f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d276e4828449f9) cirosalvio *July 21, 2021*
 
 >**Add main for StringEncrypter**
 >
@@ -33,73 +78,6 @@
 >
 >[e282130d613ae70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e282130d613ae70) marco.spasiano *July 17, 2021*
 
-
-### Jira ORA-00907 
-
->**FIX ORA-00907 on search incarichi**
->
->[ca865b2c45b22d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca865b2c45b22d3) marco.spasiano *July 28, 2021*
-
-
-## Release 6.3.44  -- _July 16, 2021_ 
-**Changes**
-
->**Aggiunta delle colonne "descrizione" e  "classificazione cori" dei codici di ritenuta Co.Ri nella fase di estrazione excel.**
->
->[5d2f300584bfd0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d2f300584bfd0b) marco.spasiano *July 16, 2021*
-
->**Aggiunto controllo sulle modalità di pagamento, il conto deve essere di 7 caratteri numerici.**
->
->[0d5c4b9bba929ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d5c4b9bba929ad) marco.spasiano *July 16, 2021*
-
-
-## Release 6.3.43  -- _July 13, 2021_ 
-**Changes**
-
->**Eliminata la data scadenza pagamento per F24EP**
->
->[c02eff84f7ddd8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c02eff84f7ddd8d) marco.spasiano *July 13, 2021*
-
->**FIX NPE on controlla quadratura per natura**
->
->[f4bfbdd9895ec75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4bfbdd9895ec75) marco.spasiano *July 12, 2021*
-
-
-## Release 6.3.42  -- _July 08, 2021_ 
-**Changes**
-
->**Aggiunto controllo sulle modalità di pagamento, può esistere solo una tra "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A" e "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"**
->
->[69ffc800d01c588](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69ffc800d01c588) marco.spasiano *July 08, 2021*
-
->**Se siopeplus non è attivo, genera sempre il flusso OPI**
->
->[a474d599a074633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a474d599a074633) marco.spasiano *July 08, 2021*
-
-
-## Release 6.3.40  -- _July 07, 2021_ 
-**Changes**
-
->**Se siopeplus non è attivo, le distinte sono sempre da flusso**
->
->[7cb414925f23df2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cb414925f23df2) marco.spasiano *July 07, 2021*
-
-
-## Release 6.3.39  -- _July 06, 2021_ 
-**Changes**
-
->**Upgrade siopeplus artifact to 1.0.0**
->
->[774bdc9ff5f9947](https://github.com/consiglionazionaledellericerche/sigla-main/commit/774bdc9ff5f9947) marco.spasiano *July 06, 2021*
-
-
-## Release 6.3.38  -- _July 06, 2021_ 
-**Changes**
-
->**Aggiunto controllo sul codice CIG**
->
->[96cf2fa819f79b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cf2fa819f79b7) marco.spasiano *July 06, 2021*
-
 >**Upgrade version of siopeplus artifact**
 >
 >[9e7e7218e8891e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e7e7218e8891e8) marco.spasiano *July 05, 2021*
@@ -111,10 +89,6 @@
 >**Gestito controllo imponibile natura nel caso di Bollo non indicato come riga di fattura elettronica ma messo solo in testata**
 >
 >[91e2d08717f6be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91e2d08717f6be4) gianfranco.gasparro *July 02, 2021*
-
-
-## Release 6.3.35  -- _July 01, 2021_ 
-**Changes**
 
 >**FIX rest select progetti**
 >
@@ -131,54 +105,6 @@
 >**Update OrdineAcqBulkInfo.xml**
 >
 >[575e4cf30be7e4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/575e4cf30be7e4f) GASPARRO GIANFRANCO *June 30, 2021*
-
-
-## Release 6.3.34  -- _June 29, 2021_ 
-**Changes**
-
->**Corretta GET per Consultazioni REST**
->
->[362806bcd2ab572](https://github.com/consiglionazionaledellericerche/sigla-main/commit/362806bcd2ab572) gianfranco.gasparro *June 29, 2021*
-
->**Closed Issue #80**
->
->[c45b43db2000f28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45b43db2000f28) marco.spasiano *June 25, 2021*
-
->**FIX carica fattua elettronica**
->
->[ce34b95642c29db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce34b95642c29db) marco.spasiano *June 21, 2021*
-
->**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
->
->[6640ffeababf78d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6640ffeababf78d) marco.spasiano *June 21, 2021*
-
-
-## Release 6.3.32  -- _June 18, 2021_ 
-**Changes**
-
->**Rimosso controllo sulla consuntività per le fatture elettroniche su cui non sono ancora stampati i registri IVA**
->
->[2e91f90ab2a684c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e91f90ab2a684c) marco.spasiano *June 18, 2021*
-
->**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
->
->[64154baa27d787d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64154baa27d787d) marco.spasiano *June 18, 2021*
-
-
-## Release 6.3.31  -- _June 16, 2021_ 
-**Changes**
-
->**Corretto recupero mandati per consultazione pagamenti**
->
->[06b7664b39a2760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06b7664b39a2760) gianfranco.gasparro *June 16, 2021*
-
->**Add api rest docs**
->
->[7bb392888aebc29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bb392888aebc29) marco.spasiano *June 16, 2021*
-
->**Change email message to error on log**
->
->[c6c3ce13deb3890](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c6c3ce13deb3890) marco.spasiano *May 31, 2021*
 
 >**Update liquidazione_iva.rst**
 >
@@ -1132,6 +1058,129 @@
 >**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
 >
 >[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
+
+
+## Release 6.3.45  -- _July 28, 2021_ 
+**Changes**
+
+>**Refactor generator class**
+>
+>[72afaa1907fe76d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72afaa1907fe76d) marco.spasiano *July 27, 2021*
+
+
+### Jira ORA-00907 
+
+>**FIX ORA-00907 on search incarichi**
+>
+>[ca865b2c45b22d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca865b2c45b22d3) marco.spasiano *July 28, 2021*
+
+
+## Release 6.3.44  -- _July 16, 2021_ 
+**Changes**
+
+>**Aggiunta delle colonne "descrizione" e  "classificazione cori" dei codici di ritenuta Co.Ri nella fase di estrazione excel.**
+>
+>[5d2f300584bfd0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d2f300584bfd0b) marco.spasiano *July 16, 2021*
+
+>**Aggiunto controllo sulle modalità di pagamento, il conto deve essere di 7 caratteri numerici.**
+>
+>[0d5c4b9bba929ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d5c4b9bba929ad) marco.spasiano *July 16, 2021*
+
+
+## Release 6.3.43  -- _July 13, 2021_ 
+**Changes**
+
+>**Eliminata la data scadenza pagamento per F24EP**
+>
+>[c02eff84f7ddd8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c02eff84f7ddd8d) marco.spasiano *July 13, 2021*
+
+>**FIX NPE on controlla quadratura per natura**
+>
+>[f4bfbdd9895ec75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4bfbdd9895ec75) marco.spasiano *July 12, 2021*
+
+
+## Release 6.3.42  -- _July 08, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sulle modalità di pagamento, può esistere solo una tra "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A" e "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"**
+>
+>[69ffc800d01c588](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69ffc800d01c588) marco.spasiano *July 08, 2021*
+
+>**Se siopeplus non è attivo, genera sempre il flusso OPI**
+>
+>[a474d599a074633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a474d599a074633) marco.spasiano *July 08, 2021*
+
+
+## Release 6.3.40  -- _July 07, 2021_ 
+**Changes**
+
+>**Se siopeplus non è attivo, le distinte sono sempre da flusso**
+>
+>[7cb414925f23df2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cb414925f23df2) marco.spasiano *July 07, 2021*
+
+
+## Release 6.3.39  -- _July 06, 2021_ 
+**Changes**
+
+>**Upgrade siopeplus artifact to 1.0.0**
+>
+>[774bdc9ff5f9947](https://github.com/consiglionazionaledellericerche/sigla-main/commit/774bdc9ff5f9947) marco.spasiano *July 06, 2021*
+
+
+## Release 6.3.38  -- _July 06, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sul codice CIG**
+>
+>[96cf2fa819f79b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cf2fa819f79b7) marco.spasiano *July 06, 2021*
+
+
+## Release 6.3.34  -- _June 29, 2021_ 
+**Changes**
+
+>**Corretta GET per Consultazioni REST**
+>
+>[362806bcd2ab572](https://github.com/consiglionazionaledellericerche/sigla-main/commit/362806bcd2ab572) gianfranco.gasparro *June 29, 2021*
+
+>**Closed Issue #80**
+>
+>[c45b43db2000f28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45b43db2000f28) marco.spasiano *June 25, 2021*
+
+>**FIX carica fattua elettronica**
+>
+>[ce34b95642c29db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce34b95642c29db) marco.spasiano *June 21, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[6640ffeababf78d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6640ffeababf78d) marco.spasiano *June 21, 2021*
+
+
+## Release 6.3.32  -- _June 18, 2021_ 
+**Changes**
+
+>**Rimosso controllo sulla consuntività per le fatture elettroniche su cui non sono ancora stampati i registri IVA**
+>
+>[2e91f90ab2a684c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e91f90ab2a684c) marco.spasiano *June 18, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[64154baa27d787d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64154baa27d787d) marco.spasiano *June 18, 2021*
+
+
+## Release 6.3.31  -- _June 16, 2021_ 
+**Changes**
+
+>**Corretto recupero mandati per consultazione pagamenti**
+>
+>[06b7664b39a2760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06b7664b39a2760) gianfranco.gasparro *June 16, 2021*
+
+>**Add api rest docs**
+>
+>[7bb392888aebc29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bb392888aebc29) marco.spasiano *June 16, 2021*
+
+>**Change email message to error on log**
+>
+>[c6c3ce13deb3890](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c6c3ce13deb3890) marco.spasiano *May 31, 2021*
 
 
 ### Jira CVE-2021 
