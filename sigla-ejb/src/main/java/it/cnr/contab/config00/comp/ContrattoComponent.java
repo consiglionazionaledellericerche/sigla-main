@@ -2420,6 +2420,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 
 	}
 	private void validaRigheDettContrattoArticoli(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if ( bulk.getDettaglio_contratto().stream()
+				.collect(Collectors.groupingBy(Dettaglio_contrattoBulk::getCdBeneServizio, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0)
+			throw new ApplicationException("Esistitono Beni duplicati nel Dettalgio Contratto");
+
+		Map<String, Long> result =bulk.getDettaglio_contratto().stream()
+				.collect(Collectors.groupingBy(Dettaglio_contrattoBulk::getCdBeneServizio, Collectors.counting()));
 		for ( Dettaglio_contrattoBulk dettaglio_contrattoBulk:bulk.getDettaglio_contratto()){
 			if ( dettaglio_contrattoBulk.getCdBeneServizio()==null || dettaglio_contrattoBulk.getCdBeneServizio().isEmpty())
 				throw new ApplicationException("Selezionare il bene per tutti i dettagli Contratti");
@@ -2429,9 +2436,17 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 
 	}
 	private void validaRigheDettContrattoCatGrp(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if ( bulk.getDettaglio_contratto().stream()
+				.collect(Collectors.groupingBy(Dettaglio_contrattoBulk::getCdCategoriaGruppo, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0)
+				throw new ApplicationException("Esistitono Categoria Gruppo duplicati nel Dettalgio Contratto");
+
 		for ( Dettaglio_contrattoBulk dettaglio_contrattoBulk:bulk.getDettaglio_contratto()){
 			if (dettaglio_contrattoBulk.getCdCategoriaGruppo()==null || dettaglio_contrattoBulk.getCdCategoriaGruppo().isEmpty())
 				throw new ApplicationException("Selezionare la Categoria/Gruppo tutti i dettagli Contratti");
+			if ( dettaglio_contrattoBulk.getCategoriaGruppoInvent().getDs_categoria_gruppo()==null ||
+					dettaglio_contrattoBulk.getCategoriaGruppoInvent().getDs_categoria_gruppo().isEmpty())
+				throw new ApplicationException("Esiste una Categoria Gruppo non presente in anagrafica");
 		}
 
 	}
