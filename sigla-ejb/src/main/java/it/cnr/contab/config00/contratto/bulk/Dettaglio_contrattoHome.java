@@ -40,43 +40,5 @@ public class Dettaglio_contrattoHome extends BulkHome {
 		if (dettaglio.getId() == null)
 			dettaglio.setId(recuperoProgressivoDettaglio(userContext));
 	}
-	public SQLBuilder selectBeneServizioByClause(UserContext userContext, Dettaglio_contrattoBulk dettaglio_contrattoBulk,
-												 Bene_servizioHome bene_servizioHome, Bene_servizioBulk bene_servizioBulk,
-												 CompoundFindClause compoundfindclause) throws PersistencyException{
-		SQLBuilder sql = bene_servizioHome.selectByClause(userContext, compoundfindclause);
-		List<String> l=dettaglio_contrattoBulk.getContratto().getDettaglio_contratto()
-				.stream()
-				.filter(e->(e.getCdBeneServizio()!=null && (!(e.getCdBeneServizio().isEmpty()))))
-				.map(Dettaglio_contrattoBulk::getCdBeneServizio)
-				.map(e->"'".concat(e).concat("'"))
-				.collect(Collectors.toList());
-		l.remove(bene_servizioBulk.getCd_bene_servizio());
-		String  beneServiziAlreadySelected = null;
-		if ( l!=null && ( !l.isEmpty()))
-			beneServiziAlreadySelected=l.stream().collect(Collectors.joining(","));
-
-		if(StringUtils.isNotBlank(beneServiziAlreadySelected))
-			sql.addSQLClause("AND", "CD_BENE_SERVIZIO NOT IN (" + beneServiziAlreadySelected + ")");
-		return sql;
-	}
-	public SQLBuilder selectCategoriaGruppoInventByClause(UserContext userContext, Dettaglio_contrattoBulk dettaglio_contrattoBulk,
-														  Categoria_gruppo_inventHome categoria_gruppo_inventHome, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk,
-														  CompoundFindClause compoundfindclause) throws PersistencyException{
-		SQLBuilder sql = categoria_gruppo_inventHome.selectByClause(userContext, compoundfindclause);
-		List<String> l=dettaglio_contrattoBulk.getContratto().getDettaglio_contratto()
-				.stream()
-				.filter(e->(e.getCdCategoriaGruppo()!=null && (!(e.getCdCategoriaGruppo().isEmpty()))))
-				.map(Dettaglio_contrattoBulk::getCdCategoriaGruppo)
-				.map(e->"'".concat(e).concat("'"))
-				.collect(Collectors.toList());
-		l.remove(categoria_gruppo_inventBulk.getCd_categoria_gruppo());
-		String  catGrpAlreadySelected = null;
-		if ( l!=null && ( !l.isEmpty()))
-			catGrpAlreadySelected=l.stream().collect(Collectors.joining(","));
-
-		if(StringUtils.isNotBlank(catGrpAlreadySelected))
-			sql.addSQLClause("AND", "CD_CATEGORIA_GRUPPO NOT IN (" + catGrpAlreadySelected + ")");
-		return sql;
-	}
 
 }
