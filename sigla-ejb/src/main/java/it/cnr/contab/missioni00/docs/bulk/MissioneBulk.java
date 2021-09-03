@@ -32,6 +32,8 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -40,6 +42,7 @@ import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
@@ -49,6 +52,7 @@ import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -73,7 +77,7 @@ import it.cnr.jada.util.action.CRUDBP;
 
 @StorageType(name="D:emppay:missione", parentName="D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
-public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk,AllegatoParentBulk, AllegatoStorePath
+public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk, AllegatoParentBulk, AllegatoStorePath
 {
 	// Testata Missione
 	@JsonIgnore
@@ -93,8 +97,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	protected Tipo_missioneBulk tipo_missione;
 	@JsonIgnore
 	private java.util.Collection tipi_missione;
-	public final static String TIPO_ISTITUZIONALE = "I";
-	public final static String TIPO_COMMERCIALE = "C";		
 	public final static Dictionary<String, String> ti_istituz_commKeys;
 	@JsonIgnore
 	private MissioneBulk missioneIniziale;
@@ -260,8 +262,9 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	static
 	{
 		ti_istituz_commKeys = new OrderedHashtable();
-		ti_istituz_commKeys.put("C", "Commerciale");
-		ti_istituz_commKeys.put("I", "Istituzionale");		
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ti_istituz_commKeys.put(tipoIVA.value(), tipoIVA.label());
+		}
 
 		STATO_FONDO_ECO = new it.cnr.jada.util.OrderedHashtable();
 		STATO_FONDO_ECO.put(NO_FONDO_ECO,"Non usare fondo economale");
@@ -1739,7 +1742,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		setTi_provvisorio_definitivo(MissioneBulk.SALVA_TEMPORANEO);
 		setV_terzo(new V_terzo_per_compensoBulk());
 		setTi_anagrafico(ANAG_DIPENDENTE);
-		setTi_istituz_commerc(TIPO_ISTITUZIONALE);
+		setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
 		setStato_cofi(STATO_INIZIALE_COFI);
 		setStato_coge(STATO_INIZIALE_COGE);
@@ -3037,6 +3040,23 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 * Il metodo imposta il valore dell'attributo 'isDeleting'
 	 */
 	public void setIsDeleting(boolean deletingStatus) {}
+
+	private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
+	@Override
+	public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+		return scrittura_partita_doppia;
+	}
+	@Override
+	public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+		this.scrittura_partita_doppia = scrittura_partita_doppia;
+	}
+
+	@Override
+	public TipoDocumentoEnum getTipoDocumentoEnum() {
+		return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+	}
+
 	/**
 	 * Il metodo inizializza alcuni campi della missione che la rendono DEFINITIVA
 	 */
@@ -3749,5 +3769,15 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	public static boolean isAbilitatoCancellazioneMissioneFromGemis(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 		return Utility.getRuoloComponentSession().isAbilitatoCancellazioneMissioneGemis(param0);
+	}
+
+	@Override
+	public String getCd_tipo_doc() {
+		return this.getCd_tipo_doc_amm();
+	}
+
+	@Override
+	public Long getPg_doc() {
+		return this.getPg_doc_amm();
 	}
 }

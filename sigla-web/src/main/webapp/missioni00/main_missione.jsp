@@ -45,37 +45,10 @@
 <table class="Panel" width="100%">
 	<tr><td>
 		<%	
-			String[][] pages = null;
-			if(missione != null && missione.getPg_missione() != null && missione.getPg_missione().compareTo(new Long (0)) > 0){
-				pages = new String[][] {
-					{ "tabTestata","Testata","/missioni00/tab_missione_testata.jsp" },							
-					{ "tabAnagrafico","Anagrafico","/missioni00/tab_missione_anagrafico.jsp" },
-					{ "tabConfigurazioneTappe","Configurazione tappe","/missioni00/tab_missione_configurazione_tappa.jsp" } ,								
-					{ "tabDettaglioSpese","Dettaglio spese","/missioni00/tab_missione_dettaglio_spese.jsp" } ,
-					{ "tabDettaglioDiaria","Dettaglio diaria","/missioni00/tab_missione_dettaglio_diaria.jsp" } ,
-					{ "tabDettaglioRimborso","Dettaglio rimborso","/missioni00/tab_missione_dettaglio_rimborso.jsp" } ,
-					{ "tabObbligazione","Documenti associati","/missioni00/tab_missione_obbligazione.jsp" } ,
-					{ "tabConsuntivo","Consuntivo","/missioni00/tab_missione_consuntivo.jsp" } ,
-					{ "tabAllegati","Allegati","/missioni00/tab_missione_allegati.jsp" }
-				};
-			} else {
-				pages = new String[][] {
-					{ "tabTestata","Testata","/missioni00/tab_missione_testata.jsp" },							
-					{ "tabAnagrafico","Anagrafico","/missioni00/tab_missione_anagrafico.jsp" },
-					{ "tabConfigurazioneTappe","Configurazione tappe","/missioni00/tab_missione_configurazione_tappa.jsp" } ,								
-					{ "tabDettaglioSpese","Dettaglio spese","/missioni00/tab_missione_dettaglio_spese.jsp" } ,
-					{ "tabDettaglioDiaria","Dettaglio diaria","/missioni00/tab_missione_dettaglio_diaria.jsp" } ,
-					{ "tabDettaglioRimborso","Dettaglio rimborso","/missioni00/tab_missione_dettaglio_rimborso.jsp" } ,
-					{ "tabObbligazione","Documenti associati","/missioni00/tab_missione_obbligazione.jsp" } ,
-					{ "tabConsuntivo","Consuntivo","/missioni00/tab_missione_consuntivo.jsp" } 
-				};
-			}
-	
-		
 				JSPUtils.tabbed(
 						pageContext,
 						"tab",
-						pages,
+						bp.getTabs(),
 						bp.getTab("tab"),
 						"center", 
 						"100%", 

@@ -39,6 +39,8 @@ import java.util.jar.Manifest;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaComponentSession;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
 import it.cnr.contab.ordmag.magazzino.ejb.TransitoBeniOrdiniComponentSession;
 import it.cnr.contab.progettiric00.comp.RimodulaProgettoRicercaComponent;
@@ -102,7 +104,7 @@ public final class Utility {
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
-    public static final BigDecimal CENTO = new BigDecimal(100);
+	public static final BigDecimal CENTO = new BigDecimal(100);
 	/**
 	 * Restituisce true se i due oggetti sono uguali o sono entrambi null
 	 * false altrimenti
@@ -130,18 +132,18 @@ public final class Utility {
 		return false;
 	}
 
-    public static BigDecimal nvl(BigDecimal imp, BigDecimal otherImp){
-        if (imp != null)
-            return imp;
-        return otherImp;
-    }
+	public static BigDecimal nvl(BigDecimal imp, BigDecimal otherImp){
+		if (imp != null)
+			return imp;
+		return otherImp;
+	}
 
 	public static BigDecimal nvl(BigDecimal imp){
 		if (imp != null)
 			return imp;
-		return ZERO;  
+		return ZERO;
 	}
-	
+
 	public static String getSiglaVersion(){
 		String version  = "01.001.000";
 		InputStream is = FatturaAttiva.class.getResourceAsStream(Utility.MANIFEST_PATH);
@@ -180,7 +182,7 @@ public final class Utility {
 			sb.append(source.substring(start));
 			return sb.toString();
 		}
-		else 
+		else
 			return null;
 	}
 
@@ -277,7 +279,7 @@ public final class Utility {
 	public static void main(String[] args) {
 		System.out.println(NumberToText(new BigDecimal("16754")));
 	}
-	
+
 	public static String NumberToText(BigDecimal importo) {
 		int parteIntera = importo.intValue();
 		String parteDecimale = importo.remainder(BigDecimal.ONE).abs().toPlainString();
@@ -298,12 +300,12 @@ public final class Utility {
 		logger.info("Load PersistentInfo start, total number of classes is {}", components.size());
 		for (BeanDefinition component : components){
 			try {
-			    Class<?> clazz = Class.forName(component.getBeanClassName());
+				Class<?> clazz = Class.forName(component.getBeanClassName());
 				logger.debug("Load PersistentInfo for class: {}",clazz.getName());
 				adminSession.loadPersistentInfos(clazz);
 				if(clazz.getName().endsWith("Bulk")) {
 					logger.debug("Load BulkInfo for class: {}",clazz.getName());
-					adminSession.loadBulkInfos(clazz);					
+					adminSession.loadBulkInfos(clazz);
 				}
 			} catch (Exception e) {
 				logger.error("Cannot load persistentInfo for class : {}", component.getBeanClassName(), e);
@@ -311,22 +313,22 @@ public final class Utility {
 		}
 		logger.info("Load PersistentInfo finish");
 	}
-	
+
 	private static String NumberToTextRicorsiva(int n) {
 		if (n < 0) {
 			return "meno " + NumberToTextRicorsiva(-n);
 		} else if (n == 0){
 			return "";
 		} else if (n <= 19){
-			return new String[] { "uno", "due", "tre", "quattro", "cinque", 
-					"sei", "sette", "otto", "nove", "dieci", 
-					"undici", "dodici", "tredici", 
-					"quattordici", "quindici", "sedici", 
+			return new String[] { "uno", "due", "tre", "quattro", "cinque",
+					"sei", "sette", "otto", "nove", "dieci",
+					"undici", "dodici", "tredici",
+					"quattordici", "quindici", "sedici",
 					"diciassette", "diciotto", "diciannove" }[n-1];
 		} else if (n <= 99) {
-			String[] vettore = 
-				{ "venti", "trenta", "quaranta", "cinquanta", "sessanta", 
-					"settanta", "ottanta", "novanta" };
+			String[] vettore =
+					{ "venti", "trenta", "quaranta", "cinquanta", "sessanta",
+							"settanta", "ottanta", "novanta" };
 			String letter = vettore[n / 10 - 2];
 			int t = n % 10; // t è la prima cifra di n
 			// se è 1 o 8 va tolta la vocale finale di letter
@@ -343,24 +345,24 @@ public final class Utility {
 			if (m != 8){
 				letter = letter + "o";
 			}
-			return NumberToTextRicorsiva(n / 100) + letter + 
+			return NumberToTextRicorsiva(n / 100) + letter +
 					NumberToTextRicorsiva(n % 100);
 		}
 		else if (n <= 1999){
 			return "mille" + NumberToTextRicorsiva(n % 1000);
 		}  else if (n <= 999999){
-			return NumberToTextRicorsiva(n / 1000) + "mila" + 
+			return NumberToTextRicorsiva(n / 1000) + "mila" +
 					NumberToTextRicorsiva(n % 1000);
 		}
 		else if (n <= 1999999){
 			return "unmilione" + NumberToTextRicorsiva(n % 1000000);
 		} else if (n <= 999999999){
-			return NumberToTextRicorsiva(n / 1000000) + "milioni" + 
+			return NumberToTextRicorsiva(n / 1000000) + "milioni" +
 					NumberToTextRicorsiva(n % 1000000);
 		} else if (n <= 1999999999){
 			return "unmiliardo" + NumberToTextRicorsiva(n % 1000000000);
 		} else {
-			return NumberToTextRicorsiva(n / 1000000000) + "miliardi" + 
+			return NumberToTextRicorsiva(n / 1000000000) + "miliardi" +
 					NumberToTextRicorsiva(n % 1000000000);
 		}
 	}
@@ -371,7 +373,7 @@ public final class Utility {
 	}
 
 	public static Parametri_cnrComponentSession createParametriCnrComponentSession()throws EJBException, RemoteException {
-		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);		
+		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);
 	}
 	public static Classificazione_vociComponentSession createClassificazioneVociComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (Classificazione_vociComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Classificazione_vociComponentSession",Classificazione_vociComponentSession.class);
@@ -401,47 +403,47 @@ public final class Utility {
 	 */
 	public static PdgAggregatoModuloComponentSession createPdgAggregatoModuloComponentSession() throws javax.ejb.EJBException {
 		return (PdgAggregatoModuloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession", PdgAggregatoModuloComponentSession.class);
-	}	
+	}
 
 	/**
 	 * Crea la PdgContrSpeseComponentSession da usare per effettuare operazioni
 	 */
 	public static PdgContrSpeseComponentSession createPdgContrSpeseComponentSession() throws javax.ejb.EJBException{
 		return (PdgContrSpeseComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_PdgContrSpeseComponentSession", PdgContrSpeseComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la Local CdrComponentSession da usare per effettuare operazioni
 	 */
 	public static PdGVariazioniComponentSession createPdGVariazioniComponentSession() throws javax.ejb.EJBException{
 		return (PdGVariazioniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG00_EJB_PdGVariazioniComponentSession", PdGVariazioniComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la Local MandatoComponentSession da usare per effettuare operazioni
 	 */
 	public static MandatoComponentSession createMandatoComponentSession() throws javax.ejb.EJBException{
 		return (MandatoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_MandatoComponentSession", MandatoComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la Local ReversaleComponentSession da usare per effettuare operazioni
 	 */
 	public static ReversaleComponentSession createReversaleComponentSession() throws javax.ejb.EJBException{
 		return (ReversaleComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ReversaleComponentSession", ReversaleComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la Local Unita_organizzativaComponentSession da usare per effettuare operazioni
 	 */
 	public static Unita_organizzativaComponentSession createUnita_organizzativaComponentSession() throws javax.ejb.EJBException{
 		return (Unita_organizzativaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Unita_organizzativaComponentSession", Unita_organizzativaComponentSession.class);
-	}	
+	}
 	public static UtenteComponentSession createUtenteComponentSession() throws javax.ejb.EJBException{
 		return (UtenteComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_EJB_UtenteComponentSession", UtenteComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la Local TerzoComponentSession da usare per effettuare operazioni
 	 */
 	public static TerzoComponentSession createTerzoComponentSession() throws javax.ejb.EJBException{
 		return (TerzoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRANAGRAF00_EJB_TerzoComponentSession", TerzoComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la RepertorioLimitiComponentSession da usare per effettuare le operazioni di CRUD
 	 */
@@ -453,66 +455,66 @@ public final class Utility {
 	 */
 	public static IncarichiRepertorioComponentSession createIncarichiRepertorioComponentSession() throws EJBException{
 		return (IncarichiRepertorioComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINCARICHI00_EJB_IncarichiRepertorioComponentSession",IncarichiRepertorioComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la IncarichiProceduraComponentSession da usare per effettuare le operazioni di CRUD
 	 */
 	public static IncarichiProceduraComponentSession createIncarichiProceduraComponentSession() throws EJBException{
 		return (IncarichiProceduraComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINCARICHI00_EJB_IncarichiProceduraComponentSession",IncarichiProceduraComponentSession.class);
-	}	
+	}
 	/**
 	 * Crea la Remote ProgettoGecoComponentSession da usare per effettuare operazioni
 	 */
 	public static ProgettoGecoComponentSession createProgettoGecoComponentSession() throws javax.ejb.EJBException{
 		return (ProgettoGecoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_GECO_ProgettoGecoComponentSession");
-	}	
+	}
 	public static Parametri_cdsComponentSession createParametriCdsComponentSession()throws EJBException, RemoteException {
-		return (Parametri_cdsComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cdsComponentSession", Parametri_cdsComponentSession.class);		
+		return (Parametri_cdsComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cdsComponentSession", Parametri_cdsComponentSession.class);
 	}
 	public static it.cnr.contab.anagraf00.ejb.AbiCabComponentSession createAbiCabComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (it.cnr.contab.anagraf00.ejb.AbiCabComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRANAGRAF00_EJB_AbiCabComponentSession", it.cnr.contab.anagraf00.ejb.AbiCabComponentSession.class);
 	}
 	public static Parametri_enteComponentSession createParametriEnteComponentSession()throws EJBException, RemoteException {
-		return (Parametri_enteComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_enteComponentSession", Parametri_cnrComponentSession.class);		
+		return (Parametri_enteComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_enteComponentSession", Parametri_cnrComponentSession.class);
 	}
 	public static FatturaAttivaSingolaComponentSession createFatturaAttivaSingolaComponentSession()throws EJBException, RemoteException {
-		return (FatturaAttivaSingolaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession", FatturaAttivaSingolaComponentSession.class);		
+		return (FatturaAttivaSingolaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession", FatturaAttivaSingolaComponentSession.class);
 	}
 	public static FatturaPassivaComponentSession createFatturaPassivaComponentSession()throws EJBException, RemoteException {
-		return (FatturaPassivaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class);		
+		return (FatturaPassivaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class);
 	}
 	/**
 	 * Crea la Local ReversaleComponentSession da usare per effettuare operazioni
 	 */
 	public static DistintaCassiereComponentSession createDistintaCassiereComponentSession() throws javax.ejb.EJBException{
 		return (DistintaCassiereComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_DistintaCassiereComponentSession", DistintaCassiereComponentSession.class);
-	}	
+	}
 	public static LiquidIvaInterfComponentSession createLiquidIvaInterfComponentSession() throws javax.ejb.EJBException{
 		return (LiquidIvaInterfComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRGESTIVA00_EJB_LiquidIvaInterfComponentSession", LiquidIvaInterfComponentSession.class);
 	}
 	public static ProgettoRicercaComponentSession createProgettoRicercaComponentSession() throws javax.ejb.EJBException{
 		return (ProgettoRicercaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession", ProgettoRicercaComponentSession.class);
 	}
-    public static VariazioniStanziamentoResiduoComponentSession createVariazioniStanziamentoResiduoComponentSession() throws javax.ejb.EJBException{
-	    return (VariazioniStanziamentoResiduoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession", VariazioniStanziamentoResiduoComponentSession.class);
+	public static VariazioniStanziamentoResiduoComponentSession createVariazioniStanziamentoResiduoComponentSession() throws javax.ejb.EJBException{
+		return (VariazioniStanziamentoResiduoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession", VariazioniStanziamentoResiduoComponentSession.class);
 	}
-    public static MovimentiMagComponentSession createMovimentiMagComponentSession() throws javax.ejb.EJBException{
-	    return (MovimentiMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_MovimentiMagComponentSession", MovimentiMagComponentSession.class);
+	public static MovimentiMagComponentSession createMovimentiMagComponentSession() throws javax.ejb.EJBException{
+		return (MovimentiMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_MovimentiMagComponentSession", MovimentiMagComponentSession.class);
 	}
-    public static OrdineAcqComponentSession createOrdineAcqComponentSession() throws javax.ejb.EJBException{
-	    return (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
+	public static OrdineAcqComponentSession createOrdineAcqComponentSession() throws javax.ejb.EJBException{
+		return (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
 	}
 	public static TransitoBeniOrdiniComponentSession createTransitoBeniOrdiniComponentSession() throws javax.ejb.EJBException{
 		return (TransitoBeniOrdiniComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_TransitoBeniOrdiniComponentSession", TransitoBeniOrdiniComponentSession.class);
 	}
-    public static NumeratoriOrdMagComponentSession createNumeratoriOrdMagComponentSession() throws javax.ejb.EJBException{
-	    return (NumeratoriOrdMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG_EJB_NumeratoriOrdMagComponentSession", NumeratoriOrdMagComponentSession.class);
+	public static NumeratoriOrdMagComponentSession createNumeratoriOrdMagComponentSession() throws javax.ejb.EJBException{
+		return (NumeratoriOrdMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG_EJB_NumeratoriOrdMagComponentSession", NumeratoriOrdMagComponentSession.class);
 	}
-    public static AttoBolloComponentSession createAttoBolloComponentSession() throws javax.ejb.EJBException{
-    	return (AttoBolloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_AttoBolloComponentSession", AttoBolloComponentSession.class);
+	public static AttoBolloComponentSession createAttoBolloComponentSession() throws javax.ejb.EJBException{
+		return (AttoBolloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_AttoBolloComponentSession", AttoBolloComponentSession.class);
 	}
-    public static TipoAttoBolloComponentSession createTipoAttoBolloComponentSession() throws javax.ejb.EJBException{
-	    return (TipoAttoBolloComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_TipoAttoBolloComponentSession", TipoAttoBolloComponentSession.class);
+	public static TipoAttoBolloComponentSession createTipoAttoBolloComponentSession() throws javax.ejb.EJBException{
+		return (TipoAttoBolloComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_TipoAttoBolloComponentSession", TipoAttoBolloComponentSession.class);
 	}
 	public static RuoloComponentSession getRuoloComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (RuoloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_EJB_RuoloComponentSession",RuoloComponentSession.class);
@@ -525,5 +527,11 @@ public final class Utility {
 	}
 	public static IncarichiEstrazioneFpComponentSession createIncarichiEstrazioneFpComponentSession() throws javax.ejb.EJBException{
 		return (IncarichiEstrazioneFpComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINCARICHI00_EJB_IncarichiEstrazioneFpComponentSession", IncarichiEstrazioneFpComponentSession.class);
+	}
+	public static ScritturaPartitaDoppiaComponentSession createScritturaPartitaDoppiaComponentSession() throws javax.ejb.EJBException{
+		return (ScritturaPartitaDoppiaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaComponentSession", ScritturaPartitaDoppiaComponentSession.class);
+	}
+	public static CompensoComponentSession createCompensoComponentSession() throws javax.ejb.EJBException{
+		return (CompensoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOMPENSI00_EJB_CompensoComponentSession", CompensoComponentSession.class);
 	}
 }

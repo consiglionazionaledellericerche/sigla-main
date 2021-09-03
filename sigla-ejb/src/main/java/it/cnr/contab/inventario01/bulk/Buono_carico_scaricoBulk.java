@@ -32,6 +32,7 @@ import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -303,8 +304,8 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 			nuovo.setBene(new Inventario_beniBulk());
 			nuovo.getBene().setInventario(this.getInventario());
 			nuovo.getBene().setPg_inventario(this.getPg_inventario());
+		nuovo.getBene().setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 			nuovo.getBene().setFl_totalmente_scaricato(java.lang.Boolean.FALSE);
-			nuovo.getBene().setTi_commerciale_istituzionale(Inventario_beniBulk.ISTITUZIONALE);
 			nuovo.getBene().setCategoria_Bene(new it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk());
 			nuovo.getBene().setUbicazione(new Ubicazione_beneBulk());
 			nuovo.getBene().setAssegnatario(new TerzoBulk());
@@ -410,7 +411,7 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 						rigoInventario.setQuantita(new Long(rigoFattura.getQuantita().longValue()));			
 						rigoInventario.setBene(bene);
 						// Assegna il Prezzo unitario: il prezzo Þ diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
-						if (rigoFattura.getTi_istituz_commerc().equals(rigoFattura.ISTITUZIONALE)){
+						if (rigoFattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value())){
 							valore_unitario = rigoFattura.getIm_imponibile().add(rigoFattura.getIm_iva());
 							valore_unitario = valore_unitario.divide(rigoFattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
 							rigoInventario.setValore_unitario(valore_unitario);				

@@ -51,6 +51,7 @@ import it.cnr.contab.gestiva00.core.bulk.Riepilogativi_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeBulk;
 import it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeHome;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.MTUStuff;
@@ -607,10 +608,10 @@ public java.util.Collection selectTipi_sezionaliByClause(
 
 	if (stampaBulk.getTipoSezionaleFlag() != null) {
 		if (stampaBulk.SEZIONALI_COMMERCIALI.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag()))
-			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.COMMERCIALE);
+			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, TipoIVA.COMMERCIALE.value());
 		else if (stampaBulk.SEZIONALI_SAN_MARINO_SENZA_IVA.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag())) {
 				sql.addSQLClause("AND", "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA", sql.EQUALS, "Y");
-				sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.ISTITUZIONALE);
+				sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, TipoIVA.ISTITUZIONALE.value());
 				sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_BENE_SERVIZIO",sql.NOT_EQUALS,Bene_servizioBulk.SERVIZIO);
 		/* RP INTRASTAT EVENTUALMENTE UTILE SE RICHIESTO UN'UNICA LIQUIDAZIONE
 		} else if (stampaBulk.SEZIONALI_BENI_INTRA_UE_SERVIZI_INTRA_EXTRA_UE.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag())) {
@@ -632,7 +633,7 @@ public java.util.Collection selectTipi_sezionaliByClause(
 		}*/ 
 		} else if (stampaBulk.SEZIONALI_BENI_INTRA_UE.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag())) {
 			sql.addSQLClause("AND", "TIPO_SEZIONALE.FL_INTRA_UE", sql.EQUALS, "Y");
-			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.ISTITUZIONALE);
+			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, TipoIVA.ISTITUZIONALE.value());
 			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_BENE_SERVIZIO",sql.EQUALS,Bene_servizioBulk.BENE);
 		} else if (stampaBulk.SEZIONALI_SERVIZI_NON_RESIDENTI.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag())) {
 			sql.openParenthesis("AND");
@@ -640,11 +641,11 @@ public java.util.Collection selectTipi_sezionaliByClause(
 			sql.addSQLClause("OR", "TIPO_SEZIONALE.FL_EXTRA_UE", sql.EQUALS, "Y");
 			sql.addSQLClause("OR", "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA", sql.EQUALS, "Y");
 			sql.closeParenthesis();
-			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.ISTITUZIONALE);
+			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, TipoIVA.ISTITUZIONALE.value());
 			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_BENE_SERVIZIO",sql.EQUALS,Bene_servizioBulk.SERVIZIO);
 		} else if (stampaBulk.SEZIONALI_SPLIT_PAYMENT.equalsIgnoreCase(stampaBulk.getTipoSezionaleFlag())) {
 			sql.addSQLClause("AND", "TIPO_SEZIONALE.FL_SPLIT_PAYMENT", sql.EQUALS, "Y");
-			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, Tipo_sezionaleBulk.ISTITUZIONALE);
+			sql.addSQLClause("AND", "TIPO_SEZIONALE.TI_ISTITUZ_COMMERC", sql.EQUALS, TipoIVA.ISTITUZIONALE.value());
 		}
 	}
 

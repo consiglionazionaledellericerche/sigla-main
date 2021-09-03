@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -94,8 +95,7 @@ private SQLBuilder selectTipiSezionali(
 	sql.addSQLJoin("SEZIONALE.CD_TIPO_SEZIONALE","TIPO_SEZIONALE.CD_TIPO_SEZIONALE");
 	sql.addSQLClause("AND","SEZIONALE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,unita_organizzativa);
 	sql.addSQLClause("AND","TIPO_SEZIONALE.TI_ISTITUZ_COMMERC",sql.EQUALS,(ti_istituz_commerc == null || it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk.PROMISCUA.equalsIgnoreCase(ti_istituz_commerc)?
-																				Tipo_sezionaleBulk.COMMERCIALE : 
-																				ti_istituz_commerc));
+			TipoIVA.COMMERCIALE.value() : ti_istituz_commerc));
 	sql.addSQLClause("AND","TIPO_SEZIONALE.TI_ACQUISTI_VENDITE",sql.EQUALS,ti_acquisti_vendite);
 	sql.addSQLClause("AND","SEZIONALE.TI_FATTURA",sql.EQUALS,ti_fattura);
 	sql.addSQLClause("AND","SEZIONALE.ESERCIZIO",sql.EQUALS,esercizio);

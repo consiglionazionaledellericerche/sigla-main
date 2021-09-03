@@ -17,6 +17,8 @@
 
 package it.cnr.contab.pdg00.bulk;
 
+import it.cnr.contab.util.enumeration.TipoIVA;
+
 /**
  * Insert the type's description here.
  * Creation date: (27/08/2004 16.29.19)
@@ -41,16 +43,15 @@ public class Stampa_vpg_bilancio_riclassVBulk extends it.cnr.jada.bulk.OggettoBu
 	private Boolean dettaglioConti;
 	
 	public final static String TIPO_IST_COM = "*";
-	public final static String TIPO_IST = "I";
-	public final static String TIPO_COM = "C";
 
 	public final static java.util.Dictionary ti_ist_comKeys;
 	
 	static {		
 		ti_ist_comKeys = new it.cnr.jada.util.OrderedHashtable();
 		ti_ist_comKeys.put(TIPO_IST_COM,"Tutto");
-		ti_ist_comKeys.put(TIPO_IST,"Istituzionale");
-		ti_ist_comKeys.put(TIPO_COM,"Commerciale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			ti_ist_comKeys.put(tipoIVA.value(), tipoIVA.label());
+		}
 	};
 
 /**

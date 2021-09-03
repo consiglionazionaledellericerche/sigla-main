@@ -42,11 +42,14 @@
 			fetchOnly="true"/>
 		<columnMapping
 			columnName="CD_TERZO"
-			propertyName="scrittura.terzo.cd_terzo" />
+			propertyName="terzo.cd_terzo" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="scrittura" 
 		partOfOid="true"/>
 	<persistentProperty
 		name="conto" />
+	<persistentProperty
+		name="terzo" />
+
 </SQLPersistentInfo>

@@ -66,6 +66,7 @@ import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -1709,7 +1710,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
 		//R.P. Consente di associare piu' volte lo stesso bene
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, associa_Bulk.getInventario().getPg_inventario());
-		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 		//RP IN QUESTO CASO DEVE PRENDERE ANCHE I TOTALMENTE SCARICATI
 		sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISTOTALMENTESCARICATO); // scaricati totalmente
 		sql.addSQLClause("AND", "INVENTARIO_BENI.ESERCIZIO_CARICO_BENE", SQLBuilder.LESS_EQUALS, CNRUserContext.getEsercizio(userContext));
@@ -1960,7 +1961,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
-		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, buonoS.getInventario().getPg_inventario());	
 		sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISNOTTOTALMENTESCARICATO); // Non scaricati totalmente
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PROGRESSIVO", SQLBuilder.EQUALS, "0"); // Solo i beni Prinicapali
@@ -2496,7 +2497,7 @@ public void selectBeniAssociatiForModifica(
 				new_bene.setEsercizio(riga_fattura.getEsercizio());
 				new_bene.setPg_fattura(riga_fattura.getPg_fattura_passiva());
 				new_bene.setProgressivo_riga(riga_fattura.getProgressivo_riga());
-				if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+				if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 					im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 				else
 					im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -2506,7 +2507,7 @@ public void selectBeniAssociatiForModifica(
 				new_bene.setEsercizio(nota.getEsercizio());
 				new_bene.setPg_fattura(nota.getPg_fattura_passiva());
 				new_bene.setProgressivo_riga(nota.getProgressivo_riga());
-				if (nota.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+				if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 					im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 				else
 					im_riga_fattura = nota.getIm_imponibile();
@@ -2516,7 +2517,7 @@ public void selectBeniAssociatiForModifica(
 				new_bene.setEsercizio(notadeb.getEsercizio());
 				new_bene.setPg_fattura(notadeb.getPg_fattura_passiva());
 				new_bene.setProgressivo_riga(notadeb.getProgressivo_riga());
-				if (notadeb.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+				if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 					im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 				else
 					im_riga_fattura = notadeb.getIm_imponibile();
@@ -3536,7 +3537,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 								new_bene_apg.setEsercizio(riga_fattura.getEsercizio());   		
 								new_bene_apg.setPg_fattura(riga_fattura.getPg_fattura_passiva());  
 								new_bene_apg.setProgressivo_riga(riga_fattura.getProgressivo_riga());
-								if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+								if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 									im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 								else
 									im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -3548,7 +3549,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 								new_bene_apg.setEsercizio(nota.getEsercizio());   		
 								new_bene_apg.setPg_fattura(nota.getPg_fattura_passiva());  
 								new_bene_apg.setProgressivo_riga(nota.getProgressivo_riga());
-								if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+								if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 									im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 								else
 									im_riga_fattura = nota.getIm_imponibile();
@@ -3569,7 +3570,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 								new_bene_apg.setEsercizio(notadeb.getEsercizio());   		
 								new_bene_apg.setPg_fattura(notadeb.getPg_fattura_passiva());  
 								new_bene_apg.setProgressivo_riga(notadeb.getProgressivo_riga());
-								if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+								if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 									im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 								else
 									im_riga_fattura = notadeb.getIm_imponibile();
@@ -4182,7 +4183,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 			}else if(fattura_attiva!=null){
 				//RP IN QUESTO CASO DEVE PRENDERE SOLO I TOTALMENTE SCARICATI
 				sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISTOTALMENTESCARICATO); // Scaricati totalmente
-				sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS,Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+				sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS,TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 				sql.addSQLClause("AND", "BUONO_CARICO_SCARICO_DETT.ESERCIZIO", SQLBuilder.EQUALS,fattura_attiva.getEsercizio());
 				sql.addSQLClause("AND","BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO",SQLBuilder.EQUALS,Buono_carico_scaricoBulk.SCARICO);
 			}
@@ -4278,7 +4279,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setEsercizio(riga_fattura.getEsercizio());
 						new_bene_apg.setPg_fattura(riga_fattura.getPg_fattura_passiva());
 						new_bene_apg.setProgressivo_riga(riga_fattura.getProgressivo_riga());
-						if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+						if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 						else
 							im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -4288,7 +4289,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setEsercizio(nota.getEsercizio());
 						new_bene_apg.setPg_fattura(nota.getPg_fattura_passiva());
 						new_bene_apg.setProgressivo_riga(nota.getProgressivo_riga());
-						if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+						if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 						else
 							im_riga_fattura = nota.getIm_imponibile();
@@ -4298,7 +4299,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setEsercizio(notadeb.getEsercizio());
 						new_bene_apg.setPg_fattura(notadeb.getPg_fattura_passiva());
 						new_bene_apg.setProgressivo_riga(notadeb.getProgressivo_riga());
-						if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+						if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 						else
 							im_riga_fattura = notadeb.getIm_imponibile();
@@ -4916,7 +4917,7 @@ try {
 			sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO (+)");
 			sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO (+)");
 			sql.addSQLClause("AND","INVENTARIO_BENI.PG_INVENTARIO",sql.EQUALS,buonoS.getPg_inventario());
-			sql.addSQLClause("AND","INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+			sql.addSQLClause("AND","INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 			sql.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)",sql.EQUALS,buonoS.getLocal_transactionID());
 			sql.addSQLClause("AND","INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO",sql.EQUALS,Inventario_beniBulk.ISNOTTOTALMENTESCARICATO);
 			sql.addSQLClause("AND","INVENTARIO_BENI_APG.CD_CDS(+)",sql.EQUALS,riga_fattura.getCd_cds());
@@ -5454,17 +5455,17 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 						tot_variazioni_riga = tot_variazioni_riga.add(variazione_piu);
 					}
 					if (riga_fattura!=null)
-						if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+						if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 						else
 							im_riga_fattura = riga_fattura.getIm_imponibile();
 					else if (nota!=null)
-						if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+						if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 						else
 							im_riga_fattura = nota.getIm_imponibile();
 					 if (notadeb!=null)
-							if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+							if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 								im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 							else
 								im_riga_fattura = notadeb.getIm_imponibile();
@@ -5493,17 +5494,17 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 						tot_bene = tot_bene.add(valore);
 					}
 					if (riga_fattura!=null)
-						if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+						if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 						else
 							im_riga_fattura = riga_fattura.getIm_imponibile();
 					else if (nota!=null)
-						if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+						if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 						else
 							im_riga_fattura = nota.getIm_imponibile();
 					else if (notadeb!=null)
-						if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+						if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 						else
 							im_riga_fattura = notadeb.getIm_imponibile();
@@ -6353,7 +6354,7 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
 	for (java.util.Enumeration e = righe_fatturaHash.keys(); e.hasMoreElements();){
 		Fattura_passiva_rigaBulk riga_fattura = (Fattura_passiva_rigaBulk)e.nextElement();
 		// Controlla se la riga di fattura è ISTITUZIONALE
-		if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+		if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 			imponibile_totale =riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 		else
 			imponibile_totale =riga_fattura.getIm_imponibile();
@@ -6999,7 +7000,7 @@ try{
 					beneScelto.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
 				}
 			}
-			if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+			if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 				im_fattura = im_fattura.add(riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva()));
 			else
 				im_fattura = im_fattura.add(riga_fattura.getIm_imponibile());

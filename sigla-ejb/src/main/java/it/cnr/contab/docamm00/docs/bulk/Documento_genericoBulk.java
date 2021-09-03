@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
@@ -30,6 +31,7 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
@@ -57,8 +59,6 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public final static String STATO_CONTABILIZZATO= "C";
 	public final static String GENERICO_E= Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E;
 	public final static String GENERICO_S= Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S;
-	public final static String ISTITUZIONALE= "I";
-	public final static String COMMERCIALE= "C";
 	public final static Dictionary STATO;
 	public final static String ASSOCIATO_A_MANDATO= "T";
 	public final static String NON_ASSOCIATO_A_MANDATO= "N";
@@ -128,8 +128,9 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 
 	static {
 		TIPO = new it.cnr.jada.util.OrderedHashtable();
-		TIPO.put(COMMERCIALE,"Commerciale");
-		TIPO.put(ISTITUZIONALE,"Istituzionale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			TIPO.put(tipoIVA.value(), tipoIVA.label());
+		}
 
 		STATO= new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INIZIALE, "Iniziale");
@@ -423,11 +424,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 
 		return calendar;
 	}
-	/**
-	 * Insert the method's description here.
-	 * Creation date: (5/15/2002 10:50:29 AM)
-	 * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-	 */
+
 	public it.cnr.jada.bulk.PrimaryKeyHashMap getDefferredSaldi() {
 		return deferredSaldi;
 	}
@@ -1346,11 +1343,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		} else
 			addToDocumentiContabiliCancellati(riga.getObbligazione_scadenziario());
 	}
-	/**
-	 * Insert the method's description here.
-	 * Creation date: (5/15/2002 10:50:29 AM)
-	 * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
-	 */
+
 	public void resetDefferredSaldi() {
 
 		deferredSaldi = null;	
@@ -1442,11 +1435,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public void setDocumentiContabiliCancellati(java.util.Vector newDocumentiContabiliCancellati) {
 		documentiContabiliCancellati = newDocumentiContabiliCancellati;
 	}
-	/**
-	 * Insert the method's description here.
-	 * Creation date: (03/12/2001 14.10.38)
-	 * @param newDocumento_generico_obbligazioniHash it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
-	 */
+
 	public void setDocumento_generico_accertamentiHash(AccertamentiTable newDocumento_generico_accertamentiHash) {
 		documento_generico_accertamentiHash = newDocumento_generico_accertamentiHash;
 	}
@@ -1496,7 +1485,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (03/12/2001 16.04.00)
-	 * @param newImportoTotalePerObbligazione java.math.BigDecimal
+	 * @param newImportoTotalePerAccertamento java.math.BigDecimal
 	 */
 	public void setImportoTotalePerAccertamento(java.math.BigDecimal newImportoTotalePerAccertamento) {
 		importoTotalePerAccertamento = newImportoTotalePerAccertamento;
@@ -1521,6 +1510,18 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	 * setIsDeleting method comment.
 	 */
 	public void setIsDeleting(boolean deletingStatus) {}
+
+	private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
+	@Override
+	public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+		return scrittura_partita_doppia;
+	}
+	@Override
+	public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+		this.scrittura_partita_doppia = scrittura_partita_doppia;
+	}
+
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (09/07/2002 16.29.09)
@@ -1766,7 +1767,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		}
 
 		if (getTi_istituz_commerc()==null)
-			setTi_istituz_commerc(ISTITUZIONALE);
+			setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
 		if (getIm_totale()==null)
 			setIm_totale(new java.math.BigDecimal(0));
@@ -1953,5 +1954,19 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public void setIdTipoDocumentoGenerico(Integer idTipoDocumentoGenerico) {
 		Optional.ofNullable(getTipoDocumentoGenerico()).ifPresent(el->el.setId(idTipoDocumentoGenerico));
 	}
-	
+
+	public TipoDocumentoEnum getTipoDocumentoEnum() {
+		return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+	}
+
+	@Override
+	public String getCd_tipo_doc() {
+		return this.getCd_tipo_doc_amm();
+	}
+
+	@Override
+	public Long getPg_doc() {
+		return this.getPg_doc_amm();
+	}
+
 }

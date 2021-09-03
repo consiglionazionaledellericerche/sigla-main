@@ -24,6 +24,8 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -31,6 +33,8 @@ import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Filtro_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -56,11 +60,9 @@ import it.cnr.contab.missioni00.tabrif.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
@@ -2195,7 +2197,33 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         } catch (Throwable e) {
             throw handleException(e);
         }
-
+        if (Optional.ofNullable(missione)
+                .map(missioneBulk -> !Optional.ofNullable(missioneBulk.getFl_associato_compenso()).orElse(Boolean.TRUE))
+                .orElse(Boolean.FALSE)
+        ) {
+            try {
+                if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                        .filter(Configurazione_cnrHome.class::isInstance)
+                        .map(Configurazione_cnrHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+                    Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                            .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                            .map(Scrittura_partita_doppiaHome.class::cast)
+                            .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+                    final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(missione);
+                    if (scritturaOpt.isPresent()) {
+                        Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                        scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                                .findMovimentiDareColl(userContext, scrittura)));
+                        scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+                                .findMovimentiAvereColl(userContext, scrittura)));
+                        missione.setScrittura_partita_doppia(scrittura);
+                    }
+                }
+            } catch (PersistencyException e) {
+                throw handleException(missione, e);
+            }
+        }
         return missione;
     }
 

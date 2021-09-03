@@ -36,5 +36,7 @@
 		partOfOid="true"/>
 	<persistentProperty
 		name="uo" 
-		partOfOid="true"/>		
+		partOfOid="true"/>
+	<persistentProperty
+		name="terzo"/>
 </SQLPersistentInfo>

@@ -133,10 +133,7 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 				}
 				setIm_totale_divisa(getIm_totale_divisa().add(getIm_iva()));
 	}
-	/**
-	 * Insert the method's description here.
-	 * @param newAccertamento it.cnr.contab.doccont00.core.bulk.AccertamentoBulk
-	 */
+
 	public void calcolaTotaliDiRigaForzaIva() {
 
 		calcolaCampiDiRiga();
@@ -486,5 +483,10 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	}
 	public void setCollegatoCapitoloPerTrovato(Boolean collegatoCapitoloPerTrovato) {
 		this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
+	}
+
+	@Override
+	public Integer getCd_terzo() {
+		return this.getFattura_attiva().getCd_terzo();
 	}
 }

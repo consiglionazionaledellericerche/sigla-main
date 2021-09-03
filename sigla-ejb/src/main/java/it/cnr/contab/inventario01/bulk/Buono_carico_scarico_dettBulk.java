@@ -27,6 +27,7 @@ import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
@@ -114,7 +115,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		 */
 		public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 			bene = new Inventario_beniBulk();
-			bene.setTi_commerciale_istituzionale(Inventario_beniBulk.ISTITUZIONALE);
+			bene.setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 			return this;
 		}
 		/**
@@ -126,7 +127,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		 */
 		public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 			bene = new Inventario_beniBulk();
-			bene.setTi_commerciale_istituzionale(Inventario_beniBulk.ISTITUZIONALE);
+			bene.setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 			return this;
 		}
 	/**

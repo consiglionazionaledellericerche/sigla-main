@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.util.enumeration.TipoIVA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +123,7 @@ import it.cnr.jada.util.action.Selection;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
-public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction {
+public class CRUDFatturaPassivaAction extends EconomicaAction {
     private transient static final Logger logger = LoggerFactory.getLogger(CRUDFatturaPassivaAction.class);
     public CRUDFatturaPassivaAction() {
         super();
@@ -1891,7 +1892,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     fattura_passiva_riga.setDs_riga_fattura(beneTrovato.getDs_bene_servizio());
                 fattura_passiva_riga.setInventariato(false);
                 Fattura_passivaBulk fatturaPassiva = fattura_passiva_riga.getFattura_passiva();
-                if (fatturaPassiva.ISTITUZIONALE.equalsIgnoreCase(fatturaPassiva.getTi_istituz_commerc())) {
+                if (TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(fatturaPassiva.getTi_istituz_commerc())) {
                     voceIvaB = caricaVoceIVADefault(context);
                     //if (voceIvaB == null)
                     //((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non è stata caricata una voce IVA di default per le fatture istituzionali!");
