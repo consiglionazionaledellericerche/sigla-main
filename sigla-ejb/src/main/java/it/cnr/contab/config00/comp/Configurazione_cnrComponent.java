@@ -751,7 +751,12 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                     CNRUserContext.getEsercizio(userContext));
             return val01YesNo(userContext, configurazioneCnrKey)
                     .orElseGet(() -> {
-                        return Boolean.FALSE;
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
                     });
         } catch (PersistencyException e) {
             throw handleException(e);
@@ -767,12 +772,18 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                     CNRUserContext.getEsercizio(userContext));
             return val01YesNo(userContext, configurazioneCnrKey)
                     .orElseGet(() -> {
-                        return Boolean.FALSE;
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
                     });
         } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
+
 
     public Boolean isAssPrgAnagraficoAttiva(UserContext userContext) throws ComponentException{
         try{
@@ -783,7 +794,12 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                     CNRUserContext.getEsercizio(userContext));
             return val01YesNo(userContext, configurazioneCnrKey)
                     .orElseGet(() -> {
-                        return Boolean.FALSE;
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
                     });
         } catch (PersistencyException e) {
             throw handleException(e);
