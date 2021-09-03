@@ -100,7 +100,7 @@ public class Inventario_beniBase extends Inventario_beniKey implements Keyed {
 	
 	private java.lang.String seriale;
 
-public Inventario_beniBase() {
+	public Inventario_beniBase() {
 	super();
 }
 public Inventario_beniBase(java.lang.Long nr_inventario,java.lang.Long pg_inventario,java.lang.Long progressivo) {

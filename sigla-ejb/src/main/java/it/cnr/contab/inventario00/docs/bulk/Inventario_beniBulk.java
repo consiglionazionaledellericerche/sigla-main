@@ -99,7 +99,7 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	
 	// Flag che indica, durante un trasferimento intra UO, che un bene accessorio diventa bene principale.
 	private Boolean fl_trasf_come_principale;
-public Inventario_beniBulk() {
+	public Inventario_beniBulk() {
 	super();
 }
 public Inventario_beniBulk(java.lang.Long nr_inventario,java.lang.Long pg_inventario,java.lang.Long progressivo) {

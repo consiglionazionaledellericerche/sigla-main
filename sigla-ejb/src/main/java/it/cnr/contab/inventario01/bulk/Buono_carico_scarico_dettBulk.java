@@ -62,6 +62,16 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 	public Buono_carico_scaricoBulk getBuono_cs() {
 		return buono_cs;
 	}
+	private Long idTransito;
+
+	public Long getIdTransito() {
+		return idTransito;
+	}
+
+	public void setIdTransito(Long idTransito) {
+		this.idTransito = idTransito;
+	}
+
 	public void setBuono_cs(Buono_carico_scaricoBulk bulk) {
 		buono_cs = bulk;
 	}
@@ -153,7 +163,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		return isBeneAccessorio();
 	}
 	public boolean isROcategoriaBene() {
-		if (getBuono_cs().isByFattura()||isAccessorioContestuale())
+		if (getBuono_cs().isByFattura()||isAccessorioContestuale()|| buono_cs.isByOrdini())
 			return true;	
 		return false;
 	}
@@ -165,7 +175,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		return false;
 	}	
 	public boolean isROfl_accessorio() {	
-		return (getBuono_cs().isByFattura() && isAccessorioContestuale()||getBuono_cs().isByDocumento() && isAccessorioContestuale());				
+		return ((getBuono_cs().isByFattura() && isAccessorioContestuale())||(getBuono_cs().isByDocumento() && isAccessorioContestuale()));
 	}
 
 	public Boolean getFl_accessorio_contestuale() {

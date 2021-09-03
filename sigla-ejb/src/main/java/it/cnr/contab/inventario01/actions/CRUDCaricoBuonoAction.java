@@ -80,7 +80,13 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 		return handleException(context,e);
 	}
 }
-public Forward doSelezionaTipoMovimento(ActionContext context) {	
+
+	@Override
+	public Forward doSalva(ActionContext actioncontext) throws RemoteException {
+		return super.doSalva(actioncontext);
+	}
+
+	public Forward doSelezionaTipoMovimento(ActionContext context) {
 
 	try {		
 		CRUDCaricoInventarioBP bp = (CRUDCaricoInventarioBP)getBusinessProcess(context);	

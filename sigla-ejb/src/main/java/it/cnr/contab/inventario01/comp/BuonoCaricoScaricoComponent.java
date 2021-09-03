@@ -49,18 +49,7 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceHome;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniHome;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniKey;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laHome;
-import it.cnr.contab.inventario00.docs.bulk.Numeratore_buono_c_sBulk;
-import it.cnr.contab.inventario00.docs.bulk.Numeratore_buono_c_sHome;
-import it.cnr.contab.inventario00.docs.bulk.Trasferimento_inventarioBulk;
-import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
-import it.cnr.contab.inventario00.docs.bulk.V_buono_carico_scaricoBulk;
+import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioHome;
@@ -126,8 +115,12 @@ implements Cloneable,Serializable{
 			try {
 				Tipo_carico_scaricoHome tipoHome = (Tipo_carico_scaricoHome)getHome(usercontext, Tipo_carico_scaricoBulk.class);
 				java.util.Collection tipi;
-				tipi = tipoHome.findTipoMovimenti((Buono_carico_scaricoBulk)oggettobulk);
-				((Buono_carico_scaricoBulk)oggettobulk).setTipoMovimenti(tipi);
+				Buono_carico_scaricoBulk buono = (Buono_carico_scaricoBulk)oggettobulk;
+				tipi = tipoHome.findTipoMovimenti(buono);
+				buono.setTipoMovimenti(tipi);
+				if (tipi != null && tipi.size() == 1){
+					buono.setTipoMovimento((Tipo_carico_scaricoBulk) tipi.iterator().next());
+				}
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);
 			} catch (IntrospectionException e) {
@@ -302,7 +295,7 @@ try{
 			throw new ComponentException("Attenzione: non esiste alcun buono corrispondente ai criteri di ricerca!");
         
 		Buono_carico_scaricoBulk buonoC = (Buono_carico_scaricoBulk)bulk;
-		if (!buonoC.isByFattura() && !buonoC.isByDocumento()){
+		if (!buonoC.isByFattura() && !buonoC.isByDocumento() && !buonoC.isByOrdini()){
 			buonoC = (Buono_carico_scaricoBulk)super.inizializzaBulkPerModifica(aUC, bulk);
 		}
 		inizializzaTipo(aUC,buonoC);	 
@@ -313,7 +306,7 @@ try{
 			buonoC.setConsegnatario(inventarioHome.findConsegnatarioFor(buonoC.getInventario()));
 			buonoC.setDelegato(inventarioHome.findDelegatoFor(buonoC.getInventario()));
 			buonoC.setUo_consegnataria(inventarioHome.findUoRespFor(aUC,buonoC.getInventario()));
-			if (buonoC.getTi_documento().equals(buonoC.CARICO)|| (!buonoC.isByFattura() && !buonoC.isByDocumento())){
+			if (buonoC.getTi_documento().equals(buonoC.CARICO)|| (!buonoC.isByFattura() && !buonoC.isByDocumento() && !buonoC.isByOrdini())){
  				 buonoC = (Buono_carico_scaricoBulk)getHome(aUC,Buono_carico_scaricoBulk.class).findByPrimaryKey(buonoC);
 				 Buono_carico_scarico_dettHome dettHome = (Buono_carico_scarico_dettHome)getHome(aUC,Buono_carico_scarico_dettBulk.class);
 				 buonoC.setBuono_carico_scarico_dettColl(new BulkList(dettHome.getDetailsFor(buonoC)));
@@ -704,7 +697,54 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 					assegnaStatoCOGE(userContext,buonoCS);
 					insertBeniPerAumentoValore(userContext, buonoCS, notChangedBeniKey);		
 				}
-				buonoCS = (Buono_carico_scaricoBulk)super.creaConBulk(userContext,buonoCS);
+
+				if (buonoCS.isByOrdini()){
+					try {
+						Numeratore_buono_c_sHome numHome = (Numeratore_buono_c_sHome) getHomeCache(userContext).getHome(Numeratore_buono_c_sBulk.class);
+						Long pg = null;
+
+						pg = numHome.getNextPg(userContext,
+								buonoCS.getEsercizio(),
+								buonoCS.getPg_inventario(),
+								buonoCS.getTi_documento(),
+								userContext.getUser());
+						SimpleBulkList<OggettoBulk> dettagli = buonoCS.getBuono_carico_scarico_dettColl();
+						Buono_carico_scaricoBulk definitivo = (Buono_carico_scaricoBulk) buonoCS.clone();
+
+						Buono_carico_scarico_dettHome home = (Buono_carico_scarico_dettHome) getTempHome(userContext, Buono_carico_scarico_dettBulk.class);
+
+						definitivo.setPg_buono_c_s(pg);
+						definitivo.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+
+						definitivo.setBuono_carico_scarico_dettColl(new SimpleBulkList());
+						for (Iterator i = dettagli.iterator(); i.hasNext(); ) {
+							Buono_carico_scarico_dettBulk dettaglio = (Buono_carico_scarico_dettBulk) i.next();
+							Buono_carico_scarico_dettBulk new_dettaglio = (Buono_carico_scarico_dettBulk) dettaglio.clone();
+							new_dettaglio.setPg_buono_c_s(pg);
+							new_dettaglio.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+							definitivo.addToBuono_carico_scarico_dettColl(new_dettaglio);
+
+							Transito_beni_ordiniHome homeTransito = (Transito_beni_ordiniHome)getHome(userContext, Transito_beni_ordiniBulk.class);
+							Transito_beni_ordiniBulk transito_beni_ordiniBulk = new Transito_beni_ordiniBulk();
+							transito_beni_ordiniBulk.setId(dettaglio.getIdTransito());
+							transito_beni_ordiniBulk = (Transito_beni_ordiniBulk)homeTransito.findByPrimaryKey(transito_beni_ordiniBulk);
+							if (transito_beni_ordiniBulk != null){
+								transito_beni_ordiniBulk.setStato(Transito_beni_ordiniBulk.STATO_TRASFERITO);
+								transito_beni_ordiniBulk.setToBeUpdated();
+								super.modificaConBulk(userContext, transito_beni_ordiniBulk);
+							}
+						}
+						buonoCS = (Buono_carico_scaricoBulk) super.creaConBulk(userContext, definitivo);
+					} catch (it.cnr.jada.persistency.PersistencyException e) {
+						throw handleException(buonoCS, e);
+					} catch (it.cnr.jada.persistency.IntrospectionException e) {
+						throw handleException(buonoCS, e);
+					}
+					buonoCS.setByOrdini(true);
+
+				} else {
+					buonoCS = (Buono_carico_scaricoBulk)super.creaConBulk(userContext,buonoCS);
+				}
 
 				if (notChangedBeniKey != null && !notChangedBeniKey.isEmpty()){
 					String msg = "Operazione riuscita con successo.\n";
@@ -6556,7 +6596,7 @@ private OggettoBulk creaBuonoScaricoConBulk(UserContext userContext, OggettoBulk
 		
 		// Valida il Buono di Scarico
 		validaBuonoScarico(userContext, buonoS);
-		if (!buonoS.isByFattura() && !buonoS.isByDocumento()){
+		if (!buonoS.isByFattura() && !buonoS.isByDocumento() && !buonoS.isByOrdini()){
 		// Setto il progressivo del Buono Scarico
 			Numeratore_buono_c_sHome numHome = (Numeratore_buono_c_sHome) getHome(userContext,Numeratore_buono_c_sBulk.class);
 		
@@ -6572,7 +6612,7 @@ private OggettoBulk creaBuonoScaricoConBulk(UserContext userContext, OggettoBulk
 				throw new ComponentException (e);
 			}
 		}
-		if (!buonoS.isByFattura()&& !buonoS.isByDocumento()){
+		if (!buonoS.isByFattura()&& !buonoS.isByDocumento()&& !buonoS.isByOrdini()){
 			String msg = null;
 			msg = makePersistentScarico(userContext, buonoS);
 

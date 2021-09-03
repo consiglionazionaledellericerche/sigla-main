@@ -45,9 +45,11 @@ thorntail:
     data-sources:
       SIGLA:
         driver-name: oracle
-        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        #        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        connection-url: jdbc:oracle:thin:@10.236.20.67:1521:xe
         user-name: PCIR009
-        password: dbform
+        password: PCIR009PSW
+#        password: dbform
         use-java-context: true
         jndi-name: java:/jdbc/CIR
   transactions:
@@ -235,7 +237,7 @@ liquibase:
 
 cnr:
   storage:
-    driver: cmis
+    driver: filesystem
   ldap:
     master:
       url: ldap://virtest1.si.cnr.it:389

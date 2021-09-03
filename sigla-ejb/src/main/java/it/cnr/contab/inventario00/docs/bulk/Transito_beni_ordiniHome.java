@@ -17,7 +17,11 @@
 
 package it.cnr.contab.inventario00.docs.bulk;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioHome;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
@@ -30,11 +34,9 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBroker;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -54,5 +56,69 @@ public Transito_beni_ordiniHome(java.sql.Connection conn, PersistentCache persis
 		Transito_beni_ordiniBulk transito = (Transito_beni_ordiniBulk)bulk;
 		if (transito.getId() == null)
 			transito.setId(recuperoId(userContext));
+	}
+
+	@Override
+	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause) throws PersistencyException {
+		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
+		CompoundFindClause clauses = new CompoundFindClause();
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "stato", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_COMPLETO);
+		sql.addClause("OR", "stato", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_INSERITO);
+		sql.closeParenthesis();
+
+		Id_inventarioHome inventarioHome = (Id_inventarioHome) getHomeCache().getHome(Id_inventarioBulk.class);
+		try {
+			Id_inventarioBulk inventario = inventarioHome.findInventarioFor(usercontext,false);
+			clauses.addClause("AND", "pg_inventario", SQLBuilder.EQUALS, inventario.getPg_inventario());
+		} catch (IntrospectionException e) {
+			throw new PersistencyException(e);
+		}
+		sql.addOrderBy("id");
+		return sql;
+	}
+
+	public SQLBuilder selectBeniInTransitoDaInventariare(UserContext usercontext, Transito_beni_ordiniBulk transito, CompoundFindClause compoundfindclause) throws PersistencyException {
+		SQLBuilder sqlBuilder = super.createSQLBuilder();
+		if(compoundfindclause == null){
+			if(transito != null)
+				compoundfindclause = transito.buildFindClauses(null);
+		} else {
+			compoundfindclause = CompoundFindClause.and(compoundfindclause, transito.buildFindClauses(Boolean.FALSE));
+		}
+		sqlBuilder.addClause(compoundfindclause);
+
+		sqlBuilder.addClause("AND", "stato", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_COMPLETO);
+		Id_inventarioHome inventarioHome = (Id_inventarioHome) getHomeCache().getHome(Id_inventarioBulk.class);
+		try {
+			Id_inventarioBulk inventario = inventarioHome.findInventarioFor(usercontext,false);
+			sqlBuilder.addClause("AND", "pg_inventario", SQLBuilder.EQUALS, inventario.getPg_inventario());
+		} catch (IntrospectionException e) {
+			throw new PersistencyException(e);
+		}
+
+
+		return sqlBuilder;
+	}
+
+	@Override
+	public void update(Persistent persistent, UserContext userContext) throws PersistencyException {
+		Transito_beni_ordiniBulk transito = (Transito_beni_ordiniBulk)persistent;
+		if (!transito.isStatoTrasferito() && !transito.isStatoAnnullato()){
+			if (transito.isTuttiCampiValorizzatiPerInventariazione()){
+				transito.setStato(Transito_beni_ordiniBulk.STATO_COMPLETO);
+			} else {
+				transito.setStato(Transito_beni_ordiniBulk.STATO_INSERITO);
+			}
+		}
+		if (transito.getFl_ammortamento() != null && !transito.getFl_ammortamento()){
+			transito.setTi_ammortamento(null);
+		}
+		super.update(persistent, userContext);
+	}
+
+	@Override
+	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
+		return super.completeBulkRowByRow(userContext, persistent);
 	}
 }

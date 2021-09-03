@@ -71,7 +71,15 @@
 				<% bp.getController().writeFormInput(out,null,"fl_elabora_buono_coge",bp.isEditing()||((tipoCS!=null) && tipoCS.isTrasferibile()),null,"onClick=\"submitForm('doOnFlElaboraCOGEChange')\"");%>
 			  </td>
 			</tr>
-		<% } else { %>		
+              <tr>
+                  <td>
+                    <% bp.getController().writeFormLabel(out,"fl_da_ordini");%>
+                  </td>
+                  <td>
+                    <% bp.getController().writeFormInput(out,null,"fl_da_ordini");%>
+                  </td>
+              </tr>
+		<% } else { %>
 		  <tr>
 			  <td>
 				<% bp.getController().writeFormLabel(out,"fl_storno_fondo");%>
@@ -93,17 +101,9 @@
 				<% bp.getController().writeFormLabel(out,"fl_vendita");%>
 			  </td>
 			  <td>
-				<% bp.getController().writeFormInput(out,null,"fl_vendita",bp.isEditing()||((tipoCS!=null) && tipoCS.isTrasferibile()),null,null);%>
+				<% bp.getController().writeFormInput(out,null,"fl_vendita");%>
 			  </td>
 		  </tr>	  
-		  <tr>
-			  <td>
-				<% bp.getController().writeFormLabel(out,"fl_da_ordini");%>
-			  </td>
-			  <td>
-				<% bp.getController().writeFormInput(out,null,"fl_da_ordini",bp.isEditing()||((tipoCS!=null) && tipoCS.isTrasferibile()),null,null);%>
-			  </td>
-		  </tr>
 		<% } %>
 		<tr>
 		  <td>

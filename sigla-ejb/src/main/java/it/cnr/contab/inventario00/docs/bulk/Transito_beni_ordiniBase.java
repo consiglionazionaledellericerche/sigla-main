@@ -66,6 +66,14 @@ public class Transito_beni_ordiniBase extends Transito_beni_ordiniKey implements
 	// ETICHETTA VARCHAR(50) NOT NULL
 	private String etichetta;
 
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
 	// FL_AMMORTAMENTO CHAR(1)
 	private Boolean fl_ammortamento;
 
@@ -82,6 +90,7 @@ public class Transito_beni_ordiniBase extends Transito_beni_ordiniKey implements
 
 	private String seriale;
 
+	private java.lang.String stato;
 public Transito_beni_ordiniBase() {
 	super();
 }

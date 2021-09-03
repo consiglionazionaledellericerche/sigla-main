@@ -207,11 +207,15 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 			movimentoScaricoMag.setTipoMovimentoMag(movimentoCaricoMag.getTipoMovimentoMag().getTipoMovimentoMagRif());
 		}
 
-    	LottoMagBulk lotto = creaCarico(userContext, movimentoCaricoMag);
-
+    	movimentoCaricoMag = creaCarico(userContext, movimentoCaricoMag);
+		try {
+			Utility.createTransitoBeniOrdiniComponentSession().gestioneTransitoInventario(userContext, movimentoCaricoMag);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
 		if (movimentoScaricoMag != null) {
 			//associo il lotto di magazzino al movimento di scarico
-			movimentoScaricoMag.setLottoMag(lotto);
+			movimentoScaricoMag.setLottoMag(movimentoCaricoMag.getLottoMag());
 			//creo il legame del movimento di scarico con il movimento di carico
 			movimentoScaricoMag.setMovimentoRif(movimentoCaricoMag);
 			movimentoScaricoMag.setToBeCreated();
@@ -224,7 +228,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 			
 			//codice di controllo: il lotto creato deve avere le movimentazioni a zero essendo carico/scarico contestuale
 	    	LottoMagHome lottoHome = (LottoMagHome)getHome(userContext,LottoMagBulk.class);
-			lotto = (LottoMagBulk)lottoHome.findByPrimaryKey(lotto);
+			LottoMagBulk lotto = (LottoMagBulk)lottoHome.findByPrimaryKey(movimentoCaricoMag.getLottoMag());
 			if (lotto.getGiacenza().compareTo(BigDecimal.ZERO)!=0 || lotto.getQuantitaValore().compareTo(BigDecimal.ZERO)!=0) {
 				lotto.setGiacenza(BigDecimal.ZERO);
 				lotto.setQuantitaValore(BigDecimal.ZERO);
@@ -236,15 +240,15 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 		return movimentoScaricoMag;
 	}
 
-	private LottoMagBulk creaCarico(UserContext userContext, MovimentiMagBulk movimentoCaricoMag)
+	private MovimentiMagBulk creaCarico(UserContext userContext, MovimentiMagBulk movimentoCaricoMag)
 			throws ComponentException, PersistencyException {
 		//creo il lotto di magazzino a partire dal movimento di carico
 		LottoMagBulk lotto = (LottoMagBulk)super.creaConBulk(userContext, createLottoMagazzino(userContext, movimentoCaricoMag));
 
 		//associo il lotto di magazzino al movimento di carico
 		movimentoCaricoMag.setLottoMag(lotto);
-		super.creaConBulk(userContext, movimentoCaricoMag);
-		return lotto;
+		creaConBulk(userContext, movimentoCaricoMag);
+		return movimentoCaricoMag;
 	}
 
     public CaricoMagazzinoBulk caricaMagazzino(UserContext userContext, CaricoMagazzinoBulk caricoMagazzino) throws ComponentException, PersistencyException {
