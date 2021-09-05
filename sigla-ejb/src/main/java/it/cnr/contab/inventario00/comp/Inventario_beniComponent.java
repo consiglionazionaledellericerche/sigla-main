@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,6 +44,7 @@ import it.cnr.contab.doccont00.comp.DateServices;
  * Creation date: (07/05/2002 17.44.39)
  * @author: Gennaro Borriello
  */
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBulk;
 import it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioHome;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
@@ -1610,4 +1612,73 @@ private void validaUtilizzatori (UserContext aUC,Inventario_beniBulk bene)
 			
 	}
 }
+	public HashMap<Obbligazione_scadenzarioBulk, Boolean> creaUtilizzatori(UserContext userContext, Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk, Buono_carico_scarico_dettBulk buono) throws ComponentException {
+		HashMap<Obbligazione_scadenzarioBulk, Boolean> resUtilizzatori = new HashMap<Obbligazione_scadenzarioBulk, Boolean>();
+		Boolean exit = false;
+		BigDecimal tot_perc_cdr = new BigDecimal(0);
+		try {
+			Obbligazione_scadenzarioHome obblHome = ((Obbligazione_scadenzarioHome) getHome(userContext, Obbligazione_scadenzarioBulk.class, null, getFetchPolicyName("findForInventario")));
+			ObbligazioneBulk obblig = obbligazione_scadenzarioBulk.getObbligazione();
+			ObbligazioneHome obbligHome = (ObbligazioneHome) getHome(userContext, obblig.getClass());
+			obblig.setObbligazione_scadenzarioColl(new BulkList(obbligHome.findObbligazione_scadenzarioList(obblig)));
+			for (Iterator i = obblig.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); ) {
+				Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) i.next();
+				if (os.getIm_associato_doc_amm().doubleValue() != 0 && os.equalsByPrimaryKey(obbligazione_scadenzarioBulk)) {
+					os.setObbligazione(obblig);
+					os.setObbligazione_scad_voceColl(new BulkList(obblHome.findObbligazione_scad_voceList(userContext, os)));
+					obblig.refreshDettagliScadenzarioPerCdrECapitoli();
+					for (Iterator lista_cdraggr = obblig.getCdrAggregatoColl().iterator(); lista_cdraggr.hasNext(); ) {
+						Obbligazione_scad_voce_aggregatoBulk cdraggr = (Obbligazione_scad_voce_aggregatoBulk) lista_cdraggr.next();
+						if (cdraggr != null && cdraggr.getImporto() != null && cdraggr.getImporto().doubleValue() != 0) {
+							BigDecimal tot_perc_la = new BigDecimal(0);
+							Iterator listaScad_voce = obblHome.findObbligazione_scad_voceList(userContext, os).iterator();
+							for (Iterator x = listaScad_voce; x.hasNext(); ) {
+								Obbligazione_scad_voceBulk dett = (Obbligazione_scad_voceBulk) x.next();
+								getHomeCache(userContext).fetchAll(userContext);
+								WorkpackageBulk linea_att = dett.getLinea_attivita();
+								if (linea_att.getCd_centro_responsabilita() == cdraggr.getCodice()) {
+									if (dett.getObbligazione_scadenzario().getIm_scadenza().doubleValue() != 0)
+										dett.setPrc((dett.getIm_voce().multiply(new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
+									if (dett.getPrc() != null && dett.getPrc().compareTo(new BigDecimal(0)) != 0 && dett.getObbligazione_scadenzario().getIm_associato_doc_amm().doubleValue() != 0) {
+										it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk new_utilizzatore_la
+												= new it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(), linea_att.getCd_centro_responsabilita(),
+												buono.getNr_inventario(),
+												buono.getPg_inventario(), new Long(buono.getProgressivo().longValue()));
+										BigDecimal perc_cdr = (cdraggr.getImporto().multiply(new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, 6));
+										tot_perc_cdr = tot_perc_cdr.add(perc_cdr);
+										tot_perc_la = tot_perc_la.add(((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6));
+										if ((tot_perc_cdr.doubleValue() >= 100 && tot_perc_la.doubleValue() >= 100)) {
+											exit = true;
+										}
+										new_utilizzatore_la.setPercentuale_utilizzo_cdr(perc_cdr);
+										new_utilizzatore_la.setPercentuale_utilizzo_la(((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6));
+										new_utilizzatore_la.setToBeCreated();
+										if ((perc_cdr.compareTo(new BigDecimal(100)) <= 0) || (((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6).compareTo(new BigDecimal(100)) <= 0)) {
+											Inventario_utilizzatori_laHome Inventario_utilizzatore_laHome = (Inventario_utilizzatori_laHome) getHome(userContext, Inventario_utilizzatori_laBulk.class);
+											Inventario_utilizzatori_laBulk utilizzatore = (Inventario_utilizzatori_laBulk) Inventario_utilizzatore_laHome.findByPrimaryKey(new Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(), linea_att.getCd_centro_responsabilita(),
+													buono.getNr_inventario(),
+													buono.getPg_inventario(), new Long(buono.getProgressivo().longValue())));
+											if (!new_utilizzatore_la.equalsByPrimaryKey(utilizzatore))
+												super.insertBulk(userContext, new_utilizzatore_la, true);
+										}
+									}
+								}
+							}
+						}
+					}
+					Iterator listaScad_voce = obblHome.findObbligazione_scad_voceList(userContext, os).iterator();
+					getHomeCache(userContext).fetchAll(userContext);
+					resUtilizzatori.put(os,exit);
+					return resUtilizzatori;
+				}
+			}
+		} catch (IntrospectionException e1) {
+			throw new ComponentException(e1);
+		} catch (PersistencyException e1) {
+			throw new ComponentException(e1);
+		}
+		resUtilizzatori.put(obbligazione_scadenzarioBulk,exit);
+		return resUtilizzatori;
+	}
+
 }

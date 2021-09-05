@@ -49,7 +49,10 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.inventario00.docs.bulk.*;
+import it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession;
 import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioHome;
@@ -64,6 +67,8 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
@@ -6041,7 +6046,8 @@ private String buildBeniNotChanged_Message(java.util.Vector notChangedBeniKey) {
 private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, SimpleBulkList dettagliColl) 
 	throws ComponentException
 {
-	
+
+	Inventario_beniComponentSession inventario_beniComponent = ((it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class));
 	Buono_carico_scarico_dettBulk dett = new Buono_carico_scarico_dettBulk();
 	Inventario_beniBulk bene = new Inventario_beniBulk();
 	Iterator i = dettagliColl.iterator();	
@@ -6075,7 +6081,26 @@ private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, Simple
 			makeBulkPersistent(aUC,bene,false);
 		}catch (Exception pe){
 			throw handleException(pe);			
-		}		
+		}
+		if (buonoC.isByOrdini()){
+			Transito_beni_ordiniHome homeTransito = (Transito_beni_ordiniHome)getHome(aUC, Transito_beni_ordiniBulk.class);
+			Transito_beni_ordiniBulk transito_beni_ordiniBulk = new Transito_beni_ordiniBulk();
+			transito_beni_ordiniBulk.setId(dett.getIdTransito());
+			try {
+				transito_beni_ordiniBulk = (Transito_beni_ordiniBulk)homeTransito.findByPrimaryKey(transito_beni_ordiniBulk);
+				if (transito_beni_ordiniBulk != null){
+					getHomeCache(aUC).fetchAll(aUC);
+//					MovimentiMagHome movHome = (MovimentiMagHome)getHome(aUC,transito_beni_ordiniBulk.getMovimentiMag());
+//					MovimentiMagBulk mov = (MovimentiMagBulk)movHome.findByPrimaryKey(transito_beni_ordiniBulk.getMovimentiMag());
+					Obbligazione_scadenzarioBulk os = transito_beni_ordiniBulk.getMovimentiMag().getLottoMag().getOrdineAcqConsegna().getObbligazioneScadenzario();
+					Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(aUC, Obbligazione_scadenzarioBulk.class);
+					os = (Obbligazione_scadenzarioBulk)obblHome.findByPrimaryKey(os);
+					inventario_beniComponent.creaUtilizzatori(aUC, os, dett);
+				}
+			} catch (PersistencyException | RemoteException e) {
+				throw new ComponentException(e);
+			}
+		}
 	}
 }
 /**
