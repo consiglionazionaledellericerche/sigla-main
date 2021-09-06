@@ -4726,4 +4726,19 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-inventario_beni-id_transito_beni_ordini">
+        <addColumn tableName="inventario_beni">
+            <column name="id_transito_beni_ordini" type="BIGINT" remarks="Identificativo del transito beni da ordini"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="id_transito_beni_ordini" baseTableName="inventario_beni" constraintName="fk_inventario_beni05" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="transito_beni_ordini"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_movimenti_mag" baseTableName="transito_beni_ordini" constraintName="fk_transito_beni_ordini00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_movimento" referencedTableName="movimenti_mag"/>
+
+        <createIndex indexName="FX_INVENTARIO_BENI05" tableName="inventario_beni">
+            <column name="id_transito_beni_ordini"/>
+        </createIndex>
+        <createIndex indexName="FX_TRANSITO_BENI_ORDINI00" tableName="transito_beni_ordini">
+            <column name="id_movimenti_mag"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

@@ -6077,26 +6077,34 @@ private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, Simple
 		if (bene.getTipo_ammortamento() != null){
 			bene.setTi_ammortamento(bene.getTipo_ammortamento().getTi_ammortamento());
 		}
+		Transito_beni_ordiniBulk transito_beni_ordiniBulk = null;
+		if (buonoC.isByOrdini()){
+			Transito_beni_ordiniHome homeTransito = (Transito_beni_ordiniHome)getHome(aUC, Transito_beni_ordiniBulk.class);
+			transito_beni_ordiniBulk = new Transito_beni_ordiniBulk();
+			transito_beni_ordiniBulk.setId(dett.getIdTransito());
+			try {
+				transito_beni_ordiniBulk = (Transito_beni_ordiniBulk)homeTransito.findByPrimaryKey(transito_beni_ordiniBulk);
+				bene.setTransito_beni_ordini(transito_beni_ordiniBulk);
+				if (transito_beni_ordiniBulk != null){
+					getHomeCache(aUC).fetchAll(aUC);
+				}
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+		}
+
+
 		try{
 			makeBulkPersistent(aUC,bene,false);
 		}catch (Exception pe){
 			throw handleException(pe);			
 		}
-		if (buonoC.isByOrdini()){
-			Transito_beni_ordiniHome homeTransito = (Transito_beni_ordiniHome)getHome(aUC, Transito_beni_ordiniBulk.class);
-			Transito_beni_ordiniBulk transito_beni_ordiniBulk = new Transito_beni_ordiniBulk();
-			transito_beni_ordiniBulk.setId(dett.getIdTransito());
+		if (buonoC.isByOrdini() && transito_beni_ordiniBulk != null){
 			try {
-				transito_beni_ordiniBulk = (Transito_beni_ordiniBulk)homeTransito.findByPrimaryKey(transito_beni_ordiniBulk);
-				if (transito_beni_ordiniBulk != null){
-					getHomeCache(aUC).fetchAll(aUC);
-//					MovimentiMagHome movHome = (MovimentiMagHome)getHome(aUC,transito_beni_ordiniBulk.getMovimentiMag());
-//					MovimentiMagBulk mov = (MovimentiMagBulk)movHome.findByPrimaryKey(transito_beni_ordiniBulk.getMovimentiMag());
-					Obbligazione_scadenzarioBulk os = transito_beni_ordiniBulk.getMovimentiMag().getLottoMag().getOrdineAcqConsegna().getObbligazioneScadenzario();
-					Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(aUC, Obbligazione_scadenzarioBulk.class);
-					os = (Obbligazione_scadenzarioBulk)obblHome.findByPrimaryKey(os);
-					inventario_beniComponent.creaUtilizzatori(aUC, os, dett);
-				}
+				Obbligazione_scadenzarioBulk os = transito_beni_ordiniBulk.getMovimentiMag().getLottoMag().getOrdineAcqConsegna().getObbligazioneScadenzario();
+				Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(aUC, Obbligazione_scadenzarioBulk.class);
+				os = (Obbligazione_scadenzarioBulk)obblHome.findByPrimaryKey(os);
+				inventario_beniComponent.creaUtilizzatori(aUC, os, dett);
 			} catch (PersistencyException | RemoteException e) {
 				throw new ComponentException(e);
 			}

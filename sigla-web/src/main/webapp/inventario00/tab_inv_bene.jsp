@@ -169,6 +169,32 @@
 	  </tr>	  
 	</table>
 	 </div>
- </tr>	  
+   	<% if (bene != null && bene.isDaOrdini()){ %>
+	   	<div class="Group">
+		<table>
+			<tr>
+				<td>
+					<% bp.getController().writeFormLabel(out,"dataBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"dataBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"numeroBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"numeroBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"estremiOrdine"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"estremiOrdine"); %>
+				</td>
+			</tr>
+		</table>
+		</div>
+   	<% } %>
+ </tr>
 	</table>
 	 	 
