@@ -8,8 +8,8 @@
 		it.cnr.contab.docamm00.bp.*"
 %>
 
-<% 	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
- %>
+<% 	CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP)BusinessProcess.getBusinessProcess(request);
+     %>
 
 <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">
@@ -17,35 +17,43 @@
     </div>
     <table width="100%">
       <tr>
-        <td><% bp.getController().writeFormLabel(out,"dt_registrazione"); %></td>
-        <td colspan=3><% bp.getController().writeFormInput(out,"dt_registrazione"); %></td>
-      </tr>
-        <tr>
-            <% bp.getController().writeFormField(out,"dt_inizio_scad_dott");%>
-            <% bp.getController().writeFormField(out,"dt_fine_scad_dott");%>
-        </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"ds_scad_dott"); %></td>
-        <td colspan="3"><% bp.getController().writeFormInput(out,"ds_scad_dott"); %></td>
+      		<% bp.getController().writeFormField(out,"cdTerzo"); %>
       </tr>
       <tr>
-        <td><% bp.getController().writeFormLabel(out,"stato"); %></td>
-        <td><% bp.getController().writeFormInput(out,"stato"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"stato_ass_compenso"); %></td>
-        <td><% bp.getController().writeFormInput(out,"stato_ass_compenso"); %></td>
-      </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"dt_sospensione"); %></td>
-        <td><% bp.getController().writeFormInput(out,"dt_sospensione"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"dt_ripristino"); %></td>
-        <td><% bp.getController().writeFormInput(out,"dt_ripristino"); %></td>
-      </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"dt_rinnovo"); %></td>
-        <td><% bp.getController().writeFormInput(out,"dt_rinnovo"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"dt_cessazione"); %></td>
-        <td><% bp.getController().writeFormInput(out,"dt_cessazione"); %></td>
-      </tr>
+      		<td colspan="2"><% bp.getController().writeFormInput(out,"find_percipiente"); %></td>
+      	</tr>
+      	<tr>
+      		<% bp.getController().writeFormField(out,"cd_precedente"); %>
+      	</tr>
+      	<tr>
+      		<% bp.getController().writeFormField(out,"nome"); %>
+      		<% bp.getController().writeFormField(out,"cognome"); %>
+      	</tr>
+      	<tr>
+      		<% bp.getController().writeFormField(out,"ragioneSociale"); %></td>
+      	</tr>
+      	<tr>
+      		<% bp.getController().writeFormField(out,"codiceFiscale"); %>
+      		<% bp.getController().writeFormField(out,"partitaIva"); %>
+      	</tr>
+    </table>
+    <div class="GroupLabel h3 text-primary">
+            Termini_pagamento
+    </div>
+    	<table>
+            <tr>
+                <td><% bp.getController().writeFormLabel(out,"cdTerminiPag");%></td>
+                <td><% bp.getController().writeFormInput(out,null,"cdTerminiPag",false,null,"");%></td>
+            </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel(out,"cdModalitaPag");%></td>
+                <td><% bp.getController().writeFormInput(out,null,"cdModalitaPag",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%></td>
+                <td>
+			        <%
+					bp.getController().writeFormField(out, "pgBanca");
+				    %>
+   		        </td>
+            </tr>
     </table>
 </div>
 <div class="Group card p-2" style="width:100%">

@@ -21,12 +21,12 @@
                   <td><% bp.getRateCRUDController().writeFormInput(out,"id");%></td>
       </tr>
       <tr>
-                  <td>AAA <% bp.getRateCRUDController().writeFormLabel(out, "find_ScadenzarioDottorati"); %></td>
-                  <td>AAA <% bp.getRateCRUDController().writeFormInput(out, "find_ScadenzarioDottorati"); %></td>
+                  <td><% bp.getRateCRUDController().writeFormLabel(out, "find_ScadenzarioDottorati"); %></td>
+                  <td><% bp.getRateCRUDController().writeFormInput(out, "find_ScadenzarioDottorati"); %></td>
             </tr>
               <tr>
-                  <td>AA<% bp.getRateCRUDController().writeFormField(out,"cdCds"); %></td>
-                  <td>AA<% bp.getRateCRUDController().writeFormField(out,"cdCds"); %></td>
+                  <td><% bp.getRateCRUDController().writeFormField(out,"cdCds"); %></td>
+                  <td><% bp.getRateCRUDController().writeFormField(out,"cdCds"); %></td>
               </tr>
             <tr>
               <td><% bp.getRateCRUDController().writeFormLabel(out,"cdUnitaOrganizzativa"); %></td>
