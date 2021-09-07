@@ -45,11 +45,9 @@ thorntail:
     data-sources:
       SIGLA:
         driver-name: oracle
-        #connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
-        connection-url: jdbc:oracle:thin:@10.236.20.67:1521:xe
+        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
         user-name: PCIR009
-        password: PCIR009PSW
-        #password: dbform
+        password: dbform
         use-java-context: true
         jndi-name: java:/jdbc/CIR
   transactions:
