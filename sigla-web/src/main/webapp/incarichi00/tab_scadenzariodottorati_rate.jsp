@@ -25,12 +25,10 @@
                   <td><% bp.getRateCRUDController().writeFormInput(out, "find_ScadenzarioDottorati"); %></td>
             </tr>
               <tr>
-                  <td><% bp.getRateCRUDController().writeFormField(out,"cdCds"); %></td>
-                  <td><% bp.getRateCRUDController().writeFormField(out,"cdCds"); %></td>
+                  <% bp.getController().writeFormField(out,"cdCds"); %>
               </tr>
             <tr>
-              <td><% bp.getRateCRUDController().writeFormLabel(out,"cdUnitaOrganizzativa"); %></td>
-              <td><% bp.getRateCRUDController().writeFormInput(out,"cdUnitaOrganizzativa"); %></td>
+                  <% bp.getController().writeFormField(out,"cdUnitaOrganizzativa"); %>
             </tr>
             <tr>
               <td><% bp.getRateCRUDController().writeFormLabel(out,"esercizio"); %></td>

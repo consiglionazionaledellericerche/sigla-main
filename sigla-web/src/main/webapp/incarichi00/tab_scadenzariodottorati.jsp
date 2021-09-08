@@ -10,7 +10,6 @@
 
 <% 	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
  %>
-
 <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">
         Anagrafica Dottorati
@@ -44,37 +43,11 @@
       </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"tiAnagrafico"); %></td>
-        <td><% bp.getController().writeFormInput(out,"tiAnagrafico"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"cdTerzo"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cdTerzo"); %></td>
+        <td colspan="3"><% bp.getController().writeFormInput(out,"tiAnagrafico"); %></td>
       </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"ragioneSociale"); %></td>
         <td colspan="3"><% bp.getController().writeFormInput(out,"ragioneSociale"); %></td>
-      </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"nome"); %></td>
-        <td><% bp.getController().writeFormInput(out,"nome"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"cognome"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cognome"); %></td>
-      </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"codiceFiscale"); %></td>
-        <td><% bp.getController().writeFormInput(out,"codiceFiscale"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"partitaIva"); %></td>
-        <td><% bp.getController().writeFormInput(out,"partitaIva"); %></td>
-      </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"cdTerminiPag"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cdTerminiPag"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"cdModalitaPag"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cdModalitaPag"); %></td>
-      </tr>
-      <tr>
-        <td><% bp.getController().writeFormLabel(out,"pgBanca"); %></td>
-        <td><% bp.getController().writeFormInput(out,"pgBanca"); %></td>
-        <td><% bp.getController().writeFormLabel(out,"cdTipoRapporto"); %></td>
-        <td><% bp.getController().writeFormInput(out,"cdTipoRapporto"); %></td>
       </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"cdTrattamento"); %></td>
