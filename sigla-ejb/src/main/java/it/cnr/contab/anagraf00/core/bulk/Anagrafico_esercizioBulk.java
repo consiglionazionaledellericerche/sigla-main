@@ -17,17 +17,55 @@
 
 package it.cnr.contab.anagraf00.core.bulk;
 
+import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.util.Optional;
 
 public class Anagrafico_esercizioBulk extends Anagrafico_esercizioBase {
 
 public Anagrafico_esercizioBulk() {
 	super();
 }
-public Anagrafico_esercizioBulk(java.lang.Integer cd_anag,java.lang.Integer esercizio) {
+	private Voce_epBulk voceEp = new Voce_epBulk();
+
+	public Anagrafico_esercizioBulk(java.lang.Integer cd_anag,java.lang.Integer esercizio) {
 	super(cd_anag,esercizio);
 }
+
+	public Voce_epBulk getVoceEp() {
+		return voceEp;
+	}
+
+	public void setVoceEp(Voce_epBulk voceEp) {
+		this.voceEp = voceEp;
+	}
+
+	@Override
+	public Integer getEsercizio_voce_ep() {
+		return Optional.ofNullable(this.getVoceEp()).map(Voce_epBulk::getEsercizio).orElse(null);
+	}
+
+	@Override
+	public void setEsercizio_voce_ep(Integer esercizio_voce_ep) {
+		if (!Optional.ofNullable(this.getVoceEp()).isPresent())
+			this.setVoceEp(new Voce_epBulk());
+		this.getVoceEp().setEsercizio(esercizio_voce_ep);
+	}
+
+	@Override
+	public String getCd_voce_ep() {
+		return Optional.ofNullable(this.getVoceEp()).map(Voce_epBulk::getCd_voce_ep).orElse(null);
+	}
+
+	@Override
+	public void setCd_voce_ep(String cd_voce_ep) {
+		if (!Optional.ofNullable(this.getVoceEp()).isPresent())
+			this.setVoceEp(new Voce_epBulk());
+		this.getVoceEp().setCd_voce_ep(cd_voce_ep);
+	}
 }

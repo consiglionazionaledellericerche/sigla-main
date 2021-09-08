@@ -54,6 +54,10 @@ public class Anagrafico_esercizioBase extends Anagrafico_esercizioKey implements
 	private Boolean fl_no_detr_cuneo_irpef;
 
 	private Boolean fl_detrazioni_altri_tipi;
+
+	private java.lang.Integer esercizio_voce_ep;
+
+	private java.lang.String cd_voce_ep;
 	
 public Anagrafico_esercizioBase() {
 	super();
@@ -172,4 +176,19 @@ public void setIm_detrazione_personale_anag(java.math.BigDecimal im_detrazione_p
 		this.fl_no_detr_cuneo_irpef = fl_no_detr_cuneo_irpef;
 	}
 
+	public Integer getEsercizio_voce_ep() {
+		return esercizio_voce_ep;
+	}
+
+	public void setEsercizio_voce_ep(Integer esercizio_voce_ep) {
+		this.esercizio_voce_ep = esercizio_voce_ep;
+	}
+
+	public String getCd_voce_ep() {
+		return cd_voce_ep;
+	}
+
+	public void setCd_voce_ep(String cd_voce_ep) {
+		this.cd_voce_ep = cd_voce_ep;
+	}
 }

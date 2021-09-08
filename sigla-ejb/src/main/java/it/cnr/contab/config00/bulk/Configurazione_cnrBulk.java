@@ -28,6 +28,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
      */
     public final static String PK_ECONOMICO_PATRIMONIALE = "ECONOMICO_PATRIMONIALE";
     public final static String SK_ECONOMICO_PATRIMONIALE_PARALLELA = "ECONOMICO_PATRIMONIALE_PARALLELA";
+    public final static String SK_ASSOCIAZIONE_CONTI = "ASSOCIAZIONE_CONTI";
 
     public final static String SK_IMPUTAZIONE_MANUALE = "IMPUTAZIONE_MANUALE";
 

@@ -4748,4 +4748,31 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione-add-economico-patrimoniale-ass-conti">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ECONOMICO_PATRIMONIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="ASSOCIAZIONE_CONTI"/>
+            <column name="val01" type="STRING" value="VOCE_CONTO"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="addColumn_anagrafico_esercizio_conto_debito_credito_ep">
+        <addColumn tableName="ANAGRAFICO_ESERCIZIO">
+            <column name="ESERCIZIO_VOCE_EP" type="SMALLINT" remarks="Anno di esercizio del conto del piano economico da utilizzare per la rilevazione del debito/credito"/>
+            <column name="CD_VOCE_EP" type="VARCHAR(45)" remarks="Identificativo del conto del piano economico da utilizzare per la rilevazione del debito/credito"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="ESERCIZIO_VOCE_EP, CD_VOCE_EP" baseTableName="ANAGRAFICO_ESERCIZIO" constraintName="FK_ANAGRAFICO_ESERCIZIO02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ESERCIZIO, CD_VOCE_EP" referencedTableName="VOCE_EP"/>
+
+        <createIndex indexName="FX_ANAGRAFICO_ESERCIZIO02" tableName="ANAGRAFICO_ESERCIZIO">
+            <column name="ESERCIZIO_VOCE_EP"/>
+            <column name="CD_VOCE_EP"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

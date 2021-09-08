@@ -17,7 +17,7 @@
 
 package it.cnr.contab.coepcoan00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.coepcoan00.core.bulk.*;
 import it.cnr.contab.coepcoan00.tabrif.bulk.Ass_anag_voce_epBulk;
 import it.cnr.contab.coepcoan00.tabrif.bulk.Ass_anag_voce_epHome;
@@ -48,7 +48,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 
@@ -1246,7 +1245,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaDocumento(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
 		try {
-			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<TestataPrimaNota>();
+			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<>();
 
 			//Le fatture generate da compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
 			if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isGenerataDaCompenso).orElse(Boolean.FALSE))
@@ -1360,7 +1359,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = this.findPairCosto(userContext, anticipo);
 					testataPrimaNota.closeDettaglioCostoRicavo(anticipo, pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
 					testataPrimaNota.closeDettaglioPatrimoniale(anticipo, pairContoCostoAnticipo.getSecond().getCd_voce_ep(), imCostoAnticipo, true);
-				} catch (ComponentException|PersistencyException e) {
+				} catch (ComponentException|RemoteException|PersistencyException e) {
 					throw new ApplicationRuntimeException(e);
 				}
 			});
@@ -1428,7 +1427,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = this.findPairCosto(userContext, anticipo);
 					testataPrimaNota.closeDettaglioCostoRicavo(anticipo, pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
 					testataPrimaNota.closeDettaglioPatrimoniale(anticipo, pairContoCostoAnticipo.getSecond().getCd_voce_ep(), imCostoAnticipo, true);
-				} catch (ComponentException|PersistencyException e) {
+				} catch (ComponentException|RemoteException|PersistencyException e) {
 					throw new ApplicationRuntimeException(e);
 				}
 			});
@@ -1599,7 +1598,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
 
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
-		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaMandato.getElemento_voce());
+		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaMandato.getMandato().getTerzo(), rigaMandato.getElemento_voce());
 
 		//La partita non deve essere registrata in caso di versamento ritenute
 		Partita partita = !TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoCoriVersamentoSpesa()?new Partita(rigaMandato, null):null;
@@ -1616,7 +1615,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		BigDecimal imReversale = rigaReversale.getIm_reversale_riga();
 
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
-		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaReversale.getElemento_voce());
+		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaReversale.getReversale().getTerzo(), rigaReversale.getElemento_voce());
 
 		//La partita non deve essere registrata in caso di versamento ritenute
 		Partita partita = new Partita(rigaReversale, null);
@@ -1709,16 +1708,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return (Voce_epBulk)voceEpHome.findByPrimaryKey(new Voce_epBulk(configBanca.getVal01(), esercizio));
 	}
 
-	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, AnticipoBulk anticipo) throws ComponentException, PersistencyException {
-		return this.findPairCosto(userContext, anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce());
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, AnticipoBulk anticipo) throws ComponentException, RemoteException, PersistencyException {
+		return this.findPairCosto(userContext, anticipo.getTerzo(), anticipo.getScadenza_obbligazione().getObbligazione().getElemento_voce());
 	}
 
-	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, MissioneBulk missione) throws ComponentException, PersistencyException {
-		return this.findPairCosto(userContext, missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce());
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, MissioneBulk missione) throws ComponentException, RemoteException, PersistencyException {
+		return this.findPairCosto(userContext, missione.getTerzo(), missione.getObbligazione_scadenzario().getObbligazione().getElemento_voce());
 	}
 
-	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, CompensoBulk compenso) throws ComponentException, PersistencyException {
-		return this.findPairCosto(userContext, compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, CompensoBulk compenso) throws ComponentException, RemoteException, PersistencyException {
+		return this.findPairCosto(userContext, compenso.getTerzo(), compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce());
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairIva(UserContext userContext, IDocumentoAmministrativoRigaBulk docammRiga) throws ComponentException, RemoteException, PersistencyException {
@@ -1734,14 +1733,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return Pair.of(aContoIvaDebito, aContoIvaCredito);
 	}
 
-	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, IDocumentoAmministrativoRigaBulk docammRiga) throws ComponentException, PersistencyException {
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, IDocumentoAmministrativoRigaBulk docammRiga) throws ComponentException, RemoteException, PersistencyException {
 		IDocumentoContabileBulk doccont = docammRiga.getScadenzaDocumentoContabile().getFather();
-		return this.findPairCosto(userContext, new Elemento_voceBulk(doccont.getCd_elemento_voce(), doccont.getEsercizio(), doccont.getTi_appartenenza(), doccont.getTi_gestione()));
+		return this.findPairCosto(userContext, new TerzoBulk(docammRiga.getCd_terzo()), new Elemento_voceBulk(doccont.getCd_elemento_voce(), doccont.getEsercizio(), doccont.getTi_appartenenza(), doccont.getTi_gestione()));
 	}
 
-	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, Elemento_voceBulk elementoVoce) throws ComponentException, PersistencyException {
+	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, TerzoBulk terzo, Elemento_voceBulk elementoVoce) throws ComponentException, RemoteException, PersistencyException {
 		Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, elementoVoce);
-		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, elementoVoce);
+		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, terzo, elementoVoce);
 		return Pair.of(aContoCosto, aContoContropartita);
 	}
 
@@ -1774,12 +1773,38 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				.orElseThrow(()->new ApplicationException("Associazione tra voce del piano finanziario e voce economica " + voceEpBulk.getCd_voce_ep() + " non trovata."));
 	}
 
+	private Voce_epBulk findContoAnag(UserContext userContext, TerzoBulk terzo, Elemento_voceBulk voceBilancio) throws ComponentException, RemoteException, PersistencyException {
+		Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE, Configurazione_cnrBulk.SK_ASSOCIAZIONE_CONTI);
+		if (Optional.ofNullable(config).filter(el->el.getVal01().equals("TERZO")).isPresent())
+			return findContoAnag(userContext, terzo);
+		return findContoAnag(userContext, voceBilancio);
+	}
+
 	private Voce_epBulk findContoAnag(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
 		return Optional.ofNullable(this.findAssEvVoceep(userContext, voceBilancio).getVoce_ep_contr())
 				.orElseThrow(()->new ApplicationRuntimeException("Conto di contropartita mancante in associazione con la voce del piano finanziario " +
 						voceBilancio.getEsercizio() + "/" + voceBilancio.getTi_appartenenza() + "/"  +
 						voceBilancio.getTi_gestione() + "/" +
 						voceBilancio.getCd_elemento_voce() + "."));
+	}
+
+	private Voce_epBulk findContoAnag(UserContext userContext, TerzoBulk terzo) throws ComponentException, PersistencyException {
+		Voce_epBulk voceEpBulk = null;
+
+		TerzoHome terzohome = (TerzoHome) getHome(userContext, TerzoBulk.class);
+		TerzoBulk terzoDB = (TerzoBulk) terzohome.findByPrimaryKey(terzo);
+
+		if (Optional.ofNullable(terzo).isPresent()) {
+			Anagrafico_esercizioHome anagesehome = (Anagrafico_esercizioHome) getHome(userContext, Anagrafico_esercizioBulk.class);
+			Anagrafico_esercizioBulk anagEse = (Anagrafico_esercizioBulk) anagesehome.findByPrimaryKey(new Anagrafico_esercizioBulk(terzoDB.getCd_anag(), CNRUserContext.getEsercizio(userContext)));
+
+			if (Optional.ofNullable(anagEse).flatMap(el->Optional.ofNullable(el.getCd_voce_ep())).isPresent()) {
+				Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
+				voceEpBulk = (Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(anagEse.getCd_voce_ep(), anagEse.getEsercizio_voce_ep()));
+			}
+		}
+		return Optional.ofNullable(voceEpBulk)
+				.orElseThrow(()->new ApplicationRuntimeException("Conto patrimoniale associato al codice terzo " + terzo.getCd_terzo() + " non individuato."));
 	}
 
 	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) throws ComponentException, PersistencyException {
