@@ -62,6 +62,9 @@ public class Movimento_cogeBase extends Movimento_cogeKey implements Keyed {
     // PG_NUMERO_DOCUMENTO DECIMAL(10,0)
     private java.lang.Long pg_numero_documento;
 
+    // FL_MODIFICABILE CHAR(1)
+    private java.lang.Boolean fl_modificabile;
+
     public Movimento_cogeBase() {
         super();
     }
@@ -232,5 +235,13 @@ public class Movimento_cogeBase extends Movimento_cogeKey implements Keyed {
 
     public void setPg_numero_documento(Long pg_numero_documento) {
         this.pg_numero_documento = pg_numero_documento;
+    }
+
+    public Boolean getFl_modificabile() {
+        return fl_modificabile;
+    }
+
+    public void setFl_modificabile(Boolean fl_modificabile) {
+        this.fl_modificabile = fl_modificabile;
     }
 }

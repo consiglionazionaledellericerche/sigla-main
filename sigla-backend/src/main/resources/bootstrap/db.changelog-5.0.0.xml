@@ -4741,4 +4741,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="id_movimenti_mag"/>
         </createIndex>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_movimento_coge_add_columns_2">
+        <addColumn tableName="movimento_coge">
+            <column name="fl_modificabile" type="CHAR(1)" defaultValue="Y" remarks="Indica se la riga e' modificabile dall'utente - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

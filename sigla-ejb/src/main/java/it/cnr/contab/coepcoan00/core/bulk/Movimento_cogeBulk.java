@@ -341,6 +341,7 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
         DEBITO("DEB", "DEBITO"),
         CREDITO("CRE", "CREDITO"),
         CESPITE("CSP", "CESPITE"),
+        TESORERIA("BAN", "TESORERIA"),
         GENERICO("GEN", "GENERICO");
 
         private final String value;
