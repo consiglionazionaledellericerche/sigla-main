@@ -19,6 +19,8 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.jada.bulk.OggettoBulk;
 
+import java.sql.Timestamp;
+
 public class Mandato_rigaIBulk extends Mandato_rigaBulk {
     protected MandatoIBulk mandatoI;
     protected boolean flCancellazione = false;

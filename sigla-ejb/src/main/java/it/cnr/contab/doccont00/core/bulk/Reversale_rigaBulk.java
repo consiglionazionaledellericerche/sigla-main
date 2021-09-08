@@ -30,6 +30,7 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -413,7 +414,7 @@ public class Reversale_rigaBulk extends Reversale_rigaBase implements IDocumento
      * bulk da rendere persistenti insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
      *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
+     * @see it.cnr.jada.comp.GenericComponent
      */
     public BulkCollection[] getBulkLists() {
         return new it.cnr.jada.bulk.BulkCollection[]{reversale_siopeColl, reversaleCupColl};
@@ -424,7 +425,7 @@ public class Reversale_rigaBulk extends Reversale_rigaBase implements IDocumento
      * Aggiunge un nuovo dettaglio (Reversale_rigaBulk) alla lista di dettagli definiti per la reversale
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param reversale_siope dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToReversale_siopeColl(Reversale_siopeBulk reversale_siope) {
@@ -451,7 +452,7 @@ public class Reversale_rigaBulk extends Reversale_rigaBase implements IDocumento
     /**
      * Aggiunge un nuovo dettaglio (Codici_siopeBulk) alla lista dei codici siope collegabili alla riga della eversale
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param codice_siope dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToCodici_siopeColl(Codici_siopeBulk codice_siope) {
@@ -532,7 +533,7 @@ public class Reversale_rigaBulk extends Reversale_rigaBase implements IDocumento
      * Aggiunge un nuovo dettaglio (ReversaleCupBulk) alla lista di dettagli definiti per la reversale
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param reversale_cup dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToReversaleCupColl(ReversaleCupBulk reversale_cup) {
@@ -612,4 +613,8 @@ public class Reversale_rigaBulk extends Reversale_rigaBase implements IDocumento
 		throw new IllegalStateException();
 	}
 
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getReversale().getDt_incasso();
+    }
 }

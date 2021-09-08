@@ -54,6 +54,7 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.si.spring.storage.StorageObject;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.*;
 
 @JsonInclude(value = Include.NON_NULL)
@@ -2453,5 +2454,10 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
     @Override
     public Long getPg_doc() {
         return this.getPg_doc_amm();
+    }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_registrazione();
     }
 }

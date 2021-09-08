@@ -34,6 +34,7 @@ import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -1159,4 +1160,8 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
         this.scrittura_partita_doppia = scrittura_partita_doppia;
     }
 
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_pagamento();
+    }
 }

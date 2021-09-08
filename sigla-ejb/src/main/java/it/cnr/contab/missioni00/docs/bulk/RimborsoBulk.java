@@ -23,6 +23,8 @@ import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 
+import java.sql.Timestamp;
+
 public class RimborsoBulk extends RimborsoBase implements IDocumentoCogeBulk {
     // Stati documento riportato
     public final static java.util.Dictionary STATI_RIPORTO;
@@ -143,4 +145,8 @@ public class RimborsoBulk extends RimborsoBase implements IDocumentoCogeBulk {
 		this.scrittura_partita_doppia = scrittura_partita_doppia;
 	}
 
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_registrazione();
+    }
 }

@@ -263,6 +263,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			this.cd_uo = documentoCogeBulk.getCd_uo();
 			this.esercizio = documentoCogeBulk.getEsercizio();
 			this.pg_doc = documentoCogeBulk.getPg_doc();
+			this.dt_contabilizzazione = documentoCogeBulk.getDt_contabilizzazione();
 			this.tipoDocumentoEnum = documentoCogeBulk.getTipoDocumentoEnum();
 			this.scrittura_partita_doppia = scrittura_partita_doppiaBulk;
 		}
@@ -274,6 +275,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			this.cd_uo = movimentoCoge.getCd_uo_documento();
 			this.esercizio = movimentoCoge.getEsercizio_documento();
 			this.pg_doc = movimentoCoge.getPg_numero_documento();
+			this.dt_contabilizzazione = movimentoCoge.getScrittura().getDt_contabilizzazione();
 			this.tipoDocumentoEnum = TipoDocumentoEnum.fromValue(movimentoCoge.getCd_tipo_documento());
 			this.scrittura_partita_doppia = scrittura_partita_doppiaBulk;
 		}
@@ -291,6 +293,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		TipoDocumentoEnum tipoDocumentoEnum;
 
 		Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
+		java.sql.Timestamp dt_contabilizzazione;
 
 		@Override
 		public String getCd_tipo_doc() {
@@ -352,6 +356,15 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
 			this.scrittura_partita_doppia = scrittura_partita_doppia;
+		}
+
+		@Override
+		public Timestamp getDt_contabilizzazione() {
+			return dt_contabilizzazione;
+		}
+
+		public void setDt_contabilizzazione(Timestamp dt_contabilizzazione) {
+			this.dt_contabilizzazione = dt_contabilizzazione;
 		}
 
 		@Override
@@ -558,7 +571,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		TerzoBulk terzo = new TerzoBulk();
 		terzo.setCd_terzo( TerzoBulk.TERZO_NULLO);
 		terzo.setDenominazione_sede("Terzo non definito");
-		terzo.setCrudStatus( terzo.NORMAL);
+		terzo.setCrudStatus( TerzoBulk.NORMAL);
 		return terzo;
 	}
 	/**
@@ -1761,7 +1774,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = new Scrittura_partita_doppiaBulk();
 
 		scritturaPartitaDoppia.setToBeCreated();
-		scritturaPartitaDoppia.setDt_contabilizzazione(EJBCommonServices.getServerTimestamp());
+		scritturaPartitaDoppia.setDt_contabilizzazione(doccoge.getDt_contabilizzazione());
 		scritturaPartitaDoppia.setUser(userContext.getUser());
 		scritturaPartitaDoppia.setCd_unita_organizzativa(doccoge.getCd_uo());
 		scritturaPartitaDoppia.setCd_cds(doccoge.getCd_cds());
@@ -1770,8 +1783,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		scritturaPartitaDoppia.setDs_scrittura(
 				"Contabilizzazione: "
 						.concat(doccoge.getCd_tipo_doc()).concat(": ")
-						.concat(doccoge.getCd_uo()).concat("\\")
-						.concat(String.valueOf(doccoge.getEsercizio())).concat("\\")
+						.concat(doccoge.getCd_cds()).concat("/")
+						.concat(doccoge.getCd_uo()).concat("/")
+						.concat(String.valueOf(doccoge.getEsercizio())).concat("/")
 						.concat(String.valueOf(doccoge.getPg_doc()))
 		);
 

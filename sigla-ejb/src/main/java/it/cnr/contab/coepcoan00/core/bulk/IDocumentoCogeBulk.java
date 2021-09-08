@@ -42,4 +42,5 @@ public interface IDocumentoCogeBulk {
 
     void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia);
 
+    java.sql.Timestamp getDt_contabilizzazione();
 }

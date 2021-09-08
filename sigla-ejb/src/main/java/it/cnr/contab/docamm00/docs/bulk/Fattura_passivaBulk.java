@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -3560,5 +3561,10 @@ public abstract class Fattura_passivaBulk
     @Override
     public Long getPg_doc() {
         return this.getPg_doc_amm();
+    }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_registrazione();
     }
 }

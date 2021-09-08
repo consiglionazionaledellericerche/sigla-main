@@ -49,6 +49,7 @@ import it.cnr.si.spring.storage.annotation.StorageType;
 import it.siopeplus.StMotivoEsclusioneCigSiope;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -3343,5 +3344,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
     public TipoDocumentoEnum getTipoDocumentoEnum() {
         return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+    }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_registrazione();
     }
 }

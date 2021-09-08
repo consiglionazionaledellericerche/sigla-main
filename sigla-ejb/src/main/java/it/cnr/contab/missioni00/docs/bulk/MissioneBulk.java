@@ -19,6 +19,7 @@ package it.cnr.contab.missioni00.docs.bulk;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -3779,5 +3780,10 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	@Override
 	public Long getPg_doc() {
 		return this.getPg_doc_amm();
+	}
+
+	@Override
+	public Timestamp getDt_contabilizzazione() {
+		return this.getDt_registrazione();
 	}
 }
