@@ -28,6 +28,12 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	/**
 	 * [INFORMAZIONI_CONTO_EVIDENZA null]
 	 **/
+	public final static String STATO_RECORD_INIZIALE = "I";
+	public final static String STATO_RECORD_PROCESSATO = "P";
+	public final static String TIPO_DOCUMENTO_MANDATO = "MANDATO";
+	public final static String TIPO_DOCUMENTO_REVERSALE = "REVERSALE";
+	public final static String TIPO_OPERAZIONE_ESEGUITO = "ESEGUITO";
+	public final static String TIPO_OPERAZIONE_REGOLARIZZATO = "REGOLARIZZATO";
 	private InformazioniContoEvidenzaBulk informazioniContoEvidenza =  new InformazioniContoEvidenzaBulk();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -108,5 +114,23 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	 **/
 	public void setContoEvidenza(java.lang.String contoEvidenza)  {
 		this.getInformazioniContoEvidenza().setContoEvidenza(contoEvidenza);
+	}
+	public Boolean isMandatoReversale(){
+		return getTipoDocumento() != null && (isMandato() || isReversale());
+	}
+	public Boolean isMandato(){
+		return getTipoDocumento() != null && getTipoDocumento().equals(TIPO_DOCUMENTO_MANDATO);
+	}
+	public Boolean isReversale(){
+		return getTipoDocumento() != null && getTipoDocumento().equals(TIPO_DOCUMENTO_REVERSALE);
+	}
+	public Boolean isTipoOperazioneEseguitoRegolarizzato(){
+		return getTipoOperazione() != null && (isTipoOperazioneEseguito() || isTipoOperazioneRegolarizzato());
+	}
+	public Boolean isTipoOperazioneEseguito(){
+		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_ESEGUITO);
+	}
+	public Boolean isTipoOperazioneRegolarizzato(){
+		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_REGOLARIZZATO);
 	}
 }

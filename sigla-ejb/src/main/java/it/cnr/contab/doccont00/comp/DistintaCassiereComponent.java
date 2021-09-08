@@ -92,6 +92,7 @@ import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -128,7 +129,7 @@ public class DistintaCassiereComponent extends
     public static final String SCOSTAMENTO = "0.03";
     public static final String VARIAZIONE = "VARIAZIONE";
     public static final String SOSTITUZIONE = "SOSTITUZIONE";
-
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("ddMMyyyy");
     final String regexBic = "[A-Z|a-z||0-9]{11}|[A-Z|a-z||0-9]{8}";
     final Pattern patternBic = Pattern.compile(regexBic, Pattern.MULTILINE);
 
@@ -1114,9 +1115,836 @@ public class DistintaCassiereComponent extends
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
      * @param file        il <code>V_ext_cassiere00Bulk</code> file da processare.
      **/
+
+    private class TipoRecord01  {
+        public String getCodiceEnte() {
+            return codiceEnte;
+        }
+
+        public void setCodiceEnte(String codiceEnte) {
+            this.codiceEnte = codiceEnte;
+        }
+
+        public String getCodiceSia() {
+            return codiceSia;
+        }
+
+        public void setCodiceSia(String codiceSia) {
+            this.codiceSia = codiceSia;
+        }
+
+        public String getTipoRend() {
+            return tipoRend;
+        }
+
+        public void setTipoRend(String tipoRend) {
+            this.tipoRend = tipoRend;
+        }
+
+        public String getTipoServ() {
+            return tipoServ;
+        }
+
+        public void setTipoServ(String tipoServ) {
+            this.tipoServ = tipoServ;
+        }
+
+        public Integer getAnnoEser() {
+            return annoEser;
+        }
+
+        public void setAnnoEser(Integer annoEser) {
+            this.annoEser = annoEser;
+        }
+
+        public String getDescriEnte() {
+            return descriEnte;
+        }
+
+        public void setDescriEnte(String descriEnte) {
+            this.descriEnte = descriEnte;
+        }
+
+        public String getSporteTeso() {
+            return sporteTeso;
+        }
+
+        public void setSporteTeso(String sporteTeso) {
+            this.sporteTeso = sporteTeso;
+        }
+
+        public Integer getCab() {
+            return cab;
+        }
+
+        public void setCab(Integer cab) {
+            this.cab = cab;
+        }
+
+        public String getNumeroContoTeso() {
+            return numeroContoTeso;
+        }
+
+        public void setNumeroContoTeso(String numeroContoTeso) {
+            this.numeroContoTeso = numeroContoTeso;
+        }
+
+        public String getTipoloConto() {
+            return tipoloConto;
+        }
+
+        public void setTipoloConto(String tipoloConto) {
+            this.tipoloConto = tipoloConto;
+        }
+
+        public String getDescriSporTeso() {
+            return descriSporTeso;
+        }
+
+        public void setDescriSporTeso(String descriSporTeso) {
+            this.descriSporTeso = descriSporTeso;
+        }
+
+        public Date getDataElab() {
+            return dataElab;
+        }
+
+        public void setDataElab(Date dataElab) {
+            this.dataElab = dataElab;
+        }
+
+        public Integer getOraElab() {
+            return oraElab;
+        }
+
+        public void setOraElab(Integer oraElab) {
+            this.oraElab = oraElab;
+        }
+
+        public Date getDaDataCont() {
+            return daDataCont;
+        }
+
+        public void setDaDataCont(Date daDataCont) {
+            this.daDataCont = daDataCont;
+        }
+
+        public Date getaDataCont() {
+            return aDataCont;
+        }
+
+        public void setaDataCont(Date aDataCont) {
+            this.aDataCont = aDataCont;
+        }
+
+        public String getCodiceMini() {
+            return codiceMini;
+        }
+
+        public void setCodiceMini(String codiceMini) {
+            this.codiceMini = codiceMini;
+        }
+
+        public String getCodiceDivi() {
+            return codiceDivi;
+        }
+
+        public void setCodiceDivi(String codiceDivi) {
+            this.codiceDivi = codiceDivi;
+        }
+
+        private String codiceEnte;
+        private String codiceSia;
+        private String tipoRend;
+        private String tipoServ;
+        private Integer annoEser;
+        private String descriEnte;
+        private String sporteTeso;
+        private Integer cab;
+        private String numeroContoTeso;
+        private String tipoloConto;
+        private String descriSporTeso;
+        private Date dataElab;
+        private Integer oraElab;
+        private Date daDataCont;
+        private Date aDataCont;
+        private String codiceMini;
+        private String codiceDivi;
+    }
+
+    private class TipoRecord30  {
+        private String numeroOrdinativo;
+        private Integer suffisso;
+        private String tipoOrdinativo;
+        private String singoloCollettivo;
+        private String voceDiBilancio;
+        private Integer annoResidui;
+        private String tipoPagamento;
+        private String tipoOperazione;
+        private String statoOrdinativo;
+        private BigDecimal importoCaricato;
+        private BigDecimal segnoImportoCaricato;
+        private Integer numeroBuono;
+        private Integer numeroSottobuono;
+        private Integer progressivo;
+        private String descrizioneBeneficiarioDebitore;
+        private Long dataEsecuzione;
+        private BigDecimal importoOperazione;
+        private BigDecimal segnoImportoOperazione;
+        private BigDecimal importoResiduoGenerale;
+        private BigDecimal segnoImportoResiduoGenerale;
+        private Integer numeroBollettaQuietanza;
+        private String causale;
+        private String codiceSportelloOperante;
+        private String cabSportelloOperante;
+
+        public String getNumeroOrdinativo() {
+            return numeroOrdinativo;
+        }
+
+        public void setNumeroOrdinativo(String numeroOrdinativo) {
+            this.numeroOrdinativo = numeroOrdinativo;
+        }
+
+        public Integer getSuffisso() {
+            return suffisso;
+        }
+
+        public void setSuffisso(Integer suffisso) {
+            this.suffisso = suffisso;
+        }
+
+        public String getTipoOrdinativo() {
+            return tipoOrdinativo;
+        }
+
+        public void setTipoOrdinativo(String tipoOrdinativo) {
+            this.tipoOrdinativo = tipoOrdinativo;
+        }
+
+        public String getSingoloCollettivo() {
+            return singoloCollettivo;
+        }
+
+        public void setSingoloCollettivo(String singoloCollettivo) {
+            this.singoloCollettivo = singoloCollettivo;
+        }
+
+        public String getVoceDiBilancio() {
+            return voceDiBilancio;
+        }
+
+        public void setVoceDiBilancio(String voceDiBilancio) {
+            this.voceDiBilancio = voceDiBilancio;
+        }
+
+        public Integer getAnnoResidui() {
+            return annoResidui;
+        }
+
+        public void setAnnoResidui(Integer annoResidui) {
+            this.annoResidui = annoResidui;
+        }
+
+        public String getTipoPagamento() {
+            return tipoPagamento;
+        }
+
+        public void setTipoPagamento(String tipoPagamento) {
+            this.tipoPagamento = tipoPagamento;
+        }
+
+        public String getTipoOperazione() {
+            return tipoOperazione;
+        }
+
+        public void setTipoOperazione(String tipoOperazione) {
+            this.tipoOperazione = tipoOperazione;
+        }
+
+        public String getStatoOrdinativo() {
+            return statoOrdinativo;
+        }
+
+        public void setStatoOrdinativo(String statoOrdinativo) {
+            this.statoOrdinativo = statoOrdinativo;
+        }
+
+        public BigDecimal getImportoCaricato() {
+            return importoCaricato;
+        }
+
+        public void setImportoCaricato(BigDecimal importoCaricato) {
+            this.importoCaricato = importoCaricato;
+        }
+
+        public BigDecimal getSegnoImportoCaricato() {
+            return segnoImportoCaricato;
+        }
+
+        public void setSegnoImportoCaricato(BigDecimal segnoImportoCaricato) {
+            this.segnoImportoCaricato = segnoImportoCaricato;
+        }
+
+        public Integer getNumeroBuono() {
+            return numeroBuono;
+        }
+
+        public void setNumeroBuono(Integer numeroBuono) {
+            this.numeroBuono = numeroBuono;
+        }
+
+        public Integer getNumeroSottobuono() {
+            return numeroSottobuono;
+        }
+
+        public void setNumeroSottobuono(Integer numeroSottobuono) {
+            this.numeroSottobuono = numeroSottobuono;
+        }
+
+        public Integer getProgressivo() {
+            return progressivo;
+        }
+
+        public void setProgressivo(Integer progressivo) {
+            this.progressivo = progressivo;
+        }
+
+        public String getDescrizioneBeneficiarioDebitore() {
+            return descrizioneBeneficiarioDebitore;
+        }
+
+        public void setDescrizioneBeneficiarioDebitore(String descrizioneBeneficiarioDebitore) {
+            this.descrizioneBeneficiarioDebitore = descrizioneBeneficiarioDebitore;
+        }
+
+        public Long getDataEsecuzione() {
+            return dataEsecuzione;
+        }
+
+        public void setDataEsecuzione(Long dataEsecuzione) {
+            this.dataEsecuzione = dataEsecuzione;
+        }
+
+        public BigDecimal getImportoOperazione() {
+            return importoOperazione;
+        }
+
+        public void setImportoOperazione(BigDecimal importoOperazione) {
+            this.importoOperazione = importoOperazione;
+        }
+
+        public BigDecimal getSegnoImportoOperazione() {
+            return segnoImportoOperazione;
+        }
+
+        public void setSegnoImportoOperazione(BigDecimal segnoImportoOperazione) {
+            this.segnoImportoOperazione = segnoImportoOperazione;
+        }
+
+        public BigDecimal getImportoResiduoGenerale() {
+            return importoResiduoGenerale;
+        }
+
+        public void setImportoResiduoGenerale(BigDecimal importoResiduoGenerale) {
+            this.importoResiduoGenerale = importoResiduoGenerale;
+        }
+
+        public BigDecimal getSegnoImportoResiduoGenerale() {
+            return segnoImportoResiduoGenerale;
+        }
+
+        public void setSegnoImportoResiduoGenerale(BigDecimal segnoImportoResiduoGenerale) {
+            this.segnoImportoResiduoGenerale = segnoImportoResiduoGenerale;
+        }
+
+        public Integer getNumeroBollettaQuietanza() {
+            return numeroBollettaQuietanza;
+        }
+
+        public void setNumeroBollettaQuietanza(Integer numeroBollettaQuietanza) {
+            this.numeroBollettaQuietanza = numeroBollettaQuietanza;
+        }
+
+        public String getCausale() {
+            return causale;
+        }
+
+        public void setCausale(String causale) {
+            this.causale = causale;
+        }
+
+        public String getCodiceSportelloOperante() {
+            return codiceSportelloOperante;
+        }
+
+        public void setCodiceSportelloOperante(String codiceSportelloOperante) {
+            this.codiceSportelloOperante = codiceSportelloOperante;
+        }
+
+        public String getCabSportelloOperante() {
+            return cabSportelloOperante;
+        }
+
+        public void setCabSportelloOperante(String cabSportelloOperante) {
+            this.cabSportelloOperante = cabSportelloOperante;
+        }
+
+        public String getAbiBeneficiarioDebitore() {
+            return abiBeneficiarioDebitore;
+        }
+
+        public void setAbiBeneficiarioDebitore(String abiBeneficiarioDebitore) {
+            this.abiBeneficiarioDebitore = abiBeneficiarioDebitore;
+        }
+
+        public String getNumeroCcBeneficiarioDebitore() {
+            return numeroCcBeneficiarioDebitore;
+        }
+
+        public void setNumeroCcBeneficiarioDebitore(String numeroCcBeneficiarioDebitore) {
+            this.numeroCcBeneficiarioDebitore = numeroCcBeneficiarioDebitore;
+        }
+
+        public String getCro() {
+            return cro;
+        }
+
+        public void setCro(String cro) {
+            this.cro = cro;
+        }
+
+        public String getCri() {
+            return cri;
+        }
+
+        public void setCri(String cri) {
+            this.cri = cri;
+        }
+
+        public String getOrdinativoRettificato() {
+            return ordinativoRettificato;
+        }
+
+        public void setOrdinativoRettificato(String ordinativoRettificato) {
+            this.ordinativoRettificato = ordinativoRettificato;
+        }
+
+        public String getNumeroSospeso() {
+            return numeroSospeso;
+        }
+
+        public void setNumeroSospeso(String numeroSospeso) {
+            this.numeroSospeso = numeroSospeso;
+        }
+
+        public String getEntaSospeso() {
+            return entaSospeso;
+        }
+
+        public void setEntaSospeso(String entaSospeso) {
+            this.entaSospeso = entaSospeso;
+        }
+
+        public String getDataEsecuzionePool() {
+            return dataEsecuzionePool;
+        }
+
+        public void setDataEsecuzionePool(String dataEsecuzionePool) {
+            this.dataEsecuzionePool = dataEsecuzionePool;
+        }
+
+        public String getFiller() {
+            return filler;
+        }
+
+        public void setFiller(String filler) {
+            this.filler = filler;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getCodiceDivisa() {
+            return codiceDivisa;
+        }
+
+        public void setCodiceDivisa(String codiceDivisa) {
+            this.codiceDivisa = codiceDivisa;
+        }
+
+        private String abiBeneficiarioDebitore;
+        private String cabBeneficiarioDebitore;
+        private String numeroCcBeneficiarioDebitore;
+        private String cro;
+
+        public String getCabBeneficiarioDebitore() {
+            return cabBeneficiarioDebitore;
+        }
+
+        public void setCabBeneficiarioDebitore(String cabBeneficiarioDebitore) {
+            this.cabBeneficiarioDebitore = cabBeneficiarioDebitore;
+        }
+
+        private String cri;
+        private String ordinativoRettificato;
+        private String numeroSospeso;
+        private String entaSospeso;
+        private String dataEsecuzionePool;
+        private String filler;
+        private String timestamp;
+        private String codiceDivisa;
+    }
+
+    private class TipoRecord32  {
+        private String numeroSospeso;
+        private String tipoVoce;
+        private String tipoSospeso;
+        private String tipoPaga;
+        private String tipoOper;
+        private String statoOper;
+        private String descriBene;
+        private Integer dataCari;
+        private BigDecimal importo;
+        private BigDecimal segnoImporto;
+        private Integer dataOperazione;
+        private Integer dataValuta;
+        private BigDecimal importoOperazione;
+        private BigDecimal segnoImportoOperazione;
+        private BigDecimal importoResiOperazione;
+        private BigDecimal segnoImportoResiOperazione;
+        private String causale1aParte;
+        private String codiceSportelloOperatore;
+        private String cabSportelloOperatore;
+        private String abiBene;
+        private String cabBene;
+        private String numeroCcBene;
+        private String cro;
+        private String cri;
+        private String numeroCcRett;
+        private String indiriBene;
+        private String localiBene;
+        private String capBene;
+        private String provinBene;
+        private String causale2aParte;
+        private Integer dataOrdi;
+        private String timestamp;
+        private String codiceDivisa;
+        private String numeroSospesoSost;
+
+        public String getNumeroSospeso() {
+            return numeroSospeso;
+        }
+
+        public void setNumeroSospeso(String numeroSospeso) {
+            this.numeroSospeso = numeroSospeso;
+        }
+
+        public String getTipoVoce() {
+            return tipoVoce;
+        }
+
+        public void setTipoVoce(String tipoVoce) {
+            this.tipoVoce = tipoVoce;
+        }
+
+        public String getTipoSospeso() {
+            return tipoSospeso;
+        }
+
+        public void setTipoSospeso(String tipoSospeso) {
+            this.tipoSospeso = tipoSospeso;
+        }
+
+        public String getTipoPaga() {
+            return tipoPaga;
+        }
+
+        public void setTipoPaga(String tipoPaga) {
+            this.tipoPaga = tipoPaga;
+        }
+
+        public String getTipoOper() {
+            return tipoOper;
+        }
+
+        public void setTipoOper(String tipoOper) {
+            this.tipoOper = tipoOper;
+        }
+
+        public String getStatoOper() {
+            return statoOper;
+        }
+
+        public void setStatoOper(String statoOper) {
+            this.statoOper = statoOper;
+        }
+
+        public String getDescriBene() {
+            return descriBene;
+        }
+
+        public void setDescriBene(String descriBene) {
+            this.descriBene = descriBene;
+        }
+
+        public Integer getDataCari() {
+            return dataCari;
+        }
+
+        public void setDataCari(Integer dataCari) {
+            this.dataCari = dataCari;
+        }
+
+        public BigDecimal getImporto() {
+            return importo;
+        }
+
+        public void setImporto(BigDecimal importo) {
+            this.importo = importo;
+        }
+
+        public BigDecimal getSegnoImporto() {
+            return segnoImporto;
+        }
+
+        public void setSegnoImporto(BigDecimal segnoImporto) {
+            this.segnoImporto = segnoImporto;
+        }
+
+        public Integer getDataOperazione() {
+            return dataOperazione;
+        }
+
+        public void setDataOperazione(Integer dataOperazione) {
+            this.dataOperazione = dataOperazione;
+        }
+
+        public Integer getDataValuta() {
+            return dataValuta;
+        }
+
+        public void setDataValuta(Integer dataValuta) {
+            this.dataValuta = dataValuta;
+        }
+
+        public BigDecimal getImportoOperazione() {
+            return importoOperazione;
+        }
+
+        public void setImportoOperazione(BigDecimal importoOperazione) {
+            this.importoOperazione = importoOperazione;
+        }
+
+        public BigDecimal getSegnoImportoOperazione() {
+            return segnoImportoOperazione;
+        }
+
+        public void setSegnoImportoOperazione(BigDecimal segnoImportoOperazione) {
+            this.segnoImportoOperazione = segnoImportoOperazione;
+        }
+
+        public BigDecimal getImportoResiOperazione() {
+            return importoResiOperazione;
+        }
+
+        public void setImportoResiOperazione(BigDecimal importoResiOperazione) {
+            this.importoResiOperazione = importoResiOperazione;
+        }
+
+        public BigDecimal getSegnoImportoResiOperazione() {
+            return segnoImportoResiOperazione;
+        }
+
+        public void setSegnoImportoResiOperazione(BigDecimal segnoImportoResiOperazione) {
+            this.segnoImportoResiOperazione = segnoImportoResiOperazione;
+        }
+
+        public String getCausale1aParte() {
+            return causale1aParte;
+        }
+
+        public void setCausale1aParte(String causale1aParte) {
+            this.causale1aParte = causale1aParte;
+        }
+
+        public String getCodiceSportelloOperatore() {
+            return codiceSportelloOperatore;
+        }
+
+        public void setCodiceSportelloOperatore(String codiceSportelloOperatore) {
+            this.codiceSportelloOperatore = codiceSportelloOperatore;
+        }
+
+        public String getCabSportelloOperatore() {
+            return cabSportelloOperatore;
+        }
+
+        public void setCabSportelloOperatore(String cabSportelloOperatore) {
+            this.cabSportelloOperatore = cabSportelloOperatore;
+        }
+
+        public String getAbiBene() {
+            return abiBene;
+        }
+
+        public void setAbiBene(String abiBene) {
+            this.abiBene = abiBene;
+        }
+
+        public String getCabBene() {
+            return cabBene;
+        }
+
+        public void setCabBene(String cabBene) {
+            this.cabBene = cabBene;
+        }
+
+        public String getNumeroCcBene() {
+            return numeroCcBene;
+        }
+
+        public void setNumeroCcBene(String numeroCcBene) {
+            this.numeroCcBene = numeroCcBene;
+        }
+
+        public String getCro() {
+            return cro;
+        }
+
+        public void setCro(String cro) {
+            this.cro = cro;
+        }
+
+        public String getCri() {
+            return cri;
+        }
+
+        public void setCri(String cri) {
+            this.cri = cri;
+        }
+
+        public String getNumeroCcRett() {
+            return numeroCcRett;
+        }
+
+        public void setNumeroCcRett(String numeroCcRett) {
+            this.numeroCcRett = numeroCcRett;
+        }
+
+        public String getIndiriBene() {
+            return indiriBene;
+        }
+
+        public void setIndiriBene(String indiriBene) {
+            this.indiriBene = indiriBene;
+        }
+
+        public String getLocaliBene() {
+            return localiBene;
+        }
+
+        public void setLocaliBene(String localiBene) {
+            this.localiBene = localiBene;
+        }
+
+        public String getCapBene() {
+            return capBene;
+        }
+
+        public void setCapBene(String capBene) {
+            this.capBene = capBene;
+        }
+
+        public String getProvinBene() {
+            return provinBene;
+        }
+
+        public void setProvinBene(String provinBene) {
+            this.provinBene = provinBene;
+        }
+
+        public String getCausale2aParte() {
+            return causale2aParte;
+        }
+
+        public void setCausale2aParte(String causale2aParte) {
+            this.causale2aParte = causale2aParte;
+        }
+
+        public Integer getDataOrdi() {
+            return dataOrdi;
+        }
+
+        public void setDataOrdi(Integer dataOrdi) {
+            this.dataOrdi = dataOrdi;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getCodiceDivisa() {
+            return codiceDivisa;
+        }
+
+        public void setCodiceDivisa(String codiceDivisa) {
+            this.codiceDivisa = codiceDivisa;
+        }
+
+        public String getNumeroSospesoSost() {
+            return numeroSospesoSost;
+        }
+
+        public void setNumeroSospesoSost(String numeroSospesoSost) {
+            this.numeroSospesoSost = numeroSospesoSost;
+        }
+    }
+
+    private BigDecimal estraiImporto(String importo){
+        return new BigDecimal(importo).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_UP);
+    }
+
     private void callProcessaFile(UserContext userContext,
                                   V_ext_cassiere00Bulk file)
             throws it.cnr.jada.comp.ComponentException {
+
+// TODO Insert in EXT_CASSIERE00_LOGS...lo faccio?
+        boolean tesoreriaUnica = false;
+        String ccEnte = null;
+        try {
+            tesoreriaUnica = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, file.getEsercizio()).getFl_tesoreria_unica();
+            ccEnte = Utility.createConfigurazioneCnrComponentSession().getContoCorrenteEnte(userContext, file.getEsercizio());
+        } catch (RemoteException e) {
+            throw new ComponentException(e);
+        }
+
+// Da spostare in un altro component mettendo REQUIRES_NEW
+// TODO        lock table EXT_CASSIERE00 in exclusive mode;
+        MovimentoContoEvidenzaHome home = (MovimentoContoEvidenzaHome)getHome(userContext, MovimentoContoEvidenzaBulk.class);
+
+        try {
+            List righeFile = home.recuperoRigheFile(file.getNome_file(), file.getEsercizio(), MovimentoContoEvidenzaBulk.STATO_RECORD_INIZIALE);
+            for (Object bulk : righeFile){
+                MovimentoContoEvidenzaBulk riga = (MovimentoContoEvidenzaBulk)bulk;
+                Integer esercizio = riga.getEsercizio();
+                if (riga.isMandatoReversale()){
+
+                }
+                TipoRecord01 record01 = null;
+            }
+        } catch (IntrospectionException | PersistencyException e) {
+            throw new ComponentException(e);
+        }
 
         LoggableStatement cs = null;
         try {
