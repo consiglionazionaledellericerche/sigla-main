@@ -291,10 +291,27 @@ public class Configurazione_cnrHome extends BulkHome {
         return Optional.ofNullable(
                         this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
                                 Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
-                                Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
                 )
                 .map(Configurazione_cnrBulk::getVal01)
-                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("PARALLELA")))
+                .orElse(Boolean.FALSE);
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale pura
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomicaPura(UserContext userContext) throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("PURA")))
                 .orElse(Boolean.FALSE);
     }
 
@@ -308,7 +325,7 @@ public class Configurazione_cnrHome extends BulkHome {
         return Optional.ofNullable(
                         this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
                                 Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
-                                Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
                 )
                 .map(Configurazione_cnrBulk::getVal02)
                 .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))

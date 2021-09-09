@@ -4748,13 +4748,28 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione-add-economico-patrimoniale-tipo-economico-patrimoniale">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" valueNumeric="${esercizio_corrente}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ECONOMICO_PATRIMONIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="TIPO_ECONOMICO_PATRIMONIALE"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="val02" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
     <changeSet author="raffaele.pagano" id="configurazione-add-economico-patrimoniale-ass-conti">
         <insert tableName="configurazione_cnr">
-            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
+            <column name="esercizio" type="NUMERIC" valueNumeric="${esercizio_corrente}"/>
             <column name="cd_unita_funzionale" type="STRING" value="*"/>
             <column name="cd_chiave_primaria" type="STRING" value="ECONOMICO_PATRIMONIALE"/>
             <column name="cd_chiave_secondaria" type="STRING" value="ASSOCIAZIONE_CONTI"/>
-            <column name="val01" type="STRING" value="VOCE_CONTO"/>
+            <column name="val01" type="STRING" value="TERZO"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="STRING" value="SYSTEM"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
