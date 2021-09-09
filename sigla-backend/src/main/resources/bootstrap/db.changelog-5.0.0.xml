@@ -4779,15 +4779,23 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     </changeSet>
     <changeSet author="raffaele.pagano" id="addColumn_anagrafico_esercizio_conto_debito_credito_ep">
         <addColumn tableName="ANAGRAFICO_ESERCIZIO">
-            <column name="ESERCIZIO_VOCE_EP" type="SMALLINT" remarks="Anno di esercizio del conto del piano economico da utilizzare per la rilevazione del debito/credito"/>
-            <column name="CD_VOCE_EP" type="VARCHAR(45)" remarks="Identificativo del conto del piano economico da utilizzare per la rilevazione del debito/credito"/>
+            <column name="ESERCIZIO_VOCE_DEBITO_EP" type="SMALLINT" remarks="Anno di esercizio del conto del piano economico da utilizzare per la rilevazione del debito"/>
+            <column name="CD_VOCE_DEBITO_EP" type="VARCHAR(45)" remarks="Identificativo del conto del piano economico da utilizzare per la rilevazione del debito"/>
+            <column name="ESERCIZIO_VOCE_CREDITO_EP" type="SMALLINT" remarks="Anno di esercizio del conto del piano economico da utilizzare per la rilevazione del credito"/>
+            <column name="CD_VOCE_CREDITO_EP" type="VARCHAR(45)" remarks="Identificativo del conto del piano economico da utilizzare per la rilevazione del credito"/>
         </addColumn>
 
-        <addForeignKeyConstraint baseColumnNames="ESERCIZIO_VOCE_EP, CD_VOCE_EP" baseTableName="ANAGRAFICO_ESERCIZIO" constraintName="FK_ANAGRAFICO_ESERCIZIO02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ESERCIZIO, CD_VOCE_EP" referencedTableName="VOCE_EP"/>
+        <addForeignKeyConstraint baseColumnNames="ESERCIZIO_VOCE_DEBITO_EP, CD_VOCE_DEBITO_EP" baseTableName="ANAGRAFICO_ESERCIZIO" constraintName="FK_ANAGRAFICO_ESERCIZIO02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ESERCIZIO, CD_VOCE_EP" referencedTableName="VOCE_EP"/>
+        <addForeignKeyConstraint baseColumnNames="ESERCIZIO_VOCE_CREDITO_EP, CD_VOCE_CREDITO_EP" baseTableName="ANAGRAFICO_ESERCIZIO" constraintName="FK_ANAGRAFICO_ESERCIZIO03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ESERCIZIO, CD_VOCE_EP" referencedTableName="VOCE_EP"/>
 
         <createIndex indexName="FX_ANAGRAFICO_ESERCIZIO02" tableName="ANAGRAFICO_ESERCIZIO">
-            <column name="ESERCIZIO_VOCE_EP"/>
-            <column name="CD_VOCE_EP"/>
+            <column name="ESERCIZIO_VOCE_DEBITO_EP"/>
+            <column name="CD_VOCE_DEBITO_EP"/>
+        </createIndex>
+
+        <createIndex indexName="FX_ANAGRAFICO_ESERCIZIO03" tableName="ANAGRAFICO_ESERCIZIO">
+            <column name="ESERCIZIO_VOCE_CREDITO_EP"/>
+            <column name="CD_VOCE_CREDITO_EP"/>
         </createIndex>
     </changeSet>
 </databaseChangeLog>

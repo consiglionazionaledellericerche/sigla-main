@@ -31,41 +31,74 @@ public class Anagrafico_esercizioBulk extends Anagrafico_esercizioBase {
 public Anagrafico_esercizioBulk() {
 	super();
 }
-	private Voce_epBulk voceEp = new Voce_epBulk();
+	private Voce_epBulk voceCreditoEp = new Voce_epBulk();
+	private Voce_epBulk voceDebitoEp = new Voce_epBulk();
 
 	public Anagrafico_esercizioBulk(java.lang.Integer cd_anag,java.lang.Integer esercizio) {
 	super(cd_anag,esercizio);
 }
 
-	public Voce_epBulk getVoceEp() {
-		return voceEp;
+	public Voce_epBulk getVoceCreditoEp() {
+		return voceCreditoEp;
 	}
 
-	public void setVoceEp(Voce_epBulk voceEp) {
-		this.voceEp = voceEp;
+	public void setVoceCreditoEp(Voce_epBulk voceCreditoEp) {
+		this.voceCreditoEp = voceCreditoEp;
 	}
 
-	@Override
-	public Integer getEsercizio_voce_ep() {
-		return Optional.ofNullable(this.getVoceEp()).map(Voce_epBulk::getEsercizio).orElse(null);
+	public Voce_epBulk getVoceDebitoEp() {
+		return voceDebitoEp;
 	}
 
-	@Override
-	public void setEsercizio_voce_ep(Integer esercizio_voce_ep) {
-		if (!Optional.ofNullable(this.getVoceEp()).isPresent())
-			this.setVoceEp(new Voce_epBulk());
-		this.getVoceEp().setEsercizio(esercizio_voce_ep);
+	public void setVoceDebitoEp(Voce_epBulk voceDebitoEp) {
+		this.voceDebitoEp = voceDebitoEp;
 	}
 
 	@Override
-	public String getCd_voce_ep() {
-		return Optional.ofNullable(this.getVoceEp()).map(Voce_epBulk::getCd_voce_ep).orElse(null);
+	public Integer getEsercizio_voce_credito_ep() {
+		return Optional.ofNullable(this.getVoceCreditoEp()).map(Voce_epBulk::getEsercizio).orElse(null);
 	}
 
 	@Override
-	public void setCd_voce_ep(String cd_voce_ep) {
-		if (!Optional.ofNullable(this.getVoceEp()).isPresent())
-			this.setVoceEp(new Voce_epBulk());
-		this.getVoceEp().setCd_voce_ep(cd_voce_ep);
+	public void setEsercizio_voce_credito_ep(Integer esercizio_voce_credito_ep) {
+		if (!Optional.ofNullable(this.getVoceCreditoEp()).isPresent())
+			this.setVoceCreditoEp(new Voce_epBulk());
+		this.getVoceCreditoEp().setEsercizio(esercizio_voce_credito_ep);
+	}
+
+	@Override
+	public String getCd_voce_credito_ep() {
+		return Optional.ofNullable(this.getVoceCreditoEp()).map(Voce_epBulk::getCd_voce_ep).orElse(null);
+	}
+
+	@Override
+	public void setCd_voce_credito_ep(String cd_voce_credito_ep) {
+		if (!Optional.ofNullable(this.getVoceCreditoEp()).isPresent())
+			this.setVoceCreditoEp(new Voce_epBulk());
+		this.getVoceCreditoEp().setCd_voce_ep(cd_voce_credito_ep);
+	}
+
+	@Override
+	public Integer getEsercizio_voce_debito_ep() {
+		return Optional.ofNullable(this.getVoceDebitoEp()).map(Voce_epBulk::getEsercizio).orElse(null);
+	}
+
+	@Override
+	public void setEsercizio_voce_debito_ep(Integer esercizio_voce_debito_ep) {
+		if (!Optional.ofNullable(this.getVoceDebitoEp()).isPresent())
+			this.setVoceCreditoEp(new Voce_epBulk());
+		this.getVoceDebitoEp().setEsercizio(esercizio_voce_debito_ep);
+	}
+
+	@Override
+	public String getCd_voce_debito_ep() {
+		return Optional.ofNullable(this.getVoceDebitoEp()).map(Voce_epBulk::getCd_voce_ep).orElse(null);
+	}
+
+	@Override
+	public void setCd_voce_debito_ep(String cd_voce_debito_ep) {
+		if (!Optional.ofNullable(this.getVoceDebitoEp()).isPresent())
+			this.setVoceCreditoEp(new Voce_epBulk());
+		this.getVoceDebitoEp().setCd_voce_ep(cd_voce_debito_ep);
 	}
 }

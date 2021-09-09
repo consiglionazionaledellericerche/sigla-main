@@ -22,12 +22,20 @@
 	<defaultColumnMap
 			tableName="ANAGRAFICO_ESERCIZIO" >
 		<columnMapping
-			columnName="ESERCIZIO_VOCE_EP"
-			propertyName="voceEp.esercizio" />
+			columnName="ESERCIZIO_VOCE_CREDITO_EP"
+			propertyName="voceCreditoEp.esercizio" />
 		<columnMapping
-			columnName="CD_VOCE_EP"
-			propertyName="voceEp.cd_voce_ep" />
+			columnName="CD_VOCE_CREDITO_EP"
+			propertyName="voceCreditoEp.cd_voce_ep" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE_DEBITO_EP"
+			propertyName="voceDebitoEp.esercizio" />
+		<columnMapping
+			columnName="CD_VOCE_DEBITO_EP"
+			propertyName="voceDebitoEp.cd_voce_ep" />
 	</defaultColumnMap>
 	<persistentProperty
-			name="voceEp" />
+		name="voceCreditoEp" />
+	<persistentProperty
+		name="voceDebitoEp" />
 </SQLPersistentInfo>
