@@ -1700,24 +1700,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									"movimentazione non possibile in quanto la variazione è di tipo rimodulazione di altro progetto (" +
 									progettoRimodulato.getCd_progetto() + ").");
 
-						//Il progetto viene controllato solo se non è scaduto (anno fine <= anno variazione) o, se scaduto,
-						// la variazione non è di tipo Maggiori Entrate/Spese nell'ambito del CDS
-						if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
-								.filter(annoFine->annoFine.compareTo(esercizioVariazione)>=0).isPresent() ||
-							!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(((Pdg_variazioneBulk)variazione).getTipologia())) {
-							BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
+						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
 
-							//recupero il record se presente altrimenti ne creo uno nuovo
-							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
-									.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-									.findFirst()
-									.orElse(new CtrlDispPianoEco(progetto, null));
+						//recupero il record se presente altrimenti ne creo uno nuovo
+						CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
+								.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+								.findFirst()
+								.orElse(new CtrlDispPianoEco(progetto, null));
 
-							dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
 
-							if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
-								listCtrlDispPianoEcoEtr.add(dispPianoEco);
-						}
+						if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
+							listCtrlDispPianoEcoEtr.add(dispPianoEco);
 					}
 
 					for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
