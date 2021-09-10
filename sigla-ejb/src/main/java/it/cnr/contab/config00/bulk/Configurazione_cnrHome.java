@@ -284,6 +284,23 @@ public class Configurazione_cnrHome extends BulkHome {
     /**
      *
      * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale (parallela o pura)
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomica(UserContext userContext) throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> !Boolean.valueOf(s.equalsIgnoreCase("N")))
+                .orElse(Boolean.FALSE);
+    }
+
+    /**
+     *
+     * @param userContext
      * @return É attiva la gestione dell'economico patrimononale parallela
      * @throws PersistencyException
      */

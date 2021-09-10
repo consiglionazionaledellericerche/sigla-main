@@ -87,46 +87,16 @@
 		inputType="CHECKBOX"
 		label="Applica altri tipi detrazioni" />
 	<fieldProperty
-		name="find_voce_credito_ep"
-		property="voce_credito_ep"
+		name="find_conto_credito"
+		property="contoCredito"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true" />
 	<fieldProperty
-		name="cd_voce_credito_ep"
-		property="voce_credito_ep.cd_voce_ep"
-		label="Conto EP Credito"
-		inputType="TEXT"
-		maxLength="20"
-		inputSize="10"
-		formatName="it.cnr.jada.util.UppercaseStringFormat"
-		enabledOnSearch="true" />
-	<fieldProperty
-		name="ds_voce_credito_ep"
-		property="voce_credito_ep.ds_voce_ep"
-		label=""
-		inputType="ROTEXT"
-		inputSize="20"
-		enabledOnSearch="true" />
-	<fieldProperty
-		name="find_voce_debito_ep"
-		property="voce_debito_ep"
+		name="find_conto_debito"
+		property="contoDebito"
 		inputType="SEARCHTOOL"
-		enabledOnSearch="true" />
-	<fieldProperty
-		name="cd_voce_debito_ep"
-		property="voce_debito_ep.cd_voce_ep"
-		label="Conto EP Debito"
-		inputType="TEXT"
-		maxLength="20"
-		inputSize="10"
-		formatName="it.cnr.jada.util.UppercaseStringFormat"
-		enabledOnSearch="true" />
-	<fieldProperty
-		name="ds_voce_debito_ep"
-		property="voce_debito_ep.ds_voce_ep"
-		label=""
-		inputType="ROTEXT"
-		inputSize="20"
+		formName="searchtool"
 		enabledOnSearch="true" />
 
 	<formFieldProperty
@@ -156,17 +126,9 @@
 	<formFieldProperty
 		name="fl_detrazioni_altri_tipi" />
 	<formFieldProperty
-		name="find_voce_credito_ep" />
+		name="find_conto_credito" />
 	<formFieldProperty
-		name="cd_voce_credito_ep" />
-	<formFieldProperty
-		name="ds_voce_credito_ep" />
-	<formFieldProperty
-		name="find_voce_debito_ep" />
-	<formFieldProperty
-		name="cd_voce_debito_ep" />
-	<formFieldProperty
-		name="ds_voce_debito_ep" />
+		name="find_conto_debito" />
 
 	<columnFieldProperty
 		name="fl_notaxarea" />

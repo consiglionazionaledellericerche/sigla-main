@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +40,9 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.config00.comp.Configurazione_cnrComponent;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
@@ -45,6 +50,7 @@ import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.action.Config;
@@ -658,12 +664,20 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 	}
 	
 	private boolean elenco = true;
+	private boolean attivaEconomica = false;
 	private String file;
 	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
-		int solaris = EcfBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.YEAR);
-		int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue();
-		setElenco(solaris == esercizioScrivania+1);
-		super.init(config, actioncontext);
+		try {
+			int solaris = EcfBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.YEAR);
+			int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue();
+			setElenco(solaris == esercizioScrivania+1);
+			setAttivaEconomica(Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(actioncontext.getUserContext()));
+			super.init(config, actioncontext);
+		}catch(it.cnr.jada.comp.ComponentException ex){
+			throw handleException(ex);
+		}catch(java.rmi.RemoteException ex){
+			throw handleException(ex);
+		}
 	}
 	public boolean isElenco() {
 		return elenco;
@@ -671,6 +685,15 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 	public void setElenco(boolean elenco) {
 		this.elenco = elenco;
 	}
+
+	public boolean isAttivaEconomica() {
+		return attivaEconomica;
+	}
+
+	public void setAttivaEconomica(boolean attivaEconomica) {
+		this.attivaEconomica = attivaEconomica;
+	}
+
 	public void Estrazione(ActionContext context) throws ComponentException, RemoteException, BusinessProcessException{
 		  try{			  
 			  Long prog_estrazione=((AnagraficoComponentSession)createComponentSession()).Max_prog_estrazione(context.getUserContext());
@@ -1398,45 +1421,33 @@ public Timestamp findMaxDataCompValida(UserContext context,AnagraficoBulk anagra
 	}
 }
 public String[][] getTabs() {
-	if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
-			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
-					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica()))
-		return new String[][] {
-			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
-			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
-			{ "tabDetrazioniFamiliari","Carichi familiari","/anagraf00/tab_detrazioni_familiari.jsp" },
-			{ "tabDettagli","Dettagli","/anagraf00/tab_dettagli.jsp" },
-			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" },
-			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" },
-			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" }};
-	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
-			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
-					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaGiuridica()) &&
-					(!((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isStudioAssociato()))
-		return new String[][] {
-			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
-			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } ,
-			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" },
-			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" }};
-	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica())
-		return new String[][] {
-			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
-			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
-			{ "tabDetrazioniFamiliari","Carichi familiari","/anagraf00/tab_detrazioni_familiari.jsp" },
-			{ "tabDettagli","Dettagli","/anagraf00/tab_dettagli.jsp" },
-			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" },
-			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" } };
-	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isStudioAssociato() ) 
-		return new String[][] {
-				{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
-				{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
-				{ "tabAssociatiStudio","Lista Associati","/anagraf00/tab_associati_studio.jsp" },
-				{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" } };
-	else
-		return new String[][] {
-			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
-			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
-			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" } };
+	TreeMap<Integer, String[]> hash = new TreeMap<>();
+	int i=0;
+
+	hash.put(i++, new String[]{"tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp"});
+	if (!this.isSearching()) {
+		hash.put(i++, new String[]{"tabRapporto", "Rapporto", "/anagraf00/tab_rapporto.jsp"});
+		if (((AnagraficoBulk) getModel()).isPersonaFisica()) {
+			hash.put(i++, new String[]{"tabDetrazioniFamiliari", "Carichi familiari", "/anagraf00/tab_detrazioni_familiari.jsp"});
+			hash.put(i++, new String[]{"tabDettagli", "Dettagli", "/anagraf00/tab_dettagli.jsp"});
+			hash.put(i++, new String[]{"tabPagamentiEsterni", "Pagamenti esterni", "/anagraf00/tab_pagamenti_esterni.jsp"});
+		}
+		if (NazioneBulk.ITALIA.equals(((AnagraficoBulk) getModel()).getTi_italiano_estero()) &&
+				((AnagraficoBulk) getModel()).getPartita_iva() != null &&
+				(((AnagraficoBulk) getModel()).isPersonaFisica() || (((AnagraficoBulk) getModel()).isPersonaGiuridica() && !((AnagraficoBulk) getModel()).isStudioAssociato()))) {
+			hash.put(i++, new String[]{"tabEsportatore", "Esportatore abituale", "/anagraf00/tab_esportatore.jsp"});
+		}
+		if (((AnagraficoBulk) getModel()).isStudioAssociato())
+			hash.put(i++, new String[]{"tabAssociatiStudio", "Lista Associati", "/anagraf00/tab_associati_studio.jsp"});
+
+		hash.put(i++, new String[]{"tabAssGruppoIva", "Associazione Gruppo Iva", "/anagraf00/tab_gruppo_iva.jsp"});
+		if (this.isAttivaEconomica())
+			hash.put(i++, new String[]{"tabAssVoceEp", "Associazione Conti Economici", "/anagraf00/tab_voce_ep.jsp"});
+	}
+	String[][] tabs = new String[i][3];
+	for (int j = 0; j < i; j++)
+		tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+	return tabs;
 }
 public SimpleDetailCRUDController getCrudAssociatiStudio() {
 	return crudAssociatiStudio;
