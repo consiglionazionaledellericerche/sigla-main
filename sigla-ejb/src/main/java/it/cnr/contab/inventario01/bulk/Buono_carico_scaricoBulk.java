@@ -27,6 +27,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
+import it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
@@ -34,7 +35,11 @@ import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
+
+import java.math.BigDecimal;
+
 public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 	
 	public final static String CARICO = "C";
@@ -64,6 +69,7 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 //	Collezione contentente le righe di dettaglio della Documento generico Passivo
 	private BulkList dettagliDocumentoColl = new BulkList();
 	private Boolean byDocumento = new Boolean(false);
+	private Boolean byOrdini = new Boolean(false);
 	private Boolean byDocumentoPerAumentoValore= new Boolean(false);
 	
 	private PrimaryKeyHashtable dettagliRigheDocHash;
@@ -137,7 +143,16 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 			return null;
 		return tipoMovimento.getCd_tipo_carico_scarico();
 	}
-	
+
+	public void setByOrdini(Boolean boolean1) {
+		byOrdini = boolean1;
+	}
+	public boolean isByOrdini() {
+
+		if (byOrdini == null)
+			return false;
+		return byOrdini.booleanValue();
+	}
 	public void setByFattura(Boolean boolean1) {
 		byFattura = boolean1;
 	}
@@ -280,18 +295,21 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 		Buono_carico_scarico_dettBulk  element = (Buono_carico_scarico_dettBulk )buono_carico_scarico_dettColl.get(indiceDiLinea);
 		return (Buono_carico_scarico_dettBulk )buono_carico_scarico_dettColl.remove(indiceDiLinea);
 	}
+
 	public int addToBuono_carico_scarico_dettColl (Buono_carico_scarico_dettBulk nuovo)
 	{	
 		nuovo.setBuono_cs(this);
 		getBuono_carico_scarico_dettColl().add(nuovo);
-		nuovo.setBene(new Inventario_beniBulk());
-		nuovo.getBene().setInventario(this.getInventario());
-		nuovo.getBene().setPg_inventario(this.getPg_inventario());
+		if (!this.isByOrdini()){
+			nuovo.setBene(new Inventario_beniBulk());
+			nuovo.getBene().setInventario(this.getInventario());
+			nuovo.getBene().setPg_inventario(this.getPg_inventario());
 		nuovo.getBene().setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
-		nuovo.getBene().setFl_totalmente_scaricato(java.lang.Boolean.FALSE);
-		nuovo.getBene().setCategoria_Bene(new it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk());
-		nuovo.getBene().setUbicazione(new Ubicazione_beneBulk());
-		nuovo.getBene().setAssegnatario(new TerzoBulk());
+			nuovo.getBene().setFl_totalmente_scaricato(java.lang.Boolean.FALSE);
+			nuovo.getBene().setCategoria_Bene(new it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk());
+			nuovo.getBene().setUbicazione(new Ubicazione_beneBulk());
+			nuovo.getBene().setAssegnatario(new TerzoBulk());
+		}
 		return getBuono_carico_scarico_dettColl().size()-1;
 	}
 	public PrimaryKeyHashtable getDettagliRigheHash() {
@@ -326,6 +344,39 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 	 * Creation date: (11/21/2001 5:15:54 PM)
 	 * @return java.lang.String
 	 */
+	public void caricaDettagliFromTransito(java.util.List<Transito_beni_ordiniBulk> dettagliDaInventariare){
+		if (dettagliDaInventariare != null){
+			for (Transito_beni_ordiniBulk transito : dettagliDaInventariare){
+				Buono_carico_scarico_dettBulk rigoInventario = new Buono_carico_scarico_dettBulk();
+				Inventario_beniBulk bene = new Inventario_beniBulk();
+				rigoInventario.setToBeCreated();
+				bene.setToBeCreated();
+				rigoInventario.setBuono_cs(this);
+				bene.setDs_bene(transito.getDs_bene());
+				rigoInventario.setQuantita(new Long("1"));
+				rigoInventario.setBene(bene);
+				bene.setCollocazione(transito.getCollocazione());
+				bene.setValore_iniziale(transito.getValore_iniziale());
+				bene.setAssegnatario(transito.getAssegnatario());
+				bene.setCategoria_Bene(transito.getMovimentiMag().getLottoMag().getBeneServizio().getCategoria_gruppo());
+				bene.setCondizioneBene(transito.getCondizioneBene());
+				bene.setInventario(transito.getInventario());
+				bene.setTipo_ammortamento(transito.getTipo_ammortamento());
+				bene.setFl_ammortamento(transito.getFl_ammortamento());
+				bene.setUbicazione(transito.getUbicazione());
+				bene.setCd_barre(transito.getCd_barre());
+				bene.setTarga(transito.getTarga());
+				bene.setSeriale(transito.getSeriale());
+				bene.setDt_acquisizione(transito.getDt_acquisizione());
+				bene.setTi_commerciale_istituzionale(transito.getTi_commerciale_istituzionale());
+				rigoInventario.setIdTransito(transito.getId());
+				rigoInventario.setValore_unitario(transito.getValore_iniziale());
+				rigoInventario.CalcolaTotaleBene();
+				rigoInventario.setTi_documento(CARICO);
+				addToBuono_carico_scarico_dettColl(rigoInventario);
+			}
+		}
+	}
 	public void completeFrom(java.util.List dettagliDaInventariare) throws it.cnr.jada.comp.ApplicationException {
 		java.math.BigDecimal valore_unitario = new java.math.BigDecimal(0);
 		if (dettagliDaInventariare != null){
@@ -630,4 +681,8 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 	public void setPerVendita(Boolean perVendita) {
 		this.perVendita = perVendita;
 	}
+	public boolean isTemporaneo() {
+		return 	getPg_buono_c_s() == null || getPg_buono_c_s().compareTo(new Long("0")) <= 0;
+	}
+
 }

@@ -79,7 +79,7 @@
 			propertyName="esercizio_carico_bene"
 			sqlTypeName="DECIMAL"
 			columnSize="4"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="DUVA"
 			propertyName="duva"
@@ -108,7 +108,7 @@
 			propertyName="cd_unita_organizzativa"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="CD_CONDIZIONE_BENE"
 			propertyName="cd_condizione_bene"
@@ -136,7 +136,7 @@
 			propertyName="cd_cds"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="DT_ACQUISIZIONE"
 			propertyName="dt_acquisizione"
@@ -156,7 +156,13 @@
 			columnName="SERIALE"
 			propertyName="seriale"
 			sqlTypeName="VARCHAR"
-			columnSize="25" />				
+			columnSize="25" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="3"
+				nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -206,4 +212,6 @@
 			name="pg_inventario"/>
 	<persistentProperty
 			name="id_movimenti_mag"/>
+	<persistentProperty
+			name="stato"/>
 </SQLPersistentInfo>

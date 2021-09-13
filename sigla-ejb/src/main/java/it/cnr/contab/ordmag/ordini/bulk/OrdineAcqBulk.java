@@ -1567,4 +1567,9 @@ public class OrdineAcqBulk extends OrdineAcqBase
     public Long getPg_doc() {
         return this.getPg_doc_amm();
     }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDataOrdine();
+    }
 }

@@ -710,6 +710,42 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     /**
      *
      * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale (parallela o pura)
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomica(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .isAttivaEconomica(userContext);
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale pura
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomicaPura(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .isAttivaEconomicaPura(userContext);
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *
+     * @param userContext
      * @return É attiva la gestione dell'economico patrimononale parallela
      * @throws PersistencyException
      */

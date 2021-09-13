@@ -85,7 +85,20 @@
 		name="fl_detrazioni_altri_tipi"
 		property="fl_detrazioni_altri_tipi"
 		inputType="CHECKBOX"
-		label="Applica altri tipi detrazioni" />		
+		label="Applica altri tipi detrazioni" />
+	<fieldProperty
+		name="find_conto_credito"
+		property="contoCredito"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="find_conto_debito"
+		property="contoDebito"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true" />
+
 	<formFieldProperty
 		name="fl_notaxarea" />
 	<formFieldProperty
@@ -111,7 +124,12 @@
 	<formFieldProperty
 		name="fl_no_credito_irpef" />									
 	<formFieldProperty
-		name="fl_detrazioni_altri_tipi" />	
+		name="fl_detrazioni_altri_tipi" />
+	<formFieldProperty
+		name="find_conto_credito" />
+	<formFieldProperty
+		name="find_conto_debito" />
+
 	<columnFieldProperty
 		name="fl_notaxarea" />
 	<columnFieldProperty

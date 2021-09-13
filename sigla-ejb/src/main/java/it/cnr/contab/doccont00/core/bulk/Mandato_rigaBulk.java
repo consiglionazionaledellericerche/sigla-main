@@ -32,6 +32,7 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 
 public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocumentoCogeBulk {
@@ -450,7 +451,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
      * bulk da rendere persistenti insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
      *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
+     * @see it.cnr.jada.comp.GenericComponent
      */
     public BulkCollection[] getBulkLists() {
         return new it.cnr.jada.bulk.BulkCollection[]{mandato_siopeColl, mandatoCupColl};
@@ -461,7 +462,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
      * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param mandato_siope dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToMandato_siopeColl(Mandato_siopeBulk mandato_siope) {
@@ -488,7 +489,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
     /**
      * Aggiunge un nuovo dettaglio (Codici_siopeBulk) alla lista dei codici siope collegabili alla riga del mandato
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param codice_siope dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToCodici_siopeColl(Codici_siopeBulk codice_siope) {
@@ -561,7 +562,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
      * Aggiunge un nuovo dettaglio (MandatoCupBulk) alla lista di dettagli definiti per il mandato
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param mandato_cup dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToMandatoCupColl(MandatoCupBulk mandato_cup) {
@@ -649,4 +650,8 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
         throw new IllegalStateException();
     }
 
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getMandato().getDt_pagamento();
+    }
 }

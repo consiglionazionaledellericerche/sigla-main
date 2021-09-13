@@ -54,7 +54,7 @@ public class Configurazione_cnrHome extends BulkHome {
         super(Configurazione_cnrBulk.class, conn, persistentCache);
     }
 
-    public List findTipoVariazioniPdg() throws PersistencyException {
+    public java.util.List findTipoVariazioniPdg() throws PersistencyException {
 
         SQLBuilder sql = createSQLBuilder();
 
@@ -65,7 +65,7 @@ public class Configurazione_cnrHome extends BulkHome {
         return fetchAll(sql);
     }
 
-    public List findTipoVariazioniStanz_res() throws PersistencyException {
+    public java.util.List findTipoVariazioniStanz_res() throws PersistencyException {
 
         SQLBuilder sql = createSQLBuilder();
 
@@ -76,7 +76,7 @@ public class Configurazione_cnrHome extends BulkHome {
         return fetchAll(sql);
     }
 
-    public List findTipoVariazioniEnteStanz_res() throws PersistencyException {
+    public java.util.List findTipoVariazioniEnteStanz_res() throws PersistencyException {
 
         SQLBuilder sql = createSQLBuilder();
 
@@ -118,7 +118,7 @@ public class Configurazione_cnrHome extends BulkHome {
         if (esercizio == null) esercizio = new Integer(0);
         if (unita_funzionale == null) unita_funzionale = ASTERISCO;
         if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-        return (Configurazione_cnrBulk) getHomeCache().getHome(Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+        return (Configurazione_cnrBulk) getHomeCache().getHome(Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
     }
 
     /**
@@ -185,7 +185,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getUoRagioneria(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA))
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -201,7 +201,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getCdrPersonale(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_PERSONALE))
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_PERSONALE))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -217,7 +217,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getCdrServizioEnte(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_SERVIZIO_ENTE))
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_SERVIZIO_ENTE))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -233,7 +233,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getUoAccreditamentoSac(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_ACCREDITAMENTO_SAC))
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_ACCREDITAMENTO_SAC))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -249,7 +249,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getUoDistintaTuttaSac(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_DISTINTA_TUTTA_SAC))
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_DISTINTA_TUTTA_SAC))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -263,7 +263,7 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getCdsSAC(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDS_SPECIALE, Configurazione_cnrBulk.SK_CDS_SAC))
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDS_SPECIALE, Configurazione_cnrBulk.SK_CDS_SAC))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
@@ -276,9 +276,26 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public String getBeneServScontoAbbuono() throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(null,Configurazione_cnrBulk.PK_BENE_SERVIZIO_SPECIALE, Configurazione_cnrBulk.SK_SCONTO_ABBUONO))
+                        this.getConfigurazione(null,Configurazione_cnrBulk.PK_BENE_SERVIZIO_SPECIALE, Configurazione_cnrBulk.SK_SCONTO_ABBUONO))
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale (parallela o pura)
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomica(UserContext userContext) throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> !Boolean.valueOf(s.equalsIgnoreCase("N")))
+                .orElse(Boolean.FALSE);
     }
 
     /**
@@ -289,12 +306,29 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public boolean isAttivaEconomicaParallela(UserContext userContext) throws PersistencyException {
         return Optional.ofNullable(
-                this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
-                        Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
-                        Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
-        )
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
+                )
                 .map(Configurazione_cnrBulk::getVal01)
-                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("PARALLELA")))
+                .orElse(Boolean.FALSE);
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione dell'economico patrimononale pura
+     * @throws PersistencyException
+     */
+    public boolean isAttivaEconomicaPura(UserContext userContext) throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("PURA")))
                 .orElse(Boolean.FALSE);
     }
 
@@ -306,13 +340,12 @@ public class Configurazione_cnrHome extends BulkHome {
      */
     public boolean isBloccoScrittureProposte(UserContext userContext) throws PersistencyException{
         return Optional.ofNullable(
-                this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
-                        Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
-                        Configurazione_cnrBulk.SK_ECONOMICO_PATRIMONIALE_PARALLELA)
-        )
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                                Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
+                )
                 .map(Configurazione_cnrBulk::getVal02)
                 .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
                 .orElse(Boolean.TRUE);
     }
-
 }

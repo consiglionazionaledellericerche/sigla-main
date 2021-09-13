@@ -42,6 +42,7 @@ import javax.servlet.ServletException;
 import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaComponentSession;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
+import it.cnr.contab.ordmag.magazzino.ejb.TransitoBeniOrdiniComponentSession;
 import it.cnr.contab.progettiric00.comp.RimodulaProgettoRicercaComponent;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
@@ -502,6 +503,9 @@ public final class Utility {
 	}
 	public static OrdineAcqComponentSession createOrdineAcqComponentSession() throws javax.ejb.EJBException{
 		return (OrdineAcqComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_OrdineAcqComponentSession", OrdineAcqComponentSession.class);
+	}
+	public static TransitoBeniOrdiniComponentSession createTransitoBeniOrdiniComponentSession() throws javax.ejb.EJBException{
+		return (TransitoBeniOrdiniComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_TransitoBeniOrdiniComponentSession", TransitoBeniOrdiniComponentSession.class);
 	}
 	public static NumeratoriOrdMagComponentSession createNumeratoriOrdMagComponentSession() throws javax.ejb.EJBException{
 		return (NumeratoriOrdMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG_EJB_NumeratoriOrdMagComponentSession", NumeratoriOrdMagComponentSession.class);

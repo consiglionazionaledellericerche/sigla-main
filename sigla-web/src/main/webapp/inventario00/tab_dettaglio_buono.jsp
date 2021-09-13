@@ -81,6 +81,9 @@
 			</td>	
 					
 		</tr>
+		<%
+			if (!riga.getBuono_cs().isByOrdini()){
+		%>
 		<tr>
 			<td>
 				<% bp.getDettaglio().writeFormLabel(out,"fl_bene_accessorio"); %>
@@ -99,7 +102,8 @@
 			</td>			
 		</tr>
 		<% } %>	
-		<% 	if (riga!=null && riga.isBeneAccessorio() && !riga.isAccessorioContestuale()){ %>		
+		<% } %>
+		<% 	if (riga!=null && riga.isBeneAccessorio() && !riga.isAccessorioContestuale()){ %>
 			<tr>
 				<td>
 					<% bp.getDettaglio().writeFormLabel(out,"find_bene_principale"); %>
@@ -179,6 +183,9 @@
 				<% bp.getDettaglio().writeFormInput(out,"valore_totale"); %>
 			</td>	
 		</tr>
+		<%
+			if (!riga.getBuono_cs().isByOrdini()){
+		%>
 		<tr>
 			<td>
 				<% bp.getDettaglio().writeFormLabel(out,"imponibile_ammortamento"); %>
@@ -187,4 +194,7 @@
 				<% bp.getDettaglio().writeFormInput(out,null,"imponibile_ammortamento",(riga!=null && riga.isTotalmenteScaricato()),null,null); %>
 			</td>	
 		</tr>	
+		<%
+			}
+		%>
 	 </table>

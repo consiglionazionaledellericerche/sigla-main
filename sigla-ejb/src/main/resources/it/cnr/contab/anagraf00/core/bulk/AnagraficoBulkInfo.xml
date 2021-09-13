@@ -584,7 +584,22 @@
 		property="anagrafico_esercizio.fl_detrazioni_altri_tipi"
 		inputType="CHECKBOX"
 		label="Applica altri tipi detrazioni" 		
-		nullable="false" />		
+		nullable="false" />
+	<fieldProperty
+		name="find_conto_credito"
+		property="anagrafico_esercizio.contoCredito"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Conto EP Credito"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="find_conto_debito"
+		property="anagrafico_esercizio.contoDebito"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Conto EP Debito"
+		enabledOnSearch="true" />
+
 	<fieldProperty
 		name="fl_non_obblig_p_iva"
 		property="fl_non_obblig_p_iva"
@@ -1015,8 +1030,13 @@
 				
 	<formFieldProperty
 		name="dt_fine_diaria_miss_est" 
-		command="doCambiaDateDiariaMissEst"/>			
-				
+		command="doCambiaDateDiariaMissEst"/>
+
+	<formFieldProperty
+		name="find_conto_credito" />
+	<formFieldProperty
+		name="find_conto_debito" />
+
 	<findFieldProperty
 		name="cd_anag"
 		label="Codice anagrafico"

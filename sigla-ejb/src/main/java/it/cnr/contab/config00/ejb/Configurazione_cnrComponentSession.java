@@ -77,6 +77,10 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, RemoteException;
 
+    Boolean isAttivaEconomica(UserContext userContext) throws ComponentException, RemoteException;
+
+    Boolean isAttivaEconomicaPura(UserContext userContext) throws ComponentException, RemoteException;
+
     Boolean isAttivaEconomicaParallela(UserContext userContext) throws ComponentException, RemoteException;
 
     Boolean isBloccoScrittureProposte(UserContext userContext) throws ComponentException, RemoteException;

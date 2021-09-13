@@ -31,6 +31,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
@@ -1437,7 +1438,10 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             || (anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())
                             || (anag_eserc.getFl_no_detr_cuneo_irpef() != null && anag_eserc.getFl_no_detr_cuneo_irpef().booleanValue())
                             || (anag_eserc.getFl_no_credito_cuneo_irpef() != null && anag_eserc.getFl_no_credito_cuneo_irpef().booleanValue())
-                            || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())) {
+                            || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())
+                            || (anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
+                            || (anag_eserc.getContoCredito()!=null && anag_eserc.getContoCredito().getEsercizio()!=null && anag_eserc.getContoCredito().getCd_voce_ep()!=null)
+                            || (anag_eserc.getContoDebito()!=null && anag_eserc.getContoDebito().getEsercizio()!=null && anag_eserc.getContoDebito().getCd_voce_ep()!=null)) {
 
                         //inizializzo i flag se non valorizzati
                         if (anag_eserc.getFl_nofamilyarea() == null) {
@@ -1486,6 +1490,10 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         if (anag_eserc.getFl_detrazioni_altri_tipi() == null) {
                             // lo inizializziamo sempre a NO
                             anag_eserc.setFl_detrazioni_altri_tipi(new Boolean(false));
+                        }
+                        if (anag_eserc.getFl_applica_detr_pers_max() == null) {
+                            // lo inizializziamo sempre a NO
+                            anag_eserc.setFl_applica_detr_pers_max(new Boolean(false));
                         }
                         anag_eserc.setCd_anag(anagrafico.getCd_anag());
                         insertBulk(userContext, anag_eserc);
@@ -2713,5 +2721,19 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         } catch (javax.ejb.EJBException e) {
             throw new it.cnr.jada.DetailedRuntimeException(e);
         }
+    }
+
+    public SQLBuilder selectAnagrafico_esercizio_contoCreditoByClause(UserContext userContext, AnagraficoBulk anagrafico, ContoBulk conto, CompoundFindClause clause) throws ComponentException {
+        SQLBuilder sql = getHome(userContext, conto).createSQLBuilder();
+        sql.addClause(clause);
+        sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+        return sql;
+    }
+
+    public SQLBuilder selectAnagrafico_esercizio_contoDebitoByClause(UserContext userContext, AnagraficoBulk anagrafico, ContoBulk conto, CompoundFindClause clause) throws ComponentException {
+        SQLBuilder sql = getHome(userContext, conto).createSQLBuilder();
+        sql.addClause(clause);
+        sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+        return sql;
     }
 }

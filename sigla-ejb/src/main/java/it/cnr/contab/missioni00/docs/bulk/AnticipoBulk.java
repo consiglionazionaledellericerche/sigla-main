@@ -37,6 +37,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
+import java.sql.Timestamp;
 import java.util.Dictionary;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -1451,5 +1452,10 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
     @Override
     public Long getPg_doc() {
         return this.getPg_doc_amm();
+    }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_registrazione();
     }
 }

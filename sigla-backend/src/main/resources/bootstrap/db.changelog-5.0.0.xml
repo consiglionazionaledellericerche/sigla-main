@@ -101,13 +101,13 @@
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="codice" remarks="Codice identificativo dell''atto." type="VARCHAR(3)">
+            <column name="codice" remarks="Codice identificativo dell''atto." type="VARCHAR(3)">
                 <constraints nullable="false"/>
             </column>
             <column name="descrizione" remarks="Descrizione dell''atto." type="VARCHAR(1000)">
                 <constraints nullable="false"/>
             </column>
-            <column name="desc_norma" remarks="Descrizione dell''articolo di  riferimento." type="VARCHAR(1000)">
+            <column name="desc_norma" remarks="Descrizione dell''articolo di  riferimento." type="VARCHAR(1000)">
                 <constraints nullable="false"/>
             </column>
             <column name="im_bollo" remarks="Importo Unitario del Bollo" type="numeric(15, 2)">
@@ -499,7 +499,7 @@
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="codice" remarks="Codice identificativo del tipo documento generico." type="VARCHAR(3)">
+            <column name="codice" remarks="Codice identificativo del tipo documento generico." type="VARCHAR(3)">
                 <constraints nullable="false"/>
             </column>
             <column name="tipo_documento" remarks="Tipo Documento (A=Attivo, P=Passivo)" type="CHAR(1)">
@@ -796,7 +796,7 @@
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="codice" remarks="Codice identificativo dell tipo di finanziamento dominio (
+            <column name="codice" remarks="Codice identificativo dell tipo di finanziamento dominio (
                 'FOE'=FOE,
                 'FOE_PRO'=FOE progetti,
                 'AUT'=Autofinanziamento,
@@ -1695,7 +1695,7 @@ BONIFICO ESTERO EURO"/>
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="esito" remarks="Codice identificativo dell''esito." type="VARCHAR(50)">
+            <column name="esito" remarks="Codice identificativo dell''esito." type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="location" remarks="URL del messaggio" type="VARCHAR(1000)">
@@ -3104,7 +3104,7 @@ TRASPORTO_AEREO"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-
+            
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
@@ -4361,7 +4361,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="report_name_ente"
                     remarks="Nome del report per l'ENTE comprensivo di percorso relativo alla cartella reports, nel fomrato UNIX es. /preventivo/pdg/pdgdett_voce_funzione_natura.rpt"
                     type="VARCHAR(1500)" >
-                <constraints nullable="true"/>
+                 <constraints nullable="true"/>
             </column>
         </addColumn>
     </changeSet>
@@ -4731,5 +4731,195 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
                     remarks="Indica se l'impegno deve essere creato in automatico per gli anni configurati in OBBLIGAZIONE_PLURIENNALE. VALORI: S=Obbligazione Pluriennale; N/= Obbligazione non pluriennale"
                     type="CHAR(1)"/>
         </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="remove-table-transito_beni_ordini-not-null-uo-cds">
+        <dropNotNullConstraint
+                columnName="cd_unita_organizzativa"
+                tableName="transito_beni_ordini"
+                columnDataType="VARCHAR(30)"/>
+        <dropNotNullConstraint
+                columnName="cd_cds"
+                tableName="transito_beni_ordini"
+                columnDataType="VARCHAR(30)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-invent-beni-ordini">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGINVENTBENIORDINIM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Inventariazione Beni da ordini"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGINVENTBENIORDINIM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTransitoBeniOrdiniBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.INVENT.ORDINI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Inventariazione da Ordini"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="ORDINI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.INVENT"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.INVENT.ORDINI.BENI_TRANSITO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Beni in Transito"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGINVENTBENIORDINIM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTransitoBeniOrdiniBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="1"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BENI_TRANSITO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.INVENT.ORDINI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-default_ordine-condizione_bene">
+        <addColumn tableName="condizione_bene">
+            <column name="fl_default_ordine" type="CHAR(1)" defaultValue="N" remarks="Condizione bene di default per il transito da ordine. Dominio: Y = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-inventariazione-automatica">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGINVENTAUTOMM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Inventariazione"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGINVENTAUTOMM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDSelezionatoreBeniInTransitoBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.INVENT.ORDINI.INVENTARIAZIONE"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Inventariazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGINVENTAUTOMM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDSelezionatoreBeniInTransitoBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="1"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="INVENTARIAZIONE"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.INVENT.ORDINI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-ordinamento-inventariazione">
+        <update tableName="albero_main">
+            <column name="pg_ordinamento" value='2' type="BIGINT"/>
+            <where>cd_nodo = '0.AMM.INVENT.ORDINI.INVENTARIAZIONE'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-stato_transito_beni_ordini">
+        <addColumn tableName="transito_beni_ordini">
+            <column name="stato" type="CHAR(3)" defaultValue="INS" remarks="Stato del bene in transito da ordine. Valori Possibili: INS=Inserito, ANN=Eliminato, COM=Completo, TRA=Trasferito">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-inventario_beni-id_transito_beni_ordini">
+        <addColumn tableName="inventario_beni">
+            <column name="id_transito_beni_ordini" type="BIGINT" remarks="Identificativo del transito beni da ordini"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="id_transito_beni_ordini" baseTableName="inventario_beni" constraintName="fk_inventario_beni05" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="transito_beni_ordini"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_movimenti_mag" baseTableName="transito_beni_ordini" constraintName="fk_transito_beni_ordini00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_movimento" referencedTableName="movimenti_mag"/>
+
+        <createIndex indexName="FX_INVENTARIO_BENI05" tableName="inventario_beni">
+            <column name="id_transito_beni_ordini"/>
+        </createIndex>
+        <createIndex indexName="FX_TRANSITO_BENI_ORDINI00" tableName="transito_beni_ordini">
+            <column name="id_movimenti_mag"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_movimento_coge_add_columns_2">
+        <addColumn tableName="movimento_coge">
+            <column name="fl_modificabile" type="CHAR(1)" defaultValue="Y" remarks="Indica se la riga e' modificabile dall'utente - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione-add-economico-patrimoniale-tipo-economico-patrimoniale">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" valueNumeric="${esercizio_corrente}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ECONOMICO_PATRIMONIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="TIPO_ECONOMICO_PATRIMONIALE"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="val02" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione-add-economico-patrimoniale-ass-conti">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" valueNumeric="${esercizio_corrente}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ECONOMICO_PATRIMONIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="ASSOCIAZIONE_CONTI"/>
+            <column name="val01" type="STRING" value="TERZO"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="addColumn_anagrafico_esercizio_conto_debito_credito_ep">
+        <addColumn tableName="ANAGRAFICO_ESERCIZIO">
+            <column name="ESERCIZIO_VOCE_DEBITO_EP" type="SMALLINT" remarks="Anno di esercizio del conto del piano economico da utilizzare per la rilevazione del debito"/>
+            <column name="CD_VOCE_DEBITO_EP" type="VARCHAR(45)" remarks="Identificativo del conto del piano economico da utilizzare per la rilevazione del debito"/>
+            <column name="ESERCIZIO_VOCE_CREDITO_EP" type="SMALLINT" remarks="Anno di esercizio del conto del piano economico da utilizzare per la rilevazione del credito"/>
+            <column name="CD_VOCE_CREDITO_EP" type="VARCHAR(45)" remarks="Identificativo del conto del piano economico da utilizzare per la rilevazione del credito"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="ESERCIZIO_VOCE_DEBITO_EP, CD_VOCE_DEBITO_EP" baseTableName="ANAGRAFICO_ESERCIZIO" constraintName="FK_ANAGRAFICO_ESERCIZIO02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ESERCIZIO, CD_VOCE_EP" referencedTableName="VOCE_EP"/>
+        <addForeignKeyConstraint baseColumnNames="ESERCIZIO_VOCE_CREDITO_EP, CD_VOCE_CREDITO_EP" baseTableName="ANAGRAFICO_ESERCIZIO" constraintName="FK_ANAGRAFICO_ESERCIZIO03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ESERCIZIO, CD_VOCE_EP" referencedTableName="VOCE_EP"/>
+
+        <createIndex indexName="FX_ANAGRAFICO_ESERCIZIO02" tableName="ANAGRAFICO_ESERCIZIO">
+            <column name="ESERCIZIO_VOCE_DEBITO_EP"/>
+            <column name="CD_VOCE_DEBITO_EP"/>
+        </createIndex>
+
+        <createIndex indexName="FX_ANAGRAFICO_ESERCIZIO03" tableName="ANAGRAFICO_ESERCIZIO">
+            <column name="ESERCIZIO_VOCE_CREDITO_EP"/>
+            <column name="CD_VOCE_CREDITO_EP"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

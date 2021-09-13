@@ -26,12 +26,19 @@ import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
+import it.cnr.jada.bulk.ValidationException;
 
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Iterator;
 
 public class Transito_beni_ordiniBulk extends Transito_beni_ordiniBase {
+
+	public final static String STATO_ANNULLATO = "ANN";
+	public final static String STATO_INSERITO = "INS";
+	public final static String STATO_COMPLETO = "COM";
+	public final static String STATO_TRASFERITO = "TRA";
+	private Collection condizioni;
 
 	public MovimentiMagBulk getMovimentiMag() {
 		return movimentiMag;
@@ -51,8 +58,6 @@ public class Transito_beni_ordiniBulk extends Transito_beni_ordiniBase {
 	private java.math.BigDecimal valore_unitario;
 
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk assegnatario;
-
-	private Collection condizioni;
 
 	public final static Dictionary ISTITUZIONALE_COMMERCIALE;
 	public final static String ISTITUZIONALE      = "I";
@@ -320,4 +325,60 @@ public void setUbicazione(Ubicazione_beneBulk newUbicazione) {
 public void setValore_unitario(java.math.BigDecimal newValore_unitario) {
 	valore_unitario = newValore_unitario;
 }
+
+	public Collection getCondizioni() {
+		return condizioni;
+	}
+
+	public void setCondizioni(Collection condizioni) {
+		this.condizioni = condizioni;
+	}
+	public String getCd_categoria_gruppo() {
+		if (getMovimentiMag() != null ){
+			return getMovimentiMag().getLottoMag().getBeneServizio().getCategoria_gruppo().getCd_categoria_gruppo();
+		}
+		return null;
+	}
+	public final static Dictionary STATO;
+	static{
+		STATO = new it.cnr.jada.util.OrderedHashtable();
+		STATO.put(STATO_INSERITO,"Inserito");
+		STATO.put(STATO_COMPLETO,"Completo");
+		STATO.put(STATO_ANNULLATO,"Annullato");
+		STATO.put(STATO_TRASFERITO,"Trasferito");
+	}
+
+	public Dictionary getStatoKeys() {
+		return STATO;
+	}
+
+	public Boolean isStatoInserito(){
+		return STATO_INSERITO.equals(getStato());
+	}
+	public Boolean isStatoCompleto(){
+		return STATO_COMPLETO.equals(getStato());
+	}
+	public Boolean isStatoTrasferito(){
+		return STATO_TRASFERITO.equals(getStato());
+	}
+	public Boolean isStatoAnnullato(){
+		return STATO_ANNULLATO.equals(getStato());
+	}
+
+	@Override
+	public void validate() throws ValidationException {
+		if (getTi_ammortamento() == null && getTipo_ammortamento() != null){
+			setTi_ammortamento(getTipo_ammortamento().getTi_ammortamento());
+		}
+		if (getFl_ammortamento() != null && getFl_ammortamento() && getTi_ammortamento() == null){
+			throw new ValidationException("Valorizzare il tipo ammortamento.");
+		}
+	}
+
+	public Boolean isTuttiCampiValorizzatiPerInventariazione(){
+		if (getUbicazione() != null && getUbicazione().getCd_ubicazione() != null && getCondizioneBene() != null && getFl_ammortamento() != null && (!getFl_ammortamento() ||(getFl_ammortamento() && getTi_ammortamento() != null))){
+			return true;
+		}
+		return false;
+	}
 }

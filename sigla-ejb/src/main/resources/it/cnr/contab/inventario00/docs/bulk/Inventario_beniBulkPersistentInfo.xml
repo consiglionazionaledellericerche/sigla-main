@@ -42,6 +42,9 @@
 		<columnMapping
 			columnName="CD_CONDIZIONE_BENE"
 			propertyName="condizioneBene.cd_condizione_bene"/>
+		<columnMapping
+				columnName="ID_TRANSITO_BENI_ORDINI"
+				propertyName="transito_beni_ordini.id"/>
 
 		<addColumnMapping
 			propertyName="nuovo_bene_padre.inventario.pg_inventario" />
@@ -131,6 +134,8 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="categoria_Bene" />
+	<persistentProperty
+			name="transito_beni_ordini" />
 	<persistentProperty
 		name="assegnatario" />
 	<persistentProperty

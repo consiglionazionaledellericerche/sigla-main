@@ -18,7 +18,7 @@
 <title>Documento generico passivo</title>
 </head>
 <body class="Form">
-<% CRUDBP bp = (CRUDDocumentoGenericoPassivoBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDDocumentoGenericoPassivoBP bp = (CRUDDocumentoGenericoPassivoBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 	<table>
 		<%

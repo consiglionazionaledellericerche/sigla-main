@@ -235,7 +235,8 @@ liquibase:
 
 cnr:
   storage:
-    driver: cmis
+    driver: filesystem
+#    driver: CMIS
   ldap:
     master:
       url: ldap://virtest1.si.cnr.it:389

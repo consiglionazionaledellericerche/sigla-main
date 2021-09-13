@@ -24,6 +24,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import it.cnr.contab.doccont00.core.bulk.*;
@@ -1969,4 +1970,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		return this.getPg_doc_amm();
 	}
 
+	@Override
+	public Timestamp getDt_contabilizzazione() {
+		return this.getData_registrazione();
+	}
 }

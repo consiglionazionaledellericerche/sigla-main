@@ -54,6 +54,7 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.*;
+import it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession;
 import it.cnr.contab.inventario01.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -444,6 +445,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
     }
 
     private void aggiornaCarichiInventario(UserContext userContext, Fattura_passivaBulk fattura_passiva) throws ComponentException {
+        Inventario_beniComponentSession inventario_beniComponent = ((it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class));
 
         if (fattura_passiva != null && fattura_passiva instanceof Nota_di_creditoBulk) {
             CarichiInventarioTable carichiInventarioHash = fattura_passiva.getCarichiInventarioHash();
@@ -475,73 +477,21 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
                     for (Iterator g = buonoCS.getBuono_carico_scarico_dettColl().iterator(); g.hasNext(); ) {
                         Buono_carico_scarico_dettBulk buono = ((Buono_carico_scarico_dettBulk) g.next());
-                        boolean exit = false;
-                        BigDecimal tot_perc_cdr = new BigDecimal(0);
+                        Boolean exit = false;
                         for (Iterator f = fattura_passiva.getFattura_passiva_dettColl().iterator(); (f.hasNext() && !exit); ) {
                             Fattura_passiva_rigaIBulk fattura = ((Fattura_passiva_rigaIBulk) f.next());
                             for (Iterator coll = buonoCS.getDettagliFatturaColl().iterator(); (coll.hasNext() && !exit); ) {
                                 Fattura_passiva_rigaIBulk fattura_coll = ((Fattura_passiva_rigaIBulk) coll.next());
                                 if (fattura_coll.equalsByPrimaryKey(fattura)) {
+                                    Map<Obbligazione_scadenzarioBulk, Boolean> resUtilizzatori = null;
                                     try {
-                                        Obbligazione_scadenzarioHome obblHome = ((Obbligazione_scadenzarioHome) getHome(userContext, Obbligazione_scadenzarioBulk.class, null, getFetchPolicyName("findForInventario")));
-                                        ObbligazioneBulk obblig = fattura.getObbligazione_scadenziario().getObbligazione();
-                                        ObbligazioneHome obbligHome = (ObbligazioneHome) getHome(userContext, obblig.getClass());
-                                        obblig.setObbligazione_scadenzarioColl(new BulkList(obbligHome.findObbligazione_scadenzarioList(obblig)));
-                                        for (Iterator i = obblig.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); ) {
-                                            Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) i.next();
-                                            if (os.getIm_associato_doc_amm().doubleValue() != 0 && os.equalsByPrimaryKey(fattura.getObbligazione_scadenziario())) {
-                                                os.setObbligazione(obblig);
-                                                os.setObbligazione_scad_voceColl(new BulkList(obblHome.findObbligazione_scad_voceList(userContext, os)));
-                                                fattura.setObbligazione_scadenziario(os);
-                                                obblig.refreshDettagliScadenzarioPerCdrECapitoli();
-                                                for (Iterator lista_cdraggr = obblig.getCdrAggregatoColl().iterator(); lista_cdraggr.hasNext(); ) {
-                                                    Obbligazione_scad_voce_aggregatoBulk cdraggr = (Obbligazione_scad_voce_aggregatoBulk) lista_cdraggr.next();
-                                                    if (cdraggr != null && cdraggr.getImporto() != null && cdraggr.getImporto().doubleValue() != 0) {
-                                                        BigDecimal tot_perc_la = new BigDecimal(0);
-                                                        Iterator listaScad_voce = obblHome.findObbligazione_scad_voceList(userContext, fattura.getObbligazione_scadenziario()).iterator();
-                                                        for (Iterator x = listaScad_voce; x.hasNext(); ) {
-                                                            Obbligazione_scad_voceBulk dett = (Obbligazione_scad_voceBulk) x.next();
-                                                            getHomeCache(userContext).fetchAll(userContext);
-                                                            WorkpackageBulk linea_att = dett.getLinea_attivita();
-                                                            if (linea_att.getCd_centro_responsabilita() == cdraggr.getCodice()) {
-                                                                if (dett.getObbligazione_scadenzario().getIm_scadenza().doubleValue() != 0)
-                                                                    dett.setPrc((dett.getIm_voce().multiply(new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
-                                                                if (dett.getPrc() != null && dett.getPrc().compareTo(new BigDecimal(0)) != 0 && dett.getObbligazione_scadenzario().getIm_associato_doc_amm().doubleValue() != 0) {
-                                                                    it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk new_utilizzatore_la
-                                                                            = new it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(), linea_att.getCd_centro_responsabilita(),
-                                                                            buono.getNr_inventario(),
-                                                                            buono.getPg_inventario(), new Long(buono.getProgressivo().longValue()));
-                                                                    BigDecimal perc_cdr = (cdraggr.getImporto().multiply(new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, 6));
-                                                                    tot_perc_cdr = tot_perc_cdr.add(perc_cdr);
-                                                                    tot_perc_la = tot_perc_la.add(((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6));
-                                                                    if ((tot_perc_cdr.doubleValue() >= 100 && tot_perc_la.doubleValue() >= 100)) {
-                                                                        exit = true;
-                                                                    }
-                                                                    new_utilizzatore_la.setPercentuale_utilizzo_cdr(perc_cdr);
-                                                                    new_utilizzatore_la.setPercentuale_utilizzo_la(((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6));
-                                                                    new_utilizzatore_la.setToBeCreated();
-                                                                    if ((perc_cdr.compareTo(new BigDecimal(100)) <= 0) || (((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6).compareTo(new BigDecimal(100)) <= 0)) {
-                                                                        Inventario_utilizzatori_laHome Inventario_utilizzatore_laHome = (Inventario_utilizzatori_laHome) getHome(userContext, Inventario_utilizzatori_laBulk.class);
-                                                                        Inventario_utilizzatori_laBulk utilizzatore = (Inventario_utilizzatori_laBulk) Inventario_utilizzatore_laHome.findByPrimaryKey(new Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(), linea_att.getCd_centro_responsabilita(),
-                                                                                buono.getNr_inventario(),
-                                                                                buono.getPg_inventario(), new Long(buono.getProgressivo().longValue())));
-                                                                        if (!new_utilizzatore_la.equalsByPrimaryKey(utilizzatore))
-                                                                            super.insertBulk(userContext, new_utilizzatore_la, true);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                Iterator listaScad_voce = obblHome.findObbligazione_scad_voceList(userContext, fattura.getObbligazione_scadenziario()).iterator();
-                                                getHomeCache(userContext).fetchAll(userContext);
-                                            }
-                                        }
-                                    } catch (IntrospectionException e1) {
-                                        throw new ComponentException(e1);
-                                    } catch (PersistencyException e1) {
-                                        throw new ComponentException(e1);
+                                        resUtilizzatori = inventario_beniComponent.creaUtilizzatori(userContext, fattura.getObbligazione_scadenziario(), buono);
+                                    } catch (RemoteException remoteException) {
+                                        throw new ComponentException(remoteException);
                                     }
+                                    Obbligazione_scadenzarioBulk os = resUtilizzatori.keySet().iterator().next();
+                                    exit = resUtilizzatori.get(os);
+                                    fattura.setObbligazione_scadenziario(os);
                                 }
                             }
                         }
@@ -4864,23 +4814,27 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      */
 //^^@@
     public OggettoBulk modificaConBulk(UserContext aUC, OggettoBulk bulk) throws ComponentException {
-        return Optional.ofNullable(bulk)
-                .filter(Fattura_passivaBulk.class::isInstance)
-                .map(Fattura_passivaBulk.class::cast)
-                .map(fattura_passivaBulk -> {
-                    try {
-                        return modificaConBulk(aUC, fattura_passivaBulk, null);
-                    } catch (ComponentException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                })
-                .orElseGet(() -> {
-                    try {
-                        return super.modificaConBulk(aUC, bulk);
-                    } catch (ComponentException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                });
+        try {
+            return Optional.ofNullable(bulk)
+                    .filter(Fattura_passivaBulk.class::isInstance)
+                    .map(Fattura_passivaBulk.class::cast)
+                    .map(fattura_passivaBulk -> {
+                        try {
+                            return modificaConBulk(aUC, fattura_passivaBulk, null);
+                        } catch (ComponentException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    })
+                    .orElseGet(() -> {
+                        try {
+                            return super.modificaConBulk(aUC, bulk);
+                        } catch (ComponentException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    });
+        } catch (DetailedRuntimeException _ex) {
+            throw handleException(_ex);
+        }
     }
 //^^@@
 

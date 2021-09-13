@@ -24,14 +24,13 @@ import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.OrderedHashtable;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -899,4 +898,8 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
         this.scrittura_partita_doppia = scrittura_partita_doppia;
     }
 
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_incasso();
+    }
 }
