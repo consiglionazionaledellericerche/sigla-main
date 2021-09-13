@@ -20,22 +20,22 @@ package it.cnr.contab.doccont00.core.bulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
-public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocumentoCogeBulk {
+public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
 
     public final static String SIOPE_TOTALMENTE_ASSOCIATO = "T";
     public final static String SIOPE_PARZIALMENTE_ASSOCIATO = "P";
@@ -622,36 +622,11 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase implements IDocu
         this.allegatiDocumentiAmministrativi = allegatiDocumentiAmministrativi;
     }
 
-    @Override
-    public String getCd_tipo_doc() {
-        return this.getCd_tipo_documento_amm();
-    }
-
-    @Override
-    public String getCd_uo() {
-        return this.getCd_uo_doc_amm();
-    }
-
-    @Override
-    public Long getPg_doc() {
-        return this.getPg_doc_amm();
-    }
-
-    @Override
-    public TipoDocumentoEnum getTipoDocumentoEnum() {
-        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
-    }
-
     public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
         throw new IllegalStateException();
     }
 
     public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
         throw new IllegalStateException();
-    }
-
-    @Override
-    public Timestamp getDt_contabilizzazione() {
-        return this.getMandato().getDt_pagamento();
     }
 }

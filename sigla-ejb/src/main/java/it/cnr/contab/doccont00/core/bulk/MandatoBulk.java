@@ -18,7 +18,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -27,16 +26,11 @@ import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.OrderedHashtable;
-import it.cnr.jada.util.action.CRUDBP;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpdateSaldi {
     public final static String STATO_MANDATO_ANNULLATO = "A";

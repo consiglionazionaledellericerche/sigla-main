@@ -19,7 +19,6 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 
 /**
