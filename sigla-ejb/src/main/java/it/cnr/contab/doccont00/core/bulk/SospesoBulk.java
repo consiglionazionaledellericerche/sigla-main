@@ -43,6 +43,7 @@ public class SospesoBulk extends SospesoBase {
     public final static Dictionary stato_sospesoCNRKeys;
     public final static Dictionary tiStatoTextForSearchKeys;
     public final static Dictionary ti_entrata_spesaKeys;
+    public final static String RISC_PREFIX ="XSRC";
 
 	static private java.util.Hashtable ti_cc_biKeys;
 

@@ -859,4 +859,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
         if (getV_man_rev() != null)
             getV_man_rev().setPg_documento_cont(pg_reversale_riemissione);
     }
+    public String getIdReversaleAsString(){
+        return getCd_cds()+"-"+getEsercizio()+"-"+getPg_reversale();
+    }
 }

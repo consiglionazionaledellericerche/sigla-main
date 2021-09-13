@@ -17,11 +17,10 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
-import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
@@ -32,6 +31,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -502,5 +503,71 @@ public class SospesoHome extends BulkHome {
 		} catch (IntrospectionException e) {
 		}
 		return super.completeBulkRowByRow(userContext, persistent);
+	}
+	public void initializePrimaryKeyForInsert(UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
+		SospesoBulk sospesoBulk = (SospesoBulk)bulk;
+		if (sospesoBulk.getCd_sospeso() == null){
+
+			LoggableStatement ps = null;
+			try {
+				ps = new LoggableStatement(getConnection(),
+						"SELECT cd_sospeso FROM " +
+								it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+								"SOSPESO A" +
+								"WHERE ESERCIZIO = ? AND " +
+								"CD_CDS = ? AND " +
+								"TI_ENTRATA_SPESA = ? AND " +
+								"TI_SOSPESO_RISCONTRO = 'R' AND " +
+								"CD_SOSPESO LIKE "+ SospesoBulk.RISC_PREFIX+"'%'" +
+								"cd_sospeso = ( SELECT MAX(cd_sospeso) " +
+								"FROM " +
+								it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+								"sospeso " +
+								"WHERE ESERCIZIO = a.esercizio AND " +
+								"CD_CDS = a.cd_cds AND " +
+								"ti_entrata_spesa = a.ti_entrata_spesa AND " +
+								"ti_sospeso_riscontro = a.ti_sospeso_riscontro and " +
+								" CD_SOSPESO LIKE "+SospesoBulk.RISC_PREFIX+"'%') " +
+								"FOR UPDATE NOWAIT",true ,this.getClass());
+			} catch (SQLException throwables) {
+				throw new ComponentException(e);
+			}
+
+			try
+			{
+				ps.setObject( 1, sospesoBulk.getEsercizio());
+				ps.setString( 2, sospesoBulk.getCd_cds());
+				ps.setString( 3, sospesoBulk.getTi_entrata_spesa());
+
+				ResultSet rs = ps.executeQuery();
+				try
+				{
+					if length(aCurr) != 14 then
+					IBMERR001.RAISE_ERR_GENERICO('Esistono numerazioni di riscontro non compatibili con la numerazione automatica generata dall''interfaccia di riscontro automatica (la lunghezza del codice sospeso è diversa da 14 caratteri)');
+					end if;
+					aNum:=substr(aCurr,5,10);
+					return RISC_PREFIX||lpad(aNum+1,10,'0');
+
+
+					if ( rs.next() )
+						return  new Long( rs.getLong(1) + 1) ;
+					else
+						return  new Long( 1 ) ;
+				}
+				finally
+				{
+					try{rs.close();}catch( java.sql.SQLException e ){};
+				}
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			} finally
+			{
+				try{ps.close();}catch( java.sql.SQLException e ){};
+			}
+
+		}
+
+
+			movimento.setPgMovimento(recuperoProgressivoMovimento(userContext));
 	}
 }
