@@ -42,6 +42,7 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -53,6 +54,7 @@ import org.springframework.data.util.Pair;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -289,6 +291,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			this.dt_contabilizzazione = movimentoCoge.getScrittura().getDt_contabilizzazione();
 			this.tipoDocumentoEnum = TipoDocumentoEnum.fromValue(movimentoCoge.getCd_tipo_documento());
 			this.scrittura_partita_doppia = scrittura_partita_doppiaBulk;
+		}
+
+		public Partita(String cd_tipo_doc, String cd_cds, String cd_uo, Integer esercizio, Long pg_doc, TipoDocumentoEnum tipoDocumentoEnum) {
+			super();
+			this.cd_tipo_doc = cd_tipo_doc;
+			this.cd_cds = cd_cds;
+			this.cd_uo = cd_uo;
+			this.esercizio = esercizio;
+			this.pg_doc = pg_doc;
+			this.tipoDocumentoEnum = tipoDocumentoEnum;
 		}
 
 		String cd_tipo_doc;
@@ -1595,16 +1607,43 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			throw new ApplicationException("La riga del mandato " + rigaMandato.getEsercizio() + "/" + rigaMandato.getCd_cds() + "/" + rigaMandato.getPg_mandato() +
 					" non risulta pagare un documento/anticipo/missione/versamento cori. Proposta di prima nota non possibile.");
 
-		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
-
-		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
-		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaMandato.getMandato().getTerzo(), rigaMandato.getElemento_voce(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		final BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
 
 		//La partita non deve essere registrata in caso di versamento ritenute
-		Partita partita = !TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoCoriVersamentoSpesa()?new Partita(rigaMandato, null):null;
+		Partita partita = new Partita(rigaMandato.getCd_tipo_documento_amm(), rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm(),
+				TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()));
 
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato, partita);
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
+		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
+
+		if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoCoriVersamentoSpesa()) {
+			//La partita non deve essere registrata in caso di versamento ritenute
+			Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaMandato.getMandato().getTerzo(), rigaMandato.getElemento_voce(), partita.getTipoDocumentoEnum().getTipoPatrimoniale());
+			testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imNettoMandato);
+		} else {
+			List<Movimento_cogeBulk> dettPnPatrimonialePartita = this.findContoAnag(userContext,partita);
+			if (dettPnPatrimonialePartita==null || dettPnPatrimonialePartita.isEmpty())
+				throw new ApplicationException("Non è stato possibile individuare la riga di tipo debito/credito per la partita " +
+						partita.getEsercizio()+"/"+partita.getCd_cds()+"/"+partita.getCd_uo()+"/"+partita.getPg_doc()+"/"+partita.getTipoDocumentoEnum()+
+						". Proposta di prima nota non possibile.");
+
+			final BigDecimal totContiEp = BigDecimal.valueOf(dettPnPatrimonialePartita.stream()
+							.mapToDouble(el->el.getIm_movimento().doubleValue())
+							.sum());
+
+			BigDecimal imDaRipartire = imNettoMandato;
+			//Chiudo i conti in percentuale
+			for (Iterator<Movimento_cogeBulk> i = dettPnPatrimonialePartita.iterator(); i.hasNext(); ) {
+				Movimento_cogeBulk dettPN= (Movimento_cogeBulk) i.next();
+				BigDecimal imRiga = imNettoMandato.multiply(dettPN.getIm_movimento()).divide(totContiEp,2, RoundingMode.HALF_EVEN);
+				if (imRiga.compareTo(imDaRipartire)>0 || !i.hasNext()) {
+					testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imDaRipartire);
+					break;
+				}
+				testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imRiga);
+				imDaRipartire = imDaRipartire.subtract(imRiga);
+			};
+		}
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), partita.getTipoDocumentoEnum().getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
 	}
 
 	private void addDettagliPrimaNotaReversaleDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Reversale_rigaBulk rigaReversale) throws ComponentException, PersistencyException, RemoteException {
@@ -1615,12 +1654,33 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		BigDecimal imReversale = rigaReversale.getIm_reversale_riga();
 
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
-		Voce_epBulk contoPatrimonialePartita = this.findContoAnag(userContext, rigaReversale.getReversale().getTerzo(), rigaReversale.getElemento_voce(), Movimento_cogeBulk.TipoRiga.CREDITO.value());
 
 		//La partita non deve essere registrata in caso di versamento ritenute
-		Partita partita = new Partita(rigaReversale, null);
+		Partita partita = new Partita(rigaReversale.getCd_tipo_documento_amm(), rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm(),
+				TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()));
 
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.getControSezione(TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).getSezionePatrimoniale()), contoPatrimonialePartita.getCd_voce_ep(), imReversale, partita);
+		List<Movimento_cogeBulk> dettPnPatrimonialePartita = this.findContoAnag(userContext,partita);
+		if (dettPnPatrimonialePartita==null || dettPnPatrimonialePartita.isEmpty())
+			throw new ApplicationException("Non è stato possibile individuare la riga di tipo debito/credito per la partita " +
+					partita.getEsercizio()+"/"+partita.getCd_cds()+"/"+partita.getCd_uo()+"/"+partita.getPg_doc()+"/"+partita.getTipoDocumentoEnum()+
+					". Proposta di prima nota non possibile.");
+
+		final BigDecimal totContiEp = BigDecimal.valueOf(dettPnPatrimonialePartita.stream()
+				.mapToDouble(el->el.getIm_movimento().doubleValue())
+				.sum());
+
+		BigDecimal imDaRipartire = imReversale;
+		//Chiudo i conti in percentuale
+		for (Iterator<Movimento_cogeBulk> i = dettPnPatrimonialePartita.iterator(); i.hasNext(); ) {
+			Movimento_cogeBulk dettPN=i.next();
+			BigDecimal imRiga = imReversale.multiply(dettPN.getIm_movimento()).divide(totContiEp,2, RoundingMode.HALF_EVEN);
+			if (imRiga.compareTo(imDaRipartire)>0 || !i.hasNext()) {
+				testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imDaRipartire);
+				break;
+			}
+			testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imRiga);
+			imDaRipartire = imDaRipartire.subtract(imRiga);
+		};
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imReversale);
 	}
 
@@ -1822,6 +1882,32 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				.orElseThrow(()->new ApplicationRuntimeException("Conto " +
 						(tipoConto.equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()) ? "debito" : "credito") +
 						" associato al codice terzo " + terzo.getCd_terzo() + " non individuato."));
+	}
+
+	/**
+	 * Ritorna la lista delle righe prima nota associate che movimentano i conti patrimoniali di tipo debito/credito associati al documento
+	 * @param userContext
+	 * @param docamm
+	 * @return
+	 * @throws ComponentException
+	 * @throws PersistencyException
+	 */
+	private List<Movimento_cogeBulk> findContoAnag(UserContext userContext, IDocumentoCogeBulk docamm) throws ComponentException, PersistencyException {
+		Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+				.filter(Scrittura_partita_doppiaHome.class::isInstance)
+				.map(Scrittura_partita_doppiaHome.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+		final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(docamm);
+		if (scritturaOpt.isPresent()) {
+			Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+			scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+					.findMovimentiDareColl(userContext, scrittura)));
+			scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+					.findMovimentiAvereColl(userContext, scrittura)));
+			return scrittura.getAllMovimentiColl().stream().filter(el->el.getSezione().equals(docamm.getTipoDocumentoEnum().getSezionePatrimoniale()))
+					.filter(el->docamm.getTipoDocumentoEnum().getTipoPatrimoniale().equals(el.getTi_riga())).collect(Collectors.toList());
+		}
+		return null;
 	}
 
 	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) throws ComponentException, PersistencyException {
@@ -2231,4 +2317,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 		return coriList;
 	}
+
+
 }

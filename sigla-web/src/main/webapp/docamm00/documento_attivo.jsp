@@ -18,11 +18,10 @@
 <title>Documento generico attivo</title>
 </head>
 <body class="Form">
-<% CRUDBP bp = (CRUDDocumentoGenericoAttivoBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDDocumentoGenericoAttivoBP bp = (CRUDDocumentoGenericoAttivoBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 	<table>
-		<% 
-
+		<%
 		JSPUtils.tabbed(
 					pageContext,
 					"tab",
