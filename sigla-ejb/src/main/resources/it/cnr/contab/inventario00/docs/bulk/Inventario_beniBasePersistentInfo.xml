@@ -214,7 +214,7 @@
 				propertyName="id_transito_beni_ordini"
 				sqlTypeName="DECIMAL"
 				columnSize="12"
-				nullable="false"/>
+				nullable="true"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
