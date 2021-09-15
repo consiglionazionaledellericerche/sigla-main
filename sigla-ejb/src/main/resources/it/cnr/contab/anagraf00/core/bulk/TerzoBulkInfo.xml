@@ -579,13 +579,19 @@
 		label="Codice IPA" />
 	<columnFieldProperty
 		name="codiceDestinatarioFatt"
+		textTruncate="true"
+		headerStyle="max-width: 8ch"
 		label="Codice Dest. Fatt. Elettr." />
 	<columnFieldProperty
 		name="codiceUnivocoPcc" />
 	<columnFieldProperty
-		name="denominazionePcc" />
+		name="denominazionePcc"
+		textTruncate="true"
+		headerStyle="max-width: 8ch" />
 	<columnFieldProperty
-			name="cd_precedente" />
+		name="cd_precedente"
+		textTruncate="true"
+		headerStyle="max-width: 8ch"/>
 
 	<columnSet
 		name="columnSet01" >
