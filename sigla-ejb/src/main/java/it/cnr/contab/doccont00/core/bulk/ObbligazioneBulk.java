@@ -700,7 +700,6 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_spese_costi_altrui( new Boolean( false ));
 	setFl_gara_in_corso( new Boolean( false ));
 	setRiportato("N");
-	setFl_pluriennale(Boolean.FALSE);
 
 	// I seguenti campi sono definiti temporaneamente, ma DA CANCELLARE
 	setIm_costi_anticipati( new java.math.BigDecimal(0) );
@@ -1993,12 +1992,6 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	}
 	public BigDecimal getImportoNonPagato() {
 		return this.getObbligazione_scadenzarioColl().stream().map(e->e.getImportoNonPagato()).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
-	}
-
-	public boolean isROFlagPluriennale(){
-
-		return Boolean.FALSE;
-
 	}
 
 }

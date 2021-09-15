@@ -145,9 +145,6 @@ public class ObbligazioneBase extends ObbligazioneKey implements Keyed {
 	// CD_ELEMENTO_VOCE_NEXT VARCHAR(20) NOT NULL
 	private java.lang.String cd_elemento_voce_next;
 
-	// flag_pluriennale CHAR(1)
-	private Boolean fl_pluriennale;
-
 public ObbligazioneBase() {
 	super();
 }
@@ -590,13 +587,5 @@ public void setTi_gestione(java.lang.String ti_gestione) {
 	}
 	public void setCd_elemento_voce_next(java.lang.String cd_elemento_voce_next) {
 		this.cd_elemento_voce_next = cd_elemento_voce_next;
-	}
-
-	public Boolean getFl_pluriennale() {
-		return fl_pluriennale;
-	}
-
-	public void setFl_pluriennale(Boolean fl_pluriennale) {
-		this.fl_pluriennale = fl_pluriennale;
 	}
 }

@@ -594,16 +594,6 @@
 		label="Voce del piano"
 		enabledOnSearch="true"
 		completeOnSave="false" />
-	<fieldProperty
-			name="fl_pluriennale"
-			property="fl_pluriennale"
-			label="Obbligazione Pluriennale"
-			inputType="CHECKBOX"
-			command="doDefault"
-			readonlyProperty="ROFlagPluriennale"
-			maxLength="1"
-			inputSize="1"
-	/>
 
 	<columnFieldProperty
 		name="esercizio_competenza"
@@ -646,9 +636,7 @@
 	<columnFieldProperty
 		name="motivazione"
 		/>
-	<columnFieldProperty
-			name="fl_pluriennale"
-	/>
+
 	<formFieldProperty
 		name="cd_cds"
 		/>
@@ -833,9 +821,7 @@
 		name="ds_elemento_voce_next" />
 	<formFieldProperty
 		name="find_elemento_voce_next" />
-	<formFieldProperty
-			name="fl_pluriennale"
-	/>
+
 
 	<form name="searchtool">
         <formFieldProperty
@@ -930,7 +916,5 @@
 	<findFieldProperty
 		name="ds_gara_in_corso"
 		/>
-	<findFieldProperty
-			name="fl_pluriennale"
-	/>
+
 </bulkInfo>

@@ -290,13 +290,7 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="true" />
-		<columnMapping
-				columnName="FL_PLURIENNALE"
-				propertyName="fl_pluriennale"
-				sqlTypeName="CHAR"
-				columnSize="1"
-				nullable="false"
-				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -391,6 +385,5 @@
 		name="ti_gestione_ev_next" />
 	<persistentProperty
 		name="cd_elemento_voce_next" />
-	<persistentProperty
-			name="fl_pluriennale" />
+
 </SQLPersistentInfo>
