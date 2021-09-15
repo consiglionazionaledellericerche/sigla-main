@@ -45,6 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 
 import javax.activation.DataHandler;
@@ -85,6 +86,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     @Autowired
     private StoreService storeService;
+
+    @Value("${pec.sdi.replyTo:}")
+    private String replyTo;
 
     private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
             pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
@@ -1031,7 +1035,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
         email.setHostName(pecHostName);
         String replyTo = null;
         if (bulk.getDocumentoEleTrasmissione() != null) {
-            replyTo = bulk.getDocumentoEleTrasmissione().getReplyTo();
+            replyTo = Optional.ofNullable(this.replyTo).filter(s -> !s.isEmpty()).orElse(bulk.getDocumentoEleTrasmissione().getReplyTo());
         }
         email.addTo(replyTo == null ? pecSDIAddress : replyTo, "SdI - Sistema Di Interscambio");
         email.setFrom(userName, userName);
