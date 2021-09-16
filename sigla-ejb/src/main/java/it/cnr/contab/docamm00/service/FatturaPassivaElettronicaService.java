@@ -89,6 +89,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     @Value("${pec.sdi.replyTo:}")
     private String replyTo;
+    @Value("${pec.host.port:465}")
+    private String port;
 
     private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
             pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
@@ -1031,7 +1033,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
+        SimplePECMail email = new SimplePECMail(userName, password, this.port);
         email.setHostName(pecHostName);
         String replyTo = null;
         if (bulk.getDocumentoEleTrasmissione() != null) {
@@ -1056,7 +1058,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void inviaFatturaElettronica(String userName, String password, File fatturaAttivaSigned, String idFattura) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
+        SimplePECMail email = new SimplePECMail(userName, password, this.port);
         email.setHostName(pecHostName);
         email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
         email.setFrom(userName, userName);
@@ -1069,7 +1071,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void inviaFatturaElettronica(String userName, String password, DataSource fatturaAttivaSigned, String idFattura) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
+        SimplePECMail email = new SimplePECMail(userName, password, this.port);
         email.setHostName(pecHostName);
         email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
         email.setFrom(userName, userName);
@@ -1090,7 +1092,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
             new AuthenticationFailedException("Cannot decrypt password");
         }
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
+        SimplePECMail email = new SimplePECMail(userName, password, this.port);
         email.setHostName(pecHostName);
         email.addTo(emailPEC);
         email.setFrom(userName, userName);
