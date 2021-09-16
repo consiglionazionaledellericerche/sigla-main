@@ -580,18 +580,18 @@
 	<columnFieldProperty
 		name="codiceDestinatarioFatt"
 		textTruncate="true"
-		headerStyle="max-width: 8ch"
+		headerStyle="max-width: 13ch"
 		label="Codice Dest. Fatt. Elettr." />
 	<columnFieldProperty
 		name="codiceUnivocoPcc" />
 	<columnFieldProperty
 		name="denominazionePcc"
 		textTruncate="true"
-		headerStyle="max-width: 8ch" />
+		headerStyle="max-width: 13ch" />
 	<columnFieldProperty
 		name="cd_precedente"
 		textTruncate="true"
-		headerStyle="max-width: 8ch"/>
+		headerStyle="max-width: 13ch"/>
 
 	<columnSet
 		name="columnSet01" >
