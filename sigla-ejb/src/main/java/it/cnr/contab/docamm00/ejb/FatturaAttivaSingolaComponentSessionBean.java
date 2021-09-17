@@ -39,6 +39,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 
 @Stateless(name = "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession")
 public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaAttivaSingolaComponentSession {
@@ -293,10 +294,10 @@ public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CR
 	}
     }
 
-    public it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk param1) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+    public it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, CompoundFindClause compoundfindclause, it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk param1) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
         pre_component_invocation(param0, componentObj);
 	try {
-            it.cnr.jada.util.RemoteIterator result = ((FatturaAttivaSingolaComponent) componentObj).cercaFatturaPerNdC(param0, param1);
+            it.cnr.jada.util.RemoteIterator result = ((FatturaAttivaSingolaComponent) componentObj).cercaFatturaPerNdC(param0, compoundfindclause, param1);
             component_invocation_succes(param0, componentObj);
 		return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {
