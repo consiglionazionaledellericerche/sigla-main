@@ -26,6 +26,7 @@ import java.sql.Types;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
@@ -68,6 +69,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
@@ -79,11 +81,14 @@ import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_anagraficoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -1768,6 +1773,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	}
 	
 	validaCampi(uc, obbligazione);
+	validaObbligazionePluriennale(uc, obbligazione);
 
 	try {
 		if (Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(uc) && obbligazione.getGaeDestinazioneFinale()!=null &&
@@ -1807,7 +1813,8 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
 
-	//esegue il check di disponibilita di cassa 
+
+	//esegue il check di disponibilita di cassa
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
 	verificaCoperturaContratto( uc, obbligazione);
 	verificaCoerenzaGaeContratto(uc, obbligazione);
@@ -2562,7 +2569,13 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 	
 }
 //^^@@
-/** 
+
+	@Override
+	public OggettoBulk[] modificaConBulk(UserContext usercontext, OggettoBulk[] aoggettobulk) throws ComponentException {
+		return super.modificaConBulk(usercontext, aoggettobulk);
+	}
+
+/**
   *  Obbligazione non esiste
   *    PreCondition:
   *      L'obbligazione richiesta non esiste.
@@ -2619,6 +2632,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbli
 		Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome) getHome( aUC, Obbligazione_scadenzarioBulk.class );
 		
 		obblig.setObbligazione_scadenzarioColl( new BulkList( obbligHome.findObbligazione_scadenzarioList( obblig ) ));
+		obblig.setObbligazioniPluriennali(new BulkList(obbligHome.findObbligazioniPluriennali(aUC,obblig)));
+
+
 		for ( Iterator i = obblig.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
 		{
 			Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) i.next();
@@ -3233,10 +3249,13 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		//verifica la correttezza dell'imputazione finanziaria
 		validaImputazioneFinanziaria( aUC, obbligazione );
 
+		validaObbligazionePluriennale(aUC, obbligazione);
 		//aggiorna il db:
 		updateBulk( aUC, obbligazione);
 		makeBulkListPersistent( aUC, obbligazione.getObbligazione_scadenzarioColl());
-		
+
+		makeBulkListPersistent( aUC, obbligazione.getObbligazioniPluriennali());
+
 		//esegue il check di disponibilita di cassa
 		controllaDisponibilitaCassaPerVoce( aUC, obbligazione, MODIFICA );
 
@@ -5310,6 +5329,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			return prcImputazioneFinanziariaTable;
 		} catch (PersistencyException e) {
 			throw handleException( e );
+		} catch (IntrospectionException e) {
+			throw handleException( e );
 		}
 	}
 	/*
@@ -5358,8 +5379,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			BigDecimal newImportoOsv = Utility.ZERO, totImporto = Utility.ZERO;
 			ObbligazioneHome obbligazioneHome = (ObbligazioneHome) getHome( userContext, ObbligazioneBulk.class );
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk)obbligazioneHome.findByPrimaryKey(scadenzaVecchia.getObbligazione());
-			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, obbligazione);
-
+			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, (OggettoBulk)obbligazione);
+			
 			//cerco nell'obbligazione riletto la scadenza indicata
 			for (Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk)s.next();
@@ -5372,18 +5393,17 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				}
 			}
 
-			if (scadenzaVecchia == null)
-				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");
+			if (scadenzaVecchia == null) 
+				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");	
 
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
 			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
 			scadenzaNuova.setDs_scadenza(nuovaDescrizione!=null ? nuovaDescrizione : scadenzaVecchia.getDs_scadenza());
-			scadenzaNuova.setPg_obbligazione(dati.getNuovoPgObbligazioneScadenzario());
 			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 		
 			// Rigenero i relativi dettagli	
-			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);
-
+			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);	
+		
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scad_voceBulk osvOld = (Obbligazione_scad_voceBulk)s.next();
 				if (nuovaGae != null && cdr != null){
@@ -5394,15 +5414,15 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 						osvOld.setToBeUpdated();
 					}
 				} else {
-					newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP);
+					newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
 					
 					aggiornaImportoScadVoceScadenzaNuova(newImportoOsv, scadenzaNuova, osvOld);
 						
 					osvOld.setIm_voce(newImportoOsv);
 					osvOld.setToBeUpdated();
 				}
-			}
-
+			}		
+		
 			//Quadro la sommatoria sulla vecchia scadenza
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); )
 				totImporto = totImporto.add(((Obbligazione_scad_voceBulk)s.next()).getIm_voce()); 
@@ -5411,14 +5431,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				//recupero il primo dettaglio e lo aggiorno per quadrare
 				for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 					Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk)s.next();
-					BigDecimal arrotondamento = nuovoImportoScadenzaVecchia.subtract(totImporto);
-					if (osv.getIm_voce().add(arrotondamento).compareTo(Utility.ZERO)!=-1) {
-						osv.setIm_voce(osv.getIm_voce().add(arrotondamento));
-						scadenzaNuova.getObbligazione_scad_voceColl().stream()
-								.filter(el->el.getCd_centro_responsabilita().equals(osv.getCd_centro_responsabilita()))
-								.filter(el->el.getCd_linea_attivita().equals(osv.getCd_linea_attivita()))
-								.findFirst()
-								.ifPresent(osvNew->osvNew.setIm_voce(osvNew.getIm_voce().subtract(arrotondamento)));
+					if (osv.getIm_voce().add(nuovoImportoScadenzaVecchia.subtract(totImporto)).compareTo(Utility.ZERO)!=-1) {
+						osv.setIm_voce(osv.getIm_voce().add(nuovoImportoScadenzaVecchia.subtract(totImporto)));
 						break;
 					}
 				}
@@ -5538,17 +5552,17 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			throw handleException( e );
 		}
 	}
-	private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbligazione_scadenzarioBulk scadenzaNuova,
-			Obbligazione_scad_voceBulk osvOld) {
-		for (Iterator n = scadenzaNuova.getObbligazione_scad_voceColl().iterator(); n.hasNext(); ) {
-			Obbligazione_scad_voceBulk osvNew = (Obbligazione_scad_voceBulk)n.next();
-			if (osvNew.getCd_centro_responsabilita().equals(osvOld.getCd_centro_responsabilita()) &&
-				osvNew.getCd_linea_attivita().equals(osvOld.getCd_linea_attivita())
-	//		    && osvNew.getCd_voce().equals(osvOld.getCd_voce())
-				)
-				osvNew.setIm_voce(osvOld.getIm_voce().subtract(newImportoOsv));
-		}
+private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbligazione_scadenzarioBulk scadenzaNuova,
+		Obbligazione_scad_voceBulk osvOld) {
+	for (Iterator n = scadenzaNuova.getObbligazione_scad_voceColl().iterator(); n.hasNext(); ) {
+		Obbligazione_scad_voceBulk osvNew = (Obbligazione_scad_voceBulk)n.next();
+		if (osvNew.getCd_centro_responsabilita().equals(osvOld.getCd_centro_responsabilita()) &&
+		    osvNew.getCd_linea_attivita().equals(osvOld.getCd_linea_attivita()) 
+//		    && osvNew.getCd_voce().equals(osvOld.getCd_voce())
+		    )
+			osvNew.setIm_voce(osvOld.getIm_voce().subtract(newImportoOsv));
 	}
+}
 	private void aggiornaObbligazioneModificaTemporanea(UserContext userContext,Obbligazione_modificaBulk obbligazioneModTemporanea) throws ComponentException {
 
 		try {
@@ -6017,5 +6031,42 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 
 		sql.addClause(clauses);
 		return sql;
+	}
+
+	private void validaObbligazionePluriennale(UserContext uc, ObbligazioneBulk bulk) throws ComponentException{
+
+
+		for(Obbligazione_pluriennaleBulk obbPlur : bulk.getObbligazioniPluriennali()){
+			if(obbPlur.getAnno() == null || obbPlur.getAnno() == 0){
+				throw new ApplicationException("Impostare Anno Impegno Pluriennale");
+			}
+			if( !isAnnoPluriennaleSuccessivo(bulk.getEsercizio(),obbPlur.getAnno())){
+				throw new ApplicationException("L'anno deve essere successivo all'anno corrente");
+			}
+			if(isAnnoDuplicato(bulk)){
+				throw new ApplicationException("Risulta presente più volte lo stesso anno");
+			}
+			if(obbPlur.getImporto() == null || obbPlur.getImporto().compareTo(new BigDecimal(0)) == 0){
+				throw new ApplicationException("Impostare Importo");
+			}
+		}
+	}
+
+	private boolean isAnnoDuplicato(ObbligazioneBulk bulk){
+		if ( bulk.getObbligazioniPluriennali().stream()
+				.collect(Collectors.groupingBy(Obbligazione_pluriennaleBulk::getAnno, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+
+	private boolean isAnnoPluriennaleSuccessivo(Integer annoObbligazione, Integer annoObbPluriennale) {
+
+		if(annoObbPluriennale.compareTo(annoObbligazione) <= 0){
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+
 	}
 }

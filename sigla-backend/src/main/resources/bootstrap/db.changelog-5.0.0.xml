@@ -4798,6 +4798,104 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="CD_VOCE_CREDITO_EP"/>
         </createIndex>
     </changeSet>
+    <changeSet author="valentina.tomada" id="create-table-progetto-anagrafico">
+        <createTable remarks="Progetto Anagrafico" tableName="progetto_anagrafico">
+            <column name="id_prg_anagrafico" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_anag" remarks="Codice entità anagrafica di primo livello" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_inizio" remarks="Data inizio nel progetto" type="${date.type}"/>
+            <column name="data_fine" remarks="Data fine  nel progetto" type="${date.type}"/>
+            <column name="importo" remarks="Importo totale" type="numeric(15, 2)"/>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="id_prg_anagrafico" constraintName="progetto_anagrafico_pkey" tableName="progetto_anagrafico"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_anag" baseTableName="progetto_anagrafico" constraintName="fk_det_anagrafico" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_anag" referencedTableName="anagrafico"/>
+
+        <createIndex indexName="FX_PROGETTO_ANAGRAFICO00" tableName="progetto_anagrafico">
+            <column name="cd_anag"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="valentina.tomada" id="create-table-obbligazione-pluriennale">
+        <createTable remarks="Obbligazione Pluriennale" tableName="obbligazione_pluriennale">
+            <column name="id_obbligazione_plur" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="anno" remarks="Anno Obbligazione Pluriennale" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cd_cds" remarks="Cds dell'obbligazione " type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio dell'obbligazione" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_originale" remarks="Esercizio Originale dell'obbligazione" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_obbligazione" remarks="Numero dell'obbligazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="importo" remarks="Importo totale" type="numeric(15, 2)"/>
+
+            <column name="cd_cds_rif" remarks="Cds dell'obbligazione di riferimento " type="VARCHAR(30)"/>
+            <column name="esercizio_rif" remarks="Esercizio dell'obbligazione di riferimento" type="INT"/>
+            <column name="esercizio_originale_rif" remarks="Esercizio Originale dell'obbligazione di riferimento" type="INT"/>
+            <column name="pg_obbligazione_rif" remarks="Numero dell'obbligazione di riferimento" type="BIGINT"/>
+
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id_obbligazione_plur" constraintName="obbligazione_pluriennale_pkey" tableName="obbligazione_pluriennale"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione" baseTableName="obbligazione_pluriennale" constraintName="fk_obbligazione_pluriennale01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione" referencedTableName="obbligazione"/>
+        <addForeignKeyConstraint baseColumnNames="cd_cds_rif,esercizio_rif,esercizio_originale_rif,pg_obbligazione_rif" baseTableName="obbligazione_pluriennale" constraintName="fk_obbligazione_pluriennale02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione" referencedTableName="obbligazione"/>
+
+        <createIndex indexName="fx_obbligazione_pluriennale00" tableName="obbligazione_pluriennale">
+            <column name="cd_cds"/>
+            <column name="esercizio"/>
+            <column name="esercizio_originale"/>
+            <column name="pg_obbligazione"/>
+        </createIndex>
+
+    </changeSet>
 
     <changeSet author="raffaele.pagano" id="inserimento-batch-apertura-anno-contabile">
         <insert tableName="batch_procedura">

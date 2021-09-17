@@ -36,6 +36,7 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -86,6 +87,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -181,6 +183,9 @@ public ProgettoRicercaComponent() {
 			 ((Progetto_uoBulk) ((ProgettoBulk)bulk).getDettagli().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
 			}
 
+			for(int i=0; ((ProgettoBulk)bulk).getAnagraficheProgetto().size() > i; i++){
+				((Progetto_anagraficoBulk) ((ProgettoBulk)bulk).getAnagraficheProgetto().get(i)).setPgProgetto(new Integer(sq_progetto.intValue()));
+			}
 			((ProgettoBulk)bulk).setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
 			try {
 				validaCreaConBulk(uc, bulk);
@@ -207,6 +212,7 @@ public ProgettoRicercaComponent() {
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getAnagraficheProgetto());
 
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
@@ -315,6 +321,8 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliFinanziatori(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliFinanziatori(testata)));
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
+
+						testata.setAnagraficheProgetto(new it.cnr.jada.bulk.BulkList(testataHome.findAnagraficheProgetto(userContext,testata)));
 						
 						testata = initializePianoEconomico(userContext, testata, true);
 
@@ -633,6 +641,8 @@ public ProgettoRicercaComponent() {
 			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
 			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
 			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
+
+			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getAnagraficheProgetto());
 
 			if (((ProgettoBulk)bulk).getOtherField()!=null) {
 				((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
@@ -1565,6 +1575,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue(), rimodulazione);
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
 		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
+		   		validaAnagraficheProgetto(userContext, progetto);
 	   		};
     	} catch(Throwable e) {
     		throw handleException(e);
@@ -2464,5 +2475,40 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
+	}
+
+	private void validaAnagraficheProgetto(UserContext uc, ProgettoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if(bulk.getAnagraficheProgetto() == null || bulk.getAnagraficheProgetto() .isEmpty()){
+			return;
+		}
+		validaRigheDettaglioAnagraficaProgetto(uc,bulk);
+
+	}
+	private void validaRigheDettaglioAnagraficaProgetto(UserContext uc, ProgettoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+
+		if(isProgettoAnagraficaDuplicato(bulk)){
+			throw new ApplicationException("Ci sono anagrafiche duplicate");
+		}
+		for ( Progetto_anagraficoBulk progetto_anagraficoBulk:bulk.getAnagraficheProgetto()){
+			if(progetto_anagraficoBulk.getCdAnag() == null || progetto_anagraficoBulk.getCdAnag()== 0){
+				throw new ApplicationException("Selezionare anagrafica");
+			}
+
+			if(progetto_anagraficoBulk.getDataInizio() == null){
+				throw new ApplicationException("Impostare data inizio nel progetto");
+			}
+			if(progetto_anagraficoBulk.getDataFine() == null){
+				throw new ApplicationException("Impostare data fine nel progetto");
+			}
+		}
+
+	}
+	private boolean isProgettoAnagraficaDuplicato(ProgettoBulk bulk){
+		if ( bulk.getAnagraficheProgetto().stream()
+				.collect(Collectors.groupingBy(Progetto_anagraficoBulk::getCdAnag, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 }

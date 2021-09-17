@@ -26,6 +26,10 @@
 	<td align="right">
 	    <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
 	    <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico"); %></td>
+<!--	<td align="right">
+	    <% bp.getController().writeFormInput(out,"fl_pluriennale");%>
+	    <% bp.getController().writeFormLabel(out,"fl_pluriennale");%></td> -->
+
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>

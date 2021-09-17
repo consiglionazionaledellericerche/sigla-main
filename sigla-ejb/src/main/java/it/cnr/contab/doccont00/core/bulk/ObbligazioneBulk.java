@@ -150,6 +150,8 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 
 	private boolean fromDocAmm = false;
 
+	private BulkList<Obbligazione_pluriennaleBulk> obbligazioniPluriennali = new BulkList<Obbligazione_pluriennaleBulk>();
+
 public ObbligazioneBulk() {
 	super();
 }
@@ -286,7 +288,7 @@ public it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk getArticolo( String 
  */ 
 public BulkCollection[] getBulkLists() {
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
-			obbligazione_scadenzarioColl };
+			obbligazione_scadenzarioColl,obbligazioniPluriennali  };
 }
 /**
  * @return java.util.Collection
@@ -2007,4 +2009,31 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	public void setGaeDestinazioneFinale(WorkpackageBulk gaeDestinazioneFinale) {
 		this.gaeDestinazioneFinale = gaeDestinazioneFinale;
 	}
+	public boolean isROFlagPluriennale(){
+
+		return Boolean.FALSE;
+
+	}
+
+	public BulkList<Obbligazione_pluriennaleBulk> getObbligazioniPluriennali() {
+		return obbligazioniPluriennali;
+	}
+
+	public void setObbligazioniPluriennali(BulkList<Obbligazione_pluriennaleBulk> obbligazioniPluriennali) {
+		this.obbligazioniPluriennali = obbligazioniPluriennali;
+	}
+
+	public int addToObbligazioniPluriennali(Obbligazione_pluriennaleBulk dett){
+		dett.setObbligazione(this);
+		getObbligazioniPluriennali().add(dett);
+		return getObbligazioniPluriennali().size()-1;
+	}
+
+	public Obbligazione_pluriennaleBulk removeFromObbligazioniPluriennali(int index) {
+		Obbligazione_pluriennaleBulk dett = (Obbligazione_pluriennaleBulk)getObbligazioniPluriennali().remove(index);
+		return dett;
+	}
+
+
+
 }

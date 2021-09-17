@@ -25,20 +25,17 @@ import java.util.Optional;
 
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.progettiric00.bp.AmministraTestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
@@ -46,7 +43,9 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
@@ -805,6 +804,50 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 		{
 			return handleException(actioncontext, throwable);
 		}
+	}
+
+	public Forward doOnDataInizioAnagraficaProgettoChange(ActionContext actioncontext) {
+		try {
+			checkDataInizioFine(actioncontext,false);
+			return actioncontext.findDefaultForward();
+		} catch (Throwable e) {
+			return handleException(actioncontext, e);
+		}
+	}
+	public Forward doOnDataFineAnagraficaProgettoChange(ActionContext actioncontext) {
+		try {
+			checkDataInizioFine(actioncontext,true);
+			return actioncontext.findDefaultForward();
+		} catch (Throwable e) {
+			return handleException(actioncontext, e);
+		}
+	}
+
+	private void checkDataInizioFine(ActionContext context,boolean originDataFine) throws FillException, ApplicationException {
+		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
+		ProgettoBulk model=(ProgettoBulk)bp.getModel();
+		Progetto_anagraficoBulk riga = (Progetto_anagraficoBulk) bp.getCrudProgetto_anagrafico().getModel();
+		Timestamp dataOld = getDataOldCheck(riga,originDataFine);
+
+		fillModel(context);
+		if ( riga.getDataFine() != null &&
+				riga.getDataInizio().compareTo(riga.getDataFine()) >= 0){
+			setDataOldCheck( riga,dataOld,originDataFine);
+			if ( originDataFine)
+				throw new ApplicationException("La Data Fine deve essere maggiore della Data Inizio");
+			throw new ApplicationException("La Data Inizio deve essere minore della Data Fine");
+		}
+
+	}
+	private void setDataOldCheck(Progetto_anagraficoBulk riga, Timestamp dataOld,boolean originDataFine ){
+		if ( originDataFine)
+			riga.setDataFine(dataOld);
+		riga.setDataInizio(dataOld);
+	}
+	private Timestamp getDataOldCheck(Progetto_anagraficoBulk riga, boolean originDataFine ){
+		if ( originDataFine)
+			return riga.getDataFine();
+		return riga.getDataInizio();
 	}
 }
 
