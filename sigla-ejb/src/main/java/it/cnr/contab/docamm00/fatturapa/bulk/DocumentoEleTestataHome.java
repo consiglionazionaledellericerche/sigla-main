@@ -256,13 +256,10 @@ public class DocumentoEleTestataHome extends BulkHome {
         			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
             		throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
             	}
-				/*
-            	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
+            	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()),
             			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
 								StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
 								StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
-
-				 */
             	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
             			documentoEleTestataBulk, notificaEsitoCommittente);
     		} catch(ApplicationException _ex) {

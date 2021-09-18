@@ -147,10 +147,11 @@ public class TransactionalFatturaPassivaComponentSession extends it.cnr.jada.ejb
         }
     }
 
-    public it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, CompoundFindClause compoundfindclause, it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
             return (it.cnr.jada.util.RemoteIterator) invoke("cercaFatturaPerNdC", new Object[]{
                     param0,
+                    compoundfindclause,
                     param1});
         } catch (java.rmi.RemoteException e) {
             throw e;

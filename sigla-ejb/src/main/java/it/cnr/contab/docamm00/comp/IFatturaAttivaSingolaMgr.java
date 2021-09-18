@@ -28,6 +28,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 
 public interface IFatturaAttivaSingolaMgr extends IDocumentoAmministrativoMgr
 {
@@ -198,7 +199,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaDettagliFatturaPerNdD(it.cn
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
  */
 
-public abstract it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk param1) throws it.cnr.jada.comp.ComponentException;
+public abstract it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, CompoundFindClause compoundfindclause, it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
   *	Tutti i controlli  superati.
   *		PreCondition:

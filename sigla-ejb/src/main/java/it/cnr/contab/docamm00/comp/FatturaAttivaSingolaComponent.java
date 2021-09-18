@@ -1950,7 +1950,7 @@ public class FatturaAttivaSingolaComponent
      * La fattura non viene aggiunta alla lista delle fatture congruenti.
      */
 //^^@@
-    public RemoteIterator cercaFatturaPerNdC(UserContext context, Nota_di_credito_attivaBulk notaDiCredito)
+    public RemoteIterator cercaFatturaPerNdC(UserContext context, CompoundFindClause compoundfindclause, Nota_di_credito_attivaBulk notaDiCredito)
             throws ComponentException {
 
         Fattura_attiva_IHome home = (Fattura_attiva_IHome) getHome(context, Fattura_attiva_IBulk.class);
@@ -1964,7 +1964,9 @@ public class FatturaAttivaSingolaComponent
         sql.addClause("AND", "fl_congelata", sql.EQUALS, Boolean.FALSE);
         sql.addClause("AND", "ti_causale_emissione", sql.EQUALS, notaDiCredito.getTi_causale_emissione());
         sql.addOrderBy("ESERCIZIO DESC");
-
+        Optional.ofNullable(compoundfindclause).ifPresent(compoundFindClause -> {
+            sql.addClause(compoundFindClause);
+        });
         try {
             return iterator(
                     context,

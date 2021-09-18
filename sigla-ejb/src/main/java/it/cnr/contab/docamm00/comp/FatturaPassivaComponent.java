@@ -1878,7 +1878,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
      * La fattura non viene aggiunta alla lista delle fatture congruenti.
      */
 //^^@@
-    public RemoteIterator cercaFatturaPerNdC(UserContext context, Nota_di_creditoBulk notaDiCredito)
+    public RemoteIterator cercaFatturaPerNdC(UserContext context, CompoundFindClause compoundfindclause, Nota_di_creditoBulk notaDiCredito)
             throws ComponentException {
 
         Fattura_passiva_IHome home = (Fattura_passiva_IHome) getHome(context, Fattura_passiva_IBulk.class);
@@ -1894,7 +1894,9 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         //sql.addClause("AND", "pg_lettera", sql.ISNULL, null);
         sql.addClause("AND", "ti_istituz_commerc", SQLBuilder.EQUALS, notaDiCredito.getTi_istituz_commerc());
         sql.addOrderBy("ESERCIZIO DESC");
-
+        Optional.ofNullable(compoundfindclause).ifPresent(compoundFindClause -> {
+            sql.addClause(compoundFindClause);
+        });
         try {
             return iterator(
                     context,
