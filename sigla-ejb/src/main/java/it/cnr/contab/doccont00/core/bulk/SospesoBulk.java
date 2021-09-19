@@ -635,4 +635,8 @@ if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
                 .orElseGet(() -> new MandatoIBulk()));
         mandatoRiaccredito.setPg_mandato(pg_mandato_man_riaccr);
     }
+
+    public Boolean isTipoEntrata(){
+        return Optional.ofNullable(getTi_entrata_spesa()).map(x -> x.equals(TIPO_ENTRATA)).orElse(false);
+    }
 }

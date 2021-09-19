@@ -19,12 +19,14 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import java.sql.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 import java.math.*;
+import java.util.Collection;
 
 public class Sospeso_det_uscHome extends BulkHome {
 /**
@@ -51,58 +53,20 @@ public Sospeso_det_uscHome(java.sql.Connection conn,PersistentCache persistentCa
 */
 public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws it.cnr.jada.persistency.PersistencyException 
 {
-	try
-	{
-		LoggableStatement ps = new LoggableStatement(getConnection(),
-			"SELECT SUM( IM_ASSOCIATO ) " +			
-			"FROM " +
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 			
-			"SOSPESO_DET_USC WHERE " +
-			"ESERCIZIO = ? AND CD_CDS = ? AND PG_MANDATO = ? AND STATO = ? AND TI_SOSPESO_RISCONTRO = ?" ,
-			true,this.getClass());
-		try
+
+		BigDecimal impTotale = Utility.ZERO;
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, man_rev.getEsercizio());
+		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, man_rev.getCd_cds());
+		sql.addSQLClause("AND", "PG_MANDATO", sql.EQUALS, man_rev.getPg_documento_cont());
+		sql.addSQLClause("AND", "STATO", sql.EQUALS, Sospeso_det_uscBulk.STATO_DEFAULT);
+		sql.addSQLClause("AND", "TI_SOSPESO_RISCONTRO", sql.EQUALS, SospesoBulk.TI_RISCONTRO);
+		Collection coll = fetchAll(sql);
+		for (java.util.Iterator i = coll.iterator(); i.hasNext();)
 		{
-			ps.setObject( 1, man_rev.getEsercizio() );
-			ps.setString( 2, man_rev.getCd_cds() );
-			ps.setObject( 3, man_rev.getPg_documento_cont() );
-			ps.setString( 4, Sospeso_det_uscBulk.STATO_DEFAULT );
-			ps.setString( 5, SospesoBulk.TI_RISCONTRO );
-		
-			ResultSet rs = ps.executeQuery();
-			BigDecimal result; 
-			try
-			{
-				if(rs.next())
-				{
-					result =  rs.getBigDecimal(1);
-					if ( result == null )
-						result = new BigDecimal(0);
-				}		
-				else
-					result =  new BigDecimal(0);
-				return result;	
-			}
-			catch( SQLException e )
-			{
-				throw new PersistencyException( e );
-			}
-			finally
-			{
-				try{rs.close();}catch( java.sql.SQLException e ){};
-			}
+			Sospeso_det_etrBulk sospDet = (Sospeso_det_etrBulk) i.next();
+			impTotale = impTotale.add(Utility.nvl(sospDet.getIm_associato()));
 		}
-		catch( SQLException e )
-		{
-			throw new PersistencyException( e );
-		}
-		finally
-		{
-			try{ps.close();}catch( java.sql.SQLException e ){};	
-		}
-	}
-	catch ( SQLException e )
-	{
-			throw new PersistencyException( e );
-	}
+		return impTotale;
 }
 }

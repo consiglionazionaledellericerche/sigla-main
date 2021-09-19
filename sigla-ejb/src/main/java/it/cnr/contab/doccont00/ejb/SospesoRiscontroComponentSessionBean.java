@@ -19,8 +19,13 @@ package it.cnr.contab.doccont00.ejb;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.doccont00.comp.SospesoRiscontroComponent;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -107,4 +112,23 @@ public RemoteIterator cercaSospesiPerStato(UserContext usercontext, CompoundFind
         throw uncaughtError(usercontext, componentObj, error);
     }
 }
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void caricamentoRigaGiornaleCassa(it.cnr.jada.UserContext param0, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			((SospesoRiscontroComponent) componentObj).caricamentoRigaGiornaleCassa(param0, tesoreriaUnica, cdsEnte, riga);
+			component_invocation_succes(param0, componentObj);
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+
 }

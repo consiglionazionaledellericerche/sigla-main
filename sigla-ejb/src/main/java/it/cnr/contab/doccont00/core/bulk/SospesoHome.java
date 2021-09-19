@@ -17,6 +17,7 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -215,6 +216,25 @@ public class SospesoHome extends BulkHome {
 				Sospeso_det_etrBulk.STATO_DEFAULT);
 		return getHomeCache().getHome(Sospeso_det_etrBulk.class).fetchAll(sql);
 
+	}
+
+	public SospesoBulk findSospesoDaStornare(String cdsEnte, Integer esercizio, String ti_entrata_spesa, String cd_sospeso)
+			throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+		sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, cdsEnte);
+		sql.addClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS,
+				ti_entrata_spesa);
+		sql.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
+		sql.addClause("AND", "cd_sospeso", SQLBuilder.EQUALS, cd_sospeso);
+		sql.addClause("AND", "cd_sospeso_padre", SQLBuilder.ISNULL, null);
+		Collection coll = getHomeCache().getHome(Sospeso_det_etrBulk.class).fetchAll(sql);
+
+		if (coll != null && !coll.isEmpty()){
+			return (SospesoBulk) coll.iterator().next();
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -504,7 +524,7 @@ public class SospesoHome extends BulkHome {
 		}
 		return super.completeBulkRowByRow(userContext, persistent);
 	}
-	public void initializePrimaryKeyForInsert(UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
+	public String recuperoNextCodiceSospeso(UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
 		SospesoBulk sospesoBulk = (SospesoBulk)bulk;
 		if (sospesoBulk.getCd_sospeso() == null){
 
@@ -530,7 +550,7 @@ public class SospesoHome extends BulkHome {
 								" CD_SOSPESO LIKE "+SospesoBulk.RISC_PREFIX+"'%') " +
 								"FOR UPDATE NOWAIT",true ,this.getClass());
 			} catch (SQLException throwables) {
-				throw new ComponentException(e);
+				throw new ComponentException(throwables);
 			}
 
 			try
@@ -542,17 +562,14 @@ public class SospesoHome extends BulkHome {
 				ResultSet rs = ps.executeQuery();
 				try
 				{
-					if length(aCurr) != 14 then
-					IBMERR001.RAISE_ERR_GENERICO('Esistono numerazioni di riscontro non compatibili con la numerazione automatica generata dall''interfaccia di riscontro automatica (la lunghezza del codice sospeso è diversa da 14 caratteri)');
-					end if;
-					aNum:=substr(aCurr,5,10);
-					return RISC_PREFIX||lpad(aNum+1,10,'0');
+					String maxSospeso = rs.getString(1);
+					if (maxSospeso.length() != 14){
+						throw new ComponentException("Esistono numerazioni di riscontro non compatibili con la numerazione automatica generata dall'interfaccia di riscontro automatica. La lunghezza del codice sospeso è diversa da 14 caratteri.");
+					}
+					Long num = new Long(maxSospeso.substring(4,14));
+					String nextCd = SospesoBulk.RISC_PREFIX+String.format("%10s", (num+1)).replace(' ', '0');
+					return nextCd;
 
-
-					if ( rs.next() )
-						return  new Long( rs.getLong(1) + 1) ;
-					else
-						return  new Long( 1 ) ;
 				}
 				finally
 				{
@@ -566,8 +583,6 @@ public class SospesoHome extends BulkHome {
 			}
 
 		}
-
-
-			movimento.setPgMovimento(recuperoProgressivoMovimento(userContext));
+		return null;
 	}
 }

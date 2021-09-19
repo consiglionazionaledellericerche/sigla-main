@@ -38,13 +38,15 @@ import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
+import it.cnr.contab.doccont00.ejb.SospesoRiscontroComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -75,13 +77,11 @@ import org.apache.commons.io.IOUtils;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -89,14 +89,8 @@ import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
-import java.util.concurrent.CompletionException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -1117,7 +1111,6 @@ public class DistintaCassiereComponent extends
                                   V_ext_cassiere00Bulk file)
             throws it.cnr.jada.comp.ComponentException {
 
-// TODO Insert in EXT_CASSIERE00_LOGS...lo faccio?
         boolean tesoreriaUnica = false;
         String ccEnte = null;
         EnteBulk cdsEnte = null;
@@ -1135,79 +1128,18 @@ public class DistintaCassiereComponent extends
             throw new ComponentException(e);
         }
 
-// Da spostare in un altro component mettendo REQUIRES_NEW
-// TODO        lock table EXT_CASSIERE00 in exclusive mode;
         MovimentoContoEvidenzaHome home = (MovimentoContoEvidenzaHome)getHome(userContext, MovimentoContoEvidenzaBulk.class);
+        SospesoRiscontroComponentSession sess = (SospesoRiscontroComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                .createEJB("CNRDOCCONT00_EJB_SospesoRiscontroComponentSession");
 
         try {
             List righeFile = home.recuperoRigheFile(file.getNome_file(), file.getEsercizio(), MovimentoContoEvidenzaBulk.STATO_RECORD_INIZIALE);
             for (Object bulk : righeFile){
                 MovimentoContoEvidenzaBulk riga = (MovimentoContoEvidenzaBulk)bulk;
-                Integer esercizio = riga.getEsercizio();
-                if (riga.isMandatoReversale()){
-                    if (riga.isTipoOperazioneEseguitoRegolarizzato()){
-                        if (riga.isReversale()){
-                            ReversaleBulk rev = new ReversaleBulk();
-                            ReversaleHome reversaleHome = (ReversaleHome) getHome(userContext, rev);
-                            try {
-                                rev = reversaleHome.findAndLockReversaleNonAnnullata(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());
-                            } catch (OutdatedResourceException | BusyResourceException e) {
-                                throw  new ComponentException(e);
-                            }
-
-                            if (rev == null){
-                                throw  new ComponentException("Reversale "+riga.getEsercizio()+"-"+riga.getNumeroDocumento()+" annullata o non esistente");
-                            }
-
-                            V_mandato_reversaleBulk v_man_rev = new V_mandato_reversaleBulk();
-                            v_man_rev.setEsercizio(rev.getEsercizio());
-                            v_man_rev.setCd_cds(rev.getCd_cds());
-                            v_man_rev.setPg_documento_cont(rev.getPg_documento_cont());
-
-                            Sospeso_det_etrHome homeSospesoEtr = (Sospeso_det_etrHome)getHome(userContext, Sospeso_det_etrBulk.class);
-                            BigDecimal importoGiaRiscontrato = homeSospesoEtr.calcolaTotDettagli(v_man_rev);
-                            if (importoGiaRiscontrato.compareTo(rev.getIm_reversale()) == 0){
-                                throw new ComponentException("La reversale "+rev.getIdReversaleAsString()+" risulta già completamente riscontrata (totale dei riscontri ed importo "+
-                                        " della reversale pari a "+rev.getIm_reversale().doubleValue());
-                            } else if (importoGiaRiscontrato.add(riga.getImporto()).compareTo(rev.getIm_reversale()) > 0){
-                                throw new ComponentException("Impossibile riscontrare la reversale "+rev.getIdReversaleAsString()+" per "+riga.getImporto().doubleValue()+". Risulta già riscontrata per "+importoGiaRiscontrato.doubleValue()+
-                                        "  e pertanto il totale dei riscontri supererebbe l''importo della reversale stessa che è di "+rev.getIm_reversale().doubleValue());
-                            }
-                            SospesoBulk sospeso = new SospesoBulk();
-                            sospeso.setCd_cds(rev.getCd_cds());
-                            sospeso.setEsercizio(rev.getEsercizio());
-                            sospeso.setTi_entrata_spesa(SospesoBulk.TIPO_ENTRATA);
-                            sospeso.setTi_sospeso_riscontro(SospesoBulk.TI_RISCONTRO);
-                            sospeso.setCd_sospeso();
-                        }
-                    }
-                }
-                TipoRecord01 record01 = null;
+                sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
             }
-        } catch (IntrospectionException | PersistencyException e) {
+        } catch (IntrospectionException | PersistencyException | RemoteException e) {
             throw new ComponentException(e);
-        }
-
-        LoggableStatement cs = null;
-        try {
-            cs = new LoggableStatement(getConnection(userContext), "{ call "
-                    + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-                    + "CNRCTB750.processaInterfaccia(?,?,?) }", false, this
-                    .getClass());
-            cs.setInt(1, file.getEsercizio().intValue());
-            cs.setString(2, file.getNome_file());
-            cs.setString(3, it.cnr.contab.utenze00.bp.CNRUserContext
-                    .getUser(userContext));
-            cs.executeQuery();
-        } catch (Throwable e) {
-            throw handleException(e);
-        } finally {
-            try {
-                if (cs != null)
-                    cs.close();
-            } catch (java.sql.SQLException e) {
-                throw handleException(e);
-            }
         }
     }
 

@@ -28,12 +28,25 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	/**
 	 * [INFORMAZIONI_CONTO_EVIDENZA null]
 	 **/
+
+	public final static String RIFERIMENTO_INTERNO_BANCA_ITALIA = "FZPBP1";
+	public final static String RIFERIMENTO_INTERNO_PAGAMENTO_STIPENDI = "PAGSTIP";
 	public final static String STATO_RECORD_INIZIALE = "I";
 	public final static String STATO_RECORD_PROCESSATO = "P";
+	public final static String TIPO_MOVIMENTO_ENTRATA = "ENTRATA";
 	public final static String TIPO_DOCUMENTO_MANDATO = "MANDATO";
+	public final static String INIZIO_TIPO_DOCUMENTO_SOSPESO = "SOSPESO";
 	public final static String TIPO_DOCUMENTO_REVERSALE = "REVERSALE";
 	public final static String TIPO_OPERAZIONE_ESEGUITO = "ESEGUITO";
 	public final static String TIPO_OPERAZIONE_REGOLARIZZATO = "REGOLARIZZATO";
+	public final static String TIPO_OPERAZIONE_STORNATO = "STORNATO";
+	public final static String TIPO_ESECUZIONE_BANCA_ITALIA = "ACCREDITO BANCA D'ITALIA";
+	public final static String TIPO_ESECUZIONE_TESORERIA_TAB_A = "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A";
+	public final static String TIPO_ESECUZIONE_TESORERIA_TAB_B = "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B";
+	public final static String TIPO_ESECUZIONE_REG_BANCA_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
+	public final static String TIPO_ESECUZIONE_REG_TESORERIA_TAB_A = "REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A";
+	public final static String TIPO_ESECUZIONE_REG_TESORERIA_TAB_B = "REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B";
+
 	private InformazioniContoEvidenzaBulk informazioniContoEvidenza =  new InformazioniContoEvidenzaBulk();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -132,5 +145,24 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	}
 	public Boolean isTipoOperazioneRegolarizzato(){
 		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_REGOLARIZZATO);
+	}
+	public Boolean isTipoOperazioneStornato(){
+		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_STORNATO);
+	}
+	public Boolean isTipoEsecuzioneBancaItalia(){
+		return getTipoEsecuzione() != null  && (getTipoEsecuzione().equals(TIPO_ESECUZIONE_BANCA_ITALIA) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_TESORERIA_TAB_A) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_TESORERIA_TAB_B)
+				||getTipoEsecuzione().equals(TIPO_ESECUZIONE_REG_BANCA_ITALIA) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_REG_TESORERIA_TAB_A) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_REG_TESORERIA_TAB_B));
+	}
+	public Boolean isSospeso(){
+		return getTipoDocumento() != null && getTipoDocumento().startsWith(INIZIO_TIPO_DOCUMENTO_SOSPESO);
+	}
+	public Boolean isMovimentoEntrata(){
+		return getTipoMovimento() != null && getTipoMovimento().equals(TIPO_MOVIMENTO_ENTRATA);
+	}
+	public Boolean isCodiceRiferimentoInternoBancaItalia(){
+		return getCodiceRifInterno() != null && getCodiceRifInterno().startsWith(RIFERIMENTO_INTERNO_BANCA_ITALIA);
+	}
+	public Boolean isCodiceRiferimentoInternoPagamentoStipendi(){
+		return getCodiceRifInterno() != null && getCodiceRifInterno().startsWith(RIFERIMENTO_INTERNO_PAGAMENTO_STIPENDI);
 	}
 }

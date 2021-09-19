@@ -1114,4 +1114,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
                   .map(uo->!uo.equals(this.getCd_uo_origine()))
                   .orElse(Boolean.FALSE);
     }
+    public String getIdMandatoAsString(){
+        return getCd_cds()+"-"+getEsercizio()+"-"+getPg_mandato();
+    }
 }
