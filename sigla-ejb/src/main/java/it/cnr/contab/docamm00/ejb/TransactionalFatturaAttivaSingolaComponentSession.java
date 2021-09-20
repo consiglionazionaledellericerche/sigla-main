@@ -32,6 +32,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 
 public class TransactionalFatturaAttivaSingolaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements FatturaAttivaSingolaComponentSession {
 public it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk addebitaDettagli(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk param1,java.util.List param2,java.util.Hashtable param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -261,10 +262,11 @@ public it.cnr.jada.util.RemoteIterator cercaDettagliFatturaPerNdD(it.cnr.jada.Us
 		}
 	}
 }
-public it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, CompoundFindClause compoundfindclause, it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.jada.util.RemoteIterator)invoke("cercaFatturaPerNdC",new Object[] {
 			param0,
+			compoundfindclause,
 			param1 });
 	} catch(java.rmi.RemoteException e) {
 		throw e;

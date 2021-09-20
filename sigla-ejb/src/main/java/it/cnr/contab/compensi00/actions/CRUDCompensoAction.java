@@ -63,24 +63,20 @@ public class CRUDCompensoAction extends EconomicaAction {
     }
 
     public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obbligazione_scadenzarioBulk scadenza) {
-        CRUDCompensoBP bp = (CRUDCompensoBP) getBusinessProcess(context);
+        CRUDCompensoBP bp = null;
         try {
             if (scadenza == null)
                 return context.findDefaultForward();
-
-
+            bp = (CRUDCompensoBP) getBusinessProcess(context);
             CompensoBulk compenso = (CompensoBulk) bp.getModel();
             TerzoBulk creditore = scadenza.getObbligazione().getCreditore();
-//        compenso.setCollegatoCapitoloPerTrovato(scadenza.getObbligazione().getElemento_voce().isVocePerTrovati());
             if (!compenso.getTerzo().equalsByPrimaryKey(creditore) &&
                     !AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
                 setMessage(context, FormBP.ERROR_MESSAGE, "La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore del compenso!");
 
             Obbligazione_scadenzarioBulk oldScad = compenso.getObbligazioneScadenzario();
             bp.elaboraScadenze(context, oldScad, scadenza);
-
             return context.findDefaultForward();
-
         } catch (Throwable t) {
             it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi defSaldiBulk = bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk();
             if (scadenza.getObbligazione().getPg_ver_rec().equals(scadenza.getObbligazione().getSaldiInfo().get("pg_ver_rec")))
