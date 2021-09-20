@@ -17,115 +17,111 @@
 
 package it.cnr.contab.docamm00.client;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.comp.ApplicationException;
+import org.jboss.resteasy.client.jaxrs.internal.BasicAuthentication;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-
-import org.jboss.resteasy.client.jaxrs.BasicAuthentication;
-
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.jada.comp.ApplicationException;
+import java.io.IOException;
 
 public class RicercaTrovato {
 
-	private static String targetEndpoint; //="http://siglaas4.cedrc.cnr.it:8480/";
-	private static String siglaRestClientUser;
-	private static String siglaRestClientPassword;
-	public RicercaTrovato() throws FileNotFoundException, IOException {
-		super();
-			loadProperties();
-	}
+    private static String targetEndpoint; //="http://siglaas4.cedrc.cnr.it:8480/";
+    private static String siglaRestClientUser;
+    private static String siglaRestClientPassword;
 
-	private TrovatoProperties recuperoTrovatoProperties() {
-		TrovatoProperties trovatoProperties = SpringUtil.getBean("trovatoProperties",TrovatoProperties.class);
-		return trovatoProperties;
-	}
+    public RicercaTrovato() throws IOException {
+        super();
+        loadProperties();
+    }
 
+    public static String getTargetEndpoint() {
+        return targetEndpoint;
+    }
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato, Boolean soloValidi) throws Exception {
-		TrovatoBulk trovatoBulk = new TrovatoBulk();
-		if (trovato == null){
-			throw new ApplicationException("Identificativo del trovato non indicato.");
-		} else {
-			trovatoBulk = cerca(trovato, soloValidi);
-		}
-		return trovatoBulk;
-	}
+    public static void setTargetEndpoint(String targetEndpoint) {
+        RicercaTrovato.targetEndpoint = targetEndpoint;
+    }
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato) throws Exception {
-		return ricercaDatiTrovato(userContext, trovato, false);
-	}
+    public static String getSiglaRestClientUser() {
+        return siglaRestClientUser;
+    }
 
-	private TrovatoBulk cerca(Long pgTrovato, Boolean soloValidi) throws Exception {
+    public static void setSiglaRestClientUser(String siglaRestClientUser) {
+        RicercaTrovato.siglaRestClientUser = siglaRestClientUser;
+    }
 
-    	TrovatoBulk trovato = new TrovatoBulk();
-        String url = "";
-        url = getTargetEndpoint()+"/rest/trovato/";
-        if (soloValidi){
-        	url+="valido/";
+    public static String getSiglaRestClientPassword() {
+        return siglaRestClientPassword;
+    }
+
+    public static void setSiglaRestClientPassword(String siglaRestClientPassword) {
+        RicercaTrovato.siglaRestClientPassword = siglaRestClientPassword;
+    }
+
+    private TrovatoProperties recuperoTrovatoProperties() {
+        TrovatoProperties trovatoProperties = SpringUtil.getBean("trovatoProperties", TrovatoProperties.class);
+        return trovatoProperties;
+    }
+
+    public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext, Long trovato, Boolean soloValidi) throws Exception {
+        TrovatoBulk trovatoBulk = new TrovatoBulk();
+        if (trovato == null) {
+            throw new ApplicationException("Identificativo del trovato non indicato.");
+        } else {
+            trovatoBulk = cerca(trovato, soloValidi);
         }
-        url+=pgTrovato;
-    	String username = getSiglaRestClientUser(), 
-    			password = getSiglaRestClientPassword();
-        	
-        	ClientBuilder clientBuilder = ClientBuilder.newBuilder();
-        	Client client = clientBuilder.register(new BasicAuthentication(username,  password)).build();
-        	WebTarget target = client.target(url);
-        	Invocation.Builder request = target.request();
-        	Response response = request.get();
-        	TrovatoRest trovatoRest = response.readEntity(TrovatoRest.class);
-        
-        	if (trovatoRest == null ){
-    			throw new ApplicationException("Identificativo del trovato indicato non esiste.");
-        	}  else {
-        		valorizzaTrovato(trovato, trovatoRest);
-        	}
-		
-	    return trovato;
-	}
-	
-	private void valorizzaTrovato(TrovatoBulk trovatoBulk,
-			TrovatoRest trovatoBean) {
-		trovatoBulk.setPg_trovato(new Long(trovatoBean.getNsrif()));
-		trovatoBulk.setInventore(trovatoBean.getInventore());
-		trovatoBulk.setTitolo(trovatoBean.getTitolo());
-	}
+        return trovatoBulk;
+    }
 
-	public synchronized void loadProperties() throws FileNotFoundException, IOException {
-		TrovatoProperties trovatoProperties = recuperoTrovatoProperties();
-		setTargetEndpoint(trovatoProperties.getTrovatoTargetEndpoint());
-		setSiglaRestClientUser(trovatoProperties.getTrovatoSiglaRestClientUser());
-		setSiglaRestClientPassword(trovatoProperties.getTrovatoSiglaRestClientPassword());
-	}
+    public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext, Long trovato) throws Exception {
+        return ricercaDatiTrovato(userContext, trovato, false);
+    }
 
-	public static String getTargetEndpoint() {
-		return targetEndpoint;
-	}
+    private TrovatoBulk cerca(Long pgTrovato, Boolean soloValidi) throws Exception {
 
+        TrovatoBulk trovato = new TrovatoBulk();
+        String url = "";
+        url = getTargetEndpoint() + "/rest/trovato/";
+        if (soloValidi) {
+            url += "valido/";
+        }
+        url += pgTrovato;
+        String username = getSiglaRestClientUser(),
+                password = getSiglaRestClientPassword();
 
-	public static void setTargetEndpoint(String targetEndpoint) {
-		RicercaTrovato.targetEndpoint = targetEndpoint;
-	}
+        ClientBuilder clientBuilder = ClientBuilder.newBuilder();
+        Client client = clientBuilder.register(new BasicAuthentication(username, password)).build();
+        WebTarget target = client.target(url);
+        Invocation.Builder request = target.request();
+        Response response = request.get();
+        TrovatoRest trovatoRest = response.readEntity(TrovatoRest.class);
 
-	public static String getSiglaRestClientUser() {
-		return siglaRestClientUser;
-	}
+        if (trovatoRest == null) {
+            throw new ApplicationException("Identificativo del trovato indicato non esiste.");
+        } else {
+            valorizzaTrovato(trovato, trovatoRest);
+        }
 
-	public static void setSiglaRestClientUser(String siglaRestClientUser) {
-		RicercaTrovato.siglaRestClientUser = siglaRestClientUser;
-	}
+        return trovato;
+    }
 
-	public static String getSiglaRestClientPassword() {
-		return siglaRestClientPassword;
-	}
+    private void valorizzaTrovato(TrovatoBulk trovatoBulk,
+                                  TrovatoRest trovatoBean) {
+        trovatoBulk.setPg_trovato(new Long(trovatoBean.getNsrif()));
+        trovatoBulk.setInventore(trovatoBean.getInventore());
+        trovatoBulk.setTitolo(trovatoBean.getTitolo());
+    }
 
-	public static void setSiglaRestClientPassword(String siglaRestClientPassword) {
-		RicercaTrovato.siglaRestClientPassword = siglaRestClientPassword;
-	}
+    public synchronized void loadProperties() throws IOException {
+        TrovatoProperties trovatoProperties = recuperoTrovatoProperties();
+        setTargetEndpoint(trovatoProperties.getTrovatoTargetEndpoint());
+        setSiglaRestClientUser(trovatoProperties.getTrovatoSiglaRestClientUser());
+        setSiglaRestClientPassword(trovatoProperties.getTrovatoSiglaRestClientPassword());
+    }
 }
