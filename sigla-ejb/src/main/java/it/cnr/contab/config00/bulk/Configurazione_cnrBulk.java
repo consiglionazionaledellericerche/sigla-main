@@ -19,15 +19,15 @@ package it.cnr.contab.config00.bulk;
 
 public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
-    public final static String SK_SDI = "SDI";
-    public final static String PK_EMAIL_PEC = "EMAIL_PEC";
-    public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
-    /**
-     * VAL01 Y -> presente l'economico patrimoniale parallela, N -> presente l'economico patrimoniale parallela
-     * VAL02 Y -> blocco scritture proposte, N -> è possibile modificare le scritture
-     */
-    public final static String PK_ECONOMICO_PATRIMONIALE = "ECONOMICO_PATRIMONIALE";
-    public final static String SK_TIPO_ECONOMICO_PATRIMONIALE = "TIPO_ECONOMICO_PATRIMONIALE";
+	public final static String SK_SDI = "SDI";
+	public final static String PK_EMAIL_PEC = "EMAIL_PEC";
+	public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
+	/**
+	 * VAL01 Y -> presente l'economico patrimoniale parallela, N -> presente l'economico patrimoniale parallela
+	 * VAL02 Y -> blocco scritture proposte, N -> è possibile modificare le scritture
+	 */
+	public final static String PK_ECONOMICO_PATRIMONIALE = "ECONOMICO_PATRIMONIALE";
+	public final static String SK_TIPO_ECONOMICO_PATRIMONIALE = "TIPO_ECONOMICO_PATRIMONIALE";
     public final static String SK_ASSOCIAZIONE_CONTI = "ASSOCIAZIONE_CONTI";
 
     public final static String SK_IMPUTAZIONE_MANUALE = "IMPUTAZIONE_MANUALE";
@@ -133,40 +133,47 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_FATTURA_PASSIVA = "FATTURA_PASSIVA";
     public final static String SK_LIMITE_REG_TARDIVA = "LIMITE_REG_TARDIVA";
 
-    public final static String PK_GESTIONE_PROGETTI = "PROGETTI";
-    public final static String SK_PROGETTO_PIANO_ECONOMICO = "PIANO_ECONOMICO";
-    public final static String SK_NATURA_REIMPIEGO = "NATURA_REIMPIEGO";
+	public final static String PK_GESTIONE_PROGETTI = "PROGETTI";
+	public final static String SK_PROGETTO_PIANO_ECONOMICO = "PIANO_ECONOMICO";
+	public final static String SK_NATURA_REIMPIEGO = "NATURA_REIMPIEGO";
+	public final static String SK_ASS_PROGETTI_ANGAGRAFICO = "ASS_PROGETTI_ANGAGRAFICO";
 
-    public final static String PK_FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
-    public final static String SK_CODICE_ABI_BT = "CODICE_ABI_BT";
-    public final static String SK_CODICE_A2A = "CODICE_A2A";
-    public final static String SK_CODICE_ENTE = "CODICE_ENTE";
-    public final static String SK_CODICE_ENTE_BT = "CODICE_ENTE_BT";
-    public final static String SK_CODICE_TRAMITE_BT = "CODICE_TRAMITE_BT";
-    public final static String SK_CODICE_ISTAT_ENTE = "CODICE_ISTAT_ENTE";
-    public final static String SK_ATTIVO_SIOPEPLUS = "ATTIVO_SIOPEPLUS";
-    public final static String SK_ANNULLA_MANDATI = "ANNULLA_MANDATI";
-    public final static String SK_ANNULLA_REVERSALI = "ANNULLA_REVERSALI";
-    public final static String SK_RIPORTA_MANDATO_DAFIRMARE = "RIPORTA_MANDATO_DAFIRMARE";
+	public final static String PK_FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
+	public final static String SK_CODICE_ABI_BT = "CODICE_ABI_BT";
+	public final static String SK_CODICE_A2A = "CODICE_A2A";
+	public final static String SK_CODICE_ENTE = "CODICE_ENTE";
+	public final static String SK_CODICE_ENTE_BT = "CODICE_ENTE_BT";
+	public final static String SK_CODICE_TRAMITE_BT = "CODICE_TRAMITE_BT";
+	public final static String SK_CODICE_ISTAT_ENTE = "CODICE_ISTAT_ENTE";
+	public final static String SK_ATTIVO_SIOPEPLUS = "ATTIVO_SIOPEPLUS";
+	public final static String SK_ANNULLA_MANDATI = "ANNULLA_MANDATI";
+	public final static String SK_ANNULLA_REVERSALI = "ANNULLA_REVERSALI";
+	public final static String SK_RIPORTA_MANDATO_DAFIRMARE = "RIPORTA_MANDATO_DAFIRMARE";
 
     public final static String PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE = "AGGIORNAMENTO IMPEGNO DA ORDINE";
     public final static String IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO = "IMPEGNO CHIUSURA FORZATA A RESIDUO";
     public final static String IMPEGNO_CHIUSURA_FORZATA_A_COMPETENZA = "IMPEGNO CHIUSURA FORZATA A COMPETENZA";
 
-    public final static String PK_BLOCCO_RESIDUI = "BLOCCO_RESIDUI";
-    public final static String SK_NATURA_FINANZIAMENTO = "NATURA_FINANZIAMENTO";
+	public final static String PK_BLOCCO_RESIDUI = "BLOCCO_RESIDUI";
+	public final static String SK_NATURA_FINANZIAMENTO = "NATURA_FINANZIAMENTO";
 
-    public final static String PK_CORI_SPECIALE = "CORI_SPECIALE";
-    public final static String SK_IVA = "IVA";
+	public final static String PK_CORI_SPECIALE = "CORI_SPECIALE";
+	public final static String SK_IVA = "IVA";
 
-    public final static String PK_VOCEEP_SPECIALE = "VOCEEP_SPECIALE";
-    public final static String SK_IVA_CREDITO = "IVA_CREDITO";
-    public final static String SK_IVA_DEBITO = "IVA_DEBITO";
-    public final static String SK_BANCA = "BANCA";
+	public final static String PK_VOCEEP_SPECIALE = "VOCEEP_SPECIALE";
+	public final static String SK_IVA_CREDITO = "IVA_CREDITO";
+	public final static String SK_IVA_DEBITO = "IVA_DEBITO";
+	public final static String SK_BANCA = "BANCA";
 
-    public Configurazione_cnrBulk() {
-        super();
-    }
+	public final static String PK_IMPEGNI = "IMPEGNI";
+	public final static String SK_IMPEGNI_PLURIENNALI = "IMPEGNI_PLURIENNALI";
+
+	public final static String PK_ACCERTAMENTI = "ACCERTAMENTI";
+	public final static String SK_ACCERTAMENTI_PLURIENNALI = "ACCERTAMENTI_PLURIENNALI";
+
+	public Configurazione_cnrBulk() {
+		super();
+	}
 
     public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria, java.lang.String cd_chiave_secondaria, java.lang.String cd_unita_funzionale, java.lang.Integer esercizio) {
         super(cd_chiave_primaria, cd_chiave_secondaria, cd_unita_funzionale, esercizio);

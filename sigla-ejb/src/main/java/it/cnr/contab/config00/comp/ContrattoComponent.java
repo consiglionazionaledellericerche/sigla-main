@@ -36,18 +36,8 @@ import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -116,6 +106,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
+import javax.swing.text.html.Option;
 
 /**
  * @author mspasiano
@@ -520,6 +511,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		if(oggettobulk instanceof ContrattoBulk)
 			try {
 				validaCampiObbligatori(usercontext,(ContrattoBulk)oggettobulk);
+				validaDettaglioContratto( usercontext,(ContrattoBulk)oggettobulk);
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);
 			} catch (IntrospectionException e) {
@@ -548,6 +540,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	public OggettoBulk modificaConBulk(UserContext userContext, ContrattoBulk bulk) throws ComponentException{
 		try {
 			validaCampiObbligatori(userContext,(ContrattoBulk)bulk);
+			validaDettaglioContratto( userContext,(ContrattoBulk)bulk);
 			ContrattoBulk contratto=(ContrattoBulk)bulk;
 			validaAssociazioneContrattoAccertamenti(userContext,(ContrattoBulk)bulk);
 
@@ -691,9 +684,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			testata.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, testata, Ass_contratto_ditteBulk.LISTA_INVITATE)));
 
+			testata.setDettaglio_contratto(new it.cnr.jada.bulk.BulkList(testataHome.findDettaglioContratto(userContext, testata )));
+
+
 			if (Optional.ofNullable(testata.getPg_progetto()).isPresent())
 				testata.setProgetto((ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(CNRUserContext.getEsercizio(userContext), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
-			
+			getHomeCache(userContext).fetchAll(userContext);
 			return calcolaTotDocCont(userContext,testata);
 		} catch(Exception e) {
 				throw handleException(e);
@@ -795,7 +791,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			
 			contratto.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, contratto, Ass_contratto_ditteBulk.LISTA_INVITATE)));
-			
+			contratto.setDettaglio_contratto(new it.cnr.jada.bulk.BulkList(testataHome.findDettaglioContratto(userContext, contratto)));
 			SQLBuilder sql = null;
 			SQLBuilder sql_liq = null;
 			SQLBuilder sql_pag = null;
@@ -1558,6 +1554,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			validaModificaConBulk(userContext, contratto);
 			try {
 				validaCampiObbligatori(userContext,contratto);
+				validaDettaglioContratto( userContext,contratto);
 			}catch (IntrospectionException e) {
 				throw new ComponentException(e);
 			} catch (SQLException e) {
@@ -1634,7 +1631,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Ass_contratto_uoBulk ass_contratto_uo = (Ass_contratto_uoBulk)j.next();
 				if(ass_contratto_uo.getCrudStatus()== OggettoBulk.NORMAL)
 					ass_contratto_uo.setCrudStatus(OggettoBulk.TO_BE_DELETED);
-			}			
+			}
+			for (java.util.Iterator j=contratto.getDettaglio_contratto().iterator();j.hasNext();){
+				Dettaglio_contrattoBulk dettaglio_contrattoBulk = (Dettaglio_contrattoBulk)j.next();
+				if(dettaglio_contrattoBulk.getCrudStatus()== OggettoBulk.NORMAL)
+					dettaglio_contrattoBulk.setCrudStatus(OggettoBulk.TO_BE_DELETED);
+			}
 			super.eliminaConBulk(userContext,contratto);
 			/* Inserisco il nuovo contratto 
 			   Recupero le uo associate al contratto e le lego a quello definitivo */		
@@ -1648,6 +1650,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				ass_contratto_ditte.setContratto(contrattoClone);
 				ass_contratto_ditte.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 			}
+			for (java.util.Iterator j=contrattoClone.getDettaglio_contratto().iterator();j.hasNext();){
+				Dettaglio_contrattoBulk dettaglio_contrattoBulk = (Dettaglio_contrattoBulk)j.next();
+				dettaglio_contrattoBulk.setContratto(contrattoClone);
+				dettaglio_contrattoBulk.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+			}
+
 			contrattoClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 			contrattoClone.setStato(ContrattoBulk.STATO_DEFINITIVO);
 
@@ -2398,5 +2406,48 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		} catch (Throwable e) {
 			throw handleException(e);
 		}
+	}
+	private void validaDettaglioContratto(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if (  bulk.getTipo_dettaglio_contratto() ==null ||  bulk.getTipo_dettaglio_contratto().isEmpty())
+			return;
+		if ( Optional.ofNullable(bulk.getDettaglio_contratto()).filter(e->e.isEmpty()).isPresent())
+			throw new ApplicationException("Bisogna aggiungere almeno un dettaglio Contratto");
+
+		if ( bulk.DETTAGLIO_CONTRATTO_ARTICOLI.equals( bulk.getTipo_dettaglio_contratto()))
+			validaRigheDettContrattoArticoli(uc,bulk);
+		if ( bulk.DETTAGLIO_CONTRATTO_CATGRP.equals( bulk.getTipo_dettaglio_contratto()))
+			validaRigheDettContrattoCatGrp(uc,bulk);
+
+	}
+	private void validaRigheDettContrattoArticoli(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if ( bulk.getDettaglio_contratto().stream()
+				.collect(Collectors.groupingBy(Dettaglio_contrattoBulk::getCdBeneServizio, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0)
+			throw new ApplicationException("Esistitono Beni duplicati nel Dettalgio Contratto");
+
+		Map<String, Long> result =bulk.getDettaglio_contratto().stream()
+				.collect(Collectors.groupingBy(Dettaglio_contrattoBulk::getCdBeneServizio, Collectors.counting()));
+		for ( Dettaglio_contrattoBulk dettaglio_contrattoBulk:bulk.getDettaglio_contratto()){
+			if ( dettaglio_contrattoBulk.getCdBeneServizio()==null || dettaglio_contrattoBulk.getCdBeneServizio().isEmpty())
+				throw new ApplicationException("Selezionare il bene per tutti i dettagli Contratti");
+			if ( dettaglio_contrattoBulk.getPrezzoUnitario()==null ||dettaglio_contrattoBulk.getPrezzoUnitario().compareTo(BigDecimal.ZERO)<=0)
+				throw new ApplicationException("Inserire il Prezzo Unitario per tutti i dettagli Contratti");
+		}
+
+	}
+	private void validaRigheDettContrattoCatGrp(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if ( bulk.getDettaglio_contratto().stream()
+				.collect(Collectors.groupingBy(Dettaglio_contrattoBulk::getCdCategoriaGruppo, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0)
+				throw new ApplicationException("Esistitono Categoria Gruppo duplicati nel Dettalgio Contratto");
+
+		for ( Dettaglio_contrattoBulk dettaglio_contrattoBulk:bulk.getDettaglio_contratto()){
+			if (dettaglio_contrattoBulk.getCdCategoriaGruppo()==null || dettaglio_contrattoBulk.getCdCategoriaGruppo().isEmpty())
+				throw new ApplicationException("Selezionare la Categoria/Gruppo tutti i dettagli Contratti");
+			if ( dettaglio_contrattoBulk.getCategoriaGruppoInvent().getDs_categoria_gruppo()==null ||
+					dettaglio_contrattoBulk.getCategoriaGruppoInvent().getDs_categoria_gruppo().isEmpty())
+				throw new ApplicationException("Esiste una Categoria Gruppo non presente in anagrafica");
+		}
+
 	}
 }

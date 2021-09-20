@@ -94,7 +94,7 @@
 	<formFieldProperty
 			name="ordinamento" />
 	<printForm
-		name="/ordmag/iss/magazzino/stampa_consumi.jasper">
+		name="/ordmag/stampa_inventario.jasper">
 		<printFieldProperty
 			name="dataInventario"
 			parameterPosition="2"

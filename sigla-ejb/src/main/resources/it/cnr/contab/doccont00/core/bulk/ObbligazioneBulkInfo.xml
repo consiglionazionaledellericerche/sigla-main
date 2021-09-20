@@ -595,7 +595,6 @@
 		enabledOnSearch="true"
 		completeOnSave="false" />
 
-
 	<columnFieldProperty
 		name="esercizio_competenza"
 		label="Esercizio competenza"
@@ -636,7 +635,7 @@
 		/>
 	<columnFieldProperty
 		name="motivazione"
-		/>		
+		/>
 
 	<formFieldProperty
 		name="cd_cds"
@@ -822,7 +821,8 @@
 		name="ds_elemento_voce_next" />
 	<formFieldProperty
 		name="find_elemento_voce_next" />
-	
+
+
 	<form name="searchtool">
         <formFieldProperty
               name="cd_cds" 
@@ -915,5 +915,6 @@
 		/>		
 	<findFieldProperty
 		name="ds_gara_in_corso"
-		/>		
+		/>
+
 </bulkInfo>

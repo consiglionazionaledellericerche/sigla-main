@@ -490,4 +490,15 @@ public class ContrattoHome extends BulkHome {
         getHomeCache().fetchAll(userContext);
         return all;
     }
+    public java.util.Collection findDettaglioContratto(it.cnr.jada.UserContext userContext, ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+        PersistentHome dettHome = getHomeCache().getHome(Dettaglio_contrattoBulk.class);
+        SQLBuilder sql = dettHome.createSQLBuilder();
+        sql.addSQLClause("AND", "ESERCIZIO_CONTRATTO", sql.EQUALS, contratto.getEsercizio());
+        sql.addSQLClause("AND", "STATO_CONTRATTO", SQLBuilder.EQUALS, contratto.getStato());
+        sql.addSQLClause("AND", "PG_CONTRATTO", sql.EQUALS, contratto.getPg_contratto());
+
+        sql.setOrderBy("ID", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+        return dettHome.fetchAll(sql);
+    }
+
 }

@@ -24,43 +24,19 @@
 package it.cnr.contab.config00.bp;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import javax.ejb.EJBException;
-import javax.ejb.RemoveException;
-import javax.servlet.ServletException;
-
-import it.cnr.contab.util.SIGLAGroups;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -74,7 +50,23 @@ import it.cnr.jada.util.upload.UploadedFile;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.util.RecordFormatException;
+
+import javax.ejb.EJBException;
+import javax.ejb.RemoveException;
+import javax.servlet.ServletException;
+import java.io.*;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author mspasiano
@@ -90,7 +82,32 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	private String tipoAccesso;
 	protected ContrattoService contrattoService;
 	protected Date dataStipulaParametri;
-	protected Boolean flagPubblicaContratto; 
+	protected Boolean flagPubblicaContratto;
+	private boolean attivoOrdini = false;
+	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){
+		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+			ContrattoBulk contratto = ( ContrattoBulk) this.getParentModel();
+			if (((Dettaglio_contrattoBulk) detail).isNonCancellabile())
+				throw new ValidationException("Non è possibile cancellare dettaglio già utilizzato in un ordine.");
+
+		}
+	};
+
+	public boolean isAttivoOrdini() {
+		return attivoOrdini;
+	}
+	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		try {
+			attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(actioncontext.getUserContext());
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+		super.init(config, actioncontext);
+	}
+
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);
 	private SimpleDetailCRUDController crudAssUODisponibili = new SimpleDetailCRUDController( "Associazione UO Disponibili", Unita_organizzativaBulk.class, "associazioneUODisponibili", this);
 	private SimpleDetailCRUDController crudAssDitte = new SimpleDetailCRUDController( "ditte Invitate", Ass_contratto_ditteBulk.class, "ditteInvitate", this){
@@ -976,5 +993,9 @@ public SimpleDetailCRUDController getCrudAssDitte() {
 		catch (RecordFormatException e) {
 			throw new ApplicationException("Errore nella lettura del file!");
 		}
+	}
+
+	public SimpleDetailCRUDController getCrudDettaglio_contratto() {
+		return crudDettaglio_contratto;
 	}
 }

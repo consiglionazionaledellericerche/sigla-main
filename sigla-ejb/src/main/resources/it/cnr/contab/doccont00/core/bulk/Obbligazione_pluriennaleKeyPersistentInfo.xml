@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_pluriennaleKey">
+	<defaultColumnMap
+		tableName="OBBLIGAZIONE_PLURIENNALE">
+		<columnMapping
+			columnName="ID_OBBLIGAZIONE_PLUR"
+			propertyName="idObbligazionePlur"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="idObbligazionePlur"
+		partOfOid="true" />
+</SQLPersistentInfo>

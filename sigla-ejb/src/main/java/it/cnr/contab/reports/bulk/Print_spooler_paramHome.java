@@ -29,4 +29,9 @@ public Print_spooler_paramHome(java.sql.Connection conn) {
 public Print_spooler_paramHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Print_spooler_paramBulk.class,conn,persistentCache);
 }
+public BulkList<Print_spooler_paramBulk> getParamsFromPgStampa(Long pgStampa) throws PersistencyException {
+	SQLBuilder sql = this.createSQLBuilder();
+	sql.addSQLClause(FindClause.AND, "PRINT_SPOOLER_PARAM.pg_stampa", SQLBuilder.EQUALS, pgStampa);
+	return new BulkList<Print_spooler_paramBulk>( this.fetchAll(sql));
+}
 }

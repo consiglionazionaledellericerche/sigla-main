@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="pgContratto"
+		property="contratto.pgContratto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Progressivo contratto (cronologico all'interno dell'esercizio)" />
+	<fieldProperty
+		name="esercizioContratto"
+		property="contratto.esercizioContratto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="Esercizio del Contratto." />
+	<fieldProperty
+		name="statoContratto"
+		property="contratto.statoContratto"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Stato del Contratto" />
+	<fieldProperty
+			name="findBeneServizio"
+			property="beneServizio"
+			inputType="SEARCHTOOL_WITH_LIKE"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			readonlyProperty="ROFindBeneServizio"
+			label="Bene/Servizio"/>
+	<fieldProperty
+		name="cdBeneServizio"
+		property="beneServizio.cd_bene_servizio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		label="Bene/Servizio" />
+	<fieldProperty
+			name="dsBeneServizio"
+			property="beneServizio.ds_bene_servizio"
+			maxLength="300"
+			inputSize="40"
+			inputType="TEXT"
+			label="Descr. Bene/Servizio"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="findUnitaMisura"
+			property="unitaMisura"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			readonlyProperty="ROFindUniMisura"
+			label="Unità di Misura" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice dell'unità di misura di ordine" />
+	<fieldProperty
+		name="coefConv"
+		property="coefConv"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="true"
+		label="Coefficiente di conversione dell'unità di misura" />
+	<fieldProperty
+		name="quantitaMin"
+		property="quantitaMin"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		enabledOnEdit="true"
+		command="doOnQuantitaMinChange"
+		label="Quantità Min" />
+	<fieldProperty
+		name="quantitaMax"
+		property="quantitaMax"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		enabledOnEdit="true"
+		command="doOnQuantitaMaxChange"
+		label="Quantità Max" />
+	<fieldProperty
+		name="quantitaOrdinata"
+		property="quantitaOrdinata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="false"
+		label="Quantità Ordinata" />
+	<fieldProperty
+		name="prezzoUnitario"
+		property="prezzoUnitario"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="true"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
+		nullable="false"
+		label="Prezzo unitario" />
+	<fieldProperty
+			name="findCategoriaGruppo"
+			property="categoriaGruppoInvent"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Categoria Gruppo"
+			readonlyProperty="ROFindCatGrp"
+			enabledOnEdit="true" />
+
+	<fieldProperty
+		name="cdCategoriaGruppo"
+		property="categoriaGruppoInvent.cd_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice Categoria" />
+	<fieldProperty
+			name="dsCategoriaGruppo"
+			property="categoriaGruppoInvent.ds_categoria_gruppo"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Descrizione"
+			nullable="false"
+			caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="importoOrdinato"
+		property="importoOrdinato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		inputSize="21"
+		maxLength="21"
+		enabledOnEdit="false"
+		label="Importo Ordinato" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="pgContratto" />
+	<findFieldProperty
+		name="esercizioContratto" />
+	<findFieldProperty
+		name="statoContratto" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+			name="dsBeneServizio"/>
+	<findFieldProperty
+		name="cdUnitaMisura" />
+	<findFieldProperty
+		name="coefConv" />
+	<findFieldProperty
+		name="quantitaMin" />
+	<findFieldProperty
+		name="quantitaMax" />
+	<findFieldProperty
+		name="quantitaOrdinata" />
+	<findFieldProperty
+		name="prezzoUnitario" />
+	<findFieldProperty
+		name="cdCategoriaGruppo" />
+	<findFieldProperty
+			name="dsCategoriaGruppo"/>
+	<findFieldProperty
+		name="importoOrdinato" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="pgContratto" />
+	<columnFieldProperty
+		name="esercizioContratto" />
+	<columnFieldProperty
+		name="statoContratto" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="cdUnitaMisura" />
+	<columnFieldProperty
+		name="coefConv" />
+	<columnFieldProperty
+		name="quantitaMin" />
+	<columnFieldProperty
+		name="quantitaMax" />
+	<columnFieldProperty
+		name="quantitaOrdinata" />
+	<columnFieldProperty
+		name="prezzoUnitario" />
+	<columnFieldProperty
+		name="cdCategoriaGruppo" />
+	<columnFieldProperty
+		name="importoOrdinato" />
+	<formFieldProperty
+			name="id" />
+	<formFieldProperty
+			name="dsBeneServizio"/>
+	<formFieldProperty
+			name="coefConv" />
+	<formFieldProperty
+			name="quantitaMin" />
+	<formFieldProperty
+			name="quantitaMax" />
+	<formFieldProperty
+			name="quantitaOrdinata" />
+	<formFieldProperty
+			name="prezzoUnitario" />
+	<formFieldProperty
+			name="importoOrdinato" />
+	<formFieldProperty
+			name="findUnitaMisura" />
+	<formFieldProperty
+			name="findBeneServizio"/>
+	<formFieldProperty
+			name="findCategoriaGruppo"/>
+
+	<columnSet
+			name="ColumnsDettArticoli">
+		<columnFieldProperty
+				name="cdBeneServizio" />
+		<columnFieldProperty
+				name="dsBeneServizio"/>
+		<columnFieldProperty
+				name="cdUnitaMisura" />
+		<columnFieldProperty
+				name="prezzoUnitario" />
+		<columnFieldProperty
+				name="quantitaMin" />
+		<columnFieldProperty
+				name="quantitaMax"/>
+		<columnFieldProperty
+				name="quantitaOrdinata"/>
+	</columnSet>
+	<columnSet
+			name="ColumnsDettArtGrp">
+		<columnFieldProperty
+				name="cdCategoriaGruppo" />
+		<columnFieldProperty
+				name="dsCategoriaGruppo" />
+		<columnFieldProperty
+				name="importoOrdinato" />
+
+	</columnSet>
+</bulkInfo>

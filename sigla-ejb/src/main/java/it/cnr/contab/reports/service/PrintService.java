@@ -165,7 +165,8 @@ public class PrintService implements InitializingBean {
             printSpooler = offlineReportComponent.getJobWaitToJsoDS(userContextCal);
 
             if (Optional.ofNullable(printSpooler).isPresent()) {
-                PrintDataSourceOffline jsonDataSource = this.getPrintDsOfflineImplemented().get(printSpooler.getReport());
+                Print_priorityBulk print_priorityBulk = offlineReportComponent.findPrintPriority(userContextCal,printSpooler.getReport());
+                PrintDataSourceOffline jsonDataSource = this.getPrintDsOfflineImplemented().get(print_priorityBulk.getReportName());
                 //printSpooler = jsonDataSource.getPrintSpooler(userContextCal,printSpooler);
                 printSpooler = offlineReportComponent.getPrintSpoolerDsOffLine( userContextCal,printSpooler,jsonDataSource);
                 executeReportDs(userContextCal, printSpooler);

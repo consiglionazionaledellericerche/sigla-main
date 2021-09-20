@@ -21,13 +21,16 @@
 */
 package it.cnr.contab.config00.contratto.bulk;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.util.action.CRUDBP;
 import org.springframework.util.StringUtils;
 
@@ -79,6 +82,17 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		ti_natura_contabileKeys.put(NATURA_CONTABILE_ATTIVO_E_PASSIVO,"Attivo e Passivo");
 		ti_natura_contabileKeys.put(NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI,"Senza flussi finanziari");
 	}
+	public static final java.util.Dictionary tipoDettaglioContrattoKeys = new it.cnr.jada.util.OrderedHashtable();
+
+
+	final public static String DETTAGLIO_CONTRATTO_CATGRP = "CAT";
+	final public static String DETTAGLIO_CONTRATTO_ARTICOLI = "ART";
+
+	static {
+		tipoDettaglioContrattoKeys.put(DETTAGLIO_CONTRATTO_CATGRP,"Categoria Gruppo");
+		tipoDettaglioContrattoKeys.put(DETTAGLIO_CONTRATTO_ARTICOLI,"Articoli");
+	}
+
 	private ContrattoBulk contratto_padre;
 	private TerzoBulk figura_giuridica_interna;
 	private TerzoBulk figura_giuridica_esterna;
@@ -101,6 +115,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
 	private BulkList ditteInvitate = new BulkList();
+	private BulkList<Dettaglio_contrattoBulk> dettaglio_contratto= new it.cnr.jada.bulk.BulkList<Dettaglio_contrattoBulk>();
 		
 	@Transient
 	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
@@ -138,6 +153,13 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	public boolean isRODefinitivo(){
 		return getStato()!=null && isDefinitivo();
+	}
+	public boolean isROTipoContratto(){
+		if (Optional.ofNullable(getDettaglio_contratto()).filter(p->( !p.isEmpty())).isPresent()){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+
 	}
 	public boolean isRODati_cessazione(){
 		return getStato()!=null && !isDefinitivo();
@@ -238,8 +260,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 */
 	public final java.util.Dictionary getTi_natura_contabileKeys() {
 		return ti_natura_contabileKeys;
-	}		
-	
+	}
+
+	public final java.util.Dictionary getTipoDettaglioContrattoKeys() {
+		return tipoDettaglioContrattoKeys;
+	}
+
 	@StorageProperty(name="sigla_contratti:natura_contabile")
 	public String getDescrizioneNaturaContabile(){
 		return (String) Optional.ofNullable(getNatura_contabile()).map(x -> ti_natura_contabileKeys.get(x)).orElse(null);
@@ -438,8 +464,14 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati(),getArchivioAllegatiFlusso(),getDitteInvitate()};
+		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati(),
+				getArchivioAllegatiFlusso(),getDitteInvitate(),getDettaglio_contratto()};
 	}
+
+//	public List getChildren() {
+//		return getDettaglio_contratto();
+//	}
+
 	public Ass_contratto_uoBulk removeFromAssociazioneUO(int index) {
 		Ass_contratto_uoBulk dett = (Ass_contratto_uoBulk)getAssociazioneUO().remove(index);
 		return dett;
@@ -979,4 +1011,23 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 			setResponsabile(new V_persona_fisicaBulk());
 		return super.initializeForFreeSearch(crudbp, actioncontext);
 	}
+
+	public BulkList<Dettaglio_contrattoBulk> getDettaglio_contratto() {
+		return dettaglio_contratto;
+	}
+
+	public void setDettaglio_contratto(BulkList<Dettaglio_contrattoBulk> dettaglio_contratto) {
+		this.dettaglio_contratto = dettaglio_contratto;
+	}
+	public int addToDettaglio_contratto(Dettaglio_contrattoBulk dett) {
+		//dett.setUtente(this);
+		dett.setContratto(this);
+		getDettaglio_contratto().add(dett);
+		return getDettaglio_contratto().size()-1;
+	}
+	public Dettaglio_contrattoBulk removeFromDettaglio_contratto(int index) {
+		Dettaglio_contrattoBulk dett = (Dettaglio_contrattoBulk)getDettaglio_contratto().remove(index);
+		return dett;
+	}
+
 }

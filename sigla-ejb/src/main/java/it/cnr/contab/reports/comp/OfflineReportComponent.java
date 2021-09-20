@@ -20,16 +20,14 @@ package it.cnr.contab.reports.comp;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.reports.bulk.Print_priorityBulk;
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
-import it.cnr.contab.reports.bulk.Print_spoolerHome;
-import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.reports.bulk.*;
 import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
 import it.cnr.contab.reports.util.UtilReports;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.bulk.ValidationException;
@@ -257,9 +255,10 @@ public class OfflineReportComponent extends GenericComponent implements
             it.cnr.jada.UserContext userContext, String reportName)
             throws ComponentException {
         try {
-            return ( Print_priorityBulk) getHome(userContext,
-                    Print_priorityBulk.class).findByPrimaryKey(
-                    new Print_priorityBulk(reportName));
+            return ( Print_priorityBulk) (
+                    ( Print_priorityHome)getHome(userContext,
+                    Print_priorityBulk.class))
+                    .findPrintPriorityByReportName(userContext,reportName);
 
         } catch (PersistencyException e) {
             throw handleException(e);
@@ -403,13 +402,20 @@ public class OfflineReportComponent extends GenericComponent implements
     public Print_spoolerBulk getJobWaitToJsoDS(UserContext userContext) throws ComponentException {
         Print_spoolerHome printHome = (Print_spoolerHome) getHome(userContext, Print_spoolerBulk.class);
         try {
-
-
             final List<Print_spoolerBulk> list = printHome.fetchAll(printHome.getJobWaitToJsoDS());
 
-            return Optional.ofNullable(list).filter(l2-> !l2.isEmpty())
+            Print_spoolerBulk p= Optional.ofNullable(list).filter(l2-> !l2.isEmpty())
                     .map(l -> l.get(0))
                     .orElse(null);
+            if ( p!=null){
+                //recupera i params chiedere a Marco se vogliamo modificare Print_spoolerBulk per recuperarli sempre
+                Print_spooler_paramHome paramsHome = (Print_spooler_paramHome) getHome(userContext,Print_spooler_paramBulk.class);
+                BulkList b = paramsHome.getParamsFromPgStampa( p.getPgStampa());
+                if ( b!=null)
+                    p.setParams(b);
+
+            }
+            return p;
         } catch (PersistencyException | BusyResourceException e) {
             throw handleException(e);
         }

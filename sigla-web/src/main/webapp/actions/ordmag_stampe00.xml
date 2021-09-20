@@ -42,7 +42,7 @@
         <init-param name="defaultAction" value="StampaMagInventarioAction" />
         <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
         <init-param name="printbp" value="OfflineReportPrintBP"/>
-        <init-param name="reportName" value="/ordmag/magazzino/stampa_inventario.jasper" />
+        <init-param name="reportName" value="/ordmag/stampa_inventario.jasper" />
         <init-param name="repotWhitDsOffLine" value="true"/>
     </businessProcess>
 

@@ -247,6 +247,13 @@
 			sqlTypeName="DECIMAL" 
 			columnSize="10" 
 			nullable="true"/>
+		<columnMapping
+				columnName="TIPO_DETTAGLIO_CONTRATTO"
+				propertyName="tipo_dettaglio_contratto"
+				sqlTypeName="VARCHAR"
+				columnSize="3"
+				nullable="true" />
+
 	</defaultColumnMap>
 	
         <persistentProperty
@@ -323,5 +330,7 @@
  		 <persistentProperty
                 name="codiceFlussoAcquisti"/>                                   
  		 <persistentProperty
-                name="pg_progetto"/> 
+                name="pg_progetto"/>
+		 <persistentProperty
+			name="tipo_dettaglio_contratto"/>
 </SQLPersistentInfo>

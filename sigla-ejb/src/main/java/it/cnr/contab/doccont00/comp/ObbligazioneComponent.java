@@ -26,6 +26,7 @@ import java.sql.Types;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
@@ -68,6 +69,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
@@ -79,11 +81,14 @@ import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_anagraficoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -1768,6 +1773,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	}
 	
 	validaCampi(uc, obbligazione);
+	validaObbligazionePluriennale(uc, obbligazione);
 	
 	/* simona 23.10.2002 : invertito l'ordine della verifica e della generzione dettagli x problema 344 */
 	generaDettagliScadenzaObbligazione( uc, obbligazione, null );	
@@ -1777,6 +1783,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	validaImputazioneFinanziaria( uc, obbligazione );
 
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
+
 
 	//esegue il check di disponibilita di cassa 
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
@@ -2533,7 +2540,13 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 	
 }
 //^^@@
-/** 
+
+	@Override
+	public OggettoBulk[] modificaConBulk(UserContext usercontext, OggettoBulk[] aoggettobulk) throws ComponentException {
+		return super.modificaConBulk(usercontext, aoggettobulk);
+	}
+
+	/**
   *  Obbligazione non esiste
   *    PreCondition:
   *      L'obbligazione richiesta non esiste.
@@ -2590,6 +2603,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbli
 		Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome) getHome( aUC, Obbligazione_scadenzarioBulk.class );
 		
 		obblig.setObbligazione_scadenzarioColl( new BulkList( obbligHome.findObbligazione_scadenzarioList( obblig ) ));
+		obblig.setObbligazioniPluriennali(new BulkList(obbligHome.findObbligazioniPluriennali(aUC,obblig)));
+
+
 		for ( Iterator i = obblig.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
 		{
 			Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) i.next();
@@ -3204,9 +3220,12 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		//verifica la correttezza dell'imputazione finanziaria
 		validaImputazioneFinanziaria( aUC, obbligazione );
 
+		validaObbligazionePluriennale(aUC, obbligazione);
 		//aggiorna il db:
 		updateBulk( aUC, obbligazione);
 		makeBulkListPersistent( aUC, obbligazione.getObbligazione_scadenzarioColl());
+
+		makeBulkListPersistent( aUC, obbligazione.getObbligazioniPluriennali());
 		
 		//esegue il check di disponibilita di cassa
 		controllaDisponibilitaCassaPerVoce( aUC, obbligazione, MODIFICA );
@@ -5891,5 +5910,42 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 			handleException(e);
 		}
 		return obbligazione;
-	}	
+	}
+
+	private void validaObbligazionePluriennale(UserContext uc, ObbligazioneBulk bulk) throws ComponentException{
+
+
+		for(Obbligazione_pluriennaleBulk obbPlur : bulk.getObbligazioniPluriennali()){
+			if(obbPlur.getAnno() == null || obbPlur.getAnno() == 0){
+				throw new ApplicationException("Impostare Anno Impegno Pluriennale");
+			}
+			if( !isAnnoPluriennaleSuccessivo(bulk.getEsercizio(),obbPlur.getAnno())){
+				throw new ApplicationException("L'anno deve essere successivo all'anno corrente");
+			}
+			if(isAnnoDuplicato(bulk)){
+				throw new ApplicationException("Risulta presente più volte lo stesso anno");
+			}
+			if(obbPlur.getImporto() == null || obbPlur.getImporto().compareTo(new BigDecimal(0)) == 0){
+				throw new ApplicationException("Impostare Importo");
+			}
+		}
+	}
+
+	private boolean isAnnoDuplicato(ObbligazioneBulk bulk){
+		if ( bulk.getObbligazioniPluriennali().stream()
+				.collect(Collectors.groupingBy(Obbligazione_pluriennaleBulk::getAnno, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+
+	private boolean isAnnoPluriennaleSuccessivo(Integer annoObbligazione, Integer annoObbPluriennale) {
+
+		if(annoObbPluriennale.compareTo(annoObbligazione) <= 0){
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+
+	}
 }

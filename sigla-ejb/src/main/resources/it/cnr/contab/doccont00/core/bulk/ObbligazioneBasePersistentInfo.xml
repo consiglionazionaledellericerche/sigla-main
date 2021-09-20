@@ -290,6 +290,7 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="true" />
+
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -384,4 +385,5 @@
 		name="ti_gestione_ev_next" />
 	<persistentProperty
 		name="cd_elemento_voce_next" />
+
 </SQLPersistentInfo>
