@@ -29,13 +29,10 @@
 			columnName="PG_OBBLIGAZIONE_RIF"
 			propertyName="obbligazioneRif.pg_obbligazione" />
 	</defaultColumnMap>
-
 	<persistentProperty
 		name="obbligazione"
-		partOfOid="true"/>
+		partOfOid="true" />
 	<persistentProperty
-		name="obbligazioneRif"
-		/>
-
-
+			name="obbligazioneRif"
+	/>
 </SQLPersistentInfo>
