@@ -5920,13 +5920,13 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 				throw new ApplicationException("Impostare Anno Impegno Pluriennale");
 			}
 			if( !isAnnoPluriennaleSuccessivo(bulk.getEsercizio(),obbPlur.getAnno())){
-				throw new ApplicationException("L'anno deve essere successivo all'anno corrente");
+				throw new ApplicationException("L'anno dell'Obbligazione Pluriennale deve essere successivo all'anno corrente");
 			}
 			if(isAnnoDuplicato(bulk)){
-				throw new ApplicationException("Risulta presente più volte lo stesso anno");
+				throw new ApplicationException("Risulta presente più volte lo stesso anno per l'Obbligazione Pluriennale");
 			}
-			if(obbPlur.getImporto() == null || obbPlur.getImporto().compareTo(new BigDecimal(0)) == 0){
-				throw new ApplicationException("Impostare Importo");
+			if(obbPlur.getImporto() == null){
+				throw new ApplicationException("Impostare Importo dell'Obbligazione Pluriennale");
 			}
 		}
 	}
