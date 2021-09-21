@@ -217,6 +217,7 @@ public ProgettoRicercaComponent() {
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
 				validaPianoEconomico(uc, (ProgettoBulk)bulk);
+				validaAnagraficheProgetto(uc, (ProgettoBulk)bulk);
 			}catch(Throwable throwable){
 	            throw handleException(throwable);
 	        }
@@ -666,6 +667,7 @@ public ProgettoRicercaComponent() {
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
 			validaPianoEconomico(uc, (ProgettoBulk)bulk);
+			validaAnagraficheProgetto(uc, (ProgettoBulk)bulk);
 		}catch(Throwable throwable){
 			throw handleException(throwable);
 		}
@@ -1584,7 +1586,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue(), rimodulazione);
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
 		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
-		   		validaAnagraficheProgetto(userContext, progetto);
+
 	   		};
     	} catch(Throwable e) {
     		throw handleException(e);
