@@ -56,7 +56,7 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 	 * Setta il valore di: [Cds dell'obbligazione]
 	 **/
 	public void setCdCds(String cdCds)  {
-		this.getObbligazione().setCd_cds(cdCds);
+		this.getObbligazione().getCds().setCd_unita_organizzativa(cdCds);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -127,7 +127,7 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 	 * Setta il valore di: [Cds dell'obbligazione di riferimento]
 	 **/
 	public void setCdCdsRif(String cdCdsRif)  {
-		this.getObbligazioneRif().setCd_cds(cdCdsRif);
+		this.getObbligazioneRif().getCds().setCd_unita_organizzativa(cdCdsRif);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
