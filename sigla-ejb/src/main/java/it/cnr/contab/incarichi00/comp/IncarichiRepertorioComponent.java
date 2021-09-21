@@ -978,7 +978,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         nodeAddAspect.add(nodeAllegato);
                     }
 					if (nodeAllegato!=null) {
-						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
+						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || allegato.isAnnullato() ||
 								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
@@ -1027,7 +1027,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         nodeRemoveAspect.add(nodeIncarico);
                     }
 					if (nodeAllegato!=null) {
-						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
+						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || allegato.isAnnullato() ||
 								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
