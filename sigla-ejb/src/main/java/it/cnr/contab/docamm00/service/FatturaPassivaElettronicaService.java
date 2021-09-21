@@ -1034,8 +1034,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = utilSe createSimplePECMail(userName, password);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(userName, password);
         String replyTo = null;
         if (bulk.getDocumentoEleTrasmissione() != null) {
             replyTo = Optional.ofNullable(this.replyTo).filter(s -> !s.isEmpty()).orElse(bulk.getDocumentoEleTrasmissione().getReplyTo());
