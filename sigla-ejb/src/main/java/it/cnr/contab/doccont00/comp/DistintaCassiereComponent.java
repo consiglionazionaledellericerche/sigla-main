@@ -5116,10 +5116,12 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                         } else {
                             throw new ApplicationMessageFormatException(
-                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2}",
+                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
                                     String.valueOf(bulk.getEsercizio()),
                                     String.valueOf(bulk.getCd_cds()),
-                                    String.valueOf(bulk.getPg_documento_cont()));
+                                    String.valueOf(bulk.getPg_documento_cont()),
+                                    totSiope,
+                                    infoben.getImportoBeneficiario());
                         }
                     }
 
@@ -5245,10 +5247,12 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                         } else {
                             throw new ApplicationMessageFormatException(
-                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2}",
+                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
                                     String.valueOf(bulk.getEsercizio()),
                                     String.valueOf(bulk.getCd_cds()),
-                                    String.valueOf(bulk.getPg_documento_cont()));
+                                    String.valueOf(bulk.getPg_documento_cont()),
+                                    totSiope,
+                                    infoben.getImportoBeneficiario());
                         }
                     }
 
