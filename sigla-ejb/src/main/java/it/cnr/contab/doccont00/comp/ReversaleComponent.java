@@ -1318,8 +1318,7 @@ REVERSALE
             for (Iterator i = mandato.getMandato_rigaColl().iterator(); i.hasNext(); ) {
                 riga = (Mandato_rigaIBulk) i.next();
 
-                if (it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA.equals(riga.getCd_tipo_documento_amm())
-                        && riga.getIm_ritenute_riga().compareTo(new BigDecimal(0)) > 0)
+                if (it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA.equals(riga.getCd_tipo_documento_amm()))
                     if (mandato.getMandato_terzo().getTerzo().getAnagrafico() != null)
                         mandato.getMandato_terzo().getTerzo().setAnagrafico((AnagraficoBulk) getHome(userContext, AnagraficoBulk.class).findByPrimaryKey(new AnagraficoBulk(mandato.getMandato_terzo().getTerzo().getAnagrafico().getCd_anag())));
                 if (mandato.getMandato_terzo().getTerzo().getAnagrafico().isItaliano())
