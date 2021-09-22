@@ -20,14 +20,12 @@ package it.cnr.contab.docamm00.client;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.comp.ApplicationException;
-import org.jboss.resteasy.client.jaxrs.internal.BasicAuthentication;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class RicercaTrovato {
 
@@ -124,4 +122,19 @@ public class RicercaTrovato {
         setSiglaRestClientUser(trovatoProperties.getTrovatoSiglaRestClientUser());
         setSiglaRestClientPassword(trovatoProperties.getTrovatoSiglaRestClientPassword());
     }
+
+    public class BasicAuthentication implements ClientRequestFilter {
+        private final String authHeader;
+
+        public BasicAuthentication(String username, String password) {
+            StringBuffer buf = new StringBuffer(username);
+            buf.append(':').append(password);
+            this.authHeader = "Basic " + Base64.getEncoder().encodeToString(buf.toString().getBytes(StandardCharsets.UTF_8));
+        }
+
+        public void filter(ClientRequestContext requestContext) throws IOException {
+            requestContext.getHeaders().putSingle("Authorization", this.authHeader);
+        }
+    }
+
 }
