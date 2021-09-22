@@ -35,6 +35,8 @@
 
                 <td><% bp.getCrudDettaglio_contratto().writeFormLabel(out,"prezzoUnitario");%></td>
                 <td><% bp.getCrudDettaglio_contratto().writeFormInput(out,null,"prezzoUnitario"); %></td>
+                <td><% bp.getCrudDettaglio_contratto().writeFormLabel(out,"importoOrdinato");%></td>
+                <td><% bp.getCrudDettaglio_contratto().writeFormInput(out,null,"importoOrdinato"); %></td>
             </tr>
             <tr>
                 <td><% bp.getCrudDettaglio_contratto().writeFormLabel(out,"quantitaMin");%></td>

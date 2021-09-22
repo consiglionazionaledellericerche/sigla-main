@@ -17,17 +17,9 @@
 
 package it.cnr.contab.ordmag.ordini.action;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javax.persistence.PersistenceException;
 
@@ -43,6 +35,7 @@ import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
@@ -60,11 +53,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
-import it.cnr.contab.reports.bulk.Report;
-import it.cnr.contab.reports.service.PrintService;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.jada.UserContext;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -72,7 +61,6 @@ import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.BulkBP;
@@ -193,8 +181,10 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             riga.setCoefConv(null);
             riga.setDspTipoConsegna(null);
             riga.setDspConto(null);
+            riga.setPrezzoUnitario(null);
             riga.setTipoConsegnaDefault(null);
             riga.setVoceIva(null);
+            riga.setDettaglioContratto(null);
             return context.findDefaultForward();
 
         } catch (Exception e) {
@@ -210,11 +200,32 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
         riga.setBeneServizio(bene);
         ((CRUDBP) context.getBusinessProcess()).setDirty(true);
         if (bene != null) {
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
             riga.setDsBeneServizio(bene.getDs_bene_servizio());
             riga.setCdBeneServizio(bene.getCd_bene_servizio());
-            if (bene.getUnitaMisura() != null) {
-                riga.setUnitaMisura(bene.getUnitaMisura());
-                riga.setCoefConv(BigDecimal.ONE);
+            ContrattoBulk contrattoBulk = riga.getOrdineAcq().getContratto();
+            if (contrattoBulk != null && contrattoBulk.isDettaglioContrattoPerArticoli()) {
+                try {
+                    Dettaglio_contrattoBulk dettaglio_contrattoBulk = bp.recuperoDettaglioContratto(context, riga);
+                    riga.setDettaglioContratto(dettaglio_contrattoBulk);
+                    if (riga.getDettaglioContratto() != null){
+                        riga.setUnitaMisura(riga.getDettaglioContratto().getUnitaMisura());
+                        riga.setCoefConv(riga.getDettaglioContratto().getCoefConv());
+                        riga.setPrezzoUnitario(riga.getDettaglioContratto().getPrezzoUnitario());
+                    } else {
+                        if (bene.getUnitaMisura() != null) {
+                            riga.setUnitaMisura(bene.getUnitaMisura());
+                            riga.setCoefConv(BigDecimal.ONE);
+                        }
+                    }
+                } catch (BusinessProcessException e) {
+                    handleException(context, e);
+                }
+            } else {
+                if (bene.getUnitaMisura() != null) {
+                    riga.setUnitaMisura(bene.getUnitaMisura());
+                    riga.setCoefConv(BigDecimal.ONE);
+                }
             }
             if (bene.getTipoGestione() != null) {
                 riga.setDspTipoConsegna(bene.getTipoGestione());
@@ -223,7 +234,6 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             if (bene.getVoce_iva() != null) {
                 riga.setVoceIva(bene.getVoce_iva());
             }
-            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
             if (bene.getCategoria_gruppo() != null) {
                 try {
                     ContoBulk conto = bp.recuperoContoDefault(context, bene.getCategoria_gruppo());
@@ -2110,6 +2120,15 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
     }
 
     public Forward doBringBackVisualizzaContratto(ActionContext context) {
+        return context.findDefaultForward();
+    }
+
+    public Forward doToggleDettaglioContratto(ActionContext context) {
+        CRUDOrdineAcqBP bp = Optional.ofNullable(getBusinessProcess(context))
+                .filter(CRUDOrdineAcqBP.class::isInstance)
+                .map(CRUDOrdineAcqBP.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+        bp.setDettaglioContrattoCollapse(!bp.isDettaglioContrattoCollapse());
         return context.findDefaultForward();
     }
 

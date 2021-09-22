@@ -47,6 +47,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.util.Constants;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.comp.CheckDisponibilitaContrattoFailed;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
@@ -1683,6 +1685,16 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 	}
 
+	public it.cnr.jada.persistency.sql.SQLBuilder selectCategoriaGruppoInventByClause(UserContext aUC, Dettaglio_contrattoBulk dettaglio_contrattoBulk, Categoria_gruppo_inventBulk cgi, it.cnr.jada.persistency.sql.CompoundFindClause clauses)
+			throws ComponentException {
+		it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,cgi).createSQLBuilder();
+
+		sql.addSQLClause("AND","LIVELLO",sql.EQUALS,"1");
+
+		sql.addClause(clauses);
+		sql.addOrderBy("cd_categoria_gruppo");
+		return sql;
+	}
 	/**
 	 * inizializzaBulkPerStampa method comment.
 	 */

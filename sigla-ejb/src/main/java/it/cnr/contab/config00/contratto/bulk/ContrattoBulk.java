@@ -1029,5 +1029,14 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		Dettaglio_contrattoBulk dett = (Dettaglio_contrattoBulk)getDettaglio_contratto().remove(index);
 		return dett;
 	}
+	public boolean isDettaglioContrattoPerArticoli()
+	{
+		return getTipo_dettaglio_contratto() != null && getTipo_dettaglio_contratto().equals(DETTAGLIO_CONTRATTO_ARTICOLI);
+	}
+
+	public boolean isDettaglioContrattoPerCategoriaGruppo()
+	{
+		return getTipo_dettaglio_contratto() != null && getTipo_dettaglio_contratto().equals(DETTAGLIO_CONTRATTO_CATGRP);
+	}
 
 }

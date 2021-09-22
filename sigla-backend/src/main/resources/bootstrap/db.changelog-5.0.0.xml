@@ -5020,4 +5020,15 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </createIndex>
 
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-ordine_acq_riga-id_dettaglio_contratto">
+        <addColumn tableName="ORDINE_ACQ_RIGA">
+            <column name="ID_DETTAGLIO_CONTRATTO" type="INT" remarks="Id di riferimento del dettaglio del contratto"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="ID_DETTAGLIO_CONTRATTO" baseTableName="ORDINE_ACQ_RIGA" constraintName="FK_ORDINE_ACQ_RIGA04" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="DETTAGLIO_CONTRATTO"/>
+
+        <createIndex indexName="FX_ORDINE_ACQ_RIGA04" tableName="ORDINE_ACQ_RIGA">
+            <column name="ID_DETTAGLIO_CONTRATTO"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

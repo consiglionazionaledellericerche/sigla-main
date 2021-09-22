@@ -26,6 +26,7 @@ import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -454,10 +455,10 @@ public class ContrattoHome extends BulkHome {
     }
 
     public SQLBuilder calcolaTotOrdini(it.cnr.jada.UserContext userContext, ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
-        PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
+        PersistentHome dettHome = getHomeCache().getHome(OrdineAcqBulk.class);
         SQLBuilder sql = dettHome.createSQLBuilder();
         sql.resetColumns();
-        sql.addColumn("SUM(TOTALE_ORDINI) TOTALE ");
+        sql.addColumn("SUM(IM_TOTALE_ORDINE) TOTALE ");
         sql.addSQLClause("AND", "ESERCIZIO_CONTRATTO", sql.EQUALS, contratto.getEsercizio());
         sql.addSQLClause("AND", "STATO_CONTRATTO", SQLBuilder.EQUALS, contratto.getStato());
         sql.addSQLClause("AND", "PG_CONTRATTO", sql.EQUALS, contratto.getPg_contratto());

@@ -34,6 +34,7 @@ import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
 import it.cnr.contab.docamm00.bp.VoidableBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
@@ -47,6 +48,7 @@ import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
@@ -82,13 +84,22 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	private boolean carryingThrough = false;
 	protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
 	private boolean isDeleting = false;
+	private boolean dettaglioContrattoCollapse = false;
+
+	public boolean isDettaglioContrattoCollapse() {
+		return dettaglioContrattoCollapse;
+	}
+
+	public void setDettaglioContrattoCollapse(boolean dettaglioContrattoCollapse) {
+		this.dettaglioContrattoCollapse = dettaglioContrattoCollapse;
+	}
 
 	public boolean isInputReadonly()
 	{
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 		if(ordine == null)
 			return super.isInputReadonly();
-		return 	super.isInputReadonly() || (ordine.getStato() != null && !ordine.isStatoInserito() && !ordine.isStatoInApprovazione()) ;
+		return 	super.isInputReadonly() || (ordine.getStato() != null && !ordine.isStatoInserito() && !ordine.isStatoInApprovazione() && ((ordine.isStatoAllaFirma() && !ordine.isToBeUpdated()) || !ordine.isStatoAllaFirma())) ;
 	}
 
 	private final SimpleDetailCRUDController righe= new OrdineAcqRigaCRUDController("Righe", OrdineAcqRigaBulk.class, "righeOrdineColl", this){
@@ -694,6 +705,22 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		try {
 
 			return ((OrdineAcqComponentSession)createComponentSession()).recuperoContoDefault(context.getUserContext(), categoria_gruppo_inventBulk);
+
+		} catch (it.cnr.jada.comp.ComponentException| PersistencyException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
+	public Dettaglio_contrattoBulk recuperoDettaglioContratto(
+			ActionContext context,
+			OrdineAcqRigaBulk riga)
+			throws it.cnr.jada.action.BusinessProcessException {
+
+		try {
+
+			return ((OrdineAcqComponentSession)createComponentSession()).recuperoDettaglioContratto(context.getUserContext(), riga);
 
 		} catch (it.cnr.jada.comp.ComponentException| PersistencyException e) {
 			throw handleException(e);
