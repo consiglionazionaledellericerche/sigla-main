@@ -68,13 +68,7 @@ public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
 	private final SimpleDetailCRUDController lineeDiAttivita = new SimpleDetailCRUDController("LineeDiAttivita",V_pdg_accertamento_etrBulk.class,"lineeAttivitaColl",this);
 	private final SimpleDetailCRUDController nuoveLineeDiAttivita = new SimpleDetailCRUDController("NuoveLineeDiAttivita",Linea_attivitaBulk.class,"nuoveLineeAttivitaColl",this);
 
-	private final SimpleDetailCRUDController crudAccertamento_pluriennale = new SimpleDetailCRUDController("AccertamentiPluriennali", Accertamento_pluriennaleBulk.class,"accertamentiPluriennali",this){
-		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
-			Accertamento_pluriennaleBulk riga = (Accertamento_pluriennaleBulk) getCrudAccertamento_pluriennale().getModel();
-			super.validateForDelete(context,riga);
-
-		}
-	};
+	private final SimpleDetailCRUDController crudAccertamento_pluriennale = new SimpleDetailCRUDController("AccertamentiPluriennali", Accertamento_pluriennaleBulk.class,"accertamentiPluriennali",this);
 
 
 
