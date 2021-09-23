@@ -5046,5 +5046,64 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
 
     </changeSet>
 
+    <changeSet author="valentina.tomada" id="create-table-accertamento-pluriennale">
+        <createTable remarks="Accertamento Pluriennale" tableName="accertamento_pluriennale">
+
+            <column name="anno" remarks="Anno Accertamento Pluriennale - chiave primaria" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds" remarks="Cds dell'accertamento - chiave primaria  " type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio dell'accertamento - chiave primaria" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_originale" remarks="Esercizio Originale dell'accertamento - chiave primaria" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_accertamento" remarks="Numero dell'accertamento - chiave primaria" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="importo" remarks="Importo totale" type="numeric(15, 2)"/>
+
+            <column name="cd_cds_rif" remarks="Cds dell'accertamento di riferimento " type="VARCHAR(30)"/>
+            <column name="esercizio_rif" remarks="Esercizio dell'accertamento di riferimento" type="INT"/>
+            <column name="esercizio_originale_rif" remarks="Esercizio Originale dell'accertamento di riferimento" type="INT"/>
+            <column name="pg_accertamento_rif" remarks="Numero dell'accertamento di riferimento" type="BIGINT"/>
+
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="accertamento_pluriennale" constraintName="accertamento_pluriennale_pkey" columnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento,anno"></addPrimaryKey>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento" baseTableName="accertamento_pluriennale" constraintName="fk_accertamento_pluriennale01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento" referencedTableName="accertamento"/>
+        <addForeignKeyConstraint baseColumnNames="cd_cds_rif,esercizio_rif,esercizio_originale_rif,pg_accertamento_rif" baseTableName="accertamento_pluriennale" constraintName="fk_accertamento_pluriennale02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento" referencedTableName="accertamento"/>
+
+        <createIndex indexName="fx_accertamento_pluriennale00" tableName="accertamento_pluriennale">
+            <column name="cd_cds"/>
+            <column name="esercizio"/>
+            <column name="esercizio_originale"/>
+            <column name="pg_accertamento"/>
+        </createIndex>
+
+    </changeSet>
+
+
+
 
 </databaseChangeLog>

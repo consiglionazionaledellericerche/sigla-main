@@ -110,6 +110,10 @@ public class AccertamentoBulk extends AccertamentoBase implements IDocumentoCont
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private boolean enableVoceNext = false;
 
+	private BulkList<Accertamento_pluriennaleBulk> accertamentiPluriennali = new BulkList<Accertamento_pluriennaleBulk>();
+
+
+
 public AccertamentoBulk() {
 	super();
 }
@@ -209,7 +213,8 @@ public BulkCollection[] getBulkLists() {
 	// Metti solo le liste di oggetti che devono essere resi persistenti
 	
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
-			accertamento_scadenzarioColl, archivioAllegati, pdgVincoliColl, accertamentoVincoliPerentiColl };
+			accertamento_scadenzarioColl, archivioAllegati, pdgVincoliColl,
+			 accertamentoVincoliPerentiColl, accertamentiPluriennali };
 }
 /**
  * Insert the method's description here.
@@ -1405,6 +1410,26 @@ public void setCd_cds(java.lang.String cd_cds) {
 		nuovo.setCd_uo_origine( getCd_uo_origine());
 		nuovo.setCd_cds_origine( getCd_cds_origine());
 		nuovo.setFl_netto_sospeso( getFl_netto_sospeso());
+		nuovo.setAccertamentiPluriennali(getAccertamentiPluriennali());
 		return nuovo;
 	}
+
+	public BulkList<Accertamento_pluriennaleBulk> getAccertamentiPluriennali() {
+		return accertamentiPluriennali;
+	}
+	public void setAccertamentiPluriennali(BulkList<Accertamento_pluriennaleBulk> accertamentiPluriennali) {
+		this.accertamentiPluriennali = accertamentiPluriennali;
+	}
+
+	public int addToAccertamentiPluriennali(Accertamento_pluriennaleBulk dett){
+		dett.setAccertamento(this);
+		getAccertamentiPluriennali().add(dett);
+		return getAccertamentiPluriennali().size()-1;
+	}
+
+	public Accertamento_pluriennaleBulk removeFromAccertamentiPluriennali(int index) {
+		Accertamento_pluriennaleBulk dett = (Accertamento_pluriennaleBulk)getAccertamentiPluriennali().remove(index);
+		return dett;
+	}
+
 }
