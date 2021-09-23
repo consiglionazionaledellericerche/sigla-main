@@ -1195,7 +1195,13 @@ public void cancellaObbligazioneProvvisoria (UserContext aUC,ObbligazioneBulk ob
 
 		//imposto a TO_BE_DELETED l'obbligazione e tutte le sue scadenze e tutte le sue scad_voce
 		obbligazione.setToBeDeleted();
-//		aggiornaCapitoloSaldoObbligazione( aUC, obbligazione );
+
+
+		obbligazione.getObbligazioniPluriennali().stream().forEach(e->{
+			e.setToBeDeleted();
+		});
+
+		//		aggiornaCapitoloSaldoObbligazione( aUC, obbligazione );
 		makeBulkPersistent( aUC, obbligazione );
 		aggiornaCapitoloSaldoObbligazione( aUC, obbligazione, CANCELLAZIONE );		
 	}
@@ -2075,6 +2081,10 @@ public void eliminaConBulk (UserContext aUC,OggettoBulk bulk) throws ComponentEx
 		}		
 
 		ObbligazioneBulk obbligazione = (ObbligazioneBulk) bulk;
+
+
+
+
 		if ( obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
 			cancellaObbligazioneProvvisoria( aUC, obbligazione );
 		else if ( obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_DEFINITIVO ))
@@ -3993,7 +4003,9 @@ public ObbligazioneBulk stornaObbligazioneDefinitiva(
 
         obbligazione.setUser(aUC.getUser());
         updateBulk(aUC, obbligazione);
- */       
+
+
+ */
       makeBulkPersistent( aUC, obbligazione);
       /*
 	  if ( !aUC.isTransactional() )	

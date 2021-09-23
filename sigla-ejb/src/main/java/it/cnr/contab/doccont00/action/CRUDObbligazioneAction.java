@@ -1446,7 +1446,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 			fillModel(actioncontext);
 
 			if(riga.getAnno().compareTo(annoCorrente) <= 0){
-				throw new ApplicationException("L'anno deve essere successivo all'anno corrente");
+				throw new ApplicationException("L'anno di Obbligazione Pluriennale deve essere successivo all'anno corrente");
 			}
 			return actioncontext.findDefaultForward();
 		} catch (Throwable e) {

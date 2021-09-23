@@ -57,6 +57,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 
@@ -1781,7 +1782,7 @@ public SQLBuilder selectAllEqualsObbligazioniByClause( ObbligazioneBulk bulk, Ob
 		sql.addSQLClause("AND", "ESERCIZIO_ORIGINALE", sql.EQUALS, bulk.getEsercizio_originale());
 		sql.addSQLClause("AND", "PG_OBBLIGAZIONE", sql.EQUALS, bulk.getPg_obbligazione());
 
-		sql.setOrderBy("ID_OBBLIGAZIONE_PLUR", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		sql.setOrderBy("ANNO", OrderConstants.ORDER_DESC);
 		return dettHome.fetchAll(sql);
 	}
 }
