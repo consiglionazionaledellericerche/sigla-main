@@ -23,11 +23,7 @@
 	    <td><% bp.getController().writeFormInput(out,"default","dt_registrazione", bp.isPublishHidden(),null,null);%></td>
         <td><% bp.getController().writeFormLabel(out,"cd_protocollo");%></td>
         <td><% bp.getController().writeFormInput(out,"cd_protocollo");%></td>
-        <%if(contratto.isPassivo() && bp.isAttivoOrdini()){%>
-            <td><% bp.getController().writeFormLabel(out,"tipo_dettaglio_contratto");%></td>
-            <td><% bp.getController().writeFormInput(out,"tipo_dettaglio_contratto");%></td>
-         <%}%>
-      </tr>  	
+      </tr>
       <tr><td colspan=4>
 	      <div class="GroupLabel h3 text-primary">Estremi del protocollo informatico</div>          
 	      <div class="Group card">
@@ -125,7 +121,13 @@
 			    <td colspan="5"><% bp.getController().writeFormInput(out,null,"natura_contabile",bp.isPublishHidden() || bp.isFromFlussoAcquisti(),null,"onChange=\"submitForm('doOnTipoChange')\""); %></td>
 		      </tr>        
 		      <% if ((ContrattoBulk)bp.getModel() != null && ((ContrattoBulk)bp.getModel()).isPassivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
-			  <tr>         
+			  <tr>
+                <%if(contratto.isPassivo() && bp.isAttivoOrdini()){%>
+                    <td><% bp.getController().writeFormLabel(out,"tipo_dettaglio_contratto");%></td>
+                    <td><% bp.getController().writeFormInput(out,"tipo_dettaglio_contratto");%></td>
+                 <%}%>
+		      </tr>
+			  <tr>
 		         <td><% bp.getController().writeFormLabel(out,"fl_mepa");%></td>
 		         <td><% bp.getController().writeFormInput(out,"default","fl_mepa", bp.isPublishHidden() || bp.isFromFlussoAcquisti(),null,null);%></td>
 		      </tr>

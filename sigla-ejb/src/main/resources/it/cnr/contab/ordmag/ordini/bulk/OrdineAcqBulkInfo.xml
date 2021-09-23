@@ -625,6 +625,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+		readonlyProperty="ROContratto"
 		label="Contratto"
 		enabledOnSearch="true" 
 		/>

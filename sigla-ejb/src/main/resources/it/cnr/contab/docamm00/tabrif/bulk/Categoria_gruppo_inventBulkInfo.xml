@@ -212,5 +212,11 @@
 			name="cd_categoria_gruppo"/>
 		<formFieldProperty
 			name="ds_categoria_gruppo"/>
-    </form>    	
+    </form>
+	<form name="searchtool_ridotto">
+		<formFieldProperty
+				name="cd_categoria_gruppo"/>
+		<formFieldProperty
+				name="ds_categoria_gruppo"/>
+	</form>
 </bulkInfo>

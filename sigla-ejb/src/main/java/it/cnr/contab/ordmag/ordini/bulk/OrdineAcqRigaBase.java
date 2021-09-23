@@ -75,10 +75,19 @@ public class OrdineAcqRigaBase extends OrdineAcqRigaKey implements Keyed {
 
 //    IM_TOTALE_RIGA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imTotaleRiga;
- 
+
+	private Long idDettaglioContratto;
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
- 
+
+	public Long getIdDettaglioContratto() {
+		return idDettaglioContratto;
+	}
+
+	public void setIdDettaglioContratto(Long idDettaglioContratto) {
+		this.idDettaglioContratto = idDettaglioContratto;
+	}
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ORDINE_ACQ_RIGA

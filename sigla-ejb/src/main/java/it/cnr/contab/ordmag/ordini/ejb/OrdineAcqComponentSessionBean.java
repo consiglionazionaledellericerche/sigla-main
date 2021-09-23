@@ -17,13 +17,11 @@
 
 package it.cnr.contab.ordmag.ordini.ejb;
 
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
-import it.cnr.contab.ordmag.ordini.bulk.AbilitazioneOrdiniAcqBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.ordmag.ordini.comp.OrdineAcqComponent;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
@@ -332,6 +330,26 @@ public class OrdineAcqComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
         try {
             ((OrdineAcqComponent)componentObj).chiusuraForzataOrdini(userContext, ordineAcqConsegnaBulk);
             component_invocation_succes(userContext,componentObj);
+        } catch(it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext,componentObj);
+            throw e;
+        } catch(ComponentException e) {
+            component_invocation_failure(userContext,componentObj);
+            throw e;
+        } catch(RuntimeException e) {
+            throw uncaughtRuntimeException(userContext,componentObj,e);
+        } catch(Error e) {
+            throw uncaughtError(userContext,componentObj,e);
+        }
+    }
+
+    public Dettaglio_contrattoBulk recuperoDettaglioContratto(UserContext userContext, OrdineAcqRigaBulk riga)
+            throws ComponentException, PersistencyException, RemoteException{
+        pre_component_invocation(userContext,componentObj);
+        try {
+            Dettaglio_contrattoBulk result = ((OrdineAcqComponent)componentObj).recuperoDettaglioContratto(userContext, riga);
+            component_invocation_succes(userContext,componentObj);
+            return result;
         } catch(it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(userContext,componentObj);
             throw e;

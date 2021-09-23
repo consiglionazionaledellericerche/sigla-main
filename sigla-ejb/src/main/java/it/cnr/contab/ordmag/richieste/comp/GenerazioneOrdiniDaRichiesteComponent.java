@@ -133,7 +133,7 @@ public OrdineAcqBulk generaOrdine(it.cnr.jada.UserContext userContext, OrdineAcq
 	}
 	for (Object riga : ordine.getRigheOrdineColl()){
 		OrdineAcqRigaBulk rigaOrdine = (OrdineAcqRigaBulk)riga;
-		impostaCampiDspRiga(rigaOrdine);
+		impostaCampiDspRiga(userContext, rigaOrdine);
 	}
 	return ordine;
 }

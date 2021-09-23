@@ -47,6 +47,7 @@ import it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP;
 import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
@@ -518,33 +519,8 @@ public class OrdineAcqComponent
 
 			for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
 				OrdineAcqRigaBulk riga= (OrdineAcqRigaBulk) i.next();
-				//    		if (riga.getBeneServizio() != null){
-				//    			Bene_servizioBulk bene = recuperoBeneServizio(usercontext, riga.getCdBeneServizio());
-				//    			riga.setBeneServizio(bene);
-				//    			riga.setTipoConsegnaDefault(bene.getTipoGestione());
-				//    		}
-				//    		if (riga.getUnitaMisura() != null){
-				//    			UnitaMisuraHome home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
-				//    			UnitaMisuraBulk um = (UnitaMisuraBulk)home.findByPrimaryKey(new UnitaMisuraBulk(riga.getCdUnitaMisura()));
-				//    			riga.setUnitaMisura(um);
-				//    		}
-				//    		if (riga.getVoceIva() != null){
-				//    			Voce_ivaHome home = (Voce_ivaHome)getHome(usercontext, Voce_ivaBulk.class);
-				//    			Voce_ivaBulk voce = (Voce_ivaBulk)home.findByPrimaryKey(new Voce_ivaBulk(riga.getCdVoceIva()));
-				//    			riga.setVoceIva(voce);
-				//    		}
 
-				it.cnr.jada.bulk.BulkHome homeConsegna= getHome(usercontext, OrdineAcqConsegnaBulk.class);
-				it.cnr.jada.persistency.sql.SQLBuilder sqlConsegna= homeConsegna.createSQLBuilder();
-				sqlConsegna.addClause("AND", "numero", sql.EQUALS, ordine.getNumero());
-				sqlConsegna.addClause("AND", "cdCds", sql.EQUALS, ordine.getCdCds());
-				sqlConsegna.addClause("AND", "cdUnitaOperativa", sql.EQUALS, ordine.getCdUnitaOperativa());
-				sqlConsegna.addClause("AND", "esercizio", sql.EQUALS, ordine.getEsercizio());
-				sqlConsegna.addClause("AND", "cdNumeratore", sql.EQUALS, ordine.getCdNumeratore());
-				sqlConsegna.addClause("AND", "riga", sql.EQUALS, riga.getRiga());
-				sqlConsegna.addOrderBy("consegna");
-
-				riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(homeConsegna.fetchAll(sqlConsegna)));
+				riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(recuperoRigheConsegnaCollegate(usercontext, riga)));
 
 				getHomeCache(usercontext).fetchAll(usercontext);
 
@@ -553,18 +529,7 @@ public class OrdineAcqComponent
 				for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
 					OggettoBulk consbulk= (OggettoBulk) c.next();
 					OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-					//        		if (cons.getLuogoConsegnaMag() != null){
-					//        			LuogoConsegnaMagHome home = (LuogoConsegnaMagHome)getHome(usercontext, LuogoConsegnaMagBulk.class);
-					//        			LuogoConsegnaMagBulk luogo = (LuogoConsegnaMagBulk)home.findByPrimaryKey(new LuogoConsegnaMagBulk(cons.getCdCdsLuogo(), cons.getCdLuogoConsegna()));
-					//        			cons.setLuogoConsegnaMag(luogo);
-					//        		}
-					//        		if (cons.getMagazzino() != null){
-					//        			MagazzinoBulk mag = recuperoMagazzino(usercontext, cons);
-					//        			cons.setMagazzino(mag);
-					//        		}
 					if (cons.getObbligazioneScadenzario() != null){
-						//        			Obbligazione_scadenzarioBulk scad = retrieveObbligazioneScadenzario(usercontext, cons);
-						//        			cons.setObbligazioneScadenzario(scad);
 						Obbligazione_scadenzarioBulk scad = cons.getObbligazioneScadenzario();
 						if (scadenzaComune == null || scadenzaComune.equalsByPrimaryKey(scad)){
 							esisteScadenzaComune = true;
@@ -580,7 +545,7 @@ public class OrdineAcqComponent
 						cons.setUnitaOperativaOrd(uop);
 					}
 				}
-				impostaCampiDspRiga(riga);
+				impostaCampiDspRiga(usercontext, riga);
 				if (esisteScadenzaComune){
 					riga.setDspObbligazioneScadenzario(scadenzaComune);
 				}
@@ -594,7 +559,20 @@ public class OrdineAcqComponent
 		return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 	}
 
-	protected void impostaCampiDspRiga(OrdineAcqRigaBulk riga) {
+	private List recuperoRigheConsegnaCollegate(UserContext usercontext, OrdineAcqRigaBulk riga) throws ComponentException, PersistencyException {
+		it.cnr.jada.bulk.BulkHome homeConsegna= getHome(usercontext, OrdineAcqConsegnaBulk.class);
+		it.cnr.jada.persistency.sql.SQLBuilder sqlConsegna= homeConsegna.createSQLBuilder();
+		sqlConsegna.addClause("AND", "numero", SQLBuilder.EQUALS, riga.getNumero());
+		sqlConsegna.addClause("AND", "cdCds", SQLBuilder.EQUALS, riga.getCdCds());
+		sqlConsegna.addClause("AND", "cdUnitaOperativa", SQLBuilder.EQUALS, riga.getCdUnitaOperativa());
+		sqlConsegna.addClause("AND", "esercizio", SQLBuilder.EQUALS, riga.getEsercizio());
+		sqlConsegna.addClause("AND", "cdNumeratore", SQLBuilder.EQUALS, riga.getCdNumeratore());
+		sqlConsegna.addClause("AND", "riga", SQLBuilder.EQUALS, riga.getRiga());
+		sqlConsegna.addOrderBy("consegna");
+		return homeConsegna.fetchAll(sqlConsegna);
+	}
+
+	protected void impostaCampiDspRiga(UserContext userContext, OrdineAcqRigaBulk riga) throws ComponentException{
 		if (riga.getRigheConsegnaColl().size() == 1){
 			OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)riga.getRigheConsegnaColl().iterator().next();
 			riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
@@ -846,6 +824,19 @@ public class OrdineAcqComponent
 		Bene_servizioHome beneHome = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
 		SQLBuilder sql = beneHome.selectByClause(userContext, compoundfindclause);
 		sql.addSQLClause("AND", "FL_VALIDO", SQLBuilder.EQUALS, Bene_servizioBulk.STATO_VALIDO);
+		ContrattoBulk contrattoBulk = riga.getOrdineAcq().getContratto();
+		if (riga.getOrdineAcq() != null && contrattoBulk != null && contrattoBulk.getTipo_dettaglio_contratto() != null){
+			sql.addTableToHeader("DETTAGLIO_CONTRATTO");
+			if (contrattoBulk.isDettaglioContrattoPerArticoli()){
+				sql.addSQLJoin("BENE_SERVIZIO.CD_BENE_SERVIZIO", SQLBuilder.EQUALS,"DETTAGLIO_CONTRATTO.CD_BENE_SERVIZIO");
+
+			} else if (contrattoBulk.isDettaglioContrattoPerCategoriaGruppo()){
+				sql.addSQLJoin("BENE_SERVIZIO.CD_CATEGORIA_GRUPPO", SQLBuilder.EQUALS,"DETTAGLIO_CONTRATTO.CD_CATEGORIA_GRUPPO");
+			}
+			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.PG_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getPg_contratto());
+			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.ESERCIZIO_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getEsercizio());
+			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.STATO_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getStato());
+		}
 
 		return sql;
 	}
@@ -1196,6 +1187,17 @@ public class OrdineAcqComponent
 					}
 					if (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito())){
 						throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o alla firma");
+					}
+					if (ordine.isStatoAllaFirma()){
+						for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
+							OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+							for (java.util.Iterator k= riga.getRigheConsegnaColl().iterator(); k.hasNext();) {
+								OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk) k.next();
+								if (cons.getObbligazioneScadenzario() == null || cons.getObbligazioneScadenzario().getPg_obbligazione() == null){
+									throw new it.cnr.jada.comp.ApplicationException("Sulla consegna "+cons.getConsegnaOrdineString()+ " non è indicata l'obbligazione");
+								}
+							}
+						}
 					}
 				} else if (ordineDB.isOrdineInviatoFornitore()){
 					throw new it.cnr.jada.comp.ApplicationException("Non è possibile cambiare lo stato di un ordine inviato al fornitore");
@@ -2325,6 +2327,8 @@ public class OrdineAcqComponent
 		  sql.addSQLClause("OR","(DT_PROROGA IS NOT NULL AND TRUNC(DT_PROROGA) >= TRUNC(SYSDATE))");
 		sql.closeParenthesis();
 		*/
+		sql.addOrderBy("esercizio");
+		sql.addOrderBy("pg_contratto");
 		return sql;
 	}
 	public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, int flag) throws ComponentException
@@ -2375,7 +2379,63 @@ public class OrdineAcqComponent
 				}
 				if (totale != null ){
 					if (totale.compareTo(ordine.getContratto().getIm_contratto_passivo()) > 0){
-						throw handleException( new ApplicationException("La somma degli ordini associati "+ totale+"supera l'importo definito nel contratto "+ordine.getContratto().getIm_contratto_passivo()));
+						throw handleException( new ApplicationException("La somma degli ordini associati "+ totale.doubleValue()+" supera l'importo definito nel contratto "+ordine.getContratto().getIm_contratto_passivo()));
+					}
+				}
+
+				if (ordine.getContratto().isDettaglioContrattoPerArticoli() || ordine.getContratto().isDettaglioContrattoPerCategoriaGruppo()){
+					List<Dettaglio_contrattoBulk> dettagliContrattoDaAggiornare = new ArrayList<>();
+					for (java.util.Iterator i= ordine.getDettagliCancellati().iterator(); i.hasNext();) {
+						OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
+						gestioneAggiornamentoDettaglioContratto(dettagliContrattoDaAggiornare, riga.getDettaglioContratto(), riga.getImTotaleRiga().negate(), riga.getQuantitaConsegneColl().negate());
+					}
+
+					for (Object obj : ordine.getRigheOrdineColl()){
+						OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) obj;
+						if (riga.getDettaglioContratto() == null){
+							throw handleException( new ApplicationException("La riga "+ riga.getRiga()+" non è collegata ad un dettaglio del contratto indicato"));
+						}
+						if (riga.isToBeCreated()){
+							gestioneAggiornamentoDettaglioContratto(dettagliContrattoDaAggiornare, riga.getDettaglioContratto(), riga.getImTotaleRiga(), riga.getQuantitaConsegneColl());
+						} else if (riga.isToBeUpdated()){
+							OrdineAcqRigaBulk rigaDB;
+							try {
+								rigaDB = (OrdineAcqRigaBulk) getTempHome(aUC, OrdineAcqRigaBulk.class).findByPrimaryKey(
+										new OrdineAcqRigaBulk(
+												ordine.getCdCds(),
+												ordine.getCdUnitaOperativa(),
+												ordine.getEsercizio(),
+												ordine.getCdNumeratore(),
+												ordine.getNumero(),
+												riga.getRiga()
+										));
+								rigaDB.setRigheConsegnaColl(new BulkList<>(recuperoRigheConsegnaCollegate(aUC, rigaDB)));
+							} catch (PersistencyException e) {
+								throw new ComponentException(e);
+							}
+							if (rigaDB.getDettaglioContratto() != null){
+								Dettaglio_contrattoBulk dettaglio_contrattoDB = (Dettaglio_contrattoBulk) getTempHome(aUC, Dettaglio_contrattoBulk.class).findByPrimaryKey(rigaDB.getDettaglioContratto());
+								if (dettaglio_contrattoDB.equalsByPrimaryKey(riga.getDettaglioContratto())){
+									gestioneAggiornamentoDettaglioContratto(dettagliContrattoDaAggiornare, riga.getDettaglioContratto(), riga.getImTotaleRiga().subtract(rigaDB.getImTotaleRiga()), riga.getQuantitaConsegneColl().subtract(rigaDB.getQuantitaConsegneColl()));
+								} else {
+									gestioneAggiornamentoDettaglioContratto(dettagliContrattoDaAggiornare, rigaDB.getDettaglioContratto(), rigaDB.getImTotaleRiga().negate(), rigaDB.getQuantitaConsegneColl().negate());
+									gestioneAggiornamentoDettaglioContratto(dettagliContrattoDaAggiornare, riga.getDettaglioContratto(), riga.getImTotaleRiga(), riga.getQuantitaConsegneColl());
+								}
+							} else {
+								gestioneAggiornamentoDettaglioContratto(dettagliContrattoDaAggiornare, riga.getDettaglioContratto(), riga.getImTotaleRiga(), riga.getQuantitaConsegneColl());
+							}
+						}
+					}
+					for (Dettaglio_contrattoBulk dettaglioContratto : dettagliContrattoDaAggiornare){
+						if (dettaglioContratto.getCdBeneServizio() != null){
+							if (dettaglioContratto.getQuantitaMin() != null && Utility.nvl(dettaglioContratto.getQuantitaOrdinata()).compareTo(dettaglioContratto.getQuantitaMin()) < 0){
+								throw handleException( new ApplicationException("La quantità minima ordinabile sul contratto per l'articolo "+ dettaglioContratto.getCdBeneServizio()+" è di "+dettaglioContratto.getQuantitaMin()));
+							}
+							if (dettaglioContratto.getQuantitaMax() != null && Utility.nvl(dettaglioContratto.getQuantitaOrdinata()).compareTo(dettaglioContratto.getQuantitaMax()) > 0){
+								throw handleException( new ApplicationException("Sfondamento di "+dettaglioContratto.getQuantitaOrdinata().subtract(dettaglioContratto.getQuantitaMax())+" della quantità massima ordinabile sul contratto per l'articolo "+ dettaglioContratto.getCdBeneServizio()));
+							}
+						}
+						super.updateBulk(aUC, dettaglioContratto);
 					}
 				}
 			} catch (IntrospectionException e1) {
@@ -2384,8 +2444,29 @@ public class OrdineAcqComponent
 				throw new it.cnr.jada.comp.ComponentException(e1);
 			}
 		}
-
 	}
+
+	private void gestioneAggiornamentoDettaglioContratto(List<Dettaglio_contrattoBulk> dettagliContrattoDaAggiornare, Dettaglio_contrattoBulk dettaglio_contratto, BigDecimal importoDaAggiungere, BigDecimal quantitaDaAggiungere) {
+		Boolean contrattoTrovato = false;
+		for (Dettaglio_contrattoBulk dettaglio_contrattoBulk : dettagliContrattoDaAggiornare){
+			if (dettaglio_contratto.equalsByPrimaryKey(dettaglio_contrattoBulk)){
+				dettaglio_contrattoBulk.setImportoOrdinato(Utility.nvl(dettaglio_contrattoBulk.getImportoOrdinato()).add(importoDaAggiungere));
+				if (dettaglio_contrattoBulk.getCdBeneServizio() != null){
+					dettaglio_contrattoBulk.setQuantitaOrdinata(Utility.nvl(dettaglio_contrattoBulk.getQuantitaOrdinata()).add(quantitaDaAggiungere));
+				}
+				contrattoTrovato = true;
+			}
+		}
+		if (!contrattoTrovato){
+			dettaglio_contratto.setImportoOrdinato(Utility.nvl(dettaglio_contratto.getImportoOrdinato()).add(importoDaAggiungere));
+			if (dettaglio_contratto.getCdBeneServizio() != null){
+				dettaglio_contratto.setQuantitaOrdinata(Utility.nvl(dettaglio_contratto.getQuantitaOrdinata()).add(quantitaDaAggiungere));
+			}
+			dettaglio_contratto.setToBeUpdated();
+			dettagliContrattoDaAggiornare.add(dettaglio_contratto);
+		}
+	}
+
 	public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine) throws ComponentException
 	{
 		verificaCoperturaContratto (aUC,ordine, MODIFICA);
@@ -2462,7 +2543,7 @@ public class OrdineAcqComponent
 		return null;
 	}
 
-	private Unita_organizzativaBulk recuperoUoOrdinante(UserContext aUC, OrdineAcqConsegnaBulk consegna)
+	private Unita_organizzativaBulk 	recuperoUoOrdinante(UserContext aUC, OrdineAcqConsegnaBulk consegna)
 			throws ComponentException, PersistencyException {
 		UnitaOperativaOrdBulk uop = recuperoUop(aUC, consegna.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd());
 		if (uop != null){
@@ -2741,10 +2822,16 @@ public class OrdineAcqComponent
 
 	public SQLBuilder selectNumerazioneOrdByClause(UserContext userContext,  OggettoBulk bulk, NumerazioneOrdBulk numerazioneOrdBulk, CompoundFindClause clauses) throws ComponentException {
 
-		NumerazioneOrdHome home = (NumerazioneOrdHome)getHome(userContext, NumerazioneOrdBulk.class);
-		SQLBuilder sql = home.createSQLBuilder();
-		sql.addSQLClause("AND","ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+		OrdineAcqHome home = (OrdineAcqHome)getHome(userContext, OrdineAcqBulk.class);
+		NumerazioneOrdHome numerazioneHome = (NumerazioneOrdHome)getHome(userContext, NumerazioneOrdBulk.class);
+		SQLBuilder sql = null;
+		try {
+			sql = home.selectNumerazioneOrdByClause(userContext, (OrdineAcqBulk) bulk, numerazioneHome, new NumerazioneOrdBulk(), new CompoundFindClause());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
  		sql.addClause(clauses);
+		sql.addOrderBy("cd_numeratore");
 		return sql;
 	}
 
@@ -2787,5 +2874,9 @@ public class OrdineAcqComponent
 			throw new PersistencyException(e);
 		}
 		return null;
+	}
+	public Dettaglio_contrattoBulk recuperoDettaglioContratto(UserContext userContext, OrdineAcqRigaBulk riga) throws PersistencyException, ComponentException{
+		OrdineAcqRigaHome home = (OrdineAcqRigaHome) getHome(userContext, OrdineAcqRigaBulk.class);
+		return home.recuperoDettaglioContratto(riga);
 	}
 }
