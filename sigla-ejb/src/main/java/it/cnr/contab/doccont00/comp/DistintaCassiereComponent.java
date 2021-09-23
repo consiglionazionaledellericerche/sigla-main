@@ -1131,15 +1131,50 @@ public class DistintaCassiereComponent extends
         MovimentoContoEvidenzaHome home = (MovimentoContoEvidenzaHome)getHome(userContext, MovimentoContoEvidenzaBulk.class);
         SospesoRiscontroComponentSession sess = (SospesoRiscontroComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                 .createEJB("CNRDOCCONT00_EJB_SospesoRiscontroComponentSession");
-
+        List righeFile = new ArrayList();
         try {
             List righeFile = home.recuperoRigheFile(file.getNome_file(), file.getEsercizio(), MovimentoContoEvidenzaBulk.STATO_RECORD_INIZIALE);
-            for (Object bulk : righeFile){
-                MovimentoContoEvidenzaBulk riga = (MovimentoContoEvidenzaBulk)bulk;
-                sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
-            }
         } catch (IntrospectionException | PersistencyException | RemoteException e) {
             throw new ComponentException(e);
+        }
+        for (Object bulk : righeFile){
+            MovimentoContoEvidenzaBulk riga = (MovimentoContoEvidenzaBulk)bulk;
+            try {
+                sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
+            } catch (PersistencyException | RemoteException e) {
+                Ext_cassiere00_scartiBulk scarto = new Ext_cassiere00_scartiBulk();
+                scarto.setEsercizio(file.getEsercizio());
+                scarto.setNome_file(file.getNome_file());
+                scarto.setPg_esecuzione(file.ge);
+                scarto.setPg_rec(riga.getProgressivo());
+                scarto.setDt_giornaliera(riga.getDataMovimento());
+
+                Timestamp oggi = null;
+                try {
+                    oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+                } catch (javax.ejb.EJBException e) {
+                    throw new it.cnr.jada.DetailedRuntimeException(e);
+                }
+
+                scarto.setDt_elaborazione(oggi);
+                scarto.setCd_cds(cdsEnte.getCd_unita_organizzativa());
+                if (riga.isMandatoReversale()){
+                    scarto.setTipo_mov(riga.getTipoMovimento().substring(0,1));
+                    scarto.setCd_cds_manrev(scarto.getCd_cds());
+                    scarto.setEsercizio_manrev(riga.getEsercizio());
+                    scarto.setPg_manrev(riga.getNumeroDocumento().toString());
+                } else {
+                    scarto.setTipo_mov(Ext_cassiere00_scartiBulk.TIPO_MOVIMENTO_SOSPESO);
+                    scarto.setCd_cds_sr(scarto.getCd_cds());
+                    scarto.setEsercizio_sr(riga.getEsercizio());
+                    scarto.setTi_entrata_spesa_sr(riga.recuperoTipoSospesoEntrataSpesa());
+                    scarto.setTi_sospeso_riscontro_sr(riga.isTipoOperazioneStornato() ? SospesoBulk.TI_SOSPESO : SospesoBulk.TI_RISCONTRO);
+                    scarto.setCd_sr(riga.recuperoNumeroSospeso());
+                }
+                scarto.setAnomalia(e.getMessage());
+                scarto.setToBeCreated();
+                super.creaConBulk(userContext,scarto);
+            }
         }
     }
 

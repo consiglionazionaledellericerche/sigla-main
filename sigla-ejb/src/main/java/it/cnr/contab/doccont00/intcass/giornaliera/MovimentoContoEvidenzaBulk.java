@@ -20,6 +20,7 @@
  * Date 02/10/2018
  */
 package it.cnr.contab.doccont00.intcass.giornaliera;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
@@ -164,5 +165,11 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	}
 	public Boolean isCodiceRiferimentoInternoPagamentoStipendi(){
 		return getCodiceRifInterno() != null && getCodiceRifInterno().startsWith(RIFERIMENTO_INTERNO_PAGAMENTO_STIPENDI);
+	}
+	public String recuperoTipoSospesoEntrataSpesa(){
+		return isMovimentoEntrata() ?  SospesoBulk.TIPO_ENTRATA : SospesoBulk.TIPO_SPESA;
+	}
+	public String recuperoNumeroSospeso(){
+		return String.format("%018d", getNumeroDocumento());
 	}
 }

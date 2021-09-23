@@ -2777,7 +2777,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 }
             } else if (riga.isSospeso()){
                 if (riga.isTipoOperazioneStornato()){
-                    SospesoBulk sospeso = homeSospeso.findSospesoDaStornare(cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.isMovimentoEntrata() ?  SospesoBulk.TIPO_ENTRATA : SospesoBulk.TIPO_SPESA, String.format("%018d", riga.getNumeroDocumento()));
+                    SospesoBulk sospeso = homeSospeso.findSospesoDaStornare(cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.recuperoTipoSospesoEntrataSpesa(), riga.recuperoNumeroSospeso());
                     if (sospeso == null){
                         throw new ComponentException("Sospeso da stornare non trovato: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento());
                     }
@@ -2828,9 +2828,9 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                     SospesoBulk sospeso = new SospesoBulk();
                     sospeso.setCd_cds(cdsEnte.getCd_unita_organizzativa());
                     sospeso.setEsercizio(riga.getEsercizio());
-                    sospeso.setTi_entrata_spesa(riga.isMovimentoEntrata() ? SospesoBulk.TIPO_ENTRATA : SospesoBulk.TIPO_SPESA);
+                    sospeso.setTi_entrata_spesa(riga.recuperoTipoSospesoEntrataSpesa());
                     sospeso.setTi_sospeso_riscontro(SospesoBulk.TI_SOSPESO);
-                    sospeso.setCd_sospeso(String.format("%018d", riga.getNumeroDocumento()));
+                    sospeso.setCd_sospeso(riga.recuperoNumeroSospeso());
 
                     SospesoBulk sospesoBulk = (SospesoBulk) homeSospeso.findByPrimaryKey(sospeso);
                     if (sospesoBulk != null){
