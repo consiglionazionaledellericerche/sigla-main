@@ -185,4 +185,21 @@ public class Accertamento_pluriennaleBulk extends Accertamento_pluriennaleBase {
 	public void setPgAccertamentoRif(Long pgAccertamentoRif)  {
 		this.getAccertamentoRif().setPg_accertamento(pgAccertamentoRif);
 	}
+
+	public Accertamento_pluriennaleBulk clone( AccertamentoBulk accertamento,it.cnr.jada.action.ActionContext context){
+		Accertamento_pluriennaleBulk nuovo = null;
+		try {
+			nuovo = (Accertamento_pluriennaleBulk)getClass().newInstance();
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+		nuovo.setAccertamentoRif(this.getAccertamentoRif());
+		nuovo.setAccertamento(accertamento);
+		nuovo.setAnno(this.getAnno());
+		nuovo.setImporto(this.getImporto());
+		nuovo.setCrudStatus(TO_BE_CREATED);
+		return nuovo;
+	}
 }

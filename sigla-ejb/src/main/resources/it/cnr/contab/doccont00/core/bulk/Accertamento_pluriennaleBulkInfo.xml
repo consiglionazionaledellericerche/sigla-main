@@ -52,7 +52,7 @@
 		name="importo"
 		property="importo"
 		inputType="TEXT"
-		formatName="it.jada.stone.util.Importo2CifreFormat"
+		formatName="it.cnr.contab.util.Importo2CifreFormat"
 		enabledOnEdit="true"
 		label="Importo totale" />
 	<fieldProperty

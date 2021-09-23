@@ -1373,6 +1373,16 @@ public void setCd_cds(java.lang.String cd_cds) {
 	public BigDecimal getImportoNonIncassato() {
 		return this.getAccertamento_scadenzarioColl().stream().map(e->e.getImportoNonIncassato()).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 	}
+	private BulkList<Accertamento_pluriennaleBulk> clonaAccertamentiPluriennali(AccertamentoBulk accertamento,it.cnr.jada.action.ActionContext context){
+		if ( this.getAccertamentiPluriennali()==null || this.getAccertamentiPluriennali().isEmpty())
+			return this.getAccertamentiPluriennali();
+		BulkList<Accertamento_pluriennaleBulk> pluriennali= new BulkList<Accertamento_pluriennaleBulk>();
+		for ( Accertamento_pluriennaleBulk p:this.getAccertamentiPluriennali()){
+			Accertamento_pluriennaleBulk n = p.clone(accertamento,context);
+			pluriennali.add( n);
+		}
+		return pluriennali;
+	}
 	public Object clona(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 		AccertamentoBulk nuovo = null;
 		try {
@@ -1410,7 +1420,8 @@ public void setCd_cds(java.lang.String cd_cds) {
 		nuovo.setCd_uo_origine( getCd_uo_origine());
 		nuovo.setCd_cds_origine( getCd_cds_origine());
 		nuovo.setFl_netto_sospeso( getFl_netto_sospeso());
-		nuovo.setAccertamentiPluriennali(getAccertamentiPluriennali());
+		// da verificare se vanno clonati
+		//nuovo.setAccertamentiPluriennali(clonaAccertamentiPluriennali(nuovo,context));
 		return nuovo;
 	}
 
