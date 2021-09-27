@@ -5498,6 +5498,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             sql.addClause("AND", "fl_autofattura", SQLBuilder.EQUALS, dettaglio.getFattura_passiva().getFl_autofattura());
         else if (dettaglio.getFattura_passiva().getTipo_sezionale() != null)
             sql.addClause("AND", "fl_autofattura", SQLBuilder.EQUALS, dettaglio.getFattura_passiva().getTipo_sezionale().getFl_servizi_non_residenti());
+        if (!dettaglio.getFattura_passiva().getFlDaOrdini()){
+            sql.addSQLClause("AND", "FL_GESTIONE_MAGAZZINO", SQLBuilder.EQUALS, "N");
+        }
         sql.addClause(clauses);
         return sql;
     }

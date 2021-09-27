@@ -14,7 +14,7 @@
 <script language="JavaScript" src="scripts/util.js"></script>
 
 
-<title>Parametri di Ricerca Movimenti di Magazzino</title>
+<title>Parametri di Selezione Ordini</title>
 
 </head>
 <body class="Form">

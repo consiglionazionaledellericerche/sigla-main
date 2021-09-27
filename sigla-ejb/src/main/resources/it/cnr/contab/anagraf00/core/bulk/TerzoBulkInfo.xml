@@ -163,7 +163,6 @@
 	<fieldProperty
 		name="codiceUnivocoUfficioIpa"
 		property="codiceUnivocoUfficioIpa"
-		readonlyPropertyOnEdit="notGestoreIstat"
 		label="Codice Univoco Ufficio IPA"
 		inputType="TEXT" />
 	<fieldProperty

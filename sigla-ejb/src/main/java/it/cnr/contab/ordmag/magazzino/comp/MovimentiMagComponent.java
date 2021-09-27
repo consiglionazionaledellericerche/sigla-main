@@ -335,29 +335,35 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 			throws ComponentException, PersistencyException, ApplicationException, RemoteException {
 		OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
 		OrdineAcqConsegnaBulk consegnaDaRipristinare = movimentoDaAnnullare.getLottoMag().getOrdineAcqConsegna();
+		OrdineAcqRigaBulk rigaDaRipristinare = consegnaDaRipristinare.getOrdineAcqRiga();
 		OrdineAcqConsegnaHome home = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
 		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)home.findByPrimaryKey(userContext, consegnaDaRipristinare);
 		OrdineAcqBulk ordine = (OrdineAcqBulk)ordineComponent.inizializzaBulkPerModifica(userContext, consegna.getOrdineAcqRiga().getOrdineAcq());
 
-		ordine.getRigheOrdineColl().stream().forEach(ordineRiga->{
-			OrdineAcqConsegnaBulk ordineConsegnaComp =
-						Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
-								.filter(list -> !list.isEmpty())
-								.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
-								.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
-			consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
-			if (consegna.getQuantitaOrig() != null){
-				consegna.setQuantita(consegna.getQuantitaOrig());
-				consegna.setQuantitaOrig(null);
-				ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
-				ordine.setAggiornaImpegniInAutomatico(true);
-			}
-			ordine.setToBeUpdated();
-			//rimuovo la vecchia consegna
-			ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
-			//inserisco la nuova consegna
-			ordineRiga.getRigheConsegnaColl().add(consegna);
-		});
+		OrdineAcqRigaBulk ordineRiga =
+				Optional.ofNullable(ordine.getRigheOrdineColl())
+						.filter(list -> !list.isEmpty())
+						.map(list->list.get(list.indexOfByPrimaryKey(rigaDaRipristinare)))
+						.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della riga "+rigaDaRipristinare.getRigaOrdineString()+"."));
+
+		OrdineAcqConsegnaBulk ordineConsegnaComp =
+				Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
+						.filter(list -> !list.isEmpty())
+						.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
+						.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
+		consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+		if (consegna.getQuantitaOrig() != null){
+			consegna.setQuantita(consegna.getQuantitaOrig());
+			consegna.setQuantitaOrig(null);
+			ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
+			ordine.setAggiornaImpegniInAutomatico(true);
+		}
+		ordine.setToBeUpdated();
+		int i = 0;
+		//rimuovo la vecchia consegna
+		ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
+		//inserisco la nuova consegna
+		ordineRiga.getRigheConsegnaColl().add(consegna);
 		ordineComponent.modificaConBulk(userContext, ordine);
 	}
 
