@@ -5100,8 +5100,16 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="esercizio_originale"/>
             <column name="pg_accertamento"/>
         </createIndex>
-
     </changeSet>
+    <changeSet author="ciro.salvio" id="addColumn-ordine_acq_riga-id_dettaglio_contratto">
+        <addColumn tableName="DETTAGLIO_CONTRATTO">
+            <column name="stato" remarks="Stato del Dettaglio Contratto:&#10;VAL = Valido,&#10;ANN = Annullato" type="VARCHAR(3)" defaultValue="VAL">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+
 
 
 

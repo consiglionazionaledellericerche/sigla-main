@@ -8,10 +8,15 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.OggettoBulk;
 
 import java.math.BigDecimal;
 
 public class Dettaglio_contrattoBulk extends Dettaglio_contrattoBase {
+
+	public final static String STATO_ANNULLATO = "ANN";
+	public final static String STATO_VALIDO = "VAL";
+
 	/**
 	 * [CONTRATTO ]
 	 **/
@@ -195,5 +200,13 @@ public class Dettaglio_contrattoBulk extends Dettaglio_contrattoBase {
 	public boolean isROFindUniMisura(){
 		return isRoBeneServizioUM();
 	}
+
+	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context)
+	{
+		super.initializeForInsert(bp,context);
+		setStato( this.STATO_VALIDO );
+		return this;
+	}
+
 
 }

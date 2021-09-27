@@ -40,6 +40,8 @@ public class Dettaglio_contrattoBase extends Dettaglio_contrattoKey implements K
  
 //    IMPORTO_ORDINATO DECIMAL(21,6)
 	private java.math.BigDecimal importoOrdinato;
+
+	private String stato;
  
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -218,5 +220,13 @@ public class Dettaglio_contrattoBase extends Dettaglio_contrattoKey implements K
 	 **/
 	public void setImportoOrdinato(java.math.BigDecimal importoOrdinato)  {
 		this.importoOrdinato=importoOrdinato;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 }
