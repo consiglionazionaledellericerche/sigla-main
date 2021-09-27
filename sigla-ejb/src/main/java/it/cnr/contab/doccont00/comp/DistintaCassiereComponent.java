@@ -45,6 +45,7 @@ import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.service.SpringUtil;
@@ -66,6 +67,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.MimeTypes;
@@ -1110,7 +1112,20 @@ public class DistintaCassiereComponent extends
     private void callProcessaFile(UserContext userContext,
                                   V_ext_cassiere00Bulk file)
             throws it.cnr.jada.comp.ComponentException {
+        Timestamp oggi = null;
+        try {
+            oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+        } catch (javax.ejb.EJBException e) {
+            throw new it.cnr.jada.DetailedRuntimeException(e);
+        }
 
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        Batch_log_tstaBulk log = new Batch_log_tstaBulk();
+        log.setDs_log("CICF-"+file.getNome_file()+" Start: "+ formatterTime.format(oggi.toInstant()));
+        log.setCd_log_tipo(Batch_log_tstaBulk.LOG_TIPO_INTERF_CASS00);
+        log.setNote("Caricamento interfaccia ritorno cassiere. File:"+file.getNome_file()+" Utente: "+userContext.getUser());
+        log.setToBeCreated();
+        log = (Batch_log_tstaBulk)super.creaConBulk(userContext, log);
         boolean tesoreriaUnica = false;
         String ccEnte = null;
         EnteBulk cdsEnte = null;
