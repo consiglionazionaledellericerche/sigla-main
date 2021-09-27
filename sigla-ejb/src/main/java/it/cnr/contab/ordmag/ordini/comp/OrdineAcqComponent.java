@@ -186,7 +186,7 @@ public class OrdineAcqComponent
 			for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
 				OggettoBulk consbulk= (OggettoBulk) c.next();
 				OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-				if (!cons.isConsegnaImporto0()){
+				if (!cons.isConsegna0()){
 					ParametriCalcoloImportoOrdine parametriCons = (ParametriCalcoloImportoOrdine)parametriRiga.clone();
 					if (cons.getQuantita() == null ){
 						throw new it.cnr.jada.comp.ApplicationException("Campi di consegna ordine necessari per il calcolo dell'importo non valorizzati.");
@@ -2057,7 +2057,7 @@ public class OrdineAcqComponent
 				for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
 					OggettoBulk consbulk= (OggettoBulk) c.next();
 					OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-					if (!cons.isConsegnaImporto0()){
+					if (!cons.isConsegna0()){
 						Obbligazione_scadenzarioBulk scadenza = cons.getObbligazioneScadenzario();
 						if (cons.getObbligazioneScadenzario() != null) {
 							if (ordine.getOrdineObbligazioniHash() == null ||

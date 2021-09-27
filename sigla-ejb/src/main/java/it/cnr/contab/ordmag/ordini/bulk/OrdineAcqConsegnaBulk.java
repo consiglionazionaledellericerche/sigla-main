@@ -96,7 +96,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 		STATO.put(STATO_EVASA_FORZATAMENTE,"Evasa Forzatamente");
 	}
 
-	public boolean isConsegnaImporto0(){
+	public boolean isConsegna0(){
 		if (getStato() != null && (getStato().equals(STATO_ANNULLATA) || getStato().equals(STATO_EVASA_FORZATAMENTE))){
 			return true;
 		}
