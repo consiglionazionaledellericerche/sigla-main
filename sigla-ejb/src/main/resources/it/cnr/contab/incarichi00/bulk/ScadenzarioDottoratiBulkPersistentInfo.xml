@@ -10,9 +10,24 @@
 		<columnMapping
 			columnName="CD_TERZO"
 			propertyName="terzo.cd_terzo" />
+		<columnMapping
+				columnName="CD_MODALITA_PAG"
+				propertyName="modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+				columnName="CD_TERMINI_PAG"
+				propertyName="termini_pagamento.cd_termini_pag" />
+		<columnMapping
+				columnName="PG_BANCA"
+				propertyName="banca.pg_banca" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="anagraficaDottorati" />
 	<persistentProperty
 		name="terzo" />
+	<persistentProperty
+			name="modalita_pagamento" />
+	<persistentProperty
+			name="termini_pagamento" />
+	<persistentProperty
+			name="banca" />
 </SQLPersistentInfo>

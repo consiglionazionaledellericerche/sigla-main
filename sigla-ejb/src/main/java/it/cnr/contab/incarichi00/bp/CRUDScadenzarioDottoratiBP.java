@@ -17,6 +17,7 @@
 
 package it.cnr.contab.incarichi00.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.compensi00.bp.MinicarrieraRataCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
@@ -27,7 +28,9 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
 import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiRataBulk;
+import it.cnr.contab.incarichi00.ejb.ScadenzarioDottoratiComponentSession;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.jada.UserContext;
@@ -71,4 +74,56 @@ public class CRUDScadenzarioDottoratiBP
             super.init(config, actioncontext);
     }
 
+
+     /**
+     * Ricerca i conti disponibili e imposta nel modello il primo elemento trovato
+     */
+
+     public void findListaBanche(ActionContext context) throws BusinessProcessException {
+
+     try {
+                    MinicarrieraBulk carriera = (MinicarrieraBulk) getModel();
+                    if (carriera.getModalita_pagamento() != null) {
+                        MinicarrieraComponentSession component = (MinicarrieraComponentSession) createComponentSession();
+                        java.util.List coll = component.findListaBanche(context.getUserContext(), carriera);
+
+                        //	Assegno di default la prima banca tra quelle selezionate
+                        if (coll == null || coll.isEmpty())
+                            carriera.setBanca(null);
+                        else
+                            carriera.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk) new java.util.Vector(coll).firstElement());
+                    } else
+                        carriera.setBanca(null);
+
+                } catch (it.cnr.jada.comp.ComponentException ex) {
+                    throw handleException(ex);
+                } catch (java.rmi.RemoteException ex) {
+                    throw handleException(ex);
+                }
+            }
+
+            /**
+             * Chiama il metodo sulla component 'completa percipiente' e mette il controller
+             * in stato edit sul modello clone
+             */
+
+            public void completaTerzo(
+                    ActionContext context,
+                    ScadenzarioDottoratiBulk scadenzarioDottorati,
+                    TerzoBulk terzo) throws BusinessProcessException {
+
+                try {
+
+                    ScadenzarioDottoratiComponentSession component = (ScadenzarioDottoratiComponentSession) createComponentSession();
+                    ScadenzarioDottoratiBulk scadenzarioDottoratiClone = component.completaTerzo(context.getUserContext(), scadenzarioDottorati, terzo);
+
+                    setModel(context, scadenzarioDottoratiClone);
+
+                } catch (it.cnr.jada.comp.ComponentException ex) {
+                    throw handleException(ex);
+                } catch (java.rmi.RemoteException ex) {
+                    throw handleException(ex);
+                }
+
+            }
 }

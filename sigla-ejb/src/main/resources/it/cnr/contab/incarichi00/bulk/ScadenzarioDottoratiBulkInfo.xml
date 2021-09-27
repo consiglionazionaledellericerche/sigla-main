@@ -79,7 +79,7 @@
 		enabledOnEdit="false"
 		label="tiAnagrafico" />
 	<fieldProperty
-		name="cdTerzo"
+		name="findTerzo"
 		property="terzo"
 		inputType="SEARCHTOOL"
 		formName="searchtool_small"
@@ -130,33 +130,108 @@
 		maxLength="20"
 		enabledOnEdit="false"
 		label="partitaIva" />
+	/**************************************************/
+	/********************** BANCHE ********************/
 	<fieldProperty
-		name="cdTerminiPag"
-		property="cdTerminiPag"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="cdTerminiPag" />
+			name="termini_pagamento"
+			property="termini_pagamento"
+			printProperty="cd_ds_termini_pagamento"
+			optionsProperty="termini"
+			readonlyPropertyOnInsert="ROPercipiente"
+			readonlyPropertyOnEdit="ROPercipiente"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			inputType="SELECT"
+			label="Term. pagamento" />
 	<fieldProperty
-		name="cdModalitaPag"
-		property="cdModalitaPag"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		nullable="false"
-		label="cdModalitaPag" />
+			name="modalita_pagamento"
+			property="modalita_pagamento"
+			printProperty="cd_ds_modalita_pagamento"
+			optionsProperty="modalita"
+			inputType="SELECT"
+			nullable="false"
+			readonlyPropertyOnInsert="ROPercipiente"
+			readonlyPropertyOnEdit="ROPercipiente"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			label="Mod. pagamento" />
 	<fieldProperty
-		name="pgBanca"
-		property="pgBanca"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
-		nullable="false"
-		label="pgBanca" />
+			name="listaBanche"
+			property="banca"
+			inputType="BUTTON"
+			img="img/find16.gif"
+			readonlyProperty="abledToInsertBank"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			label="Conto/i ..."
+			href="javascript:submitForm('doSearch(main.listaBanche)')" />
+	<fieldProperty
+			name="contoA"
+			property="banca"
+			inputType="FORM"
+			formName="A"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoP"
+			property="banca"
+			inputType="FORM"
+			formName="P"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoB"
+			property="banca"
+			inputType="FORM"
+			formName="BdocAmm"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoQ"
+			property="banca"
+			inputType="FORM"
+			formName="Q"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoN"
+			property="banca"
+			inputType="FORM"
+			formName="N"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	/**************************************************/
+	<fieldProperty
+			name="cd_modalita_pag"
+			property="cd_modalita_pag"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Codice Modalita di Pag."
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="cd_termini_pag"
+			property="cd_termini_pag"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Codice Termine di Pag."
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="pg_banca"
+			property="pg_banca"
+			inputType="TEXT"
+			label="Conto" />
 	<fieldProperty
 		name="cdTipoRapporto"
 		property="cdTipoRapporto"
@@ -391,7 +466,7 @@
 	<formFieldProperty
 		name="tiAnagrafico" />
 	<formFieldProperty
-			name="cdTerzo" />
+			name="findTerzo" />
 	<formFieldProperty
 		name="ragioneSociale" />
 	<formFieldProperty
@@ -402,12 +477,13 @@
 		name="codiceFiscale" />
 	<formFieldProperty
 		name="partitaIva" />
+	<formFieldProperty name="cd_modalita_pag" />
+	<formFieldProperty name="cd_termini_pag" />
+	<formFieldProperty name="modalita_pagamento" />
+	<formFieldProperty name="termini_pagamento" />
 	<formFieldProperty
-		name="cdTerminiPag" />
-	<formFieldProperty
-		name="cdModalitaPag" />
-	<formFieldProperty
-		name="pgBanca" />
+		name="pg_banca" />
+	<formFieldProperty name="banca" />
 	<formFieldProperty
 		name="cdTipoRapporto" />
 	<formFieldProperty
@@ -479,7 +555,7 @@
 	<findFieldProperty
 		name="tiAnagrafico" />
 	<findFieldProperty
-		name="cdTerzo" />
+		name="findTerzo" />
 	<findFieldProperty
 		name="ragioneSociale" />
 	<findFieldProperty
@@ -491,11 +567,11 @@
 	<findFieldProperty
 		name="partitaIva" />
 	<findFieldProperty
-		name="cdTerminiPag" />
+			name="cd_modalita_pag" />
 	<findFieldProperty
-		name="cdModalitaPag" />
+			name="cd_termini_pag" />
 	<findFieldProperty
-		name="pgBanca" />
+		name="pg_banca" />
 	<findFieldProperty
 		name="cdTipoRapporto" />
 	<findFieldProperty
@@ -567,7 +643,7 @@
 	<columnFieldProperty
 		name="tiAnagrafico" />
 	<columnFieldProperty
-		name="cdTerzo" />
+		name="findTerzo" />
 	<columnFieldProperty
 		name="ragioneSociale" />
 	<columnFieldProperty
@@ -578,12 +654,6 @@
 		name="codiceFiscale" />
 	<columnFieldProperty
 		name="partitaIva" />
-	<columnFieldProperty
-		name="cdTerminiPag" />
-	<columnFieldProperty
-		name="cdModalitaPag" />
-	<columnFieldProperty
-		name="pgBanca" />
 	<columnFieldProperty
 		name="cdTipoRapporto" />
 	<columnFieldProperty

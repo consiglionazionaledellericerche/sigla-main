@@ -49,7 +49,7 @@ public class ScadenzarioDottoratiBase extends ScadenzarioDottoratiKey implements
  
 //    CD_TERMINI_PAG VARCHAR(10)
 	private String cdTerminiPag;
- 
+
 //    CD_MODALITA_PAG VARCHAR(10) NOT NULL
 	private String cdModalitaPag;
  

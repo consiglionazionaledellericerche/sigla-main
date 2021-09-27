@@ -105,7 +105,7 @@
 			columnName="PG_BANCA"
 			propertyName="pgBanca"
 			sqlTypeName="DECIMAL"
-			columnSize="38"
+			columnSize="10"
 			nullable="false" />
 		<columnMapping
 			columnName="CD_TIPO_RAPPORTO"

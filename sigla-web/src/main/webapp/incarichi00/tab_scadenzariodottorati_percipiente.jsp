@@ -4,11 +4,13 @@
 		java.util.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.incarichi00.bp.*,
+		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.contab.incarichi00.docs.bulk.*,
 		it.cnr.contab.docamm00.bp.*"
 %>
 
 <% 	CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP)BusinessProcess.getBusinessProcess(request);
+	ScadenzarioDottoratiBulk scadenzarioDottorati = (ScadenzarioDottoratiBulk)bp.getModel();
      %>
 
 <div class="Group card p-2" style="width:100%">
@@ -17,7 +19,7 @@
     </div>
     <table width="100%">
       <tr>
-      		<% bp.getController().writeFormField(out,"cdTerzo"); %>
+      		<% bp.getController().writeFormField(out,"findTerzo"); %>
       </tr>
       <tr>
       		<td colspan="2"><% bp.getController().writeFormInput(out,"find_percipiente"); %></td>
@@ -40,21 +42,49 @@
     <div class="GroupLabel h3 text-primary">
             Termini_pagamento
     </div>
-    	<table>
+    	<!--<table>
             <tr>
                 <td><% bp.getController().writeFormLabel(out,"cdTerminiPag");%></td>
                 <td><% bp.getController().writeFormInput(out,null,"cdTerminiPag",false,null,"");%></td>
             </tr>
             <tr>
-                <td><% bp.getController().writeFormLabel(out,"cdModalitaPag");%></td>
-                <td><% bp.getController().writeFormInput(out,null,"cdModalitaPag",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%></td>
+            <td><% bp.getController().writeFormLabel(out,"cdModalitaPag");%></td>
+                <td>
+                <% bp.getController().writeFormInput(out,null,"cdModalitaPag",false,null,"onChange=\"submitForm('doOnCdModalitaPagChange')\"");%>
+                </td>
+
+            </tr>
+            <tr>
                 <td>
 			        <%
-					bp.getController().writeFormField(out, "pgBanca");
+					bp.getController().writeFormInput(out,"pgBanca");
 				    %>
    		        </td>
             </tr>
-    </table>
+    </table>-->
+    <table>
+    	  <tr>
+         	<td>
+     	     	<% bp.getController().writeFormLabel(out,"termini_pagamento");%>
+          	</td>
+         	<td>
+    	      	<% bp.getController().writeFormInput(out,null,"termini_pagamento",false,null,"");%>
+          	</td>
+          </tr>
+          <tr>
+         	<td>
+     	     	<% bp.getController().writeFormLabel(out,"modalita_pagamento");%>
+          	</td>
+         	<td>
+    	      	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
+          	</td>
+    		<td>
+    			<% 	if (scadenzarioDottorati.getBanca() != null) {
+    					bp.getController().writeFormInput(out, null, "listaBanche", false, null, "");
+    				} %>
+       		</td>
+          </tr>
+        </table>
 </div>
 <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">

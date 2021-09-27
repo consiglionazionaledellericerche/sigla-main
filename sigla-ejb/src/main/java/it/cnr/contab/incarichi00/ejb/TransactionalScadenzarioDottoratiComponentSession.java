@@ -17,7 +17,12 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
 import it.cnr.contab.incarichi00.ejb.ScadenzarioDottoratiComponentSession;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
 
@@ -247,4 +252,9 @@ public it.cnr.jada.bulk.OggettoBulk[] modificaConBulk(it.cnr.jada.UserContext pa
 		}
 	}
 }
+
+	@Override
+	public ScadenzarioDottoratiBulk completaTerzo(UserContext param0, ScadenzarioDottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
+		return null;
+	}
 }

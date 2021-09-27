@@ -17,11 +17,17 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
 import it.cnr.contab.incarichi00.comp.ScadenzarioDottoratiComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
+import java.rmi.RemoteException;
 
 @Stateless(name="CNRINCARICHI00_EJB_ScadenzarioDottoratiComponentSession")
 public class ScadenzarioDottoratiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScadenzarioDottoratiComponentSession {
@@ -32,6 +38,11 @@ public class ScadenzarioDottoratiComponentSessionBean extends it.cnr.jada.ejb.CR
 
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
 		return new ScadenzarioDottoratiComponentSessionBean();
+	}
+
+	@Override
+	public ScadenzarioDottoratiBulk completaTerzo(UserContext param0, ScadenzarioDottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
+		return null;
 	}
 
 }

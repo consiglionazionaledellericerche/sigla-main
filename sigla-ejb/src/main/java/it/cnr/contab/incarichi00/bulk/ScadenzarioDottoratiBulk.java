@@ -26,7 +26,70 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 
 	private CdsBulk cds = new CdsBulk();
 
+	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = null;
+	private java.util.Collection modalita;
 
+	/**
+	 * Banca
+	 */
+	private it.cnr.contab.anagraf00.core.bulk.BancaBulk banca = null;
+
+	public it.cnr.contab.anagraf00.core.bulk.BancaBulk getBanca() {
+		return banca;
+	}
+
+	public java.lang.Long getPg_banca() {
+		it.cnr.contab.anagraf00.core.bulk.BancaBulk banca = this.getBanca();
+		if (banca == null)
+			return null;
+		return banca.getPg_banca();
+	}
+
+	public void setBanca(it.cnr.contab.anagraf00.core.bulk.BancaBulk newBanca) {
+		banca = newBanca;
+	}
+
+	public void setPg_banca(java.lang.Long pg_banca) {
+		this.getBanca().setPg_banca(pg_banca);
+	}
+
+	/**
+	 * Fine Banca
+	 */
+
+	/**
+	 * Termini pagamento
+	 */
+
+	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk termini_pagamento = null;
+	private java.util.Collection termini;
+
+	public java.lang.String getCd_termini_pag() {
+		it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk termini_pagamento = this.getTermini_pagamento();
+		if (termini_pagamento == null)
+			return null;
+		return termini_pagamento.getCd_termini_pag();
+	}
+
+	public java.util.Collection getTermini() {
+		return termini;
+	}
+
+	public it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk getTermini_pagamento() {
+		return termini_pagamento;
+	}
+
+	public void setCd_termini_pag(java.lang.String cd_termini_pag) {
+		this.getTermini_pagamento().setCd_termini_pag(cd_termini_pag);
+	}
+
+	public void setTermini(java.util.Collection newTermini) {
+		termini = newTermini;
+	}
+
+	public void setTermini_pagamento(it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk newTermini_pagamento) {
+		termini_pagamento = newTermini_pagamento;
+	}
 	/**private Integer esercizio;
 
 	public Integer getEsercizio() {
@@ -37,7 +100,33 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 		this.esercizio = esercizio;
 	}*/
 
+	public java.lang.String getCd_modalita_pag() {
+		it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = this.getModalita_pagamento();
+		if (modalita_pagamento == null)
+			return null;
+		return modalita_pagamento.getCd_modalita_pag();
+	}
 
+	public java.util.Collection getModalita() {
+		return modalita;
+	}
+
+
+	public it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk getModalita_pagamento() {
+		return modalita_pagamento;
+	}
+
+	public void setCd_modalita_pag(java.lang.String cd_modalita_pag) {
+		this.getModalita_pagamento().setCd_modalita_pag(cd_modalita_pag);
+	}
+
+	public void setModalita_pagamento(it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk newModalita_pagamento) {
+		modalita_pagamento = newModalita_pagamento;
+	}
+
+	public void setModalita(java.util.Collection newModalita) {
+		modalita = newModalita;
+	}
 
 	private Unita_organizzativaBulk uo = new Unita_organizzativaBulk();
 	/**
