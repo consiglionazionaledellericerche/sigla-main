@@ -38,6 +38,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="false"
+		nullable="false"
 		label="Numeratore" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
@@ -45,6 +46,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
+		nullable="false"
 		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
@@ -168,7 +170,7 @@
 	<fieldProperty
 		name="cambio"
 		property="cambio"
-		inputType="TEXT"
+		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"				
 		label="Cambio"
 		nullable="false"		
@@ -459,7 +461,6 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="Data Conferma Ordine" />
-		
         <fieldProperty
                 name="findResponsabile"
                 property="responsabileProcPers"

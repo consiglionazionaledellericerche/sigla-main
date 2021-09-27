@@ -5,6 +5,7 @@
 		java.util.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.ordmag.anag00.*,
+		it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk,
 		it.cnr.contab.ordmag.ordini.*"
 %>
 
@@ -15,7 +16,8 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<% CRUDBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request); %>
+<% CRUDBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request);
+OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel(); %>
 <script language="JavaScript">
 function doStampaOrdine() {
 	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/stampaOrdineAcq.html?methodName=stampaOrdine&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
@@ -25,7 +27,8 @@ function doStampaOrdine() {
 <title>Ordine d'Acquisto</title>
 </head>
 <body class="Form">
-<%  bp.openFormWindow(pageContext); %>
+<%  bp.openFormWindow(pageContext);
+%>
 	<div class="Group card p-2 mb-2">
 		<table cellpadding="2">
 			<tr>
@@ -62,8 +65,9 @@ function doStampaOrdine() {
 				     bp.getController().writeFormField(out, "statoForUpdate");
 				   }
 				%>
-				<%
-					bp.getController().writeFormField(out, "dataOrdineDef");
+				<% if (ordine != null && ordine.getNumero() != null) {
+    					bp.getController().writeFormField(out, "dataOrdineDef");
+				   }
 				%>
 			</tr>
 		</table>

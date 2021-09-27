@@ -727,7 +727,9 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	SQLBuilder sql = movimentiHome.createSQLBuilder();
     	sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
     	sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
-    	sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+		if (parametri.getMagazzinoAbilitato() != null ){
+			sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+		}
     	if (parametri.getDaDataMovimento() != null ){
     		sql.addSQLClause("AND","DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataMovimento());
     	} 
@@ -749,14 +751,15 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	} 
     	if (parametri.getTipoMovimentoMag() != null && parametri.getTipoMovimentoMag().getCdTipoMovimento() != null){
      	}
-        sql.generateJoin("lottoMag", "LOTTO_MAG");
+        sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
+
         sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
     	
     	if (parametri.getDaBeneServizio() != null && parametri.getDaBeneServizio().getCd_bene_servizio() != null){
-    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
+    		sql.addSQLClause("AND","BENE_SERVIZIO.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
     	} 
     	if (parametri.getaBeneServizio() != null && parametri.getaBeneServizio().getCd_bene_servizio() != null){
-    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
+    		sql.addSQLClause("AND","BENE_SERVIZIO.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
     	} 
     	if (parametri.getDaUnitaOperativaRicevente() != null && parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa() != null){
     		sql.addSQLClause("AND","CD_UOP",SQLBuilder.GREATER_EQUALS,parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa());

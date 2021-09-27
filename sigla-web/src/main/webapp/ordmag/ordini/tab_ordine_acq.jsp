@@ -19,8 +19,7 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			<td><% bp.getController().writeFormLabel(out, "findDivisa");%></td>
 			<td>
 				<% bp.getController().writeFormInput(out, "findDivisa");%>
-				<% bp.getController().writeFormLabel( out, "cambio"); %>
-				<% bp.getController().writeFormInput( out, "default", "cambio", false, null, null); %>					
+				<% bp.getController().writeFormField( out, "cambio"); %>
 			</td>
 		</tr>
 		<tr><% bp.getController().writeFormField(out, "findTipoOrdine");%></tr>
