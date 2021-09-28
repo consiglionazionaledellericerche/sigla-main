@@ -43,7 +43,6 @@ public class Dettaglio_contrattoHome extends BulkHome {
 	}
 	public void initializePrimaryKeyForInsert(UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
 		Dettaglio_contrattoBulk dettaglio = (Dettaglio_contrattoBulk)bulk;
-		//dettaglio.setStato(Dettaglio_contrattoBulk.STATO_VALIDO);
 		if (dettaglio.getId() == null)
 			dettaglio.setId(recuperoProgressivoDettaglio(userContext));
 	}
