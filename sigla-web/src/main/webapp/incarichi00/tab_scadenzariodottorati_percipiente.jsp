@@ -42,7 +42,7 @@
     <div class="GroupLabel h3 text-primary">
             Termini_pagamento
     </div>
-    	<!--<table>
+    	<table>
             <tr>
                 <td><% bp.getController().writeFormLabel(out,"cdTerminiPag");%></td>
                 <td><% bp.getController().writeFormInput(out,null,"cdTerminiPag",false,null,"");%></td>
@@ -61,30 +61,30 @@
 				    %>
    		        </td>
             </tr>
-    </table>-->
+    </table>
     <table>
-    	  <tr>
-         	<td>
-     	     	<% bp.getController().writeFormLabel(out,"termini_pagamento");%>
-          	</td>
-         	<td>
-    	      	<% bp.getController().writeFormInput(out,null,"termini_pagamento",false,null,"");%>
-          	</td>
-          </tr>
-          <tr>
-         	<td>
-     	     	<% bp.getController().writeFormLabel(out,"modalita_pagamento");%>
-          	</td>
-         	<td>
-    	      	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
-          	</td>
-    		<td>
-    			<% 	if (scadenzarioDottorati.getBanca() != null) {
-    					bp.getController().writeFormInput(out, null, "listaBanche", false, null, "");
-    				} %>
-       		</td>
-          </tr>
-        </table>
+       	  <tr>
+       	  <td><% bp.getController().writeFormField(out,"termini_pagamento"); %>
+       	  </td>
+       	  <td><% bp.getController().writeFormField(out,"modalita_pagamento"); %>
+                 	  </td>
+       	  </tr>
+       	     <tr>
+            	<td>
+        	     	<% bp.getController().writeFormLabel(out,"modalita_pagamento");%>
+        	     	<% bp.getController().writeFormInput(out,"pagamento");%>
+
+             	</td>
+            	<td>
+       	      	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
+             	</td>
+       		<td>
+       			<% 	if (scadenzarioDottorati.getBanca() != null) {
+       					bp.getController().writeFormInput(out, null, "listaBanche", false, null, "");
+       				} %>
+          		</td>
+             </tr>
+           </table>
 </div>
 <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">

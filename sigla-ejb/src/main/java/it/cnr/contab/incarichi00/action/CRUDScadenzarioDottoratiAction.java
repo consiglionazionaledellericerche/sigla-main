@@ -17,7 +17,9 @@
 
 package it.cnr.contab.incarichi00.action;
 
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
 import it.cnr.contab.compensi00.bp.MinicarrieraRataCRUDController;
@@ -37,6 +39,7 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.OptionBP;
 
@@ -105,7 +108,7 @@ public Forward doBringBackSearchFindTerzo(ActionContext context, ScadenzarioDott
 				scadenzarioDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());
 				scadenzarioDottorati.setCdTerminiPag(null);
 				scadenzarioDottorati.setCdModalitaPag(null);
-				scadenzarioDottorati.setPgBanca(null);
+				scadenzarioDottorati.setModalita(vTerzo.getModalita_pagamento());
 				scadenzarioDottorati.setCdTipoRapporto(null);
 				scadenzarioDottorati.setTiPrestazione(null);
 			}

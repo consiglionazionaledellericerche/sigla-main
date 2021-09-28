@@ -5,16 +5,21 @@
 package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.Iterator;
 
 public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
+	public static final String STATO_NON_ASS_COMPENSO = "N";
+
 	/**
 	 * [ANAGRAFICA_DOTTORATI ]
 	 **/
@@ -25,6 +30,9 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	private TerzoBulk terzo =  new TerzoBulk();
 
 	private CdsBulk cds = new CdsBulk();
+	private ScadenzarioDottoratiBulk scadenzarioDottorati_origine = null;
+
+
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = null;
 	private java.util.Collection modalita;
@@ -33,6 +41,7 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	 * Banca
 	 */
 	private it.cnr.contab.anagraf00.core.bulk.BancaBulk banca = null;
+	private V_terzo_per_compensoBulk percipiente = null;
 
 	public it.cnr.contab.anagraf00.core.bulk.BancaBulk getBanca() {
 		return banca;
@@ -56,6 +65,14 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	/**
 	 * Fine Banca
 	 */
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (6/24/2002 3:36:33 PM)
+	 * @return it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk
+	 */
+	public ScadenzarioDottoratiBulk getScadenzarioDottorati() {
+		return scadenzarioDottorati_origine;
+	}
 
 	/**
 	 * Termini pagamento
@@ -258,4 +275,69 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 		return dett;
 	}
 
+
+	/**
+	 * ROpercipiente
+	 */
+	public V_terzo_per_compensoBulk getPercipiente() {
+		return percipiente;
+	}
+
+	/**
+	 * Restituisce un boolean 'true' nel caso in cui NON posso ricercare banche
+	 */
+
+	public boolean isAbledToInsertBank() {
+
+		return !(getTerzo()!= null &&
+				getModalita_pagamento() != null &&
+				!isROPercipiente());
+	}
+
+	/**
+	 * Restituisce un boolean 'true' se i campi anagrafici relativi al percipiente
+	 * selezionato non sono modificabili
+	 */
+
+	public boolean isROFl_tassazione_separata() {
+
+		return	isROPercipiente() ||
+				(getScadenzarioDottoratiRate() != null && !getScadenzarioDottoratiRate().isEmpty());
+	}
+
+	/**
+	 * Restituisce un boolean 'true' se il percipiente non è modificabile
+	 */
+
+	public boolean isROPercipiente() {
+
+		return (getScadenzarioDottorati() != null &&
+				(getScadenzarioDottorati().getCrudStatus() == OggettoBulk.NORMAL ||
+						getScadenzarioDottorati().getCrudStatus() == OggettoBulk.TO_BE_UPDATED)) ||
+				(getStatoAssCompenso() != null &&
+						!STATO_NON_ASS_COMPENSO.equalsIgnoreCase(getStatoAssCompenso()) &&
+						getCrudStatus() != OggettoBulk.UNDEFINED) ||
+				!(getStato() == null ||
+						getPercipiente() == null);
+	}
+	/**
+	 * Restituisce un boolean 'true' se i campi anagrafici relativi al percipiente
+	 * selezionato non sono modificabili
+	 */
+
+	public boolean isROPercipienteAnag() {
+
+		return	getPercipiente() == null ||
+				getPercipiente().getCrudStatus() == OggettoBulk.NORMAL ||
+				isROPercipiente();
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/4/2001 2:42:26 PM)
+	 * @return boolean
+	 */
+	public boolean isROTi_istituz_commerc() {
+
+		return isROPercipiente();
+	}
 }
