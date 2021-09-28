@@ -71,11 +71,6 @@
        	  </tr>
        	     <tr>
             	<td>
-        	     	<% bp.getController().writeFormLabel(out,"modalita_pagamento");%>
-        	     	<% bp.getController().writeFormInput(out,"pagamento");%>
-
-             	</td>
-            	<td>
        	      	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
              	</td>
        		<td>
