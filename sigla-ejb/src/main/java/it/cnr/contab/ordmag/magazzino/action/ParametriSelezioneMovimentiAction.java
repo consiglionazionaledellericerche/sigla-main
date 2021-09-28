@@ -23,6 +23,7 @@ import it.cnr.contab.ordmag.magazzino.bp.ParametriSelezioneMovimentiMagBP;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.util.action.BulkAction;
@@ -187,5 +188,10 @@ public class ParametriSelezioneMovimentiAction extends BulkAction {
     	
     }
 
-
+	@Override
+	public Forward doCloseForm(ActionContext actioncontext) throws BusinessProcessException {
+		ParametriSelezioneMovimentiMagBP bp = (ParametriSelezioneMovimentiMagBP)actioncontext.getBusinessProcess();
+		bp.setDirty(false);
+		return super.doCloseForm(actioncontext);
+	}
 }

@@ -335,29 +335,35 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 			throws ComponentException, PersistencyException, ApplicationException, RemoteException {
 		OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
 		OrdineAcqConsegnaBulk consegnaDaRipristinare = movimentoDaAnnullare.getLottoMag().getOrdineAcqConsegna();
+		OrdineAcqRigaBulk rigaDaRipristinare = consegnaDaRipristinare.getOrdineAcqRiga();
 		OrdineAcqConsegnaHome home = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
 		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)home.findByPrimaryKey(userContext, consegnaDaRipristinare);
 		OrdineAcqBulk ordine = (OrdineAcqBulk)ordineComponent.inizializzaBulkPerModifica(userContext, consegna.getOrdineAcqRiga().getOrdineAcq());
 
-		ordine.getRigheOrdineColl().stream().forEach(ordineRiga->{
-			OrdineAcqConsegnaBulk ordineConsegnaComp =
-						Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
-								.filter(list -> !list.isEmpty())
-								.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
-								.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
-			consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
-			if (consegna.getQuantitaOrig() != null){
-				consegna.setQuantita(consegna.getQuantitaOrig());
-				consegna.setQuantitaOrig(null);
-				ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
-				ordine.setAggiornaImpegniInAutomatico(true);
-			}
-			ordine.setToBeUpdated();
-			//rimuovo la vecchia consegna
-			ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
-			//inserisco la nuova consegna
-			ordineRiga.getRigheConsegnaColl().add(consegna);
-		});
+		OrdineAcqRigaBulk ordineRiga =
+				Optional.ofNullable(ordine.getRigheOrdineColl())
+						.filter(list -> !list.isEmpty())
+						.map(list->list.get(list.indexOfByPrimaryKey(rigaDaRipristinare)))
+						.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della riga "+rigaDaRipristinare.getRigaOrdineString()+"."));
+
+		OrdineAcqConsegnaBulk ordineConsegnaComp =
+				Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
+						.filter(list -> !list.isEmpty())
+						.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
+						.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
+		consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+		if (consegna.getQuantitaOrig() != null){
+			consegna.setQuantita(consegna.getQuantitaOrig());
+			consegna.setQuantitaOrig(null);
+			ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
+			ordine.setAggiornaImpegniInAutomatico(true);
+		}
+		ordine.setToBeUpdated();
+		int i = 0;
+		//rimuovo la vecchia consegna
+		ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
+		//inserisco la nuova consegna
+		ordineRiga.getRigheConsegnaColl().add(consegna);
 		ordineComponent.modificaConBulk(userContext, ordine);
 	}
 
@@ -721,7 +727,9 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	SQLBuilder sql = movimentiHome.createSQLBuilder();
     	sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
     	sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
-    	sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+		if (parametri.getMagazzinoAbilitato() != null ){
+			sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+		}
     	if (parametri.getDaDataMovimento() != null ){
     		sql.addSQLClause("AND","DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataMovimento());
     	} 
@@ -743,14 +751,15 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	} 
     	if (parametri.getTipoMovimentoMag() != null && parametri.getTipoMovimentoMag().getCdTipoMovimento() != null){
      	}
-        sql.generateJoin("lottoMag", "LOTTO_MAG");
+        sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
+
         sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
     	
     	if (parametri.getDaBeneServizio() != null && parametri.getDaBeneServizio().getCd_bene_servizio() != null){
-    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
+    		sql.addSQLClause("AND","BENE_SERVIZIO.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
     	} 
     	if (parametri.getaBeneServizio() != null && parametri.getaBeneServizio().getCd_bene_servizio() != null){
-    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
+    		sql.addSQLClause("AND","BENE_SERVIZIO.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
     	} 
     	if (parametri.getDaUnitaOperativaRicevente() != null && parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa() != null){
     		sql.addSQLClause("AND","CD_UOP",SQLBuilder.GREATER_EQUALS,parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa());

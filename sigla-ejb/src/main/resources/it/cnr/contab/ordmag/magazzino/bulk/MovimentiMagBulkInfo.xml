@@ -86,6 +86,15 @@
 		nullable="false"
 		label="Tipo Mov." />
 	<fieldProperty
+			name="dsTipoMovimento"
+			property="tipoMovimentoMag.dsTipoMovimento"
+			inputType="TEXT"
+			inputSize="3"
+			maxLength="3"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Tipo Mov." />
+	<fieldProperty
 		name="dataBolla"
 		property="dataBolla"
 		inputType="TEXT"
@@ -646,6 +655,8 @@
 	<findFieldProperty
 		name="cdTipoMovimento" />
 	<findFieldProperty
+			name="dsTipoMovimento" />
+	<findFieldProperty
 		name="dataBolla" />
 	<findFieldProperty
 		name="numeroBolla" />
@@ -748,7 +759,9 @@
 		<columnFieldProperty
 			name="dtRiferimento" />
 		<columnFieldProperty
-			name="cdTipoMovimento" />
+				name="cdTipoMovimento" />
+		<columnFieldProperty
+			name="dsTipoMovimento" />
 		<columnFieldProperty
 			name="cdBeneServizio" />
 		<columnFieldProperty

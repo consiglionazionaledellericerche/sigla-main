@@ -53,6 +53,7 @@ import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -185,7 +186,7 @@ public class OrdineAcqComponent
 			for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
 				OggettoBulk consbulk= (OggettoBulk) c.next();
 				OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-				if (!cons.isConsegnaImporto0()){
+				if (!cons.isConsegna0()){
 					ParametriCalcoloImportoOrdine parametriCons = (ParametriCalcoloImportoOrdine)parametriRiga.clone();
 					if (cons.getQuantita() == null ){
 						throw new it.cnr.jada.comp.ApplicationException("Campi di consegna ordine necessari per il calcolo dell'importo non valorizzati.");
@@ -520,7 +521,7 @@ public class OrdineAcqComponent
 			for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
 				OrdineAcqRigaBulk riga= (OrdineAcqRigaBulk) i.next();
 
-				riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(recuperoRigheConsegnaCollegate(usercontext, riga)));
+				riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(recuperoRigheConsegnaCollegate(usercontext, getHome(usercontext, OrdineAcqConsegnaBulk.class), riga)));
 
 				getHomeCache(usercontext).fetchAll(usercontext);
 
@@ -558,9 +559,7 @@ public class OrdineAcqComponent
 		rebuildObbligazioni(usercontext, ordine);
 		return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 	}
-
-	private List recuperoRigheConsegnaCollegate(UserContext usercontext, OrdineAcqRigaBulk riga) throws ComponentException, PersistencyException {
-		it.cnr.jada.bulk.BulkHome homeConsegna= getHome(usercontext, OrdineAcqConsegnaBulk.class);
+	private List recuperoRigheConsegnaCollegate(UserContext usercontext, BulkHome homeConsegna, OrdineAcqRigaBulk riga) throws ComponentException, PersistencyException {
 		it.cnr.jada.persistency.sql.SQLBuilder sqlConsegna= homeConsegna.createSQLBuilder();
 		sqlConsegna.addClause("AND", "numero", SQLBuilder.EQUALS, riga.getNumero());
 		sqlConsegna.addClause("AND", "cdCds", SQLBuilder.EQUALS, riga.getCdCds());
@@ -584,7 +583,7 @@ public class OrdineAcqComponent
 			riga.setDspConto(cons.getContoBulk());
 			riga.setDspStato(cons.getStato());
 		} else if (riga.getRigheConsegnaColl().size() > 1){
-			BigDecimal quantita = BigDecimal.ZERO;
+			riga.setDspQuantita(riga.getQuantitaConsegneColl());
 			String stato = null;
 			boolean primoGiro = true;
 			for (OrdineAcqConsegnaBulk cons : riga.getRigheConsegnaColl() ){
@@ -2058,7 +2057,7 @@ public class OrdineAcqComponent
 				for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
 					OggettoBulk consbulk= (OggettoBulk) c.next();
 					OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-					if (!cons.isConsegnaImporto0()){
+					if (!cons.isConsegna0()){
 						Obbligazione_scadenzarioBulk scadenza = cons.getObbligazioneScadenzario();
 						if (cons.getObbligazioneScadenzario() != null) {
 							if (ordine.getOrdineObbligazioniHash() == null ||
@@ -2409,7 +2408,7 @@ public class OrdineAcqComponent
 												ordine.getNumero(),
 												riga.getRiga()
 										));
-								rigaDB.setRigheConsegnaColl(new BulkList<>(recuperoRigheConsegnaCollegate(aUC, rigaDB)));
+								rigaDB.setRigheConsegnaColl(new BulkList<>(recuperoRigheConsegnaCollegate(aUC, getTempHome(aUC, OrdineAcqConsegnaBulk.class), rigaDB)));
 							} catch (PersistencyException e) {
 								throw new ComponentException(e);
 							}
@@ -2599,6 +2598,8 @@ public class OrdineAcqComponent
 					sql.addTableToHeader("ABIL_UTENTE_UOP_OPER", "ABIL_UTENTE_UOP_OPER");
 					sql.addSQLJoin("ORDINE_ACQ.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
 					sql.addSQLClause(FindClause.AND, "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
+					sql.addSQLClause(FindClause.AND, "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
+
 				}
 			}
 		}

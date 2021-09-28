@@ -464,8 +464,10 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		BigDecimal quantita = BigDecimal.ZERO;
 		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
 			OrdineAcqConsegnaBulk cons = ((OrdineAcqConsegnaBulk)i.next());
-			BigDecimal qtaCons = cons.getQuantitaEvasa() == null ? cons.getQuantita() : cons.getQuantitaEvasa();
-			quantita = quantita.add(qtaCons);
+			if (!cons.isConsegna0()){
+				BigDecimal qtaCons = cons.getQuantitaEvasa() == null ? cons.getQuantita() : cons.getQuantitaEvasa();
+				quantita = quantita.add(qtaCons);
+			}
 		}
 		return quantita;
 	}

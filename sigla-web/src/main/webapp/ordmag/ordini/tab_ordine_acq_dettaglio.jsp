@@ -46,7 +46,7 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
         </tr>
         <% if (riga != null && riga.getDettaglioContratto() != null) { %>
             <%if (bp.getParentRoot().isBootstrap()) { %>
-            <div class="card-header">
+            <div>
                 <h6 class="mb-0">
                     <a onclick="submitForm('doToggle(dettaglioContratto)')" class="text-primary"><i aria-hidden="true" class="fa <%=collapseIconClass%>"></i> Dati Dettaglio Contratto</a>
                 </h6>
