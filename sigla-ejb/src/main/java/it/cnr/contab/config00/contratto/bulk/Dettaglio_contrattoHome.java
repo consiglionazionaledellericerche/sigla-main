@@ -43,7 +43,7 @@ public class Dettaglio_contrattoHome extends BulkHome {
 	}
 	public void initializePrimaryKeyForInsert(UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
 		Dettaglio_contrattoBulk dettaglio = (Dettaglio_contrattoBulk)bulk;
-		dettaglio.setStato(Dettaglio_contrattoBulk.STATO_VALIDO);
+		//dettaglio.setStato(Dettaglio_contrattoBulk.STATO_VALIDO);
 		if (dettaglio.getId() == null)
 			dettaglio.setId(recuperoProgressivoDettaglio(userContext));
 	}
@@ -51,7 +51,12 @@ public class Dettaglio_contrattoHome extends BulkHome {
 
 	@Override
 	public void delete(Persistent persistent, UserContext userContext) throws PersistencyException {
-		((Dettaglio_contrattoBulk)persistent).setStato(Dettaglio_contrattoBulk.STATO_ANNULLATO);
-		super.update(persistent, userContext);
+		Dettaglio_contrattoBulk dettaglio=(Dettaglio_contrattoBulk)persistent;
+		if ( ContrattoBulk.STATO_PROVVISORIO.equals(dettaglio.getContratto().getStato()))
+			super.delete(persistent,userContext);
+		else{
+			dettaglio.setStato(Dettaglio_contrattoBulk.STATO_ANNULLATO);
+			super.update(persistent, userContext);
+		}
 	}
 }
