@@ -4798,4 +4798,31 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="CD_VOCE_CREDITO_EP"/>
         </createIndex>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="inserimento-batch-apertura-anno-contabile">
+        <insert tableName="batch_procedura">
+            <column name="cd_procedura" type="STRING" value="RIBALTAMENTOPDGP"/>
+            <column name="ds_procedura" type="STRING" value="Ribaltamento configurazione, str.organizzativa, anagrafica capitoli e piano dei conti."/>
+            <column name="object_name" type="STRING" value="JOB_RIBALTAMENTO_PDGP"/>
+            <column name="package_name" type="STRING" value="CNRMIG100"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+
+        <insert tableName="batch_procedura_parametro">
+            <column name="cd_procedura" type="STRING" value="RIBALTAMENTOPDGP"/>
+            <column name="nome_parametro" type="STRING" value="AES"/>
+            <column name="pg_valore_parametro" type="NUMERIC" value="1"/>
+            <column name="valore_number" type="NUMERIC" value="2022"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

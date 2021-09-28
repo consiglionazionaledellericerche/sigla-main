@@ -4,6 +4,8 @@
 
 CREATE OR REPLACE PACKAGE BODY "CNRMIG100" is
 
+lPgExec number;
+
 function isRibaltamentoPDGPEffettuato (aEs number, aPgEsec number) return boolean is
 --aPgEsecPrec integer;
 conta_es      number;
@@ -1038,17 +1040,14 @@ begin
 
 end;
 ----------------------------------------------------------------------------
-procedure init_ribaltamento_pdgp(aEs number, aMessage in out varchar2) is
+procedure init_ribaltamento_pdgp(aEs number, aPgEsec number, aMessage in out varchar2) is
 aEsPrec         number;
-aPgEsec         number;
 stato_fine      char(1) := 'I';
 aNum            number;
 new_val01       VARCHAR2(100);
 begin
-
 	begin
-		aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_PDGP,dsProcesso_pdgp,null,cgUtente,null,null);
-dbms_output.put_line('0001');
+        dbms_output.put_line('0001');
 		startLogRibaltamento(aEs, aPgEsec, dsProcesso_pdgp , cgUtente);
 
 		if isRibaltamentoPDGPEffettuato(aEs, aPgEsec) then
@@ -1318,6 +1317,13 @@ dbms_output.put_line('0007');
 		ibmutl200.LOGERR(aPgEsec,aMessage,'','');
 	end;
 
+end;
+
+procedure init_ribaltamento_pdgp(aEs number, aMessage in out varchar2) is
+    aPgEsec  number;
+begin
+    aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_PDGP,dsProcesso_pdgp,null,cgUtente,null,null);
+    init_ribaltamento_pdgp(aEs, aPgEsec, aMessage);
 end;
 ----------------------------------------------------------------------------
 Procedure ribaltaEV(aEsDest number, aEsOrig number, aPgEsec number, aStato in out char, aMessage in out varchar2) is
@@ -3675,5 +3681,32 @@ begin
 	end loop;  -- fine ciclo aLimitiSpesa
 
 end;
+
+procedure JOB_RIBALTAMENTO_PDGP(job number, pg_exec number, next_date date, aEs number) as
+    aTSNow date;
+    aUser varchar2(20);
+    aMessage varchar2(500);
+begin
+    aTSNow:=sysdate;
+    aUser:=IBMUTL200.getUserFromLog(pg_exec);
+    lPgExec := pg_exec;
+
+    -- Aggiorna le info di testata del log
+    IBMUTL210.logStartExecutionUpd(lPgExec, TI_LOG_RIBALTAMENTO_PDGP, job, 'Batch di ribaltamento configurazione, str.organizzativa, anagrafica capitoli e piano dei conti. Start:'||to_char(aTSNow,'YYYY/MM/DD HH-MI-SS'));
+
+	if aEs = 0 then
+	   ibmutl200.logErr(lPgExec,'Esercizio zero non gestito', '', '');
+	else
+	   insert into numerazione_base (ESERCIZIO, COLONNA, TABELLA, CD_CORRENTE, CD_MASSIMO, DUVA, UTUV, DACR, UTCR, PG_VER_REC, CD_INIZIALE )
+	   (select aEs, COLONNA, TABELLA, 0, CD_MASSIMO, SYSDATE, 'SYSTEM', SYSDATE, 'SYSTEM', 1, CD_INIZIALE
+	    FROM numerazione_base
+	    WHERE Esercizio = aEs - 1
+	    AND TABELLA IN ('VAR_STANZ_RES' , 'VAR_STANZ_RES$'));
+
+	   INIT_RIBALTAMENTO_pdgp(aEs,pg_exec,aMessage);
+       ibmutl200.logInf(pg_exec,aMessage, '', '');
+       ibmutl200.logInf(pg_exec,'Batch di aggiornamento coordinate bancarie dipendenti.', 'End:'||to_char(sysdate,'YYYY/MM/DD HH-MI-SS'), '');
+    end if;
+ end;
 ----------------------------------------------------------------------------
 end;
