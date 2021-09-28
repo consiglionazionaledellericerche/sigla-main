@@ -6,7 +6,8 @@
 		it.cnr.contab.incarichi00.bp.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.contab.incarichi00.docs.bulk.*,
-		it.cnr.contab.docamm00.bp.*"
+		it.cnr.contab.docamm00.bp.*,
+		it.cnr.contab.anagraf00.tabrif.bulk.*"
 %>
 
 <% 	CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP)BusinessProcess.getBusinessProcess(request);
@@ -60,6 +61,27 @@
           		</td>
              </tr>
            </table>
+           <table>
+           <tr>
+           		  	<td colspan="2">
+           		<%	if (scadenzarioDottorati.getBanca() != null) {
+           				if (Rif_modalita_pagamentoBulk.BANCARIO.equalsIgnoreCase(scadenzarioDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoB");
+           				} else if (Rif_modalita_pagamentoBulk.POSTALE.equalsIgnoreCase(scadenzarioDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoP");
+           				} else if (Rif_modalita_pagamentoBulk.QUIETANZA.equalsIgnoreCase(scadenzarioDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoQ");
+           				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(scadenzarioDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoA");
+           				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(scadenzarioDottorati.getBanca().getTi_pagamento())) {
+           		 	     	bp.getController().writeFormInput(out,"contoN");
+           				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(scadenzarioDottorati.getBanca().getTi_pagamento()) && scadenzarioDottorati.getBanca().isTABB()) {
+                               bp.getController().writeFormInput(out,"contoB");
+                           }
+           			}  %>
+           			<td>
+           		<tr>
+               </table>
 </div>
 <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">

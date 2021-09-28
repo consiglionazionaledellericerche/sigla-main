@@ -82,18 +82,18 @@ public class CRUDScadenzarioDottoratiBP
      public void findListaBanche(ActionContext context) throws BusinessProcessException {
 
      try {
-                    MinicarrieraBulk carriera = (MinicarrieraBulk) getModel();
-                    if (carriera.getModalita_pagamento() != null) {
-                        MinicarrieraComponentSession component = (MinicarrieraComponentSession) createComponentSession();
-                        java.util.List coll = component.findListaBanche(context.getUserContext(), carriera);
+                    ScadenzarioDottoratiBulk scadenzarioDottorati = (ScadenzarioDottoratiBulk) getModel();
+                    if (scadenzarioDottorati.getModalita_pagamento() != null) {
+                        ScadenzarioDottoratiComponentSession component = (ScadenzarioDottoratiComponentSession) createComponentSession();
+                        java.util.List coll = component.findListaBanche(context.getUserContext(), scadenzarioDottorati);
 
                         //	Assegno di default la prima banca tra quelle selezionate
                         if (coll == null || coll.isEmpty())
-                            carriera.setBanca(null);
+                            scadenzarioDottorati.setBanca(null);
                         else
-                            carriera.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk) new java.util.Vector(coll).firstElement());
+                            scadenzarioDottorati.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk) new java.util.Vector(coll).firstElement());
                     } else
-                        carriera.setBanca(null);
+                        scadenzarioDottorati.setBanca(null);
 
                 } catch (it.cnr.jada.comp.ComponentException ex) {
                     throw handleException(ex);

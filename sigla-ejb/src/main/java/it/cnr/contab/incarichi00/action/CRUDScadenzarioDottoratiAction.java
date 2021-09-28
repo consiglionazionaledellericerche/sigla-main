@@ -108,7 +108,7 @@ public Forward doBringBackSearchFindTerzo(ActionContext context, ScadenzarioDott
 				scadenzarioDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());
 				scadenzarioDottorati.setCdTerminiPag(null);
 				scadenzarioDottorati.setCdModalitaPag(null);
-				scadenzarioDottorati.setModalita(vTerzo.getModalita_pagamento());
+				//scadenzarioDottorati.setModalita(vTerzo.getModalita_pagamento());
 				scadenzarioDottorati.setCdTipoRapporto(null);
 				scadenzarioDottorati.setTiPrestazione(null);
 			}
@@ -155,7 +155,7 @@ public Forward doOnModalitaPagamentoChange(ActionContext context) {
 
 	try {
 		fillModel(context);
-		CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)getBusinessProcess(context);
+		CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
 		bp.findListaBanche(context);
 
 		return context.findDefaultForward();

@@ -25,6 +25,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 public class TransactionalScadenzarioDottoratiComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements ScadenzarioDottoratiComponentSession {
 public it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext param0,it.cnr.jada.persistency.sql.CompoundFindClause param1,it.cnr.jada.bulk.OggettoBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -255,6 +256,11 @@ public it.cnr.jada.bulk.OggettoBulk[] modificaConBulk(it.cnr.jada.UserContext pa
 
 	@Override
 	public ScadenzarioDottoratiBulk completaTerzo(UserContext param0, ScadenzarioDottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
+		return null;
+	}
+
+	@Override
+	public List findListaBanche(UserContext param0, ScadenzarioDottoratiBulk param1) throws ComponentException, RemoteException {
 		return null;
 	}
 }

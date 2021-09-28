@@ -28,6 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import java.rmi.RemoteException;
+import java.util.List;
 
 @Stateless(name="CNRINCARICHI00_EJB_ScadenzarioDottoratiComponentSession")
 public class ScadenzarioDottoratiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScadenzarioDottoratiComponentSession {
@@ -42,6 +43,11 @@ public class ScadenzarioDottoratiComponentSessionBean extends it.cnr.jada.ejb.CR
 
 	@Override
 	public ScadenzarioDottoratiBulk completaTerzo(UserContext param0, ScadenzarioDottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
+		return null;
+	}
+
+	@Override
+	public List findListaBanche(UserContext param0, ScadenzarioDottoratiBulk param1) throws ComponentException, RemoteException {
 		return null;
 	}
 
