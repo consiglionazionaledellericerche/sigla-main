@@ -42,37 +42,17 @@
     <div class="GroupLabel h3 text-primary">
             Termini_pagamento
     </div>
-    	<table>
-            <tr>
-                <td><% bp.getController().writeFormLabel(out,"cdTerminiPag");%></td>
-                <td><% bp.getController().writeFormInput(out,null,"cdTerminiPag",false,null,"");%></td>
-            </tr>
-            <tr>
-            <td><% bp.getController().writeFormLabel(out,"cdModalitaPag");%></td>
-                <td>
-                <% bp.getController().writeFormInput(out,null,"cdModalitaPag",false,null,"onChange=\"submitForm('doOnCdModalitaPagChange')\"");%>
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-			        <%
-					bp.getController().writeFormInput(out,"pgBanca");
-				    %>
-   		        </td>
-            </tr>
-    </table>
     <table>
        	  <tr>
-       	  <td><% bp.getController().writeFormField(out,"termini_pagamento"); %>
-       	  </td>
-       	  <td><% bp.getController().writeFormField(out,"modalita_pagamento"); %>
-                 	  </td>
+       	  <td><% bp.getController().writeFormLabel(out, "termini_pagamento"); %>
+       	  <% bp.getController().writeFormInput(out,"termini_pagamento"); %></td>
        	  </tr>
        	     <tr>
-            	<td>
+            	<td><% bp.getController().writeFormLabel(out, "modalita_pagamento"); %>
        	      	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
              	</td>
+             	</tr>
+             	<tr>
        		<td>
        			<% 	if (scadenzarioDottorati.getBanca() != null) {
        					bp.getController().writeFormInput(out, null, "listaBanche", false, null, "");
