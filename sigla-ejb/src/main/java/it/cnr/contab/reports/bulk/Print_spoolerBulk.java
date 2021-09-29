@@ -56,7 +56,7 @@ public class Print_spoolerBulk extends Print_spoolerBase {
 		statoKeys.put(STATO_IN_ESECUZIONE, "In esecuzione");
 		statoKeys.put(STATO_ERRORE, "Errore");
 		statoKeys.put(STATO_ESEGUITA, "Eseguita");
-		statoKeys.put(STATO_IN_CODA_WAITDS, "In Coda calcolo DS");
+		statoKeys.put(STATO_IN_CODA_WAITDS, "In Coda");
 		ti_visibilitaKeys = new OrderedHashtable();
 		ti_visibilitaKeys.put(TI_VISIBILITA_UTENTE, "Utente");
 		ti_visibilitaKeys.put(TI_VISIBILITA_CDR, "Cdr");
