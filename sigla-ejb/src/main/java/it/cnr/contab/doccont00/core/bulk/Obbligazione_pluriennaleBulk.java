@@ -180,4 +180,23 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 	public void setPgObbligazioneRif(Long pgObbligazioneRif)  {
 		this.getObbligazioneRif().setPg_obbligazione(pgObbligazioneRif);
 	}
+
+	public Obbligazione_pluriennaleBulk clone(ObbligazioneBulk obbligazione, it.cnr.jada.action.ActionContext context){
+		Obbligazione_pluriennaleBulk nuovo = null;
+
+		try {
+			nuovo = (Obbligazione_pluriennaleBulk)getClass().newInstance();
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+		nuovo.setObbligazione(obbligazione);
+		nuovo.setAnno(this.getAnno());
+		nuovo.setImporto(this.getImporto());
+		nuovo.setObbligazioneRif(this.getObbligazioneRif());
+		nuovo.setCrudStatus(TO_BE_CREATED);
+
+		return nuovo;
+	}
 }

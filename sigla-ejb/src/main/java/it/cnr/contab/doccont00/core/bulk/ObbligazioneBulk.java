@@ -1733,9 +1733,24 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 
 		nuova.setFl_gara_in_corso(getFl_gara_in_corso());
 		nuova.setDs_gara_in_corso(getDs_gara_in_corso());
+		// da verificare se vanno clonati
+		//nuovo.setObbligazioniPluriennali(clonaObbligazioniPluriennali(nuovo,context));
 
 		return nuova;
 	}
+
+	private BulkList<Obbligazione_pluriennaleBulk> clonaObbligazioniPluriennali(ObbligazioneBulk obbligazione,it.cnr.jada.action.ActionContext context){
+		if ( this.getObbligazioniPluriennali()==null || this.getObbligazioniPluriennali().isEmpty())
+			return this.getObbligazioniPluriennali();
+		BulkList<Obbligazione_pluriennaleBulk> pluriennali= new BulkList<Obbligazione_pluriennaleBulk>();
+		for ( Obbligazione_pluriennaleBulk p:this.getObbligazioniPluriennali()){
+			Obbligazione_pluriennaleBulk n = p.clone(obbligazione,context);
+			pluriennali.add( n);
+		}
+		return pluriennali;
+	}
+
+
 	@Override
 	public void insertingUsing(Persister persister, UserContext userContext) {
 		if (getFl_netto_sospeso() == null)
