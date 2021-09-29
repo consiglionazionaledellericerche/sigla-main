@@ -46,7 +46,7 @@
 		maxLength="10"
 		inputSize="10"
 		nullable="false"
-		label="dataInventario"/>
+		label="Data Inventario"/>
 	<fieldProperty
 			name="cdsMagForPrint"
 			property="cdsMagForPrint"/>
@@ -68,7 +68,7 @@
 			property="flDettaglioArticolo"
 			inputType="CHECKBOX"
 			enabledOnSearch="true"
-			label="Dettaglio Aritcolo" />
+			label="Dettaglio Articolo" />
 
 	<fieldProperty
 			name="ordinamento"

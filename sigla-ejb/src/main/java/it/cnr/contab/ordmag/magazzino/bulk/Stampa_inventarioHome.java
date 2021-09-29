@@ -82,7 +82,7 @@ public class Stampa_inventarioHome extends BulkHome {
 	 * @param persistentCache it.cnr.jada.persistency.PersistentCache
 	 */
 	public Stampa_inventarioHome(java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
-		super(Stampa_consumiBulk.class, conn, persistentCache);
+		super(Stampa_inventarioBulk.class, conn, persistentCache);
 	}
 
 	private static final String DATA_INVENTARIO="dataInventario";

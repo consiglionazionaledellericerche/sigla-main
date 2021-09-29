@@ -32,9 +32,9 @@ public class Stampa_inventarioBulk extends AbilitazioneMagazzinoBulk {
 
     private Categoria_gruppo_inventBulk catgrp;
 
-    private Boolean flDettaglioArticolo = Boolean.TRUE;
+    private Boolean flDettaglioArticolo = Boolean.FALSE;
 
-    private Boolean flRaggCatGruppo = Boolean.TRUE;
+    private Boolean flRaggCatGruppo = Boolean.FALSE;
 
     private String ordinamento;
 
