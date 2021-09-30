@@ -16,6 +16,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	public static final String STATO_NON_ASS_COMPENSO = "N";
@@ -27,12 +28,10 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	/**
 	 * [TERZO ]
 	 **/
-	private TerzoBulk terzo =  new TerzoBulk();
+	private TerzoBulk terzo;
 
 	private CdsBulk cds = new CdsBulk();
 	private ScadenzarioDottoratiBulk scadenzarioDottorati_origine = null;
-
-
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = null;
 	private java.util.Collection modalita;
@@ -337,7 +336,13 @@ public class ScadenzarioDottoratiBulk extends ScadenzarioDottoratiBase {
 	 * @return boolean
 	 */
 	public boolean isROTi_istituz_commerc() {
-
 		return isROPercipiente();
 	}
+
+	public boolean isROTerzo() {
+		return Optional.ofNullable(getTerzo())
+				.filter(terzoBulk -> Optional.ofNullable(terzoBulk.getCd_terzo()).isPresent())
+				.isPresent();
+	}
+
 }

@@ -78,10 +78,11 @@
 		maxLength="1"
 		enabledOnEdit="false"
 		label="tiAnagrafico" />
+
 	<fieldProperty
 		name="findTerzo"
 		property="terzo"
-		inputType="SEARCHTOOL"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool_small"
 		label="Codice Terzo"
 		enabledOnSearch="true"
@@ -90,46 +91,64 @@
 	<fieldProperty
 		name="ragioneSociale"
 		property="ragioneSociale"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
 		maxLength="100"
-		enabledOnEdit="false"
-		label="ragioneSociale" />
+		inputSize="100"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROTerzo"
+		readonlyPropertyOnEdit="ROTerzo"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="nome"
 		property="nome"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
 		maxLength="50"
-		enabledOnEdit="false"
-		label="nome" />
+		inputSize="50"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROTerzo"
+		readonlyPropertyOnEdit="ROTerzo"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nome"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cognome"
 		property="cognome"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
 		maxLength="50"
-		enabledOnEdit="false"
-		label="cognome" />
+		inputSize="50"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROTerzo"
+		readonlyPropertyOnEdit="ROTerzo"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Cognome"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="codiceFiscale"
 		property="codiceFiscale"
-		inputType="TEXT"
-		inputSize="20"
 		maxLength="20"
-		enabledOnEdit="false"
-		label="codiceFiscale" />
+		inputSize="20"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROTerzo"
+		readonlyPropertyOnEdit="ROTerzo"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Codice Fiscale"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="partitaIva"
 		property="partitaIva"
-		inputType="TEXT"
-		inputSize="20"
 		maxLength="20"
-		enabledOnEdit="false"
-		label="partitaIva" />
+		inputSize="20"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROTerzo"
+		readonlyPropertyOnEdit="ROTerzo"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Partita Iva"
+		caseSensitiveSearch="false" />
+
 	/**************************************************/
 	/********************** BANCHE ********************/
 	<fieldProperty

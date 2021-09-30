@@ -5,9 +5,17 @@
 	<defaultColumnMap
 		tableName="SCADENZARIO_DOTTORATI_RATA">
 		<columnMapping
-			columnName="ID_SCADENZARIO_DOTTORATI"
-			propertyName="scadenzarioDottorati.id" />
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="uo.cd_unita_organizzativa" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="scadenzarioDottorati" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+
 </SQLPersistentInfo>

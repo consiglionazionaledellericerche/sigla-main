@@ -4,7 +4,14 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+
+import java.util.Optional;
+
 public class ScadenzarioDottoratiRataBulk extends ScadenzarioDottoratiRataBase {
+	private CdsBulk cds;
+	private Unita_organizzativaBulk uo;
 	/**
 	 * [SCADENZARIO_DOTTORATI ]
 	 **/
@@ -45,5 +52,49 @@ public class ScadenzarioDottoratiRataBulk extends ScadenzarioDottoratiRataBase {
 	 **/
 	public void setIdScadenzarioDottorati(Long idScadenzarioDottorati)  {
 		this.getScadenzarioDottorati().setId(idScadenzarioDottorati);
+	}
+
+	public CdsBulk getCds() {
+		return cds;
+	}
+
+	public void setCds(CdsBulk cds) {
+		this.cds = cds;
+	}
+
+	public Unita_organizzativaBulk getUo() {
+		return uo;
+	}
+
+	public void setUo(Unita_organizzativaBulk uo) {
+		this.uo = uo;
+	}
+
+	@Override
+	public void setCdCds(String cdCds) {
+		Optional.ofNullable(cds)
+				.orElse(new CdsBulk())
+						.setCd_unita_organizzativa(cdCds);
+	}
+
+	@Override
+	public String getCdCds() {
+		return Optional.ofNullable(cds)
+				.map(CdsBulk::getCd_unita_organizzativa)
+				.orElse(super.getCdCds());
+	}
+
+	@Override
+	public void setCdUnitaOrganizzativa(String cdUnitaOrganizzativa) {
+		Optional.ofNullable(uo)
+				.orElse(new Unita_organizzativaBulk())
+				.setCd_unita_organizzativa(cdUnitaOrganizzativa);
+	}
+
+	@Override
+	public String getCdUnitaOrganizzativa() {
+		return Optional.ofNullable(uo)
+				.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+				.orElse(super.getCdUnitaOrganizzativa());
 	}
 }

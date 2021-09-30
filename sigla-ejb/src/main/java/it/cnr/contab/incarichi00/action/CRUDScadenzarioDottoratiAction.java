@@ -17,261 +17,183 @@
 
 package it.cnr.contab.incarichi00.action;
 
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
 import it.cnr.contab.compensi00.bp.MinicarrieraRataCRUDController;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
-import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
-import it.cnr.contab.compensi00.ejb.MinicarrieraComponentSession;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.incarichi00.bp.CRUDScadenzarioDottoratiBP;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.missioni00.bp.CRUDAnticipoBP;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.BulkCollections;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.OptionBP;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
-/**
 
 /**
+ * /**
  * Insert the type's description here.
  * Creation date: (21/02/2002 16.13.08)
+ *
  * @author: Roberto Fantino
-
  */
 
 public class CRUDScadenzarioDottoratiAction extends it.cnr.jada.util.action.CRUDAction {
-/**
- * CRUDCompensoAction constructor comment.
- */
-public CRUDScadenzarioDottoratiAction() {
-	super();
-}
+    /**
+     * CRUDCompensoAction constructor comment.
+     */
+    public CRUDScadenzarioDottoratiAction() {
+        super();
+    }
 
-/**
- * Prepara la minicarriera per la ricerca di un nuovo percipiente
- */
-public Forward doBlankSearchFind_terzo(ActionContext context, ScadenzarioDottoratiBulk scadenzarioDottorati) {
+    /**
+     * Prepara la minicarriera per la ricerca di un nuovo percipiente
+     */
+    public Forward doBlankSearchFindTerzo(ActionContext context, ScadenzarioDottoratiBulk scadenzarioDottorati) {
 
-	if (scadenzarioDottorati != null){
-		TerzoBulk terzo = new TerzoBulk();
-		terzo = scadenzarioDottorati.getTerzo();
-		scadenzarioDottorati.setCdTerzo(terzo.getCd_terzo());
-		context.getBusinessProcess().setResource("findTerzo",terzo.getCd_terzo().toString());
-		scadenzarioDottorati.setNome(terzo.getNome_unita_organizzativa());
-		scadenzarioDottorati.setCognome(null);
-		scadenzarioDottorati.setRagioneSociale(null);
-		scadenzarioDottorati.setPartitaIva(terzo.getPartita_iva_anagrafico());
-		scadenzarioDottorati.setCodiceFiscale(terzo.getCodice_fiscale_anagrafico());
-		scadenzarioDottorati.setCdTerminiPag(terzo.getTermini_pagamento().toString());
-		scadenzarioDottorati.setCdModalitaPag(terzo.getModalita_pagamento().toString());
-		scadenzarioDottorati.setPgBanca(null);
-		scadenzarioDottorati.setCdTipoRapporto(null);
-		scadenzarioDottorati.setTiPrestazione(null);
-		}
-	return context.findDefaultForward();
+        if (scadenzarioDottorati != null) {
+            scadenzarioDottorati.setTerzo(new TerzoBulk());
+            scadenzarioDottorati.setNome(null);
+            scadenzarioDottorati.setCognome(null);
+            scadenzarioDottorati.setRagioneSociale(null);
+            scadenzarioDottorati.setPartitaIva(null);
+            scadenzarioDottorati.setCodiceFiscale(null);
+            scadenzarioDottorati.setCdTerminiPag(null);
+            scadenzarioDottorati.setCdModalitaPag(null);
+            scadenzarioDottorati.setPgBanca(null);
+            scadenzarioDottorati.setCdTipoRapporto(null);
+            scadenzarioDottorati.setTiPrestazione(null);
+            scadenzarioDottorati.setModalita(null);
+            scadenzarioDottorati.setTermini(null);
+        }
+        return context.findDefaultForward();
 
-}
+    }
 
-/**
- * Gestisce un HookForward di ritorno da un risultato di una ricerca del percipiente
- */
- 
-public Forward doBringBackSearchFindTerzo(ActionContext context, ScadenzarioDottoratiBulk scadenzarioDottorati, TerzoBulk vTerzo) {
+    /**
+     * Gestisce un HookForward di ritorno da un risultato di una ricerca del percipiente
+     */
 
-	try {
+    public Forward doBringBackSearchFindTerzo(ActionContext context, ScadenzarioDottoratiBulk scadenzarioDottorati, TerzoBulk vTerzo) {
+        try {
+            if (vTerzo != null) {
+                scadenzarioDottorati.setTerzo(vTerzo);
+                CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
+                if (scadenzarioDottorati != null) {
+                    scadenzarioDottorati.setCdTerzo(vTerzo.getCd_terzo());
+                    scadenzarioDottorati.setNome(vTerzo.getAnagrafico().getNome());
+                    scadenzarioDottorati.setCognome(vTerzo.getAnagrafico().getCognome());
+                    scadenzarioDottorati.setRagioneSociale(vTerzo.getAnagrafico().getRagione_sociale());
+                    scadenzarioDottorati.setPartitaIva(vTerzo.getPartita_iva_anagrafico());
+                    scadenzarioDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());
+                    bp.completaTerzo(context, scadenzarioDottorati, vTerzo);
+                }
+            }
+            return context.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
 
-		if(vTerzo != null) {
-			scadenzarioDottorati.setTerzo(vTerzo);
-			doBlankSearchFind_terzo(context, scadenzarioDottorati);
-			CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
-			if (scadenzarioDottorati != null){
-				scadenzarioDottorati.setCdTerzo(vTerzo.getCd_terzo());
-				scadenzarioDottorati.setNome(vTerzo.getDenominazionePcc());
-				scadenzarioDottorati.setCognome(null);
-				scadenzarioDottorati.setRagioneSociale(null);
-				scadenzarioDottorati.setPartitaIva(vTerzo.getPartita_iva_anagrafico());
-				scadenzarioDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());
-				scadenzarioDottorati.setCdTerminiPag(null);
-				scadenzarioDottorati.setCdModalitaPag(null);
-				//scadenzarioDottorati.setModalita(vTerzo.getModalita_pagamento());
-				scadenzarioDottorati.setCdTipoRapporto(null);
-				scadenzarioDottorati.setTiPrestazione(null);
-			}
-		} 
-		return context.findDefaultForward();
+    /**
+     * Inoltro la richiesta alla stored procedure per la generazione delle rate
+     * Il modello deve essere prima validato dal metodo 'validate'
+     */
 
-	} catch(Exception e) {
-		return handleException(context,e);
-	}
-}
+    public Forward doGeneraRate(ActionContext context) {
 
-/**
- * Inoltro la richiesta alla stored procedure per la generazione delle rate
- * Il modello deve essere prima validato dal metodo 'validate'
- */
+        try {
+            fillModel(context);
+            CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP) getBusinessProcess(context);
+            MinicarrieraBulk carriera = (MinicarrieraBulk) bp.getModel();
+            carriera.validate();
+            if (!carriera.isNonAssociataACompenso())
+                throw new it.cnr.jada.comp.ApplicationException("Almeno una rata ha già generato un compenso. Impossibile rigenerare le rate.");
 
-public Forward doGeneraRate(ActionContext context) {
+            bp.generaRate(context);
+            bp.setDirty(true);
+            setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Creazione delle rate eseguita in maniera corretta.");
 
-	try {
-		fillModel(context);
-		CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)getBusinessProcess(context);
-		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
-		carriera.validate();
-		if (!carriera.isNonAssociataACompenso())
-			throw new it.cnr.jada.comp.ApplicationException("Almeno una rata ha già generato un compenso. Impossibile rigenerare le rate.");
-		
-		bp.generaRate(context);
-		bp.setDirty(true);
-		setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Creazione delle rate eseguita in maniera corretta.");
+            return context.findDefaultForward();
 
-		return context.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
 
-	} catch(Exception e) {
-		return handleException(context,e);
-	}
-}
+    /**
+     * Gestisce la richiesta di cambiamento della modalità di pagamento e ricerca le
+     * banche valide
+     */
 
-/**
- * Gestisce la richiesta di cambiamento della modalità di pagamento e ricerca le
- * banche valide
- */
+    public Forward doOnModalitaPagamentoChange(ActionContext context) {
 
-public Forward doOnModalitaPagamentoChange(ActionContext context) {
+        try {
+            fillModel(context);
+            CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
+            bp.findListaBanche(context);
 
-	try {
-		fillModel(context);
-		CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
-		bp.findListaBanche(context);
+            return context.findDefaultForward();
 
-		return context.findDefaultForward();
+        } catch (Throwable ex) {
+            return handleException(context, ex);
+        }
+    }
 
-	}catch (Throwable ex) {
-		return handleException(context, ex);
-	}
-}
-/**
- * Gestisce la richiesta di cambiamento del tipo di anagrafico della
- * minicarriera. Inoltre essa viene preparata per una nuova ricerca
- * del percipiente
- */
- 
-public Forward doOnTipoAnagraficoChange(ActionContext context) {
+    /**
+     * Gestisce la richiesta di cambiamento del tipo di anagrafico della
+     * minicarriera. Inoltre essa viene preparata per una nuova ricerca
+     * del percipiente
+     */
 
-	try {
-		fillModel(context);
-		CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
-		ScadenzarioDottoratiBulk carriera = (ScadenzarioDottoratiBulk) bp.getModel();
+    public Forward doOnTipoAnagraficoChange(ActionContext context) {
 
-		if (!bp.isSearching())
-			return doBlankSearchFind_terzo(context, carriera);
-		return context.findDefaultForward();
+        try {
+            fillModel(context);
+            CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
+            ScadenzarioDottoratiBulk carriera = (ScadenzarioDottoratiBulk) bp.getModel();
 
-	} catch(Exception e) {
-		return handleException(context,e);
-	}
-}
-/**
- * Gestisce la richiesta di cambiamento del tipo rapporto
- * Vengono ricercati i nuovi tipi di trattamento validi
- */
-/*
-public Forward doOnTipoRapportoChange(ActionContext context) {
+            if (!bp.isSearching())
+                return doBlankSearchFindTerzo(context, carriera);
+            return context.findDefaultForward();
 
-	try {
-		fillModel(context);
-		PostTipoRapportoChange(context);
-		
-		return context.findDefaultForward();
-	}catch (Throwable ex) {
-		return handleException(context, ex);
-	}
-}*/
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
 
-/**
- * Gestisce la richiesta di cancellazione di una o piu' rate
- */
- 
-public Forward doRemoveFromCRUDMain_rateCRUDController(ActionContext context) {
-	
-	CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)context.getBusinessProcess();
-	MinicarrieraRataCRUDController rateController = (MinicarrieraRataCRUDController)bp.getRateCRUDController();
-	it.cnr.jada.util.action.Selection selection = rateController.getSelection();
-	try {
-		if (selection.isEmpty())
-			throw new it.cnr.jada.comp.ApplicationException("Selezionare le rate che si desidera eliminare!");
-	} catch (it.cnr.jada.comp.ApplicationException e) {
-		return handleException(context, e);
-	}
+    /**
+     * Gestisce la richiesta di cancellazione di una o piu' rate
+     */
 
-	try {
-		rateController.remove(context);
-	} catch (Throwable e) {
-		return handleException(context, e);
-	}
-	
-	return context.findDefaultForward();
-}
-/**
- * Gestisce la ricerca delle banche valide per la modalità di pagamento selezionata
- */
+    public Forward doRemoveFromCRUDMain_rateCRUDController(ActionContext context) {
 
-public Forward doSearchListaBanche(ActionContext context) {
-	
-	MinicarrieraBulk carriera = (MinicarrieraBulk)getBusinessProcess(context).getModel();
-	String columnSet = carriera.getModalita_pagamento().getTiPagamentoColumnSet();
-	return search(context, getFormField(context, "main.listaBanche"), columnSet);
-}
-/**
- * Gestisce la richiesta di cambiamento della pagina del viewer
- */
- /*
-public Forward doTab(ActionContext context,String tabName,String pageName) {
+        CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP) context.getBusinessProcess();
+        MinicarrieraRataCRUDController rateController = bp.getRateCRUDController();
+        it.cnr.jada.util.action.Selection selection = rateController.getSelection();
+        try {
+            if (selection.isEmpty())
+                throw new it.cnr.jada.comp.ApplicationException("Selezionare le rate che si desidera eliminare!");
+        } catch (it.cnr.jada.comp.ApplicationException e) {
+            return handleException(context, e);
+        }
 
-	try	{
-			
-		fillModel(context);
-		CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)getBusinessProcess(context);
-		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
+        try {
+            rateController.remove(context);
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
 
-		if ((bp.isEditable()) && (!bp.isSearching())){
-			try {
-				if ("tabMinicarriera".equalsIgnoreCase(bp.getTab(tabName))) {
-					carriera.validaTestata();
-				}
-				if ("tabMinicarrieraPercipiente".equalsIgnoreCase(bp.getTab(tabName))) {
-					//carriera.validaPercipiente();
-				}
-				if ("tabMinicarrieraRate".equalsIgnoreCase(bp.getTab(tabName))) {
-					bp.getRateCRUDController().validate(context);
-				}
-			} catch (it.cnr.jada.bulk.ValidationException e) {
-				bp.setMessage(
-					OptionBP.WARNING_MESSAGE,
-					e.getMessage());
-			}
-		}
+        return context.findDefaultForward();
+    }
 
-		return super.doTab( context, tabName, pageName );
+    /**
+     * Gestisce la ricerca delle banche valide per la modalità di pagamento selezionata
+     */
 
-	} catch(Throwable e) {
-		return handleException(context,e);
-	}
-}*/
+    public Forward doSearchListaBanche(ActionContext context) {
 
+        MinicarrieraBulk carriera = (MinicarrieraBulk) getBusinessProcess(context).getModel();
+        String columnSet = carriera.getModalita_pagamento().getTiPagamentoColumnSet();
+        return search(context, getFormField(context, "main.listaBanche"), columnSet);
+    }
 
 }

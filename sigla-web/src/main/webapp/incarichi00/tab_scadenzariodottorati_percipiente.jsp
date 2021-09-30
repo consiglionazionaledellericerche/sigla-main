@@ -15,34 +15,25 @@
      %>
 
 <div class="Group card p-2" style="width:100%">
-    <div class="GroupLabel h3 text-primary">
-        Testata
-    </div>
+    <div class="GroupLabel h3 text-primary">Testata</div>
     <table width="100%">
-      <tr>
-      		<% bp.getController().writeFormField(out,"findTerzo"); %>
-      </tr>
-      <tr>
-      		<td colspan="2"><% bp.getController().writeFormInput(out,"find_percipiente"); %></td>
-      	</tr>
+        <tr>
+            <% bp.getController().writeFormField(out,"findTerzo"); %>
+        </tr>
+        <tr>
+            <% bp.getController().writeFormField(out,"nome"); %>
+            <% bp.getController().writeFormField(out,"cognome"); %>
+        </tr>
       	<tr>
-      		<% bp.getController().writeFormField(out,"cd_precedente"); %>
-      	</tr>
-      	<tr>
-      		<% bp.getController().writeFormField(out,"nome"); %>
-      		<% bp.getController().writeFormField(out,"cognome"); %>
-      	</tr>
-      	<tr>
-      		<% bp.getController().writeFormField(out,"ragioneSociale"); %></td>
+      	    <td><% bp.getController().writeFormLabel(out,"ragioneSociale"); %></td>
+      	    <td colspan="3"><% bp.getController().writeFormInput(out,"ragioneSociale"); %></td>
       	</tr>
       	<tr>
       		<% bp.getController().writeFormField(out,"codiceFiscale"); %>
       		<% bp.getController().writeFormField(out,"partitaIva"); %>
       	</tr>
     </table>
-    <div class="GroupLabel h3 text-primary">
-            Termini_pagamento
-    </div>
+    <div class="GroupLabel h3 text-primary">Termini Pagamento</div>
     <table>
        	  <tr>
        	  <td><% bp.getController().writeFormLabel(out, "termini_pagamento"); %>
