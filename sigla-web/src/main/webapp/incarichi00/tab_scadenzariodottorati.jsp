@@ -143,9 +143,13 @@
       </tr>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"tiPrestazione"); %></td>
-        <td colspan="3"><% bp.getController().writeFormInput(out,"tiPrestazione"); %></td>
+        <td><% bp.getController().writeFormInput(out,"tiPrestazione"); %></td>
         <td><% bp.getController().writeFormLabel(out,"imponibileIrpefEseprec1"); %></td>
         <td><% bp.getController().writeFormInput(out,"imponibileIrpefEseprec1"); %></td>
+      </tr>
+      <tr>
+      <td colspan="3"><% bp.getController().writeFormLabel(out, "cdTipoRapporto"); %>	</td>
+      <td><% bp.getController().writeFormInput(out,"cdTipoRapporto");%></td>
       </tr>
     </table>
 </div>
