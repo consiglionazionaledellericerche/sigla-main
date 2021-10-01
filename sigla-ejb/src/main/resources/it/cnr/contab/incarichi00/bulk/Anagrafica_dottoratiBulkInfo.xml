@@ -168,7 +168,7 @@
 			property="importoTotaleBorsa"
 			inputType="TEXT"
 			enabledOnEdit="true"
-			label="Importo Totale Borsa" />
+			label="Importo Totale Borsa Dottorato" />
 	<fieldProperty
 			name="nomeDottorato"
 			property="nomeDottorato"
@@ -198,7 +198,7 @@
 			property="uoCnr"
 			inputType="TEXT"
 			enabledOnEdit="false"
-			label="UO CNR" />
+			label="UO Cnr" />
 	<fieldProperty
 			name="stato"
 			property="stato"
