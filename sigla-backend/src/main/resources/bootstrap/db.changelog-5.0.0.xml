@@ -4850,4 +4850,48 @@ TRASPORTO_AEREO"/>
         </update>
     </changeSet>
 
+    <changeSet author="valerio.diego" id="addColumn-anagrafica_dottorati">
+        <addColumn tableName="anagrafica_dottorati">
+            <column name="pg_banca" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="uo_cnr" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="stato" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_sospensione" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_riattivazione" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_inizio_dottorato" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_fine_dottorato" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_proroga_dottorato" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_registrazione" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="n_rate_dottorato" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_cds" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
