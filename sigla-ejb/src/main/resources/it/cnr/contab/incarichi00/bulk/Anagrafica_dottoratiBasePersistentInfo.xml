@@ -149,6 +149,90 @@
 			sqlTypeName="VARCHAR"
 			columnSize="250"
 			nullable="true" />
+		<!--
+		Dopo aggiornamento con Patrizia
+		-->
+		<columnMapping
+				columnName="PG_BANCA"
+				propertyName="pgBanca"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="UO_CNR"
+				propertyName="uoCnr"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_SOSPENSIONE"
+				propertyName="dtSospensione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_RIATTIVAZIONE"
+				propertyName="dt_riattivazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="N_RATE-DOTTORATO"
+				propertyName="nRateDottorato"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_INIZIO_DOTTORATO"
+				propertyName="dtInizioDottorato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_FINE_DOTTORATO"
+				propertyName="dtFineDottorato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_PROROGA_DOTTORATO"
+				propertyName="dtProrogaDottorato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_REGISTRAZIONE"
+				propertyName="dtRegistrazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cdCds"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="250"
+			nullable="false" />
+		<!--
+		Fine aggiornamento con Patrizia
+		-->
 		<columnMapping
 			columnName="ID_PHDTIPO_DOTTORATI"
 			propertyName="idPhdtipoDottorati"
@@ -222,6 +306,34 @@
 			name="nomeDottorato" />
 	<persistentProperty
 		name="note" />
+
+	<persistentProperty
+			name="pgBanca" />
+	<persistentProperty
+			name="uoCnr" />
+	<persistentProperty
+			name="stato" />
+	<persistentProperty
+			name="dtSospensione" />
+	<persistentProperty
+			name="dtRiattivazione" />
+	<persistentProperty
+			name="nRateDottorato" />
+	<persistentProperty
+			name="dtInizioDottorato" />
+	<persistentProperty
+			name="dtFineDottorato" />
+	<persistentProperty
+			name="dtProrogaDottorato" />
+	<persistentProperty
+			name="dtRegistrazione" />
+	<persistentProperty
+			name="cdCds" />
+	<persistentProperty
+			name="cdUnitaOrganizzativa" />
+	<persistentProperty
+			name="esercizio" />
+
 	<persistentProperty
 		name="idPhdtipoDottorati" />
 	<persistentProperty

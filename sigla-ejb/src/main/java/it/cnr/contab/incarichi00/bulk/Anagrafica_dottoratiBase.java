@@ -4,6 +4,9 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.sql.Timestamp;
+
 public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements Keyed {
 //    REGIONE VARCHAR(250) NOT NULL
 	private String regione;
@@ -60,6 +63,24 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	private Integer totaleBorseFinanziate;
 	private Double importoTotaleBorsa;
 	private String nomeDottorato;
+
+	//Dopo aggiornamento con Patrizia aggiunto questi campi 01/10/2021
+	private Integer pgBanca;
+	private String uoCnr;
+	private String stato;
+	private java.sql.Timestamp dtSospensione;
+	private java.sql.Timestamp dtRiattivazione;
+	private java.sql.Timestamp dtInizioDottorato;
+	private java.sql.Timestamp dtFineDottorato;
+	private java.sql.Timestamp dtProrogaDottorato;
+	private java.sql.Timestamp dtRegistrazione;
+	private Integer nRateDottorato;
+	private String cdCds;
+	private String cdUnitaOrganizzativa;
+	private Integer esercizio;
+
+
+	//Fine
  
 //    ID_PHDTIPO_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idPhdtipoDottorati;
@@ -370,6 +391,116 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	public void setNote(String note)  {
 		this.note=note;
 	}
+
+
+
+	public Integer getPgBanca() {
+		return pgBanca;
+	}
+
+	public void setPgBanca(Integer pgBanca) {
+		this.pgBanca = pgBanca;
+	}
+
+	public String getUoCnr() {
+		return uoCnr;
+	}
+
+	public void setUoCnr(String uoCnr) {
+		this.uoCnr = uoCnr;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public Timestamp getDtSospensione() {
+		return dtSospensione;
+	}
+
+	public void setDtSospensione(Timestamp dtSospensione) {
+		this.dtSospensione = dtSospensione;
+	}
+
+	public Timestamp getDtRiattivazione() {
+		return dtRiattivazione;
+	}
+
+	public void setDtRiattivazione(Timestamp dtRiattivazione) {
+		this.dtRiattivazione = dtRiattivazione;
+	}
+
+	public Timestamp getDtInizioDottorato() {
+		return dtInizioDottorato;
+	}
+
+	public void setDtInizioDottorato(Timestamp dtInizioDottorato) {
+		this.dtInizioDottorato = dtInizioDottorato;
+	}
+
+	public Timestamp getDtFineDottorato() {
+		return dtFineDottorato;
+	}
+
+	public void setDtFineDottorato(Timestamp dtFineDottorato) {
+		this.dtFineDottorato = dtFineDottorato;
+	}
+
+	public Timestamp getDtProrogaDottorato() {
+		return dtProrogaDottorato;
+	}
+
+	public void setDtProrogaDottorato(Timestamp dtProrogaDottorato) {
+		this.dtProrogaDottorato = dtProrogaDottorato;
+	}
+
+	public Timestamp getDtRegistrazione() {
+		return dtRegistrazione;
+	}
+
+	public void setDtRegistrazione(Timestamp dtRegistrazione) {
+		this.dtRegistrazione = dtRegistrazione;
+	}
+
+	public Integer getnRateDottorato() {
+		return nRateDottorato;
+	}
+
+	public void setnRateDottorato(Integer nRateDottorato) {
+		this.nRateDottorato = nRateDottorato;
+	}
+
+	public String getCdCds() {
+		return cdCds;
+	}
+
+	public void setCdCds(String cdCds) {
+		this.cdCds = cdCds;
+	}
+
+	public String getCdUnitaOrganizzativa() {
+		return cdUnitaOrganizzativa;
+	}
+
+	public void setCdUnitaOrganizzativa(String cdUnitaOrganizzativa) {
+		this.cdUnitaOrganizzativa = cdUnitaOrganizzativa;
+	}
+
+	public Integer getEsercizio() {
+		return esercizio;
+	}
+
+	public void setEsercizio(Integer esercizio) {
+		this.esercizio = esercizio;
+	}
+
+
+
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Identificativo del tipo dottorati.]

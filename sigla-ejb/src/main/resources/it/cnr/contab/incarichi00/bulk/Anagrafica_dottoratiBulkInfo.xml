@@ -184,6 +184,102 @@
 		maxLength="250"
 		enabledOnEdit="false"
 		label="Note" />
+	<!--
+	Dopo aggiornamento con Patrizia
+	-->
+	<fieldProperty
+			name="pgBanca"
+			property="pgBanca"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="pgBanca" />
+	<fieldProperty
+			name="uoCnr"
+			property="uoCnr"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="UO CNR" />
+	<fieldProperty
+			name="stato"
+			property="stato"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="stato" />
+	<fieldProperty
+			name="dtSospensione"
+			property="dtSospensione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtSospensione" />
+	<fieldProperty
+			name="dtRiattivazione"
+			property="dtRiattivazione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtRiattivazione" />
+	<fieldProperty
+			name="nRateDottorato"
+			property="nRateDottorato"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Numero Rate Dottorato" />
+	<fieldProperty
+			name="dtInizioDottorato"
+			property="dtInizioDottorato"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtInizioDottorato" />
+	<fieldProperty
+			name="dtFineDottorato"
+			property="dtFineDottorato"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtFineDottorato" />
+	<fieldProperty
+			name="dtProrogaDottorato"
+			property="dtProrogaDottorato"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtProrogaDottorato" />
+	<fieldProperty
+			name="dtRegistrazione"
+			property="dtRegistrazione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="false"
+			label="dtRegistrazione" />
+	<fieldProperty
+			name="cdCds"
+			property="cdCds"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="cdCds" />
+	<fieldProperty
+			name="cdUnitaOrganizzativa"
+			property="cdUnitaOrganizzativa"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="cdUnitaOrganizzativa" />
+	<fieldProperty
+			name="esercizio"
+			property="esercizio"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="esercizio" />
+	<!--
+	Fine aggiornamento
+	-->
 	<fieldProperty
 		name="find_PhdtipoDottorati"
 		property="phdtipoDottorati"
@@ -263,6 +359,34 @@
 			name="nomeDottorato" />
 	<formFieldProperty
 		name="note" />
+
+	<formFieldProperty
+			name="pgBanca" />
+	<formFieldProperty
+			name="uoCnr" />
+	<formFieldProperty
+			name="stato" />
+	<formFieldProperty
+			name="dtSospensione" />
+	<formFieldProperty
+			name="dtRiattivazione" />
+	<formFieldProperty
+			name="nRateDottorato" />
+	<formFieldProperty
+			name="dtInizioDottorato" />
+	<formFieldProperty
+			name="dtFineDottorato" />
+	<formFieldProperty
+			name="dtProrogaDottorato" />
+	<formFieldProperty
+			name="dtRegistrazione" />
+	<formFieldProperty
+			name="cdCds" />
+	<formFieldProperty
+			name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+			name="esercizio" />
+
 	<formFieldProperty
 			name="find_PhdtipoDottorati" />
 	<formFieldProperty
@@ -319,6 +443,34 @@
 			name="importoTotaleBorsa" />
 	<findFieldProperty
 			name="nomeDottorato" />
+
+	<findFieldProperty
+			name="pgBanca" />
+	<findFieldProperty
+			name="uoCnr" />
+	<findFieldProperty
+			name="stato" />
+	<findFieldProperty
+			name="dtSospensione" />
+	<findFieldProperty
+			name="dtRiattivazione" />
+	<findFieldProperty
+			name="nRateDottorato" />
+	<findFieldProperty
+			name="dtInizioDottorato" />
+	<findFieldProperty
+			name="dtFineDottorato" />
+	<findFieldProperty
+			name="dtProrogaDottorato" />
+	<findFieldProperty
+			name="dtRegistrazione" />
+	<findFieldProperty
+			name="cdCds" />
+	<findFieldProperty
+			name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+			name="esercizio" />
+
 	<findFieldProperty
 		name="idCicloDottorati" />
 	<!--<findFieldProperty
@@ -373,6 +525,34 @@
 			name="nomeDottorato" />
 	<columnFieldProperty
 		name="note" />
+
+	<columnFieldProperty
+			name="pgBanca" />
+	<columnFieldProperty
+			name="uoCnr" />
+	<columnFieldProperty
+			name="stato" />
+	<columnFieldProperty
+			name="dtSospensione" />
+	<columnFieldProperty
+			name="dtRiattivazione" />
+	<columnFieldProperty
+			name="nRateDottorato" />
+	<columnFieldProperty
+			name="dtInizioDottorato" />
+	<columnFieldProperty
+			name="dtFineDottorato" />
+	<columnFieldProperty
+			name="dtProrogaDottorato" />
+	<columnFieldProperty
+			name="dtRegistrazione" />
+	<columnFieldProperty
+			name="cdCds" />
+	<columnFieldProperty
+			name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+			name="esercizio" />
+
 	<columnFieldProperty
 		name="idPhdtipoDottorati" />
 	<columnFieldProperty

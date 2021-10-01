@@ -25,7 +25,7 @@
         <tr><td>
 <div class="Group card p-2 mt-2" style="width:100%">
     <fieldset>
-        <legend style="color:red">Identificativo</legend>
+        <legend style="color:blue">Identificativo</legend>
     	<table>
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "id"); %>	</td>
@@ -36,7 +36,7 @@
     	</table>
     </fieldset>
     <fieldset>
-        <legend style="color:red">Universit&aacute;</legend>
+        <legend style="color:blue">Universit&aacute;</legend>
         <table>
             <tr>
             	<td><% bp.getController().writeFormLabel(out, "regione");%></td>
@@ -49,6 +49,10 @@
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "cdTerzo"); %></td>
     			<td><% bp.getController().writeFormInput(out, "cdTerzo"); %></td>
+    		</tr>
+    		<tr>
+    			<td><% bp.getController().writeFormLabel(out, "pgBanca"); %></td>
+    			<td><% bp.getController().writeFormInput(out, "pgBanca"); %></td>
     		</tr>
             <tr>
     			<td><% bp.getController().writeFormLabel(out, "telefonoAteneo"); %></td>
@@ -69,7 +73,7 @@
     	</table>
     	</fieldset>
         <fieldset>
-            <legend style="color:red">Dati Azienda</legend>
+            <legend style="color:blue">Dati Azienda</legend>
             <table>
                 <tr>
     			    <td><% bp.getController().writeFormLabel(out, "azienda"); %></td>
@@ -86,7 +90,7 @@
     		</table>
         </fieldset>
         <fieldset>
-            <legend style="color:red">Dati Infrastruttura Europea</legend>
+            <legend style="color:blue">Dati Infrastruttura Europea</legend>
             <table>
                 <tr>
     			    <td><% bp.getController().writeFormLabel(out, "nomeInfraEuropea"); %></td>
@@ -99,15 +103,47 @@
     		</table>
     	</fieldset>
     	<fieldset>
-            <legend style="color:red">Dati Borse</legend>
+            <legend style="color:blue">Dati Borse</legend>
             <table>
-                 <tr>
-                     <td><% bp.getController().writeFormLabel(out, "numeroBorseFinanziate"); %></td>
-                     <td><% bp.getController().writeFormInput(out, "numeroBorseFinanziate"); %></td>
-                 </tr>
                  <tr>
                      <td><% bp.getController().writeFormLabel(out, "find_CicloDottorati"); %></td>
                      <td><% bp.getController().writeFormInput(out, "find_CicloDottorati"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "importoTotaleBorsa"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "importoTotaleBorsa"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "dtRegistrazione"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "dtRegistrazione"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "dtInizioDottorato"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "dtInizioDottorato"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "dtFineDottorato"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "dtFineDottorato"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "nRateDottorato"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "nRateDottorato"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "dtSospensione"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "dtSospensione"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "dtRiattivazione"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "dtRiattivazione"); %></td>
+                 </tr>
+                 <tr>
+                     <td><% bp.getController().writeFormLabel(out, "dtProrogaDottorato"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "dtProrogaDottorato"); %></td>
+                 </tr>
+            <!--<tr>
+                     <td><% bp.getController().writeFormLabel(out, "numeroBorseFinanziate"); %></td>
+                     <td><% bp.getController().writeFormInput(out, "numeroBorseFinanziate"); %></td>
                  </tr>
     			 <tr>
     			     <td><% bp.getController().writeFormLabel(out, "numeroCicliFinanziati"); %></td>
@@ -116,15 +152,11 @@
     			 <tr>
                      <td><% bp.getController().writeFormLabel(out, "totaleBorseFinanziate"); %></td>
                      <td><% bp.getController().writeFormInput(out, "totaleBorseFinanziate"); %></td>
-                 </tr>
-                 <tr>
-                     <td><% bp.getController().writeFormLabel(out, "importoTotaleBorsa"); %></td>
-                     <td><% bp.getController().writeFormInput(out, "importoTotaleBorsa"); %></td>
-                 </tr>
+                 </tr>-->
             </table>
         </fieldset>
         <fieldset>
-        <legend style="color:red">Dati Corso</legend>
+        <legend style="color:blue">Dati Corso</legend>
     		<table>
                 <tr>
     		        <td><% bp.getController().writeFormLabel(out, "dipartimentoUniversita"); %></td>
@@ -141,19 +173,23 @@
     		</table>
     	</fieldset>
         <fieldset>
-        <legend style="color:red">Dati CNR e Data</legend>
+        <legend style="color:blue">Dati CNR e Data</legend>
             <table>
     			<tr>
     			    <td><% bp.getController().writeFormLabel(out, "ricercatore"); %></td>
                     <td><% bp.getController().writeFormInput(out, "ricercatore"); %></td>
     			</tr>
     			<tr>
+    			    <td><% bp.getController().writeFormLabel(out, "dipartimentoCnr"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "dipartimentoCnr"); %></td>
+    			</tr>
+    			<tr>
     			    <td><% bp.getController().writeFormLabel(out, "istitutoCnr"); %></td>
                     <td><% bp.getController().writeFormInput(out, "istitutoCnr"); %></td>
     			</tr>
-    			<tr>
-    			    <td><% bp.getController().writeFormLabel(out, "dipartimentoCnr"); %></td>
-                    <td><% bp.getController().writeFormInput(out, "dipartimentoCnr"); %></td>
+                <tr>
+    			    <td><% bp.getController().writeFormLabel(out, "uoCnr"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "uoCnr"); %></td>
     			</tr>
     			<tr>
     			    <td><% bp.getController().writeFormLabel(out, "dataStipulaConvenzione"); %></td>
