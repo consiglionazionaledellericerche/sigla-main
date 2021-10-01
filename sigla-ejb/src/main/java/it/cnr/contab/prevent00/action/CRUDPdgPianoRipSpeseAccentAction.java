@@ -28,11 +28,14 @@ import it.cnr.contab.prevent00.bp.CRUDPdgPianoRipSpeseAccentBP;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.upload.UploadedFile;
+
+import java.util.Optional;
 
 /**
  * @author rpagano
@@ -162,7 +165,11 @@ public class CRUDPdgPianoRipSpeseAccentAction extends it.cnr.jada.util.action.CR
 			fillModel(context);
 			CRUDPdgPianoRipSpeseAccentBP bp = (CRUDPdgPianoRipSpeseAccentBP)getBusinessProcess(context);
 			UploadedFile file = ((it.cnr.jada.action.HttpActionContext)context).getMultipartParameter(Button.INPUT_FILE);
-			bp.caricaPianoDiRiparto(context, file.getFile());
+			if (Optional.ofNullable(file).flatMap(uploadedFile -> Optional.ofNullable(uploadedFile.getFile())).isPresent()) {
+				bp.caricaPianoDiRiparto(context, file.getFile());
+			} else {
+				throw new ApplicationException("Non è stato selezionato il file da caricare!");
+			}
 			return context.findDefaultForward();
 		}catch(Throwable ex){
 			return handleException(context, ex);
