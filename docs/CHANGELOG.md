@@ -1,3 +1,11 @@
+## Release 6.3.56  -- _October 01, 2021_ 
+**Changes**
+
+>**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
+>
+>[f7ffb262944ff63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f7ffb262944ff63) raffaelepagano *September 28, 2021*
+
+
 ## Release 6.3.55  -- _September 22, 2021_ 
 **Changes**
 
