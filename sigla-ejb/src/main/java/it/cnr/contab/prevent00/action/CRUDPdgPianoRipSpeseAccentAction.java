@@ -31,6 +31,8 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.ConsultazioniBP;
+import it.cnr.jada.util.jsp.Button;
+import it.cnr.jada.util.upload.UploadedFile;
 
 /**
  * @author rpagano
@@ -149,6 +151,18 @@ public class CRUDPdgPianoRipSpeseAccentAction extends it.cnr.jada.util.action.CR
 			CRUDPdgPianoRipSpeseAccentBP bp = (CRUDPdgPianoRipSpeseAccentBP)getBusinessProcess(context);
 			bp.inizializzaImTotSpeseAcc(context);
 			setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}
+
+	public Forward doCaricaPianoRiparto(ActionContext context) {
+		try {
+			fillModel(context);
+			CRUDPdgPianoRipSpeseAccentBP bp = (CRUDPdgPianoRipSpeseAccentBP)getBusinessProcess(context);
+			UploadedFile file = ((it.cnr.jada.action.HttpActionContext)context).getMultipartParameter(Button.INPUT_FILE);
+			bp.caricaPianoDiRiparto(context, file.getFile());
 			return context.findDefaultForward();
 		}catch(Throwable ex){
 			return handleException(context, ex);
