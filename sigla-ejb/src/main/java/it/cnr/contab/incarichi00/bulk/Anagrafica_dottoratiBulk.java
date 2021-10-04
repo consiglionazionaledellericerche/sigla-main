@@ -5,6 +5,7 @@
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 
+import java.util.Dictionary;
 import java.util.Iterator;
 
 public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
@@ -28,6 +29,17 @@ public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ANAGRAFICA_DOTTORATI
 	 **/
+	public static String TIPO_COFINANZIAMENTO_EFFETTUATO_SI = "S";
+	public static String TIPO_COFINANZIAMENTO_EFFETTUATO_NO = "N";
+	public static String TIPO_COFINANZIAMENTO_EFFETTUATO_NON_PRESENTE = "X";
+
+	public static Dictionary<String, String> tipoCofinanziamentoEffettuato = new it.cnr.jada.util.OrderedHashtable();
+	static {
+		tipoCofinanziamentoEffettuato.put(TIPO_COFINANZIAMENTO_EFFETTUATO_SI, "Si");
+		tipoCofinanziamentoEffettuato.put(TIPO_COFINANZIAMENTO_EFFETTUATO_NO, "No");
+		tipoCofinanziamentoEffettuato.put(TIPO_COFINANZIAMENTO_EFFETTUATO_NON_PRESENTE, "Non presente");
+	}
+
 	public Anagrafica_dottoratiBulk() {
 		super();
 	}
@@ -130,5 +142,9 @@ public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
 	 **/
 	public void setIdTipocorsoDottorati(Long idTipocorsoDottorati)  {
 		this.getTipocorsoDottorati().setId(idTipocorsoDottorati);
+	}
+
+	public static Dictionary<String, String> getTipoCofinanziamentoEffettuato() {
+		return tipoCofinanziamentoEffettuato;
 	}
 }

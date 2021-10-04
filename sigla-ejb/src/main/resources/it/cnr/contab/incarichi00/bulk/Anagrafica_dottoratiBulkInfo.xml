@@ -287,8 +287,9 @@
 	<fieldProperty
 			name="cofinanziamentoEffettuato"
 			property="cofinanziamentoEffettuato"
-			inputType="TEXT"
-			enabledOnEdit="false"
+			inputType="SELECT"
+			keysProperty="tipoCofinanziamentoEffettuato"
+			enabledOnEdit="true"
 			nullable="true"
 			label="cofinanziamentoEffettuato" />
 	<!--
