@@ -193,6 +193,14 @@
     			    <td><% bp.getController().writeFormLabel(out, "uoCnr"); %></td>
                     <td><% bp.getController().writeFormInput(out, "uoCnr"); %></td>
     			</tr>
+                <tr>
+    			    <td><% bp.getController().writeFormLabel(out, "cofinanziamentoCnr"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "cofinanziamentoCnr"); %></td>
+    			</tr>
+                <tr>
+    			    <td><% bp.getController().writeFormLabel(out, "cofinanziamentoEffettuato"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "cofinanziamentoEffettuato"); %></td>
+    			</tr>
     			<tr>
     			    <td><% bp.getController().writeFormLabel(out, "dataStipulaConvenzione"); %></td>
                     <td><% bp.getController().writeFormInput(out, "dataStipulaConvenzione"); %></td>

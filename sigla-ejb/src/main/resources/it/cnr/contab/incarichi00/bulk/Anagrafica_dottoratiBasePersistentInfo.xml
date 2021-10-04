@@ -230,6 +230,18 @@
 			sqlTypeName="DECIMAL"
 			columnSize="250"
 			nullable="false" />
+		<columnMapping
+				columnName="COFINANZIAMENTO_CNR"
+				propertyName="cofinanziamentoCnr"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="COFINANZIAMENTO_EFFETTUATO"
+				propertyName="cofinanziamentoEffettuato"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
 		<!--
 		Fine aggiornamento con Patrizia
 		-->
@@ -333,6 +345,10 @@
 			name="cdUnitaOrganizzativa" />
 	<persistentProperty
 			name="esercizio" />
+	<persistentProperty
+			name="cofinanziamentoCnr" />
+	<persistentProperty
+			name="cofinanziamentoEffettuato" />
 
 	<persistentProperty
 		name="idPhdtipoDottorati" />

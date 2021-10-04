@@ -4894,4 +4894,14 @@ TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
 
+    <changeSet author="valerio.diego" id="addColumn-Cofinanziamento-anagrafica_dottorati">
+        <addColumn tableName="anagrafica_dottorati">
+            <column name="cofinanziamento_cnr" type="numeric(15, 2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cofinanziamento_effettuato" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

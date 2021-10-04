@@ -78,7 +78,8 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	private String cdCds;
 	private String cdUnitaOrganizzativa;
 	private Integer esercizio;
-
+	private Double cofinanziamentoCnr;
+	private String cofinanziamentoEffettuato;
 
 	//Fine
  
@@ -498,7 +499,21 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 		this.esercizio = esercizio;
 	}
 
+	public Double getCofinanziamentoCnr() {
+		return cofinanziamentoCnr;
+	}
 
+	public void setCofinanziamentoCnr(Double cofinanziamentoCnr) {
+		this.cofinanziamentoCnr = cofinanziamentoCnr;
+	}
+
+	public String getCofinanziamentoEffettuato() {
+		return cofinanziamentoEffettuato;
+	}
+
+	public void setCofinanziamentoEffettuato(String cofinanziamentoEffettuato) {
+		this.cofinanziamentoEffettuato = cofinanziamentoEffettuato;
+	}
 
 
 	/**
