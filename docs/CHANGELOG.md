@@ -1,5 +1,25 @@
-## Release 6.3.56  -- _October 01, 2021_ 
+## Release 6.3.58  -- _October 04, 2021_ 
 **Changes**
+
+>**Nel csao di una variazione firmata non è più possibile modificarla o annullarla**
+>
+>[96cc28b63742828](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cc28b63742828) marco.spasiano *October 04, 2021*
+
+>**FIX NPE al caricamento del file dalla vecchia interfaccia**
+>
+>[1849f2773055e9d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1849f2773055e9d) marco.spasiano *October 01, 2021*
+
+
+## Release 6.3.57  -- _October 01, 2021_ 
+**Changes**
+
+>**Aggiunto il caricamento da file excel del piano di riparto delle spese accentrate**
+>
+>[8aecf7c3362fc80](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8aecf7c3362fc80) marco.spasiano *October 01, 2021*
+
+>**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
+>
+>[91d17124326265d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91d17124326265d) raffaelepagano *October 01, 2021*
 
 >**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
 >
