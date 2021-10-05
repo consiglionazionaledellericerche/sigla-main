@@ -27,6 +27,10 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
+import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
+import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
+import it.cnr.contab.logs.ejb.BatchControlComponentSession;
+import it.cnr.contab.pagopa.ejb.PendenzaPagopaComponentSession;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -40,17 +44,19 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent implements ISospesoRiscontroMgr, ICRUDMgr, Cloneable, Serializable, IPrintMgr {
     /**
@@ -2548,13 +2554,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
         }
     }
 
-    private void aggiornaRigaProcessata(UserContext userContext, MovimentoContoEvidenzaBulk riga) throws PersistencyException, ComponentException {
+    private Integer aggiornaRigaProcessata(UserContext userContext, MovimentoContoEvidenzaBulk riga) throws PersistencyException, ComponentException {
         riga.setStato(MovimentoContoEvidenzaBulk.STATO_RECORD_PROCESSATO);
         riga.setToBeUpdated();
         super.updateBulk(userContext, riga);
+        return 1;
     }
 
-    public void caricamentoRigaGiornaleCassa(UserContext userContext, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws ComponentException, PersistencyException {
+    public Integer caricamentoRigaGiornaleCassa(UserContext userContext, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws ComponentException, PersistencyException {
         try {
             SospesoHome homeSospeso = (SospesoHome)getHome(userContext, SospesoBulk.class);
             Integer esercizio = riga.getEsercizio();
@@ -2608,8 +2615,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         sospeso.setIm_ass_mod_1210(BigDecimal.ZERO);
                         sospeso.setCd_sospeso(homeSospeso.recuperoNextCodiceSospeso(userContext, sospeso));
                         sospeso.setToBeCreated();
-                        sospeso = (SospesoBulk) super.creaConBulk(userContext, sospeso);
-                        aggiornaRigaProcessata(userContext, riga);
+                        super.insertBulk(userContext, sospeso);
                         Sospeso_det_etrBulk sospDet = new Sospeso_det_etrBulk();
                         sospDet.setCd_cds(rev.getCd_cds());
                         sospDet.setEsercizio(rev.getEsercizio());
@@ -2621,15 +2627,12 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         sospDet.setCd_cds_reversale(rev.getCd_cds());
                         sospDet.setStato(Sospeso_det_etrBulk.STATO_DEFAULT);
                         sospDet.setToBeCreated();
-                        sospDet = (Sospeso_det_etrBulk) super.creaConBulk(userContext, sospDet);
-
-    // TODO: Fa la flush??? Chidere a Marco
+                        super.insertBulk(userContext, sospDet);
 
                         BigDecimal importoGiaRiscontratoAggiornato = homeSospesoEtr.calcolaTotDettagli(v_man_rev);
                         rev.setIm_incassato(importoGiaRiscontratoAggiornato);
                         rev.setToBeUpdated();
                         if (importoGiaRiscontratoAggiornato.compareTo(rev.getIm_reversale()) == 0){
-                            //RIscontro reversale
                             rev.setStato(ReversaleBulk.STATO_REVERSALE_INCASSATO);
                             rev.setDt_incasso(riga.getDataMovimento());
                             BulkList listaRighe = new BulkList(((ReversaleHome) getHome(userContext, rev.getClass())).findReversale_riga(userContext, rev));
@@ -2647,6 +2650,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                             aggiornaSaldiCapitoli(userContext, manRev);
                         }
                         super.updateBulk(userContext,rev);
+                        return aggiornaRigaProcessata(userContext, riga);
                     } else if (riga.isMandato()){
                         MandatoBulk man = new MandatoBulk();
                         MandatoHome mandatoHomeHome = (MandatoHome) getHome(userContext, man);
@@ -2695,8 +2699,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         sospeso.setIm_ass_mod_1210(BigDecimal.ZERO);
                         sospeso.setCd_sospeso(homeSospeso.recuperoNextCodiceSospeso(userContext, sospeso));
                         sospeso.setToBeCreated();
-                        sospeso = (SospesoBulk) super.creaConBulk(userContext, sospeso);
-                        aggiornaRigaProcessata(userContext, riga);
+                        super.insertBulk(userContext, sospeso);
                         Sospeso_det_uscBulk sospDet = new Sospeso_det_uscBulk();
                         sospDet.setCd_cds(man.getCd_cds());
                         sospDet.setEsercizio(man.getEsercizio());
@@ -2708,7 +2711,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         sospDet.setStato(Sospeso_det_uscBulk.STATO_DEFAULT);
                         sospDet.setCd_cds_mandato(man.getCd_cds());
                         sospDet.setToBeCreated();
-                        sospDet = (Sospeso_det_uscBulk) super.creaConBulk(userContext, sospDet);
+                        super.insertBulk(userContext, sospDet);
 
                         BigDecimal importoGiaRiscontratoAggiornato = homeSospesoUsc.calcolaTotDettagli(v_man_rev);
                         man.setIm_pagato(importoGiaRiscontratoAggiornato);
@@ -2731,8 +2734,8 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                             manRev.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_MAN);
                             aggiornaSaldiCapitoli(userContext, manRev);
                         }
-                        super.updateBulk(userContext, man);
-
+                        super.insertBulk(userContext, man);
+                        return aggiornaRigaProcessata(userContext, riga);
                     } else {
                         throw  new ComponentException("Il Tipo Ordinativo "+ riga.getTipoDocumento()+" non è compatibile, può assumere solo i valori R (Reversale) e M (Mandato)");
                     }
@@ -2772,7 +2775,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         man.setToBeUpdated();
                         super.updateBulk(userContext,man);
 
-                        aggiornaRigaProcessata(userContext, riga);
+                        return aggiornaRigaProcessata(userContext, riga);
                     }
                 }
             } else if (riga.isSospeso()){
@@ -2823,7 +2826,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                     sospeso.setDt_storno(riga.getDataMovimento());
                     sospeso.setToBeUpdated();
                     super.updateBulk(userContext, sospeso);
-                    aggiornaRigaProcessata(userContext, riga);
+                    return aggiornaRigaProcessata(userContext, riga);
                 } else if (riga.isTipoOperazioneEseguito()){
                     SospesoBulk sospeso = new SospesoBulk();
                     sospeso.setCd_cds(cdsEnte.getCd_unita_organizzativa());
@@ -2867,17 +2870,28 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         SospesoBulk sospesoFiglio = (SospesoBulk)sospeso.clone();
 
                         sospeso.setToBeCreated();
-                        super.creaConBulk(userContext, sospeso);
+                        super.insertBulk(userContext, sospeso);
 
                         sospesoFiglio.setCd_sospeso_padre(sospeso.getCd_sospeso());
                         sospesoFiglio.setCd_sospeso(sospesoFiglio.getCd_sospeso()+"."+sospeso.getNextCdSospesoFiglio());
                         sospesoFiglio.setCd_proprio_sospeso(sospeso.getNextCdSospesoFiglio());
                         sospesoFiglio.setToBeCreated();
-                        super.creaConBulk(userContext, sospeso);
+                        super.insertBulk(userContext, sospesoFiglio);
+
+                        if (riga.isIncassoPagopa()){
+                            PendenzaPagopaComponentSession pendenzaPagopaComponentSession = (PendenzaPagopaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices
+                                    .createEJB("CNRPAGOPA_EJB_ScadenzaPagopaComponentSession");
+                            try {
+                                pendenzaPagopaComponentSession.riconciliaIncassoPagopa(userContext, riga);
+                            } catch (Exception e){
+                                throw handleException(e);
+                            }
+                        }
                     }
-                    aggiornaRigaProcessata(userContext, riga);
+                    return aggiornaRigaProcessata(userContext, riga);
                 }
             }
+            return 0;
         } catch (IntrospectionException e){
             throw new ComponentException(e);
         }

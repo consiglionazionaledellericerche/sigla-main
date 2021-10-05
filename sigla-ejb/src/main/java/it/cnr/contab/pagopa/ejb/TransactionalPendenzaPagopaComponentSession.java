@@ -19,6 +19,7 @@ package it.cnr.contab.pagopa.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.pagopa.model.pagamento.NotificaPagamento;
@@ -141,4 +142,22 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
                 }
             }
         }
+
+    public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws RemoteException, ComponentException{
+        try {
+             invoke("riconciliaIncassoPagopa", new Object[]{
+                    userContext,
+                    movimentoContoEvidenzaBulk});
+        } catch (RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
     }
+}

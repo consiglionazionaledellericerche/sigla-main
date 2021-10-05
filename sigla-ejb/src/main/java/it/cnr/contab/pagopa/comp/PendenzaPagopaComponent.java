@@ -29,6 +29,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.pagopa.bulk.*;
 import it.cnr.contab.pagopa.model.*;
 import it.cnr.contab.pagopa.model.pagamento.DatiSingoloPagamento;
@@ -52,6 +53,7 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
@@ -83,15 +85,20 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		super.eliminaConBulk(usercontext, oggettobulk);
 	}
 
-	public void riconciliaIncassoPagopa(UserContext userContext) throws ComponentException {
+	public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
 		try {
 			MovimentoCassaPagopa movimentoCassaPagopa = new MovimentoCassaPagopa();
-			movimentoCassaPagopa.setDataContabile("");
-			movimentoCassaPagopa.setDataValuta("");
-			movimentoCassaPagopa.setCausale("");
-			movimentoCassaPagopa.setImporto(BigDecimal.ZERO);
-			movimentoCassaPagopa.setSct("");
-			movimentoCassaPagopa = pagopaService.riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
+			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			movimentoCassaPagopa.setDataContabile(formatter.format(movimentoContoEvidenzaBulk.getDataMovimento()));
+			movimentoCassaPagopa.setDataValuta(formatter.format(movimentoContoEvidenzaBulk.getDataValutaEnte()));
+			movimentoCassaPagopa.setCausale(movimentoContoEvidenzaBulk.getCausale());
+			movimentoCassaPagopa.setImporto(movimentoContoEvidenzaBulk.getImporto());
+			movimentoCassaPagopa.setSct(movimentoContoEvidenzaBulk.getIdentificativoFlusso());
+			try  {
+				movimentoCassaPagopa = pagopaService.riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
+			} catch (HttpClientErrorException.BadRequest e ){
+				movimentoCassaPagopa = null;
+			}
 			if (movimentoCassaPagopa != null && movimentoCassaPagopa.getRiscossioni() != null && !movimentoCassaPagopa.getRiscossioni().isEmpty()){
 				PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
 				for (RiscossioneMovimentoCassaPagopa riscossione : movimentoCassaPagopa.getRiscossioni()){
@@ -102,6 +109,9 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				}
 			}
 		} catch (Throwable t) {
+			String error = "pagoPA: Errore durante la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso() +" "+t.getMessage();
+			logger.error(error);
+			SendMail.sendErrorMail("pagoPA: Errore durante riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso(), error);
 			throw handleException(t);
 		}
 	}

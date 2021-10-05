@@ -94,7 +94,7 @@
 	<persistentProperty
 		name="ds_log" />
 	<persistentProperty
-			name=cd_log_tipo" />
+			name="cd_log_tipo" />
 	<persistentProperty
 		name="duva" />
 	<persistentProperty

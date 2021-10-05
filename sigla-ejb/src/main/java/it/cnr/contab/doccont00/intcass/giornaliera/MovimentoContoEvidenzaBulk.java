@@ -30,6 +30,10 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	 * [INFORMAZIONI_CONTO_EVIDENZA null]
 	 **/
 
+	public final static String CAUSALE_PAGOPA_CUMULATIVO = "/PUR/";
+	public final static String CAUSALE_PAGOPA_SINGOLO_STRUTTURATO = "/RFS/";
+	public final static String CAUSALE_PAGOPA_SINGOLO_STANDARD = "/RFB/";
+
 	public final static String RIFERIMENTO_INTERNO_BANCA_ITALIA = "FZPBP1";
 	public final static String RIFERIMENTO_INTERNO_PAGAMENTO_STIPENDI = "PAGSTIP";
 	public final static String STATO_RECORD_INIZIALE = "I";
@@ -142,13 +146,13 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 		return getTipoOperazione() != null && (isTipoOperazioneEseguito() || isTipoOperazioneRegolarizzato());
 	}
 	public Boolean isTipoOperazioneEseguito(){
-		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_ESEGUITO);
+		return getTipoOperazione() != null  && getTipoOperazione().equals(TIPO_OPERAZIONE_ESEGUITO);
 	}
 	public Boolean isTipoOperazioneRegolarizzato(){
-		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_REGOLARIZZATO);
+		return getTipoOperazione() != null  && getTipoOperazione().equals(TIPO_OPERAZIONE_REGOLARIZZATO);
 	}
 	public Boolean isTipoOperazioneStornato(){
-		return getTipoOperazione() != null  && getTipoDocumento().equals(TIPO_OPERAZIONE_STORNATO);
+		return getTipoOperazione() != null  && getTipoOperazione().equals(TIPO_OPERAZIONE_STORNATO);
 	}
 	public Boolean isTipoEsecuzioneBancaItalia(){
 		return getTipoEsecuzione() != null  && (getTipoEsecuzione().equals(TIPO_ESECUZIONE_BANCA_ITALIA) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_TESORERIA_TAB_A) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_TESORERIA_TAB_B)
@@ -171,5 +175,8 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	}
 	public String recuperoNumeroSospeso(){
 		return String.format("%018d", getNumeroDocumento());
+	}
+	public Boolean isIncassoPagopa (){
+		return getCausale() != null && (getCausale().startsWith(CAUSALE_PAGOPA_CUMULATIVO) || getCausale().startsWith(CAUSALE_PAGOPA_SINGOLO_STRUTTURATO)|| getCausale().startsWith(CAUSALE_PAGOPA_SINGOLO_STANDARD));
 	}
 }

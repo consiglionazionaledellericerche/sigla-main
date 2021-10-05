@@ -319,9 +319,9 @@ public it.cnr.jada.util.RemoteIterator cercaSospesiPerStato(it.cnr.jada.UserCont
 		}
 	}
 }
- 	public void caricamentoRigaGiornaleCassa(it.cnr.jada.UserContext param0, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws RemoteException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException,it.cnr.jada.comp.ComponentException {
+ 	public Integer caricamentoRigaGiornaleCassa(it.cnr.jada.UserContext param0, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws RemoteException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException,it.cnr.jada.comp.ComponentException {
 		try {
-			invoke("caricamentoRigaGiornaleCassa",new Object[] {
+			return (Integer) invoke("caricamentoRigaGiornaleCassa",new Object[] {
 					param0,
 					tesoreriaUnica, cdsEnte,riga });
 		} catch(java.rmi.RemoteException e) {

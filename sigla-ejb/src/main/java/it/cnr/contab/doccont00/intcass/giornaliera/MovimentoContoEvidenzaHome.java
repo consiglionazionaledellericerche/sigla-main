@@ -39,7 +39,7 @@ public class MovimentoContoEvidenzaHome extends BulkHome {
 		SQLBuilder sql = createSQLBuilder();
 
 		sql.addClause("AND","esercizio",SQLBuilder.EQUALS, esercizio);
-		sql.addClause("AND","identificativo_flusso",SQLBuilder.EQUALS, nomeFile);
+		sql.addClause("AND","identificativoFlusso",SQLBuilder.EQUALS, nomeFile);
 		sql.addClause("AND","stato",SQLBuilder.EQUALS, stato);
 		sql.addOrderBy("progressivo");
 		return fetchAll(sql);

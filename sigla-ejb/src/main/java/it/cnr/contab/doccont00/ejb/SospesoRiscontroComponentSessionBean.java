@@ -113,11 +113,12 @@ public RemoteIterator cercaSospesiPerStato(UserContext usercontext, CompoundFind
     }
 }
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void caricamentoRigaGiornaleCassa(it.cnr.jada.UserContext param0, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+	public Integer caricamentoRigaGiornaleCassa(it.cnr.jada.UserContext param0, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
 		pre_component_invocation(param0, componentObj);
 		try {
-			((SospesoRiscontroComponent) componentObj).caricamentoRigaGiornaleCassa(param0, tesoreriaUnica, cdsEnte, riga);
+			Integer caricato = ((SospesoRiscontroComponent) componentObj).caricamentoRigaGiornaleCassa(param0, tesoreriaUnica, cdsEnte, riga);
 			component_invocation_succes(param0, componentObj);
+			return caricato;
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0, componentObj);
 			throw e;

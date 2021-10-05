@@ -19,6 +19,7 @@ package it.cnr.contab.pagopa.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.contab.pagopa.comp.PendenzaPagopaComponent;
 import it.cnr.contab.pagopa.model.Pendenza;
@@ -156,4 +157,21 @@ public class PendenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
             }
         }
 
+    public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk)  throws ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            ((PendenzaPagopaComponent)componentObj).riconciliaIncassoPagopa(userContext, movimentoContoEvidenzaBulk);
+            component_invocation_succes(userContext, componentObj);
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
 }

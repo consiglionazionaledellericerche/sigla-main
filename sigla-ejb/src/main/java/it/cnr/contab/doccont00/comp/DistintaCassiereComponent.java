@@ -45,7 +45,10 @@ import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
+import it.cnr.contab.logs.ejb.BatchControlComponentSession;
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.service.SpringUtil;
@@ -69,7 +72,9 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.bulk.StorageFile;
@@ -91,6 +96,7 @@ import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -1113,19 +1119,41 @@ public class DistintaCassiereComponent extends
                                   V_ext_cassiere00Bulk file)
             throws it.cnr.jada.comp.ComponentException {
         Timestamp oggi = null;
+        BatchControlComponentSession batchControlComponentSession = (BatchControlComponentSession)it.cnr.jada.util.ejb.EJBCommonServices
+                .createEJB("BLOGS_EJB_BatchControlComponentSession");
+        String subjectError = "Errore Caricamento Giornaliera File: "+file.getNome_file();
         try {
-            oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+            Date today = Calendar.getInstance().getTime();
+            oggi = new Timestamp(today.getTime());
         } catch (javax.ejb.EJBException e) {
             throw new it.cnr.jada.DetailedRuntimeException(e);
         }
 
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone( ZoneId.systemDefault() );
         Batch_log_tstaBulk log = new Batch_log_tstaBulk();
         log.setDs_log("CICF-"+file.getNome_file()+" Start: "+ formatterTime.format(oggi.toInstant()));
         log.setCd_log_tipo(Batch_log_tstaBulk.LOG_TIPO_INTERF_CASS00);
         log.setNote("Caricamento interfaccia ritorno cassiere. File:"+file.getNome_file()+" Utente: "+userContext.getUser());
         log.setToBeCreated();
-        log = (Batch_log_tstaBulk)super.creaConBulk(userContext, log);
+        try {
+            log = (Batch_log_tstaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log);
+        } catch (ComponentException | RemoteException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento in Batch_log_tsta "+e.getMessage());
+            throw new ComponentException(e);
+        }
+
+        Ext_cassiere00_logsBulk cassiere00_logsBulk = new Ext_cassiere00_logsBulk();
+        cassiere00_logsBulk.setNome_file(file.getNome_file());
+        cassiere00_logsBulk.setEsercizio(file.getEsercizio());
+        cassiere00_logsBulk.setPg_esecuzione(log.getPg_esecuzione());
+        cassiere00_logsBulk.setToBeCreated();
+        try {
+            cassiere00_logsBulk = (Ext_cassiere00_logsBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,cassiere00_logsBulk);
+        } catch (ComponentException | RemoteException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento in Ext_cassiere00_logs "+e.getMessage());
+            throw new ComponentException(e);
+        }
+
         boolean tesoreriaUnica = false;
         String ccEnte = null;
         EnteBulk cdsEnte = null;
@@ -1137,9 +1165,11 @@ public class DistintaCassiereComponent extends
             if(aL.size() > 0){
                 cdsEnte = (EnteBulk) aL.get(0);
             } else {
+                SendMail.sendErrorMail(subjectError, "Cds Ente non trovato!");
                 throw new ComponentException("Cds Ente non trovato!");
             }
         } catch (RemoteException | PersistencyException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante la ricerca della tesoreria unica "+e.getMessage());
             throw new ComponentException(e);
         }
 
@@ -1148,27 +1178,52 @@ public class DistintaCassiereComponent extends
                 .createEJB("CNRDOCCONT00_EJB_SospesoRiscontroComponentSession");
         List righeFile = new ArrayList();
         try {
-            List righeFile = home.recuperoRigheFile(file.getNome_file(), file.getEsercizio(), MovimentoContoEvidenzaBulk.STATO_RECORD_INIZIALE);
-        } catch (IntrospectionException | PersistencyException | RemoteException e) {
+            righeFile = home.recuperoRigheFile(file.getNome_file(), file.getEsercizio(), MovimentoContoEvidenzaBulk.STATO_RECORD_INIZIALE);
+        } catch (IntrospectionException | PersistencyException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante il recupero delle righe del file "+e.getMessage());
             throw new ComponentException(e);
         }
-        for (Object bulk : righeFile){
+
+        List listaRigheMovimentoContoEvidenza = (List) righeFile.stream().collect(Collectors.toList());
+
+        int totaleRighe = 0;
+        int contaErrori = 0;
+        int righeProcessate = 0;
+        for (Object bulk : listaRigheMovimentoContoEvidenza){
             MovimentoContoEvidenzaBulk riga = (MovimentoContoEvidenzaBulk)bulk;
             try {
-                sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
+                totaleRighe++;
+                righeProcessate = righeProcessate + sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
             } catch (PersistencyException | RemoteException e) {
+                contaErrori++;
+                Batch_log_rigaBulk log_riga = new Batch_log_rigaBulk();
+                log_riga.setPg_esecuzione(log.getPg_esecuzione());
+                log_riga.setPg_riga(BigDecimal.valueOf(contaErrori));
+                log_riga.setTi_messaggio("E");
+                log_riga.setMessaggio(cdsEnte.getCd_unita_organizzativa()+"-"+file.getNome_file()+"-Riga-"+riga.getProgressivo());
+                log_riga.setTrace(log_riga.getMessaggio());
+                log_riga.setNote(e.getMessage());
+                log_riga.setToBeCreated();
+                try {
+                    log_riga = (Batch_log_rigaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log_riga);
+                } catch (ComponentException | RemoteException ex) {
+                    SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento dell'errore in Batch_log_rigaBulk "+ex.getMessage());
+                    throw new ComponentException(ex);
+                }
+
                 Ext_cassiere00_scartiBulk scarto = new Ext_cassiere00_scartiBulk();
                 scarto.setEsercizio(file.getEsercizio());
                 scarto.setNome_file(file.getNome_file());
-                scarto.setPg_esecuzione(file.ge);
+                scarto.setPg_esecuzione(log.getPg_esecuzione().longValue());
                 scarto.setPg_rec(riga.getProgressivo());
                 scarto.setDt_giornaliera(riga.getDataMovimento());
 
-                Timestamp oggi = null;
+                oggi = null;
                 try {
-                    oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
-                } catch (javax.ejb.EJBException e) {
-                    throw new it.cnr.jada.DetailedRuntimeException(e);
+                    Date today = Calendar.getInstance().getTime();
+                    oggi = new Timestamp(today.getTime());
+                } catch (javax.ejb.EJBException ex) {
+                    throw new ComponentException(ex);
                 }
 
                 scarto.setDt_elaborazione(oggi);
@@ -1188,8 +1243,57 @@ public class DistintaCassiereComponent extends
                 }
                 scarto.setAnomalia(e.getMessage());
                 scarto.setToBeCreated();
-                super.creaConBulk(userContext,scarto);
+                try {
+                    scarto = (Ext_cassiere00_scartiBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,scarto);
+                } catch (ComponentException | RemoteException ex) {
+                    SendMail.sendErrorMail(subjectError, "Errore durante il recupero dell'errore in Ext_cassiere00_scarti "+ex.getMessage());
+                    throw new ComponentException(ex);
+                }
             }
+        }
+        try {
+            Date today = Calendar.getInstance().getTime();
+            oggi = new Timestamp(today.getTime());
+        } catch (javax.ejb.EJBException e) {
+            throw new ComponentException(e);
+        }
+        if (contaErrori > 0) {
+            log.setFl_errori(true);
+            log.setToBeUpdated();
+            try {
+                super.updateBulk(userContext, log);
+            } catch (PersistencyException e) {
+                SendMail.sendErrorMail(subjectError, "Errore durante l'aggiornamento di Batch_log_tsta "+e.getMessage());
+                throw new ComponentException(e);
+            }
+        }
+        Batch_log_rigaBulk log_riga = new Batch_log_rigaBulk();
+        log_riga.setPg_esecuzione(log.getPg_esecuzione());
+        log_riga.setPg_riga(BigDecimal.valueOf(contaErrori + 1));
+        log_riga.setTi_messaggio("I");
+        log_riga.setMessaggio("Caricamento "+cdsEnte.getCd_unita_organizzativa()+"-"+file.getNome_file()+". Righe elaborate: "+totaleRighe+". Righe processate: "+righeProcessate+". Errori: "+contaErrori);
+        log_riga.setNote("Termine operazione caricamento interfaccia ritorno cassiere."+ formatterTime.format(oggi.toInstant()));
+        log_riga.setToBeCreated();
+        try {
+            log_riga = (Batch_log_rigaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log_riga);
+        } catch (ComponentException | RemoteException ex) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento della riga di chiusura di Batch_log_riga "+ex.getMessage());
+            throw new ComponentException(ex);
+        }
+
+        MessaggioBulk messaggio = new MessaggioBulk();
+        String ds = "Caricamento interfaccia ritorno cassiere: "+file.getNome_file()+" es."+file.getEsercizio();
+        messaggio.setDs_messaggio("ATTN: "+ds);
+        messaggio.setCd_utente(userContext.getUser());
+        messaggio.setSoggetto(ds+" "+formatterTime.format(oggi.toInstant())+" (log esecuzione: "+log.getPg_esecuzione()+")");
+        messaggio.setCorpo("Operazione Completata. Righe elaborate: "+totaleRighe+". Righe processate: "+righeProcessate+". Errori: "+contaErrori);
+        messaggio.setPriorita(1);
+        messaggio.setToBeCreated();
+        try {
+            messaggio = (MessaggioBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,messaggio);
+        } catch (ComponentException | RemoteException ex) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento del Messaggio "+ex.getMessage());
+            throw new ComponentException(ex);
         }
     }
 
@@ -3093,23 +3197,24 @@ public class DistintaCassiereComponent extends
     protected void validaCreaModificaConBulk(UserContext userContext,
                                              OggettoBulk bulk) throws ComponentException {
         super.validaCreaModificaConBulk(userContext, bulk);
+        if (bulk instanceof Distinta_cassiereBulk){
+            Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) bulk;
 
-        Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) bulk;
-
-        try {
-            long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
-                    Distinta_cassiere_detBulk.class)).getNrDettagli(
-                    userContext, distinta);
-            if (nrDettagli == 0)
-                throw new ApplicationException(
-                        " La distinta deve avere almeno un dettaglio!");
-            // Controlla i documenti inseriti nella distinta
-            validaDocumentiContabiliAssociati(userContext, distinta);
-            if (distinta.getFl_annulli().booleanValue())
-                callCheckDocContForDistintaAnn(userContext, distinta);
-            callCheckDocContForDistinta(userContext, distinta);
-        } catch (Exception e) {
-            throw handleException(e);
+            try {
+                long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
+                        Distinta_cassiere_detBulk.class)).getNrDettagli(
+                        userContext, distinta);
+                if (nrDettagli == 0)
+                    throw new ApplicationException(
+                            " La distinta deve avere almeno un dettaglio!");
+                // Controlla i documenti inseriti nella distinta
+                validaDocumentiContabiliAssociati(userContext, distinta);
+                if (distinta.getFl_annulli().booleanValue())
+                    callCheckDocContForDistintaAnn(userContext, distinta);
+                callCheckDocContForDistinta(userContext, distinta);
+            } catch (Exception e) {
+                throw handleException(e);
+            }
         }
     }
 
