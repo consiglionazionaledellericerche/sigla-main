@@ -85,18 +85,7 @@ public class OrdineAcqCMISService extends StoreService {
 	public String getStorePath(OrdineAcqBulk allegatoParentBulk) throws BusinessProcessException{
 
 		try {
-			/*
-            String path = Arrays.asList(
-                    SpringUtil.getBean(StorePath.class).getPathOrdini(),
-                    allegatoParentBulk.getCdUnitaOperativa(),
-                    allegatoParentBulk.getCdNumeratore(),
-                    Optional.ofNullable(allegatoParentBulk.getEsercizio())
-                            .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
-                            .orElse("0")
-            ).stream().collect(
-                    Collectors.joining(StorageDriver.SUFFIX)
-            );
-            */
+
 			String path =Arrays.asList(
 					SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
 					allegatoParentBulk.getUnitaOperativaOrd().getCdUnitaOrganizzativa(),
