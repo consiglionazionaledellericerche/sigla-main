@@ -283,7 +283,7 @@
 			inputType="TEXT"
 			enabledOnEdit="false"
 			nullable="true"
-			label="cofinanziamentoCnr" />
+			label="Cofinanziamento CNR" />
 	<fieldProperty
 			name="cofinanziamentoEffettuato"
 			property="cofinanziamentoEffettuato"
@@ -291,7 +291,7 @@
 			keysProperty="tipoCofinanziamentoEffettuato"
 			enabledOnEdit="true"
 			nullable="true"
-			label="cofinanziamentoEffettuato" />
+			label="Cofinanziamento Effettuato" />
 	<!--
 	Fine aggiornamento
 	-->
