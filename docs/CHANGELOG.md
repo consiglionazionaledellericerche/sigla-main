@@ -1,3 +1,19 @@
+## Release 6.3.59  -- _October 05, 2021_ 
+**Changes**
+
+>**FIX generazione flusso con diversi CUP con lo stesso codice SIOPE e implementazione del test**
+>
+>[5c0239442acc11c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c0239442acc11c) marco.spasiano *October 05, 2021*
+
+>**Closed issue #89**
+>
+>[bc83dc64f375c6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc83dc64f375c6a) marco.spasiano *October 05, 2021*
+
+>**Aggiunta la possibilità di caricare la giornaliera di SIOPE+ da mappa**
+>
+>[4c9a7133c8b97ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c9a7133c8b97ab) marco.spasiano *October 04, 2021*
+
+
 ## Release 6.3.58  -- _October 04, 2021_ 
 **Changes**
 
