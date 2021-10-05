@@ -4342,4 +4342,177 @@ TRASPORTO_AEREO"/>
         </insert>
     </changeSet>
 
+    <!--
+    Anagrafica_Dottorati_Rate
+    -->
+    <changeSet author="valerio.diego" id="create-table-anagrafica_dottorati-rate">
+    <createTable tableName="anagrafica_dottorati_rate" remarks="Tabella contenente anagrafica dottorati rate">
+        <column name="id" remarks="Chiave Primaria." type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="id_anagrafica_dottorati" remarks="Identificativo anagrafica dottorati." type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="cd_cds" type="VARCHAR(30)">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="cd_unita_organizzativa" type="VARCHAR(30)">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="esercizio" type="INT">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="pg_rata" type="INT">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="pg_mandato" type="INT">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="dt_inizio_rata" type="DATE">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="dt_fine_rata" type="DATE">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="dt_scadenza" type="DATE">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="im_rata" type="numeric(15,2)">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="dacr" type="DATE">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="utcr" type="VARCHAR(20)">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="duva" type="DATE">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="utuv" type="VARCHAR(20)">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="cd_terzo" type="INT">
+            <constraints nullable="false"></constraints>
+        </column>
+        <column name="cd_modalita_pag" type="VARCHAR(10)">
+            <constraints nullable="true"></constraints>
+        </column>
+        <column name="pg_banca" type="INT">
+            <constraints nullable="true"></constraints>
+        </column>
+        <column name="stato" type="VARCHAR(100)">
+            <constraints nullable="true"></constraints>
+        </column>
+        <column name="pg_ver_rec" type="BIGINT">
+            <constraints nullable="false"></constraints>
+        </column>
+    </createTable>
+        <addPrimaryKey columnNames="id" constraintName="anag_dott_rate_pkey" tableName="anagrafica_dottorati_rate"/>
+    </changeSet>
+
+    <changeSet author="valerio.diego" id="relazioni-anagrafica-dottorati-rate" >
+        <addForeignKeyConstraint
+                baseColumnNames="id_anagrafica_dottorati"
+                baseTableName="anagrafica_dottorati_rate"
+                constraintName="fk_anagrafica_dottorati"
+                referencedColumnNames="id"
+                referencedTableName="anagrafica_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="cd_terzo"
+                baseTableName="anagrafica_dottorati_rate"
+                constraintName="fk_anag_dott_rate_terzo"
+                referencedColumnNames="cd_terzo"
+                referencedTableName="terzo"/>
+    </changeSet>
+
+    <changeSet author="valerio.diego" id="accessi_anagrafica_dottorati_rate" >
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGANAGDOTTRATEM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Anagrafica Dottorati Rate"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGANAGDOTTRATEV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Anagrafica Dottorati Rate"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGANAGDOTTRATEM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiRateBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGANAGDOTTRATEV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiRateBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANAGDOTTRATE"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Anagrafica Dottorati Rate"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="ANAGDOTTRATE"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANAGDOTTRATE.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGANAGDOTTRATEM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiRateBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANAGDOTTRATE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANAGDOTTRATE.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGANAGDOTTRATEV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiRateBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANAGDOTTRATE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
