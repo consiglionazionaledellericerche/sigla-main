@@ -24,9 +24,28 @@
 		<columnMapping
 			columnName="PG_PROGETTO"
 			propertyName="progetto.pg_progetto"
-			fetchOnly="false" />		
+			fetchOnly="false" />
 	</defaultColumnMap>
-	
+	<columnMap
+			name="PROGETTO_RIMODULAZIONE_COMPLETO"
+			tableName="PROGETTO_RIMODULAZIONE"
+			extends="default">
+		<columnMapping
+				columnName="V_PROGETTO_PADRE.CD_PROGETTO"
+				propertyName="progetto.cd_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="V_PROGETTO_PADRE.DS_PROGETTO"
+				propertyName="progetto.ds_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="400"/>
+		<columnMapping
+				columnName="V_PROGETTO_PADRE.CD_UNITA_ORGANIZZATIVA"
+				propertyName="progetto.unita_organizzativa.cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+	</columnMap>
 	<persistentProperty
 		name="progetto" 
 		partOfOid= "true"/>	
