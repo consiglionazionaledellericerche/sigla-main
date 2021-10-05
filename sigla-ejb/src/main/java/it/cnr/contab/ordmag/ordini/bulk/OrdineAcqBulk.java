@@ -50,6 +50,8 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -910,8 +912,13 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
-        archivioAllegati.add(allegato);
-        return archivioAllegati.size() - 1;
+            Optional.ofNullable(allegato)
+                    .filter(AllegatoOrdineBulk.class::isInstance)
+                    .map(AllegatoOrdineBulk.class::cast)
+                    .ifPresent(el->el.setOrdine(this));
+            archivioAllegati.add(allegato);
+            return archivioAllegati.size()-1;
+
     }
 
     public String constructCMISNomeFile() {

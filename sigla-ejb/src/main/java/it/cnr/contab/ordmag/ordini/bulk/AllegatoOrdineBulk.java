@@ -19,20 +19,31 @@ package it.cnr.contab.ordmag.ordini.bulk;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
 
+import javax.swing.text.html.Option;
+
 public class AllegatoOrdineBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
+
+	private OrdineAcqBulk ordine;
+
+	public void setOrdine(OrdineAcqBulk ordine) {
+		this.ordine = ordine;
+	}
 
 	public static OrderedHashtable aspectNamesKeys = new OrderedHashtable();
 
 	static {
 		aspectNamesKeys.put(OrdineAcqCMISService.ASPECT_ALLEGATI_ORDINI,"Allegati all'Ordine");
+		aspectNamesKeys.put(OrdineAcqCMISService.ASPECT_STAMPA_ORDINI,"Stampa Ordine");
 	}
 	private String aspectName;
 	
@@ -53,10 +64,23 @@ public class AllegatoOrdineBulk extends AllegatoGenericoBulk {
 		this.aspectName = aspectName;
 	}
 
+
+	@StoragePolicy(name="P:ordine_acq:stato", property=@StorageProperty(name="ordine_acq:stato"))
+	public String getStato(){
+		if ( Optional.ofNullable(ordine).map(ordine->ordine.getStato()).filter(s->!(s.isEmpty())).isPresent())
+			return OrdineAcqBulk.STATO.get(ordine.getStato()).toString();
+		return null;
+	}
+
 	@StorageProperty(name="cmis:secondaryObjectTypeIds")
 	public List<String> getAspect() {
 		 List<String> results = new ArrayList<String>();
-		 results.add("P:cm:titled");
+		 //results.add("P:cm:titled");
+		/*
+		Optional.ofNullable(ordine).map(ordine->ordine.getStato()).filter(s->!(s.isEmpty())).ifPresent(stato->{
+			results.add( "ciao");
+		});
+		*/
 		 results.add(getAspectName());
 		 return results;
 	}

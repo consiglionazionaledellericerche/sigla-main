@@ -120,10 +120,15 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     protected void addChildDetail(OggettoBulk oggettobulk) {
     }
 
+    protected StoreService getBeanStoreService(ActionContext actioncontext)
+            throws BusinessProcessException {
+        return SpringUtil.getBean("storeService", StoreService.class);
+    }
     @Override
     protected void initialize(ActionContext actioncontext)
             throws BusinessProcessException {
-        storeService = SpringUtil.getBean("storeService", StoreService.class);
+        //storeService = SpringUtil.getBean("storeService", StoreService.class);
+        storeService=getBeanStoreService( actioncontext);
         super.initialize(actioncontext);
     }
 

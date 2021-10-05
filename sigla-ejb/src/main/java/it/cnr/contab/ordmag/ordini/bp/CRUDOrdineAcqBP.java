@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
@@ -40,10 +41,7 @@ import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaHome;
+import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
@@ -59,6 +57,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
@@ -75,7 +74,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Gestisce le catene di elementi correlate con il documento in uso.
  */
-public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumentoAmministrativoBP, VoidableBP, IDefferedUpdateSaldiBP  {
+public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoOrdineBulk, OrdineAcqBulk> implements IDocumentoAmministrativoBP, VoidableBP, IDefferedUpdateSaldiBP  {
 
 	private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 
@@ -172,7 +171,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return consegne;
 	}
 	
-	private OrdineAcqCMISService ordineAcqCMISService;
+	//private OrdineAcqCMISService ordineAcqCMISService;
 
 	public CRUDOrdineAcqBP() {
 		this(OrdineAcqConsegnaBulk.class);
@@ -292,11 +291,30 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	public final SimpleDetailCRUDController getRighe() {
 		return righe;
 	}
-	/**
-	 * Imposta il valore della proprietà 'userConfirm'
-	 *
-	 * @param newUserConfirm	Il valore da assegnare a 'userConfirm'
-	 */
+
+	private void allegatoStampaOrdine(UserContext userContext) throws Exception {
+		OrdineAcqBulk ordineAcq = (OrdineAcqBulk)getModel();
+		//StorageObject s = (( OrdineAcqCMISService)storeService).getStorageObjectStampaOrdine(ordineAcq);
+		if ( !OrdineAcqBulk.STATO_ALLA_FIRMA.equals(ordineAcq.getStato())
+			&& !OrdineAcqBulk.STATO_DEFINITIVO.equals(ordineAcq.getStato())
+			&& allegatoStorageStampa!=null)
+			storeService.delete(allegatoStorageStampa);
+		if ( OrdineAcqBulk.STATO_ALLA_FIRMA.equals(ordineAcq.getStato()) &&
+				allegatoStorageStampa==null){
+				File f = stampaOrdine(userContext,ordineAcq);
+
+				AllegatoOrdineBulk allegatoStampaOrdine = new AllegatoOrdineBulk();
+					allegatoStampaOrdine.setFile(f);
+					allegatoStampaOrdine.setContentType( new MimetypesFileTypeMap().getContentType(f.getName()));
+					allegatoStampaOrdine.setNome(f.getName());
+					allegatoStampaOrdine.setDescrizione(f.getName());
+					allegatoStampaOrdine.setTitolo( f.getName());
+					allegatoStampaOrdine.setCrudStatus( OggettoBulk.TO_BE_CREATED);
+					allegatoStampaOrdine.setAspectName(OrdineAcqCMISService.ASPECT_STAMPA_ORDINI);
+					allegatoStampaOrdine.setOrdine(ordineAcq);
+					ordineAcq.addToArchivioAllegati(allegatoStampaOrdine);
+		}
+	}
 	public void update(it.cnr.jada.action.ActionContext context)
 			throws	it.cnr.jada.action.BusinessProcessException {
 
@@ -307,6 +325,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 					((OrdineAcqComponentSession)createComponentSession()).modificaConBulk(
 							context.getUserContext(),
 							getModel()));
+			allegatoStampaOrdine(context.getUserContext());
 			archiviaAllegati(context);
 		} catch(Exception e) {
 			throw handleException(e);
@@ -315,42 +334,67 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 
 	@Override
 	protected String getStorePath(OrdineAcqBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
-		return ordineAcqCMISService.getStorePath(allegatoParentBulk);
+		return ( (OrdineAcqCMISService)storeService).getStorePath(allegatoParentBulk);
 	}
 
 	@Override
-	protected Class<AllegatoRichiestaBulk> getAllegatoClass() {
-		return AllegatoRichiestaBulk.class;
+	protected Class<AllegatoOrdineBulk> getAllegatoClass() {
+		return AllegatoOrdineBulk.class;
 	}
+
+/*
 	public OrdineAcqCMISService getOrdineAcqCMISService() {
 		return ordineAcqCMISService;
 	}
+
 	public void setRichiesteCMISService(OrdineAcqCMISService ordineAcqCMISService) {
 		this.ordineAcqCMISService = ordineAcqCMISService;
 	}
+
+ */
+	@Override
+	public StoreService getBeanStoreService(ActionContext actioncontext)
+			throws BusinessProcessException{
+		return SpringUtil.getBean("ordineAcqCMISService", OrdineAcqCMISService.class);
+	}
+	/*
 	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 		super.initialize(actioncontext);
+
 		ordineAcqCMISService = SpringUtil.getBean("ordineAcqCMISService",
 				OrdineAcqCMISService.class);	
 	}
+	*/
+
+/*
 	@Override
 	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
 			throws BusinessProcessException {
 
-		OrdineAcqBulk allegatoParentBulk = (OrdineAcqBulk)oggettobulk;
+		//OrdineAcqBulk allegatoParentBulk = (OrdineAcqBulk)oggettobulk;
+		super.initializeModelForEditAllegati(actioncontext,oggettobulk);
 
 		return oggettobulk;	
 	}
+*/
+	private StorageObject allegatoStorageStampa=null;
 	@Override
-	protected void completeAllegato(AllegatoRichiestaBulk allegato, StorageObject storageObject) throws ApplicationException {
-		Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-				.filter(strings -> !strings.isEmpty())
-				.ifPresent(strings -> {
-					allegato.setAspectName(strings.stream()
-							.filter(s -> AllegatoRichiestaBulk.aspectNamesKeys.get(s) != null)
-							.findAny().orElse(RichiesteCMISService.ASPECT_ALLEGATI_RICHIESTA_ORDINI));
-				});
-		super.completeAllegato(allegato, storageObject);
+	protected boolean excludeChild(StorageObject storageObject) {
+		if (storeService.hasAspect( storageObject,(( OrdineAcqCMISService)storeService).ASPECT_STAMPA_ORDINI)) {
+			allegatoStorageStampa=storageObject;
+			return true;
+		}
+		return super.excludeChild(storageObject);
+	}
+
+	@Override
+	protected void completeAllegato(AllegatoOrdineBulk allegato, StorageObject storageObject) throws ApplicationException {
+			allegato.setAspectName(Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+					.map(list -> list.stream().filter(
+							o -> AllegatoOrdineBulk.aspectNamesKeys.get(o) != null
+							).findAny().orElse(OrdineAcqCMISService.ASPECT_ALLEGATI_ORDINI)
+					).orElse(null));
+			super.completeAllegato(allegato, storageObject);
 	}
 
 	@Override
@@ -360,8 +404,8 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	}
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk)getCrudArchivioAllegati().getModel();
-		StorageObject storageObject = ordineAcqCMISService.getStorageObjectBykey(allegato.getStorageKey());
-		InputStream is = ordineAcqCMISService.getResource(storageObject.getKey());
+		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
+		InputStream is = storeService.getResource(storageObject.getKey());
 		((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
 		((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
@@ -436,7 +480,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	}
 	public void stampaRichiesta(ActionContext actioncontext) throws Exception {
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
-		InputStream is = ordineAcqCMISService.getStreamOrdine(ordine);
+		InputStream is = (( OrdineAcqCMISService)storeService).getStreamOrdine(ordine);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
@@ -473,20 +517,19 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return fileName;
 	}
 	public void stampaOrdine(ActionContext actioncontext) throws Exception {
-		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
-		UserContext userContext = actioncontext.getUserContext();
-		File f = stampaOrdine(userContext,ordine);
-
+		OrdineAcqBulk ordine = (OrdineAcqBulk) getModel();
 		((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-		IOUtils.copy(new FileInputStream(f), os);
-//		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-//		int buflength;
-//		while ((buflength = fo.read(buffer)) > 0) {
-//			os.write(buffer,0,buflength);
-//		}
-//		is.close();
+		InputStream is = ((OrdineAcqCMISService)storeService).getStreamOrdine( ordine);
+		if ( is==null) {
+			UserContext userContext = actioncontext.getUserContext();
+			File f = stampaOrdine(userContext, ordine);
+			IOUtils.copy(new FileInputStream(f), os);
+		}else{
+			IOUtils.copy(is, os);
+		}
+
 		os.flush();
 
 	}
