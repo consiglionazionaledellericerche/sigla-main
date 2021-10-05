@@ -2568,7 +2568,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             if (riga.isMandatoReversale()){
                 if (riga.isTipoOperazioneEseguitoRegolarizzato()){
                     if (riga.isReversale()){
-                        ReversaleBulk rev = new ReversaleBulk();
+                        ReversaleBulk rev = new ReversaleIBulk();
                         ReversaleHome reversaleHome = (ReversaleHome) getHome(userContext, rev);
                         try {
                             rev = reversaleHome.findAndLockReversaleNonAnnullata(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());
