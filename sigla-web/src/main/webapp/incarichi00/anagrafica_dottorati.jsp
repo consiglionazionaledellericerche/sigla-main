@@ -111,7 +111,7 @@
                  </tr>
                  <tr>
                      <td><% bp.getController().writeFormLabel(out, "importoTotaleBorsa"); %></td>
-                     <td colspan="3"><% bp.getController().writeFormInput(out, "importoTotaleBorsa"); %></td>
+                     <td colspan="3"><% bp.getController().writeFormInput(out, "importoTotaleBorsa"); %> &euro;</td>
                  </tr>
                  <tr>
                      <td><% bp.getController().writeFormLabel(out, "dtRegistrazione"); %></td>
@@ -193,13 +193,22 @@
     			    <td><% bp.getController().writeFormLabel(out, "uoCnr"); %></td>
                     <td><% bp.getController().writeFormInput(out, "uoCnr"); %></td>
     			</tr>
-                <tr>
-    			    <td><% bp.getController().writeFormLabel(out, "cofinanziamentoCnr"); %></td>
-                    <td><% bp.getController().writeFormInput(out, "cofinanziamentoCnr"); %></td>
-    			</tr>
-                <tr>
-    			    <td><% bp.getController().writeFormLabel(out, "cofinanziamentoEffettuato"); %></td>
-                    <td><% bp.getController().writeFormInput(out, "cofinanziamentoEffettuato"); %></td>
+    			<tr>
+    			    <td colspan="2">
+    			    <fieldset>
+                        <legend style="color:blue">Cofinanziamento CNR</legend>
+    			        <table>
+                        <tr>
+    			            <td><% bp.getController().writeFormLabel(out, "cofinanziamentoCnr"); %></td>
+                            <td><% bp.getController().writeFormInput(out, "cofinanziamentoCnr"); %> &euro;</td>
+    			        </tr>
+                        <tr>
+    			            <td><% bp.getController().writeFormLabel(out, "cofinanziamentoEffettuato"); %></td>
+                            <td><% bp.getController().writeFormInput(out, "cofinanziamentoEffettuato"); %></td>
+    			        </tr>
+    			        </table>
+    			    </fieldset>
+    			    </td>
     			</tr>
     			<tr>
     			    <td><% bp.getController().writeFormLabel(out, "dataStipulaConvenzione"); %></td>
