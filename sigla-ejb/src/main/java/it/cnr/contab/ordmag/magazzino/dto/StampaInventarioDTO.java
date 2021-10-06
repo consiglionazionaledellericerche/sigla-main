@@ -25,6 +25,10 @@ public class StampaInventarioDTO implements Serializable {
 
     String descCatGrp;
 
+    BigDecimal importoUnitario;
+
+    String cdCds;
+
     public String getCd_magazzino() {
         return cd_magazzino;
     }
@@ -103,5 +107,21 @@ public class StampaInventarioDTO implements Serializable {
 
     public void setDescCatGrp(String descCatGrp) {
         this.descCatGrp = descCatGrp;
+    }
+
+    public BigDecimal getImportoUnitario() {
+        return importoUnitario;
+    }
+
+    public void setImportoUnitario(BigDecimal importo) {
+        this.importoUnitario = importo;
+    }
+
+    public String getCdCds() {
+        return cdCds;
+    }
+
+    public void setCdCds(String cdCds) {
+        this.cdCds = cdCds;
     }
 }
