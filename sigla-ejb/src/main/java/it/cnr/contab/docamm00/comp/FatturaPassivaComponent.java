@@ -21,10 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
-import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -32,7 +29,6 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
@@ -88,7 +84,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
+public class FatturaPassivaComponent extends ScritturaPartitaDoppiaFromDocumentoComponent
         implements IFatturaPassivaMgr, Cloneable, Serializable {
     private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
 
@@ -4511,29 +4507,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
         fattura_passiva = valorizzaInfoDocEle(userContext, fattura_passiva);
         fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(userContext));
-
-        try {
-            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
-                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                        .map(Scrittura_partita_doppiaHome.class::cast)
-                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(fattura_passiva);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                    fattura_passiva.setScrittura_partita_doppia(scrittura);
-                }
-            }
-        } catch (PersistencyException e) {
-            throw handleException(fattura_passiva, e);
-        }
+        caricaScrittura(userContext, fattura_passiva);
         return fattura_passiva;
     }
 
@@ -8271,37 +8245,5 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             sql.addClause(clause);
         sql.addOrderBy("cd_Unita_Organizzativa, cd_Cig");
         return sql;
-    }
-
-    @Override
-    protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
-        super.validaCreaModificaConBulk(usercontext, oggettobulk);
-        try {
-            if (Optional.ofNullable(getHome(usercontext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(usercontext)) {
-                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
-                        .filter(IDocumentoCogeBulk.class::isInstance)
-                        .map(IDocumentoCogeBulk.class::cast);
-                if (optionalIDocumentoCogeBulk.isPresent()){
-                    final Optional<Scrittura_partita_doppiaBulk> optionalScrittura_partita_doppiaBulk = Optional.ofNullable(optionalIDocumentoCogeBulk.get())
-                            .map(IDocumentoCogeBulk::getScrittura_partita_doppia);
-                    if (optionalScrittura_partita_doppiaBulk.isPresent()) {
-                        if (optionalScrittura_partita_doppiaBulk.get().isToBeCreated()) {
-                            creaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
-                        } else if (optionalScrittura_partita_doppiaBulk.get().isToBeUpdated()) {
-                            modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
-                        }
-                    } else {
-                        final Scrittura_partita_doppiaBulk scrittura_partita_doppiaBulk =
-                                Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get());
-                        creaConBulk(usercontext, scrittura_partita_doppiaBulk);
-                    }
-                }
-            }
-        } catch (PersistencyException | RemoteException e) {
-            throw handleException(e);
-        }
     }
 }
