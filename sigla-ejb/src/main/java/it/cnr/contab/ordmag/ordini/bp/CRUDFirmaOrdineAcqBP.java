@@ -17,13 +17,21 @@
 
 package it.cnr.contab.ordmag.ordini.bp;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CRUDFirmaOrdineAcqBP extends CRUDOrdineAcqBP{
 	public CRUDFirmaOrdineAcqBP(String function) throws BusinessProcessException{
@@ -31,6 +39,15 @@ public class CRUDFirmaOrdineAcqBP extends CRUDOrdineAcqBP{
 	}
 	public CRUDFirmaOrdineAcqBP() throws BusinessProcessException{
 		super();
+	}
+
+	public void firmaOTP(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
+		final Integer firmaFatture = firmaOrdine(context.getUserContext(), firmaOTPBulk,  Arrays.asList(( OrdineAcqBulk)this.getModel()) );
+		setMessage(INFO_MESSAGE, "Sono state firmate e inviate correttamente " + firmaFatture + " Fatture.");
+		//refresh(context);
+	}
+	public Integer firmaOrdine(UserContext userContext, FirmaOTPBulk firmaOTPBulk, List<OrdineAcqBulk> listOrdini) throws ApplicationException, BusinessProcessException {
+			return 0;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
@@ -48,8 +49,17 @@ public class OrdineAcqCMISService extends StoreService {
 	public static final String STATO_STAMPA_ORDINE_VALIDO = "VAL";
 	public static final String STATO_STAMPA_ORDINE_ANNULLATO = "ANN";
 
+	private ArubaSignServiceClient arubaSignServiceClient;
 
-    public List<StorageObject> getFilesOrdine(OrdineAcqBulk ordine) throws BusinessProcessException{
+	public ArubaSignServiceClient getArubaSignServiceClient() {
+		return arubaSignServiceClient;
+	}
+
+	public void setArubaSignServiceClient(ArubaSignServiceClient arubaSignServiceClient) {
+		this.arubaSignServiceClient = arubaSignServiceClient;
+	}
+
+	public List<StorageObject> getFilesOrdine(OrdineAcqBulk ordine) throws BusinessProcessException{
     	if ( Optional.ofNullable(recuperoFolderOrdineSigla(ordine)).isPresent())
 			return getChildren(recuperoFolderOrdineSigla(ordine).getKey());
     	return Collections.EMPTY_LIST;
