@@ -49,6 +49,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -2545,7 +2546,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } catch (OutdatedResourceException | BusyResourceException e) {
                     throw new ComponentException(e);
                 }
-                saldo.setIm_pagamenti_incassi(mandatoReversaleScadVoce.getIm_voce());
+                saldo.setIm_pagamenti_incassi(saldo.getIm_pagamenti_incassi().add(mandatoReversaleScadVoce.getIm_voce().setScale(2, RoundingMode.HALF_EVEN)));
                 saldo.setToBeUpdated();
                 super.updateBulk(userContext, saldo);
             } else {
@@ -2652,7 +2653,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                         super.updateBulk(userContext,rev);
                         return aggiornaRigaProcessata(userContext, riga);
                     } else if (riga.isMandato()){
-                        MandatoBulk man = new MandatoBulk();
+                        MandatoBulk man = new MandatoIBulk();
                         MandatoHome mandatoHomeHome = (MandatoHome) getHome(userContext, man);
                         try {
                             man = mandatoHomeHome.findAndLockMandatoNonAnnullato(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());
@@ -2734,14 +2735,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                             manRev.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_MAN);
                             aggiornaSaldiCapitoli(userContext, manRev);
                         }
-                        super.insertBulk(userContext, man);
+                        super.updateBulk(userContext, man);
                         return aggiornaRigaProcessata(userContext, riga);
                     } else {
                         throw  new ComponentException("Il Tipo Ordinativo "+ riga.getTipoDocumento()+" non è compatibile, può assumere solo i valori R (Reversale) e M (Mandato)");
                     }
                 } else if (riga.isTipoOperazioneStornato()){
                     if (riga.isMandato()){
-                        MandatoBulk man = new MandatoBulk();
+                        MandatoBulk man = new MandatoIBulk();
                         MandatoHome mandatoHome = (MandatoHome) getHome(userContext, man);
                         try {
                             man = mandatoHome.findAndLockMandatoAnnullato(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());

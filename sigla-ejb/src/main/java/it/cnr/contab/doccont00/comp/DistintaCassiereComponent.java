@@ -1194,7 +1194,7 @@ public class DistintaCassiereComponent extends
             try {
                 totaleRighe++;
                 righeProcessate = righeProcessate + sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
-            } catch (PersistencyException | RemoteException e) {
+            } catch (Exception e) {
                 contaErrori++;
                 Batch_log_rigaBulk log_riga = new Batch_log_rigaBulk();
                 log_riga.setPg_esecuzione(log.getPg_esecuzione());

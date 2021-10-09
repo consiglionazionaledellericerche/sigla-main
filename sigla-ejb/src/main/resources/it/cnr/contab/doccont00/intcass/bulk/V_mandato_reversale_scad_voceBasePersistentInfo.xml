@@ -17,48 +17,46 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiKey">
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversale_scad_voceBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversale_scad_voceKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversale_scad_voceHome" >
 	<defaultColumnMap
-		tableName="EXT_CASSIERE00_SCARTI">
+		tableName="V_MANDATO_REVERSALE_SCAD_VOCE" >
 		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="esercizio"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="false"
-			primary="true" />
+			columnName="TI_COMPETENZA_RESIDUO"
+			propertyName="ti_competenza_residuo"
+			sqlTypeName="CHAR"
+			columnSize="1" />
 		<columnMapping
-			columnName="NOME_FILE"
-			propertyName="nome_file"
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false"
-			primary="true" />
+			columnSize="10" />
 		<columnMapping
-			columnName="PG_ESECUZIONE"
-			propertyName="pg_esecuzione"
+			columnName="IM_VOCE"
+			propertyName="im_voce"
 			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false"
-			primary="true" />
-		<columnMapping
-			columnName="PG_REC"
-			propertyName="pg_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="10"
-			nullable="false"
-			primary="true" />
+			columnSize="15"
+			columnScale="2"/>
 	</defaultColumnMap>
 	<persistentProperty
-		name="esercizio"
-		partOfOid="true" />
+			name="im_voce"/>
 	<persistentProperty
-		name="nome_file"
-		partOfOid="true" />
+			name="ti_competenza_residuo"/>
 	<persistentProperty
-		name="pg_esecuzione"
-		partOfOid="true" />
+			name="ti_appartenenza"/>
 	<persistentProperty
-		name="pg_rec"
-		partOfOid="true" />
+			name="ti_gestione"/>
+	<persistentProperty
+			name="cd_tipo_documento_cont"/>
 </SQLPersistentInfo>

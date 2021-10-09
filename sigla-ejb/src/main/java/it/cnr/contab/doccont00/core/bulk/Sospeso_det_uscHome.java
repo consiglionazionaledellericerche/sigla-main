@@ -64,7 +64,7 @@ public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws i
 		Collection coll = fetchAll(sql);
 		for (java.util.Iterator i = coll.iterator(); i.hasNext();)
 		{
-			Sospeso_det_etrBulk sospDet = (Sospeso_det_etrBulk) i.next();
+			Sospeso_det_uscBulk sospDet = (Sospeso_det_uscBulk) i.next();
 			impTotale = impTotale.add(Utility.nvl(sospDet.getIm_associato()));
 		}
 		return impTotale;

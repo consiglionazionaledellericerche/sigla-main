@@ -26,10 +26,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLExceptionHandler;
+import it.cnr.jada.persistency.sql.*;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -528,60 +525,27 @@ public class SospesoHome extends BulkHome {
 		SospesoBulk sospesoBulk = (SospesoBulk)bulk;
 		if (sospesoBulk.getCd_sospeso() == null){
 
-			LoggableStatement ps = null;
+			CompoundFindClause clause = new CompoundFindClause();
+			clause.addClause("AND", "esercizio", SQLBuilder.EQUALS, sospesoBulk
+					.getEsercizio());
+			clause.addClause("AND", "cd_cds", SQLBuilder.EQUALS, sospesoBulk.getCd_cds());
+			clause.addClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS, sospesoBulk
+					.getTi_entrata_spesa());
+			clause.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS,SospesoBulk.TI_RISCONTRO);
+			clause.addClause("AND", "cd_sospeso", SQLBuilder.LIKE, SospesoBulk.RISC_PREFIX+"%");
+			String maxSospeso = SospesoBulk.RISC_PREFIX+SospesoBulk.CODICE_SOSPESO_RISCONTRO_INIZIALE;
 			try {
-				ps = new LoggableStatement(getConnection(),
-						"SELECT cd_sospeso FROM " +
-								it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-								"SOSPESO A" +
-								"WHERE ESERCIZIO = ? AND " +
-								"CD_CDS = ? AND " +
-								"TI_ENTRATA_SPESA = ? AND " +
-								"TI_SOSPESO_RISCONTRO = 'R' AND " +
-								"CD_SOSPESO LIKE "+ SospesoBulk.RISC_PREFIX+"'%'" +
-								"cd_sospeso = ( SELECT MAX(cd_sospeso) " +
-								"FROM " +
-								it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-								"sospeso " +
-								"WHERE ESERCIZIO = a.esercizio AND " +
-								"CD_CDS = a.cd_cds AND " +
-								"ti_entrata_spesa = a.ti_entrata_spesa AND " +
-								"ti_sospeso_riscontro = a.ti_sospeso_riscontro and " +
-								" CD_SOSPESO LIKE "+SospesoBulk.RISC_PREFIX+"'%') " +
-								"FOR UPDATE NOWAIT",true ,this.getClass());
-			} catch (SQLException throwables) {
-				throw new ComponentException(throwables);
-			}
-
-			try
-			{
-				ps.setObject( 1, sospesoBulk.getEsercizio());
-				ps.setString( 2, sospesoBulk.getCd_cds());
-				ps.setString( 3, sospesoBulk.getTi_entrata_spesa());
-
-				ResultSet rs = ps.executeQuery();
-				try
-				{
-					String maxSospeso = rs.getString(1);
-					if (maxSospeso.length() != 14){
-						throw new ComponentException("Esistono numerazioni di riscontro non compatibili con la numerazione automatica generata dall'interfaccia di riscontro automatica. La lunghezza del codice sospeso è diversa da 14 caratteri.");
-					}
-					Long num = new Long(maxSospeso.substring(4,14));
-					String nextCd = SospesoBulk.RISC_PREFIX+String.format("%10s", (num+1)).replace(' ', '0');
-					return nextCd;
-
+				Object max = findMax( sospesoBulk, "cd_sospeso", maxSospeso, true,  clause);
+				maxSospeso = (String) max;
+				if (maxSospeso.length() != 14){
+					throw new ComponentException("Esistono numerazioni di riscontro non compatibili con la numerazione automatica generata dall'interfaccia di riscontro automatica. La lunghezza del codice sospeso è diversa da 14 caratteri.");
 				}
-				finally
-				{
-					try{rs.close();}catch( java.sql.SQLException e ){};
-				}
-			} catch (SQLException throwables) {
-				throwables.printStackTrace();
-			} finally
-			{
-				try{ps.close();}catch( java.sql.SQLException e ){};
+				Long num = new Long(maxSospeso.substring(4,14));
+				String nextCd = SospesoBulk.RISC_PREFIX+String.format("%10s", (num+1)).replace(' ', '0');
+				return nextCd;
+			} catch (BusyResourceException e) {
+				throw new ComponentException(e);
 			}
-
 		}
 		return null;
 	}
