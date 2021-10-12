@@ -45,7 +45,7 @@
       path="/ConsIncarichiEstrazioneFpAction" actionClass="it.cnr.contab.incarichi00.action.ConsIncarichiEstrazioneFpAction">
   </action>
   <action
-      path="/ScadenzarioDottoratiAction" actionClass="it.cnr.contab.incarichi00.action.CRUDScadenzarioDottoratiAction">
+      path="/AnagraficaDottoratiAction" actionClass="it.cnr.contab.incarichi00.action.CRUDAnagraficaDottoratiAction">
   </action>
 
   <businessProcess
@@ -216,12 +216,22 @@ Anagrafica Dottorati
 <!--
 Scadenzario Dottorati
 -->
-    <businessProcess
-            name="CRUDScadenzarioDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDScadenzarioDottoratiBP">
+<!--    <businessProcess
+            name="CRUDScadenzarioDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP">
         <forward name="default" path="/incarichi00/scadenzariodottorati.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk"/>
         <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_ScadenzarioDottoratiComponentSession" />
         <init-param name="defaultAction" value="ScadenzarioDottoratiAction"/>
-    </businessProcess>
+    </businessProcess>-->
 
+    <!--
+    Anagrafica Dottorati
+    -->
+    <businessProcess
+            name="CRUDAnagraficaDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP">
+        <forward name="default" path="/incarichi00/anagrafica_dottorati.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk"/>
+        <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_AnagraficaDottoratiComponentSession" />
+        <init-param name="defaultAction" value="AnagraficaDottoratiAction"/>
+    </businessProcess>
 </action-mappings>

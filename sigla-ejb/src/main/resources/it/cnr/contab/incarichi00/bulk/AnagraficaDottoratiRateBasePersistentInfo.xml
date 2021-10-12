@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiRataBase"
-	keyClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiRataKey"
-	homeClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiRataHome">
+	persistentClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateHome">
 	<defaultColumnMap
-		tableName="SCADENZARIO_DOTTORATI_RATA">
+		tableName="ANAGRAFICA_DOTTORATI_RATE">
 		<columnMapping
-			columnName="ID_SCADENZARIO_DOTTORATI"
-			propertyName="idScadenzarioDottorati"
+			columnName="ID_ANAGRAFICA_DOTTORATI"
+			propertyName="idAnagraficaDottorati"
 			sqlTypeName="DECIMAL"
 			columnSize="38"
 			nullable="false" />
@@ -96,9 +96,33 @@
 			sqlTypeName="DECIMAL"
 			columnSize="38"
 			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cdModalitaPag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pgBanca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="idScadenzarioDottorati" />
+		name="idAnagraficaDottorati" />
 	<persistentProperty
 		name="cdCds" />
 	<persistentProperty
@@ -127,4 +151,12 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cdModalitaPag" />
+	<persistentProperty
+		name="pgBanca" />
+	<persistentProperty
+		name="stato" />
 </SQLPersistentInfo>

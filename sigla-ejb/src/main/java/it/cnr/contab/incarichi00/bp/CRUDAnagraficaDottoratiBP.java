@@ -18,9 +18,9 @@
 package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
-import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiRataBulk;
-import it.cnr.contab.incarichi00.ejb.ScadenzarioDottoratiComponentSession;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateBulk;
+import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
+import it.cnr.contab.incarichi00.ejb.AnagraficaDottoratiComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -32,21 +32,21 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  *
  * @author: Roberto Fantino
  */
-public class CRUDScadenzarioDottoratiBP
+public class CRUDAnagraficaDottoratiBP
         extends it.cnr.jada.util.action.SimpleCRUDBP {
 
     private final SimpleDetailCRUDController rateCRUDController = new SimpleDetailCRUDController(
             "rateCRUDController",
-            ScadenzarioDottoratiRataBulk.class,
-            "scadenzarioDottoratiRate",
+            AnagraficaDottoratiRateBulk.class,
+            "anagraficaDottoratiRate",
             this);
 
-    public CRUDScadenzarioDottoratiBP() {
+    public CRUDAnagraficaDottoratiBP() {
         super();
     }
 
 
-    public CRUDScadenzarioDottoratiBP(String function) {
+    public CRUDAnagraficaDottoratiBP(String function) {
         super(function);
     }
 
@@ -55,7 +55,7 @@ public class CRUDScadenzarioDottoratiBP
     }
 
     protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
-        setTab("tab", "tabScadenzariodottorati");
+        setTab("tab", "tab_anagrafica_dottorati");
         super.init(config, actioncontext);
     }
 
@@ -67,18 +67,18 @@ public class CRUDScadenzarioDottoratiBP
     public void findListaBanche(ActionContext context) throws BusinessProcessException {
 
         try {
-            ScadenzarioDottoratiBulk scadenzarioDottorati = (ScadenzarioDottoratiBulk) getModel();
-            if (scadenzarioDottorati.getModalita_pagamento() != null) {
-                ScadenzarioDottoratiComponentSession component = (ScadenzarioDottoratiComponentSession) createComponentSession();
-                java.util.List coll = component.findListaBanche(context.getUserContext(), scadenzarioDottorati);
+            Anagrafica_dottoratiBulk anagraficaDottorati = (Anagrafica_dottoratiBulk) getModel();
+            if (anagraficaDottorati.getModalita_pagamento() != null) {
+                AnagraficaDottoratiComponentSession component = (AnagraficaDottoratiComponentSession) createComponentSession();
+                java.util.List coll = component.findListaBanche(context.getUserContext(), anagraficaDottorati);
 
                 //	Assegno di default la prima banca tra quelle selezionate
                 if (coll == null || coll.isEmpty())
-                    scadenzarioDottorati.setBanca(null);
+                    anagraficaDottorati.setBanca(null);
                 else
-                    scadenzarioDottorati.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk) new java.util.Vector(coll).firstElement());
+                    anagraficaDottorati.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk) new java.util.Vector(coll).firstElement());
             } else
-                scadenzarioDottorati.setBanca(null);
+                anagraficaDottorati.setBanca(null);
 
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
@@ -94,15 +94,15 @@ public class CRUDScadenzarioDottoratiBP
 
     public void completaTerzo(
             ActionContext context,
-            ScadenzarioDottoratiBulk scadenzarioDottorati,
+            Anagrafica_dottoratiBulk anagraficaDottorati,
             TerzoBulk terzo) throws BusinessProcessException {
 
         try {
 
-            ScadenzarioDottoratiComponentSession component = (ScadenzarioDottoratiComponentSession) createComponentSession();
-            ScadenzarioDottoratiBulk scadenzarioDottoratiClone = component.completaTerzo(context.getUserContext(), scadenzarioDottorati, terzo);
+            AnagraficaDottoratiComponentSession component = (AnagraficaDottoratiComponentSession) createComponentSession();
+            Anagrafica_dottoratiBulk anagraficaDottoratiClone = component.completaTerzo(context.getUserContext(), anagraficaDottorati, terzo);
 
-            setModel(context, scadenzarioDottoratiClone);
+            setModel(context, anagraficaDottoratiClone);
 
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);

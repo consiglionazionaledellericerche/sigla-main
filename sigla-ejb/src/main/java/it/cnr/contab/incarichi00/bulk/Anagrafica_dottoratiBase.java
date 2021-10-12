@@ -82,7 +82,9 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	private String cofinanziamentoEffettuato;
 
 	//Fine
- 
+
+
+
 //    ID_PHDTIPO_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idPhdtipoDottorati;
  
@@ -557,5 +559,21 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	 **/
 	public void setIdTipocorsoDottorati(Long idTipocorsoDottorati)  {
 		this.idTipocorsoDottorati=idTipocorsoDottorati;
+	}
+
+
+	/**
+	 * Non c'è in table da vedere se lasciarlo
+	 */
+	private String statoAssCompenso;
+	public String getStatoAssCompenso() {
+		return statoAssCompenso;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [statoAssCompenso]
+	 **/
+	public void setStatoAssCompenso(String statoAssCompenso)  {
+		this.statoAssCompenso=statoAssCompenso;
 	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiKey">
+	persistentClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateKey">
 	<defaultColumnMap
-		tableName="SCADENZARIO_DOTTORATI">
+		tableName="ANAGRAFICA_DOTTORATI_RATE">
 		<columnMapping
 			columnName="ID"
 			propertyName="id"

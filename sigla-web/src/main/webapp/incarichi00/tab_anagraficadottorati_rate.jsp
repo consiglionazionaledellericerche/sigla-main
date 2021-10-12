@@ -8,7 +8,7 @@
 		it.cnr.contab.docamm00.bp.*"
 %>
 
-<% 	CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP)BusinessProcess.getBusinessProcess(request);
+<% 	CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP)BusinessProcess.getBusinessProcess(request);
     bp.getRateCRUDController().writeHTMLTable(pageContext,null,true,false,true,"100%","200px"); %>
 
 <div class="Group card p-2" style="width:100%">

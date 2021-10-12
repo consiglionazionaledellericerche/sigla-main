@@ -19,8 +19,7 @@ package it.cnr.contab.incarichi00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
-import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
+import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -30,48 +29,46 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-import java.util.Optional;
-
 /**
  * Insert the type's description here.
  * Creation date: (21/02/2002 16.13.52)
  *
  * @author: Roberto Fantino
  */
-public class ScadenzarioDottoratiComponent extends it.cnr.jada.comp.CRUDComponent {
+public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent {
     /**
      * CompensoComponent constructor comment.
      */
-    public ScadenzarioDottoratiComponent() {
+    public AnagraficaDottoratiComponent() {
         super();
     }
 
     public it.cnr.jada.persistency.sql.SQLBuilder selectTerzoByClause(
-            UserContext userContext, ScadenzarioDottoratiBulk scadenzarioDottorati,
+            UserContext userContext, Anagrafica_dottoratiBulk anagraficaDottorati,
             TerzoBulk terzo, CompoundFindClause clauses
     ) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = getHome(userContext, terzo.getClass()).createSQLBuilder();
         sql.setAutoJoins(true);
         sql.generateJoin("anagrafico", "ANAGRAFICO");
         sql.addClause(FindClause.AND, "ti_terzo", SQLBuilder.NOT_EQUALS, "C");
-        sql.addSQLClause(FindClause.AND, "cognome", SQLBuilder.CONTAINS, scadenzarioDottorati.getCognome());
-        sql.addSQLClause(FindClause.AND, "nome", SQLBuilder.CONTAINS, scadenzarioDottorati.getNome());
-        sql.addSQLClause(FindClause.AND, "ragione_sociale", SQLBuilder.CONTAINS, scadenzarioDottorati.getRagioneSociale());
-        sql.addSQLClause(FindClause.AND, "codice_fiscale", SQLBuilder.CONTAINS, scadenzarioDottorati.getCodiceFiscale());
-        sql.addSQLClause(FindClause.AND, "partita_iva", SQLBuilder.CONTAINS, scadenzarioDottorati.getPartitaIva());
+      /**  sql.addSQLClause(FindClause.AND, "cognome", SQLBuilder.CONTAINS, anagraficaDottorati.getCognome());
+        sql.addSQLClause(FindClause.AND, "nome", SQLBuilder.CONTAINS, anagraficaDottorati.getNome());
+        sql.addSQLClause(FindClause.AND, "ragione_sociale", SQLBuilder.CONTAINS, anagraficaDottorati.getRagioneSociale());
+        sql.addSQLClause(FindClause.AND, "codice_fiscale", SQLBuilder.CONTAINS, anagraficaDottorati.getCodiceFiscale());
+        sql.addSQLClause(FindClause.AND, "partita_iva", SQLBuilder.CONTAINS, anagraficaDottorati.getPartitaIva());*/
         sql.addClause(clauses);
         return sql;
     }
 
-    public ScadenzarioDottoratiBulk completaTerzo(UserContext userContext, ScadenzarioDottoratiBulk scadenzarioDottoratiBulk, TerzoBulk terzoBulk) throws ComponentException {
+    public Anagrafica_dottoratiBulk completaTerzo(UserContext userContext, Anagrafica_dottoratiBulk anagraficaDottoratiBulk, TerzoBulk terzoBulk) throws ComponentException {
         TerzoHome terzoHome = (TerzoHome) getHome(userContext, TerzoBulk.class);
         try {
-            scadenzarioDottoratiBulk.setModalita(terzoHome.findRif_modalita_pagamento(terzoBulk));
-            scadenzarioDottoratiBulk.setTermini(terzoHome.findRif_termini_pagamento(terzoBulk));
+            anagraficaDottoratiBulk.setModalita(terzoHome.findRif_modalita_pagamento(terzoBulk));
+            anagraficaDottoratiBulk.setTermini(terzoHome.findRif_termini_pagamento(terzoBulk));
         } catch (PersistencyException | IntrospectionException e) {
             throw handleException(e);
         }
-        return scadenzarioDottoratiBulk;
+        return anagraficaDottoratiBulk;
     }
 
     /**
@@ -93,12 +90,12 @@ public class ScadenzarioDottoratiComponent extends it.cnr.jada.comp.CRUDComponen
     public java.util.Collection findModalita(UserContext userContext, OggettoBulk bulk)
             throws ComponentException {
         try {
-            ScadenzarioDottoratiBulk scadenzarioDottoratiBulk = (ScadenzarioDottoratiBulk) bulk;
-            if (scadenzarioDottoratiBulk.getTerzo() == null ||
-                    scadenzarioDottoratiBulk.getTerzo().getCd_terzo() == null)
+            Anagrafica_dottoratiBulk anagraficaDottoratiBulk = (Anagrafica_dottoratiBulk) bulk;
+            if (anagraficaDottoratiBulk.getTerzo() == null ||
+                    anagraficaDottoratiBulk.getTerzo().getCd_terzo() == null)
                 return null;
             TerzoHome terzoHome = (TerzoHome) getHome(userContext, TerzoBulk.class);
-            return terzoHome.findRif_modalita_pagamento(scadenzarioDottoratiBulk.getTerzo());
+            return terzoHome.findRif_modalita_pagamento(anagraficaDottoratiBulk.getTerzo());
         } catch (it.cnr.jada.persistency.PersistencyException ex) {
             throw handleException(bulk, ex);
         } catch (it.cnr.jada.persistency.IntrospectionException ex) {
@@ -122,12 +119,12 @@ public class ScadenzarioDottoratiComponent extends it.cnr.jada.comp.CRUDComponen
      **/
     public java.util.Collection findTermini(UserContext userContext, OggettoBulk bulk) throws ComponentException{
         try {
-            ScadenzarioDottoratiBulk scadenzarioDottoratiBulk = (ScadenzarioDottoratiBulk)bulk;
-            if(scadenzarioDottoratiBulk.getTerzo() == null ||
-                    scadenzarioDottoratiBulk.getTerzo().getCd_terzo() == null)
+            Anagrafica_dottoratiBulk anagraficaDottoratiBulk = (Anagrafica_dottoratiBulk)bulk;
+            if(anagraficaDottoratiBulk.getTerzo() == null ||
+                    anagraficaDottoratiBulk.getTerzo().getCd_terzo() == null)
                 return null;
             TerzoHome terzoHome = (TerzoHome)getHome(userContext,TerzoBulk.class);
-            return terzoHome.findRif_termini_pagamento(scadenzarioDottoratiBulk.getTerzo());
+            return terzoHome.findRif_termini_pagamento(anagraficaDottoratiBulk.getTerzo());
         } catch (it.cnr.jada.persistency.PersistencyException ex){
             throw handleException(bulk, ex);
         } catch (it.cnr.jada.persistency.IntrospectionException ex){

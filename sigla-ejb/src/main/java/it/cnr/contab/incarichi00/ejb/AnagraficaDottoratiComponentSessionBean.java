@@ -18,35 +18,32 @@
 package it.cnr.contab.incarichi00.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
-import it.cnr.contab.incarichi00.comp.RepertorioLimitiComponent;
-import it.cnr.contab.incarichi00.comp.ScadenzarioDottoratiComponent;
+import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
+import it.cnr.contab.incarichi00.comp.AnagraficaDottoratiComponent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import java.rmi.RemoteException;
 import java.util.List;
 
-@Stateless(name="CNRINCARICHI00_EJB_ScadenzarioDottoratiComponentSession")
-public class ScadenzarioDottoratiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScadenzarioDottoratiComponentSession {
+@Stateless(name="CNRINCARICHI00_EJB_AnagraficaDottoratiComponentSession")
+public class AnagraficaDottoratiComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AnagraficaDottoratiComponentSession {
 @PostConstruct
 	public void ejbCreate() {
-		componentObj = new ScadenzarioDottoratiComponent();
+		componentObj = new AnagraficaDottoratiComponent();
 	}
 
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
-		return new ScadenzarioDottoratiComponentSessionBean();
+		return new AnagraficaDottoratiComponentSessionBean();
 	}
 
 	@Override
-	public ScadenzarioDottoratiBulk completaTerzo(UserContext param0, ScadenzarioDottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
+	public Anagrafica_dottoratiBulk completaTerzo(UserContext param0, Anagrafica_dottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			ScadenzarioDottoratiBulk result = ((ScadenzarioDottoratiComponent)componentObj).completaTerzo(param0,param1,param2);
+			Anagrafica_dottoratiBulk result = ((AnagraficaDottoratiComponent)componentObj).completaTerzo(param0,param1,param2);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -64,7 +61,7 @@ public class ScadenzarioDottoratiComponentSessionBean extends it.cnr.jada.ejb.CR
 	}
 
 	@Override
-	public List findListaBanche(UserContext param0, ScadenzarioDottoratiBulk param1) throws ComponentException, RemoteException {
+	public List findListaBanche(UserContext param0, Anagrafica_dottoratiBulk param1) throws ComponentException, RemoteException {
 		return null;
 	}
 

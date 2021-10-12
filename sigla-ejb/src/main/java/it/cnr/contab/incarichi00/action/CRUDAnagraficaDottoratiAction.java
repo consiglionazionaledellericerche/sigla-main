@@ -21,10 +21,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
 import it.cnr.contab.compensi00.bp.MinicarrieraRataCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
-import it.cnr.contab.incarichi00.bp.CRUDScadenzarioDottoratiBP;
-import it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk;
-import it.cnr.contab.missioni00.bp.CRUDAnticipoBP;
-import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP;
+import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 
@@ -36,33 +34,24 @@ import it.cnr.jada.action.Forward;
  * @author: Roberto Fantino
  */
 
-public class CRUDScadenzarioDottoratiAction extends it.cnr.jada.util.action.CRUDAction {
+public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDAction {
     /**
      * CRUDCompensoAction constructor comment.
      */
-    public CRUDScadenzarioDottoratiAction() {
+    public CRUDAnagraficaDottoratiAction() {
         super();
     }
 
     /**
      * Prepara la minicarriera per la ricerca di un nuovo percipiente
      */
-    public Forward doBlankSearchFindTerzo(ActionContext context, ScadenzarioDottoratiBulk scadenzarioDottorati) {
+    public Forward doBlankSearchFindTerzo(ActionContext context, Anagrafica_dottoratiBulk anagraficaDottorati) {
 
-        if (scadenzarioDottorati != null) {
-            scadenzarioDottorati.setTerzo(new TerzoBulk());
-            scadenzarioDottorati.setNome(null);
-            scadenzarioDottorati.setCognome(null);
-            scadenzarioDottorati.setRagioneSociale(null);
-            scadenzarioDottorati.setPartitaIva(null);
-            scadenzarioDottorati.setCodiceFiscale(null);
-            scadenzarioDottorati.setCdTerminiPag(null);
-            scadenzarioDottorati.setCdModalitaPag(null);
-            scadenzarioDottorati.setPgBanca(null);
-            scadenzarioDottorati.setCdTipoRapporto(null);
-            scadenzarioDottorati.setTiPrestazione(null);
-            scadenzarioDottorati.setModalita(null);
-            scadenzarioDottorati.setTermini(null);
+        if (anagraficaDottorati != null) {
+            anagraficaDottorati.setTerzo(new TerzoBulk());
+            anagraficaDottorati.setPgBanca(null);
+            anagraficaDottorati.setModalita(null);
+            anagraficaDottorati.setTermini(null);
         }
         return context.findDefaultForward();
 
@@ -72,19 +61,19 @@ public class CRUDScadenzarioDottoratiAction extends it.cnr.jada.util.action.CRUD
      * Gestisce un HookForward di ritorno da un risultato di una ricerca del percipiente
      */
 
-    public Forward doBringBackSearchFindTerzo(ActionContext context, ScadenzarioDottoratiBulk scadenzarioDottorati, TerzoBulk vTerzo) {
+    public Forward doBringBackSearchFindTerzo(ActionContext context, Anagrafica_dottoratiBulk anagraficaDottorati, TerzoBulk vTerzo) {
         try {
             if (vTerzo != null) {
-                scadenzarioDottorati.setTerzo(vTerzo);
-                CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
-                if (scadenzarioDottorati != null) {
-                    scadenzarioDottorati.setCdTerzo(vTerzo.getCd_terzo());
-                    scadenzarioDottorati.setNome(vTerzo.getAnagrafico().getNome());
-                    scadenzarioDottorati.setCognome(vTerzo.getAnagrafico().getCognome());
-                    scadenzarioDottorati.setRagioneSociale(vTerzo.getAnagrafico().getRagione_sociale());
-                    scadenzarioDottorati.setPartitaIva(vTerzo.getPartita_iva_anagrafico());
-                    scadenzarioDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());
-                    bp.completaTerzo(context, scadenzarioDottorati, vTerzo);
+                anagraficaDottorati.setTerzo(vTerzo);
+                CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
+                if (anagraficaDottorati != null) {
+                    anagraficaDottorati.setCdTerzo(vTerzo.getCd_terzo());
+                    /**anagraficaDottorati.setNome(vTerzo.getAnagrafico().getNome());
+                    anagraficaDottorati.setCognome(vTerzo.getAnagrafico().getCognome());
+                    anagraficaDottorati.setRagioneSociale(vTerzo.getAnagrafico().getRagione_sociale());
+                    anagraficaDottorati.setPartitaIva(vTerzo.getPartita_iva_anagrafico());
+                    anagraficaDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());*/
+                    bp.completaTerzo(context, anagraficaDottorati, vTerzo);
                 }
             }
             return context.findDefaultForward();
@@ -128,7 +117,7 @@ public class CRUDScadenzarioDottoratiAction extends it.cnr.jada.util.action.CRUD
 
         try {
             fillModel(context);
-            CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
+            CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
             bp.findListaBanche(context);
 
             return context.findDefaultForward();
@@ -148,8 +137,8 @@ public class CRUDScadenzarioDottoratiAction extends it.cnr.jada.util.action.CRUD
 
         try {
             fillModel(context);
-            CRUDScadenzarioDottoratiBP bp = (CRUDScadenzarioDottoratiBP) getBusinessProcess(context);
-            ScadenzarioDottoratiBulk carriera = (ScadenzarioDottoratiBulk) bp.getModel();
+            CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
+            Anagrafica_dottoratiBulk carriera = (Anagrafica_dottoratiBulk) bp.getModel();
 
             if (!bp.isSearching())
                 return doBlankSearchFindTerzo(context, carriera);
