@@ -23,7 +23,6 @@
 </head>
 
 <body class="Form">
-<% bp.openFormWindow(pageContext);%>
     <div class="card p-2 w-100">
         <table class="Panel w-100">
         <tr><td>

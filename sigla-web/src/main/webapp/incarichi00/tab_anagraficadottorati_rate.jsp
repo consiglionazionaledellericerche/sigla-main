@@ -21,8 +21,8 @@
                   <td><% bp.getRateCRUDController().writeFormInput(out,"id");%></td>
       </tr>
       <tr>
-                  <td><% bp.getRateCRUDController().writeFormLabel(out, "find_ScadenzarioDottorati"); %></td>
-                  <td><% bp.getRateCRUDController().writeFormInput(out, "find_ScadenzarioDottorati"); %></td>
+                  <td><% bp.getRateCRUDController().writeFormLabel(out, "find_AnagraficaDottorati"); %></td>
+                  <td><% bp.getRateCRUDController().writeFormInput(out, "find_AnagraficaDottorati"); %></td>
             </tr>
               <tr>
                   <% bp.getController().writeFormField(out,"cdCds"); %>
