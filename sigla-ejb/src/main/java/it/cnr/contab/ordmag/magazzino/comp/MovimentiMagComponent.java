@@ -52,6 +52,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
@@ -238,6 +239,79 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 		}
 		
 		return movimentoScaricoMag;
+	}
+
+	public MovimentiMagBulk creaMovimentoRettificaValoreOrdine(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws ComponentException {
+		LottoMagBulk lotto = null;
+		try {
+			lotto = ((LottoMagHome)getHome(userContext, LottoMagBulk.class)).findCaricoDaOrdine(fatturaOrdineBulk.getOrdineAcqConsegna());
+		} catch (IntrospectionException | PersistencyException e) {
+			throw handleException(e);
+		}
+
+		MovimentiMagBulk movimentoMag = new MovimentiMagBulk();
+		movimentoMag.setLottoMag(lotto);
+
+		PersistentHome evHome = getHome(userContext, MagazzinoBulk.class);
+		MagazzinoBulk magazzinoBulk = new MagazzinoBulk(lotto.getCdCdsMag(), lotto.getCdMagazzino());
+		try {
+			magazzinoBulk = (MagazzinoBulk)evHome.findByPrimaryKey(magazzinoBulk);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+
+		Bene_servizioHome homeBene = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+		Bene_servizioBulk bene = null;
+		try {
+			bene = (Bene_servizioBulk)homeBene.findByPrimaryKey(lotto.getBeneServizio());
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		MovimentiMagHome homeMag = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
+
+		movimentoMag.setBeneServizioUt(lotto.getBeneServizio());
+		movimentoMag.setQuantita(BigDecimal.ONE);
+		movimentoMag.setDtMovimento(new Timestamp(System.currentTimeMillis()));
+		movimentoMag.setDtRiferimento(lotto.getDtCarico());
+		movimentoMag.setMagazzinoUt(magazzinoBulk);
+		movimentoMag.setUnitaOperativaOrd(fatturaOrdineBulk.getOrdineAcqConsegna().getUnitaOperativaOrd());
+
+		try {
+			movimentoMag.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		movimentoMag.setDivisa(lotto.getDivisa());
+		movimentoMag.setCambio(lotto.getCambio());
+		movimentoMag.setUnitaMisura(bene.getUnitaMisura());
+		movimentoMag.setCoeffConv(BigDecimal.ONE);
+		movimentoMag.setStato(MovimentiMagBulk.STATO_INSERITO);
+
+		movimentoMag.setToBeCreated();
+
+		OrdineAcqConsegnaHome homeConsegna = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
+		OrdineAcqConsegnaBulk consegna = null;
+		try {
+			consegna = (OrdineAcqConsegnaBulk)homeConsegna.findByPrimaryKey(fatturaOrdineBulk.getOrdineAcqConsegna());
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+
+		movimentoMag.setOrdineAcqConsegnaUt(consegna);
+
+		try {
+			BigDecimal prezzoUnitarioOrdine = recuperoPrezzoUnitario(userContext, consegna);
+			BigDecimal prezzoUnitarioOrdineRettificato = recuperoPrezzoUnitarioRettificato(userContext, fatturaOrdineBulk);
+			BigDecimal diffOrdineRettificato = prezzoUnitarioOrdineRettificato.subtract(prezzoUnitarioOrdine);
+			movimentoMag.setTipoMovimentoMag(diffOrdineRettificato.compareTo(BigDecimal.ZERO) > 0 ? magazzinoBulk.getTipoMovimentoMagRvPos() : magazzinoBulk.getTipoMovimentoMagRvNeg());
+			movimentoMag.setPrezzoUnitario(diffOrdineRettificato.abs());
+		} catch (RemoteException | PersistencyException e) {
+			throw new ComponentException(e);
+		}
+
+		movimentoMag.setTerzo(lotto.getTerzo());
+		movimentoMag.setToBeCreated();
+		return (MovimentiMagBulk) creaConBulk(userContext, movimentoMag);
 	}
 
 	private MovimentiMagBulk creaCarico(UserContext userContext, MovimentiMagBulk movimentoCaricoMag)
@@ -507,12 +581,31 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 		}
     }
 
-    private BigDecimal recuperoPrezzoUnitario(UserContext userContext, OrdineAcqConsegnaBulk cons) throws RemoteException, ComponentException{
+	private BigDecimal recuperoPrezzoUnitarioRettificato(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws RemoteException, ComponentException, PersistencyException{
+		OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
+
+		FatturaOrdineBulk fatturaOrdineBulk1 =  ordineComponent.calcolaImportoOrdine(userContext, fatturaOrdineBulk, true);
+		ImportoOrdine importo = new ImportoOrdine();
+		importo.setImponibile(fatturaOrdineBulk1.getImImponibile());
+		importo.setImportoIvaInd(fatturaOrdineBulk1.getImIvaNd());
+		return getPrezzoUnitario(importo);
+	}
+
+	private BigDecimal getPrezzoUnitario(ImportoOrdine importo) {
+		return importo.getImponibile().add(Utility.nvl(importo.getImportoIvaInd()).add(Utility.nvl(importo.getArrAliIva())));
+	}
+
+	private BigDecimal recuperoPrezzoUnitario(UserContext userContext, OrdineAcqConsegnaBulk cons) throws RemoteException, ComponentException{
     	OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
         ParametriCalcoloImportoOrdine parametri = new ParametriCalcoloImportoOrdine();
     	OrdineAcqRigaBulk riga = cons.getOrdineAcqRiga();
         OrdineAcqBulk ordine = riga.getOrdineAcq();
-    	parametri.setCambio(ordine.getCambio());
+		try {
+			getHomeCache(userContext).fetchAll(userContext);
+		} catch (PersistencyException e) {
+			handleException(e);
+		}
+		parametri.setCambio(ordine.getCambio());
     	parametri.setDivisa(ordine.getDivisa());
     	parametri.setDivisaRisultato(getEuro(userContext));
     	parametri.setPercProrata(ordine.getPercProrata());
@@ -525,7 +618,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	parametri.setQtaOrd(cons.getQuantita());
     	parametri.setArrAliIva(cons.getArrAliIva());
     	ImportoOrdine importo = ordineComponent.calcoloImportoOrdinePerMagazzino(userContext,parametri);
-    	return importo.getImponibile().add(Utility.nvl(importo.getImportoIvaInd()).add(Utility.nvl(importo.getArrAliIva())));
+    	return getPrezzoUnitario(importo);
     }
     
     private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
