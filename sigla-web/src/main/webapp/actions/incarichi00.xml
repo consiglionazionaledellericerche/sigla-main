@@ -184,7 +184,7 @@ Anagrafica Dottorati
     <businessProcess
             name="CRUDAnagraficaDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
         <forward name="default" path="/incarichi00/anagrafica_dottorati.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
         <init-param name="defaultAction" value="CRUDAction"/>
     </businessProcess>
@@ -230,7 +230,7 @@ Scadenzario Dottorati
     <businessProcess
             name="CRUDAnagraficaDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP">
         <forward name="default" path="/incarichi00/anagrafica_dottorati.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk"/>
         <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_AnagraficaDottoratiComponentSession" />
         <init-param name="defaultAction" value="AnagraficaDottoratiAction"/>
     </businessProcess>

@@ -11,20 +11,20 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
-public class Anagrafica_dottoratiHome extends BulkHome {
+public class AnagraficaDottoratiHome extends BulkHome {
 	private static final long serialVersionUID = 1L;
 
-	public Anagrafica_dottoratiHome(Connection conn) {
-		super(Anagrafica_dottoratiBulk.class, conn);
+	public AnagraficaDottoratiHome(Connection conn) {
+		super(AnagraficaDottoratiBulk.class, conn);
 	}
-	public Anagrafica_dottoratiHome(Connection conn, PersistentCache persistentCache) {
-		super(Anagrafica_dottoratiBulk.class, conn, persistentCache);
+	public AnagraficaDottoratiHome(Connection conn, PersistentCache persistentCache) {
+		super(AnagraficaDottoratiBulk.class, conn, persistentCache);
 	}
 
 	@Override
 	public void initializePrimaryKeyForInsert(UserContext usercontext, OggettoBulk oggettobulk)throws PersistencyException, ComponentException {
 		try {
-			Anagrafica_dottoratiBulk anagraficaDottorati = (Anagrafica_dottoratiBulk) oggettobulk;
+			AnagraficaDottoratiBulk anagraficaDottorati = (AnagraficaDottoratiBulk) oggettobulk;
 			anagraficaDottorati.setId(
 					new Long(((Long)findAndLockMax( oggettobulk, "id", new Long(0) )).longValue()+1));
 			super.initializePrimaryKeyForInsert(usercontext, anagraficaDottorati);

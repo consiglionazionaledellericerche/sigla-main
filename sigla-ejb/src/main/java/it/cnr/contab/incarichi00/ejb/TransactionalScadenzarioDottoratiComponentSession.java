@@ -18,7 +18,7 @@
 package it.cnr.contab.incarichi00.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -253,12 +253,12 @@ public it.cnr.jada.bulk.OggettoBulk[] modificaConBulk(it.cnr.jada.UserContext pa
 }
 
 	@Override
-	public Anagrafica_dottoratiBulk completaTerzo(UserContext param0, Anagrafica_dottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
+	public AnagraficaDottoratiBulk completaTerzo(UserContext param0, AnagraficaDottoratiBulk param1, TerzoBulk param2) throws ComponentException, RemoteException {
 		return null;
 	}
 
 	@Override
-	public List findListaBanche(UserContext param0, Anagrafica_dottoratiBulk param1) throws ComponentException, RemoteException {
+	public List findListaBanche(UserContext param0, AnagraficaDottoratiBulk param1) throws ComponentException, RemoteException {
 		return null;
 	}
 }

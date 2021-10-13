@@ -19,7 +19,7 @@ package it.cnr.contab.incarichi00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -44,7 +44,7 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
     }
 
     public it.cnr.jada.persistency.sql.SQLBuilder selectTerzoByClause(
-            UserContext userContext, Anagrafica_dottoratiBulk anagraficaDottorati,
+            UserContext userContext, AnagraficaDottoratiBulk anagraficaDottorati,
             TerzoBulk terzo, CompoundFindClause clauses
     ) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = getHome(userContext, terzo.getClass()).createSQLBuilder();
@@ -60,7 +60,7 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
         return sql;
     }
 
-    public Anagrafica_dottoratiBulk completaTerzo(UserContext userContext, Anagrafica_dottoratiBulk anagraficaDottoratiBulk, TerzoBulk terzoBulk) throws ComponentException {
+    public AnagraficaDottoratiBulk completaTerzo(UserContext userContext, AnagraficaDottoratiBulk anagraficaDottoratiBulk, TerzoBulk terzoBulk) throws ComponentException {
         TerzoHome terzoHome = (TerzoHome) getHome(userContext, TerzoBulk.class);
         try {
             anagraficaDottoratiBulk.setModalita(terzoHome.findRif_modalita_pagamento(terzoBulk));
@@ -90,7 +90,7 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
     public java.util.Collection findModalita(UserContext userContext, OggettoBulk bulk)
             throws ComponentException {
         try {
-            Anagrafica_dottoratiBulk anagraficaDottoratiBulk = (Anagrafica_dottoratiBulk) bulk;
+            AnagraficaDottoratiBulk anagraficaDottoratiBulk = (AnagraficaDottoratiBulk) bulk;
             if (anagraficaDottoratiBulk.getTerzo() == null ||
                     anagraficaDottoratiBulk.getTerzo().getCd_terzo() == null)
                 return null;
@@ -119,7 +119,7 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
      **/
     public java.util.Collection findTermini(UserContext userContext, OggettoBulk bulk) throws ComponentException{
         try {
-            Anagrafica_dottoratiBulk anagraficaDottoratiBulk = (Anagrafica_dottoratiBulk)bulk;
+            AnagraficaDottoratiBulk anagraficaDottoratiBulk = (AnagraficaDottoratiBulk)bulk;
             if(anagraficaDottoratiBulk.getTerzo() == null ||
                     anagraficaDottoratiBulk.getTerzo().getCd_terzo() == null)
                 return null;

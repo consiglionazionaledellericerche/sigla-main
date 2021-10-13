@@ -7,7 +7,7 @@ import it.cnr.jada.persistency.Keyed;
 
 import java.sql.Timestamp;
 
-public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements Keyed {
+public class AnagraficaDottoratiBase extends AnagraficaDottoratiKey implements Keyed {
 //    REGIONE VARCHAR(250) NOT NULL
 	private String regione;
  
@@ -98,10 +98,10 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ANAGRAFICA_DOTTORATI
 	 **/
-	public Anagrafica_dottoratiBase() {
+	public AnagraficaDottoratiBase() {
 		super();
 	}
-	public Anagrafica_dottoratiBase(Long id) {
+	public AnagraficaDottoratiBase(Long id) {
 		super(id);
 	}
 	/**

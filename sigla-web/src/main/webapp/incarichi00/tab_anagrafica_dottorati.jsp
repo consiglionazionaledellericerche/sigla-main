@@ -2,11 +2,15 @@
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
-		it.cnr.jada.util.jsp.*"
+		it.cnr.jada.util.jsp.*,
+		it.cnr.contab.incarichi00.bp.*,
+		it.cnr.contab.incarichi00.bulk.*,
+        it.cnr.contab.docamm00.bp.*"
 %>
 
 <%
-	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
+		SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
+
 %>
 
 <html>

@@ -22,7 +22,7 @@ import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
 import it.cnr.contab.compensi00.bp.MinicarrieraRataCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP;
-import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 
@@ -45,7 +45,7 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
     /**
      * Prepara la minicarriera per la ricerca di un nuovo percipiente
      */
-    public Forward doBlankSearchFindTerzo(ActionContext context, Anagrafica_dottoratiBulk anagraficaDottorati) {
+    public Forward doBlankSearchFindTerzo(ActionContext context, AnagraficaDottoratiBulk anagraficaDottorati) {
 
         if (anagraficaDottorati != null) {
             anagraficaDottorati.setTerzo(new TerzoBulk());
@@ -61,7 +61,7 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
      * Gestisce un HookForward di ritorno da un risultato di una ricerca del percipiente
      */
 
-    public Forward doBringBackSearchFindTerzo(ActionContext context, Anagrafica_dottoratiBulk anagraficaDottorati, TerzoBulk vTerzo) {
+    public Forward doBringBackSearchFindTerzo(ActionContext context, AnagraficaDottoratiBulk anagraficaDottorati, TerzoBulk vTerzo) {
         try {
             if (vTerzo != null) {
                 anagraficaDottorati.setTerzo(vTerzo);
@@ -138,7 +138,7 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
         try {
             fillModel(context);
             CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
-            Anagrafica_dottoratiBulk carriera = (Anagrafica_dottoratiBulk) bp.getModel();
+            AnagraficaDottoratiBulk carriera = (AnagraficaDottoratiBulk) bp.getModel();
 
             if (!bp.isSearching())
                 return doBlankSearchFindTerzo(context, carriera);

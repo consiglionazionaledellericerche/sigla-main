@@ -3,7 +3,9 @@
 	it.cnr.jada.action.*,
 	java.util.*,
 	it.cnr.jada.util.action.*,
-	it.cnr.contab.incarichi00.bp.*"
+	it.cnr.contab.incarichi00.bp.*,
+	it.cnr.contab.incarichi00.bulk.*,
+    it.cnr.contab.docamm00.bp.*"
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -13,7 +15,7 @@
 <% JSPUtils.printBaseUrl(pageContext);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Scadenzario Dottorati</title>
+<title>Anagrafica Dottorati</title>
 </head>
 <body class="Form"> 
 
@@ -33,7 +35,7 @@
 					pageContext,
 					"tab",
 					new String[][] {
-						{ "tabAnagraficadottorati","Testata","/incarichi00/tab_anagrafica_dottorati.jsp" },
+						{ "tabAnagraficadottorati","Anagrafica Dottorati","/incarichi00/tab_anagrafica_dottorati.jsp" },
 						{ "tabAnagraficadottoratiRate", "Rate", "/incarichi00/tab_anagraficadottorati_rate.jsp"}
 					},
 					bp.getTab("tab"),

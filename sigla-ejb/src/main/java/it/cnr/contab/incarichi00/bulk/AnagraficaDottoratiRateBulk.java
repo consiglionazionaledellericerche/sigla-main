@@ -25,7 +25,7 @@ public class AnagraficaDottoratiRateBulk extends AnagraficaDottoratiRateBase {
 	/**
 	 * [SCADENZARIO_DOTTORATI ]
 	 **/
-	private Anagrafica_dottoratiBulk anagraficaDottorati =  new Anagrafica_dottoratiBulk();
+	private AnagraficaDottoratiBulk anagraficaDottorati =  new AnagraficaDottoratiBulk();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: SCADENZARIO_DOTTORATI_RATA
@@ -40,10 +40,10 @@ public class AnagraficaDottoratiRateBulk extends AnagraficaDottoratiRateBase {
 	public AnagraficaDottoratiRateBulk(Long id) {
 		super(id);
 	}
-	public Anagrafica_dottoratiBulk getAnagraficaDottorati() {
+	public AnagraficaDottoratiBulk getAnagraficaDottorati() {
 		return anagraficaDottorati;
 	}
-	public void setAnagraficaDottorati(Anagrafica_dottoratiBulk anagraficaDottorati)  {
+	public void setAnagraficaDottorati(AnagraficaDottoratiBulk anagraficaDottorati)  {
 		this.anagraficaDottorati=anagraficaDottorati;
 	}
 	/**
@@ -51,7 +51,7 @@ public class AnagraficaDottoratiRateBulk extends AnagraficaDottoratiRateBase {
 	 * Restituisce il valore di: [Identificativo scadenzario dottorati.]
 	 **/
 	public Long getIdAnagraficaDottorati() {
-		Anagrafica_dottoratiBulk anagraficaDottorati = this.getAnagraficaDottorati();
+		AnagraficaDottoratiBulk anagraficaDottorati = this.getAnagraficaDottorati();
 		if (anagraficaDottorati == null)
 			return null;
 		return getAnagraficaDottorati().getId();

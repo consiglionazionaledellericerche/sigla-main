@@ -5,23 +5,23 @@
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
-public class Anagrafica_dottoratiKey extends OggettoBulk implements KeyedPersistent {
+public class AnagraficaDottoratiKey extends OggettoBulk implements KeyedPersistent {
 	private Long id;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ANAGRAFICA_DOTTORATI
 	 **/
-	public Anagrafica_dottoratiKey() {
+	public AnagraficaDottoratiKey() {
 		super();
 	}
-	public Anagrafica_dottoratiKey(Long id) {
+	public AnagraficaDottoratiKey(Long id) {
 		super();
 		this.id=id;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this== o) return true;
-		if (!(o instanceof Anagrafica_dottoratiKey)) return false;
-		Anagrafica_dottoratiKey k = (Anagrafica_dottoratiKey) o;
+		if (!(o instanceof AnagraficaDottoratiKey)) return false;
+		AnagraficaDottoratiKey k = (AnagraficaDottoratiKey) o;
 		if (!compareKey(getId(), k.getId())) return false;
 		return true;
 	}

@@ -18,8 +18,8 @@
 package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateBulk;
-import it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk;
 import it.cnr.contab.incarichi00.ejb.AnagraficaDottoratiComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -54,7 +54,7 @@ public class CRUDAnagraficaDottoratiBP
         return rateCRUDController;
     }
 
-    protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+   protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
         setTab("tab", "tab_anagrafica_dottorati");
         super.init(config, actioncontext);
     }
@@ -67,7 +67,7 @@ public class CRUDAnagraficaDottoratiBP
     public void findListaBanche(ActionContext context) throws BusinessProcessException {
 
         try {
-            Anagrafica_dottoratiBulk anagraficaDottorati = (Anagrafica_dottoratiBulk) getModel();
+            AnagraficaDottoratiBulk anagraficaDottorati = (AnagraficaDottoratiBulk) getModel();
             if (anagraficaDottorati.getModalita_pagamento() != null) {
                 AnagraficaDottoratiComponentSession component = (AnagraficaDottoratiComponentSession) createComponentSession();
                 java.util.List coll = component.findListaBanche(context.getUserContext(), anagraficaDottorati);
@@ -94,13 +94,13 @@ public class CRUDAnagraficaDottoratiBP
 
     public void completaTerzo(
             ActionContext context,
-            Anagrafica_dottoratiBulk anagraficaDottorati,
+            AnagraficaDottoratiBulk anagraficaDottorati,
             TerzoBulk terzo) throws BusinessProcessException {
 
         try {
 
             AnagraficaDottoratiComponentSession component = (AnagraficaDottoratiComponentSession) createComponentSession();
-            Anagrafica_dottoratiBulk anagraficaDottoratiClone = component.completaTerzo(context.getUserContext(), anagraficaDottorati, terzo);
+            AnagraficaDottoratiBulk anagraficaDottoratiClone = component.completaTerzo(context.getUserContext(), anagraficaDottorati, terzo);
 
             setModel(context, anagraficaDottoratiClone);
 

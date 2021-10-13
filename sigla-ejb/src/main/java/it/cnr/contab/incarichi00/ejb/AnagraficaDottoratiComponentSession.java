@@ -17,11 +17,13 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
+
 import javax.ejb.Remote;
 
 @Remote
 public interface AnagraficaDottoratiComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
-    it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk completaTerzo(it.cnr.jada.UserContext param0,it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk param1,it.cnr.contab.anagraf00.core.bulk.TerzoBulk param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-    java.util.List findListaBanche(it.cnr.jada.UserContext param0,it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+    AnagraficaDottoratiBulk completaTerzo(it.cnr.jada.UserContext param0, AnagraficaDottoratiBulk param1, it.cnr.contab.anagraf00.core.bulk.TerzoBulk param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+    java.util.List findListaBanche(it.cnr.jada.UserContext param0, AnagraficaDottoratiBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 
 }

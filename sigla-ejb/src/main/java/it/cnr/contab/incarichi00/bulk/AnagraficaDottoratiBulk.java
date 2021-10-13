@@ -11,13 +11,12 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.Dictionary;
-import java.util.Iterator;
 import java.util.Optional;
 
-public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
+public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	public static final String STATO_NON_ASS_COMPENSO = "N";
 	private CdsBulk cds = new CdsBulk();
-	private Anagrafica_dottoratiBulk anagraficaDottorati_origine = null;
+	private AnagraficaDottoratiBulk anagraficaDottorati_origine = null;
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = null;
 	private java.util.Collection modalita;
@@ -52,14 +51,14 @@ public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
 		tipoCofinanziamentoEffettuato.put(TIPO_COFINANZIAMENTO_EFFETTUATO_NON_PRESENTE, "Non presente");
 	}
 
-	public Anagrafica_dottoratiBulk() {
+	public AnagraficaDottoratiBulk() {
 		super();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ANAGRAFICA_DOTTORATI
 	 **/
-	public Anagrafica_dottoratiBulk(Long id) {
+	public AnagraficaDottoratiBulk(Long id) {
 		super(id);
 	}
 	public TerzoBulk getTerzo() {
@@ -86,7 +85,7 @@ public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
 	public void setTipocorsoDottorati(Tipocorso_dottoratiBulk tipocorsoDottorati)  {
 		this.tipocorsoDottorati=tipocorsoDottorati;
 	}
-	public Anagrafica_dottoratiBulk getAnagraficaDottorati() {
+	public AnagraficaDottoratiBulk getAnagraficaDottorati() {
 		return anagraficaDottorati_origine;
 	}
 	/**
