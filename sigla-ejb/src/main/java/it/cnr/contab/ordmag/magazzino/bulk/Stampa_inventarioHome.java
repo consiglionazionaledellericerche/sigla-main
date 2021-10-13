@@ -152,7 +152,8 @@ public class Stampa_inventarioHome extends BulkHome {
 		sql.addTableToHeader("Categoria_Gruppo_Invent","c");
 		sql.addSQLJoin("c.cd_categoria_gruppo","BENE_SERVIZIO.cd_categoria_gruppo(+)");
 		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.DT_CARICO",SQLBuilder.LESS_EQUALS, new Timestamp(dt.getTime()));
-
+		// codice magazzino uguale a quello in input
+		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.CD_MAGAZZINO_MAG",SQLBuilder.EQUALS, codMag);
 		if(catGruppo != null && !catGruppo.equals(Stampa_inventarioBulk.TUTTI)){
 			sql.addTableToHeader("CATEGORIA_GRUPPO_INVENT","CATEGORIA_GRUPPO_INVENT");
 			sql.addSQLJoin("CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_GRUPPO","BENE_SERVIZIO.CD_CATEGORIA_GRUPPO");
@@ -168,6 +169,7 @@ public class Stampa_inventarioHome extends BulkHome {
 
 				StampaInventarioDTO inv  =new StampaInventarioDTO();
 				inv.setCd_magazzino(m.getCdMagazzino());
+				inv.setDesc_magazzino(m.getMagazzino().getDsMagazzino());
 				inv.setCod_articolo(m.getCdBeneServizio());
 				inv.setGiacenza(m.getGiacenza());
 				inv.setAnnoLotto(m.getEsercizio());
@@ -175,6 +177,8 @@ public class Stampa_inventarioHome extends BulkHome {
 				inv.setNumeroLotto(m.getPgLotto());
 				inv.setCategoriaGruppo(m.getBeneServizio().getCd_categoria_gruppo());
 				inv.setDescArticolo(m.getBeneServizio().getDs_bene_servizio());
+				inv.setCod_categoria(m.getBeneServizio().getCategoria_gruppo().getCd_categoria_padre());
+				inv.setCod_gruppo(m.getBeneServizio().getCategoria_gruppo().getCd_proprio());
 				inv.setUm(m.getBeneServizio().getUnita_misura());
 				inv.setDescCatGrp(m.getBeneServizio().getCategoria_gruppo().getDs_categoria_gruppo());
 				inv.setImportoUnitario(m.getCostoUnitario());
@@ -241,6 +245,8 @@ public class Stampa_inventarioHome extends BulkHome {
 					inventario = inventario.stream().sorted(Comparator.comparing(StampaInventarioDTO::getDescArticolo)).collect(Collectors.toList());
 				}
 			}
+
+
 
 			// ORDER BY PARAM CON STREAM
 
