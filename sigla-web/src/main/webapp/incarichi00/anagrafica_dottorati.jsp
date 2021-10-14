@@ -35,7 +35,7 @@
 					pageContext,
 					"tab",
 					new String[][] {
-						{ "tabAnagraficadottorati","Anagrafica Dottorati","/incarichi00/tab_anagrafica_dottorati.jsp" },
+						{ "tabAnagraficadottorati","Anagrafica Dottorati","/incarichi00/tab_anagraficadottorati.jsp" },
 						{ "tabAnagraficadottoratiRate", "Rate", "/incarichi00/tab_anagraficadottorati_rate.jsp"}
 					},
 					bp.getTab("tab"),

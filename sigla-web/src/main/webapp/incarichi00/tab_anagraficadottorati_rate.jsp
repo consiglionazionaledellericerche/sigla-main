@@ -25,10 +25,10 @@
                   <td><% bp.getRateCRUDController().writeFormInput(out, "find_AnagraficaDottorati"); %></td>
             </tr>
               <tr>
-                  <% bp.getController().writeFormField(out,"cdCds"); %>
+                  <% bp.getRateCRUDController().writeFormField(out,"cdCds"); %>
               </tr>
             <tr>
-                  <% bp.getController().writeFormField(out,"cdUnitaOrganizzativa"); %>
+                  <% bp.getRateCRUDController().writeFormField(out,"cdUnitaOrganizzativa"); %>
             </tr>
             <tr>
               <td><% bp.getRateCRUDController().writeFormLabel(out,"esercizio"); %></td>
@@ -57,6 +57,22 @@
             <tr>
               <td><% bp.getRateCRUDController().writeFormLabel(out,"imRata"); %></td>
               <td><% bp.getRateCRUDController().writeFormInput(out,"imRata"); %></td>
+            </tr>
+            <tr>
+    			<td><% bp.getRateCRUDController().writeFormLabel(out, "cdTerzo"); %></td>
+    			<td><% bp.getRateCRUDController().writeFormInput(out, "cdTerzo"); %></td>
+    		</tr>
+            <tr>
+              <td><% bp.getRateCRUDController().writeFormLabel(out,"cd_modalita_pag"); %></td>
+              <td><% bp.getRateCRUDController().writeFormInput(out,"cd_modalita_pag"); %></td>
+            </tr>
+            <tr>
+              <td><% bp.getRateCRUDController().writeFormLabel(out,"pg_banca"); %></td>
+              <td><% bp.getRateCRUDController().writeFormInput(out,"pg_banca"); %></td>
+            </tr>
+            <tr>
+              <td><% bp.getRateCRUDController().writeFormLabel(out,"stato"); %></td>
+              <td><% bp.getRateCRUDController().writeFormInput(out,"stato"); %></td>
             </tr>
     </table>
 </div>

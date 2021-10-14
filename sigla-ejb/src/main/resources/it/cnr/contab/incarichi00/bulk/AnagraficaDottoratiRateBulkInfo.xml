@@ -98,14 +98,14 @@
 		nullable="false"
 		label="imRata" />
 	<fieldProperty
-		name="findTerzo"
-		property="terzo"
-		inputType="SEARCHTOOL_WITH_LIKE"
-		formName="searchtool_small"
-		label="Codice Terzo"
-		enabledOnSearch="true"
-		enabledOnEdit="true"
-		nullable="false"/>
+			name="cdTerzo"
+			property="terzo"
+			inputType="SEARCHTOOL"
+			formName="searchtool_small"
+			label="Codice Terzo"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			nullable="false"/>
 	/**************************************************/
 	/********************** BANCHE ********************/
 	<fieldProperty
@@ -224,6 +224,8 @@
 		name="dtScadenza" />
 	<formFieldProperty
 		name="imRata" />
+	<formFieldProperty
+			name="cdTerzo" />
 	<formFieldProperty name="modalita_pagamento" />
 	<formFieldProperty name="cd_modalita_pag" />
 	<formFieldProperty
@@ -253,6 +255,8 @@
 		name="dtScadenza" />
 	<findFieldProperty
 		name="imRata" />
+	<findFieldProperty
+		name="cdTerzo" />
 	<columnFieldProperty
 		name="id" />
 	<columnFieldProperty
@@ -273,4 +277,6 @@
 		name="dtScadenza" />
 	<columnFieldProperty
 		name="imRata" />
+	<columnFieldProperty
+		name="cdTerzo" />
 </bulkInfo>

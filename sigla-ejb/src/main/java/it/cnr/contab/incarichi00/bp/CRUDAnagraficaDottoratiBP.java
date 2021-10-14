@@ -55,7 +55,7 @@ public class CRUDAnagraficaDottoratiBP
     }
 
    protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
-        setTab("tab", "tab_anagrafica_dottorati");
+        setTab("tab", "tab_anagraficadottorati");
         super.init(config, actioncontext);
     }
 
