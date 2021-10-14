@@ -4,12 +4,15 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.bilaterali00.bulk.Blt_progettiBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 
+import java.util.AbstractList;
 import java.util.Dictionary;
 import java.util.Optional;
 
@@ -256,16 +259,34 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 
 	public Unita_organizzativaBulk getUo() { return uo; }
 	public void setUo(Unita_organizzativaBulk uo) { this.uo=uo; }
-	private BulkList anagraficaDottoratiRate = new BulkList();
+	private BulkList<AnagraficaDottoratiRateBulk> anagraficaDottoratiRate = new BulkList();
 
 
-	public BulkList getAnagraficaDottoratiRate() {
+	public BulkList<AnagraficaDottoratiRateBulk> getAnagraficaDottoratiRate() {
 		return anagraficaDottoratiRate;
 	}
 
-	public void setAnagraficaDottoratiRate(BulkList anagraficaDottoratiRate) {
+	public void setAnagraficaDottoratiRate(BulkList<AnagraficaDottoratiRateBulk> anagraficaDottoratiRate) {
 		this.anagraficaDottoratiRate = anagraficaDottoratiRate;
 	}
+
+	@Override
+	public BulkCollection[] getBulkLists() {
+		return new it.cnr.jada.bulk.BulkCollection[] {anagraficaDottoratiRate};
+	}
+
+	public int addToAnagraficaDottoratiRate(AnagraficaDottoratiRateBulk anagraficaDottoratiRateBulk) {
+		anagraficaDottoratiRateBulk.setAnagraficaDottorati(this);
+		getAnagraficaDottoratiRate().add(anagraficaDottoratiRateBulk);
+		return getAnagraficaDottoratiRate().size()-1;
+	}
+
+	public AnagraficaDottoratiRateBulk removeFromAnagraficaDottoratiRate(int index) {
+		return Optional.ofNullable(getAnagraficaDottoratiRate())
+				.map(list -> list.remove(index))
+				.orElse(null);
+	}
+
 	/**
 	 *
 	 * @return CdCds
