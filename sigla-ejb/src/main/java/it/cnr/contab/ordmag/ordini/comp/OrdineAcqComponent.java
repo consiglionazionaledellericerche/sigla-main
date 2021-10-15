@@ -226,6 +226,79 @@ public class OrdineAcqComponent
 		return ordine;
 	}
 
+	public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine) throws it.cnr.jada.comp.ComponentException{
+		return calcolaImportoOrdine(userContext, fatturaOrdine, false);
+	}
+	public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine, Boolean magazzino) throws it.cnr.jada.comp.ComponentException{
+		OrdineAcqBulk ordine = new OrdineAcqBulk(fatturaOrdine.getCdCdsOrdine(), fatturaOrdine.getCdUnitaOperativa(), fatturaOrdine.getEsercizioOrdine(), fatturaOrdine.getCdNumeratore(), fatturaOrdine.getNumero());
+		OrdineAcqHome ordineAcqHome = (OrdineAcqHome) getHome(userContext, OrdineAcqBulk.class);
+		try {
+			ordine = (OrdineAcqBulk)ordineAcqHome.findByPrimaryKey(ordine);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		OrdineAcqRigaBulk riga = new OrdineAcqRigaBulk(fatturaOrdine.getCdCdsOrdine(), fatturaOrdine.getCdUnitaOperativa(), fatturaOrdine.getEsercizioOrdine(), fatturaOrdine.getCdNumeratore(), fatturaOrdine.getNumero(), fatturaOrdine.getRiga());
+		OrdineAcqRigaHome ordineAcqRigaHome = (OrdineAcqRigaHome)  getHome(userContext, OrdineAcqRigaBulk.class);
+		try {
+			riga = (OrdineAcqRigaBulk) ordineAcqRigaHome.findByPrimaryKey(riga);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		ParametriCalcoloImportoOrdine parametri = new ParametriCalcoloImportoOrdine();
+		parametri.setCambio(ordine.getCambio());
+		parametri.setDivisa(ordine.getDivisa());
+		parametri.setDivisaRisultato(getEuro(userContext));
+		parametri.setPercProrata(ordine.getPercProrata());
+
+		parametri.setCoefacq(riga.getCoefConv());
+		parametri.setPrezzo(riga.getPrezzoUnitario());
+		parametri.setPrezzoRet(fatturaOrdine.getPrezzoUnitarioRett());
+		parametri.setSconto1(riga.getSconto1());
+		parametri.setSconto1Ret(fatturaOrdine.getSconto1Rett());
+		parametri.setSconto2(riga.getSconto2());
+		parametri.setSconto2Ret(fatturaOrdine.getSconto2Rett());
+		parametri.setSconto3(riga.getSconto3());
+		parametri.setSconto3Ret(fatturaOrdine.getSconto3Rett());
+		Voce_ivaHome voce_ivaHome = (Voce_ivaHome)  getHome(userContext, Voce_ivaBulk.class);
+		Voce_ivaBulk voce_iva = null;
+		try {
+			voce_iva = (Voce_ivaBulk) voce_ivaHome.findByPrimaryKey(riga.getVoceIva());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		parametri.setVoceIva(voce_iva);
+
+		if (fatturaOrdine.getCdVoceIvaRett() != null){
+			Voce_ivaBulk voce_ivaBulk = new Voce_ivaBulk(fatturaOrdine.getCdVoceIvaRett());
+			try {
+				voce_ivaBulk = (Voce_ivaBulk) voce_ivaHome.findByPrimaryKey(voce_ivaBulk);
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+			parametri.setVoceIvaRet(voce_ivaBulk);
+		}
+
+		OrdineAcqConsegnaBulk cons = new OrdineAcqConsegnaBulk(fatturaOrdine.getCdCdsOrdine(), fatturaOrdine.getCdUnitaOperativa(), fatturaOrdine.getEsercizioOrdine(), fatturaOrdine.getCdNumeratore(), fatturaOrdine.getNumero(), fatturaOrdine.getRiga(), fatturaOrdine.getConsegna());
+		OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)  getHome(userContext, OrdineAcqConsegnaBulk.class);
+		try {
+			cons = (OrdineAcqConsegnaBulk) ordineAcqConsegnaHome.findByPrimaryKey(cons);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		parametri.setQtaOrd(cons.getQuantita());
+		parametri.setArrAliIva(cons.getArrAliIva());
+
+		ImportoOrdine importo = magazzino ? calcoloImportoOrdinePerMagazzino(parametri) : calcoloImportoOrdine(parametri);
+		fatturaOrdine.setImImponibile(importo.getImponibile());
+		fatturaOrdine.setImImponibileDivisa(importo.getImponibile());
+		fatturaOrdine.setImIva(importo.getImportoIva());
+		fatturaOrdine.setImIvaDivisa(importo.getImportoIva());
+		fatturaOrdine.setImIvaD(importo.getImportoIvaDetraibile());
+		fatturaOrdine.setImIvaNd(importo.getImportoIvaInd());
+		fatturaOrdine.setImTotaleConsegna(importo.getTotale());
+		return fatturaOrdine;
+	}
+
 	public void impostaTotaliOrdine(OrdineAcqBulk ordine) {
 		BigDecimal imponibile = BigDecimal.ZERO, iva = BigDecimal.ZERO, ivaD = BigDecimal.ZERO, totale = BigDecimal.ZERO;
 		for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {

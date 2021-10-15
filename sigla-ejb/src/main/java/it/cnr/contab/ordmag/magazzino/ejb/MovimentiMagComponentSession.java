@@ -32,6 +32,7 @@ import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
@@ -50,4 +51,5 @@ public interface MovimentiMagComponentSession extends it.cnr.jada.ejb.CRUDCompon
 	RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle)throws ComponentException, RemoteException;
     public java.util.Collection<LottoMagBulk> findLottiMagazzino(UserContext userContext, MovimentiMagazzinoRigaBulk movimentiMagazzinoRigaBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
     public RemoteIterator ricercaMovimenti(UserContext userContext, ParametriSelezioneMovimentiBulk parametri) throws ComponentException, RemoteException;
+    public MovimentiMagBulk creaMovimentoRettificaValoreOrdine(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws ComponentException, RemoteException;
 }
