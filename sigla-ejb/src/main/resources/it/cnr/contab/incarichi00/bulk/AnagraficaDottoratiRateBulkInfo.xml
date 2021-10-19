@@ -257,6 +257,8 @@
 		name="imRata" />
 	<findFieldProperty
 		name="cdTerzo" />
+	<findFieldProperty
+		name="stato" />
 	<columnFieldProperty
 		name="id" />
 	<columnFieldProperty
@@ -279,4 +281,6 @@
 		name="imRata" />
 	<columnFieldProperty
 		name="cdTerzo" />
+	<columnFieldProperty
+		name="stato" />
 </bulkInfo>

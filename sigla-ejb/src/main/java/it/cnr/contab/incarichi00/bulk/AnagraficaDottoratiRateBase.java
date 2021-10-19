@@ -286,4 +286,18 @@ public class AnagraficaDottoratiRateBase extends AnagraficaDottoratiRateKey impl
 	public void setStato(String stato) {
 		this.stato = stato;
 	}
+	/**
+	 * Non c'è in table da vedere se lasciarlo
+	 */
+	private String statoAssCompenso;
+	public String getStatoAssCompenso() {
+		return statoAssCompenso;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [statoAssCompenso]
+	 **/
+	public void setStatoAssCompenso(String statoAssCompenso)  {
+		this.statoAssCompenso=statoAssCompenso;
+	}
 }
