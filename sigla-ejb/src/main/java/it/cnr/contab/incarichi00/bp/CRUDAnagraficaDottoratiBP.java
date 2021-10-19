@@ -29,7 +29,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 /**
  * Insert the type's description here.
  * Creation date: (21/02/2002 16.12.44)
- *
+ *columnFieldProperty
  * @author: Roberto Fantino
  */
 public class CRUDAnagraficaDottoratiBP

@@ -35,10 +35,7 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	 * [CICLO_DOTTORATI ]
 	 **/
 	private Ciclo_dottoratiBulk cicloDottorati =  new Ciclo_dottoratiBulk();
-	/**
-	 * [TIPOCORSO_DOTTORATI ]
-	 **/
-	private Tipocorso_dottoratiBulk tipocorsoDottorati =  new Tipocorso_dottoratiBulk();
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ANAGRAFICA_DOTTORATI
@@ -82,12 +79,7 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	public void setCicloDottorati(Ciclo_dottoratiBulk cicloDottorati)  {
 		this.cicloDottorati=cicloDottorati;
 	}
-	public Tipocorso_dottoratiBulk getTipocorsoDottorati() {
-		return tipocorsoDottorati;
-	}
-	public void setTipocorsoDottorati(Tipocorso_dottoratiBulk tipocorsoDottorati)  {
-		this.tipocorsoDottorati=tipocorsoDottorati;
-	}
+
 	public AnagraficaDottoratiBulk getAnagraficaDottorati() {
 		return anagraficaDottorati_origine;
 	}
@@ -142,23 +134,6 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	 **/
 	public void setIdCicloDottorati(Long idCicloDottorati)  {
 		this.getCicloDottorati().setId(idCicloDottorati);
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Identificativo del tipocorso_dottorati.]
-	 **/
-	public Long getIdTipocorsoDottorati() {
-		Tipocorso_dottoratiBulk tipocorsoDottorati = this.getTipocorsoDottorati();
-		if (tipocorsoDottorati == null)
-			return null;
-		return getTipocorsoDottorati().getId();
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Identificativo del tipocorso_dottorati.]
-	 **/
-	public void setIdTipocorsoDottorati(Long idTipocorsoDottorati)  {
-		this.getTipocorsoDottorati().setId(idTipocorsoDottorati);
 	}
 
 	public static Dictionary<String, String> getTipoCofinanziamentoEffettuato() {

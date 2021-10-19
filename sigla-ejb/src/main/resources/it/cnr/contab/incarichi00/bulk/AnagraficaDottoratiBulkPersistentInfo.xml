@@ -13,9 +13,6 @@
 		<columnMapping
 			columnName="ID_CICLO_DOTTORATI"
 			propertyName="cicloDottorati.id" />
-		<columnMapping
-			columnName="ID_TIPOCORSO_DOTTORATI"
-			propertyName="tipocorsoDottorati.id" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="terzo" />
@@ -23,6 +20,4 @@
 		name="phdtipoDottorati" />
 	<persistentProperty
 		name="cicloDottorati" />
-	<persistentProperty
-		name="tipocorsoDottorati" />
 </SQLPersistentInfo>

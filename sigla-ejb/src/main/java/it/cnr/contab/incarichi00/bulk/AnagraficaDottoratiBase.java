@@ -91,9 +91,6 @@ public class AnagraficaDottoratiBase extends AnagraficaDottoratiKey implements K
 //    ID_CICLO_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idCicloDottorati;
  
-//    ID_TIPOCORSO_DOTTORATI DECIMAL(38,0) NOT NULL
-	private Long idTipocorsoDottorati;
- 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: ANAGRAFICA_DOTTORATI
@@ -546,22 +543,6 @@ public class AnagraficaDottoratiBase extends AnagraficaDottoratiKey implements K
 	public void setIdCicloDottorati(Long idCicloDottorati)  {
 		this.idCicloDottorati=idCicloDottorati;
 	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Identificativo del tipocorso_dottorati.]
-	 **/
-	public Long getIdTipocorsoDottorati() {
-		return idTipocorsoDottorati;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Identificativo del tipocorso_dottorati.]
-	 **/
-	public void setIdTipocorsoDottorati(Long idTipocorsoDottorati)  {
-		this.idTipocorsoDottorati=idTipocorsoDottorati;
-	}
-
-
 	/**
 	 * Non c'è in table da vedere se lasciarlo
 	 */
