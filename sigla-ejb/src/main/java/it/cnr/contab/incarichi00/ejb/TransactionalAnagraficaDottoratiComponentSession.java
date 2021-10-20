@@ -25,7 +25,7 @@ import it.cnr.jada.comp.ComponentException;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public class TransactionalScadenzarioDottoratiComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements AnagraficaDottoratiComponentSession {
+public class TransactionalAnagraficaDottoratiComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements AnagraficaDottoratiComponentSession {
 public it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext param0,it.cnr.jada.persistency.sql.CompoundFindClause param1,it.cnr.jada.bulk.OggettoBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.jada.util.RemoteIterator)invoke("cerca",new Object[] {
