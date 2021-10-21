@@ -135,6 +135,11 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             ordine.setProcedureAmministrative(null);
             ordine.setTerzoCdr(null);
             ordine.setReferenteEsterno(null);
+            // cancella anche il fornitore
+            ordine.setFornitore(new TerzoBulk());
+            ordine.setRagioneSociale(null);
+            ordine.setCodiceFiscale(null);
+            ordine.setPartitaIva(null);
             return context.findDefaultForward();
 
         } catch (Exception e) {

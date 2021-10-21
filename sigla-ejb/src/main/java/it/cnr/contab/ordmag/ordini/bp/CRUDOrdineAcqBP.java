@@ -17,59 +17,57 @@
 
 package it.cnr.contab.ordmag.ordini.bp;
 
-import java.io.*;
-import java.math.BigInteger;
-import java.nio.file.Files;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.ServletException;
-
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
 import it.cnr.contab.docamm00.bp.VoidableBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.ordmag.ordini.bulk.*;
+import it.cnr.contab.ordmag.ordini.bulk.AllegatoOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
-import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
-import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.GenerazioneReportException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.GenerazioneReportException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
+
+import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.ServletException;
+import java.io.*;
+import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Gestisce le catene di elementi correlate con il documento in uso.
@@ -85,6 +83,9 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoOrdineBulk, OrdineAc
 	private boolean isDeleting = false;
 	private boolean dettaglioContrattoCollapse = false;
 
+	public StoreService getStoreService(){
+		return storeService;
+	}
 	public boolean isDettaglioContrattoCollapse() {
 		return dettaglioContrattoCollapse;
 	}
@@ -294,13 +295,13 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoOrdineBulk, OrdineAc
 
 	private void allegatoStampaOrdine(UserContext userContext) throws Exception {
 		OrdineAcqBulk ordineAcq = (OrdineAcqBulk)getModel();
-		//StorageObject s = (( OrdineAcqCMISService)storeService).getStorageObjectStampaOrdine(ordineAcq);
+		StorageObject s = (( OrdineAcqCMISService)storeService).getStorageObjectStampaOrdine(ordineAcq);
 		if ( !OrdineAcqBulk.STATO_ALLA_FIRMA.equals(ordineAcq.getStato())
 			&& !OrdineAcqBulk.STATO_DEFINITIVO.equals(ordineAcq.getStato())
-			&& allegatoStorageStampa!=null)
-			storeService.delete(allegatoStorageStampa);
+			&& s!=null)
+			storeService.delete(s);
 		if ( OrdineAcqBulk.STATO_ALLA_FIRMA.equals(ordineAcq.getStato()) &&
-				allegatoStorageStampa==null){
+				s==null){
 				File f = stampaOrdine(userContext,ordineAcq);
 
 				AllegatoOrdineBulk allegatoStampaOrdine = new AllegatoOrdineBulk();
@@ -342,48 +343,19 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoOrdineBulk, OrdineAc
 		return AllegatoOrdineBulk.class;
 	}
 
-/*
-	public OrdineAcqCMISService getOrdineAcqCMISService() {
-		return ordineAcqCMISService;
-	}
 
-	public void setRichiesteCMISService(OrdineAcqCMISService ordineAcqCMISService) {
-		this.ordineAcqCMISService = ordineAcqCMISService;
-	}
-
- */
 	@Override
 	public StoreService getBeanStoreService(ActionContext actioncontext)
 			throws BusinessProcessException{
 		return SpringUtil.getBean("ordineAcqCMISService", OrdineAcqCMISService.class);
 	}
-	/*
-	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
-		super.initialize(actioncontext);
 
-		ordineAcqCMISService = SpringUtil.getBean("ordineAcqCMISService",
-				OrdineAcqCMISService.class);	
-	}
-	*/
 
-/*
-	@Override
-	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
-			throws BusinessProcessException {
-
-		//OrdineAcqBulk allegatoParentBulk = (OrdineAcqBulk)oggettobulk;
-		super.initializeModelForEditAllegati(actioncontext,oggettobulk);
-
-		return oggettobulk;	
-	}
-*/
-	private StorageObject allegatoStorageStampa=null;
 	@Override
 	protected boolean excludeChild(StorageObject storageObject) {
-		if (storeService.hasAspect( storageObject,(( OrdineAcqCMISService)storeService).ASPECT_STAMPA_ORDINI)) {
-			allegatoStorageStampa=storageObject;
+		if (storeService.hasAspect( storageObject,(( OrdineAcqCMISService)storeService).ASPECT_STAMPA_ORDINI))
 			return true;
-		}
+
 		return super.excludeChild(storageObject);
 	}
 
@@ -771,4 +743,6 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoOrdineBulk, OrdineAc
 			throw handleException(e);
 		}
 	}
+
+
 }

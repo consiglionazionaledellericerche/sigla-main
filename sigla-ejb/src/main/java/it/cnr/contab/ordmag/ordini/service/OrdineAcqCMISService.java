@@ -17,25 +17,35 @@
 
 package it.cnr.contab.ordmag.ordini.service;
 
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util.SignP7M;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceException;
+import it.cnr.si.spring.storage.MimeTypes;
+import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
-import it.cnr.si.spring.storage.StorageDriver;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-
 public class OrdineAcqCMISService extends StoreService {
-	
+
+	private transient static final Logger logger = LoggerFactory.getLogger(OrdineAcqCMISService.class);
 	public static final String ASPECT_STAMPA_ORDINI = "P:ordini_acq_attachment:stampa";
 	public static final String ASPECT_STATO_STAMPA_ORDINI = "P:ordini_acq_attachment:stato_stampa";
 	public static final String ASPECT_ORDINI_DETTAGLIO = "P:ordini_acq_attachment:allegati_dettaglio";
@@ -49,15 +59,11 @@ public class OrdineAcqCMISService extends StoreService {
 	public static final String STATO_STAMPA_ORDINE_VALIDO = "VAL";
 	public static final String STATO_STAMPA_ORDINE_ANNULLATO = "ANN";
 
+	@Autowired
+	private StorageDriver storageDriver;
+	@Autowired
 	private ArubaSignServiceClient arubaSignServiceClient;
 
-	public ArubaSignServiceClient getArubaSignServiceClient() {
-		return arubaSignServiceClient;
-	}
-
-	public void setArubaSignServiceClient(ArubaSignServiceClient arubaSignServiceClient) {
-		this.arubaSignServiceClient = arubaSignServiceClient;
-	}
 
 	public List<StorageObject> getFilesOrdine(OrdineAcqBulk ordine) throws BusinessProcessException{
     	if ( Optional.ofNullable(recuperoFolderOrdineSigla(ordine)).isPresent())
@@ -136,4 +142,30 @@ public class OrdineAcqCMISService extends StoreService {
 				storageObject -> getResource(storageObject.getKey())
 		).orElse(null);
     }
+	public String signOrdine(SignP7M signP7M, String path) throws ApplicationException {
+		StorageObject storageObject = storageDriver.getObject(signP7M.getNodeRefSource());
+		StorageObject docFirmato =null;
+		try {
+
+			byte[] bytesSigned = arubaSignServiceClient.pdfsignatureV2(
+					signP7M.getUsername(),
+					signP7M.getPassword(),
+					signP7M.getOtp(),
+					IOUtils.toByteArray(getResource(storageObject)));
+
+			Map<String, Object> metadataProperties = new HashMap<>();
+			metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
+			docFirmato=updateStream(storageObject.getKey(),new ByteArrayInputStream(bytesSigned),MimeTypes.PDF.mimetype());
+			addAspect(storageObject,"P:cnr:signedDocument");
+
+			logger.info("Ordine {} firmato correttamente.", signP7M.getNomeFile());
+
+			return docFirmato.getKey();
+		} catch (ArubaSignServiceException _ex) {
+			logger.error("ERROR firma fatture attive", _ex);
+			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
+		} catch (IOException e) {
+			throw new ApplicationException( e );
+		}
+	}
 }

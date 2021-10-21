@@ -842,7 +842,7 @@ public class OrdineAcqComponent
 
 	public SQLBuilder selectObbligazioneScadenzarioByClause(UserContext userContext, OrdineAcqConsegnaBulk consegna,
 															Obbligazione_scadenzarioBulk obblScad,
-															CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+															CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException, IntrospectionException, RemoteException {
 
 		Obbligazione_scadenzarioHome obblScadHome = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
 		Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
@@ -850,7 +850,7 @@ public class OrdineAcqComponent
 		filtro.setIm_importo(consegna.getImTotaleConsegna());
 
 		java.util.List listaCapitoli;
-		try {
+
 			listaCapitoli = recuperoListaCapitoliSelezionabili(userContext, consegna);
 			filtro.setListaVociSelezionabili(listaCapitoli);
 			filtro.setContratto(consegna.getOrdineAcqRiga().getOrdineAcq().getContratto());
@@ -864,9 +864,7 @@ public class OrdineAcqComponent
 
 			SQLBuilder sql = ricercaObbligazioni(userContext, filtro, obblScadHome);
 			return sql;
-		} catch (ComponentException | IntrospectionException | RemoteException e) {
-			throw new PersistencyException(e);
-		}
+
 	}
 
 	private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContext, OrdineAcqConsegnaBulk consegna)
@@ -1184,8 +1182,12 @@ public class OrdineAcqComponent
 					if (!abilHome.isUtenteAbilitato(usercontext, TipoOperazioneOrdBulk.OPERAZIONE_APPROVAZIONE_ORDINE, ordine.getCdUnitaOperativa())){
 						throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato ad operare su ordini in approvazione");
 					}
-					if (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito())){
+
+					if ((!ordine.isOrdineMepa() ) && (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito()))){
 						throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o alla firma");
+					}
+					if (ordine.isOrdineMepa()  && (!(ordine.isStatoDefinitivo() || ordine.isStatoInserito()))){
+						throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o Definitivo");
 					}
 					if (ordine.isStatoAllaFirma()){
 						for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
@@ -2504,8 +2506,8 @@ public class OrdineAcqComponent
 			(
 					UserContext aUC,
 					OrdineAcqConsegnaBulk consegna)
-			throws ComponentException {
-		try {
+			throws ComponentException, PersistencyException {
+
 			if (!isUoImpegnoDaUopDestinazione(aUC)){
 				return recuperoUoOrdinante(aUC, consegna);
 			} else {
@@ -2536,9 +2538,7 @@ public class OrdineAcqComponent
 					}
 				}
 			}
-		} catch (Exception e) {
-			throw handleException(e);
-		}
+
 		return null;
 	}
 

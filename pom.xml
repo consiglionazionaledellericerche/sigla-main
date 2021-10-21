@@ -51,7 +51,7 @@
 		<slf4j.version>1.7.21</slf4j.version>
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.0</pdfbox.version>
-		<storage.cloud.version>2.0.12</storage.cloud.version>
+		<storage.cloud.version>2.0.14</storage.cloud.version>
 		<commons-io.version>2.7</commons-io.version>
 		<git.changelog.maven.plugin.version>1.61</git.changelog.maven.plugin.version>
 		<version.thorntail>2.7.0.Final</version.thorntail>

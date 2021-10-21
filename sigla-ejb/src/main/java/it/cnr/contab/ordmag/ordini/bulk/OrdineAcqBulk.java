@@ -52,6 +52,7 @@ import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
+import org.apache.commons.lang.StringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -963,16 +964,23 @@ public class OrdineAcqBulk extends OrdineAcqBase
         return clone;
     }
 
+    public boolean isOrdineMepa(){
+        return this.getContratto().getFl_mepa()!=null && this.getContratto().getFl_mepa();
+    }
     public Dictionary getStatoKeysForUpdate() {
 
         Dictionary stato = new it.cnr.jada.util.OrderedHashtable();
+
         if (isStatoInserito()) {
             stato.put(STATO_INSERITO, "Inserito");
             stato.put(STATO_IN_APPROVAZIONE, "In Approvazione");
         } else if (isStatoInApprovazione()) {
             stato.put(STATO_INSERITO, "Inserito");
             stato.put(STATO_IN_APPROVAZIONE, "In Approvazione");
-            stato.put(STATO_ALLA_FIRMA, "Alla firma");
+            if ( isOrdineMepa())
+                stato.put(STATO_DEFINITIVO, "Definitivo");
+            else
+                stato.put(STATO_ALLA_FIRMA, "Alla firma");
         } else {
             stato.put(STATO_INSERITO, "Inserito");
             stato.put(STATO_IN_APPROVAZIONE, "In Approvazione");
@@ -1584,5 +1592,12 @@ public class OrdineAcqBulk extends OrdineAcqBase
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void validate() throws ValidationException {
+        if ( getNumerazioneOrd() == null || StringUtils.isEmpty(getNumerazioneOrd().getCdNumeratore()) || StringUtils.isEmpty(getNumerazioneOrd().getCdUnitaOperativa()))
+            throw new ValidationException( "Il campo Numeratore è obbligatorio." );
+
     }
 }

@@ -17,9 +17,6 @@
 
 package it.cnr.contab.ordmag.ordini.action;
 
-import java.rmi.RemoteException;
-
-import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.ordmag.ordini.bp.CRUDFirmaOrdineAcqBP;
 import it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP;
@@ -31,93 +28,68 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.BulkBP;
 
+import java.rmi.RemoteException;
+
 public class CRUDFirmaOrdineAcqAction extends CRUDOrdineAcqAction {
 
-public CRUDFirmaOrdineAcqAction() {
+    public CRUDFirmaOrdineAcqAction() {
         super();
     }
-public Forward doFirmaOrdine(ActionContext actioncontext) throws RemoteException {
-	try
-	{
-		CRUDFirmaOrdineAcqBP bp = (CRUDFirmaOrdineAcqBP)getBusinessProcess(actioncontext);
-		fillModel(actioncontext);
-		OrdineAcqBulk ordine = (OrdineAcqBulk) bp.getModel();
-		try {
-			fillModel(actioncontext);
 
-			BulkBP firmaOTPBP = (BulkBP) actioncontext.createBusinessProcess("FirmaOTPBP");
-			firmaOTPBP.setModel(actioncontext, new FirmaOTPBulk());
-			actioncontext.addHookForward("firmaOTP",this,"doBackFirmaOTP");
-			return actioncontext.addBusinessProcess(firmaOTPBP);
-		} catch(Exception e) {
-			return handleException(actioncontext,e);
-		}
-		/*
-		if (ordine.isStatoAllaFirma()){
-			ordine.setStato(OrdineAcqBulk.STATO_DEFINITIVO);
-			java.sql.Timestamp dataReg = null;
-			try {
-				dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
-			} catch (javax.ejb.EJBException e) {
-				throw new it.cnr.jada.DetailedRuntimeException(e);
-			}
+    public Forward doFirmaOrdine(ActionContext actioncontext) throws RemoteException {
+        try {
+            CRUDFirmaOrdineAcqBP bp = (CRUDFirmaOrdineAcqBP) getBusinessProcess(actioncontext);
+            fillModel(actioncontext);
+            OrdineAcqBulk ordine = (OrdineAcqBulk) bp.getModel();
+            try {
+                fillModel(actioncontext);
 
-			ordine.setDataOrdineDef(dataReg);
-		}
+                BulkBP firmaOTPBP = (BulkBP) actioncontext.createBusinessProcess("FirmaOTPBP");
+                firmaOTPBP.setModel(actioncontext, new FirmaOTPBulk());
+                actioncontext.addHookForward("firmaOTP", this, "doBackFirmaOTP");
+                return actioncontext.addBusinessProcess(firmaOTPBP);
+            } catch (Exception e) {
+                return handleException(actioncontext, e);
+            }
 
-		getBusinessProcess(actioncontext).save(actioncontext);
-		return actioncontext.findDefaultForward();
+        } catch (Throwable throwable) {
+            return handleException(actioncontext, throwable);
+        }
 
-		 */
-	}
-	/*
-	catch(ValidationException validationexception)
-	{
-		getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
-	}*/
-	catch(Throwable throwable)
-	{
-		return handleException(actioncontext, throwable);
-	}
-	//return actioncontext.findDefaultForward();
-}
-	public Forward doBackFirmaOTP(ActionContext context) {
-		CRUDFirmaOrdineAcqBP bp = (CRUDFirmaOrdineAcqBP)getBusinessProcess(context);
-		OggettoBulk bulk = ( OrdineAcqBulk) bp.getModel();
-		HookForward caller = (HookForward)context.getCaller();
-		FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
-		try {
-			fillModel(context);
-			bulk = (OggettoBulk)bp.getBulkInfo().getBulkClass().newInstance();
-			bp.setModel(context, bulk);
-			//bp.setSelection(context);
-			bp.firmaOTP(context, firmaOTPBulk);
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
-		return context.findDefaultForward();
-	}
-	public Forward doSblocca(ActionContext actioncontext) throws RemoteException {
-	try
-	{
-		CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(actioncontext);
-		fillModel(actioncontext);
-		OrdineAcqBulk ordine = (OrdineAcqBulk) bp.getModel();
-		if (ordine.isStatoAllaFirma()){
-			ordine.setStato(OrdineAcqBulk.STATO_IN_APPROVAZIONE);
-		}
-		getBusinessProcess(actioncontext).save(actioncontext);
-		return actioncontext.findDefaultForward();
-	}
-	catch(ValidationException validationexception)
-	{
-		getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
-	}
-	catch(Throwable throwable)
-	{
-		return handleException(actioncontext, throwable);
-	}
-	return actioncontext.findDefaultForward();
-}
+    }
+
+    public Forward doBackFirmaOTP(ActionContext context) {
+        CRUDFirmaOrdineAcqBP bp = (CRUDFirmaOrdineAcqBP) getBusinessProcess(context);
+        OggettoBulk bulk = (OrdineAcqBulk) bp.getModel();
+        HookForward caller = (HookForward) context.getCaller();
+        FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
+        try {
+            fillModel(context);
+            bp.setModel(context, bulk);
+
+            bp.firmaOTP(context, firmaOTPBulk);
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+        return context.findDefaultForward();
+    }
+
+    public Forward doSblocca(ActionContext actioncontext) throws RemoteException {
+        try {
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) getBusinessProcess(actioncontext);
+            fillModel(actioncontext);
+            OrdineAcqBulk ordine = (OrdineAcqBulk) bp.getModel();
+            if (ordine.isStatoAllaFirma()) {
+                ordine.setStato(OrdineAcqBulk.STATO_IN_APPROVAZIONE);
+            }
+            getBusinessProcess(actioncontext).save(actioncontext);
+            return actioncontext.findDefaultForward();
+        } catch (ValidationException validationexception) {
+            getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
+        } catch (Throwable throwable) {
+            return handleException(actioncontext, throwable);
+        }
+        return actioncontext.findDefaultForward();
+    }
 
 }
