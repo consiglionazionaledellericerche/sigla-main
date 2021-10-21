@@ -5109,9 +5109,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
 
         </addColumn>
     </changeSet>
-
-
-
-
-
+    <changeSet author="gianfranco.gasparro" id="add-column-mepa-ordine_acq">
+        <addColumn tableName="ordine_acq">
+            <column name="fl_mepa" defaultValue="N" type="CHAR(1)" remarks="Indica se si tratta di ordine MEPA. Dominio: Y = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

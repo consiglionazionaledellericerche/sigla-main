@@ -119,9 +119,19 @@ public class OrdineAcqBase extends OrdineAcqKey implements Keyed {
 	private java.lang.String tiAttivita;
 
 	private java.math.BigDecimal imImponibile;
+
+	public Boolean getFl_mepa() {
+		return fl_mepa;
+	}
+
+	public void setFl_mepa(Boolean fl_mepa) {
+		this.fl_mepa = fl_mepa;
+	}
+
 	private java.math.BigDecimal imIva;
 	private java.math.BigDecimal imIvaD;
 	private java.math.BigDecimal imTotaleOrdine;
+	private java.lang.Boolean fl_mepa;
 
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;

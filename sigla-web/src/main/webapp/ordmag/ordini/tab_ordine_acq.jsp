@@ -37,6 +37,7 @@ OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			<tr><% bp.getController().writeFormField(out, "procedura_amministrativa");%></tr>
 			<tr><% bp.getController().writeFormField(out, "cup");%></tr>
 			<tr><% bp.getController().writeFormField(out, "referenteEsterno");%></tr>
+			<tr><% bp.getController().writeFormField(out, "fl_mepa");%></tr>
 	</table>
 </div>
 

@@ -280,6 +280,13 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+				columnName="FL_MEPA"
+				propertyName="fl_mepa"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dataOrdine" />
@@ -355,6 +362,8 @@
 		name="cdUopOrdine" />
 	<persistentProperty
 		name="dtCancellazione" />
+	<persistentProperty
+			name="fl_mepa" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

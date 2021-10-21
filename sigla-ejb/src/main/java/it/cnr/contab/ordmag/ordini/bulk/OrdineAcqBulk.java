@@ -992,6 +992,7 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) {
+        setFl_mepa(false);
         setStato(STATO_INSERITO);
         java.sql.Timestamp dataReg = null;
         try {
@@ -1600,4 +1601,5 @@ public class OrdineAcqBulk extends OrdineAcqBase
             throw new ValidationException( "Il campo Numeratore è obbligatorio." );
 
     }
+
 }
