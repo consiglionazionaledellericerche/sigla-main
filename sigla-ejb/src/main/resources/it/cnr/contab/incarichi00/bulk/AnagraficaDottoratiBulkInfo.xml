@@ -261,16 +261,20 @@
 			label="dtRegistrazione" />
 	<fieldProperty
 			name="cdCds"
-			property="cdCds"
-			inputType="TEXT"
-			enabledOnEdit="false"
-			label="cdCds" />
+			property="cds"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			nullable="false"
+			label="Centro di Spesa" />
 	<fieldProperty
 			name="cdUnitaOrganizzativa"
-			property="cdUnitaOrganizzativa"
-			inputType="TEXT"
-			enabledOnEdit="false"
-			label="cdUnitaOrganizzativa" />
+			property="uo"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			nullable="false"
+			label="Unità Organizzativa" />
 	<fieldProperty
 			name="esercizio"
 			property="esercizio"

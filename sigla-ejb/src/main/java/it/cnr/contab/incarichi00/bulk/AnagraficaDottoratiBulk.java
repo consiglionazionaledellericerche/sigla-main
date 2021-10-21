@@ -19,6 +19,7 @@ import java.util.Optional;
 public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	public static final String STATO_NON_ASS_COMPENSO = "N";
 	private CdsBulk cds = new CdsBulk();
+	private Unita_organizzativaBulk uo;
 	private AnagraficaDottoratiBulk anagraficaDottorati_origine = null;
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = null;
@@ -226,8 +227,6 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	public void setModalita(java.util.Collection newModalita) {
 		modalita = newModalita;
 	}
-
-	private Unita_organizzativaBulk uo = new Unita_organizzativaBulk();
 
 	public CdsBulk getCds() { return cds; }
 	public void setCds(CdsBulk cds) { this.cds=cds; }

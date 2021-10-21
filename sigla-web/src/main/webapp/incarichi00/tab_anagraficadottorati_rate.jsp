@@ -1,11 +1,13 @@
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
-		it.cnr.jada.action.*,
+	    it.cnr.jada.action.*,
+		it.cnr.jada.bulk.*,
 		java.util.*,
 		it.cnr.jada.util.action.*,
+		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.incarichi00.bp.*,
-		it.cnr.contab.incarichi00.docs.bulk.*,
-		it.cnr.contab.docamm00.bp.*"
+		it.cnr.contab.incarichi00.bulk.*,
+        it.cnr.contab.docamm00.bp.*"
 %>
 
 <% 	CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP)BusinessProcess.getBusinessProcess(request);

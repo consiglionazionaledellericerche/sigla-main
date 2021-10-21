@@ -1,11 +1,9 @@
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
-	it.cnr.jada.action.*,
-	java.util.*,
-	it.cnr.jada.util.action.*,
-	it.cnr.contab.incarichi00.bp.*,
-	it.cnr.contab.incarichi00.bulk.*,
-    it.cnr.contab.docamm00.bp.*"
+        it.cnr.jada.action.*,
+        java.util.*,
+        it.cnr.jada.util.action.*,
+	    it.cnr.contab.incarichi00.bp.*"
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">

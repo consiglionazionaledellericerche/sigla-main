@@ -1,6 +1,8 @@
 <%@ page pageEncoding="UTF-8"
-	import="it.cnr.jada.action.*,
+	import="it.cnr.jada.util.jsp.*,
+	    it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
+		java.util.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.incarichi00.bp.*,
@@ -33,9 +35,21 @@
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "id"); %>	</td>
     			<td><% bp.getController().writeFormInput(out,"id");%></td>
-    			<td><% bp.getController().writeFormLabel(out, "find_PhdtipoDottorati"); %></td>
-                <td><% bp.getController().writeFormInput(out, "find_PhdtipoDottorati"); %></td>
+    			<td><% bp.getController().writeFormLabel(out,"find_PhdtipoDottorati"); %></td>
+    			<td><% bp.getController().writeFormInput(out,"find_PhdtipoDottorati"); %></td>
     		</tr>
+            <tr>
+    			<td><% bp.getController().writeFormLabel(out, "esercizio"); %>	</td>
+    			<td colspan="3"><% bp.getController().writeFormInput(out,"esercizio");%></td>
+    		</tr>
+    		<tr>
+                <td><% bp.getController().writeFormLabel(out,"cdCds"); %></td>
+                <td colspan="3"><% bp.getController().writeFormInput(out,"cdCds"); %></td>
+            </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel(out,"cdUnitaOrganizzativa"); %></td>
+                <td colspan="3"><% bp.getController().writeFormInput(out,"cdUnitaOrganizzativa"); %></td>
+            </tr>
     	</table>
     </fieldset>
     <fieldset>
