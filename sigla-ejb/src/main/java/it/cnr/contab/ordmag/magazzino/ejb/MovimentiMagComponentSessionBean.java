@@ -33,6 +33,7 @@ import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
 import it.cnr.contab.ordmag.magazzino.comp.MovimentiMagComponent;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.comp.EvasioneOrdineComponent;
 import it.cnr.jada.UserContext;
@@ -282,4 +283,23 @@ public void annullaMovimento(UserContext userContext, MovimentiMagBulk movimenti
 		}
 
 	}
+	public MovimentiMagBulk creaMovimentoRettificaValoreOrdine(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			MovimentiMagBulk result = ((MovimentiMagComponent)componentObj).creaMovimentoRettificaValoreOrdine(userContext, fatturaOrdineBulk);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
 }

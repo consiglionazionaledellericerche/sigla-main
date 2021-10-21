@@ -24,20 +24,24 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagHome;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.Orderable;
@@ -175,5 +179,32 @@ public class LottoMagHome extends BulkHome {
 		List lista =  this.fetchAll(sql);
 		return lista;
 	}
-	
+
+	public LottoMagBulk findCaricoDaOrdine(OrdineAcqConsegnaBulk consegnaBulk) throws IntrospectionException,PersistencyException {
+
+		PersistentHome consHome = getHomeCache().getHome(OrdineAcqConsegnaBulk.class);
+		OrdineAcqConsegnaBulk ordineAcqConsegnaBulk = (OrdineAcqConsegnaBulk) consHome.findByPrimaryKey(consegnaBulk);
+		PersistentHome evHome = getHomeCache().getHome(MagazzinoBulk.class);
+		MagazzinoBulk magazzinoBulk = new MagazzinoBulk(ordineAcqConsegnaBulk.getCdCdsMag(), ordineAcqConsegnaBulk.getCdMagazzino());
+		magazzinoBulk = (MagazzinoBulk)evHome.findByPrimaryKey(magazzinoBulk);
+
+		TipoMovimentoMagBulk tipoMovimentoMagBulk = magazzinoBulk.getTipoMovimentoMag(ordineAcqConsegnaBulk.getTipoConsegna());
+
+		SQLBuilder sql = createSQLBuilder();
+
+		sql.addClause("AND","cdCdsOrdine",SQLBuilder.EQUALS, consegnaBulk.getCdCds());
+		sql.addClause("AND","cdNumeratoreOrdine",SQLBuilder.EQUALS, consegnaBulk.getCdNumeratore());
+		sql.addClause("AND","cdUnitaOperativa",SQLBuilder.EQUALS, consegnaBulk.getCdUnitaOperativa());
+		sql.addClause("AND","esercizioOrdine",SQLBuilder.EQUALS, consegnaBulk.getEsercizio());
+		sql.addClause("AND","numeroOrdine",SQLBuilder.EQUALS, consegnaBulk.getNumero());
+		sql.addClause("AND","rigaOrdine",SQLBuilder.EQUALS, consegnaBulk.getRiga());
+		sql.addClause("AND","consegna",SQLBuilder.EQUALS, consegnaBulk.getConsegna());
+		sql.addClause("AND","quantitaCarico",SQLBuilder.GREATER, BigDecimal.ZERO);
+		List lista = fetchAll(sql);
+		if (lista != null){
+			return (LottoMagBulk)lista.get(0);
+		}
+		return null;
+	}
+
 }

@@ -362,4 +362,43 @@ public class OrdineAcqComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
             throw uncaughtError(userContext,componentObj,e);
         }
     }
+
+    public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine)
+            throws ComponentException, PersistencyException, RemoteException{
+        pre_component_invocation(userContext,componentObj);
+        try {
+            FatturaOrdineBulk result = ((OrdineAcqComponent)componentObj).calcolaImportoOrdine(userContext, fatturaOrdine);
+            component_invocation_succes(userContext,componentObj);
+            return result;
+        } catch(it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext,componentObj);
+            throw e;
+        } catch(ComponentException e) {
+            component_invocation_failure(userContext,componentObj);
+            throw e;
+        } catch(RuntimeException e) {
+            throw uncaughtRuntimeException(userContext,componentObj,e);
+        } catch(Error e) {
+            throw uncaughtError(userContext,componentObj,e);
+        }
+    }
+    public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine, Boolean magazzino)
+            throws ComponentException, PersistencyException, RemoteException{
+        pre_component_invocation(userContext,componentObj);
+        try {
+            FatturaOrdineBulk result = ((OrdineAcqComponent)componentObj).calcolaImportoOrdine(userContext, fatturaOrdine, magazzino);
+            component_invocation_succes(userContext,componentObj);
+            return result;
+        } catch(it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext,componentObj);
+            throw e;
+        } catch(ComponentException e) {
+            component_invocation_failure(userContext,componentObj);
+            throw e;
+        } catch(RuntimeException e) {
+            throw uncaughtRuntimeException(userContext,componentObj,e);
+        } catch(Error e) {
+            throw uncaughtError(userContext,componentObj,e);
+        }
+    }
 }

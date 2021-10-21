@@ -349,4 +349,36 @@
 				}
 			}
 		}
+		public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine) throws ComponentException, PersistencyException, RemoteException {
+			try {
+				return (FatturaOrdineBulk) invoke("calcolaImportoOrdine", new Object[]{
+						userContext, fatturaOrdine});
+			} catch (RemoteException e) {
+				throw e;
+			} catch (java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch (ComponentException ex) {
+					throw ex;
+				} catch (Throwable ex) {
+					throw new RemoteException("Uncaugth exception", ex);
+				}
+			}
+		}
+		public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine, Boolean magazzino) throws ComponentException, PersistencyException, RemoteException {
+			try {
+				return (FatturaOrdineBulk) invoke("calcolaImportoOrdine", new Object[]{
+						userContext, fatturaOrdine, magazzino});
+			} catch (RemoteException e) {
+				throw e;
+			} catch (java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch (ComponentException ex) {
+					throw ex;
+				} catch (Throwable ex) {
+					throw new RemoteException("Uncaugth exception", ex);
+				}
+			}
+		}
 	}

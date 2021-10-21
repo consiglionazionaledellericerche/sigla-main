@@ -28,18 +28,24 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.ordmag.magazzino.comp.MovimentiMagComponent;
+import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
+import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineKey;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
@@ -121,6 +127,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     }
 
     public boolean isIndicatoAlmenoUnCriterioDiSelezione(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
+
         if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
             return true;
         if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent())
