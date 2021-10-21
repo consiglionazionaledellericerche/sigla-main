@@ -56,16 +56,16 @@
         <legend style="color:blue">Universit&aacute;</legend>
         <table>
             <tr>
+    			<td><% bp.getController().writeFormLabel(out, "cdTerzo"); %></td>
+    			<td><% bp.getController().writeFormInput(out, "cdTerzo"); %></td>
+    		</tr>
+            <tr>
             	<td><% bp.getController().writeFormLabel(out, "regione");%></td>
             	<td><% bp.getController().writeFormInput(out, "regione");%></td>
             </tr>
     	    <tr>
     			<td><% bp.getController().writeFormLabel(out, "universitaCapofila");%></td>
     			<td><% bp.getController().writeFormInput(out, "universitaCapofila");%></td>
-    		</tr>
-    		<tr>
-    			<td><% bp.getController().writeFormLabel(out, "cdTerzo"); %></td>
-    			<td><% bp.getController().writeFormInput(out, "cdTerzo"); %></td>
     		</tr>
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "pgBanca"); %></td>
@@ -216,12 +216,12 @@
                         <legend style="color:blue">Cofinanziamento CNR</legend>
     			        <table>
                         <tr>
-    			            <td><% bp.getController().writeFormLabel(out, "cofinanziamentoCnr"); %></td>
-                            <td><% bp.getController().writeFormInput(out, "cofinanziamentoCnr"); %> &euro;</td>
-    			        </tr>
-                        <tr>
     			            <td><% bp.getController().writeFormLabel(out, "cofinanziamentoEffettuato"); %></td>
                             <td><% bp.getController().writeFormInput(out, "cofinanziamentoEffettuato"); %></td>
+    			        </tr>
+                        <tr>
+    			            <td><% bp.getController().writeFormLabel(out, "cofinanziamentoCnr"); %></td>
+                            <td><% bp.getController().writeFormInput(out, "cofinanziamentoCnr"); %> &euro;</td>
     			        </tr>
     			        </table>
     			    </fieldset>
