@@ -270,7 +270,8 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 		if (cds == null)
 			return null;
 		//return getCds().getCd_unita_padre();
-		return getCds().getCd_ds_cds();
+		//return getCds().getCd_ds_cds();
+		return getCds().getCd_unita_organizzativa();
 	}
 	/**
 	 * Setta il valore di: [CdCds]

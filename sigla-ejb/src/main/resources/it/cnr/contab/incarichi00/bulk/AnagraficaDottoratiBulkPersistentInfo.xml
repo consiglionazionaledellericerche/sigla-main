@@ -13,11 +13,26 @@
 		<columnMapping
 			columnName="ID_CICLO_DOTTORATI"
 			propertyName="cicloDottorati.id" />
+		<columnMapping
+				columnName="PG_BANCA"
+				propertyName="banca.pg_banca" />
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="uo.cd_unita_organizzativa" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="terzo" />
+			name="terzo" />
 	<persistentProperty
-		name="phdtipoDottorati" />
+			name="phdtipoDottorati" />
 	<persistentProperty
-		name="cicloDottorati" />
+			name="cicloDottorati" />
+	<persistentProperty
+			name="banca" />
+	<persistentProperty
+			name="cds" />
+	<persistentProperty
+			name="uo" />
 </SQLPersistentInfo>
