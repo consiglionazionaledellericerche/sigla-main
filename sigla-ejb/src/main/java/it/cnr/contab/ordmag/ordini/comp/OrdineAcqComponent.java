@@ -905,6 +905,7 @@ public class OrdineAcqComponent
 			} else if (contrattoBulk.isDettaglioContrattoPerCategoriaGruppo()){
 				sql.addSQLJoin("BENE_SERVIZIO.CD_CATEGORIA_GRUPPO", SQLBuilder.EQUALS,"DETTAGLIO_CONTRATTO.CD_CATEGORIA_GRUPPO");
 			}
+			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.STATO", SQLBuilder.NOT_EQUALS, Dettaglio_contrattoBulk.STATO_ANNULLATO);
 			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.PG_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getPg_contratto());
 			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.ESERCIZIO_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getEsercizio());
 			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.STATO_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getStato());
