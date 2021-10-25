@@ -260,7 +260,15 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 				.map(list -> list.remove(index))
 				.orElse(null);
 	}
-
+	public String getCd_cds() {
+		if (getCds()!=null)
+			return getCds().getCd_unita_organizzativa();
+		return null;
+	}
+	public void setCd_cds(String cd_cds) {
+		if (getCds()!=null)
+			getCds().setCd_unita_organizzativa(cd_cds);
+	}
 	/**
 	 *
 	 * @return CdCds
@@ -277,7 +285,8 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	 * Setta il valore di: [CdCds]
 	 **/
 	public void setCdCds(String cdCds)  {
-		this.getCds().setCd_unita_padre(cdCds);
+		this.getCds().setCd_unita_organizzativa(cdCds);
+		//this.getCds().setCd_unita_padre(cdCds);
 	}
 
 	/**

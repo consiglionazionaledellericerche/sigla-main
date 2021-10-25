@@ -261,7 +261,7 @@
 			label="dtRegistrazione" />
 	<fieldProperty
 			name="cdCds"
-			property="cds.cd_unita_organizzativa"
+			property="cds"
 			inputType="SEARCHTOOL"
 			formName="searchtool"
 			enabledOnSearch="true"

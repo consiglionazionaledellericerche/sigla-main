@@ -19,7 +19,9 @@ package it.cnr.contab.incarichi00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -130,5 +132,15 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
         } catch (it.cnr.jada.persistency.IntrospectionException ex){
             throw handleException(bulk, ex);
         }
+    }
+
+    public AnagraficaDottoratiBulk inizializzaBulkPerInserimento(UserContext param0, OggettoBulk param1) throws ComponentException {
+        String cds = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(param0);
+        String uo = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(param0);
+        AnagraficaDottoratiBulk anagraficaDottorati = (AnagraficaDottoratiBulk) param1;
+     //   anagraficaDottorati.setCdCds(cds);
+     //   anagraficaDottorati.setCdUnitaOrganizzativa(uo);
+        anagraficaDottorati.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(param0));
+        return anagraficaDottorati;
     }
 }
