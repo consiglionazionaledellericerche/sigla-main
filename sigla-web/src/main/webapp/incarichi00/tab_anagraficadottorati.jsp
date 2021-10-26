@@ -35,20 +35,18 @@
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "id"); %>	</td>
     			<td><% bp.getController().writeFormInput(out,"id");%></td>
-    			<td><% bp.getController().writeFormLabel(out,"find_PhdtipoDottorati"); %></td>
-    			<td><% bp.getController().writeFormInput(out,"find_PhdtipoDottorati"); %></td>
-    		</tr>
-            <tr>
     			<td><% bp.getController().writeFormLabel(out, "esercizio"); %>	</td>
-    			<td colspan="3"><% bp.getController().writeFormInput(out,"esercizio");%></td>
-    		</tr>
+                <td colspan="3"><% bp.getController().writeFormInput(out,"esercizio");%></td>
+            </tr>
     		<tr>
                 <td><% bp.getController().writeFormLabel(out,"cdCds"); %></td>
-                <td colspan="3"><% bp.getController().writeFormInput(out,"cdCds"); %></td>
+                <td><% bp.getController().writeFormInput(out,"cdCds"); %></td>
+                <td><% bp.getController().writeFormLabel(out,"cdUnitaOrganizzativa"); %></td>
+                <td><% bp.getController().writeFormInput(out,"cdUnitaOrganizzativa"); %></td>
             </tr>
             <tr>
-                <td><% bp.getController().writeFormLabel(out,"cdUnitaOrganizzativa"); %></td>
-                <td colspan="3"><% bp.getController().writeFormInput(out,"cdUnitaOrganizzativa"); %></td>
+                <td><% bp.getController().writeFormLabel(out,"find_PhdtipoDottorati"); %></td>
+                <td colspan="3"><% bp.getController().writeFormInput(out,"find_PhdtipoDottorati"); %></td>
             </tr>
     	</table>
     </fieldset>
