@@ -261,25 +261,33 @@
 			label="dtRegistrazione" />
 	<fieldProperty
 			name="cdCds"
-			property="cds"
-			inputType="SEARCHTOOL"
-			formName="searchtool"
-			enabledOnSearch="true"
+			property="cdCds"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
 			nullable="false"
 			label="Centro di Spesa" />
 	<fieldProperty
 			name="cdUnitaOrganizzativa"
-			property="uo"
-			inputType="SEARCHTOOL"
-			formName="searchtool"
-			enabledOnSearch="true"
+			property="cdUnitaOrganizzativa"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
 			nullable="false"
 			label="Unità Organizzativa" />
 	<fieldProperty
 			name="esercizio"
 			property="esercizio"
 			inputType="TEXT"
+			enabledOnInsert="false"
 			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
+			nullable="false"
 			label="esercizio" />
 	<fieldProperty
 			name="cofinanziamentoCnr"

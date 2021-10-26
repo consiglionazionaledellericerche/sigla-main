@@ -138,8 +138,8 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
         String cds = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(param0);
         String uo = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(param0);
         AnagraficaDottoratiBulk anagraficaDottorati = (AnagraficaDottoratiBulk) param1;
-     //   anagraficaDottorati.setCdCds(cds);
-     //   anagraficaDottorati.setCdUnitaOrganizzativa(uo);
+        anagraficaDottorati.setCdCds(cds);
+        anagraficaDottorati.setCdUnitaOrganizzativa(uo);
         anagraficaDottorati.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(param0));
         return anagraficaDottorati;
     }
