@@ -7,7 +7,8 @@
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.incarichi00.bp.*,
 		it.cnr.contab.incarichi00.bulk.*,
-        it.cnr.contab.docamm00.bp.*"
+        it.cnr.contab.docamm00.bp.*,
+        it.cnr.contab.anagraf00.tabrif.bulk.*"
 %>
 
 <%
@@ -78,6 +79,25 @@
        				} %>
           		</td>
              </tr>
+<tr>
+           		  	<td colspan="2">
+           		<%	if (anagraficaDottorati.getBanca() != null) {
+           				if (Rif_modalita_pagamentoBulk.BANCARIO.equalsIgnoreCase(anagraficaDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoB");
+           				} else if (Rif_modalita_pagamentoBulk.POSTALE.equalsIgnoreCase(anagraficaDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoP");
+           				} else if (Rif_modalita_pagamentoBulk.QUIETANZA.equalsIgnoreCase(anagraficaDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoQ");
+           				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(anagraficaDottorati.getBanca().getTi_pagamento())) {
+           			 	     	bp.getController().writeFormInput(out,"contoA");
+           				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(anagraficaDottorati.getBanca().getTi_pagamento())) {
+           		 	     	bp.getController().writeFormInput(out,"contoN");
+           				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(anagraficaDottorati.getBanca().getTi_pagamento()) && anagraficaDottorati.getBanca().isTABB()) {
+                               bp.getController().writeFormInput(out,"contoB");
+                           }
+           			}  %>
+           			<td>
+           		<tr>
 
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "pgBanca"); %></td>
