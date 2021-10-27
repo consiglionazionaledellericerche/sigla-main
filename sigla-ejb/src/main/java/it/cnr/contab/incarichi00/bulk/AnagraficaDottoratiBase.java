@@ -66,6 +66,7 @@ public class AnagraficaDottoratiBase extends AnagraficaDottoratiKey implements K
 
 	//Dopo aggiornamento con Patrizia aggiunto questi campi 01/10/2021
 	private Integer pgBanca;
+	private String cdModalitaPag;
 	private String uoCnr;
 	private String stato;
 	private java.sql.Timestamp dtSospensione;
@@ -543,6 +544,15 @@ public class AnagraficaDottoratiBase extends AnagraficaDottoratiKey implements K
 	public void setIdCicloDottorati(Long idCicloDottorati)  {
 		this.idCicloDottorati=idCicloDottorati;
 	}
+
+	public String getCdModalitaPag() {
+		return cdModalitaPag;
+	}
+
+	public void setCdModalitaPag(String cdModalitaPag)  {
+		this.cdModalitaPag=cdModalitaPag;
+	}
+
 	/**
 	 * Non c'è in table da vedere se lasciarlo
 	 */

@@ -159,6 +159,12 @@
 				columnSize="250"
 				nullable="true" />
 		<columnMapping
+				columnName="CD_MODALITA_PAG"
+				propertyName="cdModalitaPag"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="false" />
+		<columnMapping
 				columnName="UO_CNR"
 				propertyName="uoCnr"
 				sqlTypeName="VARCHAR"
@@ -315,6 +321,8 @@
 
 	<persistentProperty
 			name="pgBanca" />
+	<persistentProperty
+			name="cdModalitaPag" />
 	<persistentProperty
 			name="uoCnr" />
 	<persistentProperty

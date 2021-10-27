@@ -22,6 +22,9 @@
 		<columnMapping
 				columnName="CD_UNITA_ORGANIZZATIVA"
 				propertyName="uo.cd_unita_organizzativa" />
+		<columnMapping
+				columnName="CD_MODALITA_PAG"
+				propertyName="modalita_pagamento.cd_modalita_pag" />
 	</defaultColumnMap>
 	<persistentProperty
 			name="terzo" />
@@ -35,4 +38,6 @@
 			name="cds" />
 	<persistentProperty
 			name="uo" />
+	<persistentProperty
+			name="modalita_pagamento" />
 </SQLPersistentInfo>

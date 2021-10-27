@@ -4515,4 +4515,12 @@ TRASPORTO_AEREO"/>
         </insert>
     </changeSet>
 
+    <changeSet id="add_cdModalitaPagamento_in_AnagraficaDottorati" author="valerio.diego">
+        <addColumn tableName="anagrafica_dottorati">
+            <column name="cd_modalita_pag" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
