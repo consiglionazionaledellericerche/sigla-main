@@ -24,6 +24,7 @@ import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 
 /**
@@ -187,10 +188,14 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
 
     public Forward doBringBackSearchCdTerzo(ActionContext context,
                                             AnagraficaDottoratiBulk anagraficaDottorati,
-                                            TerzoBulk vTerzo){
+                                            TerzoBulk vTerzo) throws BusinessProcessException {
+
         anagraficaDottorati.setCdTerzo(vTerzo.getCd_terzo());
         anagraficaDottorati.setRegione(vTerzo.getComune_sede().getProvincia().getRegione().getDs_regione());
         anagraficaDottorati.setUniversitaCapofila(vTerzo.getDenominazione_sede());
+
+        CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
+        bp.completaTerzo(context, anagraficaDottorati, vTerzo);
 
 
         //fare creazione per pgBanca

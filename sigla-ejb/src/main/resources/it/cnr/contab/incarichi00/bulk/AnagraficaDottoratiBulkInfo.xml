@@ -200,6 +200,14 @@
 			enabledOnEdit="false"
 			label="pgBanca" />
 	<fieldProperty
+			name="cd_modalita_pag"
+			property="cd_modalita_pag"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Codice Modalita di Pag."
+			caseSensitiveSearch="false" />
+	<fieldProperty
 			name="uoCnr"
 			property="uoCnr"
 			inputType="TEXT"
@@ -329,6 +337,77 @@
 		enabledOnSearch="true"
 		nullable="false"
 		label="Ciclo di Inizio" />
+	/**************************************************/
+	/********************** BANCHE ********************/
+	<fieldProperty
+			name="modalita_pagamento"
+			property="modalita_pagamento"
+			printProperty="cd_ds_modalita_pagamento"
+			optionsProperty="modalita"
+			inputType="SELECT"
+			nullable="false"
+			readonlyPropertyOnInsert="ROPercipiente"
+			readonlyPropertyOnEdit="ROPercipiente"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			label="Mod. pagamento" />
+	<fieldProperty
+			name="listaBanche"
+			property="banca"
+			inputType="BUTTON"
+			img="img/find16.gif"
+			readonlyProperty="abledToInsertBank"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			label="Conto/i ..."
+			href="javascript:submitForm('doSearch(main.listaBanche)')" />
+	<fieldProperty
+			name="contoA"
+			property="banca"
+			inputType="FORM"
+			formName="A"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoP"
+			property="banca"
+			inputType="FORM"
+			formName="P"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoB"
+			property="banca"
+			inputType="FORM"
+			formName="BdocAmm"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoQ"
+			property="banca"
+			inputType="FORM"
+			formName="Q"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoN"
+			property="banca"
+			inputType="FORM"
+			formName="N"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	/**************************************************/
+
 	<!--<fieldProperty
 		name="find_TipocorsoDottorati"
 		property="tipocorsoDottorati"
@@ -395,6 +474,8 @@
 
 	<formFieldProperty
 			name="pgBanca" />
+	<formFieldProperty name="cd_modalita_pag" />
+	<formFieldProperty name="modalita_pagamento" />
 	<formFieldProperty
 			name="uoCnr" />
 	<formFieldProperty
@@ -483,6 +564,8 @@
 
 	<findFieldProperty
 			name="pgBanca" />
+	<findFieldProperty
+			name="cd_modalita_pag" />
 	<findFieldProperty
 			name="uoCnr" />
 	<findFieldProperty

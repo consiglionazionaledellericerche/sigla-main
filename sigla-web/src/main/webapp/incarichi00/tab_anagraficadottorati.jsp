@@ -11,8 +11,9 @@
 %>
 
 <%
-		SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
 
+		CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP)BusinessProcess.getBusinessProcess(request);
+        AnagraficaDottoratiBulk anagraficaDottorati = (AnagraficaDottoratiBulk)bp.getModel();
 %>
 
 <html>
@@ -65,6 +66,19 @@
     			<td><% bp.getController().writeFormLabel(out, "universitaCapofila");%></td>
     			<td><% bp.getController().writeFormInput(out, "universitaCapofila");%></td>
     		</tr>
+    		<tr>
+                <td><% bp.getController().writeFormLabel(out, "modalita_pagamento"); %>
+                <% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
+                </td>
+            </tr>
+<tr>
+       		<td>
+       			<% 	if (anagraficaDottorati.getBanca() != null) {
+       					bp.getController().writeFormInput(out, null, "listaBanche", false, null, "");
+       				} %>
+          		</td>
+             </tr>
+
     		<tr>
     			<td><% bp.getController().writeFormLabel(out, "pgBanca"); %></td>
     			<td><% bp.getController().writeFormInput(out, "pgBanca"); %></td>
