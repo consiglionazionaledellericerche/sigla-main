@@ -185,4 +185,16 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
         return search(context, getFormField(context, "main.listaBanche"), columnSet);
     }
 
+    public Forward doBringBackSearchCdTerzo(ActionContext context,
+                                            AnagraficaDottoratiBulk anagraficaDottorati,
+                                            TerzoBulk vTerzo){
+        anagraficaDottorati.setCdTerzo(vTerzo.getCd_terzo());
+        anagraficaDottorati.setRegione(vTerzo.getComune_sede().getProvincia().getRegione().getDs_regione());
+        anagraficaDottorati.setUniversitaCapofila(vTerzo.getDenominazione_sede());
+
+
+        //fare creazione per pgBanca
+        //anagraficaDottorati.setRegione(terzo.getBanche().toString());
+        return context.findDefaultForward();
+    }
 }

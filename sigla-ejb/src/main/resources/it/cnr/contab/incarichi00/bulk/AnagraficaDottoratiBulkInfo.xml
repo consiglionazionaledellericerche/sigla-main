@@ -16,7 +16,10 @@
 		property="regione"
 		inputType="TEXT"
 		maxLength="250"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
 		label="Regione" />
 	<fieldProperty
@@ -24,7 +27,10 @@
 		property="universitaCapofila"
 		inputType="TEXTAREA"
 		maxLength="250"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
 		label="Ateneo Sede Amministrativa Dottorato" />
 	<fieldProperty
