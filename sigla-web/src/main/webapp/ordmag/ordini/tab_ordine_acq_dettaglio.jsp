@@ -32,8 +32,8 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			<td colspan="5"><% bp.getRighe().writeFormInput(out, "voce_iva"); %></td>
 		</tr>
 		<tr>
-			<% bp.getRighe().writeFormField(out, "dspQuantita"); %>
 			<% bp.getRighe().writeFormField(out,"prezzoUnitario");%>
+			<% bp.getRighe().writeFormField(out, "dspQuantita"); %>
 		</tr>
 		<tr>
 			<% bp.getRighe().writeFormField(out,"sconto1");%>      	

@@ -398,24 +398,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		setImIvaNd(BigDecimal.ZERO);
 		setImIvaDivisa(BigDecimal.ZERO);
 		setImTotaleRiga(BigDecimal.ZERO);
-		BigDecimal value = null;
-		try {
-			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
-		} catch (RemoteException e) {
-		} catch (Exception e) {
-		}
-		if (value!= null){
-			java.sql.Timestamp oggi = null;
-			try {
-				oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
-			} catch (javax.ejb.EJBException e) {
-				throw new it.cnr.jada.DetailedRuntimeException(e);
-			}
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(oggi);
-			cal.add(Calendar.DAY_OF_WEEK, value.intValue());
-			setDspDtPrevConsegna(DateUtils.truncate(new Timestamp(cal.getTime().getTime()))); 
-		}
+		setDspDtPrevConsegna(OrdineAcqConsegnaBulk.recuperoDataDefaultPrevistaConsegna(userContext));
 		return this;
 	}
 	public BulkList<OrdineAcqConsegnaBulk> getRigheConsegnaColl() {

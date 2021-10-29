@@ -220,6 +220,7 @@ public class OrdineAcqComponent
 					cons.setImTotaleConsegna(BigDecimal.ZERO);
 					cons.setToBeUpdated();
 				}
+				ordine.sostituisciConsegnaFromObbligazioniHash(cons);
 			}
 		}
 		impostaTotaliOrdine(ordine);
@@ -971,7 +972,7 @@ public class OrdineAcqComponent
 												 MagazzinoBulk mag,
 												 CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
-		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, riga.getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
+		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, riga.getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause, riga.getDspTipoConsegna());
 
 		return sql;
 	}
@@ -980,7 +981,7 @@ public class OrdineAcqComponent
 											  MagazzinoBulk mag,
 											  CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
-		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, cons.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
+		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, cons.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause, cons.getTipoConsegna());
 
 		return sql;
 	}

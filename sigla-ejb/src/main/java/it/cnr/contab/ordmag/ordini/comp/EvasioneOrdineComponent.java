@@ -233,7 +233,7 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 										throw new DetailedRuntimeException(e);
 									}
 
-									newConsegna = (OrdineAcqConsegnaBulk)newConsegna.inizializza();
+									newConsegna = (OrdineAcqConsegnaBulk)newConsegna.inizializza(userContext);
 									newConsegna.setConsegna(ordineRigaComp.getRigheConsegnaColl().size()+1);
 									newConsegna.setVecchiaConsegna(ordineConsegna.getConsegna());
 									newConsegna.setQuantita(ordineConsegna.getQuantita().subtract(ordineConsegna.getQuantitaEvasa()));
