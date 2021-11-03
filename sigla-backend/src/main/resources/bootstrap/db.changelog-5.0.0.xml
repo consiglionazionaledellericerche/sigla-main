@@ -5127,4 +5127,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="tipo_gestione" type="VARCHAR(3)" remarks="Indica se il magazzino gestisce solo ordini con una determinata gestione"/>
         </addColumn>
     </changeSet>
+    <changeSet author="ciro.salvio" id="alter_documento_ele_allegati_cmis_node_ref">
+        <modifyDataType tableName="documento_ele_allegati" columnName="cmis_node_ref" newDataType="VARCHAR(500)"/>
+    </changeSet>
 </databaseChangeLog>

@@ -470,7 +470,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
             final Session session = Session.getInstance(props);
             URLName urlName = new URLName(pecURLName);
             Store store = session.getStore(urlName);
+            userName="ciro.salvio@iss.it";
+            password="Cucciolo3!";
             store.connect(userName, password);
+
             searchMailFromPec(userName, password, store, daysBefore, filterOggetto);
             searchMailFromSdi(userName, store, daysBefore, filterOggetto);
             searchMailFromReturn(userName, store, daysBefore, filterOggetto);
