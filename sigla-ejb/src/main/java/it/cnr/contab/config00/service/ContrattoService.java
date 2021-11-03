@@ -220,7 +220,8 @@ public class ContrattoService extends StoreService {
 		try {
 			copyNode(source, getStorageObjectByPath(getCMISPathAlternativo(allegato), true));
 		} catch (StorageException _ex) {
-			logger.error("Errore in costruisciAlberaturaAlternativa per il nodo " + source.getKey(), _ex);
+			//logger.error("Errore in costruisciAlberaturaAlternativa per il nodo " + source.getKey(), _ex);
+			throw  new ApplicationException(_ex);
 		}
 	}
 
