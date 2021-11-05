@@ -5130,4 +5130,26 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <changeSet author="ciro.salvio" id="alter_documento_ele_allegati_cmis_node_ref">
         <modifyDataType tableName="documento_ele_allegati" columnName="cmis_node_ref" newDataType="VARCHAR(500)"/>
     </changeSet>
+    <changeSet id="bene_servizio_rest" author="ciro.salvio">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSBENESERVIZIO"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Servizio REST per bene e servizio"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSBENESERVIZIO"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsBeneServizioBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
