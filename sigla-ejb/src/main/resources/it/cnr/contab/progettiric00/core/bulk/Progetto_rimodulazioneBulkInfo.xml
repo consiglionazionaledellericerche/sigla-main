@@ -152,7 +152,7 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
+		enabledOnFreeSearch="true" />
 	<fieldProperty
 		name="statoRadio"
 		property="stato"

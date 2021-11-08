@@ -502,6 +502,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         String identificativoFlusso = Optional.ofNullable(flussoGiornaleDiCassa.getIdentificativoFlussoBT())
                 .map(s -> s.substring(0, s.indexOf("#")))
                 .orElseThrow(() -> new ApplicationMessageFormatException("IdentificativoFlusso non trovato per location {0}", risultato.getLocation()));
+        return messaggioGiornaleDiCassa(flussoGiornaleDiCassa, identificativoFlusso);
+    }
+
+    public FlussoGiornaleDiCassaBulk messaggioGiornaleDiCassa(FlussoGiornaleDiCassa flussoGiornaleDiCassa, String identificativoFlusso) throws RemoteException, ComponentException {
         final FlussoGiornaleDiCassaBulk flussoGiornaleDiCassaBulk = Optional.ofNullable(
                 crudComponentSession.findByPrimaryKey(
                         userContext,
