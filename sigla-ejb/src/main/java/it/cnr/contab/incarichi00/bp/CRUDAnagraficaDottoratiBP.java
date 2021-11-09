@@ -35,7 +35,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 public class CRUDAnagraficaDottoratiBP
         extends it.cnr.jada.util.action.SimpleCRUDBP {
 
-    private final SimpleDetailCRUDController rateCRUDController = new SimpleDetailCRUDController(
+    private final AnagraficaDottoratiRataCRUDController rateCRUDController = new AnagraficaDottoratiRataCRUDController(
             "rateCRUDController",
             AnagraficaDottoratiRateBulk.class,
             "anagraficaDottoratiRate",
@@ -50,7 +50,7 @@ public class CRUDAnagraficaDottoratiBP
         super(function);
     }
 
-    public SimpleDetailCRUDController getRateCRUDController() {
+    public AnagraficaDottoratiRataCRUDController getRateCRUDController() {
         return rateCRUDController;
     }
 

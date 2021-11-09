@@ -23,6 +23,7 @@ import it.cnr.contab.compensi00.bp.MinicarrieraRataCRUDController;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -76,6 +77,28 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
                     anagraficaDottorati.setCodiceFiscale(vTerzo.getCodice_fiscale_anagrafico());*/
                     bp.completaTerzo(context, anagraficaDottorati, vTerzo);
                 }
+            }
+            return context.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doBringBackSearchFindAnagraficaDottorati(ActionContext context, AnagraficaDottoratiRateBulk anagraficaDottoratiRate, AnagraficaDottoratiBulk anagraficaDottorati) {
+        try {
+            if (anagraficaDottorati != null) {
+                anagraficaDottoratiRate.setAnagraficaDottorati(anagraficaDottorati);
+                //CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
+                anagraficaDottoratiRate.setCds(anagraficaDottorati.getCds());
+                anagraficaDottoratiRate.setCdUnitaOrganizzativa(anagraficaDottorati.getCdUnitaOrganizzativa());
+                anagraficaDottoratiRate.setTerzo(anagraficaDottorati.getTerzo());
+                anagraficaDottoratiRate.setModalita_pagamento(anagraficaDottorati.getModalita_pagamento());
+                anagraficaDottoratiRate.setPgBanca(anagraficaDottorati.getPgBanca());
+
+          //      anagraficaDottorati.setEsercizio(anagraficaDottorati.getEsercizio()); // non so se serve che potrebbe dar problemi su rate
+
+                //   bp.completaTerzo(context, anagraficaDottorati, vTerzo);
+
             }
             return context.findDefaultForward();
         } catch (Exception e) {

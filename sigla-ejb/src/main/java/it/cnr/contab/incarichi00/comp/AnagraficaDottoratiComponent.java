@@ -17,8 +17,11 @@
 
 package it.cnr.contab.incarichi00.comp;
 
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -142,5 +145,42 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
         anagraficaDottorati.setCdUnitaOrganizzativa(uo);
         anagraficaDottorati.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(param0));
         return anagraficaDottorati;
+    }
+
+    /**
+     *  Normale.
+     *    PreCondition:
+     *      Nessun errore segnalato.
+     *    PostCondition:
+     *      Viene restituita la lista delle banche del percipiente.
+     */
+//^^@@
+
+    public java.util.List findListaBanche(
+            UserContext userContext,
+            AnagraficaDottoratiBulk anagraficaDottorati)
+            throws ComponentException {
+
+        try {
+            if(anagraficaDottorati.getPercipiente() == null ||
+                    anagraficaDottorati.getPercipiente().getCd_terzo() == null)
+                return null;
+
+            return getHome(userContext, BancaBulk.class).fetchAll(selectBancaByClause(userContext, anagraficaDottorati, null, null));
+        }catch(it.cnr.jada.persistency.PersistencyException ex){
+            throw handleException(ex);
+        }
+    }
+
+    public SQLBuilder selectBancaByClause(UserContext userContext, AnagraficaDottoratiBulk anagraficaDottorati, BancaBulk banca, CompoundFindClause clauses) throws ComponentException {
+
+        BancaHome bancaHome = (BancaHome)getHome(userContext, BancaBulk.class);
+
+        SQLBuilder sql = bancaHome.selectBancaFor(
+                anagraficaDottorati.getModalita_pagamento(),
+                anagraficaDottorati.getCdTerzo());
+        sql.addClause(clauses);
+
+        return sql;
     }
 }

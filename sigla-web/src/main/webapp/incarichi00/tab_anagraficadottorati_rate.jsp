@@ -11,7 +11,10 @@
 %>
 
 <% 	CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP)BusinessProcess.getBusinessProcess(request);
+    AnagraficaDottoratiBulk carriera = (AnagraficaDottoratiBulk)bp.getModel();
     bp.getRateCRUDController().writeHTMLTable(pageContext,null,true,false,true,"100%","200px"); %>
+
+
 
 <div class="Group card p-2" style="width:100%">
     <div class="GroupLabel h3 text-primary">
