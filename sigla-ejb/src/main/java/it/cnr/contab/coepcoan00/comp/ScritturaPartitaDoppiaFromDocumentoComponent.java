@@ -80,16 +80,16 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                             .map(IDocumentoCogeBulk::getScrittura_partita_doppia);
                     if (optionalScrittura_partita_doppiaBulk.isPresent()) {
                         if (optionalScrittura_partita_doppiaBulk.get().isToBeCreated()) {
-                            creaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                            super.creaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
                         } else if (optionalScrittura_partita_doppiaBulk.get().isToBeUpdated()) {
-                            modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                            super.modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
                         }
                     } else {
                         final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk =
                                 Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
                                         .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
                         if (optionalScritturaPartitaDoppiaBulk.isPresent()) {
-                            creaConBulk(usercontext, optionalScritturaPartitaDoppiaBulk.get());
+                            super.creaConBulk(usercontext, optionalScritturaPartitaDoppiaBulk.get());
                         }
                     }
                 }
