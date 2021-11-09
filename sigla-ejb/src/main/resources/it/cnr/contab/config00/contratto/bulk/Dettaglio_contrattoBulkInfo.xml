@@ -125,7 +125,7 @@
 			name="findCategoriaGruppo"
 			property="categoriaGruppoInvent"
 			inputType="searchtool"
-			formName="searchtool_ridottodoSearch"
+			formName="searchtool_ridotto"
 			enabledOnSearch="true"
 			label="Categoria Gruppo"
 			readonlyProperty="ROFindCatGrp"

@@ -501,5 +501,15 @@
 	<findFieldProperty
 		name="fl_autofattura" />	
 	<findFieldProperty
-		name="fl_bollo" />	
+		name="fl_bollo" />
+
+	<columnSet name="restService">
+		<columnFieldProperty name="cd_bene_servizio" />
+		<columnFieldProperty name="ds_bene_servizio" />
+		<columnFieldProperty name="unita_misura" />
+		<columnFieldProperty name="fl_gestione_inventario" />
+		<columnFieldProperty name="fl_gestione_magazzino" />
+		<columnFieldProperty name="cd_voce_iva" />
+		<columnFieldProperty name="tipoGestione" />
+	</columnSet>
 </bulkInfo>

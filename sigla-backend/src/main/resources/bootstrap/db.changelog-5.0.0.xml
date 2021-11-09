@@ -5127,4 +5127,56 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="tipo_gestione" type="VARCHAR(3)" remarks="Indica se il magazzino gestisce solo ordini con una determinata gestione"/>
         </addColumn>
     </changeSet>
+    <changeSet author="ciro.salvio" id="alter_documento_ele_allegati_cmis_node_ref">
+        <modifyDataType tableName="documento_ele_allegati" columnName="cmis_node_ref" newDataType="VARCHAR(500)"/>
+    </changeSet>
+    <changeSet id="bene_servizio_rest" author="ciro.salvio">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSBENESERVIZIO"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Servizio REST per bene e servizio"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSBENESERVIZIO"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsBeneServizioBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="inserimento-batch-apertura-anno-contabile">
+        <insert tableName="batch_procedura">
+            <column name="cd_procedura" type="STRING" value="RIBALTAMENTOPDGP"/>
+            <column name="ds_procedura" type="STRING" value="Ribaltamento configurazione, str.organizzativa, anagrafica capitoli e piano dei conti."/>
+            <column name="object_name" type="STRING" value="JOB_RIBALTAMENTO_PDGP"/>
+            <column name="package_name" type="STRING" value="CNRMIG100"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+
+        <insert tableName="batch_procedura_parametro">
+            <column name="cd_procedura" type="STRING" value="RIBALTAMENTOPDGP"/>
+            <column name="nome_parametro" type="STRING" value="AES"/>
+            <column name="pg_valore_parametro" type="NUMERIC" value="1"/>
+            <column name="valore_number" type="NUMERIC" value="2022"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

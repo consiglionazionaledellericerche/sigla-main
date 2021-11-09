@@ -299,12 +299,12 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
         else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva())
             return true;
         else
-            return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !(pdgVariazione.getStatoDocumentale() != null);
+            return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !pdgVariazione.isVariazioneFirmata();
     }
 
     public boolean isDeleteButtonEnabled() {
         return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) &&
-                !((Pdg_variazioneBulk) getModel()).isApprovata() && !(((Pdg_variazioneBulk) getModel()).getStatoDocumentale() != null);
+                !((Pdg_variazioneBulk) getModel()).isApprovata() && !((Pdg_variazioneBulk) getModel()).isVariazioneFirmata();
     }
 
     /**
@@ -589,8 +589,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             return (isSaveButtonEnabled() || (optPdg_variazioneBulk.get().isPropostaDefinitiva())) &&
                     optPdg_variazioneBulk.get().isPropostaDefinitiva() &&
                     optPdg_variazioneBulk.get().isNotNew() &&
-                    optPdg_variazioneBulk.get().getStatoDocumentale() == null &&
-                    optPdg_variazioneBulk.get().getDt_firma() == null &&
+                    !optPdg_variazioneBulk.get().isVariazioneFirmata() &&
                     (getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea() || isUoSac()) &&
                     optPdg_variazioneBulk.get().getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
         } else {
@@ -681,7 +680,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
     public boolean isAbilitatoModificaDescVariazioni() {
         Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) getModel();
-        if (pdg != null && pdg.getStatoDocumentale() != null && pdg.getStatoDocumentale().compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED) == 0)
+        if (pdg != null && pdg.isVariazioneFirmata())
             return false;
         else
             return abilitatoModificaDescVariazioni;

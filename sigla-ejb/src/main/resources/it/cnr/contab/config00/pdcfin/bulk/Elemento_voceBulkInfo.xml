@@ -489,15 +489,15 @@
     <columnFieldProperty
             name="fl_partita_giro"
 			textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_missioni"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="flComunicaPagamenti"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="cd_capoconto_fin"
             textTruncate="true"
@@ -525,31 +525,31 @@
 	<columnFieldProperty
             name="fl_voce_fondo"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
 	<columnFieldProperty
             name="fl_recon"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
 	<columnFieldProperty
             name="fl_inv_beni_patr"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_check_terzo_siope"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_limite_spesa"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_soggetto_prelievo"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_prelievo"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="perc_prelievo_pdgp_entrate"
             textTruncate="true"
@@ -557,19 +557,19 @@
     <columnFieldProperty
             name="fl_solo_competenza"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_solo_residuo"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_azzera_residui"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_trovato"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
 
     <columnSet
             name="restService">
