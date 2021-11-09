@@ -23,6 +23,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.docamm00.storage.StorageFolderFattura;
 import it.cnr.contab.docamm00.storage.StorageFolderFatturaAttiva;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
@@ -139,6 +140,11 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
         return storageObject;
     }
+    public StorageObject recuperoFolderFattura2(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
+        //String path = storageFile.getStorageParentPath();
+        return null;
+    }
+
 
     public StorageObject recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
         int posizionePunto = cdUo.indexOf(".");
@@ -196,14 +202,50 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         return null;
     }
 
+
+
     public InputStream getStreamXmlFirmatoFatturaAttiva(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception {
         List<String> ids = getNodeRefFatturaAttivaXmlFirmato(esercizio, cds, cdUo, pgFattura);
         return getStream(ids);
     }
 
-    public InputStream getStreamDocumento(Fattura_attivaBulk fattura) throws Exception {
-        return getStreamDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
+
+    public List<String> getNodeRefDocumentoAttivoNew(Fattura_attivaBulk fattura) throws DetailedException {
+
+        List<StorageObject>  childrens=this.getChildren(getPathFolderFatturaAttiva(fattura));
+        List<StorageObject> results = childrens.stream().filter(storageObject -> hasAspect(storageObject, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value())).collect(Collectors.toList());
+
+        if (results.size() == 0) {
+            results = childrens.stream().filter(storageObject -> hasAspect(storageObject, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_DOPO_PROTOCOLLO.value())).collect(Collectors.toList());
+            if (results.size() == 0) {
+                return null;
+            } else {
+                return results.stream()
+                        .map(StorageObject::getKey)
+                        .collect(Collectors.toList());
+            }
+        } else {
+            return results.stream()
+                    .map(StorageObject::getKey)
+                    .collect(Collectors.toList());
+        }
     }
+
+    private String getPathFolderFatturaAttiva(Fattura_attivaBulk fattura){
+        StorageFolderFatturaAttiva storageFolderFatturaAttiva= new StorageFolderFatturaAttiva(fattura);
+        return storageFolderFatturaAttiva.getCMISPath();
+    }
+    public InputStream getStreamDocumentoAttivo(Fattura_attivaBulk fattura) throws Exception {
+        List<String> ids = getNodeRefDocumentoAttivoNew(fattura);
+        return getStream(ids);
+    }
+    public InputStream getStreamDocumento(Fattura_attivaBulk fattura) throws Exception {
+        return getStreamDocumentoAttivo( fattura);
+
+    }
+    /*public InputStream getStreamDocumento(Fattura_attivaBulk fattura) throws Exception {
+        return getStreamDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
+    }*/
 
     public InputStream getStreamAllegatiDocumento(Fattura_attivaBulk fattura) throws Exception {
         return getStreamAllegatiDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
@@ -217,7 +259,9 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
             StorageFileFatturaAttiva storageFile = new StorageFileFatturaAttiva(file, fattura,
                     "application/pdf", "FAPP" + fattura.constructCMISNomeFile() + ".pdf");
             String path = storageFile.getStorageParentPath();
-            StorageObject folder = documentiCollegatiDocAmmService.getStorageObjectByPath(path);
+
+            //StorageObject folder = documentiCollegatiDocAmmService.getStorageObjectByPath(path);
+            StorageObject folder = getStorageObjectByPath( path, true, false);
             try {
                 Optional.ofNullable(documentiCollegatiDocAmmService.restoreSimpleDocument(
                         storageFile,
