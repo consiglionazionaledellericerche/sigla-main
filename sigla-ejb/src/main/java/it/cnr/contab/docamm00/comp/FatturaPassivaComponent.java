@@ -4416,6 +4416,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         try {
             BulkList<Fattura_passiva_rigaBulk> dettagli = new BulkList(findDettagli(userContext, fattura_passiva));
             fattura_passiva.setFattura_passiva_dettColl(dettagli);
+/* TODO GG
             fattura_passiva.setFatturaRigaOrdiniHash(new FatturaRigaOrdiniTable(
                     dettagli.stream().collect(Collectors.toMap(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk,
                             fattura_passiva_rigaBulk -> {
@@ -4430,7 +4431,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                                 } catch (ComponentException | PersistencyException | IntrospectionException e) {
                                     throw new DetailedRuntimeException(e);
                                 }
-                            }))));
+                            }))));*/
             completeWithCondizioneConsegna(userContext, fattura_passiva);
             completeWithModalitaTrasporto(userContext, fattura_passiva);
             completeWithModalitaIncasso(userContext, fattura_passiva);
@@ -6252,6 +6253,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     private void controllaQuadraturaOrdini(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
+/*  TODO GG
         if (Optional.ofNullable(fatturaPassiva.getFatturaRigaOrdiniHash()).isPresent()) {
             try {
                 fatturaPassiva.getFatturaRigaOrdiniHash().entrySet().stream()
@@ -6277,7 +6279,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             } catch (DetailedRuntimeException _ex) {
                 throw new ApplicationException(_ex.getMessage());
             }
-        }
+        }*/
     }
 
     private void controllaQuadraturaInventario(UserContext auc, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
@@ -8031,13 +8033,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         return dataFattura != null && ((dataFine == null) || !dataFattura.after(dataFine));
     }
 
-    public List<EvasioneOrdineRigaBulk> findContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga, CompoundFindClause findclause) throws ComponentException {
+    public List<EvasioneOrdineRigaBulk> findRicercaOrdiniByClause(UserContext userContext, Fattura_passivaBulk fatturaPassiva, CompoundFindClause findclause) throws ComponentException {
         EvasioneOrdineRigaHome home = Optional.ofNullable(getHome(userContext, EvasioneOrdineRigaBulk.class, "V_EVASIONE_ORDINE"))
                 .filter(EvasioneOrdineRigaHome.class::isInstance)
                 .map(EvasioneOrdineRigaHome.class::cast)
                 .orElseThrow(() -> new ComponentException("Cannot find EvasioneOrdineRigaHome"));
         try {
-            List<EvasioneOrdineRigaBulk> list = home.fetchAll(selectContabilizzaRigaByClause(userContext, fatturaPassivaRiga, null, findclause));
+            List<EvasioneOrdineRigaBulk> list = home.fetchAll(selectRicercaOrdiniByClause(userContext, fatturaPassiva, null, findclause));
             getHomeCache(userContext).fetchAll(userContext);
             return list;
         } catch (PersistencyException e) {
@@ -8055,22 +8057,22 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * @return
      * @throws ComponentException
      */
-    public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Fattura_passiva_rigaIBulk fatturaPassivaRiga,
+    public SQLBuilder selectRicercaOrdiniByClause(CNRUserContext userContext, Fattura_passiva_IBulk fatturaPassiva,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
-        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk) fatturaPassivaRiga, evasioneOrdineRigaBulk, findclause);
+        return selectRicercaOrdiniByClause(userContext, (Fattura_passivaBulk) fatturaPassiva, evasioneOrdineRigaBulk, findclause);
     }
 
-    public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Nota_di_credito_rigaBulk nota_di_credito_rigaBulk,
+    public SQLBuilder selectRicercaOrdiniByClause(CNRUserContext userContext, Nota_di_creditoBulk nota_di_creditoBulk,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
-        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk) nota_di_credito_rigaBulk, evasioneOrdineRigaBulk, findclause);
+        return selectRicercaOrdiniByClause(userContext, (Fattura_passivaBulk) nota_di_creditoBulk, evasioneOrdineRigaBulk, findclause);
     }
 
-    public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Nota_di_debito_rigaBulk nota_di_debito_rigaBulk,
+    public SQLBuilder selectRicercaOrdiniByClause(CNRUserContext userContext, Nota_di_debitoBulk nota_di_debitoBulk,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
-        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk) nota_di_debito_rigaBulk, evasioneOrdineRigaBulk, findclause);
+        return selectRicercaOrdiniByClause(userContext, (Fattura_passivaBulk) nota_di_debitoBulk, evasioneOrdineRigaBulk, findclause);
     }
 
-    public SQLBuilder selectContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga,
+    public SQLBuilder selectRicercaOrdiniByClause(UserContext userContext, Fattura_passivaBulk fatturaPassiva,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
         EvasioneOrdineRigaHome home = Optional.ofNullable(getHome(userContext, EvasioneOrdineRigaBulk.class, "V_EVASIONE_ORDINE"))
                 .filter(EvasioneOrdineRigaHome.class::isInstance)
@@ -8079,32 +8081,20 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
         SQLBuilder sqlBuilder = home.createSQLBuilder();
         sqlBuilder.setAutoJoins(true);
+        sqlBuilder.addSQLClause(FindClause.AND, "EVASIONE_ORDINE_RIGA.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_INSERITA);
 
         sqlBuilder.generateJoin("evasioneOrdine", "EVASIONE_ORDINE");
-        sqlBuilder.addSQLClause(FindClause.AND, "EVASIONE_ORDINE.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_INSERITA);
-        sqlBuilder.addSQLClause(FindClause.AND, "EVASIONE_ORDINE.DATA_BOLLA", SQLBuilder.LESS_EQUALS, fatturaPassivaRiga.getFattura_passiva().getDt_fattura_fornitore());
+        sqlBuilder.addSQLClause(FindClause.AND, "EVASIONE_ORDINE.DATA_BOLLA", SQLBuilder.LESS_EQUALS, fatturaPassiva.getDt_fattura_fornitore());
 
         sqlBuilder.generateJoin("ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
         sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO_FATT", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_FATT_ASSOCIATA_TOTALMENTE);
         sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_CONSEGNA.STATO", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_EVASA);
 
         sqlBuilder.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
-        Optional.ofNullable(fatturaPassivaRiga.getBene_servizio())
-                .ifPresent(bene_servizioBulk -> Optional.ofNullable(bene_servizioBulk.getCd_bene_servizio())
-                        .ifPresent(cd_bene_servizio -> {
-                            sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO", SQLBuilder.EQUALS, cd_bene_servizio);
-                        })
-                );
-        Optional.ofNullable(fatturaPassivaRiga.getVoce_iva())
-                .ifPresent(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getCd_voce_iva())
-                        .ifPresent(cd_voce_iva -> {
-                            sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.CD_VOCE_IVA", SQLBuilder.EQUALS, cd_voce_iva);
-                        })
-                );
 
         sqlBuilder.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, fatturaPassivaRiga.getFattura_passiva().getCd_terzo());
-        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.TI_ATTIVITA", SQLBuilder.EQUALS, fatturaPassivaRiga.getFattura_passiva().getTi_istituz_commerc());
+        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, fatturaPassiva.getCd_terzo());
+        sqlBuilder.addSQLClause(FindClause.AND, "ORDINE_ACQ.TI_ATTIVITA", SQLBuilder.EQUALS, fatturaPassiva.getTi_istituz_commerc());
 
         sqlBuilder.addClause(findclause);
         return sqlBuilder;

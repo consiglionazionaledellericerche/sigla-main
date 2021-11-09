@@ -107,12 +107,13 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 	}
 	protected it.cnr.jada.util.jsp.Button[] createFPInventarioToolbar() {
 
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[4];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[5];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.inventaria");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.associaInventario");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.inventariaPerAumento");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.beni_coll");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.selezionaOrdini");
 		return toolbar;
 	}
 	protected it.cnr.jada.util.jsp.Button[] createFPToolbar() {
@@ -430,6 +431,17 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 		}catch(java.rmi.RemoteException ex){
 			throw handleException(ex);
 		}
+	}
+	public boolean isSelezionaOrdiniButtonEnabled() {
+
+		return (isEditing() || isInserting()) && getModel() != null
+				&& !((Fattura_passivaBulk) getModel()).isGenerataDaCompenso()
+				&& (isAnnoDiCompetenza());
+	}
+
+	public boolean isSelezionaOrdiniButtonHidden() {
+
+		return isSearching() || isDeleting();
 	}
 
 }
