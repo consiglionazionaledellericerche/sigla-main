@@ -2574,6 +2574,38 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(cdUo -> cdUo.equals(cdrPersonaleBulk.getCd_unita_organizzativa()))
 					.orElse(Boolean.FALSE);
 
+			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
+			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isVariazioneMaggioriEntrateSpese)
+					.orElse(Boolean.FALSE);
+
+			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
+			boolean isVariazioneCompetenzaMinoriEntrateSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isVariazioneMinoriEntrateSpese)
+					.orElse(Boolean.FALSE);
+
+			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
+			boolean isVariazioneStornoSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isStornoSpesa)
+					.orElse(Boolean.FALSE)  ||
+					Optional.of(variazione)
+							.filter(Var_stanz_resBulk.class::isInstance)
+							.map(Var_stanz_resBulk.class::cast)
+							.map(Var_stanz_resBulk::isVariazioneStorno)
+							.orElse(Boolean.FALSE);
+
+			boolean isVariazioneMonoProgetto = listCtrlPianoEco.stream().map(CtrlPianoEco::getProgetto)
+					.map(ProgettoBulk::getPg_progetto).distinct().count()==1;
+
 			if (isAttivaGestioneTrasferimenti) {
 				//se non è una variazione di personale non possono essere movimentate voci del personale
 				if (isVariazionePersonale) {
@@ -2672,14 +2704,19 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						});
 					}
 				} else if (!isCDRAreaVariazione) {
-					//Il controllo non vale se la variazione viene fatta dal CDR Area
-					listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
-									el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
-							.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
-								+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
-					});
+					//L'area può sempre ricevere somme su un progetto cui partecipa se le stesse provengono dallo stesso progetto
+					//Questa condizione è garantita dal monoprogetto e da storno spese
+					//Indicazioni avute da Sabrina Miceli il 10/11/2021
+					if (!isVariazioneMonoProgetto || !isVariazioneStornoSpese) {
+						//Il controllo non vale se la variazione viene fatta dal CDR Area
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
+										el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
+									+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
+						});
+					}
 				}
 
 				if (isVariazioneRagioneria) {
@@ -2735,35 +2772,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
 				});
 			}
-			
-			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
-			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isVariazioneMaggioriEntrateSpese)
-					.orElse(Boolean.FALSE);
-			
-			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
-			boolean isVariazioneCompetenzaMinoriEntrateSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isVariazioneMinoriEntrateSpese)
-					.orElse(Boolean.FALSE);
-	
-			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
-			boolean isVariazioneStornoSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isStornoSpesa)
-					.orElse(Boolean.FALSE)  ||
-					Optional.of(variazione)
-					.filter(Var_stanz_resBulk.class::isInstance)
-					.map(Var_stanz_resBulk.class::cast)
-					.map(Var_stanz_resBulk::isVariazioneStorno)
-					.orElse(Boolean.FALSE);
 			
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
@@ -3068,9 +3076,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.filter(el->el.isNaturaFonteEsterna())
 						.map(CtrlPianoEcoDett::getImporto)
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-
-				boolean isVariazioneMonoProgetto = listCtrlPianoEco.stream().map(CtrlPianoEco::getProgetto)
-						.map(ProgettoBulk::getPg_progetto).distinct().count()==1;
 
 				{
 					/**
