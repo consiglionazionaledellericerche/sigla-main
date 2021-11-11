@@ -5,6 +5,7 @@
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.bilaterali00.bulk.Blt_progettiBulk;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -12,14 +13,19 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 
+import java.sql.Timestamp;
 import java.util.AbstractList;
 import java.util.Dictionary;
+import java.util.Iterator;
 import java.util.Optional;
 
 public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 	public static final String STATO_NON_ASS_COMPENSO = "N";
 	private CdsBulk cds = new CdsBulk();
 	private Unita_organizzativaBulk uo;
+
+
+	private java.lang.Long idAnagraficaDottoratiPerClone;
 	private AnagraficaDottoratiBulk anagraficaDottorati_origine = null;
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk modalita_pagamento = null;
@@ -249,10 +255,36 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 		return new it.cnr.jada.bulk.BulkCollection[] {anagraficaDottoratiRate};
 	}
 
-	public int addToAnagraficaDottoratiRate(AnagraficaDottoratiRateBulk anagraficaDottoratiRateBulk) {
+	/**public int addToAnagraficaDottoratiRate(AnagraficaDottoratiRateBulk anagraficaDottoratiRateBulk) {
 		anagraficaDottoratiRateBulk.setAnagraficaDottorati(this);
 		getAnagraficaDottoratiRate().add(anagraficaDottoratiRateBulk);
 		return getAnagraficaDottoratiRate().size()-1;
+	}*/
+	public int addToAnagraficaDottoratiRate(AnagraficaDottoratiRateBulk rata) {
+		rata.setAnagraficaDottorati(this);
+
+		long max = 0;
+		for (
+				Iterator i = getAnagraficaDottoratiRate().iterator(); i.hasNext(); ) {
+			long prog = ((AnagraficaDottoratiRateBulk) i.next()).getPgRata().longValue();
+			if (prog > max) max = prog;
+		}
+		rata.setPgRata(new Long(max + 1));
+
+		rata.initialize();
+		rata.setUser(getUser());
+
+		int realSize = getAnagraficaDottoratiRate().size() - 1;
+		java.sql.Timestamp dataUltimaFine = ((AnagraficaDottoratiRateBulk) getAnagraficaDottoratiRate().get(realSize)).getDtFineRata();
+		java.sql.Timestamp dataInizio = !getAnagraficaDottoratiRate().isEmpty() ? incrementaData(dataUltimaFine) : it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
+		rata.setDtInizioRata(dataInizio);
+		rata.setDtFineRata(dataInizio);
+		rata.setDtScadenza(dataInizio);
+
+		getAnagraficaDottoratiRate().add(rata);
+		removeFromDettagliCancellati(rata);
+
+		return getAnagraficaDottoratiRate().size() - 1;
 	}
 
 	public AnagraficaDottoratiRateBulk removeFromAnagraficaDottoratiRate(int index) {
@@ -380,5 +412,36 @@ public class AnagraficaDottoratiBulk extends AnagraficaDottoratiBase {
 		return Optional.ofNullable(getTerzo())
 				.filter(terzoBulk -> Optional.ofNullable(terzoBulk.getCd_terzo()).isPresent())
 				.isPresent();
+	}
+
+	public static java.sql.Timestamp incrementaData(java.sql.Timestamp data){
+
+		java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+		gc.setTime(data);
+		gc.set(java.util.Calendar.HOUR, 0);
+		gc.set(java.util.Calendar.MINUTE, 0);
+		gc.set(java.util.Calendar.SECOND, 0);
+		gc.set(java.util.Calendar.MILLISECOND, 0);
+		gc.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+		gc.add(java.util.Calendar.DATE, 1);
+
+		return new java.sql.Timestamp(gc.getTime().getTime());
+	}
+
+
+	/**
+	 * Richeisto non usato
+	 */
+
+	public int removeFromDettagliCancellati(AnagraficaDottoratiRateBulk rata) {
+		return 0;
+	}
+
+	public java.lang.Long getIdAnagraficaDottoratiPerClone() {
+		return idAnagraficaDottoratiPerClone;
+	}
+
+	public void setIdAnagraficaDottoratiPerClone(Long idAnagraficaDottoratiPerClone) {
+		this.idAnagraficaDottoratiPerClone = idAnagraficaDottoratiPerClone;
 	}
 }

@@ -18,6 +18,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 
 
 public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
@@ -157,5 +158,8 @@ public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
 
     public Numerazione_doc_ammBulk(java.lang.String cd_cds, java.lang.String cd_tipo_documento_amm, java.lang.String cd_unita_organizzativa, java.lang.Integer esercizio) {
         super(cd_cds, cd_tipo_documento_amm, cd_unita_organizzativa, esercizio);
+    }
+
+    public Numerazione_doc_ammBulk(AnagraficaDottoratiBulk carriera) {
     }
 }

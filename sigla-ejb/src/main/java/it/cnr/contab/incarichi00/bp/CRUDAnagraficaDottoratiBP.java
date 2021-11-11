@@ -18,6 +18,8 @@
 package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
+import it.cnr.contab.compensi00.ejb.MinicarrieraComponentSession;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateBulk;
 import it.cnr.contab.incarichi00.ejb.AnagraficaDottoratiComponentSession;
@@ -103,6 +105,24 @@ public class CRUDAnagraficaDottoratiBP
             AnagraficaDottoratiBulk anagraficaDottoratiClone = component.completaTerzo(context.getUserContext(), anagraficaDottorati, terzo);
 
             setModel(context, anagraficaDottoratiClone);
+
+        } catch (it.cnr.jada.comp.ComponentException ex) {
+            throw handleException(ex);
+        } catch (java.rmi.RemoteException ex) {
+            throw handleException(ex);
+        }
+
+    }
+
+    public void generaRate(ActionContext context)
+            throws BusinessProcessException {
+
+        try {
+
+            AnagraficaDottoratiComponentSession comp = (AnagraficaDottoratiComponentSession) createComponentSession();
+            AnagraficaDottoratiBulk carriera = comp.generaRate(context.getUserContext(), (AnagraficaDottoratiBulk) getModel(), isEditing());
+
+            setModel(context, carriera);
 
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);

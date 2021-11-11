@@ -5,6 +5,7 @@
 package it.cnr.contab.incarichi00.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -272,5 +273,14 @@ public class AnagraficaDottoratiRateBulk extends AnagraficaDottoratiRateBase {
 		return Optional.ofNullable(getTerzo())
 				.filter(terzoBulk -> Optional.ofNullable(terzoBulk.getCd_terzo()).isPresent())
 				.isPresent();
+	}
+
+	public void initialize() {
+
+		setDtInizioRata(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp());
+		setDtFineRata(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp());
+		setDtScadenza(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp());
+
+		setImRata(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 }

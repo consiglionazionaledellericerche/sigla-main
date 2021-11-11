@@ -115,11 +115,9 @@ public class CRUDAnagraficaDottoratiAction extends it.cnr.jada.util.action.CRUDA
 
         try {
             fillModel(context);
-            CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP) getBusinessProcess(context);
-            MinicarrieraBulk carriera = (MinicarrieraBulk) bp.getModel();
+            CRUDAnagraficaDottoratiBP bp = (CRUDAnagraficaDottoratiBP) getBusinessProcess(context);
+            AnagraficaDottoratiBulk carriera = (AnagraficaDottoratiBulk) bp.getModel();
             carriera.validate();
-            if (!carriera.isNonAssociataACompenso())
-                throw new it.cnr.jada.comp.ApplicationException("Almeno una rata ha già generato un compenso. Impossibile rigenerare le rate.");
 
             bp.generaRate(context);
             bp.setDirty(true);

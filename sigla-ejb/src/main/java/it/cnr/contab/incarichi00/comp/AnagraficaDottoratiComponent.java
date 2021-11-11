@@ -22,17 +22,27 @@ import it.cnr.contab.anagraf00.core.bulk.BancaHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraHome;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
 import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiHome;
+import it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiRateBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.rmi.RemoteException;
 
 /**
  * Insert the type's description here.
@@ -183,4 +193,208 @@ public class AnagraficaDottoratiComponent extends it.cnr.jada.comp.CRUDComponent
 
         return sql;
     }
+
+    /**
+     *   Validazione minicarriera.
+     *	PreCondition:
+     *		Viene richiesta la generazione delle rate di una minicarriera e la stessa non ha superato il metodo 'validate'.
+     *	PostCondition:
+     *		Non  viene consentita la generazione delle rate della minicarriera.
+     *   Tutti i controlli superati.
+     *	PreCondition:
+     *		Viene richiesta la generazione delle rate di una minicarriera e la stessa ha superato il metodo 'validate'.
+     *	PostCondition:
+     *		Viene consentita la generazione delle rate della minicarriera.
+     */
+//^^@@
+
+    public AnagraficaDottoratiBulk generaRate(
+            UserContext userContext,
+            AnagraficaDottoratiBulk carriera,
+            boolean eseguiCopia)
+            throws it.cnr.jada.comp.ComponentException {
+
+        try{
+            carriera.validate();
+            Long pgTmp = null;
+            //eseguiCopia &&
+            if (carriera.getIdAnagraficaDottoratiPerClone() == null){
+                pgTmp = assegnaProgressivoTemporaneo(userContext, carriera);
+                carriera.setIdAnagraficaDottoratiPerClone(pgTmp);
+                //copiaMinicarriera(userContext, carriera);
+            }
+
+            if (carriera.getId() == null){
+                pgTmp = assegnaProgressivoTemporaneo(userContext, carriera);
+                carriera.setId(pgTmp);
+                insertBulk(userContext, carriera);
+            }else{
+                updateBulk(userContext, carriera);
+            }
+
+            callGeneraRate(userContext, carriera);
+            return reloadAnagraficaDottorati(userContext, carriera);
+
+        } catch(it.cnr.jada.persistency.PersistencyException ex) {
+            throw handleException(carriera,ex);
+        } catch(it.cnr.jada.bulk.ValidationException ex) {
+            throw handleException(carriera,ex);
+        }
+    }
+
+    private Long assegnaProgressivoTemporaneo(
+            UserContext userContext,
+            AnagraficaDottoratiBulk carriera)
+            throws ComponentException {
+
+        try {
+            // Assegno un nuovo progressivo temporaneo alla minicarriera
+            NumerazioneTempDocAmmComponentSession session = (NumerazioneTempDocAmmComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_NumerazioneTempDocAmmComponentSession", NumerazioneTempDocAmmComponentSession.class);
+            Numerazione_doc_ammBulk numerazione = new Numerazione_doc_ammBulk(carriera);
+            numerazione.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            return session.getNextTempPG(userContext, numerazione);
+        }catch(javax.ejb.EJBException ex){
+            throw handleException(carriera, ex);
+        }catch(RemoteException ex){
+            throw handleException(carriera, ex);
+        }
+
+    }
+
+    private void callGeneraRate(UserContext userContext, AnagraficaDottoratiBulk carriera) throws ComponentException{
+
+        LoggableStatement cs = null;
+        try	{
+            cs = new LoggableStatement(getConnection(userContext),
+                    "{call " +
+                            it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+                            "CNRCTB605.creaRateMinicarriera(?,?,?,?,?,?,?,?) }",
+                    false,this.getClass());
+            cs.setString( 1, carriera.getCd_cds()                 );
+            cs.setString( 2, carriera.getCdUnitaOrganizzativa() );
+            cs.setInt( 3, carriera.getEsercizio().intValue() );
+            cs.setLong( 4, carriera.getId() );
+
+            if (carriera.getIdAnagraficaDottoratiPerClone() != null) {
+                cs.setString( 5, carriera.getCd_cds() );
+                cs.setString( 6, carriera.getCdUnitaOrganizzativa() );
+                cs.setInt( 7, carriera.getEsercizio().intValue() );
+                cs.setLong( 8, carriera.getIdAnagraficaDottoratiPerClone().longValue() );
+            } else {
+                cs.setNull( 5, java.sql.Types.VARCHAR );
+                cs.setNull( 6, java.sql.Types.VARCHAR );
+                cs.setNull( 7, java.sql.Types.NUMERIC );
+                cs.setNull( 8, java.sql.Types.NUMERIC );
+            }
+
+            cs.executeQuery();
+
+        } catch (Throwable e) {
+            throw handleException(e);
+        } finally {
+            try {
+                if (cs != null) cs.close();
+            } catch (java.sql.SQLException e) {
+                throw handleException(e);
+            }
+        }
+    }
+
+    private AnagraficaDottoratiBulk reloadAnagraficaDottorati(UserContext userContext, AnagraficaDottoratiBulk carriera) throws ComponentException{
+
+        try {
+            Long pgTmp = carriera.getIdAnagraficaDottoratiPerClone();
+        //    it.cnr.jada.bulk.PrimaryKeyHashMap saldi = carriera.getDefferredSaldi();
+
+            AnagraficaDottoratiHome home = (AnagraficaDottoratiHome)getHome(userContext, carriera);
+            AnagraficaDottoratiBulk carrieraCaricata = (AnagraficaDottoratiBulk)home.findByPrimaryKey(carriera);
+
+            try {
+                BulkList rate = new BulkList(findRate(userContext, carrieraCaricata));
+                for (java.util.Iterator i = carriera.getAnagraficaDottoratiRate().iterator(); i.hasNext();) {
+                    AnagraficaDottoratiRateBulk vecchiaRata = (AnagraficaDottoratiRateBulk)i.next();
+                }
+                carrieraCaricata.setAnagraficaDottoratiRate(rate);
+            } catch (it.cnr.jada.persistency.IntrospectionException e) {
+                throw handleException(carriera, e);
+            }
+
+            getHomeCache(userContext).fetchAll(userContext);
+
+            carrieraCaricata.setIdAnagraficaDottoratiPerClone(pgTmp);
+       //     completaMinicarriera(userContext, carrieraCaricata); //da vedere se serve
+       //     carrieraCaricata.setDefferredSaldi(saldi);
+
+            return carrieraCaricata;
+
+        }catch (it.cnr.jada.persistency.PersistencyException ex){
+            throw handleException(ex);
+        }
+    }
+
+    /**
+     *	Normale.
+     *		PreCondition:
+     * 		Richiesta di caricamento rate di una minicarriera
+     *   	PostCondition:
+     *  		Restituisce la lista delle rate
+     */
+//^^@@
+
+    public java.util.List findRate(UserContext aUC,AnagraficaDottoratiBulk carriera)
+            throws
+            ComponentException,
+            it.cnr.jada.persistency.PersistencyException,
+            it.cnr.jada.persistency.IntrospectionException {
+
+        if (carriera == null) return null;
+
+        it.cnr.jada.bulk.BulkHome home = getHome(aUC, AnagraficaDottoratiRateBulk.class);
+
+        it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
+        sql.addClause("AND", "pg_minicarriera", sql.EQUALS, carriera.getId());
+        sql.addClause("AND", "cd_cds", sql.EQUALS, carriera.getCd_cds());
+        sql.addClause("AND", "esercizio", sql.EQUALS, carriera.getEsercizio());
+        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, carriera.getCdUnitaOrganizzativa());
+        sql.addOrderBy("PG_RATA");
+        return home.fetchAll(sql);
+    }
+
+ /**   private void completaAnagraficaDottorati(
+            UserContext userContext,
+            AnagraficaDottoratiBulk carriera)
+            throws ComponentException{
+
+        try {
+
+            carriera.setPercipiente(loadPercipiente(userContext,carriera));
+            completaPercipiente(userContext, carriera);
+            carriera.setTipiTrattamento(findTipiTrattamento(userContext, carriera));
+            loadTipoTrattamento(userContext, carriera);
+
+            //if (isGestitePrestazioni(userContext))
+            //{
+            carriera.impostaVisualizzaPrestazione();
+            //carriera.setTipiPrestazioneCompenso(getHome(userContext,Tipo_prestazione_compensoBulk.class).findAll());
+            carriera.setTipiPrestazioneCompenso(findTipiPrestazioneCompenso(userContext,
+                    carriera));
+            //}
+            //else
+            //carriera.setVisualizzaPrestazione(false);
+
+            if (isGestitiIncarichi(userContext))
+                carriera.impostaVisualizzaIncarico();
+            else
+                carriera.setVisualizzaPrestazione(false);
+
+            getHomeCache(userContext).fetchAll(userContext);
+            carriera.setAliquotaCalcolata(
+                    carriera.getFl_tassazione_separata() != null &&
+                            carriera.getFl_tassazione_separata().booleanValue() &&
+                            new java.math.BigDecimal(0).compareTo(carriera.getAliquota_irpef_media()) != 0);
+        } catch (it.cnr.jada.persistency.PersistencyException ex) {
+            throw handleException(ex);
+        }
+    }*/
+
 }

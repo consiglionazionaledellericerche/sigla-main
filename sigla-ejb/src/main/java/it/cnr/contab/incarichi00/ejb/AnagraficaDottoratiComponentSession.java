@@ -25,5 +25,6 @@ import javax.ejb.Remote;
 public interface AnagraficaDottoratiComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
     AnagraficaDottoratiBulk completaTerzo(it.cnr.jada.UserContext param0, AnagraficaDottoratiBulk param1, it.cnr.contab.anagraf00.core.bulk.TerzoBulk param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
     java.util.List findListaBanche(it.cnr.jada.UserContext param0, AnagraficaDottoratiBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+    it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk generaRate(it.cnr.jada.UserContext param0,it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 
 }
