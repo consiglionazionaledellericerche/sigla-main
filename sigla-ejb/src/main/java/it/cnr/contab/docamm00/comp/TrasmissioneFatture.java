@@ -328,7 +328,7 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
                 if (fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals("FATT_ELETT_INVIATA_SDI")) {
                     try {
                         DocumentiCollegatiDocAmmService docCollService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
-                        InputStream streamSigned = docCollService.getStreamXmlFirmatoFatturaAttiva(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
+                        InputStream streamSigned = docCollService.getStreamXmlFirmatoFatturaAttiva(fattura);
                         if (streamSigned != null) {
                             SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Mancata Consegna Fattura: " + fattura.getCd_uo() + "-" + fattura.getEsercizio() + "-" + fattura.getPg_fattura_attiva(), "Verrà riprovato l'invio.");
                             return streamSigned;
