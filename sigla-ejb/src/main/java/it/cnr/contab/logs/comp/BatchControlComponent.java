@@ -447,8 +447,4 @@ public class BatchControlComponent extends CRUDComponent
 
     private static final DateFormat oracleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-    public OggettoBulk creaConBulkRequiresNew(UserContext userContext, OggettoBulk  oggettoBulk)
-            throws ComponentException {
-        return super.creaConBulk(userContext,oggettoBulk);
-    }
 }

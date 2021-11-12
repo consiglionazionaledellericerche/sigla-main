@@ -566,22 +566,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     }
 
     /**
-     * Ritorna il conto corrente ENTE
-     * <p><b>chiave_primaria: CONTO_CORRENTE_SPECIALE</b>
-     * <p><b>chiave_secondaria: ENTE</b>
-     *
-     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
-     * @return String - il codice uo della Ragioneria
-     * @throws ComponentException, PersistencyException
-     */
-    public String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException {
-        try {
-            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getContoCorrenteEnte(esercizio);
-        }catch (PersistencyException e){
-            throw handleException(e);
-        }
-    }
-    /**
      * Ritorna il codice cdr del personale
      * <p><b>chiave_primaria: ELEMENTO_VOCE_SPECIALE</b>
      * <p><b>chiave_secondaria: TEMPO_IND_SU_PROGETTI_FINANZIATI</b>

@@ -18,21 +18,19 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.OrderedHashtable;
-import it.cnr.jada.util.action.CRUDBP;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpdateSaldi {
     public final static String STATO_MANDATO_ANNULLATO = "A";
@@ -125,6 +123,9 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     private java.util.Dictionary tipoDocumentoPerRicercaKeys;
     private java.math.BigDecimal im_disp_cassa_cds;
     private java.math.BigDecimal im_disp_cassa_CNR;
+
+    private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
     public MandatoBulk() {
         super();
     }
@@ -1114,7 +1115,47 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
                   .map(uo->!uo.equals(this.getCd_uo_origine()))
                   .orElse(Boolean.FALSE);
     }
-    public String getIdMandatoAsString(){
-        return getCd_cds()+"-"+getEsercizio()+"-"+getPg_mandato();
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_documento_cont();
+    }
+
+    @Override
+    public String getCd_uo() {
+        return this.getCd_unita_organizzativa();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_documento_cont();
+    }
+
+    @Override
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc());
+    }
+
+    @Override
+    public TerzoBulk getTerzo() {
+        return Optional.ofNullable(this.getMandato_terzo()).flatMap(el->Optional.ofNullable(el.getTerzo())).orElse(null);
+    }
+
+    @Override
+    public java.lang.Long getPg_manrev() {
+        return this.getPg_mandato();
+    }
+
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        return scrittura_partita_doppia;
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_pagamento();
     }
 }

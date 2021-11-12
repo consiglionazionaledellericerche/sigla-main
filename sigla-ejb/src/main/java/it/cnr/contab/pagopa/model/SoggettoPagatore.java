@@ -1,7 +1,6 @@
 
 package it.cnr.contab.pagopa.model;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "email",
     "cellulare"
 })
-public class SoggettoPagatore implements Serializable {
+public class SoggettoPagatore {
 
     @JsonProperty("tipo")
     private String tipo;
@@ -49,6 +48,8 @@ public class SoggettoPagatore implements Serializable {
     private String email;
     @JsonProperty("cellulare")
     private String cellulare;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("tipo")
     public String getTipo() {
@@ -158,6 +159,16 @@ public class SoggettoPagatore implements Serializable {
     @JsonProperty("cellulare")
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
 }

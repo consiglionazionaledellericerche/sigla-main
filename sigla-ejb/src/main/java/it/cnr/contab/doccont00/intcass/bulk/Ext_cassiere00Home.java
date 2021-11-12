@@ -17,7 +17,6 @@
 
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;

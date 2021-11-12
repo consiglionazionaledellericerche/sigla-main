@@ -19,7 +19,6 @@ package it.cnr.contab.doccont00.intcass.bulk;
 
 import java.util.List;
 
-import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.jada.bulk.BulkHome;
@@ -45,18 +44,5 @@ public class V_mandato_reversale_scad_voceHome extends BulkHome {
     	sql.addClause("AND","ti_gestione",SQLBuilder.EQUALS,CostantiTi_gestione.TI_GESTIONE_ENTRATE);    	
     	return fetchAll(sql);
     }
-
-	public List findMandatiReversali(V_mandato_reversaleBulk mandato_reversaleBulk) throws PersistencyException{
-		SQLBuilder sql = createSQLBuilder();
-		sql.addClause("AND","esercizio",SQLBuilder.EQUALS,mandato_reversaleBulk.getEsercizio());
-		sql.addClause("AND","pg_documento",SQLBuilder.EQUALS,mandato_reversaleBulk.getPg_documento_cont());
-		sql.addClause("AND","cd_cds",SQLBuilder.EQUALS,mandato_reversaleBulk.getCd_cds());
-		if (mandato_reversaleBulk.isMandato()){
-			sql.addClause("AND","ti_documento",SQLBuilder.EQUALS, V_doc_cont_compBulk.TIPO_DOC_CONT_MANDATO);
-		} else {
-			sql.addClause("AND","ti_documento",SQLBuilder.EQUALS, V_doc_cont_compBulk.TIPO_DOC_CONT_REVERSALE);
-		}
-		return fetchAll(sql);
-	}
 
 }
