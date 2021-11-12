@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversale_scad_voceBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversale_scad_voceKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversale_scad_voceHome" >
+	<defaultColumnMap
+		tableName="V_MANDATO_REVERSALE_SCAD_VOCE" >
+		<columnMapping
+			columnName="TI_COMPETENZA_RESIDUO"
+			propertyName="ti_competenza_residuo"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_VOCE"
+			propertyName="im_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+	</defaultColumnMap>
+	<persistentProperty
+			name="im_voce"/>
+	<persistentProperty
+			name="ti_competenza_residuo"/>
+	<persistentProperty
+			name="ti_appartenenza"/>
+	<persistentProperty
+			name="ti_gestione"/>
+	<persistentProperty
+			name="cd_tipo_documento_cont"/>
+</SQLPersistentInfo>

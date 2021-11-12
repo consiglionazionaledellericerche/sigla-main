@@ -17,12 +17,31 @@
 
 <action-mappings>
   <action
+          path="/ConsPagamentiPagopaAction" actionClass="it.cnr.contab.pagopa.action.ConsPagamentiPagopaAction">
+  </action>
+  <action
+          path="/PagamentiPagopaAction" actionClass="it.cnr.contab.pagopa.action.PagamentiPagopaAction">
+  </action>
+  <action
           path="/PendenzePagopaAction" actionClass="it.cnr.contab.pagopa.action.PendenzePagopaAction">
   </action>
 
   <businessProcess name="CRUDPendenzaPagopaBP" className="it.cnr.contab.pagopa.bp.CRUDPendenzaPagopaBP">
     <forward name="default" path="/pagopa/pendenze_pagopa.jsp"/>
+    <init-param name="defaultAction" value="PendenzePagopaAction" />
     <init-param name="bulkClassName" value="it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk"/>
+    <init-param name="componentSessionName" value="CNRPAGOPA_EJB_ScadenzaPagopaComponentSession"/>
+  </businessProcess>
+  <businessProcess name="CRUDPagamentoPagopaBP" className="it.cnr.contab.pagopa.bp.CRUDPagamentoPagopaBP">
+    <forward name="default" path="/pagopa/pagamenti_pagopa.jsp"/>
+    <init-param name="defaultAction" value="PagamentiPagopaAction" />
+    <init-param name="bulkClassName" value="it.cnr.contab.pagopa.bulk.PagamentoPagopaBulk"/>
+    <init-param name="componentSessionName" value="CNRPAGOPA_EJB_ScadenzaPagopaComponentSession"/>
+  </businessProcess>
+  <businessProcess name="CRUDConsPagamentoPagopaBP" className="it.cnr.contab.pagopa.bp.CRUDConsPagamentoPagopaBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+    <init-param name="defaultAction" value="ConsPagamentiPagopaAction" />
+    <init-param name="bulkClassName" value="it.cnr.contab.pagopa.bulk.PagamentoPagopaBulk"/>
     <init-param name="componentSessionName" value="CNRPAGOPA_EJB_ScadenzaPagopaComponentSession"/>
   </businessProcess>
 </action-mappings>

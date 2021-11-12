@@ -54,7 +54,7 @@
 	<fieldProperty
 			name="findTerzo"
 			property="terzo"
-			inputType="SEARCHTOOL"
+			inputType="SEARCHTOOL_WITH_LIKE"
 			formName="searchtool_large"
 			label="Terzo"
 			enabledOnSearch="true"
@@ -182,10 +182,39 @@
 			inputType="TEXT"
 			inputSize="10"
 			maxLength="3"
+			enabledOnInsert="false"
 			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
 			nullable="false"
 			keysProperty="statoKeys"
 			label="Stato" />
+	<fieldProperty
+			name="statoForSearch"
+			property="stato"
+			inputSize="20"
+			maxLength="20"
+			inputType="SELECT"
+			nullable="true"
+			keysProperty="statoKeysForSearch"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Stato"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="statoForUpdate"
+			property="stato"
+			inputSize="20"
+			maxLength="20"
+			inputType="SELECT"
+			nullable="true"
+			keysProperty="statoKeysForUpdate"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			label="Stato"
+			caseSensitiveSearch="false" />
 	<fieldProperty
 			name="tipoPosizione"
 			property="tipoPosizione"
@@ -195,16 +224,44 @@
 			enabledOnEdit="false"
 			nullable="false"
 			label="Posizione" />
+	<fieldProperty
+			name="find_elemento_voce"
+			property="elemento_voce"
+			inputType="SEARCHTOOL"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			nullable="false"
+			enabledOnFreeSearch="true"/>
+	/>
+	<fieldProperty
+			name="cd_elemento_voce"
+			property="elemento_voce.cd_elemento_voce"
+			label="Voce Bilancio"
+			inputType="TEXT"
+			maxLength="20"
+			inputSize="10"
+			enabledOnSearch="true"
+	/>
+	<fieldProperty
+			name="ds_elemento_voce"
+			property="elemento_voce.ds_elemento_voce"
+			label=""
+			inputType="ROTEXT"
+			inputSize="20"
+			enabledOnSearch="true"
+	/>
 	<form name="searchtool" >
-		<formFieldProperty
-				name="esercizio" />
 		<formFieldProperty
 				name="cdAvviso" />
 		<formFieldProperty
 				name="descrizione"
+				inputType="ROTEXT"
 				inputSize="30" />
 		<formFieldProperty
 				name="importoPendenza" />
+		<formFieldProperty
+				name="dtScadenza" />
 	</form>
 	<form name="searchtool_terzo" >
 		<formFieldProperty
@@ -246,6 +303,10 @@
 	<formFieldProperty
 			name="stato" />
 	<formFieldProperty
+			name="statoForSearch" />
+	<formFieldProperty
+			name="statoForUpdate" />
+	<formFieldProperty
 			name="tipoPosizione" />
 	<formFieldProperty
 			name="codice_fiscale"
@@ -280,6 +341,10 @@
 			name="descrizione" />
 	<columnFieldProperty
 			name="stato" />
+	<columnFieldProperty
+			name="statoForSearch" />
+	<findFieldProperty
+			name="statoForSearch" />
 	<findFieldProperty
 			name="esercizio" />
 	<findFieldProperty
@@ -302,4 +367,19 @@
 		name="dtScadenza" />
 	<findFieldProperty
 		name="tipoPosizione" />
+	<columnFieldProperty
+			name="cd_elemento_voce"
+	/>
+	<formFieldProperty
+			name="find_elemento_voce"
+	/>
+	<formFieldProperty
+			name="cd_elemento_voce"
+	/>
+	<formFieldProperty
+			name="ds_elemento_voce"
+	/>
+	<findFieldProperty
+			name="cd_elemento_voce"
+	/>
 </bulkInfo>

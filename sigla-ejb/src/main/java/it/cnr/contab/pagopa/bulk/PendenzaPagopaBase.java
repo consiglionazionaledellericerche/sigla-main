@@ -27,6 +27,46 @@ public class PendenzaPagopaBase extends PendenzaPagopaKey implements Keyed {
 
 	// ESERCIZIO DECIMAL(4,0) NOT NULL 
 	private Integer esercizio;
+	private Integer esercizioVoce;
+	private java.lang.String cd_elemento_voce;
+
+	public Integer getEsercizioVoce() {
+		return esercizioVoce;
+	}
+
+	public void setEsercizioVoce(Integer esercizioVoce) {
+		this.esercizioVoce = esercizioVoce;
+	}
+
+	public String getCd_elemento_voce() {
+		return cd_elemento_voce;
+	}
+
+	public void setCd_elemento_voce(String cd_elemento_voce) {
+		this.cd_elemento_voce = cd_elemento_voce;
+	}
+
+	public String getTi_appartenenza() {
+		return ti_appartenenza;
+	}
+
+	public void setTi_appartenenza(String ti_appartenenza) {
+		this.ti_appartenenza = ti_appartenenza;
+	}
+
+	public String getTi_gestione() {
+		return ti_gestione;
+	}
+
+	public void setTi_gestione(String ti_gestione) {
+		this.ti_gestione = ti_gestione;
+	}
+
+	// TI_APPARTENENZA CHAR(1) NOT NULL
+	private java.lang.String ti_appartenenza;
+
+	// TI_GESTIONE CHAR(1) NOT NULL
+	private java.lang.String ti_gestione;
 
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL
 	private String cdUnitaOrganizzativa;

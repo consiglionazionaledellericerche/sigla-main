@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pagopa.bulk.PagamentoPagopaBase"
+	keyClassName="it.cnr.contab.pagopa.bulk.PagamentoPagopaKey"
+	homeClassName="it.cnr.contab.pagopa.bulk.PagamentoPagopaHome" >
+	<defaultColumnMap
+		tableName="PAGAMENTO_PAGOPA" >
+		<columnMapping
+			columnName="IUR"
+			propertyName="iur"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+				columnName="RPP"
+				propertyName="rpp"
+				sqlTypeName="VARCHAR"
+				columnSize="100"
+				nullable="true" />
+		<columnMapping
+				columnName="CCP"
+				propertyName="ccp"
+				sqlTypeName="VARCHAR"
+				columnSize="50"
+				nullable="false" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="false" />
+		<columnMapping
+				columnName="ID_PENDENZA_PAGOPA"
+				propertyName="idPendenzaPagopa"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				nullable="false" />
+		<columnMapping
+				columnName="CAUSALE"
+				propertyName="causale"
+				sqlTypeName="VARCHAR"
+				columnSize="1000"
+				nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dtPagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+				columnName="IMPORTO"
+				propertyName="importo"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+				columnName="ID_RICONCILIAZIONE"
+				propertyName="id_riconciliazione"
+				sqlTypeName="VARCHAR"
+				columnSize="50"
+				nullable="true" />
+		<columnMapping
+				columnName="RICONCILIAZIONE"
+				propertyName="riconciliazione"
+				sqlTypeName="VARCHAR"
+				columnSize="100"
+				nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="iur" />
+	<persistentProperty
+			name="rpp" />
+	<persistentProperty
+			name="ccp" />
+	<persistentProperty
+			name="idPendenzaPagopa" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+			name="causale" />
+	<persistentProperty
+	    name="dtPagamento" />
+	<persistentProperty
+			name="importo" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+			name="id_riconciliazione" />
+	<persistentProperty
+			name="riconciliazione" />
+</SQLPersistentInfo>
