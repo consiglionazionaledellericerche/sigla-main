@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiHome">
+	<defaultColumnMap
+		tableName="ANAGRAFICA_DOTTORATI">
+		<columnMapping
+			columnName="REGIONE"
+			propertyName="regione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="UNIVERSITA_CAPOFILA"
+			propertyName="universitaCapofila"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="TELEFONO_ATENEO"
+			propertyName="telefonoAteneo"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_ATENEO"
+			propertyName="emailAteneo"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="ALTRE_UNIVERSITA"
+			propertyName="altreUniversita"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DIPARTIMENTO_UNIVERSITA"
+			propertyName="dipartimentoUniversita"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CORSO_DOTTORATO"
+			propertyName="corsoDottorato"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="TEMATICA"
+			propertyName="tematica"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_CICLI_FINANZIATI"
+			propertyName="numeroCicliFinanziati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="RICERCATORE"
+			propertyName="ricercatore"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="ISTITUTO_CNR"
+			propertyName="istitutoCnr"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DIPARTIMENTO_CNR"
+			propertyName="dipartimentoCnr"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_STIPULA_CONVENZIONE"
+			propertyName="dataStipulaConvenzione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+				columnName="AZIENDA"
+				propertyName="azienda"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="AZIENDA_SETTORE"
+				propertyName="aziendaSettore"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="AZIENDA_SEDE"
+				propertyName="aziendaSede"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="NOME_INFRA_EUROPEA"
+				propertyName="nomeInfraEuropea"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="DESCR_INFRA_EUROPEA"
+				propertyName="descrInfraEuropea"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="NUMERO_BORSE_FINANZIATE"
+				propertyName="numeroBorseFinanziate"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="TOTALE_BORSE_FINANZIATE"
+				propertyName="totaleBorseFinanziate"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPORTO_TOTALE_BORSA"
+				propertyName="importoTotaleBorsa"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="NOME_DOTTORATO"
+				propertyName="nomeDottorato"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<!--
+		Dopo aggiornamento con Patrizia
+		-->
+		<columnMapping
+				columnName="PG_BANCA"
+				propertyName="pgBanca"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_MODALITA_PAG"
+				propertyName="cdModalitaPag"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="false" />
+		<columnMapping
+				columnName="UO_CNR"
+				propertyName="uoCnr"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_SOSPENSIONE"
+				propertyName="dtSospensione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_RIATTIVAZIONE"
+				propertyName="dtRiattivazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="N_RATE_DOTTORATO"
+				propertyName="nRateDottorato"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_INIZIO_DOTTORATO"
+				propertyName="dtInizioDottorato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_FINE_DOTTORATO"
+				propertyName="dtFineDottorato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_PROROGA_DOTTORATO"
+				propertyName="dtProrogaDottorato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_REGISTRAZIONE"
+				propertyName="dtRegistrazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cdCds"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+				columnName="COFINANZIAMENTO_CNR"
+				propertyName="cofinanziamentoCnr"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="COFINANZIAMENTO_EFFETTUATO"
+				propertyName="cofinanziamentoEffettuato"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<!--
+		Fine aggiornamento con Patrizia
+		-->
+		<columnMapping
+			columnName="ID_PHDTIPO_DOTTORATI"
+			propertyName="idPhdtipoDottorati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_CICLO_DOTTORATI"
+			propertyName="idCicloDottorati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="regione" />
+	<persistentProperty
+		name="universitaCapofila" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="telefonoAteneo" />
+	<persistentProperty
+		name="emailAteneo" />
+	<persistentProperty
+		name="altreUniversita" />
+	<persistentProperty
+		name="dipartimentoUniversita" />
+	<persistentProperty
+		name="corsoDottorato" />
+	<persistentProperty
+		name="tematica" />
+	<persistentProperty
+		name="numeroCicliFinanziati" />
+	<persistentProperty
+		name="ricercatore" />
+	<persistentProperty
+		name="istitutoCnr" />
+	<persistentProperty
+		name="dipartimentoCnr" />
+	<persistentProperty
+		name="dataStipulaConvenzione" />
+	<persistentProperty
+		name="azienda" />
+	<persistentProperty
+		name="aziendaSettore" />
+	<persistentProperty
+		name="aziendaSede" />
+	<persistentProperty
+		name="nomeInfraEuropea" />
+	<persistentProperty
+		name="descrInfraEuropea" />
+	<persistentProperty
+		name="numeroBorseFinanziate" />
+	<persistentProperty
+			name="totaleBorseFinanziate" />
+	<persistentProperty
+			name="importoTotaleBorsa" />
+	<persistentProperty
+			name="nomeDottorato" />
+	<persistentProperty
+		name="note" />
+
+	<persistentProperty
+			name="pgBanca" />
+	<persistentProperty
+			name="cdModalitaPag" />
+	<persistentProperty
+			name="uoCnr" />
+	<persistentProperty
+			name="stato" />
+	<persistentProperty
+			name="dtSospensione" />
+	<persistentProperty
+			name="dtRiattivazione" />
+	<persistentProperty
+			name="nRateDottorato" />
+	<persistentProperty
+			name="dtInizioDottorato" />
+	<persistentProperty
+			name="dtFineDottorato" />
+	<persistentProperty
+			name="dtProrogaDottorato" />
+	<persistentProperty
+			name="dtRegistrazione" />
+	<persistentProperty
+			name="cdCds" />
+	<persistentProperty
+			name="cdUnitaOrganizzativa" />
+	<persistentProperty
+			name="esercizio" />
+	<persistentProperty
+			name="cofinanziamentoCnr" />
+	<persistentProperty
+			name="cofinanziamentoEffettuato" />
+
+	<persistentProperty
+		name="idPhdtipoDottorati" />
+	<persistentProperty
+		name="idCicloDottorati" />
+	<persistentProperty
+		name="pg_ver_rec"/>
+</SQLPersistentInfo>

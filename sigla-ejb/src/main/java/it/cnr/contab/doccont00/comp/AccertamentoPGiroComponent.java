@@ -963,7 +963,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 		verificaAccertamento( uc, accert_pgiro );
 		Accertamento_scadenzarioBulk accert_scad = creaAccertamento_scadenzario( uc, accert_pgiro);
 		creaAccertamento_scad_voce( uc, accert_scad );
-	
+
 		super.creaConBulk( uc, accert_pgiro );
 
 		if ( !uc.isTransactional() )

@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXT"
+		maxLength="38"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Id" />
+	<fieldProperty
+		name="regione"
+		property="regione"
+		inputType="TEXT"
+		maxLength="250"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Regione" />
+	<fieldProperty
+		name="universitaCapofila"
+		property="universitaCapofila"
+		inputType="TEXTAREA"
+		maxLength="250"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Ateneo Sede Amministrativa Dottorato" />
+	<fieldProperty
+		name="cdTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		formName="searchtool_small"
+		label="Codice Terzo"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		nullable="false"/>
+	<fieldProperty
+		name="telefonoAteneo"
+		property="telefonoAteneo"
+		inputType="TEXT"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Telefono Ateneo" />
+	<fieldProperty
+		name="emailAteneo"
+		property="emailAteneo"
+		inputType="TEXT"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Email Ateneo" />
+	<fieldProperty
+		name="altreUniversita"
+		property="altreUniversita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Altre Universita" />
+	<fieldProperty
+		name="dipartimentoUniversita"
+		property="dipartimentoUniversita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Dipartimento Universita" />
+	<fieldProperty
+		name="corsoDottorato"
+		property="corsoDottorato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Corso Dottorato" />
+	<fieldProperty
+		name="tematica"
+		property="tematica"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Tematica" />
+	<fieldProperty
+		name="numeroCicliFinanziati"
+		property="numeroCicliFinanziati"
+		inputType="TEXT"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Numero Cicli Finanziati" />
+	<fieldProperty
+		name="ricercatore"
+		property="ricercatore"
+		inputType="TEXT"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Ricercatore" />
+	<fieldProperty
+		name="istitutoCnr"
+		property="istitutoCnr"
+		inputType="TEXT"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="istituto Cnr" />
+	<fieldProperty
+		name="dipartimentoCnr"
+		property="dipartimentoCnr"
+		inputType="TEXT"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Dipartimento Cnr" />
+	<fieldProperty
+		name="dataStipulaConvenzione"
+		property="dataStipulaConvenzione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataStipulaConvenzione" />
+	<fieldProperty
+			name="azienda"
+			property="azienda"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Azienda" />
+	<fieldProperty
+			name="aziendaSettore"
+			property="aziendaSettore"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Settore Azienda" />
+	<fieldProperty
+			name="aziendaSede"
+			property="aziendaSede"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Sede dell'Azienda" />
+	<fieldProperty
+			name="nomeInfraEuropea"
+			property="nomeInfraEuropea"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Nome Infrastruttura Europea" />
+	<fieldProperty
+			name="descrInfraEuropea"
+			property="descrInfraEuropea"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Descrizione Infrastruttura Europea" />
+	<fieldProperty
+			name="numeroBorseFinanziate"
+			property="numeroBorseFinanziate"
+			inputType="TEXT"
+			enabledOnEdit="true"
+			label="Numero di borse finanziate per ciclo corso" />
+	<fieldProperty
+			name="totaleBorseFinanziate"
+			property="totaleBorseFinanziate"
+			inputType="TEXT"
+			enabledOnEdit="true"
+			label="Totale Borse Finanziate" />
+	<fieldProperty
+			name="importoTotaleBorsa"
+			property="importoTotaleBorsa"
+			inputType="TEXT"
+			enabledOnEdit="true"
+			label="Importo Totale Borsa Dottorato" />
+	<fieldProperty
+			name="nomeDottorato"
+			property="nomeDottorato"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Nome Dottorato" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Note" />
+	<!--
+	Dopo aggiornamento con Patrizia
+	-->
+	<fieldProperty
+			name="pgBanca"
+			property="pgBanca"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="pgBanca" />
+	<fieldProperty
+			name="cd_modalita_pag"
+			property="cd_modalita_pag"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Codice Modalita di Pag."
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="uoCnr"
+			property="uoCnr"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="UO Cnr" />
+	<fieldProperty
+			name="stato"
+			property="stato"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="stato" />
+	<fieldProperty
+			name="dtSospensione"
+			property="dtSospensione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtSospensione" />
+	<fieldProperty
+			name="dtRiattivazione"
+			property="dtRiattivazione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtRiattivazione" />
+	<fieldProperty
+			name="nRateDottorato"
+			property="nRateDottorato"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Numero Rate Dottorato" />
+	<fieldProperty
+			name="dtInizioDottorato"
+			property="dtInizioDottorato"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtInizioDottorato" />
+	<fieldProperty
+			name="dtFineDottorato"
+			property="dtFineDottorato"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtFineDottorato" />
+	<fieldProperty
+			name="dtProrogaDottorato"
+			property="dtProrogaDottorato"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="true"
+			label="dtProrogaDottorato" />
+	<fieldProperty
+			name="dtRegistrazione"
+			property="dtRegistrazione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="false"
+			nullable="false"
+			label="dtRegistrazione" />
+	<fieldProperty
+			name="cdCds"
+			property="cdCds"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
+			nullable="false"
+			label="Centro di Spesa" />
+	<fieldProperty
+			name="cdUnitaOrganizzativa"
+			property="cdUnitaOrganizzativa"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
+			nullable="false"
+			label="Unità Organizzativa" />
+	<fieldProperty
+			name="esercizio"
+			property="esercizio"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
+			nullable="false"
+			label="esercizio" />
+	<fieldProperty
+			name="cofinanziamentoCnr"
+			property="cofinanziamentoCnr"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			nullable="true"
+			label="Cofinanziamento CNR" />
+	<fieldProperty
+			name="cofinanziamentoEffettuato"
+			property="cofinanziamentoEffettuato"
+			inputType="SELECT"
+			keysProperty="tipoCofinanziamentoEffettuato"
+			enabledOnEdit="true"
+			nullable="true"
+			label="Cofinanziamento Effettuato" />
+	<!--
+	Fine aggiornamento
+	-->
+	<fieldProperty
+		name="find_PhdtipoDottorati"
+		property="phdtipoDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipologia di Dottorato" />
+	<fieldProperty
+		name="find_CicloDottorati"
+		property="cicloDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Ciclo di Inizio" />
+	/**************************************************/
+	/********************** BANCHE ********************/
+	<fieldProperty
+			name="modalita_pagamento"
+			property="modalita_pagamento"
+			printProperty="cd_ds_modalita_pagamento"
+			optionsProperty="modalita"
+			inputType="SELECT"
+			nullable="false"
+			readonlyPropertyOnInsert="ROPercipiente"
+			readonlyPropertyOnEdit="ROPercipiente"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			label="Mod. pagamento" />
+	<fieldProperty
+			name="listaBanche"
+			property="banca"
+			inputType="BUTTON"
+			img="img/find16.gif"
+			readonlyProperty="abledToInsertBank"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			label="Conto/i ..."
+			href="javascript:submitForm('doSearch(main.listaBanche)')" />
+	<fieldProperty
+			name="contoA"
+			property="banca"
+			inputType="FORM"
+			formName="A"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoP"
+			property="banca"
+			inputType="FORM"
+			formName="P"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoB"
+			property="banca"
+			inputType="FORM"
+			formName="BdocAmm"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoQ"
+			property="banca"
+			inputType="FORM"
+			formName="Q"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="contoN"
+			property="banca"
+			inputType="FORM"
+			formName="N"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	/**************************************************/
+
+	<!--<fieldProperty
+		name="find_TipocorsoDottorati"
+		property="tipocorsoDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo Corso Dottorato Delibera 52/2020" />-->
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="regione" />
+	<formFieldProperty
+		name="universitaCapofila" />
+	<formFieldProperty
+			name="cdTerzo" />
+	<formFieldProperty
+		name="telefonoAteneo" />
+	<formFieldProperty
+		name="emailAteneo" />
+	<formFieldProperty
+		name="altreUniversita" />
+	<formFieldProperty
+		name="dipartimentoUniversita" />
+	<formFieldProperty
+		name="corsoDottorato" />
+	<formFieldProperty
+		name="tematica" />
+	<formFieldProperty
+		name="numeroCicliFinanziati" />
+	<formFieldProperty
+		name="ricercatore" />
+	<formFieldProperty
+		name="istitutoCnr" />
+	<formFieldProperty
+		name="dipartimentoCnr" />
+	<formFieldProperty
+		name="dataStipulaConvenzione" />
+	<formFieldProperty
+		name="azienda" />
+	<formFieldProperty
+		name="aziendaSettore" />
+	<formFieldProperty
+		name="aziendaSede" />
+	<formFieldProperty
+		name="nomeInfraEuropea" />
+	<formFieldProperty
+		name="descrInfraEuropea" />
+	<formFieldProperty
+		name="numeroBorseFinanziate" />
+	<formFieldProperty
+			name="totaleBorseFinanziate" />
+	<formFieldProperty
+			name="importoTotaleBorsa" />
+	<formFieldProperty
+			name="nomeDottorato" />
+	<formFieldProperty
+		name="note" />
+
+	<formFieldProperty
+			name="pgBanca" />
+	<formFieldProperty name="cd_modalita_pag" />
+	<formFieldProperty name="modalita_pagamento" />
+	<formFieldProperty
+			name="uoCnr" />
+	<formFieldProperty
+			name="stato" />
+	<formFieldProperty
+			name="dtSospensione" />
+	<formFieldProperty
+			name="dtRiattivazione" />
+	<formFieldProperty
+			name="nRateDottorato" />
+	<formFieldProperty
+			name="dtInizioDottorato" />
+	<formFieldProperty
+			name="dtFineDottorato" />
+	<formFieldProperty
+			name="dtProrogaDottorato" />
+	<formFieldProperty
+			name="dtRegistrazione" />
+	<formFieldProperty
+			name="cdCds" />
+	<formFieldProperty
+			name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+			name="esercizio" />
+	<formFieldProperty
+			name="cofinanziamentoCnr" />
+	<formFieldProperty
+			name="cofinanziamentoEffettuato" />
+
+	<formFieldProperty
+			name="find_PhdtipoDottorati" />
+	<formFieldProperty
+			name="find_CicloDottorati" />
+	<!--<formFieldProperty
+			name="find_TipocorsoDottorati" />-->
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="regione" />
+	<findFieldProperty
+		name="universitaCapofila" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="telefonoAteneo" />
+	<findFieldProperty
+		name="emailAteneo" />
+	<findFieldProperty
+		name="altreUniversita" />
+	<findFieldProperty
+		name="dipartimentoUniversita" />
+	<findFieldProperty
+		name="corsoDottorato" />
+	<findFieldProperty
+		name="tematica" />
+	<findFieldProperty
+		name="numeroCicliFinanziati" />
+	<findFieldProperty
+		name="ricercatore" />
+	<findFieldProperty
+		name="istitutoCnr" />
+	<findFieldProperty
+		name="dipartimentoCnr" />
+	<findFieldProperty
+		name="dataStipulaConvenzione" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="azienda" />
+	<findFieldProperty
+		name="aziendaSettore" />
+	<findFieldProperty
+		name="aziendaSede" />
+	<findFieldProperty
+		name="nomeInfraEuropea" />
+	<findFieldProperty
+		name="descrInfraEuropea" />
+	<findFieldProperty
+		name="numeroBorseFinanziate" />
+	<findFieldProperty
+			name="totaleBorseFinanziate" />
+	<findFieldProperty
+			name="importoTotaleBorsa" />
+	<findFieldProperty
+			name="nomeDottorato" />
+
+	<findFieldProperty
+			name="pgBanca" />
+	<findFieldProperty
+			name="cd_modalita_pag" />
+	<findFieldProperty
+			name="uoCnr" />
+	<findFieldProperty
+			name="stato" />
+	<findFieldProperty
+			name="dtSospensione" />
+	<findFieldProperty
+			name="dtRiattivazione" />
+	<findFieldProperty
+			name="nRateDottorato" />
+	<findFieldProperty
+			name="dtInizioDottorato" />
+	<findFieldProperty
+			name="dtFineDottorato" />
+	<findFieldProperty
+			name="dtProrogaDottorato" />
+	<findFieldProperty
+			name="dtRegistrazione" />
+	<findFieldProperty
+			name="cdCds" />
+	<findFieldProperty
+			name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+			name="esercizio" />
+	<findFieldProperty
+			name="cofinanziamentoCnr" />
+	<findFieldProperty
+			name="cofinanziamentoEffettuato" />
+
+	<findFieldProperty
+		name="idCicloDottorati" />
+	<!--<findFieldProperty
+		name="idTipocorsoDottorati" />-->
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="regione" />
+	<columnFieldProperty
+		name="universitaCapofila" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="telefonoAteneo" />
+	<columnFieldProperty
+		name="emailAteneo" />
+	<columnFieldProperty
+		name="altreUniversita" />
+	<columnFieldProperty
+		name="dipartimentoUniversita" />
+	<columnFieldProperty
+		name="corsoDottorato" />
+	<columnFieldProperty
+		name="tematica" />
+	<columnFieldProperty
+		name="numeroCicliFinanziati" />
+	<columnFieldProperty
+		name="ricercatore" />
+	<columnFieldProperty
+		name="istitutoCnr" />
+	<columnFieldProperty
+		name="dipartimentoCnr" />
+	<columnFieldProperty
+		name="dataStipulaConvenzione" />
+	<columnFieldProperty
+			name="azienda" />
+	<columnFieldProperty
+			name="aziendaSettore" />
+	<columnFieldProperty
+			name="aziendaSede" />
+	<columnFieldProperty
+			name="nomeInfraEuropea" />
+	<columnFieldProperty
+			name="descrInfraEuropea" />
+	<columnFieldProperty
+			name="numeroBorseFinanziate" />
+	<columnFieldProperty
+			name="totaleBorseFinanziate" />
+	<columnFieldProperty
+			name="importoTotaleBorsa" />
+	<columnFieldProperty
+			name="nomeDottorato" />
+	<columnFieldProperty
+		name="note" />
+
+	<columnFieldProperty
+			name="pgBanca" />
+	<columnFieldProperty
+			name="uoCnr" />
+	<columnFieldProperty
+			name="stato" />
+	<columnFieldProperty
+			name="dtSospensione" />
+	<columnFieldProperty
+			name="dtRiattivazione" />
+	<columnFieldProperty
+			name="nRateDottorato" />
+	<columnFieldProperty
+			name="dtInizioDottorato" />
+	<columnFieldProperty
+			name="dtFineDottorato" />
+	<columnFieldProperty
+			name="dtProrogaDottorato" />
+	<columnFieldProperty
+			name="dtRegistrazione" />
+	<columnFieldProperty
+			name="cdCds" />
+	<columnFieldProperty
+			name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+			name="esercizio" />
+	<columnFieldProperty
+			name="cofinanziamentoCnr" />
+	<columnFieldProperty
+			name="cofinanziamentoEffettuato" />
+
+	<columnFieldProperty
+		name="idPhdtipoDottorati" />
+	<columnFieldProperty
+		name="idCicloDottorati" />
+	<!--<columnFieldProperty
+		name="idTipocorsoDottorati" />-->
+</bulkInfo>

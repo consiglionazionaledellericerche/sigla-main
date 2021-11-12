@@ -45,9 +45,9 @@
 			 	     	bp.getController().writeFormInput(out,"contoP");
 				} else if (Rif_modalita_pagamentoBulk.QUIETANZA.equalsIgnoreCase(carriera.getBanca().getTi_pagamento())) {
 			 	     	bp.getController().writeFormInput(out,"contoQ");
-				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(carriera.getBanca().getTi_pagamento())) { 
+				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(carriera.getBanca().getTi_pagamento())) {
 			 	     	bp.getController().writeFormInput(out,"contoA");
-				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(carriera.getBanca().getTi_pagamento())) { 
+				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(carriera.getBanca().getTi_pagamento())) {
 		 	     	bp.getController().writeFormInput(out,"contoN");
 				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(carriera.getBanca().getTi_pagamento()) && carriera.getBanca().isTABB()) {
                     bp.getController().writeFormInput(out,"contoB");

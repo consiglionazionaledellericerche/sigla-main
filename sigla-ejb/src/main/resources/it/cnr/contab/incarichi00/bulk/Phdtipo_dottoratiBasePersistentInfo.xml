@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Phdtipo_dottoratiBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.Phdtipo_dottoratiKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Phdtipo_dottoratiHome">
+	<defaultColumnMap
+		tableName="PHDTIPO_DOTTORATI">
+		<columnMapping
+			columnName="NAME"
+			propertyName="name"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+				columnName="PG_VER_REC"
+				propertyName="pg_ver_rec"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="false"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="name" />
+	<persistentProperty
+			name="pg_ver_rec"/>
+</SQLPersistentInfo>

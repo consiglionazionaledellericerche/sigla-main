@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXT"
+		maxLength="38"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Id" />
+	<fieldProperty
+		name="name"
+		property="name"
+		inputType="TEXTAREA"
+		maxLength="250"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Name" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="name" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="name" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="name" />
+
+	<form
+			name="searchtool" >
+		<formFieldProperty
+				name="name"
+				inputType="TEXT"
+				inputSize="30" />
+	</form>
+</bulkInfo>

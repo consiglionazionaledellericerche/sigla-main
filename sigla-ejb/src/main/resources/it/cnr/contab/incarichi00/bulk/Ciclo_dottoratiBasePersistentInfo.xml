@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiHome">
+	<defaultColumnMap
+		tableName="CICLO_DOTTORATI">
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="numero"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="ANNO_INIZIO"
+			propertyName="annoInizio"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ANNO_FINE"
+			propertyName="annoFine"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="numero" />
+	<persistentProperty
+		name="annoInizio" />
+	<persistentProperty
+		name="annoFine" />
+	<persistentProperty
+		name="pg_ver_rec"/>
+</SQLPersistentInfo>
