@@ -251,8 +251,6 @@ pagopa:
     base_url: http://govpay.test.si.cnr.it/govpay
     username: gpadmin
     password: bubbazza
-    usernameApp: sigla
-    passwordApp: Acr.1214
 ---
 project:
   stage: demo-h2

@@ -393,11 +393,11 @@
 			propertyName="nomeFileInvioSdi"
 			sqlTypeName="VARCHAR"
 			columnSize="100" />
-		<columnMapping
+<!--		<columnMapping
 				columnName="ID_PENDENZA_PAGOPA"
 				propertyName="idPendenzaPagopa"
 				sqlTypeName="DECIMAL"
-				columnSize="15"/>
+				columnSize="15"/>-->
 		<columnMapping
 				columnName="FL_ORDINE_ELETTRONICO"
 				propertyName="fl_ordine_elettronico"

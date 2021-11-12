@@ -1,8 +1,6 @@
 
 package it.cnr.contab.pagopa.model;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -23,66 +21,34 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "hashDocumento",
     "provinciaResidenza"
 })
-public class Voci implements Serializable {
+public class Voci {
 
+    @JsonProperty("Entrata")
+    private Entrata entrata;
     @JsonProperty("codEntrata")
     private String codEntrata;
 
-    @JsonProperty("idVocePendenza")
-    private String idVocePendenza;
-    @JsonProperty("importo")
-    private BigDecimal importo;
-    @JsonProperty("descrizione")
-    private String descrizione;
+    public Entrata getEntrata() {
+        return entrata;
+    }
+
+    public void setEntrata(Entrata entrata) {
+        this.entrata = entrata;
+    }
+
     @JsonProperty("tipoBollo")
     private String tipoBollo;
     @JsonProperty("hashDocumento")
     private String hashDocumento;
-
-    public String getCodiceContabilita() {
-        return codiceContabilita;
-    }
-
-    public void setCodiceContabilita(String codiceContabilita) {
-        this.codiceContabilita = codiceContabilita;
-    }
-
     @JsonProperty("provinciaResidenza")
     private String provinciaResidenza;
-    @JsonProperty("codiceContabilita")
-    private String codiceContabilita;
-
-    public String getIbanAccredito() {
-        return ibanAccredito;
-    }
-
-    public void setIbanAccredito(String ibanAccredito) {
-        this.ibanAccredito = ibanAccredito;
-    }
-
-    public String getIbanAppoggio() {
-        return ibanAppoggio;
-    }
-
-    public void setIbanAppoggio(String ibanAppoggio) {
-        this.ibanAppoggio = ibanAppoggio;
-    }
-
-    public String getTipoContabilita() {
-        return tipoContabilita;
-    }
-
-    public void setTipoContabilita(String tipoContabilita) {
-        this.tipoContabilita = tipoContabilita;
-    }
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("codEntrata")
     public String getCodEntrata() {
         return codEntrata;
     }
-    private String ibanAccredito;
-    private String ibanAppoggio;
-    private String tipoContabilita = "SIOPE";
 
     @JsonProperty("codEntrata")
     public void setCodEntrata(String codEntrata) {
@@ -119,27 +85,14 @@ public class Voci implements Serializable {
         this.provinciaResidenza = provinciaResidenza;
     }
 
-    public String getIdVocePendenza() {
-        return idVocePendenza;
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
-    public void setIdVocePendenza(String idVocePendenza) {
-        this.idVocePendenza = idVocePendenza;
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
-    public BigDecimal getImporto() {
-        return importo;
-    }
-
-    public void setImporto(BigDecimal importo) {
-        this.importo = importo;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
 }

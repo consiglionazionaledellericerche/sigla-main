@@ -43,8 +43,6 @@ public class SospesoBulk extends SospesoBase {
     public final static Dictionary stato_sospesoCNRKeys;
     public final static Dictionary tiStatoTextForSearchKeys;
     public final static Dictionary ti_entrata_spesaKeys;
-    public final static String RISC_PREFIX ="XSRC";
-    public final static String CODICE_SOSPESO_RISCONTRO_INIZIALE = "0000000001";
 
 	static private java.util.Hashtable ti_cc_biKeys;
 
@@ -635,9 +633,5 @@ if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
         setMandatoRiaccredito(Optional.ofNullable(mandatoRiaccredito)
                 .orElseGet(() -> new MandatoIBulk()));
         mandatoRiaccredito.setPg_mandato(pg_mandato_man_riaccr);
-    }
-
-    public Boolean isTipoEntrata(){
-        return Optional.ofNullable(getTi_entrata_spesa()).map(x -> x.equals(TIPO_ENTRATA)).orElse(false);
     }
 }

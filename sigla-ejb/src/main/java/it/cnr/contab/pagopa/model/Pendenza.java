@@ -1,7 +1,6 @@
 
 package it.cnr.contab.pagopa.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -36,18 +35,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "dataPromemoriaScadenza",
     "voci"
 })
-public class Pendenza implements Serializable {
-
-    @JsonProperty("idA2A")
-    private String idA2A = null;
-
-    @JsonProperty("idPendenza")
-    private String idPendenza = null;
+public class Pendenza {
 
     @JsonProperty("idTipoPendenza")
     private String idTipoPendenza;
     @JsonProperty("idDominio")
-    private String idDominio;
+    private Integer idDominio;
     @JsonProperty("idUnitaOperativa")
     private String idUnitaOperativa;
     @JsonProperty("causale")
@@ -57,7 +50,7 @@ public class Pendenza implements Serializable {
     @JsonProperty("importo")
     private BigDecimal importo;
     @JsonProperty("numeroAvviso")
-    private String numeroAvviso;
+    private Long numeroAvviso;
     @JsonProperty("tassonomia")
     private String tassonomia;
     @JsonProperty("tassonomiaAvviso")
@@ -68,8 +61,6 @@ public class Pendenza implements Serializable {
     private String divisione;
     @JsonProperty("dataValidita")
     private String dataValidita;
-    @JsonProperty("dataCaricamento")
-    private String dataCaricamento;
     @JsonProperty("dataScadenza")
     private String dataScadenza;
     @JsonProperty("annoRiferimento")
@@ -86,17 +77,8 @@ public class Pendenza implements Serializable {
     private String dataPromemoriaScadenza;
     @JsonProperty("voci")
     private List<Voci> voci = null;
-
-    public StatoPendenzaVerificata getStato() {
-        return stato;
-    }
-
-    public void setStato(StatoPendenzaVerificata stato) {
-        this.stato = stato;
-    }
-
-    @JsonProperty("stato")
-    private StatoPendenzaVerificata stato;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("idTipoPendenza")
     public String getIdTipoPendenza() {
@@ -109,12 +91,12 @@ public class Pendenza implements Serializable {
     }
 
     @JsonProperty("idDominio")
-    public String getIdDominio() {
+    public Integer getIdDominio() {
         return idDominio;
     }
 
     @JsonProperty("idDominio")
-    public void setIdDominio(String idDominio) {
+    public void setIdDominio(Integer idDominio) {
         this.idDominio = idDominio;
     }
 
@@ -159,12 +141,12 @@ public class Pendenza implements Serializable {
     }
 
     @JsonProperty("numeroAvviso")
-    public String getNumeroAvviso() {
+    public Long getNumeroAvviso() {
         return numeroAvviso;
     }
 
     @JsonProperty("numeroAvviso")
-    public void setNumeroAvviso(String numeroAvviso) {
+    public void setNumeroAvviso(Long numeroAvviso) {
         this.numeroAvviso = numeroAvviso;
     }
 
@@ -298,15 +280,14 @@ public class Pendenza implements Serializable {
         this.voci = voci;
     }
 
-    public void setIdA2A(String idA2A) {
-        this.idA2A = idA2A;
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
-    public void setIdPendenza(String idPendenza) {
-        this.idPendenza = idPendenza;
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
-    public void setDataCaricamento(String dataCaricamento) {
-        this.dataCaricamento = dataCaricamento;
-    }
 }

@@ -24,9 +24,6 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Ext_cassiere00Bulk extends Ext_cassiere00Base {
 
-	public final static String TIPO_RECORD_01 = "01";
-	public final static String TIPO_RECORD_30 = "30";
-	public final static String TIPO_RECORD_32 = "32";
 	private SimpleBulkList logs;
 
 public Ext_cassiere00Bulk() {
