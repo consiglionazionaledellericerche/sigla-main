@@ -44,9 +44,6 @@
   <action 
       path="/ConsIncarichiEstrazioneFpAction" actionClass="it.cnr.contab.incarichi00.action.ConsIncarichiEstrazioneFpAction">
   </action>
-  <action
-      path="/AnagraficaDottoratiAction" actionClass="it.cnr.contab.incarichi00.action.CRUDAnagraficaDottoratiAction">
-  </action>
 
   <businessProcess
       name="CRUDConfigTipoAttivitaBP" className="it.cnr.contab.incarichi00.bp.CRUDConfigTipoAttivitaBP">
@@ -178,51 +175,4 @@
 		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_ConsIncarAssRicBorseStComponentSession"/>								
 	    <init-param name="defaultAction" value="ConsIncarAssRicBorseStAction"/>	    
   </businessProcess>
-    <!--
-    Anagrafica Dottorati
-    -->
-    <businessProcess
-            name="CRUDAnagraficaDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP">
-        <forward name="default" path="/incarichi00/anagrafica_dottorati.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.AnagraficaDottoratiBulk"/>
-        <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_AnagraficaDottoratiComponentSession" />
-        <init-param name="defaultAction" value="AnagraficaDottoratiAction"/>
-    </businessProcess>
-
-    <businessProcess
-            name="CRUDCicloDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-        <forward name="default" path="/util/form.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiBulk"/>
-        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
-        <init-param name="defaultAction" value="CRUDAction"/>
-    </businessProcess>
-
-    <businessProcess
-            name="CRUDPhdtipoDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-        <forward name="default" path="/util/form.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Phdtipo_dottoratiBulk"/>
-        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
-        <init-param name="defaultAction" value="CRUDAction"/>
-    </businessProcess>
-
-    <businessProcess
-            name="CRUDTipocorsoDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-        <forward name="default" path="/util/form.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Tipocorso_dottoratiBulk"/>
-        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
-        <init-param name="defaultAction" value="CRUDAction"/>
-    </businessProcess>
-
-<!--
-Scadenzario Dottorati
--->
-<!--    <businessProcess
-            name="CRUDScadenzarioDottoratiBP" className="it.cnr.contab.incarichi00.bp.CRUDAnagraficaDottoratiBP">
-        <forward name="default" path="/incarichi00/scadenzariodottorati.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.ScadenzarioDottoratiBulk"/>
-        <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_ScadenzarioDottoratiComponentSession" />
-        <init-param name="defaultAction" value="ScadenzarioDottoratiAction"/>
-    </businessProcess>-->
-
-
 </action-mappings>
