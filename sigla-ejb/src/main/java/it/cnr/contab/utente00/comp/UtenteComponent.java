@@ -432,9 +432,6 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException
 	{
 		UtenteBulk utenteBulk =  (UtenteBulk)bulk;
-
-		((UtenteBulk)utenteBulk).setPassword(((UtenteBulk)utenteBulk).DEFAULT_PSWD);	
-
 		try
 		{
 			String cd_gestore = utenteBulk.getUser();

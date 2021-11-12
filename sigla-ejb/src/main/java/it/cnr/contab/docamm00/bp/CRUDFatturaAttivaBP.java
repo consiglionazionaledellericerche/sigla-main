@@ -1256,7 +1256,7 @@ public abstract class CRUDFatturaAttivaBP
 
     public void visualizzaDocumentoAttivo(ActionContext actioncontext) throws Exception {
         Fattura_attivaBulk fattura = (Fattura_attivaBulk) getModel();
-        InputStream is = docCollService.getStreamDocumento(fattura);
+        InputStream is = docCollService.getStreamDocumentoAttivo(fattura);
         if (is != null) {
             ((HttpActionContext) actioncontext).getResponse().setContentType("application/pdf");
             OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
