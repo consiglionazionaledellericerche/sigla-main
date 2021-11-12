@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<SQLPersistentInfo
-	persistentClassName="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiBulk"
-	homeClassName="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiHome">
-	<defaultColumnMap
-		tableName="CICLO_DOTTORATI">
-	</defaultColumnMap>
-</SQLPersistentInfo>
