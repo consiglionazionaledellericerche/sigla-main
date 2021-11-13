@@ -18,7 +18,6 @@
 package it.cnr.contab.prevent00.ejb;
 
 import javax.ejb.Remote;
-import java.math.BigDecimal;
 
 @Remote
 public interface PdgPianoRipartoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
@@ -28,6 +27,4 @@ public interface PdgPianoRipartoComponentSession extends it.cnr.jada.ejb.CRUDCom
 	it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk rendiPdgPianoRipartoDefinitivo(it.cnr.jada.UserContext param0, it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 	it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk rendiPdgPianoRipartoProvvisorio(it.cnr.jada.UserContext param0, it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 	it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk caricaStruttura(it.cnr.jada.UserContext param0, it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-	void caricaPianoDiRiparto(it.cnr.jada.UserContext param0, String param1, String param2, BigDecimal param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-
 }

@@ -20,8 +20,13 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class ContrattoBase extends ContrattoKey implements Keyed {
 //    ESERCIZIO_PADRE DECIMAL(4,0)
 	private java.lang.Integer esercizio_padre;
@@ -158,6 +163,7 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	private java.lang.Integer pg_progetto;
 
 	// PG_PROGETTO VARCHAR2(3)
+	@JsonIgnore
 	private String tipo_dettaglio_contratto;
 
 	public ContrattoBase() {

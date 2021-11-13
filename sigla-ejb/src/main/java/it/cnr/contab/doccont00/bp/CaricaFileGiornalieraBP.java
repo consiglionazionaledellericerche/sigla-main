@@ -21,9 +21,6 @@ package it.cnr.contab.doccont00.bp;
 import it.cnr.contab.doccont00.intcass.giornaliera.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassa.InformazioniContoEvidenza;
 import it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassa.InformazioniContoEvidenza.MovimentoContoEvidenza;
-import it.cnr.contab.doccont00.service.DocumentiContabiliService;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -77,22 +74,6 @@ public class CaricaFileGiornalieraBP extends BulkBP {
             throws BusinessProcessException {
         super.init(config, actioncontext);
         setModel(actioncontext, new FlussoGiornaleDiCassaBulk());
-    }
-
-    public void caricaFileSIOPE(ActionContext actioncontext, File file) throws BusinessProcessException, ComponentException, RemoteException {
-        final DocumentiContabiliService documentiContabiliService = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class);
-        try {
-            JAXBContext jc = JAXBContext.newInstance("it.cnr.si.siopeplus.giornaledicassa.custom");
-            it.cnr.si.siopeplus.giornaledicassa.custom.ObjectFactory obj = new it.cnr.si.siopeplus.giornaledicassa.custom.ObjectFactory();
-            it.cnr.si.siopeplus.giornaledicassa.FlussoGiornaleDiCassa flussoGiornaleDiCassa =
-                    (it.cnr.si.siopeplus.giornaledicassa.FlussoGiornaleDiCassa) jc.createUnmarshaller().unmarshal(file);
-            String identificativoFlusso = Optional.ofNullable(flussoGiornaleDiCassa.getIdentificativoFlussoBT())
-                    .map(s -> s.substring(0, s.indexOf("#")))
-                    .orElseThrow(() -> new ApplicationMessageFormatException("IdentificativoFlusso non trovato!"));
-            documentiContabiliService.messaggioGiornaleDiCassa(flussoGiornaleDiCassa, identificativoFlusso);
-        } catch (JAXBException e) {
-            throw handleException(e);
-        }
     }
 
     public void caricaFile(ActionContext actioncontext, File file) throws BusinessProcessException, ComponentException, RemoteException {
