@@ -4,6 +4,8 @@
 
 CREATE OR REPLACE PACKAGE BODY "CNRMIG100" is
 
+lPgExec number;
+
 function isRibaltamentoPDGPEffettuato (aEs number, aPgEsec number) return boolean is
 --aPgEsecPrec integer;
 conta_es      number;
@@ -222,9 +224,6 @@ begin
 
   -- inizio spostamento in ribaltamento_altro rospuc
 	-- Ribaltamento elemento voce
-	lock table elemento_voce in exclusive mode nowait;
-	lock table voce_f in exclusive mode nowait;
-	lock table voce_f_saldi_cmp in exclusive mode nowait;
 	aMessage := 'Ribaltamento dell''anagrafica dei capitoli sull''esercizio '||aEs||'. Lock tabelle ELEMENTO_VOCE, VOCE_F, VOCE_F_SALDI_CMP';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aElVoce in (select * from ELEMENTO_VOCE
@@ -352,7 +351,6 @@ begin
 	-- in VOCE_F
 
 	-- Ribaltamento delle associazioni fra elementi voce
-	lock table ass_ev_ev in exclusive mode nowait;
 	aMessage := 'Ribaltamento delle associazioni fra elementi voce sull''esercizio '||aEs||'. Lock tabella ASS_EV_EV';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aAssEVEV in (select * from ASS_EV_EV
@@ -416,7 +414,6 @@ begin
 	end loop;
 
 	-- Ribaltamento associazioni tra categorie e voci del piano dei conti
-	lock table categoria_gruppo_voce in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazioni tra categorie e voci del piano dei conti sull''esercizio '||aEs||'. Lock tabella CATEGORIA_GRUPPO_VOCE';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aCatGV in (select * from CATEGORIA_GRUPPO_VOCE
@@ -631,7 +628,6 @@ begin
 	-- Ribaltamento per la Gestione SIOPE
 
 	-- Ribaltamento dei codici siope
-	lock table CODICI_SIOPE in exclusive mode nowait;
 	aMessage := 'Ribaltamento Codici SIOPE sull''esercizio '||aEs||'. Lock tabella CODICI_SIOPE';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	For aCodSiope in (select * from CODICI_SIOPE
@@ -665,7 +661,6 @@ begin
 	End Loop;
 
 	-- Ribaltamento delle associazioni fra tipologie istat e codici siope
-	lock table ASS_TIPOLOGIA_ISTAT_SIOPE in exclusive mode nowait;
 	aMessage := 'Ribaltamento Associazione Tipologia ISTAT - Codici SIOPE sull''esercizio '||aEs||'. Lock tabella ASS_TIPOLOGIA_ISTAT_SIOPE';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	For aAssIstatSiope in (select * from ASS_TIPOLOGIA_ISTAT_SIOPE
@@ -700,7 +695,6 @@ begin
 	End Loop;
 
 	-- Ribaltamento delle associazioni fra elementi voce e codici siope
-	lock table ass_ev_siope in exclusive mode nowait;
 	aMessage := 'Ribaltamento delle associazioni fra elementi voce e codici siope sull''esercizio '||aEs||'. Lock tabella ASS_EV_SIOPE';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	For aAssEVSiope in (select * from ASS_EV_SIOPE
@@ -743,7 +737,6 @@ begin
 	end loop;
 
 	-- Ribaltamento delle associazioni fra contributi/ritenute e codici siope
-	lock table ASS_TIPO_CONTR_RITENUTA_SIOPE in exclusive mode nowait;
 	aMessage := 'Ribaltamento Associazione Contributi/ritenute - Codici SIOPE sull''esercizio '||aEs||'. Lock tabella ASS_TIPO_CONTR_RITENUTA_SIOPE';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	For aAssContrRitSiope in (Select * From ASS_TIPO_CONTR_RITENUTA_SIOPE
@@ -799,7 +792,6 @@ begin
 
 		-- Ribaltamento FIRME sull'esercizio contabile destinazione
 		-- a partire dall'esercizio precedente
-		lock table firme in exclusive mode nowait;
 		begin
 			aMessage := 'Inserimento delle FIRME per l''esercizio base '||aEs||'. Lock tabella FIRME';
 			ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -817,7 +809,6 @@ begin
 		-- Ribaltamento ASS_INCARICO_ATTIVITA sull'esercizio contabile destinazione
 		-- a partire dall'esercizio precedente
 		-- archivio già caricato anche negli anni successivi
-		lock table ass_incarico_attivita in exclusive mode nowait;
 		begin
 			aMessage := 'Inserimento di ASS_INCARICO_ATTIVITA per l''esercizio base '||aEs||'. Lock tabella ASS_INCARICO_ATTIVITA';
 			ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -836,7 +827,6 @@ begin
 		ribaltaCORI_altro(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
 
 		-- Ribaltamento associazione tra UO e tipologie sezionali
-		lock table sezionale in exclusive mode nowait;
 		aMessage := 'Ribaltamento associazione tra UO e tipologie sezionali sull''esercizio '||aEs||'. Lock tabella SEZIONALE';
 		ibmutl200.loginf(aPgEsec,aMessage,'','');
 		for	aSez in (select * from SEZIONALE
@@ -883,7 +873,6 @@ begin
 		end loop;
 
 		-- Ribaltamento tabella causali di registrazione COGE
-		lock table CAUSALE_COGE in exclusive mode nowait;
 		aMessage := 'Ribaltamento tabella causali di registrazione COGE sull''esercizio '||aEs||'. Lock tabella CAUSALE_COGE';
 		ibmutl200.loginf(aPgEsec,aMessage,'','');
 		for aCC in (select * from causale_coge
@@ -918,7 +907,6 @@ begin
 		end loop;
 
 		-- ribaltamento tabella associativa tra la categoria di un bene e il tipo ammortamento
-		lock table ASS_TIPO_AMM_CAT_GRUP_INV in exclusive mode nowait;
 		aMessage := 'Ribaltamento associazione tra la categoria di un bene e il tipo ammortamento sull''esercizio '||aEs||'. Lock tabella ASS_TIPO_AMM_CAT_GRUP_INV';
 		ibmutl200.loginf(aPgEsec,aMessage,'','');
 		for aAssCatAmm in (select * from ASS_TIPO_AMM_CAT_GRUP_INV
@@ -954,7 +942,6 @@ begin
 		end loop;
 
 		-- ribaltamento associazioni tra CODICE SIA in interfaccia di ritorno cassiere e codice CDS CIR
- 		lock table EXT_CASSIERE_CDS in exclusive mode nowait;
  		aMessage := 'Ribaltamento associazioni tra CODICE SIA in interfaccia di ritorno cassiere e codice CDS CIR sull''esercizio '||aEs||'. Lock tabella EXT_CASSIERE_CDS';
  		ibmutl200.loginf(aPgEsec,aMessage,'','');
  		for aExt in (select * from EXT_CASSIERE_CDS
@@ -995,7 +982,6 @@ begin
     ribaltaINTRASTAT(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
 
 		-- ribaltamento Nazioni inserite nella BLACKLIST
- 		lock table NAZIONE_BLACKLIST in exclusive mode nowait;
  		aMessage := 'Ribaltamento Nazioni inserite nella BLACKLIST sull''esercizio '||aEs||'. Lock tabella NAZIONE_BLACKLIST';
  		ibmutl200.loginf(aPgEsec,aMessage,'','');
  		for aNaz in (select * from NAZIONE_BLACKLIST
@@ -1038,17 +1024,14 @@ begin
 
 end;
 ----------------------------------------------------------------------------
-procedure init_ribaltamento_pdgp(aEs number, aMessage in out varchar2) is
+procedure init_ribaltamento_pdgp(aEs number, aPgEsec number, aMessage in out varchar2) is
 aEsPrec         number;
-aPgEsec         number;
 stato_fine      char(1) := 'I';
 aNum            number;
 new_val01       VARCHAR2(100);
 begin
-
 	begin
-		aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_PDGP,dsProcesso_pdgp,null,cgUtente,null,null);
-dbms_output.put_line('0001');
+        dbms_output.put_line('0001');
 		startLogRibaltamento(aEs, aPgEsec, dsProcesso_pdgp , cgUtente);
 
 		if isRibaltamentoPDGPEffettuato(aEs, aPgEsec) then
@@ -1089,7 +1072,6 @@ dbms_output.put_line('0001');
 		end;
 
 		-- Creazione esercizio base
-		lock table esercizio_base in exclusive mode nowait;
 		begin
 			aMessage := 'Inserimento dell''esercizio base '||aEs||'. Lock tabella ESERCIZIO_BASE';
 			ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -1102,7 +1084,6 @@ dbms_output.put_line('0001');
 		end;
 
 		-- Creazione Parametri CNR
-		lock table parametri_cnr in exclusive mode nowait;
 		begin
 			aMessage := 'Inserimento dei Parametri CNR per l''esercizio base '||aEs||'. Lock tabella PARAMETRI_CNR';
 			ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -1133,10 +1114,6 @@ dbms_output.put_line('0001');
 dbms_output.put_line('0002');
 
 		-- Definizione esercizio contabile dell'ente
-		lock table esercizio in exclusive mode nowait;
-		lock table bilancio_preventivo in exclusive mode nowait;
-		lock table voce_f_saldi_cmp in exclusive mode nowait;
-		lock table numerazione_doc_cont in exclusive mode nowait;
 		begin
 			 aMessage := 'Inserimento dell''esercizio contabile '||aEs||' per l''ente. Lock tabelle ESERCIZIO, NUMERAZIONE_DOC_CONT';
 			ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -1190,7 +1167,6 @@ dbms_output.put_line('0002');
 
     -- Ribaltamento TIPO_VARIAZIONE sull'esercizio contabile destinazione
 		-- a partire dall'esercizio precedente
-		lock table tipo_variazione in exclusive mode nowait;
 		begin
 			aMessage := 'Inserimento di TIPO_VARIAZIONE per l''esercizio base '||aEs||'. Lock tabella TIPO_VARIAZIONE';
 			ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -1216,7 +1192,6 @@ dbms_output.put_line('0004');
 
 		-- Ribaltamento CONFIGURAZIONE_CNR sull'esercizio contabile destinazione
 		-- a partire dall'esercizio precedente
-		lock table configurazione_cnr in exclusive mode nowait;
 		aMessage := 'Ribaltamento configurazione CNR sull''esercizio '||aEs||'. Lock tabella CONFIGURAZIONE_CNR';
 		ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 		for aConfCNR in (select * from CONFIGURAZIONE_CNR
@@ -1319,11 +1294,17 @@ dbms_output.put_line('0007');
 	end;
 
 end;
+
+procedure init_ribaltamento_pdgp(aEs number, aMessage in out varchar2) is
+    aPgEsec  number;
+begin
+    aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_PDGP,dsProcesso_pdgp,null,cgUtente,null,null);
+    init_ribaltamento_pdgp(aEs, aPgEsec, aMessage);
+end;
 ----------------------------------------------------------------------------
 Procedure ribaltaEV(aEsDest number, aEsOrig number, aPgEsec number, aStato in out char, aMessage in out varchar2) is
 begin
 	-- Ribaltamento Classificazioni Entrate
-	lock table classificazione_entrate in exclusive mode nowait;
 	aMessage := 'Ribaltamento Classificazioni Entrate sull''esercizio '||aEsDest||'. Lock tabella CLASSIFICAZIONE_ENTRATE';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aClassE in (select * from CLASSIFICAZIONE_ENTRATE
@@ -1362,7 +1343,6 @@ begin
 		end;
 	end loop;
 	-- Ribaltamento Classificazioni Spese
-	lock table classificazione_spese in exclusive mode nowait;
 	aMessage := 'Ribaltamento Classificazioni Spese sull''esercizio '||aEsDest||'. Lock tabella CLASSIFICAZIONE_SPESE';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aClassS in (select * from CLASSIFICAZIONE_SPESE
@@ -1402,7 +1382,6 @@ begin
 	end loop;
 
 	-- Ribaltamento Parametri Livelli
-	lock table parametri_livelli in exclusive mode nowait;
         Begin
 	   aMessage := 'Ribaltamento Parametri Livelli sull''esercizio '||aEsDest||'. Lock tabella PARAMETRI_LIVELLI';
 	   ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -1448,9 +1427,6 @@ begin
 	End;
 
 	-- Ribaltamento elemento voce
-	lock table elemento_voce in exclusive mode nowait;
-	lock table voce_f in exclusive mode nowait;
-	lock table voce_f_saldi_cmp in exclusive mode nowait;
 	aMessage := 'Ribaltamento dell''anagrafica dei capitoli sull''esercizio '||aEsDest||'. Lock tabelle ELEMENTO_VOCE, VOCE_F, VOCE_F_SALDI_CMP';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aElVoce in (select * from ELEMENTO_VOCE
@@ -1573,7 +1549,6 @@ begin
 	-- in VOCE_F
 
 	-- Ribaltamento delle associazioni elementi voce, funzioni e tipologia di cds
-	lock table ASS_EV_FUNZ_TIPOCDS in exclusive mode nowait;
 	aMessage := 'Ribaltamento delle associazioni elementi voce, funzioni e tipologia di cds sull''esercizio '||aEsDest||'. Lock tabella ASS_EV_FUNZ_TIPOCDS';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aAssEVF in (select * from ASS_EV_FUNZ_TIPOCDS
@@ -1610,7 +1585,6 @@ begin
 	-- in VOCE_F
 
 	-- Ribaltamento delle associazioni fra elementi voce
-	lock table ass_ev_ev in exclusive mode nowait;
 	aMessage := 'Ribaltamento delle associazioni fra elementi voce sull''esercizio '||aEsDest||'. Lock tabella ASS_EV_EV';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aAssEVEV in (select * from ASS_EV_EV
@@ -2034,7 +2008,6 @@ parent_key_not_found exception;
 pragma exception_init(parent_key_not_found,-2291);
 begin
 
-	lock table prc_copertura_obblig in exclusive mode nowait;
 	aMessage := 'Creazione dell''esercizio contabile '||aEsDest||' per i CDS e impostazione delle percentuali di copertura '||cnrutil.getLabelObbligazioniMin()||'. Lock tabelle ESERCIZIO, PRC_COPERTURA_OBBLIG, NUMERAZIONE_DOC_CONT.';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	-- ciclo sui cds validi nel corso dell'esercizio di destinazione
@@ -2116,7 +2089,6 @@ exception when DUP_VAL_ON_INDEX then
 	end loop; -- fine ciclo sui cds
 dbms_output.put_line('0013');
 
-	lock table parametri_cds in exclusive mode nowait;
 	aMessage := 'Creazione dei parametri CDS per l''esercizio contabile '||aEsDest||' per i CDS validi. Lock tabella PARAMETRI_CDS.';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	-- ciclo sui cds validi nel corso dell'esercizio di destinazione
@@ -2269,7 +2241,6 @@ dbms_output.put_line('0014');
 	   End;
 	end loop;
 
-	lock table chiusura_coep in exclusive mode nowait;
 	aMessage := 'Creazione della tabella CHIUSURA_COEP per l''esercizio contabile '||aEsDest||' per i CDS validi. Lock tabella CHIUSURA_COEP.';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	-- ciclo sui cds validi nel corso dell'esercizio di destinazione
@@ -2304,7 +2275,6 @@ dbms_output.put_line('0014');
 		end;
 	end loop;
 
-	lock table ASS_PARTITA_GIRO in exclusive mode nowait;
 	aMessage := 'Ribaltamento tabella di identificazione dei collegamenti tra conti di partita di giro su '||aEsDest||'. Lock tabella ASS_PARTITA_GIRO.';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aAssPgiro in (select * from ASS_PARTITA_GIRO
@@ -2351,7 +2321,6 @@ dbms_output.put_line('0014');
 	end loop; -- fine ciclo sulle associazioni
 
 	-- Ribaltamento elenco dei CDS che sono gestiti in versamento via interfaccia
-	lock table LIQUID_CORI_INTERF_CDS in exclusive mode nowait;
 	aMessage := 'Ribaltamento elenco dei CDS che sono gestiti in versamento via interfaccia sull''esercizio '||aEsDest||'. Lock tabella LIQUID_CORI_INTERF_CDS';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aInterf in (select * from LIQUID_CORI_INTERF_CDS
@@ -2384,7 +2353,6 @@ dbms_output.put_line('0014');
 	end loop;
 
 	-- Ribaltamento elenco dei CDS che in un determinato esercizio utilizzano l'interfaccia di generazione della liquidazione IVA
-	lock table LIQUID_IVA_INTERF_CDS in exclusive mode nowait;
 	aMessage := 'Ribaltamento elenco dei CDS che sono gestiti in versamento via interfaccia sull''esercizio '||aEsDest||'. Lock tabella LIQUID_IVA_INTERF_CDS';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aInterf in (select * from LIQUID_IVA_INTERF_CDS
@@ -2414,7 +2382,6 @@ dbms_output.put_line('0014');
 		end;
 	end loop;
 	-- Ribaltamento UO che hanno una gestione dell'IVA esterna
-	lock table LIQUID_IVA_ESTERNA in exclusive mode nowait;
 	aMessage := 'Ribaltamento UO che hanno una gestione dell''IVA esterna sull''esercizio '||aEsDest||'. Lock tabella LIQUID_IVA_ESTERNA';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aEsterna in (select * from LIQUID_IVA_ESTERNA
@@ -2446,7 +2413,6 @@ dbms_output.put_line('0014');
 	end loop;
 
 	-- Ribaltamento Dipartimento_peso
-	lock table Dipartimento_peso in exclusive mode nowait;
 	aMessage := 'Ribaltamento Dipartimento peso sull''esercizio '||aEsDest||'. Lock tabella Dipartimento_peso';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aDati in (select * from Dipartimento_peso
@@ -2477,7 +2443,6 @@ dbms_output.put_line('0014');
 	end loop;
 
 	--Ribaltamento ASS_UO_AREA
-	lock table ass_uo_area in exclusive mode nowait;
 	aMessage := 'Creazione di ASS_UO_AREA per l''esercizio contabile '||aEsDest||' per le UO valide. Lock tabella ASS_UO_AREA.';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 
@@ -2514,7 +2479,6 @@ dbms_output.put_line('0014');
 		end;
 	end loop;
 	--Ribaltamento ASS_DIPARTIMENTO_AREA
-	lock table ass_dipartimento_area in exclusive mode nowait;
 	aMessage := 'Creazione di ASS_DIPARTIMENTO_AREA per l''esercizio contabile '||aEsDest||' per le Aree valide. Lock tabella ASS_DIPARTIMENTO_AREA.';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 
@@ -2553,7 +2517,6 @@ procedure ribaltaEP(aEsDest number, aEsOrig number, aPgEsec number, aStato in ou
 begin
 
 	-- Ribaltamento conti E/P
-	lock table VOCE_EP in exclusive mode nowait;
 	aMessage := 'Ribaltamento del piano dei conti E/P sull''esercizio '||aEsDest||'. Lock tabella VOCE_EP';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aVoceEP in (select * from VOCE_EP
@@ -2607,7 +2570,6 @@ begin
 	end loop;
 
 	-- Ribaltamento  delle associazioni entrate-ricavi spese-costi
-	lock table ass_ev_voceep in exclusive mode nowait;
 	aMessage := 'Ribaltamento  delle associazioni entrate-ricavi spese-costi sull''esercizio '||aEsDest||'. Lock tabella ASS_EV_VOCEEP';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aAssEVEP in (select * from ASS_EV_VOCEEP
@@ -2646,7 +2608,6 @@ begin
 	end loop;
 
 	-- Ribaltamento Parametri Livelli
-	lock table parametri_livelli_ep in exclusive mode nowait;
         Begin
 	   aMessage := 'Ribaltamento Parametri Livelli EP sull''esercizio '||aEsDest||'. Lock tabella PARAMETRI_LIVELLI_EP';
 	   ibmutl200.LOGINF(aPgEsec,aMessage,'','');
@@ -2890,7 +2851,6 @@ begin
 	end loop;
 */
 	-- Ribaltamento associazione fra categoria inventariale e voce del piano economico
-	lock table categoria_gruppo_voce_ep in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazione fra categoria inventariale e voce del piano economico';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aAssCatVoceEp in (select * from categoria_gruppo_voce_ep
@@ -2937,7 +2897,6 @@ begin
 	end loop;
 
 		-- Ribaltamento associazione CNR_ASS_CONTO_GRUPPO_EP
-	lock table CNR_ASS_CONTO_GRUPPO_EP in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazione CNR_ASS_CONTO_GRUPPO_EP';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aAssContoGruppoEp in (select * from CNR_ASS_CONTO_GRUPPO_EP
@@ -2982,7 +2941,6 @@ procedure ribaltaCORI_altro(aEsDest number, aEsOrig number, aPgEsec number, aSta
 uoEnte unita_organizzativa%rowtype;
 begin
 	-- Ribaltamento record con Pk ('999',aEsOrig,'999.0000',0) in LIQUID_CORI
-	lock table LIQUID_CORI in exclusive mode nowait;
 	uoEnte:=CNRCTB020.GETUOENTE(aEsDest);
 	aMessage := 'Ribaltamento record con Pk ('||cnrctb020.getCDCDSENTE(aEsDest)||','||aEsOrig||','||uoEnte.cd_unita_organizzativa||',0) in LIQUID_CORI sull''esercizio '||aEsDest||'. Lock tabella LIQUID_CORI';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
@@ -3025,7 +2983,6 @@ begin
 
 
 	-- Ribaltamento definizioni gruppi CORI
-	lock table gruppo_cr in exclusive mode nowait;
 	aMessage := 'Ribaltamento definizioni gruppi CORI sull''esercizio '||aEsDest||'. Lock tabella GRUPPO_CR';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aGrCR in (select * from GRUPPO_CR
@@ -3068,7 +3025,6 @@ begin
 	end loop;
 
 	-- Ribaltamento dettagli gruppo CORI
-	lock table gruppo_cr_det in exclusive mode nowait;
 	aMessage := 'Ribaltamento dettagli gruppo CORI sull''esercizio '||aEsDest||'. Lock tabella GRUPPO_CR_DET';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for	aGrCRDet in (select * from GRUPPO_CR_DET
@@ -3108,7 +3064,6 @@ begin
 	end loop;
 
 	-- Ribaltamento regole in deroga per UO
-	lock table gruppo_cr_uo in exclusive mode nowait;
 	aMessage := 'Ribaltamento regole in deroga per UO sull''esercizio '||aEsDest||'. Lock tabella GRUPPO_CR_UO';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for	aGrCRUO in (select * from GRUPPO_CR_UO
@@ -3141,7 +3096,6 @@ begin
 	end loop;
 
 	-- Ribaltamento associazione CORI e relativo gruppo
-	lock table TIPO_CR_BASE in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazione CORI e relativo gruppo sull''esercizio '||aEsDest||'. Lock tabella TIPO_CR_BASE';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for	aTiCR in (select * from TIPO_CR_BASE
@@ -3170,7 +3124,6 @@ begin
 	end loop;
 
 	-- Ribaltamento archivio per liquidazione stipendi
-	lock table STIPENDI_COFI in exclusive mode nowait;
 	aMessage := 'Ribaltamento archivio per liquidazione stipendi sull''esercizio '||aEsDest||'. Lock tabella STIPENDI_COFI';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	For	i In 1..15 Loop
@@ -3198,7 +3151,6 @@ begin
 	End Loop;
 
 	-- Ribaltamento informazioni relative alla regione per liquidazione CORI stipendiali
-	lock table STIPENDI_COFI_CORI_REG in exclusive mode nowait;
 	aMessage := 'Ribaltamento informazioni relative alla regione per liquidazione CORI stipendiali sull''esercizio '||aEsDest||'. Lock tabella STIPENDI_COFI_CORI_REG';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for	aStip in (select * from STIPENDI_COFI_CORI_REG
@@ -3233,7 +3185,6 @@ procedure ribaltaCORI_pdgp(aEsDest number, aEsOrig number, aPgEsec number, aStat
 begin
 
 	-- Ribaltamento associazioni tipo cori ed EV
-	lock table ass_tipo_cori_ev in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazioni tipo cori ed EV sull''esercizio '||aEsDest||'. Lock tabella ASS_TIPO_CORI_EV';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aAssCoriEV in (select * from ASS_TIPO_CORI_EV
@@ -3273,7 +3224,6 @@ begin
 	end loop;
 
 	-- Ribaltamento associazione tipo cori e conto EP
-	lock table ass_tipo_cori_voce_ep in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazione tipo cori e conto EP sull''esercizio '||aEsDest||'. Lock tabella ASS_TIPO_CORI_VOCE_EP';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 	for aAssCoriEP in (select * from ASS_TIPO_CORI_VOCE_EP
@@ -3356,7 +3306,6 @@ begin
 		end;
 	end loop;
 	-- Ribaltamento MODALITA_TRASPORTO
-	lock table MODALITA_TRASPORTO in exclusive mode nowait;
 	aMessage := 'Ribaltamento MODALITA_TRASPORTO sull''esercizio '||aEsDest||'. Lock tabella MODALITA_TRASPORTO';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 
@@ -3387,7 +3336,6 @@ begin
 		end;
 	end loop;
 	-- Ribaltamento CONDIZIONE_CONSEGNA
-	lock table CONDIZIONE_CONSEGNA in exclusive mode nowait;
 	aMessage := 'Ribaltamento CONDIZIONE_CONSEGNA sull''esercizio '||aEsDest||'. Lock tabella CONDIZIONE_CONSEGNA';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 
@@ -3467,7 +3415,6 @@ begin
 		end;
 	end loop;
 	-- Ribaltamento MODALITA_EROGAZIONE
-	lock table MODALITA_EROGAZIONE in exclusive mode nowait;
 	aMessage := 'Ribaltamento MODALITA_EROGAZIONE sull''esercizio '||aEsDest||'. Lock tabella MODALITA_EROGAZIONE';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 
@@ -3498,7 +3445,6 @@ begin
 		end;
 	end loop;
 	-- Ribaltamento MODALITA_INCASSO
-	lock table MODALITA_INCASSO in exclusive mode nowait;
 	aMessage := 'Ribaltamento MODALITA_INCASSO sull''esercizio '||aEsDest||'. Lock tabella MODALITA_INCASSO';
 	ibmutl200.loginf(aPgEsec,aMessage,'','');
 
@@ -3579,8 +3525,6 @@ parent_key_not_found exception;
 pragma exception_init(parent_key_not_found,-2291);
 begin
   -- Ribaltamento tabella LIMITE_SPESA
-	lock table LIMITE_SPESA in exclusive mode nowait;
-	lock table LIMITE_SPESA_DET in exclusive mode nowait;
 	aMessage := 'Ribaltamento dei limiti di spesa sull''esercizio '||aEsDest||'. Lock tabella LIMITE_SPESA';
 	ibmutl200.LOGINF(aPgEsec,aMessage,'','');
 	for aLimitiSpesa in (select * from LIMITE_SPESA
@@ -3675,5 +3619,140 @@ begin
 	end loop;  -- fine ciclo aLimitiSpesa
 
 end;
+
+procedure AGGIORMENTO_PROGETTI(aEs number, pg_exec number) as
+   aTSNow date;
+   aUser varchar2(20);
+   aMessage varchar2(500);
+   P_INDEX NUMBER := 0;
+   CONTA_INS NUMBER := 0;
+begin
+   aTSNow:=sysdate;
+   aUser:=IBMUTL200.getUserFromLog(pg_exec);
+
+   --Inserisco sui progetti le voci di bilancio nuove create associate ai piani economici e che prevedono l'inserimento automatico e non manuale
+   INSERT INTO ASS_PROGETTO_PIAECO_VOCE
+      (PG_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_VOCE_PIANO, ESERCIZIO_PIANO, ESERCIZIO_VOCE, TI_APPARTENENZA, TI_GESTIONE, CD_ELEMENTO_VOCE, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+   SELECT A.PG_PROGETTO, B.CD_UNITA_PIANO, B.CD_VOCE_PIANO, A.ESERCIZIO_PIANO,
+          B.ESERCIZIO, B.TI_APPARTENENZA, B.TI_GESTIONE, B.CD_ELEMENTO_VOCE, aTSNow, aUser, aTSNow, aUser, 0
+   FROM PROGETTO_PIANO_ECONOMICO A, ELEMENTO_VOCE B, VOCE_PIANO_ECONOMICO_PRG C
+   WHERE A.CD_UNITA_ORGANIZZATIVA = C.CD_UNITA_ORGANIZZATIVA
+   AND   A.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+   AND   B.CD_UNITA_PIANO = C.CD_UNITA_ORGANIZZATIVA
+   AND   B.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+   AND   A.ESERCIZIO_PIANO = B.ESERCIZIO
+   AND   C.FL_ADD_VOCIBIL = 'N'
+   AND   A.ESERCIZIO_PIANO = aEs
+   AND   NOT EXISTS(SELECT 1 FROM ASS_PROGETTO_PIAECO_VOCE D
+                    WHERE D.PG_PROGETTO = A.PG_PROGETTO
+                    AND   D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                    AND   D.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                    AND   D.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO);
+
+   aMessage := 'Aggiornamento voci su piano economico progetti. Inseriti '||sql%rowcount||' record.';
+   ibmutl200.LOGINF(pg_exec,aMessage,'','');
+
+   --Inserisco sulle rimodulazioni dei progetti le voci di bilancio nuove create associate ai piani economici e che prevedono l'inserimento automatico e non manuale
+   FOR REC IN (SELECT DISTINCT A.PG_PROGETTO, A.PG_RIMODULAZIONE, B.CD_UNITA_PIANO, B.CD_VOCE_PIANO, A.ESERCIZIO_PIANO
+               FROM PROGETTO_RIMODULAZIONE_PPE A, PROGETTO_RIMODULAZIONE PR, ELEMENTO_VOCE B, VOCE_PIANO_ECONOMICO_PRG C
+               WHERE A.CD_UNITA_ORGANIZZATIVA = C.CD_UNITA_ORGANIZZATIVA
+               AND   A.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+               AND   B.CD_UNITA_PIANO = C.CD_UNITA_ORGANIZZATIVA
+               AND   B.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+               AND   A.ESERCIZIO_PIANO = B.ESERCIZIO
+               AND   C.FL_ADD_VOCIBIL = 'N'
+               AND   A.PG_PROGETTO = PR.PG_PROGETTO
+               AND   A.PG_RIMODULAZIONE = PR.PG_RIMODULAZIONE
+               AND   PR.STATO NOT IN ('A', 'R')
+               AND   A.ESERCIZIO_PIANO = aEs
+               AND   (A.IM_VAR_SPESA_FINANZIATO > 0 OR A.IM_VAR_SPESA_COFINANZIATO > 0 OR A.IM_STOASS_SPESA_FINANZIATO > 0 OR A.IM_STOASS_SPESA_COFINANZIATO > 0)
+               AND   NOT EXISTS(SELECT 1 FROM PROGETTO_RIMODULAZIONE_VOCE D
+                                WHERE D.PG_PROGETTO = A.PG_PROGETTO
+                                AND   D.PG_RIMODULAZIONE = A.PG_RIMODULAZIONE
+                                AND   D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                AND   D.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                AND   D.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)
+               AND   NOT EXISTS(SELECT 1 FROM ASS_PROGETTO_PIAECO_VOCE E
+                                WHERE E.PG_PROGETTO = A.PG_PROGETTO
+                                AND   E.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                AND   E.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                AND   E.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)) LOOP
+
+       P_INDEX := 0;
+
+       FOR DET IN (SELECT A.PG_PROGETTO, A.PG_RIMODULAZIONE, B.CD_UNITA_PIANO, B.CD_VOCE_PIANO, A.ESERCIZIO_PIANO,
+       	               B.ESERCIZIO, B.TI_APPARTENENZA, B.TI_GESTIONE, B.CD_ELEMENTO_VOCE
+                   FROM PROGETTO_RIMODULAZIONE_PPE A, PROGETTO_RIMODULAZIONE PR, ELEMENTO_VOCE B, VOCE_PIANO_ECONOMICO_PRG C
+                   WHERE A.CD_UNITA_ORGANIZZATIVA = C.CD_UNITA_ORGANIZZATIVA
+                   AND   A.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+                   AND   B.CD_UNITA_PIANO = C.CD_UNITA_ORGANIZZATIVA
+                   AND   B.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+                   AND   A.ESERCIZIO_PIANO = B.ESERCIZIO
+                   AND   C.FL_ADD_VOCIBIL = 'N'
+                   AND   A.PG_PROGETTO = PR.PG_PROGETTO
+                   AND   A.PG_RIMODULAZIONE = PR.PG_RIMODULAZIONE
+                   AND   PR.STATO NOT IN ('A', 'R')
+                   AND   A.ESERCIZIO_PIANO = aEs
+                   AND   (A.IM_VAR_SPESA_FINANZIATO > 0 OR A.IM_VAR_SPESA_COFINANZIATO > 0 OR A.IM_STOASS_SPESA_FINANZIATO > 0 OR A.IM_STOASS_SPESA_COFINANZIATO > 0)
+                   AND   NOT EXISTS(SELECT 1 FROM PROGETTO_RIMODULAZIONE_VOCE D
+                                    WHERE D.PG_PROGETTO = A.PG_PROGETTO
+                    				AND   D.PG_RIMODULAZIONE = A.PG_RIMODULAZIONE
+                                    AND   D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                    AND   D.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                    AND   D.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)
+                   AND   NOT EXISTS(SELECT 1 FROM ASS_PROGETTO_PIAECO_VOCE E
+                                    WHERE E.PG_PROGETTO = A.PG_PROGETTO
+                                    AND   E.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                    AND   E.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                    AND   E.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)
+                   AND   A.PG_PROGETTO = REC.PG_PROGETTO
+                   AND   A.PG_RIMODULAZIONE = REC.PG_RIMODULAZIONE
+                   AND   B.CD_UNITA_PIANO = REC.CD_UNITA_PIANO
+                   AND   B.CD_VOCE_PIANO = REC.CD_VOCE_PIANO
+                   AND   A.ESERCIZIO_PIANO = REC.ESERCIZIO_PIANO) LOOP
+
+           P_INDEX := P_INDEX + 1;
+           INSERT INTO PROGETTO_RIMODULAZIONE_VOCE
+               (PG_PROGETTO, PG_RIMODULAZIONE, CD_UNITA_ORGANIZZATIVA, CD_VOCE_PIANO, ESERCIZIO_PIANO,
+                PG_VARIAZIONE, ESERCIZIO_VOCE, TI_APPARTENENZA, TI_GESTIONE, CD_ELEMENTO_VOCE, TI_OPERAZIONE, IM_VAR_SPESA_FINANZIATO, IM_VAR_SPESA_COFINANZIATO, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+           VALUES(DET.PG_PROGETTO, DET.PG_RIMODULAZIONE, DET.CD_UNITA_PIANO, DET.CD_VOCE_PIANO, DET.ESERCIZIO_PIANO,
+                P_INDEX, DET.ESERCIZIO, DET.TI_APPARTENENZA, DET.TI_GESTIONE, DET.CD_ELEMENTO_VOCE, 'A', 0, 0,
+                aTSNow, aUser, aTSNow, aUser, 0);
+
+           CONTA_INS := CONTA_INS + SQL%ROWCOUNT;
+       END LOOP;
+   END LOOP;
+   aMessage := 'Aggiornamento voci su rimodulazione piano economico progetti. Inseriti '||sql%rowcount||' record.';
+   ibmutl200.LOGINF(pg_exec,aMessage,'','');
+end;
+
+procedure JOB_RIBALTAMENTO_PDGP(job number, pg_exec number, next_date date, aEs number) as
+    aTSNow date;
+    aUser varchar2(20);
+    aMessage varchar2(500);
+begin
+    aTSNow:=sysdate;
+    aUser:=IBMUTL200.getUserFromLog(pg_exec);
+    lPgExec := pg_exec;
+
+    -- Aggiorna le info di testata del log
+    IBMUTL210.logStartExecutionUpd(lPgExec, TI_LOG_RIBALTAMENTO_PDGP, job, 'Batch di ribaltamento configurazione, str.organizzativa, anagrafica capitoli e piano dei conti. Start:'||to_char(aTSNow,'YYYY/MM/DD HH-MI-SS'));
+
+	if aEs = 0 then
+	   ibmutl200.logErr(lPgExec,'Esercizio zero non gestito', '', '');
+	else
+	   insert into numerazione_base (ESERCIZIO, COLONNA, TABELLA, CD_CORRENTE, CD_MASSIMO, DUVA, UTUV, DACR, UTCR, PG_VER_REC, CD_INIZIALE )
+	   (select aEs, COLONNA, TABELLA, 0, CD_MASSIMO, aTSNow, aUser, aTSNow, aUser, 1, CD_INIZIALE
+	    FROM numerazione_base
+	    WHERE Esercizio = aEs - 1
+	    AND TABELLA IN ('VAR_STANZ_RES' , 'VAR_STANZ_RES$'));
+
+	   INIT_RIBALTAMENTO_pdgp(aEs,pg_exec,aMessage);
+	   AGGIORMENTO_PROGETTI(aEs,pg_exec);
+
+       ibmutl200.logInf(pg_exec,aMessage, '', '');
+       ibmutl200.logInf(pg_exec,'Batch di ribaltamento configurazione, str.organizzativa, anagrafica capitoli e piano dei conti.', 'End:'||to_char(sysdate,'YYYY/MM/DD HH-MI-SS'), '');
+    end if;
+ end;
 ----------------------------------------------------------------------------
 end;

@@ -22,9 +22,13 @@
 package it.cnr.contab.incarichi00.bulk;
 import java.sql.Connection;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
@@ -34,5 +38,19 @@ public class Incarichi_repertorio_annoHome extends BulkHome {
 	}
 	public Incarichi_repertorio_annoHome(Connection conn, PersistentCache persistentCache) {
 		super(Incarichi_repertorio_annoBulk.class, conn, persistentCache);
+	}
+
+	@Override
+	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
+		persistent = super.completeBulkRowByRow(userContext, persistent);
+		try {
+			if (persistent instanceof Incarichi_repertorio_annoBulk) {
+				Incarichi_repertorio_annoBulk increpanno = (Incarichi_repertorio_annoBulk) persistent;
+				CompensoHome cHome = (CompensoHome) getHomeCache().getHome(CompensoBulk.class);
+				increpanno.setCompensiColl(new BulkList(cHome.findCompensoIncaricoList(userContext, increpanno)));
+			}
+		} catch (IntrospectionException e) {
+		}
+		return persistent;
 	}
 }

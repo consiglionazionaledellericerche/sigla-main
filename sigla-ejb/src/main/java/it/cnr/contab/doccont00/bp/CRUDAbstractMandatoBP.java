@@ -129,6 +129,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		try {
+			this.nodeRefDocumento = null;
 			Optional.ofNullable(documentiContabiliService.getDocumentKey(
 			(StatoTrasmissione) getComponentSession().findByPrimaryKey(context.getUserContext(),
 					new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato()))
