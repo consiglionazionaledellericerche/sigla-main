@@ -28,6 +28,7 @@ import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 
+import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -53,6 +54,7 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAm
 	protected BulkList<OrdineAcqConsegnaBulk> righeConsegnaColl= new BulkList<OrdineAcqConsegnaBulk>();
 	private java.lang.String dspTipoConsegna;
 	private java.lang.String dspStato;
+	private Dettaglio_contrattoBulk dettaglioContratto;
 
 	private java.lang.String tipoConsegnaDefault;
 
@@ -277,12 +279,21 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 			return null;
 		return getBeneServizio().getCd_bene_servizio();
 	}
+	public java.lang.Long getIdDettaglioContratto() {
+		Dettaglio_contrattoBulk dettaglio_contrattoBulk = this.getDettaglioContratto();
+		if (dettaglio_contrattoBulk == null)
+			return null;
+		return getDettaglioContratto().getId();
+	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdBeneServizio]
 	 **/
 	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
 		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
+	}
+	public void setIdDettaglioContratto(java.lang.Long idDettaglioContratto)  {
+		this.getDettaglioContratto().setId(idDettaglioContratto);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -354,10 +365,16 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public void setDspUopDest(UnitaOperativaOrdBulk dspUopDest) {
 		this.dspUopDest = dspUopDest;
 	}
+	public boolean isROPrezzoUnitario(){
+		if (getDettaglioContratto() == null || getDettaglioContratto().getPrezzoUnitario() == null){
+			return false;
+		}
+		return true;
+	}
 	public Boolean isROCoefConv(){
 		if (getUnitaMisura() != null && getUnitaMisura().getCdUnitaMisura() != null && 
 				getBeneServizio() != null && getBeneServizio().getUnitaMisura() != null && getBeneServizio().getCdUnitaMisura() != null && 
-				!getUnitaMisura().getCdUnitaMisura().equals(getBeneServizio().getCdUnitaMisura())){
+				!getUnitaMisura().getCdUnitaMisura().equals(getBeneServizio().getCdUnitaMisura()) && (getDettaglioContratto() == null || getDettaglioContratto().getCdUnitaMisura() == null)){
 			return false;
 		}
 		return true;
@@ -381,24 +398,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		setImIvaNd(BigDecimal.ZERO);
 		setImIvaDivisa(BigDecimal.ZERO);
 		setImTotaleRiga(BigDecimal.ZERO);
-		BigDecimal value = null;
-		try {
-			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
-		} catch (RemoteException e) {
-		} catch (Exception e) {
-		}
-		if (value!= null){
-			java.sql.Timestamp oggi = null;
-			try {
-				oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
-			} catch (javax.ejb.EJBException e) {
-				throw new it.cnr.jada.DetailedRuntimeException(e);
-			}
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(oggi);
-			cal.add(Calendar.DAY_OF_WEEK, value.intValue());
-			setDspDtPrevConsegna(DateUtils.truncate(new Timestamp(cal.getTime().getTime()))); 
-		}
+		setDspDtPrevConsegna(OrdineAcqConsegnaBulk.recuperoDataDefaultPrevistaConsegna(userContext));
 		return this;
 	}
 	public BulkList<OrdineAcqConsegnaBulk> getRigheConsegnaColl() {
@@ -441,6 +441,18 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		nuovoRigo.setConsegna(new Integer(max+1));
 		righeConsegnaColl.add(nuovoRigo);
 		return righeConsegnaColl.size()-1;
+	}
+	public BigDecimal getQuantitaConsegneColl()
+	{
+		BigDecimal quantita = BigDecimal.ZERO;
+		for (Iterator i = righeConsegnaColl.iterator(); i.hasNext();) {
+			OrdineAcqConsegnaBulk cons = ((OrdineAcqConsegnaBulk)i.next());
+			if (!cons.isConsegna0()){
+				BigDecimal qtaCons = cons.getQuantitaEvasa() == null ? cons.getQuantita() : cons.getQuantitaEvasa();
+				quantita = quantita.add(qtaCons);
+			}
+		}
+		return quantita;
 	}
 	public BulkCollection[] getBulkLists() {
 
@@ -571,5 +583,13 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public Timestamp getDt_a_competenza_coge() {
 		// TODO: 14/06/21 Da implementare
 		return null;
+	}
+
+	public Dettaglio_contrattoBulk getDettaglioContratto() {
+		return dettaglioContratto;
+	}
+
+	public void setDettaglioContratto(Dettaglio_contrattoBulk dettaglioContratto) {
+		this.dettaglioContratto = dettaglioContratto;
 	}
 }

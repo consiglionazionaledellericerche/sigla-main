@@ -41,6 +41,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.math.BigDecimal;
@@ -1354,5 +1355,17 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
         sql.addClause(FindClause.AND, "pg_accertamento", SQLBuilder.EQUALS, bulk.getPg_accertamento());
         sql.addClause(clause);
         return sql;
+    }
+
+    public java.util.Collection findAccertamentiPluriennali(it.cnr.jada.UserContext userContext, AccertamentoBulk bulk) throws IntrospectionException, PersistencyException {
+        PersistentHome dettHome = getHomeCache().getHome(Accertamento_pluriennaleBulk.class);
+        SQLBuilder sql = dettHome.createSQLBuilder();
+        sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, bulk.getCd_cds());
+        sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, bulk.getEsercizio());
+        sql.addSQLClause("AND", "ESERCIZIO_ORIGINALE", sql.EQUALS, bulk.getEsercizio_originale());
+        sql.addSQLClause("AND", "PG_ACCERTAMENTO", sql.EQUALS, bulk.getPg_accertamento());
+
+        sql.setOrderBy("ANNO", OrderConstants.ORDER_DESC);
+        return dettHome.fetchAll(sql);
     }
 }

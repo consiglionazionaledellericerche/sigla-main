@@ -68,7 +68,7 @@
 			property="flDettaglioArticolo"
 			inputType="CHECKBOX"
 			enabledOnSearch="true"
-			label="Dettaglio Aritcolo" />
+			label="Dettaglio Articolo" />
 
 	<fieldProperty
 			name="ordinamento"

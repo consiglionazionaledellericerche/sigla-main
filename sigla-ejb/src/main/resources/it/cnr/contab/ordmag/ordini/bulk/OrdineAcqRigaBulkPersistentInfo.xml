@@ -45,6 +45,9 @@
 		<columnMapping
 			columnName="CD_UNITA_MISURA"
 			propertyName="unitaMisura.cdUnitaMisura" />
+		<columnMapping
+				columnName="ID_DETTAGLIO_CONTRATTO"
+				propertyName="dettaglioContratto.id" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="ordineAcq"
@@ -55,4 +58,6 @@
 		name="voceIva" />
 	<persistentProperty
 		name="unitaMisura" />
+	<persistentProperty
+			name="dettaglioContratto" />
 </SQLPersistentInfo>

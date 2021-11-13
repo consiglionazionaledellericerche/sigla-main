@@ -113,6 +113,80 @@
 	  </tr>
 	</table>
    </div>
+	   	<div class="Group">
+		<table>
+			<tr>
+				<td>
+					<% bp.getController().writeFormLabel(out,"dataBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"dataBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"numeroBolla"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"numeroBolla"); %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<% bp.getController().writeFormLabel(out,"dtRiferimento"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"dtRiferimento"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"ordine"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"ordine"); %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<% bp.getController().writeFormLabel(out,"cd_bene_servizio"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"cd_bene_servizio"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"notaRiga"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"notaRiga"); %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<% bp.getController().writeFormLabel(out,"cdTerzo"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"cdTerzo"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"dsTerzo"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"dsTerzo"); %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<% bp.getController().writeFormLabel(out,"cdUnitaOperativa"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"cdUnitaOperativa"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormLabel(out,"dsUnitaOperativa"); %>
+				</td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"dsUnitaOperativa"); %>
+				</td>
+			</tr>
+		</table>
+		</div>
 
  </tr>
 	</table>

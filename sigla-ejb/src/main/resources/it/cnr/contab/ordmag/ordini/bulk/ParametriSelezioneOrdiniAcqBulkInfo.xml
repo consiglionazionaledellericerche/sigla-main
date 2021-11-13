@@ -122,7 +122,6 @@
 			inputType="SEARCHTOOL"
 			formName="searchtool_codice"
 			enabledOnSearch="true"
-			nullable="false"
 			label="Da Articolo" />
 	<fieldProperty
 			name="findABeneServizio"
@@ -130,7 +129,6 @@
 			inputType="SEARCHTOOL"
 			formName="searchtool_codice"
 			enabledOnSearch="true"
-			nullable="false"
 			label="A Articolo" />
 
 	<fieldProperty
@@ -138,7 +136,6 @@
 			property="statoOrdine"
 			inputType="SELECT"
 			label="Stato Ordine"
-			nullable="false"
 			enabledOnSearch="true"
 			keysProperty="statoOrdineKeys" />
 

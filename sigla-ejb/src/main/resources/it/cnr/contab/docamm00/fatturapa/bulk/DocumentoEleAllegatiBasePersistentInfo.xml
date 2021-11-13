@@ -44,7 +44,7 @@
 			columnName="CMIS_NODE_REF"
 			propertyName="cmisNodeRef"
 			sqlTypeName="VARCHAR"
-			columnSize="100"
+			columnSize="500"
 			nullable="true" />
 		<columnMapping
 			columnName="ANOMALIE"

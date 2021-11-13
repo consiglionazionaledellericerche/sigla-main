@@ -54,7 +54,7 @@
     </tr>
     <tr>
       <% if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
-        <%	if(bp.isGestoreIstat(uc, terzo)){ %>
+        <%	if(bp.isGestoreIstat(uc, terzo) || !terzo.getAnagrafico().isStrutturaCNR()){ %>
             <% bp.writeFormField(out,"codiceUnivocoUfficioIpa");%>
         <%} else { %>
             <td><%bp.writeFormLabel(out,"default","codiceUnivocoUfficioIpa"); %></td>

@@ -37,11 +37,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Local
-@Path("/contrattoMaggiolli")
+@Path("/contrattoMaggioli")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PermitAll
 @Api("Contratti")
+
 public interface ContrattoMaggioliLocal {
     /**
      * PUT  /restapi/contratto -> return Contratto
@@ -59,7 +60,7 @@ public interface ContrattoMaggioliLocal {
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
             }
     )
-    public Response insertContratto(@Context HttpServletRequest request, @Valid ContrattoMaggioliDTOBulk contrattoMaggioliBulk) throws Exception;
+    public Response insertContratto(@Context HttpServletRequest request, @Valid ContrattoDtoBulk contrattoMaggioliBulk) throws Exception;
 
     /**
      * GET  /restapi/contratto -> return Contratto

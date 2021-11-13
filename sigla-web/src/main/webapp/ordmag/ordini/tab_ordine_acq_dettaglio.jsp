@@ -11,6 +11,7 @@
 <%  
 CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request);
 	OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
+	String collapseIconClass = bp.isDettaglioContrattoCollapse() ? "fa-chevron-circle-down" : "fa-chevron-circle-up";
 %>
 <div class="Group card p-2 mb-2">
 	<table class="w-100">
@@ -31,8 +32,8 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			<td colspan="5"><% bp.getRighe().writeFormInput(out, "voce_iva"); %></td>
 		</tr>
 		<tr>
+			<% bp.getRighe().writeFormField(out,"prezzoUnitario");%>
 			<% bp.getRighe().writeFormField(out, "dspQuantita"); %>
-			<% bp.getRighe().writeFormField(out, "prezzoUnitario");	%>      	
 		</tr>
 		<tr>
 			<% bp.getRighe().writeFormField(out,"sconto1");%>      	
@@ -43,6 +44,22 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			<td><% bp.getRighe().writeFormLabel(out,"notaRiga");%></td>      	
 			<td colspan="5"><% bp.getRighe().writeFormInput(out,"notaRiga");%></td>
         </tr>
+        <% if (riga != null && riga.getDettaglioContratto() != null) { %>
+            <%if (bp.getParentRoot().isBootstrap()) { %>
+            <div>
+                <h6 class="mb-0">
+                    <a onclick="submitForm('doToggle(dettaglioContratto)')" class="text-primary"><i aria-hidden="true" class="fa <%=collapseIconClass%>"></i> Dati Dettaglio Contratto</a>
+                </h6>
+            </div>
+            <% } %>
+            <% if (riga.getDettaglioContratto() != null && (!bp.isDettaglioContrattoCollapse() || !bp.getParentRoot().isBootstrap())) { %>
+                     <tr>
+                        <% bp.getRighe().writeFormField(out,"quantitaMin");%>
+                        <% bp.getRighe().writeFormField(out,"quantitaMax");%>
+                        <% bp.getRighe().writeFormField(out,"quantitaOrdinata");%>
+                    </tr>
+            <% } %>
+        <% } %>
 	</table>
 </div>
 

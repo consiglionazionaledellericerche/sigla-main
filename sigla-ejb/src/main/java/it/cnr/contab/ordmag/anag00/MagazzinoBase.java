@@ -105,8 +105,16 @@ public class MagazzinoBase extends MagazzinoKey implements Keyed {
  
 //    DT_ULT_VAL_RIM TIMESTAMP(7)
 	private java.sql.Timestamp dtUltValRim;
- 
-//    ESERCIZIO_VAL_RIM DECIMAL(4,0)
+
+	public String getTipoGestione() {
+		return tipoGestione;
+	}
+
+	public void setTipoGestione(String tipoGestione) {
+		this.tipoGestione = tipoGestione;
+	}
+
+	//    ESERCIZIO_VAL_RIM DECIMAL(4,0)
 	private Integer esercizioValRim;
  
 //    CD_CDS_RAGGR_RIM VARCHAR(30)
@@ -123,7 +131,8 @@ public class MagazzinoBase extends MagazzinoKey implements Keyed {
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
- 
+
+	private java.lang.String tipoGestione;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MAGAZZINO

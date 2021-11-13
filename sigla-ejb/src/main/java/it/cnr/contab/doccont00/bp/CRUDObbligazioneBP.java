@@ -68,13 +68,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     private final SimpleDetailCRUDController aggregatoPerCdr = new SimpleDetailCRUDController("AggregatoPerCdr", Obbligazione_scad_voce_aggregatoBulk.class, "cdrAggregatoColl", this);
     private final SimpleDetailCRUDController aggregatoPerCapitolo = new SimpleDetailCRUDController("AggregatoPerCapitolo", Obbligazione_scad_voce_aggregatoBulk.class, "capitoliAggregatoColl", this);
 
-    private final SimpleDetailCRUDController crudObbligazione_pluriennale = new SimpleDetailCRUDController("ObbligazioniPluriennali", Obbligazione_pluriennaleBulk.class, "obbligazioniPluriennali", this){
-        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
-            Obbligazione_pluriennaleBulk riga = (Obbligazione_pluriennaleBulk) getCrudObbligazione_pluriennale().getModel();
-            super.validateForDelete(context,riga);
-
-        }
-    };
+    private final SimpleDetailCRUDController crudObbligazione_pluriennale = new SimpleDetailCRUDController("ObbligazioniPluriennali", Obbligazione_pluriennaleBulk.class, "obbligazioniPluriennali", this);
 
     public SimpleDetailCRUDController getCrudObbligazione_pluriennale() {
         return crudObbligazione_pluriennale;

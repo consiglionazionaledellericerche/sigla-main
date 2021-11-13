@@ -7,7 +7,19 @@ public class StampaInventarioDTO implements Serializable {
 
     String cd_magazzino;
 
+    String desc_magazzino;
+
     String cod_articolo;
+
+    String descArticolo;
+
+    String categoriaGruppo;
+
+    String descCatGrp;
+
+    String cod_categoria;
+
+    String cod_gruppo;
 
     BigDecimal giacenza;
 
@@ -17,13 +29,17 @@ public class StampaInventarioDTO implements Serializable {
 
     Integer numeroLotto;
 
-    String categoriaGruppo;
 
-    String descArticolo;
+
+
 
     String um;
 
-    String descCatGrp;
+
+
+    BigDecimal importoUnitario;
+
+    String cdCds;
 
     public String getCd_magazzino() {
         return cd_magazzino;
@@ -103,5 +119,45 @@ public class StampaInventarioDTO implements Serializable {
 
     public void setDescCatGrp(String descCatGrp) {
         this.descCatGrp = descCatGrp;
+    }
+
+    public BigDecimal getImportoUnitario() {
+        return importoUnitario;
+    }
+
+    public void setImportoUnitario(BigDecimal importo) {
+        this.importoUnitario = importo;
+    }
+
+    public String getCdCds() {
+        return cdCds;
+    }
+
+    public void setCdCds(String cdCds) {
+        this.cdCds = cdCds;
+    }
+
+    public String getDesc_magazzino() {
+        return desc_magazzino;
+    }
+
+    public void setDesc_magazzino(String desc_magazzino) {
+        this.desc_magazzino = desc_magazzino;
+    }
+
+    public String getCod_categoria() {
+        return cod_categoria;
+    }
+
+    public void setCod_categoria(String cod_categoria) {
+        this.cod_categoria = cod_categoria;
+    }
+
+    public String getCod_gruppo() {
+        return cod_gruppo;
+    }
+
+    public void setCod_gruppo(String cod_gruppo) {
+        this.cod_gruppo = cod_gruppo;
     }
 }

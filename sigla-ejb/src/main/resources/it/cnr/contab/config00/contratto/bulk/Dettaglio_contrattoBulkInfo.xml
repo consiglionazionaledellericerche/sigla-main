@@ -106,6 +106,7 @@
 	<fieldProperty
 		name="quantitaOrdinata"
 		property="quantitaOrdinata"
+		style="text-align: right"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="false"
@@ -123,8 +124,8 @@
 	<fieldProperty
 			name="findCategoriaGruppo"
 			property="categoriaGruppoInvent"
-			inputType="SEARCHTOOL"
-			formName="searchtool"
+			inputType="searchtool"
+			formName="searchtool_ridotto"
 			enabledOnSearch="true"
 			label="Categoria Gruppo"
 			readonlyProperty="ROFindCatGrp"
@@ -151,9 +152,10 @@
 	<fieldProperty
 		name="importoOrdinato"
 		property="importoOrdinato"
-		inputType="TEXT"
+		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.GenericImportoFormat"
 		inputSize="21"
+		style="text-align: right"
 		maxLength="21"
 		enabledOnEdit="false"
 		label="Importo Ordinato" />
@@ -257,6 +259,8 @@
 				name="quantitaMax"/>
 		<columnFieldProperty
 				name="quantitaOrdinata"/>
+		<columnFieldProperty
+				name="importoOrdinato"/>
 	</columnSet>
 	<columnSet
 			name="ColumnsDettArtGrp">

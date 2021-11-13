@@ -52,6 +52,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
@@ -240,6 +241,79 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 		return movimentoScaricoMag;
 	}
 
+	public MovimentiMagBulk creaMovimentoRettificaValoreOrdine(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws ComponentException {
+		LottoMagBulk lotto = null;
+		try {
+			lotto = ((LottoMagHome)getHome(userContext, LottoMagBulk.class)).findCaricoDaOrdine(fatturaOrdineBulk.getOrdineAcqConsegna());
+		} catch (IntrospectionException | PersistencyException e) {
+			throw handleException(e);
+		}
+
+		MovimentiMagBulk movimentoMag = new MovimentiMagBulk();
+		movimentoMag.setLottoMag(lotto);
+
+		PersistentHome evHome = getHome(userContext, MagazzinoBulk.class);
+		MagazzinoBulk magazzinoBulk = new MagazzinoBulk(lotto.getCdCdsMag(), lotto.getCdMagazzino());
+		try {
+			magazzinoBulk = (MagazzinoBulk)evHome.findByPrimaryKey(magazzinoBulk);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+
+		Bene_servizioHome homeBene = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+		Bene_servizioBulk bene = null;
+		try {
+			bene = (Bene_servizioBulk)homeBene.findByPrimaryKey(lotto.getBeneServizio());
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		MovimentiMagHome homeMag = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
+
+		movimentoMag.setBeneServizioUt(lotto.getBeneServizio());
+		movimentoMag.setQuantita(BigDecimal.ONE);
+		movimentoMag.setDtMovimento(new Timestamp(System.currentTimeMillis()));
+		movimentoMag.setDtRiferimento(lotto.getDtCarico());
+		movimentoMag.setMagazzinoUt(magazzinoBulk);
+		movimentoMag.setUnitaOperativaOrd(fatturaOrdineBulk.getOrdineAcqConsegna().getUnitaOperativaOrd());
+
+		try {
+			movimentoMag.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		movimentoMag.setDivisa(lotto.getDivisa());
+		movimentoMag.setCambio(lotto.getCambio());
+		movimentoMag.setUnitaMisura(bene.getUnitaMisura());
+		movimentoMag.setCoeffConv(BigDecimal.ONE);
+		movimentoMag.setStato(MovimentiMagBulk.STATO_INSERITO);
+
+		movimentoMag.setToBeCreated();
+
+		OrdineAcqConsegnaHome homeConsegna = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
+		OrdineAcqConsegnaBulk consegna = null;
+		try {
+			consegna = (OrdineAcqConsegnaBulk)homeConsegna.findByPrimaryKey(fatturaOrdineBulk.getOrdineAcqConsegna());
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+
+		movimentoMag.setOrdineAcqConsegnaUt(consegna);
+
+		try {
+			BigDecimal prezzoUnitarioOrdine = recuperoPrezzoUnitario(userContext, consegna);
+			BigDecimal prezzoUnitarioOrdineRettificato = recuperoPrezzoUnitarioRettificato(userContext, fatturaOrdineBulk);
+			BigDecimal diffOrdineRettificato = prezzoUnitarioOrdineRettificato.subtract(prezzoUnitarioOrdine);
+			movimentoMag.setTipoMovimentoMag(diffOrdineRettificato.compareTo(BigDecimal.ZERO) > 0 ? magazzinoBulk.getTipoMovimentoMagRvPos() : magazzinoBulk.getTipoMovimentoMagRvNeg());
+			movimentoMag.setPrezzoUnitario(diffOrdineRettificato.abs());
+		} catch (RemoteException | PersistencyException e) {
+			throw new ComponentException(e);
+		}
+
+		movimentoMag.setTerzo(lotto.getTerzo());
+		movimentoMag.setToBeCreated();
+		return (MovimentiMagBulk) creaConBulk(userContext, movimentoMag);
+	}
+
 	private MovimentiMagBulk creaCarico(UserContext userContext, MovimentiMagBulk movimentoCaricoMag)
 			throws ComponentException, PersistencyException {
 		//creo il lotto di magazzino a partire dal movimento di carico
@@ -335,29 +409,35 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 			throws ComponentException, PersistencyException, ApplicationException, RemoteException {
 		OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
 		OrdineAcqConsegnaBulk consegnaDaRipristinare = movimentoDaAnnullare.getLottoMag().getOrdineAcqConsegna();
+		OrdineAcqRigaBulk rigaDaRipristinare = consegnaDaRipristinare.getOrdineAcqRiga();
 		OrdineAcqConsegnaHome home = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
 		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)home.findByPrimaryKey(userContext, consegnaDaRipristinare);
 		OrdineAcqBulk ordine = (OrdineAcqBulk)ordineComponent.inizializzaBulkPerModifica(userContext, consegna.getOrdineAcqRiga().getOrdineAcq());
 
-		ordine.getRigheOrdineColl().stream().forEach(ordineRiga->{
-			OrdineAcqConsegnaBulk ordineConsegnaComp =
-						Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
-								.filter(list -> !list.isEmpty())
-								.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
-								.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
-			consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
-			if (consegna.getQuantitaOrig() != null){
-				consegna.setQuantita(consegna.getQuantitaOrig());
-				consegna.setQuantitaOrig(null);
-				ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
-				ordine.setAggiornaImpegniInAutomatico(true);
-			}
-			ordine.setToBeUpdated();
-			//rimuovo la vecchia consegna
-			ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
-			//inserisco la nuova consegna
-			ordineRiga.getRigheConsegnaColl().add(consegna);
-		});
+		OrdineAcqRigaBulk ordineRiga =
+				Optional.ofNullable(ordine.getRigheOrdineColl())
+						.filter(list -> !list.isEmpty())
+						.map(list->list.get(list.indexOfByPrimaryKey(rigaDaRipristinare)))
+						.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della riga "+rigaDaRipristinare.getRigaOrdineString()+"."));
+
+		OrdineAcqConsegnaBulk ordineConsegnaComp =
+				Optional.ofNullable(ordineRiga.getRigheConsegnaColl())
+						.filter(list -> !list.isEmpty())
+						.map(list->list.get(list.indexOfByPrimaryKey(consegna)))
+						.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+consegna.getConsegnaOrdineString()+"."));
+		consegna.setStato(OrdineAcqConsegnaBulk.STATO_INSERITA);
+		if (consegna.getQuantitaOrig() != null){
+			consegna.setQuantita(consegna.getQuantitaOrig());
+			consegna.setQuantitaOrig(null);
+			ordine.sostituisciConsegnaFromObbligazioniHash(consegna);
+			ordine.setAggiornaImpegniInAutomatico(true);
+		}
+		ordine.setToBeUpdated();
+		int i = 0;
+		//rimuovo la vecchia consegna
+		ordineRiga.getRigheConsegnaColl().removeByPrimaryKey(ordineConsegnaComp);
+		//inserisco la nuova consegna
+		ordineRiga.getRigheConsegnaColl().add(consegna);
 		ordineComponent.modificaConBulk(userContext, ordine);
 	}
 
@@ -501,12 +581,31 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 		}
     }
 
-    private BigDecimal recuperoPrezzoUnitario(UserContext userContext, OrdineAcqConsegnaBulk cons) throws RemoteException, ComponentException{
+	private BigDecimal recuperoPrezzoUnitarioRettificato(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws RemoteException, ComponentException, PersistencyException{
+		OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
+
+		FatturaOrdineBulk fatturaOrdineBulk1 =  ordineComponent.calcolaImportoOrdine(userContext, fatturaOrdineBulk, true);
+		ImportoOrdine importo = new ImportoOrdine();
+		importo.setImponibile(fatturaOrdineBulk1.getImImponibile());
+		importo.setImportoIvaInd(fatturaOrdineBulk1.getImIvaNd());
+		return getPrezzoUnitario(importo);
+	}
+
+	private BigDecimal getPrezzoUnitario(ImportoOrdine importo) {
+		return importo.getImponibile().add(Utility.nvl(importo.getImportoIvaInd()).add(Utility.nvl(importo.getArrAliIva())));
+	}
+
+	private BigDecimal recuperoPrezzoUnitario(UserContext userContext, OrdineAcqConsegnaBulk cons) throws RemoteException, ComponentException{
     	OrdineAcqComponentSession ordineComponent = Utility.createOrdineAcqComponentSession();
         ParametriCalcoloImportoOrdine parametri = new ParametriCalcoloImportoOrdine();
     	OrdineAcqRigaBulk riga = cons.getOrdineAcqRiga();
         OrdineAcqBulk ordine = riga.getOrdineAcq();
-    	parametri.setCambio(ordine.getCambio());
+		try {
+			getHomeCache(userContext).fetchAll(userContext);
+		} catch (PersistencyException e) {
+			handleException(e);
+		}
+		parametri.setCambio(ordine.getCambio());
     	parametri.setDivisa(ordine.getDivisa());
     	parametri.setDivisaRisultato(getEuro(userContext));
     	parametri.setPercProrata(ordine.getPercProrata());
@@ -519,7 +618,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	parametri.setQtaOrd(cons.getQuantita());
     	parametri.setArrAliIva(cons.getArrAliIva());
     	ImportoOrdine importo = ordineComponent.calcoloImportoOrdinePerMagazzino(userContext,parametri);
-    	return importo.getImponibile().add(Utility.nvl(importo.getImportoIvaInd()).add(Utility.nvl(importo.getArrAliIva())));
+    	return getPrezzoUnitario(importo);
     }
     
     private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
@@ -721,7 +820,9 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	SQLBuilder sql = movimentiHome.createSQLBuilder();
     	sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
     	sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
-    	sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+		if (parametri.getMagazzinoAbilitato() != null ){
+			sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+		}
     	if (parametri.getDaDataMovimento() != null ){
     		sql.addSQLClause("AND","DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataMovimento());
     	} 
@@ -743,14 +844,15 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
     	} 
     	if (parametri.getTipoMovimentoMag() != null && parametri.getTipoMovimentoMag().getCdTipoMovimento() != null){
      	}
-        sql.generateJoin("lottoMag", "LOTTO_MAG");
+        sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
+
         sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
     	
     	if (parametri.getDaBeneServizio() != null && parametri.getDaBeneServizio().getCd_bene_servizio() != null){
-    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
+    		sql.addSQLClause("AND","BENE_SERVIZIO.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
     	} 
     	if (parametri.getaBeneServizio() != null && parametri.getaBeneServizio().getCd_bene_servizio() != null){
-    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
+    		sql.addSQLClause("AND","BENE_SERVIZIO.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
     	} 
     	if (parametri.getDaUnitaOperativaRicevente() != null && parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa() != null){
     		sql.addSQLClause("AND","CD_UOP",SQLBuilder.GREATER_EQUALS,parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa());

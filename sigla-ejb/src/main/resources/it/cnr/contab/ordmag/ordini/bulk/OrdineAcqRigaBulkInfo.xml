@@ -122,7 +122,6 @@
 		inputSize="20"
 		inputType="TEXT"
 		nullable="false"
-		readonlyProperty="RObeneservizio"
 		label="Bene/Servizio"
 		caseSensitiveSearch="false" />
 	<fieldProperty
@@ -206,6 +205,7 @@
 		inputType="TEXT"
 		inputSize="20"
 		maxLength="20"
+		readonlyProperty="ROPrezzoUnitario"
 		enabledOnEdit="true"
 		nullable="false"
 		formatName="it.cnr.contab.util.Importo6CifreFormat"
@@ -436,6 +436,28 @@
 			completeOnSave="true"
 			label="Conto"
 	/>
+	<fieldProperty
+			name="quantitaMin"
+			property="dettaglioContratto.quantitaMin"
+			inputType="ROTEXT"
+			formatName="it.cnr.contab.util.PositiveDecimalFormat"
+			style="text-align: right"
+			label="Quantità Min Ord." />
+	<fieldProperty
+			name="quantitaMax"
+			property="dettaglioContratto.quantitaMax"
+			inputType="ROTEXT"
+			formatName="it.cnr.contab.util.PositiveDecimalFormat"
+			style="text-align: right"
+			label="Quantità Max Ord." />
+	<fieldProperty
+			name="quantitaOrdinata"
+			property="dettaglioContratto.quantitaOrdinata"
+			style="text-align: right"
+			inputType="ROTEXT"
+			formatName="it.cnr.contab.util.PositiveDecimalFormat"
+			enabledOnEdit="false"
+			label="Quantità Ordinata" />
 	<columnSet
 		name="righeSet">
 		<columnFieldProperty
@@ -513,6 +535,12 @@
 		name="ds_voce_iva" />
 	<formFieldProperty
 		name="percentuale_voce_iva" />
+	<formFieldProperty
+			name="quantitaMin" />
+	<formFieldProperty
+			name="quantitaMax" />
+	<formFieldProperty
+			name="quantitaOrdinata" />
 	<formFieldProperty
 		name="sconto1"  
 		command="doOnImportoChange" />

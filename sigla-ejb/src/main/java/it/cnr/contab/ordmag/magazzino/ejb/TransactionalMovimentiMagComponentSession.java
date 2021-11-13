@@ -29,6 +29,7 @@ import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -250,4 +251,23 @@ public void annullaMovimento(UserContext userContext, MovimentiMagBulk movimenti
 			}
 		}
 	}
+
+	public MovimentiMagBulk creaMovimentoRettificaValoreOrdine(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws ComponentException, RemoteException{
+		try {
+			return (MovimentiMagBulk) invoke("creaMovimentoRettificaValoreOrdine",new Object[] {
+					userContext,
+					fatturaOrdineBulk});
+		} catch(RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
 }

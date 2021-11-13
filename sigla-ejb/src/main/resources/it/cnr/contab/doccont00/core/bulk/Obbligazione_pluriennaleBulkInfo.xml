@@ -1,123 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo>
 	<fieldProperty
-			name="idObbligazionePlur"
-			property="idObbligazionePlur"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			enabledOnSearch="false"
-			nullable="false"
-			label="Chiave Primaria." />
+		name="cdCds"
+		property="obbligazione.cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Cds dell'obbligazione" />
 	<fieldProperty
-			name="anno"
-			property="anno"
-			inputType="TEXT"
-			maxLength="4"
-			inputSize="5"
-			enabledOnEdit="true"
-			command="doOnAnnoObbligazionePluriennaleChange"
-			label="Anno Obbligazione Pluriennale" />
+		name="esercizio"
+		property="obbligazione.esercizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esercizio dell'obbligazione" />
 	<fieldProperty
-			name="cdCds"
-			property="obbligazione.cds.cd_unita_organizzativa"
-			inputType="TEXT"
-			inputSize="30"
-			maxLength="30"
-			enabledOnEdit="false"
-			nullable="false"
-			label="Cds dell'obbligazione" />
+		name="esercizioOriginale"
+		property="obbligazione.esercizio_originale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esercizio Originale dell'obbligazione" />
 	<fieldProperty
-			name="esercizio"
-			property="obbligazione.esercizio"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			nullable="false"
-			label="Esercizio dell'obbligazione" />
+		name="pgObbligazione"
+		property="obbligazione.pg_obbligazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Numero dell'obbligazione" />
 	<fieldProperty
-			name="esercizioOriginale"
-			property="obbligazione.esercizio_originale"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			nullable="false"
-			label="Esercizio Originale dell'obbligazione" />
+		name="anno"
+		property="anno"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="5"
+		enabledOnEdit="true"
+		command="doOnAnnoObbligazionePluriennaleChange"
+		label="Anno Obbligazione Pluriennale" />
 	<fieldProperty
-			name="pgObbligazione"
-			property="obbligazione.pg_obbligazione"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			nullable="false"
-			label="Numero dell'obbligazione" />
-
-
-
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.Importo2CifreFormat"
+		enabledOnEdit="true"
+		label="Importo totale" />
 	<fieldProperty
-			name="importo"
-			property="importo"
-			inputType="TEXT"
-			formatName="it.cnr.contab.util.Importo2CifreFormat"
-			enabledOnEdit="true"
-			label="Importo totale" />
+		name="cdCdsRif"
+		property="obbligazioneRif.cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Cds dell'obbligazione di riferimento" />
 	<fieldProperty
-			name="cdCdsRif"
-			property="obbligazioneRif.cds.cd_unita_organizzativa"
-			inputType="TEXT"
-			inputSize="30"
-			maxLength="30"
-			enabledOnEdit="false"
-			label="Cds dell'obbligazione di riferimento" />
+		name="esercizioRif"
+		property="obbligazioneRif.esercizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio di riferimento" />
 	<fieldProperty
-			name="esercizioRif"
-			property="obbligazioneRif.esercizio"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			label="Esercizio dell'obbligazione di riferimento" />
+		name="esercizioOriginaleRif"
+		property="obbligazioneRif.esercizio_originale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio Originale di riferimento" />
 	<fieldProperty
-			name="esercizioOriginaleRif"
-			property="obbligazioneRif.esercizio_originale"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			label="Esercizio Originale dell'obbligazione di riferimento" />
-	<fieldProperty
-			name="pgObbligazioneRif"
-			property="obbligazioneRif.pg_obbligazione"
-			inputType="TEXTAREA"
-			cols="60"
-			rows="5"
-			maxLength="38"
-			enabledOnEdit="false"
-			label="Numero dell'obbligazione di riferimento" />
-
-
+		name="pgObbligazioneRif"
+		property="obbligazioneRif.pg_obbligazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Numero di riferimento" />
 	<form
-			name="searchtool">
+		name="searchtool">
 		<formFieldProperty
-				name="idObbligazionePlur" />
+			name="cdCds" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="esercizioOriginale" />
+		<formFieldProperty
+			name="pgObbligazione" />
+		<formFieldProperty
+			name="anno" />
 	</form>
 
-
-
 	<formFieldProperty
-			name="anno" />
+		name="anno" />
 	<formFieldProperty
-			name="importo" />
+		name="importo" />
 	<formFieldProperty
 			name="cdCds" />
 	<formFieldProperty
@@ -127,9 +117,6 @@
 	<formFieldProperty
 			name="pgObbligazione" />
 
-
-	<columnFieldProperty
-			name="idObbligazionePlur" />
 	<columnFieldProperty
 			name="anno" />
 	<columnFieldProperty
@@ -140,8 +127,6 @@
 			name="esercizioOriginale" />
 	<columnFieldProperty
 			name="pgObbligazione" />
-
-
 	<columnFieldProperty
 			name="importo" />
 	<columnFieldProperty
@@ -153,15 +138,17 @@
 	<columnFieldProperty
 			name="pgObbligazioneRif" />
 
-
 	<columnSet
 			name="ColumnsDettObbPluriennale">
 		<columnFieldProperty
 				name="anno" />
 		<columnFieldProperty
 				name="importo" />
-
-
+		<columnFieldProperty
+				name="esercizioRif" />
+		<columnFieldProperty
+				name="esercizioOriginaleRif" />
+		<columnFieldProperty
+				name="pgObbligazioneRif" />
 	</columnSet>
-
 </bulkInfo>

@@ -17,13 +17,11 @@
 
 	package it.cnr.contab.ordmag.ordini.ejb;
 
+	import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 	import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 	import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 	import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
-	import it.cnr.contab.ordmag.ordini.bulk.AbilitazioneOrdiniAcqBulk;
-	import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-	import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
-	import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
+	import it.cnr.contab.ordmag.ordini.bulk.*;
 	import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 	import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 	import it.cnr.jada.UserContext;
@@ -332,6 +330,54 @@
 					throw ex;
 				} catch(Throwable ex) {
 					throw new RemoteException("Uncaugth exception",ex);
+				}
+			}
+		}
+		public Dettaglio_contrattoBulk recuperoDettaglioContratto(UserContext userContext, OrdineAcqRigaBulk riga) throws ComponentException, PersistencyException, RemoteException {
+			try {
+				return (Dettaglio_contrattoBulk) invoke("recuperoDettaglioContratto", new Object[]{
+						userContext, riga});
+			} catch (RemoteException e) {
+				throw e;
+			} catch (java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch (ComponentException ex) {
+					throw ex;
+				} catch (Throwable ex) {
+					throw new RemoteException("Uncaugth exception", ex);
+				}
+			}
+		}
+		public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine) throws ComponentException, PersistencyException, RemoteException {
+			try {
+				return (FatturaOrdineBulk) invoke("calcolaImportoOrdine", new Object[]{
+						userContext, fatturaOrdine});
+			} catch (RemoteException e) {
+				throw e;
+			} catch (java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch (ComponentException ex) {
+					throw ex;
+				} catch (Throwable ex) {
+					throw new RemoteException("Uncaugth exception", ex);
+				}
+			}
+		}
+		public FatturaOrdineBulk calcolaImportoOrdine(it.cnr.jada.UserContext userContext, FatturaOrdineBulk fatturaOrdine, Boolean magazzino) throws ComponentException, PersistencyException, RemoteException {
+			try {
+				return (FatturaOrdineBulk) invoke("calcolaImportoOrdine", new Object[]{
+						userContext, fatturaOrdine, magazzino});
+			} catch (RemoteException e) {
+				throw e;
+			} catch (java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch (ComponentException ex) {
+					throw ex;
+				} catch (Throwable ex) {
+					throw new RemoteException("Uncaugth exception", ex);
 				}
 			}
 		}

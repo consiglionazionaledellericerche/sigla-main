@@ -5,26 +5,18 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ContrattoMaggioliDTOBulk extends ContrattoDtoBulk implements Serializable {
+
     @NotNull
-    String name;
+   AttachmentFile contrattoFile;
 
-    public String getName() {
-        return name;
+    List<AttachmentContratto> attachments;
+
+    public List<AttachmentContratto> getAttachments() {
+        return attachments;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-        AttachmentFile contrattoFile;
-
-    List<OtherAttachments> otherFiles;
-
-    public List<OtherAttachments> getOtherFiles() {
-        return otherFiles;
-    }
-
-    public void setOtherFiles(List<OtherAttachments> otherFiles) {
-        this.otherFiles = otherFiles;
+    public void setAttachments(List<AttachmentContratto> attachments) {
+        this.attachments = attachments;
     }
 
     public AttachmentFile getContrattoFile() {

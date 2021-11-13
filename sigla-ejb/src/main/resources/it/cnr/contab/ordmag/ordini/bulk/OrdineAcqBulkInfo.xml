@@ -38,6 +38,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="false"
+		nullable="false"
 		label="Numeratore" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
@@ -45,6 +46,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
+		nullable="false"
 		label="Unità Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
@@ -168,7 +170,7 @@
 	<fieldProperty
 		name="cambio"
 		property="cambio"
-		inputType="TEXT"
+		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"				
 		label="Cambio"
 		nullable="false"		
@@ -459,7 +461,6 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="Data Conferma Ordine" />
-		
         <fieldProperty
                 name="findResponsabile"
                 property="responsabileProcPers"
@@ -625,6 +626,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+		readonlyProperty="ROContratto"
 		label="Contratto"
 		enabledOnSearch="true" 
 		/>
@@ -706,6 +708,15 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+			name="fl_mepa"
+			property="fl_mepa"
+			inputType="CHECKBOX"
+			nullable="false"
+			enabledOnSearch="false"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			label="MEPA" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -728,6 +739,8 @@
 		name="esercizio" />
 	<formFieldProperty
 		name="tiAttivita" />
+	<formFieldProperty
+			name="fl_mepa" />
 	<formFieldProperty
 		name="tiAttivitaSearch" />
 	<formFieldProperty
@@ -898,6 +911,8 @@
 	<findFieldProperty
 		name="referenteEsterno" />
 	<findFieldProperty
+			name="fl_mepa" />
+	<findFieldProperty
 		name="cdTipoOrdine" />
 	<findFieldProperty name="tiAttivitaSearch" />
 	<findFieldProperty
@@ -948,6 +963,8 @@
 		name="dataOrdineDef" />
 	<columnFieldProperty
 		name="referenteEsterno" />
+	<columnFieldProperty
+			name="fl_mepa" />
 	<columnFieldProperty
 		name="cdTipoOrdine" />
 	<columnFieldProperty

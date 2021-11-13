@@ -261,8 +261,6 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 			setFl_gestione_magazzino(FALSE);
 		if (getFl_gestione_inventario()==null)
 			setFl_gestione_inventario(FALSE);
-		if (getFl_gestione_inventario().booleanValue() && getFl_gestione_magazzino().booleanValue())
-			throw new ValidationException("Attenzione: non è possibile che un bene servizio sia a magazzino e ad inventario");
 		if (getFl_gestione_inventario().booleanValue() && (getCategoria_gruppo()==null || getCategoria_gruppo().getDs_categoria_gruppo()==null))
 			throw new ValidationException("Inserire un gruppo inventariale");
 	}

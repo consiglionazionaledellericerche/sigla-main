@@ -127,6 +127,7 @@
 		<property name="pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm" value="${pec.sdi.subject.fatturaPassiva.notifica.scartoEsito.term}"/>
 
 		<property name="pecMailConf" ref="props-pec-mail"></property>
+		<property name="emailSDIInAttachement" value="${pec.sdi.email.sdi.attachment}"/>
 	</bean>
 
 	<bean name="props-aruba" class="org.springframework.beans.factory.config.PropertiesFactoryBean">

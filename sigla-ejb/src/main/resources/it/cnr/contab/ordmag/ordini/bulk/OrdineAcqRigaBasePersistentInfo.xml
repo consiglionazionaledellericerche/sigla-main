@@ -178,6 +178,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+				columnName="ID_DETTAGLIO_CONTRATTO"
+				propertyName="id_dettaglio_contratto"
+				sqlTypeName="DECIMAL"
+				columnSize="12"
+				nullable="true"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="cdBeneServizio" />
@@ -215,6 +221,8 @@
 		name="imIvaNd" />
 	<persistentProperty
 		name="imTotaleRiga" />
+	<persistentProperty
+			name="idDettaglioContratto" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

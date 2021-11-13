@@ -2163,7 +2163,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				movimentoCoge.setTi_istituz_commerc(fatpas.getTi_istituz_commerc());
 			} else if (doccoge instanceof Fattura_attivaBulk) {
 				Fattura_attivaBulk fatatt = (Fattura_attivaBulk) doccoge;
-
+				movimentoCoge.setTi_istituz_commerc("I");
 				movimentoCoge.setCd_cds(fatatt.getCd_cds_origine());
 				movimentoCoge.setEsercizio(fatatt.getEsercizio());
 				movimentoCoge.setCd_unita_organizzativa(fatatt.getCd_uo_origine());

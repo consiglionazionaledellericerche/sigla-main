@@ -28,6 +28,11 @@ public class ContrattoDtoBulk extends ContrattoBase {
     private String cd_unita_organizzativa;
     private List<DittaInvitataExt> listaDitteInvitateExt;
     private List<UoAbilitataExt> listaUoAbilitateExt;
+    private List<DettaglioContrattoDtoBulk> dettaglioContratto;
+    private List<AttachmentContratto> attachments;
+    private EnumTipoDettaglioContratto tipoDettaglioContratto;
+
+
     private String cdCupExt;
 
     public String getCdCupExt() {
@@ -72,5 +77,29 @@ public class ContrattoDtoBulk extends ContrattoBase {
 
     public void setListaUoAbilitateExt(List<UoAbilitataExt> listaUoAbilitateExt) {
         this.listaUoAbilitateExt = listaUoAbilitateExt;
+    }
+
+    public List<DettaglioContrattoDtoBulk> getDettaglioContratto() {
+        return dettaglioContratto;
+    }
+
+    public void setDettaglioContratto(List<DettaglioContrattoDtoBulk> dettaglioContratto) {
+        this.dettaglioContratto = dettaglioContratto;
+    }
+
+    public List<AttachmentContratto> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<AttachmentContratto> attachments) {
+        this.attachments = attachments;
+    }
+
+    public EnumTipoDettaglioContratto getTipoDettaglioContratto() {
+        return tipoDettaglioContratto;
+    }
+
+    public void setTipoDettaglioContratto(EnumTipoDettaglioContratto tipoDettaglioContratto) {
+        this.tipoDettaglioContratto = tipoDettaglioContratto;
     }
 }

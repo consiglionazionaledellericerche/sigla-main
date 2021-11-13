@@ -78,6 +78,9 @@ MagazzinoBulk ordine = (MagazzinoBulk)bp.getModel();
                 <% bp.getController().writeFormField(out, "abilTuttiBeniServ");%>
             </td>
         </tr>
+			<tr>
+				<td><% bp.getController().writeFormField( out, "tipoGestione"); %></td>
+			</tr>
 
 		<tr>
         	<td>

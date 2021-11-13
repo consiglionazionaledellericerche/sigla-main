@@ -48,7 +48,6 @@ public class UtenteBulk extends UtenteBase {
 	public static final String UTENTE_COMUNE_KEY = "U"; 
 	public static final String UTENTE_AMMINISTRATORE_KEY = "A";
 	public static final String UTENTE_SUPERUTENTE_KEY = "S";
-	public static final String DEFAULT_PSWD = "PASSWORD";
 	private it.cnr.jada.bulk.BulkList	utente_abil_ordine   = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	utente_indirizzi_mail   = new it.cnr.jada.bulk.BulkList();
 
