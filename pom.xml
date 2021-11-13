@@ -23,6 +23,7 @@
 	<artifactId>sigla-parent</artifactId>
 	<description>Sistema Informativo per la Gestione delle Linee di Attività</description>
 	<packaging>pom</packaging>
+
 	<parent>
 		<artifactId>archetype</artifactId>
 		<groupId>it.cnr.si</groupId>
