@@ -5178,5 +5178,16 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
-
+    <changeSet author="gianfranco.gasparro" id="update-fatt-elettronica-ass_bp_accesso">
+        <update tableName="ass_bp_accesso">
+            <column name="business_process" value='SelezionatoreDocAmmFatturazioneElettronica' type="VARCHAR(200)"/>
+            <where>CD_ACCESSO = 'AMMDOCFATTELETTVM'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-fatt-elettronica-albero_main">
+        <update tableName="albero_main">
+            <column name="business_process" value='SelezionatoreDocAmmFatturazioneElettronica' type="VARCHAR(200)"/>
+            <where>CD_ACCESSO = 'AMMDOCFATTELETTVM'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

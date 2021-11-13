@@ -7251,6 +7251,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         Bene_servizioHome beneServizioHome = (Bene_servizioHome) getHome(userContext, Bene_servizioBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = beneServizioHome.createSQLBuilder();
         sql.addClause("AND", "ti_bene_servizio", sql.EQUALS, dettaglio.getFattura_attiva().getTi_bene_servizio());
+        sql.addClause("AND", "fl_gestione_magazzino", SQLBuilder.EQUALS, false);
+
         sql.addClause(clauses);
         return sql;
     }
