@@ -63,29 +63,4 @@ public class CaricaFileGiornalieraAction extends it.cnr.jada.util.action.Selezio
             return handleException(context, e);
         }
     }
-
-    /**
-     * Richiamato per la procedura di upload del nuovo File Cassiere.
-     *
-     * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
-     * @return forward <code>Forward</code>
-     **/
-    public Forward doCaricaFileSIOPE(ActionContext context) {
-
-        it.cnr.jada.action.HttpActionContext httpContext = (it.cnr.jada.action.HttpActionContext) context;
-
-        UploadedFile file = httpContext.getMultipartParameter("fileGiornalieraSIOPE");
-        try {
-            if (file == null || file.getName().equals(""))
-                throw new it.cnr.jada.comp.ApplicationException("Attenzione: selezionare un File da caricare.");
-
-            CaricaFileGiornalieraBP bp = (CaricaFileGiornalieraBP) httpContext.getBusinessProcess();
-            bp.caricaFileSIOPE(context, file.getFile());
-            bp.setMessage("Operazione Completata.");
-            return context.findDefaultForward();
-        } catch (Throwable e) {
-            return handleException(context, e);
-        }
-    }
-
 }

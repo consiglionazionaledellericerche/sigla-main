@@ -3620,6 +3620,112 @@ begin
 
 end;
 
+procedure AGGIORMENTO_PROGETTI(aEs number, pg_exec number) as
+   aTSNow date;
+   aUser varchar2(20);
+   aMessage varchar2(500);
+   P_INDEX NUMBER := 0;
+   CONTA_INS NUMBER := 0;
+begin
+   aTSNow:=sysdate;
+   aUser:=IBMUTL200.getUserFromLog(pg_exec);
+
+   --Inserisco sui progetti le voci di bilancio nuove create associate ai piani economici e che prevedono l'inserimento automatico e non manuale
+   INSERT INTO ASS_PROGETTO_PIAECO_VOCE
+      (PG_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_VOCE_PIANO, ESERCIZIO_PIANO, ESERCIZIO_VOCE, TI_APPARTENENZA, TI_GESTIONE, CD_ELEMENTO_VOCE, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+   SELECT A.PG_PROGETTO, B.CD_UNITA_PIANO, B.CD_VOCE_PIANO, A.ESERCIZIO_PIANO,
+          B.ESERCIZIO, B.TI_APPARTENENZA, B.TI_GESTIONE, B.CD_ELEMENTO_VOCE, aTSNow, aUser, aTSNow, aUser, 0
+   FROM PROGETTO_PIANO_ECONOMICO A, ELEMENTO_VOCE B, VOCE_PIANO_ECONOMICO_PRG C
+   WHERE A.CD_UNITA_ORGANIZZATIVA = C.CD_UNITA_ORGANIZZATIVA
+   AND   A.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+   AND   B.CD_UNITA_PIANO = C.CD_UNITA_ORGANIZZATIVA
+   AND   B.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+   AND   A.ESERCIZIO_PIANO = B.ESERCIZIO
+   AND   C.FL_ADD_VOCIBIL = 'N'
+   AND   A.ESERCIZIO_PIANO = aEs
+   AND   NOT EXISTS(SELECT 1 FROM ASS_PROGETTO_PIAECO_VOCE D
+                    WHERE D.PG_PROGETTO = A.PG_PROGETTO
+                    AND   D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                    AND   D.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                    AND   D.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO);
+
+   aMessage := 'Aggiornamento voci su piano economico progetti. Inseriti '||sql%rowcount||' record.';
+   ibmutl200.LOGINF(pg_exec,aMessage,'','');
+
+   --Inserisco sulle rimodulazioni dei progetti le voci di bilancio nuove create associate ai piani economici e che prevedono l'inserimento automatico e non manuale
+   FOR REC IN (SELECT DISTINCT A.PG_PROGETTO, A.PG_RIMODULAZIONE, B.CD_UNITA_PIANO, B.CD_VOCE_PIANO, A.ESERCIZIO_PIANO
+               FROM PROGETTO_RIMODULAZIONE_PPE A, PROGETTO_RIMODULAZIONE PR, ELEMENTO_VOCE B, VOCE_PIANO_ECONOMICO_PRG C
+               WHERE A.CD_UNITA_ORGANIZZATIVA = C.CD_UNITA_ORGANIZZATIVA
+               AND   A.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+               AND   B.CD_UNITA_PIANO = C.CD_UNITA_ORGANIZZATIVA
+               AND   B.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+               AND   A.ESERCIZIO_PIANO = B.ESERCIZIO
+               AND   C.FL_ADD_VOCIBIL = 'N'
+               AND   A.PG_PROGETTO = PR.PG_PROGETTO
+               AND   A.PG_RIMODULAZIONE = PR.PG_RIMODULAZIONE
+               AND   PR.STATO NOT IN ('A', 'R')
+               AND   A.ESERCIZIO_PIANO = aEs
+               AND   (A.IM_VAR_SPESA_FINANZIATO > 0 OR A.IM_VAR_SPESA_COFINANZIATO > 0 OR A.IM_STOASS_SPESA_FINANZIATO > 0 OR A.IM_STOASS_SPESA_COFINANZIATO > 0)
+               AND   NOT EXISTS(SELECT 1 FROM PROGETTO_RIMODULAZIONE_VOCE D
+                                WHERE D.PG_PROGETTO = A.PG_PROGETTO
+                                AND   D.PG_RIMODULAZIONE = A.PG_RIMODULAZIONE
+                                AND   D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                AND   D.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                AND   D.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)
+               AND   NOT EXISTS(SELECT 1 FROM ASS_PROGETTO_PIAECO_VOCE E
+                                WHERE E.PG_PROGETTO = A.PG_PROGETTO
+                                AND   E.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                AND   E.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                AND   E.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)) LOOP
+
+       P_INDEX := 0;
+
+       FOR DET IN (SELECT A.PG_PROGETTO, A.PG_RIMODULAZIONE, B.CD_UNITA_PIANO, B.CD_VOCE_PIANO, A.ESERCIZIO_PIANO,
+       	               B.ESERCIZIO, B.TI_APPARTENENZA, B.TI_GESTIONE, B.CD_ELEMENTO_VOCE
+                   FROM PROGETTO_RIMODULAZIONE_PPE A, PROGETTO_RIMODULAZIONE PR, ELEMENTO_VOCE B, VOCE_PIANO_ECONOMICO_PRG C
+                   WHERE A.CD_UNITA_ORGANIZZATIVA = C.CD_UNITA_ORGANIZZATIVA
+                   AND   A.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+                   AND   B.CD_UNITA_PIANO = C.CD_UNITA_ORGANIZZATIVA
+                   AND   B.CD_VOCE_PIANO = C.CD_VOCE_PIANO
+                   AND   A.ESERCIZIO_PIANO = B.ESERCIZIO
+                   AND   C.FL_ADD_VOCIBIL = 'N'
+                   AND   A.PG_PROGETTO = PR.PG_PROGETTO
+                   AND   A.PG_RIMODULAZIONE = PR.PG_RIMODULAZIONE
+                   AND   PR.STATO NOT IN ('A', 'R')
+                   AND   A.ESERCIZIO_PIANO = aEs
+                   AND   (A.IM_VAR_SPESA_FINANZIATO > 0 OR A.IM_VAR_SPESA_COFINANZIATO > 0 OR A.IM_STOASS_SPESA_FINANZIATO > 0 OR A.IM_STOASS_SPESA_COFINANZIATO > 0)
+                   AND   NOT EXISTS(SELECT 1 FROM PROGETTO_RIMODULAZIONE_VOCE D
+                                    WHERE D.PG_PROGETTO = A.PG_PROGETTO
+                    				AND   D.PG_RIMODULAZIONE = A.PG_RIMODULAZIONE
+                                    AND   D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                    AND   D.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                    AND   D.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)
+                   AND   NOT EXISTS(SELECT 1 FROM ASS_PROGETTO_PIAECO_VOCE E
+                                    WHERE E.PG_PROGETTO = A.PG_PROGETTO
+                                    AND   E.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA
+                                    AND   E.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+                                    AND   E.ESERCIZIO_PIANO = A.ESERCIZIO_PIANO)
+                   AND   A.PG_PROGETTO = REC.PG_PROGETTO
+                   AND   A.PG_RIMODULAZIONE = REC.PG_RIMODULAZIONE
+                   AND   B.CD_UNITA_PIANO = REC.CD_UNITA_PIANO
+                   AND   B.CD_VOCE_PIANO = REC.CD_VOCE_PIANO
+                   AND   A.ESERCIZIO_PIANO = REC.ESERCIZIO_PIANO) LOOP
+
+           P_INDEX := P_INDEX + 1;
+           INSERT INTO PROGETTO_RIMODULAZIONE_VOCE
+               (PG_PROGETTO, PG_RIMODULAZIONE, CD_UNITA_ORGANIZZATIVA, CD_VOCE_PIANO, ESERCIZIO_PIANO,
+                PG_VARIAZIONE, ESERCIZIO_VOCE, TI_APPARTENENZA, TI_GESTIONE, CD_ELEMENTO_VOCE, TI_OPERAZIONE, IM_VAR_SPESA_FINANZIATO, IM_VAR_SPESA_COFINANZIATO, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+           VALUES(DET.PG_PROGETTO, DET.PG_RIMODULAZIONE, DET.CD_UNITA_PIANO, DET.CD_VOCE_PIANO, DET.ESERCIZIO_PIANO,
+                P_INDEX, DET.ESERCIZIO, DET.TI_APPARTENENZA, DET.TI_GESTIONE, DET.CD_ELEMENTO_VOCE, 'A', 0, 0,
+                aTSNow, aUser, aTSNow, aUser, 0);
+
+           CONTA_INS := CONTA_INS + SQL%ROWCOUNT;
+       END LOOP;
+   END LOOP;
+   aMessage := 'Aggiornamento voci su rimodulazione piano economico progetti. Inseriti '||sql%rowcount||' record.';
+   ibmutl200.LOGINF(pg_exec,aMessage,'','');
+end;
+
 procedure JOB_RIBALTAMENTO_PDGP(job number, pg_exec number, next_date date, aEs number) as
     aTSNow date;
     aUser varchar2(20);
@@ -3636,12 +3742,14 @@ begin
 	   ibmutl200.logErr(lPgExec,'Esercizio zero non gestito', '', '');
 	else
 	   insert into numerazione_base (ESERCIZIO, COLONNA, TABELLA, CD_CORRENTE, CD_MASSIMO, DUVA, UTUV, DACR, UTCR, PG_VER_REC, CD_INIZIALE )
-	   (select aEs, COLONNA, TABELLA, 0, CD_MASSIMO, SYSDATE, 'SYSTEM', SYSDATE, 'SYSTEM', 1, CD_INIZIALE
+	   (select aEs, COLONNA, TABELLA, 0, CD_MASSIMO, aTSNow, aUser, aTSNow, aUser, 1, CD_INIZIALE
 	    FROM numerazione_base
 	    WHERE Esercizio = aEs - 1
 	    AND TABELLA IN ('VAR_STANZ_RES' , 'VAR_STANZ_RES$'));
 
 	   INIT_RIBALTAMENTO_pdgp(aEs,pg_exec,aMessage);
+	   AGGIORMENTO_PROGETTI(aEs,pg_exec);
+
        ibmutl200.logInf(pg_exec,aMessage, '', '');
        ibmutl200.logInf(pg_exec,'Batch di ribaltamento configurazione, str.organizzativa, anagrafica capitoli e piano dei conti.', 'End:'||to_char(sysdate,'YYYY/MM/DD HH-MI-SS'), '');
     end if;

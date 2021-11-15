@@ -953,65 +953,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
      * Prepara e apre la ricerca per l'evasione dell'ordine
      */
     private Forward basicDoRicercaEvasioneOrdine(ActionContext context, Fattura_passivaBulk fatturaPassiva, List<Fattura_passiva_rigaBulk> models, boolean manually) {
-        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
-        return Optional.ofNullable(models)
-                .filter(list -> list.size() == 1 && manually)
-                .map((List<Fattura_passiva_rigaBulk> list) -> {
-                    try {
-                        final RemoteIterator contabilizzaRigaIterator = bp.find(context, new CompoundFindClause(),
-                                new EvasioneOrdineRigaBulk(), models.get(0), "contabilizzaRiga");
-                        return Optional.ofNullable(contabilizzaRigaIterator)
-                                .map(remoteIterator -> {
-                                    try {
-                                        return remoteIterator.countElements();
-                                    } catch (RemoteException e) {
-                                        throw new DetailedRuntimeException(e);
-                                    }
-                                })
-                                .filter(elements -> elements != 0)
-                                .map(integer -> {
-                                    try {
-                                        ContabilizzaOrdineBP nbp = (ContabilizzaOrdineBP) context.createBusinessProcess("ContabilizzaOrdineBP", new Object[]{"MRSWTh"});
-                                        nbp.setFattura_passiva_rigaBulk(models.get(0));
-                                        nbp.setMultiSelection(true);
-                                        nbp.setIterator(context, contabilizzaRigaIterator);
-                                        context.addHookForward("seleziona", this, "doContabilizzaOrdine");
-                                        return (Forward)context.addBusinessProcess(nbp);
-                                    } catch (BusinessProcessException | RemoteException e) {
-                                        throw new DetailedRuntimeException(e);
-                                    }
-                                }).orElseGet(() -> {
-                                    bp.setMessage("Non ci sono dati per i criteri impostati!");
-                                    try {
-                                        contabilizzaRigaIterator.close();
-                                    } catch (RemoteException e) {
-                                        throw new DetailedRuntimeException(e);
-                                    }
-                                    return context.findDefaultForward();
-                                });
-                    } catch (Throwable e) {
-                        return handleException(context, e);
-                    }
-                }).orElseGet(() -> {
-                    if (manually) {
-                        bp.setMessage(FormBP.WARNING_MESSAGE, "Per procedere, bisogna selezionare un unico dettaglio da contabilizzare!");
-                    } else {
-                        final Map<Boolean, Long> result = models.stream().map(fattura_passiva_rigaBulk -> {
-                            try {
-                                return bp.associaOrdineRigaFattura(context, fattura_passiva_rigaBulk);
-                            } catch (BusinessProcessException e) {
-                                throw new DetailedRuntimeException(e);
-                            }
-                        }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-                        final Long righeContabilizzate = Optional.ofNullable(result.get(true)).orElse(Long.valueOf(0));
-                        if (righeContabilizzate.intValue() == models.size()) {
-                            bp.setMessage(FormBP.INFO_MESSAGE,"Tutte le righe selezionate sono state contabilizzate.");
-                        } else {
-                            bp.setMessage(FormBP.ERROR_MESSAGE,"Sono state contabilizzate " + righeContabilizzate + " righe su " + models.size() + "! Procedere alla conatbilizzazione manuale.");
-                        }
-                    }
-                    return context.findDefaultForward();
-                });
+        return context.findDefaultForward();
     }
     /**
      * Contabilizza i dettagli selezionati previo controllo della selezione
@@ -1037,52 +979,14 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
         if (!crudFatturaPassivaBP.isPresent())
             return context.findDefaultForward();
 
-        final Map<String, List<EvasioneOrdineRigaBulk>> collectBeneServizio = selectedElements.get().collect(
-                Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdBeneServizio())
-        );
-        if (collectBeneServizio.size() > 1) {
-            crudFatturaPassivaBP.get().setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
-                    .concat(collectBeneServizio.keySet().stream().collect(Collectors.joining(","))).concat("]"));
-            return context.findDefaultForward();
-        }
-        final Map<String, List<EvasioneOrdineRigaBulk>> collectCodiciIva = selectedElements.get().collect(
-                Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdVoceIva())
-        );
-        if (collectCodiciIva.size() > 1) {
-            crudFatturaPassivaBP.get().setMessage("Non è possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
-                    .concat(collectCodiciIva.keySet().stream().collect(Collectors.joining(","))).concat("]"));
-            return context.findDefaultForward();
-        }
         try {
-            Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk =
-                    Optional.ofNullable(crudFatturaPassivaBP.get().getDettaglio().getDetails().get(crudFatturaPassivaBP.get().getDettaglio().getSelection().getFocus()))
-                    .filter(Fattura_passiva_rigaBulk.class::isInstance)
-                    .map(Fattura_passiva_rigaBulk.class::cast);
-            if (fattura_passiva_rigaBulk.isPresent()) {
                 selectedElements.get().forEach(evasioneOrdineRigaBulk -> {
-                    fattura_passiva_rigaBulk.get().setBene_servizio(Optional.ofNullable(fattura_passiva_rigaBulk.get().getBene_servizio())
-                            .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio())
-                    );
-                    fattura_passiva_rigaBulk.get().setVoce_iva(Optional.ofNullable(fattura_passiva_rigaBulk.get().getVoce_iva())
-                                    .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva())
-                    );
-                    fattura_passiva_rigaBulk.get().setDs_riga_fattura(Optional.ofNullable(fattura_passiva_rigaBulk.get().getDs_riga_fattura())
-                            .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio().getDs_bene_servizio())
-                    );
-                    fattura_passiva_rigaBulk.get().setPrezzo_unitario(Optional.ofNullable(fattura_passiva_rigaBulk.get().getPrezzo_unitario())
-                            .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario())
-                    );
-                    fattura_passiva_rigaBulk.get().setQuantita(Optional.ofNullable(fattura_passiva_rigaBulk.get().getQuantita())
-                            .orElseGet(() -> evasioneOrdineRigaBulk.getQuantitaEvasa())
-                    );
-                    doCalcolaTotaliDiRiga(context);
                     try {
-                        crudFatturaPassivaBP.get().associaOrdineRigaFattura(context, evasioneOrdineRigaBulk, fattura_passiva_rigaBulk.get());
+                        crudFatturaPassivaBP.get().associaOrdineFattura(context, evasioneOrdineRigaBulk);
                     } catch (BusinessProcessException e) {
                         throw new DetailedRuntimeException(e);
                     }
                 });
-            }
             return context.findDefaultForward();
         } catch (Throwable _ex) {
             return handleException(context, _ex);
@@ -1573,6 +1477,56 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 return openConfirm(context, "Alcuni dettagli sono già stati associati. Si vuole continuare?", it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfermaAssocia");
 
             return basicDoAssociaDettagli(context);
+
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doSelezionaOrdini(ActionContext context) {
+
+        try {
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            fillModel(context);
+
+            Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+
+                try {
+                    final Fattura_passivaBulk fatturaPassiva = fattura;
+                    final RemoteIterator contabilizzaRigaIterator = bp.find(context, new CompoundFindClause(),
+                            new EvasioneOrdineRigaBulk(), fattura, "ricercaOrdini");
+                    return Optional.ofNullable(contabilizzaRigaIterator)
+                            .map(remoteIterator -> {
+                                try {
+                                    return remoteIterator.countElements();
+                                } catch (RemoteException e) {
+                                    throw new DetailedRuntimeException(e);
+                                }
+                            })
+                            .filter(elements -> elements != 0)
+                            .map(integer -> {
+                                try {
+                                    ContabilizzaOrdineBP nbp = (ContabilizzaOrdineBP) context.createBusinessProcess("ContabilizzaOrdineBP", new Object[]{"MRSWTh"});
+                                    nbp.setFattura_passivaBulk(fatturaPassiva);
+                                    nbp.setMultiSelection(true);
+                                    nbp.setIterator(context, contabilizzaRigaIterator);
+                                    context.addHookForward("seleziona", this, "doContabilizzaOrdine");
+                                    return (Forward)context.addBusinessProcess(nbp);
+                                } catch (BusinessProcessException | RemoteException e) {
+                                    throw new DetailedRuntimeException(e);
+                                }
+                            }).orElseGet(() -> {
+                                bp.setMessage("Non ci sono dati per i criteri impostati!");
+                                try {
+                                    contabilizzaRigaIterator.close();
+                                } catch (RemoteException e) {
+                                    throw new DetailedRuntimeException(e);
+                                }
+                                return context.findDefaultForward();
+                            });
+                } catch (Throwable e) {
+                    return handleException(context, e);
+                }
 
         } catch (Exception e) {
             return handleException(context, e);
@@ -4097,13 +4051,13 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
     public Forward doRemoveFromCRUDMain_Ordini(ActionContext context) throws ApplicationException {
         CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
         Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
-        Selection selection = bp.getFattureRigaOrdiniController().getSelection();
+        Selection selection = bp.getFatturaOrdiniController().getSelection();
         Optional.ofNullable(selection)
                 .filter(selection1 -> !selection1.isEmpty())
                 .orElseThrow(() -> new ApplicationException("Selezionare le consegne che si desidera eliminare!"));
 
 
-        final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
+        final List<FatturaOrdineBulk> details = bp.getFatturaOrdiniController().getDetails();
         final Iterator<Integer> iterator = selection.iterator();
         List<FatturaOrdineBulk> bulksToRemove = new ArrayList<FatturaOrdineBulk>();
         iterator.forEachRemaining(index -> {
@@ -4121,16 +4075,16 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 throw new DetailedRuntimeException(e);
             }
         });
-        bulksToRemove.stream()
+/*TODO GG        bulksToRemove.stream()
                 .forEach(fatturaOrdineBulk -> {
-                    final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFatturaRigaOrdiniHash().getKey(fatturaOrdineBulk);
+                    final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFattura_passiva_ordini().getKey(fatturaOrdineBulk);
                     fatturaOrdineBulk.setToBeDeleted();
-                    bp.getFattureRigaOrdiniController().getDetails().remove(fatturaOrdineBulk);
+                    bp.getFatturaOrdiniController().getDetails().remove(fatturaOrdineBulk);
                     if (fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).isEmpty()) {
                         fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
                     }
-                });
-        bp.getFattureRigaOrdiniController().getSelection().clear();
+                });*/
+        bp.getFatturaOrdiniController().getSelection().clear();
         return context.findDefaultForward();
     }
     /**
@@ -4497,7 +4451,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
      */
     public Forward doTab(ActionContext context, String tabName, String pageName) {
 
-        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
         Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
         try {
             if ("tabFatturaPassiva".equalsIgnoreCase(bp.getTab(tabName))) {
@@ -4552,7 +4506,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 fattura = (Fattura_passivaBulk) h.calcoloConsuntivi(context.getUserContext(), fattura);
                 bp.setModel(context, fattura);
             }
-            return super.doTab(context, tabName, pageName);
+        return super.doTab(context, tabName, pageName);
         } catch (Throwable e) {
             return handleException(context, e);
         }
@@ -5582,7 +5536,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                     .filter(CRUDFatturaPassivaBP.class::isInstance)
                     .map(CRUDFatturaPassivaBP.class::cast)
                     .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
-            final List<FatturaOrdineBulk> details = bp.getFattureRigaOrdiniController().getDetails();
+            final List<FatturaOrdineBulk> details = bp.getFatturaOrdiniController().getDetails();
             details.stream().forEach(fatturaOrdineBulk -> fatturaOrdineBulk.calcolaRettifiche());
             return context.findDefaultForward();
         } catch (Throwable t) {
@@ -5622,7 +5576,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 .filter(CRUDFatturaPassivaBP.class::isInstance)
                 .map(CRUDFatturaPassivaBP.class::cast)
                 .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
-        Optional.ofNullable(bp.getFattureRigaOrdiniController())
+        Optional.ofNullable(bp.getFatturaOrdiniController())
                 .ifPresent(ordiniCRUDController -> ordiniCRUDController.setRettificheCollapse(!ordiniCRUDController.isRettificheCollapse()));
         return context.findDefaultForward();
     }

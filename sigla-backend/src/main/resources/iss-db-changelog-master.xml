@@ -26,8 +26,7 @@
     <property name="now" value="now()" dbms="postgresql"/>
 
     <property name="esercizio_corrente" value="to_number(to_char(SYSDATE, 'YYYY'))" dbms="oracle"/>
-    <property name="esercizio_corrente" value="date_part('year', now())" dbms="postgresql"/>
-    <property name="esercizio_corrente" value="YEAR(now())" dbms="h2"/>
+    <property name="esercizio_corrente" value="date_part('year', now())" dbms="postgresql,h2"/>
 
     <property name="date.type" value="DATE" dbms="oracle"/>
     <property name="date.type" value="DATETIME" dbms="postgresql"/>

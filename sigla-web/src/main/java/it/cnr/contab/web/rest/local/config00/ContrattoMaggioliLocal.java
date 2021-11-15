@@ -42,6 +42,7 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @PermitAll
 @Api("Contratti")
+
 public interface ContrattoMaggioliLocal {
     /**
      * PUT  /restapi/contratto -> return Contratto

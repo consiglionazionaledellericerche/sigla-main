@@ -5079,7 +5079,8 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                         salta = true;
                                         break;
                                     }
@@ -5113,15 +5114,8 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else {
-                            throw new ApplicationMessageFormatException(
-                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
-                                    String.valueOf(bulk.getEsercizio()),
-                                    String.valueOf(bulk.getCd_cds()),
-                                    String.valueOf(bulk.getPg_documento_cont()),
-                                    totSiope,
-                                    infoben.getImportoBeneficiario());
-                        }
+                        } else
+                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5209,7 +5203,8 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                         salta = true;
                                         break;
                                     }
@@ -5243,15 +5238,8 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else {
-                            throw new ApplicationMessageFormatException(
-                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
-                                    String.valueOf(bulk.getEsercizio()),
-                                    String.valueOf(bulk.getCd_cds()),
-                                    String.valueOf(bulk.getPg_documento_cont()),
-                                    totSiope,
-                                    infoben.getImportoBeneficiario());
-                        }
+                        } else
+                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile

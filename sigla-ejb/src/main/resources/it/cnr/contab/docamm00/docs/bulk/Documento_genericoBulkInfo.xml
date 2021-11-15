@@ -811,7 +811,7 @@
 		name="findTipoDocumentoGenerico" />
 				
 	<columnFieldProperty
-		name="cd_tipo_documento_amm" />
+		name="tipo_doc" />
 	<columnFieldProperty
 		name="pg_documento_generico" />
 	<columnFieldProperty

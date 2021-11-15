@@ -54,7 +54,7 @@ public Forward doPredisponiPerLaFirma(ActionContext context) {
 		bp.setModel(context, bulk);
 //		try {
 			bp.setSelection(context);
-			bp.predisponiPerLaFirma(context);							
+			bp.predisponiPerLaFirma(context);
 //		} finally {
 //			bp.openIterator(context);				
 //		}

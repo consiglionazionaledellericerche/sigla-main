@@ -80,6 +80,31 @@
                 columnName="QUANTITA_EVASA"
                 propertyName="quantitaEvasa"/>
         <columnMapping
+                columnName="ORDINE_ACQ.DATA_ORDINE"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.dataOrdine"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="CD_NUMERATORE_ORDINE"
+                propertyName="ordineAcqConsegna.cdNumeratore"
+                sqlTypeName="VARCHAR"
+                columnSize="3"/>
+        <columnMapping
+                columnName="NUMERO_ORDINE"
+                propertyName="ordineAcqConsegna.numero"
+                sqlTypeName="DECIMAL"
+                columnSize="5"/>
+        <columnMapping
+                columnName="RIGA_ORDINE"
+                propertyName="ordineAcqConsegna.riga"
+                sqlTypeName="DECIMAL"
+                columnSize="3"/>
+        <columnMapping
+                columnName="CONSEGNA"
+                propertyName="ordineAcqConsegna.consegna"
+                sqlTypeName="DECIMAL"
+                columnSize="3"/>
+        <columnMapping
                 columnName="ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO"
                 propertyName="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
                 sqlTypeName="VARCHAR"
@@ -89,6 +114,11 @@
                 propertyName="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
                 sqlTypeName="VARCHAR"
                 columnSize="300"/>
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.NOTA_RIGA"
+                propertyName="ordineAcqConsegna.ordineAcqRiga.notaRiga"
+                sqlTypeName="VARCHAR"
+                columnSize="2000"/>
         <columnMapping
                 columnName="ORDINE_ACQ_RIGA.CD_VOCE_IVA"
                 propertyName="ordineAcqConsegna.ordineAcqRiga.cdVoceIva"

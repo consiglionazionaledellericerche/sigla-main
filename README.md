@@ -1,5 +1,4 @@
 # [![Sistema Informativo Gestione Linee di Attività](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/docs/logo-git.png)](https://contab.cnr.it/SIGLANG)
-# [![Sistema Informativo Gestione Linee di Attività](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/docs/screenshot/main.png)](https://contab.cnr.it/SIGLANG)
 
 [![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg?logo=gnu&style=for-the-badge)](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/LICENSE)
 [![Supported JVM Versions](https://img.shields.io/badge/JVM-8-brightgreen.svg?style=for-the-badge&logo=Java)](https://openjdk.java.net/install/)
@@ -120,3 +119,4 @@ docker run -p 8080:8080 --link sigla-postgres:db -e LC_ALL="it_IT.UTF-8" -e LANG
 ```
 
 Collegarsi a http://localhost:8080/SIGLA/Login.do username: _ENTE_ password da impostare al primo login. 
+FINE

@@ -169,7 +169,7 @@ public interface FatturaPassivaComponentSession extends it.cnr.contab.docamm00.c
 
     boolean isAttivoSplitPayment(UserContext userContext, Timestamp dt_registrazione) throws PersistencyException, ComponentException, java.rmi.RemoteException;
 
-    List<EvasioneOrdineRigaBulk> findContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga, CompoundFindClause findclause) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    List<EvasioneOrdineRigaBulk> findRicercaOrdiniByClause(UserContext userContext, Fattura_passivaBulk fatturaPassiva, CompoundFindClause findclause) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
     
     boolean isAttivoSplitPaymentProf(UserContext userContext, Timestamp dt_registrazione) throws PersistencyException, ComponentException, java.rmi.RemoteException;
 

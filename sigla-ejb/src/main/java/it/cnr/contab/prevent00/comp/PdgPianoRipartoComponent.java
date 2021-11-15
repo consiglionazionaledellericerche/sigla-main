@@ -26,10 +26,8 @@
 package it.cnr.contab.prevent00.comp;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -40,8 +38,6 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoHome;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -309,43 +305,5 @@ public class PdgPianoRipartoComponent extends CRUDComponent implements Cloneable
 		if (clause != null)
 		   sql.addClause(clause);
 		return sql; 
-	}
-
-	/**
-	 * Carica i dati provenienti da un foglio excel
-	 * @param userContext
-	 * @param cds
-	 * @param cd_classificazione
-	 * @param importo
-	 * @throws ComponentException
-	 * @throws PersistencyException
-	 */
-	public void caricaPianoDiRiparto(UserContext userContext, String cds, String cd_classificazione, BigDecimal importo) throws ComponentException {
-		try {
-			Pdg_piano_ripartoBulk ripartoBulk = new Pdg_piano_ripartoBulk();
-			ripartoBulk.setToBeCreated();
-			ripartoBulk.setEsercizio(CNRUserContext.getEsercizio(userContext));
-			ripartoBulk.setStato("P");
-			ripartoBulk.setIm_tot_spese_acc(importo);
-
-			CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
-			ripartoBulk.setCentro_responsabilita(cdrHome.findCdrFromCds(userContext, cds));
-			V_classificazione_vociHome vociHome = (V_classificazione_vociHome) getHome(userContext, V_classificazione_vociBulk.class);
-			V_classificazione_vociBulk vociBulk = new V_classificazione_vociBulk();
-			vociBulk.setEsercizio(CNRUserContext.getEsercizio(userContext));
-			vociBulk.setCd_classificazione(cd_classificazione);
-			final Optional<V_classificazione_vociBulk> vClassificazioneVociBulk = vociHome.find(vociBulk).stream()
-					.filter(V_classificazione_vociBulk.class::isInstance)
-					.map(V_classificazione_vociBulk.class::cast)
-					.findAny();
-			if (vClassificazioneVociBulk.isPresent()) {
-				ripartoBulk.setV_classificazione_voci(vClassificazioneVociBulk.get());
-				creaConBulk(userContext, ripartoBulk);
-			} else {
-				throw new ApplicationMessageFormatException("La classificazione della voce {0} non è stata trovata!", cd_classificazione);
-			}
-		} catch (PersistencyException | IntrospectionException _ex) {
-			throw handleException(_ex);
-		}
 	}
 }
