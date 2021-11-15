@@ -709,20 +709,6 @@
 		name="durata_progetto" />
 	<columnFieldProperty
 		name="note" />
-	
-	<columnSet	name="restService">
-		<columnFieldProperty name="cd_progetto"/>
-		<columnFieldProperty name="pg_progetto"/>
-		<columnFieldProperty name="dt_proroga" />
-		<columnFieldProperty name="ds_progetto" />
-		<columnFieldProperty name="cd_responsabile_terzo" />
-		<columnFieldProperty name="codice_fiscale_responsabile" />
-		<columnFieldProperty name="dt_inizio" />
-		<columnFieldProperty name="dt_fine" />
-		<columnFieldProperty name="stato" />
-		<columnFieldProperty name="esercizio" />
-		<columnFieldProperty name="cd_unita_organizzativa" />
-	</columnSet>
 
 	<columnSet
 		name="filtro_ricerca_moduli">

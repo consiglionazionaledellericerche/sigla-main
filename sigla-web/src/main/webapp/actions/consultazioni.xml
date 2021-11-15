@@ -1482,7 +1482,7 @@
 					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-					value="it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk" />
+					value="it.cnr.contab.progettiric00.core.bulk.ProgettoContrattoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsProgettiAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
