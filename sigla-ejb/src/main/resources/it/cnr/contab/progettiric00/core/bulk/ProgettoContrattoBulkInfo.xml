@@ -1,0 +1,1028 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice UO Coordinatrice"
+		caseSensitiveSearch="false"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="false"		
+		nullable="false" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Descrizione UO Coordinatrice"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="false"				
+		caseSensitiveSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		label="UO Coordinatrice" />
+	/***************************************************************
+	 **  Search tool utilizzato per la ricerca del progetto padre **
+	 ***************************************************************/
+
+	<fieldProperty
+		name="find_wp_per_commessa"
+		property="cd_progetto"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="find_nodo_padre"
+		property="progettopadre"
+		inputType="SEARCHTOOL"
+		label="Commessa/Modulo Attività"
+		readonlyProperty="ROfind_nodo_padre"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="cd_progetto_padre"
+		property="progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice progetto"
+		readonlyProperty="ROprogetto"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="cd_progetto_padre_commessa"
+		property="progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice commessa"
+		readonlyProperty="ROprogetto"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_progetto_padre"
+		property="progettopadre.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		caseSensitiveSearch="false"/>
+
+	/*********************************************************/
+
+	<fieldProperty
+		name="cd_divisa"
+		property="divisa.cd_divisa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Divisa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="divisa"
+		property="divisa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Divisa del Budget" />
+
+	<fieldProperty
+		name="cd_responsabile_terzo"
+		property="responsabile.cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Responsabile" />
+	<fieldProperty
+		name="codice_fiscale_responsabile"
+		property="responsabile.anagrafico.codice_fiscale"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Fiscale"
+		nullable="true"		
+		/>
+	<fieldProperty
+		name="responsabile"
+		property="responsabile"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Responsabile"
+		nullable="false" />
+
+	<fieldProperty
+		name="cd_tipo_progetto"
+		property="tipo.cd_tipo_progetto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Tipo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo"
+		nullable="false" />
+
+	<fieldProperty
+		name="dt_inizio"
+		property="dt_inizio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Inizio"
+		nullable="false" />
+	<fieldProperty
+		name="dt_fine"
+		property="dt_fine"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		readonlyProperty="RODt_fine"
+		formatName="date_short"
+		label="Data Fine" />
+	<fieldProperty
+		name="dt_proroga"
+		property="dt_proroga"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Proroga" />
+	<fieldProperty
+		name="importo_progetto"
+		property="importo_progetto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Entità delle risorse necessarie"
+		nullable="false" />
+	<fieldProperty
+		name="importo_divisa"
+		property="importo_divisa"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Budget in Divisa" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROprogettoCodifica"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Codice"
+		nullable="false" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		maxLength="400"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="cd_progetto_comm_wp"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice Modulo di Attività"
+		nullable="false" />
+	<fieldProperty
+		name="ds_progetto_comm_wp"
+		property="ds_progetto"
+		maxLength="400"
+		inputType="TEXT"
+		cols="300"
+		rows="3"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="note"
+		property="note"
+		maxLength="2000"
+		inputSize="2000"
+		inputType="TEXTAREA"
+		label="Note"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		label="Stato"
+		inputType="RADIOGROUP"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+
+	<fieldProperty
+		name="durata_progetto"
+		property="durata_progetto"
+		keysProperty="durata_progettoKeys"
+		label="Durata"
+		inputType="RADIOGROUP"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		keysProperty="livello_progettoKeys"
+		label="Livello"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="livello_padre"
+		property="progettopadre.livello"
+		keysProperty="livello_progettoKeys"
+		label="Livello"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="dt_inizio_padre"
+		property="progettopadre.dt_inizio"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Inizio"
+		nullable="false" />
+	<fieldProperty
+		name="stato_padre"
+		property="progettopadre.stato"
+		keysProperty="statoKeys"
+		readonlyProperty="ROprogettopadre"
+		label="Stato"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="dipartimento_padre"
+		property="progettopadre.dipartimento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="ROprogettopadre"
+		enabledOnSearch="true"
+		label="Dipartimento"
+		nullable="false" />
+
+	/***************************************************************
+	 **  Search tool utilizzato per la ricerca del dipartimento   **
+	 ***************************************************************/
+	<fieldProperty
+		name="find_dipartimento"
+		property="dipartimento"
+		inputType="SEARCHTOOL"
+		nullable="false"
+		label="Dipartimento"
+		readonlyProperty="RODipartimento"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_dipartimento"
+		property="dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="15"
+		inputType="TEXT"
+		label="Dipartimento"
+		nullable="false"
+		readonlyProperty="RODipartimento"
+		caseSensitiveSearch="true" />
+	<fieldProperty
+		name="cd_dipartimento_modulo"
+		property="progettopadre.progettopadre.dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="15"
+		inputType="TEXT"
+		label="Dipartimento"
+		nullable="false"
+		readonlyProperty="RODipartimento"
+		caseSensitiveSearch="true" />
+		
+	<fieldProperty
+		name="ds_dipartimento"
+		property="dipartimento.ds_dipartimento"
+		maxLength="300"
+		inputSize="30"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RODipartimento"
+		label="Dipartimento"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="crea_dipartimento"
+		property="dipartimento"
+		inputType="CRUDTOOL"
+		readonlyProperty="RODipartimento"
+		CRUDBusinessProcessName="CRUDConfigDipartimentoBP"
+		/>
+
+	/*********************************************************/
+
+	<fieldProperty
+		name="generale_affitto"
+		property="spese.generale_affitto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Spese Generali e Affitti"
+		nullable="false" />
+	<fieldProperty
+		name="gestione_nave"
+		property="spese.gestione_nave"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Gestione Nave URANIA"
+		nullable="false" />
+	<fieldProperty
+		name="cc_brev_pi"
+		property="spese.cc_brev_pi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Convenzioni e Consorzi, Brevetti e Programmi Intenazionali"
+		nullable="false" />
+	<fieldProperty
+		name="edilizia"
+		property="spese.edilizia"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Edilizia ivi compresa manutenzione straordinaria di immobili in proprietà"
+		nullable="false" />
+	<fieldProperty
+		name="totaleSpese"
+		property="totaleSpese"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="TOTALE"
+		nullable="false" />
+	<fieldProperty
+		name="amm_immobili"
+		property="spese.amm_immobili"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Ammortamento immobili in proprietà, in uso all'Istituto"
+		nullable="false" />
+	<fieldProperty
+		name="acc_tfr"
+		property="spese.acc_tfr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Accantonamento TFR"
+		nullable="false" />
+	<fieldProperty
+		name="amm_tecnico"
+		property="spese.amm_tecnico"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Quota di ammortamento apparecchiature tecnico-scientifiche di proprietà acquisite negli esercizi precedenti"
+		nullable="false" />
+	<fieldProperty
+		name="amm_altri_beni"
+		property="spese.amm_altri_beni"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Quota di ammortamento di altri beni durevoli di proprietà acquisite negli esercizi precedenti"
+		nullable="false" />
+	<fieldProperty
+		name="totaleCostiFigurativi"
+		property="totaleCostiFigurativi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="TOTALE"
+		nullable="false" />
+	<fieldProperty
+		name="res_fo"
+		property="spese.res_fo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Risorse presunte da Fininziamento Ordinario"
+		nullable="false" />
+	<fieldProperty
+		name="res_min"
+		property="spese.res_min"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Risorse presunte da Ministeri e altri soggetti pubblici"
+		nullable="false" />
+	<fieldProperty
+		name="res_ue_int"
+		property="spese.res_ue_int"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Risorse presunte da UE e altri organismi internazionali"
+		nullable="false" />
+	<fieldProperty
+		name="res_privati"
+		property="spese.res_privati"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="Risorse presunte da Privati"
+		nullable="false" />
+	<fieldProperty
+		name="totaleRisorsePresunte"
+		property="totaleRisorsePresunte"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		label="TOTALE"
+		nullable="false" />
+	<fieldProperty
+		name="tipo_fase"
+		property="tipo_fase"
+		keysProperty="tipo_faseKeys"
+		label="Fase"
+		inputType="RADIOGROUP"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		label="Pg Progetto"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"/>
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_progetto"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="ds_progetto"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+
+	<formFieldProperty
+		name="dt_fine" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="importo_progetto" />
+	<formFieldProperty
+		name="importo_divisa" />
+	<formFieldProperty
+		name="dt_proroga" />
+	<formFieldProperty
+		name="cd_divisa" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="cd_progetto_comm_wp" />
+	<formFieldProperty
+		name="ds_progetto_comm_wp" />
+	<formFieldProperty
+		name="find_wp_per_commessa" />
+	<formFieldProperty
+		name="cd_responsabile_terzo" />
+	<formFieldProperty
+		name="dt_inizio" />
+	<formFieldProperty
+		name="cd_tipo_progetto" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="divisa" />
+	<formFieldProperty
+		name="responsabile" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="note" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="durata_progetto" />
+	<formFieldProperty
+		name="find_nodo_padre" />
+	<formFieldProperty
+		name="cd_progetto_padre" />
+	<formFieldProperty
+		name="cd_progetto_padre_commessa" />
+	<formFieldProperty
+		name="ds_progetto_padre" />		
+	<formFieldProperty
+		name="livello" />				
+	<formFieldProperty
+		name="livello_padre" />
+	<formFieldProperty
+		name="dt_inizio_padre" />
+	<formFieldProperty
+		name="stato_padre" />
+	<formFieldProperty
+		name="dipartimento_padre" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="ds_dipartimento" />
+	<formFieldProperty
+		name="find_dipartimento" />
+	<formFieldProperty
+		name="crea_dipartimento" />
+
+	<formFieldProperty
+		name="generale_affitto" />
+	<formFieldProperty
+		name="gestione_nave" />
+	<formFieldProperty
+		name="cc_brev_pi" />
+	<formFieldProperty
+		name="edilizia" />
+	<formFieldProperty
+		name="totaleSpese" />
+	<formFieldProperty
+		name="amm_immobili" />
+	<formFieldProperty
+		name="acc_tfr" />
+	<formFieldProperty
+		name="amm_tecnico" />
+	<formFieldProperty
+		name="amm_altri_beni" />
+	<formFieldProperty
+		name="totaleCostiFigurativi" />
+	<formFieldProperty
+		name="res_fo" />
+	<formFieldProperty
+		name="res_min" />
+	<formFieldProperty
+		name="res_ue_int" />
+	<formFieldProperty
+		name="res_privati" />
+	<formFieldProperty
+		name="totaleRisorsePresunte" />
+	<formFieldProperty
+		name="tipo_fase" />
+
+	<columnFieldProperty
+		name="livello" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="cd_progetto_padre" />
+	<columnFieldProperty
+		name="tipo_fase" />
+	<columnFieldProperty
+		name="cd_progetto_padre_commessa" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="ds_unita_organizzativa" />
+	<columnFieldProperty
+		name="importo_progetto" />
+	<columnFieldProperty
+		name="importo_divisa" />
+	<columnFieldProperty
+		name="dt_proroga" />
+	<columnFieldProperty
+		name="cd_divisa" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="cd_responsabile_denominazione"
+		property="responsabile.denominazione_sede" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="durata_progetto" />
+	<columnFieldProperty
+		name="note" />
+	
+	<columnSet	name="restService">
+		<columnFieldProperty name="cd_progetto"/>
+		<columnFieldProperty name="pg_progetto"/>
+		<columnFieldProperty name="dt_proroga" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_responsabile_terzo" />
+		<columnFieldProperty name="codice_fiscale_responsabile" />
+		<columnFieldProperty name="dt_inizio" />
+		<columnFieldProperty name="dt_fine" />
+		<columnFieldProperty name="stato" />
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cd_unita_organizzativa" />
+		<columnFieldProperty name="cd_cup" label="Codice CUP" property="cd_cup" inputType="TEXT" inputSize="15" />
+	</columnSet>
+
+	<columnSet
+		name="filtro_ricerca_moduli">
+	<columnFieldProperty
+		name="cd_progetto"
+		label="Codice Modulo di Attività" />
+	<columnFieldProperty
+		name="cd_progetto_padre"
+		label="Codice Commessa" />
+	<columnFieldProperty
+		name="tipo_fase" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="importo_progetto" />
+	<columnFieldProperty
+		name="importo_divisa" />
+	<columnFieldProperty
+		name="dt_proroga" />
+	<columnFieldProperty
+		name="cd_divisa" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="durata_progetto" />
+	<columnFieldProperty
+		name="note" />
+	</columnSet>
+
+	<columnSet
+		name="filtro_ricerca_commesse">
+	<columnFieldProperty
+		name="cd_progetto"
+		label="Codice Commessa" />
+	<columnFieldProperty
+		name="cd_progetto_padre" />
+	<columnFieldProperty
+		name="tipo_fase" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="importo_progetto" />
+	<columnFieldProperty
+		name="importo_divisa" />
+	<columnFieldProperty
+		name="dt_proroga" />
+	<columnFieldProperty
+		name="cd_divisa" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="durata_progetto" />
+	<columnFieldProperty
+		name="note" />
+	</columnSet>
+
+	<columnSet
+		name="filtro_ricerca_progetti">
+	<columnFieldProperty
+		name="cd_progetto"
+		label="Codice Progetto" />
+	<columnFieldProperty
+		name="tipo_fase" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="importo_progetto" />
+	<columnFieldProperty
+		name="importo_divisa" />
+	<columnFieldProperty
+		name="dt_proroga" />
+	<columnFieldProperty
+		name="cd_divisa" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="durata_progetto" />
+	<columnFieldProperty
+		name="note" />
+	</columnSet>
+
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="cd_progetto_padre" />
+	<findFieldProperty
+		name="tipo_fase" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="importo_progetto" />
+	<findFieldProperty
+		name="importo_divisa" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="cd_divisa" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="durata_progetto" />
+		
+	<freeSearchSet
+		name="filtro_ricerca_moduli">
+	<findFieldProperty
+		name="cd_progetto"
+		label="Codice Modulo di Attività" />
+	<findFieldProperty
+		name="cd_progetto_padre"
+		label="Codice Commessa" />
+	<findFieldProperty
+		name="tipo_fase" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="importo_progetto" />
+	<findFieldProperty
+		name="importo_divisa" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="cd_divisa" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="durata_progetto" />
+	<findFieldProperty
+		name="note" />
+	</freeSearchSet>
+
+	<freeSearchSet
+		name="filtro_ricerca_commesse">
+	<findFieldProperty
+		name="cd_progetto"
+		label="Codice Commessa" />
+	<findFieldProperty
+		name="cd_progetto_padre" />
+	<findFieldProperty
+		name="tipo_fase" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="importo_progetto" />
+	<findFieldProperty
+		name="importo_divisa" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="cd_divisa" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="durata_progetto" />
+	<findFieldProperty
+		name="note" />
+	</freeSearchSet>
+
+	<freeSearchSet
+		name="filtro_ricerca_progetti">
+	<findFieldProperty
+		name="cd_progetto"
+		label="Codice Progetto" />
+	<findFieldProperty
+		name="tipo_fase" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="importo_progetto" />
+	<findFieldProperty
+		name="importo_divisa" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="cd_divisa" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="durata_progetto" />
+	<findFieldProperty
+		name="note" />
+	</freeSearchSet>		
+
+	<form
+		name="form_searchtool_progetto" >
+		<formFieldProperty
+		    inputSize="30"
+			maxLength="30"
+			name="cd_progetto"/>
+		<formFieldProperty
+		    inputSize="60"
+			maxLength="60"
+			inputType="ROTEXT"
+			name="ds_progetto"/>
+	</form>
+	
+	
+	<form
+		name="searchtool_modulo" >
+		<formFieldProperty
+			name="cd_progetto"
+		    inputSize="30" 
+		    label="Modulo"/>
+		<formFieldProperty
+			name="ds_progetto" 
+			inputType="ROTEXT"
+		    inputSize="100" />
+		    
+	</form>
+		
+	<form
+		name="searchtool_commessa" >
+		<formFieldProperty
+			name="cd_progetto"
+		    inputSize="30" 
+		    label="Commessa"/>
+		<formFieldProperty
+			name="ds_progetto" 
+			inputType="ROTEXT"
+		    inputSize="100" />
+	</form>
+	
+	
+
+</bulkInfo>

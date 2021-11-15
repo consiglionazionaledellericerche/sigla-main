@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.ProgettoContrattoBulk"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.ProgettoContrattoHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_GEST" >
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="responsabile.cd_terzo"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_TIPO_PROGETTO"
+			propertyName="tipo.cd_tipo_progetto"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="PG_PROGETTO_PADRE"
+			propertyName="progettopadre.pg_progetto"
+			fetchOnly="false" />			
+		<columnMapping
+			columnName="ESERCIZIO_PROGETTO_PADRE"
+			propertyName="progettopadre.esercizio"
+			fetchOnly="false" />			
+		<columnMapping
+			columnName="TIPO_FASE_PROGETTO_PADRE"
+			propertyName="progettopadre.tipo_fase"
+			fetchOnly="false" />			
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="dipartimento.cd_dipartimento"
+			fetchOnly="false" />			
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_UNITA_ORGANIZZATIVA_VALIDA"
+		tableName="V_UNITA_ORGANIZZATIVA_VALIDA"
+		extends="default" >
+	</columnMap>
+	<columnMap
+		name="PROGETTO_SIC"
+		tableName="PROGETTO_SIC"
+		extends="default" >
+		<columnMapping
+			columnName="FL_PIANO_TRIENNALE"
+			propertyName="fl_piano_triennale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</columnMap>
+	<columnMap
+		name="V_PROGETTO_PADRE"
+		tableName="V_PROGETTO_PADRE"
+		extends="default" >
+		<columnMapping
+			columnName="P_CD_PROGETTO"
+			propertyName="progettopadre.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap
+		name="V_ABIL_PROGETTI"
+		tableName="V_ABIL_PROGETTI">
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_COMMESSA"
+			propertyName="progettopadre.pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_MODULO"
+			propertyName="progettopadre.progettopadre.pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />	
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>					
+	</columnMap>
+	<persistentProperty
+		name="divisa" />
+	<persistentProperty
+		name="unita_organizzativa" />
+	<persistentProperty
+		name="responsabile" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="progettopadre" />		
+	<persistentProperty
+		name="dipartimento" />
+
+	<columnMap
+			name="CUP"
+			tableName="V_PROGETTO_PADRE"
+			extends="default" >
+		<columnMapping
+				columnName="CONTRATTO.CD_CUP"
+				propertyName="cd_cup"
+				sqlTypeName="VARCHAR"
+				columnSize="15"
+				nullable="true" />
+	</columnMap>
+	<persistentProperty
+			name="cd_cup" />
+
+	<fetchPolicy
+		name="it.cnr.contab.progettiric00.comp.ProgettoRicercaModuloComponent.findProgettoPadre">
+		<exclude pattern="*"/>
+		<include pattern="progettopadre"/>		
+		<include pattern="progettopadre.progettopadre"/>
+	</fetchPolicy>				
+</SQLPersistentInfo>
