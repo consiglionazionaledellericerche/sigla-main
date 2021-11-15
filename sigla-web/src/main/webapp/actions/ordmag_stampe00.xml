@@ -31,7 +31,7 @@
        <init-param name="defaultAction" value="StampaMagConsumiAction" />
         <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
         <init-param name="printbp" value="OfflineReportPrintBP"/>
-        <init-param name="reportName" value="/ordmag/iss/magazzino/stampa_consumi.jasper" />
+        <init-param name="reportName" value="/ordmag/stampa_consumi.jasper" />
         <init-param name="repotWhitDsOffLine" value="true"/>
     </businessProcess>
 

@@ -22,6 +22,56 @@
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
+			name="daDataMovimento"
+			property="daDataMovimento"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			nullable="false"
+			command="doOnDataInizioMovimentoChange"
+			label="Da Data Movimento" />
+	<fieldProperty
+			name="aDataMovimento"
+			property="aDataMovimento"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			nullable="false"
+			command="doOnDataFineMovimentoChange"
+			label="A Data Movimento" />
+	<fieldProperty
+			name="dataRiferimento"
+			property="dataRiferimento"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			nullable="false"
+			label="Data Riferimento" />
+
+	<fieldProperty
+			name="findDaUnitaOperativa"
+			property="daUnitaOperativa"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			command="doOnUoInzioChange"
+			label="Da UOp" />
+
+	<fieldProperty
+			name="findAUnitaOperativa"
+			property="aUnitaOperativa"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			command="doOnUoFineChange"
+			label="A UOp" />
+
+	<fieldProperty
 			name="findMagazzino"
 			property="magazzinoAbilitato"
 			inputType="SEARCHTOOL"
@@ -30,23 +80,50 @@
 			enabledOnSearch="true"
 			nullable="false"
 			label="Magazzino" />
+
 	<fieldProperty
-			name="findCatGrp"
-			property="catgrp"
+			name="findDaCatGrp"
+			property="daCatgrp"
 			inputType="SEARCHTOOL"
 			formName="searchtool"
 			enabledOnEdit="true"
 			enabledOnSearch="true"
-			label="Cat./gruppo" />
+			label="Da Cat./gruppo" />
+
 	<fieldProperty
-		name="dataInventario"
-		property="dataInventario"
-		inputType="TEXT"
-		formatName="date_short"
-		maxLength="10"
-		inputSize="10"
-		nullable="false"
-		label="dataInventario"/>
+			name="findACatGrp"
+			property="aCatgrp"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="A Cat./gruppo" />
+
+	<fieldProperty
+			name="findDaBeneServizio"
+			property="daBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="Da Articolo" />
+
+	<fieldProperty
+			name="findABeneServizio"
+			property="aBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="A Articolo" />
+
+
+	<fieldProperty
+			name="cdDaUnitaOperativaForPrint"
+			property="cdDaUnitaOperativaForPrint"/>
+	<fieldProperty
+			name="cdAUnitaOperativaForPrint"
+			property="cdAUnitaOperativaForPrint"/>
 	<fieldProperty
 			name="cdsMagForPrint"
 			property="cdsMagForPrint"/>
@@ -54,88 +131,174 @@
 			name="cdMagazzinoForPrint"
 			property="cdMagazzinoForPrint"/>
 	<fieldProperty
-			name="cdCatGrpForPrint"
-			property="cdCatGrpForPrint"/>
+			name="descMagazzinoForPrint"
+			property="descMagazzinoForPrint"/>
+	<fieldProperty
+			name="descDaUnitaOperativaForPrint"
+			property="descDaUnitaOperativaForPrint"/>
+	<fieldProperty
+			name="descAUnitaOperativaForPrint"
+			property="descAUnitaOperativaForPrint"/>
+
 
 	<fieldProperty
-			name="flRaggCatGruppo"
-			property="flRaggCatGruppo"
-			inputType="CHECKBOX"
-			enabledOnSearch="true"
-			label="Raggr. Cat. Gruppo" />
+			name="cdDaCatGrpForPrint"
+			property="cdDaCatGrpForPrint"/>
 	<fieldProperty
-			name="flDettaglioArticolo"
-			property="flDettaglioArticolo"
-			inputType="CHECKBOX"
-			enabledOnSearch="true"
-			label="Dettaglio Articolo" />
-
+			name="cdACatGrpForPrint"
+			property="cdACatGrpForPrint"/>
 	<fieldProperty
-			name="ordinamento"
-			property="ordinamento"
-			keysProperty="TIPO_ORDINAMENTO"
-			inputType="RADIOGROUP"
-			layout = "HORIZONTAL"
-			label="Tipo Ordinamento"
-			caseSensitiveSearch="false" />
+			name="cdDaBeneForPrint"
+			property="cdDaBeneForPrint"/>
+	<fieldProperty
+			name="cdABeneForPrint"
+			property="cdABeneForPrint"/>
+	<fieldProperty
+			name="descCatGruppoDaForPrint"
+			property="descCatGruppoDaForPrint"/>
+	<fieldProperty
+			name="descCatGruppoAForPrint"
+			property="descCatGruppoAForPrint"/>
+	<fieldProperty
+			name="descDaBeneForPrint"
+			property="descDaBeneForPrint"/>
+	<fieldProperty
+			name="descABeneForPrint"
+			property="descABeneForPrint"/>
 
 
-	<formFieldProperty name="dataInventario" />
-	<formFieldProperty
-			name="findMagazzino" />
-	<formFieldProperty
-			name="findCatGrp" />
-	<formFieldProperty
-			name="flDettaglioArticolo" />
-	<formFieldProperty
-			name="flRaggCatGruppo" />
-	<formFieldProperty
-			name="flDettaglioArticolo" />
-	<formFieldProperty
-			name="ordinamento" />
+
+
+
+
+	<formFieldProperty name="daDataMovimento" />
+	<formFieldProperty name="aDataMovimento" />
+	<formFieldProperty name="dataRiferimento" />
+	<formFieldProperty name="findDaUnitaOperativa" />
+	<formFieldProperty name="findAUnitaOperativa" />
+	<formFieldProperty name="findMagazzino" />
+	<formFieldProperty name="findDaCatGrp" />
+	<formFieldProperty name="findACatGrp" />
+	<formFieldProperty name="findDaBeneServizio" />
+	<formFieldProperty name="findABeneServizio" />
+
+
 	<printForm
-		name="/ordmag/iss/magazzino/stampa_consumi.jasper">
+			name="/ordmag/stampa_consumi.jasper">
 		<printFieldProperty
-			name="dataInventario"
-			parameterPosition="2"
-			parameterType="DATE"
-			paramNameJR="dataInventario"
-			paramTypeJR="java.util.Date"/>
+				name="daDataMovimento"
+				parameterPosition="1"
+				parameterType="DATE"
+				paramNameJR="daDataMovimento"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="aDataMovimento"
+				parameterPosition="2"
+				parameterType="DATE"
+				paramNameJR="aDataMovimento"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="dataRiferimento"
+				parameterPosition="3"
+				parameterType="DATE"
+				paramNameJR="dataRiferimento"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="cdDaUnitaOperativaForPrint"
+				parameterPosition="4"
+				parameterType="STRING"
+				paramNameJR="cdDaUop"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdAUnitaOperativaForPrint"
+				parameterPosition="5"
+				parameterType="STRING"
+				paramNameJR="cdAUop"
+				paramTypeJR="java.lang.String"/>
 		<printFieldProperty
 				name="cdsMagForPrint"
-				parameterPosition="0"
+				parameterPosition="6"
 				parameterType="STRING"
 				paramNameJR="cdsMagazzino"
 				paramTypeJR="java.lang.String"/>
 		<printFieldProperty
 				name="cdMagazzinoForPrint"
-				parameterPosition="1"
+				parameterPosition="7"
 				parameterType="STRING"
 				paramNameJR="cdMagazzino"
 				paramTypeJR="java.lang.String"/>
+
 		<printFieldProperty
-				name="cdCatGrpForPrint"
-				parameterPosition="3"
+				name="cdDaCatGrpForPrint"
+				parameterPosition="8"
 				parameterType="STRING"
-				paramNameJR="cdCatGrp"
+				paramNameJR="cdDaCatGrp"
 				paramTypeJR="java.lang.String"/>
 		<printFieldProperty
-				name="flDettaglioArticolo"
-				parameterPosition="3"
+				name="cdACatGrpForPrint"
+				parameterPosition="9"
 				parameterType="STRING"
-				paramNameJR="flDettaglioArticolo"
-				paramTypeJR="java.lang.Boolean"/>
-		<printFieldProperty
-				name="flRaggCatGruppo"
-				parameterPosition="3"
-				parameterType="STRING"
-				paramNameJR="flRaggCatGruppo"
-				paramTypeJR="java.lang.Boolean"/>
-		<printFieldProperty
-				name="ordinamento"
-				parameterPosition="3"
-				parameterType="STRING"
-				paramNameJR="ordinamento"
+				paramNameJR="cdACatGrp"
 				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdDaBeneForPrint"
+				parameterPosition="10"
+				parameterType="STRING"
+				paramNameJR="cdDaArticolo"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdABeneForPrint"
+				parameterPosition="11"
+				parameterType="STRING"
+				paramNameJR="cdAArticolo"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="descCatGruppoDaForPrint"
+				parameterPosition="12"
+				parameterType="STRING"
+				paramNameJR="descCatGruppoDa"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="descCatGruppoAForPrint"
+				parameterPosition="13"
+				parameterType="STRING"
+				paramNameJR="descCatGruppoA"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="descDaBeneForPrint"
+				parameterPosition="14"
+				parameterType="STRING"
+				paramNameJR="descDaBene"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="descABeneForPrint"
+				parameterPosition="15"
+				parameterType="STRING"
+				paramNameJR="descABene"
+				paramTypeJR="java.lang.String"/>
+
+		<printFieldProperty
+				name="descMagazzinoForPrint"
+				parameterPosition="16"
+				parameterType="STRING"
+				paramNameJR="descMagazzino"
+				paramTypeJR="java.lang.String"/>
+
+		<printFieldProperty
+				name="descDaUnitaOperativaForPrint"
+				parameterPosition="17"
+				parameterType="STRING"
+				paramNameJR="descDaUnitaOper"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="descAUnitaOperativaForPrint"
+				parameterPosition="18"
+				parameterType="STRING"
+				paramNameJR="descAUnitaOper"
+				paramTypeJR="java.lang.String"/>
+
+
+
 	</printForm>
+
 </bulkInfo>
