@@ -254,8 +254,9 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		try {
 			String iban = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, 0, null, "PAGOPA", "IBAN");
 			voci.setIbanAccredito(iban);
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			throw new ComponentException("Errore nel recupero dell'IBAN su CONFIGURAZIONE_CNR - 0 - PAGOPA - IBAN");
 		}
 		voci.setDescrizione(pendenzaPagopaBulk.getDescrizione());
 		voci.setIdVocePendenza(pendenzaPagopaBulk.getId().toString());

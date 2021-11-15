@@ -4419,4 +4419,22 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-menu-pagamenti_pagopa">
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA.INCASSI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione Incassi"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPAGAMENTOPAGOPA"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPagamentoPagopaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="30"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="INCASSI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

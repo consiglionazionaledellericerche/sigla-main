@@ -79,7 +79,6 @@ function doVisualizzaRt() {
 	<tr>
         <%
 				   if (bp.isInserting()) {
-					 bp.getController().writeFormField(out, "stato");
 				   } else if (bp.isSearching()) {
 				     bp.getController().writeFormField(out, "statoForSearch");
 				   } else {
