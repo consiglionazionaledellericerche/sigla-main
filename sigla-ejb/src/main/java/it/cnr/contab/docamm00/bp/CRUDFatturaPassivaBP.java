@@ -101,9 +101,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             "fattura_passiva_obbligazioniHash", this);
     private final SimpleDetailCRUDController dettaglioObbligazioneController;
 
-    private final OrdiniCRUDController fattureRigaOrdiniController = new OrdiniCRUDController(
+    private final OrdiniCRUDController fatturaOrdiniController = new OrdiniCRUDController(
             "Ordini", FatturaOrdineBulk.class,
-            "fatturaRigaOrdiniHash", this);
+            "fattura_passiva_ordini", this);
 
     private final FatturaPassivaRigaIntrastatCRUDController dettaglioIntrastatController = new FatturaPassivaRigaIntrastatCRUDController(
             "Intrastat", Fattura_passiva_intraBulk.class,
@@ -387,8 +387,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         return consuntivoController;
     }
 
-    public OrdiniCRUDController getFattureRigaOrdiniController() {
-        return fattureRigaOrdiniController;
+    public OrdiniCRUDController getFatturaOrdiniController() {
+        return fatturaOrdiniController;
     }
 
     /**
@@ -1735,12 +1735,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         return attivoOrdini;
     }
 
-    public void associaOrdineRigaFattura(ActionContext context, EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) throws BusinessProcessException {
+    public void associaOrdineFattura(ActionContext context, EvasioneOrdineRigaBulk evasioneOrdineRigaBulk) throws BusinessProcessException {
         OrdineAcqConsegnaBulk ordineAcqConsegna = evasioneOrdineRigaBulk.getOrdineAcqConsegna();
-
+        Fattura_passivaBulk fattura = (Fattura_passivaBulk) getModel();
         FatturaOrdineBulk fatturaOrdineBulk = new FatturaOrdineBulk();
         fatturaOrdineBulk.setOrdineAcqConsegna(ordineAcqConsegna);
-        fatturaOrdineBulk.setFatturaPassivaRiga(fattura_passiva_rigaBulk);
         fatturaOrdineBulk.setImImponibile(ordineAcqConsegna.getImImponibile());
         fatturaOrdineBulk.setImImponibileDivisa(ordineAcqConsegna.getImImponibileDivisa());
         fatturaOrdineBulk.setImIva(ordineAcqConsegna.getImIva());
@@ -1749,7 +1748,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         fatturaOrdineBulk.setImIvaNd(ordineAcqConsegna.getImIvaNd());
         fatturaOrdineBulk.setImTotaleConsegna(ordineAcqConsegna.getImTotaleConsegna());
         fatturaOrdineBulk.setStatoAss("TOT");
-        fatturaOrdineBulk.setToBeCreated();
+
+        fattura.addToFattura_passiva_ordini(fatturaOrdineBulk);
 
         ordineAcqConsegna.setStatoFatt(OrdineAcqConsegnaBulk.STATO_FATT_ASSOCIATA_TOTALMENTE);
         ordineAcqConsegna.setToBeUpdated();
@@ -1760,20 +1760,15 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         } catch (ComponentException|RemoteException e) {
             throw handleException(e);
         }
-        fattura_passiva_rigaBulk.setStato_cofi(Fattura_passivaBulk.STATO_CONTABILIZZATO);
-        fattura_passiva_rigaBulk.getFattura_passiva().addToFatturaRigaOrdiniHash(
-                fattura_passiva_rigaBulk,
-                fatturaOrdineBulk
-        );
     }
-
+/*
     public boolean associaOrdineRigaFattura(ActionContext context, Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) throws BusinessProcessException {
         return Optional.ofNullable(createComponentSession())
                 .filter(FatturaPassivaComponentSession.class::isInstance)
                 .map(FatturaPassivaComponentSession.class::cast)
                 .map(fatturaPassivaComponentSession -> {
                     try {
-                        List<EvasioneOrdineRigaBulk> evasioneOrdineRigas = fatturaPassivaComponentSession.findContabilizzaRigaByClause(
+                        List<EvasioneOrdineRigaBulk> evasioneOrdineRigas = fatturaPassivaComponentSession.findRicercaOrdiniByClause(
                                 context.getUserContext(),
                                 fattura_passiva_rigaBulk,
                                 CompoundFindClause.identity(
@@ -1816,7 +1811,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                     }
                 }).orElse(false);
     }
-
+*/
     public CollapsableDetailCRUDController getCrudDocEleAcquistoColl() {
         return crudDocEleAcquistoColl;
     }

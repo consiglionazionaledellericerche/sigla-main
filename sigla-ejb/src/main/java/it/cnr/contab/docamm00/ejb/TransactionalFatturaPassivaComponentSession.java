@@ -1297,14 +1297,14 @@ public class TransactionalFatturaPassivaComponentSession extends it.cnr.jada.ejb
         }
     }
 
-    public List<EvasioneOrdineRigaBulk> findContabilizzaRigaByClause(UserContext userContext,
-                                                                     Fattura_passiva_rigaBulk fatturaPassivaRiga,
+    public List<EvasioneOrdineRigaBulk> findRicercaOrdiniByClause(UserContext userContext,
+                                                                     Fattura_passivaBulk fatturaPassiva,
                                                                      CompoundFindClause findclause)
             throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
-            return ((List<EvasioneOrdineRigaBulk>) invoke("findContabilizzaRigaByClause", new Object[]{
+            return ((List<EvasioneOrdineRigaBulk>) invoke("findRicercaOrdiniByClause", new Object[]{
                     userContext,
-                    fatturaPassivaRiga,
+                    fatturaPassiva,
                     findclause}));
         } catch (java.rmi.RemoteException e) {
             throw e;

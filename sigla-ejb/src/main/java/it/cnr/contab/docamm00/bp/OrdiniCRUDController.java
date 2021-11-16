@@ -66,26 +66,6 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
         super(name, modelClass, listPropertyName, parent);
     }
 
-    public BulkList<FatturaOrdineBulk> getDetails() {
-        final Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk = Optional.ofNullable(getParentController())
-                .filter(CRUDFatturaPassivaBP.class::isInstance)
-                .map(CRUDFatturaPassivaBP.class::cast)
-                .filter(crudFatturaPassivaBP -> crudFatturaPassivaBP.getDettaglio().getSelection().getFocus() != -1)
-                .map(crudFatturaPassivaBP -> crudFatturaPassivaBP.getDettaglio().getDetails().get(
-                        crudFatturaPassivaBP.getDettaglio().getSelection().getFocus())
-                )
-                .filter(Fattura_passiva_rigaBulk.class::isInstance)
-                .map(Fattura_passiva_rigaBulk.class::cast);
-        if (fattura_passiva_rigaBulk.isPresent()) {
-            return Optional.ofNullable(getParentModel())
-                    .filter(Fattura_passivaBulk.class::isInstance)
-                    .map(Fattura_passivaBulk.class::cast)
-                    .map(fattura_passivaBulk -> fattura_passivaBulk.getFatturaRigaOrdiniHash())
-                    .map(fatturaRigaOrdiniTable -> fatturaRigaOrdiniTable.get(fattura_passiva_rigaBulk.get()))
-                    .orElseGet(() -> new BulkList(Collections.emptyList()));
-        }
-        return new BulkList(Collections.emptyList());
-    }
 
     /**
      * Restituisce true se è possibile aggiungere nuovi elementi

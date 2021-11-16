@@ -258,40 +258,54 @@
         <columnFieldProperty name="dataBolla" property="evasioneOrdine.dataBolla" formatName="date_short"
                              label="Data Bolla"/>
         <columnFieldProperty name="numeroBolla" property="evasioneOrdine.numeroBolla" label="Numero Bolla"/>
-        <columnFieldProperty name="quantitaEvasa"/>
+        <columnFieldProperty name="dataOrdine" property="ordineAcqConsegna.ordineAcqRiga.ordineAcq.dataOrdine" formatName="date_short" label="Dt. Ord."/>
+        <columnFieldProperty name="cdNumeratore" property="ordineAcqConsegna.cdNumeratore" label="Tipo"/>
+        <columnFieldProperty name="numero" property="ordineAcqConsegna.numero" label="Num"/>
+        <columnFieldProperty name="riga" property="ordineAcqConsegna.riga" label="Riga"/>
+        <columnFieldProperty name="consegna" property="ordineAcqConsegna.consegna" label="Cons"/>
         <columnFieldProperty name="cdBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
                              label="Codice Bene"/>
         <columnFieldProperty name="dsBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
                              label="Descrizione Bene"/>
+        <columnFieldProperty name="notaRiga" property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
+                           label="Note"/>
         <columnFieldProperty name="cdVoceIva" property="ordineAcqConsegna.ordineAcqRiga.cdVoceIva" label="Codice IVA"/>
-        <columnFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
-                             label="Imponibile in divisa" formatName="it.cnr.contab.util.EuroFormat"/>
-        <columnFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
-                             label="Importo in divisa" formatName="it.cnr.contab.util.EuroFormat"/>
-        <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
-                             label="Totale riga" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="quantitaEvasa"/>
         <columnFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
                              formatName="it.cnr.contab.util.Importo6CifreFormat"
                              label="Prezzo Unitario"/>
+        <columnFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                             label="Imponibile" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                             label="Iva" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                             label="Totale riga" formatName="it.cnr.contab.util.EuroFormat"/>
     </columnSet>
     <freeSearchSet name="fattura_passiva">
         <findFieldProperty name="dataBolla" property="evasioneOrdine.dataBolla" formatName="date_short"
                              label="Data Bolla" inputType="TEXT"/>
         <findFieldProperty name="numeroBolla" property="evasioneOrdine.numeroBolla" label="Numero Bolla" inputType="TEXT"/>
-        <findFieldProperty name="quantitaEvasa"/>
+        <findFieldProperty name="dataOrdine" property="ordineAcqConsegna.ordineAcqRiga.ordineAcq.dataOrdine" formatName="date_short" label="Data Ordine" inputType="TEXT"/>
+        <findFieldProperty name="cdNumeratore" property="ordineAcqConsegna.cdNumeratore" label="Numeratore" inputType="TEXT"/>
+        <findFieldProperty name="numero" property="ordineAcqConsegna.numero" label="Numero" inputType="TEXT"/>
+        <findFieldProperty name="riga" property="ordineAcqConsegna.riga" label="Riga" inputType="TEXT"/>
+        <findFieldProperty name="consegna" property="ordineAcqConsegna.consegna" label="Consegna" inputType="TEXT"/>
         <findFieldProperty name="cdBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.cdBeneServizio"
                              label="Codice Bene" inputType="TEXT"/>
         <findFieldProperty name="dsBeneServizio" property="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
                              label="Descrizione Bene" inputType="TEXT"/>
+        <findFieldProperty name="notaRiga" property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
+                           label="Note" inputType="TEXT"/>
         <findFieldProperty name="cdVoceIva" property="ordineAcqConsegna.ordineAcqRiga.cdVoceIva" label="Codice IVA" inputType="TEXT"/>
-        <findFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
-                             label="Imponibile in divisa" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
-        <findFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
-                             label="Importo in divisa" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
-        <findFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
-                             label="Totale riga" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
         <findFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
                            formatName="it.cnr.contab.util.Importo6CifreFormat"
-                             label="Prezzo Unitario" inputType="TEXT"/>
+                           label="Prezzo Unitario" inputType="TEXT"/>
+        <findFieldProperty name="quantitaEvasa"/>
+        <findFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                             label="Imponibile" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
+        <findFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                             label="Iva" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
+        <findFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                             label="Totale riga" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
     </freeSearchSet>
 </bulkInfo>
