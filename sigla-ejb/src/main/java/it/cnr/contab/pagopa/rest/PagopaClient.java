@@ -28,7 +28,7 @@ public interface PagopaClient {
     @RequestLine("GET /backend/api/pendenze/rs/basic/v2/avvisi/{idDominio}/{numeroAvviso}")
     byte[] stampaAvviso(@Param("idDominio") String idDominio, @Param("numeroAvviso") String numeroAvviso);
 
-    @Headers({"Accept: application/json"})
+    @Headers({"Accept: application/pdf"})
     @RequestLine("GET /backend/api/pendenze/rs/basic/v2/rpp/{idDominio}/{iuv}/{ccp}/rt?visualizzaSoggettoDebitore={visualizzaDebitore}")
     byte[] stampaRt(@Param("idDominio") String idDominio, @Param("iuv") String iuv, @Param("ccp") String ccp, @Param("visualizzaDebitore") boolean visualizzaDebitore);
 
