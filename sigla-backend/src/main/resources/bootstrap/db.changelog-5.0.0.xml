@@ -2775,7 +2775,7 @@ TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
     <changeSet author="gianfranco.gasparro" id="alter_liquid_gruppo_centro_comp_doc_cont_segno_opposto">
-        <addColumn tableName="liquid_gruppo_centro_Comp">
+        <addColumn tableName="liquid_gruppo_centro_comp">
             <column name="CD_CDS_OBB_ACCENTR_OPP" remarks="Cds dell'obbligazione accentrata di segno opposto" type="VARCHAR(30)"/>
             <column name="ES_OBB_ACCENTR_OPP" remarks="Esercizio dell'obbligazione accentrata di segno opposto" type="INT"/>
             <column name="ES_ORIG_OBB_ACCENTR_OPP" remarks="Esercizio Originale dell'obbligazione accentrata di segno opposto" type="INT"/>
