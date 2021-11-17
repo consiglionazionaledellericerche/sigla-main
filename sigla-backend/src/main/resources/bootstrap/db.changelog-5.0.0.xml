@@ -3837,10 +3837,10 @@ TRASPORTO_AEREO"/>
     </changeSet>
     <changeSet author="raffaele.pagano" id="add-riferimenti-perla2018">
         <addColumn tableName="unita_organizzativa">
-            <column name="codiceAooIpa" type="VARCHAR(100)" remarks="Codice univoco ipa che identifica le Aree Organizzative Omogenee (AOO) dell’Amministrazione dichiarante"/>
+            <column name="codiceaooipa" type="VARCHAR(100)" remarks="Codice univoco ipa che identifica le Aree Organizzative Omogenee (AOO) dell’Amministrazione dichiarante"/>
         </addColumn>
         <addColumn tableName="incarichi_repertorio">
-            <column name="idPerla" type="BIGINT" remarks="Identificativo attribuito dal sistema perla all'incarico."/>
+            <column name="idperla" type="BIGINT" remarks="Identificativo attribuito dal sistema perla all'incarico."/>
         </addColumn>
     </changeSet>
     <changeSet author="raffaele.pagano" id="incarichi-disable-invio-corte-conti">
