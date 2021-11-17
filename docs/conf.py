@@ -23,7 +23,7 @@ source_parsers = {
 }
 
 project = 'Sistema Informativo Gestione Linee di Attività'
-release = '6.3.59'
+release = '6.3.60'
 author = u'Consiglio Nazionale delle Ricerche'
 
 show_authors = True
