@@ -418,6 +418,8 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                             )
                         );
                     }
+                } else {
+                    throw handleException(new ApplicationException("La Cartella di destinazione non esiste!"));
                 }
             } catch (FileNotFoundException e) {
                 throw handleException(e);
