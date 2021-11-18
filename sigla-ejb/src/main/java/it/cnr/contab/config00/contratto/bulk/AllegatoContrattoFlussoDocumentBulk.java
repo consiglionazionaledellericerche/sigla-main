@@ -33,7 +33,7 @@ import it.cnr.si.spring.storage.config.StoragePropertyNames;
 public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements StorageTypeName {
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
-	private File file;
+	private byte[] bytest;
 	private String contentType;
 	private String nome;
 	private String titolo;
@@ -132,13 +132,14 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 		return nodeId != null;
 	}
 
-	public File getFile() {
-		return file;
+	public byte[] getBytest() {
+		return bytest;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+	public void setBytest(byte[] bytest) {
+		this.bytest = bytest;
 	}
+
 	public String getNome() {
 		return nome;
 	}

@@ -9,11 +9,11 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.web.rest.exception.RestException;
-import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
-import it.cnr.contab.web.rest.model.DittaInvitataExt;
-import it.cnr.contab.web.rest.model.UoAbilitataExt;
+import it.cnr.contab.web.rest.model.*;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
@@ -25,10 +25,12 @@ import org.springframework.util.CollectionUtils;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -39,9 +41,69 @@ public abstract class AbstractContrattoResource {
     @EJB ContrattoComponentSession contrattoComponentSession;
     @EJB Unita_organizzativaComponentSession unita_organizzativaComponentSession;
 
-    public  void validateContratto(ContrattoDtoBulk contrattoBulk){
+    private void checkRowDettaglioContrattoArticolo(DettaglioContrattoDtoBulk row){
+        if (!Optional.ofNullable(row.getCdBeneServizio()).isPresent())
+            throw new RestException(Response.Status.BAD_REQUEST,String.format("Il codice Bene Servizio è obbligatorio per le righe del Dettaglio"));
+        if (!Optional.ofNullable(row.getPrezzoUnitario()).isPresent() && row.getPrezzoUnitario().compareTo(BigDecimal.ZERO)<=0)
+            throw new RestException(Response.Status.BAD_REQUEST,String.format("Il prezzo unitario è obbligatorio e deve essere maggiore di zero per le righe del Dettaglio"));
+    }
+    private void checkRowDettaglioContrattoCatGrp(DettaglioContrattoDtoBulk row){
+        if (!Optional.ofNullable(row.getCdCategoriaGruppo()).isPresent())
+            throw new RestException(Response.Status.BAD_REQUEST,String.format("La categoria/Gruppo è obbligatoria per le righe del Dettaglio"));
+        if (!Optional.ofNullable(row.getPrezzoUnitario()).isPresent() && row.getPrezzoUnitario().compareTo(BigDecimal.ZERO)<=0)
+            throw new RestException(Response.Status.BAD_REQUEST,String.format("Il prezzo unitario è obbligatorio e deve essere maggiore di zero per le righe del Dettaglio"));
+
+    }
+    private void checkRowDettaglioContratto(EnumTipoDettaglioContratto tipoDettaglioContratto,DettaglioContrattoDtoBulk row){
+       if ( tipoDettaglioContratto.equals(EnumTipoDettaglioContratto.DETTAGLIO_CONTRATTO_CATGRP))
+           checkRowDettaglioContrattoCatGrp(row);
+        if ( tipoDettaglioContratto.equals(EnumTipoDettaglioContratto.DETTAGLIO_CONTRATTO_ARTICOLI))
+            checkRowDettaglioContrattoArticolo(row);
+    }
+    private void checkRowsDettaglioContratto(ContrattoDtoBulk contrattoDtoBulk){
+        Optional.ofNullable(contrattoDtoBulk.getDettaglioContratto()).
+                ifPresent(stream->stream.forEach(row->{
+                    checkRowDettaglioContratto(contrattoDtoBulk.getTipoDettaglioContratto(),row);
+                }));
+    }
+    private Dettaglio_contrattoBulk getDettaglioContrattoArticolo(DettaglioContrattoDtoBulk row){
+        Dettaglio_contrattoBulk d = new Dettaglio_contrattoBulk();
+        d.setCdBeneServizio(row.getCdBeneServizio());
+        d.setPrezzoUnitario(row.getPrezzoUnitario());
+        d.setQuantitaMax( row.getQuantitaMax());
+        d.setQuantitaMin(row.getQuantitaMin());
+        return d;
+    }
+    private Dettaglio_contrattoBulk getDettaglioContrattoCatGrp(DettaglioContrattoDtoBulk row){
+        Dettaglio_contrattoBulk d = new Dettaglio_contrattoBulk();
+        d.setCdCategoriaGruppo(row.getCdCategoriaGruppo());
+        d.setPrezzoUnitario(row.getPrezzoUnitario());
+        return d;
+    }
+    private Dettaglio_contrattoBulk getDettaglioContratto(EnumTipoDettaglioContratto tipoDettaglioContratto,DettaglioContrattoDtoBulk row){
+        if ( tipoDettaglioContratto.equals(EnumTipoDettaglioContratto.DETTAGLIO_CONTRATTO_CATGRP))
+            return getDettaglioContrattoCatGrp(row);
+        if ( tipoDettaglioContratto.equals(EnumTipoDettaglioContratto.DETTAGLIO_CONTRATTO_ARTICOLI))
+            return getDettaglioContrattoArticolo(row);
+        return null;
+
+    }
+    private List<Dettaglio_contrattoBulk> getListaDettagliContratto( EnumTipoDettaglioContratto tipoDettaglioContratto,List<DettaglioContrattoDtoBulk> dettagliContrattoDtoBulk){
+        List<Dettaglio_contrattoBulk> dettaglio = new ArrayList<Dettaglio_contrattoBulk>();
+        Optional.ofNullable(dettagliContrattoDtoBulk).
+                ifPresent(stream->stream.forEach(row->{
+                   dettaglio.add(getDettaglioContratto(tipoDettaglioContratto,row));
+                }));
+        return Collections.EMPTY_LIST;
+    }
+
+    public void validateContratto(ContrattoDtoBulk contrattoBulk,CNRUserContext userContext) throws RemoteException, ComponentException {
         //Check valore tipoDettaglioContratto
         if (Optional.ofNullable(contrattoBulk.getTipo_dettaglio_contratto()).isPresent()){
+            if ( Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(userContext))
+                throw new RestException(Response.Status.BAD_REQUEST,String.format("Il dettaglio del contratto non è previsto su questa installazione SIGLA"));
+
+            /*
             if ( !contrattoBulk.getTipo_dettaglio_contratto().equals(ContrattoBulk.DETTAGLIO_CONTRATTO_ARTICOLI) &&
                     contrattoBulk.getTipo_dettaglio_contratto().equals(ContrattoBulk.DETTAGLIO_CONTRATTO_CATGRP))
             throw new RestException(Response.Status.BAD_REQUEST, String.format("Per Il Tipo Dettaglio Contratto sono previsti i seguenti valori:{ vuoto,"
@@ -50,16 +112,20 @@ public abstract class AbstractContrattoResource {
                 //if (CollectionUtils.isEmpty(contrattoBulk.getDettaglioContratto()))
 
             }
+             */
+            if ( Optional.ofNullable(contrattoBulk.getTipoDettaglioContratto()).isPresent()){
+                checkRowsDettaglioContratto(contrattoBulk);
+            }
         }
-
     }
+
     public Response insertContratto(@Context HttpServletRequest request, ContrattoDtoBulk contrattoBulk) throws Exception {
 
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
         Optional.ofNullable(contrattoBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
                 orElseThrow(() -> new RestException(Response.Status.BAD_REQUEST, "Esercizio del contesto diverso da quello del Contratto"));
         Optional.ofNullable(contrattoBulk.getEsercizio()).orElse(getYearFromToday());
-        validateContratto(contrattoBulk);
+        validateContratto(contrattoBulk,userContext);
         ContrattoBulk contrattoBulkSigla = creaContrattoSigla(contrattoBulk, userContext);
         contrattoBulkSigla.setStato(ContrattoBulk.STATO_PROVVISORIO);
         if (contrattoBulkSigla.getCd_unita_organizzativa() != null){
@@ -86,12 +152,14 @@ public abstract class AbstractContrattoResource {
         return Response.status(Response.Status.CREATED).entity(contrattoBulk).build();
     }
 
-    private List<Dettaglio_contrattoBulk> getDettaglioContratto(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext){
+
+    private List<AllegatoContrattoFlussoDocumentBulk> getAllegatiContrattoFlusso(List<AttachmentContratto> l){
+        List<AllegatoContrattoFlussoDocumentBulk> attachments = new ArrayList<AllegatoContrattoFlussoDocumentBulk>();
+
+
         return null;
     }
-    private List<AllegatoContrattoFlussoDocumentBulk> getAllegatiContrattoFlusso(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext){
-        return null;
-    }
+
     private ContrattoBulk creaContrattoSigla(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) throws PersistencyException, ValidationException, ComponentException, RemoteException {
         ContrattoBulk contrattoBulkSigla = new ContrattoBulk();
         if (Optional.ofNullable(contrattoBulk.getCd_unita_organizzativa()).isPresent()){
@@ -198,6 +266,11 @@ public abstract class AbstractContrattoResource {
                 }
             }
         }
+        if ( Optional.ofNullable(contrattoBulk.getTipoDettaglioContratto()).isPresent()){
+            contrattoBulkSigla.setTipo_dettaglio_contratto( contrattoBulk.getTipoDettaglioContratto().name());
+            contrattoBulkSigla.setDettaglio_contratto(new BulkList<Dettaglio_contrattoBulk>(getListaDettagliContratto(contrattoBulk.getTipoDettaglioContratto(),contrattoBulk.getDettaglioContratto())));
+        }
+        contrattoBulkSigla.setArchivioAllegatiFlusso(new BulkList<AllegatoContrattoFlussoDocumentBulk>(getAllegatiContrattoFlusso(contrattoBulk.getAttachments())));
         return contrattoBulkSigla;
     }
 

@@ -778,6 +778,18 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 
 	private void archiviaAllegati(ActionContext actioncontext, ContrattoBulk contratto) throws BusinessProcessException, ApplicationException{
+		try {
+			crudArchivioAllegati.validate(actioncontext);
+		} catch (ValidationException e1) {
+			throw handleException(e1);
+		}
+		ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
+		try {
+			comp.archiviaAllegati(actioncontext.getUserContext(),contratto);
+		} catch (ComponentException e) {
+			throw new ApplicationException(e);
+		}
+		/*
 		Optional.ofNullable(contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contratto)))
 				.orElseGet(() -> {
 					StorageObject parentStorageObject = contrattoService.getStorageObjectByPath(
@@ -789,11 +801,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 									contratto
 							));
 				});
-		try {
-			crudArchivioAllegati.validate(actioncontext);
-		} catch (ValidationException e1) {
-			throw handleException(e1);
-		}
+
 		for (Iterator<AllegatoContrattoDocumentBulk> iterator = contratto.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoContrattoDocumentBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
@@ -850,6 +858,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				}
 			}
 		}
+		*/
 	}
 
 	public Boolean getFlagPubblicaContratto() {

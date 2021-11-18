@@ -64,7 +64,10 @@ import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.SIGLAGroups;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
+import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
@@ -91,6 +94,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
@@ -99,11 +104,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1546,6 +1547,79 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *		reloadVarBilancio(UserContext userContext, Var_bilancioBulk varBilancio);
 	  *
 	**/
+	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto) throws ComponentException {
+		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
+				ContrattoService.class);
+		Optional.ofNullable(contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contratto)))
+				.orElseGet(() -> {
+					StorageObject parentStorageObject = contrattoService.getStorageObjectByPath(
+							contrattoService.getCMISPath(contratto), true
+					);
+					return contrattoService.getStorageObjectBykey(
+							contrattoService.createFolderIfNotPresent(parentStorageObject.getPath(),
+									contratto.getCMISFolderName(), null, null,
+									contratto
+							));
+				});
+
+		for (Iterator<AllegatoContrattoDocumentBulk> iterator = contratto.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
+			AllegatoContrattoDocumentBulk allegato = iterator.next();
+			if (allegato.isToBeDeleted()){
+				contrattoService.delete(allegato.getNodeId());
+				allegato.setCrudStatus(OggettoBulk.NORMAL);
+			}
+		}
+		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
+			if (allegato.isToBeCreated()){
+				try {
+					StorageObject storageObject = Optional.ofNullable(allegato.getFile())
+							.map(file -> {
+								try {
+									return contrattoService.storeSimpleDocument(
+											allegato,
+											new FileInputStream(file),
+											allegato.getContentType(),
+											allegato.getDocumentName(),
+											contrattoService.getCMISPath(allegato),
+											true);
+								} catch (FileNotFoundException e) {
+									throw new StorageException(StorageException.Type.GENERIC, e);
+								}
+							}).orElseGet(() -> {
+								return contrattoService.storeSimpleDocument(
+										allegato,
+										null,
+										allegato.getContentType(),
+										allegato.getDocumentName(), contrattoService.getCMISPath(allegato),
+										true);
+							});
+					if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
+						contrattoService.costruisciAlberaturaAlternativa(allegato, storageObject);
+
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegato.setNodeId(storageObject.getKey());
+				} catch (StorageException e) {
+					if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+						throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+					throw new ComponentException(e);
+				}
+			}else if (allegato.isToBeUpdated()) {
+				try {
+					if (allegato.getFile() != null)
+						contrattoService.updateStream(allegato.getNodeId(),
+								new FileInputStream(allegato.getFile()),
+								allegato.getContentType());
+					contrattoService.updateProperties(allegato, contrattoService.getStorageObjectBykey(allegato.getNodeId()));
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+				} catch (FileNotFoundException e) {
+					throw new ComponentException(e);
+				}catch (StorageException e) {
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
+				}
+			}
+		}
+	}
+
 	public ContrattoBulk salvaDefinitivo(UserContext userContext, ContrattoBulk contratto) throws ComponentException{
 		try {
 			ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
@@ -2074,8 +2148,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				contratto.setFigura_giuridica_esterna(getTerzoFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaAggiudicatarioExt()));
 
 				gestioneCigSuContrattoDaFlows(userContext, contratto);
-			
 				contratto = (ContrattoBulk)creaConBulk(userContext, contratto);
+				archiviaAllegati(userContext,contratto);
 				return contratto;
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);

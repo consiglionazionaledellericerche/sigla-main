@@ -1,6 +1,7 @@
 package it.cnr.contab.web.rest.resource.config00;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.local.config00.ContrattoMaggioliLocal;
 import it.cnr.contab.web.rest.model.AttachmentContratto;
@@ -22,7 +23,7 @@ public class ContrattoMaggioliResource  extends AbstractContrattoResource implem
     private final Logger _log = LoggerFactory.getLogger(ContrattoMaggioliResource.class);
 
     @Override
-    public void validateContratto(ContrattoDtoBulk contrattoBulk) {
+    public void validateContratto(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) {
         //Check valore tipoDettaglioContratto
         if (Optional.ofNullable(contrattoBulk.getTipo_dettaglio_contratto()).isPresent()){
             if ( !contrattoBulk.getTipo_dettaglio_contratto().equals(ContrattoBulk.DETTAGLIO_CONTRATTO_ARTICOLI) &&
@@ -41,12 +42,15 @@ public class ContrattoMaggioliResource  extends AbstractContrattoResource implem
     @Override
     public Response insertContratto(HttpServletRequest request, @Valid ContrattoDtoBulk contrattoDtoBulk) throws Exception {
         _log.info("insertContratto->Maggioli" );
+        CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+        ContrattoBulk contratto = ( ContrattoBulk) super.insertContratto(request,contrattoDtoBulk).getEntity();
+        contrattoComponentSession.salvaDefinitivo(userContext,contratto);
         return Response.status(Response.Status.CREATED).entity(contrattoDtoBulk).build();
     }
 
     @Override
     public Response recuperoDatiContratto(HttpServletRequest request, String uo, Integer cdTerzo) throws Exception {
         _log.info("recuperoDatiContratto->Maggioli" );
-        return Response.ok().entity(new ContrattoBulk()).build();
+       return super.recuperoDatiContratto(request,uo,cdTerzo);
     }
 }
