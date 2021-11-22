@@ -91,12 +91,12 @@ public class CRUDAbiCabBP extends it.cnr.jada.util.action.SimpleCRUDBP {
         }
     }
 
-    public boolean isCancellatoLogicamente() throws BusinessProcessException {
-        return Optional.ofNullable(getModel())
+    public boolean isRipristinaButtonHidden() throws BusinessProcessException {
+        return !(Optional.ofNullable(getModel())
                 .filter(AbicabBulk.class::isInstance)
                 .map(AbicabBulk.class::cast)
                 .map(AbicabBulk::getFl_cancellato)
-                .orElse(Boolean.FALSE);
+                .orElse(Boolean.FALSE) && isEditable());
     }
 
 	@Override
