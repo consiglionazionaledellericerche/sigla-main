@@ -1,3 +1,11 @@
+## Release 6.4.1  -- _November 22, 2021_ 
+**Changes**
+
+>**Aggiunto la possibilità di ripristinare delle coordinate bancarie cancellate logicamente**
+>
+>[f43eef88f6a8c35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f43eef88f6a8c35) marco.spasiano *November 22, 2021*
+
+
 ## Release 6.4.0  -- _November 22, 2021_ 
 **Changes**
 
