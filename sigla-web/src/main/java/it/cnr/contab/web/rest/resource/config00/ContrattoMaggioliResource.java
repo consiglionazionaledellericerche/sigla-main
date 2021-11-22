@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.Valid;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 public class ContrattoMaggioliResource  extends AbstractContrattoResource implements ContrattoMaggioliLocal {
@@ -43,8 +47,15 @@ public class ContrattoMaggioliResource  extends AbstractContrattoResource implem
     public Response insertContratto(HttpServletRequest request, @Valid ContrattoDtoBulk contrattoDtoBulk) throws Exception {
         _log.info("insertContratto->Maggioli" );
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
-        ContrattoBulk contratto = ( ContrattoBulk) super.insertContratto(request,contrattoDtoBulk).getEntity();
-        contrattoComponentSession.salvaDefinitivo(userContext,contratto);
+        List<AttachmentContratto> l =contrattoDtoBulk.getAttachments();
+        AttachmentContratto a = Optional.ofNullable(contrattoDtoBulk.getAttachments()).filter(s->s.size()>0).get().stream().findFirst().orElse(null);
+        byte[] decoded= Base64.getDecoder().decode(a.getBytes());
+
+        try (FileOutputStream outputStream = new FileOutputStream("D://temp//decodedFileContratto.pdf")) {
+            outputStream.write(decoded);
+        }
+        //ContrattoBulk contratto = ( ContrattoBulk) super.insertContratto(request,contrattoDtoBulk).getEntity();
+        //contrattoComponentSession.salvaDefinitivo(userContext,contratto);
         return Response.status(Response.Status.CREATED).entity(contrattoDtoBulk).build();
     }
 

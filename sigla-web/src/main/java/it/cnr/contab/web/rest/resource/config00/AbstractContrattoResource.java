@@ -147,8 +147,8 @@ public abstract class AbstractContrattoResource {
                 contrattoBulkSigla);
 
         contratto.setToBeCreated();
-        ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
-        contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());
+        //ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
+        //contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());
         return Response.status(Response.Status.CREATED).entity(contrattoBulk).build();
     }
 
