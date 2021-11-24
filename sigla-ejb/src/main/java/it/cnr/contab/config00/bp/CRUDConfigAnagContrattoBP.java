@@ -29,11 +29,13 @@ import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -42,6 +44,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
@@ -691,6 +694,30 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		ContrattoBulk contratto = (ContrattoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
 		try {
+			Optional.ofNullable(contrattoService.findAllegatiFlussoContratto(contratto))
+			.filter(list->!list.isEmpty())
+					.ifPresent(list->{
+						list.stream()
+								.forEach(allegato->{
+									contratto.addToArchivioAllegatiFlusso(allegato);
+								});
+					});
+
+
+			Optional.ofNullable(contrattoService.findAllegatiContratto(contratto))
+					.filter(list->!list.isEmpty())
+					.ifPresent(list->{
+						list.stream()
+								.forEach(allegato->{
+									contratto.addToArchivioAllegati(allegato);
+								});
+					});
+
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
+		/*
+		try {
 			Optional.ofNullable(contrattoService.getFolderContratto(contratto))
 					.map(storageObject -> contrattoService.getChildren(storageObject.getKey()))
 					.map(storageObjects -> storageObjects.stream())
@@ -739,6 +766,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
+		*/
+
 		return contratto;
 	}
 

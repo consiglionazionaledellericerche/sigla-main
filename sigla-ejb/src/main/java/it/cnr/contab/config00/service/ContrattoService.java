@@ -66,6 +66,7 @@ public class ContrattoService extends StoreService {
 	}
 
 	private List<String> getBasePath(ContrattoBulk contrattoBulk) {
+
 		if (contrattoBulk.isFromFlussoAcquisti()){
 			return Arrays.asList(
 					SpringUtil.getBean(StorePath.class).getPathComunicazioniAl(),
@@ -175,6 +176,8 @@ public class ContrattoService extends StoreService {
 		return result;
 	}
 
+
+
 	public String getCMISPathAlternativo(AllegatoContrattoDocumentBulk allegato) {
 		return Arrays.asList(
 				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
@@ -187,11 +190,18 @@ public class ContrattoService extends StoreService {
 		);
 	}
 
+	public String getCMISPathAllegati(ContrattoBulk contratto){
+		List<String > l = new ArrayList<String>(getBasePath(contratto));
+		l.add(contratto.getCMISFolderName());
+		return l.stream().collect(Collectors.joining(StorageDriver.SUFFIX));
+	}
+	/*
 	public String getCMISPath(AllegatoContrattoDocumentBulk allegato) {
+
 		if (allegato.getContrattoBulk().isFromFlussoAcquisti()){
 			return Arrays.asList(
 					SpringUtil.getBean(StorePath.class).getPathComunicazioniAl(),
-					"flows-demo",
+					getFolderFlowsName(),
 					"acquisti",
 					Optional.ofNullable(allegato.getContrattoBulk().getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse("").replace(".", ""),
 					Optional.ofNullable(allegato.getContrattoBulk().getEsercizio())
@@ -215,7 +225,7 @@ public class ContrattoService extends StoreService {
 		);
 
 	}
-
+*/
 	public void costruisciAlberaturaAlternativa(AllegatoContrattoDocumentBulk allegato, StorageObject source) throws ApplicationException {
 		try {
 			copyNode(source, getStorageObjectByPath(getCMISPathAlternativo(allegato), true));

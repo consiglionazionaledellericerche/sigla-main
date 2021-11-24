@@ -14,6 +14,7 @@ import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.model.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
@@ -24,6 +25,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.ws.rs.QueryParam;
@@ -33,9 +35,10 @@ import javax.ws.rs.core.SecurityContext;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
-
-public abstract class AbstractContrattoResource {
+@Stateless
+public abstract  class AbstractContrattoResource {
     private final Logger LOGGER = LoggerFactory.getLogger(ContrattoResource.class);
+
     @Context SecurityContext securityContext;
     @EJB CRUDComponentSession crudComponentSession;
     @EJB ContrattoComponentSession contrattoComponentSession;
@@ -67,6 +70,7 @@ public abstract class AbstractContrattoResource {
                 }));
     }
     private Dettaglio_contrattoBulk getDettaglioContrattoArticolo(DettaglioContrattoDtoBulk row){
+        //check Bene Servizio esiste in sigla
         Dettaglio_contrattoBulk d = new Dettaglio_contrattoBulk();
         d.setCdBeneServizio(row.getCdBeneServizio());
         d.setPrezzoUnitario(row.getPrezzoUnitario());
@@ -75,6 +79,7 @@ public abstract class AbstractContrattoResource {
         return d;
     }
     private Dettaglio_contrattoBulk getDettaglioContrattoCatGrp(DettaglioContrattoDtoBulk row){
+        //check Categoria Gruppo esiste in sigla
         Dettaglio_contrattoBulk d = new Dettaglio_contrattoBulk();
         d.setCdCategoriaGruppo(row.getCdCategoriaGruppo());
         d.setPrezzoUnitario(row.getPrezzoUnitario());
@@ -119,6 +124,20 @@ public abstract class AbstractContrattoResource {
         }
     }
 
+    protected ContrattoBulk innerCreaContrattoBulk( CNRUserContext userContext ,ContrattoBulk contratto) throws ComponentException, RemoteException {
+        return (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto,false);
+    }
+
+    protected ContrattoBulk creaContrattoBulk(CNRUserContext userContext ,ContrattoBulk contrattoBulkSigla) throws ComponentException, RemoteException {
+        final ContrattoBulk contratto = (ContrattoBulk) contrattoComponentSession.inizializzaBulkPerInserimento(
+                userContext,
+                contrattoBulkSigla);
+
+        contratto.setToBeCreated();
+        return innerCreaContrattoBulk( userContext,contratto);
+
+    }
+
     public Response insertContratto(@Context HttpServletRequest request, ContrattoDtoBulk contrattoBulk) throws Exception {
 
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
@@ -142,22 +161,36 @@ public abstract class AbstractContrattoResource {
         contrattoBulkSigla.setAtto(new Tipo_atto_amministrativoBulk());
         contrattoBulkSigla.setCd_tipo_atto("DET");
 
+/*
         final ContrattoBulk contratto = (ContrattoBulk) contrattoComponentSession.inizializzaBulkPerInserimento(
                 userContext,
                 contrattoBulkSigla);
 
         contratto.setToBeCreated();
-        //ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
-        //contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());
+
+ */
+        ContrattoBulk contrattoCreated = creaContrattoBulk( userContext,contrattoBulkSigla);
+        contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());
         return Response.status(Response.Status.CREATED).entity(contrattoBulk).build();
     }
 
 
-    private List<AllegatoContrattoFlussoDocumentBulk> getAllegatiContrattoFlusso(List<AttachmentContratto> l){
+    private List<AllegatoContrattoFlussoDocumentBulk> getAllegatiContrattoFlusso(ContrattoBulk contrattoBulk,List<AttachmentContratto> l){
         List<AllegatoContrattoFlussoDocumentBulk> attachments = new ArrayList<AllegatoContrattoFlussoDocumentBulk>();
+        Optional.ofNullable(l).
+                ifPresent(stream->stream.forEach(a->{
+                    AllegatoContrattoFlussoDocumentBulk attachment = new AllegatoContrattoFlussoDocumentBulk();
+                    attachment.setType(a.getTypeAttachment().matadata);
+                    attachment.setBytes(Base64.getDecoder().decode(a.getBytes()));
+                    attachment.setNome(a.getNomeFile());
+                    attachment.setTitolo(a.getNomeFile());
+                    attachment.setContentType(a.getMimeTypes().mimetype());
+                    attachments.add(attachment);
+                    attachment.setContrattoBulk(contrattoBulk);
+                    attachment.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+                    }));
 
-
-        return null;
+        return attachments;
     }
 
     private ContrattoBulk creaContrattoSigla(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) throws PersistencyException, ValidationException, ComponentException, RemoteException {
@@ -219,7 +252,11 @@ public abstract class AbstractContrattoResource {
             contrattoBulkSigla.setFigura_giuridica_interna(new TerzoBulk());
             contrattoBulkSigla.setFig_giur_int(contrattoBulk.getFig_giur_int());
         }
-        contrattoBulkSigla.setFl_art82(contrattoBulk.getFl_art82());
+        contrattoBulkSigla.setFl_art82(Boolean.FALSE);
+        Optional.ofNullable(contrattoBulk.getFl_art82()).ifPresent(fl->{
+            contrattoBulkSigla.setFl_art82(fl);
+        });
+
         contrattoBulkSigla.setFl_mepa(contrattoBulk.getFl_mepa());
         contrattoBulkSigla.setFl_pubblica_contratto(contrattoBulk.getFl_pubblica_contratto());
         contrattoBulkSigla.setIm_contratto_passivo(contrattoBulk.getIm_contratto_passivo());
@@ -270,7 +307,7 @@ public abstract class AbstractContrattoResource {
             contrattoBulkSigla.setTipo_dettaglio_contratto( contrattoBulk.getTipoDettaglioContratto().name());
             contrattoBulkSigla.setDettaglio_contratto(new BulkList<Dettaglio_contrattoBulk>(getListaDettagliContratto(contrattoBulk.getTipoDettaglioContratto(),contrattoBulk.getDettaglioContratto())));
         }
-        contrattoBulkSigla.setArchivioAllegatiFlusso(new BulkList<AllegatoContrattoFlussoDocumentBulk>(getAllegatiContrattoFlusso(contrattoBulk.getAttachments())));
+        contrattoBulkSigla.setArchivioAllegatiFlusso(new BulkList<AllegatoContrattoFlussoDocumentBulk>(getAllegatiContrattoFlusso(contrattoBulkSigla,contrattoBulk.getAttachments())));
         return contrattoBulkSigla;
     }
 

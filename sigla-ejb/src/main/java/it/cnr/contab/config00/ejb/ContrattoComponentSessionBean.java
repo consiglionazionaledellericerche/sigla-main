@@ -377,9 +377,9 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}	
-	public ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException {
+	public ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto,boolean statoDefinitivo) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException {
 		try {
-			ContrattoBulk result = ((ContrattoComponent)componentObj).creaContrattoDaFlussoAcquisti(userContext, contratto);
+			ContrattoBulk result = ((ContrattoComponent)componentObj).creaContrattoDaFlussoAcquisti(userContext, contratto,statoDefinitivo);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

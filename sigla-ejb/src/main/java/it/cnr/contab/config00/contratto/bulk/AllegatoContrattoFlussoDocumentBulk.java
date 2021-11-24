@@ -17,8 +17,10 @@
 
 package it.cnr.contab.config00.contratto.bulk;
 
-import java.io.File;
+import java.io.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.util.Utility;
@@ -33,7 +35,9 @@ import it.cnr.si.spring.storage.config.StoragePropertyNames;
 public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements StorageTypeName {
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
-	private byte[] bytest;
+	//allegato da webService
+	private byte[] bytes;
+	private File file;
 	private String contentType;
 	private String nome;
 	private String titolo;
@@ -132,12 +136,12 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 		return nodeId != null;
 	}
 
-	public byte[] getBytest() {
-		return bytest;
+	public byte[] getBytes() {
+		return bytes;
 	}
 
-	public void setBytest(byte[] bytest) {
-		this.bytest = bytest;
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
 	}
 
 	public String getNome() {
@@ -256,6 +260,39 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 
 	public void setLabel(String label) {
 		this.label = label;
-	}	
+	}
 
-}	
+	@StorageProperty(name="cmis:secondaryObjectTypeIds")
+	public List<String> getAspect() {
+		List<String> results = new ArrayList<String>();
+		results.add(getType());
+		return results;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public boolean existBytes(){
+		if ( file==null && bytes==null)
+			return Boolean.FALSE;
+		return Boolean.TRUE;
+
+	}
+	public InputStream getInputStream()  {
+		if ( file!=null) {
+			try {
+				return new FileInputStream(file);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		if ( bytes!=null)
+			return  new ByteArrayInputStream(bytes);
+		return null;
+	}
+}
