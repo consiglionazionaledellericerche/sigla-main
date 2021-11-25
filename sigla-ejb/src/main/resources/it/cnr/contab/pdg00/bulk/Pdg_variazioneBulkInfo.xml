@@ -212,7 +212,9 @@
         enabledOnSearch="true"		
 		maxLength="500"
 		nullable="true"
+		inputCssClass="w-100 "
 		label="Motivazione mancata app." />
+
 	<fieldProperty
 		name="dt_app_formale"
 		property="dt_app_formale"
@@ -534,8 +536,8 @@
 		property="assegnazione"
 		label="Assegnata a"
 		inputType="TEXT"
-		maxLength="50"
-		inputSize="50"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
 		enabledOnSearch="true"
 		nullable="true"	/>
 	<fieldProperty
@@ -552,9 +554,12 @@
 		name="note"
 		property="note"
 		label="Note"
-		cols="60"
+		cols="80"
 		rows="4"
+		maxLength="2000"
 		inputType="TEXTAREA"
+		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="true" />
 
     <form

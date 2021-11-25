@@ -21,7 +21,7 @@
 	<% if (!bp.getParametriCnr().getFl_regolamento_2006().booleanValue() && bk.getDesTipoVariazione()!=null) { %>
 		<legend class="GroupLabel cardLabel card-header text-primary"><% bp.getController().writeFormInput(out,null,"desTipoVariazione",true,"GroupLabel cardLabel card-header text-primary","style=\"border-style : none; cursor:default;\"");%></legend>
 	<% } %> 
-<table class="card-block">
+<table class="card-block m-2">
   <TR>
    	<% bp.getController().writeFormField(out,"esercizio");%>
     <TD colspan="4">
@@ -125,9 +125,23 @@
 <% if (bp.isUoEnte() && (bp.isSearching() || !bk.isPropostaProvvisoria())) { %>
     <% if (bp.getParent().isBootstrap()) { %><BR><% } %>
     <fieldset class="fieldset card">
-        <table class="card-block">
+        <table class="card-block m-2">
            <tr><% bp.getController().writeFormField(out,"fl_cda");%></tr>
-           <tr><% bp.getController().writeFormField(out,"assegnazione");%></tr>
+           <tr>
+                <td><% bp.getController().writeFormLabel(out,"assegnazione");%></td>
+                <td><% bp.getController().writeFormInput(out,"assegnazione");
+                       if (!bp.isSearching())
+                       	    JSPUtils.button(out,
+                       				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-link text-success" : "img/edit16.gif",
+                       				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-link text-success" : "img/edit16.gif",
+                       				null,
+                       				"javascript:submitForm('doPrendiInCarico')",
+                       				"btn-secondary btn-outline-secondary btn-title",
+                       				true,
+                       				bp.getParentRoot().isBootstrap());
+		             %>
+		        </td>
+		   </tr>
            <tr><% bp.getController().writeFormField(out,"im_incassato");%></tr>
            <tr><% bp.getController().writeFormField(out,"note");%></tr>
         </table>
@@ -136,8 +150,8 @@
 
 <% if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEnte())) { %>
 <fieldset class="fieldset card">
-<legend class="GroupLabel card-header h3 text-primary">Motivazione della Mancata Approvazione</legend>
-	<table class="card-block">
+    <legend class="GroupLabel card-header h3 text-primary">Motivazione della Mancata Approvazione</legend>
+	<table class="card-block m-2">
           <tr>
             <TD><% bp.getController().writeFormLabel(out,"cd_causale_respinta");%></TD>
             <TD colspan="5"><% bp.getController().writeFormInput(out,"default","cd_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
@@ -152,7 +166,7 @@
 
 <% if (bp.getParent().isBootstrap()) {%><BR><% } %>
 <fieldset class="fieldset card">
-	<table class="card-block">
+	<table class="card-block m-2">
 	  <tr>
 	     <td></td>
 	     <td align=center><span class="GroupLabel font-weight-bold text-primary">Variazioni +</span></td>
