@@ -207,7 +207,33 @@
 			propertyName="pg_rimodulazione"
 			sqlTypeName="DECIMAL"
 			columnSize="10"
-			nullable="true" />	
+			nullable="true" />
+		<columnMapping
+			columnName="ASSEGNAZIONE"
+			propertyName="assegnazione"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_INCASSATO"
+			propertyName="im_incassato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_CDA"
+			propertyName="fl_cda"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 		
 	<persistentProperty
@@ -271,5 +297,13 @@
 	<persistentProperty
 		name="pg_progetto_rimodulazione" />
 	<persistentProperty
-		name="pg_rimodulazione" />		
+		name="pg_rimodulazione" />
+	<persistentProperty
+		name="assegnazione" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="im_incassato" />
+	<persistentProperty
+		name="fl_cda" />
 </SQLPersistentInfo>

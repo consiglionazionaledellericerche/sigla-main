@@ -4839,4 +4839,16 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="addColumn_variazioni_competenza">
+        <addColumn tableName="PDG_VARIAZIONE">
+            <column name="IM_INCASSATO" type="numeric(15, 2)" remarks="Importo incassato"/>
+            <column name="FL_CDA" type="CHAR(1)" defaultValue="N" remarks="Variazione di CDA.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ASSEGNAZIONE" type="VARCHAR(50)" remarks="Utente assegnatario"/>
+            <column name="NOTE" type="VARCHAR(2000)" remarks="Annotazioni"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
