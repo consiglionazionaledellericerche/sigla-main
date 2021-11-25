@@ -720,57 +720,6 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
-		/*
-		try {
-			Optional.ofNullable(contrattoService.getFolderContratto(contratto))
-					.map(storageObject -> contrattoService.getChildren(storageObject.getKey()))
-					.map(storageObjects -> storageObjects.stream())
-					.orElse(Stream.empty())
-					.filter(storageObject -> Optional.ofNullable(storageObject.getKey()).isPresent())
-					.forEach(child -> {
-						contratto.setAllegatoFlusso(false);
-						if (contratto.isFromFlussoAcquisti()){
-							AllegatoContrattoFlussoDocumentBulk allegato = AllegatoContrattoFlussoDocumentBulk.construct(child);
-							Optional.ofNullable(child.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-									.map(strings -> strings.stream())
-									.ifPresent(stringStream -> {
-										stringStream
-										.filter(s -> AllegatoContrattoFlussoDocumentBulk.ti_allegatoFlussoKeys.get(s) != null)
-										.findFirst()
-										.ifPresent(s -> allegato.setType(s));
-										if (allegato.getType() != null){
-											allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-											allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-											allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-											allegato.setNome(allegato.getTitolo());
-											allegato.setCrudStatus(OggettoBulk.NORMAL);
-											contratto.addToArchivioAllegatiFlusso(allegato);
-											contratto.setAllegatoFlusso(true);
-											if (!allegato.isContentStreamPresent())
-												setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
-										}
-									});
-						}
-						if (contratto.getAllegatoFlusso() == false){
-							AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-							allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-							allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-							allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-							allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
-							allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
-
-							allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
-							allegato.setCrudStatus(OggettoBulk.NORMAL);
-							contratto.addToArchivioAllegati(allegato);
-							if (!allegato.isContentStreamPresent())
-								setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
-						}
-
-					});
-		} catch (ApplicationException e) {
-			throw handleException(e);
-		}
-		*/
 
 		return contratto;
 	}

@@ -161,13 +161,6 @@ public abstract class AbstractContrattoResource {
         contrattoBulkSigla.setStato(ContrattoBulk.STATO_PROVVISORIO);
         if (contrattoBulkSigla.getCd_unita_organizzativa() != null){
             setUniOrganizzativa( contrattoBulkSigla);
-            /*
-            if (contrattoBulkSigla.getCd_unita_organizzativa().length() == 6){
-                contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulkSigla.getCd_unita_organizzativa().substring(0, 3)+"."+contrattoBulkSigla.getCd_unita_organizzativa().substring(3));
-            } else {
-                throw new RestException(Response.Status.BAD_REQUEST, String.format("L'Unita Organizzativa indicata %s non è conforme con il formato atteso", contrattoBulkSigla.getCd_unita_organizzativa()));
-            }
-            */
         } else {
             throw new RestException(Response.Status.BAD_REQUEST, "Unita Organizzativa non indicata");
         }
