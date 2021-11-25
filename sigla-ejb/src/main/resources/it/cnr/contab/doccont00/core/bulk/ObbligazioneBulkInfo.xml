@@ -594,7 +594,27 @@
 		label="Voce del piano"
 		enabledOnSearch="true"
 		completeOnSave="false" />
-
+	<fieldProperty
+		name="findGaeDestinazioneFinale"
+		property="gaeDestinazioneFinale"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="prg_liv2"
+		enabledOnSearch="true"
+		label="GAE di destinazione" />
+	<fieldProperty
+		name="cdCdrDestinazioneFinale"
+		property="gaeDestinazioneFinale.centro_responsabilita.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="CdR di destinazione"/>
+	<fieldProperty
+		name="dsCdrDestinazioneFinale"
+		property="gaeDestinazioneFinale.centro_responsabilita.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="45"
+		label="Descrizione CdR di destinazione" />
 
 	<columnFieldProperty
 		name="esercizio_competenza"
@@ -822,7 +842,13 @@
 		name="ds_elemento_voce_next" />
 	<formFieldProperty
 		name="find_elemento_voce_next" />
-	
+	<formFieldProperty
+		name="findGaeDestinazioneFinale" />
+	<formFieldProperty
+		name="cdCdrDestinazioneFinale" />
+	<formFieldProperty
+		name="dsCdrDestinazioneFinale" />
+
 	<form name="searchtool">
         <formFieldProperty
               name="cd_cds" 
@@ -839,7 +865,7 @@
               name="pg_obbligazione" 
               enabledOnSearch="true"/>   
     </form>
-    	
+
 	<findFieldProperty
 		name="cd_elemento_voce"
 		/>

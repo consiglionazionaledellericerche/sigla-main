@@ -348,4 +348,21 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
                 .orElse(Boolean.TRUE);
     }
+
+    /**
+     *
+     * @param userContext
+     * @return É attivo il blocco delle scritture di economica
+     * @throws PersistencyException
+     */
+    public boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws PersistencyException{
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_VARIAZIONE_AUTOMATICA,
+                                Configurazione_cnrBulk.SK_SPESA)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .orElse(Boolean.FALSE);
+    }
 }
