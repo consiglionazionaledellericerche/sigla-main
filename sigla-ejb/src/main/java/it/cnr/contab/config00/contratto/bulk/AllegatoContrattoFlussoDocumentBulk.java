@@ -217,6 +217,35 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 	public String getDocumentName() {
 		StringBuffer name = new StringBuffer();
 		String tipo = getType();
+		if (tipo.equals(CONTRATTO_FLUSSO))
+			name.append("CTR");
+		else if (tipo.equals(DECISIONE_CONTRATTARE_FLUSSO))
+			name.append("DEC");
+		else if (tipo.equals(AGGIUDICAZIONE_FLUSSO))
+			name.append("AGG");
+		else if (tipo.equals(ALLEGATO_FLUSSO))
+			name.append("ALL");
+		else if (tipo.equals(REVOCA_FLUSSO))
+			name.append("REV");
+		else if (tipo.equals(RICHIESTA_ACQUISTO_FLUSSO))
+			name.append("RIC");
+		else if (tipo.equals(AVVISO_POST_INFORMAZIONE_FLUSSO))
+			name.append("AVV");
+		else if (tipo.equals(STIPULA_FLUSSO))
+			name.append("STI");
+		else if (tipo.equals(ELENCO_VERBALI_FLUSSO))
+			name.append("ELV");
+		else if (tipo.equals(NOMINA_COMMISSIONE_FLUSSO))
+			name.append("COMM");
+		else if (tipo.equals(AMMESSI_ESCLUSI_FLUSSO))
+			name.append("AMM");
+		else if (tipo.equals(LETTERA_INVITO_FLUSSO))
+			name.append("LET");
+		else if (tipo.equals(BANDO_AVVISI_FLUSSO))
+			name.append("BAN");
+		else if (tipo.equals(MODIFICHE_VARIANTI_FLUSSO))
+			name.append("MOD");
+
 		name.append("-").append(contrattoBulk.getUnita_organizzativa().getCd_unita_organizzativa());
 		name.append("-").append(contrattoBulk.getEsercizio()).append(contrattoBulk.getStato()).append(Utility.lpad(contrattoBulk.getPg_contratto(), 9, '0'));
 		name.append(".").append(getNome()==null?"Progetto.link":getNome());

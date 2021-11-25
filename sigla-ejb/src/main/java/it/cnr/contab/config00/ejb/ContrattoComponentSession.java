@@ -41,5 +41,5 @@ RemoteIterator findListaContrattiElenco(UserContext userContext,String query,Str
 RemoteIterator findContrattoByCig(UserContext userContext, ContrattoBulk contratto, CigBulk cig)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException,java.rmi.RemoteException;
 ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto,boolean statoDefinitivo) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void archiviaAllegati(UserContext userContext, ContrattoBulk contratto) throws ComponentException;
+void archiviaAllegati(UserContext userContext, ContrattoBulk contratto,boolean attFromFlussoStoredInSigla) throws ComponentException;
 }

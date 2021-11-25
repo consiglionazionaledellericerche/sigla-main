@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -826,6 +827,26 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
                     Configurazione_cnrBulk.PK_GESTIONE_PROGETTI,
                     Configurazione_cnrBulk.SK_ASS_PROGETTI_ANGAGRAFICO,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+    public Boolean isAttachRestContrStoredFromSigla(UserContext userContext) throws ComponentException, RemoteException {
+        try{
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_GESTIONE_CONTRATTI,
+                    Configurazione_cnrBulk.SK_ATT_REST_STORED_FROM_SIGLA,
                     ASTERISCO,
                     CNRUserContext.getEsercizio(userContext));
             return val01YesNo(userContext, configurazioneCnrKey)

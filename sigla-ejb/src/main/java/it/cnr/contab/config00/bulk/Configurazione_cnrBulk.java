@@ -171,6 +171,9 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_ACCERTAMENTI = "ACCERTAMENTI";
 	public final static String SK_ACCERTAMENTI_PLURIENNALI = "ACCERTAMENTI_PLURIENNALI";
 
+    public final static String PK_GESTIONE_CONTRATTI = "CONTRATTI";
+    public final static String SK_ATT_REST_STORED_FROM_SIGLA = "ATT_REST_CONTR_STORED_FROM_SIGLA";
+
 	public Configurazione_cnrBulk() {
 		super();
 	}

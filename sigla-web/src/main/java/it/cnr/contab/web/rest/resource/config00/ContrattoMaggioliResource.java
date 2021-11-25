@@ -36,6 +36,7 @@ import java.util.Optional;
 public class ContrattoMaggioliResource  extends AbstractContrattoResource implements ContrattoMaggioliLocal {
     private final Logger _log = LoggerFactory.getLogger(ContrattoMaggioliResource.class);
 
+
     @Override
     public void validateContratto(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) {
         //Check valore tipoDettaglioContratto

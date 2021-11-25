@@ -21,8 +21,11 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.PersistencyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -36,7 +39,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
 @Stateless
-public abstract  class AbstractContrattoResource {
+public abstract class AbstractContrattoResource {
     private final Logger LOGGER = LoggerFactory.getLogger(ContrattoResource.class);
 
     @Context SecurityContext securityContext;
@@ -138,6 +141,15 @@ public abstract  class AbstractContrattoResource {
 
     }
 
+    public void setUniOrganizzativa(ContrattoBulk contrattoBulkSigla){
+        if (contrattoBulkSigla.getCd_unita_organizzativa().length() == 6){
+            contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulkSigla.getCd_unita_organizzativa().substring(0, 3)+"."+contrattoBulkSigla.getCd_unita_organizzativa().substring(3));
+            return;
+        }
+        if ( contrattoBulkSigla.getCd_unita_organizzativa().length() == 7 && contrattoBulkSigla.getCd_unita_organizzativa().charAt(3)=='.')
+            return;
+        throw new RestException(Response.Status.BAD_REQUEST, String.format("L'Unita Organizzativa indicata %s non è conforme con il formato atteso", contrattoBulkSigla.getCd_unita_organizzativa()));
+    }
     public Response insertContratto(@Context HttpServletRequest request, ContrattoDtoBulk contrattoBulk) throws Exception {
 
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
@@ -148,11 +160,14 @@ public abstract  class AbstractContrattoResource {
         ContrattoBulk contrattoBulkSigla = creaContrattoSigla(contrattoBulk, userContext);
         contrattoBulkSigla.setStato(ContrattoBulk.STATO_PROVVISORIO);
         if (contrattoBulkSigla.getCd_unita_organizzativa() != null){
+            setUniOrganizzativa( contrattoBulkSigla);
+            /*
             if (contrattoBulkSigla.getCd_unita_organizzativa().length() == 6){
                 contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulkSigla.getCd_unita_organizzativa().substring(0, 3)+"."+contrattoBulkSigla.getCd_unita_organizzativa().substring(3));
             } else {
                 throw new RestException(Response.Status.BAD_REQUEST, String.format("L'Unita Organizzativa indicata %s non è conforme con il formato atteso", contrattoBulkSigla.getCd_unita_organizzativa()));
             }
+            */
         } else {
             throw new RestException(Response.Status.BAD_REQUEST, "Unita Organizzativa non indicata");
         }

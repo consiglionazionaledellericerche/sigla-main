@@ -81,12 +81,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	private static final long serialVersionUID = 1L;
 
+
+
 	private ContrattoBulk contratto;
 	private String tipoAccesso;
 	protected ContrattoService contrattoService;
 	protected Date dataStipulaParametri;
 	protected Boolean flagPubblicaContratto;
 	private boolean attivoOrdini = false;
+	private boolean attachRestContrStoredFromSigla = false;
 	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
 			ContrattoBulk contratto = ( ContrattoBulk) this.getParentModel();
@@ -103,6 +106,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
 		try {
 			attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(actioncontext.getUserContext());
+			attachRestContrStoredFromSigla = Utility.createConfigurazioneCnrComponentSession().isAttachRestContrStoredFromSigla(actioncontext.getUserContext());
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -347,7 +351,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public SimpleDetailCRUDController getCrudAssUO() {
 		return crudAssUO;
 	}
-	/* 
+	/*
 	 * Necessario per la creazione di una form con enctype di tipo "multipart/form-data"
 	 * Sovrascrive quello presente nelle superclassi
 	 * 
@@ -814,7 +818,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		}
 		ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 		try {
-			comp.archiviaAllegati(actioncontext.getUserContext(),contratto);
+			comp.archiviaAllegati(actioncontext.getUserContext(),contratto,attachRestContrStoredFromSigla);
 		} catch (ComponentException e) {
 			throw new ApplicationException(e);
 		}

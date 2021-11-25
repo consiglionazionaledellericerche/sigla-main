@@ -119,6 +119,7 @@ import javax.swing.text.html.Option;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent implements Cloneable, Serializable, IPrintMgr {
+
 	public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 		if(bulk instanceof ContrattoBulk)
 			return select(userContext, clauses, (ContrattoBulk) bulk);
@@ -1664,7 +1665,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			}
 		}
 	}
-	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto) throws ComponentException {
+	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto,boolean attFromFlussoStoredInSigla) throws ComponentException {
 		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
 				ContrattoService.class);
 		Optional.ofNullable(contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contratto)))
@@ -1678,7 +1679,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 									contratto
 							));
 				});
-		archiviaAllegatiFlusso( userContext,contratto,contrattoService);
+		if (attFromFlussoStoredInSigla)
+			archiviaAllegatiFlusso( userContext,contratto,contrattoService);
 		archiviaAllegati( userContext,contratto,contrattoService);
 	}
 
@@ -2198,6 +2200,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 		public ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto, boolean statoDefinitivo) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException {
 			try {
+
 				controlloFlussoAcquistiGiaEsistente(userContext, contratto);
 				TerzoBulk terzoUo = selectTerzoFromUo(userContext, contratto.getUnita_organizzativa());
 				if (terzoUo != null){
@@ -2211,17 +2214,16 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 
 				gestioneCigSuContrattoDaFlows(userContext, contratto);
 				contratto = (ContrattoBulk)creaConBulk(userContext, contratto);
-				archiviaAllegati(userContext,contratto);
+				archiviaAllegati(userContext,contratto,Utility.createConfigurazioneCnrComponentSession().isAttachRestContrStoredFromSigla(userContext));
 				if ( statoDefinitivo) {
 					try {
 						return salvaDefinitivo(userContext, contratto);
 					}catch (Exception e){
 						//rimuovi Contratto con gli allegati
 						eliminaConBulk(userContext,contratto);
-
-						throw new ComponentException(e);
 					}
 				}
+
 				return contratto;
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);

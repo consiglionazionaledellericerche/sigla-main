@@ -53,7 +53,7 @@ public class RestServiceContrattiTest {
         ContrattoDtoBulk c = new ContrattoDtoBulk();
         c.setEsercizio(2021);
         c.setCodiceFlussoAcquisti( "test");
-        c.setCd_unita_organizzativa("000000");
+        c.setCd_unita_organizzativa("000.000");
         c.setCodfisPivaRupExt("ZNCMRT79E49H501E");
         c.setCodfisPivaAggiudicatarioExt("05923561004");
         c.setCodfisPivaFirmatarioExt("ZNCMRT79E49H501E");

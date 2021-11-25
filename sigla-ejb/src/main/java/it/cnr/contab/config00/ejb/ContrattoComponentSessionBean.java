@@ -396,9 +396,9 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 	}
 
 	@Override
-	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto) throws ComponentException {
+	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto,boolean attFromFlussoStoredInSigla) throws ComponentException {
 		try {
-			((ContrattoComponent)componentObj).archiviaAllegati(userContext, contratto);
+			((ContrattoComponent)componentObj).archiviaAllegati(userContext, contratto,attFromFlussoStoredInSigla);
 			component_invocation_succes(userContext,componentObj);
 			return;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

@@ -91,4 +91,6 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean isAccertamentoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
 
+    Boolean isAttachRestContrStoredFromSigla(UserContext userContext)throws ComponentException, RemoteException;
+
 }
