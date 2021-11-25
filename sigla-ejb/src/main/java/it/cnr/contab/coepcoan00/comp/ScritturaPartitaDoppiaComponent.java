@@ -2197,15 +2197,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private boolean hasAutofattura(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
 		try {
 			if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo()) {
-				Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
-				if (!fatpas.isCommerciale())
-					return false;
-				if (!fatpas.getFl_autofattura().booleanValue()) {
-					AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
-					AutofatturaBulk autof = autofatturaHome.findFor(fatpas);
-					return Optional.ofNullable(autof).isPresent();
+				final Optional<Fattura_passivaBulk> optionalFattura_passivaBulk = Optional.ofNullable(docamm)
+						.filter(Fattura_passivaBulk.class::isInstance)
+						.map(Fattura_passivaBulk.class::cast);
+				if (optionalFattura_passivaBulk.isPresent()) {
+					if (!optionalFattura_passivaBulk.get().isCommerciale())
+						return false;
+					if (!optionalFattura_passivaBulk.get().getFl_autofattura().booleanValue()) {
+						AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
+						AutofatturaBulk autof = autofatturaHome.findFor(optionalFattura_passivaBulk.get());
+						return Optional.ofNullable(autof).isPresent();
+					}
+					return optionalFattura_passivaBulk.get().getFl_autofattura();
 				}
-				return fatpas.getFl_autofattura();
 			}
 			return false;
 		} catch (Exception e) {
