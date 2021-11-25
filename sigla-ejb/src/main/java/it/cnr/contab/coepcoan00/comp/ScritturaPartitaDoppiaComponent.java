@@ -2218,10 +2218,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private boolean registraIvaCoge(IDocumentoAmministrativoBulk docamm) {
-		if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo()) {
+		if (docamm.getTipoDocumentoEnum().isFatturaPassiva()) {
 			Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
 			return fatpas.registraIvaCoge();
-		} else if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoAttivo()) {
+		} else if (docamm.getTipoDocumentoEnum().isFatturaAttiva()) {
 			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
 			return fatatt.registraIvaCoge();
 		}
