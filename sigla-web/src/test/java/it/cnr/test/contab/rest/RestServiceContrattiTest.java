@@ -25,7 +25,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.xerces.impl.xpath.regex.Match;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,6 +44,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class RestServiceContrattiTest {
@@ -118,6 +122,13 @@ public class RestServiceContrattiTest {
 
     @Test
     public void jsonTest()throws Exception {
+        final String regex = "[0-9A-Z]{3}\\.[0-9A-Z]{3}";
+        final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        String unita="00.aA1";
+        Boolean b = pattern.matcher(unita).matches();
+        Assert.assertTrue(b);
+
+/*
         String text = "2009-10-20";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date parsedDate = dateFormat.parse("20211122");
@@ -151,7 +162,7 @@ public class RestServiceContrattiTest {
             throw new ComponentException("Errore nella generazione del file JSON per l'esecuzione della stampa ( errore joson).",ex);
         }
         System.out.println(myJson);
-
+    */
     }
 
 }

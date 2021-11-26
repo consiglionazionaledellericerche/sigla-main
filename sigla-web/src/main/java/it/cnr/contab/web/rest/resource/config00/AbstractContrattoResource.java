@@ -38,6 +38,8 @@ import javax.ws.rs.core.SecurityContext;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.regex.Pattern;
+
 @Stateless
 public abstract class AbstractContrattoResource {
     private final Logger LOGGER = LoggerFactory.getLogger(ContrattoResource.class);
@@ -141,12 +143,14 @@ public abstract class AbstractContrattoResource {
 
     }
 
+    final String regex = "[0-9A-Z]{3}\\.[0-9A-Z]{3}";
+    final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     public void setUniOrganizzativa(ContrattoBulk contrattoBulkSigla){
         if (contrattoBulkSigla.getCd_unita_organizzativa().length() == 6){
             contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulkSigla.getCd_unita_organizzativa().substring(0, 3)+"."+contrattoBulkSigla.getCd_unita_organizzativa().substring(3));
             return;
         }
-        if ( contrattoBulkSigla.getCd_unita_organizzativa().length() == 7 && contrattoBulkSigla.getCd_unita_organizzativa().charAt(3)=='.')
+        if ( pattern.matcher(contrattoBulkSigla.getCd_unita_organizzativa()).matches())
             return;
         throw new RestException(Response.Status.BAD_REQUEST, String.format("L'Unita Organizzativa indicata %s non è conforme con il formato atteso", contrattoBulkSigla.getCd_unita_organizzativa()));
     }
