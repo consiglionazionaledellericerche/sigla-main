@@ -47,7 +47,7 @@
 		inputSize="5"
 		enabledOnEdit="true"
 		command="doOnAnnoObbligazionePluriennaleChange"
-		label="Anno Obbligazione Pluriennale" />
+		label="Anno Impegno Pluriennale" />
 	<fieldProperty
 		name="importo"
 		property="importo"
