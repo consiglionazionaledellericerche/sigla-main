@@ -862,4 +862,24 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione che, in fase di assunzione impegno, consente di creare in automatico sull'impegno di spesa
+     * una variazione di storno bilancio con cui vengono in automatico spostate le somme dalla GAE selezionata sull'impegno ad una GAE alternativa
+     * indicata direttamente dall'utente
+     * @throws PersistencyException
+     */
+    public boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .isVariazioneAutomaticaSpesa(userContext);
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
 }

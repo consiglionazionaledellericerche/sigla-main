@@ -93,4 +93,5 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean isAttachRestContrStoredFromSigla(UserContext userContext)throws ComponentException, RemoteException;
 
+    Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException;
 }
