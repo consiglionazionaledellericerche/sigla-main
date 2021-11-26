@@ -5983,7 +5983,7 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 		return Boolean.TRUE;
 
 	}
-	}
+
 
 	public SQLBuilder selectGaeDestinazioneFinaleByClause(UserContext userContext, ObbligazioneBulk obbligazione, WorkpackageBulk lineaAttivita, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 		WorkpackageHome home = (WorkpackageHome)getHome(userContext, lineaAttivita,"V_LINEA_ATTIVITA_VALIDA");

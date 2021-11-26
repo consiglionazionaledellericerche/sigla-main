@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;

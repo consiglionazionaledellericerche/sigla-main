@@ -656,10 +656,6 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             }
         }
     }
-
-
-}
-
     @Override
     public Boolean isAttachRestContrStoredFromSigla(UserContext userContext) throws ComponentException, RemoteException {
         try {
