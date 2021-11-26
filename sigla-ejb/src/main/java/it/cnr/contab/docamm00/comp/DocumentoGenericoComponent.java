@@ -2127,8 +2127,15 @@ public class DocumentoGenericoComponent
 //^^@@
     public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
             throws it.cnr.jada.comp.ComponentException {
+        final Optional<Documento_genericoBulk> optionalDocumento_genericoBulk = Optional.ofNullable(bulk)
+                .filter(Documento_genericoBulk.class::isInstance)
+                .map(Documento_genericoBulk.class::cast);
 
-        Documento_genericoBulk documento = (Documento_genericoBulk) bulk;
+        if (!optionalDocumento_genericoBulk.isPresent()) {
+            return super.creaConBulk(userContext, bulk);
+        }
+
+        Documento_genericoBulk documento = optionalDocumento_genericoBulk.get();
         documento.setAndVerifyStatus();
         try {
 
