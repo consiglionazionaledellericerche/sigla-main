@@ -294,6 +294,10 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                 (pdgVariazione.isApprovata() || pdgVariazione.isApprovazioneFormale()) &&
                 pdgVariazione.isMotivazioneVariazioneBandoPersonale() && pdgVariazione.getStorageMatricola() == null)
             return true;
+        else if (this.isUoEnte())
+            // bottone lasciato attivato per consentire all'utente ablitato ad approvare (uoEnte())
+            // di modificare alcuni campi attivi se abilitato a validare
+            return true;
         else if (!isAbilitatoModificaDescVariazioni() && pdgVariazione.isApprovata())
             return false;
         else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva())
