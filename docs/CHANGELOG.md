@@ -1,35 +1,41 @@
-## Release 6.3.62  -- _November 17, 2021_ 
+## Release 6.4.1  -- _November 22, 2021_ 
 **Changes**
+
+>**Aggiunto la possibilità di ripristinare delle coordinate bancarie cancellate logicamente**
+>
+>[f43eef88f6a8c35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f43eef88f6a8c35) marco.spasiano *November 22, 2021*
+
+
+## Release 6.4.0  -- _November 22, 2021_ 
+**Changes**
+
+>**FIX version**
+>
+>[ea80b76a4f6eb59](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ea80b76a4f6eb59) marco.spasiano *November 22, 2021*
+
+>**Aggiunto la possibilità di ripristinare delle coordinate bancarie cancellate logicamente**
+>
+>[05739f6933f2ec2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05739f6933f2ec2) marco.spasiano *November 22, 2021*
+
+>**Aggiunto messaggio per il caricamento degli allegati al mandato quando non esiste la folder parent**
+>
+>[61ae27ca06ec794](https://github.com/consiglionazionaledellericerche/sigla-main/commit/61ae27ca06ec794) marco.spasiano *November 22, 2021*
 
 >**FIX name of column on add-riferimenti-perla2018**
 >
->[8458b0e9939b340](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8458b0e9939b340) marco.spasiano *November 17, 2021*
-
-
-## Release 6.3.61  -- _November 17, 2021_ 
-**Changes**
+>[d3d36dabc4363bd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d3d36dabc4363bd) marco.spasiano *November 22, 2021*
 
 >**FIX name of table on alter_liquid_gruppo_centro_comp_doc_cont_segno_opposto**
 >
->[cf13417841475ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf13417841475ec) marco.spasiano *November 17, 2021*
+>[aef33b4fa13dcba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aef33b4fa13dcba) marco.spasiano *November 22, 2021*
 
 >**Aggiunto il CUP alla consultazione REST dei progetti Issue #82**
 >
->[22bfc45d10ca8eb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22bfc45d10ca8eb) marco.spasiano *November 15, 2021*
+>[c2f5eb0a27db548](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c2f5eb0a27db548) marco.spasiano *November 22, 2021*
 
 >**FIX controllo numero conto per TABA con espressione regolare ^[0-9]{7}**
 >
->[5a1c5e4f1586dfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a1c5e4f1586dfc) marco.spasiano *November 15, 2021*
-
->**Revert "Merge branch 'dottorati' of git.si.cnr.it:dev/sigla-main"**
-> * This reverts commit 07da891dfc4ca76142296a05bc060feadbb135e5
->
->[4e4b187319ff718](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4e4b187319ff718) SPASIANO MARCO *November 12, 2021*
-
->**Revert "Merge branch 'pagopa' of git.si.cnr.it:dev/sigla-main"**
-> * This reverts commit 080915cccb3fb76b7d9b18567de81603791e0374
->
->[b417e0733b69f1e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b417e0733b69f1e) SPASIANO MARCO *November 12, 2021*
+>[267908914e8c57f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/267908914e8c57f) marco.spasiano *November 22, 2021*
 
 >**Upgrade version of artifact storage cloud**
 >
@@ -39,18 +45,9 @@
 >
 >[af082b38b573507](https://github.com/consiglionazionaledellericerche/sigla-main/commit/af082b38b573507) marco.spasiano *November 11, 2021*
 
->**inserito format per le rate**
-> * TODO: problema con visualizzazione anagrafica e pgBanca
->
->[e9643de6160c81c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e9643de6160c81c) valerio.diego *November 11, 2021*
-
 >**Variazioni ad Area: è consentita se variazione monoprogetto e di tipo storno**
 >
 >[660d026cda9833e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/660d026cda9833e) raffaelepagano *November 10, 2021*
-
->**inserito AnagraficaDottoratiRataCRUDController e inserito listaBanche in AnagraficaDottorati**
->
->[6b95c6fd95c8368](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6b95c6fd95c8368) valerio.diego *November 09, 2021*
 
 >**Corretta join tra TIPO_CONTRIBUTO_RITENUTA E CONTRIBUTO_RITENUTA**
 >
@@ -60,102 +57,9 @@
 >
 >[5a781df47f10b10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a781df47f10b10) marco.spasiano *November 04, 2021*
 
->**Aggiunto conto e banca**
->
->[da7ee8b532d418a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da7ee8b532d418a) valerio.diego *October 27, 2021*
-
->**ora prevede inserimento modalita_pagamento in menu a tendina**
->
->[de939391e7fc835](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de939391e7fc835) valerio.diego *October 27, 2021*
-
->**aggiunto cdModalitaPag in anagraficaDottorati**
->
->[279f01efc8188af](https://github.com/consiglionazionaledellericerche/sigla-main/commit/279f01efc8188af) valerio.diego *October 27, 2021*
-
->**inserito che prende regione e Ateneo in automatico dal cdTerzo**
->
->[89c0dad67408ac5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/89c0dad67408ac5) valerio.diego *October 27, 2021*
-
->**sistemato interfaccia per identificativo**
->
->[24a14299cca5739](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24a14299cca5739) valerio.diego *October 26, 2021*
-
->**Sistemato che cdCds e cdUnitaOrganizzativa pesca in automatico**
->
->[3265b0782d9196b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3265b0782d9196b) valerio.diego *October 26, 2021*
-
->**Sistemare cdCds e uo che pesca in automatico su inizializzaBulkPerInserimento**
->
->[8a75941b55f6ebb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a75941b55f6ebb) valerio.diego *October 25, 2021*
-
->**Sistemato problema cdCds campo troppo lungo**
->
->[aa37bf46bc0cda7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aa37bf46bc0cda7) valerio.diego *October 22, 2021*
-
->**aggiornato campi in tab anagraficaDottorati**
-> * Todo: cdCds campo troppo lungo
->
->[3d6983ed0cc1215](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3d6983ed0cc1215) valerio.diego *October 21, 2021*
-
->**inserito cds e uo in anagraficaDottorati**
-> * Todo: cdCds campo troppo lungo
->
->[36f9b37c3307532](https://github.com/consiglionazionaledellericerche/sigla-main/commit/36f9b37c3307532) valerio.diego *October 21, 2021*
-
->**Fix dtRiattivazione**
->
->[9d0568abb2bd9c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d0568abb2bd9c1) valerio.diego *October 20, 2021*
-
->**aggiornato TransactionalScadenzarioDottoratiComponentSession in TransactionalAnagraficaDottoratiComponentSession**
->
->[9ae7818e9217369](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ae7818e9217369) valerio.diego *October 20, 2021*
-
->**Aggiunto Stato nella tabella Rate e tolto errore quando cercava AnagraficaDottorati**
->
->[39344a202cb5d0d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/39344a202cb5d0d) valerio.diego *October 19, 2021*
-
->**Cancellato tutto Tipocorso_dottorati**
-> * Fix n_rate-dottorato in n_rate_dottorato
->
->[5072c10ed1acefc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5072c10ed1acefc) valerio.diego *October 19, 2021*
-
->**FIX BulkList anagraficaDottoratiRate**
->
->[623645f72fdd37f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/623645f72fdd37f) marco.spasiano *October 14, 2021*
-
->**FIX init tabs**
->
->[f209d9257e7cf29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f209d9257e7cf29) marco.spasiano *October 14, 2021*
-
->**aggiornato tab anagraficadottorati_rate e nominativi**
->
->[566be732bb4a5c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/566be732bb4a5c1) valerio.diego *October 14, 2021*
-
->**sistemato problema tab**
-> * tolto find_ScadenzarioDottorati
->
->[111e5b0bf183d6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/111e5b0bf183d6f) valerio.diego *October 13, 2021*
-
->**Aggiornato nomi anagraficaDottorati**
-> * Problemi con tab
->
->[06426efeca9b43f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06426efeca9b43f) valerio.diego *October 13, 2021*
-
->**Tolto scadenzarioDottorati e messo tutto in anagraficaDottorati**
->
->[57b9676eb8611e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57b9676eb8611e7) valerio.diego *October 12, 2021*
-
->**Primo rilascio completo giornaliera cassa in Java con incasso sospeso pagoPA**
->
->[51dd1e103091288](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51dd1e103091288) gianfranco.gasparro *October 09, 2021*
-
 >**Compenso da minicarriera: in fase di associazione incarico viene valorizzato per ogni anno anche l'importo già utilizzato (prima il valore restituito era sempre 0).**
 >
 >[f20aedad8771c10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f20aedad8771c10) raffaelepagano *October 08, 2021*
-
->**Update README.md**
->
->[ba0787966c8ef28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba0787966c8ef28) Marco Spasiano *October 07, 2021*
 
 >**Aggiunto il salvataggio della scrittura di economica per tutti i documenti amministrativi se l'economica parallela è attiva in configurazione**
 >
@@ -169,79 +73,250 @@
 >
 >[5c0239442acc11c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c0239442acc11c) marco.spasiano *October 05, 2021*
 
->**aggiunto table anagrafica_dottorati_rate**
->
->[dcdee9d0e203330](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dcdee9d0e203330) valerio.diego *October 05, 2021*
-
->**FIX movimento conto evidenza primary key**
->
->[533abb8732a17dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/533abb8732a17dd) marco.spasiano *October 05, 2021*
-
 >**FIX Cessazione Compenso: corretto intervallo di date entro il quale effettuare controllo esistenza rapporto dipendente.**
 >
 >[d9b4c43e6a9ae13](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9b4c43e6a9ae13) raffaelepagano *October 05, 2021*
-
->**aggiunto fieldset cofinanziamento**
->
->[e3673a9a2b48b11](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3673a9a2b48b11) valerio.diego *October 05, 2021*
-
->**Aggiornamento per giornaliera cassa con incasso sospeso pagoPA**
->
->[1debd55d45acd62](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1debd55d45acd62) gianfranco.gasparro *October 05, 2021*
-
->**aggiunto fieldset cofinanziamento**
->
->[49fe8b6ab8978ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/49fe8b6ab8978ba) valerio.diego *October 05, 2021*
 
 >**Closed issue #89**
 >
 >[bc83dc64f375c6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc83dc64f375c6a) marco.spasiano *October 05, 2021*
 
->**Closed issue #89**
->
->[aabb7df92d8353e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aabb7df92d8353e) marco.spasiano *October 05, 2021*
-
->**Aggiornato dbchangelog con cancellazione delle tabelle scadenzario_dottorati, scadenzario_dottorati_rata, tipocorso_dottorati**
-> * TODO: fare la compilazione automatica per pgBanca, inserire cdCds cdUnitaOrganizzativa ed Esercizio in automatico
->
->[2fa82d3d98d5c02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fa82d3d98d5c02) valerio.diego *October 05, 2021*
-
->**Aggiunta SELECT cofinanziamento uato**
->
->[43f04c799050c0e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/43f04c799050c0e) marco.spasiano *October 04, 2021*
-
 >**Aggiunta la possibilità di caricare la giornaliera di SIOPE+ da mappa**
 >
 >[4c9a7133c8b97ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c9a7133c8b97ab) marco.spasiano *October 04, 2021*
 
->**Aggiunto cofinanziamentoCnr e cofinanziamentoEffettuato**
-> * TODO: fare la compilazione automatica per pgBanca, inserire cdCds cdUnitaOrganizzativa ed Esercizio in automatico
->
->[68dcad33dd1f93e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/68dcad33dd1f93e) valerio.diego *October 04, 2021*
 
->**sistemati campi nel form**
-> * TODO: fare la compilazione automatica per pgBanca, inserire cdCds cdUnitaOrganizzativa ed Esercizio in automatico
->
->[64a58b146ae45c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64a58b146ae45c7) valerio.diego *October 01, 2021*
+## Release 6.3.58  -- _October 04, 2021_ 
+**Changes**
 
->**aggiunti campi nella form**
-> * TODO: fare la compilazione automatica per pgBanca, inserire cdCds cdUnitaOrganizzativa ed Esercizio in automatico
+>**Nel csao di una variazione firmata non è più possibile modificarla o annullarla**
 >
->[cf1b43364a4f606](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf1b43364a4f606) valerio.diego *October 01, 2021*
+>[96cc28b63742828](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cc28b63742828) marco.spasiano *October 04, 2021*
 
->**modificato tabella anagrafica_dottorati in db con aggiunta dei campi visti con Patrizia**
+>**FIX NPE al caricamento del file dalla vecchia interfaccia**
 >
->[d2317685049d105](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2317685049d105) valerio.diego *October 01, 2021*
+>[1849f2773055e9d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1849f2773055e9d) marco.spasiano *October 01, 2021*
 
->**FIX modalita di pagamento**
+
+## Release 6.3.57  -- _October 01, 2021_ 
+**Changes**
+
+>**Aggiunto il caricamento da file excel del piano di riparto delle spese accentrate**
 >
->[e7ec19987bdeecd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7ec19987bdeecd) marco.spasiano *September 30, 2021*
+>[8aecf7c3362fc80](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8aecf7c3362fc80) marco.spasiano *October 01, 2021*
 
->**aggiunto cdTipoRapporto in form TODO: assegnazione delle sole modalitaPagamento disponibili e visione Banche**
+>**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
 >
->[7cb899686322fc9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cb899686322fc9) valerio.diego *September 29, 2021*
+>[91d17124326265d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91d17124326265d) raffaelepagano *October 01, 2021*
 
->**Sistemato problema cds e uo TODO: assegnazione delle sole modalitaPagamento disponibili e visione Banche**
+>**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
+>
+>[f7ffb262944ff63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f7ffb262944ff63) raffaelepagano *September 28, 2021*
+
+
+## Release 6.3.55  -- _September 22, 2021_ 
+**Changes**
+
+>**FIX liquibase for H2**
+>
+>[810b6027d24d484](https://github.com/consiglionazionaledellericerche/sigla-main/commit/810b6027d24d484) marco.spasiano *September 22, 2021*
+
+>**FIX trovato client**
+>
+>[b849563068f8082](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b849563068f8082) marco.spasiano *September 22, 2021*
+
+>**FIX test**
+>
+>[1b9a307660b0670](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b9a307660b0670) marco.spasiano *September 22, 2021*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[e2af958ba436806](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e2af958ba436806) marco.spasiano *September 21, 2021*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[4ef7325ed1e50f8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ef7325ed1e50f8) marco.spasiano *September 21, 2021*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[ce80955581017c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce80955581017c4) marco.spasiano *September 21, 2021*
+
+>**Incarichi: eliminata pubblicazione di allegati con stato annullato.**
+>
+>[61875ab61e98ee2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/61875ab61e98ee2) raffaelepagano *September 21, 2021*
+
+>**Closed issue #87**
+>
+>[44e36589190faac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44e36589190faac) marco.spasiano *September 21, 2021*
+
+>**Add textTruncate on ColumnFieldProperty for Bulk Contratto**
+>
+>[92b2d2236f6d25a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/92b2d2236f6d25a) marco.spasiano *September 21, 2021*
+
+
+### Jira CVE-2012 
+
+>**CVE-2012-0881**
+> * Vulnerable versions: &lt; 2.12.0
+> * Patched version: 2.12.0
+> * Apache Xerces2 Java Parser before 2.12.0 allows remote attackers to cause a denial of service (CPU consumption) via a crafted message to an XML service, which triggers hash table collisions.
+>
+>[0bef658cf345ac6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bef658cf345ac6) marco.spasiano *September 20, 2021*
+
+
+### Jira CVE-2020 
+
+>**CVE-2020-25633**
+> * Vulnerable versions: &lt;= 4.5.6.Final
+> * Patched version: 4.5.7.Final
+> * A flaw was found in RESTEasy client in all versions of RESTEasy up to 4.5.6.Final. It may allow client users to obtain the server&#39;s potentially sensitive information when the server got WebApplicationException from the RESTEasy client call. The highest threat from this vulnerability is to data confidentiality.
+>
+>[ba16f17ac109a18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba16f17ac109a18) marco.spasiano *September 20, 2021*
+
+>**CVE-2020-13956**
+> * Vulnerable versions: &lt; 4.5.13
+> * Patched version: 4.5.13
+> * Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can misinterpret malformed authority component in request URIs passed to the library as java.net.URI object and pick the wrong target host for request execution.
+>
+>[d985eb7ff33ba3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d985eb7ff33ba3a) marco.spasiano *September 20, 2021*
+
+
+## Release 6.3.51  -- _September 20, 2021_ 
+**Changes**
+
+>**Revert to tags 6.3.50**
+>
+>[4db902ce91e17c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4db902ce91e17c6) marco.spasiano *September 20, 2021*
+
+
+## Release 6.3.50  -- _September 14, 2021_ 
+**Changes**
+
+>**Fix tolta obbligatorietà Id transito Beni**
+>
+>[8de94d01e0b15a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8de94d01e0b15a0) gianfranco.gasparro *September 14, 2021*
+
+>**FIX NPE**
+>
+>[8125af0ceabe2f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8125af0ceabe2f2) marco.spasiano *September 14, 2021*
+
+>**FIX V_INVENTARIO_BENI_APG add ID_TRANSITO_BENI_ORDINI**
+>
+>[65c54156c210c7b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65c54156c210c7b) marco.spasiano *September 14, 2021*
+
+>**FIX documento_attivo.jsp**
+>
+>[69cb8ce9288fd33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69cb8ce9288fd33) marco.spasiano *September 13, 2021*
+
+>**FIX tab fattura elettronica ordine**
+>
+>[a7d6f89b98be047](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a7d6f89b98be047) marco.spasiano *September 13, 2021*
+
+>**Upgrade version of storage cloud to 2.0.12**
+>
+>[3a1dc395ee329e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a1dc395ee329e7) marco.spasiano *September 13, 2021*
+
+>**FIX update fattura exception handler**
+>
+>[aceb043e3f80626](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aceb043e3f80626) marco.spasiano *September 10, 2021*
+
+>**Variazioni: esteso controllo su sfondamento assestato entrate indipendemente dal tipo e stato progetto.**
+>
+>[2ac5a8f4b17bbfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2ac5a8f4b17bbfc) raffaelepagano *September 10, 2021*
+
+>**Economica: gestione assegnazione conto debito/credito su terzo**
+>
+>[1a4d1af7abe41c0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a4d1af7abe41c0) raffaelepagano *September 10, 2021*
+
+>**Economica: proposta parametrica conto debiti/crediti verso debitore/fornitore**
+>
+>[cca21cf05d2a5a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cca21cf05d2a5a9) raffaelepagano *September 09, 2021*
+
+>**Economica: proposta parametrica conto debiti/crediti verso debitore/fornitore**
+>
+>[f3521609421ecd9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3521609421ecd9) raffaelepagano *September 09, 2021*
+
+>**Economica: proposta parametrica conto debiti/crediti verso debitore/fornitore**
+>
+>[66b05933b64a582](https://github.com/consiglionazionaledellericerche/sigla-main/commit/66b05933b64a582) raffaelepagano *September 08, 2021*
+
+>**Economica: inserita gestione dettaglio prima nota modificabile.**
+>
+>[8370afb578e5e94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8370afb578e5e94) raffaelepagano *September 08, 2021*
+
+>**Economica: gestione data contabilizzazione prima nota**
+>
+>[c258dad4c226b9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c258dad4c226b9c) raffaelepagano *September 08, 2021*
+
+>**Fix Varie**
+>
+>[bad4b0f380b1554](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bad4b0f380b1554) raffaelepagano *September 07, 2021*
+
+>**Aggiunta visualizzazione dati ordine su Gestione Bene in Inventario**
+>
+>[27978e0f0038957](https://github.com/consiglionazionaledellericerche/sigla-main/commit/27978e0f0038957) gianfranco.gasparro *September 06, 2021*
+
+>**Gestione Utilizzatori in Inventariazione da ordini**
+>
+>[4454c42370356d0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4454c42370356d0) gianfranco.gasparro *September 05, 2021*
+
+>**Gestione Inventariazione da ordini**
+>
+>[5a3e91acac2d822](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a3e91acac2d822) gianfranco.gasparro *September 03, 2021*
+
+>**FIX reset password**
+>
+>[f0842fbc62de04e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f0842fbc62de04e) marco.spasiano *August 31, 2021*
+
+>**FIX reset password**
+>
+>[a697c9c6f945aa7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a697c9c6f945aa7) marco.spasiano *August 31, 2021*
+
+>**Fix valorizzazione data e quantità di carico sui lotti**
+>
+>[2aa562132e562b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2aa562132e562b9) gianfranco.gasparro *August 20, 2021*
+
+>**Update pom.xml**
+>
+>[56f614422e37cba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56f614422e37cba) PAGANO RAFFAELE *August 05, 2021*
+
+>**Fix scrittura partita doppia**
+>
+>[a86428ff99f66bd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a86428ff99f66bd) marco.spasiano *August 04, 2021*
+
+>**Fix scrittura partita doppia**
+>
+>[cc3dec68069f619](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cc3dec68069f619) marco.spasiano *August 04, 2021*
+
+>**FIX version of pom.xml**
+>
+>[be2965801f8af34](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be2965801f8af34) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'economica parallela è attiva in configurazione**
+>
+>[30eb44b8dcb9091](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30eb44b8dcb9091) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'economica parallela è attiva in configurazione**
+>
+>[2468311b6a11c1e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2468311b6a11c1e) marco.spasiano *August 04, 2021*
+
+>**FIX riferimenti bancari**
+>
+>[308645f1e88b1b0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/308645f1e88b1b0) marco.spasiano *August 04, 2021*
+
+>**Aggiunta tab economica sulle fatture passive**
+>
+>[07f068e53238925](https://github.com/consiglionazionaledellericerche/sigla-main/commit/07f068e53238925) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'ecnomica parallela è attiva in configurazione**
+>
+>[126d88b62e40d87](https://github.com/consiglionazionaledellericerche/sigla-main/commit/126d88b62e40d87) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'ecnomica parallela è attiva in configurazione**
+>
+>[b09e251119b8dc0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b09e251119b8dc0) marco.spasiano *August 04, 2021*
+
+>**Aggiunto per i report con DataSource offline il contesto transazionale.Aggiunta stampa inventario.**
 >
 >[853e29216068c7f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/853e29216068c7f) cirosalvio *August 04, 2021*
 
