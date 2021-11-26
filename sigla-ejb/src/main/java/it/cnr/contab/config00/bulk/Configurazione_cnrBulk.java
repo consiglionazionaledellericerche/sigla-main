@@ -164,6 +164,9 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_IVA_DEBITO = "IVA_DEBITO";
     public final static String SK_BANCA = "BANCA";
 
+    public final static String PK_VARIAZIONE_AUTOMATICA = "VARIAZIONE_AUTOMATICA";
+    public final static String SK_SPESA = "SPESA";
+
     public Configurazione_cnrBulk() {
         super();
     }

@@ -60,6 +60,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     final public static String MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA = "RAG";
     final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
     final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
+    final public static String MOTIVAZIONE_VARIAZIONE_AUTOMATICA = "SAU";
     final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
     final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
     final public static String OVERHEAD = "Overhead/Spese Generali";
@@ -257,7 +258,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     /**
      * @return
      */
-    public BulkList getAssociazioneCDR() {
+    public BulkList<Ass_pdg_variazione_cdrBulk> getAssociazioneCDR() {
         return associazioneCDR;
     }
 

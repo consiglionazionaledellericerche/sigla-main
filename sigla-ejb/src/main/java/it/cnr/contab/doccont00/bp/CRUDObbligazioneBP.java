@@ -75,6 +75,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     private boolean incarichi_repertorio_attiva = false;
     private boolean flNuovoPdg = false;
     private boolean enableVoceNext = false;
+    private boolean variazioneAutomaticaEnabled = false;
 
     private byte[] bringBackClone = null;
 
@@ -380,7 +381,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
      * Metodo utilizzato per la conferma dei dati selezionati o immessi, relativi
      * alla scadenza.
      *
-     * @param context Il contesto dell'azione
+     * @param obbligazione obbligazione
      */
     protected void validaScadenza(ObbligazioneBulk obbligazione, Obbligazione_scadenzarioBulk ob_scadenzario) throws it.cnr.jada.action.BusinessProcessException {
         try {
@@ -1000,11 +1001,6 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         return;
     }
 
-    /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
-     *
-     * @param context Il contesto dell'azione
-     */
     public void verificaTestataObbligazione(ActionContext context) throws BusinessProcessException, it.cnr.jada.bulk.ValidationException {
         getModel().validate();
         try {
@@ -1104,6 +1100,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
                 Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext()) + 1);
                 setEnableVoceNext(parCnrNewAnno != null);
             }
+            setVariazioneAutomaticaEnabled(Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(actioncontext.getUserContext()));
         } catch (Throwable throwable) {
             throw new BusinessProcessException(throwable);
         }
@@ -1191,6 +1188,14 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
 
     private void setEnableVoceNext(boolean enableVoceNext) {
         this.enableVoceNext = enableVoceNext;
+    }
+
+    public boolean isVariazioneAutomaticaEnabled() {
+        return variazioneAutomaticaEnabled;
+    }
+
+    private void setVariazioneAutomaticaEnabled(boolean variazioneAutomaticaEnabled) {
+        this.variazioneAutomaticaEnabled = variazioneAutomaticaEnabled;
     }
 
     public boolean isElementoVoceNewVisible() {
