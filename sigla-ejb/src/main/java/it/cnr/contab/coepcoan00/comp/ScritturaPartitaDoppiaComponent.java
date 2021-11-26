@@ -42,6 +42,7 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -1295,7 +1296,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 											BigDecimal imImponibile = righeDocammVoce.stream().map(IDocumentoAmministrativoRigaBulk::getIm_imponibile)
 													.reduce(BigDecimal.ZERO, BigDecimal::add);
-											BigDecimal imIva = righeDocammVoce.stream().map(IDocumentoAmministrativoRigaBulk::getIm_iva)
+											BigDecimal imIva = righeDocammVoce.stream()
+													.map(iDocumentoAmministrativoRigaBulk -> Optional.ofNullable(iDocumentoAmministrativoRigaBulk.getIm_iva()).orElse(BigDecimal.ZERO))
 													.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 											//Registrazione IVA
@@ -2167,6 +2169,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				movimentoCoge.setCd_cds(fatatt.getCd_cds_origine());
 				movimentoCoge.setEsercizio(fatatt.getEsercizio());
 				movimentoCoge.setCd_unita_organizzativa(fatatt.getCd_uo_origine());
+				movimentoCoge.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
+			} else if (doccoge instanceof Documento_genericoBulk) {
+				Documento_genericoBulk documento_genericoBulk = (Documento_genericoBulk) doccoge;
+
+				movimentoCoge.setCd_cds(documento_genericoBulk.getCd_cds_origine());
+				movimentoCoge.setEsercizio(documento_genericoBulk.getEsercizio());
+				movimentoCoge.setCd_unita_organizzativa(documento_genericoBulk.getCd_uo_origine());
+				movimentoCoge.setTi_istituz_commerc(documento_genericoBulk.getTi_istituz_commerc());
 			}
 
 			if (aPartita!=null) {
@@ -2197,15 +2207,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private boolean hasAutofattura(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
 		try {
 			if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo()) {
-				Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
-				if (!fatpas.isCommerciale())
-					return false;
-				if (!fatpas.getFl_autofattura().booleanValue()) {
-					AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
-					AutofatturaBulk autof = autofatturaHome.findFor(fatpas);
-					return Optional.ofNullable(autof).isPresent();
+				final Optional<Fattura_passivaBulk> optionalFattura_passivaBulk = Optional.ofNullable(docamm)
+						.filter(Fattura_passivaBulk.class::isInstance)
+						.map(Fattura_passivaBulk.class::cast);
+				if (optionalFattura_passivaBulk.isPresent()) {
+					if (!optionalFattura_passivaBulk.get().isCommerciale())
+						return false;
+					if (!optionalFattura_passivaBulk.get().getFl_autofattura().booleanValue()) {
+						AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
+						AutofatturaBulk autof = autofatturaHome.findFor(optionalFattura_passivaBulk.get());
+						return Optional.ofNullable(autof).isPresent();
+					}
+					return optionalFattura_passivaBulk.get().getFl_autofattura();
 				}
-				return fatpas.getFl_autofattura();
 			}
 			return false;
 		} catch (Exception e) {
@@ -2214,10 +2228,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private boolean registraIvaCoge(IDocumentoAmministrativoBulk docamm) {
-		if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo()) {
+		if (docamm.getTipoDocumentoEnum().isFatturaPassiva()) {
 			Fattura_passivaBulk fatpas = (Fattura_passivaBulk) docamm;
 			return fatpas.registraIvaCoge();
-		} else if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoAttivo()) {
+		} else if (docamm.getTipoDocumentoEnum().isFatturaAttiva()) {
 			Fattura_attivaBulk fatatt = (Fattura_attivaBulk) docamm;
 			return fatatt.registraIvaCoge();
 		}
