@@ -1665,6 +1665,21 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			}
 		}
 	}
+	private void deleteDirectoryAllegatiDaFlusso(UserContext userContext, ContrattoBulk contratto,boolean attFromFlussoStoredInSigla){
+		if ( attFromFlussoStoredInSigla) {
+			try {
+				ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
+						ContrattoService.class);
+
+				Optional.ofNullable(contrattoService.findAllegatiFlussoContratto(contratto))
+						.ifPresent(e -> e.forEach(a -> {
+					contrattoService.delete(a.getNodeId());
+				}));
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto,boolean attFromFlussoStoredInSigla) throws ComponentException {
 		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
 				ContrattoService.class);
@@ -2212,15 +2227,18 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				contratto.setFirmatario(getPersonaFisicaFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaFirmatarioExt()));
 				contratto.setFigura_giuridica_esterna(getTerzoFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaAggiudicatarioExt()));
 
+
 				gestioneCigSuContrattoDaFlows(userContext, contratto);
 				contratto = (ContrattoBulk)creaConBulk(userContext, contratto);
-				archiviaAllegati(userContext,contratto,Utility.createConfigurazioneCnrComponentSession().isAttachRestContrStoredFromSigla(userContext));
+				boolean isAttachRestContrStoredFromSigla=Utility.createConfigurazioneCnrComponentSession().isAttachRestContrStoredFromSigla(userContext);
+				archiviaAllegati(userContext,contratto,isAttachRestContrStoredFromSigla);
 				if ( statoDefinitivo) {
 					try {
 						return salvaDefinitivo(userContext, contratto);
 					}catch (Exception e){
+						if ( isAttachRestContrStoredFromSigla)
 						//rimuovi Contratto con gli allegati
-						eliminaConBulk(userContext,contratto);
+						deleteDirectoryAllegatiDaFlusso(userContext,contratto,isAttachRestContrStoredFromSigla);
 					}
 				}
 

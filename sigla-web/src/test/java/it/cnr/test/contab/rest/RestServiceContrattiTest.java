@@ -1,13 +1,9 @@
 package it.cnr.test.contab.rest;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cnr.contab.ordmag.magazzino.dto.StampaInventarioDTO;
 import it.cnr.contab.web.rest.config.SIGLASecurityContext;
 import it.cnr.contab.web.rest.model.AttachmentContratto;
 import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
-import it.cnr.contab.web.rest.model.ContrattoMaggioliDTOBulk;
 import it.cnr.contab.web.rest.model.EnumTypeAttachmentContratti;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.si.spring.storage.MimeTypes;
@@ -18,37 +14,29 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.xerces.impl.xpath.regex.Match;
-import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
-import javax.swing.text.DateFormatter;
-import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Locale;
 
 
+@PropertySource("classpath:restContrattiService-test.properties")
 public class RestServiceContrattiTest {
+
+    @Value("${test.value}")
+    public String value;
 
     @Test
     public void testContrattiMaggioli()throws Exception {
@@ -56,18 +44,23 @@ public class RestServiceContrattiTest {
         ObjectMapper mapper = new ObjectMapper();
         ContrattoDtoBulk c = new ContrattoDtoBulk();
         c.setEsercizio(2021);
-        c.setCodiceFlussoAcquisti( "test");
+        c.setCodiceFlussoAcquisti( "testCompleto2");
         c.setCd_unita_organizzativa("000.000");
         c.setCodfisPivaRupExt("ZNCMRT79E49H501E");
         c.setCodfisPivaAggiudicatarioExt("05923561004");
         c.setCodfisPivaFirmatarioExt("ZNCMRT79E49H501E");
-        //c.setCd_tipo_atto("DEL");
+
         c.setDs_atto("DECISIONE A CONTRARRE");
         c.setOggetto("Oggetto Test Contratto");
-        //c.setNatura_contabile("P");
+
         c.setIm_contratto_passivo(new BigDecimal("1200"));
         c.setIm_contratto_passivo_netto(new BigDecimal("1000"));
-        //c.setFl_art82(false);
+        c.setCd_tipo_norma_perla("30D");
+        //c.setCd_tipo_atto("DEL");
+        //c.setCd_tipo_contratto
+        //c.setCd_proc_amm();
+        //c.setCd_organo();
+
 
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
@@ -78,6 +71,7 @@ public class RestServiceContrattiTest {
 
         c.setDt_fine_validita(new java.sql.Timestamp(dateFormat.parse("20241122").getTime()));
         c.setDt_registrazione(new java.sql.Timestamp(dateFormat.parse("20211122").getTime()));
+
         //c.setCdCigExt();
         //c.setCdCupExt();
         //Tipologia
@@ -122,13 +116,15 @@ public class RestServiceContrattiTest {
 
     @Test
     public void jsonTest()throws Exception {
+        System.out.println(value);
+        /*
         final String regex = "[0-9A-Z]{3}\\.[0-9A-Z]{3}";
         final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         String unita="00.aA1";
         Boolean b = pattern.matcher(unita).matches();
         Assert.assertTrue(b);
 
-/*
+
         String text = "2009-10-20";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date parsedDate = dateFormat.parse("20211122");

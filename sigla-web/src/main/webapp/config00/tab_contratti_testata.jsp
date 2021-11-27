@@ -50,11 +50,10 @@
 	         <td><% bp.getController().writeFormLabel(out,"firmatario");%></td>
 	         <td><% bp.getController().writeFormInput(out,"default","firmatario", bp.isPublishHidden() || bp.isFromFlussoAcquisti(),null,null);%></td>
 	      </tr>            
-		  <tr>         
-	         <td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
-	         <td><% bp.getController().writeFormInput(out,"default","cd_terzo_resp", bp.isPublishHidden() || bp.isFromFlussoAcquisti(),null,null);%>
-	             <% bp.getController().writeFormInput(out,"ds_responsabile");%>
-	             <% bp.getController().writeFormInput(out,"default","responsabile", bp.isPublishHidden() || bp.isFromFlussoAcquisti(),null,null);%></td>
+		  <tr>
+		     <td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
+             <td><% bp.getController().writeFormInput(out,"default","responsabile", bp.isPublishHidden() || bp.isFromFlussoAcquisti(),null,null);%></td>
+
 	      </tr>
 		  <tr>         
 	         <td><% bp.getController().writeFormLabel(out,"direttore");%></td>

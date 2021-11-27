@@ -127,6 +127,7 @@
                 name="responsabile"
                 property="responsabile"
                 inputType="SEARCHTOOL"
+                formName="searchtool"
                 enabledOnSearch="true"
                 label="Responsabile procedimento/RUP" />
         <fieldProperty

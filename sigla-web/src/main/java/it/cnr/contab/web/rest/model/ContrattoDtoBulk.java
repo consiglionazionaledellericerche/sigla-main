@@ -44,6 +44,7 @@ public class ContrattoDtoBulk extends ContrattoBase  implements Serializable {
         this.cdCupExt = cdCupExt;
     }
 
+
     @Override
     public Integer getEsercizio() {
         return esercizio;

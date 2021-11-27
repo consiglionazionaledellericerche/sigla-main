@@ -7,6 +7,7 @@ import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -242,6 +243,10 @@ public abstract class AbstractContrattoResource {
             contrattoBulkSigla.setTipo_contratto(new Tipo_contrattoBulk());
             contrattoBulkSigla.setCd_tipo_contratto(contrattoBulk.getCd_tipo_contratto());
         }
+        if (Optional.ofNullable(contrattoBulk.getCd_tipo_norma_perla()).isPresent()){
+            contrattoBulkSigla.setTipoNormaPerla(new Tipo_norma_perlaBulk());
+            contrattoBulkSigla.setCd_tipo_norma_perla(contrattoBulk.getCd_tipo_norma_perla());
+        }
         contrattoBulkSigla.setCdCigFatturaAttiva(contrattoBulk.getCdCigFatturaAttiva());
         contrattoBulkSigla.setCodfisPivaAggiudicatarioExt(contrattoBulk.getCodfisPivaAggiudicatarioExt());
         contrattoBulkSigla.setCodfisPivaFirmatarioExt(contrattoBulk.getCodfisPivaFirmatarioExt());
@@ -268,8 +273,11 @@ public abstract class AbstractContrattoResource {
         Optional.ofNullable(contrattoBulk.getFl_art82()).ifPresent(fl->{
             contrattoBulkSigla.setFl_art82(fl);
         });
+        contrattoBulkSigla.setFl_mepa(Boolean.FALSE);
+        Optional.ofNullable(contrattoBulk.getFl_mepa()).ifPresent(fl->{
+            contrattoBulkSigla.setFl_mepa(fl);
+        });
 
-        contrattoBulkSigla.setFl_mepa(contrattoBulk.getFl_mepa());
         contrattoBulkSigla.setFl_pubblica_contratto(contrattoBulk.getFl_pubblica_contratto());
         contrattoBulkSigla.setIm_contratto_passivo(contrattoBulk.getIm_contratto_passivo());
         contrattoBulkSigla.setIm_contratto_passivo_netto(contrattoBulk.getIm_contratto_passivo_netto());
