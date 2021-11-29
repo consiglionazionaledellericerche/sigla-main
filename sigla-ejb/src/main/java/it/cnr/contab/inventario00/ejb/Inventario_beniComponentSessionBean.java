@@ -19,7 +19,13 @@ package it.cnr.contab.inventario00.ejb;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.comp.Inventario_beniComponent;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
+import it.cnr.jada.UserContext;
+
+import java.util.HashMap;
+
 @Stateless(name="CNRINVENTARIO00_EJB_Inventario_beniComponentSession")
 public class Inventario_beniComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements Inventario_beniComponentSession{
 @PostConstruct
@@ -211,4 +217,22 @@ public Boolean isContab(it.cnr.jada.UserContext param0,it.cnr.contab.inventario0
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+	public HashMap<Obbligazione_scadenzarioBulk, Boolean> creaUtilizzatori(UserContext param0, Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk, Buono_carico_scarico_dettBulk buono) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			HashMap<Obbligazione_scadenzarioBulk, Boolean> result = ((Inventario_beniComponent)componentObj).creaUtilizzatori(param0, obbligazione_scadenzarioBulk,  buono);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

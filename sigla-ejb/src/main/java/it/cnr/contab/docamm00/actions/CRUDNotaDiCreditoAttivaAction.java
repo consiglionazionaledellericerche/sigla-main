@@ -417,7 +417,7 @@ public Forward doAddToCRUDMain_Dettaglio(ActionContext context) {
 	    CRUDNotaDiCreditoAttivaBP bp = (CRUDNotaDiCreditoAttivaBP)getBusinessProcess(context);
 	    bp.getDettaglio().getSelection().clearSelection();
 	    fillModel(context);
-	    it.cnr.jada.util.RemoteIterator ri = ((FatturaAttivaSingolaComponentSession)bp.createComponentSession()).cercaFatturaPerNdC(context.getUserContext(), (Nota_di_credito_attivaBulk)bp.getModel());
+	    it.cnr.jada.util.RemoteIterator ri = ((FatturaAttivaSingolaComponentSession)bp.createComponentSession()).cercaFatturaPerNdC(context.getUserContext(), null, (Nota_di_credito_attivaBulk)bp.getModel());
 	    return select(context, ri, it.cnr.jada.bulk.BulkInfo.getBulkInfo(Fattura_attiva_IBulk.class), "default", "doSelezionaRighe");
     } catch(Throwable e) {
 		return handleException(context,e);

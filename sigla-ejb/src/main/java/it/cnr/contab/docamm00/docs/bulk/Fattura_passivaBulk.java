@@ -17,28 +17,13 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Vector;
-import java.util.stream.Collectors;
-
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
@@ -48,32 +33,24 @@ import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoOrdBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkCollections;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
-import it.siopeplus.StMotivoEsclusioneCigSiope;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 public abstract class Fattura_passivaBulk
         extends Fattura_passivaBase
@@ -107,8 +84,6 @@ public abstract class Fattura_passivaBulk
     public final static String NON_ASSOCIATO_A_MANDATO = "N";
     public final static String PARZIALMENTE_ASSOCIATO_A_MANDATO = "P";
     public final static String ASSOCIATO_A_MANDATO = "T";
-    public final static String COMMERCIALE = "C";
-    public final static String ISTITUZIONALE = "I";
     public final static String PROMISCUA = "P";
     public final static String TIPO_FATTURA_PASSIVA = "F";
     public final static String TIPO_NOTA_DI_CREDITO = "C";
@@ -137,8 +112,9 @@ public abstract class Fattura_passivaBulk
 
     static {
         TIPO = new it.cnr.jada.util.OrderedHashtable();
-        TIPO.put(COMMERCIALE, "Commerciale");
-        TIPO.put(ISTITUZIONALE, "Istituzionale");
+        for (TipoIVA tipoIVA : TipoIVA.values()) {
+            TIPO.put(tipoIVA.value(), tipoIVA.label());
+        }
         TIPO.put(PROMISCUA, "Promiscua");
 
         STATO = new it.cnr.jada.util.OrderedHashtable();
@@ -266,6 +242,8 @@ public abstract class Fattura_passivaBulk
     private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
     private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
     private java.sql.Timestamp dt_termine_creazione_docamm = null;
+
+    private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
 
     public Fattura_passivaBulk() {
         super();
@@ -401,7 +379,7 @@ public abstract class Fattura_passivaBulk
         }
         nuovoRigo.setTi_istituz_commerc(
                 PROMISCUA.equalsIgnoreCase(getTi_istituz_commerc()) ?
-                        nuovoRigo.COMMERCIALE : getTi_istituz_commerc());
+                        TipoIVA.COMMERCIALE.value() : getTi_istituz_commerc());
 
         long max = 0;
         for (Iterator i = fattura_passiva_dettColl.iterator(); i.hasNext(); ) {
@@ -1505,14 +1483,14 @@ public abstract class Fattura_passivaBulk
             setFl_san_marino_senza_iva(Boolean.FALSE);
             setFl_bolla_doganale(Boolean.FALSE);
             setFl_spedizioniere(Boolean.FALSE);
-            if (getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+            if (getTi_istituz_commerc() != null && TipoIVA.COMMERCIALE.value().equalsIgnoreCase(getTi_istituz_commerc()) &&
                     getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
                     getFl_merce_extra_ue() != null && getFl_merce_extra_ue()) {
                 setFl_merce_extra_ue(Boolean.TRUE);
                 setFl_merce_intra_ue(Boolean.FALSE);
                 setFl_autofattura(Boolean.FALSE);
                 setAutoFatturaNeeded(true);
-            } else if (getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+            } else if (getTi_istituz_commerc() != null && TipoIVA.COMMERCIALE.value().equalsIgnoreCase(getTi_istituz_commerc()) &&
                     getTi_bene_servizio() != null && FATTURA_DI_SERVIZI.equalsIgnoreCase(getTi_bene_servizio())) {
                 setFl_merce_extra_ue(Boolean.FALSE);
                 setFl_merce_intra_ue(Boolean.FALSE);
@@ -1521,7 +1499,7 @@ public abstract class Fattura_passivaBulk
             } else {
                 setFl_merce_extra_ue(Boolean.FALSE);
                 setFl_merce_intra_ue(Boolean.FALSE);
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 if (autoFatt)
                     setFl_autofattura(Boolean.TRUE);
@@ -1538,10 +1516,10 @@ public abstract class Fattura_passivaBulk
             setFl_spedizioniere(Boolean.FALSE);
             setFl_merce_extra_ue(Boolean.FALSE);
             //??? solo commerciale
-            if (getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+            if (getTi_istituz_commerc() != null && TipoIVA.COMMERCIALE.value().equalsIgnoreCase(getTi_istituz_commerc()) &&
                     getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
                     getFl_merce_intra_ue() != null && getFl_merce_intra_ue()) {
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 if (autoFatt)
                     setFl_autofattura(Boolean.TRUE);
@@ -1579,7 +1557,7 @@ public abstract class Fattura_passivaBulk
             setFl_merce_intra_ue(Boolean.FALSE);
             if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                 ((Fattura_passiva_IBulk) this).setFattura_estera(null);
-            boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+            boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
             //setAutoFatturaNeeded(autoFatt);
             if (autoFatt && (getTi_bene_servizio() != null && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()))) {
                 setFl_autofattura(Boolean.TRUE);
@@ -1659,7 +1637,7 @@ public abstract class Fattura_passivaBulk
                 setFl_merce_intra_ue(Boolean.FALSE);
                 if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                     ((Fattura_passiva_IBulk) this).setFattura_estera(null);
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 break;
             }
@@ -1707,7 +1685,7 @@ public abstract class Fattura_passivaBulk
                 setFl_merce_intra_ue(Boolean.FALSE);
                 if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                     ((Fattura_passiva_IBulk) this).setFattura_estera(null);
-                boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+                boolean autoFatt = (getTi_istituz_commerc() != null && !TipoIVA.ISTITUZIONALE.value().equalsIgnoreCase(getTi_istituz_commerc()));
                 setAutoFatturaNeeded(autoFatt);
                 break;
             }
@@ -2236,7 +2214,7 @@ public abstract class Fattura_passivaBulk
      */
 
     public boolean isCommerciale() {
-        return COMMERCIALE.equals(getTi_istituz_commerc());
+        return TipoIVA.COMMERCIALE.value().equals(getTi_istituz_commerc());
     }
 
     /**
@@ -2368,7 +2346,7 @@ public abstract class Fattura_passivaBulk
      */
 
     public boolean isIstituzionale() {
-        return ISTITUZIONALE.equals(getTi_istituz_commerc());
+        return TipoIVA.ISTITUZIONALE.value().equals(getTi_istituz_commerc());
     }
 
     /**
@@ -3516,4 +3494,50 @@ public abstract class Fattura_passivaBulk
                 .orElse(Collections.emptyList());
     }
 
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        return scrittura_partita_doppia;
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        this.scrittura_partita_doppia = scrittura_partita_doppia;
+    }
+
+    public TipoDocumentoEnum getTipoDocumentoEnum() {
+        if ("C".equals(this.getTi_fattura()))
+            return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA);
+        if ("D".equals(this.getTi_fattura()))
+            return TipoDocumentoEnum.fromValue(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA);
+        return TipoDocumentoEnum.fromValue(this.getCd_tipo_doc_amm());
+    }
+
+    public boolean registraIvaCoge() {
+        if (this.isIstituzionale()) {
+            if (Bene_servizioBulk.BENE.equalsIgnoreCase(this.getTi_bene_servizio())) {
+                if (this.isSanMarinoSenzaIVA() || this.getFl_intra_ue().booleanValue() || this.getFl_merce_intra_ue().booleanValue())
+                    return true;
+            }
+            if (Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(this.getTi_bene_servizio())) {
+                if (this.getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())
+                    return true;
+            }
+            if (this.getFl_split_payment().booleanValue())
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String getCd_tipo_doc() {
+        return this.getCd_tipo_doc_amm();
+    }
+
+    @Override
+    public Long getPg_doc() {
+        return this.getPg_doc_amm();
+    }
+
+    @Override
+    public Timestamp getDt_contabilizzazione() {
+        return this.getDt_registrazione();
+    }
 }

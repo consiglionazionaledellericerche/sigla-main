@@ -54,6 +54,7 @@ public Forward doPrint(ActionContext context) {
 		bp.print(context,bp.getModel());
 		OfflineReportPrintBP printbp = (OfflineReportPrintBP)context.createBusinessProcess("OfflineReportPrintBP");
 		printbp.setReportName(bp.getReportName());
+		printbp.setRepotWhithDsOffLine( bp.getRepotWhitDsOffLine());
 		for (Enumeration e = bp.getBulkInfo().getPrintFieldProperties(bp.getReportName());e.hasMoreElements();) {
 			PrintFieldProperty printFieldProperty = (PrintFieldProperty)e.nextElement();
 			Object value = printFieldProperty.getValueFrom(bp.getModel());

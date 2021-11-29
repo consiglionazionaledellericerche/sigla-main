@@ -32,8 +32,14 @@
   <action
 	path="/CRUDInventarioBeniAction"
 	actionClass="it.cnr.contab.inventario00.actions.CRUDInventarioBeniAction" />
-  <action 
-	path="/CRUDTrasferimentoInventarioAction" 
+	<action
+		path="/CRUDTransitoBeniAction"
+		actionClass="it.cnr.contab.inventario00.actions.CRUDTransitoBeniAction" />
+	<action
+			path="/ListaBeniInTransitoDaInventariareAction"
+			actionClass="it.cnr.contab.inventario00.actions.ListaBeniInTransitoDaInventariareAction" />
+	<action
+	path="/CRUDTrasferimentoInventarioAction"
 	actionClass="it.cnr.contab.inventario00.actions.CRUDTrasferimentoInventarioAction" />
   <action 
 	path="/CRUDAggiornamentoInventarioAction" 
@@ -82,9 +88,23 @@
 		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Inventario_beniComponentSession"/>
 		<init-param name="defaultAction" value="CRUDInventarioBeniAction"/>
 	</businessProcess>
-  
 
-  <businessProcess name="CRUDTrasferimentoExtraInventarioBP" className="it.cnr.contab.inventario00.bp.CRUDTrasferimentoInventarioBP">
+	<businessProcess
+			name="CRUDTransitoBeniOrdiniBP" className="it.cnr.contab.inventario00.bp.CRUDTransitoBeniOrdiniBP">
+		<forward name="default" path="/inventario00/transito_beni.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniBulk" />
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_TransitoBeniOrdiniComponentSession"/>
+		<init-param name="defaultAction" value="CRUDTransitoBeniAction"/>
+	</businessProcess>
+	<businessProcess
+			name="CRUDSelezionatoreBeniInTransitoBP" className="it.cnr.contab.inventario00.bp.CRUDSelezionatoreBeniInTransitoBP">
+		<forward name="default" path="/inventario00/lista_beni_da_inventariare.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniBulk" />
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_TransitoBeniOrdiniComponentSession"/>
+		<init-param name="defaultAction" value="ListaBeniInTransitoDaInventariareAction"/>
+	</businessProcess>
+
+	<businessProcess name="CRUDTrasferimentoExtraInventarioBP" className="it.cnr.contab.inventario00.bp.CRUDTrasferimentoInventarioBP">
 	<forward name="default" path="/inventario00/trasferimento_inventario.jsp"/>
 	<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Trasferimento_inventarioBulk" />
 	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>

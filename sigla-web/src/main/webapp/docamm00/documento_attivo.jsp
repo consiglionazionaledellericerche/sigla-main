@@ -18,18 +18,14 @@
 <title>Documento generico attivo</title>
 </head>
 <body class="Form">
-<% CRUDBP bp = (CRUDDocumentoGenericoAttivoBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDDocumentoGenericoAttivoBP bp = (CRUDDocumentoGenericoAttivoBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 	<table>
-		<% 
-
+		<%
 		JSPUtils.tabbed(
 					pageContext,
 					"tab",
-					new String[][] {
-					{ "tabDocumentoAttivo","Documento Generico","/docamm00/tab_documento_attivo.jsp" },
-					{ "tabDocumentoAttivoDettaglio","Dettaglio","/docamm00/tab_documento_attivo_dettaglio.jsp" },
-					{ "tabDocumentoGenericoAccertamenti","Accertamenti","/docamm00/tab_documento_generico_accertamenti.jsp" }},
+					bp.getTabs(),
 					bp.getTab("tab"),
 					"center",
 					"100%",

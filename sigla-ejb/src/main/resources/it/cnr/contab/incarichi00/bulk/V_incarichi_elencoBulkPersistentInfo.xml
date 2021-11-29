@@ -119,6 +119,12 @@
 			columnSize="7"
 			nullable="true" />
 		<columnMapping
+			columnName="DT_PROROGA"
+			propertyName="dt_proroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
 			columnName="DT_STIPULA"
 			propertyName="dt_stipula"
 			sqlTypeName="TIMESTAMP"
@@ -206,6 +212,8 @@
 		name="dt_inizio_validita" />
 	<persistentProperty
 		name="dt_fine_validita" />
+	<persistentProperty
+		name="dt_proroga" />
 	<persistentProperty
 		name="dt_stipula" />
 	<persistentProperty

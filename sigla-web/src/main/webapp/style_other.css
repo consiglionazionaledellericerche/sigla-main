@@ -458,3 +458,8 @@ input.inputFieldReadOnly {
 .sigla-mb-2{
 	margin-bottom: .5rem!important;
 }
+.text-truncate{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}

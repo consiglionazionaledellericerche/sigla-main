@@ -17,6 +17,7 @@
 
 package it.cnr.contab.util00.bulk.storage;
 
+import it.cnr.jada.UserContext;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
@@ -26,6 +27,8 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
@@ -39,6 +42,7 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	private String titolo;
 	private String descrizione;
 	private String relativePath;
+	private Date lastModificationDate;
 	private Boolean daNonEliminare = false;
 	
 	public AllegatoGenericoBulk() {
@@ -124,7 +128,15 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	
+
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
+	}
+
 	@Override
 	public void validate() throws ValidationException {
 		if (getNome() == null ) {
@@ -162,4 +174,7 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	public void setRelativePath(String relativePath) {
 		this.relativePath = relativePath;
 	}
+
+    public void complete(UserContext userContext) {
+    }
 }

@@ -25,6 +25,7 @@ package it.cnr.contab.inventario01.bp;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Vector;
 
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
@@ -66,8 +67,9 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	*/ 
 	private boolean isNumGruppiErrato = false; 
 	private boolean isQuantitaEnabled = true;
-	
-	
+	private boolean by_ordini = false;
+
+
 	public CRUDCaricoInventarioBP() {
 	super();
 	setTab("tab","tabCaricoInventarioTestata");
@@ -83,6 +85,18 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 		resetTabs();
 		utilizzatori.setReadonly(false);
 	}
+	@Override
+	public boolean isPrintButtonHidden() {
+		Buono_carico_scaricoBulk buonoCS = (Buono_carico_scaricoBulk) getModel();
+		return 	((by_ordini && isTemporaneo())|| super.isPrintButtonHidden());
+	}
+
+	public boolean isTemporaneo() {
+		Buono_carico_scaricoBulk buonoCS = (Buono_carico_scaricoBulk) getModel();
+		return 	buonoCS.isTemporaneo();
+	}
+
+
 	public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
 				Buono_carico_scaricoBulk testata = (Buono_carico_scaricoBulk)bulk;
 				testata.setTi_documento(Buono_carico_scaricoBulk.CARICO);
@@ -126,8 +140,21 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	}
 	public boolean isTabUtilizzatoriEnabled() {
 			
-		return (isInserting() && !isBy_fattura() && !isBy_documento());
+		return (isInserting() && !isBy_fattura() && !isBy_documento() && !isBy_ordini());
 	}
+	public boolean isBy_ordini() {
+		return by_ordini;
+	}
+
+	public void setBy_ordini(boolean b) {
+		by_ordini = b;
+		setFirst(true);
+		Buono_carico_scaricoBulk buonoCS = (Buono_carico_scaricoBulk) getModel();
+		buonoCS.setByOrdini(new Boolean(b));
+
+	}
+
+
 	public void resetForSearch(ActionContext context) throws BusinessProcessException {
 		super.resetForSearch(context);
 		resetTabs();
@@ -150,7 +177,14 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 			validate_Dettagli(context,model);
 		}
 
-		};
+		@Override
+		public boolean isGrowable() {
+			if (isBy_ordini()){
+				return false;
+			}
+			return super.isGrowable();
+		}
+	};
 	}
 	
 	private final SimpleDetailCRUDController dettagliFattura = new it.cnr.jada.util.action.SimpleDetailCRUDController("DettagliFattura",Fattura_passiva_rigaBulk.class,"dettagliFatturaColl",this){
@@ -270,7 +304,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 		if (buonoC.isPerAumentoValore() && (dett.getValore_unitario() == null || (dett.getValore_unitario().compareTo(new java.math.BigDecimal(0))==0))){
 			throw new ValidationException("Attenzione: indicare il Valore Caricato per il bene");
 		}
-		if (!buonoC.isPerAumentoValore()&&(dett.getV_utilizzatoriColl().size()==0)&&!buonoC.isByFattura()  &&!buonoC.isByDocumento()&& !dett.isBeneAccessorio()&& !dett.getFl_bene_accessorio() )
+		if (!buonoC.isPerAumentoValore()&&(dett.getV_utilizzatoriColl().size()==0)&&!buonoC.isByFattura()   &&!buonoC.isByOrdini() &&!buonoC.isByDocumento()&& !dett.isBeneAccessorio()&& !dett.getFl_bene_accessorio() )
 			throw new ValidationException("Attenzione: bisogna indicare gli Utilizzatori");
 	
 		if ( ((Buono_carico_scaricoBulk)dett.getBuono_cs()).isPerAumentoValore() ){
@@ -427,7 +461,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	**/   
 	public boolean isCRUDAddButtonEnabled() {
 	
-		return (isInserting() && !isBy_fattura() && !isBy_documento());
+		return (isInserting() && !isBy_fattura() && !isBy_documento() && !isBy_ordini());
 	}
 	/**
 	  * Abilita il pulsante di "Elimina", nella finestra dei dettagli del Buono di Carico.
@@ -438,7 +472,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	**/ 
 	public boolean isCRUDDeleteButtonEnabled() {
 	
-		return (isInserting() && !isBy_fattura() && !isBy_documento());
+		return (isInserting() && !isBy_fattura() && !isBy_documento() && !isBy_ordini());
 	}
 	/**
 	  * Disabilita il pulsante di "Elimina", nel form del Buono di Carico.
@@ -450,6 +484,15 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	
 		return isEditing();
 	}
+
+	@Override
+	public boolean isBringbackButtonHidden() {
+		if (isBy_ordini()){
+			return true;
+		}
+		return super.isBringbackButtonHidden();
+	}
+
 	/**
 	  * Nascondo il pulsante di "Elimina", nel form del Buono di Carico.
 	  *	Non Þ possibile cancellare un Buono presente sul DB.
@@ -457,7 +500,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	  * @return <code>boolean</code> TRUE
 	**/ 
 	public boolean isDeleteButtonHidden() {
-		if (isBy_fattura()||isBy_documento())
+		if (isBy_fattura()||isBy_documento()||isBy_ordini())
 			return true;
 		return false;
 	}
@@ -612,7 +655,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 		return new SearchProvider() {
 				public it.cnr.jada.util.RemoteIterator search(it.cnr.jada.action.ActionContext context,it.cnr.jada.persistency.sql.CompoundFindClause clauses,it.cnr.jada.bulk.OggettoBulk prototype) throws it.cnr.jada.action.BusinessProcessException {				
 					Buono_carico_scaricoBulk buonoC =(Buono_carico_scaricoBulk)getModel();
-					boolean no_accessori = buonoC.isByFattura()||buonoC.isByDocumento();
+					boolean no_accessori = buonoC.isByFattura()||buonoC.isByDocumento()||buonoC.isByOrdini();
 					try{
 						return getListaBeni(context.getUserContext(), no_accessori, buonoC.getBuono_carico_scarico_dettColl(), clauses);
 					} catch (Throwable t){

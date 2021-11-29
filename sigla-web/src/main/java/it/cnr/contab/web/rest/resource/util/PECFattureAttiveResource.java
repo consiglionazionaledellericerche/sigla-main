@@ -28,11 +28,10 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.web.rest.local.util.PECFattureAttiveLocal;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.si.spring.storage.MimeTypes;
-import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +42,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -135,6 +135,18 @@ public class PECFattureAttiveResource implements PECFattureAttiveLocal {
                 return Response.serverError().entity("File firmato non trovato").build();
             }
         }
+
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response aggiornaMetadati(@Context HttpServletRequest request, @QueryParam("esercizio") Integer esercizio, @QueryParam("cdCds") String cdCds, @QueryParam("pgFatturaAttiva") Long pgFatturaAttiva)  throws Exception {
+        CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+
+        if (esercizio == null){
+            return Response.serverError().entity("Parametro esercizio obbligatorio").build();
+        }
+        docAmmFatturazioneElettronicaComponentSession.aggiornaMetadati(userContext, esercizio, cdCds, pgFatturaAttiva);
 
         return Response.ok().build();
     }

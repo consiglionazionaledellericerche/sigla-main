@@ -946,23 +946,17 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		//CURRICULUM VITAE
 		Allegati allegati = new Allegati();
 		try {
-			allegati.setCurriculumVitae(SpringUtil.getBean("storeService", StoreService.class).getResource(incarico.getCurriculumVincitore().getCms_node_ref()));
+			Optional.ofNullable(incarico.getCurriculumVincitore()).flatMap(el->Optional.ofNullable(el.getCms_node_ref())).ifPresent(cmsNodeRef-> {
+				allegati.setCurriculumVitae(SpringUtil.getBean("storeService", StoreService.class).getResource(cmsNodeRef));
+			});
 		} catch (Throwable e) {
 		}
 
-		//DICHIARAZIONE INCARICHI
+		//DICHIARAZIONE INCARICHI - VIENE ALLEGATA LA DICHIARAZIONE DI INSUSSISTENZA CONFLITTI DI INTERESSI CHE AL SUO INTERNO HA LA DICHIARAZIONE ALTRI RAPPORTI
 		try {
-			if (incarico.getIncarichi_repertorio_rappColl() != null && !incarico.getIncarichi_repertorio_rappColl().isEmpty()) {
-				GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
-				data_da.setTime(incarico.getDt_stipula());
-				for (Iterator i = incarico.getIncarichi_repertorio_rappColl().iterator(); i.hasNext(); ) {
-					Incarichi_repertorio_rappBulk rapporto = (Incarichi_repertorio_rappBulk) i.next();
-					if (!rapporto.isAnnullato() && rapporto.getAnno_competenza().equals(data_da.get(java.util.Calendar.YEAR))) {
-						allegati.setDichiarazioneIncarichi(SpringUtil.getBean("storeService", StoreService.class).getResource(rapporto.getCms_node_ref()));
-						break;
-					}
-				}
-			}
+			Optional.ofNullable(incarico.getConflittoInteressi()).flatMap(el->Optional.ofNullable(el.getCms_node_ref())).ifPresent(cmsNodeRef-> {
+					allegati.setDichiarazioneIncarichi(SpringUtil.getBean("storeService", StoreService.class).getResource(cmsNodeRef));
+			});
 		} catch (Throwable e) {
 		}
 		incaricoPerla.setAllegati(allegati);
@@ -985,8 +979,6 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 	public List<String> getAnomalie(V_incarichi_elenco_fpBulk v_incarico, IncaricoConsulente consulentePerla) {
 		List<String> listAnomalie = new ArrayList<String>();
 		Incarichi_repertorioBulk incarico = v_incarico.getIncaricoRepertorio();
-		if (!Optional.ofNullable(consulentePerla.getDichiarante().getCodiceAooIpa()).isPresent() && !Optional.ofNullable(consulentePerla.getDichiarante().getCodiceUoIpa()).isPresent())
-			listAnomalie.add("Manca sia il Codice AOO Ipa sul CDS "+incarico.getCd_cds()+" che il Codice Uo Ipa sulla Uo "+incarico.getCd_unita_organizzativa()+".");
 		if (Optional.ofNullable(consulentePerla.getPercettorePf()).isPresent()) {
 			if (consulentePerla.getPercettorePf().getCodiceFiscale() == null)
 				listAnomalie.add("Manca il codice fiscale del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");

@@ -99,19 +99,26 @@ public class MandatoComunicaDatiHome extends BulkHome {
         sql.addSQLJoin("v_mandato_reversale_voce.esercizio","V_CLASSIFICAZIONE_VOCI_ALL.esercizio");
         sql.addSQLJoin("v_mandato_reversale_voce.ti_gestione","V_CLASSIFICAZIONE_VOCI_ALL.ti_gestione");
         sql.addSQLJoin("v_mandato_reversale_voce.cd_voce","V_CLASSIFICAZIONE_VOCI_ALL.cd_livello6");
-        if (daData != null){
-            sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.GREATER_EQUALS, daData );
-        }
-        if (aData != null){
-            sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.LESS_EQUALS, aData );
-        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(aData.getTime());
+        int anno = cal.get(Calendar.YEAR);
+
+        sql.openParenthesis(FindClause.AND);
+        sql.openParenthesis(FindClause.AND);
+        sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.GREATER_EQUALS, daData );
+        sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.LESS_EQUALS, aData );
+        sql.closeParenthesis();
+        sql.openParenthesis(FindClause.OR);
+        sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.GREATER, aData );
+        sql.addSQLClause("AND", "ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_REGOLAM_SOSPESO );
+        sql.addSQLClause("AND", "mandato.esercizio", SQLBuilder.EQUALS, anno);
+        sql.closeParenthesis();
+        sql.closeParenthesis();
+
         sql.addSQLClause("AND", "mandato.stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_PAGATO );
         sql.addSQLClause("AND", "mandato.esercizio", SQLBuilder.GREATER_EQUALS, MandatoComunicaDatiBulk.ANNO_INIZIO_PUBBLICAZIONE );
         sql.addSQLClause("AND", "ti_documento", SQLBuilder.EQUALS, "M" );
-        sql.openParenthesis(FindClause.AND);
-        sql.addSQLClause("OR", "ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_PAGAMENTO );
-        sql.addSQLClause("OR", "ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_REGOLAM_SOSPESO );
-        sql.closeParenthesis();
         sql.addSQLClause("AND", "FL_COMUNICA_PAGAMENTI", SQLBuilder.EQUALS, "Y" );
 
         PersistentHome rigaHome = getHomeCache().getHome(Mandato_rigaBulk.class);

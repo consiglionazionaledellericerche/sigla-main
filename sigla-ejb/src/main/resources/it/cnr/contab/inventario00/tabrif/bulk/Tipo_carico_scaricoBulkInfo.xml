@@ -96,6 +96,11 @@
 		property="fl_vendita"
 		inputType="CHECKBOX"
 		label="Vendita" />
+	<fieldProperty
+			name="fl_da_ordini"
+			property="fl_da_ordini"
+			inputType="CHECKBOX"
+			label="Da Ordini" />
 	<formFieldProperty
 		name="cd_tipo_carico_scarico" />
 	<formFieldProperty
@@ -118,6 +123,8 @@
 		name="fl_chiude_fondo" />
 	<formFieldProperty
 		name="fl_vendita" />
+	<formFieldProperty
+			name="fl_da_ordini" />
 	<columnFieldProperty
 		name="cd_tipo_carico_scarico" />
 	<columnFieldProperty
@@ -138,6 +145,8 @@
 		name="fl_chiude_fondo" />
 	<columnFieldProperty
 		name="fl_vendita" />
+	<columnFieldProperty
+			name="fl_da_ordini" />
 	<findFieldProperty
 		name="cd_tipo_carico_scarico" />
 	<findFieldProperty

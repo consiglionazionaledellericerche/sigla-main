@@ -38,11 +38,7 @@ function doVisualizzaContabile() {
 			JSPUtils.tabbed(
 						pageContext,
 						"tab",
-						new String[][] {
-								{ "tabMandato","Mandato","/doccont00/tab_mandato_accreditamento.jsp" },
-	/*								{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" }, */
-								{ "tabReversali","Reversali","/doccont00/tab_mandato_reversali.jsp" }								
-								},
+						bp.getTabs(),
 						bp.getTab("tab"),
 						"center",
 						null,null);

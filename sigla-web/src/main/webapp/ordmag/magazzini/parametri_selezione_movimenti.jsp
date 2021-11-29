@@ -277,28 +277,6 @@
 			<tr>
 				<td>
 					<%
-						bp.getController().writeFormLabel(out, "findTipoMovimentoMag");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "findTipoMovimentoMag");
-					%>
-				</td>
-				<td class="pl-5">
-					<%
-						bp.getController().writeFormLabel(out, "tipoMovimento");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "tipoMovimento");
-					%>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<%
 						bp.getController().writeFormLabel(out, "findTerzo");
 					%>
 				</td>

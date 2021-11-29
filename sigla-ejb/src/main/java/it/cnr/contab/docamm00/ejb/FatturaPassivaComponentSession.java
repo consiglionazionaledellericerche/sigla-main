@@ -47,7 +47,7 @@ public interface FatturaPassivaComponentSession extends it.cnr.contab.docamm00.c
 
     it.cnr.jada.util.RemoteIterator cercaDettagliFatturaPerNdD(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
-    it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.UserContext param0, CompoundFindClause compoundfindclause, it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     it.cnr.jada.util.RemoteIterator cercaFatturaPerNdD(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 

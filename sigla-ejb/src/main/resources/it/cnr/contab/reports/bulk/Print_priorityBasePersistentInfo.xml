@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_priorityBase"
+	keyClassName="it.cnr.contab.reports.bulk.Print_priorityKey"
+	homeClassName="it.cnr.contab.reports.bulk.Print_priorityHome">
+	<defaultColumnMap
+		tableName="PRINT_PRIORITY">
+		<columnMapping
+			columnName="PRIORITY"
+			propertyName="priority"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_REPORT"
+			propertyName="dsReport"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="REPORT_NAME_ENTE"
+			propertyName="reportNameEnte"
+			sqlTypeName="VARCHAR"
+			columnSize="1500"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="priority" />
+	<persistentProperty
+		name="dsReport" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="reportNameEnte" />
+</SQLPersistentInfo>

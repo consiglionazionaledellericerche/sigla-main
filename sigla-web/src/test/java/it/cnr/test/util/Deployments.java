@@ -90,6 +90,8 @@ public abstract class Deployments {
                 .addPackages(true, "org.reactivestreams")
                 .addPackages(true, "org.openqa.selenium", "org.jboss.arquillian")
                 .addPackages(true, "com.google")
+                .addPackages(true, "feign")
+                .addPackages(true, "net.dongliu.gson")
                 .addAsResource("org/springframework/web/context/ContextLoader.properties")
                 .addAsResource("org/springframework/ws/client/core/WebServiceTemplate.properties")
                 .addAsResource("META-INF/spring/filesystem.properties")

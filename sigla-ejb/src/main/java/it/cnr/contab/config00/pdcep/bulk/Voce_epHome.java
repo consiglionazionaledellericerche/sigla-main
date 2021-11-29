@@ -17,6 +17,8 @@
 
 package it.cnr.contab.config00.pdcep.bulk;
 
+import it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;

@@ -3351,9 +3351,11 @@ public void verificaCoerenzaGaeContratto(UserContext aUC,AccertamentoBulk accert
 						WorkpackageBulk lineaAttivita = home.searchGAECompleta(aUC, accertamento.getEsercizio(), el.getCd_centro_responsabilita(), el.getCd_linea_attivita());
 						if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
 							ProgettoBulk prgContratto = (ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(accertamento.getEsercizio(), optPrgContratto.get(), ProgettoBulk.TIPO_FASE_NON_DEFINITA));
-							throw new ApplicationRuntimeException("Linea di Attività "+el.getCd_linea_attivita()+" del CDR "+el.getCd_centro_responsabilita()+
-									" non selezionabile in quanto appartenente al progetto "+lineaAttivita.getCd_progetto()+" diverso dal progetto " +
-									prgContratto.getCd_progetto()+" del contratto associato all'accertamento.");
+							if (Optional.ofNullable(prgContratto).isPresent()) {
+								throw new ApplicationRuntimeException("Linea di Attività "+el.getCd_linea_attivita()+" del CDR "+el.getCd_centro_responsabilita()+
+										" non selezionabile in quanto appartenente al progetto "+lineaAttivita.getCd_progetto()+" diverso dal progetto " +
+										prgContratto.getCd_progetto()+" del contratto associato all'accertamento.");
+							}
 						}
 					} catch (ComponentException|PersistencyException e) {
 						throw new ApplicationRuntimeException(e);

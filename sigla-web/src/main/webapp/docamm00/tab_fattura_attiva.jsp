@@ -218,14 +218,32 @@
 				<% bp.getController().writeFormInput(out,null,"ds_fattura_attiva",false,null,"");%>
 		</td>
       </tr>
+    </table>
+   </div>
+     <div class="Group card">
+     <table>
       <tr>
 	       <td>
 				<% bp.getController().writeFormLabel(out,"riferimento_ordine");%>
-		   </td>      	
-		   <td colspan=3>
+		   </td>
+		   <td>
 				<% bp.getController().writeFormInput(out,null,"riferimento_ordine",false,null,"");%>
 		</td>
-      </tr>          	
+      </tr>
+      <tr>
+	       <td>
+				<% bp.getController().writeFormLabel(out,"dt_ordine");%>
+		   </td>
+		   <td colspan=3>
+				<% bp.getController().writeFormInput(out,null,"dt_ordine",false,null,"");%>
+    		</td>
+	       <td>
+				<% bp.getController().writeFormLabel(out,"fl_ordine_elettronico");%>
+		   </td>
+		   <td colspan=3>
+				<% bp.getController().writeFormInput(out,null,"fl_ordine_elettronico",false,null,"");%>
+	    	</td>
+      </tr>
     </table>
    </div>
 

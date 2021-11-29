@@ -1,5 +1,2129 @@
-## Release 6.3.9  -- _March 10, 2021_ 
+## Release 6.4.1  -- _November 22, 2021_ 
 **Changes**
+
+>**Aggiunto la possibilità di ripristinare delle coordinate bancarie cancellate logicamente**
+>
+>[f43eef88f6a8c35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f43eef88f6a8c35) marco.spasiano *November 22, 2021*
+
+
+## Release 6.4.0  -- _November 22, 2021_ 
+**Changes**
+
+>**FIX version**
+>
+>[ea80b76a4f6eb59](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ea80b76a4f6eb59) marco.spasiano *November 22, 2021*
+
+>**Aggiunto la possibilità di ripristinare delle coordinate bancarie cancellate logicamente**
+>
+>[05739f6933f2ec2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05739f6933f2ec2) marco.spasiano *November 22, 2021*
+
+>**Aggiunto messaggio per il caricamento degli allegati al mandato quando non esiste la folder parent**
+>
+>[61ae27ca06ec794](https://github.com/consiglionazionaledellericerche/sigla-main/commit/61ae27ca06ec794) marco.spasiano *November 22, 2021*
+
+>**FIX name of column on add-riferimenti-perla2018**
+>
+>[d3d36dabc4363bd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d3d36dabc4363bd) marco.spasiano *November 22, 2021*
+
+>**FIX name of table on alter_liquid_gruppo_centro_comp_doc_cont_segno_opposto**
+>
+>[aef33b4fa13dcba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aef33b4fa13dcba) marco.spasiano *November 22, 2021*
+
+>**Aggiunto il CUP alla consultazione REST dei progetti Issue #82**
+>
+>[c2f5eb0a27db548](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c2f5eb0a27db548) marco.spasiano *November 22, 2021*
+
+>**FIX controllo numero conto per TABA con espressione regolare ^[0-9]{7}**
+>
+>[267908914e8c57f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/267908914e8c57f) marco.spasiano *November 22, 2021*
+
+>**Upgrade version of artifact storage cloud**
+>
+>[4b00129fae50215](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4b00129fae50215) marco.spasiano *November 12, 2021*
+
+>**FIX initialize storage key of print document**
+>
+>[af082b38b573507](https://github.com/consiglionazionaledellericerche/sigla-main/commit/af082b38b573507) marco.spasiano *November 11, 2021*
+
+>**Variazioni ad Area: è consentita se variazione monoprogetto e di tipo storno**
+>
+>[660d026cda9833e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/660d026cda9833e) raffaelepagano *November 10, 2021*
+
+>**Corretta join tra TIPO_CONTRIBUTO_RITENUTA E CONTRIBUTO_RITENUTA**
+>
+>[b1a6d4e65dc00bb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1a6d4e65dc00bb) GASPARRO GIANFRANCO *November 05, 2021*
+
+>**FIX maxLength Natura on DocumentoEleIvaBulkInfo.xml**
+>
+>[5a781df47f10b10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a781df47f10b10) marco.spasiano *November 04, 2021*
+
+>**Compenso da minicarriera: in fase di associazione incarico viene valorizzato per ogni anno anche l'importo già utilizzato (prima il valore restituito era sempre 0).**
+>
+>[f20aedad8771c10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f20aedad8771c10) raffaelepagano *October 08, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica per tutti i documenti amministrativi se l'economica parallela è attiva in configurazione**
+>
+>[f32e765648af467](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f32e765648af467) marco.spasiano *October 07, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica per tutti i documenti amministrativi se l'economica parallela è attiva in configurazione**
+>
+>[2fa98f1283fffc0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fa98f1283fffc0) marco.spasiano *October 07, 2021*
+
+>**FIX generazione flusso con diversi CUP con lo stesso codice SIOPE e implementazione del test**
+>
+>[5c0239442acc11c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c0239442acc11c) marco.spasiano *October 05, 2021*
+
+>**FIX Cessazione Compenso: corretto intervallo di date entro il quale effettuare controllo esistenza rapporto dipendente.**
+>
+>[d9b4c43e6a9ae13](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9b4c43e6a9ae13) raffaelepagano *October 05, 2021*
+
+>**Closed issue #89**
+>
+>[bc83dc64f375c6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc83dc64f375c6a) marco.spasiano *October 05, 2021*
+
+>**Aggiunta la possibilità di caricare la giornaliera di SIOPE+ da mappa**
+>
+>[4c9a7133c8b97ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c9a7133c8b97ab) marco.spasiano *October 04, 2021*
+
+
+## Release 6.3.58  -- _October 04, 2021_ 
+**Changes**
+
+>**Nel csao di una variazione firmata non è più possibile modificarla o annullarla**
+>
+>[96cc28b63742828](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cc28b63742828) marco.spasiano *October 04, 2021*
+
+>**FIX NPE al caricamento del file dalla vecchia interfaccia**
+>
+>[1849f2773055e9d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1849f2773055e9d) marco.spasiano *October 01, 2021*
+
+
+## Release 6.3.57  -- _October 01, 2021_ 
+**Changes**
+
+>**Aggiunto il caricamento da file excel del piano di riparto delle spese accentrate**
+>
+>[8aecf7c3362fc80](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8aecf7c3362fc80) marco.spasiano *October 01, 2021*
+
+>**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
+>
+>[91d17124326265d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91d17124326265d) raffaelepagano *October 01, 2021*
+
+>**Normalizzazione batch per inserimento apertura anno contabile (RIBALTAMENTOPDGP)**
+>
+>[f7ffb262944ff63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f7ffb262944ff63) raffaelepagano *September 28, 2021*
+
+
+## Release 6.3.55  -- _September 22, 2021_ 
+**Changes**
+
+>**FIX liquibase for H2**
+>
+>[810b6027d24d484](https://github.com/consiglionazionaledellericerche/sigla-main/commit/810b6027d24d484) marco.spasiano *September 22, 2021*
+
+>**FIX trovato client**
+>
+>[b849563068f8082](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b849563068f8082) marco.spasiano *September 22, 2021*
+
+>**FIX test**
+>
+>[1b9a307660b0670](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b9a307660b0670) marco.spasiano *September 22, 2021*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[e2af958ba436806](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e2af958ba436806) marco.spasiano *September 21, 2021*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[4ef7325ed1e50f8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ef7325ed1e50f8) marco.spasiano *September 21, 2021*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[ce80955581017c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce80955581017c4) marco.spasiano *September 21, 2021*
+
+>**Incarichi: eliminata pubblicazione di allegati con stato annullato.**
+>
+>[61875ab61e98ee2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/61875ab61e98ee2) raffaelepagano *September 21, 2021*
+
+>**Closed issue #87**
+>
+>[44e36589190faac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44e36589190faac) marco.spasiano *September 21, 2021*
+
+>**Add textTruncate on ColumnFieldProperty for Bulk Contratto**
+>
+>[92b2d2236f6d25a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/92b2d2236f6d25a) marco.spasiano *September 21, 2021*
+
+
+### Jira CVE-2012 
+
+>**CVE-2012-0881**
+> * Vulnerable versions: &lt; 2.12.0
+> * Patched version: 2.12.0
+> * Apache Xerces2 Java Parser before 2.12.0 allows remote attackers to cause a denial of service (CPU consumption) via a crafted message to an XML service, which triggers hash table collisions.
+>
+>[0bef658cf345ac6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bef658cf345ac6) marco.spasiano *September 20, 2021*
+
+
+### Jira CVE-2020 
+
+>**CVE-2020-25633**
+> * Vulnerable versions: &lt;= 4.5.6.Final
+> * Patched version: 4.5.7.Final
+> * A flaw was found in RESTEasy client in all versions of RESTEasy up to 4.5.6.Final. It may allow client users to obtain the server&#39;s potentially sensitive information when the server got WebApplicationException from the RESTEasy client call. The highest threat from this vulnerability is to data confidentiality.
+>
+>[ba16f17ac109a18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba16f17ac109a18) marco.spasiano *September 20, 2021*
+
+>**CVE-2020-13956**
+> * Vulnerable versions: &lt; 4.5.13
+> * Patched version: 4.5.13
+> * Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can misinterpret malformed authority component in request URIs passed to the library as java.net.URI object and pick the wrong target host for request execution.
+>
+>[d985eb7ff33ba3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d985eb7ff33ba3a) marco.spasiano *September 20, 2021*
+
+
+## Release 6.3.51  -- _September 20, 2021_ 
+**Changes**
+
+>**Revert to tags 6.3.50**
+>
+>[4db902ce91e17c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4db902ce91e17c6) marco.spasiano *September 20, 2021*
+
+
+## Release 6.3.50  -- _September 14, 2021_ 
+**Changes**
+
+>**Fix tolta obbligatorietà Id transito Beni**
+>
+>[8de94d01e0b15a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8de94d01e0b15a0) gianfranco.gasparro *September 14, 2021*
+
+>**FIX NPE**
+>
+>[8125af0ceabe2f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8125af0ceabe2f2) marco.spasiano *September 14, 2021*
+
+>**FIX V_INVENTARIO_BENI_APG add ID_TRANSITO_BENI_ORDINI**
+>
+>[65c54156c210c7b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65c54156c210c7b) marco.spasiano *September 14, 2021*
+
+>**FIX documento_attivo.jsp**
+>
+>[69cb8ce9288fd33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69cb8ce9288fd33) marco.spasiano *September 13, 2021*
+
+>**FIX tab fattura elettronica ordine**
+>
+>[a7d6f89b98be047](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a7d6f89b98be047) marco.spasiano *September 13, 2021*
+
+>**Upgrade version of storage cloud to 2.0.12**
+>
+>[3a1dc395ee329e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a1dc395ee329e7) marco.spasiano *September 13, 2021*
+
+>**FIX update fattura exception handler**
+>
+>[aceb043e3f80626](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aceb043e3f80626) marco.spasiano *September 10, 2021*
+
+>**Variazioni: esteso controllo su sfondamento assestato entrate indipendemente dal tipo e stato progetto.**
+>
+>[2ac5a8f4b17bbfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2ac5a8f4b17bbfc) raffaelepagano *September 10, 2021*
+
+>**Economica: gestione assegnazione conto debito/credito su terzo**
+>
+>[1a4d1af7abe41c0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a4d1af7abe41c0) raffaelepagano *September 10, 2021*
+
+>**Economica: proposta parametrica conto debiti/crediti verso debitore/fornitore**
+>
+>[cca21cf05d2a5a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cca21cf05d2a5a9) raffaelepagano *September 09, 2021*
+
+>**Economica: proposta parametrica conto debiti/crediti verso debitore/fornitore**
+>
+>[f3521609421ecd9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3521609421ecd9) raffaelepagano *September 09, 2021*
+
+>**Economica: proposta parametrica conto debiti/crediti verso debitore/fornitore**
+>
+>[66b05933b64a582](https://github.com/consiglionazionaledellericerche/sigla-main/commit/66b05933b64a582) raffaelepagano *September 08, 2021*
+
+>**Economica: inserita gestione dettaglio prima nota modificabile.**
+>
+>[8370afb578e5e94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8370afb578e5e94) raffaelepagano *September 08, 2021*
+
+>**Economica: gestione data contabilizzazione prima nota**
+>
+>[c258dad4c226b9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c258dad4c226b9c) raffaelepagano *September 08, 2021*
+
+>**Fix Varie**
+>
+>[bad4b0f380b1554](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bad4b0f380b1554) raffaelepagano *September 07, 2021*
+
+>**Aggiunta visualizzazione dati ordine su Gestione Bene in Inventario**
+>
+>[27978e0f0038957](https://github.com/consiglionazionaledellericerche/sigla-main/commit/27978e0f0038957) gianfranco.gasparro *September 06, 2021*
+
+>**Gestione Utilizzatori in Inventariazione da ordini**
+>
+>[4454c42370356d0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4454c42370356d0) gianfranco.gasparro *September 05, 2021*
+
+>**Gestione Inventariazione da ordini**
+>
+>[5a3e91acac2d822](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a3e91acac2d822) gianfranco.gasparro *September 03, 2021*
+
+>**FIX reset password**
+>
+>[f0842fbc62de04e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f0842fbc62de04e) marco.spasiano *August 31, 2021*
+
+>**FIX reset password**
+>
+>[a697c9c6f945aa7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a697c9c6f945aa7) marco.spasiano *August 31, 2021*
+
+>**Fix valorizzazione data e quantità di carico sui lotti**
+>
+>[2aa562132e562b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2aa562132e562b9) gianfranco.gasparro *August 20, 2021*
+
+>**Update pom.xml**
+>
+>[56f614422e37cba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56f614422e37cba) PAGANO RAFFAELE *August 05, 2021*
+
+>**Fix scrittura partita doppia**
+>
+>[a86428ff99f66bd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a86428ff99f66bd) marco.spasiano *August 04, 2021*
+
+>**Fix scrittura partita doppia**
+>
+>[cc3dec68069f619](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cc3dec68069f619) marco.spasiano *August 04, 2021*
+
+>**FIX version of pom.xml**
+>
+>[be2965801f8af34](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be2965801f8af34) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'economica parallela è attiva in configurazione**
+>
+>[30eb44b8dcb9091](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30eb44b8dcb9091) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'economica parallela è attiva in configurazione**
+>
+>[2468311b6a11c1e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2468311b6a11c1e) marco.spasiano *August 04, 2021*
+
+>**FIX riferimenti bancari**
+>
+>[308645f1e88b1b0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/308645f1e88b1b0) marco.spasiano *August 04, 2021*
+
+>**Aggiunta tab economica sulle fatture passive**
+>
+>[07f068e53238925](https://github.com/consiglionazionaledellericerche/sigla-main/commit/07f068e53238925) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'ecnomica parallela è attiva in configurazione**
+>
+>[126d88b62e40d87](https://github.com/consiglionazionaledellericerche/sigla-main/commit/126d88b62e40d87) marco.spasiano *August 04, 2021*
+
+>**Aggiunto il salvataggio della scrittura di economica se l'ecnomica parallela è attiva in configurazione**
+>
+>[b09e251119b8dc0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b09e251119b8dc0) marco.spasiano *August 04, 2021*
+
+>**Aggiunto per i report con DataSource offline il contesto transazionale.Aggiunta stampa inventario.**
+>
+>[853e29216068c7f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/853e29216068c7f) cirosalvio *August 04, 2021*
+
+>**Aggiunto nel messaggio di errore la struttura della partita iva della nazione**
+>
+>[c91b48a3e9c4a64](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c91b48a3e9c4a64) marco.spasiano *August 03, 2021*
+
+>**Nuova Gestione delle stampe pe Ente**
+>
+>[242fb654bcb8eb0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/242fb654bcb8eb0) marco.spasiano *August 02, 2021*
+
+>**Aggiunto campo reportname_ente in cui è possiile ridefinire il report da eseguire per una stampa.**
+> * Aggiunta gestione a menù di Print_Priority.
+>
+>[212828124976c10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/212828124976c10) cirosalvio *August 02, 2021*
+
+>**Adempimenti ex art. 15 D. Lgs.33_2013 - Inserita gestione parametrica per rendere obbligatorio l'inserimento del file di tipo 'Attestazione Direttore' in fase di inserimento incarico**
+>
+>[058c07ad168810c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/058c07ad168810c) raffaelepagano *August 02, 2021*
+
+>**Adempimenti ex art. 15 D. Lgs.33_2013 - Inserita gestione parametrica per rendere obbligatorio l'inserimento del file di tipo 'Attestazione Direttore' in fase di inserimento incarico**
+>
+>[542d663cef990d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/542d663cef990d5) raffaelepagano *August 02, 2021*
+
+>**Aggiunto controllo sul codice CIG in fase di emissione e modifica del mandato di pagamento**
+>
+>[51083ae40c2b65a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51083ae40c2b65a) marco.spasiano *July 30, 2021*
+
+>**Aggiunta tab economica sulla missione che non genera compenso.**
+>
+>[803eaae3ed1fd15](https://github.com/consiglionazionaledellericerche/sigla-main/commit/803eaae3ed1fd15) marco.spasiano *July 29, 2021*
+
+>**Refactor generator class**
+>
+>[72afaa1907fe76d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72afaa1907fe76d) marco.spasiano *July 27, 2021*
+
+>**Cloud Azure Version**
+>
+>[5f5c9cdf3638ee5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5f5c9cdf3638ee5) cirosalvio *July 26, 2021*
+
+>**Cloud Azure Version**
+>
+>[e60cc82df18208c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e60cc82df18208c) cirosalvio *July 26, 2021*
+
+>**Upgrade version of storage cloud**
+>
+>[bb20be882ac07ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bb20be882ac07ec) marco.spasiano *July 22, 2021*
+
+>**Stampa Inventario e Consumi**
+>
+>[16e9674b5748dff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16e9674b5748dff) cirosalvio *July 21, 2021*
+
+>**Stampa Inventario e Consumi**
+>
+>[8d276e4828449f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d276e4828449f9) cirosalvio *July 21, 2021*
+
+>**Rinominata tab economica**
+>
+>[a5f9905aad09466](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a5f9905aad09466) marco.spasiano *July 21, 2021*
+
+>**Aggiunta tab economica sul mandato e sulla reversale.**
+>
+>[2b63dad2855b0c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b63dad2855b0c7) marco.spasiano *July 20, 2021*
+
+>**Add main for StringEncrypter**
+>
+>[f9c98c1dc6a07f0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9c98c1dc6a07f0) marco.spasiano *July 20, 2021*
+
+>**Update StringEncrypter.java**
+>
+>[6c8bd08263ca0b5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c8bd08263ca0b5) Marco Spasiano *July 19, 2021*
+
+>**Rimosso valore N6.2**
+>
+>[fa6fc1f6a43e05a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa6fc1f6a43e05a) marco.spasiano *July 19, 2021*
+
+>**Rimossa jsp**
+>
+>[e282130d613ae70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e282130d613ae70) marco.spasiano *July 17, 2021*
+
+>**FIX Terzo nella visualizzazione dei movimenti di economica**
+>
+>[b7cd68e2fdc724b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b7cd68e2fdc724b) marco.spasiano *July 16, 2021*
+
+>**Aggiunto controllo sulle modalità di pagamento, il conto deve essere di 7 caratteri numerici.**
+>
+>[0d5c4b9bba929ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d5c4b9bba929ad) marco.spasiano *July 16, 2021*
+
+>**Aggiunti TipoRiga, Partita e Terzo nella visualizzazione dei movimenti di economica**
+>
+>[b12f7bb7cbcba55](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b12f7bb7cbcba55) marco.spasiano *July 15, 2021*
+
+>**Economica: contabilizzazione reversali**
+>
+>[34e99287f6bca2b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34e99287f6bca2b) raffaelepagano *July 14, 2021*
+
+>**Economica: contabilizzazione reversali**
+>
+>[8e55284e5926d8e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8e55284e5926d8e) raffaelepagano *July 14, 2021*
+
+>**Fix Economica**
+>
+>[be4cfd5997b493b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be4cfd5997b493b) raffaelepagano *July 14, 2021*
+
+>**Aggiunti TipoRiga, Partita e Terzo nella visualizzazione dei movimenti di economica**
+>
+>[fa3c7c24ffe41ac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa3c7c24ffe41ac) marco.spasiano *July 12, 2021*
+
+>**Aggiunta enum TipoRiga per movimenti di economica**
+>
+>[0120b698a4b1e57](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0120b698a4b1e57) marco.spasiano *July 12, 2021*
+
+>**Aggiunta enum TipoRiga per movimenti di economica**
+>
+>[a98def622d07d99](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a98def622d07d99) marco.spasiano *July 12, 2021*
+
+>**Fix Economica**
+>
+>[e1f3d77feecb79b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1f3d77feecb79b) raffaelepagano *July 12, 2021*
+
+>**Economica: contabilizzazione mandati su versamenti cori**
+>
+>[7c377211fe36d4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c377211fe36d4c) raffaelepagano *July 12, 2021*
+
+>**FIX NPE on controlla quadratura per natura**
+>
+>[f4bfbdd9895ec75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4bfbdd9895ec75) marco.spasiano *July 12, 2021*
+
+>**Economica: contabilizzazione mandati su missioni**
+>
+>[c5c1438670b94ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c5c1438670b94ca) raffaelepagano *July 09, 2021*
+
+>**Economica: contabilizzazione mandati su anticipi**
+>
+>[a8fd3a01a28c318](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8fd3a01a28c318) raffaelepagano *July 09, 2021*
+
+>**Economica: contabilizzazione mandati su fatture/documenti generici**
+>
+>[f6a89f7b12f5204](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f6a89f7b12f5204) raffaelepagano *July 09, 2021*
+
+>**Economica: contabilizzazione mandati su compenso**
+>
+>[0f3e05391e4ac9b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f3e05391e4ac9b) raffaelepagano *July 09, 2021*
+
+>**Cambiato layout di presentazione delle scritture di eonomica.**
+>
+>[b1c431ab7acc533](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1c431ab7acc533) marco.spasiano *July 09, 2021*
+
+>**Economica: modifiche varie**
+>
+>[1681aedd91d27d2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1681aedd91d27d2) raffaelepagano *July 07, 2021*
+
+>**Economica: modifiche varie**
+>
+>[5357d8682d0b939](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5357d8682d0b939) raffaelepagano *July 07, 2021*
+
+>**La scrittura di economica dal documento amministrativo viene recuperata in base al progressivo**
+>
+>[16d36c3213b26c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16d36c3213b26c7) marco.spasiano *July 06, 2021*
+
+>**Economica: modifiche varie**
+>
+>[e2237073784cb50](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e2237073784cb50) raffaelepagano *July 06, 2021*
+
+>**Upgrade version of siopeplus artifact**
+>
+>[9e7e7218e8891e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e7e7218e8891e8) marco.spasiano *July 05, 2021*
+
+>**Fix valorizzazione data e quantità di carico sui lotti**
+>
+>[c213d22f6186281](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c213d22f6186281) gianfranco.gasparro *July 03, 2021*
+
+>**Gestito controllo imponibile natura nel caso di Bollo non indicato come riga di fattura elettronica ma messo solo in testata**
+>
+>[91e2d08717f6be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91e2d08717f6be4) gianfranco.gasparro *July 02, 2021*
+
+>**Economica: modifiche varie**
+>
+>[0d0d09b8d62ae89](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d0d09b8d62ae89) raffaelepagano *July 02, 2021*
+
+>**Economica: modifiche varie**
+>
+>[8f69bcea9309722](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8f69bcea9309722) raffaelepagano *July 01, 2021*
+
+>**FIX rest select progetti**
+>
+>[cb105345d0758e3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb105345d0758e3) marco.spasiano *July 01, 2021*
+
+>**Economica: modifiche varie**
+>
+>[c38f5089665a292](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c38f5089665a292) raffaelepagano *July 01, 2021*
+
+>**Aggiunta tab economica sul documento generico e anticipo.**
+>
+>[dc74d998858a34a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dc74d998858a34a) marco.spasiano *July 01, 2021*
+
+>**Trasparenza Incarichi: aggiunto nel file xml anche la data proroga dell'incarico.**
+>
+>[306ee2629673ea3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/306ee2629673ea3) raffaelepagano *July 01, 2021*
+
+>**Economica: modifiche varie**
+>
+>[cf13e707c28a136](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf13e707c28a136) raffaelepagano *July 01, 2021*
+
+>**Economica: modifiche varie**
+>
+>[224f36fd9ea0788](https://github.com/consiglionazionaledellericerche/sigla-main/commit/224f36fd9ea0788) raffaelepagano *July 01, 2021*
+
+>**Economica: modifiche varie**
+>
+>[e60cba264aa67d2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e60cba264aa67d2) raffaelepagano *July 01, 2021*
+
+>**Economica: modifiche varie**
+>
+>[a4c75a43a5245d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4c75a43a5245d5) raffaelepagano *June 30, 2021*
+
+>**Update OrdineAcqComponent.java**
+>
+>[91571df5897a65c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91571df5897a65c) GASPARRO GIANFRANCO *June 30, 2021*
+
+>**Update OrdineAcqBulkInfo.xml**
+>
+>[575e4cf30be7e4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/575e4cf30be7e4f) GASPARRO GIANFRANCO *June 30, 2021*
+
+>**Economica: modifiche varie**
+>
+>[90af334ff754557](https://github.com/consiglionazionaledellericerche/sigla-main/commit/90af334ff754557) raffaelepagano *June 30, 2021*
+
+>**Aggiunta tab economica sul compenso.**
+>
+>[7a3d2c267a42804](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a3d2c267a42804) marco.spasiano *June 30, 2021*
+
+>**Economica: modifiche varie**
+>
+>[092f1a8346d2baa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/092f1a8346d2baa) raffaelepagano *June 30, 2021*
+
+>**Aggiunta tab economica sulla fattura attiva.**
+>
+>[674fcef1dbc99ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/674fcef1dbc99ba) marco.spasiano *June 30, 2021*
+
+>**Economica: modifiche varie**
+>
+>[8c91de95e9cad6b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c91de95e9cad6b) raffaelepagano *June 30, 2021*
+
+>**Aggiunto bottone per la contabilizzazione economica**
+>
+>[a865045dbbda27e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a865045dbbda27e) marco.spasiano *June 21, 2021*
+
+>**Aggiunto bottone per la contabilizzazione economica**
+>
+>[a79694b4f028e2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a79694b4f028e2e) marco.spasiano *June 21, 2021*
+
+>**Modifiche per gestione proposta pannellino economica**
+>
+>[a10df55affae9f5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a10df55affae9f5) raffaelepagano *June 17, 2021*
+
+>**Modifiche per gestione proposta pannellino economica**
+>
+>[70e2d44902599af](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70e2d44902599af) raffaelepagano *June 17, 2021*
+
+>**Modifiche per gestione proposta pannellino economica**
+>
+>[6f6efd9fcbe5834](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6f6efd9fcbe5834) raffaelepagano *June 17, 2021*
+
+>**FIX riferimenti bancari**
+>
+>[1cbcac605bf3913](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1cbcac605bf3913) marco.spasiano *June 16, 2021*
+
+>**FIX riferimenti bancari**
+>
+>[8acb34854a17727](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8acb34854a17727) marco.spasiano *June 15, 2021*
+
+>**Aggiunta tab economica sulle fatture passive**
+>
+>[44bad42f048b782](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44bad42f048b782) marco.spasiano *June 14, 2021*
+
+>**Modifiche per gestione  proposta pannellino economica**
+>
+>[ef8f84d4f72fe87](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef8f84d4f72fe87) salvatorepagano *June 14, 2021*
+
+>**Modifiche per gestione  proposta pannellino economica**
+>
+>[2698a81e5bd88be](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2698a81e5bd88be) salvatorepagano *June 14, 2021*
+
+>**Aggiunta tab economica sulle fatture passive**
+>
+>[cdd4118de7e703a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cdd4118de7e703a) marco.spasiano *June 04, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[7eebea6674e5bcf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7eebea6674e5bcf) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[53db458360e0985](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53db458360e0985) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[4ecf4eb11cf7e25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ecf4eb11cf7e25) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[0512557baed8bb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0512557baed8bb5) patriziavillani *May 19, 2021*
+
+>**Update liquidazione_iva.rst**
+>
+>[71ceca940c17cab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/71ceca940c17cab) patriziavillani *May 19, 2021*
+
+>**Update partite_giro.rst**
+>
+>[f6bcb091f3251a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f6bcb091f3251a5) patriziavillani *April 21, 2021*
+
+>**Update partite_giro.rst**
+>
+>[034201b186fe2c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/034201b186fe2c4) patriziavillani *April 21, 2021*
+
+>**Update residuo_proprio.rst**
+>
+>[f82a073429f4de2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f82a073429f4de2) patriziavillani *April 21, 2021*
+
+>**Update residuo_improprio.rst**
+>
+>[82760b6f672ba02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/82760b6f672ba02) patriziavillani *April 21, 2021*
+
+>**Create partite_giro.rst**
+>
+>[f1d039e3aae9d81](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f1d039e3aae9d81) patriziavillani *April 21, 2021*
+
+>**Create residuo_improprio.rst**
+>
+>[1a6a9615ba52b41](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a6a9615ba52b41) patriziavillani *April 21, 2021*
+
+>**Update index.rst**
+>
+>[7a4cf4619433eaa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a4cf4619433eaa) patriziavillani *April 21, 2021*
+
+>**Create residuo_proprio.rst**
+>
+>[e4017087dcd69d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4017087dcd69d4) patriziavillani *April 21, 2021*
+
+>**Update index.rst**
+>
+>[e8a2e6940cb5654](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e8a2e6940cb5654) patriziavillani *April 21, 2021*
+
+>**Rimosso controllo per la visibilità dei Curriculum del vincitore**
+>
+>[78dfefd8c82ed72](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78dfefd8c82ed72) marco.spasiano *April 20, 2021*
+
+>**Aggiunto controllo per la visibilità dei Curriculum del vincitore**
+>
+>[304041b77004d74](https://github.com/consiglionazionaledellericerche/sigla-main/commit/304041b77004d74) marco.spasiano *April 19, 2021*
+
+>**Added user information and date to the attachments of the electronic invoice**
+>
+>[24b4b61c43e1e66](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24b4b61c43e1e66) marco.spasiano *April 19, 2021*
+
+>**Added user information and date to the attachments of the electronic invoice**
+>
+>[e880f273cf52de4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e880f273cf52de4) marco.spasiano *April 16, 2021*
+
+>**Added user information and date to the attachments of the electronic invoice**
+>
+>[498ef6adb0f39fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/498ef6adb0f39fb) marco.spasiano *April 15, 2021*
+
+>**Upgrade version of sigla-ws-client**
+>
+>[b4dcf1263870781](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4dcf1263870781) marco.spasiano *April 14, 2021*
+
+>**sostituita nella view v_spesometro_new la stringa ‘N6’ con ‘N6.2’!**
+> * Il valore N6 non è più valido da inizio anno, provocando lo scarto del file prodotto.
+>
+>[8848f7431f275c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8848f7431f275c1) marco.spasiano *April 13, 2021*
+
+>**FIX sign variazioni from CADES to PADES**
+>
+>[6bb850df5e77eae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bb850df5e77eae) marco.spasiano *April 12, 2021*
+
+>**FIX sign variazioni**
+>
+>[44028f202844dd9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44028f202844dd9) marco.spasiano *April 12, 2021*
+
+>**Cahnge log level for execute Report With JsonDataSource**
+>
+>[df19e84df5a49b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/df19e84df5a49b4) marco.spasiano *April 12, 2021*
+
+>**FIX sign variazioni**
+>
+>[d8d8f60f94d6760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d8d8f60f94d6760) marco.spasiano *April 12, 2021*
+
+>**FIX NPE on allineaDatiProceduraIncarichi**
+>
+>[2459990a977fa87](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2459990a977fa87) marco.spasiano *April 01, 2021*
+
+>**FIX NPE on allineaDatiProceduraIncarichi**
+>
+>[d68f4eac88e13fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d68f4eac88e13fd) marco.spasiano *April 01, 2021*
+
+>**Fix CU Autonomi**
+>
+>[611e1c783ada55b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/611e1c783ada55b) gianfranco.gasparro *March 31, 2021*
+
+>**Fix CU Autonomi**
+>
+>[07ffcc3116e78ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/07ffcc3116e78ff) gianfranco.gasparro *March 29, 2021*
+
+>**FIX lunghezza numero conto per ATP-TA**
+>
+>[1e738b416dc99cc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e738b416dc99cc) marco.spasiano *March 29, 2021*
+
+>**FIX merge request**
+>
+>[f44ee6ac904f569](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f44ee6ac904f569) marco.spasiano *March 29, 2021*
+
+>**Upgrade version of apache poi to 3.17**
+>
+>[56360dae70bfaf2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56360dae70bfaf2) marco.spasiano *March 29, 2021*
+
+>**FIX NPE sugli allegati ai progetti**
+>
+>[04d495bf6620c70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04d495bf6620c70) marco.spasiano *March 24, 2021*
+
+>**Progetti: corretta anomalia visualizzazione allegati verificatasi in seguito ad aggiornamenti sui criteri di visualizzazione dei file contenuti nelle sottodirectory delle cartelle principali associate agli oggetti.**
+>
+>[eae113fa6d73be3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eae113fa6d73be3) raffaele.pagano *March 24, 2021*
+
+>**Updated config.yml**
+>
+>[b48e6c9cab119d6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b48e6c9cab119d6) Marco Spasiano *February 24, 2021*
+
+>**Updated config.yml**
+>
+>[828ca80c1c91fd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/828ca80c1c91fd8) Marco Spasiano *February 24, 2021*
+
+>**Updated config.yml**
+>
+>[f903233c4d854f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f903233c4d854f9) Marco Spasiano *February 24, 2021*
+
+>**Updated config.yml**
+>
+>[cd81dc4a33b8d5a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd81dc4a33b8d5a) Marco Spasiano *February 24, 2021*
+
+>**Updated config.yml**
+>
+>[ea376256af12f56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ea376256af12f56) Marco Spasiano *February 24, 2021*
+
+>**Create config.yml**
+>
+>[96b7496c58b8114](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96b7496c58b8114) Marco Spasiano *February 24, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[bc16a899de3f0a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc16a899de3f0a0) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[691fc521dceccac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/691fc521dceccac) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[7c28451c4cce507](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c28451c4cce507) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[44f0b6c1013d956](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44f0b6c1013d956) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[1e5c7c3c6357d7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e5c7c3c6357d7c) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[be8d7a81331f921](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be8d7a81331f921) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[f349ac4007d9c6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f349ac4007d9c6f) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[25e9785ebc2b348](https://github.com/consiglionazionaledellericerche/sigla-main/commit/25e9785ebc2b348) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[72f95819e98ce67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72f95819e98ce67) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[63117708bf50441](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63117708bf50441) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[63c7c646df2787f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63c7c646df2787f) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[c540439ebd491f5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c540439ebd491f5) patriziavillani *February 23, 2021*
+
+>**Update index.rst**
+>
+>[621f92534c85b31](https://github.com/consiglionazionaledellericerche/sigla-main/commit/621f92534c85b31) patriziavillani *February 23, 2021*
+
+>**Update index.rst**
+>
+>[31d689ac4020948](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31d689ac4020948) patriziavillani *February 23, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[e7039242c5652b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7039242c5652b7) patriziavillani *February 23, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[c17f8395876f7dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c17f8395876f7dc) patriziavillani *February 23, 2021*
+
+>**Delete Fatturefattura_attiva_elettronica.rst**
+>
+>[f29865c0002715c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f29865c0002715c) patriziavillani *February 23, 2021*
+
+>**Create Fatturefattura_attiva_elettronica.rst**
+>
+>[5c9badd9dd5f656](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c9badd9dd5f656) patriziavillani *February 23, 2021*
+
+>**Create fattura_attiva_elettronica.rst**
+>
+>[4c2a5a71dd953fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c2a5a71dd953fe) patriziavillani *February 23, 2021*
+
+>**FIX identificativo flusso OPI**
+>
+>[e7548b8c7aa524f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7548b8c7aa524f) marco.spasiano *February 22, 2021*
+
+>**Add json path for swagger**
+>
+>[37d40dde54fcfc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d40dde54fcfc7) marco.spasiano *April 15, 2020*
+
+>**FIX maven.repo on docker compose [ci skip]**
+>
+>[6fa78ab6028da18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fa78ab6028da18) marco.spasiano *April 14, 2020*
+
+>**Added swagger for API documentation and change Thorntail version to 2.6.0.Final**
+>
+>[d56bf4ac17c4b79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d56bf4ac17c4b79) marco.spasiano *April 14, 2020*
+
+>**FIX maven import org.slf4j:slf4j-api**
+>
+>[57bd8659b2c0968](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57bd8659b2c0968) marco.spasiano *April 02, 2020*
+
+>**final commit to implementation Report with DataSourceOffLine**
+>
+>[7ef8a5305e45816](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7ef8a5305e45816) cirosalvio *April 01, 2020*
+
+>**Fix tests. Issue #7**
+>
+>[fc1741b6101a381](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc1741b6101a381) raffaele.pagano *April 01, 2020*
+
+>**Fix tests. Issue #7**
+>
+>[bb0088a421243a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bb0088a421243a1) raffaele.pagano *April 01, 2020*
+
+>**Rimodulazione Progetti: in fase di modifica della data di inizio/fine/proroga progetto il controllo di esistenza di obbligazioni con data coerente ai nuovi valori viene effettuata limitatamente alle obbligazioni di importo positivo.**
+>
+>[31cdb45c476d22b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31cdb45c476d22b) raffaele.pagano *April 01, 2020*
+
+>**La soluzione consiste nel visualizzare i file presenti non solo nella cartella del progetto della attuale UO Coordinatrice ma anche di quelli eventuali presenti nelle cartelle progetto delle altre Uo partecipanti, tra le quali figurano anche le vecchie UO Coordinatrici. Resolve issue #7**
+>
+>[7363c4510a4851f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7363c4510a4851f) raffaele.pagano *April 01, 2020*
+
+>**deleted the json object**
+>
+>[26874866882da93](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26874866882da93) cirosalvio *April 01, 2020*
+
+>**Adding json serializer fot timestamp type**
+>
+>[08649a5404ef801](https://github.com/consiglionazionaledellericerche/sigla-main/commit/08649a5404ef801) cirosalvio *April 01, 2020*
+
+>**Corretto filtro su tipo movimento in Visualizzazione ed annullamento Movimenti.**
+>
+>[69a3593a003cdeb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69a3593a003cdeb) gianfranco.gasparro *April 01, 2020*
+
+>**Fix Bug**
+>
+>[e352a5e4cb5b35b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e352a5e4cb5b35b) cirosalvio *April 01, 2020*
+
+>**FIX project yml for bind credential**
+>
+>[67c1fe83ae938fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/67c1fe83ae938fa) marco.spasiano *April 01, 2020*
+
+>**Add job and execution to report with Json DataSource**
+>
+>[06a4d40fec21a0e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06a4d40fec21a0e) cirosalvio *March 31, 2020*
+
+>**Add security-domain sigla-auth and ldap configuration**
+>
+>[da436c44c9996b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da436c44c9996b9) marco.spasiano *March 31, 2020*
+
+>**Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: inserito controllo limite classificazione per cds nel momento in cui viene resa definitiva una variazione di competenza**
+>
+>[e47b20fc4ca4448](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e47b20fc4ca4448) raffaele.pagano *March 29, 2020*
+
+>**Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: inseriti controlli in fase di assunzione/modifica impegno residuo e su variazioni residue**
+>
+>[06ade092bce10ae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06ade092bce10ae) raffaele.pagano *March 27, 2020*
+
+>**Fix Variazioni di Competenza: corretto controllo di associazione voci movimentate. Su progetti scaduti per le variazioni di competenza di maggiore entrara/spesa vengono visualizzate sempre tutte le voci.**
+>
+>[48f7bd901a8e7fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/48f7bd901a8e7fd) raffaele.pagano *March 27, 2020*
+
+>**Fix Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: allineamento view per nuovo campo su Elemento_voce**
+>
+>[23be8c279942dc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23be8c279942dc4) raffaele.pagano *March 27, 2020*
+
+>**Update struttura_organizzativa.rst**
+>
+>[7b2b9a14880949e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b2b9a14880949e) patriziavillani *March 24, 2020*
+
+>**Update struttura_organizzativa.rst**
+>
+>[33d47036b31d606](https://github.com/consiglionazionaledellericerche/sigla-main/commit/33d47036b31d606) patriziavillani *March 24, 2020*
+
+>**Update index.rst**
+>
+>[30dd21913c4d423](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30dd21913c4d423) patriziavillani *March 24, 2020*
+
+>**Update nuovo_layout.rst**
+>
+>[46d7f3260157168](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46d7f3260157168) patriziavillani *March 24, 2020*
+
+>**Update piano_conti_finanziario.rst**
+>
+>[35af09708e7f186](https://github.com/consiglionazionaledellericerche/sigla-main/commit/35af09708e7f186) patriziavillani *March 24, 2020*
+
+>**Remove user from screenshot**
+>
+>[0a8b9edfabad9ae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0a8b9edfabad9ae) marco.spasiano *March 24, 2020*
+
+>**Update nuovo_layout.rst**
+>
+>[6ee8624bede43e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6ee8624bede43e1) patriziavillani *March 24, 2020*
+
+>**Update nuovo_layout.rst**
+>
+>[ec35409eddf9ed1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ec35409eddf9ed1) patriziavillani *March 24, 2020*
+
+>**Update and rename nuovo_layout.md to nuovo_layout.rst**
+>
+>[4b32da67ef44cfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4b32da67ef44cfc) patriziavillani *March 24, 2020*
+
+>**Update coda_di_stampa.rst**
+>
+>[84699a4db5a0fc6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84699a4db5a0fc6) patriziavillani *March 24, 2020*
+
+>**Update coda_di_stampa.rst**
+>
+>[86d720f820278d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/86d720f820278d5) patriziavillani *March 24, 2020*
+
+>**Add files via upload**
+>
+>[0ff63d84d722a18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ff63d84d722a18) patriziavillani *March 24, 2020*
+
+>**Create coda.png**
+>
+>[2c0ab32ee761006](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c0ab32ee761006) patriziavillani *March 24, 2020*
+
+>**Update coda_di_stampa.rst**
+>
+>[8402353c6252cc5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8402353c6252cc5) patriziavillani *March 24, 2020*
+
+>**Delete coda_file_excel.rst**
+>
+>[dfd6e9143281a40](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dfd6e9143281a40) patriziavillani *March 24, 2020*
+
+>**Update index.rst**
+>
+>[98826f0391520cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/98826f0391520cb) patriziavillani *March 24, 2020*
+
+>**Update nuovo_layout.md**
+>
+>[3e38249297f9a24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3e38249297f9a24) patriziavillani *March 24, 2020*
+
+>**Update stampe.rst**
+>
+>[8360dc3a2607ad0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8360dc3a2607ad0) patriziavillani *March 24, 2020*
+
+>**Update stampe.rst**
+>
+>[d4498f9e78feeaf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4498f9e78feeaf) patriziavillani *March 24, 2020*
+
+>**Update stampe.rst**
+>
+>[b12f31e20de5b53](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b12f31e20de5b53) patriziavillani *March 24, 2020*
+
+>**Update index.rst**
+>
+>[983b6dbe139bfc3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/983b6dbe139bfc3) patriziavillani *March 24, 2020*
+
+>**Update index.rst**
+>
+>[fa0c20ebf816187](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa0c20ebf816187) patriziavillani *March 24, 2020*
+
+>**Create stampe.rst**
+>
+>[5acb85eef249d12](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5acb85eef249d12) patriziavillani *March 24, 2020*
+
+>**Update coda_file_excel.rst**
+>
+>[15746c2454e3a2f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/15746c2454e3a2f) patriziavillani *March 24, 2020*
+
+>**Update coda_file_excel.rst**
+>
+>[888683a8566b9eb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/888683a8566b9eb) patriziavillani *March 24, 2020*
+
+>**Update coda_di_stampa.rst**
+>
+>[c7bd15f625e0d96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7bd15f625e0d96) patriziavillani *March 24, 2020*
+
+>**Update nuovo_layout.md**
+>
+>[e6d50f342dca5a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e6d50f342dca5a9) patriziavillani *March 24, 2020*
+
+>**Update coda_file_excel.rst**
+>
+>[b220a891ad41d6b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b220a891ad41d6b) patriziavillani *March 24, 2020*
+
+>**Update appendix.rst**
+>
+>[f671650769fde68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f671650769fde68) patriziavillani *March 24, 2020*
+
+>**Update nuovo_layout.md**
+>
+>[5b5dccce000047f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b5dccce000047f) patriziavillani *March 24, 2020*
+
+>**Update index.rst**
+>
+>[24338e4b6b36ce1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24338e4b6b36ce1) patriziavillani *March 24, 2020*
+
+>**Update gae.rst**
+>
+>[906a7768ecaf8b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/906a7768ecaf8b7) patriziavillani *March 23, 2020*
+
+>**Update conf.py**
+>
+>[d1468a1e411b00f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1468a1e411b00f) Marco Spasiano *March 23, 2020*
+
+>**Update .travis.yml**
+>
+>[7025b6ec2b95e6e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7025b6ec2b95e6e) Marco Spasiano *March 23, 2020*
+
+>**Create .travis.yml**
+>
+>[15b088af106641b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/15b088af106641b) patriziavillani *March 23, 2020*
+
+>**Create conf.py**
+>
+>[4b1fc85e4d4425a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4b1fc85e4d4425a) patriziavillani *March 23, 2020*
+
+>**cannot merge**
+>
+>[93caf8f1ea2b8b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/93caf8f1ea2b8b9) Marco Spasiano *March 23, 2020*
+
+>**cannot merge**
+>
+>[412319ca4f4e19e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/412319ca4f4e19e) Marco Spasiano *March 23, 2020*
+
+>**FIX Recupero Dati Pagamenti**
+>
+>[661f080c7795527](https://github.com/consiglionazionaledellericerche/sigla-main/commit/661f080c7795527) marco.spasiano *March 21, 2020*
+
+>**Aggiunto controllo obbligatorietà tipo documento generico attivo**
+>
+>[80872972ce728f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80872972ce728f2) gianfranco.gasparro *March 20, 2020*
+
+>**Update conf.py**
+>
+>[5fbcc2e88858229](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5fbcc2e88858229) patriziavillani *March 19, 2020*
+
+>**Update .travis.yml**
+>
+>[0fdc5855641e3b2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0fdc5855641e3b2) patriziavillani *March 19, 2020*
+
+>**Update gae.rst**
+>
+>[95e2ecf069ed08e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95e2ecf069ed08e) patriziavillani *March 18, 2020*
+
+>**Update gae.rst**
+>
+>[d4da27188f4f86a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4da27188f4f86a) patriziavillani *March 18, 2020*
+
+>**Update gae.rst**
+>
+>[8e536d9d7944b7a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8e536d9d7944b7a) patriziavillani *March 18, 2020*
+
+>**Update gae.rst**
+>
+>[a298d09063f0f6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a298d09063f0f6d) patriziavillani *March 18, 2020*
+
+>**FIX help URL**
+>
+>[1f623244854cbc9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1f623244854cbc9) marco.spasiano *March 14, 2020*
+
+>**FIX Transaction Attribute**
+>
+>[553f76a6083da25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/553f76a6083da25) marco.spasiano *March 13, 2020*
+
+>**Add filter esercizio per selezione Conto**
+>
+>[e524b1796e616f8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e524b1796e616f8) cirosalvio *March 12, 2020*
+
+>**FIX Gestione sospesi di riaccredito per mandati da sostituire.**
+>
+>[114a8f4b3443ec5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/114a8f4b3443ec5) marco.spasiano *March 11, 2020*
+
+>**FIX Gestione sospesi di riaccredito per mandati da sostituire.**
+>
+>[eb77f7a6a3387d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eb77f7a6a3387d4) marco.spasiano *March 11, 2020*
+
+>**Funzionalità cat_grp_invent_voce_ep**
+>
+>[43157ab35ff6fb6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/43157ab35ff6fb6) cirosalvio *March 11, 2020*
+
+>**Funzionalità cat_grp_invent_voce_ep**
+>
+>[a9c0d6f846e8f36](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9c0d6f846e8f36) cirosalvio *March 11, 2020*
+
+>**Fix to pullRequest**
+>
+>[a6d4d050fd60870](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6d4d050fd60870) cirosalvio *March 11, 2020*
+
+>**Funzionalità cat_grp_invent_voce_ep**
+>
+>[cd9136b253c924e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd9136b253c924e) cirosalvio *March 11, 2020*
+
+>**Fix Stampa Documenti Generici: reso selezionabile il campo Tipo Documento Generico solo in caso di selezione di Documenti Generici di Entrata**
+>
+>[2eea587e1e3defb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2eea587e1e3defb) raffaele.pagano *March 10, 2020*
+
+>**FIX Api REST for Help**
+>
+>[fd0120ee012ff0a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd0120ee012ff0a) marco.spasiano *March 10, 2020*
+
+>**Fix Gestione Unita Operativa Responsabile e Responsabile Amministrativo**
+>
+>[9a69eb4fa8f3ea8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a69eb4fa8f3ea8) cirosalvio *March 09, 2020*
+
+>**Chiusura Forzata Ordine**
+>
+>[6bc5ee32c359393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bc5ee32c359393) cirosalvio *March 09, 2020*
+
+>**FIX docs**
+>
+>[45780f1550c38e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/45780f1550c38e5) marco.spasiano *March 03, 2020*
+
+>**Update progetto.rst**
+>
+>[e95caa4a1def116](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e95caa4a1def116) patriziavillani *March 03, 2020*
+
+>**Update progetto.rst**
+>
+>[40bb11ebe2359a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40bb11ebe2359a4) patriziavillani *March 03, 2020*
+
+>**Update progetto.rst**
+>
+>[1a72bfc40142c0f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a72bfc40142c0f) patriziavillani *March 02, 2020*
+
+>**Changed implementation of Help**
+>
+>[024b7dc27c9c94e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/024b7dc27c9c94e) marco.spasiano *March 02, 2020*
+
+>**Modify docs**
+>
+>[c0001c89da6d7a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0001c89da6d7a0) marco.spasiano *March 01, 2020*
+
+>**Modify docs**
+>
+>[87379348f209a24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/87379348f209a24) marco.spasiano *March 01, 2020*
+
+>**Modify docs**
+>
+>[9b1e01fc9e249b6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9b1e01fc9e249b6) marco.spasiano *March 01, 2020*
+
+>**Modify docs**
+>
+>[a9c3226825fa2f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9c3226825fa2f4) marco.spasiano *March 01, 2020*
+
+>**Changed implementation of Help**
+>
+>[c1c1360ea10cad1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c1c1360ea10cad1) marco.spasiano *March 01, 2020*
+
+>**Changed implementation of Help**
+>
+>[c9263a9e2cadbb6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c9263a9e2cadbb6) marco.spasiano *February 29, 2020*
+
+>**FIX maven active profile**
+>
+>[2968c512eb6e4ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2968c512eb6e4ca) marco.spasiano *February 29, 2020*
+
+>**Changed implementation of Help**
+>
+>[6942775461bb168](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6942775461bb168) marco.spasiano *February 28, 2020*
+
+>**Changed implementation of Help**
+>
+>[7f628e23bd53080](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f628e23bd53080) marco.spasiano *February 28, 2020*
+
+>**Changed implementation of Help**
+>
+>[93f4b5cb8b0b712](https://github.com/consiglionazionaledellericerche/sigla-main/commit/93f4b5cb8b0b712) marco.spasiano *February 28, 2020*
+
+>**Changed implementation of Help**
+>
+>[c0d5013073d2ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0d5013073d2ae5) marco.spasiano *February 28, 2020*
+
+>**Changed implementation of Help**
+>
+>[17e27d8462b1d61](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17e27d8462b1d61) marco.spasiano *February 28, 2020*
+
+>**Update progetto.rst**
+>
+>[8a0799b0e329ab7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a0799b0e329ab7) Marco Spasiano *February 27, 2020*
+
+>**FIX docs smartquotes**
+>
+>[7a75ca710aa4bd6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a75ca710aa4bd6) marco.spasiano *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[063e03a6a8da466](https://github.com/consiglionazionaledellericerche/sigla-main/commit/063e03a6a8da466) Marco Spasiano *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[b1da46dd1f90146](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1da46dd1f90146) Marco Spasiano *February 27, 2020*
+
+>**Update progetto.rst**
+>
+>[32254fe8b7483a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/32254fe8b7483a5) patriziavillani *February 27, 2020*
+
+>**Update progetto.rst**
+>
+>[00f5a570f99bd5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/00f5a570f99bd5c) patriziavillani *February 27, 2020*
+
+>**Update progetto.rst**
+>
+>[b413bab6e69848b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b413bab6e69848b) patriziavillani *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[c139fc8a252f7d8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c139fc8a252f7d8) patriziavillani *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[fa74a76808820a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa74a76808820a6) patriziavillani *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[8534a1c365247c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8534a1c365247c2) patriziavillani *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[20e369cdd7b817a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/20e369cdd7b817a) patriziavillani *February 27, 2020*
+
+>**FIX Test on Progetti**
+>
+>[d5747283ed29406](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d5747283ed29406) marco.spasiano *February 27, 2020*
+
+>**FIX Test on Progetti**
+>
+>[7c98717971d2df6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c98717971d2df6) marco.spasiano *February 27, 2020*
+
+>**Update progetto.rst**
+>
+>[7334bdf5f5544ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7334bdf5f5544ce) patriziavillani *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[65b0cb339652904](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65b0cb339652904) patriziavillani *February 27, 2020*
+
+>**Fix Voci accentrate: veniva erroneamente creata una nuova gae, anzichè utilizzare quella esistente, in caso di approvazione di variazione su Voci accentrate**
+>
+>[0c895403bed829a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0c895403bed829a) raffaele.pagano *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[09b14362fc01bae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09b14362fc01bae) patriziavillani *February 27, 2020*
+
+>**FIX Test on Progetti**
+>
+>[f20eb2e52b9b7dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f20eb2e52b9b7dd) marco.spasiano *February 27, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[a4eed8b81399c59](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4eed8b81399c59) patriziavillani *February 26, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[7f463ea402e4ca5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f463ea402e4ca5) patriziavillani *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[983cf01af46a906](https://github.com/consiglionazionaledellericerche/sigla-main/commit/983cf01af46a906) patriziavillani *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[38610da127b519b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/38610da127b519b) patriziavillani *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[0099e220c6ad208](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0099e220c6ad208) patriziavillani *February 26, 2020*
+
+>**Update tabelle_riferimento.rst**
+>
+>[4a1b50589c968b5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4a1b50589c968b5) patriziavillani *February 26, 2020*
+
+>**Variazioni di bilancio: estesa la possibilità di trasferire fondi su GAE Natura 6 di progetti attivi su progetti della Ragioneria (gestione attiva solo per variazioni alla Ragioneria) - Issue: #14**
+>
+>[fc303d2924c0ea1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc303d2924c0ea1) raffaele.pagano *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[0b42ebc39bb395e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0b42ebc39bb395e) patriziavillani *February 26, 2020*
+
+>**Update gae.rst**
+>
+>[784abd9c4cfcf8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/784abd9c4cfcf8d) patriziavillani *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[6d9554e9e4078b0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d9554e9e4078b0) patriziavillani *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[64adb24bd104567](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64adb24bd104567) patriziavillani *February 26, 2020*
+
+>**Update area_progettuale.rst**
+>
+>[120de2690730b9f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/120de2690730b9f) patriziavillani *February 26, 2020*
+
+>**Update area_progettuale.rst**
+>
+>[8467bcb7d13a0d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8467bcb7d13a0d4) patriziavillani *February 26, 2020*
+
+>**Update index.rst**
+>
+>[bd6bbf7f8cd2eb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd6bbf7f8cd2eb5) patriziavillani *February 26, 2020*
+
+>**Aggiunto test su creazione progetti**
+>
+>[8709fe1fa045108](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8709fe1fa045108) raffaele.pagano *February 26, 2020*
+
+>**Upgrade version of storage.cloud.version to 2.0.5**
+>
+>[c14b36a1f7032c0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c14b36a1f7032c0) marco.spasiano *February 26, 2020*
+
+>**Update progetto.rst**
+>
+>[ab6d008f63824a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab6d008f63824a1) patriziavillani *February 24, 2020*
+
+>**Update area_progettuale.rst**
+>
+>[a42b77a8fba2cb8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a42b77a8fba2cb8) patriziavillani *February 24, 2020*
+
+>**Update area_progettuale.rst**
+>
+>[955778cd00c9498](https://github.com/consiglionazionaledellericerche/sigla-main/commit/955778cd00c9498) patriziavillani *February 24, 2020*
+
+>**Update index.rst**
+>
+>[d3534720d4a82d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d3534720d4a82d5) patriziavillani *February 24, 2020*
+
+>**FIX maven plugin**
+>
+>[9ba91cc0284fa63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ba91cc0284fa63) marco.spasiano *February 24, 2020*
+
+>**Fix anomalie varie emerse durante la demo**
+>
+>[03cb5a00f998fa3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/03cb5a00f998fa3) gianfranco.gasparro *February 24, 2020*
+
+>**Fix Stampa e Ordine e criteri di ricerca per Visualizzazione righe di ordini e Evasione Forzata**
+>
+>[1fa607e1234bcbd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1fa607e1234bcbd) cirosalvio *February 24, 2020*
+
+>**Fix anomalie varie prima della demo**
+>
+>[58b7a10c2c66135](https://github.com/consiglionazionaledellericerche/sigla-main/commit/58b7a10c2c66135) gianfranco.gasparro *February 20, 2020*
+
+>**Gestito Searchtool With Like**
+>
+>[56de7e579e0288b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56de7e579e0288b) gianfranco.gasparro *February 20, 2020*
+
+>**Fix issue to search on ABIL_UTENTE_UOP_OPER**
+>
+>[a46043fcd036d4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a46043fcd036d4c) cirosalvio *February 18, 2020*
+
+>**Fix errore compilazione**
+>
+>[fcaf82f52859c58](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fcaf82f52859c58) gianfranco.gasparro *February 18, 2020*
+
+>**Fix errore compilazione**
+>
+>[6bf8b7600abcc27](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bf8b7600abcc27) gianfranco.gasparro *February 18, 2020*
+
+>**Add epub doc generate**
+>
+>[d210057b967563d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d210057b967563d) marco.spasiano *February 18, 2020*
+
+>**Add epub doc generate**
+>
+>[1ea38256836df94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ea38256836df94) marco.spasiano *February 18, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[1ceb1316b1070b1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ceb1316b1070b1) ciro.salvio *February 18, 2020*
+
+>**Fix Visualizzazione obbligazioni da ordini**
+>
+>[dd5bd53fb125790](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd5bd53fb125790) gianfranco.gasparro *February 17, 2020*
+
+>**Controllo IBAN per modalità di pagamento Terzi closed Issue #6**
+>
+>[7a09e5b2c962a68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a09e5b2c962a68) marco.spasiano *February 17, 2020*
+
+>**Gestione Conti su Ordini**
+>
+>[2a4a393411ea741](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2a4a393411ea741) gianfranco.gasparro *February 17, 2020*
+
+>**Gestione Conti su Ordini**
+>
+>[6f6edde7f145559](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6f6edde7f145559) gianfranco.gasparro *February 17, 2020*
+
+>**Add badge to Readme.md**
+>
+>[b5f89d7f915e2a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b5f89d7f915e2a6) marco.spasiano *February 15, 2020*
+
+>**FIX**
+>
+>[886e54aed459a01](https://github.com/consiglionazionaledellericerche/sigla-main/commit/886e54aed459a01) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[5fd0d7a2c24ad6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5fd0d7a2c24ad6a) marco.spasiano *February 14, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[8b03cf2b51f8347](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b03cf2b51f8347) ciro.salvio *February 14, 2020*
+
+>**FIX**
+>
+>[2bb532a53695e25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bb532a53695e25) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[a0d7593db2bae97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a0d7593db2bae97) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[11fc0679fa533c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11fc0679fa533c9) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[7e081ce12fcb157](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7e081ce12fcb157) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[e1849bcee5d8c33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1849bcee5d8c33) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[bc3eb77c47f878a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc3eb77c47f878a) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[e21f24bff49f2b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e21f24bff49f2b8) marco.spasiano *February 14, 2020*
+
+>**Delete CHANGELOG.md**
+>
+>[787dc6c47530431](https://github.com/consiglionazionaledellericerche/sigla-main/commit/787dc6c47530431) marco.spasiano *February 14, 2020*
+
+>**Delete CHANGELOG.md**
+>
+>[d92b825ca9ea966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d92b825ca9ea966) marco.spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[69bf0a7740b16ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69bf0a7740b16ba) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[657821b1fcea1e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/657821b1fcea1e1) Marco Spasiano *February 14, 2020*
+
+>**Update requirements.txt**
+>
+>[7f04ceed551c332](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f04ceed551c332) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[ef30338a3029f7a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef30338a3029f7a) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[605129117392f36](https://github.com/consiglionazionaledellericerche/sigla-main/commit/605129117392f36) Marco Spasiano *February 14, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[de48ba54ac7b413](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de48ba54ac7b413) ciro.salvio *February 14, 2020*
+
+>**Update tlsetup.sh**
+>
+>[aefefdac1307f24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aefefdac1307f24) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[7bee9e8c6dcd18b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bee9e8c6dcd18b) Marco Spasiano *February 14, 2020*
+
+>**Update Makefile**
+>
+>[65ecc1bed01694f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65ecc1bed01694f) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[eeb5ee80bb4e9c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eeb5ee80bb4e9c6) Marco Spasiano *February 14, 2020*
+
+>**Create tlsetup.sh**
+>
+>[6fc64ef15119272](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fc64ef15119272) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[7bdd8172a4cd161](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bdd8172a4cd161) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[0dde7a68dde5fe9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0dde7a68dde5fe9) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[46b81f91cbf8b11](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46b81f91cbf8b11) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[6697bd971921dc5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6697bd971921dc5) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[4095b84612e916c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4095b84612e916c) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[88eb8ca6cbd3d60](https://github.com/consiglionazionaledellericerche/sigla-main/commit/88eb8ca6cbd3d60) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[d174f590076a2ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d174f590076a2ec) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[80a51646810c75b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80a51646810c75b) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[e06d3d32f934098](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e06d3d32f934098) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[4be74bd9289d601](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4be74bd9289d601) Marco Spasiano *February 14, 2020*
+
+>**Create Makefile**
+>
+>[84a4a1a1c6956db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84a4a1a1c6956db) Marco Spasiano *February 14, 2020*
+
+>**Create .travis.yml**
+>
+>[b2e6d3ae5f65255](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2e6d3ae5f65255) Marco Spasiano *February 14, 2020*
+
+>**Fix Ricerca Impegni su Documento Generico Passivo: in alcuni casi non visualizzava la lista degli impegni se non dopo aver attivato e poi disattivato il flag Ente.**
+>
+>[a6e8da46995e5e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6e8da46995e5e1) raffaele.pagano *February 13, 2020*
+
+>**commit and Push Fix Descrption for Assigned Access and reafactor cercaAccessi e CercaRuoli for UtenteComponent**
+>
+>[f84bdece997087f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f84bdece997087f) ciro.salvio *February 13, 2020*
+
+>**Fix anomalia bene servizio non valido: sulla fattura era possibile associare un bene e servizio non valido. Ripristinato codice eliminato erroneamente a seguito di una precedente operazione di merge**
+>
+>[22ea279bd93eae0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22ea279bd93eae0) raffaele.pagano *February 13, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[3ecaa924daeda8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3ecaa924daeda8b) ciro.salvio *February 11, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[db317611ef50772](https://github.com/consiglionazionaledellericerche/sigla-main/commit/db317611ef50772) ciro.salvio *February 11, 2020*
+
+>**Aggiunto conto**
+>
+>[4fa1d456950b42c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4fa1d456950b42c) gianfranco.gasparro *February 11, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[d6735186dea3e6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d6735186dea3e6f) ciro.salvio *February 10, 2020*
+
+>**Servizio Rest: utility per lancio controllo correttezza variazione di bilancio, dal punto di vista dei progetti, anche dopo approvazione della stessa che la rende immodificabile.**
+>
+>[0e86c5d6cc17cb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0e86c5d6cc17cb5) raffaele.pagano *February 07, 2020*
+
+>**Fix Rimodulazione Progetti: corretto controllo nelle variazioni di bilancio in caso di spostamento somme dalla voce speciale di un progetto attivo.**
+>
+>[d9bcaef4b7d865c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9bcaef4b7d865c) raffaele.pagano *February 07, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[70cd2f41f3a58ee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70cd2f41f3a58ee) ciro.salvio *February 07, 2020*
+
+>**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
+>
+>[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
+
+>**Add test for stato predisposizione**
+>
+>[571ae759908e993](https://github.com/consiglionazionaledellericerche/sigla-main/commit/571ae759908e993) marco.spasiano *February 07, 2020*
+
+>**Upgrade version of storage cloud to 2.0.2, add test for Predisponi Mandato**
+>
+>[e89d6347ba10ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e89d6347ba10ae5) marco.spasiano *February 07, 2020*
+
+>**Specify version of storage-cloud [ci skip]**
+>
+>[454750ae0090660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/454750ae0090660) marco.spasiano *February 06, 2020*
+
+>**Update README.md**
+>
+>[ae760e2d646aec6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae760e2d646aec6) mspasiano *February 06, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[3be4470825e7e07](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3be4470825e7e07) ciro.salvio *February 04, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[8fc646cb0d4b4d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fc646cb0d4b4d3) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[0d2863f348b2761](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d2863f348b2761) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[16fb9e49040cb1d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16fb9e49040cb1d) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[1c9dafcc1452bc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1c9dafcc1452bc4) mspasiano *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[d2eae93713abdef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2eae93713abdef) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[eabe86df350424a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eabe86df350424a) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[d69dab77684928c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d69dab77684928c) patriziavillani *February 03, 2020*
+
+>**Create gestione_utenze.rst**
+>
+>[e20978ce68b4be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e20978ce68b4be4) patriziavillani *February 03, 2020*
+
+>**Update index.rst**
+>
+>[a4a0b4c82bda021](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4a0b4c82bda021) patriziavillani *February 03, 2020*
+
+>**Added jasper print Ordine**
+>
+>[38edca8627c44e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/38edca8627c44e5) ciro.salvio *January 30, 2020*
+
+>**Added print server parameter**
+>
+>[4e85d849ca854fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4e85d849ca854fa) ciro.salvio *January 30, 2020*
+
+>**Update and rename gae.md to gae.rst**
+>
+>[0ea3028bed80d09](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ea3028bed80d09) patriziavillani *January 30, 2020*
+
+>**Update competenza.rst**
+>
+>[54b3d41aebb7cd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54b3d41aebb7cd8) patriziavillani *January 30, 2020*
+
+>**Update competenza.rst**
+>
+>[79ddf1ef2b5ec4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/79ddf1ef2b5ec4c) patriziavillani *January 30, 2020*
+
+>**Create index.rst**
+>
+>[2fdade100c32ad5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fdade100c32ad5) patriziavillani *January 30, 2020*
+
+>**Update index.rst**
+>
+>[b1ffbe17c8ca46d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ffbe17c8ca46d) patriziavillani *January 30, 2020*
+
+>**Update and rename competenza.md to competenza.rst**
+>
+>[19f44eff0bcdd03](https://github.com/consiglionazionaledellericerche/sigla-main/commit/19f44eff0bcdd03) patriziavillani *January 30, 2020*
+
+>**Update index.rst**
+>
+>[cf72cea21f04deb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf72cea21f04deb) patriziavillani *January 30, 2020*
+
+>**Create index.rst**
+>
+>[ace03ce491e8a9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ace03ce491e8a9c) patriziavillani *January 30, 2020*
+
+>**Update and rename struttura_organizzativa.md to struttura_organizzativa.rst**
+>
+>[09b45ee512dca6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09b45ee512dca6f) patriziavillani *January 30, 2020*
+
+>**Fix Rimodulazione Progetti: limitato il controllo di chiusura del bilancio, necessario per proporre rimodulazioni anche su voci economiche presenti in bilancio, ai soli CDS partecipanti al progetto oggetto di modifica.**
+>
+>[8c97430cd21542f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c97430cd21542f) raffaele.pagano *January 30, 2020*
+
+>**Variazioni Bilancio Residuo: aggiunto tasto che consente di riportare una variazione residua dallo stato Approvato allo stato Definitivo. Il tasto è visibile solo per cds abilitati ad approvare ed utenti di tipo Supervisore.**
+>
+>[f9f2141d16226fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f2141d16226fb) raffaele.pagano *January 30, 2020*
+
+>**Commit and Push Ordmag ISS functionality**
+>
+>[610ae883002cbbd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/610ae883002cbbd) ciro.salvio *January 27, 2020*
+
+>**Commit and Push Ordmag ISS functionality**
+>
+>[a795556a789dbfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a795556a789dbfc) ciro.salvio *January 27, 2020*
+
+>**Commit and Push Ordmag ISS functionality**
+>
+>[614bfa1d5d62d93](https://github.com/consiglionazionaledellericerche/sigla-main/commit/614bfa1d5d62d93) ciro.salvio *January 27, 2020*
+
+>**BUG nella generazione del flusso SIOPE+, quando per lo stesso codice SIOPE ci sono due CUP diversi**
+>
+>[ac2dc8dd79abf7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac2dc8dd79abf7c) marco.spasiano *January 27, 2020*
+
+>**Add docs for Sphinx**
+>
+>[7076399a6e4050a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7076399a6e4050a) marco.spasiano *January 27, 2020*
+
+>**Add docs for Sphinx**
+>
+>[fa81e934353da3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa81e934353da3d) marco.spasiano *January 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[1e52fe949fa39f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e52fe949fa39f6) marco.spasiano *January 25, 2020*
+
+>**Modify Changelog**
+>
+>[e0aa2e8f4d84cef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e0aa2e8f4d84cef) marco.spasiano *January 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[a8ade95e9c7cc62](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8ade95e9c7cc62) marco.spasiano *January 25, 2020*
+
+>**Modify Changelog**
+>
+>[0bfa62040d78a67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfa62040d78a67) marco.spasiano *January 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[8efd88161db60df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8efd88161db60df) marco.spasiano *January 25, 2020*
+
+>**Ripristinate Modifiche per Gestione Ordini**
+>
+>[8440e12bcff5c96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8440e12bcff5c96) gianfranco.gasparro *January 24, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto e visualizzazione voci movimentate non associate in caso di accesso da anno successivo a quello del piano economico.**
+>
+>[ac9722860ec6952](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac9722860ec6952) raffaele.pagano *January 22, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
+>
+>[e79f3b9c133ad6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e79f3b9c133ad6d) raffaele.pagano *January 22, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
+>
+>[d227d80037e17a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d227d80037e17a0) raffaele.pagano *January 22, 2020*
+
+>**Ingrandito campo a 100 caratteri per inserimento email per fatturazione elettronica**
+>
+>[e3af1ed5393b4db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3af1ed5393b4db) gianfranco.gasparro *January 21, 2020*
+
+>**Corretta valorizzazione dati incasso su generico e reversale. Ricalcolato importo accertamento per compensazioni**
+>
+>[0f6a16ee4631e9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f6a16ee4631e9a) gianfranco.gasparro *January 21, 2020*
+
+>**Nascosta TAB di abilitazione Ordini nel caso di Gestione Ordini non Attiva**
+>
+>[9d40e70503dbadd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d40e70503dbadd) gianfranco.gasparro *January 20, 2020*
+
+>**FIX test**
+>
+>[474a262960da9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/474a262960da9f9) marco.spasiano *January 20, 2020*
+
+>**FIX test**
+>
+>[8b697d5d120ebda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b697d5d120ebda) marco.spasiano *January 20, 2020*
+
+>**FIX test**
+>
+>[26e87aba85863a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26e87aba85863a9) marco.spasiano *January 20, 2020*
+
+>**FIX gitlabci m2 cache**
+>
+>[24605d07a7b3393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24605d07a7b3393) marco.spasiano *January 20, 2020*
+
+>**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
+>
+>[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
+
+
+## Release 6.3.48  -- _September 13, 2021_ 
+**Changes**
+
+>**Economica: le scritture di economica di mandati/reverslai recuperano i conti debito/credito dai documenti pagati/riscossi**
+>
+>[cbaaaee3163a044](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cbaaaee3163a044) raffaelepagano *September 13, 2021*
+
+
+## Release 6.3.45  -- _July 28, 2021_ 
+### Jira ORA-00907 
+
+>**FIX ORA-00907 on search incarichi**
+>
+>[ca865b2c45b22d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca865b2c45b22d3) marco.spasiano *July 28, 2021*
+
+
+## Release 6.3.44  -- _July 16, 2021_ 
+**Changes**
+
+>**Aggiunta delle colonne "descrizione" e  "classificazione cori" dei codici di ritenuta Co.Ri nella fase di estrazione excel.**
+>
+>[5d2f300584bfd0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d2f300584bfd0b) marco.spasiano *July 16, 2021*
+
+
+## Release 6.3.43  -- _July 13, 2021_ 
+**Changes**
+
+>**Eliminata la data scadenza pagamento per F24EP**
+>
+>[c02eff84f7ddd8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c02eff84f7ddd8d) marco.spasiano *July 13, 2021*
+
+
+## Release 6.3.42  -- _July 08, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sulle modalità di pagamento, può esistere solo una tra "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A" e "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"**
+>
+>[69ffc800d01c588](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69ffc800d01c588) marco.spasiano *July 08, 2021*
+
+>**Se siopeplus non è attivo, genera sempre il flusso OPI**
+>
+>[a474d599a074633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a474d599a074633) marco.spasiano *July 08, 2021*
+
+
+## Release 6.3.40  -- _July 07, 2021_ 
+**Changes**
+
+>**Se siopeplus non è attivo, le distinte sono sempre da flusso**
+>
+>[7cb414925f23df2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cb414925f23df2) marco.spasiano *July 07, 2021*
+
+
+## Release 6.3.39  -- _July 06, 2021_ 
+**Changes**
+
+>**Upgrade siopeplus artifact to 1.0.0**
+>
+>[774bdc9ff5f9947](https://github.com/consiglionazionaledellericerche/sigla-main/commit/774bdc9ff5f9947) marco.spasiano *July 06, 2021*
+
+
+## Release 6.3.38  -- _July 06, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sul codice CIG**
+>
+>[96cf2fa819f79b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96cf2fa819f79b7) marco.spasiano *July 06, 2021*
+
+
+## Release 6.3.34  -- _June 29, 2021_ 
+**Changes**
+
+>**Corretta GET per Consultazioni REST**
+>
+>[362806bcd2ab572](https://github.com/consiglionazionaledellericerche/sigla-main/commit/362806bcd2ab572) gianfranco.gasparro *June 29, 2021*
+
+>**Closed Issue #80**
+>
+>[c45b43db2000f28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45b43db2000f28) marco.spasiano *June 25, 2021*
+
+>**FIX carica fattua elettronica**
+>
+>[ce34b95642c29db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce34b95642c29db) marco.spasiano *June 21, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[6640ffeababf78d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6640ffeababf78d) marco.spasiano *June 21, 2021*
+
+
+## Release 6.3.32  -- _June 18, 2021_ 
+**Changes**
+
+>**Rimosso controllo sulla consuntività per le fatture elettroniche su cui non sono ancora stampati i registri IVA**
+>
+>[2e91f90ab2a684c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e91f90ab2a684c) marco.spasiano *June 18, 2021*
+
+>**FIX controllo quadratura natura per la fattura elettronica, aggiunto imponibile.**
+>
+>[64154baa27d787d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64154baa27d787d) marco.spasiano *June 18, 2021*
+
+
+## Release 6.3.31  -- _June 16, 2021_ 
+**Changes**
+
+>**Corretto recupero mandati per consultazione pagamenti**
+>
+>[06b7664b39a2760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06b7664b39a2760) gianfranco.gasparro *June 16, 2021*
+
+>**Add api rest docs**
+>
+>[7bb392888aebc29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bb392888aebc29) marco.spasiano *June 16, 2021*
+
+>**Change email message to error on log**
+>
+>[c6c3ce13deb3890](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c6c3ce13deb3890) marco.spasiano *May 31, 2021*
+
+
+### Jira CVE-2021 
+
+>**CVE-2021-29425**
+> * Vulnerable versions: &lt; 2.7
+> * Patched version: 2.7
+> * In Apache Commons IO before 2.7, When invoking the method FileNameUtils.normalize with an improper input string, like &quot;//../foo&quot;, or &quot;\..\foo&quot;, the result would be the same value, thus possibly providing access to files in the parent directory, but not further above (thus &quot;limited&quot; path traversal), if the calling code would use the result to construct a path value.
+>
+>[fc9d14eb7fd77ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc9d14eb7fd77ca) marco.spasiano *May 31, 2021*
+
+
+## Release 6.3.30  -- _June 15, 2021_ 
+**Changes**
+
+>**Gestita registrazione nota credito con diverse riche di fattura ed un unico bene**
+>
+>[5a36ed92082141b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5a36ed92082141b) gianfranco.gasparro *June 15, 2021*
+
+>**Progetti: aggiunta possibilità di allegare più file di tipo generico**
+>
+>[f82676d1e16f287](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f82676d1e16f287) salvatorepagano *June 10, 2021*
+
+
+## Release 6.3.29  -- _May 21, 2021_ 
+**Changes**
+
+>**Aggiunta nella consultazione per GAE/Residuo Voce la colonna esercizio residuo**
+>
+>[3b0df912dd43da4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b0df912dd43da4) gianfranco.gasparro *May 21, 2021*
+
+
+## Release 6.3.28  -- _May 18, 2021_ 
+**Changes**
+
+>**Perla: aggiornamento Perla-Service**
+>
+>[b2140c16a105182](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2140c16a105182) raffaele.pagano *May 18, 2021*
+
+>**Variazioni: gestita la possibilità di approvare trasferimenti alla Ragioneria da progetti attivi su FES a stesso progetto su stessa Fonte**
+>
+>[54ee368a3d1853d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54ee368a3d1853d) raffaele.pagano *May 18, 2021*
+
+>**Fix Progetti: corretta anomalia visualizzazione allegati**
+>
+>[896a9bf01e7af8f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/896a9bf01e7af8f) raffaele.pagano *May 13, 2021*
+
+
+## Release 6.3.27  -- _May 12, 2021_ 
+**Changes**
+
+>**Rilascio consultazione GAE Residui Spesa con dettaglio VOCE**
+>
+>[d48dc16066a317b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d48dc16066a317b) gianfranco.gasparro *May 12, 2021*
+
+>**Fix Stampa Progetti: corretto funzionamento flag 'Stampa solo Gae Movimentate'**
+>
+>[8c7d5a1c7b3751b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c7d5a1c7b3751b) raffaele.pagano *May 12, 2021*
+
+>**Fix Incarichi - Allineata view v_incarichi_elenco_fp alle modifiche apportate a v_incarichi_elenco**
+>
+>[e09a119195da173](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e09a119195da173) raffaele.pagano *April 29, 2021*
+
+
+## Release 6.3.26  -- _April 28, 2021_ 
+**Changes**
+
+>**Fix Incarichi:**
+> * 1) non pubblicava gli attestati di insussistenza.
+> * 2) spostato il controllo dei 3 mesi della data di stipula alla data di fine pubblicazione.
+>
+>[6d093c95237e031](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d093c95237e031) raffaele.pagano *April 28, 2021*
+
+>**Comunicazione PerlaPa: adeguamento procedure per gestire la comunicazione al nuovo sistema Perla attivo dal 2018.**
+> * 1) eliminata obbligatorietà della Dichiarazione Altri rapporti anche per Occasionali in quanto già compresa nella Dichiarazione Insussistenza Conflitti Interesse;
+> * 3) limitata al pdf la tipologia di file allegabili per Curriculum e Dichiarazione Insussistenza Conflitti Interesse;
+> * 4) inserito limite di 1MB per Curriculum e Dichiarazione Insussistenza Conflitti Interesse;
+>
+>[d0fa900ab5f8dd0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d0fa900ab5f8dd0) raffaele.pagano *April 23, 2021*
+
+
+## Release 6.3.25  -- _April 19, 2021_ 
+**Changes**
+
+>**Progetti: corretta anomalia visualizzazione allegati nelle rimodulazioni.**
+>
+>[d9c9b50cf34a584](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9c9b50cf34a584) raffaele.pagano *April 19, 2021*
+
+
+## Release 6.3.18  -- _April 07, 2021_ 
+**Changes**
+
+>**Tolti i mandati a regolamento sospeso dell'anno diverso da quello di elaborazione**
+>
+>[91d3baae7e07b4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91d3baae7e07b4f) gianfranco.gasparro *April 07, 2021*
+
+>**Rilascio Consultazione Rest Utenti per helpdesk**
+>
+>[ba0d62857ce48b2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba0d62857ce48b2) gianfranco.gasparro *April 06, 2021*
+
+
+## Release 6.3.17  -- _March 25, 2021_ 
+**Changes**
+
+>**Rilascio aggiornamento metadati fatture attive**
+>
+>[189d816e66f6d52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/189d816e66f6d52) gianfranco.gasparro *March 25, 2021*
+
+>**Fix Estrazione CU**
+>
+>[7924bd915e141ea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7924bd915e141ea) gianfranco.gasparro *March 25, 2021*
+
+>**Fix Estrazione CU**
+>
+>[c80ab9aca77456e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c80ab9aca77456e) gianfranco.gasparro *March 24, 2021*
+
+>**Fix ricerca che non tornava dati**
+>
+>[53a5ed36de852e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53a5ed36de852e7) gianfranco.gasparro *March 22, 2021*
+
+
+## Release 6.3.15  -- _March 23, 2021_ 
+**Changes**
+
+>**FIX riporta indietro accertamento**
+>
+>[8042010221e4061](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8042010221e4061) marco.spasiano *March 23, 2021*
+
+
+## Release 6.3.13  -- _March 20, 2021_ 
+**Changes**
+
+>**FIX H2 test**
+>
+>[70a777b8a17435d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70a777b8a17435d) marco.spasiano *March 20, 2021*
+
+
+## Release 6.3.12  -- _March 20, 2021_ 
+**Changes**
+
+>**FIX H2 test**
+>
+>[f5e2149e7fde20e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f5e2149e7fde20e) marco.spasiano *March 19, 2021*
+
+
+## Release 6.3.11  -- _March 19, 2021_ 
+**Changes**
+
+>**Aggiunta la possibilità di visualizzare i file allegati al mandato anche dalla consultazione stato invio mandati**
+>
+>[7b9cd0852d14007](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b9cd0852d14007) marco.spasiano *March 19, 2021*
+
+>**Cambiato anno**
+>
+>[c1053582513d0a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c1053582513d0a5) gianfranco.gasparro *March 19, 2021*
+
+>**FIX NPE on attach invoice**
+>
+>[717cb929dcfa709](https://github.com/consiglionazionaledellericerche/sigla-main/commit/717cb929dcfa709) marco.spasiano *March 19, 2021*
+
+>**Cambiato anno**
+>
+>[cb034e57e7ac8cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb034e57e7ac8cb) gianfranco.gasparro *March 18, 2021*
+
+>**Cambiato anno**
+>
+>[524d6825e75aa02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/524d6825e75aa02) gianfranco.gasparro *March 18, 2021*
+
+>**Modifiche CU**
+>
+>[aa1c835884367b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aa1c835884367b4) gianfranco.gasparro *March 18, 2021*
+
+>**Nella selezione dei mandati annullati da firmare non veniva fatto il controllo sull'attivazione di SIOPE+**
+>
+>[8b48f8486cc5558](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b48f8486cc5558) marco.spasiano *March 15, 2021*
+
+>**FIX file name in docs**
+>
+>[41e311f294484d9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/41e311f294484d9) marco.spasiano *March 15, 2021*
 
 >**Gestione distinta annulli senza l'integrazione con SIOPE+**
 >
@@ -93,6 +2217,10 @@
 >
 >[6fbb8715e3ee70b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fbb8715e3ee70b) patriziavillani *March 01, 2021*
 
+>**Modifiche PagoPA**
+>
+>[755005de1b41604](https://github.com/consiglionazionaledellericerche/sigla-main/commit/755005de1b41604) gianfranco.gasparro *February 28, 2021*
+
 >**Update nota_credito_attiva.rst**
 >
 >[791d7d316b50715](https://github.com/consiglionazionaledellericerche/sigla-main/commit/791d7d316b50715) patriziavillani *February 26, 2021*
@@ -165,6 +2293,34 @@
 >
 >[6668bec31322ccc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6668bec31322ccc) patriziavillani *February 26, 2021*
 
+>**Add circleci build**
+>
+>[3fdb2ef5c7deef9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3fdb2ef5c7deef9) marco.spasiano *February 24, 2021*
+
+>**Updated config.yml**
+>
+>[447aae8b2953c52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/447aae8b2953c52) Marco Spasiano *February 24, 2021*
+
+>**Add circleci build**
+>
+>[68bbb593aa5f3ed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/68bbb593aa5f3ed) marco.spasiano *February 24, 2021*
+
+>**Fix**
+>
+>[486ecf861ebc55f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/486ecf861ebc55f) gianfranco.gasparro *January 19, 2021*
+
+>**Aggiornamento PagoPA**
+>
+>[47251ea2f38bcd1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/47251ea2f38bcd1) gianfranco.gasparro *June 05, 2020*
+
+>**Inizio Gestione PagoPA**
+>
+>[a38e8ce64d3804f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a38e8ce64d3804f) gianfranco.gasparro *May 28, 2020*
+
+>**Aggiunta e corretta view di controllo sulle partite di giro**
+>
+>[8d5d4e97b0e54ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d5d4e97b0e54ff) gianfranco.gasparro *May 25, 2020*
+
 
 ## Release 6.3.7  -- _March 05, 2021_ 
 **Changes**
@@ -235,94 +2391,6 @@
 >
 >[78535cca862ac82](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78535cca862ac82) marco.spasiano *February 25, 2021*
 
->**Add circleci build**
->
->[3fdb2ef5c7deef9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3fdb2ef5c7deef9) marco.spasiano *February 24, 2021*
-
->**Updated config.yml**
->
->[447aae8b2953c52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/447aae8b2953c52) Marco Spasiano *February 24, 2021*
-
->**Add circleci build**
->
->[68bbb593aa5f3ed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/68bbb593aa5f3ed) marco.spasiano *February 24, 2021*
-
->**Update fattura_passiva.rst**
->
->[bc16a899de3f0a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc16a899de3f0a0) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[691fc521dceccac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/691fc521dceccac) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[7c28451c4cce507](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c28451c4cce507) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[44f0b6c1013d956](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44f0b6c1013d956) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[1e5c7c3c6357d7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e5c7c3c6357d7c) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[be8d7a81331f921](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be8d7a81331f921) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[f349ac4007d9c6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f349ac4007d9c6f) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[25e9785ebc2b348](https://github.com/consiglionazionaledellericerche/sigla-main/commit/25e9785ebc2b348) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[72f95819e98ce67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72f95819e98ce67) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[63117708bf50441](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63117708bf50441) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[63c7c646df2787f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63c7c646df2787f) patriziavillani *February 23, 2021*
-
->**Update fattura_passiva.rst**
->
->[c540439ebd491f5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c540439ebd491f5) patriziavillani *February 23, 2021*
-
->**Update index.rst**
->
->[621f92534c85b31](https://github.com/consiglionazionaledellericerche/sigla-main/commit/621f92534c85b31) patriziavillani *February 23, 2021*
-
->**Update index.rst**
->
->[31d689ac4020948](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31d689ac4020948) patriziavillani *February 23, 2021*
-
->**Update fattura_attiva.rst**
->
->[e7039242c5652b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7039242c5652b7) patriziavillani *February 23, 2021*
-
->**Update fattura_attiva.rst**
->
->[c17f8395876f7dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c17f8395876f7dc) patriziavillani *February 23, 2021*
-
->**Delete Fatturefattura_attiva_elettronica.rst**
->
->[f29865c0002715c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f29865c0002715c) patriziavillani *February 23, 2021*
-
->**Create Fatturefattura_attiva_elettronica.rst**
->
->[5c9badd9dd5f656](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c9badd9dd5f656) patriziavillani *February 23, 2021*
-
->**Create fattura_attiva_elettronica.rst**
->
->[4c2a5a71dd953fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c2a5a71dd953fe) patriziavillani *February 23, 2021*
-
 >**Fix procedure CNRMIG080**
 >
 >[13a4e85440e0920](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13a4e85440e0920) raffaele.pagano *February 12, 2021*
@@ -350,22 +2418,6 @@
 >**Inizio integrazione ACE**
 >
 >[3198c3d4bfc4966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3198c3d4bfc4966) gianfranco.gasparro *February 08, 2021*
-
->**FIX error on compile**
->
->[fe30fc242eb8083](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe30fc242eb8083) marco.spasiano *February 08, 2021*
-
->**Fix view**
->
->[017334be889f0ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/017334be889f0ce) gianfranco.gasparro *February 07, 2021*
-
-
-## Release 6.3.0  -- _February 22, 2021_ 
-**Changes**
-
->**FIX identificativo flusso OPI**
->
->[e7548b8c7aa524f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7548b8c7aa524f) marco.spasiano *February 22, 2021*
 
 
 ## Release 6.2.103  -- _February 19, 2021_ 
@@ -542,6 +2594,14 @@
 >**Update index.rst**
 >
 >[c34866bc4ae8157](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c34866bc4ae8157) patriziavillani *February 11, 2021*
+
+>**FIX error on compile**
+>
+>[fe30fc242eb8083](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe30fc242eb8083) marco.spasiano *February 08, 2021*
+
+>**Fix view**
+>
+>[017334be889f0ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/017334be889f0ce) gianfranco.gasparro *February 07, 2021*
 
 
 ## Release 6.2.97  -- _February 15, 2021_ 
@@ -1841,46 +3901,6 @@
 >
 >[1beeb085812fdfb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1beeb085812fdfb) gianfranco.gasparro *May 04, 2020*
 
->**Corretto test per comunicazione dati pagamenti**
->
->[497a3e5b6520c2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/497a3e5b6520c2e) gianfranco.gasparro *April 16, 2020*
-
->**Corretto test per comunicazione dati pagamenti**
->
->[379603aeda42335](https://github.com/consiglionazionaledellericerche/sigla-main/commit/379603aeda42335) gianfranco.gasparro *April 16, 2020*
-
->**Corretto test per comunicazione dati pagamenti**
->
->[b02a7f13b887c5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b02a7f13b887c5c) gianfranco.gasparro *April 16, 2020*
-
->**Adeguato a swagger i servizi REST di Missioni e Contratto**
->
->[f3f768f6b2c478d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3f768f6b2c478d) gianfranco.gasparro *April 16, 2020*
-
->**Fix allegati progetti: corretta errata visualizzazione di file allegati al progetto (venivano visualizzati più volte gli stessi file)**
->
->[2b807e0755a22df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b807e0755a22df) raffaele.pagano *April 15, 2020*
-
->**Fix**
->
->[f9fb58f2f09242c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9fb58f2f09242c) gianfranco.gasparro *April 15, 2020*
-
->**Add json path for swagger**
->
->[37d40dde54fcfc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d40dde54fcfc7) marco.spasiano *April 15, 2020*
-
->**FIX maven.repo on docker compose [ci skip]**
->
->[6fa78ab6028da18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fa78ab6028da18) marco.spasiano *April 14, 2020*
-
->**Added swagger for API documentation and change Thorntail version to 2.6.0.Final**
->
->[d56bf4ac17c4b79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d56bf4ac17c4b79) marco.spasiano *April 14, 2020*
-
->**Completata comunicazione dati pagamenti**
->
->[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
-
 
 ## Release 6.2.44  -- _October 06, 2020_ 
 **Changes**
@@ -2376,10 +4396,6 @@
 >
 >[44cad47d982be8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44cad47d982be8d) raffaele.pagano *June 05, 2020*
 
->**Aggiunta e corretta view di controllo sulle partite di giro**
->
->[8d5d4e97b0e54ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d5d4e97b0e54ff) gianfranco.gasparro *May 25, 2020*
-
 
 ## Release 6.2.20  -- _June 08, 2020_ 
 **Changes**
@@ -2521,6 +4537,38 @@
 >[cecf12ae1f1150b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cecf12ae1f1150b) raffaele.pagano *April 20, 2020*
 
 
+## Release 6.2.8  -- _April 20, 2020_ 
+**Changes**
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[497a3e5b6520c2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/497a3e5b6520c2e) gianfranco.gasparro *April 16, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[379603aeda42335](https://github.com/consiglionazionaledellericerche/sigla-main/commit/379603aeda42335) gianfranco.gasparro *April 16, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[b02a7f13b887c5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b02a7f13b887c5c) gianfranco.gasparro *April 16, 2020*
+
+>**Adeguato a swagger i servizi REST di Missioni e Contratto**
+>
+>[f3f768f6b2c478d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3f768f6b2c478d) gianfranco.gasparro *April 16, 2020*
+
+>**Fix allegati progetti: corretta errata visualizzazione di file allegati al progetto (venivano visualizzati più volte gli stessi file)**
+>
+>[2b807e0755a22df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b807e0755a22df) raffaele.pagano *April 15, 2020*
+
+>**Fix**
+>
+>[f9fb58f2f09242c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9fb58f2f09242c) gianfranco.gasparro *April 15, 2020*
+
+>**Completata comunicazione dati pagamenti**
+>
+>[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
+
+
 ## Release 6.2.7  -- _April 07, 2020_ 
 **Changes**
 
@@ -2535,10 +4583,6 @@
 >**FIX sphinx-contrib images**
 >
 >[9d4e7395bfb58df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d4e7395bfb58df) Marco Spasiano *April 06, 2020*
-
-
-## Release 6.2.6  -- _April 06, 2020_ 
-**Changes**
 
 >**Rimossa l'autenticazione per la ricerca dei Terzi**
 >
@@ -2576,350 +4620,6 @@
 >
 >[a170e20766a05fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a170e20766a05fa) marco.spasiano *April 03, 2020*
 
->**FIX maven import org.slf4j:slf4j-api**
->
->[57bd8659b2c0968](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57bd8659b2c0968) marco.spasiano *April 02, 2020*
-
->**Fix tests. Issue #7**
->
->[fc1741b6101a381](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc1741b6101a381) raffaele.pagano *April 01, 2020*
-
->**Fix tests. Issue #7**
->
->[bb0088a421243a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bb0088a421243a1) raffaele.pagano *April 01, 2020*
-
->**Rimodulazione Progetti: in fase di modifica della data di inizio/fine/proroga progetto il controllo di esistenza di obbligazioni con data coerente ai nuovi valori viene effettuata limitatamente alle obbligazioni di importo positivo.**
->
->[31cdb45c476d22b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31cdb45c476d22b) raffaele.pagano *April 01, 2020*
-
->**La soluzione consiste nel visualizzare i file presenti non solo nella cartella del progetto della attuale UO Coordinatrice ma anche di quelli eventuali presenti nelle cartelle progetto delle altre Uo partecipanti, tra le quali figurano anche le vecchie UO Coordinatrici. Resolve issue #7**
->
->[7363c4510a4851f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7363c4510a4851f) raffaele.pagano *April 01, 2020*
-
->**FIX project yml for bind credential**
->
->[67c1fe83ae938fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/67c1fe83ae938fa) marco.spasiano *April 01, 2020*
-
->**Add security-domain sigla-auth and ldap configuration**
->
->[da436c44c9996b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da436c44c9996b9) marco.spasiano *March 31, 2020*
-
->**Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: inserito controllo limite classificazione per cds nel momento in cui viene resa definitiva una variazione di competenza**
->
->[e47b20fc4ca4448](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e47b20fc4ca4448) raffaele.pagano *March 29, 2020*
-
->**Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: inseriti controlli in fase di assunzione/modifica impegno residuo e su variazioni residue**
->
->[06ade092bce10ae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06ade092bce10ae) raffaele.pagano *March 27, 2020*
-
->**Fix Variazioni di Competenza: corretto controllo di associazione voci movimentate. Su progetti scaduti per le variazioni di competenza di maggiore entrara/spesa vengono visualizzate sempre tutte le voci.**
->
->[48f7bd901a8e7fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/48f7bd901a8e7fd) raffaele.pagano *March 27, 2020*
-
->**Fix Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: allineamento view per nuovo campo su Elemento_voce**
->
->[23be8c279942dc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23be8c279942dc4) raffaele.pagano *March 27, 2020*
-
->**Update struttura_organizzativa.rst**
->
->[7b2b9a14880949e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b2b9a14880949e) patriziavillani *March 24, 2020*
-
->**Update struttura_organizzativa.rst**
->
->[33d47036b31d606](https://github.com/consiglionazionaledellericerche/sigla-main/commit/33d47036b31d606) patriziavillani *March 24, 2020*
-
->**Update index.rst**
->
->[30dd21913c4d423](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30dd21913c4d423) patriziavillani *March 24, 2020*
-
->**Update nuovo_layout.rst**
->
->[46d7f3260157168](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46d7f3260157168) patriziavillani *March 24, 2020*
-
->**Update piano_conti_finanziario.rst**
->
->[35af09708e7f186](https://github.com/consiglionazionaledellericerche/sigla-main/commit/35af09708e7f186) patriziavillani *March 24, 2020*
-
->**Remove user from screenshot**
->
->[0a8b9edfabad9ae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0a8b9edfabad9ae) marco.spasiano *March 24, 2020*
-
->**Update nuovo_layout.rst**
->
->[6ee8624bede43e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6ee8624bede43e1) patriziavillani *March 24, 2020*
-
->**Update nuovo_layout.rst**
->
->[ec35409eddf9ed1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ec35409eddf9ed1) patriziavillani *March 24, 2020*
-
->**Update and rename nuovo_layout.md to nuovo_layout.rst**
->
->[4b32da67ef44cfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4b32da67ef44cfc) patriziavillani *March 24, 2020*
-
->**Update coda_di_stampa.rst**
->
->[84699a4db5a0fc6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84699a4db5a0fc6) patriziavillani *March 24, 2020*
-
->**Update coda_di_stampa.rst**
->
->[86d720f820278d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/86d720f820278d5) patriziavillani *March 24, 2020*
-
->**Add files via upload**
->
->[0ff63d84d722a18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ff63d84d722a18) patriziavillani *March 24, 2020*
-
->**Create coda.png**
->
->[2c0ab32ee761006](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c0ab32ee761006) patriziavillani *March 24, 2020*
-
->**Update coda_di_stampa.rst**
->
->[8402353c6252cc5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8402353c6252cc5) patriziavillani *March 24, 2020*
-
->**Delete coda_file_excel.rst**
->
->[dfd6e9143281a40](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dfd6e9143281a40) patriziavillani *March 24, 2020*
-
->**Update index.rst**
->
->[98826f0391520cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/98826f0391520cb) patriziavillani *March 24, 2020*
-
->**Update nuovo_layout.md**
->
->[3e38249297f9a24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3e38249297f9a24) patriziavillani *March 24, 2020*
-
->**Update stampe.rst**
->
->[8360dc3a2607ad0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8360dc3a2607ad0) patriziavillani *March 24, 2020*
-
->**Update stampe.rst**
->
->[d4498f9e78feeaf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4498f9e78feeaf) patriziavillani *March 24, 2020*
-
->**Update stampe.rst**
->
->[b12f31e20de5b53](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b12f31e20de5b53) patriziavillani *March 24, 2020*
-
->**Update index.rst**
->
->[983b6dbe139bfc3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/983b6dbe139bfc3) patriziavillani *March 24, 2020*
-
->**Update index.rst**
->
->[fa0c20ebf816187](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa0c20ebf816187) patriziavillani *March 24, 2020*
-
->**Create stampe.rst**
->
->[5acb85eef249d12](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5acb85eef249d12) patriziavillani *March 24, 2020*
-
->**Update coda_file_excel.rst**
->
->[15746c2454e3a2f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/15746c2454e3a2f) patriziavillani *March 24, 2020*
-
->**Update coda_file_excel.rst**
->
->[888683a8566b9eb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/888683a8566b9eb) patriziavillani *March 24, 2020*
-
->**Update coda_di_stampa.rst**
->
->[c7bd15f625e0d96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7bd15f625e0d96) patriziavillani *March 24, 2020*
-
->**Update nuovo_layout.md**
->
->[e6d50f342dca5a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e6d50f342dca5a9) patriziavillani *March 24, 2020*
-
->**Update coda_file_excel.rst**
->
->[b220a891ad41d6b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b220a891ad41d6b) patriziavillani *March 24, 2020*
-
->**Update appendix.rst**
->
->[f671650769fde68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f671650769fde68) patriziavillani *March 24, 2020*
-
->**Update nuovo_layout.md**
->
->[5b5dccce000047f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b5dccce000047f) patriziavillani *March 24, 2020*
-
->**Update index.rst**
->
->[24338e4b6b36ce1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24338e4b6b36ce1) patriziavillani *March 24, 2020*
-
->**Update gae.rst**
->
->[906a7768ecaf8b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/906a7768ecaf8b7) patriziavillani *March 23, 2020*
-
->**Update conf.py**
->
->[d1468a1e411b00f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1468a1e411b00f) Marco Spasiano *March 23, 2020*
-
->**Update .travis.yml**
->
->[7025b6ec2b95e6e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7025b6ec2b95e6e) Marco Spasiano *March 23, 2020*
-
->**Create .travis.yml**
->
->[15b088af106641b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/15b088af106641b) patriziavillani *March 23, 2020*
-
->**Create conf.py**
->
->[4b1fc85e4d4425a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4b1fc85e4d4425a) patriziavillani *March 23, 2020*
-
->**cannot merge**
->
->[93caf8f1ea2b8b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/93caf8f1ea2b8b9) Marco Spasiano *March 23, 2020*
-
->**cannot merge**
->
->[412319ca4f4e19e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/412319ca4f4e19e) Marco Spasiano *March 23, 2020*
-
->**Update conf.py**
->
->[5fbcc2e88858229](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5fbcc2e88858229) patriziavillani *March 19, 2020*
-
->**Update .travis.yml**
->
->[0fdc5855641e3b2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0fdc5855641e3b2) patriziavillani *March 19, 2020*
-
->**Update gae.rst**
->
->[95e2ecf069ed08e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95e2ecf069ed08e) patriziavillani *March 18, 2020*
-
->**Update gae.rst**
->
->[d4da27188f4f86a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4da27188f4f86a) patriziavillani *March 18, 2020*
-
->**Update gae.rst**
->
->[8e536d9d7944b7a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8e536d9d7944b7a) patriziavillani *March 18, 2020*
-
->**Update gae.rst**
->
->[a298d09063f0f6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a298d09063f0f6d) patriziavillani *March 18, 2020*
-
->**Update progetto.rst**
->
->[e95caa4a1def116](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e95caa4a1def116) patriziavillani *March 03, 2020*
-
->**Update progetto.rst**
->
->[40bb11ebe2359a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40bb11ebe2359a4) patriziavillani *March 03, 2020*
-
->**Update progetto.rst**
->
->[1a72bfc40142c0f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a72bfc40142c0f) patriziavillani *March 02, 2020*
-
->**Update progetto.rst**
->
->[32254fe8b7483a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/32254fe8b7483a5) patriziavillani *February 27, 2020*
-
->**Update progetto.rst**
->
->[00f5a570f99bd5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/00f5a570f99bd5c) patriziavillani *February 27, 2020*
-
->**Update progetto.rst**
->
->[b413bab6e69848b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b413bab6e69848b) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[c139fc8a252f7d8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c139fc8a252f7d8) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[fa74a76808820a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa74a76808820a6) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[8534a1c365247c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8534a1c365247c2) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[20e369cdd7b817a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/20e369cdd7b817a) patriziavillani *February 27, 2020*
-
->**Update progetto.rst**
->
->[7334bdf5f5544ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7334bdf5f5544ce) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[65b0cb339652904](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65b0cb339652904) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[09b14362fc01bae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09b14362fc01bae) patriziavillani *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[a4eed8b81399c59](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4eed8b81399c59) patriziavillani *February 26, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[7f463ea402e4ca5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f463ea402e4ca5) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[983cf01af46a906](https://github.com/consiglionazionaledellericerche/sigla-main/commit/983cf01af46a906) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[38610da127b519b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/38610da127b519b) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[0099e220c6ad208](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0099e220c6ad208) patriziavillani *February 26, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[4a1b50589c968b5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4a1b50589c968b5) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[0b42ebc39bb395e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0b42ebc39bb395e) patriziavillani *February 26, 2020*
-
->**Update gae.rst**
->
->[784abd9c4cfcf8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/784abd9c4cfcf8d) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[6d9554e9e4078b0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d9554e9e4078b0) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[64adb24bd104567](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64adb24bd104567) patriziavillani *February 26, 2020*
-
->**Update area_progettuale.rst**
->
->[120de2690730b9f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/120de2690730b9f) patriziavillani *February 26, 2020*
-
->**Update area_progettuale.rst**
->
->[8467bcb7d13a0d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8467bcb7d13a0d4) patriziavillani *February 26, 2020*
-
->**Update index.rst**
->
->[bd6bbf7f8cd2eb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd6bbf7f8cd2eb5) patriziavillani *February 26, 2020*
-
->**Update progetto.rst**
->
->[ab6d008f63824a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab6d008f63824a1) patriziavillani *February 24, 2020*
-
->**Update area_progettuale.rst**
->
->[a42b77a8fba2cb8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a42b77a8fba2cb8) patriziavillani *February 24, 2020*
-
->**Update area_progettuale.rst**
->
->[955778cd00c9498](https://github.com/consiglionazionaledellericerche/sigla-main/commit/955778cd00c9498) patriziavillani *February 24, 2020*
-
->**Update index.rst**
->
->[d3534720d4a82d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d3534720d4a82d5) patriziavillani *February 24, 2020*
-
->**FIX maven plugin**
->
->[9ba91cc0284fa63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ba91cc0284fa63) marco.spasiano *February 24, 2020*
-
 
 ## Release 6.2.2  -- _March 25, 2020_ 
 **Changes**
@@ -2936,14 +4636,6 @@
 >
 >[11ae322bb5afdea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11ae322bb5afdea) gianfranco.gasparro *March 24, 2020*
 
->**FIX Recupero Dati Pagamenti**
->
->[661f080c7795527](https://github.com/consiglionazionaledellericerche/sigla-main/commit/661f080c7795527) marco.spasiano *March 21, 2020*
-
->**Aggiunto controllo obbligatorietà tipo documento generico attivo**
->
->[80872972ce728f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80872972ce728f2) gianfranco.gasparro *March 20, 2020*
-
 
 ## Release 6.2.1  -- _March 19, 2020_ 
 **Changes**
@@ -2951,18 +4643,6 @@
 >**Dalla UO Ente non si vedranno più tutte le variazioni ma solo quelle della stessa UO**
 >
 >[5e0e0c976f51dce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e0e0c976f51dce) marco.spasiano *March 19, 2020*
-
-
-## Release 6.2.0  -- _March 14, 2020_ 
-**Changes**
-
->**FIX help URL**
->
->[1f623244854cbc9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1f623244854cbc9) marco.spasiano *March 14, 2020*
-
->**FIX Transaction Attribute**
->
->[553f76a6083da25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/553f76a6083da25) marco.spasiano *March 13, 2020*
 
 
 ## Release 6.1.45  -- _March 12, 2020_ 
@@ -3068,30 +4748,6 @@
 >
 >[c7668acf9ae4c18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7668acf9ae4c18) marco.spasiano *February 18, 2020*
 
->**Fix errore compilazione**
->
->[fcaf82f52859c58](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fcaf82f52859c58) gianfranco.gasparro *February 18, 2020*
-
->**Fix errore compilazione**
->
->[6bf8b7600abcc27](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bf8b7600abcc27) gianfranco.gasparro *February 18, 2020*
-
->**Add epub doc generate**
->
->[d210057b967563d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d210057b967563d) marco.spasiano *February 18, 2020*
-
->**Add epub doc generate**
->
->[1ea38256836df94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ea38256836df94) marco.spasiano *February 18, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[1ceb1316b1070b1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ceb1316b1070b1) ciro.salvio *February 18, 2020*
-
->**Fix Visualizzazione obbligazioni da ordini**
->
->[dd5bd53fb125790](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd5bd53fb125790) gianfranco.gasparro *February 17, 2020*
-
 >**Create accesso_ruolo.rst**
 >
 >[523202c0508a45e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/523202c0508a45e) patriziavillani *February 17, 2020*
@@ -3107,34 +4763,6 @@
 >**Create gestione_utenze.rst**
 >
 >[cf5fe463fa7e248](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf5fe463fa7e248) patriziavillani *February 17, 2020*
-
->**Controllo IBAN per modalità di pagamento Terzi closed Issue #6**
->
->[7a09e5b2c962a68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a09e5b2c962a68) marco.spasiano *February 17, 2020*
-
->**Gestione Conti su Ordini**
->
->[2a4a393411ea741](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2a4a393411ea741) gianfranco.gasparro *February 17, 2020*
-
->**Gestione Conti su Ordini**
->
->[6f6edde7f145559](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6f6edde7f145559) gianfranco.gasparro *February 17, 2020*
-
->**Add badge to Readme.md**
->
->[b5f89d7f915e2a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b5f89d7f915e2a6) marco.spasiano *February 15, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[8b03cf2b51f8347](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b03cf2b51f8347) ciro.salvio *February 14, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[de48ba54ac7b413](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de48ba54ac7b413) ciro.salvio *February 14, 2020*
-
->**commit and Push Fix Descrption for Assigned Access and reafactor cercaAccessi e CercaRuoli for UtenteComponent**
->
->[f84bdece997087f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f84bdece997087f) ciro.salvio *February 13, 2020*
 
 >**Update gestione_utenze.rst**
 >
@@ -3252,210 +4880,6 @@
 >
 >[6c48e6a1ac9af56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c48e6a1ac9af56) patriziavillani *February 12, 2020*
 
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[3ecaa924daeda8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3ecaa924daeda8b) ciro.salvio *February 11, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[db317611ef50772](https://github.com/consiglionazionaledellericerche/sigla-main/commit/db317611ef50772) ciro.salvio *February 11, 2020*
-
->**Aggiunto conto**
->
->[4fa1d456950b42c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4fa1d456950b42c) gianfranco.gasparro *February 11, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[d6735186dea3e6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d6735186dea3e6f) ciro.salvio *February 10, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[70cd2f41f3a58ee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70cd2f41f3a58ee) ciro.salvio *February 07, 2020*
-
->**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
->
->[3be4470825e7e07](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3be4470825e7e07) ciro.salvio *February 04, 2020*
-
->**Update gestione_utenze.rst**
->
->[8fc646cb0d4b4d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fc646cb0d4b4d3) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[0d2863f348b2761](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d2863f348b2761) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[16fb9e49040cb1d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16fb9e49040cb1d) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[1c9dafcc1452bc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1c9dafcc1452bc4) mspasiano *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[d2eae93713abdef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2eae93713abdef) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[eabe86df350424a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eabe86df350424a) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[d69dab77684928c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d69dab77684928c) patriziavillani *February 03, 2020*
-
->**Create gestione_utenze.rst**
->
->[e20978ce68b4be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e20978ce68b4be4) patriziavillani *February 03, 2020*
-
->**Update index.rst**
->
->[a4a0b4c82bda021](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4a0b4c82bda021) patriziavillani *February 03, 2020*
-
->**Added jasper print Ordine**
->
->[38edca8627c44e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/38edca8627c44e5) ciro.salvio *January 30, 2020*
-
->**Added print server parameter**
->
->[4e85d849ca854fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4e85d849ca854fa) ciro.salvio *January 30, 2020*
-
->**Update and rename gae.md to gae.rst**
->
->[0ea3028bed80d09](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ea3028bed80d09) patriziavillani *January 30, 2020*
-
->**Update competenza.rst**
->
->[54b3d41aebb7cd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54b3d41aebb7cd8) patriziavillani *January 30, 2020*
-
->**Update competenza.rst**
->
->[79ddf1ef2b5ec4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/79ddf1ef2b5ec4c) patriziavillani *January 30, 2020*
-
->**Create index.rst**
->
->[2fdade100c32ad5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fdade100c32ad5) patriziavillani *January 30, 2020*
-
->**Update index.rst**
->
->[b1ffbe17c8ca46d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ffbe17c8ca46d) patriziavillani *January 30, 2020*
-
->**Update and rename competenza.md to competenza.rst**
->
->[19f44eff0bcdd03](https://github.com/consiglionazionaledellericerche/sigla-main/commit/19f44eff0bcdd03) patriziavillani *January 30, 2020*
-
->**Update index.rst**
->
->[cf72cea21f04deb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf72cea21f04deb) patriziavillani *January 30, 2020*
-
->**Create index.rst**
->
->[ace03ce491e8a9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ace03ce491e8a9c) patriziavillani *January 30, 2020*
-
->**Update and rename struttura_organizzativa.md to struttura_organizzativa.rst**
->
->[09b45ee512dca6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09b45ee512dca6f) patriziavillani *January 30, 2020*
-
->**Fix Rimodulazione Progetti: limitato il controllo di chiusura del bilancio, necessario per proporre rimodulazioni anche su voci economiche presenti in bilancio, ai soli CDS partecipanti al progetto oggetto di modifica.**
->
->[8c97430cd21542f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c97430cd21542f) raffaele.pagano *January 30, 2020*
-
->**Variazioni Bilancio Residuo: aggiunto tasto che consente di riportare una variazione residua dallo stato Approvato allo stato Definitivo. Il tasto è visibile solo per cds abilitati ad approvare ed utenti di tipo Supervisore.**
->
->[f9f2141d16226fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f2141d16226fb) raffaele.pagano *January 30, 2020*
-
->**Commit and Push Ordmag ISS functionality**
->
->[610ae883002cbbd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/610ae883002cbbd) ciro.salvio *January 27, 2020*
-
->**Commit and Push Ordmag ISS functionality**
->
->[a795556a789dbfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a795556a789dbfc) ciro.salvio *January 27, 2020*
-
->**Commit and Push Ordmag ISS functionality**
->
->[614bfa1d5d62d93](https://github.com/consiglionazionaledellericerche/sigla-main/commit/614bfa1d5d62d93) ciro.salvio *January 27, 2020*
-
->**BUG nella generazione del flusso SIOPE+, quando per lo stesso codice SIOPE ci sono due CUP diversi**
->
->[ac2dc8dd79abf7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac2dc8dd79abf7c) marco.spasiano *January 27, 2020*
-
->**Add docs for Sphinx**
->
->[7076399a6e4050a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7076399a6e4050a) marco.spasiano *January 27, 2020*
-
->**Add docs for Sphinx**
->
->[fa81e934353da3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa81e934353da3d) marco.spasiano *January 25, 2020*
-
->**Add docs for Sphinx**
->
->[1e52fe949fa39f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e52fe949fa39f6) marco.spasiano *January 25, 2020*
-
->**Modify Changelog**
->
->[e0aa2e8f4d84cef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e0aa2e8f4d84cef) marco.spasiano *January 25, 2020*
-
->**Add docs for Sphinx**
->
->[a8ade95e9c7cc62](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8ade95e9c7cc62) marco.spasiano *January 25, 2020*
-
->**Modify Changelog**
->
->[0bfa62040d78a67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfa62040d78a67) marco.spasiano *January 25, 2020*
-
->**Add docs for Sphinx**
->
->[8efd88161db60df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8efd88161db60df) marco.spasiano *January 25, 2020*
-
->**Ripristinate Modifiche per Gestione Ordini**
->
->[8440e12bcff5c96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8440e12bcff5c96) gianfranco.gasparro *January 24, 2020*
-
->**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto e visualizzazione voci movimentate non associate in caso di accesso da anno successivo a quello del piano economico.**
->
->[ac9722860ec6952](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac9722860ec6952) raffaele.pagano *January 22, 2020*
-
->**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
->
->[e79f3b9c133ad6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e79f3b9c133ad6d) raffaele.pagano *January 22, 2020*
-
->**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
->
->[d227d80037e17a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d227d80037e17a0) raffaele.pagano *January 22, 2020*
-
->**Ingrandito campo a 100 caratteri per inserimento email per fatturazione elettronica**
->
->[e3af1ed5393b4db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3af1ed5393b4db) gianfranco.gasparro *January 21, 2020*
-
->**Corretta valorizzazione dati incasso su generico e reversale. Ricalcolato importo accertamento per compensazioni**
->
->[0f6a16ee4631e9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f6a16ee4631e9a) gianfranco.gasparro *January 21, 2020*
-
->**Nascosta TAB di abilitazione Ordini nel caso di Gestione Ordini non Attiva**
->
->[9d40e70503dbadd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d40e70503dbadd) gianfranco.gasparro *January 20, 2020*
-
->**FIX test**
->
->[474a262960da9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/474a262960da9f9) marco.spasiano *January 20, 2020*
-
->**FIX test**
->
->[8b697d5d120ebda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b697d5d120ebda) marco.spasiano *January 20, 2020*
-
->**FIX test**
->
->[26e87aba85863a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26e87aba85863a9) marco.spasiano *January 20, 2020*
-
->**FIX gitlabci m2 cache**
->
->[24605d07a7b3393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24605d07a7b3393) marco.spasiano *January 20, 2020*
-
->**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
->
->[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
-
 
 ## Release 6.1.44  -- _March 11, 2020_ 
 **Changes**
@@ -3475,166 +4899,6 @@
 >**Update nuovo_layout.md**
 >
 >[7491dfc0c344016](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7491dfc0c344016) Marco Spasiano *March 11, 2020*
-
->**FIX Gestione sospesi di riaccredito per mandati da sostituire.**
->
->[114a8f4b3443ec5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/114a8f4b3443ec5) marco.spasiano *March 11, 2020*
-
->**FIX Gestione sospesi di riaccredito per mandati da sostituire.**
->
->[eb77f7a6a3387d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eb77f7a6a3387d4) marco.spasiano *March 11, 2020*
-
->**Funzionalità cat_grp_invent_voce_ep**
->
->[43157ab35ff6fb6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/43157ab35ff6fb6) cirosalvio *March 11, 2020*
-
->**Funzionalità cat_grp_invent_voce_ep**
->
->[a9c0d6f846e8f36](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9c0d6f846e8f36) cirosalvio *March 11, 2020*
-
->**Fix to pullRequest**
->
->[a6d4d050fd60870](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6d4d050fd60870) cirosalvio *March 11, 2020*
-
->**Funzionalità cat_grp_invent_voce_ep**
->
->[cd9136b253c924e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd9136b253c924e) cirosalvio *March 11, 2020*
-
->**Fix Stampa Documenti Generici: reso selezionabile il campo Tipo Documento Generico solo in caso di selezione di Documenti Generici di Entrata**
->
->[2eea587e1e3defb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2eea587e1e3defb) raffaele.pagano *March 10, 2020*
-
->**FIX Api REST for Help**
->
->[fd0120ee012ff0a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd0120ee012ff0a) marco.spasiano *March 10, 2020*
-
->**Fix Gestione Unita Operativa Responsabile e Responsabile Amministrativo**
->
->[9a69eb4fa8f3ea8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a69eb4fa8f3ea8) cirosalvio *March 09, 2020*
-
->**Chiusura Forzata Ordine**
->
->[6bc5ee32c359393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bc5ee32c359393) cirosalvio *March 09, 2020*
-
->**FIX docs**
->
->[45780f1550c38e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/45780f1550c38e5) marco.spasiano *March 03, 2020*
-
->**Changed implementation of Help**
->
->[024b7dc27c9c94e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/024b7dc27c9c94e) marco.spasiano *March 02, 2020*
-
->**Modify docs**
->
->[c0001c89da6d7a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0001c89da6d7a0) marco.spasiano *March 01, 2020*
-
->**Modify docs**
->
->[87379348f209a24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/87379348f209a24) marco.spasiano *March 01, 2020*
-
->**Modify docs**
->
->[9b1e01fc9e249b6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9b1e01fc9e249b6) marco.spasiano *March 01, 2020*
-
->**Modify docs**
->
->[a9c3226825fa2f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9c3226825fa2f4) marco.spasiano *March 01, 2020*
-
->**Changed implementation of Help**
->
->[c1c1360ea10cad1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c1c1360ea10cad1) marco.spasiano *March 01, 2020*
-
->**Changed implementation of Help**
->
->[c9263a9e2cadbb6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c9263a9e2cadbb6) marco.spasiano *February 29, 2020*
-
->**FIX maven active profile**
->
->[2968c512eb6e4ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2968c512eb6e4ca) marco.spasiano *February 29, 2020*
-
->**Changed implementation of Help**
->
->[6942775461bb168](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6942775461bb168) marco.spasiano *February 28, 2020*
-
->**Changed implementation of Help**
->
->[7f628e23bd53080](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f628e23bd53080) marco.spasiano *February 28, 2020*
-
->**Changed implementation of Help**
->
->[93f4b5cb8b0b712](https://github.com/consiglionazionaledellericerche/sigla-main/commit/93f4b5cb8b0b712) marco.spasiano *February 28, 2020*
-
->**Changed implementation of Help**
->
->[c0d5013073d2ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0d5013073d2ae5) marco.spasiano *February 28, 2020*
-
->**Changed implementation of Help**
->
->[17e27d8462b1d61](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17e27d8462b1d61) marco.spasiano *February 28, 2020*
-
->**Update progetto.rst**
->
->[8a0799b0e329ab7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a0799b0e329ab7) Marco Spasiano *February 27, 2020*
-
->**FIX docs smartquotes**
->
->[7a75ca710aa4bd6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a75ca710aa4bd6) marco.spasiano *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[063e03a6a8da466](https://github.com/consiglionazionaledellericerche/sigla-main/commit/063e03a6a8da466) Marco Spasiano *February 27, 2020*
-
->**Update tabelle_riferimento.rst**
->
->[b1da46dd1f90146](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1da46dd1f90146) Marco Spasiano *February 27, 2020*
-
->**FIX Test on Progetti**
->
->[d5747283ed29406](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d5747283ed29406) marco.spasiano *February 27, 2020*
-
->**FIX Test on Progetti**
->
->[7c98717971d2df6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c98717971d2df6) marco.spasiano *February 27, 2020*
-
->**Fix Voci accentrate: veniva erroneamente creata una nuova gae, anzichè utilizzare quella esistente, in caso di approvazione di variazione su Voci accentrate**
->
->[0c895403bed829a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0c895403bed829a) raffaele.pagano *February 27, 2020*
-
->**FIX Test on Progetti**
->
->[f20eb2e52b9b7dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f20eb2e52b9b7dd) marco.spasiano *February 27, 2020*
-
->**Variazioni di bilancio: estesa la possibilità di trasferire fondi su GAE Natura 6 di progetti attivi su progetti della Ragioneria (gestione attiva solo per variazioni alla Ragioneria) - Issue: #14**
->
->[fc303d2924c0ea1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc303d2924c0ea1) raffaele.pagano *February 26, 2020*
-
->**Aggiunto test su creazione progetti**
->
->[8709fe1fa045108](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8709fe1fa045108) raffaele.pagano *February 26, 2020*
-
->**Upgrade version of storage.cloud.version to 2.0.5**
->
->[c14b36a1f7032c0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c14b36a1f7032c0) marco.spasiano *February 26, 2020*
-
->**Fix anomalie varie emerse durante la demo**
->
->[03cb5a00f998fa3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/03cb5a00f998fa3) gianfranco.gasparro *February 24, 2020*
-
->**Fix Stampa e Ordine e criteri di ricerca per Visualizzazione righe di ordini e Evasione Forzata**
->
->[1fa607e1234bcbd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1fa607e1234bcbd) cirosalvio *February 24, 2020*
-
->**Fix anomalie varie prima della demo**
->
->[58b7a10c2c66135](https://github.com/consiglionazionaledellericerche/sigla-main/commit/58b7a10c2c66135) gianfranco.gasparro *February 20, 2020*
-
->**Gestito Searchtool With Like**
->
->[56de7e579e0288b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56de7e579e0288b) gianfranco.gasparro *February 20, 2020*
-
->**Fix issue to search on ABIL_UTENTE_UOP_OPER**
->
->[a46043fcd036d4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a46043fcd036d4c) cirosalvio *February 18, 2020*
 
 
 ## Release 6.1.42  -- _March 09, 2020_ 
@@ -3747,174 +5011,6 @@
 >**Delete tlsetup.sh**
 >
 >[6b651ae962464fc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6b651ae962464fc) Marco Spasiano *February 14, 2020*
-
->**FIX**
->
->[886e54aed459a01](https://github.com/consiglionazionaledellericerche/sigla-main/commit/886e54aed459a01) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[5fd0d7a2c24ad6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5fd0d7a2c24ad6a) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[2bb532a53695e25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bb532a53695e25) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[a0d7593db2bae97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a0d7593db2bae97) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[11fc0679fa533c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11fc0679fa533c9) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[7e081ce12fcb157](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7e081ce12fcb157) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[e1849bcee5d8c33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1849bcee5d8c33) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[bc3eb77c47f878a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc3eb77c47f878a) marco.spasiano *February 14, 2020*
-
->**FIX**
->
->[e21f24bff49f2b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e21f24bff49f2b8) marco.spasiano *February 14, 2020*
-
->**Delete CHANGELOG.md**
->
->[787dc6c47530431](https://github.com/consiglionazionaledellericerche/sigla-main/commit/787dc6c47530431) marco.spasiano *February 14, 2020*
-
->**Delete CHANGELOG.md**
->
->[d92b825ca9ea966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d92b825ca9ea966) marco.spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[69bf0a7740b16ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69bf0a7740b16ba) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[657821b1fcea1e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/657821b1fcea1e1) Marco Spasiano *February 14, 2020*
-
->**Update requirements.txt**
->
->[7f04ceed551c332](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f04ceed551c332) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[ef30338a3029f7a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef30338a3029f7a) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[605129117392f36](https://github.com/consiglionazionaledellericerche/sigla-main/commit/605129117392f36) Marco Spasiano *February 14, 2020*
-
->**Update tlsetup.sh**
->
->[aefefdac1307f24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aefefdac1307f24) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[7bee9e8c6dcd18b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bee9e8c6dcd18b) Marco Spasiano *February 14, 2020*
-
->**Update Makefile**
->
->[65ecc1bed01694f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65ecc1bed01694f) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[eeb5ee80bb4e9c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eeb5ee80bb4e9c6) Marco Spasiano *February 14, 2020*
-
->**Create tlsetup.sh**
->
->[6fc64ef15119272](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fc64ef15119272) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[7bdd8172a4cd161](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bdd8172a4cd161) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[0dde7a68dde5fe9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0dde7a68dde5fe9) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[46b81f91cbf8b11](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46b81f91cbf8b11) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[6697bd971921dc5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6697bd971921dc5) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[4095b84612e916c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4095b84612e916c) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[88eb8ca6cbd3d60](https://github.com/consiglionazionaledellericerche/sigla-main/commit/88eb8ca6cbd3d60) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[d174f590076a2ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d174f590076a2ec) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[80a51646810c75b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80a51646810c75b) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[e06d3d32f934098](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e06d3d32f934098) Marco Spasiano *February 14, 2020*
-
->**Update .travis.yml**
->
->[4be74bd9289d601](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4be74bd9289d601) Marco Spasiano *February 14, 2020*
-
->**Create Makefile**
->
->[84a4a1a1c6956db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84a4a1a1c6956db) Marco Spasiano *February 14, 2020*
-
->**Create .travis.yml**
->
->[b2e6d3ae5f65255](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2e6d3ae5f65255) Marco Spasiano *February 14, 2020*
-
->**Fix Ricerca Impegni su Documento Generico Passivo: in alcuni casi non visualizzava la lista degli impegni se non dopo aver attivato e poi disattivato il flag Ente.**
->
->[a6e8da46995e5e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6e8da46995e5e1) raffaele.pagano *February 13, 2020*
-
->**Fix anomalia bene servizio non valido: sulla fattura era possibile associare un bene e servizio non valido. Ripristinato codice eliminato erroneamente a seguito di una precedente operazione di merge**
->
->[22ea279bd93eae0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22ea279bd93eae0) raffaele.pagano *February 13, 2020*
-
->**Servizio Rest: utility per lancio controllo correttezza variazione di bilancio, dal punto di vista dei progetti, anche dopo approvazione della stessa che la rende immodificabile.**
->
->[0e86c5d6cc17cb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0e86c5d6cc17cb5) raffaele.pagano *February 07, 2020*
-
->**Fix Rimodulazione Progetti: corretto controllo nelle variazioni di bilancio in caso di spostamento somme dalla voce speciale di un progetto attivo.**
->
->[d9bcaef4b7d865c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9bcaef4b7d865c) raffaele.pagano *February 07, 2020*
-
->**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
->
->[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
-
->**Add test for stato predisposizione**
->
->[571ae759908e993](https://github.com/consiglionazionaledellericerche/sigla-main/commit/571ae759908e993) marco.spasiano *February 07, 2020*
-
->**Upgrade version of storage cloud to 2.0.2, add test for Predisponi Mandato**
->
->[e89d6347ba10ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e89d6347ba10ae5) marco.spasiano *February 07, 2020*
-
->**Specify version of storage-cloud [ci skip]**
->
->[454750ae0090660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/454750ae0090660) marco.spasiano *February 06, 2020*
-
->**Update README.md**
->
->[ae760e2d646aec6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae760e2d646aec6) mspasiano *February 06, 2020*
 
 
 ## Release 6.1.29  -- _February 14, 2020_ 

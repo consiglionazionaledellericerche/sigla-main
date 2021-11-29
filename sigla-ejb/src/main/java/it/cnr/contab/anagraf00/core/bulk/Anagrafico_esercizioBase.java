@@ -54,8 +54,16 @@ public class Anagrafico_esercizioBase extends Anagrafico_esercizioKey implements
 	private Boolean fl_no_detr_cuneo_irpef;
 
 	private Boolean fl_detrazioni_altri_tipi;
-	
-public Anagrafico_esercizioBase() {
+
+	private java.lang.Integer esercizio_voce_debito_ep;
+
+	private java.lang.String cd_voce_debito_ep;
+
+	private java.lang.Integer esercizio_voce_credito_ep;
+
+	private java.lang.String cd_voce_credito_ep;
+
+	public Anagrafico_esercizioBase() {
 	super();
 }
 public Anagrafico_esercizioBase(java.lang.Integer cd_anag,java.lang.Integer esercizio) {
@@ -172,4 +180,35 @@ public void setIm_detrazione_personale_anag(java.math.BigDecimal im_detrazione_p
 		this.fl_no_detr_cuneo_irpef = fl_no_detr_cuneo_irpef;
 	}
 
+	public Integer getEsercizio_voce_debito_ep() {
+		return esercizio_voce_debito_ep;
+	}
+
+	public void setEsercizio_voce_debito_ep(Integer esercizio_voce_debito_ep) {
+		this.esercizio_voce_debito_ep = esercizio_voce_debito_ep;
+	}
+
+	public String getCd_voce_debito_ep() {
+		return cd_voce_debito_ep;
+	}
+
+	public void setCd_voce_debito_ep(String cd_voce_debito_ep) {
+		this.cd_voce_debito_ep = cd_voce_debito_ep;
+	}
+
+	public Integer getEsercizio_voce_credito_ep() {
+		return esercizio_voce_credito_ep;
+	}
+
+	public void setEsercizio_voce_credito_ep(Integer esercizio_voce_credito_ep) {
+		this.esercizio_voce_credito_ep = esercizio_voce_credito_ep;
+	}
+
+	public String getCd_voce_credito_ep() {
+		return cd_voce_credito_ep;
+	}
+
+	public void setCd_voce_credito_ep(String cd_voce_credito_ep) {
+		this.cd_voce_credito_ep = cd_voce_credito_ep;
+	}
 }

@@ -22,6 +22,7 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.fatturapa.bulk.*;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
@@ -45,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 
 import javax.activation.DataHandler;
@@ -85,6 +87,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private UtilService utilService;
+
+    @Value("${pec.sdi.replyTo:}")
+    private String replyTo;
 
     private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
             pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
@@ -1027,11 +1034,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(userName, password);
         String replyTo = null;
         if (bulk.getDocumentoEleTrasmissione() != null) {
-            replyTo = bulk.getDocumentoEleTrasmissione().getReplyTo();
+            replyTo = Optional.ofNullable(this.replyTo).filter(s -> !s.isEmpty()).orElse(bulk.getDocumentoEleTrasmissione().getReplyTo());
         }
         email.addTo(replyTo == null ? pecSDIAddress : replyTo, "SdI - Sistema Di Interscambio");
         email.setFrom(userName, userName);
@@ -1052,8 +1058,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void inviaFatturaElettronica(String userName, String password, File fatturaAttivaSigned, String idFattura) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(userName, password);
         email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
         email.setFrom(userName, userName);
         email.setSubject(pecSDISubjectFatturaAttivaInvioTerm + " " + idFattura);
@@ -1065,8 +1070,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     public void inviaFatturaElettronica(String userName, String password, DataSource fatturaAttivaSigned, String idFattura) throws EmailException, XmlMappingException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(userName, password);
         email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
         email.setFrom(userName, userName);
         email.setSubject(pecSDISubjectFatturaAttivaInvioTerm + " " + idFattura);
@@ -1086,8 +1090,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
             new AuthenticationFailedException("Cannot decrypt password");
         }
         // Create the email message
-        SimplePECMail email = new SimplePECMail(userName, password);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(userName, password);
         email.addTo(emailPEC);
         email.setFrom(userName, userName);
         email.setSubject(subject);

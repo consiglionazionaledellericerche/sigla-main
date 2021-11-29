@@ -24,19 +24,24 @@ import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
+import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageDriver;
-import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceException;
+import it.cnr.si.spring.storage.*;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.mail.*;
 import javax.mail.search.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -46,6 +51,10 @@ import java.util.stream.Collectors;
 public class PdgVariazioniService extends DocumentiContabiliService {
     private transient static final Logger logger = LoggerFactory.getLogger(PdgVariazioniService.class);
     private Properties pecMailConf;
+    @Autowired
+    private StorageDriver storageDriver;
+    @Autowired
+    private ArubaSignServiceClient arubaSignServiceClient;
 
     @Value("${pec.variazioni.username}")
     private String pecVariazioniUsername;
@@ -69,17 +78,25 @@ public class PdgVariazioniService extends DocumentiContabiliService {
 
     public String getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
         return Arrays.asList(
+                getParentPath(archiviaStampaPdgVariazioneBulk),
+                "Variazione al PdG n. "
+                        + archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg()
+                        + " CdR proponente "
+                        + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf"
+        ).stream().collect(
+                Collectors.joining(StorageDriver.SUFFIX)
+        );
+    }
+
+    public String getParentPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
+        return Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(),
                 Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
                         .map(esercizio -> String.valueOf(esercizio))
                         .orElse("0"),
                 sanitizeFolderName(archiviaStampaPdgVariazioneBulk.getCd_cds()),
                 "CdR " + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() +
-                        " Variazione " + Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(), 5, '0'),
-                "Variazione al PdG n. "
-                        + archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg()
-                        + " CdR proponente "
-                        + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf"
+                        " Variazione " + Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(), 5, '0')
         ).stream().collect(
                 Collectors.joining(StorageDriver.SUFFIX)
         );
@@ -279,4 +296,41 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         }
     }
 
+    public String signVariazioni(SignP7M signP7M, String path) throws StorageException {
+        StorageObject storageObject = storageDriver.getObject(signP7M.getNodeRefSource());
+        StorageObject docFirmato =null;
+        try {
+            byte[] bytesSigned = arubaSignServiceClient.pdfsignatureV2(
+                    signP7M.getUsername(),
+                    signP7M.getPassword(),
+                    signP7M.getOtp(),
+                    IOUtils.toByteArray(getResource(storageObject)));
+
+            Map<String, Object> metadataProperties = new HashMap<>();
+            metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
+            metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
+
+            docFirmato = storeSimpleDocument(
+                    new ByteArrayInputStream(bytesSigned),
+                    MimeTypes.PDF.mimetype(),
+                    path,
+                    metadataProperties);
+
+            logger.info("VARIAZIONE {} firmata correttamente.", signP7M.getNomeFile());
+
+            List<String> aspects = storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+            aspects.add("P:cnr:signedDocument");
+            updateProperties(Collections.singletonMap(
+                    StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                    aspects
+            ), storageObject);
+            if (Optional.ofNullable(docFirmato).isPresent()) {
+                createRelationship(storageObject.getKey(), docFirmato.getKey(), "R:varpianogest:allegatiVarBilancio");
+                createRelationship(docFirmato.getKey(), storageObject.getKey(),  "R:cnr:signedDocumentAss");
+            }
+            return docFirmato.getKey();
+        } catch (ArubaSignServiceException | IOException e) {
+            throw new StorageException(StorageException.Type.GENERIC, e);
+        }
+    }
 }

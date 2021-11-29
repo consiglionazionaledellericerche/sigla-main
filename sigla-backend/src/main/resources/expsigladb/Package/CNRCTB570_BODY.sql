@@ -23,7 +23,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
  Begin
   aTSNow:=sysdate;
   recParametriCNR := CNRUTL001.getRecParametriCnr(aLGCori.esercizio);
-  
+
   -- Leggo la testata della liquidazione (lock)
   select * into aLC from liquid_cori where
        cd_cds = aLGCori.cd_cds
@@ -37,10 +37,10 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
   aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
   If aLGCori.cd_unita_organizzativa = aUOVERSCONTOBI.cd_unita_organizzativa then
-        IBMERR001.RAISE_ERR_GENERICO('Non è possibile eliminare il versamento dei CORI che rientrano nel Modello F24EP');
-  End If;      
+        IBMERR001.RAISE_ERR_GENERICO('Non Ã¨ possibile eliminare il versamento dei CORI che rientrano nel Modello F24EP');
+  End If;
 
-  -- Se il versamento è quello dell'UO di versamento, e il gruppo di cui annullare la liquidazione è composto di SOLI
+  -- Se il versamento Ã¨ quello dell'UO di versamento, e il gruppo di cui annullare la liquidazione Ã¨ composto di SOLI
   -- dati propri dell'UO che versa, posso smontare la liquidazione di quel gruppo
 
   if aLGCori.cd_unita_organizzativa = aUOVERSACC.cd_unita_organizzativa then
@@ -55,7 +55,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
      and cd_gruppo_cr = aLGCori.cd_gruppo_cr
      and cd_regione = aLGCori.cd_regione
      and pg_comune = aLGCori.pg_comune;
-    IBMERR001.RAISE_ERR_GENERICO('Non è possibile eliminare il versamento accentrato dei CORI perchè la liquidazione raccoglie versamenti di altre UO per il gruppo'||CNRCTB575.getDesc(aLGCori));
+    IBMERR001.RAISE_ERR_GENERICO('Non Ã¨ possibile eliminare il versamento accentrato dei CORI perchÃ¨ la liquidazione raccoglie versamenti di altre UO per il gruppo'||CNRCTB575.getDesc(aLGCori));
    exception when NO_DATA_FOUND then
     null;
    end;
@@ -64,9 +64,9 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   -- Devo modificare la partita di giro sull'UO che versa legata a aLGCori con fl_accentrato a Y
 
   if aLGCori.fl_accentrato = 'Y' then
-   -- Solo se lo stato è diverso da liquidato posso smontare
+   -- Solo se lo stato Ã¨ diverso da liquidato posso smontare
    if aLGCori.stato = CNRCTB575.STATO_LIQUIDATO then
-    IBMERR001.RAISE_ERR_GENERICO('La liquidazione CORI al centro risulta già chiusa per il gruppo CORI '||CNRCTB575.getDesc(aLGCori));
+    IBMERR001.RAISE_ERR_GENERICO('La liquidazione CORI al centro risulta giÃ  chiusa per il gruppo CORI '||CNRCTB575.getDesc(aLGCori));
    end if;
    begin
     aGC:=getGruppoCentro(aLC, aLGCori);
@@ -74,7 +74,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
     IBMERR001.RAISE_ERR_GENERICO('Riferimento a gruppo centro di liquidazione non trovato per il gruppo CORI '||CNRCTB575.getDesc(aLGCori));
    end;
    if aGC.stato = CNRCTB575.STATO_GRUPPO_CENTRO_CHIUSO then
-    IBMERR001.RAISE_ERR_GENERICO('La liquidazione CORI al centro risulta già chiusa per il gruppo CORI '||CNRCTB575.getDesc(aLGCori));
+    IBMERR001.RAISE_ERR_GENERICO('La liquidazione CORI al centro risulta giÃ  chiusa per il gruppo CORI '||CNRCTB575.getDesc(aLGCori));
    end if;
    if aLGCori.im_liquidato > 0 then
     IF recParametriCNR.FL_TESORERIA_UNICA = 'Y' THEN
@@ -83,9 +83,9 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
       aObbGiro.cd_cds:=aGC.cd_cds_obb_accentr;
       aObbGiro.esercizio_originale:=aGC.esercizio_ori_obb_accentr;
       aObbGiro.pg_obbligazione:=aGC.pg_obb_accentr;
-      
+
       CNRCTB035.GETPGIROCDSINV(aObbGiro,aObbScadGiro,aObbScadVoceGiro,aAccGiro,aAccScadGiro,aAccScadVoceGiro);
-      
+
       CNRCTB043.modificaPraticaAcc(aAccGiro.esercizio,aAccGiro.cd_cds,aAccGiro.esercizio_originale,aAccGiro.pg_accertamento,0-aLGCori.im_liquidato,aTSNow,aUser);*/
       IBMERR001.RAISE_ERR_GENERICO('Impossibile annullare la liquidazione CORI nel caso di tesoreria unica');
     else
@@ -222,7 +222,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
         And cd_unita_organizzativa != aUOVERSACC.cd_unita_organizzativa
         And cd_unita_organizzativa != aUOVERSCONTOBI.cd_unita_organizzativa;
    end;
-   -- Se non ci sono altre righe nella liquidazione per aUOVERSACC.cd_unita_organizzativa, 
+   -- Se non ci sono altre righe nella liquidazione per aUOVERSACC.cd_unita_organizzativa,
    -- elimino anche la testata (LIQUID_CORI)
    declare
     aLocG liquid_gruppo_cori%rowtype;
@@ -293,16 +293,16 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   begin
    CNRCTB575.INS_LIQUID_GRUPPO_CENTRO_COMP(aLGCC);
   exception when DUP_VAL_ON_INDEX then
-   -- L'inserimento può dare un errore di chiave duplicata se due sessioni tentano di inserire
+   -- L'inserimento puÃ² dare un errore di chiave duplicata se due sessioni tentano di inserire
    -- il primo record per lo stesso gruppo di versamento: la prima inserisce, la seconda deve essere bloccata
    -- e restituire l'errore di risorsa occupata
-   IBMERR001.RAISE_ERR_GENERICO('Esiste già una liquidazione con saldo negativo sul gruppo'||aLGCC.cd_gruppo_cr||'.'||aLGCC.cd_regione||'.'||aLGCC.pg_comune||' per l''UO:'||aLGCC.cd_unita_organizzativa);
+   IBMERR001.RAISE_ERR_GENERICO('Esiste giÃ  una liquidazione con saldo negativo sul gruppo'||aLGCC.cd_gruppo_cr||'.'||aLGCC.cd_regione||'.'||aLGCC.pg_comune||' per l''UO:'||aLGCC.cd_unita_organizzativa);
   end;
   return aLGCC;
  end;
 
- procedure restituzioneCrediti(aLiquid liquid_cori%rowtype,Cds In Out VARCHAR2,Uo In Out VARCHAR2,terzo_versamento In Out VARCHAR2, aLGC liquid_gruppo_centro%rowtype, 
-    aTotReversale IN OUT number, aRevP IN OUT reversale%rowtype, aListRigheRevP IN OUT CNRCTB038.righeReversaleList, 
+ procedure restituzioneCrediti(aLiquid liquid_cori%rowtype,Cds In Out VARCHAR2,Uo In Out VARCHAR2,terzo_versamento In Out VARCHAR2, aLGC liquid_gruppo_centro%rowtype,
+    aTotReversale IN OUT number, aRevP IN OUT reversale%rowtype, aListRigheRevP IN OUT CNRCTB038.righeReversaleList,
     aTotMandato IN OUT number, aManP IN OUT mandato%rowtype, aListRigheManP IN OUT CNRCTB038.righeMandatoList, aUser varchar2, aTSNow date) is
    aGen documento_generico%rowtype;
    aGenRiga documento_generico_riga%rowtype;
@@ -320,7 +320,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
    aAccScadVoce accertamento_scad_voce%rowtype;
    aAccNew accertamento%rowtype;
    aAccScadNew accertamento_scadenzario%rowtype;
-   aAccScadVoceNew accertamento_scad_voce%rowtype;   
+   aAccScadVoceNew accertamento_scad_voce%rowtype;
    aObb obbligazione%rowtype;
    aObbScad obbligazione_scadenzario%rowtype;
    aObbScadVoce obbligazione_scad_voce%rowtype;
@@ -349,9 +349,9 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
    ESERCIZIO_UO_SPECIALI number;
    IMPORTO_DA_REGOLARIZZARE NUMBER := 0;
    aRevRegolarizzazione  reversale%rowtype;
-   aListRigheRevRegolarizzazione  CNRCTB038.righeReversaleList; 
+   aListRigheRevRegolarizzazione  CNRCTB038.righeReversaleList;
    aManRegolarizzazione mandato%rowtype;
-   aListRigheManRegolarizzazione CNRCTB038.righeMandatoList; 
+   aListRigheManRegolarizzazione CNRCTB038.righeMandatoList;
    aAnagVerRegolarizzazione anagrafico%rowtype;
    aListGenVERigheRegolarizz CNRCTB100.docGenRigaList;
    aGenRegolarizzazione documento_generico%rowtype;
@@ -363,7 +363,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   recParametriCNR := CNRUTL001.getRecParametriCnr(aLiquid.esercizio);
   aDateCont:=CNRCTB008.getTimestampContabile(aLGC.esercizio,aTSNow);
   aDivisaEuro:=CNRCTB015.GETVAL01PERCHIAVE(CNRCTB100.CCNR_DIVISA,CNRCTB100.CCNR_EURO);
-  
+
   ESERCIZIO_UO_SPECIALI := to_number(To_Char(aLiquid.DT_DA,'YYYY'));
   aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
 
@@ -415,8 +415,8 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
 
          --aAcc si chiude con la reversale di versamento
          --aObb si chiude con il mandato di restituzione
-         --Se la UO è 999.000, solo la reversale di versamento deve uscire dalla 999, mentre il mandato di restituzione deve uscire dalla SAC
-         --quindi devo annullare aAcc sulla SAC (cioè rendere tronca aObb) e ricrearla tronca sulla 999 
+         --Se la UO Ã¨ 999.000, solo la reversale di versamento deve uscire dalla 999, mentre il mandato di restituzione deve uscire dalla SAC
+         --quindi devo annullare aAcc sulla SAC (cioÃ¨ rendere tronca aObb) e ricrearla tronca sulla 999
       If recParametriCNR.FL_TESORERIA_UNICA != 'Y' then
          aAcc.cd_cds:=aLGCC.cd_cds_acc_accentr;
          aAcc.esercizio:=aLGCC.esercizio_acc_accentr;
@@ -424,7 +424,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          aAcc.pg_accertamento:=aLGCC.pg_acc_accentr;
          CNRCTB035.GETPGIROCDSINV(aAcc,aAccScad,aAccScadVoce,aObb,aObbScad,aObbScadVoce);
          if Uo = aUOVERSCONTOBI.cd_unita_organizzativa then
-               CNRCTB043.troncaPraticaObbPgiro(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser); 
+               CNRCTB043.troncaPraticaObbPgiro(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser);
                -- devo creare la pgiro tronca sulla 999
                   aAccNew:=null;
                   aAccScadNew:=null;
@@ -441,9 +441,9 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                        And a.esercizio = aLGCC.esercizio
                        And a.ti_gestione = CNRCTB001.GESTIONE_ENTRATE
                        And a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
-                  Exception 
+                  Exception
                           when TOO_MANY_ROWS then
-                               IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aLGCC.cd_gruppo_cr);
+                               IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aLGCC.cd_gruppo_cr);
                           when NO_DATA_FOUND then
                               IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aLGCC.cd_gruppo_cr||' non trovato');
                   End;
@@ -455,17 +455,17 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                        And ti_appartenenza = CNRCTB001.APPARTENENZA_CNR
                        And ti_gestione = CNRCTB001.GESTIONE_ENTRATE
                        And cd_elemento_voce = aCdEV;
-                  Exception 
+                  Exception
                           when NO_DATA_FOUND then
                              IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aLGCC.cd_gruppo_cr||' non esistente');
                   End;
-                  
+
                   aAccNew.CD_CDS:=Cds;
                   aAccNew.ESERCIZIO:=aAcc.esercizio;
                   aAccNew.ESERCIZIO_ORIGINALE:=aAcc.esercizio_originale;
                   If aAcc.esercizio = aAcc.esercizio_originale Then
                        aAccNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC;
-                  Else     
+                  Else
                        aAccNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC_RES;
                   End If;
                   aAccNew.CD_UNITA_ORGANIZZATIVA:=Uo;
@@ -479,7 +479,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                   aAccNew.DS_ACCERTAMENTO:='PGiro creata in automatico da liquidazione CORI';
                   aAccNew.NOTE_ACCERTAMENTO:='';
                   aAccNew.CD_TERZO:=aAcc.CD_TERZO;
-                  aAccNew.IM_ACCERTAMENTO:=aObb.IM_OBBLIGAZIONE;    --aAcc.IM_ACCERTAMENTO è stato annullato    
+                  aAccNew.IM_ACCERTAMENTO:=aObb.IM_OBBLIGAZIONE;    --aAcc.IM_ACCERTAMENTO Ã¨ stato annullato
                   aAccNew.FL_PGIRO:='Y';
                   aAccNew.RIPORTATO:='N';
                   aAccNew.DACR:=aTSNow;
@@ -488,11 +488,11 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                   aAccNew.UTUV:=aUser;
                   aAccNew.PG_VER_REC:=1;
                   aAccNew.ESERCIZIO_COMPETENZA:=aAcc.esercizio;
-                
+
                   CNRCTB040.CREAACCERTAMENTOPGIROTRONC(false,aAccNew,aAccScadNew,aObbNew,aObbScadNew,trunc(aTSNow));
- 
+
                   CREALIQUIDCORIASSPGIRO(aLiquid,aLGCC.cd_gruppo_cr,aLGCC.cd_regione,aLGCC.pg_comune,'E',null,null,aAccNew,aAcc,aUser,trunc(aTSNow));
-                  
+
                   aAcc     := aAccNew;
                   aAccScad := aAccScadNew;
          End If;
@@ -526,7 +526,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
          aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
          aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
-         
+
          aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
          aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
          aGenRiga.CD_CDS:=aGen.CD_CDS;
@@ -627,25 +627,32 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          CNRCTB037.GENERADOCUMENTO(aManP,aListRigheManP);
       else
         if aLGCC.CD_CDS_OBB_ACCENTR_OPP is not null and recParametriCNR.FL_TESORERIA_UNICA = 'Y' then
-         Select * into aObb
-         From     obbligazione
-         Where    cd_cds = aLGCC.CD_CDS_OBB_ACCENTR_OPP And
-                  esercizio = aLGCC.ES_OBB_ACCENTR_OPP And
-                  esercizio_originale = aLGCC.ES_ORIG_OBB_ACCENTR_OPP And
-                  pg_obbligazione = aLGCC.PG_OBB_ACCENTR_OPP And
-                  fl_pgiro = 'Y'
-         For update nowait;
-         IMPORTO_DA_REGOLARIZZARE := aObb.IM_OBBLIGAZIONE;
-          Select * into aAccScad
-          From     accertamento_scadenzario
-          Where    cd_cds = aLGCC.cd_cds_acc_accentr And
-                     esercizio = aLGCC.esercizio_acc_accentr And
-                     esercizio_originale = aLGCC.esercizio_ori_acc_accentr And
-                     pg_accertamento = aLGCC.pg_acc_accentr;
-         CNRCTB035.sdoppiaScadenzaAccertamento(aAccScad, aAccScad.im_SCADENZA - IMPORTO_DA_REGOLARIZZARE, aUser);
+          begin
+           Select * into aObb
+           From     obbligazione
+           Where    cd_cds = aLGCC.CD_CDS_OBB_ACCENTR_OPP And
+                    esercizio = aLGCC.ES_OBB_ACCENTR_OPP And
+                    esercizio_originale = aLGCC.ES_ORIG_OBB_ACCENTR_OPP And
+                    pg_obbligazione = aLGCC.PG_OBB_ACCENTR_OPP And
+                    fl_pgiro = 'Y'
+           For update nowait;
+
+           IMPORTO_DA_REGOLARIZZARE := aObb.IM_OBBLIGAZIONE;
+
+            Select * into aAccScad
+            From     accertamento_scadenzario
+            Where    cd_cds = aLGCC.cd_cds_acc_accentr And
+                       esercizio = aLGCC.esercizio_acc_accentr And
+                       esercizio_originale = aLGCC.esercizio_ori_acc_accentr And
+                       pg_accertamento = aLGCC.pg_acc_accentr;
+           CNRCTB035.sdoppiaScadenzaAccertamento(aAccScad, aAccScad.im_SCADENZA - IMPORTO_DA_REGOLARIZZARE, aUser);
+          exception
+            when NO_DATA_FOUND then
+             IMPORTO_DA_REGOLARIZZARE := 0;
+          end;
         ELSE
          IMPORTO_DA_REGOLARIZZARE := 0;
-        end if;  
+        end if;
          Begin
             Select * into aAcc
             From     accertamento
@@ -655,7 +662,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                      pg_accertamento = aLGCC.pg_acc_accentr And
                      fl_pgiro = 'Y'
             For update nowait;
-            
+
             Select * into aAccScad
             From     accertamento_scadenzario
             Where    cd_cds = aLGCC.cd_cds_acc_accentr And
@@ -664,7 +671,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                      pg_accertamento = aLGCC.pg_acc_accentr and
                      pg_accertamento_scadenzario = 1
             For update nowait;
-            
+
             Select * into aAccScadVoce
             From     accertamento_scad_voce
             Where    cd_cds = aLGCC.cd_cds_acc_accentr And
@@ -693,7 +700,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
        aGenVERiga.IM_RIGA:=aAccScad.im_SCADENZA;
        -- Utilizzo delle corrette informazioni di pagamento nel caso di accentramento o non accentramento
        aGenVERiga.CD_TERZO:=terzo_versamento;
-       
+
        If Uo = aUOVERSCONTOBI.cd_unita_organizzativa then
             CNRCTB080.getTerzoPerEnteContoBI(Uo, aCdTerzoVE, aCdModPagVE, aPgBancaVE);
        Else
@@ -701,7 +708,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
             aPgBancaVE := aPgBancaRes;
             aCdModPagVE := aCdModPagRes;
        End If;
-          
+
        aGenVERiga.CD_TERZO_UO_CDS:=aCdTerzoVE;
        aGenVERiga.PG_BANCA_UO_CDS:=aPgBancaVE;
        aGenVERiga.CD_MODALITA_PAG_UO_CDS:=aCdModPagVE;
@@ -753,8 +760,8 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
        aTotReversale:=aTotReversale+aRevPRiga.im_reversale_riga;
        aListRigheRevP(aListRigheRevP.count+1):=aRevPRiga;
 
-       if aLGCC.CD_CDS_OBB_ACCENTR_OPP is not null and recParametriCNR.FL_TESORERIA_UNICA = 'Y' then
-         
+       if aLGCC.CD_CDS_OBB_ACCENTR_OPP is not null and importo_da_regolarizzare > 0 and recParametriCNR.FL_TESORERIA_UNICA = 'Y' then
+
          Select * into aObbScad
          From     obbligazione_scadenzario
          Where    cd_cds = aLGCC.CD_CDS_OBB_ACCENTR_OPP And
@@ -762,7 +769,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
                   esercizio_originale = aLGCC.ES_ORIG_OBB_ACCENTR_OPP And
                   pg_obbligazione = aLGCC.PG_OBB_ACCENTR_OPP
          For update nowait;
-         
+
          Select * into aObbScadVoce
          From     obbligazione_scad_voce
          Where    cd_cds = aLGCC.CD_CDS_OBB_ACCENTR_OPP And
@@ -800,7 +807,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
         aGenVS.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
 
          aGenVSRiga:=null;
-         
+
          aGenVSRiga.DT_DA_COMPETENZA_COGE:=aGenVS.DT_DA_COMPETENZA_COGE;
          aGenVSRiga.DT_A_COMPETENZA_COGE:=aGenVS.DT_A_COMPETENZA_COGE;
          aGenVSRiga.CD_CDS:=aGenVS.CD_CDS;
@@ -812,11 +819,11 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          aGenVSRiga.IM_RIGA:=aObb.im_obbligazione;
          -- Utilizzo delle corrette informazioni di pagamento nel caso di accentramento o non accentramento
          aGenVSRiga.CD_TERZO:=aObb.cd_terzo;
-         
+
          CNRCTB080.getModPagUltime(aObb.cd_terzo, aCdModPagVE, aPgBancaVE);
          aGenVSRiga.CD_MODALITA_PAG:=aCdModPagVE;
          aGenVSRiga.PG_BANCA:=aPgBancaVE;
-            
+
          aAnagVerRegolarizzazione :=CNRCTB080.GETANAG(aObb.cd_terzo);
          aGenVSRiga.RAGIONE_SOCIALE:=aAnagVerRegolarizzazione.RAGIONE_SOCIALE;
          aGenVSRiga.NOME:=aAnagVerRegolarizzazione.NOME;
@@ -932,7 +939,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
         aGenRegolarizzazione.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
 
          aGenRigaRegolarizzazione:=null;
-         
+
          aGenRigaRegolarizzazione.DT_DA_COMPETENZA_COGE:=aGenRegolarizzazione.DT_DA_COMPETENZA_COGE;
          aGenRigaRegolarizzazione.DT_A_COMPETENZA_COGE:=aGenRegolarizzazione.DT_A_COMPETENZA_COGE;
          aGenRigaRegolarizzazione.CD_CDS:=aGenRegolarizzazione.CD_CDS;
@@ -943,8 +950,8 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          aGenRigaRegolarizzazione.IM_RIGA_DIVISA:=IMPORTO_DA_REGOLARIZZARE;
          aGenRigaRegolarizzazione.IM_RIGA:=IMPORTO_DA_REGOLARIZZARE;
          -- Utilizzo delle corrette informazioni di pagamento nel caso di accentramento o non accentramento
-         aGenRigaRegolarizzazione.CD_TERZO:=aGenVSRiga.cd_terzo;
-         
+         aGenRigaRegolarizzazione.CD_TERZO:=aAcc.cd_terzo;
+
          CNRCTB080.getTerzoPerUO(aGenRegolarizzazione.CD_UNITA_ORGANIZZATIVA, aCdTerzoUO, aCdModPagUO, aPgBancaUO,aGenRegolarizzazione.esercizio);
 
          aGenRigaRegolarizzazione.CD_TERZO_UO_CDS:=aCdTerzoUO;
@@ -965,8 +972,11 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          aGenRigaRegolarizzazione.TI_ASSOCIATO_MANREV:=aGenRegolarizzazione.TI_ASSOCIATO_MANREV;
 
          aListGenVERigheRegolarizz (1):=aGenRigaRegolarizzazione;
-
+BEGIN
          CNRCTB110.creaGenericoAggObbAcc(aGenRegolarizzazione,aListGenVERigheRegolarizz);
+Exception
+  WHEN Others THEN RAISE_APPLICATION_ERROR(-20100,aGenRigaRegolarizzazione.DS_RIGA||' '||aAcc.PG_ACCERTAMENTO);
+END;
 
       --- creo la reversale di regolarizzazione
          aRevRegolarizzazione.CD_CDS:=Cds;
@@ -1073,10 +1083,10 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   begin
    CNRCTB575.INS_LIQUID_GRUPPO_CENTRO(aLGC);
   exception when DUP_VAL_ON_INDEX then
-   -- L'inserimento può dare un errore di chiave duplicata se due sessioni tentano di inserire
+   -- L'inserimento puÃ² dare un errore di chiave duplicata se due sessioni tentano di inserire
    -- il primo record per lo stesso gruppo di versamento: la prima inserisce, la seconda deve essere bloccata
    -- e restituire l'errore di risorsa occupata
-   IBMERR001.RAISE_ERR_GENERICO('Risorsa occupata riprovare più tardi');
+   IBMERR001.RAISE_ERR_GENERICO('Risorsa occupata riprovare piÃ¹ tardi');
   end;
   return aLGC;
  end;
@@ -1137,13 +1147,13 @@ Begin
 
 
 /***************GGGGGGGGGGGGGGG PENSO CHE BISOGNA MODIFICARE QUESTA PARTE....DEVO SOMMARE GLI IMPORTI DI SEGNO INVERSO CHE TROVO SU CONTRIBUTO_RITENUTA CHE DEVO METTERE IN JOIN
- CON LIQUID_GRUPPO_CORI_DET....POI L'IMPORTO IN VALORE ASSOLUTO LO DEVO SOMMARE ALL'IMPORTO LIQUIDATO E DEVO CREARE I DOCUMENTI CONTABILI E AMMINISTRATIVI DI SEGNO OPPOSTO...  
- 
-Nel 2017 ci sono accertamenti e impegni in partita di giro sul cds dell'istituto per ogni compenso...questi vengono ribaltati a 0. 
-Nel 2018: 
+ CON LIQUID_GRUPPO_CORI_DET....POI L'IMPORTO IN VALORE ASSOLUTO LO DEVO SOMMARE ALL'IMPORTO LIQUIDATO E DEVO CREARE I DOCUMENTI CONTABILI E AMMINISTRATIVI DI SEGNO OPPOSTO...
+
+Nel 2017 ci sono accertamenti e impegni in partita di giro sul cds dell'istituto per ogni compenso...questi vengono ribaltati a 0.
+Nel 2018:
 
  nel caso di ammontare positivo nel 2018 viene creato un unico impegno a residuo tronco (con accertamento a 0) per tutti gli istituti...sulla uo 000.407......l'impegno viene registrato su liquid_gruppo_cori,
-e l'importo dell'impegno deriva dalla somma di tutte le liquidazioni positive degli istituti, somma che si può ricavare da questa select:
+e l'importo dell'impegno deriva dalla somma di tutte le liquidazioni positive degli istituti, somma che si puÃ² ricavare da questa select:
 
 
 select sum(im_liquidato)
@@ -1158,7 +1168,7 @@ AND IM_LIQUIDATO > 0
  ESERCIZIO_ORI_OBB_ACCENTR is null)
 
  nel caso di ammontare negativo per ciascun istituto viene creato un accertamento a residuo tronco (con impegno a 0)...sulla uo 000.407...per ogni istituto che ha ritenute da versare...l'accertamento viene registrato su liquid_gruppo_centro_comp,
-e l'importo dell'accertamento deriva dalla somma algebrica di impegni e accertamenti dell'istituto, 
+e l'importo dell'accertamento deriva dalla somma algebrica di impegni e accertamenti dell'istituto,
 
 le somme si possono ricavare da questa select:
 
@@ -1167,20 +1177,20 @@ contributo_ritenuta c, liquid_gruppo_Cori_Det l
 where c.esercizio = l.esercizio_contributo_ritenuta and
 c.pg_compenso = l.pg_compenso and
 C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and
 l.ESERCIZIO = 2018 and
 l.cd_uo_origine = '014.000' and pg_liquidazione = 0 and
 l.cd_gruppo_cr = '1004'
 
- 
- 
- 
+
+
+
  CONTROLLARE BENE COME FA CON I GENERICI I MANDATI E LE REVERSALI.... FORSE DEVO MODIFICARE ANCHE ALTRO */
 
 
 
   if aAggregato.im_liquidato = 0 then
-   -- ATTENZIONE!!! Se l'importo da liquidare è 0 non c'è niente da aggiornare al centro
+   -- ATTENZIONE!!! Se l'importo da liquidare Ã¨ 0 non c'Ã¨ niente da aggiornare al centro
    return;
   end if;
 
@@ -1189,7 +1199,7 @@ l.cd_gruppo_cr = '1004'
 
   aLGC:=null;
 
---pipe.send_message('1 '||  aL.esercizio);           
+--pipe.send_message('1 '||  aL.esercizio);
   begin
    aLGC:=getGruppoCentroAperto(aL, aAggregato);
   exception when NO_DATA_FOUND then
@@ -1201,7 +1211,7 @@ l.cd_gruppo_cr = '1004'
 
 --GGG1 DA CAMBIARE
   if aAggregato.im_liquidato < 0 Then
-  --and recParametriCNR.FL_TESORERIA_UNICA != 'Y' 
+  --and recParametriCNR.FL_TESORERIA_UNICA != 'Y'
     aLGCC:=creaGruppoCentroComp(aL, aLGC, aAggregato,aTSNow,aUser);
     IF recParametriCNR.FL_TESORERIA_UNICA = 'Y' THEN
 
@@ -1213,8 +1223,8 @@ l.cd_gruppo_cr = '1004'
         FROM GRUPPO_CR_DET
         WHERE ESERCIZIO = aAggregato.esercizio AND
               CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR  AND
-              CD_REGIONE = aAggregato.cd_regione AND 
-              PG_COMUNE = aAggregato.pg_comune; 
+              CD_REGIONE = aAggregato.cd_regione AND
+              PG_COMUNE = aAggregato.pg_comune;
       Exception
         WHEN Others THEN
          IBMERR001.RAISE_ERR_GENERICO('Errore nel recupero del terzo  per il gruppo '||aAggregato.cd_gruppo_cr||'.'||aAggregato.cd_regione||'.'||aAggregato.pg_comune||'. Errore:'||sqlerrm);
@@ -1224,14 +1234,15 @@ l.cd_gruppo_cr = '1004'
       aObbPGScad:=null;
 
       if aL.da_esercizio_precedente = 'Y' then
-        select NVL(sum(ammontare),0) 
+        select NVL(sum(ammontare),0)
         INTO SOMMA_OPPOSTA
         from
         contributo_ritenuta c, liquid_gruppo_Cori_Det l
         where c.esercizio = l.esercizio_contributo_ritenuta and
         c.pg_compenso = l.pg_compenso and
         C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-        c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+        c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and
+        C.TI_ENTE_PERCIPIENTE = l.TI_ENTE_PERCIPIENTE  and
         l.CD_CDS = aAggregato.CD_CDS and
         l.ESERCIZIO = aAggregato.esercizio and
         l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
@@ -1243,7 +1254,7 @@ l.cd_gruppo_cr = '1004'
         l.CD_REGIONE = aAggregato.CD_REGIONE and
         l.PG_COMUNE = aAggregato.PG_COMUNE and
         C.AMMONTARE > 0;
-      END IF;  
+      END IF;
       begin
        select distinct a.cd_elemento_voce
        into aCdEV
@@ -1255,7 +1266,7 @@ l.cd_gruppo_cr = '1004'
          and a.ti_gestione = CNRCTB001.GESTIONE_ENTRATE
          and a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
       exception when TOO_MANY_ROWS then
-         IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+         IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
              when NO_DATA_FOUND then
                IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
       end;
@@ -1309,6 +1320,8 @@ l.cd_gruppo_cr = '1004'
       aAccPG:=aAcc;
       aAccPGScad:=aAccScad;
 
+      aObbPG:=null;
+      aObbPGScad:=null;
 
 
 -- GG MODIFICA PER RIBALTARE ANCHE GLI IMPEGNI E NON CREARE SOLO GLI ACCERTAMENTI...IN QUESTO MODO IL FINE ANNO DEGLI IMPEGNI QUADRA CON L'INIZIO ANNO SUCCESSIVO
@@ -1324,7 +1337,7 @@ l.cd_gruppo_cr = '1004'
            and a.ti_gestione = CNRCTB001.GESTIONE_SPESE
            and a.ti_appartenenza = CNRCTB001.APPARTENENZA_CDS;
         exception when TOO_MANY_ROWS then
-           IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+           IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
                when NO_DATA_FOUND then
                  IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
         end;
@@ -1339,7 +1352,7 @@ l.cd_gruppo_cr = '1004'
         exception when NO_DATA_FOUND then
           IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non esistente');
         end;
-        
+
         aObb:=null;
         aObbScad:=null;
         aObb.CD_CDS:=aUOVERSACC.cd_unita_padre;
@@ -1353,7 +1366,7 @@ l.cd_gruppo_cr = '1004'
           aObb.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO;
         end if;
         aObb.im_costi_anticipati:=0;
-        
+
       aObb.fl_calcolo_automatico:='N';
       aObb.fl_spese_costi_altrui:='N';
         aObb.STATO_OBBLIGAZIONE := CNRCTB035.STATO_DEFINITIVO;
@@ -1394,16 +1407,16 @@ begin
             aAggregato.cd_gruppo_cr = tb_ass_pgiro(i).cd_gr_cr and
             aAggregato.cd_regione = tb_ass_pgiro(i).cd_regione and
             aAggregato.pg_comune = tb_ass_pgiro(i).pg_comune then
-      
+
             TROVATO_DETTAGLIO_P_GIRO := 'S';
-      
+
             IF SOMMA_OPPOSTA > 0 THEN
               tb_ass_pgiro(i).CD_CDS_OBB_PGIRO_OPP  := aObbPG.cd_cds;
               tb_ass_pgiro(i).ES_OBB_PGIRO_OPP      := aObbPG.esercizio;
               tb_ass_pgiro(i).ES_ORIG_OBB_PGIRO_OPP := aObbPG.esercizio_originale;
               tb_ass_pgiro(i).PG_OBB_PGIRO_OPP      := aObbPG.PG_OBBLIGAZIONE;
             END IF;
-            
+
             tb_ass_pgiro(i).cd_cds_acc_pgiro  := aAccPG.cd_cds;
             tb_ass_pgiro(i).es_acc_pgiro      := aAccPG.esercizio;
             tb_ass_pgiro(i).es_orig_acc_pgiro := aAccPG.esercizio_originale;
@@ -1417,8 +1430,8 @@ begin
 end;
       IF TROVATO_DETTAGLIO_P_GIRO = 'N' THEN
          IBMERR001.RAISE_ERR_GENERICO('Per il cds '||aAggregato.cd_cds||', l''esercizio '||aAggregato.esercizio||', la UO '||aAggregato.cd_unita_organizzativa||', la liquidazione '||aAggregato.pg_liquidazione||
-              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non è stata trovata la partita di giro di dettaglio');
-      END IF;     
+              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non Ã¨ stata trovata la partita di giro di dettaglio');
+      END IF;
 
     ELSE
       aAccPG:=null;
@@ -1435,7 +1448,7 @@ end;
               and a.ti_gestione = CNRCTB001.GESTIONE_ENTRATE
               and a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
       exception when TOO_MANY_ROWS then
-                 IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+                 IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
                when NO_DATA_FOUND then
                  IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
       end;
@@ -1448,10 +1461,10 @@ end;
       exception when NO_DATA_FOUND then
         IBMERR001.RAISE_ERR_GENERICO('Conto associato in partita di giro non trovato per voce di entrata:'||aCdEV);
       end;
-      
+
       -- Estraggo il terzo UO relativo all'UO SAC che accentra i versamenti
       CNRCTB080.GETTERZOPERUO(aLGCC.cd_unita_organizzativa,aCdTerzoUo, aCdModPagUo, aPgBancaUo,aAggregato.esercizio);
-      
+
       aObb:=null;
       aObbScad:=null;
       aObb.CD_CDS:=aUOVERSACC.cd_unita_padre;
@@ -1480,7 +1493,7 @@ end;
       aObb.UTUV:=aUser;
       aObb.PG_VER_REC:=1;
       aObb.ESERCIZIO_COMPETENZA:=aAggregato.esercizio;
-      
+
       CNRCTB030.CREAOBBLIGAZIONEPGIRO(false,aObb,aObbScad,aAccPG,aAccPGScad,trunc(aTSNow));
     END IF;
     update liquid_gruppo_centro_comp set
@@ -1508,7 +1521,8 @@ end;
       where c.esercizio = l.esercizio_contributo_ritenuta and
       c.pg_compenso = l.pg_compenso and
       C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-      c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+      c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and
+      C.TI_ENTE_PERCIPIENTE = l.TI_ENTE_PERCIPIENTE  and
       l.CD_CDS = aAggregato.CD_CDS and
       l.ESERCIZIO = aAggregato.esercizio and
       l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
@@ -1520,7 +1534,7 @@ end;
       l.CD_REGIONE = aAggregato.CD_REGIONE and
       l.PG_COMUNE = aAggregato.PG_COMUNE and
       C.AMMONTARE < 0;
-    END IF;      
+    END IF;
    if aLGC.pg_obb_accentr is not null then
     --CNRCTB043.modificaPraticaObb(aLGC.esercizio_obb_accentr,aLGC.cd_cds_obb_accentr,aLGC.esercizio_ori_obb_accentr,aLGC.pg_obb_accentr,aAggregato.im_liquidato,aTSNow,aUser);
     --aggiunto l'ultimo parametro aAccConScad = 'Y' per indicare che sono gestite le scadenze per le pgiro di entrata
@@ -1532,7 +1546,7 @@ end;
       aObbGiro.pg_obbligazione:=aLGC.pg_obb_accentr;
 
       CNRCTB035.GETPGIROCDS(aObbGiro,aObbScadGiro,aObbScadVoceGiro,aAccGiro,aAccScadGiro,aAccScadVoceGiro);
-      
+
       CNRCTB043.modificaPraticaAcc(aAccGiro.esercizio,aAccGiro.cd_cds,aAccGiro.esercizio_originale,aAccGiro.pg_accertamento,aAggregato.im_liquidato + somma_opposta,aTSNow,aUser);
       TROVATO_DETTAGLIO_P_GIRO := 'N';
 begin
@@ -1547,23 +1561,23 @@ begin
             aAggregato.cd_gruppo_cr = tb_ass_pgiro(i).cd_gr_cr and
             aAggregato.cd_regione = tb_ass_pgiro(i).cd_regione and
             aAggregato.pg_comune = tb_ass_pgiro(i).pg_comune then
-      
+
             TROVATO_DETTAGLIO_P_GIRO := 'S';
-      
+
             tb_ass_pgiro(i).cd_cds_obb_pgiro  := aObbGiro.cd_cds;
             tb_ass_pgiro(i).es_obb_pgiro      := aObbGiro.esercizio;
             tb_ass_pgiro(i).es_orig_obb_pgiro := aObbGiro.esercizio_originale;
             tb_ass_pgiro(i).pg_obb_pgiro      := aObbGiro.pg_obbligazione;
             tb_ass_pgiro(i).ti_origine_pgiro := 'S';
-        end if;         
+        end if;
       End Loop;
  Exception when NO_DATA_FOUND then
      IBMERR001.RAISE_ERR_GENERICO('Errore b ');
 end;
       IF TROVATO_DETTAGLIO_P_GIRO = 'N' THEN
          IBMERR001.RAISE_ERR_GENERICO('Per il cds '||aAggregato.cd_cds||', l''esercizio '||aAggregato.esercizio||', la UO '||aAggregato.cd_unita_organizzativa||', la liquidazione '||aAggregato.pg_liquidazione||
-              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non è stata trovata la partita di giro di dettaglio');
-      END IF;     
+              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non Ã¨ stata trovata la partita di giro di dettaglio');
+      END IF;
     ELSE
       CNRCTB043.modificaPraticaObb(aLGC.esercizio_obb_accentr,aLGC.cd_cds_obb_accentr,aLGC.esercizio_ori_obb_accentr,aLGC.pg_obb_accentr,aAggregato.im_liquidato,aTSNow,aUser,aAccConScad);
     END IF;
@@ -1586,9 +1600,9 @@ end;
            And a.esercizio = aAggregato.esercizio
            And a.ti_gestione = CNRCTB001.GESTIONE_SPESE
            And a.ti_appartenenza = CNRCTB001.APPARTENENZA_CDS;
-      Exception 
+      Exception
               when TOO_MANY_ROWS then
-                   IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+                   IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
               when NO_DATA_FOUND then
                    IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
       End;
@@ -1601,11 +1615,11 @@ end;
            And ti_appartenenza = CNRCTB001.APPARTENENZA_CDS
            And ti_gestione = CNRCTB001.GESTIONE_SPESE
            And cd_elemento_voce = aCdEV;
-      Exception 
+      Exception
               when NO_DATA_FOUND then
                  IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non esistente');
       End;
-      
+
       aObbNew.CD_CDS:=aUOVERSACC.cd_unita_padre;
       aObbNew.ESERCIZIO:=aAggregato.esercizio;
       if aL.da_esercizio_precedente = 'Y' then
@@ -1625,7 +1639,7 @@ end;
       aObbNew.DT_REGISTRAZIONE:=TRUNC(aDateCont);
       aObbNew.DS_OBBLIGAZIONE:='CORI-VA gruppo cr:'||aAggregato.cd_gruppo_cr||'.'||aAggregato.cd_regione||'.'||aAggregato.pg_comune;
       aObbNew.NOTE_OBBLIGAZIONE:='';
-      
+
       aObbNew.CD_TERZO:=CNRCTB015.GETIM01PERCHIAVE(CNRCTB035.TERZO_SPECIALE,CNRCTB035.CODICE_DIVERSI_PGIRO);
 
       aObbNew.IM_OBBLIGAZIONE:=aAggregato.im_liquidato;
@@ -1648,10 +1662,10 @@ end;
       aAcc:=aAccNew;
       aAccScad:=aAccScadNew;
 
-      
- 
+
+
       TROVATO_DETTAGLIO_P_GIRO := 'N';
-      
+
 
 begin
       For i in 1..Nvl(tb_ass_pgiro.Count,0) Loop
@@ -1665,22 +1679,22 @@ begin
             aAggregato.cd_gruppo_cr = tb_ass_pgiro(i).cd_gr_cr and
             aAggregato.cd_regione = tb_ass_pgiro(i).cd_regione and
             aAggregato.pg_comune = tb_ass_pgiro(i).pg_comune then
-      
+
             TROVATO_DETTAGLIO_P_GIRO := 'S';
-      
+
             tb_ass_pgiro(i).cd_cds_obb_pgiro  := aObbNew.cd_cds;
             tb_ass_pgiro(i).es_obb_pgiro      := aObbNew.esercizio;
             tb_ass_pgiro(i).es_orig_obb_pgiro := aObbNew.esercizio_originale;
             tb_ass_pgiro(i).pg_obb_pgiro      := aObbNew.pg_obbligazione;
             tb_ass_pgiro(i).ti_origine_pgiro := 'S';
-        end if;         
+        end if;
       End Loop;
  Exception when NO_DATA_FOUND then
      IBMERR001.RAISE_ERR_GENERICO('Errore c1 ');
 end;
       IF TROVATO_DETTAGLIO_P_GIRO = 'N' THEN
          IBMERR001.RAISE_ERR_GENERICO('Per il cds '||aAggregato.cd_cds||', l''esercizio '||aAggregato.esercizio||', la UO '||aAggregato.cd_unita_organizzativa||', la liquidazione '||aAggregato.pg_liquidazione||
-              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non è stata trovata la partita di giro di dettaglio');
+              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non Ã¨ stata trovata la partita di giro di dettaglio');
       END IF;
     ELSE
       aObbPG:=null;
@@ -1696,7 +1710,7 @@ end;
          and a.ti_gestione = CNRCTB001.GESTIONE_ENTRATE
          and a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
       exception when TOO_MANY_ROWS then
-         IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+         IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
              when NO_DATA_FOUND then
                IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
       end;
@@ -1739,11 +1753,11 @@ end;
       aAcc.ESERCIZIO_COMPETENZA:=aAggregato.esercizio;
       aAcc.IM_ACCERTAMENTO:=aAggregato.im_liquidato;
       CNRCTB040.CREAACCERTAMENTOPGIRO(false,aAcc,aAccScad,aObbPG,aObbPGScad,trunc(aTSNow));
-      
+
       -- Crea generico e reversale provvisoria
-      
+
       aAnagTst:=CNRCTB080.GETANAG(aCdTerzoAcc);
-      
+
       aGen:=null;
       aGenRiga:=null;
       aListGenRighe.delete;
@@ -1804,7 +1818,7 @@ end;
       aGenRiga.TI_ASSOCIATO_MANREV:=aGen.TI_ASSOCIATO_MANREV;
       aListGenRighe(1):=aGenRiga;
       CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
-      
+
       aRev:=null;
       aRevRiga:=null;
       aRev.CD_CDS:=aAcc.cd_cds;
@@ -1851,9 +1865,9 @@ end;
       aRevRiga.DUVA:=aTSNow;
       aRevRiga.PG_VER_REC:=1;
       CNRCTB037.generaRevProvvPgiro(aRev, aRevRiga, aTSNow, aUser);
-    END IF; 
+    END IF;
 
-    update  liquid_gruppo_centro 
+    update  liquid_gruppo_centro
     set     cd_cds_obb_accentr = aObbPG.cd_cds
          ,esercizio_obb_accentr = aObbPG.esercizio
          ,esercizio_ori_obb_accentr = aObbPG.esercizio_originale
@@ -1865,7 +1879,7 @@ end;
       and pg_gruppo_centro = aLGC.pg_gruppo_centro;
 -- Fix mancato aggiornamento pg_obb_accentr su liquid_gruppo_cori_locale alla creazione obb accentr
 -- sul gruppo CORI al centro
-    
+
     aLGC.cd_cds_obb_accentr:=aObbPG.cd_cds;
     aLGC.esercizio_obb_accentr:=aObbPG.esercizio;
     aLGC.esercizio_ori_obb_accentr:=aObbPG.esercizio_originale;
@@ -1898,23 +1912,23 @@ begin
             aAggregato.cd_gruppo_cr = tb_ass_pgiro(i).cd_gr_cr and
             aAggregato.cd_regione = tb_ass_pgiro(i).cd_regione and
             aAggregato.pg_comune = tb_ass_pgiro(i).pg_comune then
-      
+
             TROVATO_DETTAGLIO_P_GIRO := 'S';
-      
+
             tb_ass_pgiro(i).CD_CDS_ACC_PGIRO_OPP  := aAccGiroOpp.cd_cds;
             tb_ass_pgiro(i).ES_ACC_PGIRO_OPP      := aAccGiroOpp.esercizio;
             tb_ass_pgiro(i).ES_ORIG_ACC_PGIRO_OPP := aAccGiroOpp.esercizio_originale;
             tb_ass_pgiro(i).PG_ACC_PGIRO_OPP      := aAccGiroOpp.PG_ACCERTAMENTO;
 
-        end if;         
+        end if;
       End Loop;
  Exception when NO_DATA_FOUND then
      IBMERR001.RAISE_ERR_GENERICO('Errore b ');
 end;
       IF TROVATO_DETTAGLIO_P_GIRO = 'N' THEN
          IBMERR001.RAISE_ERR_GENERICO('Per il cds '||aAggregato.cd_cds||', l''esercizio '||aAggregato.esercizio||', la UO '||aAggregato.cd_unita_organizzativa||', la liquidazione '||aAggregato.pg_liquidazione||
-              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non è stata trovata la partita di giro di dettaglio');
-      END IF;     
+              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non Ã¨ stata trovata la partita di giro di dettaglio');
+      END IF;
     else
       aAccNew:=null;
       aAccScadNew:=null;
@@ -1928,9 +1942,9 @@ end;
            And a.esercizio = aAggregato.esercizio
            And a.ti_gestione = CNRCTB001.GESTIONE_ENTRATE
            And a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
-      Exception 
+      Exception
               when TOO_MANY_ROWS then
-                   IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+                   IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
               when NO_DATA_FOUND then
                    IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
       End;
@@ -1943,11 +1957,11 @@ end;
            And ti_appartenenza = CNRCTB001.APPARTENENZA_CNR
            And ti_gestione = CNRCTB001.GESTIONE_ENTRATE
            And cd_elemento_voce = aCdEV;
-      Exception 
+      Exception
               when NO_DATA_FOUND then
                  IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non esistente');
       End;
-      
+
       aAccNew.CD_CDS:=aUOVERSACC.cd_unita_padre;
       aAccNew.ESERCIZIO:=aAggregato.esercizio;
       if aL.da_esercizio_precedente = 'Y' then
@@ -1968,7 +1982,7 @@ end;
       aAccNew.DT_REGISTRAZIONE:=TRUNC(aDateCont);
       aAccNew.DS_ACCERTAMENTO:='CORI-VA per il segno opposto gruppo cr:'||aAggregato.cd_gruppo_cr||'.'||aAggregato.cd_regione||'.'||aAggregato.pg_comune;
       aAccNew.NOTE_ACCERTAMENTO:='';
-      
+
       aAccNew.CD_TERZO:=CNRCTB015.GETIM01PERCHIAVE(CNRCTB035.TERZO_SPECIALE,CNRCTB035.CODICE_DIVERSI_PGIRO);
 
       aAccNew.IM_ACCERTAMENTO:=SOMMA_OPPOSTA;
@@ -1986,7 +2000,7 @@ end;
       aAcc:=aAccNew;
       aAccScad:=aAccScadNew;
       TROVATO_DETTAGLIO_P_GIRO := 'N';
-      
+
 
 begin
       For i in 1..Nvl(tb_ass_pgiro.Count,0) Loop
@@ -2000,23 +2014,23 @@ begin
             aAggregato.cd_gruppo_cr = tb_ass_pgiro(i).cd_gr_cr and
             aAggregato.cd_regione = tb_ass_pgiro(i).cd_regione and
             aAggregato.pg_comune = tb_ass_pgiro(i).pg_comune then
-      
+
             TROVATO_DETTAGLIO_P_GIRO := 'S';
-      
+
             tb_ass_pgiro(i).CD_CDS_ACC_PGIRO_OPP  := aAcc.cd_cds;
             tb_ass_pgiro(i).ES_ACC_PGIRO_OPP      := aAcc.esercizio;
             tb_ass_pgiro(i).ES_ORIG_ACC_PGIRO_OPP := aAcc.esercizio_originale;
             tb_ass_pgiro(i).PG_ACC_PGIRO_OPP      := aAcc.PG_ACCERTAMENTO;
-        end if;         
+        end if;
       End Loop;
  Exception when NO_DATA_FOUND then
      IBMERR001.RAISE_ERR_GENERICO('Errore c1 ');
 end;
       IF TROVATO_DETTAGLIO_P_GIRO = 'N' THEN
          IBMERR001.RAISE_ERR_GENERICO('Per il cds '||aAggregato.cd_cds||', l''esercizio '||aAggregato.esercizio||', la UO '||aAggregato.cd_unita_organizzativa||', la liquidazione '||aAggregato.pg_liquidazione||
-              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non è stata trovata la partita di giro di dettaglio');
+              ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non Ã¨ stata trovata la partita di giro di dettaglio');
       END IF;
-      update  liquid_gruppo_centro 
+      update  liquid_gruppo_centro
       set     CD_CDS_ACC_ACCENTR_OPP = aAcc.cd_cds
            ,ES_ACC_ACCENTR_OPP = aAcc.esercizio
            ,ES_ORIG_ACC_ACCENTR_OPP = aAcc.esercizio_originale
@@ -2026,12 +2040,12 @@ end;
         and cd_regione = aLGC.cd_regione
         and pg_comune = aLGC.pg_comune
         and pg_gruppo_centro = aLGC.pg_gruppo_centro;
-    
+
       aLGC.CD_CDS_ACC_ACCENTR_OPP:=aAcc.cd_cds;
       aLGC.ES_ACC_ACCENTR_OPP:=aAcc.esercizio;
       aLGC.ES_ORIG_ACC_ACCENTR_OPP:=aAcc.esercizio_originale;
       aLGC.PG_ACC_ACCENTR_OPP:=aAcc.pg_accertamento;
-    END IF; 
+    END IF;
    END IF;
 
   -- Aggiorna liquid_gruppo_cori con le informazioni relative all'obbligazione pgiro su UO che versa
@@ -2175,6 +2189,10 @@ end;
    ind_pGiro    number := 0;
    ESERCIZIO_UO_SPECIALI NUMBER;
    somma_compensazioni NUMBER;
+   msg_acc varchar2(1000) := '';
+   aCdTerzoVE number(8);
+   aCdModPagVE varchar2(10);
+   aPgBancaVE number(10);
  begin
   for aPar in (select * from vsx_liquidazione_cori where pg_call = pgCall
   ) loop
@@ -2199,7 +2217,7 @@ end;
   if
    not CNRCTB008.ISESERCIZIOAPERTO(aEs, aCdCds)
   then
-   IBMERR001.RAISE_ERR_GENERICO('L''esercizio '||aEs||' non è aperto per il CDS '||aCdCds);
+   IBMERR001.RAISE_ERR_GENERICO('L''esercizio '||aEs||' non Ã¨ aperto per il CDS '||aCdCds);
   end if;
 
   aDateCont:=CNRCTB008.getTimestampContabile(aEs,aTSNow);
@@ -2254,8 +2272,8 @@ end;
          and aParD.cd_gruppo_cr = a.cd_gruppo_cr
          and aParD.cd_regione = a.cd_regione
          and aParD.pg_comune = a.pg_comune);
-         
-      -- Flag che determina se l'UO in processo è di CDS versato via interfaccia
+
+      -- Flag che determina se l'UO in processo Ã¨ di CDS versato via interfaccia
       lIsCdsInterDet := IsCdsInterfDet(aCdCds,aEs);
       lIsCdsInterTot := IsCdsInterfTot(aCdCds,aEs);
 
@@ -2269,11 +2287,11 @@ end;
      end if;
 
      UOENTE:=CNRCTB020.GETUOENTE(aEs);
-     
+
      -- Check su esercizio
      If Not CNRCTB008.ISESERCIZIOAPERTO(aEs, aUOVERSACC.cd_unita_padre)
      Then
-        IBMERR001.RAISE_ERR_GENERICO('L''esercizio '||aEs||' non è aperto per il CDS di versamento CORI '||aUOVERSACC.cd_unita_padre);
+        IBMERR001.RAISE_ERR_GENERICO('L''esercizio '||aEs||' non Ã¨ aperto per il CDS di versamento CORI '||aUOVERSACC.cd_unita_padre);
      End If;
 
      -- Nel caso di liq. via interfaccia, devo ripulire in interfaccia
@@ -2281,7 +2299,7 @@ end;
      -- PER L'INTERFACCIA DI TIPO DETTAGLIO:
      If lIsCdsInterDet Then
        For aLCInterf in (
-           Select * From liquid_cori_interf_dett alc 
+           Select * From liquid_cori_interf_dett alc
            Where esercizio=decode(aLiquid.da_esercizio_precedente,'Y',aEs-1,aEs)
              And cd_cds = aCdCds
              And cd_unita_organizzativa = aCdUo
@@ -2324,7 +2342,7 @@ end;
      -- PER L'INTERFACCIA DI TIPO TOTALE:
      If lIsCdsInterTot Then
        For aLCInterf in (
-           Select * From liquid_cori_interf alc 
+           Select * From liquid_cori_interf alc
            Where esercizio=decode(aLiquid.da_esercizio_precedente,'Y',aEs-1,aEs)
              And cd_cds = aCdCds
              And cd_unita_organizzativa = aCdUo
@@ -2363,31 +2381,31 @@ end;
      -- il puntatore alla liquidazione per quei gruppi che l'utente ha scelto di NON versare
      If aUOVERSACC.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo then
        For aDGruppoCentro in (
-           Select * From liquid_gruppo_centro 
+           Select * From liquid_gruppo_centro
            Where esercizio=aEs
              And cd_cds_lc = aCdCds
              And cd_uo_lc = aCdUo
              And pg_lc = aPgLiq
              And stato = CNRCTB575.STATO_GRUPPO_CENTRO_INIZIALE
-             For update nowait) 
+             For update nowait)
        Loop
 
          Declare
            aLNum number;
          Begin
-           Select distinct 1 into aLNum 
+           Select distinct 1 into aLNum
            From vsx_liquidazione_cori aParD
            Where aParD.pg_call = pgCall
              And aParD.cd_cds = aCdCds
              And aParD.esercizio = aEs
              And aParD.cd_unita_organizzativa = aCdUo
              And aParD.pg_liquidazione = aPgLiq
-             And aParD.cd_uo_origine = UOENTE.cd_unita_organizzativa  
+             And aParD.cd_uo_origine = UOENTE.cd_unita_organizzativa
              And aParD.cd_gruppo_cr = aDGruppoCentro.cd_gruppo_cr
              And aParD.cd_regione = aDGruppoCentro.cd_regione
              And aParD.pg_comune = aDGruppoCentro.pg_comune;
          Exception when NO_DATA_FOUND Then
-                Update liquid_gruppo_centro 
+                Update liquid_gruppo_centro
                 Set cd_cds_lc = null,
                     cd_uo_lc = null,
                     pg_lc = null,
@@ -2404,19 +2422,19 @@ end;
      -- Estraggo il terzo UO relativo all'UO SAC che accentra i versamenti
      CNRCTB080.GETTERZOPERUO(aUOVERSACC.cd_unita_organizzativa,aCdTerzoAcc, aCdModPagAcc, aPgBancaAcc,aEs);
      isLiquidParzAcc:=false;
-    
+
      -- LIQUIDAZIONE DI UO
      -- CICLO SU AGGREGATI PROPRI
      -- Nel caso di UO di versamento centrale: raccolgo anche i gruppi dei versamenti locali
      -- Nel caso di UO di versamenti unificati: raccolgo anche i gruppi di tutte le UO della SAC
-     
+
      -- Deve esistere un loop esterno che raggruppa i gruppi, per ognuno dei quali viene creato un Mandato
      -- (prima per ogni aggregato veniva creato un mandato poiche' non potevano esserci due uo con lo stesso gruppo)
      -- e il loop interno, gia' esistente, per ogni gruppo prende tutte le UO
 
   For aVersamenti In (Select a.cd_gruppo_cr,a.esercizio,a.cd_cds,a.cd_unita_organizzativa,
-                         a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato,Sum(a.im_liquidato) tot_liquidato, b.ti_mandato 
-                   From V_LIQUID_GRUPPO_CORI_CR_DET a, rif_modalita_pagamento b 
+                         a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato,Sum(a.im_liquidato) tot_liquidato, b.ti_mandato
+                   From V_LIQUID_GRUPPO_CORI_CR_DET a, rif_modalita_pagamento b
            Where a.esercizio = aEs
                      And a.cd_cds = aCdCds
                      And a.cd_unita_organizzativa = aCdUo
@@ -2437,21 +2455,20 @@ end;
                 Group by a.cd_gruppo_cr,a.esercizio,a.cd_cds,a.cd_unita_organizzativa,
                          a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato, b.ti_mandato
                 Order by a.cd_gruppo_cr,a.esercizio,a.cd_cds,a.cd_unita_organizzativa,
-                         a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato         
+                         a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato
   ) Loop -- LOOP VERSAMENTO aVersamenti
---pipe.send_message('aVersamenti.cd_gruppo_cr = '||aVersamenti.cd_gruppo_cr); 
-
+--pipe.send_message('aVersamenti.cd_gruppo_cr = '||aVersamenti.cd_gruppo_cr);
       select  FL_CONTO_BI
       INTO    CONTO_BI
       from    rif_modalita_pagamento
       WHERE   CD_MODALITA_PAG = aVersamenti.cd_modalita_pagamento;
-      
+
       If aVersamenti.fl_accentrato = 'Y' then
           if aCdTerzoAcc is null or aCdModPagAcc is null or aPgBancaAcc is null then
              IBMERR001.RAISE_ERR_GENERICO('Dati relativi al terzo di versamento accentrato non trovati o non completi');
           end if;
           aAnagTst:=CNRCTB080.GETANAG(aCdTerzoAcc);
-          isLiquidParzAcc:=true; -- Serve per marcare l'intera liquidazione come TRASFERITA (la chiusura dei pending verrà fatta alcentro)
+          isLiquidParzAcc:=true; -- Serve per marcare l'intera liquidazione come TRASFERITA (la chiusura dei pending verrÃ  fatta alcentro)
       Else
           if aVersamenti.cd_terzo_versamento is null or aVersamenti.pg_banca is null or aVersamenti.cd_modalita_pagamento is null then
              IBMERR001.RAISE_ERR_GENERICO('Dati relativi al terzo di versamento CORI non trovati o non completi per gruppo:'||aVersamenti.cd_gruppo_cr);
@@ -2459,22 +2476,22 @@ end;
           aAnagTst:=CNRCTB080.GETANAG(aVersamenti.cd_terzo_versamento);
       End If;
 
---pipe.send_message('aVersamenti.cd_gruppo_cr '||aVersamenti.cd_gruppo_cr); 
---pipe.send_message('aVersamenti.tot_liquidato '||aVersamenti.tot_liquidato);  
+--pipe.send_message('aVersamenti.cd_gruppo_cr '||aVersamenti.cd_gruppo_cr);
+--pipe.send_message('aVersamenti.tot_liquidato '||aVersamenti.tot_liquidato);
       -- Gestione liquidazione gruppi negativi solo da esercizio precedente
       If aVersamenti.tot_liquidato < 0 then
         If aLiquid.da_esercizio_precedente = 'N' Or aVersamenti.fl_accentrato = 'N' Then
            IBMERR001.RAISE_ERR_GENERICO('Importo di liquidazione negativo o nullo per gruppo CORI: '||aVersamenti.cd_gruppo_cr||' - Terzo di versamento: '||aVersamenti.cd_terzo_versamento);
         End if;
       End if;
-               
-      -- Per i gruppi dei versamenti locali non devo controllare aVersamenti.tot_liquidato bensì devo fare
-      -- la somma da V_LIQUID_CENTRO_UO perchè aVersamenti.tot_liquidato contiene solo la parte positiva
-      -- e se la somma è negativa il versamento deve essere bloccato
+
+      -- Per i gruppi dei versamenti locali non devo controllare aVersamenti.tot_liquidato bensÃ¬ devo fare
+      -- la somma da V_LIQUID_CENTRO_UO perchÃ¨ aVersamenti.tot_liquidato contiene solo la parte positiva
+      -- e se la somma Ã¨ negativa il versamento deve essere bloccato
       --PER IL MOMENTO PENSO CHE DEVO BLOCCARE ANCHE SE UN SOLO DETTAGLIO (ISTITUTO) E' NEGATIVO ma nel secondo loop
       --QUESTO CONTROLLO FORSE VA MODIFICATO TOGLIENDO LA CONDIZIONE SU REGIONE E COMUNE E AGGIUNGENDO IL TERZO DI VERSAMENTO
       --?????????????????????
-      
+
       If aUOVERSACC.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo Then
         Declare
            totale_negativo    number;
@@ -2511,8 +2528,8 @@ end;
                IBMERR001.RAISE_ERR_GENERICO('Esistono Gruppi Locali negativi che rendono tutta la liquidazione negativa per il gruppo CORI:'||aVersamenti.cd_gruppo_cr||' - Terzo di versamento:'||aVersamenti.cd_terzo_versamento);
             End if;
         End;
-      End If;     
-      
+      End If;
+
       -- Questa parte, relativa alla chiusura delle partite di giro dei compensi va tolta per i CDS caricati via interfaccia
       -- Inizio parte 1 esclusa per liq. di uo appartenenti a cds liquidati via interfaccia
       aTotMandato:=0;
@@ -2576,7 +2593,7 @@ end;
 
   For aGruppi In (Select a.cd_gruppo_cr,a.cd_regione,a.pg_comune,a.esercizio,a.cd_cds,a.cd_unita_organizzativa,
                          a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato,Sum(a.im_liquidato) im_liquidato
-                   From V_LIQUID_GRUPPO_CORI_CR_DET a 
+                   From V_LIQUID_GRUPPO_CORI_CR_DET a
            Where a.esercizio = aEs
                      And a.cd_cds = aCdCds
                      And a.cd_unita_organizzativa = aCdUo
@@ -2602,24 +2619,24 @@ end;
                 Order by a.cd_gruppo_cr,a.cd_regione,a.pg_comune,a.esercizio,a.cd_cds,a.cd_unita_organizzativa,
                          a.cd_terzo_versamento,a.cd_modalita_pagamento,a.pg_banca,fl_accentrato
  ) Loop -- loop principale aGruppi
---pipe.send_message('Loop aGruppi'); 
---pipe.send_message('aGruppi.cd_gruppo_cr '||aGruppi.cd_gruppo_cr); 
---pipe.send_message('aGruppi.im_liquidato '||aGruppi.im_liquidato);       
+--pipe.send_message('Loop aGruppi');
+--pipe.send_message('aGruppi.cd_gruppo_cr '||aGruppi.cd_gruppo_cr);
+--pipe.send_message('aGruppi.im_liquidato '||aGruppi.im_liquidato);
       -- Gestione liquidazione gruppi negativi solo da esercizio precedente
       -- DA COMMENTARE SOLO A GENNAIO PER LA LIQ DA ESERCIZIO PRECEDENTE     ---- SI COMMENTA SOLO LA PARTE INTERNA...NON QUELLA CHE EMETTE I MANDATI
 --INIZIO PARTE DA COMMENTARE SOLO A GENNAIO
-
+/*
       If aGruppi.im_liquidato < 0 then
         If aLiquid.da_esercizio_precedente = 'N' Or aGruppi.fl_accentrato = 'N' Then
            IBMERR001.RAISE_ERR_GENERICO('Importo di liquidazione negativo o nullo per gruppo CORI: '||aGruppi.cd_gruppo_cr||'.'||aGruppi.cd_regione||'.'||aGruppi.pg_comune);
         End if;
       End if;
-
+*/
 --FINE PARTE DA COMMENTARE SOLO A GENNAIO
-      
-      -- Per i gruppi dei versamenti locali non devo controllare aGruppi.im_liquidato bensì devo fare
-      -- la somma da V_LIQUID_CENTRO_UO perchè aGruppi.im_liquidato contiene solo la parte positiva
-      -- e se la somma è negativa il versamento deve essere bloccato
+
+      -- Per i gruppi dei versamenti locali non devo controllare aGruppi.im_liquidato bensÃ¬ devo fare
+      -- la somma da V_LIQUID_CENTRO_UO perchÃ¨ aGruppi.im_liquidato contiene solo la parte positiva
+      -- e se la somma Ã¨ negativa il versamento deve essere bloccato
        If aUOVERSACC.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo Then
          Declare
            totale_negativo    number;
@@ -2646,28 +2663,28 @@ end;
                 And v.pg_comune = aGruppi.pg_comune
                 And v.pg_liquidazione = aPgLiq
                 And v.pg_liquidazione_origine = 0);
---pipe.send_message('aGruppi.im_liquidato + totale_negativo '||To_Char(aGruppi.im_liquidato + totale_negativo)); 
+--pipe.send_message('aGruppi.im_liquidato + totale_negativo '||To_Char(aGruppi.im_liquidato + totale_negativo));
 
             -- DA COMMENTARE SOLO A GENNAIO PER LA LIQ DA ESERCIZIO PRECEDENTE---- SI COMMENTA SOLO LA PARTE INTERNA...NON QUELLA CHE EMETTE I MANDATI
 --INIZIO PARTE DA COMMENTARE SOLO A GENNAIO
-
+/*
             If (aGruppi.im_liquidato + totale_negativo) < 0 then
                IBMERR001.RAISE_ERR_GENERICO('Esistono Gruppi Locali negativi che rendono tutta la liquidazione negativa per il gruppo CORI:'||aGruppi.cd_gruppo_cr||'.'||aGruppi.cd_regione||'.'||aGruppi.pg_comune);
                --IBMERR001.RAISE_ERR_GENERICO('Esistono Gruppi Locali negativi che rendono tutta la liquidazione negativa per il gruppo CORI:'||aGruppi.cd_gruppo_cr||'.'||aGruppi.cd_regione||'.'||aGruppi.pg_comune||'/'||totale_negativo||'/'||aGruppi.im_liquidato);
             End if;
-
+*/
 --FINE PARTE DA COMMENTARE SOLO A GENNAIO
          End;
        End If;
-           
+
        --
        --UOENTE:=CNRCTB020.GETUOENTE(aEs);
-      
+
        -- Questa parte, relativa alla chiusura delle partite di giro dei compensi va tolta per i CDS caricati via interfaccia
        -- Inizio parte 1 esclusa per liq. di uo appartenenti a cds liquidati via interfaccia
 
-       -- Devo prendere tutte le UO di origine tranne la 999.000    
-       For aAggregato in (Select * From V_LIQUID_GRUPPO_CORI_CR_DET a 
+       -- Devo prendere tutte le UO di origine tranne la 999.000
+       For aAggregato in (Select * From V_LIQUID_GRUPPO_CORI_CR_DET a
                 Where a.esercizio = aEs
                           And a.cd_cds = aCdCds
                           And a.cd_unita_organizzativa = aCdUo
@@ -2675,10 +2692,10 @@ end;
                           And (-- Proprio
                                a.cd_uo_origine = a.cd_unita_organizzativa
                                -- Non proprio e non presente come proprio
-                               Or 
+                               Or
                                (a.cd_uo_origine <> a.cd_unita_organizzativa
-                               /* 
-                                And Not Exists (Select 1 From vsx_liquidazione_cori v 
+                               /*
+                                And Not Exists (Select 1 From vsx_liquidazione_cori v
                                     Where v.pg_call = pgCall
                                       And v.esercizio = a.esercizio
                                 And v.cd_cds = a.cd_cds
@@ -2689,8 +2706,8 @@ end;
                                                   And v.cd_regione = a.cd_regione
                                                   And v.pg_comune = a.pg_comune)*/
                                 )
-                               ) 
-                          And a.cd_uo_origine <> UOENTE.cd_unita_organizzativa     --'999.000'    
+                               )
+                          And a.cd_uo_origine <> UOENTE.cd_unita_organizzativa     --'999.000'
                           And Exists (Select 1 From vsx_liquidazione_cori v
                                        Where v.pg_call = pgCall
                                          And v.esercizio = a.esercizio
@@ -2705,10 +2722,10 @@ end;
                                          And v.pg_liquidazione_origine = a.pg_liquidazione_origine)
                                          And a.cd_gruppo_cr = aGruppi.cd_gruppo_cr
                                          And a.cd_regione = aGruppi.cd_regione
-                                         And a.pg_comune = aGruppi.pg_comune                        
+                                         And a.pg_comune = aGruppi.pg_comune
      ) Loop -- loop 1
     tb_ass_pgiro.delete;
---pipe.send_message('Loop aAggregato'); 
+--pipe.send_message('Loop aAggregato');
     If not lIsCdsInterDet And Not lIsCdsInterTot then
        -- CICLO SUI CORI DEI MIEI AGGREGATI PER CHIUDERE LE PARTITE DI GIRO APERTE
        -- Questa gestione estrae solo i CORI appartenenti all'UO che liquida
@@ -2741,7 +2758,7 @@ end;
                                   And a1.ti_ente_percipiente = a.ti_ente_percipiente)
                      For update nowait
        ) Loop -- loop2
-           --Il documento generico deve essere Istituzionale o Commerciale così come il compenso
+           --Il documento generico deve essere Istituzionale o Commerciale cosÃ¬ come il compenso
            Begin
              Select c.ti_istituz_commerc
              Into tipo_ic
@@ -2751,13 +2768,13 @@ end;
                And c.esercizio = aCori.esercizio
                And c.pg_compenso = aCori.pg_compenso;
            Exception
-               When Others Then 
+               When Others Then
                   tipo_ic := 'I';
-           End;   
+           End;
 
          -- Gestione dei CORI positivi
          if aCori.ammontare > 0 then
-            -- Modifica del 18/11/2002 anche il generico di trasferimento nel caso di CORI accentrati è targato come GEN_COR_VER_S
+            -- Modifica del 18/11/2002 anche il generico di trasferimento nel caso di CORI accentrati Ã¨ targato come GEN_COR_VER_S
 
             aTipoGenerico := CNRCTB100.TI_GEN_CORI_VER_SPESA;
 --GGGG_TODO VERIFICARE IN CONTRIBUTO_RITENUTA LE DIFFERENZE DI DATI TRA GLI ISTITUTI E LE UO...VERIFICARE ANCHE LE QUERY DEI CURSORI..
@@ -2766,34 +2783,32 @@ end;
             aAccTmp.esercizio_originale := aCori.esercizio_ori_accertamento;
             aAccTmp.pg_accertamento     := aCori.pg_accertamento;
             CNRCTB035.getPgiroCds(aAccTmp, aAccScadTmp, aAccScadVoceTmp, aObbTmp, aObbScadTmp, aObbScadVoceTmp);
-
 --/* GG REMMATO SOLO PER IL FINE ANNO 2015
             If aLiquid.da_esercizio_precedente = 'Y' Then
 
                -- 09.01.2008 remmata questa chiamata, e utilizzata la nuova gestione che ribalta entrambi i documenti
                -- CNRCTB046.ripPgiroCds (aAccTmp, aObb, aTSNow, aUser);
-               
+
                -- 09.01.2008 SF PARTITE DI GIRO DA ESERCIZIO PRECEDENTE
                CNRCTB046.ripPgiroCdsEntrambe( aObbTmp, aObbScadTmp, aObbScadVoceTmp, aAccTmp, aAccScadTmp, aAccScadVoceTmp, Null, Null, CNRCTB001.GESTIONE_SPESE,
                                              aTSNow, aUser, aObb, aAcc);
-                    
                CNRCTB035.getPgiroCds (aObb, aObbScad, aObbScadVoce, aAcc, aAccScad, aAccScadVoce);
 
             Else
                aObb     := aObbTmp;
                aObbScad := aObbScadTmp;
             End if;
---*/ 
+--*/
 --            aObb     := aObbTmp;
 --            aObbScad := aObbScadTmp;
 -- FINE GG
 
-------------------------------------            
-            -- se la UO è quella del versamento su conto BI occorre rendere tronca la PGIRO in oggetto 
+------------------------------------
+            -- se la UO Ã¨ quella del versamento su conto BI occorre rendere tronca la PGIRO in oggetto
             -- e crearla sempre tronca sulla UO di versamento (999.000)
-            If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa 
---GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000            
--- da qui non dovrebbe passare più
+            If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa
+--GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000
+-- da qui non dovrebbe passare piÃ¹
             and aUOVERSACC.cd_unita_organizzativa != aUOVERSCONTOBI.cd_unita_organizzativa then
                   --prendo la pgiro duale (e verifico che sia effettivamente chiusa prima di renderla tronca)
                   --aObbOld.cd_cds:=aGruppoCentro.cd_cds_obb_accentr;
@@ -2801,15 +2816,16 @@ end;
                   --aObbOld.esercizio_originale:=aGruppoCentro.esercizio_ori_obb_accentr;
                   --aObbOld.pg_obbligazione:=aGruppoCentro.pg_obb_accentr;
                   --CNRCTB035.GETPGIROCDSINV(aObbOld,aObbScadOld,aObbScadVoceOld,aAccOld,aAccScadOld,aAccScadVoceOld);
-                  --rendo tronca la stessa (cioè annullo la parte spesa)
+                  --rendo tronca la stessa (cioÃ¨ annullo la parte spesa)
 --/* GG REMMATO SOLO PER IL FINE ANNO 2015
                   If aLiquid.da_esercizio_precedente = 'N' Then
-                       CNRCTB043.troncaPraticaAccPgiro(aAccTmp.esercizio,aAccTmp.cd_cds,aAccTmp.esercizio_originale,aAccTmp.pg_accertamento,aTSNow,aUser); 
+                       CNRCTB043.troncaPraticaAccPgiro(aAccTmp.esercizio,aAccTmp.cd_cds,aAccTmp.esercizio_originale,aAccTmp.pg_accertamento,aTSNow,aUser);
                   Else  -- rendo tronca quella ribaltata
-                       CNRCTB043.troncaPraticaAccPgiroInv(aAcc.esercizio,aAcc.cd_cds,aAcc.esercizio_originale,aAcc.pg_accertamento,aTSNow,aUser); 
+
+                       CNRCTB043.troncaPraticaAccPgiroInv(aAcc.esercizio,aAcc.cd_cds,aAcc.esercizio_originale,aAcc.pg_accertamento,aTSNow,aUser);
                   End if;
---*/                  
---                  CNRCTB043.troncaPraticaAccPgiro(aAccTmp.esercizio,aAccTmp.cd_cds,aAccTmp.esercizio_originale,aAccTmp.pg_accertamento,aTSNow,aUser); 
+--*/
+--                  CNRCTB043.troncaPraticaAccPgiro(aAccTmp.esercizio,aAccTmp.cd_cds,aAccTmp.esercizio_originale,aAccTmp.pg_accertamento,aTSNow,aUser);
 -- FINE GG
                   -- devo creare la pgiro tronca sulla 999
                   aObbNew:=null;
@@ -2827,9 +2843,9 @@ end;
                        And a.esercizio = aEs   --aCori.esercizio
                        And a.ti_gestione = CNRCTB001.GESTIONE_SPESE
                        And a.ti_appartenenza = CNRCTB001.APPARTENENZA_CDS;
-                  Exception 
+                  Exception
                           when TOO_MANY_ROWS then
-                               IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+                               IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
                           when NO_DATA_FOUND then
                                IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
                   End;
@@ -2841,11 +2857,11 @@ end;
                        And ti_appartenenza = CNRCTB001.APPARTENENZA_CDS
                        And ti_gestione = CNRCTB001.GESTIONE_SPESE
                        And cd_elemento_voce = aCdEV;
-                  Exception 
+                  Exception
                           when NO_DATA_FOUND then
                              IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non esistente');
                   End;
-                  
+
                   aObbNew.CD_CDS:=aCdCds;
                   aObbNew.ESERCIZIO:=aObb.esercizio;
                   aObbNew.ESERCIZIO_ORIGINALE:=aObb.esercizio_originale;
@@ -2854,8 +2870,8 @@ end;
                      aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_IMP;
                   Else
                      aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_IMP_RES;
-                  End If;   
---*/                  
+                  End If;
+--*/
 --                  aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_IMP;
 -- FINE GG
                   aObbNew.CD_UNITA_ORGANIZZATIVA:=aCdUo;
@@ -2868,7 +2884,7 @@ end;
                   aObbNew.DS_OBBLIGAZIONE:='PGiro creata in automatico da liquidazione CORI';
                   aObbNew.NOTE_OBBLIGAZIONE:='';
                   aObbNew.CD_TERZO:=aObb.CD_TERZO;
-                  aObbNew.IM_OBBLIGAZIONE:=aObb.IM_OBBLIGAZIONE;    --aObbOld.IM_OBBLIGAZIONE è stata già annullata
+                  aObbNew.IM_OBBLIGAZIONE:=aObb.IM_OBBLIGAZIONE;    --aObbOld.IM_OBBLIGAZIONE Ã¨ stata giÃ  annullata
                   aObbNew.stato_obbligazione:=CNRCTB035.STATO_DEFINITIVO;
                   aObbNew.im_costi_anticipati:=0;
                   aObbNew.fl_calcolo_automatico:='N';
@@ -2881,25 +2897,25 @@ end;
                   aObbNew.UTUV:=aUser;
                   aObbNew.PG_VER_REC:=1;
                   aObbNew.ESERCIZIO_COMPETENZA:=aEs;
-                
+
                   CNRCTB030.CREAOBBLIGAZIONEPGIROTRONC(false,aObbNew,aObbScadNew,aAccNew,aAccScadNew,trunc(aTSNow));
- 
+
                   CREALIQUIDCORIASSPGIRO(aLiquid,aAggregato.cd_gruppo_cr,aAggregato.cd_regione,aAggregato.pg_comune,'S',aObbNew,aObb,null,null,aUser,trunc(aTSNow));
-                  
-                  
+
+
                   aObb     := aObbNew;
                   aObbScad := aObbScadNew;
             End If;
-            
--------------------------------------            
+
+-------------------------------------
 ---INIZIO GGG
             IF recParametriCNR.FL_TESORERIA_UNICA = 'Y' and aAggregato.cd_unita_organizzativa <> aUOVERSACC.cd_unita_organizzativa and
                 aAggregato.cd_unita_organizzativa <> aUOVERSCONTOBI.cd_unita_organizzativa and aAggregato.fl_accentrato = 'Y' THEN
               If aLiquid.da_esercizio_precedente = 'N' Then
-                CNRCTB043.troncaPraticaAccPgiro(aCori.esercizio_accertamento,aCori.cd_cds_accertamento,aCori.esercizio_ori_accertamento,aCori.pg_accertamento,aTSNow,aUser); 
+                CNRCTB043.troncaPraticaAccPgiro(aCori.esercizio_accertamento,aCori.cd_cds_accertamento,aCori.esercizio_ori_accertamento,aCori.pg_accertamento,aTSNow,aUser);
               Else  -- rendo tronca quella ribaltata
 -- GGG TODO_DA_VERIFICARE COSA PASSARE...DOVREBBE ESSERE OK...CHIEDERE A TILDE
-                CNRCTB043.troncaPraticaAccPgiroInv(aAcc.esercizio,aAcc.cd_cds,aAcc.esercizio_oriGINALE,aAcc.pg_accertamento,aTSNow,aUser); 
+                CNRCTB043.troncaPraticaAccPgiroInv(aAcc.esercizio,aAcc.cd_cds,aAcc.esercizio_oriGINALE,aAcc.pg_accertamento,aTSNow,aUser);
               End if;
               ind_pGiro := Nvl(tb_ass_pgiro.Count,0) + 1;
               tb_ass_pgiro(ind_pGiro).cd_cds := aCori.cd_cds;
@@ -2956,7 +2972,7 @@ end;
               aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
               aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
               aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
-              
+
               aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
               aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
               --
@@ -3010,7 +3026,7 @@ end;
               aListGenRighe(1):=aGenRiga;
               --
               CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
-              
+
               -- Generazione righe mandato
               aManPRiga:=null;
               aManPRiga.CD_CDS:=aGen.cd_cds;
@@ -3043,10 +3059,10 @@ end;
             END IF;
 ---FINE GGG
          -- ================================================================
-         -- Se il CORI è negativo
+         -- Se il CORI Ã¨ negativo
          -- ================================================================
          elsif aCori.ammontare < 0 Then
-            -- Modifica del 18/11/2002 anche il generico di trasferimento nel caso di CORI accentrati è targato come GEN_COR_VER_E
+            -- Modifica del 18/11/2002 anche il generico di trasferimento nel caso di CORI accentrati Ã¨ targato come GEN_COR_VER_E
             --if aAggregato.fl_accentrato = 'Y' then
             --  aTipoGenerico := CNRCTB100.TI_GENERICO_TRASF_E;
             -- else
@@ -3056,14 +3072,14 @@ end;
             aObbTmp.esercizio:=aCori.esercizio_obbligazione;
             aObbTmp.esercizio_originale:=aCori.esercizio_ori_obbligazione;
             aObbTmp.pg_obbligazione:=aCori.pg_obbligazione;
--- recupero l'accertamento collegato alla partita di giro di spesa.           
+-- recupero l'accertamento collegato alla partita di giro di spesa.
             CNRCTB035.getPgiroCds(aObbTmp,aObbScadTmp,aObbScadVoceTmp,aAccTmp,aAccScadTmp,aAccScadVoceTmp);
 --/* GG REMMATO SOLO PER IL FINE ANNO 2015
             If aLiquid.da_esercizio_precedente = 'Y' Then
 
                -- 09.01.2008 remmata questa chiamata, e utilizzata la nuova gestione che ribalta entrambi i documenti
                -- CNRCTB046.ripPgiroCds(aObbTmp,aAcc,aTSNow,aUser);
-                 
+
                -- 09.01.2008 SF PARTITE DI GIRO DA ESERCIZIO PRECEDENTE
                CNRCTB046.ripPgiroCdsEntrambe(aObbTmp, aObbScadTmp, aObbScadVoceTmp, aAccTmp, aAccScadTmp, aAccScadVoceTmp, Null, Null, CNRCTB001.GESTIONE_ENTRATE,
                                              aTSNow, aUser, aObb, aAcc);
@@ -3077,11 +3093,11 @@ end;
 --               aAcc     := aAccTmp;
 --               aAccScad := aAccScadTmp;
 -- FINE GG
-------------------------------------            
-            -- se la UO è quella del versamento su conto BI occorre rendere tronca la PGIRO in oggetto 
+------------------------------------
+            -- se la UO Ã¨ quella del versamento su conto BI occorre rendere tronca la PGIRO in oggetto
             -- e crearla sempre tronca sulla UO di versamento (999.000)
-            If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa 
---GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000            
+            If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa
+--GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000
             and aUOVERSACC.cd_unita_organizzativa != aUOVERSCONTOBI.cd_unita_organizzativa then
                   --prendo la pgiro duale (e verifico che sia effettivamente chiusa prima di renderla tronca)
                   --aObbOld.cd_cds:=aGruppoCentro.cd_cds_obb_accentr;
@@ -3089,15 +3105,15 @@ end;
                   --aObbOld.esercizio_originale:=aGruppoCentro.esercizio_ori_obb_accentr;
                   --aObbOld.pg_obbligazione:=aGruppoCentro.pg_obb_accentr;
                   --CNRCTB035.GETPGIROCDSINV(aObbOld,aObbScadOld,aObbScadVoceOld,aAccOld,aAccScadOld,aAccScadVoceOld);
-                  --rendo tronca la stessa (cioè annullo la parte entrata)
+                  --rendo tronca la stessa (cioÃ¨ annullo la parte entrata)
 --/* GG REMMATO SOLO PER IL FINE ANNO 2015
                   If aLiquid.da_esercizio_precedente = 'N' Then
-                       CNRCTB043.troncaPraticaObbPgiro(aObbTmp.esercizio,aObbTmp.cd_cds,aObbTmp.esercizio_originale,aObbTmp.pg_obbligazione,aTSNow,aUser); 
+                       CNRCTB043.troncaPraticaObbPgiro(aObbTmp.esercizio,aObbTmp.cd_cds,aObbTmp.esercizio_originale,aObbTmp.pg_obbligazione,aTSNow,aUser);
                   Else  -- rendo tronca quella ribaltata
-                       CNRCTB043.troncaPraticaObbPgiroInv(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser); 
+                       CNRCTB043.troncaPraticaObbPgiroInv(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser);
                   End if;
 --*/
---                       CNRCTB043.troncaPraticaObbPgiro(aObbTmp.esercizio,aObbTmp.cd_cds,aObbTmp.esercizio_originale,aObbTmp.pg_obbligazione,aTSNow,aUser); 
+--                       CNRCTB043.troncaPraticaObbPgiro(aObbTmp.esercizio,aObbTmp.cd_cds,aObbTmp.esercizio_originale,aObbTmp.pg_obbligazione,aTSNow,aUser);
 -- FINE GG
                   -- devo creare la pgiro tronca sulla 999
                   aAccNew:=null;
@@ -3115,9 +3131,9 @@ end;
                        And a.esercizio = aEs   --aCori.esercizio
                        And a.ti_gestione = CNRCTB001.GESTIONE_ENTRATE
                        And a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
-                  Exception 
+                  Exception
                           when TOO_MANY_ROWS then
-                               IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+                               IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
                           when NO_DATA_FOUND then
                               IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
                   End;
@@ -3129,18 +3145,18 @@ end;
                        And ti_appartenenza = CNRCTB001.APPARTENENZA_CNR
                        And ti_gestione = CNRCTB001.GESTIONE_ENTRATE
                        And cd_elemento_voce = aCdEV;
-                  Exception 
+                  Exception
                           when NO_DATA_FOUND then
                              IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non esistente');
                   End;
-                  
+
                   aAccNew.CD_CDS:=aCdCds;
                   aAccNew.ESERCIZIO:=aAcc.esercizio;
                   aAccNew.ESERCIZIO_ORIGINALE:=aAcc.esercizio_originale;
 --/* GG REMMATO SOLO PER IL FINE ANNO 2015
                   If aLiquid.da_esercizio_precedente = 'N' Then
                        aAccNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC;
-                  Else     
+                  Else
                        aAccNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC_RES;
                   End If;
 --*/
@@ -3157,7 +3173,7 @@ end;
                   aAccNew.DS_ACCERTAMENTO:='PGiro creata in automatico da liquidazione CORI';
                   aAccNew.NOTE_ACCERTAMENTO:='';
                   aAccNew.CD_TERZO:=aAcc.CD_TERZO;
-                  aAccNew.IM_ACCERTAMENTO:=aAcc.IM_ACCERTAMENTO;    
+                  aAccNew.IM_ACCERTAMENTO:=aAcc.IM_ACCERTAMENTO;
                   aAccNew.FL_PGIRO:='Y';
                   aAccNew.RIPORTATO:='N';
                   aAccNew.DACR:=aTSNow;
@@ -3166,25 +3182,25 @@ end;
                   aAccNew.UTUV:=aUser;
                   aAccNew.PG_VER_REC:=1;
                   aAccNew.ESERCIZIO_COMPETENZA:=aEs;
-                
+
                   CNRCTB040.CREAACCERTAMENTOPGIROTRONC(false,aAccNew,aAccScadNew,aObbNew,aObbScadNew,trunc(aTSNow));
 
                   CREALIQUIDCORIASSPGIRO(aLiquid,aAggregato.cd_gruppo_cr,aAggregato.cd_regione,aAggregato.pg_comune,'E',null,null,aAccNew,aAcc,aUser,trunc(aTSNow));
-                  
+
                   aAcc     := aAccNew;
                   aAccScad := aAccScadNew;
             End If;
-            
--------------------------------------            
+
+-------------------------------------
 ---INIZIO GGG
             IF recParametriCNR.FL_TESORERIA_UNICA = 'Y' and aAggregato.cd_unita_organizzativa <> aUOVERSACC.cd_unita_organizzativa and
                 aAggregato.cd_unita_organizzativa <> aUOVERSCONTOBI.cd_unita_organizzativa and aAggregato.fl_accentrato = 'Y' THEN
             -- rendo tronca LA PARTITA DI GIRO DELL'ISTITUTO
               If aLiquid.da_esercizio_precedente = 'N' Then
-                CNRCTB043.troncaPraticaObbPgiro(aCori.esercizio_obbligazione,aCori.cd_cds,aCori.esercizio_ori_obbligazione,aCori.pg_obbligazione,aTSNow,aUser); 
+                CNRCTB043.troncaPraticaObbPgiro(aCori.esercizio_obbligazione,aCori.cd_cds,aCori.esercizio_ori_obbligazione,aCori.pg_obbligazione,aTSNow,aUser);
               Else  -- rendo tronca quella ribaltata
 -- GGG TODO_DA_VERIFICARE COSA PASSARE...DOVREBBE ESSERE OK...CHIEDERE A TILDE
-                CNRCTB043.troncaPraticaObbPgiroInv(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser); 
+                CNRCTB043.troncaPraticaObbPgiroInv(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser);
               End if;
               ind_pGiro := Nvl(tb_ass_pgiro.Count,0) + 1;
               tb_ass_pgiro(ind_pGiro).cd_cds := aCori.cd_cds;
@@ -3210,7 +3226,7 @@ end;
               aGen:=null;
               aGenRiga:=null;
               aListGenRighe.delete;
-              
+
               -- Creo il documento generico di entrata su partita di giro collegato all'annotazione di spesa su pgiro del contributo ritenuta
               aGen.CD_CDS:=aAcc.cd_cds;
               aGen.CD_UNITA_ORGANIZZATIVA:=aAcc.cd_unita_organizzativa;
@@ -3237,7 +3253,7 @@ end;
               aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
               aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
               aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
-              
+
               aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
               aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
               aGenRiga.CD_CDS:=aGen.CD_CDS;
@@ -3254,13 +3270,13 @@ end;
                   aGenRiga.CD_TERZO:=aAggregato.cd_terzo_versamento;
               end if;
               --   aGenRiga.CD_TERZO_CESSIONARIO:=aGen.CD_TERZO_CESSIONARIO;
-              -- Estrae il terzo associato all'UO del compenso e le sue modalità di pagamento di tipo bancario più recenti
-              -- se entro dalla 999 estraggo il terzo associato ad essa con modalità di pagamento BI
+              -- Estrae il terzo associato all'UO del compenso e le sue modalitÃ  di pagamento di tipo bancario piÃ¹ recenti
+              -- se entro dalla 999 estraggo il terzo associato ad essa con modalitÃ  di pagamento BI
               IF CONTO_BI = 'Y' THEN
                  CNRCTB080.getTerzoPerEnteContoBI(aCdUo, aCdTerzoUO, aCdModPagUO, aPgBancaUO);
               Else
                  CNRCTB080.getTerzoPerUO(aCori.cd_unita_organizzativa, aCdTerzoUO, aCdModPagUO, aPgBancaUO,aAcc.esercizio);
-              End If;   
+              End If;
               --
               aGenRiga.CD_TERZO_UO_CDS:=aCdTerzoUO;
               aGenRiga.PG_BANCA_UO_CDS:=aPgBancaUO;
@@ -3331,8 +3347,8 @@ end;
      End Loop; -- FINE DEL CICLO DI LOOP SU CORI --loop2
      -- Creazione della partita di giro di compensazione nel caso di liquidazione negativa (non via interfaccia)
 -- GGG TODO....VERIFICARE QUALI MODIFICHE APPORTARE IN QUESTO CASO...ESERCIZIO PRECEDENTE
-     If recParametriCNR.FL_TESORERIA_UNICA != 'Y' and 
-        Not lIsCdsInterDet 
+     If recParametriCNR.FL_TESORERIA_UNICA != 'Y' and
+        Not lIsCdsInterDet
         And Not lIsCdsInterTot
         And aAggregato.im_liquidato < 0
         And aLiquid.da_esercizio_precedente = 'Y'
@@ -3352,8 +3368,8 @@ end;
         aCdEV:=CNRCTB015.GETVAL01PERCHIAVE(aAggregato.esercizio,CNRCTB575.ELEMENTO_VOCE_SPECIALE,CNRCTB575.COMPENSAZIONE_CORI);
 
         Begin
-          Select * Into aEVComp 
-          From elemento_voce 
+          Select * Into aEVComp
+          From elemento_voce
           Where esercizio = aAggregato.esercizio
             And ti_gestione = CNRCTB001.GESTIONE_SPESE
             And ti_appartenenza = CNRCTB001.APPARTENENZA_CDS
@@ -3426,7 +3442,7 @@ end;
         aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
         aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
         aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
-        
+
         aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
         aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
         --
@@ -3509,7 +3525,7 @@ end;
         aManPRiga.PG_VER_REC:=1;
         aTotMandato:=aTotMandato+aManPRiga.im_mandato_riga;
         aListRigheManP(aListRigheManP.count+1):=aManPRiga;
-        Update liquid_gruppo_cori 
+        Update liquid_gruppo_cori
         Set cd_cds_acc_compens=aAcc.cd_cds,
             esercizio_acc_compens=aAcc.esercizio,
             esercizio_ori_acc_compens=aAcc.esercizio_originale,
@@ -3540,8 +3556,8 @@ end;
             aLocAggregato liquid_gruppo_cori%rowtype;
       begin
          Begin
-             Select * into aLocAggregato 
-             From liquid_gruppo_cori 
+             Select * into aLocAggregato
+             From liquid_gruppo_cori
              Where cd_cds = aAggregato.cd_cds
                and esercizio = aAggregato.esercizio
                and cd_unita_organizzativa = aAggregato.cd_unita_organizzativa
@@ -3560,22 +3576,22 @@ end;
          End;
       End If;
     End Loop; -- FINE CICLO DI LOOP SU AGGREGATI -- LOOP 1
-  
+
       -- ================================================================================
       -- GESTIONE DEGLI AGGREGATI RACCOLTI DA ALTRE UO DEL TIPO DI QUELLO IN PROCESSO
       -- ================================================================================
-      -- Se l'UO è quella di versamento CORI centralizzati
+      -- Se l'UO Ã¨ quella di versamento CORI centralizzati
       -- Raccoglie tutti gli aggregati al centro del tipo specificato dall'utente (da es. prec e non)
-      -- Non filtra più per UO
+      -- Non filtra piÃ¹ per UO
       if aCdUo = aUOVERSACC.cd_unita_organizzativa or aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa then
---pipe.send_message('UOENTE.cd_unita_organizzativa = '||UOENTE.cd_unita_organizzativa);       
---pipe.send_message('aGruppi.cd_unita_organizzativa = '||aGruppi.cd_unita_organizzativa);       
+--pipe.send_message('UOENTE.cd_unita_organizzativa = '||UOENTE.cd_unita_organizzativa);
+--pipe.send_message('aGruppi.cd_unita_organizzativa = '||aGruppi.cd_unita_organizzativa);
          Declare
             aVSX vsx_liquidazione_cori%rowtype;
             isFoundGruppoCentro boolean;
          Begin
-            Select * Into aVSX 
-            From vsx_liquidazione_cori v 
+            Select * Into aVSX
+            From vsx_liquidazione_cori v
             Where v.pg_call = pgCall
               And v.esercizio = aGruppi.esercizio
               And v.cd_cds = aGruppi.cd_cds
@@ -3585,23 +3601,23 @@ end;
               And v.pg_comune = aGruppi.pg_comune
               And v.pg_liquidazione = aPgLiq
               And v.cd_uo_origine = UOENTE.cd_unita_organizzativa;         --'999.000'
-              --And v.cd_uo_origine <> aGruppi.cd_unita_organizzativa;   ?????????????????????????????????? perchè c'è?????????
+              --And v.cd_uo_origine <> aGruppi.cd_unita_organizzativa;   ?????????????????????????????????? perchÃ¨ c'Ã¨?????????
 
             isFoundGruppoCentro:=false;
 
----- da quì parte la creazione di generico e mandati/reversali da liquid_gruppo_centro...
+---- da quÃ¬ parte la creazione di generico e mandati/reversali da liquid_gruppo_centro...
 
-            For aGruppoCentro in (Select * From liquid_gruppo_centro 
+            For aGruppoCentro in (Select * From liquid_gruppo_centro
                                   Where esercizio = aGruppi.esercizio
                                     And cd_gruppo_cr = aGruppi.cd_gruppo_cr
                                     And cd_regione = aGruppi.cd_regione
                                     And pg_comune = aGruppi.pg_comune
                                     And da_esercizio_precedente = aLiquid.da_esercizio_precedente
                                     And stato = CNRCTB575.STATO_GRUPPO_CENTRO_INIZIALE
-                                  For update nowait) 
+                                  For update nowait)
             Loop
                isFoundGruppoCentro:=true;
-               Update liquid_gruppo_centro 
+               Update liquid_gruppo_centro
                Set stato = CNRCTB575.STATO_GRUPPO_CENTRO_CHIUSO,
                    utuv=aUser,
                    duva=aTSNow,
@@ -3611,7 +3627,7 @@ end;
                  And cd_regione = aGruppoCentro.cd_regione
                  And pg_comune = aGruppoCentro.pg_comune
                  And pg_gruppo_centro = aGruppoCentro.pg_gruppo_centro;
-            
+
             -- Crea i mandati di eventuale restituzione crediti alle UO con gruppi negativi....GIRA SOLO SUI DATI DEGLI ANNI PRECEDENTI
             --restituzioneCrediti(aAggregato,aGruppoCentro,aTotReversale,aRevP,aListRigheRevP,aUser,aTSNow);
 -- GGG TODO PER I MANDATI DI RESTITUZIONE..SOLO A FINE ANNO
@@ -3629,7 +3645,7 @@ end;
                  and esercizio_originale = aGruppoCentro.esercizio_ori_obb_accentr
                  and pg_obbligazione = aGruppoCentro.pg_obb_accentr
                  for update nowait;
-               exception 
+               exception
                  when NO_DATA_FOUND then
                    If cnrutil.isLabelObbligazione() Then
                          IBMERR001.RAISE_ERR_GENERICO('Obbligazione di versamento cori al centro non trovata: '||aGruppoCentro.pg_obb_accentr);
@@ -3637,23 +3653,23 @@ end;
                          IBMERR001.RAISE_ERR_GENERICO('Impegno di versamento cori al centro non trovato: '||aGruppoCentro.pg_obb_accentr);
                    End If;
                end;
-            -- se la UO è quella del versamento su conto BI occorre rendere tronca la PGIRO in oggetto 
+            -- se la UO Ã¨ quella del versamento su conto BI occorre rendere tronca la PGIRO in oggetto
             -- e crearla sempre tronca sulla UO di versamento (999.000)
---pipe.send_message('aCdUo = '||aCdUo);                           
---pipe.send_message('aUOVERSCONTOBI.cd_unita_organizzativa = '||aUOVERSCONTOBI.cd_unita_organizzativa);                           
-               If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa 
---GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000            
+--pipe.send_message('aCdUo = '||aCdUo);
+--pipe.send_message('aUOVERSCONTOBI.cd_unita_organizzativa = '||aUOVERSCONTOBI.cd_unita_organizzativa);
+               If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa
+--GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000
             and aUOVERSACC.cd_unita_organizzativa != aUOVERSCONTOBI.cd_unita_organizzativa then
                   --prendo la pgiro duale (e verifico che sia effettivamente chiusa prima di renderla tronca)
                   aObbOld.cd_cds:=aGruppoCentro.cd_cds_obb_accentr;
                   aObbOld.esercizio:=aGruppoCentro.esercizio_obb_accentr;
                   aObbOld.esercizio_originale:=aGruppoCentro.esercizio_ori_obb_accentr;
                   aObbOld.pg_obbligazione:=aGruppoCentro.pg_obb_accentr;
-                  -- Il parametro 'X' serve solo per baipassare il controllo che non possono esistere più scadenze 
-                  -- per le pgiro di entrata 
+                  -- Il parametro 'X' serve solo per baipassare il controllo che non possono esistere piÃ¹ scadenze
+                  -- per le pgiro di entrata
                   CNRCTB035.GETPGIROCDSINV(aObbOld,aObbScadOld,aObbScadVoceOld,aAccOld,aAccScadOld,aAccScadVoceOld,'X');
-                  --rendo tronca la stessa (cioè annullo la parte spesa)
-                  CNRCTB043.troncaPraticaAccPgiro(aAccOld.esercizio,aAccOld.cd_cds,aAccOld.esercizio_originale,aAccOld.pg_accertamento,aTSNow,aUser); 
+                  --rendo tronca la stessa (cioÃ¨ annullo la parte spesa)
+                    CNRCTB043.troncaPraticaAccPgiro(aAccOld.esercizio,aAccOld.cd_cds,aAccOld.esercizio_originale,aAccOld.pg_accertamento,aTSNow,aUser);
                   -- devo creare la pgiro tronca sulla 999
                   aObbNew:=null;
                   aObbScadNew:=null;
@@ -3670,9 +3686,9 @@ end;
                        And a.esercizio = aGruppoCentro.esercizio
                        And a.ti_gestione = CNRCTB001.GESTIONE_SPESE
                        And a.ti_appartenenza = CNRCTB001.APPARTENENZA_CDS;
-                  Exception 
+                  Exception
                           when TOO_MANY_ROWS then
-                               IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aGruppoCentro.cd_gruppo_cr);
+                               IBMERR001.RAISE_ERR_GENERICO('Esiste piÃ¹ di un conto finanziario associato a CORI del gruppo '||aGruppoCentro.cd_gruppo_cr);
                           when NO_DATA_FOUND then
                               IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aGruppoCentro.cd_gruppo_cr||' non trovato');
                   End;
@@ -3684,17 +3700,17 @@ end;
                        And ti_appartenenza = CNRCTB001.APPARTENENZA_CDS
                        And ti_gestione = CNRCTB001.GESTIONE_SPESE
                        And cd_elemento_Voce = aCdEV;
-                  Exception 
+                  Exception
                           when NO_DATA_FOUND then
                              IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aGruppoCentro.cd_gruppo_cr||' non trovato');
                   End;
-                  
+
                   aObbNew.CD_CDS:=aCdCds;
                   aObbNew.ESERCIZIO:=aEs;
                   aObbNew.ESERCIZIO_ORIGINALE:= aObbOld.esercizio_originale;   ------    aEs;
                   If aObbNew.esercizio = aObbNew.esercizio_originale Then
                        aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_IMP;
-                  Else     
+                  Else
                        aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_IMP_RES;
                   End If;
                   aObbNew.CD_UNITA_ORGANIZZATIVA:=aCdUo;
@@ -3707,7 +3723,7 @@ end;
                   aObbNew.DS_OBBLIGAZIONE:='PGiro creata in automatico da liquidazione CORI';
                   aObbNew.NOTE_OBBLIGAZIONE:='';
                   aObbNew.CD_TERZO:=aObbOld.CD_TERZO;
-                  aObbNew.IM_OBBLIGAZIONE:=aObbVC.IM_OBBLIGAZIONE;    --aObbOld.IM_OBBLIGAZIONE è stata già annullata
+                  aObbNew.IM_OBBLIGAZIONE:=aObbVC.IM_OBBLIGAZIONE;    --aObbOld.IM_OBBLIGAZIONE Ã¨ stata giÃ  annullata
                   aObbNew.stato_obbligazione:=CNRCTB035.STATO_DEFINITIVO;
                   aObbNew.im_costi_anticipati:=0;
                   aObbNew.fl_calcolo_automatico:='N';
@@ -3720,12 +3736,12 @@ end;
                   aObbNew.UTUV:=aUser;
                   aObbNew.PG_VER_REC:=1;
                   aObbNew.ESERCIZIO_COMPETENZA:=aEs;
-               
+
                   CNRCTB030.CREAOBBLIGAZIONEPGIROTRONC(false,aObbNew,aObbScadNew,aAccNew,aAccScadNew,trunc(aTSNow));
 
                   CREALIQUIDCORIASSPGIRO(aLiquid,aGruppoCentro.cd_gruppo_cr,aGruppoCentro.cd_regione,aGruppoCentro.pg_comune,'S',aObbNew,aObbOld,null,null,aUser,trunc(aTSNow));
                End If;
-        
+
                 -- Creo il documento generico di spesa su partita di giro collegato all'annotazione di entrata su pgiro
                 -- per versamento accentrato
                 aGen.CD_CDS:=aGruppi.cd_cds;
@@ -3755,7 +3771,7 @@ end;
                 aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
                 aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
                 aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
-                
+
                 aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
                 aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
                 aGenRiga.CD_CDS:=aGen.CD_CDS;
@@ -3775,8 +3791,8 @@ end;
                 aGenRiga.CODICE_FISCALE:=aAnagTst.CODICE_FISCALE;
                 aGenRiga.PARTITA_IVA:=aAnagTst.PARTITA_IVA;
                 aGenRiga.STATO_COFI:=aGen.STATO_COFI;
-                If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa 
---GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000            
+                If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa
+--GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000
             and aUOVERSACC.cd_unita_organizzativa != aUOVERSCONTOBI.cd_unita_organizzativa then
                     aGenRiga.CD_CDS_OBBLIGAZIONE:=aObbNew.cd_cds;
                     aGenRiga.ESERCIZIO_OBBLIGAZIONE:=aObbNew.esercizio;
@@ -3786,7 +3802,7 @@ end;
                     aGenRiga.CD_CDS_OBBLIGAZIONE:=aGruppoCentro.cd_cds_obb_accentr;
                     aGenRiga.ESERCIZIO_OBBLIGAZIONE:=aGruppoCentro.esercizio_obb_accentr;
                     aGenRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aGruppoCentro.esercizio_ori_obb_accentr;
-                    aGenRiga.PG_OBBLIGAZIONE:=aGruppoCentro.pg_obb_accentr;                
+                    aGenRiga.PG_OBBLIGAZIONE:=aGruppoCentro.pg_obb_accentr;
                 End if;
                 aGenRiga.PG_OBBLIGAZIONE_SCADENZARIO:=1;
                 aGenRiga.DACR:=aGen.DACR;
@@ -3798,7 +3814,7 @@ end;
                 --
                 aListGenRighe(1):=aGenRiga;
                 CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
-                
+
                 -- Generazione righe mandato
                 aManPRiga:=null;
                 aManPRiga.CD_CDS:=aGen.cd_cds;
@@ -3828,9 +3844,9 @@ end;
                 --
                 aTotMandato:=aTotMandato+aManPRiga.im_mandato_riga;
                 aListRigheManP(aListRigheManP.count+1):=aManPRiga;
-                
+/*
                 if aGruppoCentro.PG_ACC_ACCENTR_OPP is not null then
-                    select sum(im_obbligazione) 
+                    select sum(im_obbligazione)
                     into   somma_compensazioni
                     FROM   liquid_gruppo_centro_comp l, obbligazione o
                     where  cd_cds_OBB_accentr_OPP = o.cd_cds and
@@ -3844,7 +3860,7 @@ end;
                            l.PG_GRUPPO_CENTRO = aGruppoCentro.pg_gruppo_centro and
                            PG_OBB_ACCENTR_OPP is not null;
 
-                    if somma_compensazioni > 0 then 
+                    if somma_compensazioni > 0 then
                       aAccGiroOpp.esercizio:=aGruppoCentro.ES_ACC_ACCENTR_OPP;
                       aAccGiroOpp.cd_cds:=aGruppoCentro.CD_CDS_ACC_ACCENTR_OPP;
                       aAccGiroOpp.esercizio_originale:=aGruppoCentro.ES_ORIG_ACC_ACCENTR_OPP;
@@ -3852,9 +3868,8 @@ end;
 
                       CNRCTB035.GETPGIROCDS(aAccGiroOpp,aAccScadGiroOpp,aAccScadVoceGiroOpp,aObbGiroOpp,aObbScadGiroOpp,aObbScadVoceGiroOpp);
 
-                      CNRCTB043.modificaPraticaAcc(aAccGiroOpp.esercizio,aAccGiroOpp.cd_cds,aAccGiroOpp.esercizio_originale,aAccGiroOpp.pg_accertamento,-somma_compensazioni,aTSNow,aUser);
-                    end if;  
-
+                      CNRCTB043.modificaPraticaoBB(aAccGiroOpp.esercizio,aAccGiroOpp.cd_cds,aAccGiroOpp.esercizio_originale,aAccGiroOpp.pg_accertamento,-somma_compensazioni,aTSNow,aUser,'S','N');
+                    end if;
                   begin
                     select * into aAccVC
                     from accertamento
@@ -3863,7 +3878,7 @@ end;
                     and esercizio_originale = aGruppoCentro.ES_ORIG_ACC_ACCENTR_OPP
                     and pg_ACCERTAMENTO = aGruppoCentro.PG_ACC_ACCENTR_OPP
                     for update nowait;
-                  exception 
+                  exception
                     when NO_DATA_FOUND then
                        IBMERR001.RAISE_ERR_GENERICO('Accertamento opposto di versamento cori al centro non trovata: '||aGruppoCentro.PG_ACC_ACCENTR_OPP);
                   end;
@@ -3895,9 +3910,9 @@ end;
                   aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
                   aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
                   aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
-                  
+
                   aGenRiga := null;
-                  
+
                   aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
                   aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
                   aGenRiga.CD_CDS:=aGen.CD_CDS;
@@ -3909,10 +3924,11 @@ end;
                   aGenRiga.IM_RIGA:=aGen.IM_TOTALE;
                   aGenRiga.CD_TERZO:=aGruppi.cd_terzo_versamento;
 
+
                   CNRCTB080.getTerzoPerUO(aGen.CD_UNITA_ORGANIZZATIVA, aCdTerzoUORev, aCdModPagUORev, aPgBancaUORev,aGruppi.esercizio);
+                  aGenRiga.CD_MODALITA_PAG:=aGruppi.CD_MODALITA_PAGAMENTO;
 
                   aGenRiga.CD_TERZO_UO_CDS:= aCdTerzoUORev;
-                  aGenRiga.CD_MODALITA_PAG:= aCdModPagUORev;
                   aGenRiga.PG_BANCA:= aPgBancaUORev;
 
                   aGenRiga.RAGIONE_SOCIALE:=aAnagTst.RAGIONE_SOCIALE;
@@ -3924,7 +3940,7 @@ end;
                   aGenRiga.CD_CDS_ACCERTAMENTO:=aGruppoCentro.CD_CDS_ACC_ACCENTR_OPP;
                   aGenRiga.ESERCIZIO_ACCERTAMENTO:=aGruppoCentro.ES_ACC_ACCENTR_OPP;
                   aGenRiga.ESERCIZIO_ORI_ACCERTAMENTO:=aGruppoCentro.ES_ORIG_ACC_ACCENTR_OPP;
-                  aGenRiga.PG_ACCERTAMENTO:=aGruppoCentro.PG_ACC_ACCENTR_OPP;                
+                  aGenRiga.PG_ACCERTAMENTO:=aGruppoCentro.PG_ACC_ACCENTR_OPP;
                   aGenRiga.PG_ACCERTAMENTO_SCADENZARIO:=1;
                   aGenRiga.DACR:=aGen.DACR;
                   aGenRiga.UTCR:=aGen.UTCR;
@@ -3935,7 +3951,7 @@ end;
                   --
                   aListGenRighe(1):=aGenRiga;
                   CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
-                  
+
                   -- Generazione righe mandato
                   aRevPRiga:=null;
                   aRevPRiga.CD_CDS:=aGen.cd_cds;
@@ -3954,7 +3970,7 @@ end;
                   aRevPRiga.CD_TERZO:=aGenRiga.CD_TERZO;
                   aRevPRiga.CD_TERZO_UO:=aGenRiga.CD_TERZO_UO_CDS;
                   aRevPRiga.PG_BANCA:=aGenRiga.pg_banca;
-                  aRevPRiga.CD_MODALITA_PAG:=aGenRiga.cd_modalita_pag;
+                  aRevPRiga.CD_MODALITA_PAG:=aCdModPagUORev;
                   aRevPRiga.IM_REVERSALE_RIGA:=aGen.IM_TOTALE;
                   aRevPRiga.FL_PGIRO:='Y';
                   aRevPRiga.UTCR:=aUser;
@@ -3967,7 +3983,146 @@ end;
                   aListRigheRevP(aListRigheRevP.count+1):=aRevPRiga;
 
                 end if;
+*/
+                if aGruppoCentro.PG_ACC_ACCENTR_OPP is not null and aLiquid.da_esercizio_precedente = 'Y' then
+                  select NVL(sum(ammontare),0)
+                  INTO  somma_compensazioni
+                  from  contributo_ritenuta c, liquid_gruppo_Cori_Det l, liquid_gruppo_Cori lc
+                  where c.esercizio = l.esercizio_contributo_ritenuta and
+                        c.pg_compenso = l.pg_compenso and
+                        C.CD_CDS = l.cd_CDS_origine and
+                        C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+                        c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and
+                        C.TI_ENTE_PERCIPIENTE = l.TI_ENTE_PERCIPIENTE  and
+                        l.ESERCIZIO = aGruppoCentro.esercizio and
+                        l.CD_GRUPPO_CR = aGruppoCentro.cd_gruppo_cr and
+                        l.CD_REGIONE = aGruppoCentro.cd_regione and
+                        l.PG_COMUNE = aGruppoCentro.pg_comune and
+                        l.CD_CDS = lc.CD_CDS and
+                        l.ESERCIZIO = lc.esercizio and
+                        l.CD_UNITA_ORGANIZZATIVA = lc.CD_UNITA_ORGANIZZATIVA and
+                        l.PG_LIQUIDAZIONE = lc.PG_LIQUIDAZIONE and
+                        l.CD_CDS_ORIGINE = lc.CD_CDS_ORIGINE and
+                        l.CD_UO_ORIGINE = lc.CD_UO_ORIGINE and
+                        l.PG_LIQUIDAZIONE_ORIGINE = lc.PG_LIQUIDAZIONE_ORIGINE and
+                        l.CD_GRUPPO_CR = lc.CD_GRUPPO_CR and
+                        l.CD_REGIONE = lc.CD_REGIONE and
+                        l.PG_COMUNE = lc.PG_COMUNE and
+                        lc.im_liquidato > 0 AND
+                        C.AMMONTARE < 0 AND
+                        LC.CD_CDS_ACC_ACCENTR_OPP = aGruppoCentro.CD_CDS_ACC_ACCENTR_OPP AND
+                        LC.ES_ACC_ACCENTR_OPP = aGruppoCentro.ES_ACC_ACCENTR_OPP AND
+                        LC.ES_ORIG_ACC_ACCENTR_OPP = aGruppoCentro.ES_ORIG_ACC_ACCENTR_OPP AND
+                        LC.PG_ACC_ACCENTR_OPP = aGruppoCentro.PG_ACC_ACCENTR_OPP;
+
+                    if somma_compensazioni < 0 then
+                      somma_compensazioni := abs(somma_compensazioni);
+                     -- Creo il documento generico opposto di entrata su partita di giro collegato all'annotazione di entrata su pgiro
+                      -- per versamento accentrato
+                      aGen := null;
+                      aGen.CD_CDS:=aGruppi.cd_cds;
+                      aGen.CD_UNITA_ORGANIZZATIVA:=aGruppi.cd_unita_organizzativa;
+                      aGen.ESERCIZIO:=aGruppi.esercizio;
+                      aGen.CD_CDS_ORIGINE:=aGruppi.cd_cds;
+                      aGen.CD_UO_ORIGINE:=aGruppi.cd_unita_organizzativa;
+                      aGen.CD_TIPO_DOCUMENTO_AMM:=CNRCTB100.TI_GEN_CORI_VER_ENTRATA;
+                      aGen.DATA_REGISTRAZIONE:=TRUNC(aDateCont);
+                      aGen.DS_DOCUMENTO_GENERICO:='CORI-ACC OPPOSTO'||' cds:'||aGruppi.cd_cds||' uo:'||aGruppi.cd_unita_organizzativa||' pg_liq.:'||aPgLiq||' gruppo cr:'||aGruppi.cd_gruppo_cr;
+                      aGen.TI_ISTITUZ_COMMERC:=CNRCTB100.TI_ISTITUZIONALE;
+                      aGen.IM_TOTALE:=somma_compensazioni;
+                      aGen.STATO_COFI:=CNRCTB100.STATO_GEN_COFI_TOT_MR;
+                      aGen.STATO_COGE:=CNRCTB100.STATO_COEP_EXC;
+                      aGen.STATO_COAN:=CNRCTB100.STATO_COEP_EXC;
+                      aGen.CD_DIVISA:=aDivisaEuro;
+                      aGen.CAMBIO:=1;
+                      aGen.DACR:=aTSNow;
+                      aGen.UTCR:=aUser;
+                      aGen.DUVA:=aTSNow;
+                      aGen.UTUV:=aUser;
+                      aGen.PG_VER_REC:=1;
+                      aGen.DT_SCADENZA:=TRUNC(aTSNow);
+                      aGen.STATO_PAGAMENTO_FONDO_ECO:=CNRCTB100.STATO_NO_PFONDOECO;
+                      aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
+                      aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
+                      aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
+
+                      aGenRiga := null;
+
+                      aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
+                      aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
+                      aGenRiga.CD_CDS:=aGen.CD_CDS;
+                      aGenRiga.CD_UNITA_ORGANIZZATIVA:=aGen.CD_UNITA_ORGANIZZATIVA;
+                      aGenRiga.ESERCIZIO:=aGen.ESERCIZIO;
+                      aGenRiga.CD_TIPO_DOCUMENTO_AMM:=aGen.CD_TIPO_DOCUMENTO_AMM;
+                      aGenRiga.DS_RIGA:=aGen.DS_DOCUMENTO_GENERICO;
+                      aGenRiga.IM_RIGA_DIVISA:=aGen.IM_TOTALE;
+                      aGenRiga.IM_RIGA:=aGen.IM_TOTALE;
+                      aGenRiga.CD_TERZO:=aGruppi.cd_terzo_versamento;
+
+
+                      CNRCTB080.getTerzoPerEnteContoBI(aGen.CD_UNITA_ORGANIZZATIVA, aCdTerzoVE, aCdModPagVE, aPgBancaVE);
+
+                      aGenRiga.CD_TERZO_UO_CDS:=aCdTerzoVE;
+                      aGenRiga.PG_BANCA_UO_CDS:=aPgBancaVE;
+                      aGenRiga.CD_MODALITA_PAG_UO_CDS:=aCdModPagVE;
+
+                      aGenRiga.RAGIONE_SOCIALE:=aAnagTst.RAGIONE_SOCIALE;
+                      aGenRiga.NOME:=aAnagTst.NOME;
+                      aGenRiga.COGNOME:=aAnagTst.COGNOME;
+                      aGenRiga.CODICE_FISCALE:=aAnagTst.CODICE_FISCALE;
+                      aGenRiga.PARTITA_IVA:=aAnagTst.PARTITA_IVA;
+                      aGenRiga.STATO_COFI:=aGen.STATO_COFI;
+                      aGenRiga.CD_CDS_ACCERTAMENTO:=aGruppoCentro.CD_CDS_ACC_ACCENTR_OPP;
+                      aGenRiga.ESERCIZIO_ACCERTAMENTO:=aGruppoCentro.ES_ACC_ACCENTR_OPP;
+                      aGenRiga.ESERCIZIO_ORI_ACCERTAMENTO:=aGruppoCentro.ES_ORIG_ACC_ACCENTR_OPP;
+                      aGenRiga.PG_ACCERTAMENTO:=aGruppoCentro.PG_ACC_ACCENTR_OPP;
+                      aGenRiga.PG_ACCERTAMENTO_SCADENZARIO:=1;
+                      aGenRiga.DACR:=aGen.DACR;
+                      aGenRiga.UTCR:=aGen.UTCR;
+                      aGenRiga.UTUV:=aGen.UTUV;
+                      aGenRiga.DUVA:=aGen.DUVA;
+                      aGenRiga.PG_VER_REC:=aGen.PG_VER_REC;
+                      aGenRiga.TI_ASSOCIATO_MANREV:=aGen.TI_ASSOCIATO_MANREV;
+                      --
+                      aListGenRighe(1):=aGenRiga;
+                      CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
+
+                      -- Generazione righe mandato
+                      aRevPRiga:=null;
+                      aRevPRiga.CD_CDS:=aGen.cd_cds;
+                      aRevPRiga.ESERCIZIO:=aGen.esercizio;
+                      aRevPRiga.ESERCIZIO_ACCERTAMENTO:=aGenRiga.esercizio_ACCERTAMENTO;
+                      aRevPRiga.ESERCIZIO_ORI_ACCERTAMENTO:=aGenRiga.esercizio_ori_ACCERTAMENTO;
+                      aRevPRiga.PG_ACCERTAMENTO:=aGenRiga.pg_ACCERTAMENTO;
+                      aRevPRiga.PG_ACCERTAMENTO_SCADENZARIO:=aGenRiga.pg_ACCERTAMENTO_scadenzario;
+                      aRevPRiga.CD_CDS_DOC_AMM:=aGen.cd_cds;
+                      aRevPRiga.CD_UO_DOC_AMM:=aGen.cd_unita_organizzativa;
+                      aRevPRiga.ESERCIZIO_DOC_AMM:=aGen.esercizio;
+                      aRevPRiga.CD_TIPO_DOCUMENTO_AMM:=aGen.cd_tipo_documento_amm;
+                      aRevPRiga.PG_DOC_AMM:=aGen.pg_documento_generico;
+                      aRevPRiga.DS_REVERSALE_RIGA:=aGenRiga.DS_RIGA;
+                      aRevPRiga.STATO:=aRevP.stato;
+                      aRevPRiga.CD_TERZO:=aGenRiga.CD_TERZO;
+                      aRevPRiga.CD_TERZO_UO:=aGenRiga.CD_TERZO_UO_CDS;
+                      aRevPRiga.PG_BANCA:=aGenRiga.pg_banca;
+                      aRevPRiga.CD_MODALITA_PAG:=aCdModPagUORev;
+                      aRevPRiga.IM_REVERSALE_RIGA:=aGen.IM_TOTALE;
+                      aRevPRiga.FL_PGIRO:='Y';
+                      aRevPRiga.UTCR:=aUser;
+                      aRevPRiga.DACR:=aTSNow;
+                      aRevPRiga.UTUV:=aUser;
+                      aRevPRiga.DUVA:=aTSNow;
+                      aRevPRiga.PG_VER_REC:=1;
+                      --
+                      aTotReversale:=aTotReversale+aRevPRiga.im_Reversale_riga;
+                      aListRigheRevP(aListRigheRevP.count+1):=aRevPRiga;
+                end if;
+            end if;    --fine if aGruppoCentro.PG_ACC_ACCENTR_OPP is not null and aL.da_esercizio_precedente = 'Y' then
+
             end if;    --fine if aGruppoCentro.pg_obb_accentr is not null then
+
+
+
             For aAggregatoOrig in (Select * From liquid_gruppo_cori
                                    Where esercizio = aGruppoCentro.esercizio
                                      And cd_unita_organizzativa <> aGruppi.cd_unita_organizzativa
@@ -3987,7 +4142,7 @@ end;
                and cd_unita_organizzativa = aAggregatoOrig.cd_unita_organizzativa
                and pg_liquidazione = aAggregatoOrig.pg_liquidazione
                for update nowait;
-               
+
                -- Aggiorna lo stato della riga di liquidazione in periferia
                update liquid_gruppo_cori set
                               stato = CNRCTB575.STATO_LIQUIDATO,
@@ -4004,7 +4159,7 @@ end;
                              and cd_cds_origine = aAggregatoOrig.cd_cds_origine
                              and cd_uo_origine = aAggregatoOrig.cd_uo_origine
                              and pg_liquidazione_origine = aAggregatoOrig.pg_liquidazione_origine;
-               
+
                -- Quando tutti i dettagli trasferiti di una liquidazione risultano liquidati
                -- la liquidazione diventa liquidata
                declare
@@ -4040,6 +4195,7 @@ end;
          null;
       End;
     End If; -- FINE GESTIONE SPECIALE PER UO DI VERSAMENTO ACCENTRATO if aCdUo = aUOVERSACC.cd_unita_organizzativa or aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa
+
   End Loop; -- FINE CICLO DI LOOP PRINCIPALE aGruppi
      -- Questa parte, relativa alla chiusura delle partite di giro dei compensi va tolta per i CDS caricati via interfaccia
      -- Inizio parte 2 esclusa per liq. di uo appartenenti a cds liquidati via interfaccia
@@ -4074,8 +4230,8 @@ end;
                        Where c.cd_terzo_versamento = aVersamenti.cd_terzo_versamento
                          And c.cd_modalita_pagamento = aVersamenti.cd_modalita_pagamento
                          And c.pg_banca = aVersamenti.pg_banca);
-           end if; 
-           */           
+           end if;
+           */
            IBMERR001.RAISE_ERR_GENERICO('La quota complessiva CORI da versare per Gruppo CORI:'||aVersamenti.cd_gruppo_cr||' e Terzo di versamento .'||aVersamenti.cd_terzo_versamento||' risulta negativa!');
         end if;
         -- Aggiorna liquid_gruppo_cori con le informazioni relative al mandato di versamento/trasferimento
@@ -4096,7 +4252,7 @@ end;
                Where c.cd_terzo_versamento = aVersamenti.cd_terzo_versamento
                  And c.cd_modalita_pagamento = aVersamenti.cd_modalita_pagamento
                  And c.pg_banca = aVersamenti.pg_banca);
-         
+
      End If; -- Fine parte 2 esclusa per liq. di uo appartenenti a cds liquidati via interfaccia
   End Loop; -- FINE CICLO DI LOOP VERSAMENTO aVersamenti
 
@@ -4106,7 +4262,7 @@ end;
   else
     aStatoLiquidazione:=CNRCTB575.STATO_LIQUIDATO;
   end if;
-              
+
   update liquid_cori
   set stato = aStatoLiquidazione,
       utuv=aUser,
@@ -4115,10 +4271,10 @@ end;
   where esercizio = aEs
     and cd_cds = aCdCds
     and cd_unita_organizzativa = aCdUo
-    and pg_liquidazione = aPgLiq;               
+    and pg_liquidazione = aPgLiq;
 end;
 
- procedure aggiorna_totale_gruppo_cori (p_cds in varchar2, p_uo in varchar2, p_aTotLiquid in number, p_aFlAccentrato in varchar2, p_aOldGruppoCr in varchar2, p_aOldRegioneCr in varchar2, p_aOldComuneCr in number, aPgLiq in number, aCdCds in varchar2, aCdUo in varchar2, aEs in number) is 
+ procedure aggiorna_totale_gruppo_cori (p_cds in varchar2, p_uo in varchar2, p_aTotLiquid in number, p_aFlAccentrato in varchar2, p_aOldGruppoCr in varchar2, p_aOldRegioneCr in varchar2, p_aOldComuneCr in number, aPgLiq in number, aCdCds in varchar2, aCdUo in varchar2, aEs in number) is
  begin
    Update   liquid_gruppo_cori
      set  im_liquidato = p_aTotLiquid,
@@ -4131,11 +4287,11 @@ end;
       And   cd_uo_origine = p_uo
       And   cd_gruppo_cr = p_aOldGruppoCr
       And   cd_regione = p_aOldRegioneCr
-      And   pg_comune = p_aOldComuneCr 
+      And   pg_comune = p_aOldComuneCr
       And   pg_liquidazione = aPgLiq
       And   pg_liquidazione_origine = aPgLiq;
  end;
-  
+
  -- ==========================
  -- Calcolo della liquidazione
  -- ==========================
@@ -4162,7 +4318,7 @@ end;
   ESERCIZIO_UO_SPECIALI NUMBER;
 
  begin
-  
+
   if    aPgLiq is null
      or aCdCds is null
      or aCdUo is null
@@ -4225,23 +4381,23 @@ end;
    CNRCTB575.INS_LIQUID_CORI(aLiquidCori);
    isLiquidaSuInviato:=CNRCTB575.ISLIQUIDACORIINVIATO(aEs);
 
-   -- Estrazione delle UO di versamento CORI accentrato, unificato e 
+   -- Estrazione delle UO di versamento CORI accentrato, unificato e
    -- della UO abilitata al versamento direttamente dal conto presso la Banca d'Italia (999.000)
    aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
    aUOVERSUNIFICATI:=CNRCTB020.getUOVersCoriTuttaSAC(ESERCIZIO_UO_SPECIALI);
    aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
-   
+
      -- Controllo che la liq. locale sia aperta nell'esercizio specificato
    if aUOVERSACC.cd_unita_organizzativa <> aCdUO and aUOVERSCONTOBI.cd_unita_organizzativa <> aCdUO then
            CNRCTB575.CHECKLIQUIDLOCALEAPERTA(aEs);
    end if;
 
-   -- Se l'UO di versamento = all'UO in processo e la liquidazione è di esercizio CORRENTE
+   -- Se l'UO di versamento = all'UO in processo e la liquidazione Ã¨ di esercizio CORRENTE
    -- creo le righe relative alla liquidazione al centro dei gruppi locali
    -- targandole con 999.000, 999 rispettivamente in UO e CDS origine
    If aUOVERSACC.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo Then
         UOENTE:=CNRCTB020.GETUOENTE(aEs);
-        For aGCentro in (Select * from liquid_gruppo_centro 
+        For aGCentro in (Select * from liquid_gruppo_centro
                          Where esercizio = aEs
                            And da_esercizio_precedente = daEsercizioPrec
                            And stato = CNRCTB575.STATO_GRUPPO_CENTRO_INIZIALE
@@ -4263,8 +4419,8 @@ end;
            aObb:=null;
            if aGCentro.pg_obb_accentr is not null then
               Begin
-                Select * into aObb 
-                From obbligazione 
+                Select * into aObb
+                From obbligazione
                 Where cd_cds = aGCentro.cd_cds_obb_accentr
                   And esercizio = aGCentro.esercizio_obb_accentr
                   And esercizio_originale = aGCentro.esercizio_ori_obb_accentr
@@ -4305,7 +4461,7 @@ end;
            aLiquidGruppoCori.UTUV:=aUser;
            aLiquidGruppoCori.PG_VER_REC:=1;
            CNRCTB575.INS_LIQUID_GRUPPO_CORI(aLiquidGruppoCori);
-      
+
         End Loop; -- loop 1
    End If;    --If aUOVERSACC.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo
 
@@ -4331,24 +4487,24 @@ end;
         and decode(isLiquidaSuInviato,'Y',a.dt_trasmissione_mandato,a.dt_emissione_mandato) < trunc(aDtA + 1)
         and a.cd_gruppo_cr = GruppoValido(aEs, ESERCIZIO_UO_SPECIALI, a.cd_gruppo_cr, aCdUo)
         and not exists (Select 1 from liquid_gruppo_cori_det a1
-                Where -- Esclude i cori già processati
-              --a1.cd_cds = a.cd_cds 
+                Where -- Esclude i cori giÃ  processati
+              --a1.cd_cds = a.cd_cds
               a1.esercizio_contributo_ritenuta = a.esercizio_compenso
-              --And a1.cd_unita_organizzativa = a.cd_unita_organizzativa 
+              --And a1.cd_unita_organizzativa = a.cd_unita_organizzativa
               And a1.cd_cds_origine = a.cd_cds
               And a1.cd_uo_origine = a.cd_unita_organizzativa
               And (a1.pg_liquidazione != aPgLiq
-             Or 
+             Or
              a1.esercizio != a.esercizio
              Or
              --se ad es. verso da 000.407 e poi vado nella 000.101, il pg_liq potrebbe
              --essere lo stesso e quindi rivedo il compenso. Devo non farlo vedere
              (a1.pg_liquidazione = aPgLiq And
-              a1.esercizio = a.esercizio And 
-              ( (a1.cd_cds = aUOVERSUNIFICATI.cd_unita_padre And 
+              a1.esercizio = a.esercizio And
+              ( (a1.cd_cds = aUOVERSUNIFICATI.cd_unita_padre And
                  a1.cd_unita_organizzativa = aUOVERSUNIFICATI.cd_unita_organizzativa)
                  Or
-                (a1.cd_cds = a.cd_cds And 
+                (a1.cd_cds = a.cd_cds And
                  a1.cd_unita_organizzativa = a.cd_unita_organizzativa) )
               )
              )
@@ -4455,25 +4611,25 @@ end;
        aggiorna_totale_gruppo_cori (aCdCds, aCdUo, aTotLiquid, aFlAccentrato, aOldGruppoCr, aOldRegioneCr, aOldComuneCr, aPgLiq, aCdCds, aCdUo, aEs);
      End if;
 
-     -- Se la UO in processo è quella abilitata a versare i dati di tutte le UO della SAC oppure è la 999.000
-     If aUOVERSUNIFICATI.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo Then  
+     -- Se la UO in processo Ã¨ quella abilitata a versare i dati di tutte le UO della SAC oppure Ã¨ la 999.000
+     If aUOVERSUNIFICATI.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo Then
        For aCdUoSAC In (Select a.cd_unita_organizzativa, a.cd_unita_padre
-              From unita_organizzativa a 
+              From unita_organizzativa a
               Where a.fl_cds = 'N'
                 And a.cd_tipo_unita = CNRCTB020.TIPO_SAC
-                And exists (Select 1 from v_unita_organizzativa_valida 
+                And exists (Select 1 from v_unita_organizzativa_valida
                             Where esercizio = aEs
                               And cd_unita_organizzativa = a.cd_unita_organizzativa)
                 And exists (Select 1 from gruppo_cr_uo WHERE esercizio = ESERCIZIO_UO_SPECIALI
                               And cd_unita_organizzativa = a.cd_unita_organizzativa)
-                              And a.cd_unita_organizzativa <> aCdUo) 
+                              And a.cd_unita_organizzativa <> aCdUo)
        Loop
           aLiquidGruppoCori:=null;
           aOldGruppoCr:=null;
           aOldPgCompenso:=null;
           aOldComuneCr:=null;
           aOldRegioneCr:=null;
- 
+
           For aCori in (select * from v_calcola_liquid_cori_det a
                         where a.esercizio = aEs
                         -- Questa clausola definisce la provenienza del compenso:
@@ -4488,24 +4644,24 @@ end;
                           and decode(isLiquidaSuInviato,'Y',a.dt_trasmissione_mandato,a.dt_emissione_mandato) < trunc(aDtA + 1)
                           and a.cd_gruppo_cr = GruppoValido(aEs, ESERCIZIO_UO_SPECIALI, a.cd_gruppo_cr, aCdUo)
                           and not exists (Select 1 from liquid_gruppo_cori_det a1
-                                          Where -- Esclude i cori già processati
-                                          --    a1.cd_cds = a.cd_cds 
+                                          Where -- Esclude i cori giÃ  processati
+                                          --    a1.cd_cds = a.cd_cds
                                           a1.esercizio_contributo_ritenuta = a.esercizio_compenso
-                                          --And a1.cd_unita_organizzativa = a.cd_unita_organizzativa 
+                                          --And a1.cd_unita_organizzativa = a.cd_unita_organizzativa
                                           And a1.cd_cds_origine = a.cd_cds
                                           And a1.cd_uo_origine = a.cd_unita_organizzativa
                                           And (a1.pg_liquidazione != aPgLiq
-                                               Or 
+                                               Or
                                                a1.esercizio != a.esercizio
                                                Or
                                                --se ad es. verso da 000.407 e poi vado nella 000.101, il pg_liq potrebbe
                                                --essere lo stesso e quindi rivedo il compenso. Devo non farlo vedere
                                                (a1.pg_liquidazione = aPgLiq And
-                                                a1.esercizio = a.esercizio And 
-                                                 ( (a1.cd_cds = aUOVERSUNIFICATI.cd_unita_padre And 
+                                                a1.esercizio = a.esercizio And
+                                                 ( (a1.cd_cds = aUOVERSUNIFICATI.cd_unita_padre And
                                                     a1.cd_unita_organizzativa = aUOVERSUNIFICATI.cd_unita_organizzativa)
                                                     Or
-                                                   (a1.cd_cds = a.cd_cds And 
+                                                   (a1.cd_cds = a.cd_cds And
                                                     a1.cd_unita_organizzativa = a.cd_unita_organizzativa) )
                                                )
                                                )
@@ -4518,16 +4674,16 @@ end;
           if aCori.cd_gruppo_cr is null then
              IBMERR001.RAISE_ERR_GENERICO('Gruppo CORI non trovato per CORI:'||aCori.cd_contributo_ritenuta||' e per UO: '||aCori.cd_unita_organizzativa);
           end if;
-          
+
           if aCori.cd_regione is null or aCori.pg_comune is null then
              IBMERR001.RAISE_ERR_GENERICO('Dettaglio Gruppo CORI non trovato per CORI:'||aCori.cd_contributo_ritenuta||' di tipo:'||aCori.cd_classificazione_cori||' regione:'||aCori.cd_regione_cori||' comune:'||aCori.pg_comune_cori||' e per UO: '||aCori.cd_unita_organizzativa);
           end if;
-          
+
           if aOldPgCompenso is null or aOldPgCompenso<>aCori.pg_compenso then
              CNRCTB100.LOCKDOCAMM(CNRCTB100.TI_COMPENSO,aCori.cd_cds,aCori.esercizio_compenso,aCori.cd_unita_organizzativa,aCori.pg_compenso);
            aOldPgCompenso:=aCori.pg_compenso;
           end if;
-          
+
           if aOldGruppoCr is null
              or aOldRegioneCr is null
              or aOldComuneCr is null
@@ -4539,7 +4695,7 @@ end;
               if aOldGruppoCr is not null then
                 aggiorna_totale_gruppo_cori(aCdUoSAC.cd_unita_padre,aCdUoSAC.cd_unita_organizzativa,  aTotLiquid, aFlAccentrato, aOldGruppoCr, aOldRegioneCr, aOldComuneCr, aPgLiq, aCdCds, aCdUo, aEs);
               End if;
-          
+
               Begin
                       -- Calcolo il nuovo valore del flag accentrato
                       select decode(aCori.cd_unita_organizzativa,aUOVERSACC.cd_unita_organizzativa,'N',aUOVERSCONTOBI.cd_unita_organizzativa,'N',nvl(d.fl_accentrato,b.fl_accentrato))
@@ -4557,7 +4713,7 @@ end;
               Exception when NO_DATA_FOUND then
                  IBMERR001.RAISE_ERR_GENERICO('Gruppo CORI non trovato');
               End;
-          
+
               aTotLiquid:=0;
               aOldGruppoCr:=aCori.cd_gruppo_cr;
               aOldRegioneCr:=aCori.cd_regione;
@@ -4606,17 +4762,17 @@ end;
           aLiquidGruppoCoriDet.UTUV:=aUser;
           aLiquidGruppoCoriDet.PG_VER_REC:=1;
           CNRCTB575.INS_LIQUID_GRUPPO_CORI_DET(aLiquidGruppoCoriDet);
-          
+
           aTotLiquid:=aTotLiquid + aCori.im_cori;
-          
-          End Loop; -- loop 3 
+
+          End Loop; -- loop 3
        if aOldGruppoCr is not null then
 
           aggiorna_totale_gruppo_cori(aCdUoSAC.cd_unita_padre,aCdUoSAC.cd_unita_organizzativa,  aTotLiquid, aFlAccentrato, aOldGruppoCr, aOldRegioneCr, aOldComuneCr, aPgLiq, aCdCds, aCdUo, aEs);
 
        end if;
        End Loop;
-     End If;       --  fine If aUOVERSUNIFICATI.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo 
+     End If;       --  fine If aUOVERSUNIFICATI.cd_unita_organizzativa = aCdUo or aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo
   end if; -- Diramazione calcolo cori inter
  end;
 
@@ -4670,7 +4826,7 @@ end;
     lLiquidCori.CD_UNITA_ORGANIZZATIVA:=aCdUo;
     lLiquidCori.ESERCIZIO:=aEs;
     lLiquidCori.PG_LIQUIDAZIONE:=aPgLiq;
-    -- La liquidazione via interfaccia non può essere da esercizio precedente
+    -- La liquidazione via interfaccia non puÃ² essere da esercizio precedente
     lLiquidCori.DA_ESERCIZIO_PRECEDENTE:=daEsercizioPrec;
     lLiquidCori.DT_DA:=trunc(aDtDa);
     lLiquidCori.DT_A:=trunc(aDtA);
@@ -4810,7 +4966,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
     lLiquidCori.CD_UNITA_ORGANIZZATIVA:=aCdUo;
     lLiquidCori.ESERCIZIO:=aEs;
     lLiquidCori.PG_LIQUIDAZIONE:=aPgLiq;
-    -- La liquidazione via interfaccia non può essere da esercizio precedente
+    -- La liquidazione via interfaccia non puÃ² essere da esercizio precedente
     lLiquidCori.DA_ESERCIZIO_PRECEDENTE:=daEsercizioPrec;
     lLiquidCori.DT_DA:=trunc(aDtDa);
     lLiquidCori.DT_A:=trunc(aDtA);
@@ -4826,7 +4982,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
     lUOVERSACC:=CNRCTB020.getUOVersCori(aEs);
 
     --Valorizzazione del progressivo liquidazionje interfaccia
-          Update liquid_cori_interf 
+          Update liquid_cori_interf
           Set pg_liquidazione = aPgLiq,
               utuv = aUser,
               duva = lTSNow,
@@ -4838,8 +4994,8 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
           DT_FINE=trunc(aDtA) And
           pg_liquidazione Is Null;
 
-    for lLiquidGruppoCoriInter in 
-      (Select CD_CDS, ESERCIZIO, CD_UNITA_ORGANIZZATIVA, CD_GRUPPO_CR, 
+    for lLiquidGruppoCoriInter in
+      (Select CD_CDS, ESERCIZIO, CD_UNITA_ORGANIZZATIVA, CD_GRUPPO_CR,
         CD_REGIONE, PG_COMUNE, Nvl(Sum(IM_LIQUIDATO),0) IM_LIQUIDATO
      From liquid_cori_interf
      Where cd_cds = aCdCds
@@ -4865,7 +5021,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
      And d.esercizio (+)         = c.esercizio
            And d.cd_gruppo_cr (+)           = c.cd_gruppo_cr
          And d.cd_unita_organizzativa (+) = lLiquidGruppoCoriInter.cd_unita_organizzativa;
-      
+
       if lFlAccentrato = 'Y' then
              lLiquidGruppoCori.CD_CDS                  := lLiquidGruppoCoriInter.cd_cds;
              lLiquidGruppoCori.ESERCIZIO          := aEs;
@@ -4924,13 +5080,13 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
       Where esercizio = aEs
         And cd_gruppo_cr = aGruppo
         And (fl_f24online = 'Y' or fl_f24online_previd = 'Y');
-      return gruppo;  
- exception      
-     when others then 
+      return gruppo;
+ exception
+     when others then
          gruppo := 'XXXXXXXXXX';
          return gruppo;
  end;
- 
+
   function GruppoValido (aEs number, ESERCIZIO_UO_SPECIALI number, aGruppo varchar2, aCdUo varchar2) return varchar2 is
     gruppo varchar2(10);
     aUOVERSACC unita_organizzativa%rowtype;
@@ -4939,7 +5095,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
  begin
       aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
       aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
-      -- Se la UO di versamento accentrato è uguale alla UO dei versamenti su Conto BI tutti i gruppi sono validi
+      -- Se la UO di versamento accentrato Ã¨ uguale alla UO dei versamenti su Conto BI tutti i gruppi sono validi
      select count(1) into conta
      from unita_organizzativa u, gruppo_cr_uo c
      where u.cd_unita_organizzativa = aCdUo
@@ -4950,7 +5106,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
 
       IF (aUOVERSACC.cd_unita_organizzativa = aUOVERSCONTOBI.cd_unita_organizzativa) THEN
         RETURN aGruppo;
-      ELSif aUOVERSACC.cd_unita_organizzativa = aCdUo or CONTA > 0 then 
+      ELSif aUOVERSACC.cd_unita_organizzativa = aCdUo or CONTA > 0 then
         Begin
           Select cd_gruppo_cr
           Into gruppo
@@ -4958,12 +5114,12 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
           Where esercizio = aEs
             And cd_gruppo_cr = aGruppo
             And (fl_f24online = 'N' and fl_f24online_previd = 'N');
-        Exception       
-           when others then 
+        Exception
+           when others then
                gruppo := 'XXXXXXXXXX';
-               return gruppo;    
-        End;         
-      elsif aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo then 
+               return gruppo;
+        End;
+      elsif aUOVERSCONTOBI.cd_unita_organizzativa = aCdUo then
         Begin
           Select cd_gruppo_cr
           Into gruppo
@@ -4971,24 +5127,24 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
           Where esercizio = aEs
             And cd_gruppo_cr = aGruppo
             And (fl_f24online = 'Y' or fl_f24online_previd = 'Y');
-        Exception       
-           when others then 
+        Exception
+           when others then
                gruppo := 'XXXXXXXXXX';
-               return gruppo;    
+               return gruppo;
         End;
-      -- la UO in processo non è nè quella dei versamenti accentrati, nè una della SAC, nè quella dei versamente su Conto BI  
+      -- la UO in processo non Ã¨ nÃ¨ quella dei versamenti accentrati, nÃ¨ una della SAC, nÃ¨ quella dei versamente su Conto BI
       -- quindi tutti i gruppi sono validi
-      else   
+      else
         return aGruppo;
-      end if;  
-            
-      return gruppo;  
+      end if;
+
+      return gruppo;
  end;
  Procedure CREALIQUIDCORIASSPGIRO(aLiquid liquid_cori%rowtype,aGruppo varchar2, aRegione varchar2, aComune number,aTipo varchar2,aObbNew obbligazione%rowtype,aObbOld obbligazione%rowtype,aAccNew accertamento%rowtype,aAccOld accertamento%rowtype,aUser varchar2,aTSNow date) is
  begin
     if aTipo = 'S' then
         insert into LIQUID_CORI_ASS_PGIRO (
-            CD_CDS,                  
+            CD_CDS,
             ESERCIZIO,
             CD_UNITA_ORGANIZZATIVA,
             PG_LIQUIDAZIONE,
@@ -5010,7 +5166,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
             DUVA,
             PG_VER_REC)
           values(
-            aLiquid.CD_CDS,                  
+            aLiquid.CD_CDS,
             aLiquid.ESERCIZIO,
             aLiquid.CD_UNITA_ORGANIZZATIVA,
             aLiquid.PG_LIQUIDAZIONE,
@@ -5030,10 +5186,10 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
             aTSNow,
             aUser,
             aTSNow,
-            1); 
+            1);
     Elsif aTipo = 'E' then
         insert into LIQUID_CORI_ASS_PGIRO (
-            CD_CDS,                  
+            CD_CDS,
             ESERCIZIO,
             CD_UNITA_ORGANIZZATIVA,
             PG_LIQUIDAZIONE,
@@ -5055,7 +5211,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
             DUVA,
             PG_VER_REC)
           values(
-            aLiquid.CD_CDS,                  
+            aLiquid.CD_CDS,
             aLiquid.ESERCIZIO,
             aLiquid.CD_UNITA_ORGANIZZATIVA,
             aLiquid.PG_LIQUIDAZIONE,
@@ -5075,10 +5231,10 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
             aTSNow,
             aUser,
             aTSNow,
-            1); 
-    End if;                  
+            1);
+    End if;
  end;
- 
+
  Procedure CREA_ASS_PGIRO_GR_C(tb_ass_pgiro tab_ass_pgiro, aUser varchar2, aTSNow date) is
  begin
   For i in 1..Nvl(tb_ass_pgiro.Count,0) Loop
@@ -5185,7 +5341,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
         aUser,
         aTSNow,
         aUser,
-        1); 
+        1);
   End Loop;
  end;
 End;

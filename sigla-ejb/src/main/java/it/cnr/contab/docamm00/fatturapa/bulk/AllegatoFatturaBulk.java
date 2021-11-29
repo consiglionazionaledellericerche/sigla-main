@@ -20,6 +20,10 @@ package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.jada.UserContext;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -71,6 +75,12 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 		results.add(getAspectName());
 		return results;
 	}
+	@StoragePolicy(
+			name = "P:sigla_commons_aspect:utente_applicativo_sigla",
+			property = @StorageProperty(name = "sigla_commons_aspect:utente_applicativo")
+	)
+	private String utenteSIGLA;
+
 	public static OrderedHashtable getAspectnameskeys() {
 		return aspectNamesKeys;
 	}
@@ -84,5 +94,19 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 			throw new ValidationException("Attenzione: selezionare la tipologia di File!");
 		}
 		super.validate();
+	}
+
+	public String getUtenteSIGLA() {
+		return utenteSIGLA;
+	}
+
+	public void setUtenteSIGLA(String utenteSIGLA) {
+		this.utenteSIGLA = utenteSIGLA;
+	}
+
+	@Override
+	public void complete(UserContext userContext) {
+		setUtenteSIGLA(CNRUserContext.getUser(userContext));
+		super.complete(userContext);
 	}
 }

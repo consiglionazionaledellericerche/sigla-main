@@ -27,110 +27,110 @@
 	</action>
 
 	<action path="/ConsObbligazioniAction"
-		actionClass="it.cnr.contab.consultazioni.action.ConsObbligazioniAction">
+			actionClass="it.cnr.contab.consultazioni.action.ConsObbligazioniAction">
 	</action>
 
 
 
 	<action path="/ConsWorkpackageAction"
-		actionClass="it.cnr.contab.consultazioni.action.ConsWorkpackageAction">
+			actionClass="it.cnr.contab.consultazioni.action.ConsWorkpackageAction">
 	</action>
 
 	<action path="/ConsElencoinventariobeniAction"
-		actionClass="it.cnr.contab.consultazioni.action.ConsElencoinventariobeniAction">
+			actionClass="it.cnr.contab.consultazioni.action.ConsElencoinventariobeniAction">
 	</action>
 
 	<action path="/ConsTotaleDocContCommessaContrattoAction"
-		actionClass="it.cnr.contab.consultazioni.action.ConsTotaleDocContCommessaContrattoAction">
+			actionClass="it.cnr.contab.consultazioni.action.ConsTotaleDocContCommessaContrattoAction">
 	</action>
 
 	<action path="/V_cons_partite_giroAction"
-		actionClass="it.cnr.contab.consultazioni.action.V_cons_partite_giroAction">
+			actionClass="it.cnr.contab.consultazioni.action.V_cons_partite_giroAction">
 	</action>
 
 	<action path="/LancioMonitoCococoAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.LancioMonitoCococoAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.LancioMonitoCococoAction">
 	</action>
 
 	<action path="/ConsRiepilogoCompensiAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsRiepilogoCompensiAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsRiepilogoCompensiAction">
 	</action>
 
 	<action path="/LiquidCoriMancantiAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.LiquidCoriMancantiAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.LiquidCoriMancantiAction">
 	</action>
 
 	<action path="/ConsPDGAssestatoAggregatoAction"
-		actionClass="it.cnr.contab.pdg00.consultazioni.action.ConsPDGAssestatoAggregatoAction">
+			actionClass="it.cnr.contab.pdg00.consultazioni.action.ConsPDGAssestatoAggregatoAction">
 	</action>
 
 	<action path="/ConsPdgPianoRipartoAction"
-		actionClass="it.cnr.contab.prevent00.consultazioni.action.ConsPdgPianoRipartoAction">
+			actionClass="it.cnr.contab.prevent00.consultazioni.action.ConsPdgPianoRipartoAction">
 	</action>
 	<action path="/ConsPDGPAreaAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPAreaAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPAreaAction">
 	</action>
 	<action path="/ConsPDGPIstAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPIstAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPIstAction">
 	</action>
 	<action path="/ConsPDGPDipAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPDipAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPDipAction">
 	</action>
 	<action path="/ConsPDGPDipfoAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPDipfoAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPDipfoAction">
 	</action>
 	<action path="/ConsPDGPFoAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPFoAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPFoAction">
 	</action>
 	<action path="/ConsPDGPTitAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPTitAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPTitAction">
 	</action>
 	<action path="/ConsProcedureAmministrativeAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsRegistroInventarioAction"
-		actionClass="it.cnr.contab.inventario00.actions.ConsRegistroInventarioAction">
+			actionClass="it.cnr.contab.inventario00.actions.ConsRegistroInventarioAction">
 	</action>
 	<action path="/V_cons_disp_elem_voceAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 
 	<action path="/ConsLogsApplicativiAction"
-		actionClass="it.cnr.contab.logs.action.ConsLogsApplicativiAction">
+			actionClass="it.cnr.contab.logs.action.ConsLogsApplicativiAction">
 	</action>
 
 	<action path="/ConsLogsApplicativiRigaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 
 	<action path="/ConsDispCompResIstVoceAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
 	</action>
 
 	<action path="/ConsDispCompResIstCdrGaeAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
 	</action>
 
 	<action path="/ConsDispCompResVoceNatAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
 	</action>
 
 	<action path="/ConsRiscontriAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsRiscontriAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsRiscontriAction">
 	</action>
 
 	<action path="/ConsRiscontriDetAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 
 	<action path="/ConsPDGGAreaAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGAreaAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGAreaAction">
 	</action>
 	<action path="/ConsPDGGIstAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGIstAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGIstAction">
 	</action>
 
 	<action path="/ConsVarBilancioAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 
 	<action path="/ConsPDGGDipfoAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGDipfoAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGDipfoAction">
 	</action>
 
 	<action path="/ConsRicercaMandatiPerTerzoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
@@ -140,54 +140,54 @@
 	</action>
 
 	<action path="/ConsDispCompResDipIstAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsDispCompetenzaResiduoIstitutoAction">
 	</action>
 
 	<action path="/ConsConfrontoEntSpeAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsConfrontoEntSpeAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsConfrontoEntSpeAction">
 	</action>
 
 	<action path="/ConsScadObbligazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 
 	<action path="/ConsRiepilogoSiopeAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsRiepilogoSiopeAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsRiepilogoSiopeAction">
 	</action>
 
 	<action path="/ConsRiepilogoSiopeDettagliAction"
-		actionClass="it.cnr.contab.doccont00.action.ConsRiepilogoSiopeDettagliAction">
+			actionClass="it.cnr.contab.doccont00.action.ConsRiepilogoSiopeDettagliAction">
 	</action>
 
 	<action path="/AccontoAddComAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.AccontoAddComAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.AccontoAddComAction">
 	</action>
 
 	<action path="/ConsCdSDaConguagliareAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsCdSDaConguagliareAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsCdSDaConguagliareAction">
 	</action>
 
 	<action path="/ConsTerziDaConguagliareAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsTerziDaConguagliareAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsTerziDaConguagliareAction">
 	</action>
 
 	<action path="/ConsVarCompResAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 
 	<action path="/ConsStatoInvioAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsStatoInvioAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsStatoInvioAction">
 	</action>
 	<action path="/ConsUnitaOrganizzativaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
-		needExistingSession="false">
+			needExistingSession="false">
 	</action>
 	<action path="/ConsCdRAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
-		needExistingSession="false">
+			needExistingSession="false">
 	</action>
 	<action path="/ConsProgettiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsGAEAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsCdSAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
-		needExistingSession="false">
+			needExistingSession="false">
 	</action>
 	<action path="/ConsMissioneRimborsoKmAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
@@ -203,13 +203,15 @@
 	</action>
 	<action path="/ConsTerzoPerCompensoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
+	<action path="/ConsUtenteGestAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
 	<action path="/ConsRiepilogoSiopeMandatiRestAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsDivisaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
-		needExistingSession="false">
+			needExistingSession="false">
 	</action>
 	<action path="/ConsNazioneAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
-		needExistingSession="false">
+			needExistingSession="false">
 	</action>
 	<action path="/ConsComuneAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
 			needExistingSession="false">
@@ -225,10 +227,10 @@
 	<action path="/ConsFatturaAttivaRigaBrevettiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsultazioneDocAmmAttiviBrevettiAction"
-		actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+			actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsFatturaPassivaRigaBrevettiAction"
-		actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+			actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsultazioneDocAmmBrevettiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
@@ -257,111 +259,111 @@
 	<action path="/ConsNonAcquisitiAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsNonAcquisitiAction"/>
 
 	<businessProcess name="ConsObbligazioniBP"
-		className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.consultazioni.bulk.ConsObbligazioniBulk" />
+					value="it.cnr.contab.consultazioni.bulk.ConsObbligazioniBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsObbligazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsWorkpackageBP"
-		className="it.cnr.contab.consultazioni.bp.ConsWorkpackageBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsWorkpackageBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.latt.bulk.WorkpackageBulk" />
+					value="it.cnr.contab.config00.latt.bulk.WorkpackageBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsWorkpackageAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsElencoinventariobeniBP"
-		className="it.cnr.contab.consultazioni.bp.ConsElencoinventariobeniBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsElencoinventariobeniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.ElencoinventariobeniBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.ElencoinventariobeniBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsElencoinventariobeniAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsRegistroInventarioBP"
-		className="it.cnr.contab.inventario00.bp.ConsRegistroInventarioBP">
+					 className="it.cnr.contab.inventario00.bp.ConsRegistroInventarioBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRegistroInventarioAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsCostiDelPersonaleBP"
-		className="it.cnr.contab.pdg00.consultazioni.bp.ConsCostiDelPersonaleBP">
+					 className="it.cnr.contab.pdg00.consultazioni.bp.ConsCostiDelPersonaleBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.cdip.bulk.V_stampa_costi_personaleBulk" />
+					value="it.cnr.contab.pdg00.cdip.bulk.V_stampa_costi_personaleBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGAggregatoSpesaBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_spe_det_dBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_spe_det_dBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGAggregatoEntrataBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_etr_det_dBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_etr_det_dBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsTotaleDocContCommessaContrattoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsTotaleDocContCommessaContrattoBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsTotaleDocContCommessaContrattoBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk" />
+					value="it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsTotaleDocContCommessaContrattoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsDocContCommessaContrattoBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_acc_contrattiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_acc_contrattiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGCommessaSpesaBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_speBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_speBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGCommessaEntrataBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_etrBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_etrBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsDocContPartiteGiroCdsBP"
-		className="it.cnr.contab.consultazioni.bp.V_cons_partite_giroBP">
+					 className="it.cnr.contab.consultazioni.bp.V_cons_partite_giroBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cdsBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cdsBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="searchResultColumnSet" value="registroParGiro" />
 		<init-param name="freeSearchSet" value="registroParGiro" />
@@ -370,10 +372,10 @@
 	</businessProcess>
 
 	<businessProcess name="ConsDocContPartiteGiroCnrBP"
-		className="it.cnr.contab.consultazioni.bp.V_cons_partite_giroBP">
+					 className="it.cnr.contab.consultazioni.bp.V_cons_partite_giroBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cnrBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cnrBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="searchResultColumnSet" value="registroParGiro" />
 		<init-param name="freeSearchSet" value="registroParGiro" />
@@ -382,10 +384,10 @@
 	</businessProcess>
 
 	<businessProcess name="ConsDocContPartiteGiroCdsDetBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cds_detBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cds_detBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="searchResultColumnSet" value="registroParGiro" />
 		<init-param name="freeSearchSet" value="registroParGiro" />
@@ -393,10 +395,10 @@
 	</businessProcess>
 
 	<businessProcess name="ConsDocContPartiteGiroCnrDetBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cnr_detBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_cnr_detBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="searchResultColumnSet" value="registroParGiro" />
 		<init-param name="freeSearchSet" value="registroParGiro" />
@@ -404,19 +406,19 @@
 	</businessProcess>
 
 	<businessProcess name="ConsRicostruzioneResiduiBP"
-		className="it.cnr.contab.consultazioni.bp.ConsRicostruzioneResiduiBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsRicostruzioneResiduiBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_residuoBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_residuoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsObbligazioniRiportabiliBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_riportabiliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_riportabiliBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="searchResultColumnSet" value="consObblRiportabili" />
 		<init-param name="freeSearchSet" value="consObblRiportabili" />
@@ -424,325 +426,325 @@
 	</businessProcess>
 
 	<businessProcess name="ConsSchedaAnaliticaContoBP"
-		className="it.cnr.contab.coepcoan00.consultazioni.bp.ConsSchedaAnaliticaContoBP">
+					 className="it.cnr.contab.coepcoan00.consultazioni.bp.ConsSchedaAnaliticaContoBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.coepcoan00.consultazioni.bulk.V_coge_scr_movBulk" />
+					value="it.cnr.contab.coepcoan00.consultazioni.bulk.V_coge_scr_movBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="MonitoCococoBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.MonitoCococoBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.MonitoCococoBP">
 		<forward name="default" path="/docamm00/lancio_monito_cococo.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCAMM00_EJB_MonitoCococoComponentSession" />
+					value="CNRDOCAMM00_EJB_MonitoCococoComponentSession" />
 		<init-param name="defaultAction" value="LancioMonitoCococoAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsultazioneMonitoCococoBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPdgPianoRipartoBP"
-		className="it.cnr.contab.prevent00.consultazioni.bp.ConsPdgPianoRipartoBP">
+					 className="it.cnr.contab.prevent00.consultazioni.bp.ConsPdgPianoRipartoBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_piano_ripartoBulk" />
+					value="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_piano_ripartoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPdgPianoRipartoAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPdgModuloClassBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_modulo_classBulk" />
+					value="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_modulo_classBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<businessProcess name="LiquidCoriMancantiBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.LiquidCoriMancantiBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.LiquidCoriMancantiBP">
 		<forward name="default" path="/docamm00/liquid_cori_mancanti.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_liquid_cori_mancantiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_liquid_cori_mancantiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="LiquidCoriMancantiAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsLiquidCoriMancantiBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsLiquidCoriMancantiBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsLiquidCoriMancantiBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_liquid_cori_mancantiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_liquid_cori_mancantiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGAssestatoAggregatoSpeBP"
-		className="it.cnr.contab.pdg00.consultazioni.bp.ConsPDGAssestatoAggregatoSpeBP">
+					 className="it.cnr.contab.pdg00.consultazioni.bp.ConsPDGAssestatoAggregatoSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_cons_pdg_assestato_aggregatoBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_cons_pdg_assestato_aggregatoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGAssestatoAggregatoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGAssestatoAggregatoEtrBP"
-		className="it.cnr.contab.pdg00.consultazioni.bp.ConsPDGAssestatoAggregatoEtrBP">
+					 className="it.cnr.contab.pdg00.consultazioni.bp.ConsPDGAssestatoAggregatoEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.V_cons_pdg_assestato_aggregatoBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.V_cons_pdg_assestato_aggregatoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGAssestatoAggregatoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsTerziDaConguagliareBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsTerziDaConguagliareBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsTerziDaConguagliareBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_terzi_da_conguagliareBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_terzi_da_conguagliareBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsTerziDaConguagliareAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsCdSDaConguagliareBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsCdSDaConguagliareBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsCdSDaConguagliareBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdsBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCAMM00_EJB_CdSDaConguagliareComponentSession" />
+					value="CNRDOCAMM00_EJB_CdSDaConguagliareComponentSession" />
 		<init-param name="defaultAction" value="ConsCdSDaConguagliareAction" />
 		<init-param name="searchResultColumnSet" value="basic" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsImpPagPerTipoBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_imp_pag_per_tipoBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_imp_pag_per_tipoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGPAreaSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPAreaSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPAreaSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPAreaAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPAreaEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPAreaEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPAreaEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPAreaAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPIstSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPIstSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPIstSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_istBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_istBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPIstEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPIstEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPIstEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_istBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_istBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPDipSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPDipAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPDipEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPDipAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPDipFoSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipFoSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipFoSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipfoBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipfoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPDipfoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPDipFoEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipFoEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPDipFoEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipfoBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_dipfoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPDipfoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPFoSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_foBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_foBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPFoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPFoEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPFoEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_foBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_foBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPFoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGPTitSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPTitSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPTitSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_titBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_titBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPTitAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGPTitEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPTitEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGPTitEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_titBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_titBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGPTitAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsLogsApplicativiBP"
-		className="it.cnr.contab.logs.bp.ConsLogsApplicativiBP">
+					 className="it.cnr.contab.logs.bp.ConsLogsApplicativiBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.logs.bulk.Batch_log_tstaBulk" />
+					value="it.cnr.contab.logs.bulk.Batch_log_tstaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsLogsApplicativiAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsLogsApplicativiRigaBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.logs.bulk.Batch_log_rigaBulk" />
+					value="it.cnr.contab.logs.bulk.Batch_log_rigaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsLogsApplicativiRigaAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiscontriEtrBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiscontriEtrBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiscontriEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
+					value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRiscontriAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiscontriUscBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiscontriUscBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiscontriUscBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
+					value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRiscontriAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiscontriEtrDetBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.core.bulk.V_cons_sospesi_riscontriBulk" />
+					value="it.cnr.contab.doccont00.core.bulk.V_cons_sospesi_riscontriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRiscontriDetAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiscontriUscDetBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.core.bulk.V_cons_sospesi_riscontriBulk" />
+					value="it.cnr.contab.doccont00.core.bulk.V_cons_sospesi_riscontriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRiscontriDetAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsDispCompResIstCdrGaeBP"
-		className="it.cnr.contab.doccont00.bp.ConsDispCompResIstCdrGaeBP">
+					 className="it.cnr.contab.doccont00.bp.ConsDispCompResIstCdrGaeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
 		<init-param name="defaultAction" value="ConsDispCompResIstCdrGaeAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 
 	<businessProcess name="ConsDispCompResIstVoceBP"
-		className="it.cnr.contab.doccont00.bp.ConsDispCompResIstVoceBP">
+					 className="it.cnr.contab.doccont00.bp.ConsDispCompResIstVoceBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
 		<init-param name="defaultAction" value="ConsDispCompResIstVoceAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<action path="/ConsPDGGDipAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGDipAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGGDipAction">
 	</action>
 
 	<businessProcess name="ConsPDGGDipSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGDipAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGGDipEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGDipAction" />
 		<init-param name="multiSelezione" value="Y" />
@@ -750,10 +752,10 @@
 
 
 	<businessProcess name="ConsStatoInvioMandatiBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsStatoInvioBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsStatoInvioBP">
 		<forward name="default" path="/doccont00/consStatoInvio.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk" />
 		<init-param name="tipo" value="MAN" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsStatoInvioAction" />
@@ -761,10 +763,10 @@
 	</businessProcess>
 
 	<businessProcess name="ConsStatoInvioReversaliBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsStatoInvioBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsStatoInvioBP">
 		<forward name="default" path="/doccont00/consStatoInvio.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk" />
 		<init-param name="tipo" value="REV" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsStatoInvioAction" />
@@ -794,147 +796,147 @@
 
 
 	<businessProcess name="ConsPDGGAreaSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGAreaAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGGAreaEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGAreaAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGGIstSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGIstSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGIstSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_istBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_istBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGGIstEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGIstEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGIstEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_istBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_istBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsVarBilancioBP"
-		className="it.cnr.contab.preventvar00.consultazioni.bp.ConsVarBilancioBP">
+					 className="it.cnr.contab.preventvar00.consultazioni.bp.ConsVarBilancioBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioBulk" />
+					value="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVarBilancioAction" />
 	</businessProcess>
 	<businessProcess name="ConsVarCompResBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk" />
+					value="it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVarCompResAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsPDGGDipFoSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_speBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_speBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGDipfoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPDGGDipFoEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_etrBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_etrBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsPDGGDipfoAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsRicercaMandatiPerTerzoBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_mandati_terzoBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_mandati_terzoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRicercaMandatiPerTerzoAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRicercaReversaliPerTerzoBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_reversali_terzoBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_reversali_terzoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRicercaReversaliPerTerzoAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsDispCompResDipIstBP"
-		className="it.cnr.contab.doccont00.bp.ConsDispCompResDipIstBP">
+					 className="it.cnr.contab.doccont00.bp.ConsDispCompResDipIstBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
 		<init-param name="defaultAction" value="ConsDispCompResDipIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsDispCompResVoceNatBP"
-		className="it.cnr.contab.doccont00.bp.ConsDispCompResVoceNatBP">
+					 className="it.cnr.contab.doccont00.bp.ConsDispCompResVoceNatBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_resBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
 		<init-param name="defaultAction" value="ConsDispCompResVoceNatAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsConfrontoEntSpeBP"
-		className="it.cnr.contab.doccont00.bp.ConsConfrontoEntSpeBP">
+					 className="it.cnr.contab.doccont00.bp.ConsConfrontoEntSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_speBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_speBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsConfrontoEntSpeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsConfrontoEntSpeComponentSession" />
 		<init-param name="defaultAction" value="ConsConfrontoEntSpeAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsScadObbligazioniBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_obblBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_obblBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsScadObbligazioniAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<action path="/Estrazione_glaAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.Estrazione_glaAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.Estrazione_glaAction">
 	</action>
 	<businessProcess name="Estrazione_glaBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.Estrazione_glaBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.Estrazione_glaBP">
 		<forward name="default" path="/docamm00/estrazione_gla.jsp" />
 
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_estrai_glaBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_estrai_glaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="Estrazione_glaAction" />
 	</businessProcess>
@@ -942,344 +944,357 @@
 	<action path="/Estrazione_glafittAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsEstrazione_glaBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsEstrazione_glaBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsEstrazione_glaBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_estrai_glaBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_estrai_glaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="Estrazione_glafittAction" />
 	</businessProcess>
 	<action path="/ConsReversaliRiscontrateAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsReversaliRiscontrateBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_reversali_riscontrateBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_reversali_riscontrateBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsReversaliRiscontrateAction" />
 	</businessProcess>
 	<action path="/ConsMandatiRiscontratiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsMandatiRiscontratiBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_mandati_riscontratiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_mandati_riscontratiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMandatiRiscontratiAction" />
 	</businessProcess>
 	<action path="/ConsVarPDGGAreaAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsVarPDGGAreaAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsVarPDGGAreaAction">
 	</action>
 	<businessProcess name="ConsVarPDGGAreaEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGAreaEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGAreaEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVarPDGGAreaAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsVarPDGGAreaSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGAreaSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGAreaSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVarPDGGAreaAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<action path="/ConsVarPDGGIstAction"
-		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsVarPDGGIstAction">
+			actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsVarPDGGIstAction">
 	</action>
 	<businessProcess name="ConsVarPDGGIstEtrBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstEtrBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVarPDGGIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsVarPDGGIstSpeBP"
-		className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstSpeBP">
+					 className="it.cnr.contab.prevent01.consultazioni.bp.ConsVarPDGGIstSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
+					value="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVarPDGGIstAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<action path="/ConsGAECompAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAECompAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAECompAction">
 	</action>
 	<businessProcess name="ConsGAECompEtrBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAECompEtrBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAECompEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_competenza_entBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_competenza_entBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsGAECompAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsGAECompSpeBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAECompSpeBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAECompSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_competenza_speBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_competenza_speBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsGAECompAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsPagPerTipoManBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_pagato_per_tipoBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_pagato_per_tipoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsFondoEconomaleBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_fondo_economaleBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_fondo_economaleBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeMandatiBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiBP">
 		<forward name="default" path="/doccont00/riepilogo_siope_mandati.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeReversaliBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliBP">
 		<forward name="default" path="/doccont00/riepilogo_siope_reversali.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeMandatiDettagliBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiDettagliBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiDettagliBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeDettagliAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeReversaliDettagliBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliDettagliBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliDettagliBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeDettagliAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsRiepilogoSiopeMandatiBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiBP">
 		<forward name="default" path="/doccont00/riepilogo_siope_mandati.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeReversaliBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliBP">
 		<forward name="default" path="/doccont00/riepilogo_siope_reversali.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeMandatiDettagliBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiDettagliBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeMandatiDettagliBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeDettagliAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsRiepilogoSiopeReversaliDettagliBP"
-		className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliDettagliBP">
+					 className="it.cnr.contab.doccont00.bp.ConsRiepilogoSiopeReversaliDettagliBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsRiepilogoSiopeComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeDettagliAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsDispCompResEntIstCdrGaeBP"
-		className="it.cnr.contab.doccont00.bp.ConsDispCompResEntIstCdrGaeBP">
+					 className="it.cnr.contab.doccont00.bp.ConsDispCompResEntIstCdrGaeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_res_entBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_res_entBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
 		<init-param name="defaultAction" value="ConsDispCompResIstCdrGaeAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 
 	<businessProcess name="ConsDispCompResEntIstVoceBP"
-		className="it.cnr.contab.doccont00.bp.ConsDispCompResEntIstVoceBP">
+					 className="it.cnr.contab.doccont00.bp.ConsDispCompResEntIstVoceBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_res_entBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_res_entBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession" />
 		<init-param name="defaultAction" value="ConsDispCompResIstVoceAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<action path="/ConsInventarioEPAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsInventarioEPBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.V_inventario_per_contoBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.V_inventario_per_contoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsInventarioEPAction" />
 	</businessProcess>
 	<action path="/ConsInventarioUtilizzatoriAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsInventarioUtilizzatoriBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.V_inventario_utilizzatoriBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.V_inventario_utilizzatoriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsInventarioUtilizzatoriAction" />
 	</businessProcess>
 
 	<action path="/ConsGAEResAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
+	</action>
+	<action path="/ConsGAEResSpeVocAction"
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
 	</action>
 	<businessProcess name="ConsGAEResEtrBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResEtrBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_entBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_entBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
 		<init-param name="defaultAction" value="ConsGAEResAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<businessProcess name="ConsGAEResSpeBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResSpeBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResSpeBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
 		<init-param name="defaultAction" value="ConsGAEResAction" />
+		<init-param name="multiSelezione" value="Y" />
+	</businessProcess>
+	<businessProcess name="ConsGAEResSpeVocBP"
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResSpeVocBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk" />
+		<init-param name="componentSessionName"
+					value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
+		<init-param name="defaultAction" value="ConsGAEResSpeVocAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="AccontoAddComBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.AccontoAddComBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.AccontoAddComBP">
 		<forward name="default" path="/docamm00/accontoAddCom.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk" />
+					value="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="AccontoAddComAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsAccontoAddComBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsAccontoAddComBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsAccontoAddComBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk" />
+					value="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<action path="/ConsQuoteUtilizzatoriAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsQuoteUtilizzatoriBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.V_quote_utilizzatoriBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.V_quote_utilizzatoriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsQuoteUtilizzatoriAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsRateizzaClassificCoriBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.V_rateizza_classific_coriBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.V_rateizza_classific_coriBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<action path="/ConsFileCassiereAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsFileCassiereAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsFileCassiereAction">
 	</action>
 	<businessProcess name="ConsFileCassiereBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsFileCassiereBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsFileCassiereBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_giornaliera_cassaBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_giornaliera_cassaBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsFileCassiereComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsFileCassiereComponentSession" />
 		<init-param name="defaultAction" value="ConsFileCassiereAction" />
 	</businessProcess>
 	<action path="/ConsGAEComResSintAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEComResSintAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEComResSintAction">
 	</action>
 	<businessProcess name="ConsGAEComResSintBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEComResSintBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEComResSintBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_comp_res_sintesiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_comp_res_sintesiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession" />
 		<init-param name="defaultAction" value="ConsGAEComResSintAction" />
 	</businessProcess>
 
 	<action path="/ConsCostiDelPersonaleMensileAction"
-		actionClass="it.cnr.contab.pdg00.consultazioni.action.ConsCostiDelPersonaleMensileAction">
+			actionClass="it.cnr.contab.pdg00.consultazioni.action.ConsCostiDelPersonaleMensileAction">
 	</action>
 
 	<businessProcess name="ConsCostiDelPersonaleMensileBP"
-		className="it.cnr.contab.pdg00.consultazioni.bp.ConsCostiDelPersonaleMensileBP">
+					 className="it.cnr.contab.pdg00.consultazioni.bp.ConsCostiDelPersonaleMensileBP">
 		<forward name="default" path="/pdg00/cons_costi_del_personale.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.consultazioni.bulk.Param_cons_costi_personaleBulk" />
+					value="it.cnr.contab.pdg00.consultazioni.bulk.Param_cons_costi_personaleBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsCostiDelPersonaleMensileAction" />
 	</businessProcess>
 
 
 	<businessProcess name="ConsCostiDelPersonaleMensileDettBP"
-		className="it.cnr.contab.pdg00.consultazioni.bp.ConsCostiDelPersonaleMensileDettBP">
+					 className="it.cnr.contab.pdg00.consultazioni.bp.ConsCostiDelPersonaleMensileDettBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.pdg00.cdip.bulk.V_stampa_costi_personaleBulk" />
+					value="it.cnr.contab.pdg00.cdip.bulk.V_stampa_costi_personaleBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
@@ -1288,174 +1303,174 @@
 	</action>
 
 	<businessProcess name="ConsSospesiEntrateBP"
-		className="it.cnr.contab.doccont00.bp.ConsSospesiEntrateBP">
+					 className="it.cnr.contab.doccont00.bp.ConsSospesiEntrateBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk" />
+					value="it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession" />
 		<init-param name="defaultAction" value="ConsSospesiAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsSospesiSpeseBP"
-		className="it.cnr.contab.doccont00.bp.ConsSospesiSpeseBP">
+					 className="it.cnr.contab.doccont00.bp.ConsSospesiSpeseBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk" />
+					value="it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession" />
 		<init-param name="defaultAction" value="ConsSospesiAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<action path="/ConsVLimiteSpesaDetAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsVLimiteSpesaDetBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.pdcfin.bulk.VLimiteSpesaDetBulk" />
+					value="it.cnr.contab.config00.pdcfin.bulk.VLimiteSpesaDetBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsVLimiteSpesaDetAction" />
 	</businessProcess>
 	<action path="/ConsScadAccertamentiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsScadAccertamentiBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_accertBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_accertBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsScadAccertamentiAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 	<action path="/ConsLimitiSpesaPdgpAction"
-		actionClass="it.cnr.contab.prevent00.consultazioni.action.ConsLimitiSpesaPdgpAction">
+			actionClass="it.cnr.contab.prevent00.consultazioni.action.ConsLimitiSpesaPdgpAction">
 	</action>
 	<businessProcess name="ConsLimitiSpesaPdgpBP"
-		className="it.cnr.contab.prevent00.consultazioni.bp.ConsLimitiSpesaPdgpBP">
+					 className="it.cnr.contab.prevent00.consultazioni.bp.ConsLimitiSpesaPdgpBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaPdgpBulk" />
+					value="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaPdgpBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsLimitiSpesaPdgpAction" />
 	</businessProcess>
 	<businessProcess name="ConsLimitiSpesaDetPdgpBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaDetPdgpBulk" />
+					value="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaDetPdgpBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsCupMandatiBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VConsCupMandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VConsCupMandatiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsCupReversaliBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VConsCupReversaliBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VConsCupReversaliBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 
 	<businessProcess name="ConsAccertamentiBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.consultazioni.bulk.ConsAccertamentiBulk" />
+					value="it.cnr.contab.consultazioni.bulk.ConsAccertamentiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsAccertamentiAction" />
 	</businessProcess>
 	<businessProcess name="ConsDocContrattoBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk" />
+					value="it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<businessProcess name="ConsContrattiBP"
-		className="it.cnr.contab.config00.bp.ConsContrattiBP">
+					 className="it.cnr.contab.config00.bp.ConsContrattiBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk" />
+					value="it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<businessProcess name="ConsStoGaeObbBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.consultazioni.bulk.VGaeTotaleStoricoSpeBulk" />
+					value="it.cnr.contab.consultazioni.bulk.VGaeTotaleStoricoSpeBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<action path="/ConsGAERendAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAERendAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAERendAction">
 	</action>
 	<businessProcess name="ConsGAERendBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAERendBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAERendBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession" />
 		<init-param name="defaultAction" value="ConsGAERendAction" />
 	</businessProcess>
 	<action path="/ConsInventarioRicAction"
-		actionClass="it.cnr.contab.inventario00.actions.ConsInventarioRicAction">
+			actionClass="it.cnr.contab.inventario00.actions.ConsInventarioRicAction">
 	</action>
 	<businessProcess name="ConsInventarioRicBP"
-		className="it.cnr.contab.inventario00.bp.ConsInventarioRicBP">
+					 className="it.cnr.contab.inventario00.bp.ConsInventarioRicBP">
 		<forward name="default" path="/inventario00/inventario_ric_per_data.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk" />
 		<init-param name="componentSessionName"
-			value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession" />
+					value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession" />
 		<init-param name="defaultAction" value="ConsInventarioRicAction" />
 	</businessProcess>
 	<businessProcess name="ConsInventarioRicRaggruppatiBP"
-		className="it.cnr.contab.inventario00.bp.ConsInventarioRicRaggruppatiBP">
+					 className="it.cnr.contab.inventario00.bp.ConsInventarioRicRaggruppatiBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk" />
 		<init-param name="componentSessionName"
-			value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession" />
+					value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioniAction" />
 	</businessProcess>
 	<action path="/ConsConfrontoEntSpeTotAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsConfrontoEntSpeTotAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsConfrontoEntSpeTotAction">
 	</action>
 	<businessProcess name="ConsConfrontoEntSpeTotBP"
-		className="it.cnr.contab.doccont00.consultazioni.bp.ConsConfrontoEntSpeTotBP">
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsConfrontoEntSpeTotBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_spe_totBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_spe_totBulk" />
 		<init-param name="componentSessionName"
-			value="CNRDOCCONT00_EJB_ConsConfrontoEntSpeTotComponentSession" />
+					value="CNRDOCCONT00_EJB_ConsConfrontoEntSpeTotComponentSession" />
 		<init-param name="defaultAction" value="ConsConfrontoEntSpeTotAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 
 	<businessProcess name="ConsUnitaOrganizzativaBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk" />
+					value="it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk" />
 		<init-param name="defaultAction" value="ConsUnitaOrganizzativaAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsCdRBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdrBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_CDRComponentSession" />
@@ -1464,38 +1479,38 @@
 	</businessProcess>
 
 	<businessProcess name="ConsProgettiBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk" />
+					value="it.cnr.contab.progettiric00.core.bulk.ProgettoContrattoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsProgettiAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 
 	<businessProcess name="ConsGAEBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.latt.bulk.WorkpackageBulk" />
+					value="it.cnr.contab.config00.latt.bulk.WorkpackageBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsGAEAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsCdSBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdsBulk" />
 		<init-param name="componentSessionName"
-			value="CNRCONFIG00_EJB_Unita_organizzativaComponentSession" />
+					value="CNRCONFIG00_EJB_Unita_organizzativaComponentSession" />
 		<init-param name="defaultAction" value="ConsCdSAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsNazioneBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk" />
+					value="it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_NazioneComponentSession" />
 		<init-param name="defaultAction" value="ConsNazioneAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
@@ -1510,207 +1525,207 @@
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsCapitoloBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk" />
+					value="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk" />
 		<init-param name="componentSessionName"
-			value="CNRCONFIG00_EJB_Elemento_voceComponentSession" />
+					value="CNRCONFIG00_EJB_Elemento_voceComponentSession" />
 		<init-param name="defaultAction" value="ConsCapitoloAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsImpegnoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsImpegnoAction" />
 	</businessProcess>
 	<businessProcess name="ConsImpegnoGAEBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsImpegnoGaeAction" />
 	</businessProcess>
 	<action path="/ConsDistinteTotAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsDistinteTotBP"
-		className="it.cnr.jada.util.action.ConsultazioniBP">
+					 className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.intcass.bulk.V_distinte_totBulk" />
+					value="it.cnr.contab.doccont00.intcass.bulk.V_distinte_totBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDistinteTotAction" />
 	</businessProcess>
 	<businessProcess name="ConsFatturaPassivaBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.CnrIfacFatturaPassivaRigaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsFatturaPassivaAction" />
 	</businessProcess>
 	<businessProcess name="ConsDettObbligazioniBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.CnrIfacDettObbligazioniBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.CnrIfacDettObbligazioniBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDettObbligazioniAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsInventarioBeniBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.Inventario_beniRestBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.Inventario_beniRestBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsInventarioBeniAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsUbicazioneBeniBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.inventario00.consultazioni.bulk.Ubicazione_beneRestBulk" />
+					value="it.cnr.contab.inventario00.consultazioni.bulk.Ubicazione_beneRestBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsUbicazioneBeniAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsMandatoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.MandatoRestBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.MandatoRestBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMandatoAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsMandatoRigaBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.Mandato_rigaRestBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.Mandato_rigaRestBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMandatoRigaAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsGaeCompetenzaRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VSitAnaliticaGaeCompetenzaBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VSitAnaliticaGaeCompetenzaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsGaeCompetenzaAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsGaeResiduiEntrataRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiEntrataBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiEntrataBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsGaeResiduiEntrataAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsGaeResiduiSpesaRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.VSitGaeResiduiSpesaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsGaeResiduiSpesaAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsTerzoRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.anagraf00.core.bulk.TerzoBulk" />
+					value="it.cnr.contab.anagraf00.core.bulk.TerzoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsTerzoAction" />
 		<init-param name="searchResultColumnSet" value="columnSet01" />
 	</businessProcess>
 	<businessProcess name="ConsInquadramentoRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk" />
+					value="it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsInquadramentoAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsFatturaAttivaRigaBrevettiBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsFatturaAttivaRigaBrevettiAction" />
 	</businessProcess>
 	<businessProcess name="ConsFatturaPassivaRigaBrevettiBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VFatturaPassivaRigaBrevettiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsFatturaPassivaRigaBrevettiAction" />
 	</businessProcess>
 	<businessProcess name="ConsultazioneDocAmmAttiviBrevettiBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAttiviBrevettiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioneDocAmmAttiviBrevettiAction" />
 	</businessProcess>
 	<businessProcess name="ConsultazioneDocAmmBrevettiBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmBrevettiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmBrevettiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsultazioneDocAmmBrevettiAction" />
 	</businessProcess>
 	<businessProcess name="ConsRiepilogoCompensiBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsRiepilogoCompensiBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsRiepilogoCompensiBP">
 		<forward name="default" path="/compensi00/cons_riepilogo_compensi.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRCOMPENSI00_EJB_ConsRiepilogoCompensiComponentSession" />
+					value="CNRCOMPENSI00_EJB_ConsRiepilogoCompensiComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoCompensiAction" />
 	</businessProcess>
 	<businessProcess name="VisConsRiepilogoCompensiBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.VisConsRiepilogoCompensiBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.VisConsRiepilogoCompensiBP">
 		<forward name="default" path="/util/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiBulk" />
 		<init-param name="componentSessionName"
-			value="CNRCOMPENSI00_EJB_ConsRiepilogoCompensiComponentSession" />
+					value="CNRCOMPENSI00_EJB_ConsRiepilogoCompensiComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoCompensiAction" />
 
 	</businessProcess>
 	<action path="/ConsDocammDaRiscontrareAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
-		<businessProcess name="ConsDocammAttiviBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+	<businessProcess name="ConsDocammAttiviBP" className="it.cnr.jada.util.action.ConsultazioniBP">
 		<forward name="default" path="/util/form_lista.jsp" />
 		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAttiviDaRiscontrareBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDocammDaRiscontrareAction" />
 	</businessProcess>
 	<action path="/ConsDocammAnagFitAction"
-		actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsDocammAnagFitAction">
+			actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsDocammAnagFitAction">
 	</action>
 	<businessProcess name="ConsDocammAnagFitBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagFitBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagFitBP">
 		<forward name="default" path="/docamm00/estrazione_docamm.jsp" />
 
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAnagManrevBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAnagManrevBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDocammAnagFitAction" />
 	</businessProcess>
@@ -1718,101 +1733,109 @@
 	<action path="/ConsDocammAnagAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<businessProcess name="ConsDocammAnagBP"
-		className="it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagBP">
+					 className="it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAnagManrevBulk" />
+					value="it.cnr.contab.docamm00.consultazioni.bulk.VDocAmmAnagManrevBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDocammAnagAction" />
 	</businessProcess>
 	<businessProcess name="ConsModalitaPagamentoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk" />
+					value="it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsModalitaPagamentoAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsBancaBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.anagraf00.core.bulk.BancaBulk" />
+					value="it.cnr.contab.anagraf00.core.bulk.BancaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsBancaAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="MissioneTipoSpesaBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk" />
+					value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMissioneTipoSpesaAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="MissioneRimborsoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk" />
+					value="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMissioneRimborsoKmAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="MissioneTipoPastoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk" />
+					value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMissioneTipoPastoAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsDivisaBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk" />
+					value="it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsDivisaAction" />
 	</businessProcess>
 	<businessProcess name="ConsMandatoRevRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk" />
+					value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMandatoRevRestAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsProcedureAmministrativeBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk" />
+					value="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsProcedureAmministrativeAction" />
 	</businessProcess>
 	<businessProcess name="ConsTerzoPerCompensoBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoBulk" />
+					value="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsTerzoPerCompensoAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsRiepilogoSiopeMandatiRestBP"
-		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk" />
 		<init-param name="componentSessionName"
-			value="JADAEJB_CRUDComponentSession" />
+					value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeMandatiRestAction" />
 		<init-param name="searchResultColumnSet" value="BASEDETT" />
 		<init-param name="freeSearchSet" value="BASEDETT" />
+	</businessProcess>
+	<businessProcess name="ConsUtenteGestBP"
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.utenze00.bulk.UtenteBulk" />
+		<init-param name="defaultAction" value="ConsUtenteGestAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 </action-mappings>

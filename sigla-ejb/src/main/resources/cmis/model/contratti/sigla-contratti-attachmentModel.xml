@@ -116,6 +116,11 @@
 			<description>Dichiarazione Insussistenza Conflitto Interessi</description>
 			<parent>sigla_contratti_attachment:document</parent>
 		</type>
+		<type name="sigla_contratti_attachment:attestazione_direttore">
+			<title>Attestazione Direttore</title>
+			<description>Attestazione Direttore</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
 		<type name="sigla_contratti_attachment:comunicazione_perlapa">
 			<title>Comunicazione PerlaPa</title>
 			<description>Comunicazione PerlaPa</description>

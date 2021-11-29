@@ -19,6 +19,8 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.jada.bulk.*;
 
+import java.sql.Timestamp;
+
 public class MandatoAccreditamento_rigaBulk extends Mandato_rigaBulk {
 	protected MandatoAccreditamentoBulk mandatoAccreditamento;
 	protected V_impegnoBulk impegno = new V_impegnoBulk();

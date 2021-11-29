@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaBase"
+	keyClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaKey"
+	homeClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaHome" >
+	<defaultColumnMap
+		tableName="PENDENZA_PAGOPA" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_AVVISO"
+			propertyName="cdAvviso"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+				columnName="CD_IUV"
+				propertyName="cdIuv"
+				sqlTypeName="VARCHAR"
+				columnSize="50"
+				nullable="false" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="3"
+				nullable="false" />
+		<columnMapping
+				columnName="TIPO_POSIZIONE"
+				propertyName="tipoPosizione"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				nullable="false" />
+		<columnMapping
+				columnName="ID_TIPO_PENDENZA_PAGOPA"
+				propertyName="idTipoPendenzaPagopa"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+				columnName="DESCRIZIONE"
+				propertyName="descrizione"
+				sqlTypeName="VARCHAR"
+				columnSize="2000"
+				nullable="true" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dtScadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+				columnName="IMPORTO_PENDENZA"
+				propertyName="importoPendenza"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="CD_CDS_DOC_AMM"
+				propertyName="cdCdsDocAmm"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="CD_UO_DOC_AMM"
+				propertyName="cdUoDocAmm"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="ESERCIZIO_DOC_AMM"
+				propertyName="esercizioDocAmm"
+				sqlTypeName="DECIMAL"
+				columnSize="4"/>
+		<columnMapping
+				columnName="CD_TIPO_DOC_AMM"
+				propertyName="cdTipoDocAmm"
+				sqlTypeName="VARCHAR"
+				columnSize="10"/>
+		<columnMapping
+				columnName="CD_TERZO"
+				propertyName="cd_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="false" />
+		<columnMapping
+				columnName="PG_DOC_AMM"
+				propertyName="pgDocAmm"
+				sqlTypeName="DECIMAL"
+				columnSize="10"/>
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="cdAvviso" />
+	<persistentProperty
+			name="cdIuv" />
+	<persistentProperty
+		name="tipoPosizione" />
+	<persistentProperty
+			name="idTipoPendenzaPagopa" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+			name="descrizione" />
+	<persistentProperty
+	    name="dtScadenza" />
+	<persistentProperty
+			name="importoPendenza" />
+	<persistentProperty
+			name="cdCdsDocAmm"/>
+	<persistentProperty
+			name="cdUoDocAmm"/>
+	<persistentProperty
+			name="esercizioDocAmm"/>
+	<persistentProperty
+			name="cdTipoDocAmm"/>
+	<persistentProperty
+			name="pgDocAmm"/>
+	<persistentProperty
+			name="cd_terzo" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

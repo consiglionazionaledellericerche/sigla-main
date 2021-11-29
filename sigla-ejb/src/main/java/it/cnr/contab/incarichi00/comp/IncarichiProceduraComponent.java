@@ -658,6 +658,23 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString()+"\".");
 					}
 				}
+				//Il documento viene richiesto solo in fase di salvataggio definitivo della procedura.
+				//In caso di semplice cambio importi per anno non deve scattare il controllo, dato che per incarichi vecchi
+				//tale documento non esiste.
+				if (incarico.getAttestazioneDirettore()==null &&
+						!Optional.ofNullable(incaricoOld).map(Incarichi_proceduraBulk::isProceduraDefinitiva).orElse(Boolean.FALSE)) {
+					if (parametri!=null && parametri.getAllega_attestazione_direttore()!=null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+							//Istanzio la classe per riempire tipo_archivioKeys
+							new Incarichi_procedura_archivioBulk();
+						}
+
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE).toString()+"\".");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE).toString()+"\".");
+					}
+				}
 				if (incarico.getDecretoDiNomina()==null) {
 					if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) { 
 						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
@@ -959,8 +976,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						contrattiService.updateProperties(storageFile, storageFile.getStorageObject());
 					}
 					if (allegato!=null) {
-						if (procedura.isProceduraAnnullata() || procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+						if (procedura.isProceduraAnnullata() || procedura.isProceduraProvvisoria() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
@@ -1607,6 +1624,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						if (!(parametriDefinitivi.getAllega_conflitto_interesse()!=null && parametriDefinitivi.getAllega_conflitto_interesse().equals("Y")) &&
 							parametri.getAllega_conflitto_interesse()!=null)
 							parametriDefinitivi.setAllega_conflitto_interesse(parametri.getAllega_conflitto_interesse());
+						if (!(parametriDefinitivi.getAllega_attestazione_direttore()!=null && parametriDefinitivi.getAllega_attestazione_direttore().equals("Y")) &&
+								parametri.getAllega_attestazione_direttore()!=null)
+							parametriDefinitivi.setAllega_attestazione_direttore(parametri.getAllega_attestazione_direttore());
 					}
 				}
 				return parametriDefinitivi;
@@ -1742,8 +1762,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
                         contrattiService.addAspect(storageObject, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
                     });
 					if (allegato!=null && optStorage.isPresent()) {
-						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(optStorage.get(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(optStorage.get(), true);
@@ -1789,8 +1809,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						nodeRemoveAspect.add(nodeAllegato);
 					}
 					if (allegato!=null && nodeAllegato!=null) {
-						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);

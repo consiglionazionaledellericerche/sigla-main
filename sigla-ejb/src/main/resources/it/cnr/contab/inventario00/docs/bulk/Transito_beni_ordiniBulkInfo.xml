@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cdCds"
+		property="movimentiMag.lottoMag.cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdS"	
+		caseSensitiveSearch="false"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="movimentiMag.unitaOperativaOrd.cdUnitaOperativa"
+		maxLength="15"
+		inputSize="15"
+		inputType="TEXT"
+		label="Unita Operativa"
+		caseSensitiveSearch="false"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+			name="dsUnitaOperativa"
+			property="movimentiMag.unitaOperativaOrd.dsUnitaOperativa"
+			maxLength="200"
+			inputSize="200"
+			inputType="TEXT"
+			label="Descr. Uop"
+			caseSensitiveSearch="false"
+			enabledOnInsert = "false"
+			enabledOnEdit = "false"
+			enabledOnSearch="false"/>
+	<fieldProperty
+			name="cdTerzo"
+			property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.ordineAcq.cdTerzo"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Fornitore"
+			caseSensitiveSearch="false"
+			enabledOnInsert = "false"
+			enabledOnEdit = "false"
+			enabledOnSearch="false"/>
+	<fieldProperty
+			name="dsTerzo"
+			property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.ordineAcq.ragioneSociale"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Fornitore"
+			caseSensitiveSearch="false"
+			enabledOnInsert = "false"
+			enabledOnEdit = "false"
+			enabledOnSearch="false"/>
+	<fieldProperty
+			name="ordine"
+			property="movimentiMag.lottoMag.ordineAcqConsegna.consegnaOrdineString"
+			maxLength="30"
+			inputSize="30"
+			inputType="TEXT"
+			label="Ordine"
+			caseSensitiveSearch="false"
+			enabledOnInsert = "false"
+			enabledOnEdit = "false"
+			enabledOnSearch="false"/>
+	<fieldProperty
+		name="dtRiferimento"
+		property="movimentiMag.dtRiferimento"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Dt Consegna"
+		formatName="date_short"
+		caseSensitiveSearch="false"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+			name="dataBolla"
+			property="movimentiMag.dataBolla"
+			inputType="ROTEXT"
+			maxLength="10"
+			inputSize="10"
+			label="Dt Bolla"
+			formatName="date_short"
+			caseSensitiveSearch="false"
+			enabledOnInsert = "false"
+			enabledOnEdit = "false"
+			enabledOnSearch="false"/>
+	<fieldProperty
+			name="numeroBolla"
+			property="movimentiMag.numeroBolla"
+			maxLength="30"
+			inputSize="30"
+			inputType="TEXT"
+			label="Numero Bolla"
+			caseSensitiveSearch="false"
+			enabledOnInsert = "false"
+			enabledOnEdit = "false"
+			enabledOnSearch="false"/>
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		maxLength="1000"
+		inputSize="1000"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="4"
+		nullable = "false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="valore_iniziale"
+		property="valore_iniziale"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		nullable = "false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		caseSensitiveSearch="false"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch="false"
+		label="Valore" />
+	<fieldProperty
+		name="collocazione"
+		property="collocazione"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Collocazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_inventario"
+		property="inventario.pg_inventario"
+		inputType="TEXT"
+		label="Codice Inventario" />
+	<fieldProperty
+		name="find_assegnatario"
+		property="assegnatario"
+		inputType="SEARCHTOOL" 	
+		formName="searchtool" 	
+		label="Assegnatario"		
+		enabledOnSearch="true"		
+		enabledOnEdit="true"  />
+	<fieldProperty
+		name="cd_assegnatario"
+		property="assegnatario.cd_terzo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Assegnatario"	
+		caseSensitiveSearch="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="ds_assegnatario"
+		property="assegnatario.denominazione_sede"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="Assegnatario"
+		caseSensitiveSearch="false" />
+		
+		
+	/*****************************************************	
+	* Riferimento all'oggetto complesso ubicazioneBene **/
+	<fieldProperty
+		name="find_ubicazione"
+		property="ubicazione"
+		inputType="SEARCHTOOL" 	
+		formName="searchtool" 	
+		label="Ubicazione"		
+		enabledOnSearch="true"		
+		enabledOnEdit="true"  />
+	<fieldProperty
+		name="cd_ubicazione"
+		property="ubicazione.cd_ubicazione"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Ubicazione"	
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"  />
+	<fieldProperty
+			name="ds_ubicazione"
+			property="ubicazione.ds_ubicazione_bene"
+			maxLength="100"
+			inputSize="100"
+			inputType="ROTEXT"
+			label="Descr. Ubicaz." />
+
+	/*****************************************************	
+	* Riferimento all'oggetto complesso condizioneBene **/	
+	<fieldProperty
+		name="condizioni"
+		property="condizioneBene"		
+		printProperty="ds_condizione_bene"
+		optionsProperty="condizioni"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Condizione Bene"  
+		enabledOnFreeSearch="true"   
+		enabledOnSearch="true" />
+		
+	<fieldProperty
+		name="cd_condizione_bene"
+		property="condizioneBene.cd_condizione_bene"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		label="Condizione"
+		caseSensitiveSearch="false"  
+		enabledOnFreeSearch="true"   
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_condizione_bene"
+		property="condizioneBene.ds_condizione_bene"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="Condizione"
+		caseSensitiveSearch="false"/>
+
+
+	/*****************************************************	
+	* Riferimento all'oggetto complesso categoria_Bene **/
+	<fieldProperty
+		name="cd_categoria_bene"
+		property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.beneServizio.categoria_gruppo.cd_categoria_gruppo"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Categoria"		
+		enabledOnSearch="true"  		
+		enabledOnFreeSearch="true"  		
+		caseSensitiveSearch="false"/>		
+	<fieldProperty
+		name="cd_categoria_beneForFreeSearch"
+		property="cd_categoria_gruppo"
+		inputType="TEXT"
+		label="Categoria"
+	/>
+	<fieldProperty
+		name="ds_categoria_bene"
+		property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.beneServizio.categoria_gruppo.ds_categoria_gruppo"
+		maxLength="300"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Categoria"
+		caseSensitiveSearch="false"/>
+
+	/*****************************************************
+	* Riferimento a ISTITUZIONALE_COMMERCIALE **/	
+	<fieldProperty
+		name="ti_istituzionale_commerciale"
+		property="ti_commerciale_istituzionale"
+		keysProperty="ti_istituzionale_commercialeKeys"
+		label="Tipo Bene" 
+		inputType="RADIOGROUP"/>
+
+	<fieldProperty
+		name="tipo_ammortamento"
+		property="tipo_ammortamento"		
+		printProperty="ds_tipo"
+		optionsProperty="ti_ammortamenti"
+		maxLength="100"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnSearch="false"		
+		enabledOnEdit="true"
+		label="Tipo Ammortamento"/>
+	<fieldProperty
+		name="ti_ammortamento_notIns"
+		property="tipo_ammortamento.ds_tipo_ammortamento"
+		inputType="ROTEXT"
+		inputSize="30"
+		label="Tipo Ammortamento" />	
+	<fieldProperty
+		name="fl_ammortamento"
+		property="fl_ammortamento"
+		inputType="CHECKBOX"
+		label="Soggetto ad Ammortamento" />
+	<fieldProperty
+		name="etichetta"
+		property="etichetta"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true" 
+		label="Etichetta" />
+	<fieldProperty
+		name="cd_barre"
+		property="cd_barre"
+		inputType="TEXT"
+		label="Cod. Barre" 
+		inputSize="22"
+		maxLength="22"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="targa"
+		property="targa"
+		inputType="TEXT"
+		label="Targa" 
+		inputSize="8"
+		maxLength="8"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />	
+	<fieldProperty
+		name="seriale"
+		property="seriale"
+		inputType="TEXT"
+		label="Seriale" 
+		inputSize="25"
+		maxLength="25"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<fieldProperty
+			name="stato"
+			property="stato"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="3"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			nullable="false"
+			keysProperty="statoKeys"
+			label="Stato" />
+	<formFieldProperty
+		name="etichetta" />
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+			name="stato" />
+
+/****** 	CATEGORIA  ***********/			
+	<formFieldProperty
+		name="cd_categoria_bene" />
+	<formFieldProperty
+			name="ds_categoria_bene" />
+	<formFieldProperty
+		name="categoria_Bene" />	
+
+/****** UBICAZIONE      ***********/	
+	<formFieldProperty
+		name="find_ubicazione" />
+	<formFieldProperty
+		name="cd_ubicazione" />
+	<formFieldProperty
+		name="ds_ubicazione" />
+	<formFieldProperty
+		name="ubicazione" />
+	
+/****** 	ASSEGNATARIO  ***********/	
+	<formFieldProperty
+		name="find_assegnatario" />
+	<formFieldProperty
+		name="cd_assegnatario" />
+	<formFieldProperty
+		name="ds_assegnatario" />
+
+/********** Bene Principale **********/	
+	<formFieldProperty
+		name="valore_iniziale" />
+	<formFieldProperty
+		name="collocazione" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="condizioni" />
+	<formFieldProperty
+		name="cd_condizione_bene" />
+	<formFieldProperty
+		name="ds_condizione_bene" />
+	<formFieldProperty
+			name="dataBolla" />
+	<formFieldProperty
+			name="numeroBolla" />
+
+	<formFieldProperty
+		name="ti_istituzionale_commerciale" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="num_buono" />	
+	<formFieldProperty
+		name="valore_bene" />
+	<formFieldProperty
+		name="valore_unitario" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="dsTerzo" />
+	<formFieldProperty
+		name="cdUnitaOperativa"/>
+	<formFieldProperty
+			name="dsUnitaOperativa"/>
+	<formFieldProperty
+			name="dtRiferimento"/>
+	<formFieldProperty
+			name="ordine"/>
+	<formFieldProperty
+		name="variazione_menoPerAssocia"/>
+	<formFieldProperty
+		name="fl_totalmente_scaricato" />
+	<formFieldProperty
+		name="valore_alienazione" />
+	<formFieldProperty
+		name="valore_alienazione_apg" 
+		command="doAssegnaValoreAlienazione" />	
+	<formFieldProperty
+		name="dt_validita_variazione" />
+	<formFieldProperty
+		name="dt_acquisizione" />	
+/******* Tipo Ammortamento *****************/
+	<formFieldProperty
+		name="tipo_ammortamento" />
+	<formFieldProperty
+		name="ti_ammortamento_notIns" />
+	<formFieldProperty
+		name="fl_ammortamento" />
+	<formFieldProperty
+		name="perc_successivi" />
+	<formFieldProperty
+		name="perc_primo_anno" />
+	<formFieldProperty
+		name="imponibile_ammortamento" />
+
+	<formFieldProperty
+		name="cd_barre" />
+	<formFieldProperty
+		name="targa" />	
+	<formFieldProperty
+		name="seriale" />
+	<columnFieldProperty
+			name="ds_bene"
+			style="width:300px" />
+	<columnFieldProperty
+			name="dtRiferimento"
+			style="width:50px" />
+	<columnFieldProperty
+			name="cd_categoria_bene"
+			style="width:50px" />
+	<columnFieldProperty
+			name="ds_categoria_bene"
+			style="width:100px" />
+	<columnFieldProperty
+		name="valore_iniziale"
+		style="width:80px"/>
+	<columnFieldProperty
+			name="dsTerzo"
+			style="width:100px"/>
+	<columnFieldProperty
+			name="dataBolla"
+			style="width:50px" />
+	<columnFieldProperty
+			name="numeroBolla"
+			style="width:80px" />
+	<columnFieldProperty
+		name="ds_assegnatario"
+		style="width:300px"/>	
+	<columnFieldProperty
+		name="cd_ubicazione"
+		label="Ubicaz."
+		style="width:20px"/>
+	<columnFieldProperty
+			name="ds_ubicazione"
+			style="width:80px"/>
+	<columnFieldProperty
+		name="collocazione"   
+		style="width:40px"/>
+	<columnFieldProperty
+		name="seriale"   
+		style="width:40px"/>
+	<columnFieldProperty
+			name="cd_barre"
+			style="width:40px"/>
+	<columnFieldProperty
+			name="targa"
+			style="width:30px"/>
+	<columnFieldProperty
+			name="dsUnitaOperativa"
+			style="width:120px"/>
+	<findFieldProperty
+		name="etichetta" />
+	<findFieldProperty
+		name="id_bene_origineForFreeSearch" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ds_bene" />
+	<findFieldProperty
+		name="cd_categoria_beneForFreeSearch" />
+	<findFieldProperty
+		name="valore_iniziale" />
+	<findFieldProperty
+		name="cd_ubicazione" />
+	<findFieldProperty
+		name="cd_assegnatario" />
+	<findFieldProperty
+		name="collocazione" />
+	<findFieldProperty
+		name="condizioni" />
+	<findFieldProperty
+		name="cd_barre" />
+	<findFieldProperty
+		name="targa" />
+	<findFieldProperty
+		name="seriale" />	
+	<findFieldProperty
+		name="fl_totalmente_scaricato" />
+	<findFieldProperty
+			name="stato" />
+</bulkInfo>

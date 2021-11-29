@@ -25,6 +25,7 @@ import it.cnr.jada.persistency.sql.*;
 public class Condizione_beneBase extends Condizione_beneKey implements Keyed {
 	// DS_CONDIZIONE_BENE VARCHAR(100) NOT NULL
 	private java.lang.String ds_condizione_bene;
+	private java.lang.Boolean flDefaultOrdine;
 
 public Condizione_beneBase() {
 	super();
@@ -44,4 +45,12 @@ public java.lang.String getDs_condizione_bene() {
 public void setDs_condizione_bene(java.lang.String ds_condizione_bene) {
 	this.ds_condizione_bene = ds_condizione_bene;
 }
+
+	public Boolean getFlDefaultOrdine() {
+		return flDefaultOrdine;
+	}
+
+	public void setFlDefaultOrdine(Boolean flDefaultOrdine) {
+		this.flDefaultOrdine = flDefaultOrdine;
+	}
 }

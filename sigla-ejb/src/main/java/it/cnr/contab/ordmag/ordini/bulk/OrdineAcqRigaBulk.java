@@ -52,10 +52,19 @@ import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAmministrativoRigaBulk, Voidable {
 	protected BulkList<OrdineAcqConsegnaBulk> righeConsegnaColl= new BulkList<OrdineAcqConsegnaBulk>();
 	private java.lang.String dspTipoConsegna;
+	private java.lang.String dspStato;
 
 	private java.lang.String tipoConsegnaDefault;
 
 	private java.sql.Timestamp dspDtPrevConsegna;
+
+	public String getDspStato() {
+		return dspStato;
+	}
+
+	public void setDspStato(String dspStato) {
+		this.dspStato = dspStato;
+	}
 
 	private java.math.BigDecimal dspQuantita;
 
@@ -356,7 +365,10 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public Dictionary getTipoConsegnaKeys() {
 		return OrdineAcqConsegnaBulk.TIPO_CONSEGNA;
 	}
-	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
+	public Dictionary getStatoKeys() {
+		return OrdineAcqConsegnaBulk.STATO;
+	}
+	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context)
 	{
 		return inizializzaPerInserimento(context.getUserContext());
 	}
@@ -542,5 +554,22 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		return getOrdineAcq().getOrdineString()
 				.concat("/")
 				.concat(String.valueOf(this.getRiga()));
+	}
+
+	@Override
+	public Integer getCd_terzo() {
+		return this.getOrdineAcq().getCdTerzo();
+	}
+
+	@Override
+	public Timestamp getDt_da_competenza_coge() {
+		// TODO: 14/06/21 Da implementare 
+		return null;
+	}
+
+	@Override
+	public Timestamp getDt_a_competenza_coge() {
+		// TODO: 14/06/21 Da implementare
+		return null;
 	}
 }

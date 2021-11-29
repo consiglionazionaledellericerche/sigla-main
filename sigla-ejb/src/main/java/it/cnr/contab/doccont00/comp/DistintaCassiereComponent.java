@@ -48,6 +48,8 @@ import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupKey;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -3178,18 +3180,50 @@ public class DistintaCassiereComponent extends
     private void validaDocumentiContabiliAssociati(UserContext userContext,
                                                    Distinta_cassiereBulk distinta) throws ComponentException {
         try {
-            // if
-            // (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,
-            // distinta.getEsercizio()).getFl_siope().booleanValue()) {
             V_mandato_reversaleHome home = (V_mandato_reversaleHome) getHome(
                     userContext, V_mandato_reversaleBulk.class);
             SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
                     userContext, distinta, V_mandato_reversaleBulk.class, null);
-            List list = home.fetchAll(sql);
+            List<V_mandato_reversaleBulk> list = home.fetchAll(sql);
             for (Iterator i = list.iterator(); i.hasNext(); ) {
-                V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
-                        .next();
-
+                V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i.next();
+                if (bulk.isMandato()) {
+                    MandatoIHome mandatoHome = (MandatoIHome) getHome(userContext,MandatoIBulk.class);
+                    final MandatoBulk mandatoBulk = (MandatoBulk) mandatoHome.findByPrimaryKey(
+                            new MandatoIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()));
+                    final String cupNonValidi = mandatoHome.findCodiciSiopeCupCollegati(userContext, mandatoBulk)
+                            .stream()
+                            .filter(cupBulk -> {
+                                return Optional.ofNullable(cupBulk.getDt_canc())
+                                        .map(timestamp -> timestamp.before(distinta.getDt_emissione()))
+                                        .orElse(Boolean.FALSE);
+                            })
+                            .map(CupBulk::getCdCup)
+                            .distinct()
+                            .collect(Collectors.joining(","));
+                    if (Optional.ofNullable(cupNonValidi).filter(s -> !s.isEmpty()).isPresent()) {
+                        throw new ApplicationMessageFormatException("Il mandato {0}/{1} è legato ad un CUP {2} non più valido, Scollegarlo dalla distinta e ripetere l'operazione.",
+                                        bulk.getCd_cds(), String.valueOf(bulk.getPg_documento_cont()), cupNonValidi);
+                    }
+                } else if (bulk.isReversale()) {
+                    ReversaleIHome reversaleIHome = (ReversaleIHome) getHome(userContext,ReversaleIBulk.class);
+                    final ReversaleBulk reversaleBulk = (ReversaleBulk) reversaleIHome.findByPrimaryKey(
+                            new ReversaleIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()));
+                    final String cupNonValidi = reversaleIHome.findCodiciSiopeCupCollegati(userContext, reversaleBulk)
+                            .stream()
+                            .filter(cupBulk -> {
+                                return Optional.ofNullable(cupBulk.getDt_canc())
+                                        .map(timestamp -> timestamp.before(distinta.getDt_emissione()))
+                                        .orElse(Boolean.FALSE);
+                            })
+                            .map(CupBulk::getCdCup)
+                            .distinct()
+                            .collect(Collectors.joining(","));
+                    if (Optional.ofNullable(cupNonValidi).filter(s -> !s.isEmpty()).isPresent()) {
+                        throw new ApplicationMessageFormatException("La Reversale {0}/{1} è legata ad un CUP {2} non più valido, Scollegarlo dalla distinta e ripetere l'operazione.",
+                                bulk.getCd_cds(), String.valueOf(bulk.getPg_documento_cont()), cupNonValidi);
+                    }
+                }
                 if (Utility.createParametriCnrComponentSession()
                         .getParametriCnr(userContext, distinta.getEsercizio())
                         .getFl_siope().booleanValue()) {
@@ -4983,7 +5017,6 @@ public class DistintaCassiereComponent extends
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
-                        infoben.setDataScadenzaPagamento(xmlGregorianCalendar);
                         infoben.setDestinazione(LIBERA);
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
@@ -5080,8 +5113,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5115,8 +5147,15 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else
-                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+                        } else {
+                            throw new ApplicationMessageFormatException(
+                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()),
+                                    totSiope,
+                                    infoben.getImportoBeneficiario());
+                        }
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5204,8 +5243,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5239,8 +5277,15 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else
-                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+                        } else {
+                            throw new ApplicationMessageFormatException(
+                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()),
+                                    totSiope,
+                                    infoben.getImportoBeneficiario());
+                        }
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5308,7 +5353,6 @@ public class DistintaCassiereComponent extends
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
-                        infoben.setDataScadenzaPagamento(xmlGregorianCalendar);
                         infoben.setDestinazione(LIBERA);
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
@@ -5318,11 +5362,13 @@ public class DistintaCassiereComponent extends
                     if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
                         infoben.setNumeroContoBancaItaliaEnteRicevente(
                                 Optional.ofNullable(docContabile.getNumeroConto())
+                                        .filter(s -> s.length() == 7)
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
-                                                "sul Mandato {0}/{1}/{2}",
+                                                "sul Mandato {0}/{1}/{2}, oppure il numero conto {3} non ha la lunghezza corretta!",
                                                 String.valueOf(bulk.getEsercizio()),
                                                 String.valueOf(bulk.getCd_cds()),
-                                                String.valueOf(bulk.getPg_documento_cont())
+                                                String.valueOf(bulk.getPg_documento_cont()),
+                                                docContabile.getNumeroConto()
                                         ))
                         );
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);

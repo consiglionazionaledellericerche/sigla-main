@@ -569,10 +569,13 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			.forEach(newDett->{
 				Progetto_rimodulazione_ppeBulk detail = 
 						progettoRimodulazione.getDettagliRimodulazione().stream()
-							.filter(dett->dett.getCd_unita_organizzativa().equals(newDett.getCd_unita_organizzativa()))
-							.filter(dett->dett.getCd_voce_piano().equals(newDett.getCd_voce_piano()))
-							.filter(dett->dett.getEsercizio_piano().equals(newDett.getEsercizio_piano()))
-							.findFirst().orElseGet(()->{
+							.filter(dett -> Optional.ofNullable(dett.getCd_unita_organizzativa()).orElse("")
+									.equals(Optional.ofNullable(newDett.getCd_unita_organizzativa()).orElse("")))
+							.filter(dett -> Optional.ofNullable(dett.getCd_voce_piano()).orElse("")
+									.equals(Optional.ofNullable(newDett.getCd_voce_piano()).orElse("")))
+							.filter(dett -> Optional.ofNullable(dett.getEsercizio_piano()).orElse(0)
+									.equals(Optional.ofNullable(newDett.getEsercizio_piano()).orElse(0)))
+							.findFirst().orElseGet(() -> {
 								newDett.setToBeCreated();
 								progettoRimodulazione.addToDettagliRimodulazione(newDett);
 								return newDett;

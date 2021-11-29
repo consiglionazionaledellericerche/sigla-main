@@ -25,6 +25,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
+import java.sql.Timestamp;
 import java.util.List;
 public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //    ESERCIZIO DECIMAL(4,0) NOT NULL
@@ -80,8 +81,11 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
  
 //    DT_FINE_VALIDITA TIMESTAMP(7)
 	private java.sql.Timestamp dt_fine_validita;
- 
-//    DT_FINE_VALIDITA_VARIAZIONE TIMESTAMP(7)
+
+//    DT_PROROGA TIMESTAMP(7)
+	private java.sql.Timestamp dt_proroga;
+
+	//    DT_FINE_VALIDITA_VARIAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dt_fine_validita_variazione;
 
 //    DT_STIPULA TIMESTAMP(7)
@@ -179,6 +183,12 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 	}
 	public java.sql.Timestamp getDt_fine_validita() {
 		return dt_fine_validita;
+	}
+	public void setDt_proroga(Timestamp dt_proroga) {
+		this.dt_proroga = dt_proroga;
+	}
+	public Timestamp getDt_proroga() {
+		return dt_proroga;
 	}
 	public void setDt_fine_validita(java.sql.Timestamp dt_fine_validita)  {
 		this.dt_fine_validita=dt_fine_validita;

@@ -40,7 +40,6 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -49,7 +48,6 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
@@ -342,7 +340,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
         if (Optional.ofNullable(mandatoBulk.getStatoVarSos())
                 .map(s -> s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
                 .orElse(Boolean.FALSE)) {
-            if(!isAbilitatoCrudMandatoVariazioneBP) {
+            if (!isAbilitatoCrudMandatoVariazioneBP) {
                 setModel(context, createEmptyModelForSearch(context));
                 setStatus(SEARCH);
                 setMessage(ERROR_MESSAGE, "Mandato in stato 'DA VARIARE', accesso non consentito!");
@@ -525,9 +523,9 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                     .map(CNRUserInfo.class::cast)
                     .orElseThrow(() -> new BusinessProcessException("Cannot find UserInfo in context"));
             final Unita_organizzativa_enteBulk uoEnte = Optional.ofNullable(Utility.createUnita_organizzativaComponentSession().getUoEnte(actioncontext.getUserContext()))
-                                            .filter(Unita_organizzativa_enteBulk.class::isInstance)
-                                            .map(Unita_organizzativa_enteBulk.class::cast)
-                                            .orElseThrow(() -> new BusinessProcessException("Unita ENTE non trovata"));
+                    .filter(Unita_organizzativa_enteBulk.class::isInstance)
+                    .map(Unita_organizzativa_enteBulk.class::cast)
+                    .orElseThrow(() -> new BusinessProcessException("Unita ENTE non trovata"));
 
             isAbilitatoCrudMandatoVariazioneBP = Optional.ofNullable(GestioneUtenteAction.getComponentSession()
                     .validaBPPerUtente(actioncontext.getUserContext(),

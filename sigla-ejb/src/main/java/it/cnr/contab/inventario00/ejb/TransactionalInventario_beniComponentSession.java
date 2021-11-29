@@ -17,7 +17,11 @@
 
 package it.cnr.contab.inventario00.ejb;
 import java.rmi.*;
+import java.util.HashMap;
 
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalInventario_beniComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements Inventario_beniComponentSession {
@@ -410,4 +414,21 @@ public Boolean isContab(it.cnr.jada.UserContext param0,it.cnr.contab.inventario0
 		}
 	}
 }
+	public HashMap<Obbligazione_scadenzarioBulk, Boolean> creaUtilizzatori(UserContext param0, Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk, Buono_carico_scarico_dettBulk buono) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return(HashMap<Obbligazione_scadenzarioBulk, Boolean>)invoke("creaUtilizzatori",new Object[] {
+					param0,
+					obbligazione_scadenzarioBulk, buono });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

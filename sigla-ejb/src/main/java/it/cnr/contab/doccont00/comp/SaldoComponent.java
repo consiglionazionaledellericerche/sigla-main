@@ -1700,24 +1700,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									"movimentazione non possibile in quanto la variazione è di tipo rimodulazione di altro progetto (" +
 									progettoRimodulato.getCd_progetto() + ").");
 
-						//Il progetto viene controllato solo se non è scaduto (anno fine <= anno variazione) o, se scaduto,
-						// la variazione non è di tipo Maggiori Entrate/Spese nell'ambito del CDS
-						if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
-								.filter(annoFine->annoFine.compareTo(esercizioVariazione)>=0).isPresent() ||
-							!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(((Pdg_variazioneBulk)variazione).getTipologia())) {
-							BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
+						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
 
-							//recupero il record se presente altrimenti ne creo uno nuovo
-							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
-									.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-									.findFirst()
-									.orElse(new CtrlDispPianoEco(progetto, null));
+						//recupero il record se presente altrimenti ne creo uno nuovo
+						CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
+								.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+								.findFirst()
+								.orElse(new CtrlDispPianoEco(progetto, null));
 
-							dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
 
-							if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
-								listCtrlDispPianoEcoEtr.add(dispPianoEco);
-						}
+						if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
+							listCtrlDispPianoEcoEtr.add(dispPianoEco);
 					}
 
 					for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
@@ -2343,8 +2337,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
 				/*
 				 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+				 * oppure
+				 * la variazione è generata automaticamente (es. in fase di emissione obbligazione)
 				 */
-				if (uoScrivania.isUoEnte() && variazione.getCentro_responsabilita().getUnita_padre().isUoEnte())
+				if (variazione.getCentro_responsabilita().getUnita_padre().isUoEnte() &&
+						(uoScrivania.isUoEnte() || Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_AUTOMATICA.equals(variazione.getTiMotivazioneVariazione())))
 					return;
 
 				/*
@@ -2580,6 +2577,38 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(cdUo -> cdUo.equals(cdrPersonaleBulk.getCd_unita_organizzativa()))
 					.orElse(Boolean.FALSE);
 
+			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
+			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isVariazioneMaggioriEntrateSpese)
+					.orElse(Boolean.FALSE);
+
+			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
+			boolean isVariazioneCompetenzaMinoriEntrateSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isVariazioneMinoriEntrateSpese)
+					.orElse(Boolean.FALSE);
+
+			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
+			boolean isVariazioneStornoSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isStornoSpesa)
+					.orElse(Boolean.FALSE)  ||
+					Optional.of(variazione)
+							.filter(Var_stanz_resBulk.class::isInstance)
+							.map(Var_stanz_resBulk.class::cast)
+							.map(Var_stanz_resBulk::isVariazioneStorno)
+							.orElse(Boolean.FALSE);
+
+			boolean isVariazioneMonoProgetto = listCtrlPianoEco.stream().map(CtrlPianoEco::getProgetto)
+					.map(ProgettoBulk::getPg_progetto).distinct().count()==1;
+
 			if (isAttivaGestioneTrasferimenti) {
 				//se non è una variazione di personale non possono essere movimentate voci del personale
 				if (isVariazionePersonale) {
@@ -2678,14 +2707,19 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						});
 					}
 				} else if (!isCDRAreaVariazione) {
-					//Il controllo non vale se la variazione viene fatta dal CDR Area
-					listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
-									el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
-							.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
-								+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
-					});
+					//L'area può sempre ricevere somme su un progetto cui partecipa se le stesse provengono dallo stesso progetto
+					//Questa condizione è garantita dal monoprogetto e da storno spese
+					//Indicazioni avute da Sabrina Miceli il 10/11/2021
+					if (!isVariazioneMonoProgetto || !isVariazioneStornoSpese) {
+						//Il controllo non vale se la variazione viene fatta dal CDR Area
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
+										el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
+									+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
+						});
+					}
 				}
 
 				if (isVariazioneRagioneria) {
@@ -2741,35 +2775,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
 				});
 			}
-			
-			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
-			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isVariazioneMaggioriEntrateSpese)
-					.orElse(Boolean.FALSE);
-			
-			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
-			boolean isVariazioneCompetenzaMinoriEntrateSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isVariazioneMinoriEntrateSpese)
-					.orElse(Boolean.FALSE);
-	
-			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
-			boolean isVariazioneStornoSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isStornoSpesa)
-					.orElse(Boolean.FALSE)  ||
-					Optional.of(variazione)
-					.filter(Var_stanz_resBulk.class::isInstance)
-					.map(Var_stanz_resBulk.class::cast)
-					.map(Var_stanz_resBulk::isVariazioneStorno)
-					.orElse(Boolean.FALSE);
 			
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
@@ -3078,7 +3083,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				{
 					/**
 					 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o
-					 *    al CDR Personale o alla UO Ragioneria solo su GAE Natura 6
+					 *    al CDR Personale o alla UO Ragioneria su GAE Natura 6 se variazione multiprogetto o su GAE natura FES se variazione monoprogetto
 					 */
 					if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
 						//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
@@ -3089,7 +3094,15 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.flatMap(List::stream)
 								.filter(el->el.isUoArea()||el.isCdrPersonale()||el.isUoRagioneria())
 								.filter(el->el.isUoArea()?el.isNaturaFonteEsterna():Boolean.TRUE)
-								.filter(el->el.isUoRagioneria()?el.isNaturaReimpiego():Boolean.TRUE)
+								.filter(el->{
+									if (el.isUoRagioneria()) {
+										if (!isVariazioneMonoProgetto)
+											return el.isNaturaReimpiego();
+										else
+											return el.isNaturaFonteEsterna();
+									}
+									return Boolean.TRUE;
+								})
 								.map(CtrlPianoEcoDett::getImporto)
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
@@ -3098,7 +3111,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
 									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
 									+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
-									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE di natura 6 ("
+									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE "
+									+ (isVariazioneMonoProgetto?"Fonte Esterna":"di natura 6") + " ("
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviCashFund.abs())+").");						
 					}
 				}

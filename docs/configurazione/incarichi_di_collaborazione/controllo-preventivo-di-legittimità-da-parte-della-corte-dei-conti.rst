@@ -268,8 +268,8 @@ caso sarà possibile procedere al rinnovo del medesimo.
   :maxdepth: 3
   :caption: Indice dei contenuti
 
-  controllo-preventivo-di-legittimità-da-parte-della-corte-dei-conti/condizione-sospensiva-dellefficacia-del-contratto-negli-incarichi-co.co.co-per-gli-anni-successivi-al-primo.rst
-  controllo-preventivo-di-legittimità-da-parte-della-corte-dei-conti/i-limiti-di-spesa-per-incarichi-di-natura-occasionale.rst
+  corte-dei-conti/condizione-sospensiva.rst
+  corte-dei-conti/limiti-di-spesa.rst
 
 .. [1]
     Cfr. art. 6 comma 4 del Disciplinare incarichi

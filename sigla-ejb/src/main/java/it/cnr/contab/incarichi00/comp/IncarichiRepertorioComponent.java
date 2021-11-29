@@ -426,6 +426,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                 if (!estensioneFile.equalsIgnoreCase("pdf")) {
                     if (allegato.isCurriculumVincitore())
                         throw new ApplicationException("File non valido!\nIl formato del file consentito per il Curriculum Vitae è il pdf.");
+                    if (allegato.isConflittoInteressi())
+                        throw new ApplicationException("File non valido!\nIl formato del file consentito per l'Attestazione Insussistenza Conflitto Interessi è il pdf.");
                     if (allegato.isAggiornamentoCurriculumVincitore())
                         throw new ApplicationException("File non valido!\nIl formato del file consentito per l'aggiornamento del Curriculum Vitae è il pdf.");
                 }
@@ -640,6 +642,20 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                             throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \"" + incarico.getV_terzo().getCognome() + " " + incarico.getV_terzo().getNome() + "\" un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString() + "\".");
                         else
                             throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString() + "\".");
+                    }
+                }
+
+                if (incarico.getAttestazioneDirettore() == null) {
+                    if (parametri != null && parametri.getAllega_attestazione_direttore() != null && parametri.getAllega_attestazione_direttore().equals("Y")) {
+                        if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+                            //Istanzio la classe per riempire tipo_archivioKeys
+                            new Incarichi_procedura_archivioBulk();
+                        }
+
+                        if (incarico.getV_terzo() != null && incarico.getV_terzo().getCognome() != null && incarico.getV_terzo().getNome() != null)
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \"" + incarico.getV_terzo().getCognome() + " " + incarico.getV_terzo().getNome() + "\" un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE).toString() + "\".");
+                        else
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_ATTESTAZIONE_DIRETTORE).toString() + "\".");
                     }
                 }
 
@@ -962,8 +978,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         nodeAddAspect.add(nodeAllegato);
                     }
 					if (nodeAllegato!=null) {
-						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
@@ -1011,8 +1027,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         nodeRemoveAspect.add(nodeIncarico);
                     }
 					if (nodeAllegato!=null) {
-						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);

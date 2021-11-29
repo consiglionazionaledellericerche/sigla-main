@@ -44,6 +44,12 @@ public abstract class AllegatiTypeCRUDBP<T extends AllegatoGenericoTypeBulk, K e
         super(s);
     }
 
+    @Override
+    protected void completeAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
+        super.completeAllegato(allegato, storageObject);
+        completeAllegato(allegato);
+    }
+
     protected void completeAllegato(T allegato) throws ApplicationException {
 		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
 		allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));

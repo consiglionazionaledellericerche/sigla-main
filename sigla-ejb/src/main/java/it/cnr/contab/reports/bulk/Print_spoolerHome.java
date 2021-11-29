@@ -27,6 +27,8 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
+import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class Print_spoolerHome extends BulkHome {
 	public Print_spoolerHome(java.sql.Connection conn) {
@@ -81,6 +83,23 @@ public class Print_spoolerHome extends BulkHome {
 	public void deleteRiga(Print_spoolerBulk bulk, UserContext userContext)
 			throws PersistencyException {
 		delete(bulk, userContext);
+	}
+
+	public SQLBuilder getJobWaitToJsoDS() throws PersistencyException, BusyResourceException{
+
+		SQLBuilder sql = createSQLBuilder();
+		sql.openParenthesis("AND");
+		sql.addClause("AND ","dtProssimaEsecuzione",sql.ISNULL,null);
+		sql.addClause("AND","stato",sql.EQUALS, Print_spoolerBulk.STATO_IN_CODA_WAITDS);
+		sql.closeParenthesis();
+
+		sql.addClause("OR (","dtProssimaEsecuzione",sql.LESS, EJBCommonServices
+				.getServerDate());
+		sql.addClause("AND","stato",sql.EQUALS, Print_spoolerBulk.STATO_IN_CODA_WAITDS);
+		sql.closeParenthesis();
+		sql.addOrderBy("pg_stampa desc");
+
+		return sql;
 	}
 
 }

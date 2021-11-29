@@ -46,14 +46,24 @@ public class Tipo_carico_scaricoBase extends Tipo_carico_scaricoKey implements K
 	private java.lang.Boolean fl_chiude_fondo;
 //	 fl_vendita CHAR(1) NOT NULL
 	private java.lang.Boolean fl_vendita;
-	
+	private java.lang.Boolean fl_da_ordini;
+
 public Tipo_carico_scaricoBase() {
 	super();
 }
 public Tipo_carico_scaricoBase(java.lang.String cd_tipo_carico_scarico) {
 	super(cd_tipo_carico_scarico);
 }
-/* 
+
+	public Boolean getFl_da_ordini() {
+		return fl_da_ordini;
+	}
+
+	public void setFl_da_ordini(Boolean fl_da_ordini) {
+		this.fl_da_ordini = fl_da_ordini;
+	}
+
+	/*
  * Getter dell'attributo ds_tipo_carico_scarico
  */
 public java.lang.String getDs_tipo_carico_scarico() {

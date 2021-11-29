@@ -24,6 +24,9 @@ package it.cnr.contab.docamm00.docs.bulk;
  * @author: Ardire Alfonso
  */
 
+import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
+import it.cnr.contab.docamm00.storage.StorageFolderFatturaAttiva;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -32,6 +35,7 @@ import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.si.spring.storage.StorageObject;
 
 import java.util.List;
 
@@ -110,5 +114,20 @@ public class Fattura_attivaHome extends BulkHome {
         sql.addSQLClause(FindClause.AND, "STATO_INVIO_SDI", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
         sql.addSQLClause(FindClause.AND, "NOME_FILE_INVIO_SDI", SQLBuilder.ISNULL, null);
         return fetchAll(sql);
+    }
+
+    @Override
+    public void update(Persistent persistent, UserContext userContext) throws PersistencyException {
+        super.update(persistent, userContext);
+        Fattura_attivaBulk fattura = (Fattura_attivaBulk) persistent;
+        aggiornaMetadatiFattura(fattura);
+    }
+
+    public void aggiornaMetadatiFattura(Fattura_attivaBulk fattura) {
+        DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
+        StorageObject so = documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura);
+        if (so != null){
+            documentiCollegatiDocAmmService.updateMetadataFromBulk(so, new StorageFolderFatturaAttiva(fattura));
+        }
     }
 }

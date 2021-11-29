@@ -961,7 +961,9 @@
         <columnFieldProperty
                 name="fig_giur_est"/>
         <columnFieldProperty
-                name="cd_terzo_resp"/>
+                name="cd_terzo_resp"
+                textTruncate="true"
+                headerStyle="max-width: 13ch"/>
         <columnFieldProperty
                 name="cd_terzo_firmatario"/>
         <columnFieldProperty
@@ -991,7 +993,9 @@
         <columnFieldProperty
                 name="cdCig" />                
         <columnFieldProperty
-                name="cdCigFatturaAttiva"/>
+                name="cdCigFatturaAttiva"
+                textTruncate="true"
+                headerStyle="max-width: 13ch"/>
         <columnFieldProperty
                 name="dt_inizio_validita"/>
         <columnFieldProperty

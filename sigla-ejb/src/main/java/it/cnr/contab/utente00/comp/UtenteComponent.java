@@ -633,6 +633,7 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 		try 
 		{
 			utente.setDt_ultima_var_password(null);
+			utente.setPassword(null);
 			utente.setToBeUpdated();
 			makeBulkPersistent( userContext, utente );
 			return utente;

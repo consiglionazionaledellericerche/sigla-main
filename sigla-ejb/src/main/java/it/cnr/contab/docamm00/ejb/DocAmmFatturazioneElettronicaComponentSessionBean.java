@@ -137,4 +137,20 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 			throw uncaughtError(userContext,componentObj,e);
 		}
 	}
+	public void aggiornaMetadati(UserContext userContext, Integer esercizio, String cdCds, Long pgFatturaAttiva)throws ComponentException{
+		pre_component_invocation(userContext,componentObj);
+		try {
+			((DocAmmFatturazioneElettronicaComponent)componentObj).aggiornaMetadati(userContext, esercizio, cdCds,  pgFatturaAttiva);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
 }

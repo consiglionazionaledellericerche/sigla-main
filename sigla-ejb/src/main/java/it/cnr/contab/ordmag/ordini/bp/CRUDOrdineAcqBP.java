@@ -128,11 +128,14 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		@Override
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)oggettobulk;
-			OrdineAcqRigaBulk dettaglio =consegna.getOrdineAcqRiga();
+			OrdineAcqRigaBulk dettaglio =(OrdineAcqRigaBulk)getRighe().getModel();
 			consegna.setTipoConsegna(dettaglio.getTipoConsegnaDefault());
 			consegna.setMagazzino(dettaglio.getOrdineAcq().getUnicoMagazzinoAbilitato());
 			if (consegna.getMagazzino() != null){
 				consegna.setLuogoConsegnaMag(consegna.getMagazzino().getLuogoConsegnaMag());
+			}
+			if (dettaglio.getDspConto() != null){
+				consegna.setContoBulk(dettaglio.getDspConto());
 			}
 
 			int index = super.addDetail(oggettobulk);
@@ -328,18 +331,15 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return oggettobulk;	
 	}
 	@Override
-	protected void completeAllegato(AllegatoRichiestaBulk allegato) throws ApplicationException {
-		Optional.ofNullable(allegato)
-				.map(allegatoRichiestaBulk -> allegatoRichiestaBulk.getStorageKey())
-				.map(storageKey -> ordineAcqCMISService.getStorageObjectBykey(storageKey))
-				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+	protected void completeAllegato(AllegatoRichiestaBulk allegato, StorageObject storageObject) throws ApplicationException {
+		Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 				.filter(strings -> !strings.isEmpty())
 				.ifPresent(strings -> {
 					allegato.setAspectName(strings.stream()
 							.filter(s -> AllegatoRichiestaBulk.aspectNamesKeys.get(s) != null)
 							.findAny().orElse(RichiesteCMISService.ASPECT_ALLEGATI_RICHIESTA_ORDINI));
 				});
-		super.completeAllegato(allegato);
+		super.completeAllegato(allegato, storageObject);
 	}
 
 	@Override
@@ -488,7 +488,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileOrdineOut);
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setFlEmail(false);
-			print.setReport("/ordmag/ordini/iss/" + jasperOrdineName);
+			print.setReport("/ordmag/ordini/" + jasperOrdineName);
 			print.setNomeFile(nomeFileOrdineOut);
 			print.setUtcr(userContext.getUser());
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());

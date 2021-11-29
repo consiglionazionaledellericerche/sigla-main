@@ -21,17 +21,14 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
+import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
@@ -48,19 +45,19 @@ import it.cnr.contab.docamm00.intrastat.bulk.*;
 import it.cnr.contab.docamm00.storage.StorageFolderFatturaPassiva;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.*;
+import it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession;
 import it.cnr.contab.inventario01.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.*;
-import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -75,6 +72,7 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJBException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -85,9 +83,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
+public class FatturaPassivaComponent extends ScritturaPartitaDoppiaFromDocumentoComponent
         implements IFatturaPassivaMgr, Cloneable, Serializable {
     private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
 
@@ -180,7 +177,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     scadenza.setIm_associato_doc_amm(
                             calcolaTotalePer(
                                     (java.util.List) newAccertamentiHash.get(scadenza),
-                                    (notaDiCredito.quadraturaInDeroga()||(notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment()))));
+                                    (notaDiCredito.quadraturaInDeroga() || (notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment()))));
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }
             }
@@ -352,10 +349,10 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             Buono_carico_scarico_dettHome home = (Buono_carico_scarico_dettHome) getTempHome(userContext, Buono_carico_scarico_dettBulk.class);
 
             SQLBuilder sql = home.createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, buonoTemporaneo.getEsercizio().toString());
-            sql.addSQLClause("AND", "PG_INVENTARIO", sql.EQUALS, buonoTemporaneo.getPg_inventario().toString());
-            sql.addSQLClause("AND", "TI_DOCUMENTO", sql.EQUALS, buonoTemporaneo.getTi_documento());
-            sql.addSQLClause("AND", "PG_BUONO_C_S", sql.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, buonoTemporaneo.getEsercizio().toString());
+            sql.addSQLClause("AND", "PG_INVENTARIO", SQLBuilder.EQUALS, buonoTemporaneo.getPg_inventario().toString());
+            sql.addSQLClause("AND", "TI_DOCUMENTO", SQLBuilder.EQUALS, buonoTemporaneo.getTi_documento());
+            sql.addSQLClause("AND", "PG_BUONO_C_S", SQLBuilder.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
             List dettagli = home.fetchAll(sql);
 
             definitivo.setPg_buono_c_s(pg);
@@ -404,7 +401,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         try {
             Inventario_beni_apgHome apgHome = (Inventario_beni_apgHome) getHome(userContext, Inventario_beni_apgBulk.class);
             SQLBuilder sql = apgHome.createSQLBuilder();
-            sql.addSQLClause("AND", "LOCAL_TRANSACTION_ID", sql.EQUALS, buono_temporaneo.getLocal_transactionID());
+            sql.addSQLClause("AND", "LOCAL_TRANSACTION_ID", SQLBuilder.EQUALS, buono_temporaneo.getLocal_transactionID());
             List beniApg = apgHome.fetchAll(sql);
             for (Iterator i = beniApg.iterator(); i.hasNext(); ) {
                 Inventario_beni_apgBulk beneApg = (Inventario_beni_apgBulk) i.next();
@@ -444,6 +441,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
     }
 
     private void aggiornaCarichiInventario(UserContext userContext, Fattura_passivaBulk fattura_passiva) throws ComponentException {
+        Inventario_beniComponentSession inventario_beniComponent = ((it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class));
 
         if (fattura_passiva != null && fattura_passiva instanceof Nota_di_creditoBulk) {
             CarichiInventarioTable carichiInventarioHash = fattura_passiva.getCarichiInventarioHash();
@@ -475,73 +473,21 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
                     for (Iterator g = buonoCS.getBuono_carico_scarico_dettColl().iterator(); g.hasNext(); ) {
                         Buono_carico_scarico_dettBulk buono = ((Buono_carico_scarico_dettBulk) g.next());
-                        boolean exit = false;
-                        BigDecimal tot_perc_cdr = new BigDecimal(0);
+                        Boolean exit = false;
                         for (Iterator f = fattura_passiva.getFattura_passiva_dettColl().iterator(); (f.hasNext() && !exit); ) {
                             Fattura_passiva_rigaIBulk fattura = ((Fattura_passiva_rigaIBulk) f.next());
-                            for (Iterator coll = ((Buono_carico_scaricoBulk) buonoCS).getDettagliFatturaColl().iterator(); (coll.hasNext() && !exit); ) {
+                            for (Iterator coll = buonoCS.getDettagliFatturaColl().iterator(); (coll.hasNext() && !exit); ) {
                                 Fattura_passiva_rigaIBulk fattura_coll = ((Fattura_passiva_rigaIBulk) coll.next());
                                 if (fattura_coll.equalsByPrimaryKey(fattura)) {
+                                    Map<Obbligazione_scadenzarioBulk, Boolean> resUtilizzatori = null;
                                     try {
-                                        Obbligazione_scadenzarioHome obblHome = ((Obbligazione_scadenzarioHome) getHome(userContext, Obbligazione_scadenzarioBulk.class, null, getFetchPolicyName("findForInventario")));
-                                        ObbligazioneBulk obblig = fattura.getObbligazione_scadenziario().getObbligazione();
-                                        ObbligazioneHome obbligHome = (ObbligazioneHome) getHome(userContext, obblig.getClass());
-                                        obblig.setObbligazione_scadenzarioColl(new BulkList(obbligHome.findObbligazione_scadenzarioList(obblig)));
-                                        for (Iterator i = obblig.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); ) {
-                                            Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) i.next();
-                                            if (os.getIm_associato_doc_amm().doubleValue() != 0 && os.equalsByPrimaryKey(fattura.getObbligazione_scadenziario())) {
-                                                os.setObbligazione(obblig);
-                                                os.setObbligazione_scad_voceColl(new BulkList(obblHome.findObbligazione_scad_voceList(userContext, os)));
-                                                fattura.setObbligazione_scadenziario(os);
-                                                obblig.refreshDettagliScadenzarioPerCdrECapitoli();
-                                                for (Iterator lista_cdraggr = obblig.getCdrAggregatoColl().iterator(); lista_cdraggr.hasNext(); ) {
-                                                    Obbligazione_scad_voce_aggregatoBulk cdraggr = (Obbligazione_scad_voce_aggregatoBulk) lista_cdraggr.next();
-                                                    if (cdraggr != null && cdraggr.getImporto() != null && cdraggr.getImporto().doubleValue() != 0) {
-                                                        BigDecimal tot_perc_la = new BigDecimal(0);
-                                                        Iterator listaScad_voce = obblHome.findObbligazione_scad_voceList(userContext, fattura.getObbligazione_scadenziario()).iterator();
-                                                        for (Iterator x = listaScad_voce; x.hasNext(); ) {
-                                                            Obbligazione_scad_voceBulk dett = (Obbligazione_scad_voceBulk) x.next();
-                                                            getHomeCache(userContext).fetchAll(userContext);
-                                                            WorkpackageBulk linea_att = dett.getLinea_attivita();
-                                                            if (linea_att.getCd_centro_responsabilita() == cdraggr.getCodice()) {
-                                                                if (dett.getObbligazione_scadenzario().getIm_scadenza().doubleValue() != 0)
-                                                                    dett.setPrc((dett.getIm_voce().multiply(new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
-                                                                if (dett.getPrc() != null && dett.getPrc().compareTo(new BigDecimal(0)) != 0 && dett.getObbligazione_scadenzario().getIm_associato_doc_amm().doubleValue() != 0) {
-                                                                    it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk new_utilizzatore_la
-                                                                            = new it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(), linea_att.getCd_centro_responsabilita(),
-                                                                            buono.getNr_inventario(),
-                                                                            buono.getPg_inventario(), new Long(buono.getProgressivo().longValue()));
-                                                                    BigDecimal perc_cdr = (cdraggr.getImporto().multiply(new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, 6));
-                                                                    tot_perc_cdr = tot_perc_cdr.add(perc_cdr);
-                                                                    tot_perc_la = tot_perc_la.add(((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6));
-                                                                    if ((tot_perc_cdr.doubleValue() >= 100 && tot_perc_la.doubleValue() >= 100)) {
-                                                                        exit = true;
-                                                                    }
-                                                                    new_utilizzatore_la.setPercentuale_utilizzo_cdr(perc_cdr);
-                                                                    new_utilizzatore_la.setPercentuale_utilizzo_la(((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6));
-                                                                    new_utilizzatore_la.setToBeCreated();
-                                                                    if ((perc_cdr.compareTo(new BigDecimal(100)) <= 0) || (((dett.getPrc()).multiply(new BigDecimal(100))).divide(perc_cdr, 2, 6).compareTo(new BigDecimal(100)) <= 0)) {
-                                                                        Inventario_utilizzatori_laHome Inventario_utilizzatore_laHome = (Inventario_utilizzatori_laHome) getHome(userContext, Inventario_utilizzatori_laBulk.class);
-                                                                        Inventario_utilizzatori_laBulk utilizzatore = (Inventario_utilizzatori_laBulk) Inventario_utilizzatore_laHome.findByPrimaryKey(new Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(), linea_att.getCd_centro_responsabilita(),
-                                                                                buono.getNr_inventario(),
-                                                                                buono.getPg_inventario(), new Long(buono.getProgressivo().longValue())));
-                                                                        if (!new_utilizzatore_la.equalsByPrimaryKey(utilizzatore))
-                                                                            super.insertBulk(userContext, new_utilizzatore_la, true);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                Iterator listaScad_voce = obblHome.findObbligazione_scad_voceList(userContext, fattura.getObbligazione_scadenziario()).iterator();
-                                                getHomeCache(userContext).fetchAll(userContext);
-                                            }
-                                        }
-                                    } catch (IntrospectionException e1) {
-                                        throw new ComponentException(e1);
-                                    } catch (PersistencyException e1) {
-                                        throw new ComponentException(e1);
+                                        resUtilizzatori = inventario_beniComponent.creaUtilizzatori(userContext, fattura.getObbligazione_scadenziario(), buono);
+                                    } catch (RemoteException remoteException) {
+                                        throw new ComponentException(remoteException);
                                     }
+                                    Obbligazione_scadenzarioBulk os = resUtilizzatori.keySet().iterator().next();
+                                    exit = resUtilizzatori.get(os);
+                                    fattura.setObbligazione_scadenziario(os);
                                 }
                             }
                         }
@@ -562,10 +508,10 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         try {
             Buono_carico_scarico_dettHome home = (Buono_carico_scarico_dettHome) getHome(userContext, Buono_carico_scarico_dettBulk.class);
             SQLBuilder sql = home.createSQLBuilder();
-            sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, buonoTemporaneo.getEsercizio().toString());
-            sql.addSQLClause("AND", "PG_INVENTARIO", sql.EQUALS, buonoTemporaneo.getPg_inventario().toString());
-            sql.addSQLClause("AND", "TI_DOCUMENTO", sql.EQUALS, buonoTemporaneo.getTi_documento());
-            sql.addSQLClause("AND", "PG_BUONO_C_S", sql.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
+            sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, buonoTemporaneo.getEsercizio().toString());
+            sql.addSQLClause("AND", "PG_INVENTARIO", SQLBuilder.EQUALS, buonoTemporaneo.getPg_inventario().toString());
+            sql.addSQLClause("AND", "TI_DOCUMENTO", SQLBuilder.EQUALS, buonoTemporaneo.getTi_documento());
+            sql.addSQLClause("AND", "PG_BUONO_C_S", SQLBuilder.EQUALS, buonoTemporaneo.getPg_buono_c_s().toString());
             List dettagli = home.fetchAll(sql);
 
             for (Iterator i = dettagli.iterator(); i.hasNext(); ) {
@@ -776,7 +722,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
         if (fattura_passiva != null) {
             ObbligazioniTable obbligazioniHash = fattura_passiva.getFattura_passiva_obbligazioniHash();
-            
+
             if (obbligazioniHash != null && !obbligazioniHash.isEmpty()) {
                 Obbligazione_scadenzarioHome home = (Obbligazione_scadenzarioHome) getHome(userContext, Obbligazione_scadenzarioBulk.class);
 
@@ -835,7 +781,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     scadenza.setIm_associato_doc_amm(im_ass);
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }
-                
+
             }
         }
     }
@@ -1075,7 +1021,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
             rigaNdD.setObbligazione_scadenziario(obbligazioneSelezionata);
             rigaNdD.setRiga_fattura_associata(rigaAssociata);
-            rigaNdD.setStato_cofi(rigaNdD.STATO_CONTABILIZZATO);
+            rigaNdD.setStato_cofi(Fattura_passiva_rigaBulk.STATO_CONTABILIZZATO);
             rigaNdD.setToBeUpdated();
             ndD.addToFattura_passiva_obbligazioniHash(obbligazioneSelezionata, rigaNdD);
             //ndD.setStato_coan(ndD.NON_PROCESSARE_IN_COAN);
@@ -1199,7 +1145,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             //che sto già modificando.
             rigaNdC.setObbligazione_scadenziario(obbligazioneSelezionata);
             rigaNdC.setRiga_fattura_associata(rigaAssociata);
-            rigaNdC.setStato_cofi(rigaNdC.STATO_CONTABILIZZATO);
+            rigaNdC.setStato_cofi(Fattura_passiva_rigaBulk.STATO_CONTABILIZZATO);
             rigaNdC.setToBeUpdated();
             ndC.addToFattura_passiva_obbligazioniHash(obbligazioneSelezionata, rigaNdC);
             //ndC.setStato_coan(ndC.NON_PROCESSARE_IN_COAN);
@@ -1233,7 +1179,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
             rigaNdC.setAccertamento_scadenzario(scadenza);
             rigaNdC.setRiga_fattura_associata(rigaNdC.getRiga_fattura_origine());
-            rigaNdC.setStato_cofi(rigaNdC.STATO_CONTABILIZZATO);
+            rigaNdC.setStato_cofi(Fattura_passiva_rigaBulk.STATO_CONTABILIZZATO);
             impostaCollegamentoCapitoloPerTrovato(context, rigaNdC);
             rigaNdC.setToBeUpdated();
             ndC.addToAccertamenti_scadenzarioHash(scadenza, rigaNdC);
@@ -1330,7 +1276,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 Fattura_passiva_rigaIBulk key = (Fattura_passiva_rigaIBulk) dett.next();
                 for (Iterator i = ((Vector) dettagliDaStornare.get(key)).iterator(); i.hasNext(); ) {
                     Nota_di_credito_rigaBulk riga = (Nota_di_credito_rigaBulk) i.next();
- 
+
                     if (!quadraturaInDeroga && riga.getFattura_passiva().quadraturaInDeroga())
                         quadraturaInDeroga = true;
 
@@ -1524,7 +1470,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             throws it.cnr.jada.comp.ComponentException {
 
         Vector dettagli = (Vector) notaDiCredito.getAccertamentiHash().get(scadenza);
-        return calcolaTotalePer(dettagli,(notaDiCredito.quadraturaInDeroga()||(notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment())));
+        return calcolaTotalePer(dettagli, (notaDiCredito.quadraturaInDeroga() || (notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment())));
     }
 //^^@@
 
@@ -1636,17 +1582,17 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     for (Iterator it = righeNdD.iterator(); it.hasNext(); ) {
                         Nota_di_debito_rigaBulk rigaNdD = (Nota_di_debito_rigaBulk) it.next();
                         try {
-    						Nota_di_debitoBulk nota = (Nota_di_debitoBulk) notaHome.findByPrimaryKey(
-    						        new Nota_di_creditoBulk(
-    						        		rigaNdD.getCd_cds(),
-    						        		rigaNdD.getCd_unita_organizzativa(),
-    						        		rigaNdD.getEsercizio(),
-    						        		rigaNdD.getPg_fattura_passiva()
-    						        ));
-    						rigaNdD.setFattura_passiva(nota);
-    					} catch (PersistencyException e) {
-    						throw new ComponentException(e);
-    					}
+                            Nota_di_debitoBulk nota = (Nota_di_debitoBulk) notaHome.findByPrimaryKey(
+                                    new Nota_di_creditoBulk(
+                                            rigaNdD.getCd_cds(),
+                                            rigaNdD.getCd_unita_organizzativa(),
+                                            rigaNdD.getEsercizio(),
+                                            rigaNdD.getPg_fattura_passiva()
+                                    ));
+                            rigaNdD.setFattura_passiva(nota);
+                        } catch (PersistencyException e) {
+                            throw new ComponentException(e);
+                        }
                         if (rigaNdD.getFattura_passiva().getFattura_passiva_dettColl() == null ||
                                 rigaNdD.getFattura_passiva().getFattura_passiva_dettColl().isEmpty()) {
                             try {
@@ -1768,17 +1714,17 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     for (Iterator it = righeNdC.iterator(); it.hasNext(); ) {
                         Nota_di_credito_rigaBulk rigaNdC = (Nota_di_credito_rigaBulk) it.next();
                         try {
-    						Nota_di_creditoBulk nota = (Nota_di_creditoBulk) notaHome.findByPrimaryKey(
-    						        new Nota_di_creditoBulk(
-    						        		rigaNdC.getCd_cds(),
-    						        		rigaNdC.getCd_unita_organizzativa(),
-    						        		rigaNdC.getEsercizio(),
-    						        		rigaNdC.getPg_fattura_passiva()
-    						        ));
-    						rigaNdC.setFattura_passiva(nota);
-    					} catch (PersistencyException e) {
-    						throw new ComponentException(e);
-    					}
+                            Nota_di_creditoBulk nota = (Nota_di_creditoBulk) notaHome.findByPrimaryKey(
+                                    new Nota_di_creditoBulk(
+                                            rigaNdC.getCd_cds(),
+                                            rigaNdC.getCd_unita_organizzativa(),
+                                            rigaNdC.getEsercizio(),
+                                            rigaNdC.getPg_fattura_passiva()
+                                    ));
+                            rigaNdC.setFattura_passiva(nota);
+                        } catch (PersistencyException e) {
+                            throw new ComponentException(e);
+                        }
 
                         if (rigaNdC.getFattura_passiva().getFattura_passiva_dettColl() == null ||
                                 rigaNdC.getFattura_passiva().getFattura_passiva_dettColl().isEmpty()) {
@@ -1859,11 +1805,11 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
         Fattura_passiva_rigaIHome home = (Fattura_passiva_rigaIHome) getHome(context, Fattura_passiva_rigaIBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "pg_fattura_passiva", sql.EQUALS, fatturaPassiva.getPg_fattura_passiva());
-        sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
-        sql.addClause("AND", "esercizio", sql.EQUALS, fatturaPassiva.getEsercizio());
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, fatturaPassiva.getCd_uo_origine());
-        sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
+        sql.addClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fatturaPassiva.getPg_fattura_passiva());
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, fatturaPassiva.getCd_cds_origine());
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, fatturaPassiva.getEsercizio());
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, fatturaPassiva.getCd_uo_origine());
+        sql.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
         //Escludo le riportate
         //sql.addSQLClause("AND", "ESERCIZIO_OBBLIGAZIONE", sql.EQUALS, fatturaPassiva.getEsercizio());
 
@@ -1928,23 +1874,25 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
      * La fattura non viene aggiunta alla lista delle fatture congruenti.
      */
 //^^@@
-    public RemoteIterator cercaFatturaPerNdC(UserContext context, Nota_di_creditoBulk notaDiCredito)
+    public RemoteIterator cercaFatturaPerNdC(UserContext context, CompoundFindClause compoundfindclause, Nota_di_creditoBulk notaDiCredito)
             throws ComponentException {
 
         Fattura_passiva_IHome home = (Fattura_passiva_IHome) getHome(context, Fattura_passiva_IBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "cd_terzo", sql.EQUALS, notaDiCredito.getFornitore().getCd_terzo());
-        sql.addClause("AND", "cd_cds", sql.EQUALS, notaDiCredito.getCd_cds_origine());
-        sql.addClause("AND", "esercizio", sql.LESS_EQUALS, notaDiCredito.getEsercizio());
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, notaDiCredito.getCd_uo_origine());
-        sql.addClause("AND", "fl_fattura_compenso", sql.EQUALS, Boolean.FALSE);
-        sql.addClause("AND", "fl_congelata", sql.EQUALS, Boolean.FALSE);
-        sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
+        sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, notaDiCredito.getFornitore().getCd_terzo());
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, notaDiCredito.getCd_cds_origine());
+        sql.addClause("AND", "esercizio", SQLBuilder.LESS_EQUALS, notaDiCredito.getEsercizio());
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, notaDiCredito.getCd_uo_origine());
+        sql.addClause("AND", "fl_fattura_compenso", SQLBuilder.EQUALS, Boolean.FALSE);
+        sql.addClause("AND", "fl_congelata", SQLBuilder.EQUALS, Boolean.FALSE);
+        sql.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
         // RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
         //sql.addClause("AND", "pg_lettera", sql.ISNULL, null);
-        sql.addClause("AND", "ti_istituz_commerc", sql.EQUALS, notaDiCredito.getTi_istituz_commerc());
+        sql.addClause("AND", "ti_istituz_commerc", SQLBuilder.EQUALS, notaDiCredito.getTi_istituz_commerc());
         sql.addOrderBy("ESERCIZIO DESC");
-
+        Optional.ofNullable(compoundfindclause).ifPresent(compoundFindClause -> {
+            sql.addClause(compoundFindClause);
+        });
         try {
             return iterator(
                     context,
@@ -1995,13 +1943,13 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
         Fattura_passiva_IHome home = (Fattura_passiva_IHome) getHome(context, Fattura_passiva_IBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "cd_terzo", sql.EQUALS, notaDiDebito.getFornitore().getCd_terzo());
-        sql.addClause("AND", "cd_cds", sql.EQUALS, notaDiDebito.getCd_cds_origine());
-        sql.addClause("AND", "esercizio", sql.LESS_EQUALS, notaDiDebito.getEsercizio());
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, notaDiDebito.getCd_uo_origine());
-        sql.addClause("AND", "fl_fattura_compenso", sql.EQUALS, Boolean.FALSE);
-        sql.addClause("AND", "fl_congelata", sql.EQUALS, Boolean.FALSE);
-        sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
+        sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, notaDiDebito.getFornitore().getCd_terzo());
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, notaDiDebito.getCd_cds_origine());
+        sql.addClause("AND", "esercizio", SQLBuilder.LESS_EQUALS, notaDiDebito.getEsercizio());
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, notaDiDebito.getCd_uo_origine());
+        sql.addClause("AND", "fl_fattura_compenso", SQLBuilder.EQUALS, Boolean.FALSE);
+        sql.addClause("AND", "fl_congelata", SQLBuilder.EQUALS, Boolean.FALSE);
+        sql.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, Fattura_passiva_IBulk.STATO_ANNULLATO);
         // RP 23/03/2010  commentato per permettere la generazione delle nc/nd di fatture con lettera di pagamento
         //sql.addClause("AND", "pg_lettera", sql.ISNULL, null);
         sql.addOrderBy("ESERCIZIO DESC");
@@ -2099,27 +2047,27 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         sql.addSQLJoin("OBBLIGAZIONE.TI_GESTIONE", "ELEMENTO_VOCE.TI_GESTIONE");
         sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO", "ELEMENTO_VOCE.ESERCIZIO");
 
-        sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
-        sql.addSQLClause("AND", "OBBLIGAZIONE.STATO_OBBLIGAZIONE", sql.EQUALS, "D");
-        sql.addSQLClause("AND", "OBBLIGAZIONE.RIPORTATO", sql.EQUALS, "N");
-        sql.addSQLClause("AND", "OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
-        sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
+        sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+        sql.addSQLClause("AND", "OBBLIGAZIONE.STATO_OBBLIGAZIONE", SQLBuilder.EQUALS, "D");
+        sql.addSQLClause("AND", "OBBLIGAZIONE.RIPORTATO", SQLBuilder.EQUALS, "N");
+        sql.addSQLClause("AND", "OBBLIGAZIONE.DT_CANCELLAZIONE", SQLBuilder.ISNULL, null);
+        sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", SQLBuilder.NOT_EQUALS, new java.math.BigDecimal(0));
         sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
         sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP), java.sql.Types.DECIMAL, 2);
         sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
         sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP), java.sql.Types.DECIMAL, 2);
-        sql.addSQLClause("AND", "OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA", sql.EQUALS, filtro.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, filtro.getCd_unita_organizzativa());
 
         if (filtro.getElemento_voce() != null) {
-            sql.addSQLClause("AND", "OBBLIGAZIONE.CD_ELEMENTO_VOCE", sql.STARTSWITH, filtro.getElemento_voce().getCd_elemento_voce());
-            sql.addSQLClause("AND", "OBBLIGAZIONE.TI_APPARTENENZA", sql.EQUALS, filtro.getElemento_voce().getTi_appartenenza());
-            sql.addSQLClause("AND", "OBBLIGAZIONE.TI_GESTIONE", sql.EQUALS, filtro.getElemento_voce().getTi_gestione());
-            sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, filtro.getElemento_voce().getEsercizio());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.CD_ELEMENTO_VOCE", SQLBuilder.STARTSWITH, filtro.getElemento_voce().getCd_elemento_voce());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.TI_APPARTENENZA", SQLBuilder.EQUALS, filtro.getElemento_voce().getTi_appartenenza());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.TI_GESTIONE", SQLBuilder.EQUALS, filtro.getElemento_voce().getTi_gestione());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO", SQLBuilder.EQUALS, filtro.getElemento_voce().getEsercizio());
         }
 
         if (filtro.hasDocumentoCompetenzaCOGEInAnnoPrecedente() ||
                 !filtro.hasDocumentoCompetenzaCOGESoloInAnnoCorrente())
-            sql.addSQLClause("AND", "OBBLIGAZIONE.FL_PGIRO", sql.EQUALS, "N");
+            sql.addSQLClause("AND", "OBBLIGAZIONE.FL_PGIRO", SQLBuilder.EQUALS, "N");
 
         if (!filtro.getFl_fornitore().booleanValue()) {
             sql.addTableToHeader("TERZO");
@@ -2130,31 +2078,31 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             sql.addParameter(filtro.getFornitore().getCd_terzo(), java.sql.Types.INTEGER, 0);
             sql.addParameter(AnagraficoBulk.DIVERSI, java.sql.Types.VARCHAR, 0);
         } else {
-            sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TERZO", sql.EQUALS, filtro.getFornitore().getCd_terzo());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TERZO", SQLBuilder.EQUALS, filtro.getFornitore().getCd_terzo());
         }
 
         if (filtro.getFl_data_scadenziario().booleanValue() && filtro.getData_scadenziario() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA", sql.EQUALS, filtro.getData_scadenziario());
+            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA", SQLBuilder.EQUALS, filtro.getData_scadenziario());
         if (filtro.getFl_importo().booleanValue() && filtro.getIm_importo() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.GREATER_EQUALS, filtro.getIm_importo());
+            sql.addSQLClause("AND", "OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", SQLBuilder.GREATER_EQUALS, filtro.getIm_importo());
 
         //filtro su Tipo obbligazione
         if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getTipo_obbligazione() != null) {
             if (ObbligazioneBulk.TIPO_COMPETENZA.equals(filtro.getTipo_obbligazione()))
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB);
             else if (ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(filtro.getTipo_obbligazione()))
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES);
             else if (ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(filtro.getTipo_obbligazione()))
-                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
+                sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
         }
 
         //filtro su Anno Residuo obbligazione
         if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getEsercizio_ori_obbligazione() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO_ORIGINALE", sql.EQUALS, filtro.getEsercizio_ori_obbligazione());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.ESERCIZIO_ORIGINALE", SQLBuilder.EQUALS, filtro.getEsercizio_ori_obbligazione());
 
         //filtro su Numero obbligazione
         if (filtro.getFl_nr_obbligazione().booleanValue() && filtro.getNr_obbligazione() != null)
-            sql.addSQLClause("AND", "OBBLIGAZIONE.PG_OBBLIGAZIONE", sql.EQUALS, filtro.getNr_obbligazione());
+            sql.addSQLClause("AND", "OBBLIGAZIONE.PG_OBBLIGAZIONE", SQLBuilder.EQUALS, filtro.getNr_obbligazione());
 
         return iterator(
                 context,
@@ -2231,21 +2179,21 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 fattura_passiva.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
                 fattura_passiva.setRagione_sociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
                 fattura_passiva.setCodice_fiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
-                if (fattura_passiva.getPartita_iva()!= null){
+                if (fattura_passiva.getPartita_iva() != null) {
                     it.cnr.contab.anagraf00.core.bulk.AnagraficoHome home = (it.cnr.contab.anagraf00.core.bulk.AnagraficoHome) getHome(uc, AnagraficoBulk.class);
                     Collection coll = home.findGruppiIvaAssociati(fornitoreTrovato.getAnagrafico());
                     Boolean trovato = false;
-                    if (coll != null && !coll.isEmpty()){
+                    if (coll != null && !coll.isEmpty()) {
                         for (java.util.Iterator i = coll.iterator(); i.hasNext(); ) {
                             AssGruppoIvaAnagBulk assGruppoIvaAnagBulk = (AssGruppoIvaAnagBulk) i.next();
-                            AnagraficoBulk anagraficoBulk = (AnagraficoBulk)home.findByPrimaryKey(assGruppoIvaAnagBulk.getAnagraficoGruppoIva());
+                            AnagraficoBulk anagraficoBulk = (AnagraficoBulk) home.findByPrimaryKey(assGruppoIvaAnagBulk.getAnagraficoGruppoIva());
                             if (anagraficoBulk != null && anagraficoBulk.isGruppoIVA() && fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDtIniValGruppoIva()) > 0 &&
-                                    fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDt_canc()) < 0 && anagraficoBulk.getPartita_iva().compareTo(fattura_passiva.getPartita_iva()) == 0){
+                                    fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDt_canc()) < 0 && anagraficoBulk.getPartita_iva().compareTo(fattura_passiva.getPartita_iva()) == 0) {
                                 trovato = true;
                             }
                         }
                     }
-                    if (!trovato){
+                    if (!trovato) {
                         fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
                     }
                 } else {
@@ -2366,7 +2314,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 
                     rigaSelected.setObbligazione_scadenziario(obbligazioneSelezionata);
                     impostaCollegamentoCapitoloPerTrovato(context, rigaSelected);
-                    rigaSelected.setStato_cofi(rigaSelected.STATO_CONTABILIZZATO);
+                    rigaSelected.setStato_cofi(Fattura_passiva_rigaBulk.STATO_CONTABILIZZATO);
                     rigaSelected.setToBeUpdated();
                     fatturaPassiva.addToFattura_passiva_obbligazioniHash(obbligazioneSelezionata, rigaSelected);
                 }
@@ -2386,40 +2334,40 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 throw handleException(fatturaPassiva, t);
             }
         }
-		impostaCig(context, fatturaPassiva);
+        impostaCig(context, fatturaPassiva);
         return fatturaPassiva;
     }
 
-	public void impostaCig(UserContext context, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
-		PrimaryKeyHashtable obbligazioneTable = fatturaPassiva.getFattura_passiva_obbligazioniHash();
-		LinkedList<CigBulk> cigList = new LinkedList<>(); 
-		if (!obbligazioneTable.isEmpty()){
-			Enumeration e = obbligazioneTable.keys();
-		    while (e.hasMoreElements()) {
-		      Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) e.nextElement();
-		      ObbligazioneBulk obbligazione = new ObbligazioneBulk(scad.getCd_cds(), scad.getEsercizio(), scad.getEsercizio_originale(), scad.getPg_obbligazione());
-		      try {
-				obbligazione = (ObbligazioneBulk)getHome(context, ObbligazioneBulk.class).findByPrimaryKey(obbligazione);
-			} catch (PersistencyException e1) {
-				throw new ComponentException(e1);
-			}
-		      if (obbligazione != null && obbligazione.getContratto() != null){
-		    	  ContrattoBulk contratto = new ContrattoBulk(obbligazione.getContratto().getEsercizio(), obbligazione.getContratto().getStato(), obbligazione.getContratto().getPg_contratto());
-		    	  try {
-		    		  contratto = (ContrattoBulk)getHome(context, ContrattoBulk.class).findByPrimaryKey(contratto);
-		    	  } catch (PersistencyException e1) {
-		    		  throw new ComponentException(e1);
-		    	  }
-		    	  if (obbligazione.getContratto().getCig() != null && !cigList.contains(obbligazione.getContratto().getCig())){
-			    	  if (cigList.isEmpty()){
-				    	  cigList.add(obbligazione.getContratto().getCig());
-			    	  } else {
-				    	  cigList.add(obbligazione.getContratto().getCig());
-				    	  break;
-			    	  }
-		    	  }
-		      }
-		    } 
+    public void impostaCig(UserContext context, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
+        PrimaryKeyHashtable obbligazioneTable = fatturaPassiva.getFattura_passiva_obbligazioniHash();
+        LinkedList<CigBulk> cigList = new LinkedList<>();
+        if (!obbligazioneTable.isEmpty()) {
+            Enumeration e = obbligazioneTable.keys();
+            while (e.hasMoreElements()) {
+                Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) e.nextElement();
+                ObbligazioneBulk obbligazione = new ObbligazioneBulk(scad.getCd_cds(), scad.getEsercizio(), scad.getEsercizio_originale(), scad.getPg_obbligazione());
+                try {
+                    obbligazione = (ObbligazioneBulk) getHome(context, ObbligazioneBulk.class).findByPrimaryKey(obbligazione);
+                } catch (PersistencyException e1) {
+                    throw new ComponentException(e1);
+                }
+                if (obbligazione != null && obbligazione.getContratto() != null) {
+                    ContrattoBulk contratto = new ContrattoBulk(obbligazione.getContratto().getEsercizio(), obbligazione.getContratto().getStato(), obbligazione.getContratto().getPg_contratto());
+                    try {
+                        contratto = (ContrattoBulk) getHome(context, ContrattoBulk.class).findByPrimaryKey(contratto);
+                    } catch (PersistencyException e1) {
+                        throw new ComponentException(e1);
+                    }
+                    if (obbligazione.getContratto().getCig() != null && !cigList.contains(obbligazione.getContratto().getCig())) {
+                        if (cigList.isEmpty()) {
+                            cigList.add(obbligazione.getContratto().getCig());
+                        } else {
+                            cigList.add(obbligazione.getContratto().getCig());
+                            break;
+                        }
+                    }
+                }
+            }
 //		    if (cigList.size() == 1){
 //		    	CigBulk cigImpegno = cigList.get(0);
 //		    	if (fatturaPassiva.getCig() != null && !fatturaPassiva.getCig().equalsByPrimaryKey(cigImpegno)){
@@ -2435,8 +2383,8 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
 //		    } else {
 //	    		fatturaPassiva.setCig(null);
 //		    }
-		}
-	}
+        }
+    }
 
     private void validaScadenze(Fattura_passivaBulk doc, Obbligazione_scadenzarioBulk newScad) throws ComponentException {
         Iterator it;
@@ -2504,15 +2452,15 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     Iterator righeCollegate = ((List) obbligazioniHash.get(scadenza)).iterator();
                     if (righeCollegate != null && righeCollegate.hasNext()) {
                         Fattura_passiva_rigaBulk primaRiga = (Fattura_passiva_rigaBulk) righeCollegate.next();
-                        java.util.Calendar dtCompetenzaDa = fatturaPassiva.getDateCalendar(primaRiga.getDt_da_competenza_coge());
-                        java.util.Calendar dtCompetenzaA = fatturaPassiva.getDateCalendar(primaRiga.getDt_a_competenza_coge());
+                        java.util.Calendar dtCompetenzaDa = Fattura_passivaBulk.getDateCalendar(primaRiga.getDt_da_competenza_coge());
+                        java.util.Calendar dtCompetenzaA = Fattura_passivaBulk.getDateCalendar(primaRiga.getDt_a_competenza_coge());
                         // il controllo se reputato necessario potrebbe essere cambiato con le righe commentate
                         //int annoDa =dtCompetenzaDa.get(java.util.Calendar.YEAR);
                         //int annoA =dtCompetenzaA.get(java.util.Calendar.YEAR);
                         while (righeCollegate.hasNext()) {
                             Fattura_passiva_rigaBulk rigaSuccessiva = (Fattura_passiva_rigaBulk) righeCollegate.next();
-                            java.util.Calendar dtCompetenzaDaSuccessiva = fatturaPassiva.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
-                            java.util.Calendar dtCompetenzaASuccessiva = fatturaPassiva.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
+                            java.util.Calendar dtCompetenzaDaSuccessiva = Fattura_passivaBulk.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
+                            java.util.Calendar dtCompetenzaASuccessiva = Fattura_passivaBulk.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
 //						if(annoDa!=(dtCompetenzaDaSuccessiva.get(java.util.Calendar.YEAR)) ||
 //							annoA!=(dtCompetenzaASuccessiva.get(java.util.Calendar.YEAR)))
 //								throw new ApplicationException("I dettagli del documento collegati alla scadenza \"" + scadenza.getDs_scadenza() + "\"\nnon hanno lo stesso anno di competenza! Impossibile salvare.");
@@ -3038,11 +2986,11 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             if (dettaglio != null && dettaglio.isToBeDeleted()) {
                 Ass_inv_bene_fatturaHome asshome = (Ass_inv_bene_fatturaHome) getHome(userContext, Ass_inv_bene_fatturaBulk.class);
                 SQLBuilder sql = asshome.createSQLBuilder();
-                sql.addSQLClause("AND", "CD_CDS_FATT_PASS", sql.EQUALS, dettaglio.getCd_cds());
-                sql.addSQLClause("AND", "ESERCIZIO_FATT_PASS", sql.EQUALS, dettaglio.getEsercizio().intValue());
-                sql.addSQLClause("AND", "CD_UO_FATT_PASS", sql.EQUALS, dettaglio.getCd_unita_organizzativa());
-                sql.addSQLClause("AND", "PG_FATTURA_PASSIVA", sql.EQUALS, dettaglio.getPg_fattura_passiva().longValue());
-                sql.addSQLClause("AND", "PROGRESSIVO_RIGA_FATT_PASS", sql.EQUALS, dettaglio.getProgressivo_riga().longValue());
+                sql.addSQLClause("AND", "CD_CDS_FATT_PASS", SQLBuilder.EQUALS, dettaglio.getCd_cds());
+                sql.addSQLClause("AND", "ESERCIZIO_FATT_PASS", SQLBuilder.EQUALS, dettaglio.getEsercizio().intValue());
+                sql.addSQLClause("AND", "CD_UO_FATT_PASS", SQLBuilder.EQUALS, dettaglio.getCd_unita_organizzativa());
+                sql.addSQLClause("AND", "PG_FATTURA_PASSIVA", SQLBuilder.EQUALS, dettaglio.getPg_fattura_passiva().longValue());
+                sql.addSQLClause("AND", "PROGRESSIVO_RIGA_FATT_PASS", SQLBuilder.EQUALS, dettaglio.getProgressivo_riga().longValue());
                 List associazioni = asshome.fetchAll(sql);
                 for (Iterator i = associazioni.iterator(); i.hasNext(); ) {
                     Ass_inv_bene_fatturaBulk associazione = (Ass_inv_bene_fatturaBulk) i.next();
@@ -3107,10 +3055,10 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 }
 
                 fattura_passiva.setAnnullato(dataAnnullamento);
-                if (fattura_passiva.REGISTRATO_IN_COGE.equalsIgnoreCase(fattura_passiva.getStato_coge()))
-                    fattura_passiva.setStato_coge(fattura_passiva.DA_RICONTABILIZZARE_IN_COGE);
-                if (fattura_passiva.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(fattura_passiva.getStato_coan()))
-                    fattura_passiva.setStato_coan(fattura_passiva.DA_RICONTABILIZZARE_IN_COAN);
+                if (Fattura_passivaBulk.REGISTRATO_IN_COGE.equalsIgnoreCase(fattura_passiva.getStato_coge()))
+                    fattura_passiva.setStato_coge(Fattura_passivaBulk.DA_RICONTABILIZZARE_IN_COGE);
+                if (Fattura_passivaBulk.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(fattura_passiva.getStato_coan()))
+                    fattura_passiva.setStato_coan(Fattura_passivaBulk.DA_RICONTABILIZZARE_IN_COAN);
 
                 try {
                     if (fattura_passiva.getAutofattura() != null) {
@@ -3141,11 +3089,11 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                         liberaSospeso(userContext, lettera.getSospeso());
                 }
                 if (fattura_passiva instanceof Nota_di_creditoBulk &&
-                        ((Nota_di_creditoBulk) fattura_passiva).getAccertamentiHash() != null)
+                        fattura_passiva.getAccertamentiHash() != null)
                     aggiornaAccertamentiSuCancellazione(
                             userContext,
                             (Nota_di_creditoBulk) fattura_passiva,
-                            ((Nota_di_creditoBulk) fattura_passiva).getAccertamentiHash().keys(),
+                            fattura_passiva.getAccertamentiHash().keys(),
                             null,
                             null);
 
@@ -3228,11 +3176,11 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                         });
             }
             if (fattura_passiva instanceof Nota_di_creditoBulk &&
-                    ((Nota_di_creditoBulk) fattura_passiva).getAccertamentiHash() != null)
+                    fattura_passiva.getAccertamentiHash() != null)
                 aggiornaAccertamentiSuCancellazione(
                         userContext,
                         (Nota_di_creditoBulk) fattura_passiva,
-                        ((Nota_di_creditoBulk) fattura_passiva).getAccertamentiHash().keys(),
+                        fattura_passiva.getAccertamentiHash().keys(),
                         null,
                         null);
         } catch (Throwable e) {
@@ -3305,7 +3253,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
     private void eliminaFattura(UserContext aUC, Fattura_passivaBulk fatturaPassiva)
             throws ComponentException {
 
-        if (fatturaPassiva.STATO_PARZIALE.equalsIgnoreCase(fatturaPassiva.getStato_cofi()))
+        if (Fattura_passivaBulk.STATO_PARZIALE.equalsIgnoreCase(fatturaPassiva.getStato_cofi()))
             throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile cancellare una " + fatturaPassiva.getDescrizioneEntita() + " in stato parziale.");
 
         if (fatturaPassiva.isPagata())
@@ -3542,10 +3490,10 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         else home = getHome(aUC, Fattura_passiva_rigaIBulk.class);
 
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "pg_fattura_passiva", sql.EQUALS, fatturaPassiva.getPg_fattura_passiva());
-        sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
-        sql.addClause("AND", "esercizio", sql.EQUALS, fatturaPassiva.getEsercizio());
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, fatturaPassiva.getCd_unita_organizzativa());
+        sql.addClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fatturaPassiva.getPg_fattura_passiva());
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, fatturaPassiva.getCd_cds());
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, fatturaPassiva.getEsercizio());
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, fatturaPassiva.getCd_unita_organizzativa());
         return home.fetchAll(sql);
     }
 
@@ -3567,10 +3515,10 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         it.cnr.jada.bulk.BulkHome home = getHome(aUC, Fattura_passiva_intraBulk.class, null, "NoFatturaPassivaBulk");
 
         it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "pg_fattura_passiva", sql.EQUALS, fatturaPassiva.getPg_fattura_passiva());
-        sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
-        sql.addClause("AND", "esercizio", sql.EQUALS, fatturaPassiva.getEsercizio());
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, fatturaPassiva.getCd_unita_organizzativa());
+        sql.addClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fatturaPassiva.getPg_fattura_passiva());
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, fatturaPassiva.getCd_cds());
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, fatturaPassiva.getEsercizio());
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, fatturaPassiva.getCd_unita_organizzativa());
         return home.fetchAll(sql);
     }
 //^^@@
@@ -3788,7 +3736,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         Vector options = new Vector();
         Vector options_all = new Vector();
         Vector options_bs = new Vector();
- 
+
         if (fatturaPassiva.getFl_intra_ue() != null && fatturaPassiva.getFl_intra_ue().booleanValue()) {
             options.add(new String[][]{{"TIPO_SEZIONALE.FL_INTRA_UE", "Y", "AND"}});
         } else if (fatturaPassiva.getFl_extra_ue() != null && fatturaPassiva.getFl_extra_ue().booleanValue()) {
@@ -3825,24 +3773,24 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         else if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
             options.add(new String[][]{{"TIPO_SEZIONALE.FL_SPLIT_PAYMENT", "Y", "AND"}});
 
-        if ((fatturaPassiva.isCommerciale()) && 
-            	(fatturaPassiva.getFl_split_payment()==null ||
-            	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
-            	fatturaPassiva.getData_protocollo()!=null && 
-            	!fatturaPassiva.isEstera() &&
+        if ((fatturaPassiva.isCommerciale()) &&
+                (fatturaPassiva.getFl_split_payment() == null ||
+                        (fatturaPassiva.getFl_split_payment() != null && !fatturaPassiva.getFl_split_payment().booleanValue())) &&
+                fatturaPassiva.getData_protocollo() != null &&
+                !fatturaPassiva.isEstera() &&
                 !fatturaPassiva.isSanMarinoSenzaIVA() &&
-                !fatturaPassiva.isSanMarinoConIVA()){
-           		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
-           		if(fatturaPassiva.getDt_registrazione() != null && fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && 
-           		  (fatturaPassiva.getDt_registrazione().before(conf.getDt02())|| fatturaPassiva.getDt_registrazione().equals(conf.getDt02())))
-           			options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
-           		else
-                	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
-        }else{
-        	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
+                !fatturaPassiva.isSanMarinoConIVA()) {
+            Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
+            if (fatturaPassiva.getDt_registrazione() != null && fatturaPassiva.getDt_registrazione().after(conf.getDt01()) &&
+                    (fatturaPassiva.getDt_registrazione().before(conf.getDt02()) || fatturaPassiva.getDt_registrazione().equals(conf.getDt02())))
+                options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
+            else
+                options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
+        } else {
+            options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
         }
-            			
-        
+
+
         options.add(new String[][]{
                 {"TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND"},
                 {"TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "OR"}
@@ -3900,7 +3848,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     fatturaPassiva.getEsercizio(),
                     fatturaPassiva.getCd_uo_origine(),
                     (fatturaPassiva.isPromiscua()) ?
-                            fatturaPassiva.COMMERCIALE :
+                            TipoIVA.COMMERCIALE.value() :
                             fatturaPassiva.getTi_istituz_commerc(),
                     it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.ACQUISTI,
                     fatturaPassiva.getTi_fattura(),
@@ -3976,7 +3924,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         try {
             String cd_uo = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
             SQLBuilder sql = getHomeCache(userContext).getHome(TerzoBulk.class).createSQLBuilder();
-            sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, cd_uo);
+            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, cd_uo);
             java.util.List result = getHomeCache(userContext).getHome(TerzoBulk.class).fetchAll(sql);
             if (result.size() == 0)
                 throw new ApplicationException("Non e' stato definito in anagrafico il terzo per l'unità organizzativa " + cd_uo);
@@ -4006,9 +3954,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         try {
             Unita_organizzativa_enteHome uo_home = (Unita_organizzativa_enteHome) getHomeCache(userContext).getHome(it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk.class);
             it.cnr.jada.persistency.sql.SQLBuilder sql = uo_home.createSQLBuilder();
-            sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.FL_UO_CDS", sql.EQUALS, "Y");
-            sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.ESERCIZIO_INIZIO", sql.LESS_EQUALS, esercizio);
-            sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.ESERCIZIO_FINE", sql.GREATER_EQUALS, esercizio);
+            sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.FL_UO_CDS", SQLBuilder.EQUALS, "Y");
+            sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.ESERCIZIO_INIZIO", SQLBuilder.LESS_EQUALS, esercizio);
+            sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.ESERCIZIO_FINE", SQLBuilder.GREATER_EQUALS, esercizio);
             java.util.List uo = uo_home.fetchAll(sql);
             if (uo.isEmpty()) return null;
             return (it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk) uo.get(0);
@@ -4273,48 +4221,48 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fattura instanceof Nota_di_creditoBulk) {
             Nota_di_creditoBulk fattura_passiva = (Nota_di_creditoBulk) fattura;
             // nella view vengono valorizzati gli stessi campi
-            sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, fattura_passiva.getCd_cds());
-            sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, fattura_passiva.getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura_passiva.getEsercizio());
-            sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura_passiva.getPg_fattura_passiva());
-            sql.addSQLClause("AND", "cd_tipo_documento_amm", sql.ISNULL, null);
+            sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_cds());
+            sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getEsercizio());
+            sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura_passiva.getPg_fattura_passiva());
+            sql.addSQLClause("AND", "cd_tipo_documento_amm", SQLBuilder.ISNULL, null);
         } else if (fattura instanceof Nota_di_credito_rigaBulk) {
             Nota_di_credito_rigaBulk fattura_passiva = (Nota_di_credito_rigaBulk) fattura;
-            sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, fattura_passiva.getCd_cds());
-            sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, fattura_passiva.getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura_passiva.getEsercizio());
-            sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura_passiva.getPg_fattura_passiva());
-            sql.addSQLClause("AND", "progressivo_riga_fatt_pass", sql.EQUALS, fattura_passiva.getProgressivo_riga());
-            sql.addSQLClause("AND", "cd_tipo_documento_amm", sql.ISNULL, null);
+            sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_cds());
+            sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getEsercizio());
+            sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura_passiva.getPg_fattura_passiva());
+            sql.addSQLClause("AND", "progressivo_riga_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getProgressivo_riga());
+            sql.addSQLClause("AND", "cd_tipo_documento_amm", SQLBuilder.ISNULL, null);
         } else if (fattura instanceof Nota_di_debitoBulk) {
             Nota_di_debitoBulk fattura_passiva = (Nota_di_debitoBulk) fattura;
             // nella view vengono valorizzati gli stessi campi
-            sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, fattura_passiva.getCd_cds());
-            sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, fattura_passiva.getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura_passiva.getEsercizio());
-            sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura_passiva.getPg_fattura_passiva());
-            sql.addSQLClause("AND", "cd_tipo_documento_amm", sql.ISNULL, null);
+            sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_cds());
+            sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getEsercizio());
+            sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura_passiva.getPg_fattura_passiva());
+            sql.addSQLClause("AND", "cd_tipo_documento_amm", SQLBuilder.ISNULL, null);
         } else if (fattura instanceof Nota_di_debito_rigaBulk) {
             Nota_di_debito_rigaBulk fattura_passiva = (Nota_di_debito_rigaBulk) fattura;
-            sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, fattura_passiva.getCd_cds());
-            sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, fattura_passiva.getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura_passiva.getEsercizio());
-            sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura_passiva.getPg_fattura_passiva());
-            sql.addSQLClause("AND", "progressivo_riga_fatt_pass", sql.EQUALS, fattura_passiva.getProgressivo_riga());
-            sql.addSQLClause("AND", "cd_tipo_documento_amm", sql.ISNULL, null);
+            sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_cds());
+            sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getEsercizio());
+            sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura_passiva.getPg_fattura_passiva());
+            sql.addSQLClause("AND", "progressivo_riga_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getProgressivo_riga());
+            sql.addSQLClause("AND", "cd_tipo_documento_amm", SQLBuilder.ISNULL, null);
         } else {
-            sql.addClause("AND", "cd_cds_fatt_pass", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
-            sql.addClause("AND", "cd_uo_fatt_pass", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_unita_organizzativa());
-            sql.addSQLClause("AND", "cd_tipo_documento_amm", sql.ISNULL, null);
+            sql.addClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
+            sql.addClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_unita_organizzativa());
+            sql.addSQLClause("AND", "cd_tipo_documento_amm", SQLBuilder.ISNULL, null);
             if (fattura instanceof Fattura_passivaBulk) {
                 Fattura_passivaBulk fattura_passiva = (Fattura_passivaBulk) fattura;
-                sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura_passiva.getEsercizio());
-                sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura_passiva.getPg_fattura_passiva());
+                sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getEsercizio());
+                sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura_passiva.getPg_fattura_passiva());
             } else {
                 Fattura_passiva_rigaBulk fattura_passiva = (Fattura_passiva_rigaBulk) fattura;
-                sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura_passiva.getEsercizio());
-                sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura_passiva.getPg_fattura_passiva());
-                sql.addSQLClause("AND", "progressivo_riga_fatt_pass", sql.EQUALS, fattura_passiva.getProgressivo_riga());
+                sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getEsercizio());
+                sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura_passiva.getPg_fattura_passiva());
+                sql.addSQLClause("AND", "progressivo_riga_fatt_pass", SQLBuilder.EQUALS, fattura_passiva.getProgressivo_riga());
             }
         }
         try {
@@ -4353,7 +4301,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                             fattura.getEsercizio()))) //equivale a quello di scrivania!!
                 throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire una fattura passiva per un esercizio non aperto!");
             java.sql.Timestamp date = fHome.getServerDate();
-            int annoSolare = fattura.getDateCalendar(date).get(java.util.Calendar.YEAR);
+            int annoSolare = Fattura_passivaBulk.getDateCalendar(date).get(java.util.Calendar.YEAR);
             if (annoSolare != it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
                 throw new it.cnr.jada.comp.ApplicationException("Non è possibile inserire " + fattura.getDescrizioneEntitaPlurale() + " in esercizi non corrispondenti all'anno solare!");
             fattura.setDt_registrazione(date);
@@ -4363,11 +4311,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
         fattura.resetDefferredSaldi();
 
-        fattura.setStato_cofi(fattura.STATO_INIZIALE);
-        fattura.setStato_coge(fattura.NON_REGISTRATO_IN_COGE);
-        fattura.setStato_coan(fattura.NON_CONTABILIZZATO_IN_COAN);
-        fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
-        fattura.setTi_associato_manrev(fattura.NON_ASSOCIATO_A_MANDATO);
+        fattura.setStato_cofi(Fattura_passivaBulk.STATO_INIZIALE);
+        fattura.setStato_coge(Fattura_passivaBulk.NON_REGISTRATO_IN_COGE);
+        fattura.setStato_coan(Fattura_passivaBulk.NON_CONTABILIZZATO_IN_COAN);
+        fattura.setStato_pagamento_fondo_eco(Fattura_passivaBulk.NO_FONDO_ECO);
+        fattura.setTi_associato_manrev(Fattura_passivaBulk.NON_ASSOCIATO_A_MANDATO);
         fattura.setStato_liquidazione(fattura.SOSP);
         fattura.setCausale(fattura.ATTLIQ);
         fattura.setIm_totale_fattura(new java.math.BigDecimal(0));
@@ -4388,7 +4336,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         //Come da richiesta 101 gestione errori CNR imposto come default
         //istituzionale (09/09/2002 RP)
         //Originale: fattura.setTi_istituz_commerc(fattura.COMMERCIALE);
-        fattura.setTi_istituz_commerc(fattura.ISTITUZIONALE);
+        fattura.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 
         fattura = setChangeDataToEur(userContext, fattura);
 
@@ -4436,7 +4384,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Viene generata una CRUDException con la descrizione dell'errore.
      */
 //^^@@
-    public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk) throws ComponentException {
+    public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws ComponentException {
 
         if (bulk == null)
             throw new ComponentException("Attenzione: non esiste alcuna fattura corrispondente ai criteri di ricerca!");
@@ -4446,44 +4394,44 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fattura_passiva.getEsercizio() == null)
             throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non è valorizzato! Impossibile proseguire.");
 
-        int esScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue();
+        int esScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue();
         if (fattura_passiva.getEsercizio().intValue() > esScrivania)
             throw new it.cnr.jada.comp.ApplicationException("Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
 
-        fattura_passiva = (Fattura_passivaBulk) super.inizializzaBulkPerModifica(aUC, fattura_passiva);
+        fattura_passiva = (Fattura_passivaBulk) super.inizializzaBulkPerModifica(userContext, fattura_passiva);
         try {
-            lockBulk(aUC, fattura_passiva);
+            lockBulk(userContext, fattura_passiva);
         } catch (Throwable t) {
             throw handleException(t);
         }
-        setDt_termine_creazione_docamm(aUC, fattura_passiva);
-        fattura_passiva.setHa_beniColl(ha_beniColl(aUC, fattura_passiva));
+        setDt_termine_creazione_docamm(userContext, fattura_passiva);
+        fattura_passiva.setHa_beniColl(ha_beniColl(userContext, fattura_passiva));
         fattura_passiva.setChangeOperationOn(fattura_passiva.getValuta());
         fattura_passiva.resetDefferredSaldi();
 
         try {
-            BulkList<Fattura_passiva_rigaBulk> dettagli = new BulkList(findDettagli(aUC, fattura_passiva));
+            BulkList<Fattura_passiva_rigaBulk> dettagli = new BulkList(findDettagli(userContext, fattura_passiva));
             fattura_passiva.setFattura_passiva_dettColl(dettagli);
             fattura_passiva.setFatturaRigaOrdiniHash(new FatturaRigaOrdiniTable(
                     dettagli.stream().collect(Collectors.toMap(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk,
-                        fattura_passiva_rigaBulk -> {
-                            try {
+                            fattura_passiva_rigaBulk -> {
+                                try {
                                     BulkList bulkList = new BulkList(
-                                        findFatturaOrdini(aUC, fattura_passiva_rigaBulk)
-                                                .stream()
-                                                .peek(fatturaOrdineBulk -> fatturaOrdineBulk.setFatturaPassivaRiga(fattura_passiva_rigaBulk))
-                                                .collect(Collectors.toList()));
+                                            findFatturaOrdini(userContext, fattura_passiva_rigaBulk)
+                                                    .stream()
+                                                    .peek(fatturaOrdineBulk -> fatturaOrdineBulk.setFatturaPassivaRiga(fattura_passiva_rigaBulk))
+                                                    .collect(Collectors.toList()));
                                     fattura_passiva_rigaBulk.setFatturaOrdineColl(bulkList);
                                     return bulkList;
-                            } catch (ComponentException | PersistencyException | IntrospectionException e) {
-                                throw new DetailedRuntimeException(e);
-                            }
-                        }))));
-            completeWithCondizioneConsegna(aUC, fattura_passiva);
-            completeWithModalitaTrasporto(aUC, fattura_passiva);
-            completeWithModalitaIncasso(aUC, fattura_passiva);
-            completeWithModalitaErogazione(aUC, fattura_passiva);
-            BulkList dettagliIntrastat = new BulkList(findDettagliIntrastat(aUC, fattura_passiva));
+                                } catch (ComponentException | PersistencyException | IntrospectionException e) {
+                                    throw new DetailedRuntimeException(e);
+                                }
+                            }))));
+            completeWithCondizioneConsegna(userContext, fattura_passiva);
+            completeWithModalitaTrasporto(userContext, fattura_passiva);
+            completeWithModalitaIncasso(userContext, fattura_passiva);
+            completeWithModalitaErogazione(userContext, fattura_passiva);
+            BulkList dettagliIntrastat = new BulkList(findDettagliIntrastat(userContext, fattura_passiva));
             if (dettagliIntrastat != null && !dettagliIntrastat.isEmpty())
                 for (Iterator i = dettagliIntrastat.iterator(); i.hasNext(); ) {
                     Fattura_passiva_intraBulk dettaglio = (Fattura_passiva_intraBulk) i.next();
@@ -4496,16 +4444,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             fattura_passiva.setFattura_passiva_intrastatColl(dettagliIntrastat);
 
 
-            getHomeCache(aUC).fetchAll(aUC);
+            getHomeCache(userContext).fetchAll(userContext);
             int dettagliRiportati = 0;
             for (Iterator i = dettagli.iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk) i.next();
                 if (dettaglio.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
                     dettaglio.setInventariato(true);
-                    if (ha_beniColl(aUC, dettaglio).booleanValue())
-                        dettaglio.setInventariato(true);
-                    else
-                        dettaglio.setInventariato(false);
+                    dettaglio.setInventariato(ha_beniColl(userContext, dettaglio).booleanValue());
                 } else
                     dettaglio.setInventariato(false);
                 if (dettaglio.checkIfRiportata()) {
@@ -4513,37 +4458,37 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     fattura_passiva.setRiportata(fattura_passiva.PARZIALMENTE_RIPORTATO);
                     dettagliRiportati++;
                 }
-                dettaglio.setTermini(findTermini(aUC, dettaglio));
-                dettaglio.setModalita(findModalita(aUC, dettaglio));
-                dettaglio.setTrovato(ricercaDatiTrovato(aUC, dettaglio.getPg_trovato()));
+                dettaglio.setTermini(findTermini(userContext, dettaglio));
+                dettaglio.setModalita(findModalita(userContext, dettaglio));
+                dettaglio.setTrovato(ricercaDatiTrovato(userContext, dettaglio.getPg_trovato()));
             }
-            fattura_passiva.setRiportata(getStatoRiporto(aUC, fattura_passiva));
+            fattura_passiva.setRiportata(getStatoRiporto(userContext, fattura_passiva));
 
             /**
              * Gennaro Borriello - (02/11/2004 15.04.39)
              *	Aggiunta gestione dell Stato Riportato all'esercizio di scrivania.
              */
-            fattura_passiva.setRiportataInScrivania(getStatoRiportoInScrivania(aUC, fattura_passiva));
+            fattura_passiva.setRiportataInScrivania(getStatoRiportoInScrivania(userContext, fattura_passiva));
 
             /**
              * Gennaro Borriello - (08/11/2004 13.35.27)
              *	Aggiunta proprietà <code>esercizioInScrivania</code>, che verrà utilizzata
              *	per la gestione di isRiportataInScrivania(), in alcuni casi.
              */
-            fattura_passiva.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
+            fattura_passiva.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 
-            calcoloConsuntivi(aUC, fattura_passiva);
-            rebuildObbligazioni(aUC, fattura_passiva);
+            calcoloConsuntivi(userContext, fattura_passiva);
+            rebuildObbligazioni(userContext, fattura_passiva);
             if (fattura_passiva instanceof Nota_di_creditoBulk)
-                rebuildAccertamenti(aUC, (Nota_di_creditoBulk) fattura_passiva);
+                rebuildAccertamenti(userContext, (Nota_di_creditoBulk) fattura_passiva);
 
             Fattura_passiva_rigaBulk riga = null;
             for (java.util.Iterator i = fattura_passiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                 riga = (Fattura_passiva_rigaBulk) i.next();
-                impostaCollegamentoCapitoloPerTrovato(aUC, riga);
-                riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
+                impostaCollegamentoCapitoloPerTrovato(userContext, riga);
+                riga.setTrovato(ricercaDatiTrovato(userContext, riga.getPg_trovato()));
             }
-            fattura_passiva = caricaAllegatiBulk(aUC, fattura_passiva);
+            fattura_passiva = caricaAllegatiBulk(userContext, fattura_passiva);
         } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(fattura_passiva, e);
         } catch (RemoteException e) {
@@ -4552,17 +4497,17 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throw handleException(fattura_passiva, e);
         }
 
-        caricaAutofattura(aUC, fattura_passiva);
-        if (fattura_passiva.getValuta().getCd_divisa().equals(getEuro(aUC).getCd_divisa()))
+        caricaAutofattura(userContext, fattura_passiva);
+        if (fattura_passiva.getValuta().getCd_divisa().equals(getEuro(userContext).getCd_divisa()))
             fattura_passiva.setDefaultValuta(true);
         if (fattura_passiva.getLettera_pagamento_estero() != null) {
             Lettera_pagam_esteroBulk lettera = fattura_passiva.getLettera_pagamento_estero();
             lettera.setAnnoDiCompetenza(esScrivania == lettera.getEsercizio().intValue());
         }
 
-        fattura_passiva = valorizzaInfoDocEle(aUC, fattura_passiva);
-        fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(aUC));
-
+        fattura_passiva = valorizzaInfoDocEle(userContext, fattura_passiva);
+        fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(userContext));
+        caricaScrittura(userContext, fattura_passiva);
         return fattura_passiva;
     }
 
@@ -4720,7 +4665,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
             cs.executeQuery();
 
-            status = new String(cs.getString(1));
+            status = cs.getString(1);
 
             if (status.compareTo("Y") == 0)
                 return true;
@@ -4797,10 +4742,10 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                             fatturaPassiva.getDocumentiContabiliCancellati().elements(),
                             scadenzeConfermate,
                             status);
-                } else if (fatturaPassiva instanceof Nota_di_creditoBulk && ((Nota_di_creditoBulk) fatturaPassiva).getAccertamentiHash() != null) {
+                } else if (fatturaPassiva instanceof Nota_di_creditoBulk && fatturaPassiva.getAccertamentiHash() != null) {
                     PrimaryKeyHashtable scadenzeConfermateTemporanee = getDocumentiContabiliTemporanei(
                             userContext,
-                            ((Nota_di_creditoBulk) fatturaPassiva).getAccertamentiHash().keys());
+                            fatturaPassiva.getAccertamentiHash().keys());
                     Vector scadenzeConfermate = new Vector();
                     java.util.Enumeration e = scadenzeConfermateTemporanee.keys();
                     while (e.hasMoreElements()) {
@@ -4845,23 +4790,27 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      */
 //^^@@
     public OggettoBulk modificaConBulk(UserContext aUC, OggettoBulk bulk) throws ComponentException {
-        return Optional.ofNullable(bulk)
-                .filter(Fattura_passivaBulk.class::isInstance)
-                .map(Fattura_passivaBulk.class::cast)
-                .map(fattura_passivaBulk -> {
-                    try {
-                        return modificaConBulk(aUC, fattura_passivaBulk, null);
-                    } catch (ComponentException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                })
-                .orElseGet(() -> {
-                    try {
-                        return super.modificaConBulk(aUC, bulk);
-                    } catch (ComponentException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                });
+        try {
+            return Optional.ofNullable(bulk)
+                    .filter(Fattura_passivaBulk.class::isInstance)
+                    .map(Fattura_passivaBulk.class::cast)
+                    .map(fattura_passivaBulk -> {
+                        try {
+                            return modificaConBulk(aUC, fattura_passivaBulk, null);
+                        } catch (ComponentException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    })
+                    .orElseGet(() -> {
+                        try {
+                            return super.modificaConBulk(aUC, bulk);
+                        } catch (ComponentException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    });
+        } catch (DetailedRuntimeException _ex) {
+            throw handleException(_ex);
+        }
     }
 //^^@@
 
@@ -4945,8 +4894,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fatturaPassiva.isPagataParzialmente() &&
                 fatturaPassiva.getDettagliPagati().size() == fatturaPassiva.getFattura_passiva_dettColl().size()) {
 
-            fatturaPassiva.setStato_cofi(fatturaPassiva.STATO_PAGATO);
-            fatturaPassiva.setTi_associato_manrev(fatturaPassiva.ASSOCIATO_A_MANDATO);
+            fatturaPassiva.setStato_cofi(Fattura_passivaBulk.STATO_PAGATO);
+            fatturaPassiva.setTi_associato_manrev(Fattura_passivaBulk.ASSOCIATO_A_MANDATO);
         }
 
         //Aggiornamenti degli stati COGE e COAN
@@ -4973,7 +4922,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     !Utility.equalsNull(fatturaPassiva.getEsercizio_lettera(), fatturaPassivaDB.getEsercizio_lettera()) ||
                     !Utility.equalsNull(fatturaPassiva.getPg_lettera(), fatturaPassivaDB.getPg_lettera()) ||
                     !Utility.equalsNull(fatturaPassiva.getCd_terzo(), fatturaPassivaDB.getCd_terzo())
-                    )
+            )
                 aggiornaStatoCoge = true;
             if (!aggiornaStatoCoge && fatturaPassiva.getFattura_passiva_dettColl().size() > 0) {
                 for (Iterator iter = fatturaPassiva.getFattura_passiva_dettColl().iterator(); iter.hasNext() && !aggiornaStatoCoge; ) {
@@ -4990,7 +4939,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                                 !Utility.equalsBulkNull(fattura_riga.getObbligazione_scadenziario(), fatturaDB_riga.getObbligazione_scadenziario()) ||
                                 !Utility.equalsNull(fattura_riga.getDt_da_competenza_coge(), fatturaDB_riga.getDt_da_competenza_coge()) ||
                                 !Utility.equalsNull(fattura_riga.getDt_a_competenza_coge(), fatturaDB_riga.getDt_a_competenza_coge())
-                                )
+                        )
                             aggiornaStatoCoge = true;
                     }
                 }
@@ -5001,12 +4950,12 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (aggiornaStatoCoge) {
             if (!(!fatturaPassiva.isDocumentoModificabile() && fatturaPassiva.isDetailDoubled())) {
                 //Aggiornamenti degli stati COGE e COAN
-                if (fatturaPassiva.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(fatturaPassiva.getStato_coan())) {
-                    fatturaPassiva.setStato_coan(fatturaPassiva.DA_RICONTABILIZZARE_IN_COAN);
+                if (Fattura_passivaBulk.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(fatturaPassiva.getStato_coan())) {
+                    fatturaPassiva.setStato_coan(Fattura_passivaBulk.DA_RICONTABILIZZARE_IN_COAN);
                     fatturaPassiva.setToBeUpdated();
                 }
-                if (fatturaPassiva.REGISTRATO_IN_COGE.equalsIgnoreCase(fatturaPassiva.getStato_coge())) {
-                    fatturaPassiva.setStato_coge(fatturaPassiva.DA_RICONTABILIZZARE_IN_COGE);
+                if (Fattura_passivaBulk.REGISTRATO_IN_COGE.equalsIgnoreCase(fatturaPassiva.getStato_coge())) {
+                    fatturaPassiva.setStato_coge(Fattura_passivaBulk.DA_RICONTABILIZZARE_IN_COGE);
                     fatturaPassiva.setToBeUpdated();
                 }
             }
@@ -5038,11 +4987,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             fatturaPassiva.getDefferredSaldi().putAll(aTempDiffSaldi);
         aggiornaCogeCoanDocAmm(aUC, fatturaPassiva);
 
-	/*
-	 * Se il documento non era modificabile nei suoi elementi principali, ma si è solo proceduto a
-	 * sdoppiare una riga di dettaglio allora il controllo sulla chiusura dell'esercizio del documento
-	 * non è necessario
-	 */
+        /*
+         * Se il documento non era modificabile nei suoi elementi principali, ma si è solo proceduto a
+         * sdoppiare una riga di dettaglio allora il controllo sulla chiusura dell'esercizio del documento
+         * non è necessario
+         */
         if (!fatturaPassiva.isDocumentoModificabile() && fatturaPassiva.isDetailDoubled())
             return fatturaPassiva;
 
@@ -5145,7 +5094,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                         scadenza,
                         calcolaTotalePer(
                                 (Vector) notaDiCredito.getAccertamenti_scadenzarioHash().get(scadenza),
-                                (notaDiCredito.quadraturaInDeroga()||(notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment()))));
+                                (notaDiCredito.quadraturaInDeroga() || (notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment()))));
             }
         }
 
@@ -5329,7 +5278,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Post: Tutte le modifiche effettuate sul compenso vengono annullate, mentre rimangono valide le
      * modifiche apportate al doc. amministrativo che ha aperto il compenso
      *
-     * @param    userContext    lo UserContext che ha generato la richiesta
+     * @param userContext lo UserContext che ha generato la richiesta
      */
     public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -5462,8 +5411,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fornitore != null) {
             sql.addTableToHeader("TERZO");
             sql.addSQLJoin("TERZO.CD_TERZO", "FATTURA_PASSIVA.CD_TERZO");
-            sql.addSQLClause("AND", "FATTURA_PASSIVA.CD_TERZO", sql.EQUALS, fornitore.getCd_terzo());
-            sql.addSQLClause("AND", "TERZO.CD_PRECEDENTE", sql.EQUALS, fornitore.getCd_precedente());
+            sql.addSQLClause("AND", "FATTURA_PASSIVA.CD_TERZO", SQLBuilder.EQUALS, fornitore.getCd_terzo());
+            sql.addSQLClause("AND", "TERZO.CD_PRECEDENTE", SQLBuilder.EQUALS, fornitore.getCd_precedente());
         }
         return sql;
     }
@@ -5516,13 +5465,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             data_a.setTime(new Date(dettaglio.getFattura_passiva().getDt_a_competenza_coge().getTime()));
 
         if ((data_da != null && data_da.get(GregorianCalendar.YEAR) < dettaglio.getEsercizio()) || (data_a != null && data_a.get(GregorianCalendar.YEAR) < dettaglio.getEsercizio()))
-            sql.addSQLClause("AND", "FL_GESTIONE_INVENTARIO", sql.EQUALS, "N");
-        sql.addClause("AND", "ti_bene_servizio", sql.EQUALS, dettaglio.getFattura_passiva().getTi_bene_servizio());
+            sql.addSQLClause("AND", "FL_GESTIONE_INVENTARIO", SQLBuilder.EQUALS, "N");
+        sql.addClause("AND", "ti_bene_servizio", SQLBuilder.EQUALS, dettaglio.getFattura_passiva().getTi_bene_servizio());
         if ((dettaglio.getFattura_passiva().getFl_intra_ue().booleanValue() || dettaglio.getFattura_passiva().getFl_extra_ue().booleanValue() || dettaglio.getFattura_passiva().getFl_san_marino_senza_iva().booleanValue())
                 && dettaglio.getFattura_passiva().isCommerciale() && dettaglio.getFattura_passiva().getTi_bene_servizio().compareTo(Bene_servizioBulk.SERVIZIO) == 0)
-            sql.addClause("AND", "fl_autofattura", sql.EQUALS, dettaglio.getFattura_passiva().getFl_autofattura());
+            sql.addClause("AND", "fl_autofattura", SQLBuilder.EQUALS, dettaglio.getFattura_passiva().getFl_autofattura());
         else if (dettaglio.getFattura_passiva().getTipo_sezionale() != null)
-            sql.addClause("AND", "fl_autofattura", sql.EQUALS, dettaglio.getFattura_passiva().getTipo_sezionale().getFl_servizi_non_residenti());
+            sql.addClause("AND", "fl_autofattura", SQLBuilder.EQUALS, dettaglio.getFattura_passiva().getTipo_sezionale().getFl_servizi_non_residenti());
         sql.addClause(clauses);
         return sql;
     }
@@ -5531,11 +5480,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             UserContext userContext,
             Fattura_passivaBulk fattura) throws ComponentException {
         SQLBuilder sql = getHome(userContext, V_ass_inv_bene_fatturaBulk.class).createSQLBuilder();
-        sql.addSQLClause("AND", "esercizio_fatt_pass", sql.EQUALS, fattura.getEsercizio());
-        sql.addSQLClause("AND", "cd_cds_fatt_pass", sql.EQUALS, fattura.getCd_cds());
-        sql.addSQLClause("AND", "cd_uo_fatt_pass", sql.EQUALS, fattura.getCd_unita_organizzativa());
-        sql.addSQLClause("AND", "pg_fattura_passiva", sql.EQUALS, fattura.getPg_fattura_passiva());
-        sql.addSQLClause("AND", "cd_tipo_documento_amm", sql.ISNULL, null);
+        sql.addSQLClause("AND", "esercizio_fatt_pass", SQLBuilder.EQUALS, fattura.getEsercizio());
+        sql.addSQLClause("AND", "cd_cds_fatt_pass", SQLBuilder.EQUALS, fattura.getCd_cds());
+        sql.addSQLClause("AND", "cd_uo_fatt_pass", SQLBuilder.EQUALS, fattura.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "pg_fattura_passiva", SQLBuilder.EQUALS, fattura.getPg_fattura_passiva());
+        sql.addSQLClause("AND", "cd_tipo_documento_amm", SQLBuilder.ISNULL, null);
         it.cnr.jada.util.RemoteIterator ri = iterator(userContext, sql, V_ass_inv_bene_fatturaBulk.class, null);
 
         return ri;
@@ -5549,14 +5498,14 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         sql.addClause(clauses);
         sql.openParenthesis("AND");
         sql.openParenthesis("AND");
-        sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passivaBulk.STATO_ANNULLATO);
-        sql.addClause("AND", "fl_extra_ue", sql.EQUALS, Boolean.TRUE);
-        sql.addSQLClause("AND", "FATTURA_PASSIVA.TI_BENE_SERVIZIO", sql.EQUALS, Bene_servizioBulk.BENE);
-        sql.addClause("AND", "fl_merce_intra_ue", sql.NOT_EQUALS, Boolean.TRUE);
+        sql.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, Fattura_passivaBulk.STATO_ANNULLATO);
+        sql.addClause("AND", "fl_extra_ue", SQLBuilder.EQUALS, Boolean.TRUE);
+        sql.addSQLClause("AND", "FATTURA_PASSIVA.TI_BENE_SERVIZIO", SQLBuilder.EQUALS, Bene_servizioBulk.BENE);
+        sql.addClause("AND", "fl_merce_intra_ue", SQLBuilder.NOT_EQUALS, Boolean.TRUE);
         sql.closeParenthesis();
         sql.openParenthesis("OR");
-        sql.addClause("AND", "fl_merce_extra_ue", sql.EQUALS, Boolean.TRUE);
-        sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passivaBulk.STATO_ANNULLATO);
+        sql.addClause("AND", "fl_merce_extra_ue", SQLBuilder.EQUALS, Boolean.TRUE);
+        sql.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, Fattura_passivaBulk.STATO_ANNULLATO);
         sql.closeParenthesis();
         sql.closeParenthesis();
         sql.addSQLClause("AND", " NOT EXISTS (SELECT 1 FROM FATTURA_PASSIVA B WHERE B.CD_CDS_FAT_CLGS = FATTURA_PASSIVA.CD_CDS AND B.CD_UO_FAT_CLGS = FATTURA_PASSIVA.CD_UNITA_ORGANIZZATIVA AND B.ESERCIZIO_FAT_CLGS = FATTURA_PASSIVA.ESERCIZIO AND B.PG_FATTURA_PASSIVA_FAT_CLGS = FATTURA_PASSIVA.PG_FATTURA_PASSIVA AND (B.FL_BOLLA_DOGANALE = 'Y' OR B.FL_SPEDIZIONIERE = 'Y') AND B.STATO_COFI <> 'A')");
@@ -5570,39 +5519,39 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, fornitore, "V_TERZO_CF_PI").createSQLBuilder();
         sql.addTableToHeader("ANAGRAFICO");
         sql.addSQLJoin("ANAGRAFICO.CD_ANAG", "V_TERZO_CF_PI.CD_ANAG");
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", sql.EQUALS, fornitore.getCd_terzo());
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.DENOMINAZIONE_SEDE", sql.STARTSWITH, fornitore.getDenominazione_sede());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", SQLBuilder.EQUALS, fornitore.getCd_terzo());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.DENOMINAZIONE_SEDE", SQLBuilder.STARTSWITH, fornitore.getDenominazione_sede());
 
         sql.openParenthesis(FindClause.AND);
         sql.addSQLClause(FindClause.AND, "V_TERZO_CF_PI.DT_FINE_RAPPORTO", SQLBuilder.ISNULL, null);
         sql.addSQLClause(FindClause.OR, "V_TERZO_CF_PI.DT_FINE_RAPPORTO", SQLBuilder.GREATER_EQUALS, fatturaPassiva.getDt_fattura_fornitore());
         sql.closeParenthesis();
 
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.TI_TERZO", sql.NOT_EQUALS, TerzoBulk.DEBITORE);
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", sql.EQUALS, fornitore.getCd_precedente());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.TI_TERZO", SQLBuilder.NOT_EQUALS, TerzoBulk.DEBITORE);
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", SQLBuilder.EQUALS, fornitore.getCd_precedente());
 
         //	modifica aggiunta per Art.35 DL n.223/2006
         sql.openParenthesis("AND");
-        sql.addSQLClause("AND", "(ANAGRAFICO.TI_ITALIANO_ESTERO", sql.EQUALS, "I");
-        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", sql.ISNOTNULL, true);
-        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", sql.ISNOTNULL, true);
+        sql.addSQLClause("AND", "(ANAGRAFICO.TI_ITALIANO_ESTERO", SQLBuilder.EQUALS, "I");
+        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", SQLBuilder.ISNOTNULL, true);
+        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", SQLBuilder.ISNOTNULL, true);
         sql.closeParenthesis();
         sql.openParenthesis("OR");
-        sql.addSQLClause("OR", "ANAGRAFICO.FL_NON_OBBLIG_P_IVA", sql.EQUALS, "Y");
-        sql.addSQLClause("AND", "ANAGRAFICO.TI_ITALIANO_ESTERO", sql.EQUALS, "I");
-        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", sql.ISNOTNULL, true);
+        sql.addSQLClause("OR", "ANAGRAFICO.FL_NON_OBBLIG_P_IVA", SQLBuilder.EQUALS, "Y");
+        sql.addSQLClause("AND", "ANAGRAFICO.TI_ITALIANO_ESTERO", SQLBuilder.EQUALS, "I");
+        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", SQLBuilder.ISNOTNULL, true);
         sql.closeParenthesis();
-        sql.addSQLClause("OR", "ANAGRAFICO.TI_ITALIANO_ESTERO", sql.NOT_EQUALS, "I");
+        sql.addSQLClause("OR", "ANAGRAFICO.TI_ITALIANO_ESTERO", SQLBuilder.NOT_EQUALS, "I");
         sql.closeParenthesis();
 
-        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", sql.STARTSWITH, fatturaPassiva.getCodice_fiscale());
-        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", sql.STARTSWITH, fatturaPassiva.getPartita_iva());
-        sql.addSQLClause("AND", "ANAGRAFICO.NOME", sql.STARTSWITH, fatturaPassiva.getNome());
-        sql.addSQLClause("AND", "ANAGRAFICO.COGNOME", sql.STARTSWITH, fatturaPassiva.getCognome());
-        sql.addSQLClause("AND", "ANAGRAFICO.RAGIONE_SOCIALE", sql.STARTSWITH, fatturaPassiva.getRagione_sociale());
-        sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", sql.NOT_EQUALS, "D");
+        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", SQLBuilder.STARTSWITH, fatturaPassiva.getCodice_fiscale());
+        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", SQLBuilder.STARTSWITH, fatturaPassiva.getPartita_iva());
+        sql.addSQLClause("AND", "ANAGRAFICO.NOME", SQLBuilder.STARTSWITH, fatturaPassiva.getNome());
+        sql.addSQLClause("AND", "ANAGRAFICO.COGNOME", SQLBuilder.STARTSWITH, fatturaPassiva.getCognome());
+        sql.addSQLClause("AND", "ANAGRAFICO.RAGIONE_SOCIALE", SQLBuilder.STARTSWITH, fatturaPassiva.getRagione_sociale());
+        sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", SQLBuilder.NOT_EQUALS, "D");
 
-        sql.addSQLClause("AND", "ANAGRAFICO.TI_ITALIANO_ESTERO", sql.EQUALS, fatturaPassiva.getSupplierNationType());
+        sql.addSQLClause("AND", "ANAGRAFICO.TI_ITALIANO_ESTERO", SQLBuilder.EQUALS, fatturaPassiva.getSupplierNationType());
 
         sql.addClause(clauses);
         return sql;
@@ -5618,16 +5567,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, soggetto, "V_TERZO_CF_PI").createSQLBuilder();
         sql.addTableToHeader("ANAGRAFICO");
         sql.addSQLJoin("ANAGRAFICO.CD_ANAG", "V_TERZO_CF_PI.CD_ANAG");
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", sql.EQUALS, soggetto.getCd_terzo());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", SQLBuilder.EQUALS, soggetto.getCd_terzo());
 
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.TI_TERZO", sql.NOT_EQUALS, TerzoBulk.DEBITORE);
-        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", sql.EQUALS, soggetto.getCd_precedente());
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.TI_TERZO", SQLBuilder.NOT_EQUALS, TerzoBulk.DEBITORE);
+        sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", SQLBuilder.EQUALS, soggetto.getCd_precedente());
 
-        sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", sql.NOT_EQUALS, AnagraficoBulk.DIVERSI);
+        sql.addSQLClause("AND", "ANAGRAFICO.TI_ENTITA", SQLBuilder.NOT_EQUALS, AnagraficoBulk.DIVERSI);
 
         if (soggetto.getAnagrafico() != null) {
-            sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", sql.STARTSWITH, soggetto.getAnagrafico().getCodice_fiscale());
-            sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", sql.STARTSWITH, soggetto.getAnagrafico().getPartita_iva());
+            sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", SQLBuilder.STARTSWITH, soggetto.getAnagrafico().getCodice_fiscale());
+            sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", SQLBuilder.STARTSWITH, soggetto.getAnagrafico().getPartita_iva());
         }
 
         sql.addClause(clauses);
@@ -5640,12 +5589,12 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, fornitore).createSQLBuilder();
         sql.addTableToHeader("ANAGRAFICO");
         sql.addSQLJoin("ANAGRAFICO.CD_ANAG", "TERZO.CD_ANAG");
-        sql.addSQLClause("AND", "TERZO.DENOMINAZIONE_SEDE", sql.STARTSWITH, fornitore.getDenominazione_sede());
-        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", sql.STARTSWITH, fornitore.getAnagrafico().getCodice_fiscale());
-        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", sql.STARTSWITH, fornitore.getAnagrafico().getPartita_iva());
-        sql.addSQLClause("AND", "ANAGRAFICO.NOME", sql.STARTSWITH, fornitore.getAnagrafico().getNome());
-        sql.addSQLClause("AND", "ANAGRAFICO.COGNOME", sql.STARTSWITH, fornitore.getAnagrafico().getCognome());
-        sql.addSQLClause("AND", "ANAGRAFICO.RAGIONE_SOCIALE", sql.STARTSWITH, fornitore.getAnagrafico().getRagione_sociale());
+        sql.addSQLClause("AND", "TERZO.DENOMINAZIONE_SEDE", SQLBuilder.STARTSWITH, fornitore.getDenominazione_sede());
+        sql.addSQLClause("AND", "ANAGRAFICO.CODICE_FISCALE", SQLBuilder.STARTSWITH, fornitore.getAnagrafico().getCodice_fiscale());
+        sql.addSQLClause("AND", "ANAGRAFICO.PARTITA_IVA", SQLBuilder.STARTSWITH, fornitore.getAnagrafico().getPartita_iva());
+        sql.addSQLClause("AND", "ANAGRAFICO.NOME", SQLBuilder.STARTSWITH, fornitore.getAnagrafico().getNome());
+        sql.addSQLClause("AND", "ANAGRAFICO.COGNOME", SQLBuilder.STARTSWITH, fornitore.getAnagrafico().getCognome());
+        sql.addSQLClause("AND", "ANAGRAFICO.RAGIONE_SOCIALE", SQLBuilder.STARTSWITH, fornitore.getAnagrafico().getRagione_sociale());
         sql.addClause(clauses);
         return sql;
     }
@@ -5665,36 +5614,36 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, sospeso).createSQLBuilder();
 
         sql.openParenthesis("AND");
-        sql.addSQLClause("OR", "IM_ASSOCIATO", sql.EQUALS, new java.math.BigDecimal(0));
-        sql.addSQLClause("OR", "IM_ASSOCIATO", sql.ISNULL, null);
+        sql.addSQLClause("OR", "IM_ASSOCIATO", SQLBuilder.EQUALS, new java.math.BigDecimal(0));
+        sql.addSQLClause("OR", "IM_ASSOCIATO", SQLBuilder.ISNULL, null);
         sql.closeParenthesis();
         sql.openParenthesis("AND");
-        sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.EQUALS, new java.math.BigDecimal(0));
-        sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.ISNULL, null);
+        sql.addSQLClause("OR", "IM_ASS_MOD_1210", SQLBuilder.EQUALS, new java.math.BigDecimal(0));
+        sql.addSQLClause("OR", "IM_ASS_MOD_1210", SQLBuilder.ISNULL, null);
         sql.closeParenthesis();
         sql.openParenthesis("AND");
-        sql.addSQLClause("OR", "IM_SOSPESO", sql.NOT_EQUALS, new java.math.BigDecimal(0));
-        sql.addSQLClause("AND", "IM_SOSPESO", sql.ISNOTNULL, null);
+        sql.addSQLClause("OR", "IM_SOSPESO", SQLBuilder.NOT_EQUALS, new java.math.BigDecimal(0));
+        sql.addSQLClause("AND", "IM_SOSPESO", SQLBuilder.ISNOTNULL, null);
         sql.closeParenthesis();
-        sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
+        sql.addClause("AND", "fl_stornato", SQLBuilder.EQUALS, Boolean.FALSE);
         try {
             EnteBulk ente = (EnteBulk) getHome(aUC, EnteBulk.class)
                     .findAll().get(0);
 
             if (!Utility.createParametriCnrComponentSession().getParametriCnr(aUC, fatturaPassiva.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()) {
-                sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
-                sql.addClause("AND", "cd_cds", sql.EQUALS, fatturaPassiva.getCd_cds());
-                sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+                sql.addClause("AND", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, fatturaPassiva.getCd_cds());
+                sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, fatturaPassiva.getCd_cds_origine());
             } else {
-                sql.addClause("AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa());
+                sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ente.getCd_unita_organizzativa());
                 sql.openParenthesis("AND");
                 sql.openParenthesis("AND");
-                sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
-                sql.addClause("AND", "cd_cds_origine", sql.EQUALS, fatturaPassiva.getCd_cds_origine());
+                sql.addClause("AND", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, fatturaPassiva.getCd_cds_origine());
                 sql.closeParenthesis();
                 sql.openParenthesis("OR");
-                sql.addClause("OR", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
-                sql.addClause("AND", "cd_cds_origine", sql.ISNULL, null);
+                sql.addClause("OR", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
+                sql.addClause("AND", "cd_cds_origine", SQLBuilder.ISNULL, null);
                 sql.closeParenthesis();
                 sql.closeParenthesis();
             }
@@ -5706,15 +5655,15 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throw handleException(fatturaPassiva, e);
         }
 
-        sql.addClause("AND", "esercizio", sql.EQUALS, fatturaPassiva.getLettera_pagamento_estero().getEsercizio());
-        sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
-        sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, fatturaPassiva.getLettera_pagamento_estero().getEsercizio());
+        sql.addClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS, SospesoBulk.TIPO_SPESA);
+        sql.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
         sql.addClause(
                 "AND",
                 "ti_cc_bi",
                 (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(fatturaPassiva.getModalita_pagamento().getTi_pagamento()) ?
-                        sql.EQUALS : sql.NOT_EQUALS),
-                sospeso.TIPO_BANCA_ITALIA);
+                        SQLBuilder.EQUALS : SQLBuilder.NOT_EQUALS),
+                SospesoBulk.TIPO_BANCA_ITALIA);
 
         sql.addClause(clauses);
 
@@ -5731,10 +5680,10 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(userContext, Voce_ivaBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = voceIvaHome.createSQLBuilder(
                 Optional.ofNullable(dettaglio.getFattura_passiva())
-                    .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDt_fattura_fornitore()))
-                    .orElse(EJBCommonServices.getServerDate())
+                        .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDt_fattura_fornitore()))
+                        .orElse(EJBCommonServices.getServerDate())
         );
-        sql.addSQLClause("AND", "ti_applicazione", sql.NOT_EQUALS, Voce_ivaBulk.VENDITE);
+        sql.addSQLClause("AND", "ti_applicazione", SQLBuilder.NOT_EQUALS, Voce_ivaBulk.VENDITE);
         //Richista 658 del 29/01/2004
 
         // rospuc 29/11/2013 da verificare !!!
@@ -5743,14 +5692,14 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 (dettaglio.getFattura_passiva().isCommerciale() && dettaglio.getFattura_passiva().getFl_san_marino_senza_iva() != null && dettaglio.getFattura_passiva().getFl_san_marino_senza_iva().booleanValue()) ||
                 (dettaglio.isVoceIVAOnlyIntraUE()))
             //if (dettaglio.isVoceIVAOnlyIntraUE())
-            sql.addSQLClause("AND", "fl_intra", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "fl_intra", SQLBuilder.EQUALS, "Y");
         //***************************
         if (dettaglio instanceof Nota_di_credito_rigaBulk && !dettaglio.getFattura_passiva().isIvaRecuperabile()) {
 
             if (((Nota_di_credito_rigaBulk) dettaglio).getRiga_fattura_origine() != null && ((Nota_di_credito_rigaBulk) dettaglio).getRiga_fattura_origine().getVoce_iva() != null) {
                 sql.openParenthesis("AND");
-                sql.addSQLClause("AND", "CD_VOCE_IVA", sql.EQUALS, ((Nota_di_credito_rigaBulk) dettaglio).getRiga_fattura_origine().getVoce_iva().getCd_voce_iva());
-                sql.addSQLClause("OR", "FL_IVA_NON_RECUPERABILE", sql.EQUALS, "Y");
+                sql.addSQLClause("AND", "CD_VOCE_IVA", SQLBuilder.EQUALS, ((Nota_di_credito_rigaBulk) dettaglio).getRiga_fattura_origine().getVoce_iva().getCd_voce_iva());
+                sql.addSQLClause("OR", "FL_IVA_NON_RECUPERABILE", SQLBuilder.EQUALS, "Y");
                 sql.closeParenthesis();
             }
         }
@@ -5763,39 +5712,39 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 dettaglio.getFattura_passiva().getFornitore().getAnagrafico().getPartita_iva() != null) {
             // tutti
             sql.openParenthesis("AND");
-            sql.addSQLClause("AND", "FL_SOLO_ITALIA", sql.EQUALS, "N");
-            sql.addSQLClause("OR", "FL_SOLO_ITALIA", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "FL_SOLO_ITALIA", SQLBuilder.EQUALS, "N");
+            sql.addSQLClause("OR", "FL_SOLO_ITALIA", SQLBuilder.EQUALS, "Y");
             sql.closeParenthesis();
 
             sql.openParenthesis("AND");
-            sql.addSQLClause("AND", "FL_AUTOFATTURA", sql.EQUALS, "N");
-            sql.addSQLClause("OR", "FL_AUTOFATTURA", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "FL_AUTOFATTURA", SQLBuilder.EQUALS, "N");
+            sql.addSQLClause("OR", "FL_AUTOFATTURA", SQLBuilder.EQUALS, "Y");
             sql.closeParenthesis();
         } else {
-            sql.addSQLClause("AND", "FL_SOLO_ITALIA", sql.EQUALS, "N");
-            sql.addSQLClause("AND", "FL_AUTOFATTURA", sql.EQUALS, "N");
+            sql.addSQLClause("AND", "FL_SOLO_ITALIA", SQLBuilder.EQUALS, "N");
+            sql.addSQLClause("AND", "FL_AUTOFATTURA", SQLBuilder.EQUALS, "N");
         }
 
         if (dettaglio.getBene_servizio() != null) {
             sql.openParenthesis("AND");
-            sql.addSQLClause("AND", "TI_BENE_SERVIZIO", sql.EQUALS, voceIva.BENE_SERVIZIO);
-            sql.addSQLClause("OR", "TI_BENE_SERVIZIO", sql.EQUALS, dettaglio.getBene_servizio().getTi_bene_servizio());
+            sql.addSQLClause("AND", "TI_BENE_SERVIZIO", SQLBuilder.EQUALS, Voce_ivaBulk.BENE_SERVIZIO);
+            sql.addSQLClause("OR", "TI_BENE_SERVIZIO", SQLBuilder.EQUALS, dettaglio.getBene_servizio().getTi_bene_servizio());
             sql.closeParenthesis();
         }
-        
+
         if ((dettaglio.getFattura_passiva().isCommerciale()) &&
-        	(dettaglio.getFattura_passiva().getFl_split_payment()==null ||
-        	(dettaglio.getFattura_passiva().getFl_split_payment()!=null && !dettaglio.getFattura_passiva().getFl_split_payment().booleanValue())) && 
-        	dettaglio.getFattura_passiva().getData_protocollo()!=null  &&
-         	!dettaglio.getFattura_passiva().isEstera() &&
-            !dettaglio.getFattura_passiva().isSanMarinoSenzaIVA() &&
-            !dettaglio.getFattura_passiva().isSanMarinoConIVA()){
-        		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(userContext, dettaglio.getFattura_passiva());
-        		if (dettaglio.getFattura_passiva().getDt_registrazione()!=null && dettaglio.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){             		
-        			sql.addSQLClause("AND", "FL_DETRAIBILE", sql.EQUALS, "N");
-        			if(voceIva!=null && voceIva.getCd_voce_iva()!=null)
-        				sql.addSQLClause("AND", "CD_VOCE_IVA", sql.EQUALS, voceIva.getCd_voce_iva());
-        		}
+                (dettaglio.getFattura_passiva().getFl_split_payment() == null ||
+                        (dettaglio.getFattura_passiva().getFl_split_payment() != null && !dettaglio.getFattura_passiva().getFl_split_payment().booleanValue())) &&
+                dettaglio.getFattura_passiva().getData_protocollo() != null &&
+                !dettaglio.getFattura_passiva().isEstera() &&
+                !dettaglio.getFattura_passiva().isSanMarinoSenzaIVA() &&
+                !dettaglio.getFattura_passiva().isSanMarinoConIVA()) {
+            Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(userContext, dettaglio.getFattura_passiva());
+            if (dettaglio.getFattura_passiva().getDt_registrazione() != null && dettaglio.getFattura_passiva().getDt_registrazione().after(conf.getDt02())) {
+                sql.addSQLClause("AND", "FL_DETRAIBILE", SQLBuilder.EQUALS, "N");
+                if (voceIva != null && voceIva.getCd_voce_iva() != null)
+                    sql.addSQLClause("AND", "CD_VOCE_IVA", SQLBuilder.EQUALS, voceIva.getCd_voce_iva());
+            }
         }
         Optional<DocumentoEleTestataBulk> documentoEleTestataBulk = Optional.ofNullable(dettaglio.getFattura_passiva())
                 .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()));
@@ -5805,7 +5754,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     .getDocEleIVAColl()
                     .stream()
                     .forEach(documentoEleIvaBulk -> {
-                        if(Optional.ofNullable(documentoEleIvaBulk.getNatura()).isPresent()) {
+                        if (Optional.ofNullable(documentoEleIvaBulk.getNatura()).isPresent()) {
                             sql.addSQLClause(FindClause.OR, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
                         } else {
                             sql.addClause(FindClause.OR, "percentuale", SQLBuilder.EQUALS, documentoEleIvaBulk.getAliquotaIva());
@@ -5927,7 +5876,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Pre:  Una richiesta di impostare un savepoint e' stata generata
      * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
      *
-     * @param    userContext    lo UserContext che ha generato la richiesta
+     * @param userContext lo UserContext che ha generato la richiesta
      */
     public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -6056,7 +6005,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (original == null || fatturaPassiva == null)
             return;
 
-        if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isElettronica() || fatturaPassiva.isGenerataDaCompenso()) {
+        if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isGenerataDaCompenso()) {
             //ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
             //ora eseguito anche se la sola autofattura è stampata sui registri IVA
 
@@ -6093,8 +6042,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             if (fattura.getLettera_pagamento_estero() != null && fattura.getLettera_pagamento_estero().getEsercizio() != null && !Utility.createParametriCnrComponentSession().getParametriCnr(userContext, fattura.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()) {
                 it.cnr.jada.bulk.BulkHome home = getHome(userContext, V_disp_cassa_cdsBulk.class);
                 SQLBuilder sql = home.createSQLBuilder();
-                sql.addClause("AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-                sql.addClause("AND", "cd_cds", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
+                sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+                sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getCd_cds());
                 List result = null;
                 result = home.fetchAll(sql);
                 if (result.size() == 0)
@@ -6168,36 +6117,36 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 //^^@@
     public void validaFattura(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
         ObbligazioniTable obbligazioniHash = fatturaPassiva.getFattura_passiva_obbligazioniHash();
-        
+
         if (obbligazioniHash != null && !obbligazioniHash.isEmpty()) {
             Enumeration en = obbligazioniHash.keys();
             while (en.hasMoreElements()) {
-            	Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) en.nextElement();
-            	CigBulk cig = null;
-            	String motivoAssenzaCig = null;
-            	if ((scad != null && scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) {
-            		cig = scad.getObbligazione().getContratto().getCig();
-            	} else {
-            		motivoAssenzaCig = scad.getMotivo_assenza_cig();
-            		cig = scad.getCig();
-            	}
+                Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) en.nextElement();
+                CigBulk cig = null;
+                String motivoAssenzaCig = null;
+                if ((scad != null && scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) {
+                    cig = scad.getObbligazione().getContratto().getCig();
+                } else {
+                    motivoAssenzaCig = scad.getMotivo_assenza_cig();
+                    cig = scad.getCig();
+                }
 
-            	Vector righeCollegate = (Vector)obbligazioniHash.get(scad);
+                Vector righeCollegate = (Vector) obbligazioniHash.get(scad);
 
-            	if (righeCollegate != null){
-            		for (Iterator i = righeCollegate.iterator(); i.hasNext(); ) {
-            			Fattura_passiva_rigaBulk riga = ((Fattura_passiva_rigaBulk) i.next());
-            			if (!(((cig == null || cig.getCdCig() == null) && riga.getCig() == null) || (cig != null && riga.getCig() != null && cig.equalsByPrimaryKey(riga.getCig())))){
-                			riga.setCig(cig);
-                			riga.setToBeUpdated();
-            			}
-            			if (!((motivoAssenzaCig == null && riga.getMotivo_assenza_cig() == null) || (motivoAssenzaCig != null && riga.getMotivo_assenza_cig() != null && 
-            					motivoAssenzaCig.equals(riga.getMotivo_assenza_cig())))){
-                			riga.setMotivo_assenza_cig(motivoAssenzaCig);
-                			riga.setToBeUpdated();
-            			}
-            		}
-            	}
+                if (righeCollegate != null) {
+                    for (Iterator i = righeCollegate.iterator(); i.hasNext(); ) {
+                        Fattura_passiva_rigaBulk riga = ((Fattura_passiva_rigaBulk) i.next());
+                        if (!(((cig == null || cig.getCdCig() == null) && riga.getCig() == null) || (cig != null && riga.getCig() != null && cig.equalsByPrimaryKey(riga.getCig())))) {
+                            riga.setCig(cig);
+                            riga.setToBeUpdated();
+                        }
+                        if (!((motivoAssenzaCig == null && riga.getMotivo_assenza_cig() == null) || (motivoAssenzaCig != null && riga.getMotivo_assenza_cig() != null &&
+                                motivoAssenzaCig.equals(riga.getMotivo_assenza_cig())))) {
+                            riga.setMotivo_assenza_cig(motivoAssenzaCig);
+                            riga.setToBeUpdated();
+                        }
+                    }
+                }
             }
         }
 
@@ -6237,42 +6186,41 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             if (fatturaPassiva.getCompenso() == null)
                 throw new it.cnr.jada.comp.ApplicationException("Prima di salvare la fattura occorre generare il compenso!");
         }
-		if (fatturaPassiva instanceof Fattura_passiva_IBulk ){
-			Rif_modalita_pagamentoBulk mod =null;
-			BancaBulk banca=null;
-			TerzoBulk terzo=null;
-			for(Iterator i=fatturaPassiva.getFattura_passiva_dettColl().iterator();i.hasNext();)
-			{
-				Fattura_passiva_rigaBulk riga=(Fattura_passiva_rigaBulk)i.next();
-				if(riga.getCessionario()==null){
-					if(mod!=null && mod.getCd_modalita_pag().compareTo(riga.getModalita_pagamento().getCd_modalita_pag())==0 &&
-							terzo.getCd_terzo()==riga.getFornitore().getCd_terzo() &&
-							banca.getPg_banca().intValue()!=riga.getBanca().getPg_banca().intValue()){
-						throw new it.cnr.jada.comp.ApplicationException("Attenzione sono state indicate delle coordinate bancarie diverse sulle righe!");
-					}else{
-						mod =riga.getModalita_pagamento();
-						banca=riga.getBanca();
-						terzo=riga.getFornitore();
-					}
-				}
-			}
-		}
+        if (fatturaPassiva instanceof Fattura_passiva_IBulk) {
+            Rif_modalita_pagamentoBulk mod = null;
+            BancaBulk banca = null;
+            TerzoBulk terzo = null;
+            for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
+                Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
+                if (riga.getCessionario() == null) {
+                    if (mod != null && mod.getCd_modalita_pag().compareTo(riga.getModalita_pagamento().getCd_modalita_pag()) == 0 &&
+                            terzo.getCd_terzo() == riga.getFornitore().getCd_terzo() &&
+                            banca.getPg_banca().intValue() != riga.getBanca().getPg_banca().intValue()) {
+                        throw new it.cnr.jada.comp.ApplicationException("Attenzione sono state indicate delle coordinate bancarie diverse sulle righe!");
+                    } else {
+                        mod = riga.getModalita_pagamento();
+                        banca = riga.getBanca();
+                        terzo = riga.getFornitore();
+                    }
+                }
+            }
+        }
         controllaQuadraturaIntrastat(aUC, fatturaPassiva);
         controllaQuadraturaObbligazioni(aUC, fatturaPassiva);
         controllaQuadraturaOrdini(aUC, fatturaPassiva);
     }
 
-	public void controlliCig(Fattura_passiva_rigaBulk riga) throws ApplicationException {
-		if (!riga.getFattura_passiva().getFl_fattura_compenso() && riga.getObbligazione_scadenziario() != null && riga.getObbligazione_scadenziario().getPg_obbligazione() != null){
-    		if (!(riga.getFattura_passiva().isEstera() ||riga.getFattura_passiva().isSanMarinoConIVA() || riga.getFattura_passiva().isSanMarinoSenzaIVA()) &&
-	    	        (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
-		        throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
-		    }
-		    if (Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getCig().getCdCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent()) {
-    		    throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
-		    }
-		}
-	}
+    public void controlliCig(Fattura_passiva_rigaBulk riga) throws ApplicationException {
+        if (!riga.getFattura_passiva().getFl_fattura_compenso() && riga.getObbligazione_scadenziario() != null && riga.getObbligazione_scadenziario().getPg_obbligazione() != null) {
+            if (!(riga.getFattura_passiva().isEstera() || riga.getFattura_passiva().isSanMarinoConIVA() || riga.getFattura_passiva().isSanMarinoSenzaIVA()) &&
+                    (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
+                throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
+            }
+            if (Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getCig().getCdCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent()) {
+                throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
+            }
+        }
+    }
 
     private void controllaQuadraturaOrdini(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
         if (Optional.ofNullable(fatturaPassiva.getFatturaRigaOrdiniHash()).isPresent()) {
@@ -6290,7 +6238,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                                     .getIm_imponibile().subtract(totaleImponibile);
                             final BigDecimal differenzaIva = fattura_passiva_rigaBulkBulkListEntry.getKey()
                                     .getIm_iva().subtract(totaleIva);
-                            return differenzaImponibile.compareTo(BigDecimal.ZERO) != 0 || differenzaIva.compareTo(BigDecimal.ZERO) != 0 ;
+                            return differenzaImponibile.compareTo(BigDecimal.ZERO) != 0 || differenzaIva.compareTo(BigDecimal.ZERO) != 0;
                         }).findFirst().ifPresent(fattura_passiva_rigaBulkBulkListEntry -> {
                     throw new DetailedRuntimeException(
                             "Attenzione l'imponibile o l'iva della riga di fattura \"" +
@@ -6311,7 +6259,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
             Fattura_passiva_rigaBulk riga_fattura = (Fattura_passiva_rigaBulk) i.next();
             if (riga_fattura.isInventariato()) {
-                if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+                if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
                     im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
                 else
                     im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -6327,12 +6275,12 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         sql.addSQLClause("AND", "CD_UO_FATT_PASS", SQLBuilder.EQUALS, fatturaPassiva.getCd_unita_organizzativa());
         sql.addSQLClause("AND", "ESERCIZIO_FATT_PASS", SQLBuilder.EQUALS, fatturaPassiva.getEsercizio());
         sql.addSQLClause("AND", "PG_FATTURA_PASSIVA", SQLBuilder.EQUALS, fatturaPassiva.getPg_fattura_passiva());
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO", sql.EQUALS, "ASS_INV_BENE_FATTURA.PG_INVENTARIO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.ESERCIZIO", sql.EQUALS, "ASS_INV_BENE_FATTURA.ESERCIZIO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO", sql.EQUALS, "ASS_INV_BENE_FATTURA.TI_DOCUMENTO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO", sql.EQUALS, "ASS_INV_BENE_FATTURA.NR_INVENTARIO");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_BUONO_C_S", sql.EQUALS, "ASS_INV_BENE_FATTURA.PG_BUONO_C_S");
-        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO", sql.EQUALS, "ASS_INV_BENE_FATTURA.PROGRESSIVO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.PG_INVENTARIO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.ESERCIZIO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.ESERCIZIO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.TI_DOCUMENTO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.NR_INVENTARIO");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_BUONO_C_S", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.PG_BUONO_C_S");
+        sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO", SQLBuilder.EQUALS, "ASS_INV_BENE_FATTURA.PROGRESSIVO");
 
         try {
             List associazioni = assHome.fetchAll(sql);
@@ -6343,11 +6291,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         } catch (PersistencyException e) {
             throw handleException(e);
         }
-    /* r.p. verificare la condizione fatturaPassiva.getCrudStatus()==1
-    *  Escludo le fattura già inserite in quanto la quadratura potrebbe non essere verificata
-    * a causa della vecchia gestione dell'associazione con il valore del bene completo,
-    * che non è stato possibile ricostruire in automatico
-    */
+        /* r.p. verificare la condizione fatturaPassiva.getCrudStatus()==1
+         *  Escludo le fattura già inserite in quanto la quadratura potrebbe non essere verificata
+         * a causa della vecchia gestione dell'associazione con il valore del bene completo,
+         * che non è stato possibile ricostruire in automatico
+         */
         if (totale_fat.compareTo(totale_inv) != 0)//  && fatturaPassiva.getCrudStatus()==1)
             throw new ApplicationException("Attenzione il totale delle righe collegate ad Inventario non corrisponde all'importo da Inventariare.");
 
@@ -6446,35 +6394,34 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (isBeneSconto && (riga.getIm_imponibile().add(riga.getIm_iva())).abs().compareTo(BigDecimal.ONE) > 0) //??
             throw new it.cnr.jada.comp.ApplicationException(
                     "Attenzione! Non è possibile inserire per questo bene/servizio questo importo.");
-        SQLBuilder sql=selectVoce_ivaByClause(aUC, riga, riga.getVoce_iva(), null);
-        
+        SQLBuilder sql = selectVoce_ivaByClause(aUC, riga, riga.getVoce_iva(), null);
+
         try {
-			if (sql.executeCountQuery(getConnection(aUC)) == 0)
-				
-			    if ((riga.getFattura_passiva().isCommerciale()) &&
-			        	(riga.getFattura_passiva().getFl_split_payment()==null ||
-			        	(riga.getFattura_passiva().getFl_split_payment()!=null && !riga.getFattura_passiva().getFl_split_payment().booleanValue())) && 
-			        	riga.getFattura_passiva().getData_protocollo()!=null  &&
-			         	!riga.getFattura_passiva().isEstera() &&
-			            !riga.getFattura_passiva().isSanMarinoSenzaIVA() &&
-			            !riga.getFattura_passiva().isSanMarinoConIVA() ){
-			    		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, riga.getFattura_passiva());
-			    		if (riga.getFattura_passiva().getDt_registrazione()!=null && riga.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){             		
-			        		 throw new it.cnr.jada.comp.ApplicationException(
-		 			  	            	"Attenzione! Selezione un codice iva non detraibile " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+".");
-		        		}
-				}
-			     else
-				 throw new it.cnr.jada.comp.ApplicationException(
-			  	            "Attenzione! Il codice iva " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+" non è valido");
-			} catch (SQLException e) {
-				throw handleException(e);
-	     }
-        if(riga.getFattura_passiva().isCommerciale() && riga.getVoce_iva().getPercentuale().compareTo(BigDecimal.ZERO)==0 & riga.getIm_iva().compareTo(BigDecimal.ZERO)!=0  ){
-        	throw new it.cnr.jada.comp.ApplicationException(
-	  	            "Attenzione! L'importo dell'iva " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+" non è valido");
+            if (sql.executeCountQuery(getConnection(aUC)) == 0)
+
+                if ((riga.getFattura_passiva().isCommerciale()) &&
+                        (riga.getFattura_passiva().getFl_split_payment() == null ||
+                                (riga.getFattura_passiva().getFl_split_payment() != null && !riga.getFattura_passiva().getFl_split_payment().booleanValue())) &&
+                        riga.getFattura_passiva().getData_protocollo() != null &&
+                        !riga.getFattura_passiva().isEstera() &&
+                        !riga.getFattura_passiva().isSanMarinoSenzaIVA() &&
+                        !riga.getFattura_passiva().isSanMarinoConIVA()) {
+                    Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, riga.getFattura_passiva());
+                    if (riga.getFattura_passiva().getDt_registrazione() != null && riga.getFattura_passiva().getDt_registrazione().after(conf.getDt02())) {
+                        throw new it.cnr.jada.comp.ApplicationException(
+                                "Attenzione! Selezione un codice iva non detraibile " + ((riga.getDs_riga_fattura() != null) ? "sul dettaglio " + riga.getDs_riga_fattura() : "su un dettaglio") + ".");
+                    }
+                } else
+                    throw new it.cnr.jada.comp.ApplicationException(
+                            "Attenzione! Il codice iva " + ((riga.getDs_riga_fattura() != null) ? "sul dettaglio " + riga.getDs_riga_fattura() : "su un dettaglio") + " non è valido");
+        } catch (SQLException e) {
+            throw handleException(e);
         }
-       	
+        if (riga.getFattura_passiva().isCommerciale() && riga.getVoce_iva().getPercentuale().compareTo(BigDecimal.ZERO) == 0 & riga.getIm_iva().compareTo(BigDecimal.ZERO) != 0) {
+            throw new it.cnr.jada.comp.ApplicationException(
+                    "Attenzione! L'importo dell'iva " + ((riga.getDs_riga_fattura() != null) ? "sul dettaglio " + riga.getDs_riga_fattura() : "su un dettaglio") + " non è valido");
+        }
+
         //28/08/2014 Rospuc - Gestione importo righe negativo
 //	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0 && !isBeneSconto)
 //		throw new it.cnr.jada.comp.ApplicationException("L'importo del prezzo unitario specificato NON è valido.");
@@ -6532,7 +6479,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 throw new it.cnr.jada.comp.ApplicationException("Attenzione: voce IVA non valida per il dettaglio - " + riga.getDs_riga_fattura());
         }
 
-}
+    }
 
     private void validateFornitore(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws it.cnr.jada.bulk.ValidationException {
 
@@ -6597,17 +6544,17 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     private void validazioneComune(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
-        if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva)){
+        if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva)) {
             throw new ApplicationMessageFormatException(
                     "Attenzione: non è stato definito un sezionale per le {0} e il tipo sezionale '{1}'!",
                     fatturaPassiva.getDescrizioneEntitaPlurale(),
                     Optional.ofNullable(fatturaPassiva)
-                        .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getTipo_sezionale()))
-                        .flatMap(tipo_sezionaleBulk -> Optional.ofNullable(tipo_sezionaleBulk.getDs_tipo_sezionale()))
-                        .orElse("NON DEFINITO")
+                            .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getTipo_sezionale()))
+                            .flatMap(tipo_sezionaleBulk -> Optional.ofNullable(tipo_sezionaleBulk.getDs_tipo_sezionale()))
+                            .orElse("NON DEFINITO")
             );
         }
-        try{
+        try {
             fatturaPassiva.validateDate();
 
             //Se è una fattura differita, la data di emissione non deve superare
@@ -6701,9 +6648,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             //se già collegate
             if (fatturaPassiva instanceof Fattura_passiva_IBulk &&
                     (original.getFl_extra_ue() != null && original.getFl_extra_ue().booleanValue() &&
-                            original.FATTURA_DI_BENI.equalsIgnoreCase(original.getTi_bene_servizio()))) {
+                            Fattura_passivaBulk.FATTURA_DI_BENI.equalsIgnoreCase(original.getTi_bene_servizio()))) {
                 if ((fatturaPassiva.getFl_extra_ue() == null || !fatturaPassiva.getFl_extra_ue().booleanValue()) ||
-                        !fatturaPassiva.FATTURA_DI_BENI.equalsIgnoreCase(fatturaPassiva.getTi_bene_servizio())) {
+                        !Fattura_passivaBulk.FATTURA_DI_BENI.equalsIgnoreCase(fatturaPassiva.getTi_bene_servizio())) {
 
                     Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk) fatturaPassiva;
                     Fattura_passiva_IHome fpHome = (Fattura_passiva_IHome) getHome(aUC, fatturaPassiva);
@@ -6745,7 +6692,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 //throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile aggiungere, eliminare o modificare i dettagli quando lo stato IVA della " + fatturaPassiva.getDescrizioneEntita() + " è B o C.");
                 //else {
                 original.setFattura_passiva_dettColl(new BulkList(originalRows));
-                for (Iterator i = ((Fattura_passivaBulk) original).getFattura_passiva_dettColl().iterator(); i.hasNext(); )
+                for (Iterator i = original.getFattura_passiva_dettColl().iterator(); i.hasNext(); )
                     ((Fattura_passiva_rigaBulk) i.next()).calcolaCampiDiRiga();
                 original.setChangeOperationOn(original.getValuta());
                 validaConConsuntivi(
@@ -6887,7 +6834,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     private boolean verificaEsistenzaAumentiValori(Fattura_passivaBulk fatturaPassiva) {
         boolean aumento = false;
         if ((fatturaPassiva.getAssociazioniInventarioHash() != null) && (!fatturaPassiva.getAssociazioniInventarioHash().isEmpty())) {
-            for (java.util.Enumeration e = ((AssociazioniInventarioTable) fatturaPassiva.getAssociazioniInventarioHash()).keys(); e.hasMoreElements(); ) {
+            for (java.util.Enumeration e = fatturaPassiva.getAssociazioniInventarioHash().keys(); e.hasMoreElements(); ) {
                 Ass_inv_bene_fatturaBulk ass = (Ass_inv_bene_fatturaBulk) e.nextElement();
                 if (ass.isPerAumentoValore())
                     aumento = true;
@@ -7003,7 +6950,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             else if (dominio.equalsIgnoreCase("descrizione")) {
                 for (StringTokenizer stringtokenizer = new StringTokenizer(query, " "); stringtokenizer.hasMoreElements(); ) {
                     String queryDetail = stringtokenizer.nextToken();
-                    if ((tipoRicerca != null && tipoRicerca.equalsIgnoreCase("selettiva")) || tipoRicerca == null) {
+                    if (tipoRicerca == null || tipoRicerca.equalsIgnoreCase("selettiva")) {
                         if (queryDetail.equalsIgnoreCase(RemoveAccent.convert(queryDetail)))
                             sql.addSQLClause("AND", "DS_FATTURA_PASSIVA", SQLBuilder.CONTAINS, queryDetail);
                         else {
@@ -7061,10 +7008,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                             mandato_riga.getPg_mandato());
                     MandatoIBulk man = (MandatoIBulk) mHome.findByPrimaryKey(mKey);
 
-                    if (man.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
-                        return true;
-                    else
-                        return false;
+                    return man.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
                 }
                 return false;
             } else {
@@ -7080,10 +7024,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                                     reversale_riga.getPg_reversale());
                             ReversaleIBulk rev = (ReversaleIBulk) rHome.findByPrimaryKey(rKey);
 
-                            if (rev.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
-                                return true;
-                            else
-                                return false;
+                            return rev.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
                         }
                     }
 
@@ -7198,7 +7139,6 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * @param bulk        fattura o nota credito da aggiornare
      * @return fattura o nota credito aggiornato con le modifiche
      * @throws ComponentException
-     *
      */
     public OggettoBulk rebuildDocumento(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
         if (bulk instanceof Fattura_passivaBulk) {
@@ -7279,7 +7219,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     private void caricaDettagliFatturaTrovato(UserContext userContext, BulkList<Fattura_passivaBulk> fatture) throws ComponentException, PersistencyException {
         for (Iterator<Fattura_passivaBulk> i = fatture.iterator(); i.hasNext(); ) {
-            Fattura_passivaBulk fattura = (Fattura_passivaBulk) i.next();
+            Fattura_passivaBulk fattura = i.next();
             caricaDettagliFatturaTrovato(userContext, fattura);
         }
     }
@@ -7291,7 +7231,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 Fattura_passiva_rigaIBulk det = (Fattura_passiva_rigaIBulk) j.next();
                 det.setVoce_iva((Voce_ivaBulk) getHome(userContext, Voce_ivaBulk.class).findByPrimaryKey(det.getVoce_iva()));
 
-                if (det.getTi_associato_manrev() != null && det.ASSOCIATO_A_MANDATO.equalsIgnoreCase(det.getTi_associato_manrev())) {
+                if (det.getTi_associato_manrev() != null && Fattura_passiva_rigaBulk.ASSOCIATO_A_MANDATO.equalsIgnoreCase(det.getTi_associato_manrev())) {
                     SQLBuilder sql = getHome(userContext, Mandato_rigaIBulk.class).createSQLBuilder();
                     sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, det.getCd_cds());
                     sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, det.getCd_unita_organizzativa());
@@ -7350,7 +7290,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             List fattureRighe = (getHome(userContext, Fattura_passiva_rigaIBulk.class).find(fatturaPassivaRiga));
             BulkList fatture = new BulkList();
             for (Iterator<Fattura_passiva_rigaIBulk> i = fattureRighe.iterator(); i.hasNext(); ) {
-                Fattura_passiva_rigaBulk fatr = (Fattura_passiva_rigaBulk) i.next();
+                Fattura_passiva_rigaBulk fatr = i.next();
 
                 Fattura_passiva_IBulk fatturaPassiva = new Fattura_passiva_IBulk();
                 fatturaPassiva.setEsercizio(fatr.getEsercizio().intValue());
@@ -7555,9 +7495,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     (it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession)
                             it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession",
                                     it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession.class);
-            ((Fattura_passivaBulk) fattura_passiva).setProgr_univoco(
+            fattura_passiva.setProgr_univoco(
                     new Long(
-                            (numerazione.creaNuovoProgressivo(userContext, new Integer(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)), "FATTURA_PASSIVA", "PG_REGISTRO_UNICO_FATPAS", ((Fattura_passivaBulk) fattura_passiva).getUser())).toString()
+                            (numerazione.creaNuovoProgressivo(userContext, new Integer(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)), "FATTURA_PASSIVA", "PG_REGISTRO_UNICO_FATPAS", fattura_passiva.getUser())).toString()
                     )
             );
         } catch (Throwable t) {
@@ -7599,6 +7539,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
 
     }
+
     private Timestamp getDataFineSplitPayment(UserContext userContext) throws ComponentException {
 
         try {
@@ -7623,7 +7564,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             fattura_passiva.setDataInizioFatturaElettronica(getDataInizioFatturazioneElettronica(aUC));
             if (fattura_passiva.isElettronica()) {
                 try {
-                    DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) fattura_passiva.getDocumentoEleTestata();
+                    DocumentoEleTestataBulk documentoEleTestata = fattura_passiva.getDocumentoEleTestata();
                     final List documentoEleAcquistos = getHome(aUC, DocumentoEleAcquistoBulk.class).find(new DocumentoEleAcquistoBulk(documentoEleTestata));
                     documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
                             getHome(aUC, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
@@ -7659,9 +7600,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         boolean noSegno = false;
         TerzoBulk terzoFatturaElettronica = fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatore();
         try {
-            terzoFatturaElettronica = (TerzoBulk) ((TerzoHome) getHome(aUC, terzoFatturaElettronica)).findByPrimaryKey(terzoFatturaElettronica);
-            if (terzoFatturaElettronica != null){
-                AnagraficoBulk anagraficoTerzoFatturaElettronica = (AnagraficoBulk) ((AnagraficoHome) getHome(aUC, AnagraficoBulk.class)).findByPrimaryKey(terzoFatturaElettronica.getAnagrafico());
+            terzoFatturaElettronica = (TerzoBulk) getHome(aUC, terzoFatturaElettronica).findByPrimaryKey(terzoFatturaElettronica);
+            if (terzoFatturaElettronica != null) {
+                AnagraficoBulk anagraficoTerzoFatturaElettronica = (AnagraficoBulk) getHome(aUC, AnagraficoBulk.class).findByPrimaryKey(terzoFatturaElettronica.getAnagrafico());
                 if (anagraficoTerzoFatturaElettronica != null &&
                         ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
                                 anagraficoTerzoFatturaElettronica.getCodice_fiscale() != null &&
@@ -7672,60 +7613,60 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                                 ||
                                 anagraficoTerzoFatturaElettronica.getCodice_fiscale() == null
                         )
-                                &&
-                                ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
-                                        anagraficoTerzoFatturaElettronica.getPartita_iva() != null &&
-                                        anagraficoTerzoFatturaElettronica.getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
-                                )
-                                        ||
-                                        fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
-                                        ||
-                                        anagraficoTerzoFatturaElettronica.getPartita_iva() == null
-                                )
+                        &&
+                        ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
+                                anagraficoTerzoFatturaElettronica.getPartita_iva() != null &&
+                                anagraficoTerzoFatturaElettronica.getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
+                        )
+                                ||
+                                fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
+                                ||
+                                anagraficoTerzoFatturaElettronica.getPartita_iva() == null
+                        )
 
-                                &&
+                        &&
 
-                                ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
-                                )
-                                        ||
-                                        fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
-                                        ||
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() == null
-                                )
-                                &&
-                                ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
-                                )
-                                        ||
-                                        fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
-                                        ||
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() == null
-                                )
+                        ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
+                        )
+                                ||
+                                fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
+                                ||
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() == null
+                        )
+                        &&
+                        ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
+                        )
+                                ||
+                                fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
+                                ||
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() == null
+                        )
 
-                                &&
+                        &&
 
-                                ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
-                                )
-                                        ||
-                                        fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
-                                        ||
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() == null
-                                )
-                                &&
-                                ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() != null &&
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
-                                )
-                                        ||
-                                        fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
-                                        ||
-                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() == null
-                                )
+                        ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
+                        )
+                                ||
+                                fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
+                                ||
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() == null
+                        )
+                        &&
+                        ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() != null &&
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
+                        )
+                                ||
+                                fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
+                                ||
+                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() == null
+                        )
 
                 )
                     throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Prestatore/Rappresentante fiscale/Intermediario nel documento elettronico.");
@@ -7764,10 +7705,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 }
             }
         }
-        if (fatturaPassiva.getTi_fattura().compareTo(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO) == 0)
-            noSegno = true;
-        else
-            noSegno = false;
+        noSegno = fatturaPassiva.getTi_fattura().compareTo(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO) == 0;
         if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
                 fatturaPassiva.getIm_totale_fattura() != null &&
                 (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(totaleFat) != 0) {   //se non è previsto arrotondamento restituisco l'errore
@@ -7781,140 +7719,163 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
         try {
             boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(aUC, "AMMFATTURDOCSFATPASA");
-            boolean checkRiepilogativo=true;
-            if ((fatturaPassiva.isCommerciale()) && 
-            		(fatturaPassiva.getFl_split_payment()==null ||
-                	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
-                	 fatturaPassiva.getData_protocollo()!=null && 
-                 	!fatturaPassiva.isEstera() &&
+            boolean checkRiepilogativo = true;
+            if ((fatturaPassiva.isCommerciale()) &&
+                    (fatturaPassiva.getFl_split_payment() == null ||
+                            (fatturaPassiva.getFl_split_payment() != null && !fatturaPassiva.getFl_split_payment().booleanValue())) &&
+                    fatturaPassiva.getData_protocollo() != null &&
+                    !fatturaPassiva.isEstera() &&
                     !fatturaPassiva.isSanMarinoSenzaIVA() &&
-                    !fatturaPassiva.isSanMarinoConIVA()){
-            	
-            			Configurazione_cnrBulk conf=getLimitiRitardoDetraibile(aUC, fatturaPassiva);
-                		if (fatturaPassiva.getDt_registrazione()!=null && fatturaPassiva.getDt_registrazione().after(conf.getDt02()))
-                			checkRiepilogativo=false;
-                }
+                    !fatturaPassiva.isSanMarinoConIVA()) {
+
+                Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
+                if (fatturaPassiva.getDt_registrazione() != null && fatturaPassiva.getDt_registrazione().after(conf.getDt02()))
+                    checkRiepilogativo = false;
+            }
 
             if (!hasAccesso && checkRiepilogativo) {
-                Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
-                for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
-                    Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
-                    String key = null;
-                    Hashtable<String, BigDecimal> currentMap = null;
-                    if (Optional.ofNullable(riga)
-                            .flatMap(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva()))
-                            .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_autofattura()))
-                            .map(flAutoFattura -> !flAutoFattura)
-                            .orElse(Boolean.FALSE)) {
-                        if (riga.getVoce_iva().getNaturaOperNonImpSdi() != null) {
-                            key = riga.getVoce_iva().getNaturaOperNonImpSdi();
-                            currentMap = mapNatura;
-                        } else {
-                            key = riga.getVoce_iva().getPercentuale().toString();
-                            currentMap = mapIva;
-                        }
-                    }
-                    if (key != null) {
-                        if (currentMap.get(key) != null)
-                            currentMap.put(key, currentMap.get(key).add(riga.getIm_iva()));
-                        else
-                            currentMap.put(key, riga.getIm_iva());
-                    }
-                }
-
-                Hashtable<String, BigDecimal> mapNaturaEle = new Hashtable<String, BigDecimal>(), mapIvaEle = new Hashtable<String, BigDecimal>();
-                for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
-                    DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
-                    String key = null;
-                    Hashtable<String, BigDecimal> currentMap = null;
-                    if (rigaEle.getImponibileImporto() != null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0) {
-                        if (rigaEle.getNatura() != null) {
-                            key = rigaEle.getNatura();
-                            currentMap = mapNaturaEle;
-                        } else {
-                            key = rigaEle.getAliquotaIva().toString();
-                            currentMap = mapIvaEle;
-                        }
-
-                        if (currentMap.get(key) != null)
-                            currentMap.put(key, currentMap.get(key).add(rigaEle.getImposta()));
-                        else
-                            currentMap.put(key, rigaEle.getImposta());
-                    }
-                }
-
-                Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();
-                for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
-                    DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
-                    String key = null;
-                    Hashtable<String, BigDecimal> currentMap = null;
-                    if (rigaEle.getNatura() != null) {
-                        key = rigaEle.getNatura();
-                        currentMap = mapNaturaEleArr;
-                    } else {
-                        key = rigaEle.getAliquotaIva().toString();
-                        currentMap = mapIvaEleArr;
-                    }
-
-                    if (currentMap.get(key) != null)
-                        currentMap.put(key, currentMap.get(key).add(Utility.nvl(rigaEle.getArrotondamento())));
-                    else
-                        currentMap.put(key, Utility.nvl(rigaEle.getArrotondamento()));
-                }
-
-                StringBuffer codiciNaturaSqu = new StringBuffer();
-                for (Iterator i = mapNatura.keySet().iterator(); i.hasNext(); ) {
-                    String key = (String) i.next();
-                    BigDecimal value = mapNatura.get(key);
-                    BigDecimal valueEle = mapNaturaEle.get(key);
-                    if (noSegno)
-                        valueEle = Optional.ofNullable(valueEle)
-                                            .map(BigDecimal::abs)
-                                            .orElse(null);
-                    BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
-                    if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
-                        if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
-                                (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
-                                (value == null && valueEle != null) || (value != null && valueEle == null))
-                            codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
-                    mapNaturaEle.remove(key);
-                }
-
-                for (Iterator i = mapNaturaEle.keySet().iterator(); i.hasNext(); )
-                    codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + (String) i.next());
-
-                StringBuffer codiciIvaSqu = new StringBuffer();
-                for (Iterator i = mapIva.keySet().iterator(); i.hasNext(); ) {
-                    String key = (String) i.next();
-                    BigDecimal value = mapIva.get(key);
-                    BigDecimal valueEle = mapIvaEle.get(key);
-                    if (noSegno)
-                        valueEle = valueEle.abs();
-                    BigDecimal valueEleArr = Utility.nvl(mapIvaEleArr.get(key));
-                    if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
-                        if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
-                                (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
-                                (value == null && valueEle != null) || (value != null && valueEle == null))
-                            codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + key);
-                    mapIvaEle.remove(key);
-                }
-
-                for (Iterator i = mapIvaEle.keySet().iterator(); i.hasNext(); )
-                    codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + (String) i.next());
-
-                if (verificaGenerazioneAutofattura(aUC, fatturaPassiva) &&
-                        (codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0))
-                    codiciNaturaSqu = new StringBuffer();
-
-                if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
-                            (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu.toString() : "") +
-                            (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
-                            (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu.toString() : "") + "!");
+                controllaQuadaraturaNatura(aUC, noSegno, fatturaPassiva, true);
+                controllaQuadaraturaNatura(aUC, noSegno, fatturaPassiva, false);
             }
         } catch (RemoteException e) {
             throw handleException(e);
         }
+    }
+
+    private void controllaQuadaraturaNatura(UserContext aUC, boolean noSegno, Fattura_passivaBulk fatturaPassiva, boolean checkIVA) throws ComponentException {
+        Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
+        BigDecimal bollo = BigDecimal.ZERO;
+        String naturaBollo = null;
+        for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
+            Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
+            if (Optional.ofNullable(riga.getBene_servizio())
+                    .flatMap(bene_servizioBulk -> Optional.ofNullable(bene_servizioBulk.getFl_bollo())).orElse(Boolean.FALSE)){
+                bollo = riga.getIm_imponibile();
+            }
+            String key = null;
+            Hashtable<String, BigDecimal> currentMap = null;
+            if (Optional.ofNullable(riga)
+                    .flatMap(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva()))
+                    .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_autofattura()))
+                    .map(flAutoFattura -> !flAutoFattura)
+                    .orElse(Boolean.FALSE)) {
+                if (riga.getVoce_iva().getNaturaOperNonImpSdi() != null) {
+                    key = riga.getVoce_iva().getNaturaOperNonImpSdi();
+                    if (riga.getBene_servizio().getFl_bollo()){
+                        naturaBollo = key;
+                    }
+                    currentMap = mapNatura;
+                } else {
+                    key = riga.getVoce_iva().getPercentuale().toString();
+                    currentMap = mapIva;
+                }
+            }
+            if (key != null) {
+                if (currentMap.get(key) != null)
+                    currentMap.put(key, currentMap.get(key).add(checkIVA ? riga.getIm_iva() : riga.getIm_imponibile()));
+                else
+                    currentMap.put(key, checkIVA ? riga.getIm_iva() : riga.getIm_imponibile());
+            }
+        }
+
+        Hashtable<String, BigDecimal> mapNaturaEle = new Hashtable<String, BigDecimal>(), mapIvaEle = new Hashtable<String, BigDecimal>();
+        for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+            DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+            String key = null;
+            Hashtable<String, BigDecimal> currentMap = null;
+            if (rigaEle.getImponibileImporto() != null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0) {
+                if (rigaEle.getNatura() != null) {
+                    key = rigaEle.getNatura();
+                    currentMap = mapNaturaEle;
+                } else {
+                    key = rigaEle.getAliquotaIva().toString();
+                    currentMap = mapIvaEle;
+                }
+
+                if (currentMap.get(key) != null)
+                    currentMap.put(key, currentMap.get(key).add(checkIVA ? rigaEle.getImposta() : rigaEle.getImponibileImporto()));
+                else
+                    currentMap.put(key, checkIVA ? rigaEle.getImposta() : rigaEle.getImponibileImporto());
+            }
+        }
+
+        Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();
+        for (Iterator i = fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+            DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+            String key = null;
+            Hashtable<String, BigDecimal> currentMap = null;
+            if (rigaEle.getNatura() != null) {
+                key = rigaEle.getNatura();
+                currentMap = mapNaturaEleArr;
+            } else {
+                key = rigaEle.getAliquotaIva().toString();
+                currentMap = mapIvaEleArr;
+            }
+
+            if (currentMap.get(key) != null)
+                currentMap.put(key, currentMap.get(key).add(Utility.nvl(rigaEle.getArrotondamento())));
+            else
+                currentMap.put(key, Utility.nvl(rigaEle.getArrotondamento()));
+        }
+
+        StringBuffer codiciNaturaSqu = new StringBuffer();
+        for (Iterator i = mapNatura.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            BigDecimal value = mapNatura.get(key);
+            BigDecimal valueEle = mapNaturaEle.get(key);
+            if (noSegno)
+                valueEle = Optional.ofNullable(valueEle)
+                        .map(BigDecimal::abs)
+                        .orElse(null);
+            BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
+            if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
+                if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
+                        (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
+                        (value == null && valueEle != null) || (value != null && valueEle == null)){
+                    if (!checkIVA && valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) > 0){
+                        BigDecimal diff = value.subtract(valueEle);
+                        if (diff.compareTo(bollo) != 0 || !naturaBollo.equals(key)){
+                            codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
+                        }
+                    } else {
+                        codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + key);
+                    }
+                }
+            mapNaturaEle.remove(key);
+        }
+
+        for (Iterator i = mapNaturaEle.keySet().iterator(); i.hasNext(); )
+            codiciNaturaSqu.append((codiciNaturaSqu.length() > 0 ? "," : "") + i.next());
+
+        StringBuffer codiciIvaSqu = new StringBuffer();
+        for (Iterator i = mapIva.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            BigDecimal value = mapIva.get(key);
+            BigDecimal valueEle = mapIvaEle.get(key);
+            if (noSegno)
+                valueEle = valueEle.abs();
+            BigDecimal valueEleArr = Utility.nvl(mapIvaEleArr.get(key));
+            if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
+                if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
+                        (valueEleArr.compareTo(new BigDecimal(0)) != 0 && value != null && valueEle != null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs()) != 0) ||
+                        (value == null && valueEle != null) || (value != null && valueEle == null))
+                    codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + key);
+            mapIvaEle.remove(key);
+        }
+
+        for (Iterator i = mapIvaEle.keySet().iterator(); i.hasNext(); )
+            codiciIvaSqu.append((codiciIvaSqu.length() > 0 ? "," : "") + i.next());
+
+        if (verificaGenerazioneAutofattura(aUC, fatturaPassiva) &&
+                (codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0))
+            codiciNaturaSqu = new StringBuffer();
+
+        if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0)
+            throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
+                    (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
+                    (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
+                    (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+
     }
 
     public void aggiornaObblSuCancPerCompenso(
@@ -8027,7 +7988,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         try {
             dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
             dataFine = Utility.createConfigurazioneCnrComponentSession().getDt02(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
-            
+
         } catch (ComponentException e) {
             throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
         } catch (RemoteException e) {
@@ -8038,11 +7999,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)) {
             return false;
         }
-        if (dataFattura == null || ((dataFine != null) && dataFattura.after(dataFine))) {
-            return false;
-        }
-       
-        return true;
+        return dataFattura != null && ((dataFine == null) || !dataFattura.after(dataFine));
     }
 
     public List<EvasioneOrdineRigaBulk> findContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga, CompoundFindClause findclause) throws ComponentException {
@@ -8055,11 +8012,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             getHomeCache(userContext).fetchAll(userContext);
             return list;
         } catch (PersistencyException e) {
-           throw handleException(e);
+            throw handleException(e);
         }
     }
+
     /**
      * Metodo richiamato dal framework per cercare le righe di consegna
+     *
      * @param userContext
      * @param fatturaPassivaRiga
      * @param evasioneOrdineRigaBulk
@@ -8069,17 +8028,17 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      */
     public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Fattura_passiva_rigaIBulk fatturaPassivaRiga,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
-        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk)fatturaPassivaRiga, evasioneOrdineRigaBulk, findclause);
+        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk) fatturaPassivaRiga, evasioneOrdineRigaBulk, findclause);
     }
 
     public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Nota_di_credito_rigaBulk nota_di_credito_rigaBulk,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
-        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk)nota_di_credito_rigaBulk, evasioneOrdineRigaBulk, findclause);
+        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk) nota_di_credito_rigaBulk, evasioneOrdineRigaBulk, findclause);
     }
 
     public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Nota_di_debito_rigaBulk nota_di_debito_rigaBulk,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
-        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk)nota_di_debito_rigaBulk, evasioneOrdineRigaBulk, findclause);
+        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk) nota_di_debito_rigaBulk, evasioneOrdineRigaBulk, findclause);
     }
 
     public SQLBuilder selectContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga,
@@ -8124,6 +8083,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     /**
      * Recupera le righe di ordine associate alla fattura
+     *
      * @param userContext
      * @param fattura_passiva_rigaBulk
      * @return List<FatturaOrdineBulk>
@@ -8147,6 +8107,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         sqlBuilder.addSQLClause(FindClause.AND, "PROGRESSIVO_RIGA", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getProgressivo_riga());
         return fatturaOrdineHome.fetchAll(sqlBuilder);
     }
+
     public Configurazione_cnrBulk getLimitiRitardoDetraibile(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
 
         try {
@@ -8154,28 +8115,29 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                     .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
             GregorianCalendar tsGregorian = (GregorianCalendar) GregorianCalendar.getInstance();
-	       	tsGregorian.setTime(fattura.getData_protocollo());
-	        
-	       	Configurazione_cnrBulk conf =sess.getConfigurazione(userContext, tsGregorian.get(GregorianCalendar.YEAR), null,
+            tsGregorian.setTime(fattura.getData_protocollo());
+
+            Configurazione_cnrBulk conf = sess.getConfigurazione(userContext, tsGregorian.get(GregorianCalendar.YEAR), null,
                     Configurazione_cnrBulk.PK_FATTURA_PASSIVA, Configurazione_cnrBulk.SK_LIMITE_REG_TARDIVA);
-	       	if (conf !=null && conf.getDt01()!=null && conf.getDt02()!=null)
-	       		return conf;
-	       	else
-	       		throw new ApplicationException("Configurazione registrazione tardiva mancante.");
-	      
+            if (conf != null && conf.getDt01() != null && conf.getDt02() != null)
+                return conf;
+            else
+                throw new ApplicationException("Configurazione registrazione tardiva mancante.");
+
         } catch (javax.ejb.EJBException ex) {
             throw handleException(ex);
         } catch (RemoteException ex) {
             throw handleException(ex);
         }
     }
+
     public boolean isAttivoSplitPaymentProf(UserContext aUC, Timestamp dataFattura) throws ComponentException {
         Date dataInizio;
         Date dataFine;
         try {
             dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
             dataFine = Utility.createConfigurazioneCnrComponentSession().getDt02(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
-            
+
         } catch (ComponentException e) {
             throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
         } catch (RemoteException e) {
@@ -8186,12 +8148,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)) {
             return false;
         }
-        if (dataFattura == null || ((dataFine != null) && dataFattura.after(dataFine))) {
-            return false;
-        }
-       
-        return true;
+        return dataFattura != null && ((dataFine == null) || !dataFattura.after(dataFine));
     }
+
     private Timestamp getDataInizioSplitPaymentProf(UserContext userContext) throws ComponentException {
 
         try {
@@ -8208,6 +8167,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
 
     }
+
     private Timestamp getDataFineSplitPaymentProf(UserContext userContext) throws ComponentException {
 
         try {
@@ -8225,68 +8185,65 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     }
 
-    public SQLBuilder selectCigByClause (UserContext userContext, Obbligazione_scadenzarioBulk obbl, CigBulk cig, CompoundFindClause clause)	throws ComponentException, PersistencyException
-	{
-		if (clause == null) 
-		  clause = cig.buildFindClauses(null);
-		SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
+    public SQLBuilder selectCigByClause(UserContext userContext, Obbligazione_scadenzarioBulk obbl, CigBulk cig, CompoundFindClause clause) throws ComponentException, PersistencyException {
+        if (clause == null)
+            clause = cig.buildFindClauses(null);
+        SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
 
-		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
-		Set<String> uoAbilitate = new HashSet<String>();
-		uoAbilitate.add(obbl.getObbligazione().getCd_unita_organizzativa());
-		ObbligazioneBulk obbligazione = null;
-	      try {
-	    	  obbligazione = (ObbligazioneBulk)getHome(userContext, ObbligazioneBulk.class).findByPrimaryKey(obbl.getObbligazione());
-		} catch (PersistencyException e1) {
-			throw new ComponentException(e1);
-		}
-		if (obbligazione != null && obbligazione.getContratto() != null){
-			ContrattoBulk contratto = obbligazione.getContratto();
-			try {
-		    	  contratto = (ContrattoBulk)getHome(userContext, ContrattoBulk.class).findByPrimaryKey(contratto);
-		    	  uoAbilitate.add(contratto.getCd_unita_organizzativa());
-			} catch (PersistencyException e1) {
-				throw new ComponentException(e1);
-			}
+        sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
+        Set<String> uoAbilitate = new HashSet<String>();
+        uoAbilitate.add(obbl.getObbligazione().getCd_unita_organizzativa());
+        ObbligazioneBulk obbligazione = null;
+        try {
+            obbligazione = (ObbligazioneBulk) getHome(userContext, ObbligazioneBulk.class).findByPrimaryKey(obbl.getObbligazione());
+        } catch (PersistencyException e1) {
+            throw new ComponentException(e1);
+        }
+        if (obbligazione != null && obbligazione.getContratto() != null) {
+            ContrattoBulk contratto = obbligazione.getContratto();
+            try {
+                contratto = (ContrattoBulk) getHome(userContext, ContrattoBulk.class).findByPrimaryKey(contratto);
+                uoAbilitate.add(contratto.getCd_unita_organizzativa());
+            } catch (PersistencyException e1) {
+                throw new ComponentException(e1);
+            }
             ContrattoHome contrattoHome = (ContrattoHome) getHome(userContext, contratto.getClass());
             try {
-            	Collection assUo = contrattoHome.findAssociazioneUO(obbligazione.getContratto());
-            	if (assUo != null){
-            		for (Iterator i = assUo.iterator(); i.hasNext(); ) {
-            			Ass_contratto_uoBulk ass = (Ass_contratto_uoBulk) i.next();
-            			uoAbilitate.add(ass.getCd_unita_organizzativa());
-            		}
-            	}
+                Collection assUo = contrattoHome.findAssociazioneUO(obbligazione.getContratto());
+                if (assUo != null) {
+                    for (Iterator i = assUo.iterator(); i.hasNext(); ) {
+                        Ass_contratto_uoBulk ass = (Ass_contratto_uoBulk) i.next();
+                        uoAbilitate.add(ass.getCd_unita_organizzativa());
+                    }
+                }
             } catch (Exception e1) {
-            	throw new ComponentException(e1);
+                throw new ComponentException(e1);
             }
-		} 
-		if (uoAbilitate.size() > 1){
-			sql.openParenthesis(FindClause.AND);
-			boolean first = true;
-			for (Iterator i = uoAbilitate.iterator(); i.hasNext(); ) {
-				String uo = (String) i.next();
-				sql.addSQLClause(first ? FindClause.AND : FindClause.OR, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
-				first = false;
-			}
-			sql.closeParenthesis();
-		} else if (obbligazione != null && (obbligazione.getContratto() == null || obbligazione.getContratto().getPg_contratto() == null)){
-			String uo = uoAbilitate.iterator().next();
-			String condizione = " cd_unita_organizzativa = '"+uo+"' or cd_unita_organizzativa in ("
-					+ " select contratto.cd_unita_organizzativa from contratto, ass_contratto_uo where contratto.esercizio = ass_contratto_uo.esercizio "
-					+ " AND contratto.stato = ass_contratto_uo.stato_contratto AND contratto.pg_contratto = ass_contratto_uo.pg_contratto and "
-					+ " ass_contratto_uo.cd_unita_organizzativa='"+uo+"' and contratto.cd_cig=cig.cd_cig)";
+        }
+        if (uoAbilitate.size() > 1) {
+            sql.openParenthesis(FindClause.AND);
+            boolean first = true;
+            for (Iterator i = uoAbilitate.iterator(); i.hasNext(); ) {
+                String uo = (String) i.next();
+                sql.addSQLClause(first ? FindClause.AND : FindClause.OR, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
+                first = false;
+            }
+            sql.closeParenthesis();
+        } else if (obbligazione != null && (obbligazione.getContratto() == null || obbligazione.getContratto().getPg_contratto() == null)) {
+            String uo = uoAbilitate.iterator().next();
+            String condizione = " cd_unita_organizzativa = '" + uo + "' or cd_unita_organizzativa in ("
+                    + " select contratto.cd_unita_organizzativa from contratto, ass_contratto_uo where contratto.esercizio = ass_contratto_uo.esercizio "
+                    + " AND contratto.stato = ass_contratto_uo.stato_contratto AND contratto.pg_contratto = ass_contratto_uo.pg_contratto and "
+                    + " ass_contratto_uo.cd_unita_organizzativa='" + uo + "' and contratto.cd_cig=cig.cd_cig)";
 
-			sql.addSQLClause( "AND", condizione);
-			
-		} else {
-			sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoAbilitate.iterator().next());
-		}
-		if (clause != null) 
-		  sql.addClause(clause);
+            sql.addSQLClause("AND", condizione);
+
+        } else {
+            sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoAbilitate.iterator().next());
+        }
+        if (clause != null)
+            sql.addClause(clause);
         sql.addOrderBy("cd_Unita_Organizzativa, cd_Cig");
-		return sql;
-	}
-	
-
+        return sql;
+    }
 }

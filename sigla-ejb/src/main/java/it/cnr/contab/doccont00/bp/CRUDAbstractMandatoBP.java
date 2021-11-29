@@ -17,6 +17,10 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.doccont00.core.bulk.CompensoOptionRequestParameter;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
@@ -31,51 +35,62 @@ import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.action.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
  */
 
-public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDocAmmEconomicaBP {
 
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_uscBulk.class,"sospeso_det_uscColl",this);
 	private final SimpleDetailCRUDController reversaliMan = new SimpleDetailCRUDController("Reversali",V_ass_doc_contabiliBulk.class,"doc_contabili_collColl",this);
-    protected boolean attivoSiopeplus;
-    private ContabiliService contabiliService;
+	protected boolean attivoSiopeplus;
+	private ContabiliService contabiliService;
 	private DocumentiContabiliService documentiContabiliService;
 	private String nodeRefDocumento;
 	private boolean supervisore = false;
 
+	private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+	protected boolean attivaEconomicaParallela = false;
+
 	public CRUDAbstractMandatoBP() {}
-	public CRUDAbstractMandatoBP( String function ) 
+	public CRUDAbstractMandatoBP( String function )
 	{
 		super(function);
 	}
+
+	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		try {
+			attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(actioncontext.getUserContext());
+		} catch (ComponentException|RemoteException e) {
+			throw handleException(e);
+		}
+		super.init(config, actioncontext);
+	}
+
 	/**
 	 * Aggiunge un nuovo sospeso alla lista dei Sospeso associati ad un Mandato
 	 * @param context contesto dell'azione
-	 * @return it.cnr.jada.action.Forward forward successivo  
+	 * @return it.cnr.jada.action.Forward forward successivo
 	 */
-	public void aggiungiSospesi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	public void aggiungiSospesi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException
 	{
 		try
 		{
@@ -90,7 +105,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 			SospesoBulk sospeso;
 			Sospeso_det_uscBulk sdu;
-			for ( Iterator i = sospesi.iterator() ;i.hasNext() ;) 
+			for ( Iterator i = sospesi.iterator() ;i.hasNext() ;)
 			{
 				sospeso = (SospesoBulk) i.next();
 				sdu = mandato.addToSospeso_det_uscColl( sospeso );
@@ -101,7 +116,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			resyncChildren( context );
 		} catch(Exception e) {
 			throw handleException(e);
-		}		
+		}
 	}
 	protected CRUDComponentSession getComponentSession() {
 		return (CRUDComponentSession) EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
@@ -114,9 +129,10 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		try {
+			this.nodeRefDocumento = null;
 			Optional.ofNullable(documentiContabiliService.getDocumentKey(
-			(StatoTrasmissione) getComponentSession().findByPrimaryKey(context.getUserContext(),
-					new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato()))
+					(StatoTrasmissione) getComponentSession().findByPrimaryKey(context.getUserContext(),
+							new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato()))
 			)).ifPresent(s -> this.nodeRefDocumento = s);
 		} catch(Exception _ex) {
 			throw handleException(_ex);
@@ -143,7 +159,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 				setStatus(VIEW);
 				setMessage("Verificare lo stato di trasmissione del mandato annullato. Non consentita la modifica.");
 			}
-		} 
+		}
 	}
 
 	public boolean isSupervisore() {
@@ -173,31 +189,17 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	 * @exception <code>BusinessProcessException</code>
 	 */
 
-	public it.cnr.jada.util.RemoteIterator cercaSospesi(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	public it.cnr.jada.util.RemoteIterator cercaSospesi(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException
 	{
-		try 
+		try
 		{
 			MandatoComponentSession session = (MandatoComponentSession) createComponentSession();
 			return session.cercaSospesi( context.getUserContext(), null, (MandatoBulk) getModel() );
-
 		} catch (it.cnr.jada.comp.ComponentException e) {
 			throw handleException(e);
 		} catch (java.rmi.RemoteException e) {
 			throw handleException(e);
 		}
-
-		/*
-	try 
-	{
-		MandatoComponentSession session = (MandatoComponentSession) createComponentSession();
-		MandatoBulk mandato = session.listaSospesi( context.getUserContext(), (MandatoBulk) getModel() );
-		setModel( context, mandato );
-		resyncChildren( context );
-	} catch(Exception e) {
-		throw handleException(e);
-	}
-		 */
-
 	}
 	/**
 	 * Gestisce l'annullamento di un Mandato.
@@ -241,7 +243,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		return sospesiSelezionati;
 	}
 	/* inizializza il BP delle stampe impostando il nome del report da stampare e i suoi parametri */
-	protected void initializePrintBP(AbstractPrintBP bp) 
+	protected void initializePrintBP(AbstractPrintBP bp)
 	{
 		OfflineReportPrintBP printbp = (OfflineReportPrintBP) bp;
 		printbp.setReportName("/doccont/doccont/vpg_man_rev_ass.jasper");
@@ -294,15 +296,15 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	 *	Abilito il bottone di caricamento dei sospesi solo se il mandato non è stato
 	 *  pagato o annullato e se e' a regolamento sospeso.
 	 *
-	 *	return boolean	= FALSE se il mandato e' stato pagato o annullato oppure se e' di regolarizzazione 
-	 *					= TRUE se il mandato non e' stato pagato o annullato e se non e' di regolarizzazione 
+	 *	return boolean	= FALSE se il mandato e' stato pagato o annullato oppure se e' di regolarizzazione
+	 *					= TRUE se il mandato non e' stato pagato o annullato e se non e' di regolarizzazione
 	 */
 	public boolean isCaricaSospesiButtonEnabled() {
 		return
 
-				MandatoBulk.TIPO_REGOLAM_SOSPESO.equals(((MandatoBulk)getModel()).getTi_mandato()) &&	
-				/*!((MandatoBulk)getModel()).isPagato() && */
-				!((MandatoBulk)getModel()).isAnnullato() ;
+				MandatoBulk.TIPO_REGOLAM_SOSPESO.equals(((MandatoBulk)getModel()).getTi_mandato()) &&
+						/*!((MandatoBulk)getModel()).isPagato() && */
+						!((MandatoBulk)getModel()).isAnnullato() ;
 	}
 	/**
 	 *	Abilito il bottone di cancellazione documento solo se non è stato pagato o
@@ -310,29 +312,28 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	 */
 	public boolean isDeleteButtonEnabled() {
 
-		if(!isEditable()) 
-			return super.isDeleteButtonEnabled();			  
+		if(!isEditable())
+			return super.isDeleteButtonEnabled();
 		else
 			return (super.isDeleteButtonEnabled() ||
-					(!isEditing() && 
-							getModel()!=null && 
-							getModel() instanceof MandatoBulk && 
-							((MandatoBulk)getModel()).getStato_trasmissione() !=null && 
+					(!isEditing() &&
+							getModel()!=null &&
+							getModel() instanceof MandatoBulk &&
+							((MandatoBulk)getModel()).getStato_trasmissione() !=null &&
 							!((MandatoBulk)getModel()).getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))) &&
-							//!((MandatoBulk)getModel()).isPagato() && 
-							!((MandatoBulk)getModel()).isAnnullato() ;
+					!((MandatoBulk)getModel()).isAnnullato() ;
 	}
-	
+
 	@Override
 	public boolean isPrintButtonHidden() {
-		boolean hidden = super.isPrintButtonHidden() || isInserting() || isSearching();		
+		boolean hidden = super.isPrintButtonHidden() || isInserting() || isSearching();
 		return hidden || this.nodeRefDocumento != null;
 	}
 
 	public boolean isPrintpdfButtonHidden() {
-		boolean hidden = super.isPrintButtonHidden() || isInserting() || isSearching();		
+		boolean hidden = super.isPrintButtonHidden() || isInserting() || isSearching();
 		return hidden || this.nodeRefDocumento == null;
-	}	
+	}
 
 	/**
 	 *	Abilito il bottone di rimozione dei sospesi solo se il mandato non è stato
@@ -382,7 +383,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 		super.initialize(actioncontext);
 		contabiliService = SpringUtil.getBean("contabiliService",
-				ContabiliService.class);	
+				ContabiliService.class);
 		documentiContabiliService = SpringUtil.getBean("documentiContabiliService",
 				DocumentiContabiliService.class);
 	}
@@ -392,7 +393,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		if (getStatus() == SEARCH)
 			return hidden;
 		MandatoBulk mandato = (MandatoBulk)getModel();
-		if (mandato != null && mandato.getPg_mandato() != null && mandato.getStato() != null && 
+		if (mandato != null && mandato.getPg_mandato() != null && mandato.getStato() != null &&
 				(mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_PAGATO) ||
 						(mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO) &&
 								Optional.ofNullable(mandato.getStatoVarSos())
@@ -400,11 +401,11 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 										.isPresent()
 						)
 				) &&
-				mandato.getStato_trasmissione() != null && 
+				mandato.getStato_trasmissione() != null &&
 				mandato.getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
 			return Optional.ofNullable(contabiliService.getNodeRefContabile(mandato))
-						.map(contabili -> contabili.isEmpty())
-						.orElse(Boolean.TRUE);
+					.map(contabili -> contabili.isEmpty())
+					.orElse(Boolean.TRUE);
 		return hidden;
 	}
 
@@ -430,7 +431,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		}
 		return null;
 	}
- 
+
 	public void scaricaContabile(ActionContext actioncontext) throws Exception {
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		InputStream is = contabiliService.getStreamContabile(mandato);
@@ -451,8 +452,8 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	public void scaricaMandato(ActionContext actioncontext) throws Exception {
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		InputStream is = documentiContabiliService.getStreamDocumento(
-                (StatoTrasmissione) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
-		        new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato()))
+				(StatoTrasmissione) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
+						new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato()))
 		);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
@@ -468,7 +469,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		}
 	}
 	public boolean isAnnullabileEnte(it.cnr.jada.action.ActionContext context,MandatoBulk mandato) throws it.cnr.jada.action.BusinessProcessException {
-		try { 
+		try {
 			return  (((MandatoComponentSession) createComponentSession()).isAnnullabile(context.getUserContext(),mandato).compareTo("F")==0);
 		} catch (it.cnr.jada.comp.ComponentException e) {
 			throw handleException(e);
@@ -483,7 +484,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			validate(context);
 			getModel().setToBeUpdated();
 			setModel( context, ((MandatoComponentSession) createComponentSession()).annullaMandato(context.getUserContext(),(MandatoBulk)getModel(), true));
-			setStatus(VIEW);			
+			setStatus(VIEW);
 		} catch(Exception e) {
 			getModel().setCrudStatus(crudStatus);
 			throw handleException(e);
@@ -492,5 +493,43 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 	public Boolean isAttivoSiopeplus() {
 		return attivoSiopeplus;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiDare() {
+		return movimentiDare;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiAvere() {
+		return movimentiAvere;
+	}
+
+	private static final String[] TAB_TESTATA = new String[]{ "tabMandato","Mandato","/doccont00/tab_mandato.jsp" };
+	private static final String[] TAB_RICERCA_DOCPASSIVI = { "tabRicercaDocPassivi","Ricerca documenti","/doccont00/tab_ricerca_doc_passivi.jsp" };
+	private static final String[] TAB_DETTAGLIO = new String[]{ "tabDettaglioMandato","Dettaglio","/doccont00/tab_dettaglio_mandato.jsp" };
+	private static final String[] TAB_SOSPESI = new String[]{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" };
+	private static final String[] TAB_REVERSALI = new String[]{ "tabReversali","Doc.Contabili associati","/doccont00/tab_mandato_reversali.jsp" };
+
+	public String[][] getTabs() {
+		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+		int i = 0;
+		if (Optional.ofNullable(this).filter(CRUDMandatoAccreditamentoBP.class::isInstance).isPresent()) {
+			pages.put(i++, TAB_TESTATA);
+			pages.put(i++, TAB_REVERSALI);
+		} else {
+			pages.put(i++, TAB_TESTATA);
+			if (isInserting()) {
+				pages.put(i++, TAB_RICERCA_DOCPASSIVI);
+			}
+			pages.put(i++, TAB_DETTAGLIO);
+			pages.put(i++, TAB_SOSPESI);
+			pages.put(i++, TAB_REVERSALI);
+		}
+		if (attivaEconomicaParallela) {
+			pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+		}
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+		return tabs;
 	}
 }

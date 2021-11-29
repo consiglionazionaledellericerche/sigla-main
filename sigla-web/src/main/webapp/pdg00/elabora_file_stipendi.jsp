@@ -22,7 +22,7 @@
 
 	<div class="Group" style="width:100%">
 	<fieldset>
-		<table width="100%">
+		<table width="100%" class="card card-shadow p-2">
 			<tr>
 				<td>
 					<% bp.getController().writeFormLabel(out,"mese");%>
@@ -57,10 +57,26 @@
    	    		  <span style="font-weight:bold; font-family:sans-serif; font-size:16px; color:blue">Risultato dell'Elaborazione</span>
  				</td>    
  				<td>
-				  <% JSPUtils.button(out,"img/history24.gif", "Visualizza<br>Flusso <u>E</u>ntrata","javascript:submitForm('doVisualizzaEntrata')", bp.getParentRoot().isBootstrap()); %>
+				  <% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-folder-open" : "img/history24.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-folder-open" : "img/history24.gif",
+				    "Visualizza Flusso Entrata",
+				    "javascript:submitForm('doVisualizzaEntrata')",
+					"btn-outline-primary btn-title",
+					true,
+				    bp.getParentRoot().isBootstrap());
+				  %>
 				</td>
 				<td>	
-				  <% JSPUtils.button(out,"img/history24.gif", "Visualizza<br>Flusso <u>S</u>pesa","javascript:submitForm('doVisualizzaSpesa')", bp.getParentRoot().isBootstrap()); %>
+				  <% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-folder-open" : "img/history24.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-folder-open" : "img/history24.gif",
+				    "Visualizza Flusso Spesa",
+				    "javascript:submitForm('doVisualizzaSpesa')",
+					"btn-outline-primary btn-title",
+					true,
+				    bp.getParentRoot().isBootstrap());
+				  %>
 				</td>
 			</tr>
 		</table>			

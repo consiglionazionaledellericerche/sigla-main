@@ -44,11 +44,19 @@
 		enabledOnEdit = "true"
 		enabledOnSearch = "true"
 		caseSensitiveSearch="false" />
+	<fieldProperty
+			name="flDefaultOrdine"
+			property="flDefaultOrdine"
+			inputType="CHECKBOX"
+			nullable="false"
+			label="Default per il transito da ordine" />
 
 	<formFieldProperty
 		name="cd_condizione_bene"/>
 	<formFieldProperty
 		name="ds_condizione_bene" />
+	<formFieldProperty
+			name="flDefaultOrdine" />
 
 	<columnFieldProperty
 		name="cd_condizione_bene"
@@ -56,10 +64,14 @@
 	<columnFieldProperty
 		name="ds_condizione_bene"
 		style="width:300px" />
+	<columnFieldProperty
+			name="flDefaultOrdine" />
 
 	<findFieldProperty
 		name="cd_condizione_bene" />
 	<findFieldProperty
 		name="ds_condizione_bene" />
+	<findFieldProperty
+			name="flDefaultOrdine" />
 
 </bulkInfo>

@@ -257,8 +257,8 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 					modalita_pagamento.setUser(context.getUserContext()
 							.getUser());
 					modalita_pagamento.setToBeCreated();
-					if (!terzo.getModalita_pagamento().containsByPrimaryKey(
-							modalita_pagamento))
+
+					if (!terzo.getModalita_pagamento().containsByPrimaryKey(modalita_pagamento))
 						terzo.addToModalita_pagamento(modalita_pagamento);
 					if (modalita_pagamento.isPerCessione())
 						modalita_pagamento.setTerzo_delegato(new TerzoBulk());

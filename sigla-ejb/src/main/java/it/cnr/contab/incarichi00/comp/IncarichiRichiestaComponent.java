@@ -64,6 +64,7 @@ import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -415,7 +416,18 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		else if (tipoInc.equals("5"))
 			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_TIROCINIO);
 
-		sql.addSQLClause(FindClause.AND,"to_char(DT_STIPULA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNULL, null);
+		sql.addSQLClause(FindClause.AND,"dt_fine_validita", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_FINE_VALIDITA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_PROROGA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+
 		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
 		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
 	}
@@ -424,12 +436,25 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		V_incarichi_elencoHome home = (V_incarichi_elencoHome)getHome(userContext, V_incarichi_elencoBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addSQLClause(FindClause.AND,"to_number(to_char(DT_STIPULA,'yyyy')) >= to_number('2013')");
-		sql.addSQLClause(FindClause.AND,"to_char(DT_STIPULA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+
+		sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNULL, null);
+		sql.addSQLClause(FindClause.AND,"dt_fine_validita", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_FINE_VALIDITA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause(FindClause.AND,"dt_proroga", SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause(FindClause.AND,"to_char(DT_PROROGA,'yyyymmdd') >= to_char(ADD_MONTHS(sysdate,-3*12),'yyyymmdd')");
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+
 		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
 		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
 	}
 
 	public SQLBuilder addFiltriListaIncarichiElenco(SQLBuilder sql,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
+		strRicerca = Optional.ofNullable(strRicerca).map(s -> s.replace("'", "''")).orElse(null);
 		if(dominio.equalsIgnoreCase("data"))
 			if (Constants.RICHIESTE_IN_CORSO.equalsIgnoreCase(query)) {
 				sql.addSQLClause(FindClause.AND,"to_number(to_char(sysdate,'yyyy')) = to_number(to_char(DT_STIPULA,'yyyy'))");
@@ -442,7 +467,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		if(cdCds!=null)
 			sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,cdCds);
 
-		if(strRicerca!=null) {
+		if(Optional.ofNullable(strRicerca).isPresent()) {
 			sql.openParenthesis(FindClause.AND);
 			sql.addSQLClause(FindClause.OR,"instr(ESERCIZIO||'/'||PG_REPERTORIO,'"+strRicerca+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(UPPER(DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");

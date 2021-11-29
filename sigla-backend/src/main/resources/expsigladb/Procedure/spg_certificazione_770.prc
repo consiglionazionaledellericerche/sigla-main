@@ -259,7 +259,8 @@ begin
 			 	                and naz2.pg_nazione (+) = com.pg_nazione);
 		end if; -- fine inserimento primo anagrafico
 
-		if aDett.cd_anag <> aTmpCdAnag then -- il primo anag non passa di qui
+		if aDett.cd_anag <> aTmpCdAnag OR
+		    (aTmpTiCompenso != null and aDett.cd_ti_compenso != null and  aTmpTiCompenso != aDett.cd_ti_compenso) then -- il primo anag non passa di qui
 	   	   i := i + 1;
 		     -- scarico i dettagli dell'anagrafico precedente
 	   	   insert into VPG_CERTIFICAZIONE_770  (ID,

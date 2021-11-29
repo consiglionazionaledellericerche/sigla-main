@@ -90,6 +90,14 @@ public class Inventario_beniBase extends Inventario_beniKey implements Keyed {
 	// VALORE_INIZIALE DECIMAL(20,6) NOT NULL
 	private java.math.BigDecimal valore_iniziale;
 
+	public Long getId_transito_beni_ordini() {
+		return id_transito_beni_ordini;
+	}
+
+	public void setId_transito_beni_ordini(Long id_transito_beni_ordini) {
+		this.id_transito_beni_ordini = id_transito_beni_ordini;
+	}
+
 	// VARIAZIONE_MENO DECIMAL(20,6)
 	private java.math.BigDecimal variazione_meno;
 
@@ -100,7 +108,9 @@ public class Inventario_beniBase extends Inventario_beniKey implements Keyed {
 	
 	private java.lang.String seriale;
 
-public Inventario_beniBase() {
+	private java.lang.Long id_transito_beni_ordini;
+
+	public Inventario_beniBase() {
 	super();
 }
 public Inventario_beniBase(java.lang.Long nr_inventario,java.lang.Long pg_inventario,java.lang.Long progressivo) {

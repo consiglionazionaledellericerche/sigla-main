@@ -1,1 +1,2 @@
 git+https://github.com/consiglionazionaledellericerche/docs-cnr-theme.git
+recommonmark

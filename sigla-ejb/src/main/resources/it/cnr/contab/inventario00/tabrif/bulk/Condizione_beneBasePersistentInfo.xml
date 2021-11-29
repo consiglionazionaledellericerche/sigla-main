@@ -58,6 +58,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="false" />
+		<columnMapping
+				columnName="FL_DEFAULT_ORDINE"
+				propertyName="flDefaultOrdine"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -71,4 +78,6 @@
 		name="ds_condizione_bene" />
 	<persistentProperty
 		name="utuv" />
+	<persistentProperty
+			name="flDefaultOrdine" />
 </SQLPersistentInfo>

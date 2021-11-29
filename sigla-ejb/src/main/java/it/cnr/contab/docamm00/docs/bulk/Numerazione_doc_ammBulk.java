@@ -28,6 +28,8 @@ public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
     public final static String TIPO_LETTERA_ESTERO = "LT_ESTERO";
     public final static String TIPO_FATTURA_ATTIVA = "FATTURA_A";
     public final static String TIPO_UNIVOCO_FATTURA_ATTIVA = "FATT_A_UNI";
+    public final static String TIPO_POSIZIONE_DEBITORIA_PAGOPA = "POS_DEB";
+    public final static String TIPO_POSIZIONE_CREDITORIA_PAGOPA = "POS_CRED";
     public final static String TIPO_DOC_GENERICO_S = "GENERICO_S";
     public final static String TIPO_DOC_GENERICO_E = "GENERICO_E";
     public final static String TIPO_TRASF_E = "TRASF_E";
@@ -98,10 +100,9 @@ public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
         setCd_unita_organizzativa(documento.getCd_unita_organizzativa());
     }
 
-    public Numerazione_doc_ammBulk(Fattura_attivaBulk fatturaAttiva, Unita_organizzativaBulk uoEntePerProgressivoUnivoco) {
+    public Numerazione_doc_ammBulk(IDocumentoAmministrativoBulk documentoAmministrativoBulk, Unita_organizzativaBulk uoEntePerProgressivoUnivoco) {
         super();
-        setCd_tipo_documento_amm(Numerazione_doc_ammBulk.TIPO_UNIVOCO_FATTURA_ATTIVA);
-        setEsercizio(fatturaAttiva.getEsercizio());
+        setEsercizio(documentoAmministrativoBulk.getEsercizio());
         setCd_cds(uoEntePerProgressivoUnivoco.getCd_cds());
         setCd_unita_organizzativa(uoEntePerProgressivoUnivoco.getCd_unita_organizzativa());
     }

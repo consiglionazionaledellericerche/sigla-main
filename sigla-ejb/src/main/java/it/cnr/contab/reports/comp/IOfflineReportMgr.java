@@ -17,6 +17,8 @@
 
 package it.cnr.contab.reports.comp;
 
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (09/05/2002 15:39:16)
@@ -65,5 +67,7 @@ public abstract void deleteJobs(it.cnr.jada.UserContext param0,it.cnr.contab.rep
  *		Viene restituito l'elenco delle stampe presenti nella coda di stampa compatibili con i criteri di visibilità specificati (secondo quanto sepcificato dalla vista "V_PRINT_SPOOLER_VISIBILITA")
  */
 
-public abstract it.cnr.jada.util.RemoteIterator queryJobs(it.cnr.jada.UserContext param0,java.lang.String param1) throws it.cnr.jada.comp.ComponentException;
+public abstract Print_spoolerBulk getJobWaitToJsoDS(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException;
+
+
 }

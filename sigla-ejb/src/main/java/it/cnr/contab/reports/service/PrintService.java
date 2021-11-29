@@ -20,22 +20,21 @@ package it.cnr.contab.reports.service;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.reports.bulk.Print_priorityBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Print_spooler_paramKey;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
+import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
+import it.cnr.contab.reports.util.UtilReports;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.Locale;
-import java.util.Optional;
-
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -43,80 +42,166 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-
-import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 public class PrintService implements InitializingBean {
 
-	private String serverPrint;
+    private final static Logger logger = LoggerFactory.getLogger(PrintService.class);
+    private static final String dsOnBody = "/dsOnBody";
+    public Map<String, PrintDataSourceOffline> printDsOfflineImplemented = new HashMap<>();
+    private Gson gson = null;
+    private String serverPrint;
+    private OfflineReportComponentSession offlineReportComponent;
 
-	public String getServerPrint() {
-		return serverPrint;
-	}
+    public String getServerPrint() {
+        return serverPrint;
+    }
 
-	public void setServerPrint(String serverPrint) {
-		this.serverPrint = serverPrint;
-	}
+    public void setServerPrint(String serverPrint) {
+        this.serverPrint = serverPrint;
+    }
 
-	private OfflineReportComponentSession offlineReportComponent;
-	
-	public void setOfflineReportComponent(
-			OfflineReportComponentSession offlineReportComponent) {
-		this.offlineReportComponent = offlineReportComponent;
-	}
-	
-	public Report executeReport(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException{
-		HttpClient httpclient = HttpClientBuilder.create().build();
-		HttpPost method = null;
-		try {
-			method = new HttpPost(
-					Optional.ofNullable(getServerPrint())
-						.orElseGet(() -> {
-							try {
-								return offlineReportComponent.getLastServerActive(userContext);
-							} catch (ComponentException|RemoteException e) {
-								throw new DetailedRuntimeException(e);
-							}
-						})
-			);
-	        method.addHeader("Accept-Language", Locale.getDefault().toString());
-	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
-			GsonBuilder builder = new GsonBuilder();
-			builder.setExclusionStrategies( new HiddenAnnotationExclusionStrategy() );
-			Gson gson = builder.create();
-	        HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());
-	       
-	        method.setEntity(requestEntity);
-	        HttpResponse httpResponse = httpclient.execute(method);				
-			int status = httpResponse.getStatusLine().getStatusCode();
-			if (status != HttpStatus.SC_OK)
-				throw new ComponentException("Webscript response width status error: "+status);
-			return new Report(printSpooler.getNomeFile(), 
-					IOUtils.toByteArray(httpResponse.getEntity().getContent()),
-					httpResponse.getEntity().getContentType().getValue(), 
-					httpResponse.getEntity().getContentLength());
-		}finally{
-			if (method != null)
-				method.releaseConnection();
-		}
-	}
+    public void setOfflineReportComponent(
+            OfflineReportComponentSession offlineReportComponent) {
+        this.offlineReportComponent = offlineReportComponent;
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		this.offlineReportComponent = Optional.ofNullable(EJBCommonServices.createEJB("BREPORTS_EJB_OfflineReportComponentSession"))
-				.filter(OfflineReportComponentSession.class::isInstance)
-				.map(OfflineReportComponentSession.class::cast)
-				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb BREPORTS_EJB_OfflineReportComponentSession"));
-	}
+    private String resolveServerPrint(UserContext userContext) {
+        return Optional.ofNullable(getServerPrint())
+                .orElseGet(() -> {
+                    try {
+                        return offlineReportComponent.getLastServerActive(userContext);
+                    } catch (ComponentException | RemoteException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                });
+    }
 
-	public class HiddenAnnotationExclusionStrategy implements ExclusionStrategy {
-		public boolean shouldSkipClass(Class<?> clazz) {
-			return clazz.getAnnotation(JsonIgnore.class) != null;
-		}
+    private String getExecuteHttpUrl(UserContext userContext, Print_spoolerBulk printSpooler) {
+        String url = resolveServerPrint(userContext);
+        if (Optional.of(printSpooler).
+                filter(p -> Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
+            url = url.concat(dsOnBody);
 
-		public boolean shouldSkipField(FieldAttributes f) {
-			return f.getAnnotation(JsonIgnore.class) != null;
-		}
-	}
+        return url;
+    }
+
+    private HttpPost getHttPostExecute(UserContext userContext, Print_spoolerBulk printSpooler) {
+        HttpPost method = null;
+        method = new HttpPost(getExecuteHttpUrl(userContext, printSpooler));
+        method.addHeader("Accept-Language", Locale.getDefault().toString());
+        method.setHeader("Content-Type", "application/json;charset=UTF-8");
+        if (Optional.of(printSpooler).
+                filter(p -> Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
+            method.setHeader("ds-utente", userContext.getUser());
+        String json = gson.toJson(printSpooler);
+        HttpEntity requestEntity = new ByteArrayEntity(json.getBytes());
+        method.setEntity(requestEntity);
+        return method;
+    }
+
+    public Report executeReport(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException {
+        HttpClient httpclient = HttpClientBuilder.create().build();
+        HttpPost method = null;
+        try {
+            //per i report on line va
+            Print_priorityBulk print_priority = offlineReportComponent.findPrintPriority(userContext,printSpooler.getReport());
+            printSpooler.setReport(UtilReports.getReportNameToRun(print_priority,printSpooler));
+            method = getHttPostExecute(userContext, printSpooler);
+            HttpResponse httpResponse = httpclient.execute(method);
+            int status = httpResponse.getStatusLine().getStatusCode();
+            if (status != HttpStatus.SC_OK)
+                throw new ComponentException("Webscript response width status error: " + status);
+            return new Report(printSpooler.getNomeFile(),
+                    IOUtils.toByteArray(httpResponse.getEntity().getContent()),
+                    httpResponse.getEntity().getContentType().getValue(),
+                    httpResponse.getEntity().getContentLength());
+        } finally {
+            if (method != null)
+                method.releaseConnection();
+        }
+    }
+
+    public void executeReportDs(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException {
+        HttpClient httpclient = HttpClientBuilder.create().build();
+        HttpPost method = null;
+        try {
+            method = getHttPostExecute(userContext, printSpooler);
+            HttpResponse httpResponse = httpclient.execute(method);
+            int status = httpResponse.getStatusLine().getStatusCode();
+            if (status != HttpStatus.SC_OK)
+                throw new ComponentException("Webscript response width status error: " + status);
+
+        } finally {
+            if (method != null)
+                method.releaseConnection();
+        }
+    }
+
+    public Map<String, PrintDataSourceOffline> getPrintDsOfflineImplemented() {
+        return printDsOfflineImplemented;
+    }
+
+    public void setPrintDsOfflineImplemented(Map<String, PrintDataSourceOffline> printDsOfflineImplemented) {
+        this.printDsOfflineImplemented = printDsOfflineImplemented;
+    }
+
+    public void executeReportWithJsonDataSource() throws Exception {
+        Print_spoolerBulk printSpooler = null;
+        try {
+            logger.trace("Start executeReportWithJsonDataSource");
+            UserContext userContextCal = new CNRUserContext("JOB_STAMPADS", "JOB_STAMPADS"
+                    , null, null, null, null);
+            printSpooler = offlineReportComponent.getJobWaitToJsoDS(userContextCal);
+
+            if (Optional.ofNullable(printSpooler).isPresent()) {
+                PrintDataSourceOffline jsonDataSource = this.getPrintDsOfflineImplemented().get(printSpooler.getReport());
+                //printSpooler = jsonDataSource.getPrintSpooler(userContextCal,printSpooler);
+                printSpooler = offlineReportComponent.getPrintSpoolerDsOffLine( userContextCal,printSpooler,jsonDataSource);
+                executeReportDs(userContextCal, printSpooler);
+            }
+        } catch (Exception e) {
+            String error = "Error executeReportWithDsJsonDataSource";
+            if (Optional.ofNullable(Optional.ofNullable(printSpooler).
+                    map(Print_spoolerBulk::getPgStampa).orElse(null)).isPresent()) {
+                error.concat("for pg_stampa=" + Optional.ofNullable(Optional.ofNullable(printSpooler).
+                        map(Print_spoolerBulk::getPgStampa).get()).toString());
+            }
+            logger.error(error, e);
+        }
+        logger.trace("Finish executeReportWithJsonDataSource");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        this.offlineReportComponent = Optional.ofNullable(EJBCommonServices.createEJB("BREPORTS_EJB_OfflineReportComponentSession"))
+                .filter(OfflineReportComponentSession.class::isInstance)
+                .map(OfflineReportComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb BREPORTS_EJB_OfflineReportComponentSession"));
+        this.gson = new GsonBuilder().
+                registerTypeAdapter(Print_spooler_paramKey.class, new PrintSpoolerParamKeySerializer()).
+                registerTypeAdapter(Timestamp.class, new JsonTimestampSeraializer()).
+                setExclusionStrategies(new HiddenAnnotationExclusionStrategy())
+                .create();
+    }
+
+    public class HiddenAnnotationExclusionStrategy implements ExclusionStrategy {
+        public boolean shouldSkipClass(Class<?> clazz) {
+            return clazz.getAnnotation(JsonIgnore.class) != null;
+        }
+
+        public boolean shouldSkipField(FieldAttributes f) {
+            return f.getAnnotation(JsonIgnore.class) != null;
+        }
+    }
 }

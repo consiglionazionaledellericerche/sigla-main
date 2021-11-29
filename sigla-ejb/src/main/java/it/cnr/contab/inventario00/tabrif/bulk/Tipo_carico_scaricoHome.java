@@ -40,7 +40,7 @@ public java.util.Collection findTipoMovimenti(it.cnr.contab.inventario01.bulk.Bu
 	if(buonoCS.isPerVendita())
 		sql.addClause("AND","fl_vendita",sql.EQUALS, Boolean.TRUE);
 	else
-		if (buonoCS.isByFattura()||buonoCS.isByDocumento())
+		if (buonoCS.isByFattura()||buonoCS.isByDocumento() || buonoCS.isByOrdini())
 		  sql.addClause("AND","fl_vendita",sql.EQUALS, Boolean.FALSE);
 	if (buonoCS.isByFattura()||buonoCS.isByDocumento()){
 		sql.addClause("AND","fl_fatturabile",sql.EQUALS, Boolean.TRUE);
@@ -53,7 +53,10 @@ public java.util.Collection findTipoMovimenti(it.cnr.contab.inventario01.bulk.Bu
 			sql.addClause("AND","fl_aumento_valore",sql.EQUALS, Boolean.FALSE);
 		}
 	}
-	if (buonoCS instanceof Buono_carico_scaricoBulk && 
+	if (buonoCS.isByOrdini()){
+		sql.addClause("AND","fl_da_ordini",sql.EQUALS, Boolean.TRUE);
+	}
+	if (buonoCS instanceof Buono_carico_scaricoBulk &&
 	   (buonoCS.getTipoMovimento() != null && !buonoCS.getTipoMovimento().getFl_buono_per_trasferimento())
 		||((buonoCS.getCrudStatus()== buonoCS.UNDEFINED)||(buonoCS.getCrudStatus()== buonoCS.TO_BE_CREATED)))
 	// Esclude i tipi di movimento "Per trasferimento"

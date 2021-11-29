@@ -18,15 +18,23 @@
 package it.cnr.contab.reports.bp;
 
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.util.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.AbstractPrintBP;
 
 public class ReportPrintBP extends AbstractPrintBP {
 	private java.util.Properties printProps;
 	private BulkList printSpoolerParam = new BulkList();
 	private String reportName;
+
+	private Boolean repotWhithDsOffLine=Boolean.FALSE;
+
+	public Boolean getRepotWhithDsOffLine() {
+		return repotWhithDsOffLine;
+	}
+
+	public void setRepotWhithDsOffLine(Boolean repotWhitDsOffLine) {
+		this.repotWhithDsOffLine = repotWhitDsOffLine;
+	}
 
 	public static final java.text.Format DATE_FORMAT = new java.text.SimpleDateFormat("yyyy/MM/dd");
 	public static final java.text.Format TIMESTAMP_FORMAT = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

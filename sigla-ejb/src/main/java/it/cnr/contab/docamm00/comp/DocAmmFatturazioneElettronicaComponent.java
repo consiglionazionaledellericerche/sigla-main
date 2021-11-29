@@ -24,7 +24,9 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import it.cnr.contab.client.docamm.FatturaAttiva;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.springframework.util.StringUtils;
 
 import javax.activation.DataHandler;
@@ -36,8 +38,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioBulk;
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -45,10 +45,6 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaHome;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
@@ -509,7 +505,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 						descrizione = fattura.getDs_fattura_attiva();
 					}
 					List<String> listaCausali = new ArrayList<String>();
-					if (fattura.getRiferimento_ordine() != null){
+					if (fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() == null){
 						if (!descrizione.equals("")){
 							descrizione += "  ";
 						} 
@@ -535,16 +531,17 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					datiGeneraliDocumento.getCausale().addAll(listaCausali);
 					
 					datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
-					
+
 					DatiBeniServiziType datiBeniServizi = factory.createDatiBeniServiziType();
 					List<DettaglioLineeType> listaDettagli = new ArrayList<DettaglioLineeType>();
 					List<RiepilogoPerAliquotaIVA> listaRiepilogo = new ArrayList<DocAmmFatturazioneElettronicaComponent.RiepilogoPerAliquotaIVA>();
 					HashMap<ContrattoBulk, List<Integer>> mappaContratti = new HashMap<ContrattoBulk, List<Integer>>();
 					HashMap<Fattura_attivaBulk,List<Integer>> dettagliNoteSenzaContratto = new HashMap<Fattura_attivaBulk, List<Integer>>();
 					HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati = new HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>>();
+					List<Integer> listaTutteLinee = new ArrayList<>();
 					for (Iterator<Fattura_attiva_rigaBulk> i= dettaglio.iterator(); i.hasNext();) {
 						Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
-//						if (!esisteBollo || !isRigaFatturaConBollo(userContext, riga)){
+						listaTutteLinee.add(riga.getProgressivo_riga().intValue());
 							DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
 							rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
 							if (riga.getDs_riga_fattura() != null){
@@ -572,12 +569,43 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 							}
 							preparaDatiContratto(userContext, mappaContratti, riga);
 							impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
-//						}
 					}
 					datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
 					impostaDatiContratto(factory, datiGenerali, mappaContratti);
 					impostaDatiDocumentiCollegati(factory, datiGenerali, mappaDocumentiCollegati, dettagliNoteSenzaContratto);
+
+					if (!fattura.isFatturaEstera() && fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() != null){
+						DatiDocumentiCorrelatiType datiOrdineAcquisto = factory.createDatiDocumentiCorrelatiType();
+						datiOrdineAcquisto.getRiferimentoNumeroLinea().addAll(listaTutteLinee);
+						datiOrdineAcquisto.setData(convertDateToXmlGregorian(fattura.getDt_ordine()));
+						datiOrdineAcquisto.setIdDocumento(substring(fattura.getRiferimento_ordine(),20));
+						String soggettoOrdine = null;
+						if (!fattura.getFl_ordine_elettronico()){
+							soggettoOrdine = "#NO#";
+						}  else {
+							if (fattura.getCodiceUnivocoUfficioIpa() != null){
+								soggettoOrdine = "#0201:"+fattura.getCodiceUnivocoUfficioIpa()+"#";
+							} else {
+								if (fattura.getPartita_iva() != null){
+									soggettoOrdine = "#9906:";
+								} else {
+									soggettoOrdine = "#9907:";
+								}
+								if (fattura.getCodiceDestinatarioFatt() != null){
+									soggettoOrdine += fattura.getCodiceDestinatarioFatt();
+								} else if (fattura.getPecFatturaElettronica() != null) {
+									soggettoOrdine += fattura.getPecFatturaElettronica();
+								} else {
+									soggettoOrdine += datiTrasmissione.getCodiceDestinatario();
+								}
+									soggettoOrdine += "#";
+							}
+						}
+						datiOrdineAcquisto.setCodiceCommessaConvenzione(soggettoOrdine);
+						datiGenerali.getDatiOrdineAcquisto().add(datiOrdineAcquisto);
+					}
+
 
 					fatturaBodyType.setDatiGenerali(datiGenerali);
 
@@ -892,13 +920,17 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	}
 	
 	private String substring80(String rit) {
-		return rit.length() > 80 ? rit.substring(0,80) : rit;
+		return substring(rit, 80 );
 	}
 
 	private String substring60(String rit) {
-		return rit.length() > 60 ? rit.substring(0,60) : rit;
+		return substring(rit, 60 );
 	}
-	
+
+	private String substring(String rit, int caratteri) {
+		return rit.length() > caratteri ? rit.substring(0,caratteri) : rit;
+	}
+
 	private IndirizzoType impostaIndirizzo(UserContext userContext, ObjectFactory factory, TerzoBulk terzo, Fattura_attivaBulk fattura) throws ComponentException, PersistencyException{
 		IndirizzoType indirizzoCedente = factory.createIndirizzoType();
 		ComuneBulk comune = terzo.getComune_sede();
@@ -997,5 +1029,35 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			caricaDatiContratto(mappaContratti, riga.getProgressivo_riga().intValue(), contrattoBulk);
 		}
 	}
-	
+	public void aggiornaMetadati(UserContext userContext, Integer esercizio, String cdCds, Long pgFatturaAttiva)throws ComponentException {
+		try {
+			Fattura_attiva_IHome home = (Fattura_attiva_IHome) getHome(userContext, Fattura_attiva_IBulk.class);
+			List<Fattura_attivaBulk> fatture = aggiornaMetadatiDocumenti(esercizio, cdCds, pgFatturaAttiva, home);
+
+			Nota_di_credito_attivaHome home2 = (Nota_di_credito_attivaHome) getHome(userContext, Nota_di_credito_attivaBulk.class);
+			List<Fattura_attivaBulk> note = aggiornaMetadatiDocumenti(esercizio, cdCds, pgFatturaAttiva, home2);
+
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	private List<Fattura_attivaBulk> aggiornaMetadatiDocumenti(Integer esercizio, String cdCds, Long pgFatturaAttiva, Fattura_attivaHome home) throws PersistencyException {
+		SQLBuilder sql = home.createSQLBuilder();
+
+		if (cdCds != null){
+			sql.addSQLClause("AND", "CD_CDS_ORIGINE", sql.EQUALS, cdCds);
+		}
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
+		if (pgFatturaAttiva != null){
+			sql.addSQLClause("AND", "PG_FATTURA_ATTIVA", sql.EQUALS, pgFatturaAttiva);
+		}
+
+		List<Fattura_attivaBulk> fatture = home.fetchAll(sql);
+
+		for (Fattura_attivaBulk fattura_attivaBulk : fatture) {
+			home.aggiornaMetadatiFattura(fattura_attivaBulk);
+		}
+		return fatture;
+	}
 }

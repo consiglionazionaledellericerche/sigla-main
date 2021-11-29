@@ -641,6 +641,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			elementIncarico.appendChild(elementLink);
 		}
 
+		Incarichi_repertorio_archivioBulk attestazione = incarico.getIncaricoRepertorio().getAttestazioneDirettore();
+		if (attestazione!=null && attestazione.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_attestazione_direttore");
+			dato = "genericdownload/"+attestazione.getNome_file()+"?nodeRef="+attestazione.getCms_node_ref();
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementIncarico.appendChild(elementLink);
+		}
+
 		Incarichi_procedura_archivioBulk progetto = incarico.getIncaricoRepertorio().getIncarichi_procedura().getProgetto();
 		if (progetto!=null && progetto.getCms_node_ref()!=null) {
 			Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
@@ -738,15 +746,26 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementRichiesta.appendChild(elementDataInizio);
 
 		Element elementDataFine = xmldoc.createElement(getTagRadice()+":datafine");
-		String dataf=null;
+		java.sql.Timestamp tsDataFine = null;
 		if(incarico.getIncaricoVariazione()!=null && incarico.getIncaricoVariazione().getDt_fine_validita()!=null)
-			dataf = formatter.format(incarico.getIncaricoVariazione().getDt_fine_validita()).toString();
+			tsDataFine = incarico.getIncaricoVariazione().getDt_fine_validita();
 		else if(incarico.getDt_fine_validita()!=null)
-			dataf = formatter.format(incarico.getDt_fine_validita()).toString();
-		dato = dataf; 
+			tsDataFine = incarico.getDt_fine_validita();
+		dato = formatter.format(tsDataFine);
 		Node nodeDataFine = xmldoc.createTextNode(dato!=null?dato:"");
 		elementDataFine.appendChild(nodeDataFine);
 		elementRichiesta.appendChild(elementDataFine);
+
+		Element elementDataProroga = xmldoc.createElement(getTagRadice()+":dataproroga");
+		String datap=null;
+		if(incarico.getDt_proroga()!=null) {
+			if (tsDataFine == null || incarico.getDt_proroga().compareTo(tsDataFine) > 0)
+				datap = formatter.format(incarico.getDt_proroga());
+		}
+		dato = datap;
+		Node nodeDataProroga = xmldoc.createTextNode(dato!=null?dato:"");
+		elementDataProroga.appendChild(nodeDataProroga);
+		elementRichiesta.appendChild(elementDataProroga);
 
 		Element elementDataStipula = xmldoc.createElement(getTagRadice()+":datastipula");
 		String datas=null;
@@ -812,6 +831,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		if (conflittoInteresse!=null && conflittoInteresse.getCms_node_ref()!=null) {
 			Element elementLink = xmldoc.createElement(getTagRadice()+":url_conflitto_interessi");
 			dato = "genericdownload/"+conflittoInteresse.getNome_file()+"?nodeRef="+conflittoInteresse.getCms_node_ref();
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementRichiesta.appendChild(elementLink);
+		}
+
+		Incarichi_repertorio_archivioBulk attestazioneDirettore = incarico.getIncaricoRepertorio().getAttestazioneDirettore();
+		if (attestazioneDirettore!=null && attestazioneDirettore.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_attestazione_direttore");
+			dato = "genericdownload/"+attestazioneDirettore.getNome_file()+"?nodeRef="+attestazioneDirettore.getCms_node_ref();
 			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 			elementRichiesta.appendChild(elementLink);
 		}

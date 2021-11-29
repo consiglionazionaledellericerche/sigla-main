@@ -41,7 +41,10 @@
 		<columnMapping
 			columnName="CD_TERZO"
 			propertyName="cliente.cd_terzo" />
-		
+<!--
+		<columnMapping
+				columnName="ID_PENDENZA_PAGOPA"
+				propertyName="pendenzaPagopa.id" />-->
 		<columnMapping
 			columnName="CD_TERZO_UO_CDS"
 			propertyName="terzo_uo.cd_terzo"
@@ -77,6 +80,8 @@
 		name="valuta" />	
 	<persistentProperty
 		name="banca_uo" />
+<!--	<persistentProperty
+			name="pendenzaPagopa" />-->
 	<persistentProperty
 		name="modalita_pagamento_uo" />
 	<persistentProperty

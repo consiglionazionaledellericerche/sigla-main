@@ -105,7 +105,7 @@ public boolean findPgiroLiqIvaCentroAperte( it.cnr.jada.UserContext userContext,
 	return false;
 }
 
-public Collection findPgiroReversaleriga( it.cnr.jada.UserContext userContext,Reversale_rigaBulk reversale_riga ) throws PersistencyException, IntrospectionException
+public Collection findPgiroReversaleriga( it.cnr.jada.UserContext userContext,Reversale_rigaBulk reversale_riga ) throws PersistencyException
 {
 	PersistentHome home = getHomeCache().getHome( Ass_obb_acr_pgiroBulk.class );
 	SQLBuilder sql = home.createSQLBuilder();
@@ -118,4 +118,16 @@ public Collection findPgiroReversaleriga( it.cnr.jada.UserContext userContext,Re
 	return result;
 }
 
+	public Collection findPgiroMandatoRiga(it.cnr.jada.UserContext userContext,Mandato_rigaBulk mandato_riga) throws PersistencyException
+	{
+		PersistentHome home = getHomeCache().getHome( Ass_obb_acr_pgiroBulk.class );
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause( "AND", "cd_cds", sql.EQUALS, mandato_riga.getCd_cds());
+		sql.addClause( "AND", "esercizio", sql.EQUALS, mandato_riga.getEsercizio_obbligazione());
+		sql.addClause( "AND", "esercizio_ori_obbligazione", sql.EQUALS, mandato_riga.getEsercizio_ori_obbligazione());
+		sql.addClause( "AND", "pg_obbligazione", sql.EQUALS, mandato_riga.getPg_obbligazione());
+		Collection result = home.fetchAll( sql);
+		getHomeCache().fetchAll(userContext);
+		return result;
+	}
 }

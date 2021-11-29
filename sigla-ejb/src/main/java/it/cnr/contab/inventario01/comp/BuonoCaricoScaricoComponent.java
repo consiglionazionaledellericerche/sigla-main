@@ -28,8 +28,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.ejb.EJBException;
 
@@ -50,18 +49,10 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceHome;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniHome;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_beniKey;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk;
-import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laHome;
-import it.cnr.contab.inventario00.docs.bulk.Numeratore_buono_c_sBulk;
-import it.cnr.contab.inventario00.docs.bulk.Numeratore_buono_c_sHome;
-import it.cnr.contab.inventario00.docs.bulk.Trasferimento_inventarioBulk;
-import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
-import it.cnr.contab.inventario00.docs.bulk.V_buono_carico_scaricoBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.inventario00.docs.bulk.*;
+import it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession;
 import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioHome;
@@ -76,8 +67,11 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -127,8 +121,12 @@ implements Cloneable,Serializable{
 			try {
 				Tipo_carico_scaricoHome tipoHome = (Tipo_carico_scaricoHome)getHome(usercontext, Tipo_carico_scaricoBulk.class);
 				java.util.Collection tipi;
-				tipi = tipoHome.findTipoMovimenti((Buono_carico_scaricoBulk)oggettobulk);
-				((Buono_carico_scaricoBulk)oggettobulk).setTipoMovimenti(tipi);
+				Buono_carico_scaricoBulk buono = (Buono_carico_scaricoBulk)oggettobulk;
+				tipi = tipoHome.findTipoMovimenti(buono);
+				buono.setTipoMovimenti(tipi);
+				if (tipi != null && tipi.size() == 1){
+					buono.setTipoMovimento((Tipo_carico_scaricoBulk) tipi.iterator().next());
+				}
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);
 			} catch (IntrospectionException e) {
@@ -303,7 +301,7 @@ try{
 			throw new ComponentException("Attenzione: non esiste alcun buono corrispondente ai criteri di ricerca!");
         
 		Buono_carico_scaricoBulk buonoC = (Buono_carico_scaricoBulk)bulk;
-		if (!buonoC.isByFattura() && !buonoC.isByDocumento()){
+		if (!buonoC.isByFattura() && !buonoC.isByDocumento() && !buonoC.isByOrdini()){
 			buonoC = (Buono_carico_scaricoBulk)super.inizializzaBulkPerModifica(aUC, bulk);
 		}
 		inizializzaTipo(aUC,buonoC);	 
@@ -314,7 +312,7 @@ try{
 			buonoC.setConsegnatario(inventarioHome.findConsegnatarioFor(buonoC.getInventario()));
 			buonoC.setDelegato(inventarioHome.findDelegatoFor(buonoC.getInventario()));
 			buonoC.setUo_consegnataria(inventarioHome.findUoRespFor(aUC,buonoC.getInventario()));
-			if (buonoC.getTi_documento().equals(buonoC.CARICO)|| (!buonoC.isByFattura() && !buonoC.isByDocumento())){
+			if (buonoC.getTi_documento().equals(buonoC.CARICO)|| (!buonoC.isByFattura() && !buonoC.isByDocumento() && !buonoC.isByOrdini())){
  				 buonoC = (Buono_carico_scaricoBulk)getHome(aUC,Buono_carico_scaricoBulk.class).findByPrimaryKey(buonoC);
 				 Buono_carico_scarico_dettHome dettHome = (Buono_carico_scarico_dettHome)getHome(aUC,Buono_carico_scarico_dettBulk.class);
 				 buonoC.setBuono_carico_scarico_dettColl(new BulkList(dettHome.getDetailsFor(buonoC)));
@@ -705,7 +703,54 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 					assegnaStatoCOGE(userContext,buonoCS);
 					insertBeniPerAumentoValore(userContext, buonoCS, notChangedBeniKey);		
 				}
-				buonoCS = (Buono_carico_scaricoBulk)super.creaConBulk(userContext,buonoCS);
+
+				if (buonoCS.isByOrdini()){
+					try {
+						Numeratore_buono_c_sHome numHome = (Numeratore_buono_c_sHome) getHomeCache(userContext).getHome(Numeratore_buono_c_sBulk.class);
+						Long pg = null;
+
+						pg = numHome.getNextPg(userContext,
+								buonoCS.getEsercizio(),
+								buonoCS.getPg_inventario(),
+								buonoCS.getTi_documento(),
+								userContext.getUser());
+						SimpleBulkList<OggettoBulk> dettagli = buonoCS.getBuono_carico_scarico_dettColl();
+						Buono_carico_scaricoBulk definitivo = (Buono_carico_scaricoBulk) buonoCS.clone();
+
+						Buono_carico_scarico_dettHome home = (Buono_carico_scarico_dettHome) getTempHome(userContext, Buono_carico_scarico_dettBulk.class);
+
+						definitivo.setPg_buono_c_s(pg);
+						definitivo.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+
+						definitivo.setBuono_carico_scarico_dettColl(new SimpleBulkList());
+						for (Iterator i = dettagli.iterator(); i.hasNext(); ) {
+							Buono_carico_scarico_dettBulk dettaglio = (Buono_carico_scarico_dettBulk) i.next();
+							Buono_carico_scarico_dettBulk new_dettaglio = (Buono_carico_scarico_dettBulk) dettaglio.clone();
+							new_dettaglio.setPg_buono_c_s(pg);
+							new_dettaglio.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+							definitivo.addToBuono_carico_scarico_dettColl(new_dettaglio);
+
+							Transito_beni_ordiniHome homeTransito = (Transito_beni_ordiniHome)getHome(userContext, Transito_beni_ordiniBulk.class);
+							Transito_beni_ordiniBulk transito_beni_ordiniBulk = new Transito_beni_ordiniBulk();
+							transito_beni_ordiniBulk.setId(dettaglio.getIdTransito());
+							transito_beni_ordiniBulk = (Transito_beni_ordiniBulk)homeTransito.findByPrimaryKey(transito_beni_ordiniBulk);
+							if (transito_beni_ordiniBulk != null){
+								transito_beni_ordiniBulk.setStato(Transito_beni_ordiniBulk.STATO_TRASFERITO);
+								transito_beni_ordiniBulk.setToBeUpdated();
+								super.modificaConBulk(userContext, transito_beni_ordiniBulk);
+							}
+						}
+						buonoCS = (Buono_carico_scaricoBulk) super.creaConBulk(userContext, definitivo);
+					} catch (it.cnr.jada.persistency.PersistencyException e) {
+						throw handleException(buonoCS, e);
+					} catch (it.cnr.jada.persistency.IntrospectionException e) {
+						throw handleException(buonoCS, e);
+					}
+					buonoCS.setByOrdini(true);
+
+				} else {
+					buonoCS = (Buono_carico_scaricoBulk)super.creaConBulk(userContext,buonoCS);
+				}
 
 				if (notChangedBeniKey != null && !notChangedBeniKey.isEmpty()){
 					String msg = "Operazione riuscita con successo.\n";
@@ -1670,7 +1715,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
 		//R.P. Consente di associare piu' volte lo stesso bene
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, associa_Bulk.getInventario().getPg_inventario());
-		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 		//RP IN QUESTO CASO DEVE PRENDERE ANCHE I TOTALMENTE SCARICATI
 		sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISTOTALMENTESCARICATO); // scaricati totalmente
 		sql.addSQLClause("AND", "INVENTARIO_BENI.ESERCIZIO_CARICO_BENE", SQLBuilder.LESS_EQUALS, CNRUserContext.getEsercizio(userContext));
@@ -1921,7 +1966,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
-		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, buonoS.getInventario().getPg_inventario());	
 		sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISNOTTOTALMENTESCARICATO); // Non scaricati totalmente
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PROGRESSIVO", SQLBuilder.EQUALS, "0"); // Solo i beni Prinicapali
@@ -1963,7 +2008,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 		
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
-		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
+//		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
 		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS,riga_fattura.getTi_istituz_commerc()); // Beni dello stesso tipo della riga di Fattura
 		/* r.p. eliminato selezione bene associati alla fattura di origine
 		sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getEsercizio());
@@ -2457,7 +2502,7 @@ public void selectBeniAssociatiForModifica(
 				new_bene.setEsercizio(riga_fattura.getEsercizio());
 				new_bene.setPg_fattura(riga_fattura.getPg_fattura_passiva());
 				new_bene.setProgressivo_riga(riga_fattura.getProgressivo_riga());
-				if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+				if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 					im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 				else
 					im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -2467,7 +2512,7 @@ public void selectBeniAssociatiForModifica(
 				new_bene.setEsercizio(nota.getEsercizio());
 				new_bene.setPg_fattura(nota.getPg_fattura_passiva());
 				new_bene.setProgressivo_riga(nota.getProgressivo_riga());
-				if (nota.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+				if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 					im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 				else
 					im_riga_fattura = nota.getIm_imponibile();
@@ -2477,7 +2522,7 @@ public void selectBeniAssociatiForModifica(
 				new_bene.setEsercizio(notadeb.getEsercizio());
 				new_bene.setPg_fattura(notadeb.getPg_fattura_passiva());
 				new_bene.setProgressivo_riga(notadeb.getProgressivo_riga());
-				if (notadeb.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+				if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 					im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 				else
 					im_riga_fattura = notadeb.getIm_imponibile();
@@ -3497,7 +3542,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 								new_bene_apg.setEsercizio(riga_fattura.getEsercizio());   		
 								new_bene_apg.setPg_fattura(riga_fattura.getPg_fattura_passiva());  
 								new_bene_apg.setProgressivo_riga(riga_fattura.getProgressivo_riga());
-								if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+								if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 									im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 								else
 									im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -3509,7 +3554,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 								new_bene_apg.setEsercizio(nota.getEsercizio());   		
 								new_bene_apg.setPg_fattura(nota.getPg_fattura_passiva());  
 								new_bene_apg.setProgressivo_riga(nota.getProgressivo_riga());
-								if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+								if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 									im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 								else
 									im_riga_fattura = nota.getIm_imponibile();
@@ -3530,7 +3575,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 								new_bene_apg.setEsercizio(notadeb.getEsercizio());   		
 								new_bene_apg.setPg_fattura(notadeb.getPg_fattura_passiva());  
 								new_bene_apg.setProgressivo_riga(notadeb.getProgressivo_riga());
-								if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+								if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 									im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 								else
 									im_riga_fattura = notadeb.getIm_imponibile();
@@ -4143,7 +4188,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 			}else if(fattura_attiva!=null){
 				//RP IN QUESTO CASO DEVE PRENDERE SOLO I TOTALMENTE SCARICATI
 				sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISTOTALMENTESCARICATO); // Scaricati totalmente
-				sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS,Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+				sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS,TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 				sql.addSQLClause("AND", "BUONO_CARICO_SCARICO_DETT.ESERCIZIO", SQLBuilder.EQUALS,fattura_attiva.getEsercizio());
 				sql.addSQLClause("AND","BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO",SQLBuilder.EQUALS,Buono_carico_scaricoBulk.SCARICO);
 			}
@@ -4239,7 +4284,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setEsercizio(riga_fattura.getEsercizio());
 						new_bene_apg.setPg_fattura(riga_fattura.getPg_fattura_passiva());
 						new_bene_apg.setProgressivo_riga(riga_fattura.getProgressivo_riga());
-						if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+						if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 						else
 							im_riga_fattura = riga_fattura.getIm_imponibile();
@@ -4249,7 +4294,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setEsercizio(nota.getEsercizio());
 						new_bene_apg.setPg_fattura(nota.getPg_fattura_passiva());
 						new_bene_apg.setProgressivo_riga(nota.getProgressivo_riga());
-						if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+						if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 						else
 							im_riga_fattura = nota.getIm_imponibile();
@@ -4259,7 +4304,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setEsercizio(notadeb.getEsercizio());
 						new_bene_apg.setPg_fattura(notadeb.getPg_fattura_passiva());
 						new_bene_apg.setProgressivo_riga(notadeb.getProgressivo_riga());
-						if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+						if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 						else
 							im_riga_fattura = notadeb.getIm_imponibile();
@@ -4877,7 +4922,7 @@ try {
 			sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO (+)");
 			sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO (+)");
 			sql.addSQLClause("AND","INVENTARIO_BENI.PG_INVENTARIO",sql.EQUALS,buonoS.getPg_inventario());
-			sql.addSQLClause("AND","INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
+			sql.addSQLClause("AND","INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, TipoIVA.COMMERCIALE.value()); // Beni dello stesso tipo della riga di Fattura
 			sql.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)",sql.EQUALS,buonoS.getLocal_transactionID());
 			sql.addSQLClause("AND","INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO",sql.EQUALS,Inventario_beniBulk.ISNOTTOTALMENTESCARICATO);
 			sql.addSQLClause("AND","INVENTARIO_BENI_APG.CD_CDS(+)",sql.EQUALS,riga_fattura.getCd_cds());
@@ -5415,17 +5460,17 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 						tot_variazioni_riga = tot_variazioni_riga.add(variazione_piu);
 					}
 					if (riga_fattura!=null)
-						if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+						if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 						else
 							im_riga_fattura = riga_fattura.getIm_imponibile();
 					else if (nota!=null)
-						if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+						if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 						else
 							im_riga_fattura = nota.getIm_imponibile();
 					 if (notadeb!=null)
-							if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+							if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 								im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 							else
 								im_riga_fattura = notadeb.getIm_imponibile();
@@ -5454,17 +5499,17 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 						tot_bene = tot_bene.add(valore);
 					}
 					if (riga_fattura!=null)
-						if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+						if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 						else
 							im_riga_fattura = riga_fattura.getIm_imponibile();
 					else if (nota!=null)
-						if (nota.getTi_istituz_commerc().equals(nota.ISTITUZIONALE))
+						if (nota.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = nota.getIm_imponibile().add(nota.getIm_iva());
 						else
 							im_riga_fattura = nota.getIm_imponibile();
 					else if (notadeb!=null)
-						if (notadeb.getTi_istituz_commerc().equals(notadeb.ISTITUZIONALE))
+						if (notadeb.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 							im_riga_fattura = notadeb.getIm_imponibile().add(notadeb.getIm_iva());
 						else
 							im_riga_fattura = notadeb.getIm_imponibile();
@@ -6001,7 +6046,8 @@ private String buildBeniNotChanged_Message(java.util.Vector notChangedBeniKey) {
 private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, SimpleBulkList dettagliColl) 
 	throws ComponentException
 {
-	
+
+	Inventario_beniComponentSession inventario_beniComponent = ((it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class));
 	Buono_carico_scarico_dettBulk dett = new Buono_carico_scarico_dettBulk();
 	Inventario_beniBulk bene = new Inventario_beniBulk();
 	Iterator i = dettagliColl.iterator();	
@@ -6031,11 +6077,38 @@ private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, Simple
 		if (bene.getTipo_ammortamento() != null){
 			bene.setTi_ammortamento(bene.getTipo_ammortamento().getTi_ammortamento());
 		}
+		Transito_beni_ordiniBulk transito_beni_ordiniBulk = null;
+		if (buonoC.isByOrdini()){
+			Transito_beni_ordiniHome homeTransito = (Transito_beni_ordiniHome)getHome(aUC, Transito_beni_ordiniBulk.class);
+			transito_beni_ordiniBulk = new Transito_beni_ordiniBulk();
+			transito_beni_ordiniBulk.setId(dett.getIdTransito());
+			try {
+				transito_beni_ordiniBulk = (Transito_beni_ordiniBulk)homeTransito.findByPrimaryKey(transito_beni_ordiniBulk);
+				bene.setTransito_beni_ordini(transito_beni_ordiniBulk);
+				if (transito_beni_ordiniBulk != null){
+					getHomeCache(aUC).fetchAll(aUC);
+				}
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+		}
+
+
 		try{
 			makeBulkPersistent(aUC,bene,false);
 		}catch (Exception pe){
 			throw handleException(pe);			
-		}		
+		}
+		if (buonoC.isByOrdini() && transito_beni_ordiniBulk != null){
+			try {
+				Obbligazione_scadenzarioBulk os = transito_beni_ordiniBulk.getMovimentiMag().getLottoMag().getOrdineAcqConsegna().getObbligazioneScadenzario();
+				Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(aUC, Obbligazione_scadenzarioBulk.class);
+				os = (Obbligazione_scadenzarioBulk)obblHome.findByPrimaryKey(os);
+				inventario_beniComponent.creaUtilizzatori(aUC, os, dett);
+			} catch (PersistencyException | RemoteException e) {
+				throw new ComponentException(e);
+			}
+		}
 	}
 }
 /**
@@ -6314,7 +6387,7 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
 	for (java.util.Enumeration e = righe_fatturaHash.keys(); e.hasMoreElements();){
 		Fattura_passiva_rigaBulk riga_fattura = (Fattura_passiva_rigaBulk)e.nextElement();
 		// Controlla se la riga di fattura è ISTITUZIONALE
-		if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+		if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 			imponibile_totale =riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 		else
 			imponibile_totale =riga_fattura.getIm_imponibile();
@@ -6557,7 +6630,7 @@ private OggettoBulk creaBuonoScaricoConBulk(UserContext userContext, OggettoBulk
 		
 		// Valida il Buono di Scarico
 		validaBuonoScarico(userContext, buonoS);
-		if (!buonoS.isByFattura() && !buonoS.isByDocumento()){
+		if (!buonoS.isByFattura() && !buonoS.isByDocumento() && !buonoS.isByOrdini()){
 		// Setto il progressivo del Buono Scarico
 			Numeratore_buono_c_sHome numHome = (Numeratore_buono_c_sHome) getHome(userContext,Numeratore_buono_c_sBulk.class);
 		
@@ -6573,7 +6646,7 @@ private OggettoBulk creaBuonoScaricoConBulk(UserContext userContext, OggettoBulk
 				throw new ComponentException (e);
 			}
 		}
-		if (!buonoS.isByFattura()&& !buonoS.isByDocumento()){
+		if (!buonoS.isByFattura()&& !buonoS.isByDocumento()&& !buonoS.isByOrdini()){
 			String msg = null;
 			msg = makePersistentScarico(userContext, buonoS);
 
@@ -6931,6 +7004,7 @@ try{
 			
 		}
 	}else if (buonoS.getDettagliFatturaColl().size()!=0 && buonoS.getDettagliFatturaColl().get(0) instanceof Nota_di_credito_rigaBulk){
+		Set<Inventario_beniBulk> beniScelti = new HashSet<>();
 		for (Iterator i = buonoS.getDettagliFatturaColl().iterator(); i.hasNext();){
 			SQLBuilder sql=home.createSQLBuilder();
 			Nota_di_credito_rigaBulk riga_fattura = (Nota_di_credito_rigaBulk)i.next(); 
@@ -6946,8 +7020,20 @@ try{
 			for (Iterator iteratore=beni.iterator();iteratore.hasNext();){
 				Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)iteratore.next();
 				totale_alienazione=totale_alienazione.add(bene_apg.getVariazione_meno());
+				Inventario_beniBulk inventario_beniBulk = new Inventario_beniBulk(bene_apg.getNr_inventario(), bene_apg.getPg_inventario(), bene_apg.getProgressivo());
+				if (beniScelti.isEmpty() || !beniScelti.contains(inventario_beniBulk)){
+					inventario_beniBulk.setValore_iniziale(bene_apg.getVariazione_meno());
+					beniScelti.add(inventario_beniBulk);
+				} else {
+					Inventario_beniBulk beneScelto = beniScelti.stream()
+	 						.filter(bene -> inventario_beniBulk.equals(bene))
+							.findAny()
+							.orElse(null);
+					beneScelto.setValore_iniziale(beneScelto.getValoreBene().add(bene_apg.getVariazione_meno()));
+					beneScelto.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
+				}
 			}
-			if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
+			if (riga_fattura.getTi_istituz_commerc().equals(TipoIVA.ISTITUZIONALE.value()))
 				im_fattura = im_fattura.add(riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva()));
 			else
 				im_fattura = im_fattura.add(riga_fattura.getIm_imponibile());
@@ -6959,6 +7045,17 @@ try{
 						riga_fattura.getDs_riga_fattura() + "' non corrisponde con il totale dei beni ad essa associati.\n " +
 						"Il valore previsto è " + im_fattura);
 			
+		}
+		for (Inventario_beniBulk inv : beniScelti) {
+			Inventario_beniHome homeInv=(Inventario_beniHome)getHome(userContext, Inventario_beniBulk.class);
+			if (inv.isToBeUpdated()){
+				Inventario_beniBulk beneDB = (Inventario_beniBulk)homeInv.findByPrimaryKey(userContext, new Inventario_beniBulk(inv.getNr_inventario(), inv.getPg_inventario(), inv.getProgressivo()));
+				if (beneDB.getValoreBene().compareTo(inv.getValoreBene()) < 0){
+					throw new ApplicationException(
+							"Attenzione: il bene " + beneDB.getNr_inventario()+"-"+beneDB.getPg_inventario()+
+									" è stato scaricato per un importo maggiore del suo valore.");
+				}
+			}
 		}
 	}
 	else if (buonoS.getDettagliDocumentoColl().size()!=0 && buonoS.getDettagliDocumentoColl().get(0) instanceof Documento_generico_rigaBulk){

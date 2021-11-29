@@ -219,7 +219,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
         try {
             CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
             DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
-            if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
+            if (Optional.ofNullable(bulk.getFlDecorrenzaTermini()).orElse("N").equalsIgnoreCase("S")) {
                 fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
             } else {
                 Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)
@@ -295,7 +295,11 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
                 compoundFindClause.addClause(FindClause.AND, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.DA_STORNARE.name());
 				compoundFindClause.addClause(FindClause.AND, "documentoEleTrasmissione.prestatore", SQLBuilder.EQUALS,
                         bulk.getDocumentoEleTrasmissione().getPrestatore());
-                compoundFindClause.addClause(FindClause.AND, "importoDocumento", SQLBuilder.EQUALS, bulk.getImportoDocumento().abs());
+				Optional.ofNullable(bulk.getImportoDocumento())
+                        .map(BigDecimal::abs)
+                        .ifPresent(importo -> {
+                            compoundFindClause.addClause(FindClause.AND, "importoDocumento", SQLBuilder.EQUALS, importo);
+                        });
                 it.cnr.jada.util.RemoteIterator ri = fatturaPassivaElettronicaBP.createComponentSession()
                         .cerca(context.getUserContext(), compoundFindClause, new DocumentoEleTestataBulk());
                 ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);

@@ -24,6 +24,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -57,12 +58,8 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -78,7 +75,7 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.*;
 
-public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cloneable, Serializable, IPrintMgr {
+public class MissioneComponent extends ScritturaPartitaDoppiaFromDocumentoComponent implements IMissioneMgr, Cloneable, Serializable, IPrintMgr {
     private transient final static Logger logger = LoggerFactory.getLogger(MissioneComponent.class);
 
     /**
@@ -2195,7 +2192,12 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         } catch (Throwable e) {
             throw handleException(e);
         }
-
+        if (Optional.ofNullable(missione)
+                .map(missioneBulk -> !Optional.ofNullable(missioneBulk.getFl_associato_compenso()).orElse(Boolean.TRUE))
+                .orElse(Boolean.FALSE)
+        ) {
+            caricaScrittura(userContext, missione);
+        }
         return missione;
     }
 

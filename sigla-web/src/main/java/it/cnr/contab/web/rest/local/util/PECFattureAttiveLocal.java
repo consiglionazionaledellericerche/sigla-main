@@ -42,4 +42,9 @@ public interface PECFattureAttiveLocal {
     @Path("/aggiorna-nome-file")
     @AccessoAllowed(value= AccessoEnum.XXXHTTPSESSIONXXXXXX)
     Response aggiornaNomeFile(@Context HttpServletRequest request) throws Exception;
+
+    @GET
+    @Path("/aggiorna-metadati")
+    @AccessoAllowed(value= AccessoEnum.XXXHTTPSESSIONXXXXXX)
+    Response aggiornaMetadati(@Context HttpServletRequest request, @QueryParam("esercizio") Integer esercizio, @QueryParam("cdCds") String cdCds, @QueryParam("pgFatturaAttiva") Long pgFatturaAttiva) throws Exception;
 }

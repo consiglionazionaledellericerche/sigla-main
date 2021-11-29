@@ -113,7 +113,8 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 
     @Override
     protected boolean excludeChild(StorageObject storageObject) {
-        if (storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals("D:doccont:document"))
+        if (Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()))
+                .filter(s -> s.equals("D:doccont:document")).isPresent())
             return true;
         return super.excludeChild(storageObject);
     }
@@ -133,7 +134,7 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 
     @Override
     protected boolean isChildGrowable(boolean isGrowable) {
-        return true;
+        return isGrowable;
     }
 
     @Override
@@ -143,10 +144,11 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
         if (allegatoDocContBulk.getRifModalitaPagamento() != null && !allegatoDocContBulk.getRifModalitaPagamento().equalsIgnoreCase("GEN") &&
                 (((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_INSERITO) ||
                         ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO) ||
-                        ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA)))
+                        ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))) {
             setStatus(VIEW);
-        else
+        } else {
             setStatus(EDIT);
+        }
         super.getChildDetail(allegatoDocContBulk);
     }
 
@@ -163,10 +165,9 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
     }
 
     @Override
-    protected void completeAllegato(AllegatoDocContBulk allegato) throws ApplicationException {
-        super.completeAllegato(allegato);
-        Optional.ofNullable(storeService.getStorageObjectBykey(allegato.getStorageKey()))
-                .map(storageObject -> storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
+    protected void completeAllegato(AllegatoDocContBulk allegato, StorageObject storageObject) throws ApplicationException {
+        super.completeAllegato(allegato, storageObject);
+        Optional.ofNullable(storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
                 .map(String.class::cast)
                 .ifPresent(s -> allegato.setRifModalitaPagamento(s));
     }
@@ -417,6 +418,8 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                             )
                         );
                     }
+                } else {
+                    throw handleException(new ApplicationException("La Cartella di destinazione non esiste!"));
                 }
             } catch (FileNotFoundException e) {
                 throw handleException(e);

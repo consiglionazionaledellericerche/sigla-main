@@ -31,6 +31,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
@@ -39,6 +40,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
 import it.cnr.contab.service.SpringUtil;
@@ -46,6 +48,7 @@ import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -1435,7 +1438,10 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             || (anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())
                             || (anag_eserc.getFl_no_detr_cuneo_irpef() != null && anag_eserc.getFl_no_detr_cuneo_irpef().booleanValue())
                             || (anag_eserc.getFl_no_credito_cuneo_irpef() != null && anag_eserc.getFl_no_credito_cuneo_irpef().booleanValue())
-                            || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())) {
+                            || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())
+                            || (anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
+                            || (anag_eserc.getContoCredito()!=null && anag_eserc.getContoCredito().getEsercizio()!=null && anag_eserc.getContoCredito().getCd_voce_ep()!=null)
+                            || (anag_eserc.getContoDebito()!=null && anag_eserc.getContoDebito().getEsercizio()!=null && anag_eserc.getContoDebito().getCd_voce_ep()!=null)) {
 
                         //inizializzo i flag se non valorizzati
                         if (anag_eserc.getFl_nofamilyarea() == null) {
@@ -1484,6 +1490,10 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         if (anag_eserc.getFl_detrazioni_altri_tipi() == null) {
                             // lo inizializziamo sempre a NO
                             anag_eserc.setFl_detrazioni_altri_tipi(new Boolean(false));
+                        }
+                        if (anag_eserc.getFl_applica_detr_pers_max() == null) {
+                            // lo inizializziamo sempre a NO
+                            anag_eserc.setFl_applica_detr_pers_max(new Boolean(false));
                         }
                         anag_eserc.setCd_anag(anagrafico.getCd_anag());
                         insertBulk(userContext, anag_eserc);
@@ -1779,7 +1789,10 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             // Per testare la partita iva
             try {
                 if (anagrafico.getPartita_iva() != null && !verificaStrutturaPiva(userContext, anagrafico))
-                    throw new it.cnr.jada.comp.ApplicationException("Verificare la partita Iva non corrisponde al modello della sua nazionalità.");
+                    throw new ApplicationMessageFormatException(
+                            "Verificare la partita Iva non corrisponde al modello della sua nazionalità. " +
+                            "Modello di riferimento: '{0}'", Optional.ofNullable(anagrafico.getNazionalita())
+                            .map(NazioneBulk::getStruttura_piva).orElse(""));
             } catch (ValidationException e) {
                 throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
             }
@@ -2566,8 +2579,30 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                     personaId = Optional.ofNullable(aceService.getPersonaId(anagraficoBulk.getCodice_fiscale()));
                 } catch (FeignException _ex) {
                 }
+                List<RapportoBulk> rapportiValidi = new LinkedList<>();
+                boolean isExDipendente = false;
+                for (Object obj : anagraficoBulk.getRapporti()){
+                    RapportoBulk rapportoBulk = (RapportoBulk) obj;
+                    Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
+                    if (tipo_rapportoBulk.isDipendente()){
+                        isExDipendente = true;
+                    }
+                    if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
+                            rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente()  &&
+                            RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())){
+                        rapportiValidi.add(rapportoBulk);
+                    }
+                }
+
                 if (!personaId.isPresent()) {
-                    SendMail.sendErrorMail("Invio Dati ACE: Codice fiscale "  + anagraficoBulk.getCodice_fiscale() +" non trovato.", "Per il codice fiscale: "  + anagraficoBulk.getCodice_fiscale() +" non è stata trovata la persona in ACE");
+                    for (RapportoBulk rapportoBulk : rapportiValidi){
+                        if (rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.BORSA_DI_STUDIO) ||
+                                rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.ASSEGNI_DI_RICERCA)){
+                            logger.error("Invio Dati ACE: Codice fiscale {} non trovato. Per il codice fiscale: {} non è stata trovata la persona in ACE", anagraficoBulk.getCodice_fiscale(), anagraficoBulk.getCodice_fiscale());
+                            break;
+                        }
+                    }
+
                 } else {
                     PersonaWebDto personaWebDto = aceService.personaById(new Integer(personaId.get()));
                     try {
@@ -2583,32 +2618,12 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             params.put("tipoAppartenenza", TipoAppartenenza.SEDE);
                             personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                     .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
-
-/*                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
-                             logger.error(error);
-                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE");*/
                         }
-                        //else {
-// Prendo l'ultima appartenenza valida dopo averla ordinata
                         if (personeEO == null || personeEO.isEmpty()){
                             String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
                             logger.error(error);
                         } else {
                             PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
-                            List<RapportoBulk> rapportiValidi = new LinkedList<>();
-                            boolean isExDipendente = false;
-                            for (Object obj : anagraficoBulk.getRapporti()){
-                                RapportoBulk rapportoBulk = (RapportoBulk) obj;
-                                Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
-                                if (tipo_rapportoBulk.isDipendente()){
-                                    isExDipendente = true;
-                                }
-                                if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
-                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente()  &&
-                                        RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())){
-                                    rapportiValidi.add(rapportoBulk);
-                                }
-                            }
 
                             if (rapportiValidi.size() > 0){
                                 List<RapportoBulk> rapportiOrdinati = (List<RapportoBulk>) rapportiValidi.stream().sorted(Comparator.comparing(RapportoBulk::getDt_ini_validita)).collect(Collectors.toList());
@@ -2706,5 +2721,19 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         } catch (javax.ejb.EJBException e) {
             throw new it.cnr.jada.DetailedRuntimeException(e);
         }
+    }
+
+    public SQLBuilder selectAnagrafico_esercizio_contoCreditoByClause(UserContext userContext, AnagraficoBulk anagrafico, ContoBulk conto, CompoundFindClause clause) throws ComponentException {
+        SQLBuilder sql = getHome(userContext, conto).createSQLBuilder();
+        sql.addClause(clause);
+        sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+        return sql;
+    }
+
+    public SQLBuilder selectAnagrafico_esercizio_contoDebitoByClause(UserContext userContext, AnagraficoBulk anagrafico, ContoBulk conto, CompoundFindClause clause) throws ComponentException {
+        SQLBuilder sql = getHome(userContext, conto).createSQLBuilder();
+        sql.addClause(clause);
+        sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+        return sql;
     }
 }

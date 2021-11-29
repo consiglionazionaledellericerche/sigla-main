@@ -23,6 +23,7 @@ package it.cnr.contab.ordmag.anag00;
 import java.util.Dictionary;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 public class NumerazioneOrdBulk extends NumerazioneOrdBase {
 	/**
@@ -40,8 +41,9 @@ public class NumerazioneOrdBulk extends NumerazioneOrdBase {
 	public final static Dictionary TIPO;
 	static{
 		TIPO = new it.cnr.jada.util.OrderedHashtable();
-		TIPO.put(COMMERCIALE,"Commerciale");
-		TIPO.put(ISTITUZIONALE,"Istituzionale");
+		for (TipoIVA tipoIVA : TipoIVA.values()) {
+			TIPO.put(tipoIVA.value(), tipoIVA.label());
+		}
 	}
 
 	/**
