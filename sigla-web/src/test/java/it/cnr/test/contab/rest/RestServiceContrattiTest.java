@@ -19,8 +19,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-@PropertySource("classpath:restContrattiService-test.properties")
+@RunWith(JUnit4.class)
 public class RestServiceContrattiTest {
 
     @Value("${test.value}")
@@ -59,7 +60,7 @@ public class RestServiceContrattiTest {
         //c.setCd_tipo_atto("DEL");
         //c.setCd_tipo_contratto
         //c.setCd_proc_amm();
-        //c.setCd_organo();
+            //c.setCd_organo();
 
 
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -116,6 +117,7 @@ public class RestServiceContrattiTest {
 
     @Test
     public void jsonTest()throws Exception {
+
         System.out.println(value);
         /*
         final String regex = "[0-9A-Z]{3}\\.[0-9A-Z]{3}";
