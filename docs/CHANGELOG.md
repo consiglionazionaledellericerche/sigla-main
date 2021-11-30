@@ -1,5 +1,41 @@
-## Release 6.4.1  -- _November 22, 2021_ 
+## Release 6.4.2  -- _November 30, 2021_ 
 **Changes**
+
+>**Nuova gestione parametrica che consente la creazione automatica di variazioni all'atto dell'assunzione di impegni di competenza - risoluzioni anomalie**
+>
+>[3b69cdb1829cb2c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b69cdb1829cb2c) raffaelepagano *November 30, 2021*
+
+>**Aggiunto blocco nel salvataggio della distinta con documenti contabili legati a CUP scaduti rispetto alla data di emissione della distinta**
+>
+>[f71f05a05a7fa0a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f71f05a05a7fa0a) marco.spasiano *November 26, 2021*
+
+>**Modifiche a SIGLA essenziali per il controllo delle variazioni di bilancio: campi aggiuntivi inseriti sulla testa delle variazioni in conto competenza visibili ed editabili esclusivamente agli utenti che sono abilitati all’approvazione delle variazioni**
+>
+>[f7d4a392c3243d0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f7d4a392c3243d0) raffaelepagano *November 25, 2021*
+
+>**Modifiche a SIGLA essenziali per il controllo delle variazioni di bilancio: campi aggiuntivi inseriti sulla testa delle variazioni in conto competenza visibili ed editabili esclusivamente agli utenti che sono abilitati all’approvazione delle variazioni**
+>
+>[1c72de8d3d75400](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1c72de8d3d75400) raffaelepagano *November 25, 2021*
+
+>**Risoluzione anomalia individuata in fase di aggiornamento piano economico**
+>
+>[1c1453e02ee3a81](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1c1453e02ee3a81) raffaelepagano *November 25, 2021*
+
+>**Nuova gestione parametrica che consente la creazione automatica di variazioni all'atto dell'assunzione di impegni di competenza**
+>
+>[36814bf67d70a52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/36814bf67d70a52) raffaelepagano *November 25, 2021*
+
+>**FIX java.lang.ClassCastException: it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk cannot be cast to it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk**
+>
+>[66d2ff78fb6b0c0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/66d2ff78fb6b0c0) marco.spasiano *November 25, 2021*
+
+>**FIX java.lang.ClassCastException: it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk cannot be cast to it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk**
+>
+>[e52ae6fb031a269](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e52ae6fb031a269) marco.spasiano *November 25, 2021*
+
+>**FIX java.lang.ClassCastException: it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk cannot be cast to it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk**
+>
+>[4ffd6acae2774b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ffd6acae2774b8) marco.spasiano *November 25, 2021*
 
 >**Aggiunto la possibilità di ripristinare delle coordinate bancarie cancellate logicamente**
 >
