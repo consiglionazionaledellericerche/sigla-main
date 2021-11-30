@@ -1808,7 +1808,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 			obbligazione = obbligHome.refreshNuoveLineeAttivitaColl(uc, obbligazione);
 		}
 	} catch ( Exception e ) {
-		throw new ApplicationException("Creazione variazione automatica: "+e.getMessage());
+		throw handleException( e );
 	}
 
 	/* simona 23.10.2002 : invertito l'ordine della verifica e della generzione dettagli x problema 344 */
