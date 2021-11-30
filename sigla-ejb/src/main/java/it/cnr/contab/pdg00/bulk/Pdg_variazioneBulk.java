@@ -183,6 +183,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
     // metodo per inizializzare l'oggetto bulk
     private void initialize() {
+        setFl_cda(new Boolean(false));
         setFl_visto_dip_variazioni(new Boolean(false));
     }
 
