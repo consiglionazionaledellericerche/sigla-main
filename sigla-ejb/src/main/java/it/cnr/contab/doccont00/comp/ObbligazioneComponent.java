@@ -1795,7 +1795,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 			obbligazione = obbligHome.refreshNuoveLineeAttivitaColl(uc, obbligazione);
 		}
 	} catch ( Exception e ) {
-		throw new ApplicationException("Creazione variazione automatica: "+e.getMessage());
+		throw handleException(e);
 	}
 
 	/* simona 23.10.2002 : invertito l'ordine della verifica e della generzione dettagli x problema 344 */
@@ -5380,6 +5380,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
 			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
 			scadenzaNuova.setDs_scadenza(nuovaDescrizione!=null ? nuovaDescrizione : scadenzaVecchia.getDs_scadenza());
+			scadenzaNuova.setPg_obbligazione(dati.getNuovoPgObbligazioneScadenzario());
 			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 		
 			// Rigenero i relativi dettagli	
