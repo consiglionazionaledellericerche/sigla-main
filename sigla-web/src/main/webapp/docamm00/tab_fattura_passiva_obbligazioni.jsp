@@ -21,9 +21,10 @@
 			<tr>
 			  	<td colspan="3">
 					<%	boolean canAdd = true;
-						if (fatturaPassiva instanceof Nota_di_creditoBulk || fatturaPassiva instanceof Nota_di_debitoBulk)
+
+						if (fatturaPassiva instanceof Nota_di_creditoBulk || fatturaPassiva instanceof Nota_di_debitoBulk || fatturaPassiva.isDaOrdini())
 							canAdd = false;
-						bp.getObbligazioniController().writeHTMLTable(pageContext,"default",canAdd,false,true,"100%","100px"); %>
+						bp.getObbligazioniController().writeHTMLTable(pageContext,"default",canAdd,false,!fatturaPassiva.isDaOrdini(),"100%","100px"); %>
 			  	</td>
 			</tr>
 			<tr>
@@ -91,7 +92,7 @@
 			</tr>
 			<tr>
 			  	<td>
-					<% bp.getDettaglioObbligazioneController().writeHTMLTable(pageContext,"righiSet",true,false,true,"100%","150px"); %>
+					<% bp.getDettaglioObbligazioneController().writeHTMLTable(pageContext,"righiSet",!fatturaPassiva.isDaOrdini(),false,!fatturaPassiva.isDaOrdini(),"100%","150px"); %>
 			  	</td>
 			</tr>
    		</table>

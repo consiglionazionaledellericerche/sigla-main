@@ -22,7 +22,7 @@
         <table width="100%">
             <tr>
                 <td>
-                    <% bp.getFatturaOrdiniController().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
+                    <% bp.getFatturaOrdiniController().writeHTMLTable(pageContext,"default",false,false,true,"100%","400px"); %>
                 </td>
             </tr>
         </table>

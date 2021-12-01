@@ -1615,8 +1615,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 .orElse(null);
         pages.put(i++, TAB_FATTURA_PASSIVA);
         pages.put(i++, TAB_FORNITORE);
-        pages.put(i++, TAB_FATTURA_PASSIVA_DETTAGLIO);
-        pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
 
         if (fattura instanceof Nota_di_creditoBulk) {
             Nota_di_creditoBulk ndc = (Nota_di_creditoBulk) this.getModel();
@@ -1624,6 +1622,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             java.util.Hashtable accertamenti = ndc.getAccertamentiHash();
             boolean hasObbligazioni = !(obbligazioni == null || obbligazioni.isEmpty());
             boolean hasAccertamenti = !(accertamenti == null || accertamenti.isEmpty());
+            pages.put(i++, TAB_FATTURA_PASSIVA_DETTAGLIO);
+            pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
             if (hasObbligazioni || !hasAccertamenti) {
                 pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
                         .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
@@ -1633,15 +1633,27 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             if (hasAccertamenti || !hasObbligazioni)
                 pages.put(i++, TAB_FATTURA_PASSIVA_ACCERTAMENTI);
         } else if (fattura instanceof Nota_di_debitoBulk) {
+            pages.put(i++, TAB_FATTURA_PASSIVA_DETTAGLIO);
+            pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
             pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
                     .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
                     .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
                     .orElse(TAB_FATTURA_PASSIVA_OBBLIGAZIONI));
         } else if (fattura instanceof Fattura_passiva_IBulk) {
-            pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
-                    .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
-                    .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
-                    .orElse(TAB_FATTURA_PASSIVA_OBBLIGAZIONI));
+
+            if (fattura.isDaOrdini()){
+                pages.put(i++, TAB_FATTURA_PASSIVA_ORDINI);
+                pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
+/*                java.util.Hashtable obbligazioni = fattura.getFattura_passiva_obbligazioniHash();
+                 boolean hasObbligazioni = !(obbligazioni == null || obbligazioni.isEmpty());
+                if (hasObbligazioni) {*/
+                    pages.put(i++, TAB_FATTURA_PASSIVA_OBBLIGAZIONI);
+//                }
+            } else {
+                pages.put(i++, TAB_FATTURA_PASSIVA_DETTAGLIO);
+                pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
+                pages.put(i++, TAB_FATTURA_PASSIVA_OBBLIGAZIONI);
+            }
             pages.put(i++, TAB_FATTURA_PASSIVA_DOCUMENTI_1210);
 
             if (!(fattura.isCommerciale() && fattura.getTi_bene_servizio() != null &&
@@ -1650,6 +1662,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 pages.put(i++, TAB_FATTURA_PASSIVA_INTRASTAT);
             }
         } else {
+            pages.put(i++, TAB_FATTURA_PASSIVA_DETTAGLIO);
+            pages.put(i++, TAB_FATTURA_PASSIVA_CONSUNTIVO);
             pages.put(i++, Optional.ofNullable(fattura.getFlDaOrdini())
                     .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
                     .map(daOrdini -> TAB_FATTURA_PASSIVA_ORDINI)
@@ -1740,6 +1754,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         Fattura_passivaBulk fattura = (Fattura_passivaBulk) getModel();
         FatturaOrdineBulk fatturaOrdineBulk = new FatturaOrdineBulk();
         fatturaOrdineBulk.setOrdineAcqConsegna(ordineAcqConsegna);
+        ordineAcqConsegna.setFatturaOrdineBulk(fatturaOrdineBulk);
         fatturaOrdineBulk.setImImponibile(ordineAcqConsegna.getImImponibile());
         fatturaOrdineBulk.setImImponibileDivisa(ordineAcqConsegna.getImImponibileDivisa());
         fatturaOrdineBulk.setImIva(ordineAcqConsegna.getImIva());
@@ -1822,5 +1837,16 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public CollapsableDetailCRUDController getMovimentiAvere() {
         return movimentiAvere;
+    }
+    public FatturaOrdineBulk calcolaRettificaOrdine(ActionContext context, FatturaOrdineBulk fatturaOrdineBulk) throws BusinessProcessException {
+        try {
+            FatturaOrdineBulk fatturaOrdine =  Utility.createOrdineAcqComponentSession().calcolaImportoOrdine(context.getUserContext(), fatturaOrdineBulk);
+            fatturaOrdineBulk.setImImponibile(fatturaOrdine.getImImponibile());
+            fatturaOrdineBulk.setImIva(fatturaOrdine.getImIva());
+            fatturaOrdineBulk.setImTotaleConsegna(fatturaOrdine.getImTotaleConsegna());
+            return fatturaOrdineBulk;
+        } catch (PersistencyException | RemoteException | ComponentException e) {
+            throw handleException(e);
+        }
     }
 }

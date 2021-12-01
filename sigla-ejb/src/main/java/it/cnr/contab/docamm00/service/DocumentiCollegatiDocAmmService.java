@@ -97,8 +97,8 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
-    private List<StorageObject> getChildrens(String folder){
-        return Optional.ofNullable(this.getStorageObjectByPath( folder,true,false)).map(so->this.getChildren(so.getKey())).orElse(Collections.emptyList());
+    private List<StorageObject> getChildrenByPath(String path){
+        return Optional.ofNullable(this.getStorageObjectByPath( path,true,false)).map(so->this.getChildren(so.getKey())).orElse(Collections.emptyList());
     }
 
     private List<StorageObject> getDocuments(List<StorageObject>  childrens, String tipoAllegato){
@@ -110,8 +110,8 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     }
 
     private List<StorageObject> getDocuments(String folder, String tipoAllegato)  {
-        List<StorageObject>  childrens=getChildrens(folder);
-        return getDocuments(childrens,tipoAllegato);
+        List<StorageObject>  children= getChildrenByPath(folder);
+        return getDocuments(children,tipoAllegato);
     }
 
     public StorageObject recuperoFolderFattura(Fattura_attivaBulk fattura)  {
@@ -145,10 +145,10 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     }
 
     public List<String> getNodeRefDocumentoAttivo(Fattura_attivaBulk fattura) throws DetailedException {
-        List<StorageObject>  childrens=this.getChildren(getPathFolderFatturaAttiva(fattura));
-        List<StorageObject> results = getDocuments(childrens,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
+        List<StorageObject>  children = getChildrenByPath(getPathFolderFatturaAttiva(fattura));
+        List<StorageObject> results = getDocuments(children,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
         if (results.size() == 0) {
-            results = getDocuments(childrens,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_DOPO_PROTOCOLLO.value());
+            results = getDocuments(children,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_DOPO_PROTOCOLLO.value());
             if (results.size() == 0) {
                 return null;
             } else {

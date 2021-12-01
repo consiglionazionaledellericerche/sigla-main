@@ -58,6 +58,8 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	private ContoBulk contoBulk =  new ContoBulk();
 
+	private FatturaOrdineBulk fatturaOrdineBulk = null;
+
 	protected BulkList righeRichiestaCollegate= new BulkList();
 	
 	private Obbligazione_scadenzarioBulk obbligazioneScadenzario =  new Obbligazione_scadenzarioBulk();
@@ -546,4 +548,12 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 				)
 				.isPresent();
 	}
+	public FatturaOrdineBulk getFatturaOrdineBulk() {
+		return fatturaOrdineBulk;
+	}
+
+	public void setFatturaOrdineBulk(FatturaOrdineBulk fatturaOrdineBulk) {
+		this.fatturaOrdineBulk = fatturaOrdineBulk;
+	}
+
 }
