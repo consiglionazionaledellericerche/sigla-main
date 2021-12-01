@@ -1089,7 +1089,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
         email.setMsg("Invio Fattura Elettronica. " + idFattura);
         email.attach(fatturaAttivaSigned, idFattura, "");
         // send the email
-        email.send();
+//        email.send();
     }
 
     public void inviaPECFornitore(UserContext userContext, DataSource attach, String filename, String emailPEC, String subject, String msg) throws ComponentException, EmailException {

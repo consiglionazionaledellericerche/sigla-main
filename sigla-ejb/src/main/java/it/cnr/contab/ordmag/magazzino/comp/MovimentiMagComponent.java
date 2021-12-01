@@ -238,7 +238,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 			}
 		}
 		
-		return movimentoScaricoMag;
+		return movimentoCaricoMag;
 	}
 
 	public MovimentiMagBulk creaMovimentoRettificaValoreOrdine(UserContext userContext, FatturaOrdineBulk fatturaOrdineBulk) throws ComponentException {

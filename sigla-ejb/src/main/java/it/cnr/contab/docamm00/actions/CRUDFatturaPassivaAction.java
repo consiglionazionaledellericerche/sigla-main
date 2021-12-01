@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,9 +95,6 @@ import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
-import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -4075,15 +4073,11 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 throw new DetailedRuntimeException(e);
             }
         });
-/*TODO GG        bulksToRemove.stream()
+        bulksToRemove.stream()
                 .forEach(fatturaOrdineBulk -> {
-                    final Fattura_passiva_rigaBulk fattura_passiva_rigaBulk = fattura.getFattura_passiva_ordini().getKey(fatturaOrdineBulk);
                     fatturaOrdineBulk.setToBeDeleted();
                     bp.getFatturaOrdiniController().getDetails().remove(fatturaOrdineBulk);
-                    if (fattura.getFatturaRigaOrdiniHash().get(fattura_passiva_rigaBulk).isEmpty()) {
-                        fattura_passiva_rigaBulk.setStato_cofi(Fattura_passiva_IBulk.STATO_INIZIALE);
-                    }
-                });*/
+                });
         bp.getFatturaOrdiniController().getSelection().clear();
         return context.findDefaultForward();
     }
@@ -5536,8 +5530,9 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                     .filter(CRUDFatturaPassivaBP.class::isInstance)
                     .map(CRUDFatturaPassivaBP.class::cast)
                     .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
-            final List<FatturaOrdineBulk> details = bp.getFatturaOrdiniController().getDetails();
-            details.stream().forEach(fatturaOrdineBulk -> fatturaOrdineBulk.calcolaRettifiche());
+            Fattura_passivaBulk fattura_passivaBulk = (Fattura_passivaBulk) bp.getModel();
+            FatturaOrdineBulk fatturaOrdineBulk = (FatturaOrdineBulk) bp.getFatturaOrdiniController().getModel();
+            bp.calcolaRettificaOrdine(context, fatturaOrdineBulk);
             return context.findDefaultForward();
         } catch (Throwable t) {
             return handleException(context, t);
@@ -5547,28 +5542,36 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
     public Forward doBringBackSearchVoceIva(ActionContext context,
                                               FatturaOrdineBulk fatturaOrdineBulk,
                                               Voce_ivaBulk voceIva) {
-        CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
-                .filter(CRUDFatturaPassivaBP.class::isInstance)
-                .map(CRUDFatturaPassivaBP.class::cast)
-                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
-        Optional.ofNullable(voceIva)
-                .ifPresent(voce_ivaBulk -> {
-                    fatturaOrdineBulk.setVoceIva(voce_ivaBulk);
-                    bp.setDirty(true);
-                });
-        return doRettificaConsegna(context);
+        try {
+            CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                    .filter(CRUDFatturaPassivaBP.class::isInstance)
+                    .map(CRUDFatturaPassivaBP.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+            if (voceIva != null){
+                fatturaOrdineBulk.setVoceIva(voceIva);
+                bp.setDirty(true);
+            }
+            bp.calcolaRettificaOrdine(context, fatturaOrdineBulk);
+            return context.findDefaultForward();
+        } catch (Throwable t) {
+            return handleException(context, t);
+        }
     }
 
     public Forward doBlankSearchVoceIva(ActionContext context,
                                             FatturaOrdineBulk fatturaOrdineBulk) {
-        CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
-                .filter(CRUDFatturaPassivaBP.class::isInstance)
-                .map(CRUDFatturaPassivaBP.class::cast)
-                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
-        fatturaOrdineBulk.setVoceIva(new Voce_ivaBulk());
-        fatturaOrdineBulk.calcolaRettifiche();
-        bp.setDirty(true);
-        return context.findDefaultForward();
+        try {
+            CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                    .filter(CRUDFatturaPassivaBP.class::isInstance)
+                    .map(CRUDFatturaPassivaBP.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+            fatturaOrdineBulk.setVoceIva(new Voce_ivaBulk());
+            bp.calcolaRettificaOrdine(context, fatturaOrdineBulk);
+            bp.setDirty(true);
+            return context.findDefaultForward();
+        } catch (Throwable t) {
+            return handleException(context, t);
+        }
     }
 
     public Forward doToggleOrdiniRettifiche(ActionContext context) {

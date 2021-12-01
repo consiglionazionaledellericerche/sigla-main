@@ -107,13 +107,12 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 	}
 	protected it.cnr.jada.util.jsp.Button[] createFPInventarioToolbar() {
 
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[5];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[4];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.inventaria");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.associaInventario");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.inventariaPerAumento");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.beni_coll");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.selezionaOrdini");
 		return toolbar;
 	}
 	protected it.cnr.jada.util.jsp.Button[] createFPToolbar() {

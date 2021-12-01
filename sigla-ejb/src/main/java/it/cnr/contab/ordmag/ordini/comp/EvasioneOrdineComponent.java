@@ -305,7 +305,9 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 						Optional.ofNullable(movimentiMagComponent.caricoDaOrdine(userContext, evasioneOrdineRiga.getOrdineAcqConsegna(), evasioneOrdineRiga))
 							.ifPresent(
 									movimentoCarico -> {
-										listaMovimentiScarico.add(movimentoCarico);
+										if (movimentoCarico.getMovimentoRif() != null){
+											listaMovimentiScarico.add(movimentoCarico);
+										}
 										evasioneOrdineRiga.setMovimentiMag(movimentoCarico);
 									});
 					} catch (ComponentException|RemoteException|PersistencyException e) {

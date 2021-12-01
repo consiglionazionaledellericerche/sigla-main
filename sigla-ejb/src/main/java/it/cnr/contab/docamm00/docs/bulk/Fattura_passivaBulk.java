@@ -25,10 +25,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBase;
+import it.cnr.contab.docamm00.fatturapa.bulk.*;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -49,6 +46,7 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -493,7 +491,9 @@ public abstract class Fattura_passivaBulk
             for (Iterator i = getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
                 if (!riga.isAnnullato()) {
-                    riga.calcolaCampiDiRiga();
+                    if (!isDaOrdini()){
+                        riga.calcolaCampiDiRiga();
+                    }
                     totaleImponibileDivisa = totaleImponibileDivisa.add(riga.getIm_totale_divisa());
                     imp = imp.add(riga.getIm_imponibile());
                     iva = iva.add(riga.getIm_iva());
@@ -3514,5 +3514,41 @@ public abstract class Fattura_passivaBulk
     @Override
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
+    }
+
+    public BigDecimal getTotaleImponibileFatturaElettronica() {
+        BigDecimal importo = BigDecimal.ZERO;
+        if (isElettronica()){
+            for (Iterator i = getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+                DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+                String key = null;
+                Hashtable<String, BigDecimal> currentMap = null;
+                if (rigaEle.getImponibileImporto() != null) {
+                    importo = importo.add(rigaEle.getImponibileImporto());
+                }
+            }
+        }
+        return importo;
+    }
+
+    public BigDecimal getTotaleIvaFatturaElettronica() {
+        BigDecimal importo = BigDecimal.ZERO;
+        if (isElettronica()){
+            for (Iterator i = getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+                DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+                String key = null;
+                Hashtable<String, BigDecimal> currentMap = null;
+                if (rigaEle.getImposta() != null) {
+                    importo = importo.add(rigaEle.getImposta());
+                }
+            }
+        }
+        return importo;
+    }
+
+    public boolean isDaOrdini(){
+        return  Optional.ofNullable(getFlDaOrdini())
+                .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                .orElse(false);
     }
 }

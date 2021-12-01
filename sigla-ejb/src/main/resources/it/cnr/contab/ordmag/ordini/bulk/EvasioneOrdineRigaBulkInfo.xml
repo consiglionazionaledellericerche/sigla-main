@@ -274,12 +274,12 @@
         <columnFieldProperty name="prezzoUnitario" property="ordineAcqConsegna.ordineAcqRiga.prezzoUnitario"
                              formatName="it.cnr.contab.util.Importo6CifreFormat"
                              label="Prezzo Unitario"/>
-        <columnFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+        <columnFieldProperty name="imImponibileDivisa" property="ordineAcqConsegna.imImponibileDivisa"
                              label="Imponibile" formatName="it.cnr.contab.util.EuroFormat"/>
-        <columnFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+        <columnFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.imIvaDivisa"
                              label="Iva" formatName="it.cnr.contab.util.EuroFormat"/>
-        <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
-                             label="Totale riga" formatName="it.cnr.contab.util.EuroFormat"/>
+        <columnFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.imTotaleConsegna"
+                             label="Totale consegna" formatName="it.cnr.contab.util.EuroFormat"/>
     </columnSet>
     <freeSearchSet name="fattura_passiva">
         <findFieldProperty name="dataBolla" property="evasioneOrdine.dataBolla" formatName="date_short"
@@ -305,7 +305,7 @@
                              label="Imponibile" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
         <findFieldProperty name="imIvaDivisa" property="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
                              label="Iva" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
-        <findFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
-                             label="Totale riga" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
+        <findFieldProperty name="imTotaleRiga" property="ordineAcqConsegna.imTotaleConsegna"
+                             label="Totale consegna" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat"/>
     </freeSearchSet>
 </bulkInfo>

@@ -40,6 +40,8 @@ import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaVBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
+import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
@@ -60,7 +62,9 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDComponent implements IScritturaPartitaDoppiaMgr,ICRUDMgr, Cloneable, Serializable,IPrintMgr{
@@ -1259,6 +1263,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaDocumento(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
 		try {
 			List<TestataPrimaNota> testataPrimaNotaList = new ArrayList<>();
+			final boolean isFatturaPassivaDaOrdini = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isDaOrdini).isPresent();
 
 			//Le fatture generate da compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
 			if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isGenerataDaCompenso).orElse(Boolean.FALSE))
@@ -1309,15 +1314,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 												} else {
 													Pair<Voce_epBulk, Voce_epBulk> pairContoIva = this.findPairIva(userContext, righeDocammVoce.stream().findAny().get());
 													testataPrimaNota.openDettaglioIva(docamm, pairContoIva.getFirst().getCd_voce_ep(), imIva);
-													testataPrimaNota.openDettaglioCostoRicavo(docamm, pairContoIva.getSecond().getCd_voce_ep(), imIva);
+													if (!isFatturaPassivaDaOrdini){
+														testataPrimaNota.openDettaglioCostoRicavo(docamm, pairContoIva.getSecond().getCd_voce_ep(), imIva);
+													}
 												}
 											}
 
+												BigDecimal imCosto = registraIva?imImponibile:imImponibile.add(imIva);
+												Pair<Voce_epBulk, Voce_epBulk> pairContoCosto = this.findPairCosto(userContext, righeDocammVoce.stream().findAny().get());
+												if (!isFatturaPassivaDaOrdini){
+													testataPrimaNota.openDettaglioCostoRicavo(docamm, pairContoCosto.getFirst().getCd_voce_ep(), imCosto);
+												}
+												testataPrimaNota.openDettaglioPatrimoniale(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imCosto, true);
 											//Registrazione conto COSTO
-											BigDecimal imCosto = registraIva?imImponibile:imImponibile.add(imIva);
-											Pair<Voce_epBulk, Voce_epBulk> pairContoCosto = this.findPairCosto(userContext, righeDocammVoce.stream().findAny().get());
-											testataPrimaNota.openDettaglioCostoRicavo(docamm, pairContoCosto.getFirst().getCd_voce_ep(), imCosto);
-											testataPrimaNota.openDettaglioPatrimoniale(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imCosto, true);
 										} catch (ComponentException|PersistencyException|RemoteException e) {
 											throw new ApplicationRuntimeException(e);
 										}
@@ -1325,6 +1334,32 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								});
 							});
 						});
+						if (isFatturaPassivaDaOrdini){
+							Fattura_passivaBulk fattura = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).get();
+							final BulkList<FatturaOrdineBulk> listaFatturaOrdini = Optional.ofNullable(fattura.getFattura_passiva_ordini())
+									.orElse(new BulkList());
+							final List<OrdineAcqConsegnaBulk> listaConsegne = listaFatturaOrdini.stream().map(FatturaOrdineBulk::getOrdineAcqConsegna).collect(Collectors.toList());
+
+							Map<Integer, Map<String, List<FatturaOrdineBulk>>> mapConto =
+									listaFatturaOrdini.stream().collect(Collectors.groupingBy(fatturaOrdineBulk->fatturaOrdineBulk.getOrdineAcqConsegna().getContoBulk().getEsercizio(),
+											Collectors.groupingBy(fatturaOrdineBulk2->fatturaOrdineBulk2.getOrdineAcqConsegna().getContoBulk().getCd_voce_ep())));
+
+							mapConto.keySet().stream().forEach(aEseConto -> {
+								mapConto.get(aEseConto).keySet().forEach(conto -> {
+									List<FatturaOrdineBulk> righeFatturaOrdine = mapConto.get(aEseConto).get(conto);
+
+									BigDecimal imImponibile = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getImImponibile)
+											.reduce(BigDecimal.ZERO, BigDecimal::add);
+									BigDecimal imIva = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getImIva)
+											.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+									testataPrimaNota.openDettaglioCostoRicavo(docamm, conto, imImponibile);
+									if (registraIva){
+										testataPrimaNota.openDettaglioCostoRicavo(docamm, conto, imIva);
+									}
+								});
+							});
+						}
 					});
 				});
 			});

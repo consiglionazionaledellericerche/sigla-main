@@ -125,18 +125,18 @@
                 sqlTypeName="VARCHAR"
                 columnSize="10"/>
         <columnMapping
-                columnName="ORDINE_ACQ_RIGA.IM_IMPONIBILE_DIVISA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa"
+                columnName="ORDINE_ACQ_CONSEGNA.IM_IMPONIBILE_DIVISA"
+                propertyName="ordineAcqConsegna.imImponibileDivisa"
                 sqlTypeName="DECIMAL"
                 columnSize="15"/>
         <columnMapping
-                columnName="ORDINE_ACQ_RIGA.IM_IVA_DIVISA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.imIvaDivisa"
+                columnName="ORDINE_ACQ_CONSEGNA.IM_IVA_DIVISA"
+                propertyName="ordineAcqConsegna.imIvaDivisa"
                 sqlTypeName="DECIMAL"
                 columnSize="15"/>
         <columnMapping
-                columnName="ORDINE_ACQ_RIGA.IM_TOTALE_RIGA"
-                propertyName="ordineAcqConsegna.ordineAcqRiga.imTotaleRiga"
+                columnName="ORDINE_ACQ_CONSEGNA.IM_TOTALE_CONSEGNA"
+                propertyName="ordineAcqConsegna.imTotaleConsegna"
                 sqlTypeName="DECIMAL"
                 columnSize="15"/>
         <columnMapping

@@ -193,6 +193,13 @@ public class OrdineAcqComponent
 					}
 					parametriCons.setQtaOrd(cons.getQuantita());
 					parametriCons.setArrAliIva(cons.getArrAliIva());
+					if (cons.getFatturaOrdineBulk() != null){
+						impostoVoceIvaRett(userContext, cons.getFatturaOrdineBulk(), parametriCons);
+						parametriCons.setPrezzoRet(cons.getFatturaOrdineBulk().getPrezzoUnitarioRett());
+						parametriCons.setSconto1Ret(cons.getFatturaOrdineBulk().getSconto1Rett());
+						parametriCons.setSconto2Ret(cons.getFatturaOrdineBulk().getSconto2Rett());
+						parametriCons.setSconto3Ret(cons.getFatturaOrdineBulk().getSconto3Rett());
+					}
 					ImportoOrdine importo = calcoloImportoOrdine(parametriCons);
 					cons.setImImponibile(importo.getImponibile());
 					cons.setImImponibileDivisa(importo.getImponibile());
@@ -269,15 +276,7 @@ public class OrdineAcqComponent
 		}
 		parametri.setVoceIva(voce_iva);
 
-		if (fatturaOrdine.getCdVoceIvaRett() != null){
-			Voce_ivaBulk voce_ivaBulk = new Voce_ivaBulk(fatturaOrdine.getCdVoceIvaRett());
-			try {
-				voce_ivaBulk = (Voce_ivaBulk) voce_ivaHome.findByPrimaryKey(voce_ivaBulk);
-			} catch (PersistencyException e) {
-				throw new ComponentException(e);
-			}
-			parametri.setVoceIvaRet(voce_ivaBulk);
-		}
+		impostoVoceIvaRett(userContext, fatturaOrdine, parametri);
 
 		OrdineAcqConsegnaBulk cons = new OrdineAcqConsegnaBulk(fatturaOrdine.getCdCdsOrdine(), fatturaOrdine.getCdUnitaOperativa(), fatturaOrdine.getEsercizioOrdine(), fatturaOrdine.getCdNumeratore(), fatturaOrdine.getNumero(), fatturaOrdine.getRiga(), fatturaOrdine.getConsegna());
 		OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)  getHome(userContext, OrdineAcqConsegnaBulk.class);
@@ -298,6 +297,19 @@ public class OrdineAcqComponent
 		fatturaOrdine.setImIvaNd(importo.getImportoIvaInd());
 		fatturaOrdine.setImTotaleConsegna(importo.getTotale());
 		return fatturaOrdine;
+	}
+
+	private void impostoVoceIvaRett(UserContext userContext, FatturaOrdineBulk fatturaOrdine, ParametriCalcoloImportoOrdine parametri) throws ComponentException {
+		Voce_ivaHome voce_ivaHome = (Voce_ivaHome)  getHome(userContext, Voce_ivaBulk.class);
+		if (fatturaOrdine.getCdVoceIvaRett() != null){
+			Voce_ivaBulk voce_ivaBulk = new Voce_ivaBulk(fatturaOrdine.getCdVoceIvaRett());
+			try {
+				voce_ivaBulk = (Voce_ivaBulk) voce_ivaHome.findByPrimaryKey(voce_ivaBulk);
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+			parametri.setVoceIvaRet(voce_ivaBulk);
+		}
 	}
 
 	public void impostaTotaliOrdine(OrdineAcqBulk ordine) {
