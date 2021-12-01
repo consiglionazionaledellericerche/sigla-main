@@ -20,10 +20,11 @@ package it.cnr.contab.web.rest.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBase;
 
+import java.io.Serializable;
 import java.util.List;
 
 @JsonInclude(value= JsonInclude.Include.NON_NULL)
-public class ContrattoDtoBulk extends ContrattoBase {
+public class ContrattoDtoBulk extends ContrattoBase  implements Serializable {
     private Integer esercizio;
     private String cd_unita_organizzativa;
     private List<DittaInvitataExt> listaDitteInvitateExt;
@@ -42,6 +43,7 @@ public class ContrattoDtoBulk extends ContrattoBase {
     public void setCdCupExt(String cdCupExt) {
         this.cdCupExt = cdCupExt;
     }
+
 
     @Override
     public Integer getEsercizio() {

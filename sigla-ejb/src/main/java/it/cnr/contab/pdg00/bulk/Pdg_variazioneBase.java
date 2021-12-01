@@ -21,6 +21,9 @@
 */
 package it.cnr.contab.pdg00.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
 public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 //	CD_CENTRO_RESPONSABILITA VARCHAR(30) NOT NULL	
 	private java.lang.String cd_centro_responsabilita;
@@ -98,7 +101,19 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 
 	// PG_RIMODULAZIONE NUMBER (10) NULL
 	private java.lang.Integer pg_rimodulazione;
-	
+
+	//IMPORTO_INCASSATO NUMBER(15,2)
+	private java.math.BigDecimal im_incassato;
+
+	//FL_CDA VARCHAR2(1)
+	private java.lang.Boolean fl_cda;
+
+	// ASSEGNAZIONE VARCHAR2(50)
+	private java.lang.String assegnazione;
+
+	// NOTE VARCHAR2(2000)
+	private java.lang.String note;
+
 	public Pdg_variazioneBase() {
 		super();
 	}
@@ -285,5 +300,37 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 
 	public void setPg_rimodulazione(java.lang.Integer pg_rimodulazione) {
 		this.pg_rimodulazione = pg_rimodulazione;
+	}
+
+	public BigDecimal getIm_incassato() {
+		return im_incassato;
+	}
+
+	public void setIm_incassato(BigDecimal im_incassato) {
+		this.im_incassato = im_incassato;
+	}
+
+	public Boolean getFl_cda() {
+		return fl_cda;
+	}
+
+	public void setFl_cda(Boolean fl_cda) {
+		this.fl_cda = fl_cda;
+	}
+
+	public String getAssegnazione() {
+		return assegnazione;
+	}
+
+	public void setAssegnazione(String assegnazione) {
+		this.assegnazione = assegnazione;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 }

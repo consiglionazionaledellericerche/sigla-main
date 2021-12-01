@@ -148,13 +148,9 @@ public enum TipoDocumentoEnum {
 	 * Indica quale tipo di conto di economica (costo/ricavo) viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getTipoEconomica() {
-		if (this.isFatturaPassiva())
+		if (this.isDocumentoAmministrativoPassivo())
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
-		if (this.isNotaCreditoPassiva())
-			return Movimento_cogeBulk.TipoRiga.COSTO.value();
-		if (this.isFatturaAttiva())
-			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
-		if (this.isNotaCreditoAttiva())
+		if (this.isDocumentoAmministrativoAttivo())
 			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
 		if (this.isCompenso())
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
@@ -169,11 +165,11 @@ public enum TipoDocumentoEnum {
 	 * Indica quale tipo di conto patrimoniale (debito/credito) viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getTipoPatrimoniale() {
-		if (this.isFatturaPassiva())
+		if (this.isFatturaPassiva()||isGenericoSpesa())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isFatturaAttiva())
+		if (this.isFatturaAttiva()||isGenericoEntrata())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
@@ -190,11 +186,11 @@ public enum TipoDocumentoEnum {
 	 * Indica quale sezione (Dare/Avere) per il conto di tipo economica viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getSezioneEconomica() {
-		if (this.isFatturaPassiva())
+		if (this.isFatturaPassiva()||isGenericoSpesa())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isFatturaAttiva())
+		if (this.isFatturaAttiva()||isGenericoEntrata())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;

@@ -1780,7 +1780,37 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	
 	validaCampi(uc, obbligazione);
 	validaObbligazionePluriennale(uc, obbligazione);
-	
+
+
+	try {
+		if (Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(uc) && obbligazione.getGaeDestinazioneFinale()!=null &&
+				obbligazione.getGaeDestinazioneFinale().getCd_linea_attivita()!=null) {
+			Utility.createCRUDPdgVariazioneGestionaleComponentSession().generaVariazioneAutomaticaDaObbligazione(uc, obbligazione);
+			//Essendo stata effettuata la variazione possiamo cambiare sull'impegno lìimputazione della GAE emttendo quella di destinazione
+			final WorkpackageBulk gaeFinale = obbligazione.getGaeDestinazioneFinale();
+			obbligazione.getObbligazione_scadenzarioColl().stream().flatMap(el -> el.getObbligazione_scad_voceColl().stream())
+					.forEach(osv -> {
+						osv.setLinea_attivita(gaeFinale);
+					});
+
+			if (obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre().getCd_unita_organizzativa()!=obbligazione.getCd_unita_organizzativa()) {
+				obbligazione.setUnita_organizzativa(obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre());
+				obbligazione.setCd_cds_origine(obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre().getCd_unita_padre());
+				obbligazione.setCd_uo_origine(obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre().getCd_unita_organizzativa());
+			}
+
+			// carica le linee di attività da PDG
+			obbligazione.setLineeAttivitaColl(listaLineeAttivitaPerCapitoliCdr(uc, obbligazione));
+			obbligazione.refreshLineeAttivitaSelezionateColl();
+
+			// carica le nuove linee di attività
+			ObbligazioneHome obbligHome = (ObbligazioneHome) getHome(uc, obbligazione.getClass());
+			obbligazione = obbligHome.refreshNuoveLineeAttivitaColl(uc, obbligazione);
+		}
+	} catch ( Exception e ) {
+		throw handleException( e );
+	}
+
 	/* simona 23.10.2002 : invertito l'ordine della verifica e della generzione dettagli x problema 344 */
 	generaDettagliScadenzaObbligazione( uc, obbligazione, null );	
 	verificaObbligazione( uc, obbligazione );
@@ -1789,7 +1819,6 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	validaImputazioneFinanziaria( uc, obbligazione );
 
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
-
 
 	//esegue il check di disponibilita di cassa 
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
@@ -2081,10 +2110,6 @@ public void eliminaConBulk (UserContext aUC,OggettoBulk bulk) throws ComponentEx
 		}		
 
 		ObbligazioneBulk obbligazione = (ObbligazioneBulk) bulk;
-
-
-
-
 		if ( obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
 			cancellaObbligazioneProvvisoria( aUC, obbligazione );
 		else if ( obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_DEFINITIVO ))
@@ -3236,7 +3261,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		makeBulkListPersistent( aUC, obbligazione.getObbligazione_scadenzarioColl());
 
 		makeBulkListPersistent( aUC, obbligazione.getObbligazioniPluriennali());
-		
+
 		//esegue il check di disponibilita di cassa
 		controllaDisponibilitaCassaPerVoce( aUC, obbligazione, MODIFICA );
 
@@ -4003,9 +4028,7 @@ public ObbligazioneBulk stornaObbligazioneDefinitiva(
 
         obbligazione.setUser(aUC.getUser());
         updateBulk(aUC, obbligazione);
-
-
- */
+ */       
       makeBulkPersistent( aUC, obbligazione);
       /*
 	  if ( !aUC.isTransactional() )	
@@ -5959,5 +5982,20 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 		}
 		return Boolean.TRUE;
 
+	}
+
+
+	public SQLBuilder selectGaeDestinazioneFinaleByClause(UserContext userContext, ObbligazioneBulk obbligazione, WorkpackageBulk lineaAttivita, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+		WorkpackageHome home = (WorkpackageHome)getHome(userContext, lineaAttivita,"V_LINEA_ATTIVITA_VALIDA");
+		SQLBuilder sql = home.createSQLBuilder();
+
+		sql.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.openParenthesis(FindClause.AND);
+		sql.addSQLClause("OR", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
+		sql.addSQLClause("OR", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+		sql.closeParenthesis();
+
+		sql.addClause(clauses);
+		return sql;
 	}
 }

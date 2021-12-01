@@ -29,11 +29,13 @@ import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -42,6 +44,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
@@ -78,12 +81,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	private static final long serialVersionUID = 1L;
 
+
+
 	private ContrattoBulk contratto;
 	private String tipoAccesso;
 	protected ContrattoService contrattoService;
 	protected Date dataStipulaParametri;
 	protected Boolean flagPubblicaContratto;
 	private boolean attivoOrdini = false;
+	private boolean attachRestContrStoredFromSigla = false;
 	private final SimpleDetailCRUDController crudDettaglio_contratto = new SimpleDetailCRUDController("Dettaglio_contratto", Dettaglio_contrattoBulk.class, "dettaglio_contratto", this){
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
 			ContrattoBulk contratto = ( ContrattoBulk) this.getParentModel();
@@ -100,6 +106,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
 		try {
 			attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(actioncontext.getUserContext());
+			attachRestContrStoredFromSigla = Utility.createConfigurazioneCnrComponentSession().isAttachRestContrStoredFromSigla(actioncontext.getUserContext());
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -344,7 +351,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public SimpleDetailCRUDController getCrudAssUO() {
 		return crudAssUO;
 	}
-	/* 
+	/*
 	 * Necessario per la creazione di una form con enctype di tipo "multipart/form-data"
 	 * Sovrascrive quello presente nelle superclassi
 	 * 
@@ -691,54 +698,29 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		ContrattoBulk contratto = (ContrattoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
 		try {
-			Optional.ofNullable(contrattoService.getFolderContratto(contratto))
-					.map(storageObject -> contrattoService.getChildren(storageObject.getKey()))
-					.map(storageObjects -> storageObjects.stream())
-					.orElse(Stream.empty())
-					.filter(storageObject -> Optional.ofNullable(storageObject.getKey()).isPresent())
-					.forEach(child -> {
-						contratto.setAllegatoFlusso(false);
-						if (contratto.isFromFlussoAcquisti()){
-							AllegatoContrattoFlussoDocumentBulk allegato = AllegatoContrattoFlussoDocumentBulk.construct(child);
-							Optional.ofNullable(child.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-									.map(strings -> strings.stream())
-									.ifPresent(stringStream -> {
-										stringStream
-										.filter(s -> AllegatoContrattoFlussoDocumentBulk.ti_allegatoFlussoKeys.get(s) != null)
-										.findFirst()
-										.ifPresent(s -> allegato.setType(s));
-										if (allegato.getType() != null){
-											allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-											allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-											allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-											allegato.setNome(allegato.getTitolo());
-											allegato.setCrudStatus(OggettoBulk.NORMAL);
-											contratto.addToArchivioAllegatiFlusso(allegato);
-											contratto.setAllegatoFlusso(true);
-											if (!allegato.isContentStreamPresent())
-												setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
-										}
-									});
-						}
-						if (contratto.getAllegatoFlusso() == false){
-							AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-							allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-							allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-							allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-							allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
-							allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
-
-							allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
-							allegato.setCrudStatus(OggettoBulk.NORMAL);
-							contratto.addToArchivioAllegati(allegato);
-							if (!allegato.isContentStreamPresent())
-								setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
-						}
-
+			Optional.ofNullable(contrattoService.findAllegatiFlussoContratto(contratto))
+			.filter(list->!list.isEmpty())
+					.ifPresent(list->{
+						list.stream()
+								.forEach(allegato->{
+									contratto.addToArchivioAllegatiFlusso(allegato);
+								});
 					});
+
+
+			Optional.ofNullable(contrattoService.findAllegatiContratto(contratto))
+					.filter(list->!list.isEmpty())
+					.ifPresent(list->{
+						list.stream()
+								.forEach(allegato->{
+									contratto.addToArchivioAllegati(allegato);
+								});
+					});
+
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
+
 		return contratto;
 	}
 
@@ -778,6 +760,18 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 
 	private void archiviaAllegati(ActionContext actioncontext, ContrattoBulk contratto) throws BusinessProcessException, ApplicationException{
+		try {
+			crudArchivioAllegati.validate(actioncontext);
+		} catch (ValidationException e1) {
+			throw handleException(e1);
+		}
+		ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
+		try {
+			comp.archiviaAllegati(actioncontext.getUserContext(),contratto,attachRestContrStoredFromSigla);
+		} catch (ComponentException e) {
+			throw new ApplicationException(e);
+		}
+		/*
 		Optional.ofNullable(contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contratto)))
 				.orElseGet(() -> {
 					StorageObject parentStorageObject = contrattoService.getStorageObjectByPath(
@@ -789,11 +783,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 									contratto
 							));
 				});
-		try {
-			crudArchivioAllegati.validate(actioncontext);
-		} catch (ValidationException e1) {
-			throw handleException(e1);
-		}
+
 		for (Iterator<AllegatoContrattoDocumentBulk> iterator = contratto.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoContrattoDocumentBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
@@ -850,6 +840,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				}
 			}
 		}
+		*/
 	}
 
 	public Boolean getFlagPubblicaContratto() {

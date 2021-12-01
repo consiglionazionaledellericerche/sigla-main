@@ -671,4 +671,17 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 			return handleException(context, ex);
 		}			
 	}
+
+	public Forward doPrendiInCarico(ActionContext context) {
+		try {
+			fillModel(context);
+			Pdg_variazioneBulk pdgVar = (Pdg_variazioneBulk)getBusinessProcess(context).getModel();
+			pdgVar.setAssegnazione(CNRUserContext.getUser(context.getUserContext()));
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}
 }

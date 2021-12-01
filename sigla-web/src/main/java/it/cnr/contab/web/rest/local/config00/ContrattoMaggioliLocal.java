@@ -24,7 +24,6 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
 import it.cnr.contab.web.rest.config.SIGLARoles;
 import it.cnr.contab.web.rest.config.SIGLASecurityContext;
 import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
-import it.cnr.contab.web.rest.model.ContrattoMaggioliDTOBulk;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -40,9 +39,8 @@ import javax.ws.rs.core.Response;
 @Path("/contrattoMaggioli")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@PermitAll
+@RolesAllowed(SIGLARoles.CONTRATTO)
 @Api("Contratti")
-
 public interface ContrattoMaggioliLocal {
     /**
      * PUT  /restapi/contratto -> return Contratto

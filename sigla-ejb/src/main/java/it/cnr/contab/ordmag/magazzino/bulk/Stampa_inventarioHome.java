@@ -179,7 +179,7 @@ public class Stampa_inventarioHome extends BulkHome {
 				inv.setDescArticolo(m.getBeneServizio().getDs_bene_servizio());
 				inv.setCod_categoria(m.getBeneServizio().getCategoria_gruppo().getCd_categoria_padre());
 				inv.setCod_gruppo(m.getBeneServizio().getCategoria_gruppo().getCd_proprio());
-				inv.setUm(m.getBeneServizio().getUnita_misura());
+				inv.setUm(m.getBeneServizio().getUnitaMisura().getCdUnitaMisura());
 				inv.setDescCatGrp(m.getBeneServizio().getCategoria_gruppo().getDs_categoria_gruppo());
 				inv.setImportoUnitario(m.getCostoUnitario());
 				inv.setCdCds(m.getCdCds());

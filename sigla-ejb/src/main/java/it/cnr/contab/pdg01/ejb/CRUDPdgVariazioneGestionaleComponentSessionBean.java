@@ -19,12 +19,14 @@ package it.cnr.contab.pdg01.ejb;
 
 import java.rmi.RemoteException;
 
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
 import it.cnr.contab.preventvar00.comp.VarBilancioComponent;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -129,4 +131,22 @@ public void allineaSaldiVariazioneApprovata(UserContext param0, Ass_pdg_variazio
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+	public Pdg_variazioneBulk generaVariazioneAutomaticaDaObbligazione(it.cnr.jada.UserContext param0,ObbligazioneBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			Pdg_variazioneBulk result = ((CRUDPdgVariazioneGestionaleComponent)componentObj).generaVariazioneAutomaticaDaObbligazione(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

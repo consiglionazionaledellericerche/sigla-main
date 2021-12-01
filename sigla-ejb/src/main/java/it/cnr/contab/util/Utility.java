@@ -43,6 +43,10 @@ import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaComponentSession;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
 import it.cnr.contab.ordmag.magazzino.ejb.TransitoBeniOrdiniComponentSession;
+import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
+import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneRigaGestComponent;
+import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
+import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneRigaGestComponentSession;
 import it.cnr.contab.progettiric00.comp.RimodulaProgettoRicercaComponent;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
@@ -533,5 +537,11 @@ public final class Utility {
 	}
 	public static CompensoComponentSession createCompensoComponentSession() throws javax.ejb.EJBException{
 		return (CompensoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOMPENSI00_EJB_CompensoComponentSession", CompensoComponentSession.class);
+	}
+	public static CRUDPdgVariazioneGestionaleComponentSession createCRUDPdgVariazioneGestionaleComponentSession() throws javax.ejb.EJBException{
+		return (CRUDPdgVariazioneGestionaleComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG01_EJB_CRUDPdgVariazioneGestionaleComponentSession", CRUDPdgVariazioneGestionaleComponentSession.class);
+	}
+	public static CRUDPdgVariazioneRigaGestComponentSession createCRUDPdgVariazioneRigaGestComponentSession() throws javax.ejb.EJBException{
+		return (CRUDPdgVariazioneRigaGestComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG01_EJB_CRUDPdgVariazioneRigaGestComponentSession", CRUDPdgVariazioneRigaGestComponentSession.class);
 	}
 }

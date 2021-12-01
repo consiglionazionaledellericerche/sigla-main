@@ -423,3 +423,6 @@ thorntail:
 spring:
   profiles:
     active: liquibase-isin
+contratto:
+  flows:
+    uniorgwithdot: false

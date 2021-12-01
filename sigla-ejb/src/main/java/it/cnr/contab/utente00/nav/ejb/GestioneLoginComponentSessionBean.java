@@ -473,7 +473,7 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 		pre_component_invocation(param0,componentObj);
 		try {
 			List result = componentObj.getRuoli(param0, utente);
-			component_invocation_succes(param0,componentObj);
+ 				component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0,componentObj);

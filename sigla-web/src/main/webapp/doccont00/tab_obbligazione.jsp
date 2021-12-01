@@ -229,6 +229,24 @@
 		</td>
 	</tr>
     <%}%>
+  	<% if (bp.isVariazioneAutomaticaEnabled() && !bp.isSearching() && obbligazione.getPg_obbligazione()==null){ %>
+	<tr>
+		<td colspan="3">
+			<div class="Group" style="border-color:red">
+			<table>
+			<tr>
+				<% bp.getController().writeFormField(out,"default","findGaeDestinazioneFinale"); %>
+			</tr>
+			<tr>
+        		<td><% bp.getController().writeFormLabel( out, "cdCdrDestinazioneFinale"); %></td>
+        		<td><% bp.getController().writeFormInput(out,"default","cdCdrDestinazioneFinale"); %>
+				    <% bp.getController().writeFormInput(out,"default","dsCdrDestinazioneFinale"); %></td>
+			</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+    <%}%>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>
 		<td><% bp.getController().writeFormInput( out,"default", "cd_riferimento_contratto", bp.isRoCampiResiduoProprio(),null,null); %></td>

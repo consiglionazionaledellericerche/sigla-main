@@ -32,12 +32,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +53,6 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -1568,5 +1570,126 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		if (clause != null) 
 			sql.addClause(clause);
 		return sql; 
-	}	
+	}
+
+	public Pdg_variazioneBulk generaVariazioneAutomaticaDaObbligazione(UserContext userContext, ObbligazioneBulk obbligazione) throws ComponentException{
+		try {
+			if (!obbligazione.isCompetenza())
+				throw new ApplicationRuntimeException("Non è possibile creare la variazione automatica su un obbligazione non di competenza.");
+
+			List<WorkpackageBulk> listLinee = obbligazione.getObbligazione_scadenzarioColl().stream().flatMap(el->el.getObbligazione_scad_voceColl().stream()).map(el->el.getLinea_attivita()).distinct().collect(Collectors.toList());
+
+			if (listLinee.isEmpty())
+				throw new ApplicationRuntimeException("Non è possibile creare la variazione automatica in quanto non è stato possibile individuare la linea di attività sull'obbligazione.");
+			else if (listLinee.size()>1)
+				throw new ApplicationRuntimeException("Non è possibile creare la variazione automatica partendo da un impegno multigae.");
+
+			WorkpackageBulk gaeSource = listLinee.get(0);
+
+			if (obbligazione.getGaeDestinazioneFinale()==null || obbligazione.getGaeDestinazioneFinale().getCd_linea_attivita()==null)
+				throw new ApplicationRuntimeException("Non è possibile creare la variazione automatica in quanto non specificato sull'obbligazione la linea di attività di destinazione.");
+
+			NaturaHome naturaHome = (NaturaHome)getHome(userContext, NaturaBulk.class);
+			NaturaBulk naturaSource = (NaturaBulk)naturaHome.findByPrimaryKey(gaeSource.getNatura());
+
+			if (!obbligazione.getGaeDestinazioneFinale().getNatura().getTipo().equals(naturaSource.getTipo()))
+				throw new ApplicationRuntimeException("Non è possibile creare la variazione automatica in quanto risulta diversa la fonte della linea di attività dell'obbligazione rispetto a quella di destinazione.");
+
+			Pdg_variazioneBulk pdgVar = new Pdg_variazioneBulk();
+			pdgVar.setEsercizio(obbligazione.getEsercizio());
+			pdgVar.setCentro_responsabilita(Utility.createCdrComponentSession().getCdrEnte(userContext));
+			pdgVar.setToBeCreated();
+
+			pdgVar = (Pdg_variazioneBulk)inizializzaBulkPerInserimento(userContext, pdgVar);
+
+			Tipo_variazioneHome tipoVarHome = (Tipo_variazioneHome)getHome(userContext, Tipo_variazioneBulk.class);
+			Tipo_variazioneBulk tipoVarBulk = (Tipo_variazioneBulk)tipoVarHome.findByPrimaryKey(new Tipo_variazioneBulk(obbligazione.getEsercizio(), Tipo_variazioneBulk.STORNO_SPESA_ISTITUTI_DIVERSI));
+
+			pdgVar.setTipo_variazione(tipoVarBulk);
+			pdgVar.setTipologia_fin(gaeSource.getNatura().getTipo());
+			pdgVar.setTiMotivazioneVariazione(Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_AUTOMATICA);
+			pdgVar.setDs_variazione("Variazione automatica generata in fase di caricamento obbligazione.");
+			pdgVar.setRiferimenti("Variazione automatica generata in fase di caricamento obbligazione.");
+
+			CdrBulk cdrSource = gaeSource.getCentro_responsabilita();
+			CdrBulk cdrDestinazioneFinale = obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita();
+			boolean isMonoCdr = cdrSource.getCd_centro_responsabilita().equals(cdrDestinazioneFinale.getCd_centro_responsabilita());
+
+			Ass_pdg_variazione_cdrBulk assPdgVariazioneCdrBulkSource = new Ass_pdg_variazione_cdrBulk();
+			assPdgVariazioneCdrBulkSource.setCentro_responsabilita(cdrSource);
+			assPdgVariazioneCdrBulkSource.setIm_entrata(BigDecimal.ZERO);
+			assPdgVariazioneCdrBulkSource.setIm_spesa(isMonoCdr?BigDecimal.ZERO:obbligazione.getIm_obbligazione().negate());
+			assPdgVariazioneCdrBulkSource.setToBeCreated();
+			pdgVar.addToAssociazioneCDR(assPdgVariazioneCdrBulkSource);
+
+			Ass_pdg_variazione_cdrBulk assPdgVariazioneCdrBulkDestinazioneFinale = null;
+			if (!isMonoCdr) {
+				assPdgVariazioneCdrBulkDestinazioneFinale = new Ass_pdg_variazione_cdrBulk();
+				assPdgVariazioneCdrBulkDestinazioneFinale.setCentro_responsabilita(cdrDestinazioneFinale);
+				assPdgVariazioneCdrBulkDestinazioneFinale.setIm_entrata(BigDecimal.ZERO);
+				assPdgVariazioneCdrBulkDestinazioneFinale.setIm_spesa(obbligazione.getIm_obbligazione());
+				assPdgVariazioneCdrBulkDestinazioneFinale.setToBeCreated();
+				pdgVar.addToAssociazioneCDR(assPdgVariazioneCdrBulkDestinazioneFinale);
+			}
+
+			pdgVar = (Pdg_variazioneBulk)this.creaConBulk(userContext, pdgVar);
+
+			assPdgVariazioneCdrBulkSource = pdgVar.getAssociazioneCDR().stream()
+					.filter(el->el.getCd_centro_responsabilita().equals(cdrSource.getCd_centro_responsabilita()))
+					.findFirst().get();
+
+			Pdg_variazione_riga_gestBulk riga1 = new Pdg_variazione_riga_gestBulk();
+			assPdgVariazioneCdrBulkSource.addToRigheVariazioneSpeGest(riga1);
+			riga1.setLinea_attivita(gaeSource);
+			riga1.setElemento_voce(obbligazione.getElemento_voce());
+			riga1.setArea(obbligazione.getCds());
+			if (gaeSource.getNatura().isFonteInterna())
+				riga1.setIm_spese_gest_decentrata_int(obbligazione.getIm_obbligazione().negate());
+			else
+				riga1.setIm_spese_gest_decentrata_est(obbligazione.getIm_obbligazione().negate());
+			riga1.setToBeCreated();
+
+			if (isMonoCdr) {
+				Pdg_variazione_riga_gestBulk riga2 = new Pdg_variazione_riga_gestBulk();
+				assPdgVariazioneCdrBulkSource.addToRigheVariazioneSpeGest(riga2);
+
+				riga2.setLinea_attivita(obbligazione.getGaeDestinazioneFinale());
+				riga2.setElemento_voce(obbligazione.getElemento_voce());
+				riga2.setArea(obbligazione.getCds());
+				if (gaeSource.getNatura().isFonteInterna())
+					riga2.setIm_spese_gest_decentrata_int(obbligazione.getIm_obbligazione());
+				else
+					riga2.setIm_spese_gest_decentrata_est(obbligazione.getIm_obbligazione());
+				riga2.setToBeCreated();
+			}
+
+			Utility.createCRUDPdgVariazioneRigaGestComponentSession().modificaConBulk(userContext, assPdgVariazioneCdrBulkSource);
+
+			if (!isMonoCdr) {
+				assPdgVariazioneCdrBulkDestinazioneFinale = pdgVar.getAssociazioneCDR().stream()
+						.filter(el->el.getCd_centro_responsabilita().equals(cdrDestinazioneFinale.getCd_centro_responsabilita()))
+						.findFirst().get();
+
+				Pdg_variazione_riga_gestBulk riga2 = new Pdg_variazione_riga_gestBulk();
+				assPdgVariazioneCdrBulkDestinazioneFinale.addToRigheVariazioneSpeGest(riga2);
+				riga2.setLinea_attivita(obbligazione.getGaeDestinazioneFinale());
+				riga2.setElemento_voce(obbligazione.getElemento_voce());
+				riga2.setArea(cdrDestinazioneFinale.getUnita_padre().getUnita_padre());
+				if (gaeSource.getNatura().isFonteInterna())
+					riga2.setIm_spese_gest_decentrata_int(obbligazione.getIm_obbligazione());
+				else
+					riga2.setIm_spese_gest_decentrata_est(obbligazione.getIm_obbligazione());
+				riga2.setToBeCreated();
+				Utility.createCRUDPdgVariazioneRigaGestComponentSession().modificaConBulk(userContext, assPdgVariazioneCdrBulkDestinazioneFinale);
+			}
+
+			pdgVar = (Pdg_variazioneBulk)this.inizializzaBulkPerModifica(userContext, pdgVar);
+			pdgVar = this.salvaDefinitivo(userContext, pdgVar);
+			pdgVar = this.approva(userContext, pdgVar);
+
+			return pdgVar;
+		}catch (Exception e) {
+			throw handleException(e);
+		}
+	}
 }

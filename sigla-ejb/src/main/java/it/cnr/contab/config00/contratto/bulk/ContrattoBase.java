@@ -152,6 +152,8 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 
 //	FL_PUBBLICA_CONTRATTO CHAR(1)
 	private java.lang.Boolean fl_pubblica_contratto;
+//	CD_TIPO_NORMA_PERLA VARCHAR2(3 BYTE)
+	private String cd_tipo_norma_perla;
 	
 	private String cdCigExt;
 	private String codfisPivaRupExt;
@@ -607,5 +609,13 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 
 	public void setTipo_dettaglio_contratto(String tipo_dettaglio_contratto) {
 		this.tipo_dettaglio_contratto = tipo_dettaglio_contratto;
+	}
+
+	public String getCd_tipo_norma_perla() {
+		return cd_tipo_norma_perla;
+	}
+
+	public void setCd_tipo_norma_perla(String cd_tipo_norma_perla) {
+		this.cd_tipo_norma_perla = cd_tipo_norma_perla;
 	}
 }

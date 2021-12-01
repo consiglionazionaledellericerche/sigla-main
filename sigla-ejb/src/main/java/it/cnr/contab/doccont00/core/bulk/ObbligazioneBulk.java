@@ -18,6 +18,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
@@ -141,7 +142,12 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private java.math.BigDecimal im_mandati;
 	private java.math.BigDecimal im_parz_scadenze;
 	private java.math.BigDecimal im_residuo_obbligazione;
-	
+
+	//Variabili utilizzate per indicare la Uo e la GAE di destinazione su cui devono essere girati
+	// gli stanziamenti e creato l'impegno
+	//Attiva solo se parametro isVariazioneAutomaticaSpesa è attivo
+	private WorkpackageBulk gaeDestinazioneFinale;
+
 	private boolean fromDocAmm = false;
 
 	private BulkList<Obbligazione_pluriennaleBulk> obbligazioniPluriennali = new BulkList<Obbligazione_pluriennaleBulk>();
@@ -702,7 +708,6 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_spese_costi_altrui( new Boolean( false ));
 	setFl_gara_in_corso( new Boolean( false ));
 	setRiportato("N");
-
 
 	// I seguenti campi sono definiti temporaneamente, ma DA CANCELLARE
 	setIm_costi_anticipati( new java.math.BigDecimal(0) );
@@ -2039,4 +2044,12 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 
 
 
+
+	public WorkpackageBulk getGaeDestinazioneFinale() {
+		return gaeDestinazioneFinale;
+	}
+
+	public void setGaeDestinazioneFinale(WorkpackageBulk gaeDestinazioneFinale) {
+		this.gaeDestinazioneFinale = gaeDestinazioneFinale;
+	}
 }

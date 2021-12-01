@@ -2337,8 +2337,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
 				/*
 				 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+				 * oppure
+				 * la variazione è generata automaticamente (es. in fase di emissione obbligazione)
 				 */
-				if (uoScrivania.isUoEnte() && variazione.getCentro_responsabilita().getUnita_padre().isUoEnte())
+				if (variazione.getCentro_responsabilita().getUnita_padre().isUoEnte() &&
+						(uoScrivania.isUoEnte() || Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_AUTOMATICA.equals(variazione.getTiMotivazioneVariazione())))
 					return;
 
 				/*

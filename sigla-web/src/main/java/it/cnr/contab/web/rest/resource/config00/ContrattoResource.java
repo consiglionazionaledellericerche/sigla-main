@@ -62,7 +62,17 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 @Stateless
 public class ContrattoResource extends AbstractContrattoResource implements ContrattoLocal {
     private final Logger LOGGER = LoggerFactory.getLogger(ContrattoResource.class);
-	/*
+
+    @Override
+    public void validateContratto(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) throws RemoteException, ComponentException {
+        Optional.ofNullable(contrattoBulk.getAttachments()).
+                ifPresent(e->{
+                   throw new RestException(Status.BAD_REQUEST,String.format("Per tale integrazione non sono previsti gli allegati"));
+                });
+        super.validateContratto(contrattoBulk, userContext);
+    }
+
+    /*
 	@Context SecurityContext securityContext;
 	@EJB CRUDComponentSession crudComponentSession;
 	@EJB ContrattoComponentSession contrattoComponentSession;
