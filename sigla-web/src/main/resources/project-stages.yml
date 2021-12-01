@@ -235,7 +235,7 @@ liquibase:
 
 cnr:
   storage:
-    driver: AZURE
+    driver: filesystem
 #    driver: CMIS
   ldap:
     master:
