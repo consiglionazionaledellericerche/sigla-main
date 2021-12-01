@@ -1,3 +1,11 @@
+## Release 6.4.3  -- _December 01, 2021_ 
+**Changes**
+
+>**Fix Modifiche a SIGLA essenziali per il controllo delle variazioni di bilancio: campi aggiuntivi inseriti sulla testa delle variazioni in conto competenza visibili ed editabili esclusivamente agli utenti che sono abilitati all’approvazione delle variazioni**
+>
+>[65db0b46f6be3e4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65db0b46f6be3e4) raffaelepagano *December 01, 2021*
+
+
 ## Release 6.4.2  -- _November 30, 2021_ 
 **Changes**
 
