@@ -122,16 +122,21 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
             final BigDecimal totaleIva = BigDecimal.valueOf(fatturaOrdineBulks.stream()
                     .mapToDouble(value -> value.getImIva().doubleValue())
                     .sum());
+            final BigDecimal totaleImponibilePerNotaCredito = BigDecimal.valueOf(fatturaOrdineBulks.stream()
+                    .mapToDouble(value -> value.getImponibilePerRigaFattura().doubleValue())
+                    .sum());
+            final BigDecimal totaleIvaPerNotaCredito = BigDecimal.valueOf(fatturaOrdineBulks.stream()
+                    .mapToDouble(value -> value.getIvaPerRigaFattura().doubleValue())
+                    .sum());
             final BigDecimal differenzaImponibile = fattura_passiva.get()
-                    .getTotaleImponibileFatturaElettronica().subtract(totaleImponibile);
+                    .getTotaleImponibileFatturaElettronica().subtract(totaleImponibilePerNotaCredito);
             final BigDecimal differenzaIva = fattura_passiva.get()
-                    .getTotaleIvaFatturaElettronica().subtract(totaleIva);
-
+                    .getTotaleIvaFatturaElettronica().subtract(totaleIvaPerNotaCredito);
 
             jspWriter.println("<tfoot class=\"bg-info\">");
             jspWriter.println("<tr>");
             jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\"  colspan=\"" + numberOfColspan + "\" align=\"right\">");
-            jspWriter.println("<span>Totali:</span>");
+            jspWriter.println("<span>Totali Ordine:</span>");
             jspWriter.println("</td>");
             jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
             jspWriter.print(euroFormat.format(totaleImponibile));
@@ -143,6 +148,23 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
             jspWriter.print(euroFormat.format(totaleImponibile.add(totaleIva)));
             jspWriter.println("</td>");
             jspWriter.println("</tr>");
+
+            if (totaleImponibile.compareTo(totaleImponibilePerNotaCredito) != 0 || totaleIva.compareTo(totaleIvaPerNotaCredito) != 0){
+                jspWriter.println("<tr>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\"  colspan=\"" + numberOfColspan + "\" align=\"right\">");
+                jspWriter.println("<span>Totali Ordine Per Nota Credito:</span>");
+                jspWriter.println("</td>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
+                jspWriter.print(euroFormat.format(totaleImponibilePerNotaCredito));
+                jspWriter.println("</td>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
+                jspWriter.print(euroFormat.format(totaleIvaPerNotaCredito));
+                jspWriter.println("</td>");
+                jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\" align=\"right\">");
+                jspWriter.print(euroFormat.format(totaleImponibilePerNotaCredito.add(totaleIvaPerNotaCredito)));
+                jspWriter.println("</td>");
+                jspWriter.println("</tr>");
+            }
 
             jspWriter.println("<tr>");
             jspWriter.println("<td class=\"TableHeader text-white font-weight-bold\"  colspan=\"" + numberOfColspan + "\" align=\"right\">");

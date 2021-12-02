@@ -1844,6 +1844,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             fatturaOrdineBulk.setImImponibile(fatturaOrdine.getImImponibile());
             fatturaOrdineBulk.setImIva(fatturaOrdine.getImIva());
             fatturaOrdineBulk.setImTotaleConsegna(fatturaOrdine.getImTotaleConsegna());
+            fatturaOrdineBulk.setImponibilePerNotaCredito(fatturaOrdine.getImponibilePerNotaCredito());
+            fatturaOrdineBulk.setImportoIvaPerNotaCredito(fatturaOrdine.getImportoIvaPerNotaCredito());
+            fatturaOrdineBulk.setImTotaleConsegna(fatturaOrdine.getImTotaleConsegna());
             return fatturaOrdineBulk;
         } catch (PersistencyException | RemoteException | ComponentException e) {
             throw handleException(e);

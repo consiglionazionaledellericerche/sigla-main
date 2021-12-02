@@ -49,6 +49,11 @@
                     <% bp.getFatturaOrdiniController().writeFormField(out, "sconto3Rett"); %>
                 </tr>
             </table>
+            <table cellpadding="5px">
+                <tr>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "imponibileErrato"); %>
+                </tr>
+            </table>
         <% } %>
     </div>
 </div>

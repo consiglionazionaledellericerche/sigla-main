@@ -5230,5 +5230,9 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="NOTE" type="VARCHAR(2000)" remarks="Annotazioni"/>
         </addColumn>
     </changeSet>
-
+    <changeSet author="raffaele.pagano" id="add-column-imponibile_errato-to-fattura_ordine">
+        <addColumn tableName="FATTURA_ORDINE">
+            <column name="IMPONIBILE_ERRATO" type="numeric(15, 2)" remarks="Imponibile errato, in attesa di nota di credito"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

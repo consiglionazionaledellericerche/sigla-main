@@ -267,6 +267,7 @@ public class OrdineAcqComponent
 		parametri.setSconto2Ret(fatturaOrdine.getSconto2Rett());
 		parametri.setSconto3(riga.getSconto3());
 		parametri.setSconto3Ret(fatturaOrdine.getSconto3Rett());
+		parametri.setImponibileErratoPerNotaCredito(fatturaOrdine.getImponibileErrato());
 		Voce_ivaHome voce_ivaHome = (Voce_ivaHome)  getHome(userContext, Voce_ivaBulk.class);
 		Voce_ivaBulk voce_iva = null;
 		try {
@@ -294,8 +295,15 @@ public class OrdineAcqComponent
 		fatturaOrdine.setImIva(importo.getImportoIva());
 		fatturaOrdine.setImIvaDivisa(importo.getImportoIva());
 		fatturaOrdine.setImIvaD(importo.getImportoIvaDetraibile());
-		fatturaOrdine.setImIvaNd(importo.getImportoIvaInd());
 		fatturaOrdine.setImTotaleConsegna(importo.getTotale());
+		fatturaOrdine.setImIvaNd(importo.getImportoIvaInd());
+
+		fatturaOrdine.setImponibilePerNotaCredito(Utility.nvl(importo.getImponibilePerNotaCredito(), fatturaOrdine.getImImponibile()));
+		fatturaOrdine.setImportoIvaPerNotaCredito(Utility.nvl(importo.getImportoIvaPerNotaCredito(), fatturaOrdine.getImIva()));
+		fatturaOrdine.setImportoIvaIndPerNotaCredito(Utility.nvl(importo.getImportoIvaIndPerNotaCredito(), fatturaOrdine.getImIvaNd()));
+		fatturaOrdine.setImportoIvaDetraibilePerNotaCredito(Utility.nvl(importo.getImportoIvaDetraibilePerNotaCredito(), fatturaOrdine.getImIvaD()));
+		fatturaOrdine.setTotaleConsegnaPerNotaCredito(Utility.nvl(importo.getTotalePerNotaCredito(), fatturaOrdine.getImTotaleConsegna()));
+
 		return fatturaOrdine;
 	}
 
@@ -1411,6 +1419,15 @@ public class OrdineAcqComponent
 		} else {
 			voceIva = parametri.getVoceIva();
 		}
+		ImportoOrdine importoOrdine = new ImportoOrdine();
+		importoOrdine = calcoloDettagliImporti(importoOrdine, parametri, imponibile, voceIva, false);
+		if (parametri.getImponibileErratoPerNotaCredito() != null){
+			importoOrdine = calcoloDettagliImporti(importoOrdine, parametri, parametri.getImponibileErratoPerNotaCredito(), voceIva, true);
+		}
+		return importoOrdine;
+	}
+
+	private ImportoOrdine calcoloDettagliImporti(ImportoOrdine importoOrdine, ParametriCalcoloImportoOrdine parametri, BigDecimal imponibile, Voce_ivaBulk voceIva, Boolean calcoloTotaliPerNotaCredito) {
 		BigDecimal importoIva = Utility.round6Decimali((Utility.divide(imponibile, Utility.CENTO, 6)).multiply(voceIva.getPercentuale()));
 		BigDecimal ivaNonDetraibile = Utility.round6Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
 		BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
@@ -1423,12 +1440,18 @@ public class OrdineAcqComponent
 			ivaDetraibile = ivaDetraibile.add(Utility.nvl(parametri.getArrAliIva()));
 		}
 		importoIva = importoIva.add(ivaDetraibile);
-		ImportoOrdine importoOrdine = new ImportoOrdine();
-		importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
-		importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
-		importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
-		importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
-		importoOrdine.setArrAliIva(BigDecimal.ZERO);
+		if (calcoloTotaliPerNotaCredito){
+			importoOrdine.setImponibilePerNotaCredito(Utility.round2Decimali(imponibile));
+			importoOrdine.setImportoIvaPerNotaCredito(Utility.round2Decimali(importoIva));
+			importoOrdine.setImportoIvaIndPerNotaCredito(Utility.round2Decimali(ivaNonDetraibile));
+			importoOrdine.setImportoIvaDetraibilePerNotaCredito(Utility.round2Decimali(ivaDetraibile));
+		} else {
+			importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
+			importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
+			importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
+			importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
+			importoOrdine.setArrAliIva(BigDecimal.ZERO);
+		}
 		return importoOrdine;
 	}
 

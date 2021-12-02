@@ -62,9 +62,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDComponent implements IScritturaPartitaDoppiaMgr,ICRUDMgr, Cloneable, Serializable,IPrintMgr{
@@ -1348,9 +1346,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								mapConto.get(aEseConto).keySet().forEach(conto -> {
 									List<FatturaOrdineBulk> righeFatturaOrdine = mapConto.get(aEseConto).get(conto);
 
-									BigDecimal imImponibile = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getImImponibile)
+									BigDecimal imImponibile = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getImponibilePerRigaFattura)
 											.reduce(BigDecimal.ZERO, BigDecimal::add);
-									BigDecimal imIva = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getImIva)
+									BigDecimal imIva = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getIvaPerRigaFattura)
 											.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 									testataPrimaNota.openDettaglioCostoRicavo(docamm, conto, imImponibile);

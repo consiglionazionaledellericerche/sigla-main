@@ -28,6 +28,15 @@ public class ParametriCalcoloImportoOrdine implements Cloneable, Serializable{
 	
 	BigDecimal percProrata;
 	BigDecimal prezzo;
+
+	public BigDecimal getImponibileErratoPerNotaCredito() {
+		return imponibileErratoPerNotaCredito;
+	}
+
+	public void setImponibileErratoPerNotaCredito(BigDecimal imponibileErratoPerNotaCredito) {
+		this.imponibileErratoPerNotaCredito = imponibileErratoPerNotaCredito;
+	}
+
 	BigDecimal qtaOrd;
 	BigDecimal coefacq;
 	Voce_ivaBulk voceIva;
@@ -44,6 +53,7 @@ public class ParametriCalcoloImportoOrdine implements Cloneable, Serializable{
     BigDecimal sconto3Ret;
     BigDecimal cambioRet; 
     BigDecimal arrAliIva;
+	BigDecimal imponibileErratoPerNotaCredito;
 
 	public Voce_ivaBulk getVoceIva() {
 		return voceIva;

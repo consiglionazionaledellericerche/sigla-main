@@ -740,7 +740,6 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             throws ComponentException {
 
         if (fattura_passiva != null) {
-            if (!fattura_passiva.isDaOrdini()){
                 ObbligazioniTable obbligazioniHash = fattura_passiva.getFattura_passiva_obbligazioniHash();
 
                 if (obbligazioniHash != null && !obbligazioniHash.isEmpty()) {
@@ -787,24 +786,26 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     fattura_passiva.setFattura_passiva_obbligazioniHash(newObbligazioniHash);
                     for (java.util.Enumeration e = ((ObbligazioniTable) newObbligazioniHash.clone()).keys(); e.hasMoreElements(); ) {
                         Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) e.nextElement();
-                        java.math.BigDecimal im_ass = null;
-                        if (fattura_passiva.isEstera() &&
-                                fattura_passiva.getLettera_pagamento_estero() != null &&
-                                fattura_passiva.getLettera_pagamento_estero().getIm_pagamento() != null &&
-                                fattura_passiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0)
-                            //Caso di collegamento a documento 1210	con sospeso inserito
-                            im_ass = scadenza.getIm_scadenza();
-                        else
-                            //Tutti gli altri casi
-                            im_ass = calcolaTotaleObbligazionePer(userContext, scadenza, fattura_passiva);
+                        if (!scadenza.getFlAssociataOrdine()){
 
-                        scadenza.setIm_associato_doc_amm(im_ass);
-                        updateImportoAssociatoDocAmm(userContext, scadenza);
+                            java.math.BigDecimal im_ass = null;
+                            if (fattura_passiva.isEstera() &&
+                                    fattura_passiva.getLettera_pagamento_estero() != null &&
+                                    fattura_passiva.getLettera_pagamento_estero().getIm_pagamento() != null &&
+                                    fattura_passiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0)
+                                //Caso di collegamento a documento 1210	con sospeso inserito
+                                im_ass = scadenza.getIm_scadenza();
+                            else
+                                //Tutti gli altri casi
+                                im_ass = calcolaTotaleObbligazionePer(userContext, scadenza, fattura_passiva);
+
+                            scadenza.setIm_associato_doc_amm(im_ass);
+                            updateImportoAssociatoDocAmm(userContext, scadenza);
+                        }
                     }
 
                 }
             }
-        }
     }
 
     private void aggiornaObbligazioniSuCancellazione(
@@ -2902,6 +2903,10 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             for (Object obj : fattura.getFattura_passiva_ordini()){
                 FatturaOrdineBulk fatturaOrdineBulk = (FatturaOrdineBulk) obj;
                 OrdineAcqConsegnaBulk consegna = fatturaOrdineBulk.getOrdineAcqConsegna();
+                if (fatturaOrdineBulk.getImponibileErrato() != null && fatturaOrdineBulk.getImponibilePerNotaCredito() != null &&
+                        fatturaOrdineBulk.getImponibilePerNotaCredito().compareTo(fatturaOrdineBulk.getImImponibile()) < 0){
+                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per la riga di consegna "+consegna.getConsegnaOrdineString() +" è stato indicato un imponibile errato per nota di credito più basso dell'imponibile reale!");
+                }
                 consegna.setFatturaOrdineBulk(fatturaOrdineBulk);
                 Fattura_passiva_rigaBulk riga = getDettaglioForRigaDaOrdini(fattura, fatturaOrdineBulk);
                 if (riga == null){
@@ -2915,7 +2920,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     riga.setIm_iva(fatturaOrdineBulk.getImIva());
                     riga.setIm_imponibile(fatturaOrdineBulk.getImImponibile());
                     riga.setIm_totale_divisa(Utility.nvl(fatturaOrdineBulk.getImImponibileDivisa()));
-                    riga.setIm_diponibile_nc(fatturaOrdineBulk.getImImponibile().add(fatturaOrdineBulk.getImIva()));
+                    riga.setIm_diponibile_nc(riga.getIm_imponibile().add(riga.getIm_iva()));
                     java.util.Vector dettagliDaContabilizzare = new java.util.Vector();
                     dettagliDaContabilizzare.add(riga);
                     Obbligazione_scadenzarioBulk obbligazione = fatturaOrdineBulk.getOrdineAcqConsegna().getObbligazioneScadenzario();
@@ -2932,9 +2937,57 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     riga.setIm_iva(riga.getIm_iva().add(fatturaOrdineBulk.getImIva()));
                     riga.setIm_imponibile(riga.getIm_imponibile().add(fatturaOrdineBulk.getImImponibile()));
                     riga.setIm_totale_divisa(riga.getIm_totale_divisa().add(Utility.nvl(fatturaOrdineBulk.getImImponibileDivisa())));
-                    riga.setIm_diponibile_nc(riga.getIm_diponibile_nc().add(fatturaOrdineBulk.getImImponibile().add(fatturaOrdineBulk.getImIva())));
+                    riga.setIm_diponibile_nc(riga.getIm_diponibile_nc().add(riga.getIm_imponibile().add(riga.getIm_iva())));
                     riga.setQuantita(riga.getQuantita().add(fatturaOrdineBulk.getOrdineAcqConsegna().getQuantita()));
                     riga.setDs_riga_fattura(impostaDescrizioneRigaDaOrdine(riga.getDs_riga_fattura(), fatturaOrdineBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getNotaRiga()));
+                }
+// TODO GG Da rivedere..
+                if (fatturaOrdineBulk.getImponibileErrato() != null && fatturaOrdineBulk.getImponibilePerNotaCredito() != null &&
+                    fatturaOrdineBulk.getImponibilePerNotaCredito().compareTo(fatturaOrdineBulk.getImImponibile()) != 0){
+
+                    Obbligazione_scadenzarioHome home = Optional.ofNullable(getHome(userContext, Obbligazione_scadenzarioBulk.class))
+                            .filter(Obbligazione_scadenzarioHome.class::isInstance)
+                            .map(Obbligazione_scadenzarioHome.class::cast)
+                            .orElseThrow(() -> new ComponentException("Cannot find Obbligazione_scadenzarioHome"));
+
+                    SQLBuilder sql = home.createSQLBuilder();
+                    sql.addClause("AND","cd_cds",sql.EQUALS, consegna.getObbligazioneScadenzario().getCd_cds());
+                    sql.addClause("AND","esercizio",sql.EQUALS, consegna.getObbligazioneScadenzario().getEsercizio());
+                    sql.addClause("AND","esercizio_originale",sql.EQUALS, consegna.getObbligazioneScadenzario().getEsercizio_originale());
+                    sql.addClause("AND","pg_obbligazione",sql.EQUALS, consegna.getObbligazioneScadenzario().getPg_obbligazione());
+                    sql.addClause("AND","im_associato_doc_amm",sql.EQUALS, BigDecimal.ZERO);
+                    sql.addOrderBy("dt_scadenza");
+                    sql.addOrderBy("pg_obbligazione_scadenzario");
+                    try {
+                        List<Obbligazione_scadenzarioBulk> scadenzaAperte = home.fetchAll(sql);
+                        if (scadenzaAperte!= null && scadenzaAperte.size() > 0){
+                            Obbligazione_scadenzarioBulk obbl = scadenzaAperte.get(0);
+                            Fattura_passiva_rigaBulk rigaPerNotaCredito = new Fattura_passiva_rigaIBulk();
+                            fattura.addToFattura_passiva_dettColl(rigaPerNotaCredito);
+                            rigaPerNotaCredito.setBene_servizio(fatturaOrdineBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio());
+                            rigaPerNotaCredito.setVoce_iva(getVoceIvaOrdini(fatturaOrdineBulk));
+                            rigaPerNotaCredito.setQuantita(BigDecimal.ONE);
+                            rigaPerNotaCredito.setPrezzo_unitario(fatturaOrdineBulk.getImponibilePerNotaCredito().subtract(fatturaOrdineBulk.getImImponibile()));
+                            rigaPerNotaCredito.setDs_riga_fattura(impostaDescrizioneRigaDaOrdine(rigaPerNotaCredito.getBene_servizio().getDs_bene_servizio() ,fatturaOrdineBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getNotaRiga()));
+                            rigaPerNotaCredito.setIm_iva(fatturaOrdineBulk.getImportoIvaPerNotaCredito().subtract(fatturaOrdineBulk.getImIva()));
+                            rigaPerNotaCredito.setIm_imponibile(rigaPerNotaCredito.getPrezzo_unitario());
+                            rigaPerNotaCredito.setIm_totale_divisa(riga.getIm_imponibile());
+                            rigaPerNotaCredito.setIm_diponibile_nc(rigaPerNotaCredito.getIm_imponibile().add(rigaPerNotaCredito.getIm_iva()));
+                            obbl.setIm_associato_doc_amm(rigaPerNotaCredito.getIm_diponibile_nc());
+                            obbl.setToBeUpdated();
+                            java.util.Vector dettagliDaContabilizzare = new java.util.Vector();
+                            dettagliDaContabilizzare.add(rigaPerNotaCredito);
+                            ObbligazioniTable obbs = fattura.getObbligazioniHash();
+                            if (obbs != null) {
+                                java.util.List dettagliContabilizzati = (java.util.List) obbs.get(obbl);
+                                if (dettagliContabilizzati != null && !dettagliContabilizzati.isEmpty())
+                                    dettagliDaContabilizzare.addAll(dettagliContabilizzati);
+                            }
+                            contabilizzaDettagliSelezionati(userContext, fattura, dettagliDaContabilizzare, obbl);
+                        }
+                    } catch (PersistencyException e) {
+                        handleException(e);
+                    }
                 }
             }
         } else {
@@ -8327,7 +8380,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Metodo richiamato dal framework per cercare le righe di consegna
      *
      * @param userContext
-     * @param fatturaPassivaRiga
+     * @param fatturaPassiva
      * @param evasioneOrdineRigaBulk
      * @param findclause
      * @return
@@ -8380,7 +8433,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Recupera le righe di ordine associate alla fattura
      *
      * @param userContext
-     * @param fattura_passiva_rigaBulk
+     * @param fattura_passiva
      * @return List<FatturaOrdineBulk>
      * @throws ComponentException
      * @throws it.cnr.jada.persistency.PersistencyException
