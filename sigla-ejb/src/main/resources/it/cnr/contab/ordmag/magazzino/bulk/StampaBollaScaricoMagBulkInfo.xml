@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+			name="findMagazzino"
+			property="magazzinoAbilitato"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			nullable="false"
+			label="Magazzino" />
+	<fieldProperty
+			name="findCatGrp"
+			property="catgrp"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="Cat./gruppo" />
+	<fieldProperty
+		name="dataInventario"
+		property="dataInventario"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data Inventario"/>
+	<fieldProperty
+			name="cdsMagForPrint"
+			property="cdsMagForPrint"/>
+	<fieldProperty
+			name="cdMagazzinoForPrint"
+			property="cdMagazzinoForPrint"/>
+	<fieldProperty
+			name="cdCatGrpForPrint"
+			property="cdCatGrpForPrint"/>
+
+	<fieldProperty
+			name="flRaggCatGruppo"
+			property="flRaggCatGruppo"
+			inputType="CHECKBOX"
+			enabledOnSearch="true"
+			label="Raggr. Cat. Gruppo" />
+	<fieldProperty
+			name="flDettaglioArticolo"
+			property="flDettaglioArticolo"
+			inputType="CHECKBOX"
+			enabledOnSearch="true"
+			label="Dettaglio Articolo" />
+
+	<fieldProperty
+			name="ordinamento"
+			property="ordinamento"
+			keysProperty="TIPO_ORDINAMENTO"
+			inputType="RADIOGROUP"
+			layout = "HORIZONTAL"
+			label="Tipo Ordinamento"
+			caseSensitiveSearch="false" />
+
+
+	<formFieldProperty name="dataInventario" />
+	<formFieldProperty
+			name="findMagazzino" />
+	<formFieldProperty
+			name="findCatGrp" />
+	<formFieldProperty
+			name="flDettaglioArticolo" />
+	<formFieldProperty
+			name="flRaggCatGruppo" />
+	<formFieldProperty
+			name="flDettaglioArticolo" />
+	<formFieldProperty
+			name="ordinamento" />
+	<printForm
+		name="/ordmag/bolla_scarico.jasper">
+		<printFieldProperty
+			name="dataInventario"
+			parameterPosition="2"
+			parameterType="DATE"
+			paramNameJR="dataInventario"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="cdsMagForPrint"
+				parameterPosition="0"
+				parameterType="STRING"
+				paramNameJR="cdsMagazzino"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdMagazzinoForPrint"
+				parameterPosition="1"
+				parameterType="STRING"
+				paramNameJR="cdMagazzino"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdCatGrpForPrint"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="cdCatGrp"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="flDettaglioArticolo"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="flDettaglioArticolo"
+				paramTypeJR="java.lang.Boolean"/>
+		<printFieldProperty
+				name="flRaggCatGruppo"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="flRaggCatGruppo"
+				paramTypeJR="java.lang.Boolean"/>
+		<printFieldProperty
+				name="ordinamento"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="ordinamento"
+				paramTypeJR="java.lang.String"/>
+	</printForm>
+</bulkInfo>
