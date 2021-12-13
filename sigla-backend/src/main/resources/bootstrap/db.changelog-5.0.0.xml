@@ -5277,7 +5277,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
 
     <changeSet author="ciro.salvio" id="print_priority_stampa_bolla_scarico_mag">
         <insert tableName="print_priority">
-            <column name="report_name" type="VARCHAR(1500)" value="/ordmag/magazzino/bolla_scarico.jasper"/>
+            <column name="report_name" type="VARCHAR(1500)" value="/ordmag/bolla_scarico.jasper"/>
             <column name="priority" type="SMALLINT"  value="1" />
             <column name="ds_report" type="VARCHAR(300)" value="Stampa Bolla di Scarico"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>

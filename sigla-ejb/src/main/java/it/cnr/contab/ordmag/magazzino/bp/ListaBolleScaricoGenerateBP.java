@@ -51,7 +51,7 @@ import it.cnr.jada.util.jsp.Button;
 public class ListaBolleScaricoGenerateBP extends SelezionatoreListaBP {
 	private transient final static Logger logger = LoggerFactory.getLogger(ListaBolleScaricoGenerateBP.class);
 	private static final long serialVersionUID = 1L;
-	private static final String NOME_REPORT = "/ordmag/magazzino/bolla_scarico.jasper";
+	private static final String NOME_REPORT = "/ordmag/bolla_scarico.jasper";
 	private List<BollaScaricoMagBulk> bolle;
 
 	@Override
@@ -123,11 +123,11 @@ public class ListaBolleScaricoGenerateBP extends SelezionatoreListaBP {
 		print.setReport(NOME_REPORT);
 		print.setNomeFile(bollaScarico.toString());
 		print.setUtcr(actioncontext.getUserContext().getUser());
-		print.addParam("cds", bollaScarico.getCdCds(), String.class);
+		print.addParam("cd_cds", bollaScarico.getCdCds(), String.class);
 		print.addParam("esercizio", bollaScarico.getEsercizio().intValue(), Integer.class);
-		print.addParam("magazzino", bollaScarico.getCdMagazzino(), String.class);
-		print.addParam("numeratore", bollaScarico.getCdNumeratoreMag(), String.class);
-		print.addParam("bollaSca", bollaScarico.getPgBollaSca().longValue(), Long.class);
+		print.addParam("cd_magazzino", bollaScarico.getCdMagazzino(), String.class);
+		print.addParam("cd_numeratore_mag", bollaScarico.getCdNumeratoreMag(), String.class);
+		print.addParam("pg_bolla_sca", bollaScarico.getPgBollaSca().longValue(), Long.class);
 
 		Report report = SpringUtil.getBean("printService",
 				PrintService.class).executeReport(actioncontext.getUserContext(),
