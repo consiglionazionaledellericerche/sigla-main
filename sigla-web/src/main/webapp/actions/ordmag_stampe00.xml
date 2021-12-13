@@ -57,7 +57,6 @@
         <init-param name="defaultAction" value="StampaBollaScaricoMagAction" />
         <init-param name="printbp" value="OfflineReportPrintBP"/>
         <init-param name="reportName" value="/ordmag/bolla_scarico.jasper" />
-
     </businessProcess>
 
 
