@@ -346,5 +346,7 @@
 	<findFieldProperty
 		name="percentuale" />
 	<findFieldProperty
-		name="dt_inizio_validita" />			
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="naturaOperNonImpSdi"/>
 </bulkInfo>
