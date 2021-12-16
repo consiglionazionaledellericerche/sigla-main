@@ -5,7 +5,9 @@
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.anagraf00.bp.*,
-		it.cnr.contab.anagraf00.core.bulk.*"
+		it.cnr.contab.anagraf00.core.bulk.*,
+		it.cnr.contab.utenze00.bulk.CNRUserInfo,
+		it.cnr.contab.config00.sto.bulk.*"
 %>
 
 <%
@@ -54,30 +56,23 @@
     </tr>
     <tr>
       <% if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
-        <%	if(bp.isGestoreIstat(uc, terzo) || !terzo.getAnagrafico().isStrutturaCNR()){ %>
-            <% bp.writeFormField(out,"codiceUnivocoUfficioIpa");%>
-        <%} else { %>
-            <td><%bp.writeFormLabel(out,"default","codiceUnivocoUfficioIpa"); %></td>
-            <td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",true,null,null);%></td>
-        <%} %>
+        <td><%bp.writeFormLabel(out,"default","codiceUnivocoUfficioIpa"); %></td>
+        <td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",bp.isEnableChangeCodIpa(uc,terzo),null,null);%></td>
       <%} else {%>
-        <%if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getDataAvvioFattElettr() != null){ %>
+        <%if(terzo != null && terzo.getAnagrafico() != null
+            && terzo.getAnagrafico().getDataAvvioFattElettr() != null){ %>
             <% bp.writeFormField(out,"codiceDestinatarioFatt");%>
         <%} %>
         <%if(bp.isGestoreIstat(uc, terzo)){ %>
             <% bp.writeFormField(out,"flSbloccoFatturaElettronica");%>
         <%} %>
       <%} %>
+
       <%if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>
-        <%if(bp.isGestoreIstat(uc, terzo)){ %>
-            <% bp.writeFormField(out,"codiceUnivocoPcc");%>
-            <% bp.writeFormField(out,"denominazionePcc");%>
-        <%} else { %>
-            <td><%bp.writeFormLabel(out,"default","codiceUnivocoPcc"); %></td>
-            <td><% bp.writeFormInput(out,"default","codiceUnivocoPcc",true,null,null);%></td>
+             <td><%bp.writeFormLabel(out,"default","codiceUnivocoPcc"); %></td>
+            <td><% bp.writeFormInput(out,"default","codiceUnivocoPcc",bp.isEnableChangePCC(uc,terzo),null,null);%></td>
             <td><%bp.writeFormLabel(out,"default","denominazionePcc"); %></td>
-            <td><% bp.writeFormInput(out,"default","denominazionePcc",true,null,null);%></td>
-        <%} %>
+            <td><% bp.writeFormInput(out,"default","denominazionePcc",bp.isEnableChangePCC(uc,terzo),null,null);%></td>
       <%} %>
     </tr>
     <tr>
