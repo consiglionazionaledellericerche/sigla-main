@@ -251,7 +251,7 @@ pagopa:
     username: gpadmin
     password: bubbazza
     usernameApp: sigla
-    passwordApp: Acr.1214
+    passwordApp: Bubbazza.12
 ---
 project:
   stage: demo-h2
