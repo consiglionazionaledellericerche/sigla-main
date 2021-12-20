@@ -144,6 +144,8 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 
 	private it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk anagrafico;
 	private Unita_organizzativaBulk unita_organizzativa;
+	private TerzoBulk terzo_selected;
+
 
 	public CRUDTerzoBP(String function) throws BusinessProcessException {
 		super(function);
@@ -168,8 +170,12 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 		this.anagrafico = anagrafico;
 	}
 
-
-
+	public CRUDTerzoBP(String function,
+						Unita_organizzativaBulk unita_organizzativa,
+						TerzoBulk terzoSelected) throws BusinessProcessException {
+							this(function,unita_organizzativa);
+						this.terzo_selected=terzoSelected;
+	}
 	public CRUDTerzoBP(String function,
 			Unita_organizzativaBulk unita_organizzativa)
 			throws BusinessProcessException {
@@ -379,6 +385,13 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 		return unita_organizzativa;
 	}
 
+	protected TerzoBulk getTerzoEdit(it.cnr.jada.action.ActionContext context) throws BusinessProcessException, ComponentException, RemoteException {
+		if ( Optional.ofNullable(terzo_selected).isPresent())
+			return terzo_selected;
+		return ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession())
+				.cercaTerzoPerUnitaOrganizzativa(
+						context.getUserContext(), unita_organizzativa);
+	}
 	protected void initialize(it.cnr.jada.action.ActionContext context)
 			throws it.cnr.jada.action.BusinessProcessException {
 		try {
@@ -388,9 +401,8 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 				else
 					reset(context);
 			} else {
-				TerzoBulk terzo = ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession())
-						.cercaTerzoPerUnitaOrganizzativa(
-								context.getUserContext(), unita_organizzativa);
+
+				TerzoBulk terzo = getTerzoEdit(context);
 				if (terzo == null) {
 					if (isEditable())
 						reset(context,

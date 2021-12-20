@@ -17,8 +17,11 @@
 
 package it.cnr.contab.anagraf00.ejb;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.RemoteIterator;
 
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
@@ -437,4 +440,25 @@ public it.cnr.contab.anagraf00.core.bulk.TerzoBulk completaTerzo(it.cnr.jada.Use
 		}
 	}
 }
+
+	@Override
+	public RemoteIterator cercaTerziPerUnitaOrganizzativa(UserContext param0, Unita_organizzativaBulk param1) throws ComponentException, RemoteException, PersistencyException {
+		try {
+			return (it.cnr.jada.util.RemoteIterator)invoke("cercaTerziPerUnitaOrganizzativa",new Object[] {
+					param0,
+					param1 });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(it.cnr.jada.persistency.PersistencyException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

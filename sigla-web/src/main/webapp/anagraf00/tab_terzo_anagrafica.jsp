@@ -67,7 +67,6 @@
             <% bp.writeFormField(out,"flSbloccoFatturaElettronica");%>
         <%} %>
       <%} %>
-
       <%if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>
              <td><%bp.writeFormLabel(out,"default","codiceUnivocoPcc"); %></td>
             <td><% bp.writeFormInput(out,"default","codiceUnivocoPcc",bp.isEnableChangePCC(uc,terzo),null,null);%></td>
