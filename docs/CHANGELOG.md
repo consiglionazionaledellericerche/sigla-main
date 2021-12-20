@@ -1,3 +1,57 @@
+## Release 6.4.6  -- _December 20, 2021_ 
+**Changes**
+
+>**Come richiesto da Maria Grazia Caragnano è stato aggiunto il blocco di inventariare obbligatoriamente i beni anche se la nota di credito è in stato non liquidabile.**
+>
+>[994da78cf296d10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/994da78cf296d10) gianfranco.gasparro *December 20, 2021*
+
+
+## Release 6.4.5  -- _December 16, 2021_ 
+**Changes**
+
+>**FIX project-stages for demo**
+>
+>[c22f333b650485e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c22f333b650485e) marco.spasiano *December 16, 2021*
+
+
+## Release 6.4.4  -- _December 16, 2021_ 
+**Changes**
+
+>**Aggiunto controllo sulla data di scadenza della fattura collegata al mandato**
+>
+>[64af12e45599506](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64af12e45599506) marco.spasiano *December 14, 2021*
+
+>**Gestione autofattura attività commerciale acquisti nazionali, Rispetto alla gestione dell'autofattura derivante da applicazione dell'art art. 17 comma 6 lett c reverse charge (e art 74 c 7 e 8) emerso a seguito della fattura sdi 6016732521 uo 114.002 registrata con progr 1 è necessario innanzitutto implementare la funzionalità "Nuovo" della gestione Voce Iva per poter aggiungere la possibilità di inserire la Natura iva corrispondente e il Gruppo Iva corrispondente (gruppo 14 "Operazioni Imponibili soggette a reverse charge") anche quando si flagga il campo Detraibile.**
+> * Bisogna solo consentire il collegamento del campo natura ai codici IVA con aliquota:
+> * Ad esempio al codice IVA 22%RC6 collegheremo la natura N6.6.
+> * In fase di registrazione fattura per il dettaglio con NATURA N6.6 si potrà scegliere il codice IVA RC6NFE attualmente collegato alla natura N6.6 (per fatture ISTITUZIONALI), e il codice 22%RC6 (per fatture commerciali).
+> * Successivamente ogni qual volta si riceve una fattura passiva da fornitore italiano con valorizzato solamente l&#39;imponibile e valorizzato il campo Natura Iva con natura  N6.6 (come nell&#39;esempio della fattura suddetta),nella simulazione di registrazione di una fattura passiva italiana , quando l&#39;utente seleziona il tipo Commerciale la procedura da&#39; la possibilità all&#39;utente stesso di flaggare il campo &quot;Autofattura&quot; e di selezionare il sezionale &quot;Registro Iva Ordinario Acquisti&quot;.
+> * Ogni qualvolta si registra una fattura con natura N6.6 (il nostro caso di esempio), se si indica Commerciale si potrà scegliere tutti i codici IVA con percentuale specificata collegati a questa natura.
+> * In questi casi l’utente sceglierà (scelta già consentita) di emettere autofattura. Il registro resta quello proposto oggi quando si sceglie ‘Autofattura’.
+> * l&#39;utente durante la registrazione della fattura, nel folder Dettagli, dovrà  inserire la voce iva (ad esempio codice iva 22%RC6 - utilizzabile solamente per acquisti in attività commerciale da operatori economici
+> * nazionali) per procedere alla generazione di un&#39;autofattura che dovrà essere registrata sia nel registro iva vendite (REgistro Iva vendita Autofatture)che nel registro iva acquisti (Registro Iva Ordinario Acquisti).
+> * La scelta del codice IVA avviene come indicato al punto 1. I registri dovrebbero già essere quelli corretti (per il caso autofattura).
+> * Riguardo alla quadratura che la procedura effettua tra imponibile + iva e il totale del documento in testata, in questo caso il sistema dovrà consentire di salvare la fattura anche se l&#39;importo della fattura in testata è pari solo all&#39;imponibile (ovviamente indicheremo dettagliatamente tutti i codici iva che hanno questa gestione).
+> * Nel caso di ‘Autofattura’ con cod. natura su fatt. elettronica e aliquota IVA in fase di registrazione, le quadrature rispetto alla fattura elettronica saranno effettuate solo per l’imponibile.
+>
+>[c0aea06b2704cce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0aea06b2704cce) marco.spasiano *December 14, 2021*
+
+>**Gestione autofattura attività commerciale acquisti nazionali, Rispetto alla gestione dell'autofattura derivante da applicazione dell'art art. 17 comma 6 lett c reverse charge (e art 74 c 7 e 8) emerso a seguito della fattura sdi 6016732521 uo 114.002 registrata con progr 1 è necessario innanzitutto implementare la funzionalità "Nuovo" della gestione Voce Iva per poter aggiungere la possibilità di inserire la Natura iva corrispondente e il Gruppo Iva corrispondente (gruppo 14 "Operazioni Imponibili soggette a reverse charge") anche quando si flagga il campo Detraibile.**
+> * Bisogna solo consentire il collegamento del campo natura ai codici IVA con aliquota:
+> * Ad esempio al codice IVA 22%RC6 collegheremo la natura N6.6.
+> * In fase di registrazione fattura per il dettaglio con NATURA N6.6 si potrà scegliere il codice IVA RC6NFE attualmente collegato alla natura N6.6 (per fatture ISTITUZIONALI), e il codice 22%RC6 (per fatture commerciali).
+> * Successivamente ogni qual volta si riceve una fattura passiva da fornitore italiano con valorizzato solamente l&#39;imponibile e valorizzato il campo Natura Iva con natura  N6.6 (come nell&#39;esempio della fattura suddetta),nella simulazione di registrazione di una fattura passiva italiana , quando l&#39;utente seleziona il tipo Commerciale la procedura da&#39; la possibilità all&#39;utente stesso di flaggare il campo &quot;Autofattura&quot; e di selezionare il sezionale &quot;Registro Iva Ordinario Acquisti&quot;.
+> * Ogni qualvolta si registra una fattura con natura N6.6 (il nostro caso di esempio), se si indica Commerciale si potrà scegliere tutti i codici IVA con percentuale specificata collegati a questa natura.
+> * In questi casi l’utente sceglierà (scelta già consentita) di emettere autofattura. Il registro resta quello proposto oggi quando si sceglie ‘Autofattura’.
+> * l&#39;utente durante la registrazione della fattura, nel folder Dettagli, dovrà  inserire la voce iva (ad esempio codice iva 22%RC6 - utilizzabile solamente per acquisti in attività commerciale da operatori economici
+> * nazionali) per procedere alla generazione di un&#39;autofattura che dovrà essere registrata sia nel registro iva vendite (REgistro Iva vendita Autofatture)che nel registro iva acquisti (Registro Iva Ordinario Acquisti).
+> * La scelta del codice IVA avviene come indicato al punto 1. I registri dovrebbero già essere quelli corretti (per il caso autofattura).
+> * Riguardo alla quadratura che la procedura effettua tra imponibile + iva e il totale del documento in testata, in questo caso il sistema dovrà consentire di salvare la fattura anche se l&#39;importo della fattura in testata è pari solo all&#39;imponibile (ovviamente indicheremo dettagliatamente tutti i codici iva che hanno questa gestione).
+> * Nel caso di ‘Autofattura’ con cod. natura su fatt. elettronica e aliquota IVA in fase di registrazione, le quadrature rispetto alla fattura elettronica saranno effettuate solo per l’imponibile.
+>
+>[0c7f152593c7384](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0c7f152593c7384) marco.spasiano *December 14, 2021*
+
+
 ## Release 6.4.3  -- _December 01, 2021_ 
 **Changes**
 
