@@ -152,7 +152,7 @@ public class Obbligazione_scadenzarioHome extends BulkHome implements IScadenzaD
      * @throws IntrospectionException
      * @throws PersistencyException
      */
-    public java.util.List findObbligazione_scad_voceList(it.cnr.jada.UserContext userContext, Obbligazione_scadenzarioBulk os) throws IntrospectionException, PersistencyException {
+    public java.util.List findObbligazione_scad_voceList(it.cnr.jada.UserContext userContext, Obbligazione_scadenzarioBulk os) throws PersistencyException {
 //	PersistentHome osvHome = getHomeCache().getHome(Obbligazione_scad_voceBulk.class, "default", "it.cnr.contab.doccont00.comp.ObbligazioneComponent.edit" );
         PersistentHome osvHome = getHomeCache().getHome(Obbligazione_scad_voceBulk.class);
         SQLBuilder sql = osvHome.createSQLBuilder();

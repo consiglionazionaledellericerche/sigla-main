@@ -1672,8 +1672,6 @@ private void validaUtilizzatori (UserContext aUC,Inventario_beniBulk bene)
 					return resUtilizzatori;
 				}
 			}
-		} catch (IntrospectionException e1) {
-			throw new ComponentException(e1);
 		} catch (PersistencyException e1) {
 			throw new ComponentException(e1);
 		}

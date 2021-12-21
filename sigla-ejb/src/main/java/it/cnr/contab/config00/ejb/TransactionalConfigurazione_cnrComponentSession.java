@@ -604,6 +604,21 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             }
         }
     }
-
+    public Integer getCdTerzoDiversiStipendi(UserContext userContext)  throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (Integer) invoke("getCdTerzoDiversiStipendi", new Object[]{
+                    userContext});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
 
 }

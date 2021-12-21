@@ -31,6 +31,7 @@ public enum TipoDocumentoEnum {
 	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA),
 	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA),
 	GEN_CORA_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
+	GEN_CORA_S("GEN_CORA_S"),
 	GEN_CORV_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
 	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S"),
 	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S"),
@@ -53,6 +54,10 @@ public enum TipoDocumentoEnum {
 
 	TipoDocumentoEnum(String value) {
 		this.value = value;
+	}
+
+	public String getValue() {
+		return this.value;
 	}
 
 	public boolean isAnticipo() {

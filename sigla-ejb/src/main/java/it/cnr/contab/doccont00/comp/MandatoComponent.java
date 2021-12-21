@@ -2169,6 +2169,10 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
                         userContext, riga);
             }
 
+            riga.setDs_mandato_riga(Optional.ofNullable(riga.getDs_mandato_riga()).orElse(
+                    Optional.of(docPassivo).filter(V_doc_passivo_obbligazione_wizardBulk.class::isInstance).map(V_doc_passivo_obbligazione_wizardBulk.class::cast)
+                            .map(V_doc_passivo_obbligazione_wizardBulk::getDescrizioneRigaMandatoWizard).orElse(null)));
+
             return riga;
         } catch (Exception e) {
             throw handleException(e);

@@ -17,16 +17,24 @@
 
 package it.cnr.contab.pdg00.cdip.bulk;
 
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 public class Stipendi_cofi_coriHome extends BulkHome {
-public Stipendi_cofi_coriHome(java.sql.Connection conn) {
-	super(Stipendi_cofi_coriBulk.class,conn);
-}
-public Stipendi_cofi_coriHome(java.sql.Connection conn,PersistentCache persistentCache) {
-	super(Stipendi_cofi_coriBulk.class,conn,persistentCache);
-}
+	public Stipendi_cofi_coriHome(java.sql.Connection conn) {
+		super(Stipendi_cofi_coriBulk.class,conn);
+	}
+	public Stipendi_cofi_coriHome(java.sql.Connection conn,PersistentCache persistentCache) {
+		super(Stipendi_cofi_coriBulk.class,conn,persistentCache);
+	}
+
+	public java.util.Collection<Stipendi_cofi_coriBulk> findStipendiCofiCori(int esercizio, int mese) throws PersistencyException{
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,esercizio);
+		sql.addSQLClause(FindClause.AND,"MESE",SQLBuilder.EQUALS,mese);
+		return fetchAll(sql);
+	}
 }

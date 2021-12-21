@@ -19,8 +19,11 @@ package it.cnr.contab.docamm00.ejb;
 import java.rmi.*;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.docamm00.docs.bulk.DocumentoGenericoWizardBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
+import it.cnr.contab.doccont00.core.AccertamentoWizard;
+import it.cnr.contab.doccont00.core.ObbligazioneWizard;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -1048,4 +1051,40 @@ public it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk eliminaLetteraPag
 		}
 	}
 }
+	public Documento_genericoBulk creaDocumentoGenericoDaImpegni(UserContext param0, DocumentoGenericoWizardBulk param1, java.util.Collection<ObbligazioneWizard> param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk)invoke("creaDocumentoGenericoDaImpegni",new Object[] {
+					param0,
+					param1,
+					param2});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public Documento_genericoBulk creaDocumentoGenericoDaAccertamenti(UserContext param0, DocumentoGenericoWizardBulk param1, java.util.Collection<AccertamentoWizard> param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk)invoke("creaDocumentoGenericoDaAccertamenti",new Object[] {
+					param0,
+					param1,
+					param2});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

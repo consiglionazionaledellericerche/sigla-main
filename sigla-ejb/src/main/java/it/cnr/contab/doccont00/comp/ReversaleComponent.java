@@ -536,7 +536,7 @@ Attenzione: l'importo della riga non viene mai modificato
      * @param reversale   <code>ReversaleBulk</code> la reversale
      * @param action      <code>String</code> azione che può assumere valori inserimento/annullamento
      */
-    private void aggiornaStatoFattura(UserContext userContext, ReversaleBulk reversale, String action) throws ComponentException {
+    protected void aggiornaStatoFattura(UserContext userContext, ReversaleBulk reversale, String action) throws ComponentException {
         try {
             createFatturaPassivaComponentSession().aggiornaStatoDocumentiAmministrativi(
                     userContext,
@@ -2493,10 +2493,10 @@ REVERSALE
         if (riga.getReversale() != null && ReversaleBulk.TIPO_REGOLARIZZAZIONE.equals(riga.getReversale().getTi_reversale()))
             return null;
         SQLBuilder sql = getHome(userContext, BancaBulk.class).createSQLBuilder();
-        sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, riga.getCd_terzo_uo());
-        sql.addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", SQLBuilder.ISNULL, null);
-        sql.addClause("AND", "ti_pagamento", SQLBuilder.EQUALS, riga.getBanca().getTi_pagamento());
-        sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+        sql.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, riga.getCd_terzo_uo());
+        sql.addSQLClause(FindClause.AND, "BANCA.CD_TERZO_DELEGATO", SQLBuilder.ISNULL, null);
+        sql.addClause(FindClause.AND, "ti_pagamento", SQLBuilder.EQUALS, riga.getBanca().getTi_pagamento());
+        sql.addSQLClause(FindClause.AND, "BANCA.FL_CANCELLATO", SQLBuilder.EQUALS, "N");
         return getHome(userContext, BancaBulk.class).fetchAll(sql);
     }
 
@@ -3404,7 +3404,7 @@ REVERSALE
      * @param aUC       lo <code>UserContext</code> che ha generato la richiesta
      * @param reversale <code>ReversaleBulk</code> la reversale di cui si verifica la correttezza
      */
-    private void verificaReversale(UserContext aUC, ReversaleBulk reversale, boolean verificaDt_emissione) throws ComponentException {
+    protected void verificaReversale(UserContext aUC, ReversaleBulk reversale, boolean verificaDt_emissione) throws ComponentException {
         ReversaleHome rh = (ReversaleHome) getHome(aUC, reversale.getClass());
 
         //la reversale deve avere almeno un dettaglio

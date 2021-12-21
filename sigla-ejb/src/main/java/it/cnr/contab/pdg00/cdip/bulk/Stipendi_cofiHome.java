@@ -27,14 +27,17 @@ public class Stipendi_cofiHome extends BulkHome {
 public Stipendi_cofiHome(java.sql.Connection conn) {
 	super(Stipendi_cofiBulk.class,conn);
 }
-public Stipendi_cofiHome(java.sql.Connection conn,PersistentCache persistentCache) {
-	super(Stipendi_cofiBulk.class,conn,persistentCache);
-}
-public java.util.Collection findStipendiCofiAnno(UserContext context) throws PersistencyException{
+	public Stipendi_cofiHome(java.sql.Connection conn,PersistentCache persistentCache) {
+		super(Stipendi_cofiBulk.class,conn,persistentCache);
+	}
+	public java.util.Collection findStipendiCofiAnno(UserContext context) throws PersistencyException{
+		return findStipendiCofiAnno(context, ((it.cnr.contab.utenze00.bp.CNRUserContext)context).getEsercizio());
+	}
 
-	SQLBuilder sql = createSQLBuilder();
-	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,((it.cnr.contab.utenze00.bp.CNRUserContext)context).getEsercizio());
-	sql.addOrderBy("MESE DESC");
-	return fetchAll(sql);
-}
+	public java.util.Collection findStipendiCofiAnno(UserContext context, int esercizio) throws PersistencyException{
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,esercizio);
+		sql.addOrderBy("MESE DESC");
+		return fetchAll(sql);
+	}
 }

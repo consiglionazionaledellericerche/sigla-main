@@ -19,6 +19,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -87,4 +88,24 @@ public Ass_partita_giroBulk getAssociazionePGiroFor(ImpegnoPGiroBulk imp_pgiro)
 		throw new it.cnr.jada.comp.ApplicationException("Esiste più di un'associazione fra il capitolo di spesa e i capitoli di entrata su Partite di giro");			
 	return (Ass_partita_giroBulk) result.get(0);
 }
+	public Ass_partita_giroBulk getAssociazionePGiroFor(Elemento_voceBulk elementoVoceBulk)	throws PersistencyException, it.cnr.jada.comp.ApplicationException {
+		SQLBuilder sql = createSQLBuilder();
+		if (elementoVoceBulk.isVoceSpesa()) {
+			sql.addClause(FindClause.AND, "ti_appartenenza_clg", sql.EQUALS, elementoVoceBulk.getTi_appartenenza());
+			sql.addClause(FindClause.AND, "ti_gestione_clg", sql.EQUALS, elementoVoceBulk.getTi_gestione());
+			sql.addClause(FindClause.AND, "cd_voce_clg", sql.EQUALS, elementoVoceBulk.getCd_elemento_voce());
+			sql.addClause(FindClause.AND, "esercizio", sql.EQUALS, elementoVoceBulk.getEsercizio());
+		} else {
+			sql.addClause(FindClause.AND, "ti_appartenenza", sql.EQUALS, elementoVoceBulk.getTi_appartenenza());
+			sql.addClause(FindClause.AND, "ti_gestione", sql.EQUALS, elementoVoceBulk.getTi_gestione());
+			sql.addClause(FindClause.AND, "cd_voce", sql.EQUALS, elementoVoceBulk.getCd_elemento_voce());
+			sql.addClause(FindClause.AND, "esercizio", sql.EQUALS, elementoVoceBulk.getEsercizio());
+		}
+		java.util.List result = fetchAll( sql );
+		if ( result.size() == 0 )
+			throw new it.cnr.jada.comp.ApplicationException("Non esiste associazione fra capitoli di entrata e capitoli di spesa su Partite di giro, indicare la voce del Piano Contr.");
+		if ( result.size() > 1 )
+			throw new it.cnr.jada.comp.ApplicationException("Esiste più di un'associazione fra il capitolo di spesa e i capitoli di entrata su Partite di giro");
+		return (Ass_partita_giroBulk) result.get(0);
+	}
 }
