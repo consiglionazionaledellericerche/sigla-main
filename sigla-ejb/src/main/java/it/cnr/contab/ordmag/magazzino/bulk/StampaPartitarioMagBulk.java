@@ -17,7 +17,13 @@
 
 package it.cnr.contab.ordmag.magazzino.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 
 import java.sql.Timestamp;
 
@@ -28,115 +34,195 @@ import java.sql.Timestamp;
  * @author: Roberto Fantino
  */
 public class StampaPartitarioMagBulk extends AbilitazioneMagazzinoBulk {
-    private Timestamp dataInventario;
 
-    private Categoria_gruppo_inventBulk catgrp;
+    Timestamp daDataMovimento;
 
-    private Boolean flDettaglioArticolo = Boolean.FALSE;
+    Timestamp aDataMovimento;
 
-    private Boolean flRaggCatGruppo = Boolean.FALSE;
+    Timestamp daDataCompetenza;
 
-    private String ordinamento;
+    Timestamp aDataCompetenza;
+
+    private MagazzinoBulk magazzinoAbilitato =  new MagazzinoBulk();
+
+    private UnitaOperativaOrdBulk unitaOperativaAbilitata = new UnitaOperativaOrdBulk();
+
+    Bene_servizioBulk daBeneServizio;
+
+    Bene_servizioBulk aBeneServizio;
+
+    TerzoBulk daFornitore;
+
+    TerzoBulk aFornitore;
+
+    OrdineAcqBulk daOrdine;
+
+    OrdineAcqBulk aOrdine;
+
+    String daLottoFornitore;
+
+    String aLottoFornitore;
+
+    String daBollaFornitore;
+
+    String aBollaFornitore;
 
     public static final String TUTTI = "%";
-    public static final String ORD_CODICE="C";
-    public static final String ORD_DENOMINAZIONE="D";
-    public final static java.util.Dictionary <String,String> TIPO_ORDINAMENTO;
+    public static final String MOVIMENTI_CARICO="C";
+    public static final String MOVIMENTI_SCARICO="S";
+    public static final String MOVIMENTI_SCARICO_CARICO="E";
+    public final static java.util.Dictionary <String,String> TIPO_MOVIMENTO;
     static {
-        TIPO_ORDINAMENTO = new it.cnr.jada.util.OrderedHashtable();
-        TIPO_ORDINAMENTO.put(ORD_CODICE, "Codice");
-        TIPO_ORDINAMENTO.put(ORD_DENOMINAZIONE, "Denominazione");
+        TIPO_MOVIMENTO = new it.cnr.jada.util.OrderedHashtable();
+        TIPO_MOVIMENTO.put(MOVIMENTI_CARICO, "Carcico");
+        TIPO_MOVIMENTO.put(MOVIMENTI_SCARICO, "Scarico");
+        TIPO_MOVIMENTO.put(MOVIMENTI_SCARICO_CARICO, "Entrambi");
 
     }
 
-    public Categoria_gruppo_inventBulk getCatgrp() {
-        return catgrp;
-    }
-
-    public void setCatgrp(Categoria_gruppo_inventBulk catgrp) {
-        this.catgrp = catgrp;
-    }
 
     /**
-     * Stampa_consumiBulk constructor comment.
+     * StampaPartitarioMagBulk constructor comment.
      */
     public StampaPartitarioMagBulk() {
         super();
     }
 
-    public Timestamp getDataInventario() {
-        return dataInventario;
+    public Timestamp getDaDataMovimento() {
+        return daDataMovimento;
     }
 
-    public void setDataInventario(Timestamp dataInventario) {
-        this.dataInventario = dataInventario;
+    public void setDaDataMovimento(Timestamp daDataMovimento) {
+        this.daDataMovimento = daDataMovimento;
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (23/01/2003 16.22.06)
-     *
-     * @return java.sql.Timestamp
-     */
-
-    public String getCdsMagForPrint() {
-        if (this.getMagazzinoAbilitato() == null)
-            return TUTTI;
-        if (this.getMagazzinoAbilitato().getCdCds() == null)
-            return TUTTI;
-
-        return this.getMagazzinoAbilitato().getCdCds();
+    public Timestamp getaDataMovimento() {
+        return aDataMovimento;
     }
+
+    public void setaDataMovimento(Timestamp aDataMovimento) {
+        this.aDataMovimento = aDataMovimento;
+    }
+
+    public Timestamp getDaDataCompetenza() {
+        return daDataCompetenza;
+    }
+
+    public void setDaDataCompetenza(Timestamp daDataCompetenza) {
+        this.daDataCompetenza = daDataCompetenza;
+    }
+
+    public Timestamp getaDataCompetenza() {
+        return aDataCompetenza;
+    }
+
+    public void setaDataCompetenza(Timestamp aDataCompetenza) {
+        this.aDataCompetenza = aDataCompetenza;
+    }
+
+    @Override
+    public MagazzinoBulk getMagazzinoAbilitato() {
+        return magazzinoAbilitato;
+    }
+
+    @Override
+    public void setMagazzinoAbilitato(MagazzinoBulk magazzinoAbilitato) {
+        this.magazzinoAbilitato = magazzinoAbilitato;
+    }
+
+    @Override
+    public UnitaOperativaOrdBulk getUnitaOperativaAbilitata() {
+        return unitaOperativaAbilitata;
+    }
+
+    @Override
+    public void setUnitaOperativaAbilitata(UnitaOperativaOrdBulk unitaOperativaAbilitata) {
+        this.unitaOperativaAbilitata = unitaOperativaAbilitata;
+    }
+
+    public Bene_servizioBulk getDaBeneServizio() {
+        return daBeneServizio;
+    }
+
+    public void setDaBeneServizio(Bene_servizioBulk daBeneServizio) {
+        this.daBeneServizio = daBeneServizio;
+    }
+
+    public Bene_servizioBulk getaBeneServizio() {
+        return aBeneServizio;
+    }
+
+    public void setaBeneServizio(Bene_servizioBulk aBeneServizio) {
+        this.aBeneServizio = aBeneServizio;
+    }
+
+    public String getDaLottoFornitore() {
+        return daLottoFornitore;
+    }
+
+    public void setDaLottoFornitore(String daLottoFornitore) {
+        this.daLottoFornitore = daLottoFornitore;
+    }
+
+    public String getaLottoFornitore() {
+        return aLottoFornitore;
+    }
+
+    public void setaLottoFornitore(String aLottoFornitore) {
+        this.aLottoFornitore = aLottoFornitore;
+    }
+
+    public String getDaBollaFornitore() {
+        return daBollaFornitore;
+    }
+
+    public void setDaBollaFornitore(String daBollaFornitore) {
+        this.daBollaFornitore = daBollaFornitore;
+    }
+
+    public String getaBollaFornitore() {
+        return aBollaFornitore;
+    }
+
+    public void setaBollaFornitore(String aBollaFornitore) {
+        this.aBollaFornitore = aBollaFornitore;
+    }
+
+    public TerzoBulk getDaFornitore() {
+        return daFornitore;
+    }
+
+    public void setDaFornitore(TerzoBulk daFornitore) {
+        this.daFornitore = daFornitore;
+    }
+
+    public TerzoBulk getaFornitore() {
+        return aFornitore;
+    }
+
+    public void setaFornitore(TerzoBulk aFornitore) {
+        this.aFornitore = aFornitore;
+    }
+
+    public OrdineAcqBulk getDaOrdine() {
+        return daOrdine;
+    }
+
+    public void setDaOrdine(OrdineAcqBulk daOrdine) {
+        this.daOrdine = daOrdine;
+    }
+
+    public OrdineAcqBulk getaOrdine() {
+        return aOrdine;
+    }
+
+    public void setaOrdine(OrdineAcqBulk aOrdine) {
+        this.aOrdine = aOrdine;
+    }
+
     public String getCdMagazzinoForPrint() {
-        if (this.getMagazzinoAbilitato() == null)
-            return TUTTI;
-        if (this.getMagazzinoAbilitato().getCdMagazzino() == null)
-            return TUTTI;
-
-        return super.getMagazzinoAbilitato().getCdMagazzino();
-    }
-    public String getCdCatGrpForPrint() {
-        if (this.getCatgrp() == null)
-            return TUTTI;
-        if (this.getCatgrp().getCd_categoria_gruppo() == null)
-            return TUTTI;
-
-        return this.getCatgrp().getCd_categoria_gruppo();
+        return getMagazzinoAbilitato().getCdMagazzino();
     }
 
-    public Boolean getFlDettaglioArticolo() {
-        return flDettaglioArticolo;
-    }
 
-    public void setFlDettaglioArticolo(Boolean flDettaglioArticolo) {
-        this.flDettaglioArticolo = flDettaglioArticolo;
-    }
-
-    public Boolean getFlRaggCatGruppo() {
-        return flRaggCatGruppo;
-    }
-
-    public void setFlRaggCatGruppo(Boolean flRaggCatGruppo) {
-        this.flRaggCatGruppo = flRaggCatGruppo;
-    }
-
-    public String getOrdinamento() {
-        return ordinamento;
-    }
-
-    public void setOrdinamento(String ordinamento) {
-        this.ordinamento = ordinamento;
-    }
-
-    public void validate() throws it.cnr.jada.bulk.ValidationException {
-        if ( getMagazzinoAbilitato()==null ||
-                getMagazzinoAbilitato().getCdMagazzino()==null
-        )
-            throw new it.cnr.jada.bulk.ValidationException("Selezionare un magazzino!");
-        if ( getDataInventario()==null )
-            throw new it.cnr.jada.bulk.ValidationException("Imposta la data inventario!");
-        if ( getOrdinamento()==null || getOrdinamento().trim().isEmpty())
-            throw new it.cnr.jada.bulk.ValidationException("Selezionare l'ordinamento!");
-
-    }
 }

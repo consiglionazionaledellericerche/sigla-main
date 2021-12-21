@@ -20,8 +20,9 @@ package it.cnr.contab.ordmag.magazzino.bulk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
-import it.cnr.contab.ordmag.magazzino.dto.StampaInventarioDTO;
+import it.cnr.contab.ordmag.anag00.*;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.jada.UserContext;
@@ -29,6 +30,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.Logger;
@@ -48,7 +50,7 @@ import java.util.stream.Collectors;
  * Creation date: (23/01/2003 16.03.39)
  * @author: Roberto Fantino
  */
-public class StampaPartitarioMagHome extends BulkHome {
+public class StampaPartitarioMagHome extends MovimentiMagazzinoHome {
 	/**
 	 * Stampa_consumiHome constructor comment.
 	 * @param clazz java.lang.Class
@@ -88,9 +90,15 @@ public class StampaPartitarioMagHome extends BulkHome {
 	private static final String CATEGORIA_GRUPPO = "cdCatGrp";
 	private static final String ORDINAMENTO = "ordinamento";
 
+	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, StampaPartitarioMagBulk bulk, UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
+															CompoundFindClause compoundfindclause) throws PersistencyException{
+		return unitaOperativaHome.selectUnitaOperativeAbilitateByClause(userContext, compoundfindclause, TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO);
+	}
 
-
-
+	public SQLBuilder selectMagazzinoAbilitatoByClause(UserContext userContext, StampaPartitarioMagBulk bulk, MagazzinoHome magazzinoHome, MagazzinoBulk magazzinoBulk,
+													   CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
+		return magazzinoHome.selectMagazziniAbilitatiByClause(userContext, bulk.getUnitaOperativaAbilitata(), TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO, compoundfindclause);
+	}
 	public String createJsonForPrint(Object object) throws ComponentException {
 		ObjectMapper mapper = new ObjectMapper();
 		String myJson = null;
@@ -136,25 +144,19 @@ public class StampaPartitarioMagHome extends BulkHome {
 		}
 
 		//LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class,null,"stampa_inventario");
-		LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class);
-		SQLBuilder sql = lottoMagHome.createSQLBuilder();
+		MovimentiMagHome movimentiMagHome  = ( MovimentiMagHome)getHomeCache().getHome(LottoMagBulk.class);
+		SQLBuilder sql = movimentiMagHome.createSQLBuilder();
 		sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
-		//sql.addTableToHeader("BENE_SERVIZIO");
-		sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
-		//sql.addSQLJoin("BENE_SERVIZIO.cd_bene_servizio","LOTTO_MAG.cd_bene_servizio");
-		sql.addTableToHeader("MAGAZZINO","m");
-		sql.addSQLJoin("m.cd_magazzino","LOTTO_MAG.cd_magazzino");
-		sql.addTableToHeader("Categoria_Gruppo_Invent","c");
-		sql.addSQLJoin("c.cd_categoria_gruppo","BENE_SERVIZIO.cd_categoria_gruppo(+)");
+		sql.generateJoin(MovimentiMagBulk.class, TipoMovimentoMagBulk.class, "tipoMovimentoMag", "TIPO_MOVIMENTO_MAG");
+		sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
+		sql.generateJoin(LottoMagBulk.class, OrdineAcqRigaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_RIGA");
+		sql.generateJoin(LottoMagBulk.class, MagazzinoBulk.class, "magazzino", "MAGAZZINO");
+		sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+		sql.generateJoin(OrdineAcqRigaBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZO");
+		sql.addTableToHeader("bolla_scarico_riga_mag","bs");
+		sql.addSQLJoin("bs.pg_movimento","LOTTO_MAG.pg_movimento(+)");
 		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.DT_CARICO",SQLBuilder.LESS_EQUALS, new Timestamp(dt.getTime()));
-		// codice magazzino uguale a quello in input
-		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.CD_MAGAZZINO_MAG",SQLBuilder.EQUALS, codMag);
-		if(catGruppo != null && !catGruppo.equals(Stampa_inventarioBulk.TUTTI)){
-			sql.addTableToHeader("CATEGORIA_GRUPPO_INVENT","CATEGORIA_GRUPPO_INVENT");
-			sql.addSQLJoin("CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_GRUPPO","BENE_SERVIZIO.CD_CATEGORIA_GRUPPO");
-			//categoria gruppo uguale a quella in input
-			sql.addSQLClause(FindClause.AND,"CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS, catGruppo);
-		}
+		/*
 		List<StampaInventarioDTO> inventario= new ArrayList<StampaInventarioDTO>();
 		try {
 			List<LottoMagBulk> lotti=lottoMagHome.fetchAll(sql);
@@ -251,13 +253,15 @@ public class StampaPartitarioMagHome extends BulkHome {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
 
 		String json=null;
+		/*
 		try {
 			json=createJsonForPrint( inventario);
 		} catch (ComponentException e) {
 			e.printStackTrace();
-		}
+		}*/
 		return json;
 	}
 }

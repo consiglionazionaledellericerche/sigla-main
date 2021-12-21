@@ -16,7 +16,7 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.StampaBollaScaricoMagBulk"
-	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.StampaBollaScaricoMagHome" >
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagBulk"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagHome" >
 
 </SQLPersistentInfo>

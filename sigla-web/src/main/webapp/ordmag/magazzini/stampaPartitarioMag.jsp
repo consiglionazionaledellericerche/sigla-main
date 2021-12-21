@@ -24,29 +24,26 @@
   <tr>
 
     <table >
+        <tr>
+                <td><% bp.getController().writeFormLabel(out,"findUnitaOperativaOrd"); %></td>
+                <td colspan="5"><% bp.getController().writeFormInput(out,"findUnitaOperativaOrd"); %></td>
+           </tr>
        <tr>
             <td><% bp.getController().writeFormLabel(out,"findMagazzino"); %></td>
             <td colspan="5"><% bp.getController().writeFormInput(out,"findMagazzino"); %></td>
        </tr>
+
        <tr>
-            <td><% bp.getController().writeFormLabel(out,"findCatGrp"); %></td>
-            <td colspan="5"><% bp.getController().writeFormInput(out,"findCatGrp"); %></td>
-        </tr>
-       <tr>
-            <td><% bp.getController().writeFormLabel(out,"dataInventario"); %></td>
-            <td><% bp.getController().writeFormInput(out,"dataInventario"); %></td>
+            <td><% bp.getController().writeFormLabel(out,"daDataMovimento"); %></td>
+            <td><% bp.getController().writeFormInput(out,"daDataMovimento"); %></td>
+            <td><% bp.getController().writeFormLabel(out,"aDataMovimento"); %></td>
+            <td><% bp.getController().writeFormInput(out,"aDataMovimento"); %></td>
         </tr>
         <tr>
-            <td><% bp.getController().writeFormLabel(out,"flRaggCatGruppo"); %></td>
-            <td><% bp.getController().writeFormInput(out,"flRaggCatGruppo"); %></td>
-        </tr>
-        <tr>
-            <td><% bp.getController().writeFormLabel(out,"flDettaglioArticolo"); %></td>
-            <td><% bp.getController().writeFormInput(out,"flDettaglioArticolo"); %></td>
-        </tr>
-        <tr>
-            <td><% bp.getController().writeFormLabel(out,"ordinamento"); %></td>
-            <td><% bp.getController().writeFormInput(out,"ordinamento"); %></td>
+            <td><% bp.getController().writeFormLabel(out,"daDataCompetenza"); %></td>
+            <td><% bp.getController().writeFormInput(out,"daDataCompetenza"); %></td>
+            <td><% bp.getController().writeFormLabel(out,"aDataCompetenza"); %></td>
+            <td><% bp.getController().writeFormInput(out,"aDataCompetenza"); %></td>
         </tr>
     </table>
 
