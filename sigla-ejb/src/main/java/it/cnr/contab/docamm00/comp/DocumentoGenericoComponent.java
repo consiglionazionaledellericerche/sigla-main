@@ -1002,34 +1002,13 @@ public class DocumentoGenericoComponent
 
         if (scadenza != null) {
             try {
-                //it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession h =
-                //(it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession) it
-                //.ibm
-                //.bframe
-                //.util
-                //.ejb
-                //.EJBCommonServices
-                //.createEJB(
-                //"CNRDOCCONT00_EJB_ObbligazioneComponentSession",
-                //it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession.class);
-                it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession h =
-                        (it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession) it.cnr.jada.util.ejb
-                                .EJBCommonServices
-                                .createEJB(
-                                        "CNRDOCCONT00_EJB_ObbligazioneComponentSession",
-                                        it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession.class);
-                ObbligazioneBulk obbligazione =
-                        (ObbligazioneBulk) h.inizializzaBulkPerModifica(
-                                context,
-                                scadenza.getObbligazione());
-                it.cnr.jada.bulk.BulkList scadenze =
-                        obbligazione.getObbligazione_scadenzarioColl();
-                scadenza =
-                        (Obbligazione_scadenzarioBulk) scadenze.get(
-                                scadenze.indexOfByPrimaryKey(scadenza));
-            } catch (java.rmi.RemoteException e) {
-                throw handleException(scadenza, e);
-            } catch (javax.ejb.EJBException e) {
+                ObbligazioneHome obbligHome = (ObbligazioneHome) getHome( context, ObbligazioneBulk.class);
+                Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome) getHome( context, Obbligazione_scadenzarioBulk.class );
+                ObbligazioneBulk obbligazioneBulk = (ObbligazioneBulk)obbligHome.findByPrimaryKey(scadenza.getObbligazione());
+                obbligazioneBulk.setObbligazione_scadenzarioColl( new BulkList( obbligHome.findObbligazione_scadenzarioList( obbligazioneBulk ) ));
+                scadenza = obbligazioneBulk.getObbligazione_scadenzarioColl().get(obbligazioneBulk.getObbligazione_scadenzarioColl().indexOfByPrimaryKey(scadenza));
+                scadenza.setObbligazione_scad_voceColl( new BulkList( osHome.findObbligazione_scad_voceList(context, scadenza )));
+            } catch (Exception e) {
                 throw handleException(scadenza, e);
             }
             return scadenza;

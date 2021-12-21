@@ -101,7 +101,7 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isDocumentoAmministrativoPassivo() {
-		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva() || this.isGenericoSpesa();
+		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva() || this.isGenericoSpesa() || this.isGenericoStipendiSpesa();
 	}
 
 	public boolean isDocumentoAmministrativoAttivo() {
@@ -140,6 +140,10 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.GENERICO_E.equals(this);
 	}
 
+	public boolean isGenericoStipendiSpesa() {
+		return TipoDocumentoEnum.GEN_STIPENDI_SPESA.equals(this);
+	}
+
 	public static TipoDocumentoEnum fromValue(String v) {
 		for (TipoDocumentoEnum c : TipoDocumentoEnum.values()) {
 			if (c.value.equals(v)) {
@@ -170,7 +174,7 @@ public enum TipoDocumentoEnum {
 	 * Indica quale tipo di conto patrimoniale (debito/credito) viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getTipoPatrimoniale() {
-		if (this.isFatturaPassiva()||isGenericoSpesa())
+		if (this.isFatturaPassiva()||this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
@@ -191,7 +195,7 @@ public enum TipoDocumentoEnum {
 	 * Indica quale sezione (Dare/Avere) per il conto di tipo economica viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getSezioneEconomica() {
-		if (this.isFatturaPassiva()||isGenericoSpesa())
+		if (this.isFatturaPassiva()||this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
@@ -241,7 +245,7 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isGenericoSpesa())
+		if (this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isGenericoEntrata())
 			return Movimento_cogeBulk.SEZIONE_DARE;
