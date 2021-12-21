@@ -1,3 +1,23 @@
+## Release 6.4.7  -- _December 21, 2021_ 
+**Changes**
+
+>**Corretta ricerca sulla uo dei documenti generici attivi**
+>
+>[65a1631981c80a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65a1631981c80a9) gianfranco.gasparro *December 21, 2021*
+
+>**Conversione in java della procedura oracle di creazione stipendi. La procedura in versione java è attiva solo in presenza di economica attiva.**
+>
+>[9f9174f24504d74](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9f9174f24504d74) raffaelepagano *December 21, 2021*
+
+>**Conversione in java della procedura oracle di creazione stipendi. La procedura in versione java è attiva solo in presenza di economica attiva.**
+>
+>[50fcb0b2f6b3dfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/50fcb0b2f6b3dfc) raffaelepagano *December 21, 2021*
+
+>**Conversione in java della procedura oracle di creazione stipendi. La procedura in versione java è attiva solo in presenza di economica attiva.**
+>
+>[1e7a33bba9d36e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e7a33bba9d36e1) raffaelepagano *December 21, 2021*
+
+
 ## Release 6.4.6  -- _December 20, 2021_ 
 **Changes**
 
