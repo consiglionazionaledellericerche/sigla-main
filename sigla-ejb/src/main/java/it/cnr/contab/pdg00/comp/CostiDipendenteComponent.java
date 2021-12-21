@@ -2280,7 +2280,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 			mandatoTerzo.setTipoBollo(((Tipo_bolloHome)getHome( userContext, Tipo_bolloBulk.class )).findTipoBolloStipendi(Tipo_bolloBulk.TIPO_SPESA));
 			mandatoWizard.setMandato_terzo(mandatoTerzo);
 
-			MandatoBulk mandatoCompenso = this.createMandatoStipendio(userContext, stipendiCofiBulk, mandatoWizard);
+			MandatoBulk mandatoStipendio = this.createMandatoStipendio(userContext, stipendiCofiBulk, mandatoWizard);
 
 			/******************* CREO IL COMPENSO **************/
 			//Per il compenso setto come terzo quello diversi per stipendi
@@ -2288,12 +2288,12 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 			Integer cdTerzoStipendi = Utility.createConfigurazioneCnrComponentSession().getCdTerzoDiversiStipendi(userContext);
 			compensoWizard.getMandato_terzo().setTerzo((TerzoBulk)(getHome(userContext, TerzoBulk.class)).findByPrimaryKey(new TerzoBulk(cdTerzoStipendi)));
 
-			CompensoBulk compensoBulk = this.createCompensoStipendio(userContext, stipendiCofiBulk, compensoWizard, mandatoCompenso.getMandato_terzo().getTerzo());
+			CompensoBulk compensoBulk = this.createCompensoStipendio(userContext, stipendiCofiBulk, compensoWizard, mandatoStipendio);
 
 			/******************* CREO LE RITENUTE **************/
 			ReversaleAutomaticaWizardBulk reversaleWizard = ReversaleAutomaticaWizardBulk.createBy(mandatoWizard);
 			reversaleWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORA_E.getValue()));
-			reversaleWizard.getModelloDocumento().setTerzoWizardBulk(mandatoCompenso.getMandato_terzo().getTerzo());
+			reversaleWizard.getModelloDocumento().setTerzoWizardBulk(mandatoStipendio.getMandato_terzo().getTerzo());
 
 			//Imposto le variabili da utilizzare per il caricamento degli oggetti
 			Documento_generico_rigaBulk docRiga = new Documento_generico_rigaBulk();
@@ -2303,19 +2303,19 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 
 			reversaleWizard.getModelloDocumento().addToDocumento_generico_dettColl(docRiga);
 
-			Mandato_rigaBulk mandatoRiga = mandatoCompenso.getMandato_rigaColl().stream().findFirst().get();
-			reversaleWizard.getReversale_terzo().setTerzo(mandatoCompenso.getMandato_terzo().getTerzo());
+			Mandato_rigaBulk mandatoRiga = mandatoStipendio.getMandato_rigaColl().stream().findFirst().get();
+			reversaleWizard.getReversale_terzo().setTerzo(mandatoStipendio.getMandato_terzo().getTerzo());
 			reversaleWizard.setModalita_pagamento(mandatoRiga.getModalita_pagamento());
 			reversaleWizard.setBanca(mandatoRiga.getBanca());
 
-			this.createRitenuteStipendio(userContext, stipendiCofiBulk, reversaleWizard, mandatoWizard, mandatoCompenso, compensoBulk);
+			this.createRitenuteStipendio(userContext, stipendiCofiBulk, reversaleWizard, mandatoWizard, mandatoStipendio, compensoBulk);
 
 			//Aggiorno la riga della liquidazione
-			stipendiCofiBulk.setEsercizio_mandato(mandatoCompenso.getEsercizio());
-			stipendiCofiBulk.setCd_cds_mandato(mandatoCompenso.getCd_cds());
-			stipendiCofiBulk.setPg_mandato(mandatoCompenso.getPg_mandato());
+			stipendiCofiBulk.setEsercizio_mandato(mandatoStipendio.getEsercizio());
+			stipendiCofiBulk.setCd_cds_mandato(mandatoStipendio.getCd_cds());
+			stipendiCofiBulk.setPg_mandato(mandatoStipendio.getPg_mandato());
 
-			Mandato_rigaBulk riga = mandatoCompenso.getMandato_rigaColl().stream().findFirst().get();
+			Mandato_rigaBulk riga = mandatoStipendio.getMandato_rigaColl().stream().findFirst().get();
 
 			stipendiCofiBulk.setEsercizio_doc_gen(riga.getEsercizio_doc_amm());
 			stipendiCofiBulk.setCd_tipo_doc_gen(riga.getCd_tipo_documento_amm());
@@ -2469,7 +2469,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 		}
 	}
 
-	private CompensoBulk createCompensoStipendio(UserContext userContext, Stipendi_cofiBulk stipendiCofiBulk, MandatoAutomaticoWizardBulk mandatoWizard, TerzoBulk terzoPartiteGiro) throws ComponentException {
+	private CompensoBulk createCompensoStipendio(UserContext userContext, Stipendi_cofiBulk stipendiCofiBulk, MandatoAutomaticoWizardBulk mandatoWizard, MandatoBulk mandatoStipendio) throws ComponentException {
 		try {
 			Integer aEsercizio = stipendiCofiBulk.getEsercizio();
 			Integer aMese = stipendiCofiBulk.getMese();
@@ -2607,7 +2607,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 						accertamentoPGiroBulk.setIm_accertamento(el.getAmmontare());
 						accertamentoPGiroBulk.setDt_registrazione(compensoBulk.getDt_registrazione());
 						accertamentoPGiroBulk.setDs_accertamento("CORI-D mese:"+el.getMese()+" es:"+el.getEsercizio()+" CORI:"+el.getCd_contributo_ritenuta());
-						accertamentoPGiroBulk.setDebitore(terzoPartiteGiro);
+						accertamentoPGiroBulk.setDebitore(mandatoStipendio.getMandato_terzo().getTerzo());
 						accertamentoPGiroBulk.setToBeCreated();
 
 						accertamentoPGiroBulk = (AccertamentoPGiroBulk)Utility.createAccertamentoPGiroComponentSession().creaConBulk(userContext, accertamentoPGiroBulk);
@@ -2646,7 +2646,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 						obbligazionePGiroBulk.setIm_obbligazione(el.getAmmontare());
 						obbligazionePGiroBulk.setDt_registrazione(compensoBulk.getDt_registrazione());
 						obbligazionePGiroBulk.setDs_obbligazione("CORI-D mese:"+el.getMese()+" es:"+el.getEsercizio()+" CORI:"+el.getCd_contributo_ritenuta());
-						obbligazionePGiroBulk.setCreditore(terzoPartiteGiro);
+						obbligazionePGiroBulk.setCreditore(mandatoStipendio.getMandato_terzo().getTerzo());
 						obbligazionePGiroBulk.setStato_obbligazione(ObbligazioneBulk.STATO_OBB_DEFINITIVO);
 						obbligazionePGiroBulk.setToBeCreated();
 
@@ -2661,6 +2661,11 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 
 			//creo il compenso temporaneo
 			compensoBulk.setPg_compenso(Utility.createCompensoComponentSession().assegnaProgressivo(userContext, compensoBulk));
+			compensoBulk.setIm_cr_ente(compensoBulk.getContributi().stream().map(Contributo_ritenutaBulk::getAmmontareEnte).reduce(BigDecimal.ZERO, BigDecimal::add));
+			compensoBulk.setIm_cr_percipiente(compensoBulk.getContributi().stream().map(Contributo_ritenutaBulk::getAmmontarePercepiente).reduce(BigDecimal.ZERO, BigDecimal::add));
+			compensoBulk.setIm_totale_compenso(mandatoStipendio.getIm_mandato());
+			compensoBulk.setIm_lordo_percipiente(mandatoStipendio.getIm_mandato().subtract(compensoBulk.getIm_cr_ente()));
+			compensoBulk.setIm_netto_percipiente(mandatoStipendio.getIm_mandato().subtract(compensoBulk.getIm_cr_ente()).subtract(compensoBulk.getIm_cr_percipiente()));
 			compensoBulk.setToBeCreated();
 			makeBulkPersistent(userContext, compensoBulk);
 			return (CompensoBulk)Utility.createCompensoComponentSession().inizializzaBulkPerModifica(userContext, compensoBulk);
