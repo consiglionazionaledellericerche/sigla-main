@@ -13,12 +13,9 @@ import it.cnr.jada.bulk.FillException;
 
 public class StampaConsumiAction extends ParametricPrintAction {
     public Forward doOnDataInizioMovimentoChange(ActionContext actioncontext) throws FillException {
-
-
         ParametricPrintBP bp= (ParametricPrintBP) actioncontext.getBusinessProcess();
         Stampa_consumiBulk model=(Stampa_consumiBulk)bp.getModel();
         fillModel(actioncontext);
-
         try {
             if(model.getDaDataMovimento() == null ){
                 throw new it.cnr.jada.bulk.ValidationException("Selezionare Data Movimento Da");
@@ -32,8 +29,6 @@ public class StampaConsumiAction extends ParametricPrintAction {
         }
     }
     public Forward doOnDataFineMovimentoChange(ActionContext actioncontext) throws FillException {
-
-
         ParametricPrintBP bp= (ParametricPrintBP) actioncontext.getBusinessProcess();
         Stampa_consumiBulk model=(Stampa_consumiBulk)bp.getModel();
         fillModel(actioncontext);
@@ -54,7 +49,6 @@ public class StampaConsumiAction extends ParametricPrintAction {
         }
     }
 
-
     public Forward doBringBackSearchFindDaUnitaOperativa(ActionContext context, Stampa_consumiBulk stampaConsumi, UnitaOperativaOrdBulk uop) {
         stampaConsumi.setDaUnitaOperativa(uop);
         if(stampaConsumi.getaUnitaOperativa() == null || stampaConsumi.getaUnitaOperativa().getCdUnitaOperativa()==null){
@@ -62,6 +56,7 @@ public class StampaConsumiAction extends ParametricPrintAction {
         }
         return context.findDefaultForward();
     }
+
     public Forward doBringBackSearchFindDaCatGrp(ActionContext context, Stampa_consumiBulk stampaConsumi, Categoria_gruppo_inventBulk catGrp) {
         stampaConsumi.setDaCatgrp(catGrp);
         if(stampaConsumi.getaCatgrp() == null || stampaConsumi.getaCatgrp().getCd_categoria_gruppo() == null) {
@@ -69,6 +64,7 @@ public class StampaConsumiAction extends ParametricPrintAction {
         }
         return context.findDefaultForward();
     }
+
     public Forward doBringBackSearchFindDaBeneServizio(ActionContext context, Stampa_consumiBulk stampaConsumi, Bene_servizioBulk bene) {
         stampaConsumi.setDaBeneServizio(bene);
         if(stampaConsumi.getaBeneServizio() == null || stampaConsumi.getaBeneServizio().getCd_bene_servizio() == null) {
