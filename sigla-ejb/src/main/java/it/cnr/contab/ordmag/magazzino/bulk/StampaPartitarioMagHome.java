@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * Creation date: (23/01/2003 16.03.39)
  * @author: Roberto Fantino
  */
-public class StampaPartitarioMagHome extends MovimentiMagazzinoHome {
+public class StampaPartitarioMagHome extends BulkHome {
 	/**
 	 * Stampa_consumiHome constructor comment.
 	 * @param clazz java.lang.Class
