@@ -76,6 +76,7 @@ public class ReversaleAutomaticaComponent extends ReversaleComponent {
 			wizard.getModelloDocumento().setTerzoWizardBulk(Optional.ofNullable(wizard.getModelloDocumento().getTerzoWizardBulk()).orElse(wizard.getTerzo()));
 			wizard.getModelloDocumento().setModalitaPagamentoWizardBulk(Optional.ofNullable(wizard.getModelloDocumento().getModalitaPagamentoWizardBulk()).orElse(wizard.getModalita_pagamento()));
 			wizard.getModelloDocumento().setBancaWizardBulk(Optional.ofNullable(wizard.getModelloDocumento().getBancaWizardBulk()).orElse(wizard.getBanca()));
+			wizard.getModelloDocumento().setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO);
 
 			//Metto sugli accertamenti il terzo unico se è stato indicato a livello di reversale
 			accertamentiColl.stream().forEach(el->{
@@ -195,8 +196,8 @@ public class ReversaleAutomaticaComponent extends ReversaleComponent {
 			reversale.setTi_reversale(ReversaleAutomaticaWizardBulk.TIPO_INCASSO);
 			reversale.setCd_tipo_documento_cont( Numerazione_doc_contBulk.TIPO_REV);
 			reversale.setTi_competenza_residuo( ti_competenza_residuo );
-			reversale.setStato_trasmissione( wizard.STATO_TRASMISSIONE_NON_INSERITO);
-			reversale.setStato_coge( MandatoBulk.STATO_COGE_N);
+			reversale.setStato_trasmissione( ReversaleAutomaticaWizardBulk.STATO_TRASMISSIONE_NON_INSERITO);
+			reversale.setStato_coge( Optional.ofNullable(wizard.getStato_coge()).orElse(MandatoBulk.STATO_COGE_N));
 
 			return reversale;
 		}

@@ -95,6 +95,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public final static String NON_CONTABILIZZATO_IN_COAN = "N";
 	public final static String CONTABILIZZATO_IN_COAN = "C";
 	public final static String DA_RICONTABILIZZARE_IN_COAN = "R";
+	public final static String DA_NON_REGISTRARE_IN_COAN= "X";
 
 	public final static Dictionary TIPO;
 	public final static Dictionary STATO_COGE;
