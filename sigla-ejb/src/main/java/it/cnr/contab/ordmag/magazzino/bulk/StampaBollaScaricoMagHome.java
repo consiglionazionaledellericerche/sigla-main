@@ -20,7 +20,7 @@ package it.cnr.contab.ordmag.magazzino.bulk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
+import it.cnr.contab.ordmag.anag00.*;
 import it.cnr.contab.ordmag.magazzino.dto.StampaInventarioDTO;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
@@ -29,6 +29,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.Logger;
@@ -259,5 +260,14 @@ public class StampaBollaScaricoMagHome extends BulkHome {
 			e.printStackTrace();
 		}
 		return json;
+	}
+	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, StampaBollaScaricoMagBulk bulk, UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
+															CompoundFindClause compoundfindclause) throws PersistencyException{
+		return unitaOperativaHome.selectUnitaOperativeAbilitateByClause(userContext, compoundfindclause, TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO);
+	}
+
+	public SQLBuilder selectMagazzinoAbilitatoByClause(UserContext userContext, StampaBollaScaricoMagBulk bulk, MagazzinoHome magazzinoHome, MagazzinoBulk magazzinoBulk,
+													   CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
+		return magazzinoHome.selectMagazziniAbilitatiByClause(userContext, bulk.getUnitaOperativaAbilitata(), TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO, compoundfindclause);
 	}
 }

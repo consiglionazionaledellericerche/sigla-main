@@ -17,7 +17,11 @@
 
 package it.cnr.contab.ordmag.magazzino.bulk;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 
 import java.sql.Timestamp;
 
@@ -28,34 +32,20 @@ import java.sql.Timestamp;
  * @author: Roberto Fantino
  */
 public class StampaBollaScaricoMagBulk extends AbilitazioneMagazzinoBulk {
-    private Timestamp dataInventario;
-
-    private Categoria_gruppo_inventBulk catgrp;
-
-    private Boolean flDettaglioArticolo = Boolean.FALSE;
-
-    private Boolean flRaggCatGruppo = Boolean.FALSE;
-
-    private String ordinamento;
 
     public static final String TUTTI = "%";
-    public static final String ORD_CODICE="C";
-    public static final String ORD_DENOMINAZIONE="D";
-    public final static java.util.Dictionary <String,String> TIPO_ORDINAMENTO;
-    static {
-        TIPO_ORDINAMENTO = new it.cnr.jada.util.OrderedHashtable();
-        TIPO_ORDINAMENTO.put(ORD_CODICE, "Codice");
-        TIPO_ORDINAMENTO.put(ORD_DENOMINAZIONE, "Denominazione");
+    public static final String TUTTI_ASTERISCO = "*";
 
-    }
+    private UnitaOperativaOrdBulk unitaOperativaAbilitata = new UnitaOperativaOrdBulk();
+    private UnitaOperativaOrdBulk unitaOperativaDestinazione = new UnitaOperativaOrdBulk();
+    //private MagazzinoBulk magazzinoAbilitato =  new MagazzinoBulk();
+    private Bene_servizioBulk daBeneServizio = new Bene_servizioBulk();
+    private Bene_servizioBulk aBeneServizio = new Bene_servizioBulk();
+    private java.sql.Timestamp daData;
+    private java.sql.Timestamp aData;
+    private String daNumBolla;
+    private String aNumBolla;
 
-    public Categoria_gruppo_inventBulk getCatgrp() {
-        return catgrp;
-    }
-
-    public void setCatgrp(Categoria_gruppo_inventBulk catgrp) {
-        this.catgrp = catgrp;
-    }
 
     /**
      * Stampa_consumiBulk constructor comment.
@@ -64,21 +54,132 @@ public class StampaBollaScaricoMagBulk extends AbilitazioneMagazzinoBulk {
         super();
     }
 
-    public Timestamp getDataInventario() {
-        return dataInventario;
+
+    public UnitaOperativaOrdBulk getUnitaOperativaDestinazione() {
+        return unitaOperativaDestinazione;
     }
 
-    public void setDataInventario(Timestamp dataInventario) {
-        this.dataInventario = dataInventario;
+    public void setUnitaOperativaDestinazione(UnitaOperativaOrdBulk unitaOperativaDestinazione) {
+        this.unitaOperativaDestinazione = unitaOperativaDestinazione;
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (23/01/2003 16.22.06)
-     *
-     * @return java.sql.Timestamp
-     */
 
+
+    public Bene_servizioBulk getDaBeneServizio() {
+        return daBeneServizio;
+    }
+
+    public void setDaBeneServizio(Bene_servizioBulk daBeneServizio) {
+        this.daBeneServizio = daBeneServizio;
+    }
+
+    public Bene_servizioBulk getaBeneServizio() {
+        return aBeneServizio;
+    }
+
+    public void setaBeneServizio(Bene_servizioBulk aBeneServizio) {
+        this.aBeneServizio = aBeneServizio;
+    }
+
+    public Timestamp getDaData() {
+        return daData;
+    }
+
+    public void setDaData(Timestamp daData) {
+        this.daData = daData;
+    }
+
+    public Timestamp getaData() {
+        return aData;
+    }
+
+    public void setaData(Timestamp aData) {
+        this.aData = aData;
+    }
+
+    public String getDaNumBolla() {
+        return daNumBolla;
+    }
+
+    public void setDaNumBolla(String daNumBolla) {
+        this.daNumBolla = daNumBolla;
+    }
+
+    public String getaNumBolla() {
+        return aNumBolla;
+    }
+
+    public void setaNumBolla(String aNumBolla) {
+        this.aNumBolla = aNumBolla;
+    }
+
+    public void validate() throws it.cnr.jada.bulk.ValidationException {
+        if(getUnitaOperativaAbilitata() == null || getUnitaOperativaAbilitata().getCdUnitaOperativa() == null)
+            throw new it.cnr.jada.bulk.ValidationException("Selezionare l'Unità Operativa");
+        if ( getMagazzinoAbilitato()==null || getMagazzinoAbilitato().getCdMagazzino()==null)
+            throw new it.cnr.jada.bulk.ValidationException("Selezionare un Magazzino");
+
+        if((getUnitaOperativaDestinazione() == null || getUnitaOperativaDestinazione().getCdUnitaOperativa() == null)
+                                                    &&
+                                        !rangeArticoloImpostato()
+                                                    &&
+                                        !rangeDataBollaImpostato()
+                                                    &&
+                                        !rangeNumBollaImpostato()){
+            throw new it.cnr.jada.bulk.ValidationException("Selezionare almeno un filtro tra Unità Operativa di Destinazione, Articolo, Data e Numero Bolla");
+        }
+
+
+    }
+    private boolean rangeNumBollaImpostato() throws it.cnr.jada.bulk.ValidationException{
+        if(getDaNumBolla() == null &&  getaNumBolla() == null)
+            return false;
+
+        if((getDaNumBolla() != null &&  getaNumBolla() == null)
+                ||
+           (getDaNumBolla() == null &&  getaNumBolla() != null)) {
+            throw new it.cnr.jada.bulk.ValidationException("Selezionare intervallo Numero Bolla");
+        }
+        if((getDaNumBolla() != null &&  getaNumBolla() != null)
+                &&
+           (getDaNumBolla().compareTo(getaNumBolla()) > 0)){
+            throw new it.cnr.jada.bulk.ValidationException("Intervallo di Numero Bolla non corretto, il Numero Bolla Da non può essere maggiore del Numero Bolla A");
+        }
+        return true;
+    }
+    private boolean rangeDataBollaImpostato() throws it.cnr.jada.bulk.ValidationException {
+        if(getDaData() == null &&  getaData() == null) {
+            return false;
+        }
+        if((getDaData() != null &&  getaData()  == null)
+                ||
+                (getDaData()== null &&  getaData() != null)) {
+            throw new it.cnr.jada.bulk.ValidationException("Selezionare intervallo Date");
+        }
+        if((getDaData()  != null &&  getaData() != null)
+                &&
+                (getDaData().compareTo(getaData()) > 0)){
+            throw new it.cnr.jada.bulk.ValidationException("Intervallo di Date non corretto, la Data Da non può essere maggiore della Data A");
+        }
+
+        return true;
+    }
+    private boolean rangeArticoloImpostato() throws it.cnr.jada.bulk.ValidationException{
+        if(getDaBeneServizio().getCd_bene_servizio() == null &&  getaBeneServizio().getCd_bene_servizio() == null)
+            return false;
+
+        if((getDaBeneServizio().getCd_bene_servizio() != null &&  getaBeneServizio().getCd_bene_servizio() == null)
+                ||
+                (getDaBeneServizio().getCd_bene_servizio() == null &&  getaBeneServizio().getCd_bene_servizio() != null)) {
+            throw new it.cnr.jada.bulk.ValidationException("Selezionare intervallo Articolo");
+        }
+        if((getDaBeneServizio().getCd_bene_servizio() != null &&  getaBeneServizio().getCd_bene_servizio() != null)
+                &&
+                (getDaBeneServizio().getCd_bene_servizio().compareTo(getaBeneServizio().getCd_bene_servizio()) > 0)){
+            throw new it.cnr.jada.bulk.ValidationException("Intervallo di Articolo non corretto, l'Articolo Da non può essere maggiore dell'Articolo A");
+        }
+        return true;
+    }
     public String getCdsMagForPrint() {
         if (this.getMagazzinoAbilitato() == null)
             return TUTTI;
@@ -95,48 +196,67 @@ public class StampaBollaScaricoMagBulk extends AbilitazioneMagazzinoBulk {
 
         return super.getMagazzinoAbilitato().getCdMagazzino();
     }
-    public String getCdCatGrpForPrint() {
-        if (this.getCatgrp() == null)
+
+    public String getDescMagazzinoForPrint() {
+        if (this.getMagazzinoAbilitato() != null && this.getMagazzinoAbilitato().getCdMagazzino() != null) {
+            return getMagazzinoAbilitato().getDsMagazzino();
+        }
+
+        return "";
+    }
+    public String getCdUnitaOperativaAbilitataForPrint() {
+        return getUnitaOperativaAbilitata().getCdUnitaOperativa();
+    }
+    public String getCdUnitaOperativaDestForPrint() {
+        if(getUnitaOperativaDestinazione() == null)
             return TUTTI;
-        if (this.getCatgrp().getCd_categoria_gruppo() == null)
+        if(getUnitaOperativaDestinazione().getCdUnitaOperativa() == null)
+            return TUTTI;
+        return getUnitaOperativaDestinazione().getCdUnitaOperativa();
+    }
+    public String getDescUnitaOperativaDestForPrint() {
+        if(getUnitaOperativaDestinazione() == null)
+            return TUTTI;
+        if(getUnitaOperativaDestinazione().getCdUnitaOperativa() == null)
+            return TUTTI;
+        else
+            return getUnitaOperativaDestinazione().getCdUnitaOperativa()+"-"+getUnitaOperativaDestinazione().getDsUnitaOperativa();
+
+    }
+    public String getCdDaBeneForPrint() {
+        if (this.getDaBeneServizio() == null)
+            return TUTTI;
+        if (this.getDaBeneServizio().getCd_bene_servizio() == null)
             return TUTTI;
 
-        return this.getCatgrp().getCd_categoria_gruppo();
+        return this.getDaBeneServizio().getCd_bene_servizio();
+    }
+    public String getCdABeneForPrint() {
+        if (this.getaBeneServizio() == null)
+            return TUTTI;
+        if (this.getaBeneServizio().getCd_bene_servizio() == null)
+            return TUTTI;
+
+        return this.getaBeneServizio().getCd_bene_servizio();
+    }
+    public String getDescDaBeneForPrint(){
+        if(this.getDaBeneServizio() != null && this.getDaBeneServizio().getCd_bene_servizio() != null && !this.getDaBeneServizio().getCd_bene_servizio().equals(TUTTI_ASTERISCO)){
+            return this.getDaBeneServizio().getDs_bene_servizio();
+        }
+        return "";
+    }
+    public String getDescABeneForPrint(){
+        if(this.getaBeneServizio() != null && this.getaBeneServizio().getCd_bene_servizio() != null && !this.getaBeneServizio().getCd_bene_servizio().equals(TUTTI_ASTERISCO)){
+            return this.getaBeneServizio().getDs_bene_servizio();
+        }
+        return "";
     }
 
-    public Boolean getFlDettaglioArticolo() {
-        return flDettaglioArticolo;
-    }
 
-    public void setFlDettaglioArticolo(Boolean flDettaglioArticolo) {
-        this.flDettaglioArticolo = flDettaglioArticolo;
-    }
 
-    public Boolean getFlRaggCatGruppo() {
-        return flRaggCatGruppo;
-    }
 
-    public void setFlRaggCatGruppo(Boolean flRaggCatGruppo) {
-        this.flRaggCatGruppo = flRaggCatGruppo;
-    }
 
-    public String getOrdinamento() {
-        return ordinamento;
-    }
 
-    public void setOrdinamento(String ordinamento) {
-        this.ordinamento = ordinamento;
-    }
 
-    public void validate() throws it.cnr.jada.bulk.ValidationException {
-        if ( getMagazzinoAbilitato()==null ||
-                getMagazzinoAbilitato().getCdMagazzino()==null
-        )
-            throw new it.cnr.jada.bulk.ValidationException("Selezionare un magazzino!");
-        if ( getDataInventario()==null )
-            throw new it.cnr.jada.bulk.ValidationException("Imposta la data inventario!");
-        if ( getOrdinamento()==null || getOrdinamento().trim().isEmpty())
-            throw new it.cnr.jada.bulk.ValidationException("Selezionare l'ordinamento!");
 
-    }
 }
