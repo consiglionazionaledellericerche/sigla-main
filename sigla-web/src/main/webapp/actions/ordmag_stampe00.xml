@@ -23,7 +23,7 @@
             path="/StampaInventarioAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
     </action>
     <action
-            path="/StampaBollaScaricoMagAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+            path="/StampaBollaScaricoMagAction" actionClass="it.cnr.contab.ordmag.magazzino.action.StampaBollaScaricoMagAction">
     </action>
     <action
             path="/StampaPartitarioMagAction" actionClass="it.cnr.contab.ordmag.magazzino.action.StampaPartitarioMagAction">

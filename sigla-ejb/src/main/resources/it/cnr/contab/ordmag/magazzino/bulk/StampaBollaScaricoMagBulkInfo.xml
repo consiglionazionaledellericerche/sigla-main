@@ -33,6 +33,18 @@
 			label="Unità Operativa" />
 
 	<fieldProperty
+			name="cdUnitaOperativa"
+			property="unitaOperativaAbilitata.cdUnitaOperativa"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Codice Unità Operativa" />
+
+	<fieldProperty
 			name="findUnitaOperativaDest"
 			property="unitaOperativaDestinazione"
 			inputType="SEARCHTOOL"
@@ -41,6 +53,18 @@
 			enabledOnEdit="true"
 			command=""
 			label="Unità Operativa Destinazione" />
+
+	<fieldProperty
+			name="cdUnitaOperativaDest"
+			property="unitaOperativaDestinazione.cdUnitaOperativa"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Codice Unità Operativa" />
 
 	<fieldProperty
 			name="findMagazzino"
@@ -77,7 +101,7 @@
 			formatName="date_short"
 			enabledOnEdit="true"
 			enabledOnInsert="true"
-			command=""
+			command="doOnDataDaChange"
 			label="Da Data" />
 
 	<fieldProperty
@@ -87,7 +111,6 @@
 			formatName="date_short"
 			enabledOnEdit="true"
 			enabledOnInsert="true"
-			command=""
 			label="A Data" />
 
 	<fieldProperty
@@ -98,7 +121,7 @@
 			maxLength="30"
 			enabledOnEdit="true"
 			enabledOnInsert="true"
-			command=""
+			command="doOnPgBollaDaChange"
 			label="Da Numero Bolla" />
 
 	<fieldProperty
@@ -109,7 +132,6 @@
 			maxLength="30"
 			enabledOnEdit="true"
 			enabledOnInsert="true"
-			command=""
 			label="A Numero Bolla" />
 
 	<fieldProperty
@@ -118,9 +140,7 @@
 	<fieldProperty
 			name="cdMagazzinoForPrint"
 			property="cdMagazzinoForPrint"/>
-	<fieldProperty
-			name="descMagazzinoForPrint"
-			property="descMagazzinoForPrint"/>
+
 	<fieldProperty
 			name="descUnitaOperativaDestForPrint"
 			property="descUnitaOperativaDestForPrint"/>
@@ -136,6 +156,21 @@
 	<fieldProperty
 			name="descABeneForPrint"
 			property="descABeneForPrint"/>
+	<fieldProperty
+			name="cdDaDataForPrint"
+			property="cdDaDataForPrint"/>
+	<fieldProperty
+			name="cdADataForPrint"
+			property="cdADataForPrint"/>
+	<fieldProperty
+			name="daNumBollaForPrint"
+			property="daNumBollaForPrint"/>
+	<fieldProperty
+			name="aNumBollaForPrint"
+			property="aNumBollaForPrint"/>
+
+
+
 
 
 	<formFieldProperty name="findUnitaOperativaAbilitata" />
@@ -154,7 +189,7 @@
 	<printForm
 			name="/ordmag/bolla_scarico.jasper">
 		<printFieldProperty
-				name="cdUnitaOperativaAbilitataForPrint"
+				name="cdUnitaOperativa"
 				parameterPosition="1"
 				parameterType="STRING"
 				paramNameJR="cd_unita_operativa"
@@ -172,7 +207,7 @@
 				paramNameJR="cd_cds"
 				paramTypeJR="java.lang.String"/>
 		<printFieldProperty
-				name="cdUnitaOperativaDestForPrint"
+				name="cdUnitaOperativaDest"
 				parameterPosition="4"
 				parameterType="STRING"
 				paramNameJR="cd_uop_dest"
@@ -190,29 +225,30 @@
 				paramNameJR="cd_bene_servizio_a"
 				paramTypeJR="java.lang.String"/>
 		<printFieldProperty
-				name="daData"
+				name="cdDaDataForPrint"
 				parameterPosition="7"
 				parameterType="DATE"
 				paramNameJR="dt_bolla_sca_da"
 				paramTypeJR="java.util.Date"/>
 		<printFieldProperty
-				name="aData"
+				name="cdADataForPrint"
 				parameterPosition="8"
 				parameterType="DATE"
 				paramNameJR="dt_bolla_sca_a"
 				paramTypeJR="java.util.Date"/>
 		<printFieldProperty
-				name="daNumBolla"
+				name="daNumBollaForPrint"
 				parameterPosition="9"
 				parameterType="STRING"
 				paramNameJR="pg_bolla_sca_da"
-				paramTypeJR="java.lang.String"/>
+				paramTypeJR="java.lang.Long"/>
+
 		<printFieldProperty
-				name="aNumBolla"
+				name="aNumBollaForPrint"
 				parameterPosition="10"
 				parameterType="STRING"
 				paramNameJR="pg_bolla_sca_a"
-				paramTypeJR="java.lang.String"/>
+				paramTypeJR="java.lang.Long"/>
 
 	</printForm>
 </bulkInfo>

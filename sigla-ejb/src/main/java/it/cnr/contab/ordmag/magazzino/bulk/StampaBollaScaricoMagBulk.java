@@ -24,6 +24,11 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Insert the type's description here.
@@ -43,8 +48,8 @@ public class StampaBollaScaricoMagBulk extends AbilitazioneMagazzinoBulk {
     private Bene_servizioBulk aBeneServizio = new Bene_servizioBulk();
     private java.sql.Timestamp daData;
     private java.sql.Timestamp aData;
-    private String daNumBolla;
-    private String aNumBolla;
+    private Long daNumBolla;
+    private Long aNumBolla;
 
 
     /**
@@ -97,19 +102,19 @@ public class StampaBollaScaricoMagBulk extends AbilitazioneMagazzinoBulk {
         this.aData = aData;
     }
 
-    public String getDaNumBolla() {
+    public Long getDaNumBolla() {
         return daNumBolla;
     }
 
-    public void setDaNumBolla(String daNumBolla) {
+    public void setDaNumBolla(Long daNumBolla) {
         this.daNumBolla = daNumBolla;
     }
 
-    public String getaNumBolla() {
+    public Long getaNumBolla() {
         return aNumBolla;
     }
 
-    public void setaNumBolla(String aNumBolla) {
+    public void setaNumBolla(Long aNumBolla) {
         this.aNumBolla = aNumBolla;
     }
 
@@ -182,81 +187,83 @@ public class StampaBollaScaricoMagBulk extends AbilitazioneMagazzinoBulk {
     }
     public String getCdsMagForPrint() {
         if (this.getMagazzinoAbilitato() == null)
-            return TUTTI;
+            return null;
         if (this.getMagazzinoAbilitato().getCdCds() == null)
-            return TUTTI;
+            return null;
 
         return this.getMagazzinoAbilitato().getCdCds();
     }
     public String getCdMagazzinoForPrint() {
         if (this.getMagazzinoAbilitato() == null)
-            return TUTTI;
-        if (this.getMagazzinoAbilitato().getCdMagazzino() == null)
-            return TUTTI;
-
+            return null;
         return super.getMagazzinoAbilitato().getCdMagazzino();
     }
-
-    public String getDescMagazzinoForPrint() {
-        if (this.getMagazzinoAbilitato() != null && this.getMagazzinoAbilitato().getCdMagazzino() != null) {
-            return getMagazzinoAbilitato().getDsMagazzino();
-        }
-
-        return "";
-    }
-    public String getCdUnitaOperativaAbilitataForPrint() {
+    public String getCdUnitaOperativa() {
         return getUnitaOperativaAbilitata().getCdUnitaOperativa();
     }
-    public String getCdUnitaOperativaDestForPrint() {
+    public String getCdUnitaOperativaDest() {
         if(getUnitaOperativaDestinazione() == null)
-            return TUTTI;
-        if(getUnitaOperativaDestinazione().getCdUnitaOperativa() == null)
-            return TUTTI;
+            return null;
         return getUnitaOperativaDestinazione().getCdUnitaOperativa();
     }
-    public String getDescUnitaOperativaDestForPrint() {
-        if(getUnitaOperativaDestinazione() == null)
-            return TUTTI;
-        if(getUnitaOperativaDestinazione().getCdUnitaOperativa() == null)
-            return TUTTI;
-        else
-            return getUnitaOperativaDestinazione().getCdUnitaOperativa()+"-"+getUnitaOperativaDestinazione().getDsUnitaOperativa();
 
-    }
     public String getCdDaBeneForPrint() {
         if (this.getDaBeneServizio() == null)
-            return TUTTI;
-        if (this.getDaBeneServizio().getCd_bene_servizio() == null)
-            return TUTTI;
-
+            return null;
         return this.getDaBeneServizio().getCd_bene_servizio();
     }
     public String getCdABeneForPrint() {
         if (this.getaBeneServizio() == null)
-            return TUTTI;
-        if (this.getaBeneServizio().getCd_bene_servizio() == null)
-            return TUTTI;
-
+            return null;
         return this.getaBeneServizio().getCd_bene_servizio();
     }
-    public String getDescDaBeneForPrint(){
-        if(this.getDaBeneServizio() != null && this.getDaBeneServizio().getCd_bene_servizio() != null && !this.getDaBeneServizio().getCd_bene_servizio().equals(TUTTI_ASTERISCO)){
-            return this.getDaBeneServizio().getDs_bene_servizio();
+
+    private static String dataDaDefault="01/01/1900";
+    private static String dataADefault="31/12/9999";
+
+    public Timestamp getCdDaDataForPrint() {
+        if(this.getDaData()==null){
+            GregorianCalendar c = new GregorianCalendar();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                Date date = dateFormat.parse(dataDaDefault);
+                return new Timestamp(date.getTime());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-        return "";
+        return daData;
     }
-    public String getDescABeneForPrint(){
-        if(this.getaBeneServizio() != null && this.getaBeneServizio().getCd_bene_servizio() != null && !this.getaBeneServizio().getCd_bene_servizio().equals(TUTTI_ASTERISCO)){
-            return this.getaBeneServizio().getDs_bene_servizio();
+
+    public Timestamp getCdADataForPrint() {
+        if(this.getaData() == null){
+
+            GregorianCalendar c = new GregorianCalendar();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                Date date = dateFormat.parse(dataADefault);
+                return new Timestamp(date.getTime());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-        return "";
+
+        return aData;
     }
 
-
-
-
-
-
-
+    public Long getDaNumBollaForPrint() {
+        if(this.getDaNumBolla() == null)
+            return -1L;
+        return daNumBolla;
+    }
+    public Long getaNumBollaForPrint() {
+        if(this.getaNumBolla() == null)
+            return -1L;
+        return aNumBolla;
+    }
 
 }
