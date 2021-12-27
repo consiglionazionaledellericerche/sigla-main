@@ -2471,5 +2471,5 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	@JsonIgnore
 	public boolean isROpendenza() {
 		return isROPendenzaSearchTool() || getPendenzaPagopa() == null;
-	}s
+	}
 }
