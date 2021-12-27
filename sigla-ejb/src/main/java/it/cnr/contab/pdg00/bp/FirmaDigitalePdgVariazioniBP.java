@@ -737,16 +737,19 @@ public class FirmaDigitalePdgVariazioniBP extends
         ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
         StorageObject pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject();
         StorageObject node;
-        String nomeFileP7m = pdgVariazioneDocumentNode.getPropertyValue(StoragePropertyNames.NAME.value()) + ".p7m";
+        String nomeFileFirmato = pdgVariazioneDocumentNode.<String>getPropertyValue(StoragePropertyNames.NAME.value())
+                                    .replace(".pdf", ".signed.pdf");
         SignP7M signP7M = new SignP7M(
                 pdgVariazioneDocumentNode.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
                 firmaOTPBulk.getUserName(),
                 firmaOTPBulk.getPassword(),
                 firmaOTPBulk.getOtp(),
-                nomeFileP7m
+                nomeFileFirmato
         );
         try {
-            node = Optional.ofNullable(pdgVariazioniService.signDocuments(signP7M, "service/sigla/firma/variazioni", pdgVariazioniService.getCMISPath(archiviaStampaPdgVariazioneBulk)))
+            node = Optional.ofNullable(pdgVariazioniService.signVariazioni(
+                    signP7M,
+                    pdgVariazioniService.getParentPath(archiviaStampaPdgVariazioneBulk)))
                     .map(s -> pdgVariazioniService.getStorageObjectBykey(s))
                     .orElse(null);
         } catch (StorageException _ex) {
@@ -755,7 +758,7 @@ public class FirmaDigitalePdgVariazioniBP extends
         }
 
         try {
-            File fileNew = File.createTempFile("docFirmatoVariazioni", "p7m");
+            File fileNew = File.createTempFile("docFirmatoVariazioni", "pdf");
             OutputStream outputStream = new FileOutputStream(fileNew);
             IOUtils.copy(pdgVariazioniService.getResource(node), outputStream);
             outputStream.close();

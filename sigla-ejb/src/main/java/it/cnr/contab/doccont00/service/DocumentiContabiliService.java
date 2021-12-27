@@ -39,6 +39,7 @@ import it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaBulk
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoBulk;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBulk;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.*;
@@ -109,6 +110,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     private OrdinativiSiopePlusService ordinativiSiopePlusService;
     @Autowired
     private GiornaleDiCassaSiopePlusService giornaleDiCassaSiopePlusService;
+    @Autowired
+    private UtilService utilService;
 
     @Value("${sign.document.png.url}")
     private String signDocumentURL;
@@ -272,8 +275,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
     public void inviaDistintaPEC1210(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta) throws EmailException, ApplicationException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
         String subject = "";
         if (isNoEuroOrSepa) {
             subject += "Bonifici Estero - ";
@@ -310,8 +312,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
     public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta, boolean isDistintaStipendi) throws EmailException, ApplicationException, IOException {
         // Create the email message
-        SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
-        email.setHostName(pecHostName);
+        SimplePECMail email = utilService.createSimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
         String subject = "";
         if (isDistintaStipendi) {
             email.addTo(
@@ -501,6 +502,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         String identificativoFlusso = Optional.ofNullable(flussoGiornaleDiCassa.getIdentificativoFlussoBT())
                 .map(s -> s.substring(0, s.indexOf("#")))
                 .orElseThrow(() -> new ApplicationMessageFormatException("IdentificativoFlusso non trovato per location {0}", risultato.getLocation()));
+        return messaggioGiornaleDiCassa(flussoGiornaleDiCassa, identificativoFlusso);
+    }
+
+    public FlussoGiornaleDiCassaBulk messaggioGiornaleDiCassa(FlussoGiornaleDiCassa flussoGiornaleDiCassa, String identificativoFlusso) throws RemoteException, ComponentException {
         final FlussoGiornaleDiCassaBulk flussoGiornaleDiCassaBulk = Optional.ofNullable(
                 crudComponentSession.findByPrimaryKey(
                         userContext,

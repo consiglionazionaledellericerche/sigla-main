@@ -30,6 +30,7 @@ import it.cnr.jada.util.StrServ;
 
 import java.util.Dictionary;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * Gestione dei dati relativi alla tabella Banca
@@ -397,10 +398,12 @@ public class BancaBulk extends BancaBase {
             }
         } else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equals(getTi_pagamento()) && (isTABA() || isRegolarizzazione())) {
             // SE è BANCA_ITALIA
+            final String regex = "^[0-9]{7}";
+            final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
             Optional.ofNullable(getNumero_conto())
-                    .filter(s -> s.length() == 7)
+                    .filter(s -> pattern.matcher(s).find())
                     .orElseThrow(() ->  new ValidationException("Modalità di pagamento: Numero Conto è obbligatorio e la sua lunghezza " +
-                            "deve essere di 7 caratteri!"));
+                            "deve essere di 7 caratteri numerici!"));
         } else if (Rif_modalita_pagamentoBulk.POSTALE.equals(getTi_pagamento())) {
             // SE è POSTALE
             if (getNumero_conto() == null)

@@ -30,7 +30,7 @@
 	boolean isRODettaglio = false;
 	if (allegato!=null && ((allegato.isContratto() && (bp.isSuperUtente() || bp.isUtenteAbilitatoModificaAllegatoContratto())) ||
 						   allegato.isAllegatoGenerico() ||
-						   allegato.isCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isProgetto())) {
+						   allegato.isCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isProgetto() || allegato.isAttestazioneDirettore())) {
 		isRODettaglio = incarico==null||allegato==null||!allegato.isToBeCreated()||
 						!allegato.isAllegatoValido()||
 						incarico.getIncarichi_procedura().getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==0||

@@ -27,6 +27,7 @@ import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
@@ -62,6 +63,16 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 	public Buono_carico_scaricoBulk getBuono_cs() {
 		return buono_cs;
 	}
+	private Long idTransito;
+
+	public Long getIdTransito() {
+		return idTransito;
+	}
+
+	public void setIdTransito(Long idTransito) {
+		this.idTransito = idTransito;
+	}
+
 	public void setBuono_cs(Buono_carico_scaricoBulk bulk) {
 		buono_cs = bulk;
 	}
@@ -104,7 +115,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		 */
 		public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 			bene = new Inventario_beniBulk();
-			bene.setTi_commerciale_istituzionale(Inventario_beniBulk.ISTITUZIONALE);
+			bene.setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 			return this;
 		}
 		/**
@@ -116,7 +127,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		 */
 		public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 			bene = new Inventario_beniBulk();
-			bene.setTi_commerciale_istituzionale(Inventario_beniBulk.ISTITUZIONALE);
+			bene.setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 			return this;
 		}
 	/**
@@ -153,7 +164,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		return isBeneAccessorio();
 	}
 	public boolean isROcategoriaBene() {
-		if (getBuono_cs().isByFattura()||isAccessorioContestuale())
+		if (getBuono_cs().isByFattura()||isAccessorioContestuale()|| buono_cs.isByOrdini())
 			return true;	
 		return false;
 	}
@@ -165,7 +176,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		return false;
 	}	
 	public boolean isROfl_accessorio() {	
-		return (getBuono_cs().isByFattura() && isAccessorioContestuale()||getBuono_cs().isByDocumento() && isAccessorioContestuale());				
+		return ((getBuono_cs().isByFattura() && isAccessorioContestuale())||(getBuono_cs().isByDocumento() && isAccessorioContestuale()));
 	}
 
 	public Boolean getFl_accessorio_contestuale() {

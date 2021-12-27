@@ -235,7 +235,8 @@ liquibase:
 
 cnr:
   storage:
-    driver: cmis
+    driver: filesystem
+#    driver: CMIS
   ldap:
     master:
       url: ldap://virtest1.si.cnr.it:389
@@ -256,6 +257,28 @@ pagopa:
 project:
   stage: demo-h2
 thorntail:
+  security:
+    security-domains:
+      sigla-auth:
+        cache-type: default
+        classic-authentication:
+          login-modules:
+            Ldap:
+              code: LdapExtended
+              flag: sufficient
+              module-options:
+                java.naming.provider.url: ldap://localhost:389
+                java.naming.security.authentication: simple
+                bindDN: ou=account,o=ente,c=it
+                bindCredential: secret
+                baseCtxDN: o=ente, c=it
+                baseFilter: uid={0}
+                rolesCtxDN: ou=groups,o=ente,c=it
+                roleFilter: member={1}
+                roleAttributeID: cn
+                defaultRole: USER
+                password-stacking: useFirstPass
+                storePass: true
   datasources:
     jdbc-drivers:
       h2:
@@ -283,6 +306,29 @@ cnr:
 project:
   stage: demo-postgres
 thorntail:
+thorntail:
+  security:
+    security-domains:
+      sigla-auth:
+        cache-type: default
+        classic-authentication:
+          login-modules:
+            Ldap:
+              code: LdapExtended
+              flag: sufficient
+              module-options:
+                java.naming.provider.url: ldap://localhost:389
+                java.naming.security.authentication: simple
+                bindDN: ou=account,o=ente,c=it
+                bindCredential: secret
+                baseCtxDN: o=ente, c=it
+                baseFilter: uid={0}
+                rolesCtxDN: ou=groups,o=ente,c=it
+                roleFilter: member={1}
+                roleAttributeID: cn
+                defaultRole: USER
+                password-stacking: useFirstPass
+                storePass: true
   datasources:
     jdbc-drivers:
       postgresql:
@@ -307,6 +353,29 @@ cnr:
 project:
   stage: demo-oracle
 thorntail:
+thorntail:
+  security:
+    security-domains:
+      sigla-auth:
+        cache-type: default
+        classic-authentication:
+          login-modules:
+            Ldap:
+              code: LdapExtended
+              flag: sufficient
+              module-options:
+                java.naming.provider.url: ldap://localhost:389
+                java.naming.security.authentication: simple
+                bindDN: ou=account,o=ente,c=it
+                bindCredential: secret
+                baseCtxDN: o=ente, c=it
+                baseFilter: uid={0}
+                rolesCtxDN: ou=groups,o=ente,c=it
+                roleFilter: member={1}
+                roleAttributeID: cn
+                defaultRole: USER
+                password-stacking: useFirstPass
+                storePass: true
   datasources:
     data-sources:
       SIGLA:

@@ -20,6 +20,7 @@ package it.cnr.contab.doccont00.core.bulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -29,7 +30,10 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
 
@@ -447,7 +451,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
      * bulk da rendere persistenti insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
      *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
+     * @see it.cnr.jada.comp.GenericComponent
      */
     public BulkCollection[] getBulkLists() {
         return new it.cnr.jada.bulk.BulkCollection[]{mandato_siopeColl, mandatoCupColl};
@@ -458,7 +462,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
      * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param mandato_siope dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToMandato_siopeColl(Mandato_siopeBulk mandato_siope) {
@@ -485,7 +489,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
     /**
      * Aggiunge un nuovo dettaglio (Codici_siopeBulk) alla lista dei codici siope collegabili alla riga del mandato
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param codice_siope dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToCodici_siopeColl(Codici_siopeBulk codice_siope) {
@@ -558,7 +562,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
      * Aggiunge un nuovo dettaglio (MandatoCupBulk) alla lista di dettagli definiti per il mandato
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param mandato_cup dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToMandatoCupColl(MandatoCupBulk mandato_cup) {
@@ -616,5 +620,13 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
 
     public void setAllegatiDocumentiAmministrativi(List<AllegatoGenericoBulk> allegatiDocumentiAmministrativi) {
         this.allegatiDocumentiAmministrativi = allegatiDocumentiAmministrativi;
+    }
+
+    public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
+        throw new IllegalStateException();
+    }
+
+    public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
+        throw new IllegalStateException();
     }
 }

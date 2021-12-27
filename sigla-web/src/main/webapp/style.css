@@ -450,3 +450,8 @@ input.inputFieldReadOnly {
 .d-inline-block, .input-group{
     display : inline-block!important;
 }
+.text-truncate{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}

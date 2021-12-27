@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 
+import java.sql.Timestamp;
+
 /**
  * Insert the type's description here.
  * Creation date: (1/21/2002 4:48:58 PM)

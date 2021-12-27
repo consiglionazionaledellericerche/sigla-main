@@ -273,7 +273,7 @@ public class CRUDRichiestaUopBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ri
                     allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                     allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                     allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                    completeAllegato(allegato);
+                    completeAllegato(allegato, storageObject);
                     allegato.setCrudStatus(OggettoBulk.NORMAL);
                     allegatoParentBulk.addToArchivioAllegati(allegato);
                 } catch (NoSuchMethodException|IllegalAccessException|InstantiationException|InvocationTargetException|ApplicationException e) {
@@ -285,18 +285,15 @@ public class CRUDRichiestaUopBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ri
 	}
 
 	@Override
-	protected void completeAllegato(AllegatoRichiestaBulk allegato) throws ApplicationException {
-		Optional.ofNullable(allegato)
-				.map(allegatoRichiestaBulk -> allegatoRichiestaBulk.getStorageKey())
-				.map(storageKey -> richiesteCMISService.getStorageObjectBykey(storageKey))
-				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+	protected void completeAllegato(AllegatoRichiestaBulk allegato, StorageObject storageObject) throws ApplicationException {
+		Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 				.filter(strings -> !strings.isEmpty())
 				.ifPresent(strings -> {
 					allegato.setAspectName(strings.stream()
 							.filter(s -> AllegatoRichiestaBulk.aspectNamesKeys.get(s) != null)
 							.findAny().orElse(RichiesteCMISService.ASPECT_ALLEGATI_RICHIESTA_ORDINI));
 				});
-		super.completeAllegato(allegato);
+		super.completeAllegato(allegato, storageObject);
 	}
 
 	@Override

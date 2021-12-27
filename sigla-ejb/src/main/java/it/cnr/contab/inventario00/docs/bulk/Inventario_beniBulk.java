@@ -21,6 +21,7 @@ import java.util.*;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.*;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
 
 public class Inventario_beniBulk extends Inventario_beniBase {
@@ -31,8 +32,18 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	private Tipo_ammortamentoBulk tipo_ammortamento;	
 	private java.util.Collection ti_ammortamenti; 	
 	private Categoria_gruppo_inventBulk categoria_Bene;
+	private Transito_beni_ordiniBulk transito_beni_ordini;
 	private Ubicazione_beneBulk ubicazione;
 	private boolean pubblicazione;
+
+	public Transito_beni_ordiniBulk getTransito_beni_ordini() {
+		return transito_beni_ordini;
+	}
+
+	public void setTransito_beni_ordini(Transito_beni_ordiniBulk transito_beni_ordini) {
+		this.transito_beni_ordini = transito_beni_ordini;
+	}
+
 	private Integer num_buono;
 	private Boolean da_fattura;
 	private Boolean ha_dettagli;
@@ -72,19 +83,11 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	private Boolean contab;
 	//private java.lang.String ti_istituzionale_commerciale;
 		
-	public final static java.util.Dictionary ISTITUZIONALE_COMMERCIALE;
-	public final static String ISTITUZIONALE      = "I";
-	public final static String COMMERCIALE      = "C";
+	public final static java.util.Dictionary ISTITUZIONALE_COMMERCIALE = TipoIVA.TipoIVAKeys;
 
 	public final static String ISTOTALMENTESCARICATO = "Y";
 	public final static String ISNOTTOTALMENTESCARICATO = "N";
 
-	static {
-		
-		ISTITUZIONALE_COMMERCIALE = new it.cnr.jada.util.OrderedHashtable();
-		ISTITUZIONALE_COMMERCIALE.put(ISTITUZIONALE,"Istituzionale");
-		ISTITUZIONALE_COMMERCIALE.put(COMMERCIALE,"Commerciale");
-	};
 	private Id_inventarioBulk inventario;
 	protected final static java.text.Format FORMAT = new java.text.DecimalFormat("000");;
 	private java.math.BigDecimal valoreBene;
@@ -99,7 +102,7 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	
 	// Flag che indica, durante un trasferimento intra UO, che un bene accessorio diventa bene principale.
 	private Boolean fl_trasf_come_principale;
-public Inventario_beniBulk() {
+	public Inventario_beniBulk() {
 	super();
 }
 public Inventario_beniBulk(java.lang.Long nr_inventario,java.lang.Long pg_inventario,java.lang.Long progressivo) {
@@ -166,6 +169,12 @@ public java.lang.Integer getCd_assegnatario() {
 		return null;
 	return assegnatario.getCd_terzo();
 }
+	public java.lang.Long getId_transito_beni_ordini() {
+		Transito_beni_ordiniBulk transito = this.getTransito_beni_ordini();
+		if (transito == null)
+			return null;
+		return transito.getId();
+	}
 public java.lang.String getCd_categoria_bene() {
 	Categoria_gruppo_inventBulk categoria_Bene = this.getCategoria_Bene();
 	if (categoria_Bene == null)
@@ -480,7 +489,7 @@ public OggettoBulk initializeForFreeSearch(it.cnr.jada.util.action.CRUDBP bp,it.
 public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 
 	condizioneBene = new Condizione_beneBulk();
-	setTi_commerciale_istituzionale(ISTITUZIONALE);
+	setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 	return this;
 }
 /**
@@ -524,7 +533,7 @@ public boolean isCancellabile() {
 */
 
 public boolean isIstituzionale() {
-	return ISTITUZIONALE.equals(getTi_commerciale_istituzionale());
+	return TipoIVA.ISTITUZIONALE.value().equals(getTi_commerciale_istituzionale());
 }
 /**
 * Restituisce <code>true</code> se il bene deriva da una operazione di migrazione,
@@ -699,6 +708,9 @@ public void setCd_assegnatario(java.lang.Integer cd_assegnatario) {
 public void setCd_categoria_bene(java.lang.String cd_categoria_bene) {
 	this.getCategoria_Bene().setCd_categoria_gruppo(cd_categoria_bene);
 }
+	public void setId_transito_beni_ordini(java.lang.Long id_transito_beni_ordini) {
+		this.getTransito_beni_ordini().setId(id_transito_beni_ordini);
+	}
 public void setCd_categoria_gruppo(java.lang.String cd_categoria_gruppo) {
 	this.getCategoria_Bene().setCd_categoria_gruppo(cd_categoria_gruppo);
 }
@@ -898,5 +910,7 @@ public void setHa_dettagli(Boolean boolean1) {
 	public void setNuova_categoria(Categoria_gruppo_inventBulk nuova_categoria) {
 		this.nuova_categoria = nuova_categoria;
 	}
-
+	public Boolean isDaOrdini(){
+		return Optional.ofNullable(getTransito_beni_ordini()).isPresent();
+	}
 }

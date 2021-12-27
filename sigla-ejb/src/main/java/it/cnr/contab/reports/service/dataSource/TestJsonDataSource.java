@@ -1,16 +1,31 @@
 package it.cnr.contab.reports.service.dataSource;
 
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.ordmag.magazzino.bulk.Stampa_inventarioBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.Stampa_inventarioHome;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestJsonDataSource extends AbstractDataSourceOffline {
 
+    private final static Logger _log = LoggerFactory.getLogger(TestJsonDataSource.class);
     protected  String getJson( Object o){
         return new GsonBuilder().create().toJson(o );
     }
 
-    public String getDataSourceOffline(Print_spoolerBulk print_spoolerBulk) throws ComponentException {
+    @Override
+    public Class getBulkClass() {
+        return Stampa_inventarioBulk.class;
+    }
+
+    public String getDataSourceOffline(UserContext userContext, Print_spoolerBulk print_spoolerBulk, BulkHome bulkHome) throws ComponentException {
+        Stampa_inventarioHome home = ( Stampa_inventarioHome) bulkHome;
+        String json2=home.getJsonDataSource(userContext,print_spoolerBulk);
+        _log.info("json:"+json2);
         String text ="JsonDataSource";
         String json="{\n" +
                 "  \"anno\": 2018,\n" +

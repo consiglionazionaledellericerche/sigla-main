@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_priorityKey">
+	<defaultColumnMap
+		tableName="PRINT_PRIORITY">
+		<columnMapping
+			columnName="REPORT_NAME"
+			propertyName="reportName"
+			sqlTypeName="VARCHAR"
+			columnSize="1500"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="reportName"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -208,7 +208,13 @@
 			columnName="SERIALE"
 			propertyName="seriale"
 			sqlTypeName="VARCHAR"
-			columnSize="25" />				
+			columnSize="25" />
+		<columnMapping
+				columnName="ID_TRANSITO_BENI_ORDINI"
+				propertyName="id_transito_beni_ordini"
+				sqlTypeName="DECIMAL"
+				columnSize="12"
+				nullable="true"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -273,5 +279,7 @@
 	<persistentProperty
 		name="targa" />	
 	<persistentProperty
-		name="seriale" />		
+		name="seriale" />
+	<persistentProperty
+			name="id_transito_beni_ordini" />
 </SQLPersistentInfo>

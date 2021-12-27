@@ -127,4 +127,10 @@
             <column name="posizione_creditoria" type="CHAR(1)" value="Y"/>
         </update>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione-upd-economico-patrimoniale-ass-conti">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="CONTO"/>
+            <where>CD_CHIAVE_PRIMARIA='ECONOMICO_PATRIMONIALE' AND CD_CHIAVE_SECONDARIA='ASSOCIAZIONE_CONTI'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

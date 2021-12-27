@@ -1014,19 +1014,28 @@ BEGIN
 
    -------------------------------------------------------------------------------------------------
    -- Validazione del terzo sulla minicarriera
+   DECLARE
+     dtFine date;
+   BEGIN
+       IF aRecMinicarriera.stato='C' and aRecMinicarriera.dt_cessazione IS NOT NULL THEN
+          dtFine := aRecMinicarriera.dt_cessazione;
+       ELSE
+          dtFine := aRecMinicarriera.dt_fine_minicarriera;
+       END IF;
 
-   IF CNRCTB080.chkEsisteTerzoPerCompenso(aRecMinicarriera.cd_terzo,
-                                          aRecMinicarriera.cd_tipo_rapporto,
-                                          aRecMinicarriera.ti_anagrafico,
-                                          aRecMinicarriera.dt_registrazione,
-                                          aRecMinicarriera.dt_inizio_minicarriera,
-                                          aRecMinicarriera.dt_fine_minicarriera) = 0 THEN
-      IBMERR001.RAISE_ERR_GENERICO('Terzo ' || aRecMinicarriera.cd_terzo || ' inesistente. ' ||
-                                   'Il terzo e/o il rapporto ' || aRecMinicarriera.cd_tipo_rapporto ||
-                                   'risultano cessati o non contigui alle date di riferimento della minicarriera');
-
-   END IF;
-
+       IF CNRCTB080.chkEsisteTerzoPerCompenso(aRecMinicarriera.cd_terzo,
+                                              aRecMinicarriera.cd_tipo_rapporto,
+                                              aRecMinicarriera.ti_anagrafico,
+                                              aRecMinicarriera.dt_registrazione,
+                                              aRecMinicarriera.dt_inizio_minicarriera,
+                                              dtFine) = 0 THEN
+          IBMERR001.RAISE_ERR_GENERICO('Terzo ' || aRecMinicarriera.cd_terzo || ' inesistente. ' ||
+                                       'Il terzo e/o il rapporto ' || aRecMinicarriera.cd_tipo_rapporto ||
+                                       ' risultano cessati o non contigui alle date di riferimento della minicarriera ('||
+                                       to_char(aRecMinicarriera.dt_inizio_minicarriera,'dd/mm/yyyy')||' - '||
+                                       to_char(dtFine,'dd/mm/yyyy')||')');
+       END IF;
+  END;
 END chkScadRateMinicarriera;
 
 END;

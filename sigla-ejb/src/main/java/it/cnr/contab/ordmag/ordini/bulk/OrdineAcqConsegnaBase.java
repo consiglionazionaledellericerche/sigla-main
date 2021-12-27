@@ -21,8 +21,19 @@
  */
 package it.cnr.contab.ordmag.ordini.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
 public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed {
-//    STATO VARCHAR(3) NOT NULL
+	public BigDecimal getQuantitaOrig() {
+		return quantitaOrig;
+	}
+
+	public void setQuantitaOrig(BigDecimal quantitaOrig) {
+		this.quantitaOrig = quantitaOrig;
+	}
+
+	//    STATO VARCHAR(3) NOT NULL
 	private java.lang.String stato;
  
 //    TIPO_CONSEGNA VARCHAR(3) NOT NULL
@@ -33,7 +44,8 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
  
 //    QUANTITA DECIMAL(17,5) NOT NULL
 	private java.math.BigDecimal quantita;
- 
+	private java.math.BigDecimal quantitaOrig;
+
 //    IM_IMPONIBILE_DIVISA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imImponibileDivisa;
  

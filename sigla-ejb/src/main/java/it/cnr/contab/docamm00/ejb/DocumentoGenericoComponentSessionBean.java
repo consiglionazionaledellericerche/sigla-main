@@ -19,8 +19,6 @@ package it.cnr.contab.docamm00.ejb;
 import java.rmi.RemoteException;
 
 
-import java.rmi.RemoteException;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
@@ -28,12 +26,13 @@ import javax.ejb.Stateless;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.comp.DocumentoGenericoComponent;
-import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
-import it.cnr.contab.docamm00.comp.DocumentoGenericoComponent;
+import it.cnr.contab.docamm00.docs.bulk.DocumentoGenericoWizardBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.doccont00.core.AccertamentoWizard;
+import it.cnr.contab.doccont00.core.ObbligazioneWizard;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
+
 @Stateless(name="CNRDOCAMM00_EJB_DocumentoGenericoComponentSession")
 public class DocumentoGenericoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements DocumentoGenericoComponentSession {
 @PostConstruct
@@ -863,4 +862,40 @@ public it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk eliminaLetteraPag
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+	public Documento_genericoBulk creaDocumentoGenericoDaImpegni (UserContext param0, DocumentoGenericoWizardBulk param1, java.util.Collection<ObbligazioneWizard> param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk result = ((DocumentoGenericoComponent)componentObj).creaDocumentoGenericoDaImpegni(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public Documento_genericoBulk creaDocumentoGenericoDaAccertamenti(UserContext param0, DocumentoGenericoWizardBulk param1, java.util.Collection<AccertamentoWizard> param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk result = ((DocumentoGenericoComponent)componentObj).creaDocumentoGenericoDaAccertamenti(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

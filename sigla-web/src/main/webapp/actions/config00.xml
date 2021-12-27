@@ -38,8 +38,7 @@
   <action 
       path="/CRUDServizioPecAction" actionClass="it.cnr.jada.util.action.CRUDAction">
   </action>
-
-  <businessProcess
+    <businessProcess
       name="CRUDConfigTipoUnitaOrgBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/config00/tipo_unita_organizzativa.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaBulk" />
@@ -53,8 +52,8 @@
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Unita_organizzativaComponentSession" />		
 		<init-param name="defaultAction" value="CRUDConfigUOAction" />
   </businessProcess>
-	
-		  <businessProcess
+
+    <businessProcess
       name="CRUDConfigCdRBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/config00/cdr.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdrBulk" />
@@ -421,6 +420,13 @@
     <init-param name="bulkClassName" value="it.cnr.contab.config00.pdcep.cla.bulk.Parametri_livelli_epBulk"/>
     <init-param name="componentSessionName" value="CNRCONFIG00_EJB_Parametri_livelli_epComponentSession"/>
 	<init-param name="defaultAction" value="CRUDConfigParametriLivelliEPAction"/>
-  </businessProcess>    	      	
+  </businessProcess>
 
+  <businessProcess
+            name="ConfigPrintPriorityBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/util/form.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.reports.bulk.Print_priorityBulk" />
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+
+    </businessProcess>
 </action-mappings>

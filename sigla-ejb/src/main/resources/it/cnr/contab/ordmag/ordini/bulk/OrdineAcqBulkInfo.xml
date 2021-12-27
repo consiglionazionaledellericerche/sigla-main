@@ -567,7 +567,7 @@
         inputType="TEXT"
         inputSize="5"
         maxLength="5"
-        nullable="false"
+        nullable="true"
         label="Tipo Ordine" />
         <fieldProperty
                 name="procedura_amministrativa"

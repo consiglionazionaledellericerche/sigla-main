@@ -196,6 +196,16 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 			label="Allega Insussistenza Conflitto Interesse")
 	private java.lang.String allega_conflitto_interesse;
 
+	//  ALLEGA_ATTESTAZIONE_DIRETTORE CHAR(1)
+	@FieldPropertyAnnotation(name="allega_attestazione_direttore",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Allega Attestazione Direttore")
+	private java.lang.String allega_attestazione_direttore;
+
 //  INDICA_URL_PROGETTO CHAR(1)
 	@FieldPropertyAnnotation(name="indica_url_progetto",
 			inputType=InputType.TEXT,
@@ -347,5 +357,12 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 	}
 	public void setAllega_conflitto_interesse(String allega_conflitto_interesse) {
 		this.allega_conflitto_interesse = allega_conflitto_interesse;
+	}
+
+	public String getAllega_attestazione_direttore() {
+		return allega_attestazione_direttore;
+	}
+	public void setAllega_attestazione_direttore(String allega_attestazione_direttore) {
+		this.allega_attestazione_direttore = allega_attestazione_direttore;
 	}
 }

@@ -16,7 +16,7 @@
 	      	String[][] pages = null;
 	      	if(riga != null && riga.getNumero() != null){
 	      		pages = new String[][] {
-					{ "tabOrdineDettaglio","Dettaglio Riga","/ordmag/ordini/tab_ordine_acq_dettaglio.jsp" },
+					{ "tabOrdineDettaglio","cDettaglio Riga","/ordmag/ordini/tab_ordine_acq_dettaglio.jsp" },
 					{ "tabOrdineConsegna","Consegna","/ordmag/ordini/tab_ordine_acq_consegna.jsp" },
 					{ "tabOrdineDettaglioAllegati","Allegati","/ordmag/ordini/tab_ordine_acq_dettaglio_allegati.jsp" } };
 	      	} else {

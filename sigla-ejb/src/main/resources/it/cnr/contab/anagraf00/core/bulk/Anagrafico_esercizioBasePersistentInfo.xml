@@ -130,19 +130,39 @@
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
 			nullable="false"/>
 		<columnMapping
-				columnName="FL_NO_CREDITO_CUNEO_IRPEF"
-				propertyName="fl_no_credito_cuneo_irpef"
-				sqlTypeName="CHAR"
-				columnSize="1"
-				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
-				nullable="false"/>
+			columnName="FL_NO_CREDITO_CUNEO_IRPEF"
+			propertyName="fl_no_credito_cuneo_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+			nullable="false"/>
 		<columnMapping
-				columnName="FL_NO_DETR_CUNEO_IRPEF"
-				propertyName="fl_no_detr_cuneo_irpef"
-				sqlTypeName="CHAR"
-				columnSize="1"
-				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
-				nullable="false"/>
+			columnName="FL_NO_DETR_CUNEO_IRPEF"
+			propertyName="fl_no_detr_cuneo_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+			nullable="false"/>
+		<columnMapping
+			columnName="ESERCIZIO_VOCE_CREDITO_EP"
+			propertyName="esercizio_voce_credito_ep"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="CD_VOCE_CREDITO_EP"
+			propertyName="cd_voce_credito_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE_DEBITO_EP"
+			propertyName="esercizio_voce_debito_ep"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="CD_VOCE_DEBITO_EP"
+			propertyName="cd_voce_debito_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_notaxarea" />
@@ -175,9 +195,17 @@
 	<persistentProperty
 		name="fl_no_credito_irpef" />
 	<persistentProperty
-			name="fl_no_credito_cuneo_irpef" />
+		name="fl_no_credito_cuneo_irpef" />
 	<persistentProperty
-			name="fl_no_detr_cuneo_irpef" />
+		name="fl_no_detr_cuneo_irpef" />
 	<persistentProperty
-		name="fl_detrazioni_altri_tipi" />	
+		name="fl_detrazioni_altri_tipi" />
+	<persistentProperty
+		name="esercizio_voce_credito_ep" />
+	<persistentProperty
+		name="cd_voce_credito_ep" />
+	<persistentProperty
+		name="esercizio_voce_debito_ep" />
+	<persistentProperty
+		name="cd_voce_debito_ep" />
 </SQLPersistentInfo>

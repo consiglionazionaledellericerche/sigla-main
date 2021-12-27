@@ -62,7 +62,7 @@ import java.rmi.RemoteException;
 import java.sql.Date;
 import java.util.*;
 
-public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction {
+public class CRUDFatturaAttivaAction extends EconomicaAction {
     public CRUDFatturaAttivaAction() {
         super();
     }

@@ -17,9 +17,6 @@
 
 package it.cnr.contab.doccont00.consultazioni.bp;
 
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_entBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk;
@@ -35,6 +32,9 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
+
+import java.rmi.RemoteException;
+import java.util.Iterator;
 
 public class ConsGAEResBP extends ConsultazioniBP {
 	
@@ -60,16 +60,16 @@ public class ConsGAEResBP extends ConsultazioniBP {
 	private String pathConsultazione;
 	private boolean flNuovoPdg = false;
 
-	public ConsGAEResComponentSession createGAEResComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
+	public ConsGAEResComponentSession createGAEResComponentSession() throws javax.ejb.EJBException, RemoteException {
 		
 		   return (ConsGAEResComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsGAEResComponentSession",ConsGAEResComponentSession.class);
 	}
 
 	   
 
-	   protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+	   protected void init(it.cnr.jada.action.Config config, ActionContext context) throws BusinessProcessException {
 		   try {
-			   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+			   Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
 			   Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), esercizio); 
 			   setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 			   	
@@ -97,7 +97,7 @@ public class ConsGAEResBP extends ConsultazioniBP {
 				throw new BusinessProcessException(e);
 			} 
 	   }
-	   public void initVariabili(it.cnr.jada.action.ActionContext context, String pathProvenienza, String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
+	   public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
 		   try {
 			
 			     if (pathProvenienza == null && (livello_destinazione.equals(this.LIVELLO_ETRGAE)||livello_destinazione.equals(this.LIVELLO_SPEGAE))){
@@ -331,7 +331,7 @@ public class ConsGAEResBP extends ConsultazioniBP {
 		* @param field il campo da aggiornare 
 		* @param label il nuovo valore da sostituire al vecchio
 		*/
-	   public CompoundFindClause getSelezione(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+	   public CompoundFindClause getSelezione(ActionContext context) throws BusinessProcessException {
 		   try	{
 			   CompoundFindClause clauses = null;
 			   if (this instanceof ConsGAEResEtrBP){

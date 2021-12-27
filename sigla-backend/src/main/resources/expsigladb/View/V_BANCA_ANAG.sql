@@ -2,7 +2,7 @@
 --  DDL for View V_BANCA_ANAG
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_BANCA_ANAG" ("CD_ANAG", "CD_TERZO", "PG_BANCA", "TI_PAGAMENTO", "ABI", "CAB", "DS_ABICAB", "NUMERO_CONTO", "INTESTAZIONE", "QUIETANZA", "CODICE_IBAN", "CODICE_SWIFT", "FL_CANCELLATO", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC") AS 
+  CREATE OR REPLACE FORCE VIEW "V_BANCA_ANAG" ("CD_ANAG", "CD_TERZO", "PG_BANCA", "TI_PAGAMENTO", "ABI", "CAB", "DS_ABICAB", "NUMERO_CONTO", "INTESTAZIONE", "QUIETANZA", "CODICE_IBAN", "CODICE_SWIFT", "FL_CANCELLATO", "CD_TERZO_DELEGATO", "PG_BANCA_DELEGATO", "ORIGINE", "FL_CC_CDS", "CIN", "TIPO_POSTALIZZAZIONE", "TIPO_PAGAMENTO_SIOPE", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC") AS
   SELECT
 --
 -- Date: 23/04/2002
@@ -35,6 +35,13 @@
        B.codice_iban,
        B.codice_swift,
        B.fl_cancellato,
+       B.cd_terzo_delegato,
+       B.pg_banca_delegato,
+       B.origine,
+       B.fl_cc_cds,
+       B.cin,
+       B.tipo_postalizzazione,
+       B.tipo_pagamento_siope,
        B.dacr,
        B.utcr,
        B.duva,

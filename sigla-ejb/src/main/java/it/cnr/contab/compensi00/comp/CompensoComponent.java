@@ -38,6 +38,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.BonusHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -100,7 +101,6 @@ import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
-import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
@@ -130,6 +130,7 @@ import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -171,7 +172,7 @@ import java.util.Vector;
  * 
  * @author: Roberto Fantino
  */
-public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
+public class CompensoComponent extends ScritturaPartitaDoppiaFromDocumentoComponent implements
 		ICompensoMgr, Cloneable, IPrintMgr, Serializable {
 	/**
 	 * CompensoComponent constructor comment.
@@ -555,7 +556,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * @return il nuovo progressivo da utilizzare
 	 * 
 	 **/
-	private Long assegnaProgressivo(UserContext userContext,
+	public Long assegnaProgressivo(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
 
 		try {
@@ -2682,7 +2683,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
-		
+		caricaScrittura(userContext, compenso);
 		return compenso;
 	}
 
@@ -3015,7 +3016,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		compenso.setFl_senza_calcoli(Boolean.TRUE);
 		compenso.setBonus(bonus);
 		compenso
-				.setTi_istituz_commerc(CompensoBulk.TIPO_COMPENSO_ISTITUZIONALE);
+				.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 		compenso.setStatoCompensoToEseguiCalcolo();
 		compenso.setToBeCreated();
 		compenso.setUser(bonus.getUser());
@@ -4213,13 +4214,13 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				 bulk.getFatturaPassiva() != null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
 				 compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0 && 
 				 (!compenso.getFl_split_payment().booleanValue() ||(compenso.getFl_split_payment().booleanValue() &&  
-						   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.ISTITUZIONALE)==0 )) 
+						   compenso.getTi_istituz_commerc().compareTo(TipoIVA.ISTITUZIONALE.value())==0 ))
 				 && !compenso.isSenzaCalcoli()))
 				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_fattura());
 			
 			if (compenso !=null && compenso.getIm_totale_compenso()!=null && bulk.getFatturaPassiva() != null  &&
 					   compenso.getFl_split_payment().booleanValue() &&  
-					   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.COMMERCIALE)==0  &&
+					   compenso.getTi_istituz_commerc().compareTo(TipoIVA.COMMERCIALE.value())==0  &&
 					   bulk.getFatturaPassiva().getIm_totale_imponibile()!=null &&
 					   compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_imponibile())!=0 && !compenso.isSenzaCalcoli())
 						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_imponibile());
@@ -5139,12 +5140,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				compenso.getFatturaPassiva() != null && compenso.getFatturaPassiva().getIm_totale_fattura()!=null &&
 				 compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_fattura())!=0 && 
 				 (!compenso.getFl_split_payment().booleanValue() ||(compenso.getFl_split_payment().booleanValue() &&  
-						   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.ISTITUZIONALE)==0 ))))
+						   compenso.getTi_istituz_commerc().compareTo(TipoIVA.ISTITUZIONALE.value())==0 ))))
 				throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_fattura());
 			
 			if (compenso !=null && compenso.getIm_totale_compenso()!=null && compenso.getFatturaPassiva() != null  &&
 					   compenso.getFl_split_payment().booleanValue() &&  
-					   compenso.getTi_istituz_commerc().compareTo(Tipo_sezionaleBulk.COMMERCIALE)==0  &&
+					   compenso.getTi_istituz_commerc().compareTo(TipoIVA.COMMERCIALE.value())==0  &&
 							   compenso.getFatturaPassiva().getIm_totale_imponibile()!=null &&
 					   compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_imponibile())!=0)
 						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_imponibile());
@@ -6727,8 +6728,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 								"La tipologia della natura dell'impegno è diversa da quella del contratto prescelto.");
 				}
 			} catch (it.cnr.jada.persistency.PersistencyException e) {
-				throw handleException(e);
-			} catch (it.cnr.jada.persistency.IntrospectionException e) {
 				throw handleException(e);
 			}
 		}		

@@ -50,6 +50,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	final public static String TIPO_DECRETO_DI_NOMINA = "N";
 	final public static String TIPO_ATTO_ESITO_CONTROLLO = "E";
 	final public static String TIPO_CONFLITTO_INTERESSI = "I";
+	final public static String TIPO_ATTESTAZIONE_DIRETTORE = "S";
 	final public static String TIPO_PROGETTO = "T";
 
 	final public static String DEFAULT_NOME_FILE = "Allegato";	
@@ -77,6 +78,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 		tipo_archivioKeys.put(TIPO_ATTO_ESITO_CONTROLLO,"Esito Controllo Corte Conti");
 		tipo_archivioKeys.put(TIPO_PROGETTO,"Progetto");
 		tipo_archivioKeys.put(TIPO_CONFLITTO_INTERESSI,"Attestazione Insussistenza Conflitto Interesse");
+		tipo_archivioKeys.put(TIPO_ATTESTAZIONE_DIRETTORE,"Attestazione Direttore");
 		tipo_archivioKeys.put(TIPO_GENERICO,"Allegato generico");
 		tipo_archivioKeys.put(TIPO_ALLEGATO_CONTRATTO,"Allegato Contratto");
 	}
@@ -159,6 +161,9 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public boolean isConflittoInteressi() {
 		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_CONFLITTO_INTERESSI);
 	}
+	public boolean isAttestazioneDirettore() {
+		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_ATTESTAZIONE_DIRETTORE);
+	}
 	public void insertingUsing(Persister persister, UserContext userContext) {
 		if (getStato()==null)
 			setStato(STATO_VALIDO);
@@ -227,6 +232,8 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
     		nome = nome.append("PRG");
 		else if (this.isConflittoInteressi())
 			nome = nome.append("CONFLINT");
+		else if (this.isAttestazioneDirettore())
+			nome = nome.append("ATTDIR");
     	else
     		nome = nome.append("GEN");
     	return nome.toString();

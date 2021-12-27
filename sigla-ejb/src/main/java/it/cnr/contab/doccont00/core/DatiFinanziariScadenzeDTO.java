@@ -23,11 +23,13 @@ import java.sql.Timestamp;
 
 public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 	BigDecimal nuovoImportoScadenzaVecchia;
+	Boolean mantieniImportoAssociatoScadenza = false;
 	String nuovaDescrizione;
 	Timestamp nuovaScadenza;
 	String cdLineaAttivita;
 	String cdVoce;
 	String cdCentroResponsabilita;
+	Long nuovoPgObbligazioneScadenzario;
 	
 	public BigDecimal getNuovoImportoScadenzaVecchia() {
 		return nuovoImportoScadenzaVecchia;
@@ -64,5 +66,21 @@ public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 	}
 	public void setCdCentroResponsabilita(String cdCentroResponsabilita) {
 		this.cdCentroResponsabilita = cdCentroResponsabilita;
+	}
+
+	public Boolean getMantieniImportoAssociatoScadenza() {
+		return mantieniImportoAssociatoScadenza;
+	}
+
+	public void setMantieniImportoAssociatoScadenza(Boolean mantieniImportoAssociatoScadenza) {
+		this.mantieniImportoAssociatoScadenza = mantieniImportoAssociatoScadenza;
+	}
+
+	public Long getNuovoPgObbligazioneScadenzario() {
+		return nuovoPgObbligazioneScadenzario;
+	}
+
+	public void setNuovoPgObbligazioneScadenzario(Long nuovoPgObbligazioneScadenzario) {
+		this.nuovoPgObbligazioneScadenzario = nuovoPgObbligazioneScadenzario;
 	}
 }

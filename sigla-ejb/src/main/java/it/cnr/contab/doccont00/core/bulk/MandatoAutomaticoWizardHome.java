@@ -19,6 +19,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.V_anagrafico_terzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
@@ -76,9 +77,14 @@ public class MandatoAutomaticoWizardHome extends MandatoIHome {
 		return getHomeCache().getHome(V_anagrafico_terzoBulk.class ).fetchAll( selectTerzo( mandato ));
 	}
 
-	public Collection findDocPassivi( MandatoIBulk mandato, it.cnr.contab.utenze00.bp.CNRUserContext context ) throws IntrospectionException, PersistencyException 
+	public Collection<V_doc_passivo_obbligazione_wizardBulk> findDocPassivi( MandatoIBulk mandato, it.cnr.contab.utenze00.bp.CNRUserContext context ) throws IntrospectionException, PersistencyException
 	{
-		return getHomeCache().getHome(V_doc_passivo_obbligazione_wizardBulk.class ).fetchAll( selectDocPassivi( mandato ));
+		return getHomeCache().getHome(V_doc_passivo_obbligazione_wizardBulk.class).fetchAll( selectDocPassivi( mandato ));
+	}
+
+	public Collection<V_doc_passivo_obbligazione_wizardBulk> findDocPassivi(IDocumentoAmministrativoSpesaBulk documento ) throws IntrospectionException, PersistencyException
+	{
+		return getHomeCache().getHome(V_doc_passivo_obbligazione_wizardBulk.class).fetchAll( selectDocPassivi( documento ));
 	}
 
 	/**
@@ -132,7 +138,6 @@ public class MandatoAutomaticoWizardHome extends MandatoIHome {
 	 * Metodo per cercare i documenti passivi associati al mandato.
 	 *
 	 * @param mandato <code>MandatoIBulk</code> il mandato
-	 * @param context <code>CNRUserContext</code>
 	 *
 	 * @return <code>Collection</code> i documenti passivi associati al mandato
 	 *
@@ -180,6 +185,18 @@ public class MandatoAutomaticoWizardHome extends MandatoIHome {
 		SQLBuilder sqlTerzo = selectTerzo(mandato);
 		sqlTerzo.addSQLJoin("V_ANAGRAFICO_TERZO.CD_TERZO", "V_DOC_PASSIVO_OBBLIGAZIONE.CD_TERZO");
 		sql.addSQLExistsClause("AND", sqlTerzo);
+		return sql;
+	}
+
+	public SQLBuilder selectDocPassivi( IDocumentoAmministrativoSpesaBulk documento ) throws IntrospectionException, PersistencyException
+	{
+		PersistentHome home = getHomeCache().getHome( V_doc_passivo_obbligazione_wizardBulk.class );
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause( FindClause.AND, "cd_cds", SQLBuilder.EQUALS, documento.getCd_cds());
+		sql.addClause( FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, documento.getCd_uo());
+		sql.addClause( FindClause.AND, "esercizio", SQLBuilder.EQUALS, documento.getEsercizio());
+		sql.addClause( FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, documento.getCd_tipo_doc_amm());
+		sql.addClause( FindClause.AND, "pg_documento_amm", SQLBuilder.EQUALS, documento.getPg_doc_amm());
 		return sql;
 	}
 }

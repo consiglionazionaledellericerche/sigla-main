@@ -21,6 +21,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import javax.ejb.Remote;
+import java.rmi.RemoteException;
 
 @Remote
 public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.GenericComponentSession {
@@ -76,6 +77,17 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
 
-    String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
+    Boolean isAttivaEconomica(UserContext userContext) throws ComponentException, RemoteException;
 
+    Boolean isAttivaEconomicaPura(UserContext userContext) throws ComponentException, RemoteException;
+
+    Boolean isAttivaEconomicaParallela(UserContext userContext) throws ComponentException, RemoteException;
+
+    Boolean isBloccoScrittureProposte(UserContext userContext) throws ComponentException, RemoteException;
+
+    Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException;
+
+    java.lang.Integer getCdTerzoDiversiStipendi(UserContext userContext) throws ComponentException, RemoteException;
+
+    String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
 }

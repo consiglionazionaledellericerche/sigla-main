@@ -23,6 +23,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.mail.SimplePECMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -44,6 +45,18 @@ public class UtilService implements InitializingBean {
 
     @Value("${help.base.url}")
     private String helpBaseURL;
+
+    @Value("${pec.host.name}")
+    private String pecHostName;
+    @Value("${pec.host.sslSmtpPort}")
+    private String sslSmtpPort;
+    @Value("${pec.host.sSLOnConnect}")
+    private Boolean sSLOnConnect;
+    @Value("${pec.host.smtpPort}")
+    private Integer smtpPort;
+    @Value("${pec.host.startTLSEnabled}")
+    private Boolean startTLSEnabled;
+
 
     public void executeAggiornaGECO() {
         UserContext userContext = new CNRUserContext(GECO, null, LocalDate.now().getYear(), null, null, null);
@@ -83,5 +96,15 @@ public class UtilService implements InitializingBean {
 
     public String getHelpBaseURL() {
         return helpBaseURL;
+    }
+
+    public SimplePECMail createSimplePECMail(String userName, String password) {
+        SimplePECMail simplePECMail = new SimplePECMail(userName, password);
+        simplePECMail.setHostName(pecHostName);
+        Optional.ofNullable(sslSmtpPort).ifPresent(s -> simplePECMail.setSslSmtpPort(s));
+        Optional.ofNullable(sSLOnConnect).ifPresent(b -> simplePECMail.setSSLOnConnect(b));
+        Optional.ofNullable(smtpPort).ifPresent(i -> simplePECMail.setSmtpPort(i));
+        Optional.ofNullable(startTLSEnabled).ifPresent(b -> simplePECMail.setStartTLSEnabled(b));
+        return simplePECMail;
     }
 }

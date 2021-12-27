@@ -95,6 +95,42 @@
 			sqlTypeName="VARCHAR"
 			columnSize="1"
 			nullable="false" />
+		<columnMapping
+			columnName="TI_RIGA"
+			propertyName="ti_riga"
+			sqlTypeName="VARCHAR"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO"
+			propertyName="cd_tipo_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_DOCUMENTO"
+			propertyName="cd_cds_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_UO_DOCUMENTO"
+			propertyName="cd_uo_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_DOCUMENTO"
+			propertyName="esercizio_documento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_NUMERO_DOCUMENTO"
+			propertyName="pg_numero_documento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="FL_MODIFICABILE"
+			propertyName="fl_modificabile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -122,4 +158,18 @@
 		name="dt_da_competenza_coge" />
 	<persistentProperty
 		name="sezione" />
+	<persistentProperty
+		name="ti_riga" />
+	<persistentProperty
+		name="cd_tipo_documento" />
+	<persistentProperty
+		name="cd_cds_documento" />
+	<persistentProperty
+		name="cd_uo_documento" />
+	<persistentProperty
+		name="esercizio_documento" />
+	<persistentProperty
+		name="pg_numero_documento"/>
+	<persistentProperty
+		name="fl_modificabile" />
 </SQLPersistentInfo>

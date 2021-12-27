@@ -1179,10 +1179,10 @@
 	</businessProcess>
 
 	<action path="/ConsGAEResAction"
-		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
 	</action>
 	<action path="/ConsGAEResSpeVocAction"
-			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
+		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
 	</action>
 	<businessProcess name="ConsGAEResEtrBP"
 		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResEtrBP">

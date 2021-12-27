@@ -60,6 +60,8 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_chiude_fondo(Boolean.FALSE);
 	setFl_storno_fondo(Boolean.FALSE);
 	setFl_elabora_buono_coge(Boolean.FALSE);
+	setFl_vendita(Boolean.FALSE);
+	setFl_da_ordini(Boolean.FALSE);
 	return super.initializeForInsert(bp, context);
 }
 /**

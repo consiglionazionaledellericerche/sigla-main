@@ -698,14 +698,18 @@
 		maxLength="6"
 		inputSize="6"
 		inputType="ROTEXT"
-		label="Codice IPA"/>	
+		label="Codice IPA"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
 	<fieldProperty
 		name="codiceInvioSdi"
 		property="codiceInvioSdi"
 		maxLength="30"
 		inputSize="30"
 		label="Identificativo SDI"
-		inputType="ROTEXT"/>
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
 	<fieldProperty
 		name="statoInvioSdi"
 		property="statoInvioSdi"
@@ -944,8 +948,8 @@
 	<findFieldProperty name="ti_bene_servizioForSearch" />
 	<findFieldProperty name="flFatturaElettronica"/>
 	<findFieldProperty name="statoInvioSdi" />
-	<findFieldProperty name="codiceInvioSdi" />
-	<findFieldProperty name="codiceUnivocoUfficioIpa" />
+	<findFieldProperty name="codiceInvioSdi" inputType="TEXT"/>
+	<findFieldProperty name="codiceUnivocoUfficioIpa" inputType="TEXT"/>
 	<findFieldProperty name="dtConsegnaSdi" />
 	<findFieldProperty name="dt_ordine" />
 	<findFieldProperty name="fl_ordine_elettronico" />

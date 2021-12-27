@@ -113,7 +113,8 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 
     @Override
     protected boolean excludeChild(StorageObject storageObject) {
-        if (storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals("D:doccont:document"))
+        if (Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()))
+                .filter(s -> s.equals("D:doccont:document")).isPresent())
             return true;
         return super.excludeChild(storageObject);
     }
@@ -164,10 +165,9 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
     }
 
     @Override
-    protected void completeAllegato(AllegatoDocContBulk allegato) throws ApplicationException {
-        super.completeAllegato(allegato);
-        Optional.ofNullable(storeService.getStorageObjectBykey(allegato.getStorageKey()))
-                .map(storageObject -> storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
+    protected void completeAllegato(AllegatoDocContBulk allegato, StorageObject storageObject) throws ApplicationException {
+        super.completeAllegato(allegato, storageObject);
+        Optional.ofNullable(storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
                 .map(String.class::cast)
                 .ifPresent(s -> allegato.setRifModalitaPagamento(s));
     }
@@ -418,6 +418,8 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                             )
                         );
                     }
+                } else {
+                    throw handleException(new ApplicationException("La Cartella di destinazione non esiste!"));
                 }
             } catch (FileNotFoundException e) {
                 throw handleException(e);

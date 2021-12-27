@@ -17,7 +17,10 @@
 
 package it.cnr.contab.doccont00.bp;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
+import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
+import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.doccont00.core.bulk.CompensoOptionRequestParameter;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
@@ -32,31 +35,27 @@ import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.action.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
  */
 
-public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDocAmmEconomicaBP {
 
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_uscBulk.class,"sospeso_det_uscColl",this);
 	private final SimpleDetailCRUDController reversaliMan = new SimpleDetailCRUDController("Reversali",V_ass_doc_contabiliBulk.class,"doc_contabili_collColl",this);
@@ -66,11 +65,26 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	private String nodeRefDocumento;
 	private boolean supervisore = false;
 
+	private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
+	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
+	protected boolean attivaEconomicaParallela = false;
+
 	public CRUDAbstractMandatoBP() {}
 	public CRUDAbstractMandatoBP( String function ) 
 	{
 		super(function);
 	}
+
+	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		try {
+			attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(actioncontext.getUserContext());
+		} catch (ComponentException|RemoteException e) {
+			throw handleException(e);
+		}
+		super.init(config, actioncontext);
+	}
+
 	/**
 	 * Aggiunge un nuovo sospeso alla lista dei Sospeso associati ad un Mandato
 	 * @param context contesto dell'azione
@@ -115,6 +129,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		try {
+			this.nodeRefDocumento = null;
 			Optional.ofNullable(documentiContabiliService.getDocumentKey(
 			(StatoTrasmissione) getComponentSession().findByPrimaryKey(context.getUserContext(),
 					new V_mandato_reversaleBulk(mandato.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getCd_cds(), mandato.getPg_mandato()))
@@ -180,25 +195,11 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		{
 			MandatoComponentSession session = (MandatoComponentSession) createComponentSession();
 			return session.cercaSospesi( context.getUserContext(), null, (MandatoBulk) getModel() );
-
 		} catch (it.cnr.jada.comp.ComponentException e) {
 			throw handleException(e);
 		} catch (java.rmi.RemoteException e) {
 			throw handleException(e);
 		}
-
-		/*
-	try 
-	{
-		MandatoComponentSession session = (MandatoComponentSession) createComponentSession();
-		MandatoBulk mandato = session.listaSospesi( context.getUserContext(), (MandatoBulk) getModel() );
-		setModel( context, mandato );
-		resyncChildren( context );
-	} catch(Exception e) {
-		throw handleException(e);
-	}
-		 */
-
 	}
 	/**
 	 * Gestisce l'annullamento di un Mandato.
@@ -320,7 +321,6 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 							getModel() instanceof MandatoBulk && 
 							((MandatoBulk)getModel()).getStato_trasmissione() !=null && 
 							!((MandatoBulk)getModel()).getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))) &&
-							//!((MandatoBulk)getModel()).isPagato() && 
 							!((MandatoBulk)getModel()).isAnnullato() ;
 	}
 	
@@ -493,5 +493,43 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 	public Boolean isAttivoSiopeplus() {
 		return attivoSiopeplus;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiDare() {
+		return movimentiDare;
+	}
+
+	public CollapsableDetailCRUDController getMovimentiAvere() {
+		return movimentiAvere;
+	}
+
+	private static final String[] TAB_TESTATA = new String[]{ "tabMandato","Mandato","/doccont00/tab_mandato.jsp" };
+	private static final String[] TAB_RICERCA_DOCPASSIVI = { "tabRicercaDocPassivi","Ricerca documenti","/doccont00/tab_ricerca_doc_passivi.jsp" };
+	private static final String[] TAB_DETTAGLIO = new String[]{ "tabDettaglioMandato","Dettaglio","/doccont00/tab_dettaglio_mandato.jsp" };
+	private static final String[] TAB_SOSPESI = new String[]{ "tabSospesi","Sospesi","/doccont00/tab_mandato_sospesi.jsp" };
+	private static final String[] TAB_REVERSALI = new String[]{ "tabReversali","Doc.Contabili associati","/doccont00/tab_mandato_reversali.jsp" };
+
+	public String[][] getTabs() {
+		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+		int i = 0;
+		if (Optional.ofNullable(this).filter(CRUDMandatoAccreditamentoBP.class::isInstance).isPresent()) {
+			pages.put(i++, TAB_TESTATA);
+			pages.put(i++, TAB_REVERSALI);
+		} else {
+			pages.put(i++, TAB_TESTATA);
+			if (isInserting()) {
+				pages.put(i++, TAB_RICERCA_DOCPASSIVI);
+			}
+			pages.put(i++, TAB_DETTAGLIO);
+			pages.put(i++, TAB_SOSPESI);
+			pages.put(i++, TAB_REVERSALI);
+		}
+		if (attivaEconomicaParallela) {
+			pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
+		}
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+		return tabs;
 	}
 }

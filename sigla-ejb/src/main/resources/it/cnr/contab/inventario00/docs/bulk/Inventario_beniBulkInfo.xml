@@ -533,6 +533,28 @@
 		enabledOnInsert = "true"
 		enabledOnEdit = "true"
 		enabledOnSearch="true" />
+	<fieldProperty
+			name="dataBolla"
+			property="transito_beni_ordini.movimentiMag.dataBolla"
+			inputType="ROTEXT"
+			maxLength="10"
+			inputSize="10"
+			formatName="date_short"
+			label="Data Bolla" />
+	<fieldProperty
+			name="numeroBolla"
+			property="transito_beni_ordini.movimentiMag.numeroBolla"
+			inputType="ROTEXT"
+			maxLength="30"
+			inputSize="20"
+			label="Numero Bolla" />
+	<fieldProperty
+			name="estremiOrdine"
+			property="transito_beni_ordini.movimentiMag.lottoMag.ordineAcqConsegna.consegnaOrdineString"
+			inputType="ROTEXT"
+			maxLength="30"
+			inputSize="20"
+			label="Ordine"  />
 	<formFieldProperty
 		name="codiceCompleto" />
 	<formFieldProperty
@@ -657,7 +679,13 @@
 	<formFieldProperty
 		name="targa" />	
 	<formFieldProperty
-		name="seriale" />	
+		name="seriale" />
+	<formFieldProperty
+			name="dataBolla" />
+	<formFieldProperty
+			name="numeroBolla" />
+	<formFieldProperty
+			name="estremiOrdine" />
 	<columnFieldProperty
 		name="etichetta" 
 		style="width:130px" />

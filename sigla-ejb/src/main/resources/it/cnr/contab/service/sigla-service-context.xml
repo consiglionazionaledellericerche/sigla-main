@@ -78,9 +78,14 @@
 	<bean id="testJsonDataSource"
 		  class="it.cnr.contab.reports.service.dataSource.TestJsonDataSource" >
 	</bean>
+	<bean id="StampaInventarioJsonDataSource"
+		  class="it.cnr.contab.reports.service.dataSource.StampaInventarioJsonDataSource" >
+	</bean>
+
 
 	<util:map id="mapPrintDsOfflineImplemented" map-class="java.util.HashMap">
 		<entry key="/ordmag/iss/TestJsonDs.jasper" value-ref="testJsonDataSource" />
+		<entry key="/ordmag/magazzino/stampa_inventario.jasper" value-ref="StampaInventarioJsonDataSource" />
 	</util:map>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">

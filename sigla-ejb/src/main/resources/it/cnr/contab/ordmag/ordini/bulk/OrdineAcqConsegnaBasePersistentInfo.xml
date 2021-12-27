@@ -221,6 +221,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+				columnName="QUANTITA_ORIG"
+				propertyName="quantitaOrig"
+				sqlTypeName="DECIMAL"
+				columnSize="17"
+				columnScale="5" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="stato" />
@@ -230,6 +236,8 @@
 		name="dtPrevConsegna" />
 	<persistentProperty
 		name="quantita" />
+	<persistentProperty
+			name="quantitaOrig" />
 	<persistentProperty
 		name="imImponibileDivisa" />
 	<persistentProperty

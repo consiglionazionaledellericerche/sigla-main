@@ -21,6 +21,9 @@
  */
 package it.cnr.contab.ordmag.ordini.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
 public class EvasioneOrdineRigaBase extends EvasioneOrdineRigaKey implements Keyed {
 //    CD_CDS_ORDINE VARCHAR(30) NOT NULL
 	private java.lang.String cdCdsOrdine;
@@ -45,8 +48,19 @@ public class EvasioneOrdineRigaBase extends EvasioneOrdineRigaKey implements Key
  
 //    QUANTITA_EVASA DECIMAL(12,5) NOT NULL
 	private java.math.BigDecimal quantitaEvasa;
- 
-//    STATO VARCHAR(3) NOT NULL
+
+	private Long id_movimenti_mag;
+
+	public Long getId_movimenti_mag() {
+		return id_movimenti_mag;
+	}
+
+	public void setId_movimenti_mag(Long id_movimenti_mag) {
+		this.id_movimenti_mag = id_movimenti_mag;
+	}
+
+
+	//    STATO VARCHAR(3) NOT NULL
 	private java.lang.String stato;
  
 	/**
