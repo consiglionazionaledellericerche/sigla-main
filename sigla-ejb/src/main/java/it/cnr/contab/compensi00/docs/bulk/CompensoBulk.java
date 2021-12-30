@@ -1709,9 +1709,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
      */
     public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,
                                            it.cnr.jada.action.ActionContext context) {
-
         super.initializeForInsert(bp, context);
+        return initialize();
+    }
 
+    public OggettoBulk initialize() {
         setNumero_giorni(new Integer(0));
 
         setTi_anagrafico(Tipo_rapportoBulk.DIPENDENTE);

@@ -252,7 +252,7 @@
 		inputSize="30"
 		inputType="TEXT"
 		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
+		enabledOnFreeSearch="true"
 		label="UO Origine" />
 	<fieldProperty
 		name="esercizio"
