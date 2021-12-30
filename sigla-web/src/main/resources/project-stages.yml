@@ -304,7 +304,6 @@ cnr:
 project:
   stage: demo-postgres
 thorntail:
-thorntail:
   security:
     security-domains:
       sigla-auth:
@@ -350,7 +349,6 @@ cnr:
 ---
 project:
   stage: demo-oracle
-thorntail:
 thorntail:
   security:
     security-domains:
