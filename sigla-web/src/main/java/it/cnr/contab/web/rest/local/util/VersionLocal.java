@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
 @Path("/version")
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-public interface VerOPTIONSal {
+public interface VersionLocal {
 
     @GET
     @OPTIONS
