@@ -60,11 +60,9 @@ public interface ToDoLocal {
     }
 
     @GET
-    @OPTIONS
     Response all(@Context HttpServletRequest request) throws Exception;
 
     @GET
-    @OPTIONS
     @Path("/{toDoBP}")
     Response single(@Context HttpServletRequest request, @PathParam("toDoBP") ToDoBP toDoBP) throws Exception;
 

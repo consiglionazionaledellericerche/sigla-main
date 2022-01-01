@@ -31,8 +31,6 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.Optional;
 
 @Path("login")
-@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-@Produces(MediaType.APPLICATION_JSON)
 @PermitAll
 public class Login {
     private final Logger LOGGER = LoggerFactory.getLogger(Login.class);
@@ -40,7 +38,6 @@ public class Login {
     SecurityContext securityContext;
 
     @POST
-    @OPTIONS
     public Response postLogin(@Context HttpServletRequest request, @FormParam("j_username") String username, @FormParam("j_password") String password) {
         try {
             if (!Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
@@ -50,5 +47,11 @@ public class Login {
             LOGGER.error("Login error for user:{} password:{}", username, password, e);
             return Response.serverError().build();
         }
+    }
+
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
     }
 }
