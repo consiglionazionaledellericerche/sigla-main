@@ -80,8 +80,7 @@ public class VersionResource implements ServletContextListener, VersionLocal {
 
     }
 
-    @OPTIONS
-    @Path("{path : .*}")
+    @Override
     public Response options() {
         return Response.ok().build();
     }

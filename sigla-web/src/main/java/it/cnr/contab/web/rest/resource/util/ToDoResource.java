@@ -600,9 +600,7 @@ public class ToDoResource implements ToDoLocal {
             return firstLabel;
         }
     }
-
-    @OPTIONS
-    @Path("{path : .*}")
+    @Override
     public Response options() {
         return Response.ok().build();
     }
