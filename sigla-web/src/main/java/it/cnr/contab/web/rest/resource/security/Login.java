@@ -24,6 +24,7 @@ import javax.annotation.security.PermitAll;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -39,6 +40,7 @@ public class Login {
     SecurityContext securityContext;
 
     @POST
+    @OPTIONS
     public Response postLogin(@Context HttpServletRequest request, @FormParam("j_username") String username, @FormParam("j_password") String password) {
         try {
             if (!Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
