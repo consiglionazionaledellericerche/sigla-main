@@ -20,6 +20,7 @@ package it.cnr.contab.web.rest.local.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -29,8 +30,9 @@ import javax.ws.rs.core.Response;
 @Path("/version")
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-public interface VersionLocal {
+public interface VerOPTIONSal {
 
     @GET
+    @OPTIONS
     Response get(@Context HttpServletRequest request) throws Exception;
 }
