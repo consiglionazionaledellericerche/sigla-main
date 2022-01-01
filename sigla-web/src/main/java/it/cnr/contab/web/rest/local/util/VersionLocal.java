@@ -32,6 +32,5 @@ public interface VersionLocal {
     Response get(@Context HttpServletRequest request) throws Exception;
 
     @OPTIONS
-    @Path("{path : .*}")
     Response options();
 }

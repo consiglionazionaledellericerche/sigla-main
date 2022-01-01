@@ -50,7 +50,6 @@ public class Login {
     }
 
     @OPTIONS
-    @Path("{path : .*}")
     public Response options() {
         return Response.ok().build();
     }
