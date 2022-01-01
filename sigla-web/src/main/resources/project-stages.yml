@@ -8,6 +8,9 @@ thorntail:
         access-control-max-age:
           header-name: Access-Control-Max-Age
           header-value: -1
+        access-control-allow-origin:
+          header-name: Access-Control-Allow-Origin
+          header-value: '*'  
         # other headers configuration
     servers:
       default-server:
@@ -15,6 +18,8 @@ thorntail:
           default-host:
             filter-refs:
               access-control-max-age:
+                priority: 1
+              access-control-allow-origin:
                 priority: 1
               # other filter refs  
   security:
