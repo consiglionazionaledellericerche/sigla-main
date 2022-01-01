@@ -31,7 +31,7 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.Optional;
 
 @Path("login")
-@Consumes(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 @Produces(MediaType.APPLICATION_JSON)
 @PermitAll
 public class Login {
