@@ -2,6 +2,21 @@ logger:
   level: DEBUG
 
 thorntail:
+  undertow:
+    filter-configuration:
+      response-headers:
+        access-control-max-age:
+          header-name: Access-Control-Max-Age
+          header-value: -1
+        # other headers configuration
+    servers:
+      default-server:
+        hosts:
+          default-host:
+            filter-refs:
+              access-control-max-age:
+                priority: 1
+              # other filter refs  
   security:
     security-domains:
       sigla-auth:
