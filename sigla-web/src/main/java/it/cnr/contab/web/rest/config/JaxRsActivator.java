@@ -18,9 +18,16 @@
 package it.cnr.contab.web.rest.config;
 
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 
 @ApplicationPath("/restapi")
 public class JaxRsActivator extends Application {
-
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
+    }
 }
