@@ -79,4 +79,10 @@ public class VersionResource implements ServletContextListener, VersionLocal {
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
     }
+
+    @OPTIONS
+    public Response options() {
+        return Response.ok().build();
+    }
+
 }
