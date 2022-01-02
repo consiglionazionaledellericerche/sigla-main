@@ -600,9 +600,5 @@ public class ToDoResource implements ToDoLocal {
             return firstLabel;
         }
     }
-    @Override
-    public Response options() {
-        return Response.ok().build();
-    }
 
 }
