@@ -45,7 +45,13 @@ thorntail:
                 priority: 1
               access-control-allow-credentials:
                 priority: 1
-              # other filter refs  
+              vary-origin:
+                priority: 1
+              vary-access-control-request-method:
+                priority: 1
+              vary-access-control-request-headers:
+                priority: 1
+              # other filter refs
   security:
     security-domains:
       sigla-auth:
