@@ -601,4 +601,9 @@ public class ToDoResource implements ToDoLocal {
         }
     }
 
+    @Override
+    public Response options() {
+        return Response.ok().build();
+    }
+
 }
