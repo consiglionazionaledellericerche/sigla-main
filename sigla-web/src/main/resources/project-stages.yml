@@ -38,7 +38,7 @@ thorntail:
                 priority: 1
               # other filter refs
     servlet-containers:
-      SIGLA:
+      default:
         session-cookie-setting:
           comment: '; SameSite=None'
   security:
