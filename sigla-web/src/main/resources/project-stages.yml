@@ -13,7 +13,10 @@ thorntail:
           header-value: '*' 
         access-control-allow-headers:
           header-name: Access-Control-Allow-Headers
-          header-value: '*'    
+          header-value: '*'
+        access-control-allow-credentials:
+          header-name: Access-Control-Allow-Credentials
+          header-value: true
         # other headers configuration
     servers:
       default-server:
@@ -25,7 +28,9 @@ thorntail:
               access-control-allow-origin:
                 priority: 1
               access-control-allow-headers:
-                priority: 1  
+                priority: 1
+              access-control-allow-credentials:
+                priority: 1
               # other filter refs  
   security:
     security-domains:
