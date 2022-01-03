@@ -43,7 +43,7 @@ thorntail:
     servlet-containers:
       default:
         session-cookie-setting:
-          comment: "; SameSite=None; Secure=false"
+          comment: ";HttpOnly;Secure;SameSite=None"
   security:
     security-domains:
       sigla-auth:
