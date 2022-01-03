@@ -20,15 +20,9 @@ thorntail:
         access-control-allow-credentials:
           header-name: Access-Control-Allow-Credentials
           header-value: true
-        vary-origin:
+        vary:
           header-name: Vary
-          header-value: Origin
-        vary-access-control-request-method:
-          header-name: Vary
-          header-value: Access-Control-Request-Method
-        vary-access-control-request-headers:
-          header-name: Vary
-          header-value: Access-Control-Request-Headers
+          header-value: Origin,Access-Control-Request-Method,Access-Control-Request-Headers
         # other headers configuration
     servers:
       default-server:
@@ -45,11 +39,7 @@ thorntail:
                 priority: 1
               access-control-allow-credentials:
                 priority: 1
-              vary-origin:
-                priority: 1
-              vary-access-control-request-method:
-                priority: 1
-              vary-access-control-request-headers:
+              vary:
                 priority: 1
               # other filter refs
   security:
