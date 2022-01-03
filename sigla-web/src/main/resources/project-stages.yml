@@ -20,9 +20,6 @@ thorntail:
         access-control-allow-credentials:
           header-name: Access-Control-Allow-Credentials
           header-value: true
-        vary:
-          header-name: Vary
-          header-value: Origin,Access-Control-Request-Method,Access-Control-Request-Headers
         # other headers configuration
     servers:
       default-server:
@@ -39,9 +36,11 @@ thorntail:
                 priority: 1
               access-control-allow-credentials:
                 priority: 1
-              vary:
-                priority: 1
               # other filter refs
+    servlet-containers:
+      SIGLA:
+        session-cookie-setting:
+          comment: '; SameSite=None'
   security:
     security-domains:
       sigla-auth:
