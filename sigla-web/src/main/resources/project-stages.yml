@@ -23,6 +23,9 @@ thorntail:
         # other headers configuration
     servers:
       default-server:
+        http-listeners:
+          default:
+            rfc6265-cookie-validation: true
         hosts:
           default-host:
             filter-refs:
