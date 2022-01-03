@@ -14,6 +14,9 @@ thorntail:
         access-control-allow-headers:
           header-name: Access-Control-Allow-Headers
           header-value: '*'
+        access-control-allow-methods:
+          header-name: Access-Control-Allow-Methods
+          header-value: 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
         access-control-allow-credentials:
           header-name: Access-Control-Allow-Credentials
           header-value: true
@@ -28,6 +31,8 @@ thorntail:
               access-control-allow-origin:
                 priority: 1
               access-control-allow-headers:
+                priority: 1
+              access-control-allow-methods:
                 priority: 1
               access-control-allow-credentials:
                 priority: 1
