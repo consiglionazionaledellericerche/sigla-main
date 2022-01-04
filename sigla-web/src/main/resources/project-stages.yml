@@ -30,6 +30,7 @@ thorntail:
           default:
             enabled: true
             rfc6265-cookie-validation: true
+            socket-binding: https
         hosts:
           default-host:
             filter-refs:
