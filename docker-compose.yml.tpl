@@ -1,7 +1,5 @@
 sigla:
   image: docker.si.cnr.it/##{CONTAINER_ID}##
-  ports:
-    - 8443:8443
   volumes:
     - ./cert.p12:/opt/cert.p12
     - ./project-formazione.yml:/opt/project-formazione.yml

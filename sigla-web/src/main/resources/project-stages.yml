@@ -23,9 +23,6 @@ thorntail:
         # other headers configuration
     servers:
       default-server:
-        http-listeners:
-          default:
-            rfc6265-cookie-validation: true
         hosts:
           default-host:
             filter-refs:
@@ -40,10 +37,6 @@ thorntail:
               access-control-allow-credentials:
                 priority: 1
               # other filter refs
-    servlet-containers:
-      default:
-        session-cookie-setting:
-          comment: ";HttpOnly;SameSite=None"
   security:
     security-domains:
       sigla-auth:
