@@ -26,6 +26,10 @@ thorntail:
         http-listeners:
           default:
             rfc6265-cookie-validation: true
+        https-listeners:
+          default:
+            enabled: true
+            rfc6265-cookie-validation: true
         hosts:
           default-host:
             filter-refs:
