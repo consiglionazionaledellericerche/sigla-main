@@ -1,3 +1,239 @@
+## Release 6.4.8  -- _January 04, 2022_ 
+**Changes**
+
+>**Add OPTIONS Method**
+>
+>[b16f890d03dace3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b16f890d03dace3) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[ce2e725d301f608](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce2e725d301f608) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[d05a493384a7374](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d05a493384a7374) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[8cabd17e6dca6e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8cabd17e6dca6e2) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[da66bb94223d2a7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da66bb94223d2a7) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[6d56b20058125a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d56b20058125a8) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[5c75790234b3f00](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c75790234b3f00) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[086751be926bf7b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/086751be926bf7b) marco.spasiano *January 04, 2022*
+
+>**Add OPTIONS Method**
+>
+>[bfd1aed502b46e0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bfd1aed502b46e0) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[a4deb67612a643e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4deb67612a643e) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[853b9b71a8165e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/853b9b71a8165e2) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[920614b3ca158a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/920614b3ca158a5) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[b24e83be500c1aa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b24e83be500c1aa) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[0a332aacf6d7131](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0a332aacf6d7131) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[d8ff90634d77d1a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d8ff90634d77d1a) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[ae97a02222887fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae97a02222887fe) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[473009e0372893f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/473009e0372893f) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[ca1e0953a8a6190](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca1e0953a8a6190) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[87121ee24116cb0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/87121ee24116cb0) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[90551edf38d881d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/90551edf38d881d) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[18c9bf786ec83ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/18c9bf786ec83ff) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[82fe1484322c853](https://github.com/consiglionazionaledellericerche/sigla-main/commit/82fe1484322c853) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[f33c424748544e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f33c424748544e5) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[f08f0c51f90ca96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f08f0c51f90ca96) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[13930dc2e2c3fd6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13930dc2e2c3fd6) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[ee90fde384f72e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee90fde384f72e8) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[53ed0181b115f3f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53ed0181b115f3f) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[f8627b1c64f18c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f8627b1c64f18c1) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[ef949b3e98ac25e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef949b3e98ac25e) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[c5dca02e2817ddb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c5dca02e2817ddb) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[d29d87d1f8f0c45](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d29d87d1f8f0c45) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[ce4b612b9c12aa8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce4b612b9c12aa8) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[6e628d935ad44bb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6e628d935ad44bb) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[1fb7f61da2c35db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1fb7f61da2c35db) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[9c2810bbc9b6069](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9c2810bbc9b6069) marco.spasiano *January 03, 2022*
+
+>**Add OPTIONS Method**
+>
+>[e83bff23728feb0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e83bff23728feb0) marco.spasiano *January 02, 2022*
+
+>**Add OPTIONS Method**
+>
+>[efa68ca0cb5c941](https://github.com/consiglionazionaledellericerche/sigla-main/commit/efa68ca0cb5c941) marco.spasiano *January 02, 2022*
+
+>**Add OPTIONS Method**
+>
+>[bfcd6aa16280f2c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bfcd6aa16280f2c) marco.spasiano *January 02, 2022*
+
+>**Add OPTIONS Method**
+>
+>[7118b215436006a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7118b215436006a) marco.spasiano *January 02, 2022*
+
+>**Add OPTIONS Method**
+>
+>[161821466d74ead](https://github.com/consiglionazionaledellericerche/sigla-main/commit/161821466d74ead) marco.spasiano *January 02, 2022*
+
+>**Add OPTIONS Method**
+>
+>[a24f2bfe388f833](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a24f2bfe388f833) marco.spasiano *January 02, 2022*
+
+>**Add OPTIONS Method**
+>
+>[b3fe84c22e80d69](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b3fe84c22e80d69) marco.spasiano *January 01, 2022*
+
+>**Add OPTIONS Method**
+>
+>[cbeb73851b47e9b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cbeb73851b47e9b) marco.spasiano *January 01, 2022*
+
+>**Add OPTIONS Method**
+>
+>[54ba0b3b3fa78f8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54ba0b3b3fa78f8) marco.spasiano *January 01, 2022*
+
+>**Add OPTIONS Method**
+>
+>[4acb2becbe3d825](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4acb2becbe3d825) marco.spasiano *January 01, 2022*
+
+>**Add OPTIONS Method**
+>
+>[738a6c39e2d0d3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/738a6c39e2d0d3d) marco.spasiano *January 01, 2022*
+
+>**Add OPTIONS Method**
+>
+>[224d83116c5eb15](https://github.com/consiglionazionaledellericerche/sigla-main/commit/224d83116c5eb15) marco.spasiano *January 01, 2022*
+
+>**Update VersionLocal.java**
+>
+>[aed0a906a8ade6c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aed0a906a8ade6c) SPASIANO MARCO *January 01, 2022*
+
+>**Update sigla-web/src/main/java/it/cnr/contab/web/rest/local/util/VersionLocal.java**
+>
+>[4a472cc70173cd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4a472cc70173cd8) SPASIANO MARCO *January 01, 2022*
+
+>**Update VersionLocal.java**
+>
+>[95632818cd72941](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95632818cd72941) SPASIANO MARCO *January 01, 2022*
+
+>**Update project-stages.yml**
+>
+>[44a74e175e42179](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44a74e175e42179) SPASIANO MARCO *January 01, 2022*
+
+>**Update project-stages.yml**
+>
+>[2c3e36167cb0d0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c3e36167cb0d0b) SPASIANO MARCO *January 01, 2022*
+
+>**Update project-stages.yml**
+>
+>[a21cf05e189f01c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a21cf05e189f01c) SPASIANO MARCO *January 01, 2022*
+
+>**Update project-stages.yml**
+>
+>[6d76f59f6c2204b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d76f59f6c2204b) SPASIANO MARCO *January 01, 2022*
+
+>**Update project-stages.yml**
+>
+>[22a0873c69032c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22a0873c69032c2) SPASIANO MARCO *January 01, 2022*
+
+>**FIX CORS Filter**
+>
+>[6699dd02a9ac00b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6699dd02a9ac00b) marco.spasiano *December 30, 2021*
+
+>**Add CORS Filter**
+>
+>[7be1e5e08d93efb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7be1e5e08d93efb) marco.spasiano *December 30, 2021*
+
+>**Conversione in java della procedura oracle di creazione stipendi. La procedura in versione java è attiva solo in presenza di economica attiva.**
+>
+>[e5eb461036e88e9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e5eb461036e88e9) raffaelepagano *December 22, 2021*
+
+
 ## Release 6.4.7  -- _December 21, 2021_ 
 **Changes**
 
