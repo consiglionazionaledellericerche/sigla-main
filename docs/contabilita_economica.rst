@@ -2,15 +2,17 @@
 Contabilità Economico Patrimoniale
 ==================================
 
-Obiettivo del presente documento è fornire le informazioni necessarie all’utilizzo dell'interfaccia per la procedura SIGLA. 
-Saranno date indicazioni sulle modalità grafiche e di utilizzo rispetto a:
+La Contabilità Economico Patrimoniale è il sistema contabilile ispirato alle norme civilistiche a cui ormai sono chiamati a rispondere anche gli Enti Pubblici di Ricerca che, seguendo gli accordi stabiliti con i rispettivi Enti vigilanti, gradualmente si adegueranno abbandonando completamente la contabilità finanziaria fino ad oggi adottata.
 
-- Accesso all’applicazione e modifica dati di accesso all’interno dell’applicazione;
-- Presentazione e Funzionalità per quanto riguarda il menù;
-- Presentazione dell'interfaccia SIGLA e utilizzo dei vari componenti;
+Le possibilità di configurazione offerte da SIGLA sono:
 
-Premessa
-========
+- Utilizzo della Contabilità Finanziaria come contabilità ufficiale e derivazione del Bilancio economico patrimoniale a fine anno attraverso procedura automatica specifica;
+- Utilizzo della Contabilità Finanziaria come contabilità ufficiale e proposta delle rispettive scritture economiche patrimoniali paralelamente al consolidamento delle scritture finanziarie;
+- Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali
+- E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale;
+
+Economico Patrimoniale Parallela
+================================
 
 La modifica delle caratteristiche di presentazione delle funzionalità di SIGLA non cambia in alcun modo i processi amministrativi previsti, né influenza dati e utilizzo degli stessi.
 
