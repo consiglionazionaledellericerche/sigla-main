@@ -9,7 +9,7 @@ Una significativa revisione dell'impianto dell'applicazione è stata operata dur
 
 Ad oggi il sistema informativo SIGLA risulta completamente coerente ed adattabile all’impostazione dei bilanci ed alla gestione delle attività previste dalla normativa vigente in materia di contabilità pubblica.
 
-Le ultime evoluzioni del sistema consento l'adozione di una contabilità economico patrimoniale, derivata o parallela rispetto a quella finanziaria, opportunamente configurabile secondo le esigenze specifiche.
+Le ultime evoluzioni del sistema consentono l'adozione di una contabilità economico patrimoniale, derivata o parallela rispetto a quella finanziaria, opportunamente configurabile secondo le esigenze specifiche.
 
 **Informazioni generali del Sistema**
 
