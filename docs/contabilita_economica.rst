@@ -37,6 +37,6 @@ La gestione 'Parallela' dell'economico patrimoniale riguarda tutti i processi Am
 .. figure:: screenshot/scrittura_economica.pdf
 	:alt: Esempio scrittura economica su Fattura Passiva
 
-   	Scrittura economicoo parimoniale
+   	Scrittura economico parimoniale
 
 
