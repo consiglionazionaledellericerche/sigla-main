@@ -46,6 +46,7 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
    configurazione/index
    documenti_contabili/index
    documenti_amministrativi/index
+   contabilita_economica
    api_rest
    
 .. toctree::
