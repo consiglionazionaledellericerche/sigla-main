@@ -8,24 +8,35 @@ Le possibilità di configurazione offerte da SIGLA sono:
 
 - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e derivazione del Bilancio economico patrimoniale a fine anno attraverso procedura automatica specifica;
 - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e proposta delle rispettive scritture economiche patrimoniali paralelamente al consolidamento delle scritture finanziarie;
-- Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali
-- E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale;
+- Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
+- E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
 
 Economico Patrimoniale Parallela
 ================================
 
-La modifica delle caratteristiche di presentazione delle funzionalità di SIGLA non cambia in alcun modo i processi amministrativi previsti, né influenza dati e utilizzo degli stessi.
+La modifica delle caratteristiche di presentazione delle funzionalità di SIGLA, che automaticamente si allinea alle configurazioni definite, non cambia in alcun modo i processi amministrativi previsti, né influenza dati e utilizzo degli stessi.
 
-L’obiettivo della revisione dell’intero layout della procedura è esclusivamente quello di rendere più ‘usabile’ le funzionalità. In alcuni casi la revisione ha riguardato l’aggiunta di utilità importanti sempre al fine di migliorare la navigazione e la gestione delle mappe.
+Attivando l'economico patrimoniale parallela si gestiranno i processi finanziari come fin'ora previsto senza alterare obblighi autorizzativi e vincoli economici previsti. Contemporaneamente, però, la procedura mostra accanto ai dati finanziari, per i processi che producono un risultato di interesse anche economico, la scrittura in partita doppia derivandola da apposite configurazioni definite in fase di impostazione del sistema.
+La visualizzazione delle scritture in partita doppia è posta solitamente su un pannello della mappa specifico, che cmpare solo quando l'economico patrimoniale parallela è attivata. Questi dati, proposti sempre automaticamente, sono anche modificabili, nel caso la configurazione lo prevede, lasciando inalterati i principi economici di quadratura delle scritture e di congruità dei dati oggetto delle modifiche.
+Le operazioni finanziarie automatiche produrranno anch'esse scritture contabili tramite l'uso, anche in questo caso, di opportune configurazioni.
 
-Accesso all’applicazione SIGLA
+In questo modo è possibile mostrare all'utente, abituato a lavorare esclusivamente sulla contabilità finanziaria, il risvolto economico patrimoniale delle operazioni effettuate ed è possibile produrre in qualsiasi momento un bilancio economico periodico.
+
+Esempio scritture economiche
 ==============================
 
-Tutto ciò che riguarda le credenziali di accesso, abilitazioni all’accesso da parte dell’amministratore delle Utenze e scadenza delle password, non è oggetto di modifica. Di seguito vengono indicate le nuove modalità di presentazione della mappa di accesso:
+La gestione 'Parallela' dell'economico patrimoniale riguarda tutti i processi Amministrativi e Contabili gestiti da Sigla, oltre alle procedure automatiche previste per specifici argomenti:
 
-.. figure:: screenshot/home.png
-	:alt: Schermata di accesso a SIGLA
+- Documenti fiscali Attivi e Passivi;
+- Documenti Generici;
+- Compensi;
+- Missioni;
+- Pagamenti e Incassi;
+- Procedure automatiche.
 
-   	Schermata di accesso a SIGLA
+.. figure:: screenshot/scrittura_economica.pdf
+	:alt: Esempio scrittura economica su Fattura Passiva
 
-Nel caso l’utente avesse, per le proprie credenziali, più utenze di accesso Sigla, viene mostrato l’elenco delle utenze disponibili e valide:
+   	Scrittura economicoo parimoniale
+
+
