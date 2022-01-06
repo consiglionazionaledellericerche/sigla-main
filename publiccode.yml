@@ -47,7 +47,6 @@ description:
     longDescription: >
       ## **Introduzione**
 
-
       Al fine di fornire elementi generali della Soluzione applicativa,
       evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di
       proprietà del CNR, che si occupa di processi amministrativi e contabili,
@@ -57,9 +56,7 @@ description:
       di contabilità basato su rilevazione dei fatti di gestione in termini
       economici, patrimoniali ed analitici.
 
-
       ### **Premessa**
-
 
       L'attività di progettazione e sviluppo dell'applicazione è stata avviata
       nel 2001 quando emerse per il CNR la necessità di dotarsi di un nuovo
@@ -77,9 +74,7 @@ description:
       all'impostazione dei bilanci ed alla gestione delle attività previste
       dalla normativa vigente in materia di contabilità pubblica.
 
-
       ### **Informazioni generali del Sistema**
-
 
       Il **S**istema **I**ntegrato per la **G**estione delle **L**inee di
       **A**ttività è un sistema applicativo modulare, organizzato in componenti
@@ -93,13 +88,9 @@ description:
       applicativa è 'Multiente' e si articola su tre livelli di organizzazione
       dell'Ente, che nel caso specifico del CNR, sono:
 
-
       - Centro di Spesa;
-
       - Unità Organizzativa;
-
       - Centro di Responsabilità.
-
 
       **L'architettura e la tecnologia** utilizzate nello sviluppo consentono
       una facile manutenzione ed evoluzione del sistema. La possibilità di
@@ -112,7 +103,6 @@ description:
       semplici e intuitive dell'applicazione aiutano l'utente ad orientarsi nei
       vari processi funzionali previsti.
 
-
       **SIGLA** copre diversi aspetti amministrativi e di gestione contabile, e
       pone alla base di tutti i processi funzionali il controllo dell'uso delle
       risorse a supporto dell'attività di ricerca, o di una qualsiasi attività
@@ -122,7 +112,6 @@ description:
       l'aspetto analitico, a partire dalla fase di previsione fino alla completa
       rendicontazione, del Bilancio contabile.
 
-
       **La possibilità** di estrarre in **excel** tutti i dati presenti sulle
       funzioni di consultazione e di produrre report in autonomia, rappresenta
       una grande utilità per gli utenti che organizzano il proprio lavoro in
@@ -130,16 +119,25 @@ description:
       report periodici e di farli recapitare automaticamente al proprio
       indirizzo mail o a quello di altri collaboratori.
 
+      La **Contabilità Economico Patrimoniale** è il sistema contabilile ispirato alle norme 
+      civilistiche a cui ormai sono chiamati a rispondere anche gli Enti Pubblici di Ricerca che, 
+      seguendo gli accordi stabiliti con i rispettivi Enti vigilanti, 
+      gradualmente si adegueranno abbandonando completamente la contabilità finanziaria fino ad oggi adottata.
+
+      Le possibilità di configurazione offerte da SIGLA sono:
+
+      - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e derivazione del Bilancio economico patrimoniale a fine anno attraverso procedura automatica specifica;
+      - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e proposta delle rispettive scritture economiche patrimoniali paralelamente al consolidamento delle scritture finanziarie;
+      - Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
+      - E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
 
       ## **Componenti - Funzionali SIGLA**
-
-
+      
       Le componenti funzionali del Sistema coprono aspetti contabili e aspetti
       amministrativo-contabili che forniscono automaticamente risultati
       contabili. Gli argomenti possono essere raggruppati come di seguito
       indicato e si articolano, chiaramente, in gestioni e funzionalità di
       dettaglio:
-
 
       - **Gestione delle utenze e degli aspetti di configurazione del Sistema**
           - Amministrazione dei Profili e delle Abilitazioni
@@ -163,10 +161,9 @@ description:
           - Bilancio economico
           - Operazioni di fine anno.
       - **Gestione delle Missioni**
-
       - **Gestione degli Incarichi di collaborazione**
-
       - **Gestione dell'Inventario**
+      - **Contabilità Economico Patrimoniale**
     localisedName: SIGLA
     genericName: Sistema Informativo Contabile
     shortDescription: >-
@@ -216,3 +213,4 @@ description:
       - Gestione delle Missioni
       - Gestione degli Incarichi di collaborazione
       - Gestione dell'Inventario
+      - Contabilità Economico Patrimoniale
