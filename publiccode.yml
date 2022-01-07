@@ -143,27 +143,40 @@ description:
           - Amministrazione dei Profili e delle Abilitazioni
           - Definizione Struttura organizzativa dell'Ente
           - Configurazione del sistema
+
       - **Gestione delle Anagrafiche fondamentali**
           - Progetti e GAE (gestione azioni elementari)
           - Anagrafica Terzi
           - Piano dei Conti Finanziario ed Economico
           - Anagrafiche di base
+
       - **Gestione della Programmazione Economica e Finanziaria**
           - Bilancio di previsione Decisionale/Gestionale
           - Variazioni e Storni di Bilancio
+
       - **Gestione contabile**
           - Impegni e Accertamenti
           - Mandati, Reversali e interfaccia Cassiere
           - Documenti Amministrativi
           - Gestione IVA
+
       - **Gestioni consuntive**
           - Gestione delle rendicontazioni analitiche
           - Bilancio economico
           - Operazioni di fine anno.
+      
       - **Gestione delle Missioni**
+      
       - **Gestione degli Incarichi di collaborazione**
+      
       - **Gestione dell'Inventario**
+      
       - **Contabilità Economico Patrimoniale**
+           - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e derivazione del Bilancio economico patrimoniale a fine anno attraverso procedura automatica specifica;
+           - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e proposta delle rispettive scritture economiche patrimoniali paralelamente al consolidamento delle scritture finanziarie;
+           - Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
+           - E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
+
     localisedName: SIGLA
     genericName: Sistema Informativo Contabile
     shortDescription: >-
