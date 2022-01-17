@@ -685,7 +685,7 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             } catch (it.cnr.jada.comp.ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
-                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+                throw new RemoteException("Uncaugth exception", ex);
             }
         }
     }
