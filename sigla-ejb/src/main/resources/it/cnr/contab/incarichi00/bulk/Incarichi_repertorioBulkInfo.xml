@@ -509,7 +509,14 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Anomalia PerlaPa" />
-
+	<fieldProperty
+			name="id_sede_ace"
+			property="id_sede_ace"
+			label="Codice Sede"
+			inputSize="20"
+			optionsProperty="sediAce"
+			inputType="SELECT"
+			enabledOnSearch="true" />
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -640,6 +647,8 @@
 		name="idPerla" />
 	<formFieldProperty
 		name="anomalia_perla" />
+	<formFieldProperty
+			name="id_sede_ace" />
 
 	<columnFieldProperty
 		name="esercizio" />

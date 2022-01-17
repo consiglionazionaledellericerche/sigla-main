@@ -227,6 +227,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="1000"
 			nullable="true" />
+		<columnMapping
+				columnName="ID_SEDE_ACE"
+				propertyName="id_sede_ace"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_cds" />
@@ -296,4 +302,6 @@
 		name="idPerla" />
 	<persistentProperty
 		name="anomalia_perla" />
+	<persistentProperty
+			name="id_sede_ace" />
 </SQLPersistentInfo>

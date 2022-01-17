@@ -34,7 +34,8 @@ Not (old.stato = 'PP' and new.stato in ('PP', 'PD')) and
   old.IMPORTO_COMPLESSIVO   != new.IMPORTO_COMPLESSIVO or
   old.UTCR                  != new.UTCR or
   old.DACR                  != new.DACR or
-  old.UTUV                  != new.UTUV)
+  old.UTUV                  != new.UTUV or
+  old.ID_SEDE_ACE           != new.ID_SEDE_ACE)
       )
 Declare
    aOldRowtype incarichi_repertorio%rowtype;
@@ -79,6 +80,7 @@ Begin
    aOldRowtype.UTUV                    := :Old.UTUV;
    aOldRowtype.DUVA                    := :Old.DUVA;
    aOldRowtype.PG_VER_REC              := :Old.PG_VER_REC;
+   aOldRowtype.ID_SEDE_ACE              := :Old.ID_SEDE_ACE;
 
    -- Scarico dello storico
    CNRSTO070.sto_INCARICHI_REPERTORIO(:new.PG_VER_REC, 'STOREP', aOldRowType);

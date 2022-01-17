@@ -41,12 +41,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Dictionary;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -56,6 +51,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	public final static Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
 	public final static Dictionary ti_esitoCorteContiKeys = new it.cnr.jada.util.OrderedHashtable();
+	private java.util.Collection sediAce;
+
 	private boolean dataProrogaEnableOnView = Boolean.FALSE;
 	private boolean utenteCollegatoUoEnte = Boolean.FALSE;
 	
@@ -64,6 +61,15 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	final public static String STATO_ELIMINATO = "EL";
 	final public static String STATO_DEFINITIVO = "PD";
 	final public static String STATO_INVIATO = "IN";
+
+	public Collection getSediAce() {
+		return sediAce;
+	}
+
+	public void setSediAce(Collection sediAce) {
+		this.sediAce = sediAce;
+	}
+
 	final public static String STATO_CHIUSO = "CC";
 
 	static {

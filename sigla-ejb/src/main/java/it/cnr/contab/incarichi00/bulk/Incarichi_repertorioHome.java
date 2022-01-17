@@ -20,6 +20,7 @@
  * Date 26/07/2007
  */
 package it.cnr.contab.incarichi00.bulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
@@ -231,5 +232,13 @@ public class Incarichi_repertorioHome extends BulkHome {
 			} catch (Exception e) {}
 		}
 		return persistent;
+	}
+
+	public java.util.Collection findSediUo(Incarichi_repertorioBulk incarichi_repertorioBulk,
+										   SedeAceHome sedeHome,
+										   SedeAceBulk bulk)
+			throws IntrospectionException, PersistencyException {
+
+		return sedeHome.cercaSedi(incarichi_repertorioBulk.getCd_unita_organizzativa());
 	}
 }

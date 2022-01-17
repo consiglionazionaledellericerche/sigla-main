@@ -17,6 +17,10 @@
 
 package it.cnr.contab.incarichi00.comp;
 
+import feign.FeignException;
+import it.cnr.contab.anagraf00.comp.AnagraficoComponent;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.compensi00.docs.bulk.*;
@@ -33,6 +37,7 @@ import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -50,14 +55,39 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.service.AceService;
+import it.cnr.si.service.dto.anagrafica.enums.TipoAppartenenza;
+import it.cnr.si.service.dto.anagrafica.enums.TipoContratto;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
+import it.cnr.si.service.dto.anagrafica.scritture.PersonaDto;
+import it.cnr.si.service.dto.anagrafica.scritture.PersonaEntitaOrganizzativaDto;
+import it.cnr.si.service.dto.anagrafica.simpleweb.SimpleEntitaOrganizzativaWebDto;
 import it.cnr.si.spring.storage.StorageObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class IncarichiRepertorioComponent extends CRUDComponent {
+    private transient static final Logger logger = LoggerFactory.getLogger(IncarichiRepertorioComponent.class);
+    private AceService aceService;
+
+    public IncarichiRepertorioComponent() {
+        try {
+            aceService = SpringUtil.getBean("aceService", AceService.class);
+        } catch (NoSuchBeanDefinitionException _ex) {
+            logger.warn("URL of ACE is not defined");
+        }
+    }
+
     public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
         try {
             oggettobulk = super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
@@ -65,6 +95,10 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
             if (oggettobulk instanceof Incarichi_repertorioBulk) {
 
                 Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) oggettobulk;
+
+                Incarichi_repertorioHome incHome = (Incarichi_repertorioHome) getHome(usercontext, Incarichi_repertorioBulk.class);
+                SedeAceHome sedeAceHome = (SedeAceHome) getHome(usercontext, SedeAceBulk.class);
+                incarico.setSediAce(incHome.findSediUo(incarico, sedeAceHome, null));
 
                 incarico.setEsercizio(CNRUserContext.getEsercizio(usercontext));
                 incarico.setStato(Incarichi_repertorioBulk.STATO_PROVVISORIO);
@@ -105,6 +139,19 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                 Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) oggettobulk;
 
                 Incarichi_repertorioHome incHome = (Incarichi_repertorioHome) getHome(usercontext, Incarichi_repertorioBulk.class);
+                List lista = new ArrayList();
+                List<SimpleEntitaOrganizzativaWebDto> sedi = aceService.entitaOrganizzativaFind(100, incarico.getCd_unita_organizzativa(), LocalDate.now(), null);
+                for (SimpleEntitaOrganizzativaWebDto sede : sedi){
+                    SedeAceBulk sedeAceBulk = new SedeAceBulk();
+                    sedeAceBulk.setCdsuo(sede.getCdsuo());
+                    sedeAceBulk.setId(sede.getId());
+                    sedeAceBulk.setSigla(sede.getSigla());
+                    sedeAceBulk.setIdnsip(sede.getIdnsip());
+                    lista.add(sedeAceBulk);
+                }
+
+
+                incarico.setSediAce(lista);
                 incarico.setIncarichi_repertorio_annoColl(new BulkList(incHome.findIncarichi_repertorio_annoList(usercontext, incarico)));
                 incarico.setArchivioAllegati(new BulkList(incHome.findArchivioAllegati(incarico)));
                 incarico.setIncarichi_repertorio_varColl(new BulkList(incHome.findIncarichi_repertorio_varList(usercontext, incarico)));
@@ -1076,4 +1123,140 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
             throw handleException(e);
         }
     }
+    public void aggiornaDatiAce(UserContext userContext, Incarichi_repertorioBulk incarichi_repertorioBulk) throws ComponentException {
+        if (!Optional.ofNullable(aceService).isPresent() || !incarichi_repertorioBulk.isIncaricoDefinitivo())
+            return;
+
+        TerzoBulk terzoBulk = incarichi_repertorioBulk.getTerzo();
+        AnagraficoBulk anagraficoBulk = terzoBulk.getAnagrafico();
+        LocalDate dataInizio = incarichi_repertorioBulk.getDt_inizio_validita().toLocalDateTime().toLocalDate();
+        LocalDate dataFine =null;
+        if (incarichi_repertorioBulk.getDt_proroga() != null){
+            dataFine = incarichi_repertorioBulk.getDt_proroga().toLocalDateTime().toLocalDate();
+        } else {
+            dataFine = incarichi_repertorioBulk.getDt_fine_validita().toLocalDateTime().toLocalDate();
+        }
+        logger.info(anagraficoBulk.getCodice_fiscale());
+        try {
+            if (!anagraficoBulk.isDipendente()){
+                Optional<String> personaId = Optional.empty();
+                try {
+                    personaId = Optional.ofNullable(aceService.getPersonaId(anagraficoBulk.getCodice_fiscale()));
+                } catch (FeignException _ex) {
+                }
+
+                PersonaWebDto personaWebDto = null;
+                Tipo_incaricoBulk tipo_incaricoBulk = incarichi_repertorioBulk.getIncarichi_procedura().getTipo_incarico();
+
+                TipoContratto tipoContratto = Tipo_incaricoBulk.TIPOCONTRATTO_ACE.get(tipo_incaricoBulk.getTipo_associazione());
+                if (!personaId.isPresent()) {
+                    PersonaDto personaDto = new PersonaDto();
+                    personaDto.setCodiceFiscale(anagraficoBulk.getCodice_fiscale());
+                    personaDto.setCognome(anagraficoBulk.getCognome());
+                    personaDto.setDataNascita(anagraficoBulk.getDt_nascita().toLocalDateTime().toLocalDate());
+                    personaDto.setNome(anagraficoBulk.getNome());
+                    personaDto.setSesso(anagraficoBulk.getTi_sesso());
+
+                    personaDto.setTipoContratto(tipoContratto);
+                    personaWebDto = aceService.savePersona(personaDto);
+                    creaPersonaEO(userContext.getUser(), dataInizio, dataFine, personaWebDto ,1 );
+                } else {
+                    personaWebDto = aceService.personaById(new Integer(personaId.get()));
+                    personaWebDto.setTipoContratto(tipoContratto);
+                    personaWebDto.setDataCessazione(null);
+                    personaWebDto.setDataPrevistaCessazione(null);
+                    personaWebDto.setLivello(null);
+                    personaWebDto.setProfilo(null);
+                    aceService.updatePersona(personaWebDto);
+                }
+                    try {
+                        Map<String, Object> params = new HashMap<>();
+                        params.put("persona", personaId.get());
+                        params.put("tipoAppartenenza", TipoAppartenenza.AFFERENZA_UO);
+                        List<PersonaEntitaOrganizzativaWebDto> personeEO;
+                        personeEO = aceService.personaEntitaOrganizzativaFind(params)
+                                .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
+                        if (personeEO == null || personeEO.isEmpty()){
+                            params = new HashMap<>();
+                            params.put("persona", personaId.get());
+                            params.put("tipoAppartenenza", TipoAppartenenza.SEDE);
+                            personeEO = aceService.personaEntitaOrganizzativaFind(params)
+                                    .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
+                        }
+                        if (personeEO == null || personeEO.isEmpty()){
+                            creaPersonaEO(userContext.getUser(), dataInizio, dataFine, personaWebDto, 1);
+                        } else {
+                            PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
+
+                            // GGGG TODO
+/*
+                                if (primoGiro){
+                                    LocalDate dataFineRapporto = rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate();
+                                    aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
+                                    primoGiro = false;
+                                }*/ /*else {
+
+                                            PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
+                                            personaEntitaOrganizzativaDto.setPersona(Integer.valueOf(personaId.get()));
+                                            personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
+                                            personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEO.getEntitaOrganizzativa().getId());
+                                            personaEntitaOrganizzativaDto.setInizioValidita(
+                                                    rapportoBulk.getDt_ini_validita().toLocalDateTime().toLocalDate()
+                                            );
+                                            personaEntitaOrganizzativaDto.setFineValidita(
+                                                    rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate()
+                                            );
+                                            logger.info(personaEntitaOrganizzativaDto.toString());
+                                            final PersonaEntitaOrganizzativaWebDto personaEntitaOrganizzativaWebDto =
+                                                    aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+
+                                }*/
+                        }
+                    } catch (FeignException _ex) {
+                        String error = "Per la persona con id: "  + personaId.get() +" è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: "+_ex.getMessage();
+                        logger.error(error);
+                        SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con ID "  + personaId.get() , error);
+                    }
+            }
+        } catch (Throwable e) {
+            throw handleException(e);
+        }
+    }
+    private PersonaEntitaOrganizzativaWebDto creaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaDto personaDto, Integer idEntitaOrganizzativa) {
+        PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
+        personaEntitaOrganizzativaDto.setUtenteUva(utente);
+        personaEntitaOrganizzativaDto.setPersona(personaDto.getId());
+        personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
+        personaEntitaOrganizzativaDto.setEntitaOrganizzativa(idEntitaOrganizzativa);
+        personaEntitaOrganizzativaDto.setInizioValidita(dtIniValidita);
+        personaEntitaOrganizzativaDto.setFineValidita(dtFinValidita);
+        logger.info(personaEntitaOrganizzativaDto.toString());
+
+        return aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+    }
+    private void aggiornaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
+        PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
+        personaEntitaOrganizzativaDto.setId(personaEOWebDto.getId());
+        personaEntitaOrganizzativaDto.setNote(personaEOWebDto.getNote());
+        personaEntitaOrganizzativaDto.setPermissions(personaEOWebDto.getPermissions());
+        personaEntitaOrganizzativaDto.setUtenteUva(utente);
+        personaEntitaOrganizzativaDto.setProvvedimento(personaEOWebDto.getProvvedimento());
+        personaEntitaOrganizzativaDto.setPersona(personaEOWebDto.getPersona().getId());
+        personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
+        personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEOWebDto.getEntitaOrganizzativa().getId());
+        personaEntitaOrganizzativaDto.setInizioValidita(dtIniValidita);
+        personaEntitaOrganizzativaDto.setFineValidita(dtFinValidita);
+        logger.info(personaEntitaOrganizzativaDto.toString());
+
+        aceService.updatePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+    }
+    public java.sql.Timestamp getCurrentDate() {
+        try {
+            return it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+        } catch (javax.ejb.EJBException e) {
+            throw new it.cnr.jada.DetailedRuntimeException(e);
+        }
+    }
+
+
 }

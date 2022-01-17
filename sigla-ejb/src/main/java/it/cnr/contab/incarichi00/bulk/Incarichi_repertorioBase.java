@@ -30,10 +30,19 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
  
 //    STATO VARCHAR(1) NOT NULL
 	private java.lang.String stato;
- 
-//    ESERCIZIO_PROCEDURA DECIMAL(4,0) NOT NULL
+
+	public Integer getId_sede_ace() {
+		return id_sede_ace;
+	}
+
+	public void setId_sede_ace(Integer id_sede_ace) {
+		this.id_sede_ace = id_sede_ace;
+	}
+
+	//    ESERCIZIO_PROCEDURA DECIMAL(4,0) NOT NULL
 	private java.lang.Integer esercizio_procedura;
- 
+	private java.lang.Integer id_sede_ace;
+
 //    PG_PROCEDURA DECIMAL(10,0) NOT NULL
 	private java.lang.Long pg_procedura;
  

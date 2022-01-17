@@ -23,6 +23,11 @@ package it.cnr.contab.incarichi00.tabrif.bulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.service.dto.anagrafica.enums.TipoContratto;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Tipo_incaricoBulk extends Tipo_incaricoBase {
     public final static java.util.Dictionary <String,String> TIPI_ASSOCIAZIONE;
     public final static String ASS_INCARICHI = "INC";
@@ -35,6 +40,14 @@ public class Tipo_incaricoBulk extends Tipo_incaricoBase {
 		TIPI_ASSOCIAZIONE.put(ASS_BORSE_STUDIO,"Borse di Studio");
 		TIPI_ASSOCIAZIONE.put(ASS_ASSEGNI_RICERCA,"Assegni di Ricerca");
 	}
+
+	public static Map<String, TipoContratto> TIPOCONTRATTO_ACE = new HashMap<String, TipoContratto>(){
+		{
+			put(ASS_BORSE_STUDIO, TipoContratto.BORSISTA);
+			put(ASS_ASSEGNI_RICERCA, TipoContratto.ASSEGNISTA);
+			put(ASS_INCARICHI, TipoContratto.COLLABORATORE_PROFESSIONALE);
+		}
+	};
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk tipoRapporto = new it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk();
 	

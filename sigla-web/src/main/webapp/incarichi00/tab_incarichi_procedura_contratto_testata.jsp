@@ -130,7 +130,18 @@ if (bp.getModel()!=null &&
       </table>
       </div>
       </td></tr>
-      
+
+      <tr><td colspan=4>
+      <div class="Group card">
+      <table <%=widthTable%>>
+	  	  <tr>
+			<td><% controller.writeFormLabel(out,"id_sede_ace");%></td>
+			<td><% controller.writeFormInput(out,null,"id_sede_ace",true,null,null);%></td>
+		  </tr>
+      </table>
+      </div>
+      </td></tr>
+
       <tr><td colspan=4>
       <div class="Group card">
 	  <fieldset>

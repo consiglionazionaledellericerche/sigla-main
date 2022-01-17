@@ -4865,4 +4865,14 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_incarichi_repertorio_add_id_sede_ace">
+        <addColumn tableName="incarichi_repertorio">
+            <column name="id_sede_ace" type="NUMERIC" remarks="Indica l'identificatico della sede ACE">
+            </column>
+        </addColumn>
+        <addColumn tableName="incarichi_repertorio_s">
+            <column name="id_sede_ace" type="NUMERIC" remarks="Indica l'identificatico della sede ACE">
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

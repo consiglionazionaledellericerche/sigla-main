@@ -48,6 +48,7 @@ Begin
    aOldRowtype.UTUV                    := :Old.UTUV;
    aOldRowtype.DUVA                    := :Old.DUVA;
    aOldRowtype.PG_VER_REC              := :Old.PG_VER_REC;
+   aOldRowtype.ID_SEDE_ACE             := :Old.ID_SEDE_ACE;
 
    -- Scarico dello storico
    CNRSTO070.sto_INCARICHI_REPERTORIO(:old.PG_VER_REC+1, 'STOREP', aOldRowType);

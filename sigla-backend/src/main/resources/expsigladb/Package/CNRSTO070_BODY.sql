@@ -248,6 +248,7 @@
     ,UTUV
     ,DUVA
     ,PG_VER_REC
+    ,ID_SEDE_ACE
    ) values (
      aPgStorico
     ,aDsStorico
@@ -276,7 +277,8 @@
     ,aDest.DACR
     ,aDest.UTUV
     ,aDest.DUVA
-    ,aDest.PG_VER_REC);
+    ,aDest.PG_VER_REC
+    ,aDest.ID_SEDE_ACE);
   end;
 
   procedure sto_INCARICHI_REPERTORIO_ANNO (aPgStorico number, aDsStorico varchar2, aDest INCARICHI_REPERTORIO_ANNO%rowtype) is
