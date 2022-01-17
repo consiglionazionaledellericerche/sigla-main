@@ -1869,8 +1869,6 @@ public class OrdineAcqComponent
 						Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
 						try {
 							scadenza.setObbligazione_scad_voceColl( new BulkList( osHome.findObbligazione_scad_voceList(userContext, scadenza )));
-						} catch (IntrospectionException introspectionException) {
-							throw new ComponentException(introspectionException);
 						} catch (PersistencyException persistencyException) {
 							throw new ComponentException(persistencyException);
 						}

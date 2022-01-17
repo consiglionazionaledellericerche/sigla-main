@@ -30,9 +30,9 @@ public enum TipoDocumentoEnum {
 	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA),
 	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA),
 	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA),
-	GEN_CORA_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
-	GEN_CORV_E(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
+	GEN_CORI_ACCANTONAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
 	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S"),
+	GEN_CORI_VERSAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
 	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S"),
 	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E),
 	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON),
@@ -53,6 +53,10 @@ public enum TipoDocumentoEnum {
 
 	TipoDocumentoEnum(String value) {
 		this.value = value;
+	}
+
+	public String getValue() {
+		return this.value;
 	}
 
 	public boolean isAnticipo() {
@@ -96,11 +100,11 @@ public enum TipoDocumentoEnum {
 	}
 
 	public boolean isDocumentoAmministrativoPassivo() {
-		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva() || this.isGenericoSpesa();
+		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva() || this.isGenericoSpesa() || this.isGenericoStipendiSpesa();
 	}
 
 	public boolean isDocumentoAmministrativoAttivo() {
-		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva() || this.isGenericoEntrata();
+		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva() || this.isGenericoEntrata() || this.isGenericoCoriAccantonamentoEntrata();
 	}
 
 	public boolean isMandato() {
@@ -135,6 +139,23 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.GENERICO_E.equals(this);
 	}
 
+	public boolean isGenericoStipendiSpesa() {
+		return TipoDocumentoEnum.GEN_STIPENDI_SPESA.equals(this);
+	}
+
+	public boolean isGenericoCoriAccantonamentoEntrata() {
+		return TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_ENTRATA.equals(this);
+	}
+
+	/**
+	 * Indica se per il tipo di documento deve essere prevista la registrazione della prima nota contabile
+	 */
+	public boolean isScritturaEconomicaRequired() {
+		return !this.isGenericoCoriAccantonamentoSpesa() &&
+				!this.isGenericoCoriAccantonamentoEntrata() &&
+				!this.isGenericoStipendiSpesa();
+	}
+
 	public static TipoDocumentoEnum fromValue(String v) {
 		for (TipoDocumentoEnum c : TipoDocumentoEnum.values()) {
 			if (c.value.equals(v)) {
@@ -165,11 +186,11 @@ public enum TipoDocumentoEnum {
 	 * Indica quale tipo di conto patrimoniale (debito/credito) viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getTipoPatrimoniale() {
-		if (this.isFatturaPassiva()||isGenericoSpesa())
+		if (this.isFatturaPassiva()||this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isFatturaAttiva()||isGenericoEntrata())
+		if (this.isFatturaAttiva()||this.isGenericoEntrata()||this.isGenericoCoriAccantonamentoEntrata())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
@@ -186,11 +207,11 @@ public enum TipoDocumentoEnum {
 	 * Indica quale sezione (Dare/Avere) per il conto di tipo economica viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getSezioneEconomica() {
-		if (this.isFatturaPassiva()||isGenericoSpesa())
+		if (this.isFatturaPassiva()||this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isFatturaAttiva()||isGenericoEntrata())
+		if (this.isFatturaAttiva()||this.isGenericoEntrata()||this.isGenericoCoriAccantonamentoEntrata())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
@@ -236,9 +257,9 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isGenericoSpesa())
+		if (this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isGenericoEntrata())
+		if (this.isGenericoEntrata()||this.isGenericoCoriAccantonamentoEntrata())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isGenericoCoriVersamentoSpesa())
 			return Movimento_cogeBulk.SEZIONE_AVERE;

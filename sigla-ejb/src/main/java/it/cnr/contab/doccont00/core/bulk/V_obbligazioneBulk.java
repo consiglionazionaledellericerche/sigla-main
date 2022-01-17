@@ -17,8 +17,12 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.jada.bulk.*;
 
+import javax.persistence.Transient;
 import java.util.*;
 
 public class V_obbligazioneBulk extends V_obbligazioneBase {

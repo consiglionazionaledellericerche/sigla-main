@@ -19,7 +19,11 @@ package it.cnr.contab.docamm00.ejb;
 
 import javax.ejb.Remote;
 
+import it.cnr.contab.docamm00.docs.bulk.DocumentoGenericoWizardBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.doccont00.core.AccertamentoWizard;
+import it.cnr.contab.doccont00.core.ObbligazioneWizard;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 @Remote
@@ -66,4 +70,6 @@ java.util.List findMandatoRigaCollegati(it.cnr.jada.UserContext param0,it.cnr.co
 java.util.List findReversaleRigaCollegate(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 it.cnr.contab.anagraf00.core.bulk.TerzoBulk getTerzoUnivoco(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk eliminaLetteraPagamentoEstero(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+Documento_genericoBulk creaDocumentoGenericoDaImpegni(UserContext userContext, DocumentoGenericoWizardBulk wizard, java.util.Collection<ObbligazioneWizard> impegniColl) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+Documento_genericoBulk creaDocumentoGenericoDaAccertamenti(UserContext userContext, DocumentoGenericoWizardBulk wizard, java.util.Collection<AccertamentoWizard> accertamentiColl) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

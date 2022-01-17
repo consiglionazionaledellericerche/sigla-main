@@ -20,18 +20,26 @@ package it.cnr.contab.anagraf00.core.bulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 
+import javax.ejb.RemoveException;
+import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 public class TerzoHome extends BulkHome {
@@ -110,7 +118,7 @@ public class TerzoHome extends BulkHome {
     /**
      * Recupera tutti i dati nella tabella BANCA relativi all'anagrafica in uso.
      *
-     * @param anagrafico L'anagrafica in uso.
+     * @param terzo L'anagrafica in uso.
      * @return java.util.Collection Collezione di oggetti <code>BancaBulk</code>
      */
 
@@ -138,7 +146,7 @@ public class TerzoHome extends BulkHome {
     /**
      * Recupera tutti i dati nella tabella CONTATTO relativi all'anagrafica in uso.
      *
-     * @param anagrafico L'anagrafica in uso.
+     * @param terzo L'anagrafica in uso.
      * @return java.util.Collection Collezione di oggetti <code>ContattoBulk</code>
      */
 
@@ -152,7 +160,7 @@ public class TerzoHome extends BulkHome {
     /**
      * Recupera tutti i dati nella tabella MODALITA_PAGAMENTO relativi all'anagrafica in uso.
      *
-     * @param anagrafico L'anagrafica in uso.
+     * @param terzo L'anagrafica in uso.
      * @return java.util.Collection Collezione di oggetti <code>Modalita_pagamentoBulk</code>
      */
 
@@ -206,12 +214,7 @@ public class TerzoHome extends BulkHome {
 
     /**
      * Recupera tutti i dati nella tabella TELEFONO relativi all'anagrafica in uso.
-     *
-     * @param anagrafico   L'anagrafica in uso.
-     * @param telefonoHome <code>TelefonoHome</code>.
-     * @return java.util.Collection Collezione di oggetti <code>TelefonoBulk</code>
      */
-
     public java.util.Collection findTelefoni(TerzoBulk terzo, String ti_riferimento) throws IntrospectionException, PersistencyException {
         PersistentHome telefonoHome = getHomeCache().getHome(TelefonoBulk.class);
         SQLBuilder sql = telefonoHome.createSQLBuilder();
@@ -223,7 +226,7 @@ public class TerzoHome extends BulkHome {
     /**
      * Recupera tutti i dati nella tabella TERMINI_PAGAMENTO relativi all'anagrafica in uso.
      *
-     * @param anagrafico L'anagrafica in uso.
+     * @param terzo L'anagrafica in uso.
      * @return java.util.Collection Collezione di oggetti <code>Termini_pagamentoBulk</code>
      */
 
@@ -233,14 +236,6 @@ public class TerzoHome extends BulkHome {
         sql.addClause("AND", "cd_terzo", sql.EQUALS, Optional.ofNullable(terzo.getCd_terzo()).orElse(-1));
         return termini_pagamentoHome.fetchAll(sql);
     }
-
-    /**
-     * Imposta il pg_banca di un oggetto <code>BancaBulk</code>.
-     *
-     * @param bank <code>BancaBulk</code>
-     * @throws PersistencyException
-     * @see getCd_terzo
-     */
 
     public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk trz) throws PersistencyException, ApplicationException {
         try {
@@ -321,5 +316,61 @@ public class TerzoHome extends BulkHome {
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause(compoundfindclause);
         return sql;
+    }
+
+    public TerzoBulk findTerzoPerUo(Unita_organizzativaBulk unitaOrganizzativaBulk) throws PersistencyException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, unitaOrganizzativaBulk.getCd_unita_organizzativa());
+        sql.addClause(FindClause.AND, "dt_fine_rapporto", SQLBuilder.ISNULL, null);
+        Collection<TerzoBulk> result = this.fetchAll(sql);
+
+        return result.stream().sorted(Comparator.comparing(TerzoBulk::getCd_terzo)).findFirst().orElse(null);
+    }
+
+    public Modalita_pagamentoBulk findModalitaPagamentoPerUo(UserContext userContext, Unita_organizzativaBulk unitaOrganizzativaBulk) throws IntrospectionException, PersistencyException {
+        TerzoBulk terzoPerUo = this.findTerzoPerUo(unitaOrganizzativaBulk);
+        java.util.Collection<Modalita_pagamentoBulk> modalita_pagamentoBulks = this.findModalita_pagamento(terzoPerUo);
+        getHomeCache().fetchAll(userContext);
+        return modalita_pagamentoBulks
+                .stream()
+                .filter(mp->mp.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.BANCARIO))
+                .filter(mp->!Optional.ofNullable(mp.getCd_terzo_delegato()).isPresent())
+                .sorted(Comparator.comparing(Modalita_pagamentoBulk::getDacr).reversed())
+                .findFirst().orElse(null);
+    }
+
+    public BancaBulk findBancaPerUo(UserContext userContext, Unita_organizzativaBulk unitaOrganizzativaBulk) throws PersistencyException, RemoteException, ComponentException {
+        TerzoBulk terzoPerUo = this.findTerzoPerUo(unitaOrganizzativaBulk);
+        getHomeCache().fetchAll(userContext);
+
+        BancaHome bancaHome = (BancaHome)getHomeCache().getHome(BancaBulk.class);
+        SQLBuilder sql = bancaHome.createSQLBuilder();
+        sql.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, terzoPerUo.getCd_terzo());
+        sql.addClause(FindClause.AND, "ti_pagamento", SQLBuilder.EQUALS, Rif_modalita_pagamentoBulk.BANCARIO);
+        sql.addClause(FindClause.AND, "fl_cancellato", SQLBuilder.EQUALS, Boolean.FALSE);
+        sql.addSQLClause(FindClause.AND, "CODICE_IBAN", SQLBuilder.ISNOTNULL, null);
+        sql.addSQLClause(FindClause.AND, "cd_terzo_delegato", SQLBuilder.ISNULL, null);
+
+        if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue())
+            sql.addSQLClause(FindClause.AND, "BANCA.FL_CC_CDS", SQLBuilder.EQUALS, "Y");
+        else {
+            Configurazione_cnrBulk config = new Configurazione_cnrBulk(
+                    "CONTO_CORRENTE_SPECIALE",
+                    "ENTE",
+                    "*",
+                    new Integer(0));
+            it.cnr.contab.config00.bulk.Configurazione_cnrHome home = (it.cnr.contab.config00.bulk.Configurazione_cnrHome) getHomeCache().getHome(config);
+            List configurazioni = home.find(config);
+            if ((configurazioni != null) && (configurazioni.size() == 1)) {
+                Configurazione_cnrBulk configBanca = (Configurazione_cnrBulk) configurazioni.get(0);
+                sql.addSQLClause(FindClause.AND, "BANCA.ABI", SQLBuilder.EQUALS, configBanca.getVal01());
+                sql.addSQLClause(FindClause.AND, "BANCA.CAB", SQLBuilder.EQUALS, configBanca.getVal02());
+                sql.addSQLClause(FindClause.AND, "BANCA.NUMERO_CONTO", SQLBuilder.CONTAINS, configBanca.getVal03());
+            }
+        }
+        List result = bancaHome.fetchAll(sql);
+        if (result == null || result.size() == 0)
+            return null;
+        return (BancaBulk) result.get(0);
     }
 }
