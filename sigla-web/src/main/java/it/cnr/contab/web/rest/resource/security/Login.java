@@ -23,10 +23,9 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.security.PermitAll;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.Optional;
@@ -48,5 +47,10 @@ public class Login {
             LOGGER.error("Login error for user:{} password:{}", username, password, e);
             return Response.serverError().build();
         }
+    }
+
+    @OPTIONS
+    public Response options() {
+        return Response.ok().build();
     }
 }

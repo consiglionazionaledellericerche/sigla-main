@@ -2859,9 +2859,9 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     if (fattura_passiva.getStato_liquidazione() == null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0) {
                         if (fattura_passiva instanceof Fattura_passiva_IBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
                             throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
-                        if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
-                            throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
                     }
+                    if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
+                        throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
                 }
             }
             validaFattura(userContext, fattura_passiva);
@@ -7740,10 +7740,17 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
                 fatturaPassiva.getIm_totale_fattura() != null &&
                 (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(totaleFat) != 0) {   //se non è previsto arrotondamento restituisco l'errore
-            if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento() == null)
-                throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: " + totaleFat + " diverso da quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
+            if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento() == null) {
+                if (!existsVoceIvaWithNaturaAndPercentuale(aUC, fatturaPassiva)) {
+                    throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: " + totaleFat + " diverso da quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
+                } else {
+                    fatturaPassiva.aggiornaImportiTotali();
+                    if(!fatturaPassiva.getIm_totale_imponibile().equals(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento())) {
+                        throw new it.cnr.jada.comp.ApplicationException("Imponibile Fattura: " + fatturaPassiva.getIm_totale_imponibile() + " diverso da quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
+                    }
+                }
                 //controllo se c'è quadratura a meno di arrotondamento
-            else if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
+            } else if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
                     totaleFat != null &&
                     ((((noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).subtract(totaleFat)).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
                 throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: " + totaleFat + " non coerente con quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");
@@ -7772,6 +7779,21 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throw handleException(e);
         }
     }
+
+    private boolean existsVoceIvaWithNaturaAndPercentuale(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
+        return fatturaPassiva.isCommerciale() &&
+                fatturaPassiva
+                .getFattura_passiva_dettColl()
+                .stream()
+                .map(Fattura_passiva_rigaBulk::getVoce_iva)
+                .filter(voce_ivaBulk -> {
+                    return Optional.ofNullable(voce_ivaBulk.getNaturaOperNonImpSdi()).isPresent() &&
+                                Optional.ofNullable(voce_ivaBulk.getPercentuale())
+                                        .filter(bigDecimal -> bigDecimal.compareTo(BigDecimal.ZERO) != 0)
+                                        .isPresent();
+                }).findAny().isPresent();
+    }
+
 
     private void controllaQuadaraturaNatura(UserContext aUC, boolean noSegno, Fattura_passivaBulk fatturaPassiva, boolean checkIVA) throws ComponentException {
         Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
@@ -7901,11 +7923,14 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 (codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0))
             codiciNaturaSqu = new StringBuffer();
 
-        if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0)
-            throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
-                    (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
-                    (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
-                    (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+        if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0) {
+            if (!existsVoceIvaWithNaturaAndPercentuale(aUC, fatturaPassiva)) {
+                throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
+                        (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
+                        (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
+                        (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+            }
+        }
 
     }
 

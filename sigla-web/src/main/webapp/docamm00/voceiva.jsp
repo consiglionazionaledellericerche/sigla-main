@@ -120,7 +120,7 @@ function escludiPrimo(index){
                 <% bp.getController().writeFormField(out,"fl_iva_non_recuperabile"); %>
             </tr>
 		</table>
-		<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
+		<%	if (voce_iva != null) { %>
             <div class="Group card p-1">
                 <table>
                     <tr>

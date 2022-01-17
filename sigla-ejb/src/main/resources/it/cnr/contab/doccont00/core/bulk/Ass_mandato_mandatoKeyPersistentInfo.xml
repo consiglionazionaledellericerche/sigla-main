@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Ass_mandato_mandatoKey" >
+	<defaultColumnMap
+		tableName="ASS_MANDATO_MANDATO" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_COLL"
+			propertyName="esercizio_coll"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_COLL"
+			propertyName="cd_cds_coll"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_MANDATO_COLL"
+			propertyName="pg_mandato_coll"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+			name="esercizio"
+			partOfOid="true" />
+	<persistentProperty
+			name="cd_cds"
+			partOfOid="true" />
+	<persistentProperty
+			name="pg_mandato"
+			partOfOid="true" />
+	<persistentProperty
+			name="esercizio_coll"
+			partOfOid="true" />
+	<persistentProperty
+			name="cd_cds_coll"
+			partOfOid="true" />
+	<persistentProperty
+			name="pg_mandato_coll"
+			partOfOid="true" />
+</SQLPersistentInfo>

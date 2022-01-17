@@ -17,10 +17,17 @@
 
 package it.cnr.contab.doccont00.tabrif.bulk;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.util.Optional;
 
 public class Tipo_bolloHome extends BulkHome {
 public Tipo_bolloHome(java.sql.Connection conn) {
@@ -62,4 +69,15 @@ public Tipo_bolloBulk findTipoBolloEsente( ) throws PersistencyException, it.cnr
 		throw new it.cnr.jada.comp.ApplicationException( "Non esiste il tipo bollo con classe ESENTE" );
 	return (Tipo_bolloBulk) result.get(0); 
 }
+	public Tipo_bolloBulk findTipoBolloStipendi( String ti_entrata_spesa ) throws PersistencyException, it.cnr.jada.comp.ApplicationException
+	{
+		String codiceBollo = ((Configurazione_cnrHome)getHomeCache().getHome(Configurazione_cnrBulk.class)).getCodiceBolloStipendi();
+		return Optional.ofNullable(codiceBollo).map(cdBollo-> {
+			try {
+				return (Tipo_bolloBulk)this.findByPrimaryKey(new Tipo_bolloBulk(cdBollo));
+			} catch (PersistencyException e) {
+				throw new DetailedRuntimeException("Codice bollo "+cdBollo+" non presente in tabella TipoBollo.");
+			}
+		}).orElse(this.findTipoBolloDefault(ti_entrata_spesa));
+	}
 }

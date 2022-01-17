@@ -20,8 +20,13 @@ package it.cnr.contab.compensi00.tabrif.bulk;
 //import it.cnr.contab.anagraf00.core.bulk.Cnr_anadipBulk;
 //import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 //import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.compensi00.docs.bulk.*;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -213,4 +218,19 @@ public  Tipo_trattamentoBulk findTipoTrattamentoBonusValido(BonusBulk bonus) thr
 
 	return tratt;
 }
+	public  Tipo_trattamentoBulk findTipoTrattamentoCompenso() throws PersistencyException {
+		String cdTipoTrattamento = ((Configurazione_cnrHome)getHomeCache().getHome(Configurazione_cnrBulk.class))
+				.getConfigurazione(null, Configurazione_cnrBulk.PK_TRATTAMENTO_SPECIALE,Configurazione_cnrBulk.SK_TRATTAMENTO_STIPENDI).getVal01();
+
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause(FindClause.AND,"cd_trattamento",SQLBuilder.EQUALS, cdTipoTrattamento);
+
+		sql.addTableToHeader("ASS_TI_RAPP_TI_TRATT");
+		sql.addSQLJoin("ASS_TI_RAPP_TI_TRATT.CD_TRATTAMENTO","TIPO_TRATTAMENTO.CD_TRATTAMENTO");
+		sql.addSQLClause(FindClause.AND,"ASS_TI_RAPP_TI_TRATT.CD_TIPO_RAPPORTO",SQLBuilder.EQUALS, "STI");
+		final Optional<Tipo_trattamentoBulk> optional = fetchAll(sql).stream().findAny()
+				.filter(Tipo_trattamentoBulk.class::isInstance)
+				.map(Tipo_trattamentoBulk.class::cast);
+		return optional.orElse(null);
+	}
 }
