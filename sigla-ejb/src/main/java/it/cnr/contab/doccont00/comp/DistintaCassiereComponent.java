@@ -5842,6 +5842,13 @@ public class DistintaCassiereComponent extends
                                 codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                                 motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                             }
+                            Optional.ofNullable(fattura_passivaBulk.getDt_scadenza())
+                                    .orElseThrow(()-> new ApplicationMessageFormatException(
+                                            "Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture con data di scadenza non valorizzata!",
+                                            String.valueOf(bulk.getEsercizio()),
+                                            String.valueOf(bulk.getCd_cds()),
+                                            String.valueOf(bulk.getPg_documento_cont())
+                                    ));
                         }
                     }
                     codiciCIG = codiciCIG.stream().distinct().collect(Collectors.toList());

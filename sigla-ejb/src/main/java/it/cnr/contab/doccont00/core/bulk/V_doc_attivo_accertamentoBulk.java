@@ -263,4 +263,9 @@ public BigDecimal getIm_reversale_riga()
 	else	 
 		return getIm_scadenza();	//documenti che vanno a quadratura con la scadenza dell'accert.
 }
+	public boolean isCompetenza()
+	{
+		return getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR ) ||
+				getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_PGIRO );
+	}
 }

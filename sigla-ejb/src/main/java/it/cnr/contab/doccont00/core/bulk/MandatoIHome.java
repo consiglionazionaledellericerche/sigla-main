@@ -19,10 +19,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
@@ -244,9 +241,10 @@ public class MandatoIHome extends MandatoHome {
         sql.addClause("AND", "pg_obbligazione", sql.EQUALS, docPassivo.getPg_obbligazione());
         sql.addClause("AND", "pg_obbligazione_scadenzario", sql.EQUALS, docPassivo.getPg_obbligazione_scadenzario());
         // rp 29/09/2014 nel caso di documenti generici passivi ente  'NON liquidabili" venivano recuperati come collegati essendo su impegni a consumo
-        sql.addClause("AND", "cd_tipo_documento_amm", sql.NOT_EQUALS, Documento_genericoBulk.GENERICO_S);
-        sql.addClause("AND", "cd_tipo_documento_amm", SQLBuilder.NOT_EQUALS, Numerazione_doc_ammBulk.TIPO_ORDINE);
-        sql.addSQLClause("AND", "fl_selezione", sql.EQUALS, "N");
+        sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.NOT_EQUALS, Documento_genericoBulk.GENERICO_S);
+        sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.NOT_EQUALS, Numerazione_doc_ammBulk.TIPO_ORDINE);
+        sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.NOT_EQUALS, TipoDocumentoEnum.GEN_STIPENDI_SPESA.getValue());
+        sql.addSQLClause(FindClause.AND, "fl_selezione", SQLBuilder.EQUALS, "N");
         return home.fetchAll(sql);
 
     }
