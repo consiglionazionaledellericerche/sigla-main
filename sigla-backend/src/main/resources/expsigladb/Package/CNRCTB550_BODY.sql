@@ -5797,13 +5797,9 @@ BEGIN
          aImportoDetrazPe := 0;
    End If;
  */
-   If aImportoRiferimento <= 8000 Then
+   If aRecDetrazioniLavoro.moltiplicatore = 1 and aRecDetrazioniLavoro.numeratore = 1 Then
           aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione;
-   Elsif aImportoRiferimento <= 28000 Then
-          aCoefficientePe := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
-          aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione +
-                              (aRecDetrazioniLavoro.moltiplicatore * aCoefficientePe);
-   Elsif aImportoRiferimento <= 55000 Then
+   Elsif aRecDetrazioniLavoro.moltiplicatore = 1 Then
           aCoefficientePe := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
           aImportoDetrazPe := (aRecDetrazioniLavoro.im_detrazione * aCoefficientePe);
           --aggiungo l'eventuale maggiorazione ma solo se non �n conguaglio
@@ -5812,9 +5808,13 @@ BEGIN
               aImportoDetrazPe := aImportoDetrazPe + aRecDetrazioniLavoro.im_maggiorazione;
           End If;
    Else
-         aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione;
+          aCoefficientePe := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
+          aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione +
+                              (aRecDetrazioniLavoro.moltiplicatore * aCoefficientePe);
    End If;
-
+   if aImportoRiferimento between aRecDetrazioniLavoro.im_inf_incr_fisso and aRecDetrazioniLavoro.im_sup_incr_fisso Then
+      aImportoDetrazPe := aImportoDetrazPe + aRecDetrazioniLavoro.im_incr_fisso;
+   end if;
    --Rapporto la detrazione al numero di giorni effettivo
    IF aNumeroGG = aGGAnno THEN
       aImportoDetrazPe:=aImportoDetrazPe;
@@ -5890,20 +5890,20 @@ Begin
     aImportoDetrazLa := 0;
    End If;
    */
-   /*Modifiche Finanziaria 2008*/
-   If aImportoRiferimento <= 7500 Then
-        aImportoDetrazLa := aRecDetrazioniLavoro.im_detrazione;
-   Elsif aImportoRiferimento <= 15000 Then
-        aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
-  aImportoDetrazLa :=
-       aRecDetrazioniLavoro.im_detrazione + (aRecDetrazioniLavoro.moltiplicatore * aCoefficienteLa);
-   Elsif aImportoRiferimento <= 55000 Then
-    aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
-  aImportoDetrazLa :=
-       aRecDetrazioniLavoro.im_detrazione * aCoefficienteLa;
+
+   If aRecDetrazioniLavoro.moltiplicatore = 1 and aRecDetrazioniLavoro.numeratore = 1 Then
+          aImportoDetrazLa := aRecDetrazioniLavoro.im_detrazione;
+   Elsif aRecDetrazioniLavoro.moltiplicatore = 1 Then
+          aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
+          aImportoDetrazLa := (aRecDetrazioniLavoro.im_detrazione * aCoefficienteLa);
    Else
-    aImportoDetrazLa := 0;
+          aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
+          aImportoDetrazLa := aRecDetrazioniLavoro.im_detrazione +
+                              (aRecDetrazioniLavoro.moltiplicatore * aCoefficienteLa);
    End If;
+   if aImportoRiferimento between aRecDetrazioniLavoro.im_inf_incr_fisso and aRecDetrazioniLavoro.im_sup_incr_fisso Then
+      aImportoDetrazLa := aImportoDetrazLa + aRecDetrazioniLavoro.im_incr_fisso;
+   end if;
 
    If aDifferenzaMesi = aMMAnno Then
       aImportoDetrazLa:=aImportoDetrazLa;
