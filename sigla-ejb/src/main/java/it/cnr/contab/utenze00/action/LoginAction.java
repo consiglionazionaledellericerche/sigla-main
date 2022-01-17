@@ -40,6 +40,9 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.FormBP;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -318,6 +321,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             if (ui.getLdap_userid() != null) {
                 utente.setCd_utente_uid(ui.getLdap_userid());
             }
+            final Optional<IDToken> idToken = principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(KeycloakPrincipal.class::cast)
+                    .map(KeycloakPrincipal::getKeycloakSecurityContext)
+                    .map(KeycloakSecurityContext::getIdToken);
+            if (idToken.isPresent()){
+                utente.setCd_utente(idToken.get().getPreferredUsername());
+                utente.setCd_utente_uid(idToken.get().getPreferredUsername());
+            }
+
             utente.setUtente_multiplo(ui.getUtente_multiplo());
             ui.setUtente(utente);
             try {
@@ -593,12 +606,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                                 .flatMap(unita_organizzativaBulk -> Optional.ofNullable(unita_organizzativaBulk.getCd_unita_organizzativa())).isPresent()) {
                             try {
                                 return createCRUDComponentSession().find(
-                                        context.getUserContext(),
-                                        V_struttura_organizzativaBulk.class,
-                                        "findCDRCollegatiUO",
-                                        ui.getUnita_organizzativa(),
-                                        ui.getEsercizio()
-                                ).stream()
+                                                context.getUserContext(),
+                                                V_struttura_organizzativaBulk.class,
+                                                "findCDRCollegatiUO",
+                                                ui.getUnita_organizzativa(),
+                                                ui.getEsercizio()
+                                        ).stream()
                                         .filter(CdrBulk.class::isInstance)
                                         .map(CdrBulk.class::cast)
                                         .findAny()

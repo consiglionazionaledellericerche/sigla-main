@@ -71,8 +71,7 @@ import java.util.Iterator;
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.docamm00.ejb.FatturaAttivaComponentSessionWS")
 @DeclareRoles({WSAttributes.WSUSERROLE, WSAttributes.IITROLE})
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
-@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
+
 public class FatturaAttivaComponentWS {
     @EJB
     FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;

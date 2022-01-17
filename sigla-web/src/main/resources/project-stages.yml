@@ -334,6 +334,14 @@ thorntail:
         use-java-context: true
         jndi-name: java:/jdbc/CIR
   deployment:
+    sigla.war:
+      web:
+        security-constraints:
+          - url-pattern: /restapi/version
+          - url-pattern: /restapi/login
+          - url-pattern: /restapi/*
+            roles:
+              - "*"
     timeout: 1200
 
 spring:
@@ -615,3 +623,25 @@ thorntail:
 spring:
   profiles:
     active: liquibase-isin
+---
+project:
+  stage: keycloak
+thorntail:
+  keycloak:
+    secure-deployments:
+      sigla.war:
+        auth-server-url: "http://dockerwebtest02.si.cnr.it:8110/auth"
+        realm: cnr
+        resource: sigla
+        enable-cors: true
+        ssl-required: NONE
+        public-client: true
+  deployment:
+    sigla.war:
+      web:
+        security-constraints:
+          - url-pattern: /restapi/version
+          - url-pattern: /restapi/login
+          - url-pattern: /restapi/*
+            roles:
+              - "*"

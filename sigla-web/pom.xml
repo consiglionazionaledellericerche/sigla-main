@@ -229,6 +229,10 @@
             <groupId>io.thorntail</groupId>
             <artifactId>management-console</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>keycloak</artifactId>
+        </dependency>
         <!-- SIGLA  dependency-->
         <dependency>
             <groupId>it.cnr.si.sigla</groupId>

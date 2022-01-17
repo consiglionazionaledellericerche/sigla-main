@@ -76,8 +76,8 @@ import org.w3c.dom.Node;
 @Stateless
 @XmlSeeAlso({ java.util.ArrayList.class })
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.VoceComponentSessionWS")
-@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
+
+
 public class VoceComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	@EJB PDCFinComponentSession pdcFinComponentSession;

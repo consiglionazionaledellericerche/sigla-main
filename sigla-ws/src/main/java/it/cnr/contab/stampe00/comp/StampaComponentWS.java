@@ -50,9 +50,8 @@ import org.jboss.ws.api.annotation.WebContext;
 
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.stampe00.comp.StampaComponentSessionWS")
-@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
-@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
+
+
 public class StampaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	

@@ -76,8 +76,8 @@ import org.w3c.dom.Node;
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.CDRComponentSessionWS")
 @XmlSeeAlso({ java.util.ArrayList.class })
-@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
+
+
 public class CDRComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	@EJB CDRComponentSession cdrComponentSession;

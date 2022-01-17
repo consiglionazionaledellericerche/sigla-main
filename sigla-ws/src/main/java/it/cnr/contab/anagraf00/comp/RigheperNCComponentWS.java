@@ -71,8 +71,8 @@ import org.w3c.dom.Node;
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.RigheperNCComponentSessionWS")
 @XmlSeeAlso({ java.util.ArrayList.class })
-@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
+
+
 public class RigheperNCComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 

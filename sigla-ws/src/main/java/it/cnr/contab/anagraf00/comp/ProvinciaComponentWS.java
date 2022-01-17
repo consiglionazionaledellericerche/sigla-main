@@ -58,8 +58,8 @@ import org.jboss.ws.api.annotation.WebContext;
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.ProvinciaComponentSessionWS")
 @XmlSeeAlso({ java.util.ArrayList.class })
-@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
+
+
 public class ProvinciaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 
