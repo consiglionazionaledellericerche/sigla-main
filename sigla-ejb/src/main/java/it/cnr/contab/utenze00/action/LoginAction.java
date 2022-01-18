@@ -42,6 +42,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.FormBP;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -325,12 +326,14 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     .filter(KeycloakPrincipal.class::isInstance)
                     .map(KeycloakPrincipal.class::cast)
                     .map(KeycloakPrincipal::getKeycloakSecurityContext)
-                    .map(KeycloakSecurityContext::getIdToken);
+                    .map(keycloakSecurityContext -> {
+                        return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+                                .orElse(keycloakSecurityContext.getToken());
+                    });
             if (idToken.isPresent()){
                 utente.setCd_utente(idToken.get().getPreferredUsername());
                 utente.setCd_utente_uid(idToken.get().getPreferredUsername());
             }
-
             utente.setUtente_multiplo(ui.getUtente_multiplo());
             ui.setUtente(utente);
             try {

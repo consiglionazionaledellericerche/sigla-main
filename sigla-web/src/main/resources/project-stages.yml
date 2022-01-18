@@ -633,7 +633,6 @@ thorntail:
         auth-server-url: "http://dockerwebtest02.si.cnr.it:8110/auth"
         realm: cnr
         resource: sigla
-        enable-cors: true
         ssl-required: NONE
         public-client: true
   deployment:
