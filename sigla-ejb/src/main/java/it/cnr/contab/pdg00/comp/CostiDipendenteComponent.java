@@ -263,7 +263,7 @@ public void contabilizzaFlussoStipendialeMensile(UserContext userContext,int mes
 				stm.setInt(1, CNRUserContext.getEsercizio(userContext).intValue());
 				stm.setInt(2, mese);
 				stm.setString(3, CNRUserContext.getUser(userContext));
-				//stm.execute();
+				stm.execute();
 			} finally {
 			}
 		}

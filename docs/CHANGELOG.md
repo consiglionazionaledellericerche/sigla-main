@@ -1,3 +1,67 @@
+## Release 6.4.9  -- _January 18, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[b8d3a9e015eecdc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8d3a9e015eecdc) gianfranco.gasparro *January 18, 2022*
+
+>**Modifiche Finanziaria 2022. Solo parte detrazioni**
+>
+>[74f2c27cb7aaf18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74f2c27cb7aaf18) gianfranco.gasparro *January 17, 2022*
+
+>**Add economica on docs**
+>
+>[9a40a9a02a7096f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a40a9a02a7096f) marco.spasiano *January 07, 2022*
+
+>**Update publiccode.yml**
+>
+>[0fadbf18eb4c18d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0fadbf18eb4c18d) marco.spasiano *January 07, 2022*
+
+>**Update publiccode.yml**
+>
+>[95e53de187bafbe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95e53de187bafbe) marco.spasiano *January 06, 2022*
+
+>**Add GitHub Workflow**
+>
+>[0ba2c5c074fd98f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ba2c5c074fd98f) marco.spasiano *January 05, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[3bcc9ae01f91ff1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3bcc9ae01f91ff1) patriziavillani *January 05, 2022*
+
+>**Add files via upload**
+>
+>[0159120df4f05fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0159120df4f05fe) patriziavillani *January 05, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[f794cb15ca2ad2a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f794cb15ca2ad2a) patriziavillani *January 05, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[a78a9a4ce6f3304](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a78a9a4ce6f3304) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[c0bc1672a393ca2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0bc1672a393ca2) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[59518cd8baf6fcc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/59518cd8baf6fcc) patriziavillani *January 05, 2022*
+
+>**Create contabilita_economica.rst**
+>
+>[b1cacd1fd3afdc1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1cacd1fd3afdc1) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[4131c609cbbf228](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4131c609cbbf228) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[09bc6e37552635e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09bc6e37552635e) patriziavillani *January 05, 2022*
+
+
 ## Release 6.4.8  -- _January 04, 2022_ 
 **Changes**
 

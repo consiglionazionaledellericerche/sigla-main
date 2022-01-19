@@ -4865,4 +4865,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="detrazioni_lavoro_add_imp_incr_fisso">
+        <addColumn tableName="DETRAZIONI_LAVORO">
+            <column name="IM_INCR_FISSO" type="numeric(15, 2)" remarks="Importo Incremento Fisso"/>
+            <column name="IM_INF_INCR_FISSO" type="numeric(15, 2)" remarks="Limite inferiore per importo Incremento Fisso"/>
+            <column name="IM_SUP_INCR_FISSO" type="numeric(15, 2)" remarks="Limite superiore per importo Incremento Fisso"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
