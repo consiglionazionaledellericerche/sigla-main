@@ -253,7 +253,7 @@ public OggettoBulk caricaCosto_dipendente(UserContext userContext,Costi_dipenden
  */
 public void contabilizzaFlussoStipendialeMensile(UserContext userContext,int mese) throws ComponentException {
 	try {
-		if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(userContext))
+		if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaPura(userContext))
 			innerContabilizzaFlussoStipendialeMensile(userContext, CNRUserContext.getEsercizio(userContext).intValue(), mese);
 		else {
 			LoggableStatement stm = new LoggableStatement(getConnection(userContext),
