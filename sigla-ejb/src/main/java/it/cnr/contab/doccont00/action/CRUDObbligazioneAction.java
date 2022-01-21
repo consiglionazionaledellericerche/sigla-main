@@ -27,8 +27,10 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 
+import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
@@ -51,7 +53,10 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.pdg01.bp.CRUDPdgModuloSpeseGestBP;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -70,6 +75,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 /**
  * (Obbligazione)
@@ -1437,6 +1443,23 @@ public Forward handleException(ActionContext context, Throwable ex)
 			return context.findDefaultForward();	
 		}
 		catch(Throwable e) {return handleException(context,e);}
+	}
+
+	public Forward doCRUDFind_contratto(ActionContext context) throws BusinessProcessException {
+		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
+		ObbligazioneBulk obbligazione = (ObbligazioneBulk) bp.getModel();
+		FormField formfield = getFormField(context, "main.find_contratto");
+		try {
+			CRUDConfigAnagContrattoBP crudbp = (CRUDConfigAnagContrattoBP)context.getUserInfo().createBusinessProcess(context, formfield.getField().getCRUDBusinessProcessName(), new Object[]{bp.isEditable() ? "MR" : "R"});
+			context.addHookForward("bringback", this, "doBringBackCRUD");
+			HookForward hookforward = (HookForward)context.findForward("bringback");
+			hookforward.addParameter("field", formfield);
+			if (Optional.ofNullable(obbligazione.getContratto()).filter(ContrattoBulk::isNotNew).isPresent())
+				crudbp.basicEdit(context, obbligazione.getContratto(), true);
+			return context.addBusinessProcess(crudbp);
+		} catch (Throwable e) {
+			return handleException(context, e);
+		}
 	}
 }
 

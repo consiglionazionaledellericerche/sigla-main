@@ -19,30 +19,31 @@ package it.cnr.contab.doccont00.action;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
 import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Azione che gestisce le richieste relative alla Gestione Documenti Contabili
@@ -850,8 +851,6 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
      * Gestisce il caricamento delle nuove linee di attività
      *
      * @param context   <code>ActionContext</code> in uso.
-     * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
-     * @param latt      Oggetto di tipo <code>Linea_attivitaBulk</code>
      * @return <code>Forward</code>
      */
     public Forward doBringBackCRUDCrea_linea_attivita(ActionContext context) {
@@ -1196,4 +1195,20 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
     	}
     }
 
+    public Forward doCRUDFind_contratto(ActionContext context) throws BusinessProcessException {
+        CRUDAccertamentoBP bp = (CRUDAccertamentoBP)getBusinessProcess(context);
+        AccertamentoBulk accertamento = (AccertamentoBulk) bp.getModel();
+        FormField formfield = getFormField(context, "main.find_contratto");
+        try {
+            CRUDConfigAnagContrattoBP crudbp = (CRUDConfigAnagContrattoBP)context.getUserInfo().createBusinessProcess(context, formfield.getField().getCRUDBusinessProcessName(), new Object[]{bp.isEditable() ? "MR" : "R"});
+            context.addHookForward("bringback", this, "doBringBackCRUD");
+            HookForward hookforward = (HookForward)context.findForward("bringback");
+            hookforward.addParameter("field", formfield);
+            if (Optional.ofNullable(accertamento.getContratto()).filter(ContrattoBulk::isNotNew).isPresent())
+                crudbp.basicEdit(context, accertamento.getContratto(), true);
+            return context.addBusinessProcess(crudbp);
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
 }
