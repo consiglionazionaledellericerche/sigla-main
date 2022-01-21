@@ -1292,14 +1292,15 @@
       );
 
    -- Calcolo del credito irpef
-   FUNCTION calcolaCreditoIrpef
-      (
-       --indice BINARY_INTEGER,
-       aImportoRiferimento NUMBER,
-       inNumGGTotMinPerCredito INTEGER,
-       aRecCompenso COMPENSO%ROWTYPE,
-       cdCori TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE
-      ) RETURN NUMBER;
+   PROCEDURE calcolaCreditoIrpef
+         (
+          --indice BINARY_INTEGER,
+          aImportoRiferimento IN NUMBER,
+          inNumGGTotMinPerCredito IN INTEGER,
+          aRecCompenso IN COMPENSO%ROWTYPE,
+          cdCori IN TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE,
+          aCredito IN OUT NUMBER,
+          PAREGGIO_DETRAZIONI IN OUT VARCHAR2);
 
    FUNCTION getNumeroGGCompensiCreditoArr
       ( aTerzo  COMPENSO.cd_terzo%TYPE,
