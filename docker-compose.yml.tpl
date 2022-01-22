@@ -1,11 +1,9 @@
-sigla:
+siglang:
   image: docker.si.cnr.it/##{CONTAINER_ID}##
-  volumes:
-    - ./cert.p12:/opt/cert.p12
-    - ./project-formazione.yml:/opt/project-formazione.yml
-  command: java -Xmx1g -Xss512k -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8787 -Dspring.profiles.active=liquibase-cnr -Dremote.maven.repo=https://repository.jboss.org/nexus/content/groups/public/,https://maven.repository.redhat.com/earlyaccess/all -DarubaRemoteSignService.url=http://arss3.cedrc.cnr.it:8080/ArubaSignService/ArubaSignService?WSDL -Djava.security.egd=file:/dev/./urandom -jar /opt/sigla-thorntail.jar -s/opt/project-formazione.yml -Skeycloak
-  extra_hosts:
-    - "sigla-print.test.si.cnr.it:150.146.206.186"
-    - "zuul-server.test.si.cnr.it:150.146.206.186"
+  environment:
+    - SIGLA_WILDFLY_URL=http://sigla-main-sso.test.si.cnr.it
+  command: java -Xmx512m -Xss512k -Dserver.port=8080 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8787 -Djava.security.egd=file:/dev/./urandom -jar /opt/sigla-ng.war --spring.profiles.active=prod,keycloak
   labels:
-   SERVICE_NAME: "##{SERVICE_NAME}##"
+    SERVICE_NAME: "##{SERVICE_NAME}##"
+  volumes:
+    - ./application-ldap.yml:/application-ldap.yml

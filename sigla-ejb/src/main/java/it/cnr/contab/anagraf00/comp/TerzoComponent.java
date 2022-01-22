@@ -340,7 +340,8 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
             if (modalita_pagamento
                     .stream()
                     .map(Modalita_pagamentoBulk::getRif_modalita_pagamento)
-                    .filter(rif_modalita_pagamentoBulk -> !rif_modalita_pagamentoBulk.getFl_cancellato())
+                    .filter(rif -> !rif.getFl_cancellato())
+                    .filter(rif -> Optional.ofNullable(rif.getTipo_pagamento_siope()).isPresent())
                     .map(Rif_modalita_pagamentoBulk::getTipo_pagamento_siope)
                     .filter(s -> s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value()) ||
                             s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value()))

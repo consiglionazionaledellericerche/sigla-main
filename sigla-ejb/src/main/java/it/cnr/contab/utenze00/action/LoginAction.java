@@ -144,13 +144,6 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
     public Forward doDefault(ActionContext context) {
         try {
             LoginBP loginbp = (LoginBP) context.getBusinessProcessRoot(true);
-            if (Optional.ofNullable(loginbp)
-                    .map(LoginBP::getParentRoot)
-                    .map(BusinessProcess::isBootstrap)
-                    .orElse(Boolean.FALSE)) {
-                context.invalidateSession();
-                return context.findForward("logout");
-            }
             try {
                 GestioneUtenteBP bp = (GestioneUtenteBP) context.getBusinessProcess("/GestioneUtenteBP");
                 context.setBusinessProcess(bp);
