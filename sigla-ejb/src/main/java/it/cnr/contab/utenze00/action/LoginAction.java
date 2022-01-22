@@ -144,6 +144,51 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
     public Forward doDefault(ActionContext context) {
         try {
             LoginBP loginbp = (LoginBP) context.getBusinessProcessRoot(true);
+            if (Optional.ofNullable(loginbp)
+                    .map(LoginBP::getParentRoot)
+                    .map(BusinessProcess::isBootstrap)
+                    .orElse(Boolean.FALSE)) {
+                context.invalidateSession();
+                return context.findForward("logout");
+            }
+            try {
+                GestioneUtenteBP bp = (GestioneUtenteBP) context.getBusinessProcess("/GestioneUtenteBP");
+                context.setBusinessProcess(bp);
+                for (Enumeration en = bp.getChildren(); en.hasMoreElements(); ) {
+                    BusinessProcess bpc = (BusinessProcess) en.nextElement();
+                    if (bpc instanceof SelezionaCdsBP) {
+                        bp.closeAllChildren();
+                        CNRUserInfo userInfo = (CNRUserInfo) context.getUserInfo();
+                        if (userInfo.getUnita_organizzativa() == null &&
+                                !userInfo.getUtente().isUtenteAmministratore() &&
+                                !userInfo.getUtente().isSuperutente())
+                            bp.cercaCds(context);
+                        break;
+                    } else {
+                        bp.closeAllChildren();
+                        CNRUserInfo userInfo = (CNRUserInfo) context.getUserInfo();
+                        if (userInfo.getUnita_organizzativa() == null &&
+                                !userInfo.getUtente().isUtenteAmministratore() &&
+                                !userInfo.getUtente().isSuperutente())
+                            bp.cercaUnitaOrganizzative(context);
+                        break;
+                    }
+                }
+            } catch (NoSuchBusinessProcessException _ex) {
+                final Forward forward = doLogin(context, GestioneLoginComponent.VALIDA_FASE_INIZIALE);
+                if (forward == null)
+                    return initializeWorkspace(context);
+                return forward;
+            }
+            return context.findForward("home");
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doDefaultNG(ActionContext context) {
+        try {
+            LoginBP loginbp = (LoginBP) context.getBusinessProcessRoot(true);
             try {
                 GestioneUtenteBP bp = (GestioneUtenteBP) context.getBusinessProcess("/GestioneUtenteBP");
                 context.setBusinessProcess(bp);
