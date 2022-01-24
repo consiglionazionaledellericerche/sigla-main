@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final utlizzo versione della libreria JasperReports6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="preventivo_laboratorio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="prova_online"/>
+	<style name="table" mode="Transparent" isBold="true">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["/labcon/preventivo/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="annoInizio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[annoInizio]]></fieldDescription>
+	</field>
+	<field name="annoFine" class="java.lang.Integer">
+		<fieldDescription><![CDATA[annoFine]]></fieldDescription>
+	</field>
+	<field name="contabilita" class="java.lang.String">
+		<fieldDescription><![CDATA[contabilita]]></fieldDescription>
+	</field>
+	<field name="respItaliano" class="java.lang.String">
+		<fieldDescription><![CDATA[respItaliano]]></fieldDescription>
+	</field>
+	<field name="laboratorio" class="java.lang.String">
+		<fieldDescription><![CDATA[laboratorio]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<image isUsingCache="true">
+				<reportElement x="174" y="2" width="202" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="39" width="521" height="51" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MODELLO DI PREVENTIVO DELLE VOCI DI SPESA:  " + $F{contabilita}+"\n"+
+$F{annoInizio} +"-"+  $F{annoFine} +"-"+  $F{laboratorio}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="90" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="14" y="49" width="524" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPESE DI MISSIONE PERSONALE CNR E ASSOCIATI CNR (Fondi A)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="26" y="10" width="124" height="15" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CNR Coordinator: "]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="d86635d9-7008-4064-b688-3ece16735a9a">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseCNR")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseCNR.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="80" width="96" height="1" uuid="5982f598-eb5e-4ce1-9bde-bd85bf712eeb"/>
+			</break>
+			<textField isBlankWhenNull="false">
+				<reportElement x="150" y="10" width="333" height="15" uuid="f749511a-9b60-4617-815c-d560b35deff7"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{respItaliano}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="10" width="524" height="30" uuid="913d0988-8d06-4304-8558-75eaedc34524">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPESE DI MISSIONE PERSONALE DELL'UNITA' PARTNER SU FONDI PROPRI (Fondi B) ]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="493a5908-4c24-4b8c-85e2-8a3cd91bd074"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spesePartner")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "spesePartner.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="80" width="95" height="1" uuid="a6a66064-83d5-404e-8425-24576e05704e"/>
+			</break>
+		</band>
+		<band height="90" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{laboratorio}.equals("TEMATICO")]]></printWhenExpression>
+			<staticText>
+				<reportElement x="14" y="10" width="524" height="40" uuid="c60f3c39-377b-4cd2-a5f2-a68d4427affd">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SPESE DI MISSIONE PERSONALE DI ALTRE ISTITUZIONI ITALIANE, SU FONDI
+PROPRI (eventuali Fondi C)]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="ee6de089-0037-4f1f-bd1b-3678aec3e385">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("speseAltreIstituzioniItaliane")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "speseAltreIstituzioniItaliane.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="10" width="161" height="21" uuid="5934f960-b2b3-4b06-b944-d7ea3ab23f31"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="383" y="10" width="161" height="21" uuid="5ffc1b5f-8cdb-4640-9187-3d1c32c336b6"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="233" y="30" width="100" height="30" uuid="61ca4d08-1b5e-4347-964a-b4e8ddcdb557"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
