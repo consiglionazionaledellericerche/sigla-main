@@ -1,13 +1,13 @@
-## Release 6.4.9  -- _January 18, 2022_ 
+## Release 6.4.10  -- _January 21, 2022_ 
 **Changes**
 
->**Fix**
+>**Rilascio modifiche cuneo fiscale per i compensi finanziaria 2022**
 >
->[b8d3a9e015eecdc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8d3a9e015eecdc) gianfranco.gasparro *January 18, 2022*
+>[fef4af13571f5e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fef4af13571f5e6) gianfranco.gasparro *January 21, 2022*
 
->**Modifiche Finanziaria 2022. Solo parte detrazioni**
+>**Subordinata la procedura java di contabilizzazione stipendi all'attivazione della economica pura.**
 >
->[74f2c27cb7aaf18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74f2c27cb7aaf18) gianfranco.gasparro *January 17, 2022*
+>[d73551617067c3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d73551617067c3d) raffaelepagano *January 19, 2022*
 
 >**Add economica on docs**
 >
@@ -60,6 +60,18 @@
 >**Update index.rst**
 >
 >[09bc6e37552635e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09bc6e37552635e) patriziavillani *January 05, 2022*
+
+
+## Release 6.4.9  -- _January 18, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[b8d3a9e015eecdc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8d3a9e015eecdc) gianfranco.gasparro *January 18, 2022*
+
+>**Modifiche Finanziaria 2022. Solo parte detrazioni**
+>
+>[74f2c27cb7aaf18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74f2c27cb7aaf18) gianfranco.gasparro *January 17, 2022*
 
 
 ## Release 6.4.8  -- _January 04, 2022_ 
