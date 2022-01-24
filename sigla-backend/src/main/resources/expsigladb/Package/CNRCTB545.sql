@@ -411,7 +411,8 @@
         tAliquotaPercip CONTRIBUTO_RITENUTA.aliquota%TYPE,
         tBaseCalcoloPercip CONTRIBUTO_RITENUTA.base_calcolo%TYPE,
         tAmmontarePercipLordo CONTRIBUTO_RITENUTA.ammontare_lordo%TYPE,
-        tAmmontarePercip CONTRIBUTO_RITENUTA.ammontare%TYPE
+        tAmmontarePercip CONTRIBUTO_RITENUTA.ammontare%TYPE,
+        tCreditoPareggioDetrazioni CREDITO_IRPEF.FL_PAREGGIO_DETRAZIONI%TYPE
        );
    TYPE insiemeCoriTab IS TABLE OF insiemeCoriRec
         INDEX BY BINARY_INTEGER;

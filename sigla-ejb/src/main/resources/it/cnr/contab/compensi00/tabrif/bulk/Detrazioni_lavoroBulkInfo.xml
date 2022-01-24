@@ -153,7 +153,40 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		label="Importo minimo detrazione" />
-			
+	<fieldProperty
+			name="imIncrFisso"
+			property="imIncrFisso"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="TEXT"
+			enabledOnInsert="true"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Importo Incremento Fisso" />
+	<fieldProperty
+			name="imInfIncrFisso"
+			property="imInfIncrFisso"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="TEXT"
+			enabledOnInsert="true"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Importo Inferiore per Incremento Fisso" />
+	<fieldProperty
+			name="imSupIncrFisso"
+			property="imSupIncrFisso"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="TEXT"
+			enabledOnInsert="true"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Importo Superiore per Incremento Fisso" />
+
 	<formFieldProperty name="ti_lavoro" />
 	<formFieldProperty name="im_detrazione" />
 	<formFieldProperty name="im_inferiore" />
@@ -165,7 +198,10 @@
 	<formFieldProperty name="numeratore" />
 	<formFieldProperty name="denominatore" />
 	<formFieldProperty name="im_detrazione_minima" />
-	
+	<formFieldProperty name="imIncrFisso" />
+	<formFieldProperty name="imInfIncrFisso" />
+	<formFieldProperty name="imSupIncrFisso" />
+
 	<columnFieldProperty name="ti_lavoro" />
 	<columnFieldProperty name="im_detrazione" />
 	<columnFieldProperty name="im_inferiore" />
@@ -177,7 +213,10 @@
 	<columnFieldProperty name="numeratore"/>
 	<columnFieldProperty name="denominatore"/>
 	<columnFieldProperty name="im_detrazione_minima" />
-	
+	<columnFieldProperty name="imIncrFisso" />
+	<columnFieldProperty name="imInfIncrFisso" />
+	<columnFieldProperty name="imSupIncrFisso" />
+
 	<findFieldProperty name="ti_lavoro" />
 	<findFieldProperty name="im_detrazione" />
 	<findFieldProperty name="im_inferiore" />

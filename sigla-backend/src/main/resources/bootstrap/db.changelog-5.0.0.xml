@@ -4865,4 +4865,21 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="detrazioni_lavoro_add_imp_incr_fisso">
+        <addColumn tableName="DETRAZIONI_LAVORO">
+            <column name="IM_INCR_FISSO" type="numeric(15, 2)" remarks="Importo Incremento Fisso"/>
+            <column name="IM_INF_INCR_FISSO" type="numeric(15, 2)" remarks="Limite inferiore per importo Incremento Fisso"/>
+            <column name="IM_SUP_INCR_FISSO" type="numeric(15, 2)" remarks="Limite superiore per importo Incremento Fisso"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="credito_irpef_add_pareggio_detrazioni">
+        <addColumn tableName="CREDITO_IRPEF">
+            <column name="FL_PAREGGIO_DETRAZIONI" type="CHAR(1)" defaultValue="N" remarks="Credito che serve solo a pareggiare le detrazioni."/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="contributo_ritenuta_add_pareggio_detrazioni">
+        <addColumn tableName="CONTRIBUTO_RITENUTA">
+            <column name="fl_credito_pareggio_detrazioni" type="CHAR(1)" remarks="Indica che il credito irpef viene usato solo a pareggiare le detrazioni."/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -1634,7 +1634,8 @@ PROCEDURE calcolaCoriAltro
    aCdRegione COMPENSO.cd_regione_add%TYPE;
    aCdProvincia COMPENSO.cd_provincia_add%TYPE;
    aPgComune COMPENSO.pg_comune_add%TYPE;
-
+   aCreditoIrpef  NUMBER(15,2);
+   CREDITO_PAREGGIO_DETRAZIONI VARCHAR2(1);
    aImponibileLordoCori NUMBER(15,2);
    aImponibileNettoCori NUMBER(15,2);
    aMontanteLordoCori NUMBER(15,2);
@@ -2266,6 +2267,8 @@ Begin
 --pipe.send_message('aImDetrazioniPe = '||aImDetrazioniPe);
                   --Elsif tabella_cori(i).tFlCreditoIrpef = 'Y' THEN
                   Elsif CNRCTB545.IsCoriCreditoIrpef(tabella_cori(i).tCdCori) = 'Y' then
+                     aCreditoIrpef := 0;
+                     CREDITO_PAREGGIO_DETRAZIONI := 'N';
                      IF (aRecCompenso.fl_compenso_mcarriera_tassep = 'N'
                          AND
                          --per il conguaglio viene chiamata direttamente dal conguaglio
@@ -2279,14 +2282,16 @@ Begin
                          --aImpostaPerCreditoIrpef > aImDetrazioniPe
                         ) THEN
 
-                        tabella_cori(i).tAmmontarePercipLordo:=calcolaCreditoIrpef(--i,
+                                    calcolaCreditoIrpef(--i,
                                                                                    aTotRedditoComplessivo, --aImportoAccessoDetrazioni,
                                                                                    aNumGGTotMinPerCredito,
                                                                                    aRecCompenso,
-                                                                                   tabella_cori(i).tCdCori);
-                     ELSE
-                        tabella_cori(i).tAmmontarePercipLordo:=0;
+                                                                                   tabella_cori(i).tCdCori,
+                                                                                   aCreditoIrpef,
+                                                                                   CREDITO_PAREGGIO_DETRAZIONI);
                      END IF;
+                     tabella_cori(i).tAmmontarePercipLordo := aCreditoIrpef;
+                     tabella_cori(i).tCreditoPareggioDetrazioni := CREDITO_PAREGGIO_DETRAZIONI;
                   --*/
                   Else
 
@@ -3750,6 +3755,7 @@ END calcolaDetrazioniPer;
 PROCEDURE scriviDettaglioCompenso
    IS
    i BINARY_INTEGER;
+   K BINARY_INTEGER;
    totNettizza NUMBER(15,2);
    aTotDetrazioni NUMBER(15,2);
 
@@ -3773,6 +3779,7 @@ PROCEDURE scriviDettaglioCompenso
    contaCORIEntePiu INTEGER;
    contaCORIEnteMeno INTEGER;
 
+   SCRIVI_CUNEO VARCHAR2(1) := 'S';
    imTotaleCompenso NUMBER(15,2);
    imNettoCompenso NUMBER(15,2);
    imNettoCompensoCalcolato NUMBER(15,2);
@@ -3845,154 +3852,179 @@ BEGIN
    BEGIN
 
       ----------------------------------------------------------------------------------------------
+    -- SEGNA DI EVITARE DI SCRIVERE IL CUNEO PER IL PAREGGIO DETRAZIONI
+      k := 0;
+      if aTotDetrazioni <= 0 then
+          FOR K IN tabella_cori.FIRST .. tabella_cori.LAST LOOP
+            IF tabella_cori(K).tCreditoPareggioDetrazioni = 'Y' THEN
+                SCRIVI_CUNEO := 'N';
+            END IF;
+          END LOOP;
+      end if;
       -- Scrittura CONTRIBUTO_RITENUTA
-
       FOR i IN tabella_cori.FIRST .. tabella_cori.LAST
-
       LOOP
+         IF tabella_cori(i).tCreditoPareggioDetrazioni IS NULL OR tabella_cori(i).tCreditoPareggioDetrazioni = 'N' OR SCRIVI_CUNEO = 'S' THEN
+             aRecContributoRitenuta.cd_cds:=aRecCompenso.cd_cds;
+             aRecContributoRitenuta.cd_unita_organizzativa:=aRecCompenso.cd_unita_organizzativa;
+             aRecContributoRitenuta.esercizio:=aRecCompenso.esercizio;
+             aRecContributoRitenuta.pg_compenso:=aRecCompenso.pg_compenso;
+             aRecContributoRitenuta.cd_contributo_ritenuta:=tabella_cori(i).tCdCori;
+             aRecContributoRitenuta.dt_ini_validita:=tabella_cori(i).tDtIniValCori;
+             aRecContributoRitenuta.montante:=tabella_cori(i).tMontante;
+             aRecContributoRitenuta.imponibile_lordo:=tabella_cori(i).tImponibileLordo;
+             aRecContributoRitenuta.im_deduzione_irpef:=tabella_cori(i).tImDeduzioneIrpef;
+             aRecContributoRitenuta.im_deduzione_family:=tabella_cori(i).tImDeduzioneFamily;
+             aRecContributoRitenuta.imponibile:=tabella_cori(i).tImponibileNetto;
+             aRecContributoRitenuta.stato_cofi_cr:='N';
+             aRecContributoRitenuta.dacr:=dataOdierna;
+             aRecContributoRitenuta.utcr:=aRecCompenso.utcr;
+             aRecContributoRitenuta.duva:=dataOdierna;
+             aRecContributoRitenuta.utuv:=aRecCompenso.utuv;
+             aRecContributoRitenuta.pg_ver_rec:=aRecCompenso.pg_ver_rec;
+             aRecContributoRitenuta.fl_credito_pareggio_detrazioni := tabella_cori(i).tCreditoPareggioDetrazioni;
+             -- Parte percipiente ----------------------------------------------------------------------
+             IF tabella_cori(i).tAmmontarePercip IS NOT NULL AND aRecTipoTrattamento.fl_solo_inail_ente != 'Y' THEN
+                aRecContributoRitenuta.ti_ente_percipiente:='P';
+                aRecContributoRitenuta.aliquota:=tabella_cori(i).tAliquotaPercip;
+                aRecContributoRitenuta.base_calcolo:=tabella_cori(i).tBaseCalcoloPercip;
+                aRecContributoRitenuta.ammontare_lordo:=tabella_cori(i).tAmmontarePercipLordo;
+                -- Se il CORI rappresenta IRPEF a scaglioni allora
+                -- -- memorizzo dati per imponibile fiscale per compenso
+                -- -- nettizzo IRPEF delle detrazioni. Se il valore �egativo normalizzo a zero
 
-         aRecContributoRitenuta.cd_cds:=aRecCompenso.cd_cds;
-         aRecContributoRitenuta.cd_unita_organizzativa:=aRecCompenso.cd_unita_organizzativa;
-         aRecContributoRitenuta.esercizio:=aRecCompenso.esercizio;
-         aRecContributoRitenuta.pg_compenso:=aRecCompenso.pg_compenso;
-         aRecContributoRitenuta.cd_contributo_ritenuta:=tabella_cori(i).tCdCori;
-         aRecContributoRitenuta.dt_ini_validita:=tabella_cori(i).tDtIniValCori;
-         aRecContributoRitenuta.montante:=tabella_cori(i).tMontante;
-         aRecContributoRitenuta.imponibile_lordo:=tabella_cori(i).tImponibileLordo;
-         aRecContributoRitenuta.im_deduzione_irpef:=tabella_cori(i).tImDeduzioneIrpef;
-         aRecContributoRitenuta.im_deduzione_family:=tabella_cori(i).tImDeduzioneFamily;
-         aRecContributoRitenuta.imponibile:=tabella_cori(i).tImponibileNetto;
-         aRecContributoRitenuta.stato_cofi_cr:='N';
-         aRecContributoRitenuta.dacr:=dataOdierna;
-         aRecContributoRitenuta.utcr:=aRecCompenso.utcr;
-         aRecContributoRitenuta.duva:=dataOdierna;
-         aRecContributoRitenuta.utuv:=aRecCompenso.utuv;
-         aRecContributoRitenuta.pg_ver_rec:=aRecCompenso.pg_ver_rec;
+                IF CNRCTB545.getIsIrpefScaglioni(tabella_cori(i).tCdClassificazioneCori,
+                                                 tabella_cori(i).tPgClassificazioneMontanti,
+                                                 tabella_cori(i).tFlScriviMontanti) = 'Y' THEN
 
-         -- Parte percipiente ----------------------------------------------------------------------
-         IF tabella_cori(i).tAmmontarePercip IS NOT NULL AND aRecTipoTrattamento.fl_solo_inail_ente != 'Y' THEN
-            aRecContributoRitenuta.ti_ente_percipiente:='P';
-            aRecContributoRitenuta.aliquota:=tabella_cori(i).tAliquotaPercip;
-            aRecContributoRitenuta.base_calcolo:=tabella_cori(i).tBaseCalcoloPercip;
-            aRecContributoRitenuta.ammontare_lordo:=tabella_cori(i).tAmmontarePercipLordo;
-            -- Se il CORI rappresenta IRPEF a scaglioni allora
-            -- -- memorizzo dati per imponibile fiscale per compenso
-            -- -- nettizzo IRPEF delle detrazioni. Se il valore �egativo normalizzo a zero
+                   aImponibileIrpefLordo:=aRecContributoRitenuta.imponibile_lordo;
+                   aImponibileIrpefNetto:=aRecContributoRitenuta.imponibile;
+                   aImportoDeduzioneIrpef:=aRecContributoRitenuta.im_deduzione_irpef;
 
-            IF CNRCTB545.getIsIrpefScaglioni(tabella_cori(i).tCdClassificazioneCori,
-                                             tabella_cori(i).tPgClassificazioneMontanti,
-                                             tabella_cori(i).tFlScriviMontanti) = 'Y' THEN
+                   tabella_cori(i).tAmmontarePercip:=tabella_cori(i).tAmmontarePercip - aTotDetrazioni;
+                   aImportoIrpef:=tabella_cori(i).tAmmontarePercip;
+                   IF tabella_cori(i).tAmmontarePercip < 0 THEN
+                      totNettizza:=tabella_cori(i).tAmmontarePercip * -1;
+                      tabella_cori(i).tAmmontarePercip:=0;
+                      k := 0;
+                      FOR K IN tabella_cori.FIRST .. tabella_cori.LAST LOOP
+                        IF tabella_cori(K).tCreditoPareggioDetrazioni = 'Y' THEN
+                            IF totNettizza <= tabella_cori(K).tAmmontarePercip * -1 THEN
+                                tabella_cori(K).tAmmontarePercip := totNettizza * -1;
+                                tabella_cori(K).tAmmontarePercipLordo := totNettizza * -1;
+                            END IF;
+                        END IF;
+                      END LOOP;
 
-               aImponibileIrpefLordo:=aRecContributoRitenuta.imponibile_lordo;
-               aImponibileIrpefNetto:=aRecContributoRitenuta.imponibile;
-               aImportoDeduzioneIrpef:=aRecContributoRitenuta.im_deduzione_irpef;
+                      nettizzaDetrazioni(totNettizza);
+                   ELSE
+    -- SEGNA DI EVITARE DI SCRIVERE IL CUNEO PER IL PAREGGIO DETRAZIONI
+                      k := 0;
+                      FOR K IN tabella_cori.FIRST .. tabella_cori.LAST LOOP
+                        IF tabella_cori(K).tCreditoPareggioDetrazioni = 'Y' THEN
+                          SCRIVI_CUNEO := 'N';
+                        END IF;
+                      END LOOP;
+                   END IF;
+                END IF;
 
-               tabella_cori(i).tAmmontarePercip:=tabella_cori(i).tAmmontarePercip - aTotDetrazioni;
-               aImportoIrpef:=tabella_cori(i).tAmmontarePercip;
-               IF tabella_cori(i).tAmmontarePercip < 0 THEN
-                  totNettizza:=tabella_cori(i).tAmmontarePercip * -1;
-                  tabella_cori(i).tAmmontarePercip:=0;
-                  nettizzaDetrazioni(totNettizza);
-               END IF;
-            END IF;
+                -- Scrittura importo netto
+                -- Se il compenso �a conguaglio nel caso in cui l'importo irpef sia = 0 non si deve
+                -- calcolare nulla per addizionali territorio
 
-            -- Scrittura importo netto
-            -- Se il compenso �a conguaglio nel caso in cui l'importo irpef sia = 0 non si deve
-            -- calcolare nulla per addizionali territorio
+                IF (aOrigineCompenso = CNRCTB545.isCompensoConguaglio AND
+                    CNRCTB545.getIsAddTerritorio(tabella_cori(i).tCdClassificazioneCori) = 'Y') THEN
 
-            IF (aOrigineCompenso = CNRCTB545.isCompensoConguaglio AND
-                CNRCTB545.getIsAddTerritorio(tabella_cori(i).tCdClassificazioneCori) = 'Y') THEN
+                   IF aImportoIrpef = 0 THEN
+                      tabella_cori(i).tImponibileLordo:=0;
+                      tabella_cori(i).tImponibileNetto:=0;
+                      tabella_cori(i).tAmmontarePercipLordo:=0;
+                      tabella_cori(i).tAmmontarePercip:=0;
+                      aRecContributoRitenuta.imponibile_lordo:=tabella_cori(i).tImponibileLordo;
+                      aRecContributoRitenuta.imponibile:=tabella_cori(i).tImponibileNetto;
+                      aRecContributoRitenuta.ammontare_lordo:=tabella_cori(i).tAmmontarePercipLordo;
+                   END IF;
 
-               IF aImportoIrpef = 0 THEN
-                  tabella_cori(i).tImponibileLordo:=0;
-                  tabella_cori(i).tImponibileNetto:=0;
-                  tabella_cori(i).tAmmontarePercipLordo:=0;
-                  tabella_cori(i).tAmmontarePercip:=0;
-                  aRecContributoRitenuta.imponibile_lordo:=tabella_cori(i).tImponibileLordo;
-                  aRecContributoRitenuta.imponibile:=tabella_cori(i).tImponibileNetto;
-                  aRecContributoRitenuta.ammontare_lordo:=tabella_cori(i).tAmmontarePercipLordo;
-               END IF;
+                END IF;
 
-            END IF;
+                aRecContributoRitenuta.ammontare:=tabella_cori(i).tAmmontarePercip;
 
-            aRecContributoRitenuta.ammontare:=tabella_cori(i).tAmmontarePercip;
-
---pipe.send_message('aRecContributoRitenuta.cd_contributo_ritenuta '||aRecContributoRitenuta.cd_contributo_ritenuta);
---pipe.send_message('aRecContributoRitenuta.ammontare '||aRecContributoRitenuta.ammontare);
+    --pipe.send_message('aRecContributoRitenuta.cd_contributo_ritenuta '||aRecContributoRitenuta.cd_contributo_ritenuta);
+    --pipe.send_message('aRecContributoRitenuta.ammontare '||aRecContributoRitenuta.ammontare);
 
 
-      -- Dopo aver calcolato l'ammontare netto
-      -- Se il terzo �oggetto a sospensione e se il CORI �oggetto a sospensione
-      -- viene spostato l'ammontare nell'importo sospeso e impostato a zero l'ammontare stesso
-      If (aOrigineCompenso != CNRCTB545.isCompensoConguaglio And
-          tabella_cori(i).tFlSospensioneIrpef Is Not Null And
-          tabella_cori(i).tFlSospensioneIrpef = 'Y') Then
-         If aRecAnagrafico.fl_sospensione_irpef = 'Y' And
-            dataOdierna >= aDataSospensioneMin And
-            dataOdierna <= aDataSospensioneMax Then
-                aRecContributoRitenuta.im_cori_sospeso := aRecContributoRitenuta.ammontare;
-                aRecContributoRitenuta.ammontare:= 0;
-         Else
-            aRecContributoRitenuta.im_cori_sospeso := 0;
-         End If;
-      Else
-         aRecContributoRitenuta.im_cori_sospeso := 0;
-      End If;
+          -- Dopo aver calcolato l'ammontare netto
+          -- Se il terzo �oggetto a sospensione e se il CORI �oggetto a sospensione
+          -- viene spostato l'ammontare nell'importo sospeso e impostato a zero l'ammontare stesso
+          If (aOrigineCompenso != CNRCTB545.isCompensoConguaglio And
+              tabella_cori(i).tFlSospensioneIrpef Is Not Null And
+              tabella_cori(i).tFlSospensioneIrpef = 'Y') Then
+             If aRecAnagrafico.fl_sospensione_irpef = 'Y' And
+                dataOdierna >= aDataSospensioneMin And
+                dataOdierna <= aDataSospensioneMax Then
+                    aRecContributoRitenuta.im_cori_sospeso := aRecContributoRitenuta.ammontare;
+                    aRecContributoRitenuta.ammontare:= 0;
+             Else
+                aRecContributoRitenuta.im_cori_sospeso := 0;
+             End If;
+          Else
+             aRecContributoRitenuta.im_cori_sospeso := 0;
+          End If;
 
-            -- Totalizzazione del valore complessivo dei CORI carico percipiente
+                -- Totalizzazione del valore complessivo dei CORI carico percipiente
 
-            imCORIPercipiente:=imCORIPercipiente + aRecContributoRitenuta.ammontare;
-            IF aRecContributoRitenuta.ammontare < 0 THEN
-               imCORIPercipMeno:=imCORIPercipMeno + aRecContributoRitenuta.ammontare;
-               contaCORIPercipMeno:=contaCORIPercipMeno + 1;
-            END IF;
-            IF aRecContributoRitenuta.ammontare > 0 THEN
-               imCORIPercipPiu:=imCORIPercipPiu + aRecContributoRitenuta.ammontare;
-               contaCORIPercipPiu:=contaCORIPercipPiu + 1;
-            END IF;
+                imCORIPercipiente:=imCORIPercipiente + aRecContributoRitenuta.ammontare;
+                IF aRecContributoRitenuta.ammontare < 0 THEN
+                   imCORIPercipMeno:=imCORIPercipMeno + aRecContributoRitenuta.ammontare;
+                   contaCORIPercipMeno:=contaCORIPercipMeno + 1;
+                END IF;
+                IF aRecContributoRitenuta.ammontare > 0 THEN
+                   imCORIPercipPiu:=imCORIPercipPiu + aRecContributoRitenuta.ammontare;
+                   contaCORIPercipPiu:=contaCORIPercipPiu + 1;
+                END IF;
 
-            -- scrittura record CONTRIBUTO_RITENUTA
+                -- scrittura record CONTRIBUTO_RITENUTA
 
-            CNRCTB545.insContributoRitenuta (aRecContributoRitenuta);
+                CNRCTB545.insContributoRitenuta (aRecContributoRitenuta);
 
-         END IF;
+             END IF;
 
-         -- Parte ente -----------------------------------------------------------------------------
+             -- Parte ente -----------------------------------------------------------------------------
 
-         IF tabella_cori(i).tAmmontareEnte IS NOT NULL THEN
-            aRecContributoRitenuta.ti_ente_percipiente:='E';
-            aRecContributoRitenuta.aliquota:=tabella_cori(i).tAliquotaEnte;
-            aRecContributoRitenuta.base_calcolo:=tabella_cori(i).tBaseCalcoloEnte;
-            aRecContributoRitenuta.ammontare_lordo:=tabella_cori(i).tAmmontareEnteLordo;
-            aRecContributoRitenuta.ammontare:=tabella_cori(i).tAmmontareEnte;
+             IF tabella_cori(i).tAmmontareEnte IS NOT NULL THEN
+                aRecContributoRitenuta.ti_ente_percipiente:='E';
+                aRecContributoRitenuta.aliquota:=tabella_cori(i).tAliquotaEnte;
+                aRecContributoRitenuta.base_calcolo:=tabella_cori(i).tBaseCalcoloEnte;
+                aRecContributoRitenuta.ammontare_lordo:=tabella_cori(i).tAmmontareEnteLordo;
+                aRecContributoRitenuta.ammontare:=tabella_cori(i).tAmmontareEnte;
 
-            -- Totalizzazione del valore complessivo dei CORI carico ente.
+                -- Totalizzazione del valore complessivo dei CORI carico ente.
 
-            imCORIEnte:=imCORIEnte + tabella_cori(i).tAmmontareEnte;
-            IF tabella_cori(i).tAmmontareEnte < 0 THEN
-               imCORIEnteMeno:=imCORIEnteMeno + tabella_cori(i).tAmmontareEnte;
-               contaCORIEnteMeno:=contaCORIEnteMeno + 1;
-            END IF;
-            IF tabella_cori(i).tAmmontareEnte > 0 THEN
-               imCORIEntePiu:=imCORIEntePiu + tabella_cori(i).tAmmontareEnte;
-               contaCORIEntePiu:=contaCORIEntePiu + 1;
-            END IF;
+                imCORIEnte:=imCORIEnte + tabella_cori(i).tAmmontareEnte;
+                IF tabella_cori(i).tAmmontareEnte < 0 THEN
+                   imCORIEnteMeno:=imCORIEnteMeno + tabella_cori(i).tAmmontareEnte;
+                   contaCORIEnteMeno:=contaCORIEnteMeno + 1;
+                END IF;
+                IF tabella_cori(i).tAmmontareEnte > 0 THEN
+                   imCORIEntePiu:=imCORIEntePiu + tabella_cori(i).tAmmontareEnte;
+                   contaCORIEntePiu:=contaCORIEntePiu + 1;
+                END IF;
 
-            -- Totalizzazione degli importi di rivalsa e iva da sommare al netto percipiente
+                -- Totalizzazione degli importi di rivalsa e iva da sommare al netto percipiente
 
-            IF (tabella_cori(i).tCdClassificazioneCori = CNRCTB545.isCoriIva OR
-                tabella_cori(i).tCdClassificazioneCori = CNRCTB545.isCoriRivalsa) THEN
-               imAggiungoNettoPercip:=imAggiungoNettoPercip + tabella_cori(i).tAmmontareEnte;
-            END IF;
+                IF (tabella_cori(i).tCdClassificazioneCori = CNRCTB545.isCoriIva OR
+                    tabella_cori(i).tCdClassificazioneCori = CNRCTB545.isCoriRivalsa) THEN
+                   imAggiungoNettoPercip:=imAggiungoNettoPercip + tabella_cori(i).tAmmontareEnte;
+                END IF;
 
-      -- La sospensione �alida solo per i cori a carico percipiente
-      aRecContributoRitenuta.im_cori_sospeso := 0;
+          -- La sospensione �alida solo per i cori a carico percipiente
+          aRecContributoRitenuta.im_cori_sospeso := 0;
 
-            -- scrittura record CONTRIBUTO_RITENUTA
+                -- scrittura record CONTRIBUTO_RITENUTA
 
-            CNRCTB545.insContributoRitenuta(aRecContributoRitenuta);
-         END IF;
-
+                CNRCTB545.insContributoRitenuta(aRecContributoRitenuta);
+             END IF;
+        END IF;
       END LOOP;
 
       ----------------------------------------------------------------------------------------------
@@ -5797,13 +5829,9 @@ BEGIN
          aImportoDetrazPe := 0;
    End If;
  */
-   If aImportoRiferimento <= 8000 Then
+   If aRecDetrazioniLavoro.moltiplicatore = 1 and aRecDetrazioniLavoro.numeratore = 1 Then
           aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione;
-   Elsif aImportoRiferimento <= 28000 Then
-          aCoefficientePe := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
-          aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione +
-                              (aRecDetrazioniLavoro.moltiplicatore * aCoefficientePe);
-   Elsif aImportoRiferimento <= 55000 Then
+   Elsif aRecDetrazioniLavoro.moltiplicatore = 1 Then
           aCoefficientePe := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
           aImportoDetrazPe := (aRecDetrazioniLavoro.im_detrazione * aCoefficientePe);
           --aggiungo l'eventuale maggiorazione ma solo se non �n conguaglio
@@ -5812,9 +5840,13 @@ BEGIN
               aImportoDetrazPe := aImportoDetrazPe + aRecDetrazioniLavoro.im_maggiorazione;
           End If;
    Else
-         aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione;
+          aCoefficientePe := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
+          aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione +
+                              (aRecDetrazioniLavoro.moltiplicatore * aCoefficientePe);
    End If;
-
+   if aImportoRiferimento between aRecDetrazioniLavoro.im_inf_incr_fisso and aRecDetrazioniLavoro.im_sup_incr_fisso Then
+      aImportoDetrazPe := aImportoDetrazPe + aRecDetrazioniLavoro.im_incr_fisso;
+   end if;
    --Rapporto la detrazione al numero di giorni effettivo
    IF aNumeroGG = aGGAnno THEN
       aImportoDetrazPe:=aImportoDetrazPe;
@@ -5890,20 +5922,20 @@ Begin
     aImportoDetrazLa := 0;
    End If;
    */
-   /*Modifiche Finanziaria 2008*/
-   If aImportoRiferimento <= 7500 Then
-        aImportoDetrazLa := aRecDetrazioniLavoro.im_detrazione;
-   Elsif aImportoRiferimento <= 15000 Then
-        aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
-  aImportoDetrazLa :=
-       aRecDetrazioniLavoro.im_detrazione + (aRecDetrazioniLavoro.moltiplicatore * aCoefficienteLa);
-   Elsif aImportoRiferimento <= 55000 Then
-    aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
-  aImportoDetrazLa :=
-       aRecDetrazioniLavoro.im_detrazione * aCoefficienteLa;
+
+   If aRecDetrazioniLavoro.moltiplicatore = 1 and aRecDetrazioniLavoro.numeratore = 1 Then
+          aImportoDetrazLa := aRecDetrazioniLavoro.im_detrazione;
+   Elsif aRecDetrazioniLavoro.moltiplicatore = 1 Then
+          aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
+          aImportoDetrazLa := (aRecDetrazioniLavoro.im_detrazione * aCoefficienteLa);
    Else
-    aImportoDetrazLa := 0;
+          aCoefficienteLa := Trunc((aRecDetrazioniLavoro.numeratore - aImportoRiferimento)/aRecDetrazioniLavoro.denominatore,4);
+          aImportoDetrazLa := aRecDetrazioniLavoro.im_detrazione +
+                              (aRecDetrazioniLavoro.moltiplicatore * aCoefficienteLa);
    End If;
+   if aImportoRiferimento between aRecDetrazioniLavoro.im_inf_incr_fisso and aRecDetrazioniLavoro.im_sup_incr_fisso Then
+      aImportoDetrazLa := aImportoDetrazLa + aRecDetrazioniLavoro.im_incr_fisso;
+   end if;
 
    If aDifferenzaMesi = aMMAnno Then
       aImportoDetrazLa:=aImportoDetrazLa;
@@ -5915,16 +5947,16 @@ End calcolaDetrazioniAltriTipi;
 -- =================================================================================================
 -- Calcolo del credito irpef
 -- =================================================================================================
-FUNCTION calcolaCreditoIrpef
-   (
-    --indice BINARY_INTEGER,
-    aImportoRiferimento NUMBER,
-    inNumGGTotMinPerCredito INTEGER,
-    aRecCompenso COMPENSO%ROWTYPE,
-    cdCori TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE
-   ) RETURN NUMBER IS
+PROCEDURE calcolaCreditoIrpef
+      (
+       --indice BINARY_INTEGER,
+       aImportoRiferimento IN NUMBER,
+       inNumGGTotMinPerCredito IN INTEGER,
+       aRecCompenso IN COMPENSO%ROWTYPE,
+       cdCori IN TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE,
+       aCredito IN OUT NUMBER,
+       PAREGGIO_DETRAZIONI IN OUT VARCHAR2) IS
 
-   aCredito NUMBER(15,2);
    aCreditoCorrente NUMBER(15,2);
    aCreditoArretrato NUMBER(15,2);
    aCreditoArretratoTot NUMBER(15,2);
@@ -5979,9 +6011,8 @@ BEGIN
 
         aEsercizioRif:=aRecCompenso.Esercizio;
         IF aEsercizioRif != TO_NUMBER(TO_CHAR(aRecCompenso.dt_registrazione,'YYYY')) THEN
-              RETURN aCredito;
+              RETURN;
         END IF;
-
         -------------------------------------------------------------------------------------------------
         -- Leggo parametri per credito
         BEGIN
@@ -5992,10 +6023,11 @@ BEGIN
                   im_inferiore <= aImportoRiferimento AND
                   im_superiore >= aImportoRiferimento;
 
+           PAREGGIO_DETRAZIONI := aRecCreditoIrpef.fl_pareggio_detrazioni;
         EXCEPTION
            WHEN no_data_found THEN
 --pipe.send_message('Nessuna riga in CREDITO_IRPEF');
-                RETURN aCredito;
+                RETURN;
            WHEN OTHERS THEN
               IBMERR001.RAISE_ERR_GENERICO ('Errore nel recupero dei dati per il calcolo del credito irpef.');
         END;
@@ -6004,7 +6036,7 @@ BEGIN
 
 --pipe.send_message('aRecCreditoIrpef.im_credito = '||aRecCreditoIrpef.im_credito);
         IF aRecCreditoIrpef.im_credito = 0 then
-            RETURN aCredito;
+            RETURN;
         END IF;
         IF ((aRecCompenso.dt_da_competenza_coge >= aRecCreditoIrpef.dt_inizio_applicazione
              AND
@@ -6184,7 +6216,7 @@ BEGIN
            END IF;
         END IF;
   End If;   -- FINE  If glbFlNoCreditoIrpef != 'Y' Then
-  RETURN - aCredito;
+  aCredito:= aCredito * (-1);
   END;
 END calcolaCreditoIrpef;
 
