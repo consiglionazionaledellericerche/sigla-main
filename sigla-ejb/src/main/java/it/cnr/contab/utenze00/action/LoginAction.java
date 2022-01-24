@@ -41,8 +41,6 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.FormBP;
 import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,7 +158,6 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 
     public Forward doDefaultNG(ActionContext context) {
         try {
-            LoginBP loginbp = (LoginBP) context.getBusinessProcessRoot(true);
             return doInitializeWorkspace(context);
         } catch (Throwable e) {
             return handleException(context, e);
@@ -345,7 +342,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                         return Optional.ofNullable(keycloakSecurityContext.getIdToken())
                                 .orElse(keycloakSecurityContext.getToken());
                     });
-            if (idToken.isPresent()){
+            if (idToken.isPresent()) {
                 utente.setCd_utente(idToken.get().getPreferredUsername());
                 utente.setCd_utente_uid(idToken.get().getPreferredUsername());
             }
