@@ -166,6 +166,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 
     public Forward doInitializeWorkspace(ActionContext context) throws BusinessProcessException, ParseException, ComponentException, RemoteException {
         try {
+            LoginBP loginbp = (LoginBP) context.getBusinessProcessRoot(true);
             GestioneUtenteBP bp = (GestioneUtenteBP) context.getBusinessProcess("/GestioneUtenteBP");
             context.setBusinessProcess(bp);
             for (Enumeration en = bp.getChildren(); en.hasMoreElements(); ) {
@@ -196,7 +197,6 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         }
         return context.findForward("home");
     }
-
 
     public Forward doLoginIniziale(ActionContext context) throws java.text.ParseException {
         try {
