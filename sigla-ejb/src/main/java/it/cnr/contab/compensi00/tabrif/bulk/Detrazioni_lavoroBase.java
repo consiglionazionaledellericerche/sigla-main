@@ -22,6 +22,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.math.BigDecimal;
+
 public class Detrazioni_lavoroBase extends Detrazioni_lavoroKey implements Keyed {
 	// DT_FINE_VALIDITA TIMESTAMP
 	private java.sql.Timestamp dt_fine_validita;
@@ -31,7 +33,37 @@ public class Detrazioni_lavoroBase extends Detrazioni_lavoroKey implements Keyed
 
 	// IM_SUPERIORE DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_superiore;
-	
+
+	private java.math.BigDecimal imIncrFisso;
+
+	private java.math.BigDecimal imInfIncrFisso;
+
+	private java.math.BigDecimal imSupIncrFisso;
+
+	public BigDecimal getImIncrFisso() {
+		return imIncrFisso;
+	}
+
+	public void setImIncrFisso(BigDecimal imIncrFisso) {
+		this.imIncrFisso = imIncrFisso;
+	}
+
+	public BigDecimal getImInfIncrFisso() {
+		return imInfIncrFisso;
+	}
+
+	public void setImInfIncrFisso(BigDecimal imInfIncrFisso) {
+		this.imInfIncrFisso = imInfIncrFisso;
+	}
+
+	public BigDecimal getImSupIncrFisso() {
+		return imSupIncrFisso;
+	}
+
+	public void setImSupIncrFisso(BigDecimal imSupIncrFisso) {
+		this.imSupIncrFisso = imSupIncrFisso;
+	}
+
 	private java.math.BigDecimal im_maggiorazione;
 	
 	private java.math.BigDecimal moltiplicatore;

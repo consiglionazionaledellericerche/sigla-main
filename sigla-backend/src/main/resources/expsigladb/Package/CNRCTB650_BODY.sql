@@ -1583,6 +1583,7 @@ BEGIN
                   if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI then
                    tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
                    tabCreditoIrpef(conta).tImCreditoIrpefDovuto := tabCreditoIrpef(conta).tImCreditoIrpefDovuto + importoCredito;
+                   tabCreditoIrpef(conta).pareggio_detrazioni := aRecCreditoIrpef.fl_pareggio_detrazioni;
                    trovatoCredito := 'S';
                   end if;
                   mess := mess||tabCreditoIrpef(conta).tCdCori||' '||tabCreditoIrpef(conta).tDtIniValCori||' '||tabCreditoIrpef(conta).tImCreditoIrpefDovuto||' '||tabCreditoIrpef(conta).tImCreditoIrpefGoduto;
@@ -1598,6 +1599,7 @@ BEGIN
                   tabCreditoIrpef(conta).tImCreditoIrpefGoduto := 0;
                   tabCreditoIrpef(conta).tImCreditoIrpefDovuto := importoCredito;
                   tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
+                  tabCreditoIrpef(conta).pareggio_detrazioni := aRecCreditoIrpef.fl_pareggio_detrazioni;
                 end if;
 
              totImportoDetrazioni := totImportoDetrazioni + importoDetrazioni;
