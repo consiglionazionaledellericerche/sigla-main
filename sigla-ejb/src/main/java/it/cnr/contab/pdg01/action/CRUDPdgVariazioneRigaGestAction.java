@@ -31,7 +31,10 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneRigaGestBP;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -39,6 +42,7 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 

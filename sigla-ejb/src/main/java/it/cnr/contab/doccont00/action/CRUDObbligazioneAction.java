@@ -17,48 +17,19 @@
 
 package it.cnr.contab.doccont00.action;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Optional;
-
-import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
-import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
-import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
-import it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP;
-import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
-import it.cnr.contab.doccont00.core.bulk.MandatoAutomaticoWizardBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk;
+import it.cnr.contab.doccont00.bp.*;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.pdg01.bp.CRUDPdgModuloSpeseGestBP;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -75,8 +46,15 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Optional;
 /**
  * (Obbligazione)
  */
@@ -1443,23 +1421,6 @@ public Forward handleException(ActionContext context, Throwable ex)
 			return context.findDefaultForward();	
 		}
 		catch(Throwable e) {return handleException(context,e);}
-	}
-
-	public Forward doCRUDFind_contratto(ActionContext context) throws BusinessProcessException {
-		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
-		ObbligazioneBulk obbligazione = (ObbligazioneBulk) bp.getModel();
-		FormField formfield = getFormField(context, "main.find_contratto");
-		try {
-			CRUDConfigAnagContrattoBP crudbp = (CRUDConfigAnagContrattoBP)context.getUserInfo().createBusinessProcess(context, formfield.getField().getCRUDBusinessProcessName(), new Object[]{bp.isEditable() ? "MR" : "R"});
-			context.addHookForward("bringback", this, "doBringBackCRUD");
-			HookForward hookforward = (HookForward)context.findForward("bringback");
-			hookforward.addParameter("field", formfield);
-			if (Optional.ofNullable(obbligazione.getContratto()).filter(ContrattoBulk::isNotNew).isPresent())
-				crudbp.basicEdit(context, obbligazione.getContratto(), true);
-			return context.addBusinessProcess(crudbp);
-		} catch (Throwable e) {
-			return handleException(context, e);
-		}
 	}
 }
 

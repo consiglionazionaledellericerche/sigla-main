@@ -321,7 +321,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 
     protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 		Button[] toolbar = super.createToolbar();
-		Button[] newToolbar = new Button[ toolbar.length + 6];
+		Button[] newToolbar = new Button[ toolbar.length + 5];
 
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
@@ -331,7 +331,6 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		newToolbar[i+2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.respingi");
 		newToolbar[i+3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaDefinitivo");
 		newToolbar[i+4] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaProvvisorio");
-		newToolbar[i+5] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.consultaProgetto");
         return newToolbar;
     }
     
@@ -647,15 +646,6 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		return optModel.filter(el->!el.isStatoValidato()&&!el.isStatoRespinto()).isPresent() ||
 				optModel.flatMap(el->Optional.ofNullable(el.getVariazioniAssociate())).filter(el->!el.isEmpty()).isPresent() ||
 				!uoScrivania.isUoEnte();
-	}
-
-	public boolean isConsultaProgettoButtonHidden() {
-		Optional<Progetto_rimodulazioneBulk> optModel =
-				Optional.ofNullable(this.getModel())
-						.filter(Progetto_rimodulazioneBulk.class::isInstance)
-						.map(Progetto_rimodulazioneBulk.class::cast);
-
-		return !optModel.map(Progetto_rimodulazioneBulk::getProgetto).filter(el->el.getCrudStatus() == OggettoBulk.NORMAL).isPresent();
 	}
 
 	/**

@@ -291,6 +291,7 @@
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROprogetto"
 		formName="form_searchtool_progetto"
+		VIEWBusinessProcessName="TestataProgettiRicercaBP"
 		columnSet="nuovoPdg"
 		label="Progetto" />
 	<fieldProperty
