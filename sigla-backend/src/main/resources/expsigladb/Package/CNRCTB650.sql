@@ -334,6 +334,8 @@
    glbDeduzioneFamilyGoduto NUMBER(15,2);
    glbImportoIrpefSospesoGoduto NUMBER(15,2);
    glbImportoCreditoIrpefGoduto NUMBER(15,2);
+   glbImportoCredIrpParDetGoduto NUMBER(15,2);
+   glbImportoCredIrpParDetDovuto NUMBER(15,2);
    glbImportoBonusIrpefGoduto NUMBER(15,2);
 
    glbImportoIrpefDovuto NUMBER(15,2);

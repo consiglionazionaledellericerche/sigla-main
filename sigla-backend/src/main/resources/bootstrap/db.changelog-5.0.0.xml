@@ -4882,4 +4882,10 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="fl_credito_pareggio_detrazioni" type="CHAR(1)" remarks="Indica che il credito irpef viene usato solo a pareggiare le detrazioni."/>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="conguaglio_add_pareggio_detrazioni">
+        <addColumn tableName="CONGUAGLIO">
+            <column name="im_cred_irpef_par_det_goduto" type="numeric(15, 2)" remarks="Indica il credito irpef goduto per il pareggio detrazioni."/>
+            <column name="im_cred_irpef_par_det_dovuto" type="numeric(15, 2)" remarks="Indica il credito irpef dovuto per il pareggio detrazioni."/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

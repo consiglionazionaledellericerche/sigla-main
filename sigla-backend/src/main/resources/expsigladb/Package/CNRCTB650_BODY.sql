@@ -350,6 +350,7 @@ PROCEDURE creaCompensoConguaglio
    esisteFiSenzaConiuge CHAR(1);
 
    i BINARY_INTEGER;
+   k BINARY_INTEGER;
 
    aRecCompenso COMPENSO%ROWTYPE;
    aRecCoriConguaglio V_CORI_CONGUAGLIO%ROWTYPE;
@@ -930,6 +931,8 @@ BEGIN
       glbDeduzioneIrpefDovuto:=0;
       glbDeduzioneFamilyDovuto:=0;
       glbImportoCreditoIrpefDovuto:=0;
+      glbImportoCredIrpParDetDovuto:=0;
+      glbImportoCredIrpParDetGoduto:=0;
       glbImportoBonusIrpefDovuto:=0;
 
       glbImpAddRegRateEseprec:=0;
@@ -1011,6 +1014,15 @@ BEGIN
 
             IF glbImportoIrpefDovuto < aImTotaleDetrazioni THEN
                aImTotaleNetto:=(glbImportoIrpefDovuto - aImTotaleDetrazioni) * -1;
+               k := 0;
+               FOR K IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                  IF tabCreditoIrpef(K).PAREGGIO_DETRAZIONI = 'Y' THEN
+                    IF aImTotaleNetto <= tabCreditoIrpef(K).tImCreditoIrpefDovuto * -1 THEN
+                      tabCreditoIrpef(K).tImCreditoIrpefDovuto := aImTotaleNetto * -1;
+                    END IF;
+                  END IF;
+               END LOOP;
+
                nettizzaDetrazioni(aImTotaleNetto,
                                   aImTotDetrazioniNettoPe,
                                   aImTotDetrazioniNettoLa,
@@ -1019,6 +1031,16 @@ BEGIN
                                   aImTotDetrazioniNettoAl,
                                   aImTotDetrazioniNettoCuneo);
 
+            ELSE
+    -- SEGNA DI EVITARE DI SCRIVERE IL CUNEO PER IL PAREGGIO DETRAZIONI
+              k := 0;
+              IF tabCreditoIrpef.COUNT > 0 THEN
+                  FOR K IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                    IF tabCreditoIrpef(K).PAREGGIO_DETRAZIONI = 'Y' THEN
+                       tabCreditoIrpef(K).tImCreditoIrpefDovuto := 0;
+                    END IF;
+                  END LOOP;
+              END IF;
             END IF;
 
             glbDetrazioniPeDovuto:=aImTotDetrazioniNettoPe;
@@ -1056,7 +1078,11 @@ BEGIN
       CLOSE gen_cur_cori;
       FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
         if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
-            glbImportoCreditoIrpefDovuto := glbImportoCreditoIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+           IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
+                glbImportoCredIrpParDetDovuto := glbImportoCredIrpParDetDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+           else
+                glbImportoCreditoIrpefDovuto := glbImportoCreditoIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+           end if;
         else
             glbImportoBonusIrpefDovuto := glbImportoBonusIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
         end if;
@@ -1131,7 +1157,7 @@ BEGIN
       --glbImportoCreditoIrpefGoduto e glbImportoCreditoIrpefDovuto sono entrambi positivi
 --pipe.send_message('glbImportoCreditoIrpefDovuto = '||glbImportoCreditoIrpefDovuto);
 --pipe.send_message('glbImportoCreditoIrpefGoduto = '||glbImportoCreditoIrpefGoduto);
-      aImCompCongCreditoIrpef := -(glbImportoCreditoIrpefDovuto + glbImportoBonusIrpefDovuto - glbImportoCreditoIrpefGoduto - glbImportoBonusIrpefGoduto);
+      aImCompCongCreditoIrpef := -(glbImportoCreditoIrpefDovuto + glbImportoCredIrpParDetDovuto + glbImportoBonusIrpefDovuto - glbImportoCreditoIrpefGoduto - glbImportoCredIrpParDetGoduto - glbImportoBonusIrpefGoduto);
    End;
 
    -------------------------------------------------------------------------------------------------
@@ -1155,6 +1181,7 @@ BEGIN
              im_deduzione_goduto = glbDeduzioneIrpefGoduto,
              im_deduzione_family_goduto = glbDeduzioneFamilyGoduto,
              im_credito_irpef_goduto = glbImportoCreditoIrpefGoduto,
+             im_cred_irpef_par_det_goduto = glbImportoCredIrpParDetGoduto,
              im_bonus_irpef_goduto = glbImportoBonusIrpefGoduto,
              im_irpef_dovuto = glbImportoIrpefDovuto,
              im_family_dovuto = glbImportoFamilyDovuto,
@@ -1170,6 +1197,7 @@ BEGIN
              im_deduzione_dovuto = glbDeduzioneIrpefDovuto,
              im_deduzione_family_dovuto = glbDeduzioneFamilyDovuto,
              im_credito_irpef_dovuto = glbImportoCreditoIrpefDovuto,
+             im_cred_irpef_par_det_dovuto = glbImportoCredIrpParDetDovuto,
              im_bonus_irpef_dovuto = glbImportoBonusIrpefDovuto,
              imponibile_irpef_lordo = glbImponibileLordoIrpef,
              imponibile_irpef_netto = glbImponibileNettoIrpef,
@@ -1580,10 +1608,10 @@ BEGIN
 --            END IF;
               IF tabCreditoIrpef.COUNT > 0 THEN
                 FOR conta IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
-                  if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI then
+                  if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI and
+                      aRecCreditoIrpef.fl_pareggio_detrazioni = tabCreditoIrpef(conta).pareggio_detrazioni then
                    tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
                    tabCreditoIrpef(conta).tImCreditoIrpefDovuto := tabCreditoIrpef(conta).tImCreditoIrpefDovuto + importoCredito;
-                   tabCreditoIrpef(conta).pareggio_detrazioni := aRecCreditoIrpef.fl_pareggio_detrazioni;
                    trovatoCredito := 'S';
                   end if;
                   mess := mess||tabCreditoIrpef(conta).tCdCori||' '||tabCreditoIrpef(conta).tDtIniValCori||' '||tabCreditoIrpef(conta).tImCreditoIrpefDovuto||' '||tabCreditoIrpef(conta).tImCreditoIrpefGoduto;
@@ -2039,11 +2067,16 @@ BEGIN
 
                       if tabCreditoIrpef.count > 0 then
                        FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
-                          if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_validita then
+                          if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_validita and
+                          ((tabCreditoIrpef(i_credito).pareggio_detrazioni = aRecCoriConguaglio.fl_credito_pareggio_detrazioni) or (aRecCoriConguaglio.fl_credito_pareggio_detrazioni is null and tabCreditoIrpef(i_credito).pareggio_detrazioni = 'N')) then
                            tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto := tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
                            trovatoCredito := 'S';
                            if dataInizioGestioneCuneoFiscale <= aRecCoriConguaglio.dt_ini_validita then
-                             glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                               IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
+                                    glbImportoCredIrpParDetGoduto := glbImportoCredIrpParDetGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                               else
+                                    glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                               end if;
                            else
                              glbImportoBonusIrpefGoduto:=glbImportoBonusIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
                            end if;
@@ -2056,8 +2089,17 @@ BEGIN
                          tabCreditoIrpef(i_credito).tDtIniValCori := aRecCoriConguaglio.dt_ini_validita;
                          tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto := -aRecCoriConguaglio.ammontare_lordo;
                          tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := 0;
+                         if aRecCoriConguaglio.fl_credito_pareggio_detrazioni is null then
+                             tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI := 'N';
+                         else
+                             tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI := aRecCoriConguaglio.fl_credito_pareggio_detrazioni;
+                         end if;
                          if dataInizioGestioneCuneoFiscale <= aRecCoriConguaglio.dt_ini_validita then
-                           glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                            IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
+                              glbImportoCredIrpParDetGoduto := glbImportoCredIrpParDetGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                            else
+                              glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                            end if;
                          else
                            glbImportoBonusIrpefGoduto:=glbImportoBonusIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
                          end if;
