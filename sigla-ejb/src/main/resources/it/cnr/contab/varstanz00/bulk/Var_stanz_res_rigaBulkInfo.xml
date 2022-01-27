@@ -124,6 +124,7 @@
         property="linea_di_attivita.progetto"
         inputType="SEARCHTOOL"
         formName="searchtool"
+		VIEWBusinessProcessName="TestataProgettiRicercaBP"
         enabledOnInsert="false"
         enabledOnEdit="false"
         enabledOnSearch="false"
