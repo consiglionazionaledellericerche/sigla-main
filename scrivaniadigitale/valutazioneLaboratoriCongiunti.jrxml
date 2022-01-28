@@ -944,7 +944,7 @@
 					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["6 - Sfruttamento e/o diffusione/pubblicazione dei risultati\r\nPunteggio (attribuire un punteggio da 1 a 10): "  + $F{punteggio_sfruttamento_diffusione_risultati} + "\r\ncommento: " + "<style isBold=\"false\">" + $F{commento_sfruttamento_diffusione_risultati} + "\r\n\r\n</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["7 - Sfruttamento e/o diffusione/pubblicazione dei risultati\r\nPunteggio (attribuire un punteggio da 1 a 10): "  + $F{punteggio_sfruttamento_diffusione_risultati} + "\r\ncommento: " + "<style isBold=\"false\">" + $F{commento_sfruttamento_diffusione_risultati} + "\r\n\r\n</style>"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="27">
@@ -954,7 +954,7 @@
 					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["7 - Congruità economica del progetto\r\nPunteggio (attribuire un punteggio da 1 a 10): "  + $F{punteggio_congruita_economica_progetto} + "\r\ncommento: " + "<style isBold=\"false\">" + $F{commento_congruita_economica_progetto} + "\r\n\r\n</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["8 - Congruità economica del progetto\r\nPunteggio (attribuire un punteggio da 1 a 10): "  + $F{punteggio_congruita_economica_progetto} + "\r\ncommento: " + "<style isBold=\"false\">" + $F{commento_congruita_economica_progetto} + "\r\n\r\n</style>"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
