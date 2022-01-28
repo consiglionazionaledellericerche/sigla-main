@@ -641,6 +641,7 @@ thorntail:
         security-constraints:
           - url-pattern: /restapi/version
           - url-pattern: /restapi/login
+          - url-pattern: /restapi/swagger.json
           - url-pattern: /restapi/*
             roles:
               - "*"
