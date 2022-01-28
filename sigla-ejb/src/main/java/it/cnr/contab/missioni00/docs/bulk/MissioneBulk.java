@@ -2223,20 +2223,15 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		GregorianCalendar inizio = getGregorianCalendar(getDt_inizio_missione());
 		GregorianCalendar fine = getGregorianCalendar(getDt_fine_missione());
 
-		if(	inizio.get(GregorianCalendar.YEAR) < (getEsercizio().intValue()-2))
-			throw new it.cnr.jada.action.MessageToUser( "La data di inizio missione non e' valida!" );
 		if(	fine.get(GregorianCalendar.YEAR) > (getEsercizio().intValue()+1))
 			throw new it.cnr.jada.action.MessageToUser( "La data di fine missione non e' valida!" );	  			 
 
 		if(	inizio.get(GregorianCalendar.YEAR) == (getEsercizio().intValue()-1) && 
 				fine.get(GregorianCalendar.YEAR) == (getEsercizio().intValue()+1))
 			throw new it.cnr.jada.action.MessageToUser( "Le date di inizio/fine missione possono solo essere entrambe nell'esercizio precedente, in quello corrente o a cavallo di esercizio !" );
+		if(	fine.get(GregorianCalendar.YEAR) - inizio.get(GregorianCalendar.YEAR) > 1 )
+			throw new it.cnr.jada.action.MessageToUser( "La durata della missione non può essere a cavallo di 3 anni !" );
 
-		if(	inizio.get(GregorianCalendar.YEAR) == fine.get(GregorianCalendar.YEAR) &&
-				inizio.get(GregorianCalendar.YEAR) != getEsercizio().intValue()-1 &&
-				inizio.get(GregorianCalendar.YEAR) != getEsercizio().intValue()-2 &&
-				inizio.get(GregorianCalendar.YEAR) != getEsercizio().intValue())
-			throw new it.cnr.jada.action.MessageToUser( "Le date di inizio/fine missione possono solo essere entrambe di 2 esercizi precedenti, in quello corrente o a cavallo di esercizio !" );
 	}
 	/**
 	 * Il metodo ritorna TRUE se l'obbligazione la cui scadenza e' associata alla missione
