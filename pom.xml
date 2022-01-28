@@ -36,7 +36,7 @@
 	</modules>
 	<properties>
 		<ace.version>4.0.16</ace.version>
-		<perlapa.version>1.0.15</perlapa.version>
+		<perlapa.version>1.0.16</perlapa.version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
