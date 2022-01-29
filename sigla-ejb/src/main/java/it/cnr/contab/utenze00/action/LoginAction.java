@@ -557,7 +557,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             bp.cercaCds(context);
         else
             bp.cercaUnitaOrganizzative(context);
-        return context.findForward("desktop");
+        return context.findForward("home");
     }
 
     public Forward doSelezionaContesto(ActionContext context, Integer esercizio) {

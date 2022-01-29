@@ -627,6 +627,8 @@ spring:
 project:
   stage: keycloak
 thorntail:
+  app:
+    name: sigla.war
   keycloak:
     secure-deployments:
       sigla.war:
@@ -634,7 +636,11 @@ thorntail:
         realm: cnr
         resource: sigla
         ssl-required: NONE
-        public-client: true
+        public-client: false
+        credentials:
+          secret:
+            value: secret
+
   deployment:
     sigla.war:
       web:
