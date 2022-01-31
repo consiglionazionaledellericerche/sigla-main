@@ -42,6 +42,24 @@ public class BasicAuthentication {
 	private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
 	private static final String AUTHENTICATION_SCHEME = "Basic";
 
+	public static UtenteBulk findUtenteBulk(String username) throws ComponentException {
+		UtenteBulk utente = new UtenteBulk();
+		try {
+			utente.setCd_utente(username);
+			utente = loginComponentSession().validaUtente(
+					AdminUserContext.getInstance(),
+					utente,
+					GestioneLoginComponent.VALIDA_FASE_INIZIALE);
+			if (utente != null)
+				return utente;
+		} catch (RemoteException e) {
+			throw new ApplicationException(e.getMessage());
+		} catch (EJBException e) {
+			throw new ApplicationException(e.getMessage());
+		}
+		return null;
+	}
+
 	public static UtenteBulk authenticateUtenteMultiplo(String authorization, String utenteMultiplo) throws ComponentException{
         boolean authorized = false;
 		UtenteBulk utente = new UtenteBulk();

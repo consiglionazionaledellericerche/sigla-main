@@ -26,6 +26,7 @@ import it.cnr.jada.comp.ComponentException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -50,6 +51,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,7 +104,20 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 			final MultivaluedMap<String, String> headers = requestContext.getHeaders();
 			final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 			try {
-				utenteBulk = BasicAuthentication.authenticate(authorization);
+				final Optional<Principal> principalOptional = Optional.ofNullable(requestContext.getSecurityContext().getUserPrincipal());
+				if (principalOptional.isPresent()) {
+					final Optional<IDToken> idToken = principalOptional
+							.filter(KeycloakPrincipal.class::isInstance)
+							.map(KeycloakPrincipal.class::cast)
+							.map(KeycloakPrincipal::getKeycloakSecurityContext)
+							.map(keycloakSecurityContext -> {
+								return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+										.orElse(keycloakSecurityContext.getToken());
+							});
+					utenteBulk = BasicAuthentication.findUtenteBulk(idToken.get().getPreferredUsername());
+				} else {
+					utenteBulk = BasicAuthentication.authenticate(authorization);
+				}
 				if (utenteBulk == null){
 					requestContext.abortWith(
 							Response.status(Response.Status.UNAUTHORIZED)

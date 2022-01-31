@@ -2,6 +2,8 @@ logger:
   level: DEBUG
 
 thorntail:
+  app:
+    name: sigla.war
   security:
     security-domains:
       sigla-auth:
@@ -21,7 +23,7 @@ thorntail:
                 rolesCtxDN: ou=groups,o=cnr,c=it
                 roleFilter: member={1}
                 roleAttributeID: cn
-                defaultRole: USER
+                defaultRole: default-roles-cnr
                 password-stacking: useFirstPass
                 storePass: true
             Database:
@@ -627,8 +629,6 @@ spring:
 project:
   stage: keycloak
 thorntail:
-  app:
-    name: sigla.war
   keycloak:
     secure-deployments:
       sigla.war:
@@ -637,6 +637,7 @@ thorntail:
         resource: sigla
         ssl-required: NONE
         public-client: false
+        enable-basic-auth: true
         credentials:
           secret:
             value: secret
@@ -650,4 +651,4 @@ thorntail:
           - url-pattern: /restapi/swagger.json
           - url-pattern: /restapi/*
             roles:
-              - "*"
+              - "default-roles-cnr"
