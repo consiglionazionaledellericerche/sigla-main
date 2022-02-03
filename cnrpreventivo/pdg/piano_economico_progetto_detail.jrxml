@@ -672,11 +672,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 		<groupExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></groupExpression>
 		<groupHeader>
 			<band height="32">
-				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
-$F{CD_CENTRO_RESPONSABILITA}!=null&&
-($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
-$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
-$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$F{CD_CENTRO_RESPONSABILITA}!=null]]></printWhenExpression>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="VERB8" x="42" y="1" width="261" height="15" uuid="a35d304d-4645-4736-afd3-9e54dc4ec887"/>
 					<textElement verticalAlignment="Middle">
@@ -738,11 +734,7 @@ $P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
 		</groupHeader>
 		<groupFooter>
 			<band height="17">
-				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
-$F{CD_CENTRO_RESPONSABILITA}!=null&&
-($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
-$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
-$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$F{CD_CENTRO_RESPONSABILITA}!=null]]></printWhenExpression>
 				<staticText>
 					<reportElement key="staticText-54" style="VERB8" x="16" y="1" width="53" height="15" uuid="8dab7f75-3cf6-417f-84ee-768c4f254fff"/>
 					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
@@ -1259,11 +1251,7 @@ Economico]]></text>
 	</pageHeader>
 	<detail>
 		<band height="17">
-			<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
-$F{CD_CENTRO_RESPONSABILITA}!=null&&
-($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
-$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
-$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$F{CD_CENTRO_RESPONSABILITA}!=null]]></printWhenExpression>
 			<textField>
 				<reportElement style="VERB8" x="27" y="1" width="62" height="15" uuid="97325fb5-eaf7-46d3-8bad-657925cdf9fa"/>
 				<textElement verticalAlignment="Middle"/>
