@@ -436,6 +436,13 @@
             enabledOnEdit="true"
             enabledOnSearch="true"
             enabledOnFreeSearch="true"/>
+    <fieldProperty
+            name="cd_voce_piano_associato"
+            property="cd_voce_piano_associato"
+            maxLength="10"
+            inputSize="10"
+            inputType="TEXT"
+            label="Voce Piano Economico" />
 
     <form
             name="searchtool">
@@ -635,6 +642,18 @@
         <columnFieldProperty
                 name="fl_recon"
         />
+    </columnSet>
+
+    <columnSet name="piano_economico">
+        <columnFieldProperty
+                name="esercizio" />
+        <columnFieldProperty
+                name="cd_elemento_voce"
+                label="Codice" />
+        <columnFieldProperty
+                name="ds_elemento_voce" />
+        <columnFieldProperty
+                name="cd_voce_piano_associato" />
     </columnSet>
 
     <formFieldProperty

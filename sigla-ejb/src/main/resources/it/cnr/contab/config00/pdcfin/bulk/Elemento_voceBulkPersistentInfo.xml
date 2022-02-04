@@ -95,7 +95,19 @@
 		extends="default"
 		tableName="V_ELEMENTO_VOCE_ORDINI" >
 	</columnMap>
-			
+
+	<columnMap
+		name="V_ELEMENTO_VOCE_PDG_SPE_PIAECO"
+		extends="V_ELEMENTO_VOCE_PDG_SPE"
+		tableName="V_ELEMENTO_VOCE_PDG_SPE_PIAECO" >
+		<columnMapping
+			columnName="CD_VOCE_PIANO_ASSOCIATO"
+			propertyName="cd_voce_piano_associato"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true"/>
+	</columnMap>
+
 	<persistentProperty
 		name="elemento_padre" />
 	<persistentProperty
@@ -110,6 +122,9 @@
 		name="v_classificazione_voci.cd_classificazione" />				
 	<persistentProperty
 		name="voce_piano_economico" />
+	<persistentProperty
+		name="cd_voce_piano_associato" />
+
 	<fetchPolicy
 		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.elemento_voce">
 		<exclude pattern="*" />

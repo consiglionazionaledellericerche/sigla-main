@@ -4888,4 +4888,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="im_cred_irpef_par_det_dovuto" type="numeric(15, 2)" remarks="Indica il credito irpef dovuto per il pareggio detrazioni."/>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" runOnChange="true" id="create-view-V_ELEMENTO_VOCE_PDG_SPE_PIAECO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ELEMENTO_VOCE_PDG_SPE_PIAECO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
 </databaseChangeLog>

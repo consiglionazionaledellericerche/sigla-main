@@ -182,6 +182,7 @@
         property="elemento_voce"
         inputType="SEARCHTOOL"
         formName="searchtool"
+		columnSet="piano_economico"
         enabledOnSearch="true"
         label="Voce del Piano" />
 	<fieldProperty
