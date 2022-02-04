@@ -272,6 +272,7 @@
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		columnSet="piano_economico"
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		readonlyProperty="ROElemento_voce"

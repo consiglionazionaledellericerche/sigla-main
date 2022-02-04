@@ -577,56 +577,72 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 												   Elemento_voceBulk elementoVoce, 
 												   CompoundFindClause clause) throws ComponentException, PersistencyException {
 		try {
+
+			Optional<ProgettoBulk> optProgetto = Optional.empty();
+			if (Optional.ofNullable(dett.getProgetto()).flatMap(el -> Optional.ofNullable(el.getPg_progetto())).isPresent()) {
+				ProgettoHome home = (ProgettoHome) getHome(userContext, ProgettoBulk.class);
+				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				optProgetto = Optional.ofNullable((ProgettoBulk) home.findByPrimaryKey(dett.getProgetto()));
+				getHomeCache(userContext).fetchAll(userContext);
+			}
+
+			boolean isProgettoWithPianoEconomico = optProgetto.map(ProgettoBulk::isPianoEconomicoRequired).orElse(Boolean.FALSE);
+			String columnMapName = isProgettoWithPianoEconomico?"V_ELEMENTO_VOCE_PDG_SPE_PIAECO":"V_ELEMENTO_VOCE_PDG_SPE";
+
 			if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
-	
-			SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+
+			SQLBuilder sql = getHome(userContext, elementoVoce, columnMapName).createSQLBuilder();
 			
 			if(clause != null) sql.addClause(clause);
 	
-			sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+			sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
 	
 			sql.addTableToHeader("PARAMETRI_LIVELLI");
-			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+			sql.addSQLJoin(columnMapName+".ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
 	
 			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
-			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin(columnMapName+".ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
 			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 	
 			sql.openParenthesis(FindClause.AND);
-			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);	
-			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");	
+			sql.addSQLClause(FindClause.OR, columnMapName+".FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);
+			sql.addSQLClause(FindClause.OR, columnMapName+".FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");
 			sql.closeParenthesis();
-			sql.addSQLClause( FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", SQLBuilder.EQUALS, "N"); 
+			sql.addSQLClause( FindClause.AND, columnMapName+".FL_SOLO_RESIDUO", SQLBuilder.EQUALS, "N");
 			if (dett.getLinea_attivita() != null)
-				sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",SQLBuilder.EQUALS,dett.getLinea_attivita().getCd_funzione());
+				sql.addSQLClause(FindClause.AND,columnMapName+".CD_FUNZIONE",SQLBuilder.EQUALS,dett.getLinea_attivita().getCd_funzione());
 	
 			if(!Utility.createParametriCnrComponentSession().getParametriCnr(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )).getFl_nuovo_pdg())
 				if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
-					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
-	
+					sql.addSQLClause(FindClause.AND,columnMapName+".CD_TIPO_UNITA",SQLBuilder.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
+
+			if (isProgettoWithPianoEconomico) {
+				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo*/
+				sql.addSQLClause(FindClause.AND, columnMapName + ".PG_PROGETTO_ASSOCIATO", SQLBuilder.EQUALS, optProgetto.get().getPg_progetto());
+				sql.addSQLClause(FindClause.AND, columnMapName + ".ESERCIZIO_PIANO_ASSOCIATO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+			}
+
 			/*
 			 * controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per 
 			 * progetti con Piano Economico con data fine/proroga successiva all'anno di attivazione
 			 */
 			BigDecimal annoFrom = Utility.createConfigurazioneCnrComponentSession().getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).map(el->el.compareTo(CNRUserContext.getEsercizio( userContext ))<=0).orElse(Boolean.FALSE)) {
-				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(dett.getProgetto());
-				getHomeCache(userContext).fetchAll(userContext);
+				optProgetto.orElseThrow(() -> new ApplicationException("Errore: Progetto non valorizzato sulla riga della variazione!"));
+
 				/*
 					Il filtro sulle voci di bilancio presenti nel piano economico del progetto va fatto se:
 					1. il progetto prevede il piano economico
 					2. il progetto rientra nel periodo di attivazione dei progetti
 				 */
-				if (progetto.isPianoEconomicoRequired() &&
-						Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+				if (isProgettoWithPianoEconomico &&
+						Optional.ofNullable(optProgetto.get().getOtherField().getAnnoFine())
 								.filter(annoFine->annoFine.compareTo(annoFrom.intValue())>=0)
 								.isPresent()) {
 					/*
 						se il progetto è attivo (anno fine del progetto maggiore o uguale all'anno di esercizio) occorre sempre controllare le voci associate al piano economico del progetto
 					 */
-					if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+					if (Optional.ofNullable(optProgetto.get().getOtherField().getAnnoFine())
 								.filter(annoFine->annoFine.compareTo(CNRUserContext.getEsercizio(userContext))>=0)
 								.isPresent()) {
 						Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome) getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
@@ -649,7 +665,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 							//all'utente di effettuare una variazione negativa
 							List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
-									.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+									.cercaSaldoVoce(optProgetto.get().getPg_progetto()).stream()
 									.filter(el -> el.getAssestato().compareTo(BigDecimal.ZERO) > 0 ||
 											el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0)
 									.collect(Collectors.toList());
@@ -670,10 +686,10 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
 									sql.openParenthesis(FindClause.OR);
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, columnMapName+".CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 									sql.closeParenthesis();
 								}
 							}
@@ -683,10 +699,10 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 									Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assRimVoce.getElementoVoce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 									if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
 										sql.openParenthesis(FindClause.OR);
-										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
-										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
-										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
-										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+										sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+										sql.addSQLClause(FindClause.AND, columnMapName+".TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+										sql.addSQLClause(FindClause.AND, columnMapName+".TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+										sql.addSQLClause(FindClause.AND, columnMapName+".CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 										sql.closeParenthesis();
 									}
 								}
@@ -706,21 +722,21 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 							//all'utente di effettuare una variazione negativa
 							List<V_saldi_voce_progettoBulk> vociConDisponibilita = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
-									.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+									.cercaSaldoVoce(optProgetto.get().getPg_progetto()).stream()
 									.filter(el -> el.getDispAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0 ||
 											el.getDispAssestatoCofinanziamento().compareTo(BigDecimal.ZERO) > 0)
 									.collect(Collectors.toList());
 
 							if (vociConDisponibilita.isEmpty())
-								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+								sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, -100);
 							else {
 								sql.openParenthesis(FindClause.AND);
 								vociConDisponibilita.stream().forEach(voceNew->{
 									sql.openParenthesis(FindClause.OR);
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, columnMapName+".CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 									sql.closeParenthesis();
 								});
 								sql.closeParenthesis();
