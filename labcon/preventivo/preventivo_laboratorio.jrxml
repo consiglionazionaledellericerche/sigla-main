@@ -36,6 +36,12 @@
 	<field name="laboratorio" class="java.lang.String">
 		<fieldDescription><![CDATA[laboratorio]]></fieldDescription>
 	</field>
+	<field name="fondiABC" class="java.lang.String">
+		<fieldDescription><![CDATA[fondiABC]]></fieldDescription>
+	</field>
+	<field name="fondiC" class="java.lang.String">
+		<fieldDescription><![CDATA[fondiC]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -110,6 +116,34 @@ $F{annoInizio} +"-"+  $F{annoFine} +"-"+  $F{laboratorio}]]></textFieldExpressio
 				</textElement>
 				<textFieldExpression><![CDATA[$F{respItaliano}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="26" y="25" width="124" height="15" uuid="426462eb-b311-47c1-95ad-8ed9d0f6e3ad"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fondi A+B+C: "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="150" y="25" width="333" height="15" uuid="d76bd620-2ebb-4922-b7e4-0457b3eb8310"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fondiABC}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="90" splitType="Stretch">
 			<staticText>
@@ -131,7 +165,7 @@ $F{annoInizio} +"-"+  $F{annoFine} +"-"+  $F{laboratorio}]]></textFieldExpressio
 			</break>
 		</band>
 		<band height="90" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{laboratorio}.equals("TEMATICO")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{fondiC}.equals("Si")]]></printWhenExpression>
 			<staticText>
 				<reportElement x="14" y="10" width="524" height="40" uuid="c60f3c39-377b-4cd2-a5f2-a68d4427affd">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
