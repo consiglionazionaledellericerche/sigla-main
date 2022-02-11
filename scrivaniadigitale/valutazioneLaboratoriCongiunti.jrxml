@@ -846,9 +846,9 @@
 			<textField textAdjust="ScaleFont">
 				<reportElement x="0" y="4" width="556" height="59" uuid="1c38430f-18c4-4353-b5a3-4c46137ce2cb"/>
 				<textElement textAlignment="Center">
-					<font size="26" isBold="true"/>
+					<font size="20" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["MODULO DI VALUTAZIONE LABORATORI CONGIUNTI"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["MODULO DI VALUTAZIONE \r\n LABORATORI CONGIUNTI ARCHEOLOGICI"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
 				<reportElement x="-3" y="70" width="555" height="21" uuid="10119319-030e-4176-a69a-e86a174f58cc"/>
