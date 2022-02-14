@@ -617,7 +617,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="pianoDiLavoroPrimoAnno"/>
 		<fieldDescription><![CDATA[pianoDiLavoroPrimoAnno]]></fieldDescription>
 	</field>
-	<field name="dipartimentoId" class="java.lang.Integer">
+	<field name="dipartimentoId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="dipartimentoId"/>
 		<fieldDescription><![CDATA[dipartimentoId]]></fieldDescription>
 	</field>
@@ -629,7 +629,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="obiettivi"/>
 		<fieldDescription><![CDATA[obiettivi]]></fieldDescription>
 	</field>
-	<field name="punteggio_totale" class="java.math.BigDecimal">
+	<field name="punteggio_totale" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_totale"/>
 		<fieldDescription><![CDATA[punteggio_totale]]></fieldDescription>
 	</field>
@@ -641,7 +641,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="pathFascicoloDocumenti"/>
 		<fieldDescription><![CDATA[pathFascicoloDocumenti]]></fieldDescription>
 	</field>
-	<field name="idDomanda" class="java.lang.Integer">
+	<field name="idDomanda" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idDomanda"/>
 		<fieldDescription><![CDATA[idDomanda]]></fieldDescription>
 	</field>
@@ -649,7 +649,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="gruppoDirigenteRichiedente"/>
 		<fieldDescription><![CDATA[gruppoDirigenteRichiedente]]></fieldDescription>
 	</field>
-	<field name="idStruttura" class="java.lang.Integer">
+	<field name="idStruttura" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idStruttura"/>
 		<fieldDescription><![CDATA[idStruttura]]></fieldDescription>
 	</field>
@@ -657,7 +657,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="applicazioneAccordiInternazionali"/>
 		<fieldDescription><![CDATA[applicazioneAccordiInternazionali]]></fieldDescription>
 	</field>
-	<field name="idBando" class="java.lang.Integer">
+	<field name="idBando" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idBando"/>
 		<fieldDescription><![CDATA[idBando]]></fieldDescription>
 	</field>
@@ -677,7 +677,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="processDefinitionId"/>
 		<fieldDescription><![CDATA[processDefinitionId]]></fieldDescription>
 	</field>
-	<field name="processInstanceId" class="java.lang.Integer">
+	<field name="processInstanceId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="processInstanceId"/>
 		<fieldDescription><![CDATA[processInstanceId]]></fieldDescription>
 	</field>
@@ -733,11 +733,11 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="startDate"/>
 		<fieldDescription><![CDATA[startDate]]></fieldDescription>
 	</field>
-	<field name="taskId" class="java.lang.Integer">
+	<field name="taskId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="taskId"/>
 		<fieldDescription><![CDATA[taskId]]></fieldDescription>
 	</field>
-	<field name="punteggio_rilevanza_scientifica" class="java.math.BigDecimal">
+	<field name="punteggio_rilevanza_scientifica" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_rilevanza_scientifica"/>
 		<fieldDescription><![CDATA[punteggio_rilevanza_scientifica]]></fieldDescription>
 	</field>
@@ -745,7 +745,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_rilevanza_scientifica"/>
 		<fieldDescription><![CDATA[commento_rilevanza_scientifica]]></fieldDescription>
 	</field>
-	<field name="punteggio_documentazione_presentazione_progetto" class="java.lang.Integer">
+	<field name="punteggio_documentazione_presentazione_progetto" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_documentazione_presentazione_progetto"/>
 		<fieldDescription><![CDATA[punteggio_documentazione_presentazione_progetto]]></fieldDescription>
 	</field>
@@ -753,7 +753,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_documentazione_presentazione_progetto"/>
 		<fieldDescription><![CDATA[commento_documentazione_presentazione_progetto]]></fieldDescription>
 	</field>
-	<field name="punteggio_utilita_necessita_collaborazione" class="java.lang.Integer">
+	<field name="punteggio_utilita_necessita_collaborazione" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_utilita_necessita_collaborazione"/>
 		<fieldDescription><![CDATA[punteggio_utilita_necessita_collaborazione]]></fieldDescription>
 	</field>
@@ -761,7 +761,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_utilita_necessita_collaborazione"/>
 		<fieldDescription><![CDATA[commento_utilita_necessita_collaborazione]]></fieldDescription>
 	</field>
-	<field name="punteggio_coinvolgimento_giovani_ricercatori" class="java.lang.Integer">
+	<field name="punteggio_coinvolgimento_giovani_ricercatori" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_coinvolgimento_giovani_ricercatori"/>
 		<fieldDescription><![CDATA[punteggio_coinvolgimento_giovani_ricercatori]]></fieldDescription>
 	</field>
@@ -769,7 +769,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_coinvolgimento_giovani_ricercatori"/>
 		<fieldDescription><![CDATA[commento_coinvolgimento_giovani_ricercatori]]></fieldDescription>
 	</field>
-	<field name="punteggio_potenzialita_finanziamenti" class="java.lang.Integer">
+	<field name="punteggio_potenzialita_finanziamenti" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_potenzialita_finanziamenti"/>
 		<fieldDescription><![CDATA[punteggio_potenzialita_finanziamenti]]></fieldDescription>
 	</field>
@@ -777,7 +777,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_potenzialita_finanziamenti"/>
 		<fieldDescription><![CDATA[commento_potenzialita_finanziamenti]]></fieldDescription>
 	</field>
-	<field name="punteggio_potenzialita_ricerca_sviluppo_CNR" class="java.lang.Integer">
+	<field name="punteggio_potenzialita_ricerca_sviluppo_CNR" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_potenzialita_ricerca_sviluppo_CNR"/>
 		<fieldDescription><![CDATA[punteggio_potenzialita_ricerca_sviluppo_CNR]]></fieldDescription>
 	</field>
@@ -785,7 +785,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_potenzialita_ricerca_sviluppo_CNR"/>
 		<fieldDescription><![CDATA[commento_potenzialita_ricerca_sviluppo_CNR]]></fieldDescription>
 	</field>
-	<field name="punteggio_potenzialita_investimenti_privati" class="java.lang.Integer">
+	<field name="punteggio_potenzialita_investimenti_privati" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_potenzialita_investimenti_privati"/>
 		<fieldDescription><![CDATA[punteggio_potenzialita_investimenti_privati]]></fieldDescription>
 	</field>
@@ -793,7 +793,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_potenzialita_investimenti_privati"/>
 		<fieldDescription><![CDATA[commento_potenzialita_investimenti_privati]]></fieldDescription>
 	</field>
-	<field name="punteggio_sfruttamento_diffusione_risultati" class="java.lang.Integer">
+	<field name="punteggio_sfruttamento_diffusione_risultati" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_sfruttamento_diffusione_risultati"/>
 		<fieldDescription><![CDATA[punteggio_sfruttamento_diffusione_risultati]]></fieldDescription>
 	</field>
@@ -801,7 +801,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_sfruttamento_diffusione_risultati"/>
 		<fieldDescription><![CDATA[commento_sfruttamento_diffusione_risultati]]></fieldDescription>
 	</field>
-	<field name="punteggio_esistenza_precedenti_accordi" class="java.lang.Integer">
+	<field name="punteggio_esistenza_precedenti_accordi" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_esistenza_precedenti_accordi"/>
 		<fieldDescription><![CDATA[punteggio_esistenza_precedenti_accordi]]></fieldDescription>
 	</field>
@@ -809,7 +809,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_esistenza_precedenti_accordi"/>
 		<fieldDescription><![CDATA[commento_esistenza_precedenti_accordi]]></fieldDescription>
 	</field>
-	<field name="punteggio_congruita_economica_progetto" class="java.lang.Integer">
+	<field name="punteggio_congruita_economica_progetto" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="punteggio_congruita_economica_progetto"/>
 		<fieldDescription><![CDATA[punteggio_congruita_economica_progetto]]></fieldDescription>
 	</field>
