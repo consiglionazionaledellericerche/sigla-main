@@ -617,7 +617,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="pianoDiLavoroPrimoAnno"/>
 		<fieldDescription><![CDATA[pianoDiLavoroPrimoAnno]]></fieldDescription>
 	</field>
-	<field name="dipartimentoId" class="java.lang.Integer">
+	<field name="dipartimentoId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="dipartimentoId"/>
 		<fieldDescription><![CDATA[dipartimentoId]]></fieldDescription>
 	</field>
@@ -641,7 +641,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="pathFascicoloDocumenti"/>
 		<fieldDescription><![CDATA[pathFascicoloDocumenti]]></fieldDescription>
 	</field>
-	<field name="idDomanda" class="java.lang.Integer">
+	<field name="idDomanda" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idDomanda"/>
 		<fieldDescription><![CDATA[idDomanda]]></fieldDescription>
 	</field>
@@ -649,7 +649,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="gruppoDirigenteRichiedente"/>
 		<fieldDescription><![CDATA[gruppoDirigenteRichiedente]]></fieldDescription>
 	</field>
-	<field name="idStruttura" class="java.lang.Integer">
+	<field name="idStruttura" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idStruttura"/>
 		<fieldDescription><![CDATA[idStruttura]]></fieldDescription>
 	</field>
@@ -657,7 +657,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="applicazioneAccordiInternazionali"/>
 		<fieldDescription><![CDATA[applicazioneAccordiInternazionali]]></fieldDescription>
 	</field>
-	<field name="idBando" class="java.lang.Integer">
+	<field name="idBando" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idBando"/>
 		<fieldDescription><![CDATA[idBando]]></fieldDescription>
 	</field>
@@ -677,7 +677,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="processDefinitionId"/>
 		<fieldDescription><![CDATA[processDefinitionId]]></fieldDescription>
 	</field>
-	<field name="processInstanceId" class="java.lang.Integer">
+	<field name="processInstanceId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="processInstanceId"/>
 		<fieldDescription><![CDATA[processInstanceId]]></fieldDescription>
 	</field>
@@ -733,7 +733,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="startDate"/>
 		<fieldDescription><![CDATA[startDate]]></fieldDescription>
 	</field>
-	<field name="taskId" class="java.lang.Integer">
+	<field name="taskId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="taskId"/>
 		<fieldDescription><![CDATA[taskId]]></fieldDescription>
 	</field>
