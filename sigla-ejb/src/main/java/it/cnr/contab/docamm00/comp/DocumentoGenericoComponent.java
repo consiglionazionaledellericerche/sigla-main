@@ -971,23 +971,13 @@ public class DocumentoGenericoComponent
 
         if (scadenza != null) {
             try {
-                it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession h =
-                        (it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession) it.cnr.jada.util.ejb
-                                .EJBCommonServices
-                                .createEJB(
-                                        "CNRDOCCONT00_EJB_AccertamentoAbstractComponentSession",
-                                        it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession.class);
-                AccertamentoBulk accertamento =
-                        (AccertamentoBulk) h.inizializzaBulkPerModifica(
-                                context,
-                                scadenza.getAccertamento());
-                it.cnr.jada.bulk.BulkList scadenze = accertamento.getAccertamento_scadenzarioColl();
-                scadenza =
-                        (Accertamento_scadenzarioBulk) scadenze.get(
-                                scadenze.indexOfByPrimaryKey(scadenza));
-            } catch (java.rmi.RemoteException e) {
-                throw handleException(scadenza, e);
-            } catch (javax.ejb.EJBException e) {
+                AccertamentoHome accertHome = (AccertamentoHome) getHome( context, AccertamentoBulk.class);
+                Accertamento_scadenzarioHome asHome = (Accertamento_scadenzarioHome) getHome( context, Accertamento_scadenzarioBulk.class );
+                AccertamentoBulk accertamentoBulk = (AccertamentoBulk)accertHome.findByPrimaryKey(scadenza.getAccertamento());
+                accertamentoBulk.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamentoBulk ) ));
+                scadenza = accertamentoBulk.getAccertamento_scadenzarioColl().get(accertamentoBulk.getAccertamento_scadenzarioColl().indexOfByPrimaryKey(scadenza));
+                scadenza.setAccertamento_scad_voceColl( new BulkList( asHome.findAccertamento_scad_voceList(context, scadenza )));
+            } catch (Exception e) {
                 throw handleException(scadenza, e);
             }
             return scadenza;
@@ -6138,6 +6128,7 @@ public class DocumentoGenericoComponent
                 docRigaWizard.setTerzo(Optional.ofNullable(docRigaWizard.getTerzo()).orElse(wizard.getTerzoWizardBulk()));
                 docRigaWizard.setModalita_pagamento(Optional.ofNullable(docRigaWizard.getModalita_pagamento()).orElse(Optional.ofNullable(wizard.getModalitaPagamentoWizardBulk()).map(Modalita_pagamentoBulk::getRif_modalita_pagamento).orElse(null)));
                 docRigaWizard.setBanca(Optional.ofNullable(docRigaWizard.getBanca()).orElse(wizard.getBancaWizardBulk()));
+                docRigaWizard.setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO.equals(wizard.getTi_associato_manrev())?CompensoBulk.ASSOCIATO_MANREV:CompensoBulk.NON_ASSOCIATO_MANREV);
 
                 docGenerico_creaDocumentoGenericoRiga( userContext, docRigaWizard, documentoGenericoBulk, obbligazioneWizard );
             }
@@ -6171,6 +6162,7 @@ public class DocumentoGenericoComponent
             docRigaWizard.setTerzo(Optional.ofNullable(docRigaWizard.getTerzo()).orElse(wizard.getTerzoWizardBulk()));
             docRigaWizard.setModalita_pagamento(Optional.ofNullable(docRigaWizard.getModalita_pagamento()).orElse(Optional.ofNullable(wizard.getModalitaPagamentoWizardBulk()).map(Modalita_pagamentoBulk::getRif_modalita_pagamento).orElse(null)));
             docRigaWizard.setBanca(Optional.ofNullable(docRigaWizard.getBanca()).orElse(wizard.getBancaWizardBulk()));
+            docRigaWizard.setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO.equals(wizard.getTi_associato_manrev())?CompensoBulk.ASSOCIATO_MANREV:CompensoBulk.NON_ASSOCIATO_MANREV);
 
             for ( Iterator<AccertamentoWizard> i = accertamentiColl.iterator(); i.hasNext(); )
                 docGenerico_creaDocumentoGenericoRiga( userContext, docRigaWizard, documentoGenericoBulk, i.next());
@@ -6209,13 +6201,19 @@ public class DocumentoGenericoComponent
             documento.setCd_cds_origine(wizard.getCd_cds_origine());
             documento.setCd_uo_origine(wizard.getCd_uo_origine());
             documento.setTipo_documento(wizard.getTipo_documento());
-            documento.setTi_istituz_commerc( wizard.getTi_istituz_commerc());
+            documento.setTi_istituz_commerc(wizard.getTi_istituz_commerc());
             documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
-            documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
-            documento.setStato_coan(Documento_genericoBulk.NON_CONTABILIZZATO_IN_COAN);
+            if (documento.getTipoDocumentoEnum().isScritturaEconomicaRequired()) {
+                documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
+                documento.setStato_coan(Documento_genericoBulk.NON_CONTABILIZZATO_IN_COAN);
+            } else {
+                documento.setStato_coge(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COGE);
+                documento.setStato_coan(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COAN);
+            }
             documento.setStato_pagamento_fondo_eco(Documento_genericoBulk.NO_FONDO_ECO);
-            documento.setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO);
+            documento.setTi_associato_manrev(Optional.ofNullable(wizard.getTi_associato_manrev()).orElse(Documento_genericoBulk.NON_ASSOCIATO_A_MANDATO));
             documento.setData_registrazione(wizard.getData_registrazione());
+            documento.setDt_scadenza(wizard.getData_registrazione());
             documento.setDt_a_competenza_coge(wizard.getDt_a_competenza_coge());
             documento.setDt_da_competenza_coge(wizard.getDt_da_competenza_coge());
             documento.setDs_documento_generico(wizard.getDs_documento_generico());
@@ -6325,7 +6323,7 @@ public class DocumentoGenericoComponent
             riga.setCognome( anagrafico.getCognome());
             riga.setCodice_fiscale( anagrafico.getCodice_fiscale());
             riga.setPartita_iva( anagrafico.getPartita_iva());
-            riga.setTi_associato_manrev(CompensoBulk.ASSOCIATO_MANREV);
+            riga.setTi_associato_manrev(Optional.ofNullable(wizard.getTi_associato_manrev()).orElse(CompensoBulk.NON_ASSOCIATO_MANREV));
 
             riga.setDocumento_generico( documento );
             documento.getDocumento_generico_dettColl().add(  riga );

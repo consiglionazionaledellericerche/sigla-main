@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.AssTipoCORIEvComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
@@ -252,7 +253,7 @@ public OggettoBulk caricaCosto_dipendente(UserContext userContext,Costi_dipenden
  */
 public void contabilizzaFlussoStipendialeMensile(UserContext userContext,int mese) throws ComponentException {
 	try {
-		if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(userContext))
+		if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaPura(userContext))
 			innerContabilizzaFlussoStipendialeMensile(userContext, CNRUserContext.getEsercizio(userContext).intValue(), mese);
 		else {
 			LoggableStatement stm = new LoggableStatement(getConnection(userContext),
@@ -262,7 +263,7 @@ public void contabilizzaFlussoStipendialeMensile(UserContext userContext,int mes
 				stm.setInt(1, CNRUserContext.getEsercizio(userContext).intValue());
 				stm.setInt(2, mese);
 				stm.setString(3, CNRUserContext.getUser(userContext));
-				//stm.execute();
+				stm.execute();
 			} finally {
 			}
 		}
@@ -2179,7 +2180,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 			boolean isCNR = Utility.createParametriEnteComponentSession().getParametriEnte(userContext).isEnteCNR();
 
 			Stipendi_cofiHome stipendi_cofiHome = (Stipendi_cofiHome)getHome(userContext, it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk.class);
-			java.util.Collection<Stipendi_cofiBulk> stipendiCofi = stipendi_cofiHome.findStipendiCofiAnno(userContext, aEsercizio);
+			java.util.Collection<Stipendi_cofiBulk> stipendiCofi = stipendi_cofiHome.findStipendiCofiAnno(aEsercizio);
 
 			int lastMesePagato = stipendiCofi.stream()
 									.filter(el->el.getMese().compareTo(15)<0)
@@ -2292,8 +2293,10 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 
 			/******************* CREO LE RITENUTE **************/
 			ReversaleAutomaticaWizardBulk reversaleWizard = ReversaleAutomaticaWizardBulk.createBy(mandatoWizard);
-			reversaleWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORA_E.getValue()));
+			reversaleWizard.setStato_coge(MandatoBulk.STATO_COGE_X);
+			reversaleWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_ENTRATA.getValue()));
 			reversaleWizard.getModelloDocumento().setTerzoWizardBulk(mandatoStipendio.getMandato_terzo().getTerzo());
+			reversaleWizard.getModelloDocumento().setDs_documento_generico("CORI - mese:" + stipendiCofiBulk.getMese() + " es:" + stipendiCofiBulk.getEsercizio());
 
 			//Imposto le variabili da utilizzare per il caricamento degli oggetti
 			Documento_generico_rigaBulk docRiga = new Documento_generico_rigaBulk();
@@ -2330,6 +2333,10 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 
 			stipendiCofiBulk.setToBeUpdated();
 			makeBulkPersistent(userContext, stipendiCofiBulk);
+
+			//Effettuo scritture prima nota
+			Scrittura_partita_doppiaBulk scritturaPartitaDoppiaBulk = Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, compensoBulk);
+			makeBulkPersistent(userContext, scritturaPartitaDoppiaBulk);
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -2533,7 +2540,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 
 			compensoBulk.setStato_cofi(CompensoBulk.STATO_PAGATO);
 			compensoBulk.setStato_coge(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COGE);
-			compensoBulk.setStato_coan(Documento_genericoBulk.DA_RICONTABILIZZARE_IN_COAN);
+			compensoBulk.setStato_coan(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COAN);
 			compensoBulk.setTi_associato_manrev(Fattura_passivaBulk.ASSOCIATO_A_MANDATO);
 
 			compensoBulk.setDt_emissione_mandato(compensoBulk.getDt_registrazione());
@@ -2668,6 +2675,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 			compensoBulk.setIm_netto_percipiente(mandatoStipendio.getIm_mandato().subtract(compensoBulk.getIm_cr_ente()).subtract(compensoBulk.getIm_cr_percipiente()));
 			compensoBulk.setToBeCreated();
 			makeBulkPersistent(userContext, compensoBulk);
+
 			return (CompensoBulk)Utility.createCompensoComponentSession().inizializzaBulkPerModifica(userContext, compensoBulk);
 		} catch(Exception e) {
 			throw handleException(e);
@@ -2755,12 +2763,10 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 
 			Optional<Documento_genericoBulk> documentoPassivo = Optional.empty();
 			if (listObbligazioni.size()>0) {
-				mandatoWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORA_S.getValue()));
+				mandatoWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_SPESA.getValue()));
 				mandatoWizard.setImpegniSelezionatiColl(listObbligazioni);
 				mandatoWizard.setTi_automatismo(MandatoAutomaticoWizardBulk.AUTOMATISMO_DA_IMPEGNI);
 				mandatoWizard.setFlGeneraMandatoUnico(Boolean.TRUE);
-
-//				documentoPassivo = Optional.of(Utility.createDocumentoGenericoComponentSession().creaDocumentoGenericoDaImpegni(userContext, mandatoWizard.getModelloDocumento(), listObbligazioni));
 
 				MandatoAutomaticoComponentSession mandatoAutomaticoComponent = (MandatoAutomaticoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_MandatoAutomaticoComponentSession", MandatoAutomaticoComponentSession.class);
 				mandatoWizard = (MandatoAutomaticoWizardBulk)mandatoAutomaticoComponent.creaMandatoAutomatico(userContext, mandatoWizard);

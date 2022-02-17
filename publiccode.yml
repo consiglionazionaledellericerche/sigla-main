@@ -4,10 +4,10 @@
 
 publiccodeYmlVersion: '0.2'
 name: sigla
-releaseDate: '2021-12-20'
+releaseDate: '2022-01-28'
 url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 applicationSuite: jada
-softwareVersion: 6.4.6
+softwareVersion: 6.4.12
 developmentStatus: stable
 softwareType: standalone/web
 platforms:
@@ -47,19 +47,13 @@ description:
     longDescription: >
       ## **Introduzione**
 
-
-      Al fine di fornire elementi generali della Soluzione applicativa,
-      evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di
-      proprietà del CNR, che si occupa di processi amministrativi e contabili,
-      di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad
-      Enti pubblici, in particolare Enti di ricerca, che operano in regime di
-      Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema
-      di contabilità basato su rilevazione dei fatti di gestione in termini
-      economici, patrimoniali ed analitici.
-
+      Al fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, 
+      di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. 
+      Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, 
+      con obbligo di adozione, a consuntivo o anche in parallelo, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, 
+      patrimoniali ed analitici.
 
       ### **Premessa**
-
 
       L'attività di progettazione e sviluppo dell'applicazione è stata avviata
       nel 2001 quando emerse per il CNR la necessità di dotarsi di un nuovo
@@ -76,10 +70,11 @@ description:
       sistema informativo SIGLA risulta completamente coerente ed adattabile
       all'impostazione dei bilanci ed alla gestione delle attività previste
       dalla normativa vigente in materia di contabilità pubblica.
-
+      Le ultime evoluzioni del sistema consentono l'adozione di una contabilità economico patrimoniale, 
+      derivata o parallela rispetto a quella finanziaria, 
+      opportunamente configurabile secondo le esigenze specifiche.
 
       ### **Informazioni generali del Sistema**
-
 
       Il **S**istema **I**ntegrato per la **G**estione delle **L**inee di
       **A**ttività è un sistema applicativo modulare, organizzato in componenti
@@ -93,13 +88,9 @@ description:
       applicativa è 'Multiente' e si articola su tre livelli di organizzazione
       dell'Ente, che nel caso specifico del CNR, sono:
 
-
       - Centro di Spesa;
-
       - Unità Organizzativa;
-
       - Centro di Responsabilità.
-
 
       **L'architettura e la tecnologia** utilizzate nello sviluppo consentono
       una facile manutenzione ed evoluzione del sistema. La possibilità di
@@ -112,7 +103,6 @@ description:
       semplici e intuitive dell'applicazione aiutano l'utente ad orientarsi nei
       vari processi funzionali previsti.
 
-
       **SIGLA** copre diversi aspetti amministrativi e di gestione contabile, e
       pone alla base di tutti i processi funzionali il controllo dell'uso delle
       risorse a supporto dell'attività di ricerca, o di una qualsiasi attività
@@ -122,7 +112,6 @@ description:
       l'aspetto analitico, a partire dalla fase di previsione fino alla completa
       rendicontazione, del Bilancio contabile.
 
-
       **La possibilità** di estrarre in **excel** tutti i dati presenti sulle
       funzioni di consultazione e di produrre report in autonomia, rappresenta
       una grande utilità per gli utenti che organizzano il proprio lavoro in
@@ -130,43 +119,66 @@ description:
       report periodici e di farli recapitare automaticamente al proprio
       indirizzo mail o a quello di altri collaboratori.
 
+      La **Contabilità Economico Patrimoniale** è il sistema contabilile ispirato alle norme 
+      civilistiche a cui ormai sono chiamati a rispondere anche gli Enti Pubblici di Ricerca che, 
+      seguendo gli accordi stabiliti con i rispettivi Enti vigilanti, 
+      gradualmente si adegueranno abbandonando completamente la contabilità finanziaria fino ad oggi adottata.
+
+      Le possibilità di configurazione offerte da SIGLA sono:
+
+      - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e derivazione del Bilancio economico patrimoniale a fine anno attraverso procedura automatica specifica;
+      - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e proposta delle rispettive scritture economiche patrimoniali paralelamente al consolidamento delle scritture finanziarie;
+      - Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
+      - E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
+
 
       ## **Componenti - Funzionali SIGLA**
-
-
+      
       Le componenti funzionali del Sistema coprono aspetti contabili e aspetti
       amministrativo-contabili che forniscono automaticamente risultati
       contabili. Gli argomenti possono essere raggruppati come di seguito
       indicato e si articolano, chiaramente, in gestioni e funzionalità di
       dettaglio:
 
-
       - **Gestione delle utenze e degli aspetti di configurazione del Sistema**
           - Amministrazione dei Profili e delle Abilitazioni
           - Definizione Struttura organizzativa dell'Ente
           - Configurazione del sistema
+
       - **Gestione delle Anagrafiche fondamentali**
           - Progetti e GAE (gestione azioni elementari)
           - Anagrafica Terzi
           - Piano dei Conti Finanziario ed Economico
           - Anagrafiche di base
+
       - **Gestione della Programmazione Economica e Finanziaria**
           - Bilancio di previsione Decisionale/Gestionale
           - Variazioni e Storni di Bilancio
+          - Bilancio Economico Patrimoniale
+
       - **Gestione contabile**
           - Impegni e Accertamenti
           - Mandati, Reversali e interfaccia Cassiere
           - Documenti Amministrativi
           - Gestione IVA
+
       - **Gestioni consuntive**
           - Gestione delle rendicontazioni analitiche
           - Bilancio economico
           - Operazioni di fine anno.
+      
       - **Gestione delle Missioni**
-
+      
       - **Gestione degli Incarichi di collaborazione**
-
+      
       - **Gestione dell'Inventario**
+      
+      - **Contabilità Economico Patrimoniale**
+           - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e derivazione del Bilancio economico patrimoniale a fine anno attraverso procedura automatica specifica;
+           - Utilizzo della Contabilità Finanziaria come contabilità ufficiale e proposta delle rispettive scritture economiche patrimoniali paralelamente al consolidamento delle scritture finanziarie;
+           - Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
+           - E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
+
     localisedName: SIGLA
     genericName: Sistema Informativo Contabile
     shortDescription: >-
@@ -198,6 +210,8 @@ description:
       - docs/screenshot/print.png
       - docs/screenshot/print_2.png
       - docs/screenshot/print_3.png
+      - docs/screenshot/economica_1.png
+      - docs/screenshot/economica_2.png
     features:
       - Amministrazione dei Profili e delle Abilitazioni
       - Definizione Struttura organizzativa dell'Ente
@@ -216,3 +230,4 @@ description:
       - Gestione delle Missioni
       - Gestione degli Incarichi di collaborazione
       - Gestione dell'Inventario
+      - Contabilità Economico Patrimoniale

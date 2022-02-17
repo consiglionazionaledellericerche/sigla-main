@@ -119,6 +119,7 @@ public class MandatoAutomaticoComponent extends MandatoComponent {
 			wizard.getModelloDocumento().setDt_da_competenza_coge(Optional.ofNullable(wizard.getModelloDocumento().getDt_da_competenza_coge()).orElse(wizard.getDt_emissione()));
 			wizard.getModelloDocumento().setDt_a_competenza_coge(Optional.ofNullable(wizard.getModelloDocumento().getDt_a_competenza_coge()).orElse(wizard.getDt_emissione()));
 			wizard.getModelloDocumento().setUser(Optional.ofNullable(wizard.getUser()).orElse(wizard.getUser()));
+			wizard.getModelloDocumento().setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO);
 
 			Documento_genericoBulk documentoGenericoBulk = Utility.createDocumentoGenericoComponentSession().creaDocumentoGenericoDaImpegni(userContext, wizard.getModelloDocumento(), impegniColl);
 
