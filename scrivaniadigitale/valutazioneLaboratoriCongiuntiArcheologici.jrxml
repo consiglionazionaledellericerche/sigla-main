@@ -801,6 +801,9 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="commento_congruita_economica_progetto"/>
 		<fieldDescription><![CDATA[commento_congruita_economica_progetto]]></fieldDescription>
 	</field>
+	<field name="giudizio_complessivo" class="java.lang.String">
+		<fieldDescription><![CDATA[giudizio_complessivo]]></fieldDescription>
+	</field>
 	<group name="Group2" isStartNewColumn="true" footerPosition="StackAtBottom">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
 		<groupHeader>
@@ -827,15 +830,7 @@
 					<textFieldExpression><![CDATA["Istituto: " + $F{strutturaValutazioneDirigente}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="75">
-				<textField textAdjust="ScaleFont">
-					<reportElement x="0" y="10" width="549" height="20" uuid="1dbe54a4-231e-4a32-a1f3-a093c4e155d9"/>
-					<textElement textAlignment="Left">
-						<font size="14" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Dipartimento: " + $F{dipartimento}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band height="75"/>
 		</groupHeader>
 	</group>
 	<background>
@@ -955,6 +950,16 @@
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA["8 - Congruità economica del progetto\r\nPunteggio (attribuire un punteggio da 1 a 10): "  + $F{punteggio_congruita_economica_progetto} + "\r\ncommento: " + "<style isBold=\"false\">" + $F{commento_congruita_economica_progetto} + "\r\n\r\n</style>"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="4" width="555" height="17" uuid="ea0380ba-4b74-4cc0-9211-d4c15956bc52"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Giudizio Complessivo\r\n"  + $F{giudizio_complessivo} ]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
