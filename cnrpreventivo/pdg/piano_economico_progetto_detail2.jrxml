@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6934217901613347"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="199"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="794"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -71,12 +74,16 @@
 	<parameter name="P_IM_COFINANZIATO" class="java.math.BigDecimal" isForPrompting="false"/>
 	<parameter name="P_TOTALE_ENTRATE" class="java.math.BigDecimal" isForPrompting="false"/>
 	<parameter name="P_TOTALE_REVERSALI" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_UO_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT ESERCIZIO, STATO, PG_CONTRATTO, OGGETTO
 FROM CONTRATTO
 WHERE PG_PROGETTO = $P{P_PG_PROGETTO}
 AND (CD_UNITA_ORGANIZZATIVA=SUBSTR($P{P_CENTRO_RESPONSABILITA},1,7) OR
-SUBSTR($P{P_CENTRO_RESPONSABILITA},1,7)=$P{P_UO_COORDINATRICE})
+SUBSTR($P{P_CENTRO_RESPONSABILITA},1,3)=SUBSTR($P{P_UO_COORDINATRICE},1,3) OR 
+$P{P_UO_ENTE}='Y')
 ORDER BY ESERCIZIO, STATO, PG_CONTRATTO]]>
 	</queryString>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>

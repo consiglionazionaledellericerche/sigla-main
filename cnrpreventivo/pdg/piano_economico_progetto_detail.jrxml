@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
@@ -364,7 +365,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 		</groupHeader>
 		<groupFooter>
 			<band height="17">
-				<textField isStretchWithOverflow="true">
+				<textField textAdjust="StretchHeight">
 					<reportElement style="VERB8" x="3" y="1" width="296" height="15" uuid="bcce2779-23a1-47a5-85b8-a284c99ede56"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["Totale Esercizio "+$F{ESERCIZIO}]]></textFieldExpression>
@@ -462,7 +463,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<text><![CDATA[Voce Economica:]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true">
+				<textField textAdjust="StretchHeight">
 					<reportElement style="VERB8" x="72" y="1" width="231" height="15" uuid="9a7af229-5f48-4943-b2eb-488453ac0997"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{CD_VOCE_PIANO}+" - "+$F{DS_VOCE_PIANO}]]></textFieldExpression>
@@ -585,7 +586,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<text><![CDATA[Totale Voce Economica:]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true">
+				<textField textAdjust="StretchHeight">
 					<reportElement style="VERB8" x="100" y="1" width="203" height="15" uuid="127cb4b7-ab70-4dcb-a477-1387582f97b5"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{CD_VOCE_PIANO}+" - "+$F{DS_VOCE_PIANO}]]></textFieldExpression>
@@ -672,8 +673,12 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 		<groupExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></groupExpression>
 		<groupHeader>
 			<band height="32">
-				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$F{CD_CENTRO_RESPONSABILITA}!=null]]></printWhenExpression>
-				<textField isStretchWithOverflow="true">
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
+$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$P{P_CENTRO_RESPONSABILITA}.substring(3).equals($P{P_UO_COORDINATRICE}.substring(3))||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+				<textField textAdjust="StretchHeight">
 					<reportElement style="VERB8" x="42" y="1" width="261" height="15" uuid="a35d304d-4645-4736-afd3-9e54dc4ec887"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="false"/>
@@ -734,7 +739,11 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 		</groupHeader>
 		<groupFooter>
 			<band height="17">
-				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$F{CD_CENTRO_RESPONSABILITA}!=null]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
+$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$P{P_CENTRO_RESPONSABILITA}.substring(3).equals($P{P_UO_COORDINATRICE}.substring(3))||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
 				<staticText>
 					<reportElement key="staticText-54" style="VERB8" x="16" y="1" width="53" height="15" uuid="8dab7f75-3cf6-417f-84ee-768c4f254fff"/>
 					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
@@ -746,7 +755,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<text><![CDATA[Totale CDR:]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true">
+				<textField textAdjust="StretchHeight">
 					<reportElement style="VERB8" x="69" y="1" width="234" height="15" uuid="1027269a-6dc8-4171-8f6c-47b4940a2bd6"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="false"/>
@@ -1251,7 +1260,11 @@ Economico]]></text>
 	</pageHeader>
 	<detail>
 		<band height="17">
-			<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$F{CD_CENTRO_RESPONSABILITA}!=null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
+$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$P{P_CENTRO_RESPONSABILITA}.substring(3).equals($P{P_UO_COORDINATRICE}.substring(3))||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
 			<textField>
 				<reportElement style="VERB8" x="27" y="1" width="62" height="15" uuid="97325fb5-eaf7-46d3-8bad-657925cdf9fa"/>
 				<textElement verticalAlignment="Middle"/>
@@ -1262,7 +1275,7 @@ Economico]]></text>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CD_NATURA}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement style="VER8" x="124" y="1" width="179" height="15" uuid="3ac7599d-55fe-4ea5-a466-88a034c52280"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
@@ -1326,7 +1339,7 @@ Economico]]></text>
 	</detail>
 	<summary>
 		<band height="17">
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement style="VERB8" x="4" y="1" width="296" height="15" uuid="52cf3e27-aabd-437c-8aac-9c6fcaf9d22a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["TOTALE GENERALE"]]></textFieldExpression>

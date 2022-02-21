@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921235"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SiglaProduzione"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -27,7 +29,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["G:/Sorgenti/Sigla/sigla-reports/img/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/home/rpagano/git/sigla-reports/img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -118,14 +120,14 @@ $F{STATO}.equals("RES")?"Respinto":
 $F{STATO}.equals("DEF")?"Definitivo":
 $F{STATO}.equals("PRP")?"Provvisorio":""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement style="VERB10" x="576" y="38" width="182" height="13" uuid="db51019d-f557-43c6-b0a0-179006ac8cbd"/>
 				<textElement>
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}+" - "+$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement style="VERB10" x="48" y="38" width="431" height="13" uuid="209c4ca9-c7ad-424f-8612-5cfdaca8644d"/>
 				<textElement>
 					<font fontName="Times New Roman"/>
@@ -242,6 +244,9 @@ $F{STATO}.equals("PRP")?"Provvisorio":""]]></textFieldExpression>
 				</subreportParameter>
 				<subreportParameter name="P_PG_PROGETTO">
 					<subreportParameterExpression><![CDATA[$P{P_PG_PROGETTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_UO_ENTE">
+					<subreportParameterExpression><![CDATA[$P{P_UO_ENTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "piano_economico_progetto_detail2.jasper"]]></subreportExpression>
