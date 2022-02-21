@@ -23,6 +23,7 @@ import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBul
 import it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeBP;
 import it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeDettBP;
 import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.consultazioni.ejb.ConsProgEcoVociGaeComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -43,17 +44,13 @@ public Forward doCerca(ActionContext context) throws RemoteException, Instantiat
 		bp.fillModel(context); 
 		bp.valorizzaProgetto(context,selezione);
 
-		
 		ConsProgEcoVoceGaeDettBP dettBP = (ConsProgEcoVoceGaeDettBP) context.createBusinessProcess("ConsProgEcoVoceGaeDettBP");
-		CompoundFindClause clause = new CompoundFindClause();
-		clause.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, selezione.getPg_progetto());
-		if (selezione.getTipoStampa().equals(ConsProgettiEcoVociGaeBulk.SINTETICA)){
-			clause.addClause("AND", ConsProgettiEcoVociGaeBulk.SINTETICA, SQLBuilder.EQUALS, true);
+		if (selezione.getTipoStampa().equals(ConsProgettiEcoVociGaeBulk.SINTETICA))
 			dettBP.impostaColonne(false);
-		} else {
+		else
 			dettBP.impostaColonne(true);
-		}
-		it.cnr.jada.util.RemoteIterator ri = dettBP.createComponentSession().cerca(context.getUserContext(), clause, selezione);
+
+		it.cnr.jada.util.RemoteIterator ri = ((ConsProgEcoVociGaeComponentSession)dettBP.createComponentSession()).findProgetti(context.getUserContext(), selezione);
 		
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		if (ri.countElements() == 0) {

@@ -16,16 +16,12 @@
  */
 
 package it.cnr.contab.progettiric00.consultazioni.bulk;
-import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 
 public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persistent {
 	public final static java.util.Dictionary <String,String> TIPOLOGIA_STAMPA_KEYS;
@@ -125,7 +121,7 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 
 	private String  cd_centro_responsabilita;
 
-	protected it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk findProgettoForPrint;
+	protected ProgettoBulk findProgettoForPrint;
 
 	private String  ds_cdr;
 
@@ -238,11 +234,11 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 		this.impacc_cofin = impacc_cofin;
 	}
 
-	public Progetto_sipBulk getFindProgettoForPrint() {
+	public ProgettoBulk getFindProgettoForPrint() {
 		return findProgettoForPrint;
 	}
 
-	public void setFindProgettoForPrint(Progetto_sipBulk findProgetto) {
+	public void setFindProgettoForPrint(ProgettoBulk findProgetto) {
 		this.findProgettoForPrint = findProgetto;
 		if (getFindProgettoForPrint() != null){
 			setPg_progetto(getFindProgettoForPrint().getPg_progetto());

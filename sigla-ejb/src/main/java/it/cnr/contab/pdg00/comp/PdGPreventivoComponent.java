@@ -16,43 +16,35 @@
  */
 
 package it.cnr.contab.pdg00.comp;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
-import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
-import it.cnr.contab.progettiric00.core.bulk.*;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
-import it.cnr.contab.messaggio00.bulk.MessaggioHome;
-import it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk;
-import it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Chiusura_coepBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Chiusura_coepHome;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.CdsHome;
-import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Classificazione_speseBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Classificazione_speseHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
+import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.*;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.cdip.bulk.Stampa_rendiconto_finanziarioVBulk;
+import it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregato_spe_detBulk;
-
+import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
@@ -65,11 +57,8 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.Types;
 import java.util.Optional;
 import java.util.Vector;
-
 
 public class PdGPreventivoComponent extends PdGComponent implements it.cnr.jada.comp.ICRUDMgr, IPdGPreventivoTestataMgr, IPdGPreventivoDettagliMgr, IPrintMgr, Cloneable,Serializable {
 
@@ -4112,23 +4101,6 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		return sql;
 	}
 
-	public SQLBuilder selectFindProgettoForPrintByClause (UserContext userContext,
-													  ConsProgettiEcoVociGaeBulk stampa, Progetto_sipBulk progetto, CompoundFindClause clause) throws ComponentException, PersistencyException
-	{
-		Progetto_sipHome progettoSiphome = (Progetto_sipHome)getHome(userContext, Progetto_sipBulk.class);
-		SQLBuilder sql = progettoSiphome.createSQLBuilderAll();
-		sql.addClause( clause );
-		sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addSQLClause("AND", "TIPO_FASE", SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
-		sql.addSQLClause("AND", "PG_PROGETTO_OTHER_FIELD", SQLBuilder.ISNOTNULL,"");
-		// Se uo 999.000 in scrivania: visualizza tutti i progetti
-		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_unita_organizzativa());
-		}
-		sql.addOrderBy("cd_progetto");
-		return sql;
-	}
 	public SQLBuilder selectDipartimentoForPrintByClause (UserContext userContext,
 	Stampa_pdg_etr_speVBulk stampa, DipartimentoBulk dipartimento, CompoundFindClause clause) throws ComponentException, PersistencyException
 	{	
@@ -4873,5 +4845,5 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_situazione
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw new ComponentException(pe);
 	}	
-}	
+}
 }

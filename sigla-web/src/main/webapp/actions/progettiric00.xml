@@ -157,7 +157,7 @@
           name="ConsProgEcoVoceGaeDettBP" className="it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeDettBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+    <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ConsProgEcoVociGaeComponentSession"/>
     <init-param name="defaultAction" value="ConsultazioniAction"/>
     <init-param name="multiSelezione" value="Y" />
   </businessProcess>
