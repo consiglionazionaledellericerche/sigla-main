@@ -559,6 +559,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 	    	}
 	    	bw.append(Formatta(conta_det.toString(),"D",5,"0"));  // numero det sez4 ven	
 	    	bw.append(Formatta(somma_det.toString(),"D",13,"0"));  // somma_det sez4 ven
+			bw.append(Formatta("0","D",5,"0"));  // Numero di righe dettaglio della sezione 5
 	    	bw.append("\r\n");
     	}
     	conta=0;
