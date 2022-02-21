@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
@@ -44,24 +45,12 @@
 	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["084.000.000"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[Integer.valueOf(30264)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_ESERCIZIO_CONTRATTO" class="java.math.BigDecimal" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new BigDecimal(2018)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_STATO_CONTRATTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_PG_CONTRATTO" class="java.math.BigDecimal" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new BigDecimal(18942)]]></defaultValueExpression>
-	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="P_ESERCIZIO_CONTRATTO" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_STATO_CONTRATTO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_PG_CONTRATTO" class="java.math.BigDecimal" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT ESERCIZIO_OBB_ACR, PG_OBBLIGAZIONE_ACCERTAMENTO, CD_ELEMENTO_VOCE, DESC_VOCE,
 sum(TOTALE_ENTRATE) TOTALE_ENTRATE, sum(TOTALE_REVERSALI) TOTALE_REVERSALI
@@ -147,7 +136,7 @@ group by ESERCIZIO_OBB_ACR, PG_OBBLIGAZIONE_ACCERTAMENTO, CD_ELEMENTO_VOCE, DESC
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Accertamento n. "+$F{PG_OBBLIGAZIONE_ACCERTAMENTO}+"/"+$F{ESERCIZIO_OBB_ACR}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement style="VER8" x="151" y="1" width="285" height="15" uuid="3ac7599d-55fe-4ea5-a466-88a034c52280"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DESC_VOCE}]]></textFieldExpression>

@@ -53,9 +53,7 @@
 	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["084.000.000"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[Integer.valueOf(25841)]]></defaultValueExpression>
-	</parameter>
+	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="P_DT_INIZIO" class="java.sql.Timestamp" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -74,9 +72,7 @@
 	<parameter name="P_IM_COFINANZIATO" class="java.math.BigDecimal" isForPrompting="false"/>
 	<parameter name="P_TOTALE_ENTRATE" class="java.math.BigDecimal" isForPrompting="false"/>
 	<parameter name="P_TOTALE_REVERSALI" class="java.math.BigDecimal" isForPrompting="false"/>
-	<parameter name="P_UO_ENTE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="P_UO_ENTE" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT ESERCIZIO, STATO, PG_CONTRATTO, OGGETTO
 FROM CONTRATTO
