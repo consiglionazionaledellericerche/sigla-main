@@ -634,6 +634,10 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	public boolean isRimodulazioneDiRapidaApprovazione() {
 		return !this.getProgetto().isProgettoScaduto() &&
 				isRimodulataRipartizioneTraEsercizi() &&
+				!this.getAllDetailsProgettoPianoEconomico().stream().anyMatch(el->Optional.ofNullable(el.getDispResiduaFinanziamentoRimodulato())
+								.map(disp->disp.compareTo(BigDecimal.ZERO)<0).orElse(Boolean.FALSE) ||
+						Optional.ofNullable(el.getDispResiduaCofinanziamentoRimodulato())
+								.map(disp->disp.compareTo(BigDecimal.ZERO)<0).orElse(Boolean.FALSE)) &&
 				!this.getDettagliRimodulazione().stream().filter(el->el.getVocePianoEconomico().isVocePersonaleTempoIndeterminato()).findAny().isPresent();
 	}
 
