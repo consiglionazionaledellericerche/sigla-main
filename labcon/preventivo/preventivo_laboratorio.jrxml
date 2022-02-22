@@ -42,6 +42,9 @@
 	<field name="fondiC" class="java.lang.String">
 		<fieldDescription><![CDATA[fondiC]]></fieldDescription>
 	</field>
+	<field name="nazione" class="java.lang.String">
+		<fieldDescription><![CDATA[nazione]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -146,15 +149,15 @@ $F{annoInizio} +"-"+  $F{annoFine} +"-"+  $F{laboratorio}]]></textFieldExpressio
 			</textField>
 		</band>
 		<band height="90" splitType="Stretch">
-			<staticText>
+			<textField isBlankWhenNull="false">
 				<reportElement x="14" y="10" width="524" height="30" uuid="913d0988-8d06-4304-8558-75eaedc34524">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SPESE DI MISSIONE PERSONALE DELL'UNITA' PARTNER SU FONDI PROPRI (Fondi B) ]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["SPESE DI MISSIONE PERSONALE DELL'UNITA' PARTNER ("+ $F{nazione} +") SU FONDI PROPRI (Fondi B)"]]></textFieldExpression>
+			</textField>
 			<subreport runToBottom="false">
 				<reportElement stretchType="RelativeToBandHeight" x="14" y="71" width="524" height="13" uuid="493a5908-4c24-4b8c-85e2-8a3cd91bd074"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spesePartner")]]></dataSourceExpression>
