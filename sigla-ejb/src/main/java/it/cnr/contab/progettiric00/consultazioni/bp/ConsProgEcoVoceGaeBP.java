@@ -17,8 +17,7 @@
 
 package it.cnr.contab.progettiric00.consultazioni.bp;
 
-import it.cnr.contab.cori00.ejb.Liquid_coriComponentSession;
-import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk;
 import it.cnr.contab.progettiric00.consultazioni.ejb.ConsProgEcoVociGaeComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
@@ -43,9 +42,9 @@ public class ConsProgEcoVoceGaeBP extends BulkBP
 	}
 
 	protected void init(Config config,ActionContext context) throws BusinessProcessException {
-		ConsProgettiEcoVociGaeBulk bulk = new ConsProgettiEcoVociGaeBulk();
+		V_saldi_piano_econom_progcdrBulk bulk = new V_saldi_piano_econom_progcdrBulk();
 		bulk.setEsercizio_piano(CNRUserContext.getEsercizio(context.getUserContext()));
-		bulk.setTipoStampa(ConsProgettiEcoVociGaeBulk.DETTAGLIATA);
+		bulk.setTipoStampa(V_saldi_piano_econom_progcdrBulk.DETTAGLIATA);
 		setModel(context,bulk);
 		super.init(config,context);
 	}
@@ -67,7 +66,7 @@ public class ConsProgEcoVoceGaeBP extends BulkBP
 		}
 	}
 
-	public void valorizzaProgetto(ActionContext context, ConsProgettiEcoVociGaeBulk bulk) throws ValidationException{
+	public void valorizzaProgetto(ActionContext context, V_saldi_piano_econom_progcdrBulk bulk) throws ValidationException{
 		if (bulk.getPg_progetto()== null)
 			throw new ValidationException("Valorizzare il progetto");
 	}

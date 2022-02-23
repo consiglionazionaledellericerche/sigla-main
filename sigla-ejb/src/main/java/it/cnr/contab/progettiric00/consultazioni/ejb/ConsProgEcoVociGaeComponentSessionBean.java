@@ -17,7 +17,7 @@
 
 package it.cnr.contab.progettiric00.consultazioni.ejb;
 
-import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk;
 import it.cnr.contab.progettiric00.consultazioni.comp.ConsProgEcoVociGaeComponent;
 import it.cnr.jada.UserContext;
 
@@ -33,7 +33,7 @@ public class ConsProgEcoVociGaeComponentSessionBean extends it.cnr.jada.ejb.CRUD
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
 		return new ConsProgEcoVociGaeComponentSessionBean();
 	}
-	public it.cnr.jada.util.RemoteIterator findProgetti(UserContext param0, ConsProgettiEcoVociGaeBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException{
+	public it.cnr.jada.util.RemoteIterator findProgetti(UserContext param0, V_saldi_piano_econom_progcdrBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException{
 		pre_component_invocation(param0,componentObj);
 		try {
  			it.cnr.jada.util.RemoteIterator result = ((ConsProgEcoVociGaeComponent)componentObj).findProgetti(param0,param1);

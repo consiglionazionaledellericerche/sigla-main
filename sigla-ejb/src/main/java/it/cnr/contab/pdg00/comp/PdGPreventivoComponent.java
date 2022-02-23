@@ -39,7 +39,6 @@ import it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregato_spe_detBulk;
-import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;

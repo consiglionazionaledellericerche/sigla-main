@@ -15,16 +15,20 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.progettiric00.consultazioni.ejb;
+package it.cnr.contab.progettiric00.consultazioni.bulk;
 
-import it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistentCache;
 
-import javax.ejb.Remote;
+import java.sql.Connection;
 
-@Remote
-public interface ConsProgEcoVociGaeComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
-    RemoteIterator findProgetti(UserContext userContext, V_saldi_piano_econom_progcdrBulk bulk) throws ComponentException;
+public class V_saldi_piano_econom_progcdrHome extends BulkHome {
+
+	public V_saldi_piano_econom_progcdrHome(Connection conn) {
+		super(V_saldi_piano_econom_progcdrBulk.class, conn);
+	}
+
+	public V_saldi_piano_econom_progcdrHome(Connection conn, PersistentCache persistentCache) {
+		super(V_saldi_piano_econom_progcdrBulk.class, conn, persistentCache);
+	}
 }
