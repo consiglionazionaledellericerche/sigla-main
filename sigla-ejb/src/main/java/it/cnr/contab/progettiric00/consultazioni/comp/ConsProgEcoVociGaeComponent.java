@@ -32,6 +32,8 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
+import java.util.Optional;
+
 public class ConsProgEcoVociGaeComponent extends CRUDComponent {
 
 	public ConsProgEcoVociGaeComponent() {
@@ -62,11 +64,11 @@ public class ConsProgEcoVociGaeComponent extends CRUDComponent {
 
 	public it.cnr.jada.util.RemoteIterator findProgetti(UserContext userContext, V_saldi_piano_econom_progcdrBulk bulk) throws ComponentException {
 		try {
-			V_saldi_piano_econom_progcdrHome home = (V_saldi_piano_econom_progcdrHome)getHome(userContext, V_saldi_piano_econom_progcdrBulk.class);
-
 			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk) getHome(userContext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
 
 			boolean isSintetica = V_saldi_piano_econom_progcdrBulk.SINTETICA.equals(bulk.getTipoStampa());
+
+			V_saldi_piano_econom_progcdrHome home = (V_saldi_piano_econom_progcdrHome)getHome(userContext, V_saldi_piano_econom_progcdrBulk.class, !isSintetica?"DETTAGLIATA":null);
 
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext) );
