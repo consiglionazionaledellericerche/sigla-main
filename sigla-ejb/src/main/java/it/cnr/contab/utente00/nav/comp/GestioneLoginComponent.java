@@ -31,6 +31,7 @@ import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -40,6 +41,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.PropertyNames;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import java.io.Serializable;
@@ -956,5 +959,35 @@ public class GestioneLoginComponent
         } catch (Throwable e) {
             throw handleException(e);
         }
+    }
+
+    public boolean isUserAccessoAllowed(KeycloakPrincipal principal, Integer esercizio, String cds, String uo, String... accessi) throws ComponentException {
+        CNRUserContext context = new CNRUserContext();
+        context.setEsercizio(esercizio);
+        context.setCd_cds(cds);
+        context.setCd_unita_organizzativa(uo);
+        UtenteBulk utenteBulk = new UtenteBulk();
+        final Optional<IDToken> idToken = Optional.ofNullable(principal)
+                .filter(KeycloakPrincipal.class::isInstance)
+                .map(KeycloakPrincipal.class::cast)
+                .map(KeycloakPrincipal::getKeycloakSecurityContext)
+                .map(keycloakSecurityContext -> {
+                    return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+                            .orElse(keycloakSecurityContext.getToken());
+                });
+        if (idToken.isPresent()) {
+            utenteBulk.setCd_utente(idToken.get().getPreferredUsername());
+            utenteBulk.setCd_utente_uid(idToken.get().getPreferredUsername());
+            return Optional.ofNullable(validaUtente(context, utenteBulk))
+                    .map(utenteBulk1 -> {
+                        context.setUser(utenteBulk.getCd_utente());
+                        try {
+                            return isUserAccessoAllowed(context, accessi);
+                        } catch (ComponentException e) {
+                            return Boolean.FALSE;
+                        }
+                    }).orElse(Boolean.FALSE);
+        }
+        return Boolean.FALSE;
     }
 }

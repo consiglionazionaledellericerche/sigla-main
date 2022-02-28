@@ -28,7 +28,6 @@ import javax.jws.WebService;
 
 @WebService( name="FatturaAttivaComponentWS",targetNamespace="http://contab.cnr.it/sigla")
 @Remote
-
 public interface FatturaAttivaComponentSessionWS extends java.rmi.Remote{
 	@WebMethod @WebResult(targetNamespace="http://contab.cnr.it/sigla",name="result") java.util.ArrayList<FatturaAttiva> InserimentoFatture(
 			 @WebParam (name="fatturaAttiva") java.util.ArrayList<FatturaAttiva> fatturaAttiva) ;

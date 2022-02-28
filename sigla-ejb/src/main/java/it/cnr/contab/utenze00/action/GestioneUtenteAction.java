@@ -24,7 +24,10 @@ import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 
+import java.security.Principal;
 import java.util.Optional;
 
 /**
@@ -289,6 +292,21 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	public Forward doLogout(ActionContext context) {
 		doCloseAll(context);
 		context.invalidateSession();
+		final Optional<KeycloakPrincipal> principalOptional = Optional.ofNullable(context)
+				.filter(HttpActionContext.class::isInstance)
+				.map(HttpActionContext.class::cast)
+				.map(HttpActionContext::getRequest)
+				.flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+				.filter(KeycloakPrincipal.class::isInstance)
+				.map(KeycloakPrincipal.class::cast);
+		if (principalOptional.isPresent()) {
+			Optional.ofNullable(principalOptional.get().getKeycloakSecurityContext())
+					.filter(RefreshableKeycloakSecurityContext.class::isInstance)
+					.map(RefreshableKeycloakSecurityContext.class::cast)
+					.ifPresent(rKSC -> {
+						rKSC.logout(rKSC.getDeployment());
+					});
+		}
 		return context.findForward("logout");
 	}
 	/**

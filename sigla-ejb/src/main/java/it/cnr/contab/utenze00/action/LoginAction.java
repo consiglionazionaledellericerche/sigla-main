@@ -41,6 +41,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.FormBP;
 import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -305,6 +306,26 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         }
     }
 
+    public Forward doLogout(ActionContext context) {
+        context.invalidateSession();
+        final Optional<KeycloakPrincipal> principalOptional = Optional.ofNullable(context)
+                .filter(HttpActionContext.class::isInstance)
+                .map(HttpActionContext.class::cast)
+                .map(HttpActionContext::getRequest)
+                .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+                .filter(KeycloakPrincipal.class::isInstance)
+                .map(KeycloakPrincipal.class::cast);
+        if (principalOptional.isPresent()) {
+            Optional.ofNullable(principalOptional.get().getKeycloakSecurityContext())
+                    .filter(RefreshableKeycloakSecurityContext.class::isInstance)
+                    .map(RefreshableKeycloakSecurityContext.class::cast)
+                    .ifPresent(rKSC -> {
+                        rKSC.logout(rKSC.getDeployment());
+                    });
+        }
+        return context.findForward("logout");
+    }
+
     private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
         boolean utentiMultipliFound = false;
         CNRUserInfo ui = null;
@@ -364,8 +385,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             }
 
             if (utente == null) {
-                setErrorMessage(context, "Nome utente o password sbagliati.");
-                return context.findDefaultForward();
+                if (idToken.isPresent()) {
+                    return context.findForward("unauthorized");
+                } else {
+                    setErrorMessage(context, "Nome utente o password sbagliati.");
+                    return context.findDefaultForward();
+                }
             }
             ui.setUserid(utente.getCd_utente());
             if (utente.isAutenticazioneLdap())
@@ -393,17 +418,29 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             setErrorMessage(context, "Password scaduta da più di tre mesi.");
             return context.findForward("password_scaduta_ldap");
         } catch (it.cnr.contab.utente00.nav.comp.UtenteNonValidoException e) {
-            setErrorMessage(context, "Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
-            return context.findDefaultForward();
+            setErrorMessage(context, "Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                    .orElse(context.findDefaultForward());
         } catch (it.cnr.contab.utente00.nav.comp.UtenteInDisusoException e) {
             setErrorMessage(context, "Utente non utilizzato da più di sei mesi.");
-            return context.findDefaultForward();
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                            .orElse(context.findDefaultForward());
         } catch (it.cnr.contab.utente00.nav.comp.UtenteLdapException e) {
             setErrorMessage(context, "Utente non più valido. Utilizzare l'utente di accesso ufficiale di tipo \"nome.cognome\"");
-            return context.findDefaultForward();
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                    .orElse(context.findDefaultForward());
         } catch (it.cnr.contab.utente00.nav.comp.UtenteLdapNonUtenteSiglaException e) {
             setErrorMessage(context, "Utente valido ma che non possiede nessun profilo/abilitazione in SIGLA. Contattare l'amministratore delle utenze Sigla dell'Istituto.");
-            return context.findDefaultForward();
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                    .orElse(context.findDefaultForward());
         } catch (Throwable e) {
             return handleException(context, e);
         }
