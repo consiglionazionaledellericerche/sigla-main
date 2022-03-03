@@ -50,6 +50,7 @@ import it.cnr.contab.web.rest.config.FatturaAttivaCodiciEnum;
 import it.cnr.contab.web.rest.exception.FatturaAttivaException;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.local.docamm.FatturaAttivaLocal;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -102,136 +103,10 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
             Fattura_attivaBulk fatturaAttivaBulk = fatturaAttivaSingolaComponentSession.ricercaFattura(userContext, userContext.getEsercizio().longValue(),
                     userContext.getCd_cds(), userContext.getCd_unita_organizzativa(), pg);
             final FatturaAttiva fatturaAttiva = Optional.ofNullable(fatturaAttivaBulk)
-                    .map(fatturaAt -> {
-                        try {
-                            FatturaAttiva ritorno = new FatturaAttiva();
-                            java.util.ArrayList<FatturaAttivaRiga> righe = new java.util.ArrayList<FatturaAttivaRiga>();
-                            java.util.ArrayList<FatturaAttivaScad> righescad = new java.util.ArrayList<FatturaAttivaScad>();
-                            java.util.ArrayList<FatturaAttivaIntra> righeIntra = new java.util.ArrayList<FatturaAttivaIntra>();
-                            FatturaAttivaRiga rigaRitorno = new FatturaAttivaRiga();
-                            FatturaAttivaScad scad = new FatturaAttivaScad();
-                            FatturaAttivaIntra intra = new FatturaAttivaIntra();
-
-                            ritorno.setCambio(fatturaAt.getCambio());
-                            ritorno.setCd_cds_origine(fatturaAt.getCd_cds_origine());
-                            ritorno.setCd_divisa(fatturaAt.getCd_divisa());
-
-                            ritorno.setCd_modalita_pag_uo_cds(fatturaAt.getModalita_pagamento_uo().getCd_modalita_pag());
-                            ritorno.setCd_terzo(fatturaAt.getCd_terzo());
-                            ritorno.setCd_terzo_uo_cds(fatturaAt.getCd_terzo_uo_cds());
-                            ritorno.setCd_tipo_sezionale(fatturaAt.getCd_tipo_sezionale());
-                            ritorno.setCd_uo_origine(fatturaAt.getCd_uo_origine());
-                            ritorno.setDs_fattura_attiva(fatturaAt.getDs_fattura_attiva());
-                            ritorno.setDt_registrazione(fatturaAt.getDt_registrazione());
-                            ritorno.setEsercizio(fatturaAt.getEsercizio());
-                            ritorno.setFl_extra_ue(fatturaAt.getFl_extra_ue());
-                            ritorno.setFl_intra_ue(fatturaAt.getFl_intra_ue());
-                            ritorno.setFl_liquidazione_differita(fatturaAt.getFl_liquidazione_differita());
-                            ritorno.setFl_san_marino(fatturaAt.getFl_san_marino());
-                            ritorno.setNote(fatturaAt.getNote());
-                            ritorno.setPg_banca_uo_cds(fatturaAt.getBanca_uo().getPg_banca());
-                            ritorno.setPg_fattura_attiva(fatturaAt.getPg_fattura_attiva());
-                            ritorno.setPg_fattura_esterno(fatturaAt.getPg_fattura_esterno());
-                            ritorno.setRif_ordine(fatturaAt.getRiferimento_ordine());
-                            ritorno.setTi_causale_emissione(fatturaAt.getTi_causale_emissione());
-                            ritorno.setTi_fattura(fatturaAt.getTi_fattura());
-                            ritorno.setUtcr(fatturaAt.getUtcr());
-                            ritorno.setNr_protocollo_iva(fatturaAt.getProtocollo_iva());
-                            ritorno.setDt_protocollo(fatturaAt.getDt_emissione());
-                            ritorno.setFl_pagamento_anticipato(fatturaAt.getFl_pagamento_anticipato());
-                            for (Iterator i = fatturaAt.getFattura_attiva_intrastatColl().iterator(); i.hasNext(); ) {
-                                Fattura_attiva_intraBulk riga_intra = (Fattura_attiva_intraBulk) i.next();
-                                intra = new FatturaAttivaIntra();
-                                intra.setAmmontare_euro(riga_intra.getAmmontare_euro());
-                                intra.setCod_erogazione(riga_intra.getCd_modalita_erogazione());
-                                intra.setCod_incasso(riga_intra.getCd_modalita_incasso());
-                                intra.setId_cpa(riga_intra.getId_cpa());
-                                intra.setPg_nazione(riga_intra.getPg_nazione_destinazione());
-                                righeIntra.add(intra);
-                            }
-                            ritorno.setRigheIntra(righeIntra);
-
-                            for (Iterator i = fatturaAt.getFattura_attiva_dettColl().iterator(); i.hasNext(); ) {
-                                Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk) i.next();
-                                rigaRitorno = new FatturaAttivaRiga();
-                                rigaRitorno.setCd_tariffario(riga.getCd_tariffario());
-                                rigaRitorno.setCd_voce_iva(riga.getCd_voce_iva());
-                                rigaRitorno.setDs_riga_fattura(riga.getDs_riga_fattura());
-                                rigaRitorno.setFl_iva_forzata(riga.getFl_iva_forzata());
-                                rigaRitorno.setEsercizio_assncna_fin(riga.getEsercizio_assncna_fin());
-                                rigaRitorno.setPg_fattura_assncna_fin(riga.getPg_fattura_assncna_fin());
-                                rigaRitorno.setPg_riga_assncna_fin(riga.getPg_riga_assncna_fin());
-                                rigaRitorno.setPrezzo_unitario(riga.getPrezzo_unitario());
-                                rigaRitorno.setProgressivo_riga(riga.getProgressivo_riga());
-                                rigaRitorno.setQuantita(riga.getQuantita());
-                                if (fatturaAt instanceof Fattura_attiva_IBulk) {
-                                    AccertamentoBulk acc_db = new AccertamentoBulk(riga.getAccertamento_scadenzario().getAccertamento().getCd_cds(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio_originale(), riga.getAccertamento_scadenzario().getAccertamento().getPg_accertamento());
-                                    acc_db = (((AccertamentoBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, acc_db)));
-                                    rigaRitorno.setCd_voce(acc_db.getCapitolo().getCd_voce());
-                                    rigaRitorno.setDs_accertamento(acc_db.getDs_accertamento());
-                                    rigaRitorno.setEsercizio_contratto(acc_db.getEsercizio_contratto());
-                                    rigaRitorno.setStato_contratto(acc_db.getStato_contratto());
-                                    rigaRitorno.setPg_contratto(acc_db.getPg_contratto());
-                                    rigaRitorno.setPg_accertamento(acc_db.getPg_accertamento());
-                                    Accertamento_scadenzarioBulk acc_scad_db = new Accertamento_scadenzarioBulk(riga.getAccertamento_scadenzario().getAccertamento().getCd_cds(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio_originale(), riga.getAccertamento_scadenzario().getAccertamento().getPg_accertamento(), riga.getAccertamento_scadenzario().getPg_accertamento_scadenzario());
-                                    acc_scad_db = (((Accertamento_scadenzarioBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, acc_scad_db)));
-                                    rigaRitorno.setDt_scadenza(acc_scad_db.getDt_scadenza_incasso());
-                                    rigaRitorno.setPg_accertamento_scadenzario(acc_scad_db.getPg_accertamento_scadenzario());
-                                    List scadenzevoce = fatturaAttivaSingolaComponentSession.recuperoScadVoce(userContext, riga.getAccertamento_scadenzario());
-                                    for (Iterator s = scadenzevoce.iterator(); s.hasNext(); ) {
-                                        scad = new FatturaAttivaScad();
-                                        Accertamento_scad_voceBulk scadVoce = (Accertamento_scad_voceBulk) s.next();
-                                        scadVoce = (((Accertamento_scad_voceBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, scadVoce)));
-                                        scad.setCdr(scadVoce.getLinea_attivita().getCd_centro_responsabilita());
-                                        scad.setGae(scadVoce.getLinea_attivita().getCd_linea_attivita());
-                                        scad.setIm_voce(scadVoce.getIm_voce());
-                                        righescad.add(scad);
-                                    }
-                                    rigaRitorno.setRighescadvoc(righescad);
-                                } else {
-                                    Nota_di_credito_attivaBulk nc = (Nota_di_credito_attivaBulk) fatturaAt;
-                                    Nota_di_credito_attiva_rigaBulk nc_riga = (Nota_di_credito_attiva_rigaBulk) riga;
-                                    ritorno.setCd_modalita_pag(nc.getModalita_pagamento().getCd_modalita_pag());
-                                    ritorno.setPg_banca(nc.getBanca().getPg_banca());
-                                    ObbligazioneBulk obb_db = nc_riga.getObbligazione_scadenzario().getObbligazione();
-                                    obb_db = (((ObbligazioneBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, obb_db)));
-                                    rigaRitorno.setCd_voce(obb_db.getCd_elemento_voce());
-                                    rigaRitorno.setDs_obbligazione(obb_db.getDs_obbligazione());
-                                    rigaRitorno.setMotivazione(obb_db.getMotivazione());
-                                    rigaRitorno.setEsercizio_contratto(obb_db.getEsercizio_contratto());
-                                    rigaRitorno.setStato_contratto(obb_db.getStato_contratto());
-                                    rigaRitorno.setPg_contratto(obb_db.getPg_contratto());
-                                    rigaRitorno.setPg_obbligazione(obb_db.getPg_obbligazione());
-                                    Obbligazione_scadenzarioBulk obb_scad_db = nc_riga.getObbligazione_scadenzario();
-                                    obb_scad_db = (((Obbligazione_scadenzarioBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, obb_scad_db)));
-                                    rigaRitorno.setDt_scadenza(obb_scad_db.getDt_scadenza());
-                                    rigaRitorno.setPg_obbligazione_scadenzario(obb_scad_db.getPg_obbligazione_scadenzario());
-                                    java.util.List scadenzevoce = fatturaAttivaSingolaComponentSession.recuperoScadVoce(userContext, obb_scad_db);
-                                    for (Iterator s = scadenzevoce.iterator(); s.hasNext(); ) {
-                                        scad = new FatturaAttivaScad();
-                                        Obbligazione_scad_voceBulk scadVoce = (Obbligazione_scad_voceBulk) s.next();
-                                        scadVoce = (((Obbligazione_scad_voceBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, scadVoce)));
-                                        scad.setCdr(scadVoce.getLinea_attivita().getCd_centro_responsabilita());
-                                        scad.setGae(scadVoce.getLinea_attivita().getCd_linea_attivita());
-                                        scad.setIm_voce(scadVoce.getIm_voce());
-                                        righescad.add(scad);
-                                    }
-                                    rigaRitorno.setRighescadvoc(righescad);
-                                }
-                                righe.add(rigaRitorno);
-                                righescad = new java.util.ArrayList<FatturaAttivaScad>();
-                            }
-                            ritorno.setRighefat(righe);
-                            if (fatturaAt.getProtocollo_iva() != null) {
-                                ritorno.setNumeroFattura(fatturaAt.recuperoIdFatturaAsString());
-                            }
-                            return ritorno;
-                        } catch (ComponentException | RemoteException | PersistencyException e) {
-                            throw new RuntimeException(e);
-                        }
+                    .map(f -> {
+                        return convert(userContext, f);
                     })
                     .orElseThrow(() -> new FatturaNonTrovataException(FATTURA_ATTIVA_NON_PRESENTE));
-
             return Response.ok(fatturaAttiva).build();
         } catch (FatturaNonTrovataException _ex) {
             return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
@@ -853,7 +728,9 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
             }
 
         });
-        return Response.status(Status.CREATED).entity(fattureCreate).build();
+        return Response.status(Status.CREATED).entity(fattureCreate.stream().map(fattura_attivaBulk -> {
+            return convert(userContext, fattura_attivaBulk);
+        })).build();
     }
 
     @Override
@@ -873,6 +750,135 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
             return Response.ok().entity(stampa).build();
         } catch (FatturaNonTrovataException _ex) {
             return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
+        }
+    }
+
+    private FatturaAttiva convert(UserContext userContext, Fattura_attivaBulk fatturaAttivaBulk) {
+        try {
+            FatturaAttiva fatturaAttiva = new FatturaAttiva();
+            java.util.ArrayList<FatturaAttivaRiga> righe = new java.util.ArrayList<FatturaAttivaRiga>();
+            java.util.ArrayList<FatturaAttivaScad> righescad = new java.util.ArrayList<FatturaAttivaScad>();
+            java.util.ArrayList<FatturaAttivaIntra> righeIntra = new java.util.ArrayList<FatturaAttivaIntra>();
+            FatturaAttivaRiga rigaRitorno = new FatturaAttivaRiga();
+            FatturaAttivaScad scad = new FatturaAttivaScad();
+            FatturaAttivaIntra intra = new FatturaAttivaIntra();
+
+            fatturaAttiva.setCambio(fatturaAttivaBulk.getCambio());
+            fatturaAttiva.setCd_cds_origine(fatturaAttivaBulk.getCd_cds_origine());
+            fatturaAttiva.setCd_divisa(fatturaAttivaBulk.getCd_divisa());
+
+            fatturaAttiva.setCd_modalita_pag_uo_cds(fatturaAttivaBulk.getModalita_pagamento_uo().getCd_modalita_pag());
+            fatturaAttiva.setCd_terzo(fatturaAttivaBulk.getCd_terzo());
+            fatturaAttiva.setCd_terzo_uo_cds(fatturaAttivaBulk.getCd_terzo_uo_cds());
+            fatturaAttiva.setCd_tipo_sezionale(fatturaAttivaBulk.getCd_tipo_sezionale());
+            fatturaAttiva.setCd_uo_origine(fatturaAttivaBulk.getCd_uo_origine());
+            fatturaAttiva.setDs_fattura_attiva(fatturaAttivaBulk.getDs_fattura_attiva());
+            fatturaAttiva.setDt_registrazione(fatturaAttivaBulk.getDt_registrazione());
+            fatturaAttiva.setEsercizio(fatturaAttivaBulk.getEsercizio());
+            fatturaAttiva.setFl_extra_ue(fatturaAttivaBulk.getFl_extra_ue());
+            fatturaAttiva.setFl_intra_ue(fatturaAttivaBulk.getFl_intra_ue());
+            fatturaAttiva.setFl_liquidazione_differita(fatturaAttivaBulk.getFl_liquidazione_differita());
+            fatturaAttiva.setFl_san_marino(fatturaAttivaBulk.getFl_san_marino());
+            fatturaAttiva.setNote(fatturaAttivaBulk.getNote());
+            fatturaAttiva.setPg_banca_uo_cds(fatturaAttivaBulk.getBanca_uo().getPg_banca());
+            fatturaAttiva.setPg_fattura_attiva(fatturaAttivaBulk.getPg_fattura_attiva());
+            fatturaAttiva.setPg_fattura_esterno(fatturaAttivaBulk.getPg_fattura_esterno());
+            fatturaAttiva.setRif_ordine(fatturaAttivaBulk.getRiferimento_ordine());
+            fatturaAttiva.setTi_causale_emissione(fatturaAttivaBulk.getTi_causale_emissione());
+            fatturaAttiva.setTi_fattura(fatturaAttivaBulk.getTi_fattura());
+            fatturaAttiva.setUtcr(fatturaAttivaBulk.getUtcr());
+            fatturaAttiva.setNr_protocollo_iva(fatturaAttivaBulk.getProtocollo_iva());
+            fatturaAttiva.setDt_protocollo(fatturaAttivaBulk.getDt_emissione());
+            fatturaAttiva.setFl_pagamento_anticipato(fatturaAttivaBulk.getFl_pagamento_anticipato());
+            for (Iterator i = fatturaAttivaBulk.getFattura_attiva_intrastatColl().iterator(); i.hasNext(); ) {
+                Fattura_attiva_intraBulk riga_intra = (Fattura_attiva_intraBulk) i.next();
+                intra = new FatturaAttivaIntra();
+                intra.setAmmontare_euro(riga_intra.getAmmontare_euro());
+                intra.setCod_erogazione(riga_intra.getCd_modalita_erogazione());
+                intra.setCod_incasso(riga_intra.getCd_modalita_incasso());
+                intra.setId_cpa(riga_intra.getId_cpa());
+                intra.setPg_nazione(riga_intra.getPg_nazione_destinazione());
+                righeIntra.add(intra);
+            }
+            fatturaAttiva.setRigheIntra(righeIntra);
+
+            for (Iterator i = fatturaAttivaBulk.getFattura_attiva_dettColl().iterator(); i.hasNext(); ) {
+                Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk) i.next();
+                rigaRitorno = new FatturaAttivaRiga();
+                rigaRitorno.setCd_tariffario(riga.getCd_tariffario());
+                rigaRitorno.setCd_voce_iva(riga.getCd_voce_iva());
+                rigaRitorno.setDs_riga_fattura(riga.getDs_riga_fattura());
+                rigaRitorno.setFl_iva_forzata(riga.getFl_iva_forzata());
+                rigaRitorno.setEsercizio_assncna_fin(riga.getEsercizio_assncna_fin());
+                rigaRitorno.setPg_fattura_assncna_fin(riga.getPg_fattura_assncna_fin());
+                rigaRitorno.setPg_riga_assncna_fin(riga.getPg_riga_assncna_fin());
+                rigaRitorno.setPrezzo_unitario(riga.getPrezzo_unitario());
+                rigaRitorno.setProgressivo_riga(riga.getProgressivo_riga());
+                rigaRitorno.setQuantita(riga.getQuantita());
+                if (fatturaAttivaBulk instanceof Fattura_attiva_IBulk) {
+                    AccertamentoBulk acc_db = new AccertamentoBulk(riga.getAccertamento_scadenzario().getAccertamento().getCd_cds(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio_originale(), riga.getAccertamento_scadenzario().getAccertamento().getPg_accertamento());
+                    acc_db = (((AccertamentoBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, acc_db)));
+                    rigaRitorno.setCd_voce(acc_db.getCapitolo().getCd_voce());
+                    rigaRitorno.setDs_accertamento(acc_db.getDs_accertamento());
+                    rigaRitorno.setEsercizio_contratto(acc_db.getEsercizio_contratto());
+                    rigaRitorno.setStato_contratto(acc_db.getStato_contratto());
+                    rigaRitorno.setPg_contratto(acc_db.getPg_contratto());
+                    rigaRitorno.setPg_accertamento(acc_db.getPg_accertamento());
+                    Accertamento_scadenzarioBulk acc_scad_db = new Accertamento_scadenzarioBulk(riga.getAccertamento_scadenzario().getAccertamento().getCd_cds(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio(), riga.getAccertamento_scadenzario().getAccertamento().getEsercizio_originale(), riga.getAccertamento_scadenzario().getAccertamento().getPg_accertamento(), riga.getAccertamento_scadenzario().getPg_accertamento_scadenzario());
+                    acc_scad_db = (((Accertamento_scadenzarioBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, acc_scad_db)));
+                    rigaRitorno.setDt_scadenza(acc_scad_db.getDt_scadenza_incasso());
+                    rigaRitorno.setPg_accertamento_scadenzario(acc_scad_db.getPg_accertamento_scadenzario());
+                    List scadenzevoce = fatturaAttivaSingolaComponentSession.recuperoScadVoce(userContext, riga.getAccertamento_scadenzario());
+                    for (Iterator s = scadenzevoce.iterator(); s.hasNext(); ) {
+                        scad = new FatturaAttivaScad();
+                        Accertamento_scad_voceBulk scadVoce = (Accertamento_scad_voceBulk) s.next();
+                        scadVoce = (((Accertamento_scad_voceBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, scadVoce)));
+                        scad.setCdr(scadVoce.getLinea_attivita().getCd_centro_responsabilita());
+                        scad.setGae(scadVoce.getLinea_attivita().getCd_linea_attivita());
+                        scad.setIm_voce(scadVoce.getIm_voce());
+                        righescad.add(scad);
+                    }
+                    rigaRitorno.setRighescadvoc(righescad);
+                } else {
+                    Nota_di_credito_attivaBulk nc = (Nota_di_credito_attivaBulk) fatturaAttivaBulk;
+                    Nota_di_credito_attiva_rigaBulk nc_riga = (Nota_di_credito_attiva_rigaBulk) riga;
+                    fatturaAttiva.setCd_modalita_pag(nc.getModalita_pagamento().getCd_modalita_pag());
+                    fatturaAttiva.setPg_banca(nc.getBanca().getPg_banca());
+                    ObbligazioneBulk obb_db = nc_riga.getObbligazione_scadenzario().getObbligazione();
+                    obb_db = (((ObbligazioneBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, obb_db)));
+                    rigaRitorno.setCd_voce(obb_db.getCd_elemento_voce());
+                    rigaRitorno.setDs_obbligazione(obb_db.getDs_obbligazione());
+                    rigaRitorno.setMotivazione(obb_db.getMotivazione());
+                    rigaRitorno.setEsercizio_contratto(obb_db.getEsercizio_contratto());
+                    rigaRitorno.setStato_contratto(obb_db.getStato_contratto());
+                    rigaRitorno.setPg_contratto(obb_db.getPg_contratto());
+                    rigaRitorno.setPg_obbligazione(obb_db.getPg_obbligazione());
+                    Obbligazione_scadenzarioBulk obb_scad_db = nc_riga.getObbligazione_scadenzario();
+                    obb_scad_db = (((Obbligazione_scadenzarioBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, obb_scad_db)));
+                    rigaRitorno.setDt_scadenza(obb_scad_db.getDt_scadenza());
+                    rigaRitorno.setPg_obbligazione_scadenzario(obb_scad_db.getPg_obbligazione_scadenzario());
+                    java.util.List scadenzevoce = fatturaAttivaSingolaComponentSession.recuperoScadVoce(userContext, obb_scad_db);
+                    for (Iterator s = scadenzevoce.iterator(); s.hasNext(); ) {
+                        scad = new FatturaAttivaScad();
+                        Obbligazione_scad_voceBulk scadVoce = (Obbligazione_scad_voceBulk) s.next();
+                        scadVoce = (((Obbligazione_scad_voceBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, scadVoce)));
+                        scad.setCdr(scadVoce.getLinea_attivita().getCd_centro_responsabilita());
+                        scad.setGae(scadVoce.getLinea_attivita().getCd_linea_attivita());
+                        scad.setIm_voce(scadVoce.getIm_voce());
+                        righescad.add(scad);
+                    }
+                    rigaRitorno.setRighescadvoc(righescad);
+                }
+                righe.add(rigaRitorno);
+                righescad = new java.util.ArrayList<FatturaAttivaScad>();
+            }
+            fatturaAttiva.setRighefat(righe);
+            if (fatturaAttivaBulk.getProtocollo_iva() != null) {
+                fatturaAttiva.setNumeroFattura(fatturaAttivaBulk.recuperoIdFatturaAsString());
+            }
+            return fatturaAttiva;
+        } catch (ComponentException | RemoteException | PersistencyException e) {
+            throw new RuntimeException(e);
         }
     }
 }
