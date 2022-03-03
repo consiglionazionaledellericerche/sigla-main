@@ -53,7 +53,7 @@ public interface FatturaAttivaLocal {
     @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTV)
     @ApiOperation(value = "Recupera i dati della Fattura Attiva",
             notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTV",
-            response = Fattura_attivaBulk.class,
+            response = FatturaAttiva.class,
             authorizations = {
                     @Authorization(value = "BASIC"),
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
