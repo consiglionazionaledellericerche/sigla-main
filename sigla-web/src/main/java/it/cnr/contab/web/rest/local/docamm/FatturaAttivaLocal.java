@@ -72,7 +72,7 @@ public interface FatturaAttivaLocal {
 	@AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTM)
     @ApiOperation(value = "Inserisce una o più Fatture Attive",
             notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTM",
-            response = Fattura_attivaBulk.class,
+            response = FatturaAttiva.class,
             responseContainer = "List",
             authorizations = {
                     @Authorization(value = "BASIC"),
