@@ -226,7 +226,7 @@ public class FatturaAttivaComponentWS {
                         fatturaAttivaSingolaComponentSession.setSavePoint(context, "Fattura_automatica");
 
                         // potrebbe non essere univoca per tipologia
-                        if (fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, fatturaAttiva)) {
+                        if (fatturaAttivaSingolaComponentSession.verificaDuplicati(userContext, fatturaAttiva)) {
                             fat = ValorizzaErrore(fat, Costanti.ERRORE_FA_102.toString());
                         }
 
