@@ -72,7 +72,11 @@ import javax.ws.rs.core.SecurityContext;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Stateless
@@ -153,20 +157,26 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
             testata.setTi_fattura(fattura.getTi_fattura());
             testata.setCd_cds_origine(fattura.getCd_cds_origine());
             testata.setTi_bene_servizio(fattura.getTi_bene_servizio());
-            testata.setFl_pagamento_anticipato(fattura.getFl_pagamento_anticipato());
+            testata.setFl_pagamento_anticipato(Optional.ofNullable(fattura.getFl_pagamento_anticipato()).orElse("N"));
             testata.setCd_uo_origine(fattura.getCd_uo_origine());
             testata.setPg_fattura_esterno(fattura.getPg_fattura_esterno());
-            testata.setFl_intra_ue(fattura.getFl_intra_ue());
-            testata.setFl_extra_ue(fattura.getFl_extra_ue());
-            testata.setFl_san_marino(fattura.getFl_san_marino());
+            testata.setFl_intra_ue(Optional.ofNullable(fattura.getFl_intra_ue()).orElse(Boolean.FALSE));
+            testata.setFl_extra_ue(Optional.ofNullable(fattura.getFl_extra_ue()).orElse(Boolean.FALSE));
+            testata.setFl_san_marino(Optional.ofNullable(fattura.getFl_san_marino()).orElse(Boolean.FALSE));
             Optional.of(Stream.of(
-                            fattura.getFl_intra_ue(),
-                            fattura.getFl_extra_ue(),
-                            fattura.getFl_san_marino()).filter(x -> x.equals(Boolean.TRUE)).count()).
-                    filter(x -> x <= 1).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_129));
+                            Optional.ofNullable(fattura.getFl_intra_ue()).orElse(Boolean.FALSE),
+                            Optional.ofNullable(fattura.getFl_extra_ue()).orElse(Boolean.FALSE),
+                            Optional.ofNullable(fattura.getFl_san_marino()).orElse(Boolean.FALSE))
+                            .filter(x -> x.equals(Boolean.TRUE)).count())
+                            .filter(x -> x <= 1)
+                    .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_129));
 
-            Optional.of((fattura.getFl_intra_ue() || fattura.getFl_extra_ue()) && fattura.getTi_bene_servizio().equals("*")).
-                    filter(x -> x.equals(Boolean.FALSE)).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_142));
+            Optional.of((
+                        Optional.ofNullable(fattura.getFl_intra_ue()).orElse(Boolean.FALSE) ||
+                        Optional.ofNullable(fattura.getFl_extra_ue()).orElse(Boolean.FALSE)
+                    ) && fattura.getTi_bene_servizio().equals("*"))
+                    .filter(x -> x.equals(Boolean.FALSE))
+                    .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_142));
 
             try {
                 userContext.setTransactional(true);
@@ -174,15 +184,19 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                 testata = (Fattura_attivaBulk) fatturaAttivaSingolaComponentSession.inizializzaBulkPerInserimento(userContext, testata);
                 fatturaAttivaSingolaComponentSession.setSavePoint(userContext, FATTURA_AUTOMATICA);
                 // potrebbe non essere univoca per tipologia
-                Optional.of(fatturaAttivaSingolaComponentSession.VerificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.TRUE))
+                Optional.of(fatturaAttivaSingolaComponentSession.verificaDuplicati(userContext, testata)).filter(x -> x.equals(Boolean.FALSE))
                         .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_102));
 
                 testata.setTipo_sezionale(new Tipo_sezionaleBulk(fattura.getCd_tipo_sezionale()));
                 Optional.of(testata.getSezionali().stream().filter(x -> x.getCd_tipo_sezionale().equals(
-                                fattura.getCd_tipo_sezionale())).count()).filter(x -> x < 1).
+                                fattura.getCd_tipo_sezionale())).count()).filter(x -> x == 1).
                         orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_127));
 
-                testata.setDt_registrazione(new Timestamp(fattura.getDt_registrazione().getTime()));
+                testata.setDt_registrazione(
+                        Optional.ofNullable(fattura.getDt_registrazione())
+                                .map(date -> new Timestamp(date.getTime()))
+                                .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_152))
+                );
                 testata.setTi_causale_emissione(fattura.getTi_causale_emissione());
                 testata.setFl_liquidazione_differita(fattura.getFl_liquidazione_differita());
                 testata.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
@@ -200,6 +214,8 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                         testata.getCliente().getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI)
                 ).filter(x -> x.equals(Boolean.TRUE)).count()).filter(x -> x == 0).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_125));
 
+                Optional.ofNullable(fattura.getFl_liquidazione_differita())
+                                .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_124));
                 testata.setFl_liquidazione_differita(fattura.getFl_liquidazione_differita());
                 Optional.of(testata).filter(x -> !(x.getFl_liquidazione_differita().equals(Boolean.TRUE) &&
                                 !x.getFl_liquidazione_differita().equals(x.getCliente().getAnagrafico().getFl_fatturazione_differita())))
@@ -211,7 +227,10 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                 testata.setCd_modalita_pag_uo_cds(fattura.getCd_modalita_pag_uo_cds());
                 testata.setModalita_pagamento_uo(((Rif_modalita_pagamentoBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, new Rif_modalita_pagamentoBulk(fattura.getCd_modalita_pag_uo_cds()))));
                 Optional.ofNullable(testata.getModalita_pagamento_uo()).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_132));
-                testata.setPg_banca_uo_cds(fattura.getPg_banca_uo_cds());
+                testata.setPg_banca_uo_cds(
+                        Optional.ofNullable(fattura.getPg_banca_uo_cds())
+                                .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_134))
+                );
                 testata.setBanca_uo(((BancaBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, new BancaBulk(testata.getCd_terzo_uo_cds(), testata.getPg_banca_uo_cds()))));
                 Configurazione_cnrBulk config = configurazione_cnrComponentSession.getConfigurazione(userContext, 0, "*", CONTO_CORRENTE_SPECIALE, ENTE);
                 if (Rif_modalita_pagamentoBulk.BANCARIO.equals(testata.getModalita_pagamento_uo().getTi_pagamento())) {
@@ -243,11 +262,14 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                             orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_118));
                 }
 
-                testata.setCd_divisa(fattura.getCd_divisa());
-                testata.setCambio(fattura.getCambio());
+                testata.setCd_divisa(Optional.ofNullable(fattura.getCd_divisa()).orElse("EURO"));
+                testata.setCambio(Optional.ofNullable(fattura.getCambio()).orElse(BigDecimal.ONE));
                 testata.setNote(fattura.getNote());
                 testata.validate();
-                for (FatturaAttivaRiga fatr : fattura.getRighefat()) {
+                java.util.ArrayList<FatturaAttivaRiga> listOfRighe = Optional.ofNullable(fattura.getRighefat())
+                        .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_98));
+
+                for (FatturaAttivaRiga fatr : listOfRighe) {
                     Fattura_attiva_rigaBulk riga = new Fattura_attiva_rigaIBulk();
                     if ((testata.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO))) {
                         riga = new Nota_di_credito_attiva_rigaBulk();
@@ -275,7 +297,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                         riga.setPrezzo_unitario(riga.getTariffario().getIm_tariffario());
                         riga.setQuantita(new BigDecimal(riga.getTariffario().getUnita_misura()));
                         riga.setIm_imponibile(riga.getPrezzo_unitario().multiply(riga.getQuantita()));
-                        if (fatr.getFl_iva_forzata().booleanValue()) {
+                        if (Optional.ofNullable(fatr.getFl_iva_forzata()).orElse(Boolean.FALSE)) {
                             riga.setIm_iva(fatr.getIm_iva());
                         } else {
                             riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(
@@ -285,12 +307,12 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                         riga.setIm_diponibile_nc(riga.getIm_totale_divisa());
                         riga.setDs_riga_fattura(riga.getTariffario().getDs_tariffario());
                     } else {
-                        riga.setPrezzo_unitario(Optional.ofNullable(fatr.getPrezzo_unitario()).orElse(null));
-                        riga.setQuantita(Optional.ofNullable(fatr.getQuantita()).orElse(null));
+                        riga.setPrezzo_unitario(Optional.ofNullable(fatr.getPrezzo_unitario()).orElse(BigDecimal.ZERO));
+                        riga.setQuantita(Optional.ofNullable(fatr.getQuantita()).orElse(BigDecimal.ZERO));
                         riga.setVoce_iva(Optional.ofNullable((Voce_ivaBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, new Voce_ivaBulk(fatr.getCd_voce_iva()))).
                                 orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_106)));
                         riga.setIm_imponibile(riga.getPrezzo_unitario().multiply(riga.getQuantita()));
-                        if (fatr.getFl_iva_forzata()) {
+                        if (Optional.ofNullable(fatr.getFl_iva_forzata()).orElse(Boolean.FALSE)) {
                             riga.setIm_iva(fatr.getIm_iva());
                         } else {
                             riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).
@@ -394,8 +416,15 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                                 throw FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_107);
                             //acc.setDt_registrazione(testata.getDt_registrazione());
                             ///?????
-                            acc.setDt_registrazione((DateUtils.truncate(new Timestamp(fatr.getDt_scadenza().getTime()))));
-                            acc.setDs_accertamento(fatr.getDs_accertamento());
+                            acc.setDt_registrazione((DateUtils.truncate(new Timestamp(
+                                    Optional.ofNullable(fatr.getDt_scadenza())
+                                            .map(date -> date.getTime())
+                                            .orElse(ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()).toInstant().toEpochMilli())
+                            ))));
+                            acc.setDs_accertamento(
+                                    Optional.ofNullable(fatr.getDs_accertamento())
+                                            .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_153))
+                            );
                             //??? importo riga?????
                             if (fatturaAttivaSingolaComponentSession.isAttivoSplitPayment(userContext, testata.getDt_registrazione()) && testata.getFl_liquidazione_differita())
                                 acc.setIm_accertamento(riga.getIm_imponibile());
@@ -431,7 +460,8 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                                                 fatr.getPg_contratto() == null))
                                     throw FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_108);
                             }
-                            List<FatturaAttivaScad> listOfScad = fatr.getRighescadvoc();
+                            List<FatturaAttivaScad> listOfScad = Optional.ofNullable(fatr.getRighescadvoc())
+                                    .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_98));
                             for (FatturaAttivaScad fatrs : listOfScad) {
                                 Accertamento_scad_voceBulk acc_scad_voce = new Accertamento_scad_voceBulk();
                                 acc_scad_voce.setUtcr(testata.getUtcr());
@@ -720,8 +750,31 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                         }
                         // Fine Nota Credito
                     }
+                    //fine righe
+                    if (fattura.getCod_errore() == null) {
+                        testata = (Fattura_attivaBulk) fatturaAttivaSingolaComponentSession.creaConBulk(userContext, testata);
+                        fattura.setPg_fattura_attiva(testata.getPg_fattura_attiva());
+                        fattura.setIm_totale_imponibile(testata.getIm_totale_imponibile());
+                        fattura.setIm_totale_iva(testata.getIm_totale_iva());
+                        for (int ra = 0; ra < fattura.getRighefat().size(); ra++) {
+                            FatturaAttivaRiga fatr_agg = listOfRighe.get(ra);
+                            if (!(testata.getTi_fattura().compareTo(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO) == 0)) {
+                                Fattura_attiva_rigaIBulk riga_fat = (Fattura_attiva_rigaIBulk) testata.getFattura_attiva_dettColl().get(testata.getFattura_attiva_dettColl().indexOfByPrimaryKey(
+                                        new Fattura_attiva_rigaIBulk(testata.getCd_cds(), testata.getCd_unita_organizzativa(), testata.getEsercizio(), testata.getPg_fattura_attiva(), fatr_agg.getProgressivo_riga())));
+                                fatr_agg.setPg_accertamento(riga_fat.getAccertamento_scadenzario().getPg_accertamento());
+                            } else {
+                                Nota_di_credito_attiva_rigaBulk riga_fat = (Nota_di_credito_attiva_rigaBulk) testata.getFattura_attiva_dettColl().get(testata.getFattura_attiva_dettColl().indexOfByPrimaryKey(
+                                        new Nota_di_credito_attiva_rigaBulk(testata.getCd_cds(), testata.getCd_unita_organizzativa(), testata.getEsercizio(), testata.getPg_fattura_attiva(), new Long(fatr_agg.getProgressivo_riga()))));
+                                fatr_agg.setPg_obbligazione(riga_fat.getObbligazione_scadenzario().getPg_obbligazione());
+                            }
+                        }
+                    } else {
+                        fatturaAttivaSingolaComponentSession.rollbackToSavePoint(userContext, "Fattura_automatica");
+                    }
+
                     fattureCreate.add(testata);
                 }
+
             } catch (RemoteException | ComponentException | PersistencyException | ValidationException | IntrospectionException ex) {
                 LOGGER.error("ERROR while importing ", ex);
                 throw FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_999);
@@ -730,23 +783,32 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
         });
         return Response.status(Status.CREATED).entity(fattureCreate.stream().map(fattura_attivaBulk -> {
             return convert(userContext, fattura_attivaBulk);
-        })).build();
+        }).collect(Collectors.toList())).build();
     }
 
     @Override
-    public Response stampaFattura(@Context HttpServletRequest request, Long pgFattura) throws Exception {
-        LOGGER.debug("REST request per stmpa una fattura attiva.");
+    public Response inserisciDatiPerStampa(HttpServletRequest request, Long pgFattura) throws Exception {
+        LOGGER.debug("REST request per stampa IVA di una fattura attiva.");
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
         try {
-            byte[] stampa = fatturaAttivaSingolaComponentSession.lanciaStampa(userContext,
-                    fatturaAttivaSingolaComponentSession.inserisciDatiPerStampaIva(
-                            userContext,
+            final Long pgStampa = fatturaAttivaSingolaComponentSession
+                    .inserisciDatiPerStampaIva(userContext,
                             userContext.getEsercizio().longValue(),
                             userContext.getCd_cds(),
                             userContext.getCd_unita_organizzativa(),
-                            pgFattura
-                    )
-            );
+                            pgFattura);
+            return Response.ok().entity(pgStampa).build();
+        } catch (FatturaNonTrovataException _ex) {
+            return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
+        }
+    }
+
+    @Override
+    public Response stampaFattura(@Context HttpServletRequest request, Long pgStampa) throws Exception {
+        LOGGER.debug("REST request per stampa una fattura attiva.");
+        CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+        try {
+            byte[] stampa = fatturaAttivaSingolaComponentSession.lanciaStampa(userContext, pgStampa);
             return Response.ok().entity(stampa).build();
         } catch (FatturaNonTrovataException _ex) {
             return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
