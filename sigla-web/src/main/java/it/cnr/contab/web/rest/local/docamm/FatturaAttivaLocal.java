@@ -123,6 +123,6 @@ public interface FatturaAttivaLocal {
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
             }
     )
-    Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pgStampa) throws Exception;
+    Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pgStampa") Long pgStampa) throws Exception;
 
 }

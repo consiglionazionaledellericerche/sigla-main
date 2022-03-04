@@ -54,6 +54,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.FatturaNonProtocollataException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -85,6 +86,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
     private static final String CONTO_CORRENTE_SPECIALE = "CONTO_CORRENTE_SPECIALE";
     private static final String FATTURA_AUTOMATICA = "Fattura_automatica";
     private static final String FATTURA_ATTIVA_NON_PRESENTE = "Fattura attiva non presente.";
+    private static final String FATTURA_ATTIVA_NON_PROTOCOLLATA = "Fattura attiva non protocollata.";
     private final Logger LOGGER = LoggerFactory.getLogger(FatturaAttivaResource.class);
     @Context
     SecurityContext securityContext;
@@ -800,6 +802,8 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
             return Response.ok().entity(pgStampa).build();
         } catch (FatturaNonTrovataException _ex) {
             return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
+        } catch (FatturaNonProtocollataException _ex) {
+            return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PROTOCOLLATA)).build();
         }
     }
 
