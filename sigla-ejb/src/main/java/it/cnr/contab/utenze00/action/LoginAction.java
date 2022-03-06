@@ -688,6 +688,15 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             context.setUserContext(userContext);
             return context.findDefaultForward();
         } catch (NoSuchSessionException _ex) {
+            final Optional<Principal> principalOptional = Optional.ofNullable(context)
+                    .filter(HttpActionContext.class::isInstance)
+                    .map(HttpActionContext.class::cast)
+                    .map(HttpActionContext::getRequest)
+                    .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+                    .filter(KeycloakPrincipal.class::isInstance);
+            if (principalOptional.isPresent()) {
+                return doDefaultNG(context);
+            }
             return context.findForward("sessionExpired");
         } catch (Throwable e) {
             return handleException(context, e);
