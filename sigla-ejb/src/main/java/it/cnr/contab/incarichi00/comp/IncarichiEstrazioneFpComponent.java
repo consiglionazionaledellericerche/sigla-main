@@ -826,7 +826,10 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 					if (percettorePf.getComuneNascita().equals("*"))
 						percettorePf.setComuneNascita(percettorePf.getCodiceFiscale().substring(12,4));
 				} catch (Exception e) {
-					percettorePf.setComuneNascita(percettorePf.getCodiceFiscale().substring(12,4));
+					try {
+						percettorePf.setComuneNascita(percettorePf.getCodiceFiscale().substring(12,4));
+					} catch (Exception e2) {
+					}
 				}
 			}
 			incaricoPerla.setPercettorePf(percettorePf);
