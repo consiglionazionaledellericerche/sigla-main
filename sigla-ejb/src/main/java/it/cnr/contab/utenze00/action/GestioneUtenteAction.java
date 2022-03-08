@@ -299,7 +299,13 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 				.flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
 				.filter(KeycloakPrincipal.class::isInstance)
 				.map(KeycloakPrincipal.class::cast);
-		if (principalOptional.isPresent()) {
+		if (principalOptional.isPresent() &&
+				!Optional.ofNullable(context)
+						.filter(HttpActionContext.class::isInstance)
+						.map(HttpActionContext.class::cast)
+						.flatMap(httpActionContext -> Optional.ofNullable(httpActionContext.getParameter("access_token")))
+						.isPresent()
+		) {
 			Optional.ofNullable(principalOptional.get().getKeycloakSecurityContext())
 					.filter(RefreshableKeycloakSecurityContext.class::isInstance)
 					.map(RefreshableKeycloakSecurityContext.class::cast)
