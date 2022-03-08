@@ -1237,7 +1237,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[In compliance with the Italian Legislative Decree No. 193/2003 and EU Regulation 2016/79 We (Principal investigator a Partner coordinator) hereby authorize CNR to Process the personal data contained in the submitted proposal of Joint Laboratory.]]></textFieldExpression>
+				<textFieldExpression><![CDATA["In compliance with the Italian Legislative Decree No. 193/2003 and EU Regulation 2016/79 We (Principal investigator a Partner coordinator) hereby authorize CNR to Process the personal data contained in the submitted proposal of Joint Laboratory."]]></textFieldExpression>
 			</textField>
 			<break>
 				<reportElement x="0" y="40" width="94" height="1" uuid="e439919a-b6de-480c-9cc0-65dc02676341"/>
