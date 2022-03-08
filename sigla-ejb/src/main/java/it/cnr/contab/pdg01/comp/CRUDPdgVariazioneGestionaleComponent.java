@@ -23,44 +23,18 @@
  */
 package it.cnr.contab.pdg01.comp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
+import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
@@ -101,15 +75,27 @@ import it.cnr.jada.comp.OptionRequestException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLExceptionHandler;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent {
     private static final Logger log = LoggerFactory.getLogger(CRUDPdgVariazioneGestionaleComponent.class);
