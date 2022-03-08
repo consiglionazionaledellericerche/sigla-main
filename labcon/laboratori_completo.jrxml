@@ -1222,7 +1222,7 @@
 			</break>
 		</band>
 		<band height="75" splitType="Stretch">
-			<textField isBlankWhenNull="false">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
 				<reportElement x="21" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
