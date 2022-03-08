@@ -1201,7 +1201,7 @@ public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CR
 	}
     }
 
-    public boolean VerificaDuplicati(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+    public boolean verificaDuplicati(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
         pre_component_invocation(param0, componentObj);
 	try {
             boolean result = ((FatturaAttivaSingolaComponent) componentObj).VerificaDuplicati(param0, param1);

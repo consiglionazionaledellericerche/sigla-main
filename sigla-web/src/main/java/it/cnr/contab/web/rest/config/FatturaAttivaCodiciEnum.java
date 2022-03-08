@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum FatturaAttivaCodiciEnum {
-	ERRORE_FA_98(98,"Parametro necessario alla generazione della Fattura non inserito o non valido, Righe Scadenza inserite non valide."),
+	ERRORE_FA_98(98,"Parametro necessario alla generazione della Fattura non inserito o non valido, righe Scadenza inserite non valide."),
 	ERRORE_FA_99(99,"Tipologia fattura non valida"),
 	ERRORE_FA_100(100,"Errore generico applicativo"),
 	ERRORE_FA_101(101,"Parametro necessario alla generazione della Fattura non inserito o non valido."),
@@ -76,6 +76,8 @@ public enum FatturaAttivaCodiciEnum {
 	ERRORE_FA_149(149,"Estremi Condizione consegna non presenti"),
 	ERRORE_FA_150(150,"Estremi Modalita trasporto non presenti"),
 	ERRORE_FA_151(151,"Estremi Provincia non presenti"),
+	ERRORE_FA_152(152,"Data di registrazione non valorizzata!"),
+	ERRORE_FA_153(153,"Descrizione dell'accertamento non presente!"),
 	ERRORE_FA_999(999,"Errore generico");
 	
 	private final Integer codice;

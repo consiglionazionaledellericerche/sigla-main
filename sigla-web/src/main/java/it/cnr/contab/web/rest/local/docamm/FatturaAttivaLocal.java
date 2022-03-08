@@ -54,7 +54,7 @@ public interface FatturaAttivaLocal {
     @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTV)
     @ApiOperation(value = "Recupera i dati della Fattura Attiva",
             notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTV",
-            response = Fattura_attivaBulk.class,
+            response = FatturaAttiva.class,
             authorizations = {
                     @Authorization(value = "BASIC"),
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
@@ -72,7 +72,7 @@ public interface FatturaAttivaLocal {
 	@AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTM)
     @ApiOperation(value = "Inserisce una o più Fatture Attive",
             notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTM",
-            response = Fattura_attivaBulk.class,
+            response = FatturaAttiva.class,
             responseContainer = "List",
             authorizations = {
                     @Authorization(value = "BASIC"),
@@ -83,8 +83,30 @@ public interface FatturaAttivaLocal {
             }
     )
     Response inserisciFatture(@Context HttpServletRequest request, List<FatturaAttiva> fatture) throws Exception;
-	
-	/**
+
+
+
+    /**
+     * GET  /restapi/fatturaattiva/ricerca -> return Fattura attiva
+     */
+    @POST
+    @Path("/inserisciDatiPerStampa")
+    @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTM)
+    @ApiOperation(value = "Inserisce i dati per la stampa IVA",
+            notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTM",
+            response = Long.class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
+    Response inserisciDatiPerStampa(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
+
+
+    /**
      * GET  /restapi/fatturaattiva/ricerca -> return Fattura attiva
      */
     @GET
@@ -102,6 +124,6 @@ public interface FatturaAttivaLocal {
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
             }
     )
-    Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
+    Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pgStampa") Long pgStampa) throws Exception;
 
 }
