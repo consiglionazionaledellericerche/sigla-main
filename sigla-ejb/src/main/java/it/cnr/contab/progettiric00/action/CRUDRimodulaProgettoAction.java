@@ -24,7 +24,11 @@ import java.util.Optional;
 
 import javax.ejb.RemoveException;
 
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
@@ -695,6 +699,26 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		catch(Throwable throwable)
 		{
 			return handleException(actioncontext, throwable);
+		}
+	}
+
+	public Forward doConsultaProgetto(ActionContext context) {
+		try {
+			fillModel(context);
+			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+			bp.validate(context);
+			Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk) bp.getModel();
+			try {
+				TestataProgettiRicercaBP crudbp = (TestataProgettiRicercaBP)context.getUserInfo().createBusinessProcess(context, "TestataProgettiRicercaBP", new Object[]{bp.isEditable() ? "MR" : "R"});
+				crudbp.setModel(context, crudbp.initializeModelForEdit(context, bulk.getProgetto()));
+				crudbp.setStatus(FormController.VIEW);
+				return context.addBusinessProcess(crudbp);
+			} catch (Throwable e) {
+				return handleException(context, e);
+			}
+		}catch(Throwable ex){
+			return handleException(context, ex);
 		}
 	}
 }

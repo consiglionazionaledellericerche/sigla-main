@@ -559,11 +559,17 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     	    	sqlFatturaPassiva.addClause(FindClause.AND, "fornitore", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getPrestatore());
     	    	sqlFatturaPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa());
     	    	sqlFatturaPassiva.setOrderBy("dt_registrazione",  it.cnr.jada.util.OrderConstants.ORDER_ASC);
-    	    	List<?> fatture = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
-    	    		if (fatture.isEmpty()){
-    	    			throw new ApplicationException("Fattura collegata alla nota non trovata!");
-    	    		}
-    	    		return (Fattura_passivaBulk) fatture.get(fatture.size()-1);
+    	    	List<Fattura_passivaBulk> fatture = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
+				if (fatture.isEmpty()){
+					throw new ApplicationException("Fattura collegata alla nota non trovata!");
+				}
+				final Optional<Fattura_passivaBulk> fatturaByImporto = fatture.stream()
+						.filter(fattura_passivaBulk -> fattura_passivaBulk.getIm_totale_fattura().equals(oggettobulk.getImportoDocumento()))
+						.findAny();
+				if (fatturaByImporto.isPresent()) {
+					return fatturaByImporto.get();
+				}
+				return (Fattura_passivaBulk) fatture.get(fatture.size()-1);
     		}
 			return (Fattura_passivaBulk) fattureCol.get(0);
 		} catch (PersistencyException e) {

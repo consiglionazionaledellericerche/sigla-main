@@ -405,7 +405,8 @@
 		formName="searchtool"
 		label="Contratto"
 		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
-		enabledOnSearch="true" 
+		VIEWBusinessProcessName="CRUDConfigAnagContrattoBP"
+		enabledOnSearch="true"
 		/>
 	<fieldProperty
 		name="esercizio_contratto"	

@@ -20,12 +20,7 @@ package it.cnr.contab.progettiric00.comp;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,6 +33,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazione_wizardBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
@@ -736,6 +732,15 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			rimodulazione.setToBeUpdated();
 			rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 			createReportRimodulazione(userContext, rimodulazione);
+
+			//Se la rimodulazione rispetta sia le condizioni di rapida approvazione nonchè consiste nella sola diversa distribuzione degli importi tra anni
+			// rispettando la ripartizione per categorie economiche allora provvedo direttamente alla validazione (che dovrebbe in automatico anche approvare)
+			if (!rimodulazione.isRimodulatoImportoFinanziato() && !rimodulazione.isRimodulatoImportoCofinanziato() &&
+				!rimodulazione.isRimodulatoDtProroga() && !rimodulazione.isRimodulatoDtInizio() && !rimodulazione.isRimodulatoDtFine() &&
+				rimodulazione.isRimodulazioneDiRapidaApprovazione()) {
+				return this.valida(userContext, rimodulazione);
+			}
+
 			return rimodulazione;
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
@@ -931,7 +936,8 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			   			}
 			   		});
        		
-			if (!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty() ||
+			if (((!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty())
+					&& !rimodulazione.isRimodulazioneDiRapidaApprovazione()) ||
 				rimodulazione.isRimodulatoImportoFinanziato() || rimodulazione.isRimodulatoImportoCofinanziato())
 				rimodulazione.getArchivioAllegati().stream()
 							 .filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)

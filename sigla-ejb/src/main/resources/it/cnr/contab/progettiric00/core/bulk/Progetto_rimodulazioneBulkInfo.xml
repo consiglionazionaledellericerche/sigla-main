@@ -46,6 +46,7 @@
 		property="progetto"
 		inputType="SEARCHTOOL"
 		label="Progetto"
+		VIEWBusinessProcessName="TestataProgettiRicercaBP"
 		formName="form_searchtool_progetto"
 		freeSearchSet="filtro_ricerca_prog2"
     	columnSet="filtro_ricerca_prog2"

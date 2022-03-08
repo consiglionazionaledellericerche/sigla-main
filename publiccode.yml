@@ -4,10 +4,10 @@
 
 publiccodeYmlVersion: '0.2'
 name: sigla
-releaseDate: '2022-01-21'
+releaseDate: '2022-01-28'
 url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 applicationSuite: jada
-softwareVersion: 6.4.10
+softwareVersion: 6.4.12
 developmentStatus: stable
 softwareType: standalone/web
 platforms:
@@ -47,14 +47,11 @@ description:
     longDescription: >
       ## **Introduzione**
 
-      Al fine di fornire elementi generali della Soluzione applicativa,
-      evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di
-      proprietà del CNR, che si occupa di processi amministrativi e contabili,
-      di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad
-      Enti pubblici, in particolare Enti di ricerca, che operano in regime di
-      Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema
-      di contabilità basato su rilevazione dei fatti di gestione in termini
-      economici, patrimoniali ed analitici.
+      Al fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, 
+      di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. 
+      Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, 
+      con obbligo di adozione, a consuntivo o anche in parallelo, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, 
+      patrimoniali ed analitici.
 
       ### **Premessa**
 
@@ -73,6 +70,9 @@ description:
       sistema informativo SIGLA risulta completamente coerente ed adattabile
       all'impostazione dei bilanci ed alla gestione delle attività previste
       dalla normativa vigente in materia di contabilità pubblica.
+      Le ultime evoluzioni del sistema consentono l'adozione di una contabilità economico patrimoniale, 
+      derivata o parallela rispetto a quella finanziaria, 
+      opportunamente configurabile secondo le esigenze specifiche.
 
       ### **Informazioni generali del Sistema**
 
@@ -131,6 +131,7 @@ description:
       - Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
       - E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
 
+
       ## **Componenti - Funzionali SIGLA**
       
       Le componenti funzionali del Sistema coprono aspetti contabili e aspetti
@@ -153,6 +154,7 @@ description:
       - **Gestione della Programmazione Economica e Finanziaria**
           - Bilancio di previsione Decisionale/Gestionale
           - Variazioni e Storni di Bilancio
+          - Bilancio Economico Patrimoniale
 
       - **Gestione contabile**
           - Impegni e Accertamenti

@@ -26,6 +26,8 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -395,4 +397,12 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
+
+    public Timestamp getDataFineValiditaCaricoFamiliare(String tiPersona) throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(null,Configurazione_cnrBulk.PK_BLOCCO_DETRAZIONI, tiPersona))
+                .map(Configurazione_cnrBulk::getDt01)
+                .orElse(null);
+    }
+
 }
