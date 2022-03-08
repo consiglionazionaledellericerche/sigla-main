@@ -4891,4 +4891,24 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <changeSet author="raffaele.pagano" runOnChange="true" id="create-view-V_ELEMENTO_VOCE_PDG_SPE_PIAECO">
         <sqlFile dbms="oracle" path="../expsigladb/View/V_ELEMENTO_VOCE_PDG_SPE_PIAECO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="configurazione_cnr-add-blocco_detrazioni_figli">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="BLOCCO_DETRAZIONI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="F"/>
+            <column name="dt01" type="${date.type}" valueDate="to_Date('28022022','ddmmyyyy')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-table-carico_familiare_anag-data-fine-detr-figli">
+        <update tableName="carico_familiare_anag">
+            <column name="dt_fin_validita" valueDate="to_Date('28022022','ddmmyyyy')" type="${date.type}"/>
+            <where>ti_persona = 'F' and dt_fin_validita > to_Date('28022022','ddmmyyyy')</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>
