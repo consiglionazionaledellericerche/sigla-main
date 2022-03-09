@@ -590,10 +590,13 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(), utente, null, null, (short) 0));
             return context.findForward("desktop");
         }
-        if (utente.isSupervisore())
-            bp.cercaCds(context);
-        else
-            bp.cercaUnitaOrganizzative(context);
+        if (!bp.getParentRoot().isBootstrap()) {
+            if (utente.isSupervisore()) {
+                bp.cercaCds(context);
+            } else {
+                bp.cercaUnitaOrganizzative(context);
+            }
+        }
         return context.findForward("home");
     }
 
