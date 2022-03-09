@@ -159,6 +159,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 
     public Forward doDefaultNG(ActionContext context) {
         try {
+            if (!Optional.ofNullable(context.getUserContext()).isPresent()) {
+                final BusinessProcess businessProcess = context.getBusinessProcess();
+                log.debug("Current BusinessProcess name {}", businessProcess.getName());
+            }
             return doInitializeWorkspace(context);
         } catch (Throwable e) {
             return handleException(context, e);
@@ -590,13 +594,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             bp.setRadiceAlbero_main(context, getComponentSession().generaAlberoPerUtente(context.getUserContext(), utente, null, null, (short) 0));
             return context.findForward("desktop");
         }
-        if (!bp.getParentRoot().isBootstrap()) {
-            if (utente.isSupervisore()) {
-                bp.cercaCds(context);
-            } else {
-                bp.cercaUnitaOrganizzative(context);
-            }
-        }
+        if (utente.isSupervisore())
+            bp.cercaCds(context);
+        else
+            bp.cercaUnitaOrganizzative(context);
         return context.findForward("home");
     }
 
@@ -612,7 +613,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
      */
     public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
         try {
-            LoginBP bp = (LoginBP) context.getBusinessProcess();
+            LoginBP bp = (LoginBP) context.getBusinessProcessRoot(false);
             CNRUserInfo ui = Optional.ofNullable(context.getUserInfo())
                     .filter(CNRUserInfo.class::isInstance)
                     .map(CNRUserInfo.class::cast)
