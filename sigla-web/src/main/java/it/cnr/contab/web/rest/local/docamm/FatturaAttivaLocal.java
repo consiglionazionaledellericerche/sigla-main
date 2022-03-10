@@ -63,7 +63,7 @@ public interface FatturaAttivaLocal {
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
             }
     )
-    Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
+    Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("esercizio") Integer esercizio, @QueryParam ("pg") Long pg) throws Exception;
 
 	/**
 	 * POST  /restapi/fatturaattiva-> return Fattura attiva
@@ -103,7 +103,7 @@ public interface FatturaAttivaLocal {
                     @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
             }
     )
-    Response inserisciDatiPerStampa(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
+    Response inserisciDatiPerStampa(@Context HttpServletRequest request, @QueryParam ("esercizio") Integer esercizio, @QueryParam ("pg") Long pg) throws Exception;
 
 
     /**

@@ -102,11 +102,11 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
 
 
     @Override
-    public Response ricercaFattura(@Context HttpServletRequest request, @QueryParam("pg") Long pg) throws Exception {
+    public Response ricercaFattura(@Context HttpServletRequest request, Integer esercizio, Long pg) throws Exception {
         LOGGER.debug("REST request per ricercare una fattura attiva.");
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
         try {
-            Fattura_attivaBulk fatturaAttivaBulk = fatturaAttivaSingolaComponentSession.ricercaFattura(userContext, userContext.getEsercizio().longValue(),
+            Fattura_attivaBulk fatturaAttivaBulk = fatturaAttivaSingolaComponentSession.ricercaFattura(userContext, esercizio.longValue(),
                     userContext.getCd_cds(), userContext.getCd_unita_organizzativa(), pg);
             final FatturaAttiva fatturaAttiva = Optional.ofNullable(fatturaAttivaBulk)
                     .map(f -> {
@@ -789,13 +789,13 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
     }
 
     @Override
-    public Response inserisciDatiPerStampa(HttpServletRequest request, Long pgFattura) throws Exception {
+    public Response inserisciDatiPerStampa(HttpServletRequest request, Integer esercizio, Long pgFattura) throws Exception {
         LOGGER.debug("REST request per stampa IVA di una fattura attiva.");
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
         try {
             final Long pgStampa = fatturaAttivaSingolaComponentSession
                     .inserisciDatiPerStampaIva(userContext,
-                            userContext.getEsercizio().longValue(),
+                            esercizio.longValue(),
                             userContext.getCd_cds(),
                             userContext.getCd_unita_organizzativa(),
                             pgFattura);
