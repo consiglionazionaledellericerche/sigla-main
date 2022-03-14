@@ -577,7 +577,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 												   Elemento_voceBulk elementoVoce, 
 												   CompoundFindClause clause) throws ComponentException, PersistencyException {
 		try {
-
 			Optional<ProgettoBulk> optProgetto = Optional.empty();
 			if (Optional.ofNullable(dett.getProgetto()).flatMap(el -> Optional.ofNullable(el.getPg_progetto())).isPresent()) {
 				ProgettoHome home = (ProgettoHome) getHome(userContext, ProgettoBulk.class);
@@ -587,7 +586,13 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			}
 
 			boolean isProgettoWithPianoEconomico = optProgetto.map(ProgettoBulk::isPianoEconomicoRequired).orElse(Boolean.FALSE);
-			String columnMapName = isProgettoWithPianoEconomico?"V_ELEMENTO_VOCE_PDG_SPE_PIAECO":"V_ELEMENTO_VOCE_PDG_SPE";
+
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			//String columnMapName = isProgettoWithPianoEconomico?"V_ELEMENTO_VOCE_PDG_SPE_PIAECO":"V_ELEMENTO_VOCE_PDG_SPE";
+			String columnMapName = "V_ELEMENTO_VOCE_PDG_SPE";
 
 			if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
 
