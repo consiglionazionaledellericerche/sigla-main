@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Provvedimento" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.pdfa.conformance" value="pdfa1a"/>
+	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
+	<property name="net.sf.jasperreports.default.pdf.font.name" value="/home/rpagano/git/siper/siper_ejb/src/main/resources/it/cnr/lg104/risorse/DejaVuSans.ttf"/>
+	<property name="net.sf.jasperreports.default.pdf.embedded" value="true"/>
+	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/home/rpagano/git/siper/siper_ejb/src/main/resources/it/cnr/lg104/risorse/AdobeRGB1998.icc"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="DejaVu Sans" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG8" fontName="DejaVu Sans" fontSize="8" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC8" fontName="DejaVu Sans" fontSize="8" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNR9" fontName="DejaVu Sans" fontSize="9" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG9" fontName="DejaVu Sans" fontSize="9" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC9" fontName="DejaVu Sans" fontSize="9" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNR10" fontName="DejaVu Sans" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG10" fontName="DejaVu Sans" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC10" fontName="DejaVu Sans" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNRG11" fontName="DejaVu Sans" fontSize="11" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNR12" fontName="DejaVu Sans" fontSize="12" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG12" fontName="DejaVu Sans" fontSize="12" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC12" fontName="DejaVu Sans" fontSize="12" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNRGC12" fontName="DejaVu Sans" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+	<style name="TNRGC14" fontName="DejaVu Sans" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+	<style name="TNRG14" fontName="DejaVu Sans" fontSize="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNR16" fontName="DejaVu Sans" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRC16" fontName="DejaVu Sans" fontSize="16" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNRG16" fontName="DejaVu Sans" fontSize="16" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRGC16" fontName="DejaVu Sans" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+	<style name="TNR11" isDefault="true" fontName="DejaVu Sans" fontSize="11" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="domanda_id" class="java.lang.String">
+		<fieldDescription><![CDATA[domanda_id]]></fieldDescription>
+	</field>
+	<field name="dip_nominativo" class="java.lang.String">
+		<fieldDescription><![CDATA[dip_nominativo]]></fieldDescription>
+	</field>
+	<field name="tab_descr_est" class="java.lang.String">
+		<fieldDescription><![CDATA[tab_descr_est]]></fieldDescription>
+	</field>
+	<field name="tipo_domanda" class="java.lang.String">
+		<fieldDescription><![CDATA[tipo_domanda]]></fieldDescription>
+	</field>
+	<field name="disab_cognome" class="java.lang.String">
+		<fieldDescription><![CDATA[disab_cognome]]></fieldDescription>
+	</field>
+	<field name="disab_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[disab_nome]]></fieldDescription>
+	</field>
+	<field name="provv_diritto_ricon" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_diritto_ricon]]></fieldDescription>
+	</field>
+	<field name="data_inizio_diritto" class="java.lang.String">
+		<fieldDescription><![CDATA[data_inizio_diritto]]></fieldDescription>
+	</field>
+	<field name="provv_data_fine" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_data_fine]]></fieldDescription>
+	</field>
+	<field name="provv_cod_assenza" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_cod_assenza]]></fieldDescription>
+	</field>
+	<field name="sede_id" class="java.lang.String">
+		<fieldDescription><![CDATA[sede_id]]></fieldDescription>
+	</field>
+	<field name="matricola" class="java.lang.String">
+		<fieldDescription><![CDATA[matricola]]></fieldDescription>
+	</field>
+	<field name="dip_pos_fasc" class="java.lang.String">
+		<fieldDescription><![CDATA[dip_pos_fasc]]></fieldDescription>
+	</field>
+	<field name="old_domanda" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[old_domanda]]></fieldDescription>
+	</field>
+	<group name="Domanda_Id" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{domanda_id}]]></groupExpression>
+		<groupHeader>
+			<band height="167">
+				<staticText>
+					<reportElement key="staticText-2" style="TNRG14" x="0" y="115" width="535" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Direzione Centrale Gestione delle Risorse]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-3" style="TNR12" x="0" y="136" width="535" height="31"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Ufficio Gestione Risorse Umane
+Dott. Pierluigi Raimondi
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-1" style="TNRG11" x="0" y="88" width="56" height="16"/>
+					<textElement/>
+					<text><![CDATA[Oggetto:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-2" style="TNR11" x="56" y="88" width="479" height="16"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{dip_nominativo}.trim()+" Legge 104/92"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR11" x="0" y="45" width="144" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["Cod. Assenza: "+$F{provv_cod_assenza}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR11" x="0" y="31" width="100" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["Sede: "+$F{sede_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR11" x="0" y="14" width="112" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["Pos. "+$F{dip_pos_fasc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-1" style="TNR11" x="0" y="0" width="112" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["Matricola: "+$F{matricola}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="39">
+				<staticText>
+					<reportElement key="staticText-23" style="TNR11" x="379" y="10" width="133" height="14"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[IL DIRIGENTE]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Detail_1">
+		<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
+		<groupHeader>
+			<band height="130" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-4" style="TNR12" x="0" y="4" width="535" height="15"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[IL DIRIGENTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-5" style="TNR11" x="10" y="59" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Visto il C.C.N.L. del 19.4.2018 per il personale del Comparto "Istruzione e Ricerca"]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-6" style="TNR11" x="10" y="76" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Visto l'art. 33 della legge 5.2.1992, n. 104, come modificato dalla Legge 4.11.2010, n.183;]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-7" style="TNR11" x="10" y="94" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Visto l'art. 2, comma 3 ter, del D.L.27.8.1993 n.324, convertito in legge 27.10.1993, n.423;]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-8" style="TNR11" x="10" y="112" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Visto la circolare C.N.R. n. 3/2011 del 20.1.2011;]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-11" x="0" y="59" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-12" x="0" y="76" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-13" x="0" y="94" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-14" x="0" y="112" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-5" style="TNR11" x="10" y="29" width="515" height="26"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Visto il provvedimento del Direttore Generale n. 132 del 30.09.2019 di conferimento incarico di direzione dell'Ufficio Gestione Risorse Umane al Dott. Pierluigi Raimondi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-11" x="0" y="29" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-18" style="TNR11" x="10" y="0" width="515" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{old_domanda}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Il presente provvedimento annulla e sostituisce ogni precedente in materia.]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Detail_2">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="18" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-3" style="TNR11" x="10" y="1" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Vista la domanda presentata in data "+$F{data_inizio_diritto}+
+", mediante la quale il dipendente "+
+$F{dip_nominativo}.trim()+" ha chiesto di poter usufruire dei benefici previsti dalla L.n.104/1992 per "+
+($F{tipo_domanda}.equals("S")?"se stesso":"prestare assistenza a "+$F{disab_cognome}+" "+$F{disab_nome})+";"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-15" x="0" y="1" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-6" style="TNR11" x="10" y="0" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Per detti permessi al dipendente "+$F{dip_nominativo}.trim()+" compete il normale trattamento economico, ai sensi dell'art.2, comma 3 ter, del D.L. 27.8.1993 n.324, convertito in legge 27.10.1993, n.423."]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Detail_3">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="18" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-7" style="TNR11" x="10" y="0" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Vista la documentazione presentata da "+$F{dip_nominativo}.trim()+", in servizio presso "+$F{tab_descr_est}.trim()
++" dalla quale risulta che lo stesso può usufruire "+($F{provv_diritto_ricon}==null?"":"di "+$F{provv_diritto_ricon})+" ai sensi dell'art. 33 della Legge 5.2.1992, n.104, come modificato, da ultimo, dalla Legge 4.11.2010, n.183;"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-21" x="0" y="0" width="10" height="13"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-8" style="TNR11" x="10" y="0" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Il dipendente "+$F{dip_nominativo}.trim()+", a decorrere dal "+$F{data_inizio_diritto}+
+($F{provv_data_fine}==null?"":" al "+$F{provv_data_fine})+", può usufruire "+($F{provv_diritto_ricon}==null?"":"di "+$F{provv_diritto_ricon})+" ai sensi dell'art. 33 della Legge 5.2.1992, n.104, come modificato, da ultimo, dalla Legge 4.11.2010, n.183."]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="76">
+				<printWhenExpression><![CDATA[$F{provv_data_fine}!=null]]></printWhenExpression>
+				<staticText>
+					<reportElement key="staticText-18" style="TNR11" x="10" y="0" width="515" height="40" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Al termine del periodo di cui al punto precedente e nelle more delle eventuali visite di revisione il dipendente potrà continuare ad usufruire dei benefici in argomento fino alla successiva pronuncia della Commissione medica competente.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-18" style="TNR11" x="10" y="45" width="515" height="26" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Il dipendente è tenuto a comunicare tempestivamente l'esito della visita di revisione inserendo il relativo verbale nell'applicativo SIPER.]]></text>
+				</staticText>
+			</band>
+			<band height="18">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-8" style="TNR11" x="10" y="0" width="515" height="13"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Il dipendente è tenuto " + ($F{provv_data_fine}==null?"":"altresì ") + "a comunicare tempestivamente qualsiasi variazione inerente il diritto medesimo."]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<image scaleImage="FillFrame" onErrorType="Icon">
+				<reportElement key="image-1" x="0" y="0" width="529" height="80"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"Logo CNR-2010-ITA-09-high.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-20" style="TNR12" x="0" y="17" width="535" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DISPONE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" style="TNR11" x="10" y="0" width="515" height="13"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Ritenuta la necessità di provvedere;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="0" y="0" width="10" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement style="TNR9" x="0" y="0" width="88" height="11"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["(Id: "+$F{domanda_id}+")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
