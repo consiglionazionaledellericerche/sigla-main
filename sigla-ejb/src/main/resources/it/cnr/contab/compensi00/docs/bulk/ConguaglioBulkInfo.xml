@@ -926,6 +926,19 @@
 			formatName="it.cnr.contab.util.EuroFormat"
 			inputType="ROTEXT"
 			label="Conguaglio detrazioni Riduzione Cuneo" />
+
+	<fieldProperty
+			name="totaleCreditoIrpefDovuto"
+			property="totaleCreditoIrpefDovuto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Totale Credito Irpef Dovuto" />
+	<fieldProperty
+			name="totaleCreditoIrpefGoduto"
+			property="totaleCreditoIrpefGoduto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Totale Credito Irpef Goduto" />
 	<fieldProperty
 		name="im_credito_irpef"
 		property="im_credito_irpef"
@@ -1079,6 +1092,8 @@
 	<formFieldProperty name="im_credito_irpef_dovuto" />
 	<formFieldProperty name="im_credito_irpef_goduto" />
 	<formFieldProperty name="im_credito_irpef" />
+	<formFieldProperty name="totaleCreditoIrpefGoduto" />
+	<formFieldProperty name="totaleCreditoIrpefDovuto" />
 	<formFieldProperty name="im_bonus_irpef_dovuto" />
 	<formFieldProperty name="im_bonus_irpef_goduto" />
 	<formFieldProperty name="im_bonus_irpef" />

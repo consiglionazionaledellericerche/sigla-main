@@ -1295,10 +1295,10 @@ public void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext u
 	}
 }
 
-public boolean VerificaDuplicati(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
+public boolean verificaDuplicati(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
 		throws ComponentException, RemoteException {
 	try {
-		return ((Boolean)invoke("VerificaDuplicati",new Object[] {
+		return ((Boolean)invoke("verificaDuplicati",new Object[] {
 				userContext,
 				testata
 				})).booleanValue();

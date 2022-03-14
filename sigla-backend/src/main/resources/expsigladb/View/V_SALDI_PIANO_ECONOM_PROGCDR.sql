@@ -1,0 +1,70 @@
+CREATE OR REPLACE FORCE VIEW "PCIR009"."V_SALDI_PIANO_ECONOM_PROGCDR" ("ESERCIZIO", "PG_PROGETTO", "CD_PROGETTO", "DS_PROGETTO", "ESERCIZIO_PIANO", "CD_VOCE_PIANO", "IM_SPESA_FINANZIATO", "IM_SPESA_COFINANZIATO", "CD_ELEMENTO_VOCE", "DS_ELEMENTO_VOCE", "CD_LINEA_ATTIVITA", "CD_CENTRO_RESPONSABILITA", "DS_CDR", "ASSESTATO_FIN", "ASSESTATO_COFIN", "IMPACC_FIN", "IMPACC_COFIN", "MANRIS_FIN", "MANRIS_COFIN") AS
+  (SELECT PROGETTO_SIP.ESERCIZIO, x.pg_progetto, PROGETTO_SIP.CD_PROGETTO, PROGETTO_SIP.DS_PROGETTO,
+       x.esercizio_piano, x.cd_voce_piano, x.im_spesa_finanziato, x.im_spesa_cofinanziato,
+       x.cd_elemento_voce, x.ds_elemento_voce, x.cd_linea_attivita,
+       x.cd_centro_responsabilita, CDR.ds_cdr,
+       nvl(sum(x.assestato_fin), 0) assestato_fin,
+       nvl(sum(x.assestato_cofin), 0) assestato_cofin,
+       nvl(sum(x.impacc_fin), 0) impacc_fin,
+       nvl(sum(x.impacc_cofin), 0) impacc_cofin,
+       nvl(sum(x.manris_fin), 0) manris_fin,
+       nvl(sum(x.manris_cofin), 0) manris_cofin
+FROM (SELECT PROGETTO_PIANO_ECONOMICO.pg_progetto,
+             PROGETTO_PIANO_ECONOMICO.cd_voce_piano,
+             PROGETTO_PIANO_ECONOMICO.esercizio_piano,
+             PROGETTO_PIANO_ECONOMICO.im_spesa_finanziato,
+             PROGETTO_PIANO_ECONOMICO.im_spesa_cofinanziato,
+             ELEMENTO_VOCE.cd_elemento_voce,
+             ELEMENTO_VOCE.ds_elemento_voce,
+             V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita,
+             V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA,
+             NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_fin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_FIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_FIN,0) assestato_fin,
+             NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_cofin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_coFIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_coFIN,0) assestato_cofin,
+             NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_cofin,0) impacc_cofin,
+             NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_fin,0) impacc_fin,
+             NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_cofin,0) manris_cofin,
+             NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_fin,0) manris_fin
+	  FROM V_SALDI_GAE_VOCE_PROGETTO,
+	       ASS_PROGETTO_PIAECO_VOCE,
+	       PROGETTO_PIANO_ECONOMICO,
+	       ELEMENTO_VOCE
+  	  WHERE ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE = V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO (+)
+  	  AND   ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA = V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA (+)
+	  AND   ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE=V_SALDI_GAE_VOCE_PROGETTO.TI_GESTIONE (+)
+	  AND   ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE=V_SALDI_GAE_VOCE_PROGETTO.CD_ELEMENTO_VOCE (+)
+	  AND   ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO=V_SALDI_GAE_VOCE_PROGETTO.PG_PROGETTO (+)
+	  AND	PROGETTO_PIANO_ECONOMICO.PG_PROGETTO=ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO
+	  AND   PROGETTO_PIANO_ECONOMICO.ESERCIZIO_PIANO=ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO
+	  AND   PROGETTO_PIANO_ECONOMICO.CD_VOCE_PIANO=ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO
+  	  AND   ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE = ELEMENTO_VOCE.ESERCIZIO
+  	  AND   ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA = ELEMENTO_VOCE.TI_APPARTENENZA
+	  AND   ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE=ELEMENTO_VOCE.TI_GESTIONE
+	  AND   ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE=ELEMENTO_VOCE.CD_ELEMENTO_VOCE
+	  UNION ALL
+	  SELECT PROGETTO_PIANO_ECONOMICO.pg_progetto,
+             PROGETTO_PIANO_ECONOMICO.cd_voce_piano,
+       		 PROGETTO_PIANO_ECONOMICO.esercizio_piano,
+		     PROGETTO_PIANO_ECONOMICO.im_spesa_finanziato,
+		     PROGETTO_PIANO_ECONOMICO.im_spesa_cofinanziato,
+		     NULL cd_elemento_voce,
+		     NULL ds_elemento_voce,
+		     NULL cd_linea_attivita,
+		     NULL CD_CENTRO_RESPONSABILITA,
+		     0 assestato_fin,
+		     0 assestato_cofin,
+		     0 impacc_cofin,
+		     0 impacc_fin,
+		     0 manris_cofin,
+		     0 manris_fin
+	  FROM PROGETTO_PIANO_ECONOMICO
+	  WHERE  NOT EXISTS(SELECT * FROM  ASS_PROGETTO_PIAECO_VOCE
+		                WHERE PROGETTO_PIANO_ECONOMICO.PG_PROGETTO=ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO
+		                AND   PROGETTO_PIANO_ECONOMICO.ESERCIZIO_PIANO=ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO
+		                AND   PROGETTO_PIANO_ECONOMICO.CD_VOCE_PIANO=ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO)) X, PROGETTO_SIP, CDR
+WHERE x.pg_progetto = PROGETTO_SIP.PG_PROGETTO
+AND   x.CD_CENTRO_RESPONSABILITA=CDR.CD_CENTRO_RESPONSABILITA(+)
+AND   PROGETTO_SIP.TIPO_FASE = 'G'
+GROUP BY PROGETTO_SIP.ESERCIZIO, x.pg_progetto, PROGETTO_SIP.CD_PROGETTO, PROGETTO_SIP.DS_PROGETTO,
+       x.cd_voce_piano, x.esercizio_piano, x.im_spesa_finanziato, x.im_spesa_cofinanziato,
+       x.cd_elemento_voce, x.ds_elemento_voce, x.cd_linea_attivita,
+       x.cd_centro_responsabilita, CDR.ds_cdr);

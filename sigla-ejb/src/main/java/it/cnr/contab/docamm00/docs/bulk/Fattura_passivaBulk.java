@@ -38,11 +38,13 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
@@ -458,7 +460,10 @@ public abstract class Fattura_passivaBulk
 
     public void addToFattura_passiva_obbligazioniHash(
             Obbligazione_scadenzarioBulk obbligazione,
-            Fattura_passiva_rigaBulk rigaFattura) {
+            Fattura_passiva_rigaBulk rigaFattura) throws ApplicationException {
+        if (!Optional.ofNullable(rigaFattura).isPresent()) {
+            throw new ApplicationException("La riga di fattura non è stata selezionata, oppure è già stata contabilizzata!");
+        }
     	obbligazione.setCig(rigaFattura.getCig());
     	obbligazione.setMotivo_assenza_cig(rigaFattura.getMotivo_assenza_cig());
         if (fattura_passiva_obbligazioniHash == null)

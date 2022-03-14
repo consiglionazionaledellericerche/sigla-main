@@ -691,10 +691,6 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 
 			TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
 
-			String function = bp.isEditable() ? "M" : "V";
-			function += "R";
-
-			CRUDConfigAnagContrattoBP newbp = null;
 			// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
 			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDConfigAnagContrattoBP");
 			if (mode == null) 
@@ -703,7 +699,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if (!Optional.ofNullable(crudController.getModel()).isPresent())
 				throw new it.cnr.jada.action.MessageToUser("Selezionare il contratto al quale si vuole accesso.");
 
-			newbp = (CRUDConfigAnagContrattoBP) context.getUserInfo().createBusinessProcess(context,"CRUDConfigAnagContrattoBP",new Object[] { function, (ContrattoBulk)crudController.getModel(), "V"});
+			CRUDConfigAnagContrattoBP newbp = (CRUDConfigAnagContrattoBP) context.getUserInfo().createBusinessProcess(context,"CRUDConfigAnagContrattoBP",new Object[] { "V", (ContrattoBulk)crudController.getModel(), "V"});
 			return context.addBusinessProcess(newbp);
 		} catch(Exception e) {
 			return handleException(context,e);

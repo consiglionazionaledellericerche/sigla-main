@@ -21,6 +21,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements Configurazione_cnrComponentSession {
     public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
@@ -608,6 +609,22 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
         try {
             return (Integer) invoke("getCdTerzoDiversiStipendi", new Object[]{
                     userContext});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+    public Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona)  throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (Timestamp) invoke("getDataFineValiditaCaricoFamiliare", new Object[]{
+                    userContext, tiPersona});
         } catch (java.rmi.RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {

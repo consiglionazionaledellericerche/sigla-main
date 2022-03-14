@@ -319,6 +319,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(det.getProvenienza(),"S",2," "));
     			bw.append(Formatta(det.getOrigine(),"S",2," "));
     			bw.append(Formatta(det.getCdProvinciaDestinazione(),"S",2," "));
+				bw.append(Formatta("","S",1," ")); // Campo aggiunto per sdoppiamento colonna natura della transazione
     			bw.append("\r\n");
     		}
     	}
@@ -558,6 +559,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 	    	}
 	    	bw.append(Formatta(conta_det.toString(),"D",5,"0"));  // numero det sez4 ven	
 	    	bw.append(Formatta(somma_det.toString(),"D",13,"0"));  // somma_det sez4 ven
+			bw.append(Formatta("0","D",5,"0"));  // Numero di righe dettaglio della sezione 5
 	    	bw.append("\r\n");
     	}
     	conta=0;
@@ -584,6 +586,8 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(det.getCdModalitaTrasporto(),"D",1,"0"));
     			bw.append(Formatta(det.getDest(),"S",2," "));
     			bw.append(Formatta(det.getCdProvinciaOrigine(),"S",2," "));
+				bw.append(Formatta("","S",1," ")); // Campo aggiunto per sdoppiamento colonna natura della transazione
+				bw.append(Formatta("IT","S",2," ")); // Campo aggiunto. Codice del paese di origine della merce
     			bw.append("\r\n");
     		}
     	}

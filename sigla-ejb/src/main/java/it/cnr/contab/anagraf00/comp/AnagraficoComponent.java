@@ -79,6 +79,7 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -1206,6 +1207,16 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 dffht.setTime(carico_familiare.getDt_nascita_figlio());
                 dffht.add(dffht.YEAR, 3);
                 carico_familiare.setDt_fine_figlio_ha_treanni(new java.sql.Timestamp(dffht.getTime().getTime()));
+            }
+            if (carico_familiare.getTi_persona() != null && carico_familiare.getDt_fin_validita() != null) {
+                try {
+                    Timestamp dataFineValiditaCarico = Utility.createConfigurazioneCnrComponentSession().getDataFineValiditaCaricoFamiliare(userContext, carico_familiare.getTi_persona());
+                    if (dataFineValiditaCarico != null && carico_familiare.getDt_fin_validita().compareTo(dataFineValiditaCarico) > 0){
+                        throw new ApplicationException("La data fine validità del carico familiare "+Carico_familiare_anagBulk.PERSONA.get(carico_familiare.getTi_persona())+" non deve superare la data di fine del beneficio stabilita che è " + new SimpleDateFormat("dd/MM/yyyy").format(dataFineValiditaCarico));
+                    }
+                } catch (ComponentException | RemoteException e) {
+                    throw new ApplicationException(e);
+                }
             }
         }
     }
