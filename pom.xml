@@ -50,7 +50,7 @@
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
 		<liquibase.version>3.5.3</liquibase.version>
-		<pdfbox.version>2.0.0</pdfbox.version>
+		<pdfbox.version>2.0.25</pdfbox.version>
 		<storage.cloud.version>2.0.16</storage.cloud.version>
 		<jackson.version>2.13.0</jackson.version>
 		<commons-io.version>2.7</commons-io.version>
