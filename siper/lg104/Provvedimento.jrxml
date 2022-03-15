@@ -12,27 +12,27 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="TNR8" fontName="DejaVu Sans" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="TNRG8" fontName="DejaVu Sans" fontSize="8" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNRC8" fontName="DejaVu Sans" fontSize="8" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
-	<style name="TNR9" fontName="DejaVu Sans" fontSize="9" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="TNRG9" fontName="DejaVu Sans" fontSize="9" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNRC9" fontName="DejaVu Sans" fontSize="9" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
-	<style name="TNR10" fontName="DejaVu Sans" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="TNRG10" fontName="DejaVu Sans" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNRC10" fontName="DejaVu Sans" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
-	<style name="TNRG11" fontName="DejaVu Sans" fontSize="11" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNR12" fontName="DejaVu Sans" fontSize="12" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="TNRG12" fontName="DejaVu Sans" fontSize="12" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNRC12" fontName="DejaVu Sans" fontSize="12" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
-	<style name="TNRGC12" fontName="DejaVu Sans" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
-	<style name="TNRGC14" fontName="DejaVu Sans" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
-	<style name="TNRG14" fontName="DejaVu Sans" fontSize="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNR16" fontName="DejaVu Sans" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-	<style name="TNRC16" fontName="DejaVu Sans" fontSize="16" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
-	<style name="TNRG16" fontName="DejaVu Sans" fontSize="16" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
-	<style name="TNRGC16" fontName="DejaVu Sans" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
-	<style name="TNR11" isDefault="true" fontName="DejaVu Sans" fontSize="11" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic" isPdfEmbedded="true"/>
+	<style name="TNR11" isDefault="true" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
