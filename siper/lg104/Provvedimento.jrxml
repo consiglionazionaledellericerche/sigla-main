@@ -7,7 +7,6 @@
 	<property name="ireport.y" value="0"/>
 	<property name="net.sf.jasperreports.export.pdfa.conformance" value="pdfa1a"/>
 	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
-	<property name="net.sf.jasperreports.default.pdf.font.name" value="/home/rpagano/git/siper/siper_ejb/src/main/resources/it/cnr/lg104/risorse/DejaVuSans.ttf"/>
 	<property name="net.sf.jasperreports.default.pdf.embedded" value="true"/>
 	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/AdobeRGB1998.icc"/>
 	<import value="net.sf.jasperreports.engine.*"/>
