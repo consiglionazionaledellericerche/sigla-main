@@ -302,7 +302,7 @@ $F{dip_nominativo}.trim()+" ha chiesto di poter usufruire dei benefici previsti 
 		<band height="90" splitType="Stretch">
 			<image scaleImage="FillFrame" onErrorType="Icon">
 				<reportElement key="image-1" x="0" y="0" width="529" height="80"/>
-				<imageExpression><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ITA-09-high.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ITA-09-bg-white.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
