@@ -1,3 +1,11 @@
+## Release 6.4.15  -- _March 15, 2022_ 
+**Changes**
+
+>**Variazioni Competenza e Residue: rimossa sulla lista voci di bilancio la voce piano economico associata del progetto**
+>
+>[23c79e8b406ca57](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23c79e8b406ca57) raffaelepagano *March 15, 2022*
+
+
 ## Release 6.4.14  -- _March 14, 2022_ 
 **Changes**
 
