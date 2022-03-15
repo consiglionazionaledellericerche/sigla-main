@@ -4914,4 +4914,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <where>ti_persona = 'F' and dt_fin_validita > to_Date('28022022','ddmmyyyy')</where>
         </update>
     </changeSet>
+    <include file="bootstrap/add_column_lettera_pagamento_estero.xml"/>
+
 </databaseChangeLog>
