@@ -17,10 +17,16 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"
-	homeClassName="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeHome">
+	persistentClassName="it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk"
+	homeClassName="it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrHome">
 	<defaultColumnMap
-		tableName="PROGETTO_SIP">
+		tableName="V_SALDI_PIANO_ECONOM_PROGCDR">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
 		<columnMapping
 			columnName="ESERCIZIO_PIANO"
 			propertyName="esercizio_piano"
@@ -56,24 +62,6 @@
 				propertyName="im_spesa_cofinanziato"
 				sqlTypeName="DECIMAL"
 				columnSize="22"
-				nullable="true" />
-		<columnMapping
-				columnName="cd_elemento_voce"
-				propertyName="cd_elemento_voce"
-				sqlTypeName="VARCHAR"
-				columnSize="10"
-				nullable="true" />
-		<columnMapping
-				columnName="ds_elemento_voce"
-				propertyName="ds_elemento_voce"
-				sqlTypeName="VARCHAR"
-				columnSize="300"
-				nullable="true" />
-		<columnMapping
-				columnName="cd_linea_attivita"
-				propertyName="cd_linea_attivita"
-				sqlTypeName="VARCHAR"
-				columnSize="10"
 				nullable="true" />
 		<columnMapping
 				columnName="manris_fin"
@@ -132,7 +120,13 @@
 	</defaultColumnMap>
 	<columnMap
 			name="SINTETICA"
-			tableName="PROGETTO_SIP">
+			tableName="V_SALDI_PIANO_ECONOM_PROGCDR">
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="true" />
 		<columnMapping
 				columnName="manris_fin"
 				propertyName="manris_fin"
@@ -226,7 +220,7 @@
 	</columnMap>
 	<columnMap
 			name="DETTAGLIATA"
-			tableName="PROGETTO_SIP"
+			tableName="V_SALDI_PIANO_ECONOM_PROGCDR"
 			extends="SINTETICA" >
 		<columnMapping
 				columnName="cd_elemento_voce"
@@ -247,6 +241,8 @@
 				columnSize="10"
 				nullable="true" />
 	</columnMap>
+	<persistentProperty
+			name="esercizio" />
 	<persistentProperty
 			name="pg_progetto" />
 	<persistentProperty

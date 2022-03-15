@@ -1,3 +1,263 @@
+## Release 6.4.14  -- _March 14, 2022_ 
+**Changes**
+
+>**Variazioni Competenza e Residue: rimossa sulla lista voci di bilancio la voce piano economico associata del progetto**
+>
+>[9370320d8aec9e3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9370320d8aec9e3) raffaelepagano *March 14, 2022*
+
+>**Bump postgresql from 42.2.25 to 42.3.3 in /sigla-backend**
+>
+>[91c68554ed44552](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91c68554ed44552) marco.spasiano *March 14, 2022*
+
+>**xercesImpl from 2.12.1 to 2.12.2 in /sigla-web**
+>
+>[3941810aa7f5818](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3941810aa7f5818) marco.spasiano *March 14, 2022*
+
+>**PostgreSQL JDBC Driver (aka PgJDBC) before 42.2.13 allows XXE.**
+>
+>[7c06f5a337b3317](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c06f5a337b3317) marco.spasiano *March 14, 2022*
+
+
+## Release 6.4.13  -- _March 14, 2022_ 
+**Changes**
+
+>**Aggiunte ulteriori informazioni alla predisposizione delle lettere di pagamento estero.**
+>
+>[2e60892c292a336](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e60892c292a336) marco.spasiano *March 14, 2022*
+
+>**Incarichi: limitato il controllo di 1Mb ai soli file da inviare a Perla**
+>
+>[af1a64724d6bed4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/af1a64724d6bed4) raffaelepagano *March 14, 2022*
+
+>**Add esercizio on fattura attiva rest API**
+>
+>[e7ab5fba66401c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7ab5fba66401c5) marco.spasiano *March 10, 2022*
+
+>**Incarichi: eliminata la versione nella registrazione della key del noderef**
+>
+>[47a5b3db95f1acc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/47a5b3db95f1acc) raffaelepagano *March 09, 2022*
+
+>**Incarichi: risoluzione anomalia che non consentiva di rendere definitivo l'incarico (Err: STATUS_MARKED_ROLLBACK)**
+>
+>[80517f6a1d02970](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80517f6a1d02970) raffaelepagano *March 08, 2022*
+
+>**Controlli su variazioni bilancio: modifiche controlli su Aree Ricerca per consentire di comportarsi come un qualsiasi CDS**
+>
+>[690e50ea3e42cb0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/690e50ea3e42cb0) raffaelepagano *March 08, 2022*
+
+>**FIX fattura attiva rest API**
+>
+>[94dba12286cbaea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/94dba12286cbaea) marco.spasiano *March 08, 2022*
+
+>**FIX fattura attiva rest API**
+>
+>[225dbef0b7576d1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/225dbef0b7576d1) marco.spasiano *March 08, 2022*
+
+>**FIX fattura attiva rest API**
+>
+>[de52d49f3cacb2b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de52d49f3cacb2b) marco.spasiano *March 08, 2022*
+
+>**FIX fattura attiva rest API**
+>
+>[4d319b74e985ba3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4d319b74e985ba3) marco.spasiano *March 08, 2022*
+
+>**Aggiunta blocco gestione detrazioni carichi familiari dal 28/02/2022**
+>
+>[9079dc6eb2c1a11](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9079dc6eb2c1a11) gianfranco.gasparro *March 08, 2022*
+
+>**Movimenti Prima Nota: anomalia in fase di valorizzazione terzo su movimenti di dettaglio**
+>
+>[09eb9c0cc8e2c02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09eb9c0cc8e2c02) raffaelepagano *February 24, 2022*
+
+>**Consultazione Piano Economico: risolta anomalia che non permetteva la visualizzazione di Voce/Gae**
+>
+>[dc8f2edc96618d6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dc8f2edc96618d6) raffaelepagano *February 24, 2022*
+
+>**Mappa Progetti: consentita la visualizzazione del piano economico a tutti le uo partecipanti al progetto**
+>
+>[94cdb6e858260e0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/94cdb6e858260e0) raffaelepagano *February 24, 2022*
+
+>**Consultazione Piano Economico: ottimizzata la select**
+>
+>[37d1c49111cf609](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d1c49111cf609) raffaelepagano *February 23, 2022*
+
+>**Fix Rimodulazione Piano Economico: corretta anomalia che consentiva di validare automaticamente la rimodulazione anche in presenza di sfondamento assestato**
+>
+>[7cefdd83392363e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7cefdd83392363e) raffaelepagano *February 22, 2022*
+
+>**Fix Aggiornamento tracciato 2022**
+>
+>[b3ee34199d043d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b3ee34199d043d5) GASPARRO GIANFRANCO *February 21, 2022*
+
+>**Consultazione Piano Economico: sbloccata per partecipanti al progetto con limitazione visibilità ai dati di appartenenza**
+>
+>[da620ba7fc3b4dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da620ba7fc3b4dc) raffaelepagano *February 21, 2022*
+
+>**Aggiornamento al tracciato 2022**
+>
+>[5ac2634415a75f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5ac2634415a75f4) GASPARRO GIANFRANCO *February 21, 2022*
+
+>**Modificata descrizione della SAC e sostituito UNION ALL con UNION**
+>
+>[7412d8fd1e91ae7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7412d8fd1e91ae7) marco.spasiano *February 21, 2022*
+
+>**Nella ricerca delle fatture da collegare alla nota di credito filtra principalmente per importo totale della fattura**
+>
+>[1b34e88558384a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b34e88558384a0) marco.spasiano *February 18, 2022*
+
+>**Rimosso roOnAutoGen dalla selezione di Istituzionale/Commerciale**
+>
+>[0bfaecea0e10e1e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfaecea0e10e1e) marco.spasiano *February 17, 2022*
+
+>**Modificata descrizione della SAC**
+>
+>[338c73edb34b628](https://github.com/consiglionazionaledellericerche/sigla-main/commit/338c73edb34b628) marco.spasiano *February 17, 2022*
+
+>**Aggiunto messaggio di erore specifico quando la riga di fattura è già stata contabilizzata.**
+>
+>[726995b45e257a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/726995b45e257a1) marco.spasiano *February 11, 2022*
+
+>**Variazioni Competenza: aggiunta sulla lista voci di bilancio anche la voce piano economico associata del progetto**
+>
+>[138c170df523a39](https://github.com/consiglionazionaledellericerche/sigla-main/commit/138c170df523a39) raffaelepagano *February 04, 2022*
+
+>**Variazioni Residue: aggiunta sulla lista voci di bilancio anche la voce piano economico associata del progetto**
+>
+>[066ccb9938eded7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/066ccb9938eded7) raffaelepagano *February 04, 2022*
+
+
+## Release 6.4.12  -- _January 28, 2022_ 
+**Changes**
+
+>**Aggiornamento versione PerlaClient**
+>
+>[7ac90d81528c115](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7ac90d81528c115) raffaelepagano *January 28, 2022*
+
+
+## Release 6.4.11  -- _January 28, 2022_ 
+**Changes**
+
+>**Eliminato blocco su missioni con data inizio oltre i 2 anni**
+>
+>[9a6349d20a5cd56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a6349d20a5cd56) gianfranco.gasparro *January 27, 2022*
+
+>**Liquidazione Iva: le variazioni create in automatico sono registrate come Trasferimento alla ragioneria**
+>
+>[e9f2d9a4935d7e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e9f2d9a4935d7e7) raffaelepagano *January 27, 2022*
+
+>**Aggiunto su varie mappe la possibilità di visualizzare oggetti associati al model del BP.**
+>
+>[279ba2efcc21e6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/279ba2efcc21e6a) raffaelepagano *January 27, 2022*
+
+>**Aggiunto su varie mappe la possibilità di visualizzare oggetti associati al model del BP.**
+>
+>[b4bcf80dd56aac7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4bcf80dd56aac7) raffaelepagano *January 26, 2022*
+
+>**Rilascio modifiche conguaglio cuneo fiscale per i compensi finanziaria 2022**
+>
+>[7e5ce830ede4c2b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7e5ce830ede4c2b) gianfranco.gasparro *January 26, 2022*
+
+>**Add method doDefaultNG**
+>
+>[b91bc0feb03f9ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b91bc0feb03f9ec) SPASIANO MARCO *January 25, 2022*
+
+>**Add method doDefaultNG**
+>
+>[1ab0754ffac8e4e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ab0754ffac8e4e) SPASIANO MARCO *January 24, 2022*
+
+>**Aggiunta possibilità di aprire direttamente il repertorio contratti collegato dagli accertamenti/impegni**
+>
+>[30936febfcf3dd4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30936febfcf3dd4) raffaelepagano *January 21, 2022*
+
+>**Rimodulazione Progetti: data la possibilità direttamente alle strutture di approvare le modifiche ai piani di gestione che rispettano una serie di requisiti**
+>
+>[ad082d3382e6d34](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ad082d3382e6d34) raffaelepagano *January 21, 2022*
+
+>**Subordinata la procedura java di contabilizzazione stipendi all'attivazione della economica pura.**
+>
+>[d73551617067c3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d73551617067c3d) raffaelepagano *January 19, 2022*
+
+>**Update publiccode.yml**
+>
+>[9faa712898fd53f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9faa712898fd53f) Marco Spasiano *January 13, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[538c31665141bd4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/538c31665141bd4) raffaelepagano *January 10, 2022*
+
+>**Add economica on docs**
+>
+>[9a40a9a02a7096f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a40a9a02a7096f) marco.spasiano *January 07, 2022*
+
+>**Update publiccode.yml**
+>
+>[0fadbf18eb4c18d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0fadbf18eb4c18d) marco.spasiano *January 07, 2022*
+
+>**Update publiccode.yml**
+>
+>[95e53de187bafbe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95e53de187bafbe) marco.spasiano *January 06, 2022*
+
+>**Add GitHub Workflow**
+>
+>[0ba2c5c074fd98f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ba2c5c074fd98f) marco.spasiano *January 05, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[3bcc9ae01f91ff1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3bcc9ae01f91ff1) patriziavillani *January 05, 2022*
+
+>**Add files via upload**
+>
+>[0159120df4f05fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0159120df4f05fe) patriziavillani *January 05, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[f794cb15ca2ad2a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f794cb15ca2ad2a) patriziavillani *January 05, 2022*
+
+>**Update contabilita_economica.rst**
+>
+>[a78a9a4ce6f3304](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a78a9a4ce6f3304) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[c0bc1672a393ca2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0bc1672a393ca2) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[59518cd8baf6fcc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/59518cd8baf6fcc) patriziavillani *January 05, 2022*
+
+>**Create contabilita_economica.rst**
+>
+>[b1cacd1fd3afdc1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1cacd1fd3afdc1) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[4131c609cbbf228](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4131c609cbbf228) patriziavillani *January 05, 2022*
+
+>**Update index.rst**
+>
+>[09bc6e37552635e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09bc6e37552635e) patriziavillani *January 05, 2022*
+
+
+## Release 6.4.10  -- _January 21, 2022_ 
+**Changes**
+
+>**Rilascio modifiche cuneo fiscale per i compensi finanziaria 2022**
+>
+>[fef4af13571f5e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fef4af13571f5e6) gianfranco.gasparro *January 21, 2022*
+
+
+## Release 6.4.9  -- _January 18, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[b8d3a9e015eecdc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8d3a9e015eecdc) gianfranco.gasparro *January 18, 2022*
+
+>**Modifiche Finanziaria 2022. Solo parte detrazioni**
+>
+>[74f2c27cb7aaf18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74f2c27cb7aaf18) gianfranco.gasparro *January 17, 2022*
+
+
 ## Release 6.4.8  -- _January 04, 2022_ 
 **Changes**
 

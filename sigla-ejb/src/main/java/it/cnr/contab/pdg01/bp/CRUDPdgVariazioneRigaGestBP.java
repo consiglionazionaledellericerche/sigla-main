@@ -34,6 +34,7 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneRigaGestComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
@@ -52,6 +53,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author rpagano

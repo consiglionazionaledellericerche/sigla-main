@@ -86,6 +86,24 @@
 		</tr>
 		<tr>
 			<td colspan="4">
+				<div class="GroupLabel h3 text-primary">Istruzioni Speciali</div>
+				<div class="Group card" style="width:100%">
+					<table width="100%">
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "istruzioni_speciali_1");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "istruzioni_speciali_2");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "istruzioni_speciali_3");%>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
 				<div class="GroupLabel h3 text-primary">Sospeso</div>
 				<div class="Group card p-3" style="width:90%">
 					<table>

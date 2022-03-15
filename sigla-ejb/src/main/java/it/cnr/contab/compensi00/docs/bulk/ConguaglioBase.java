@@ -284,8 +284,26 @@ public class ConguaglioBase extends ConguaglioKey implements Keyed {
 	private java.lang.Boolean fl_no_credito_cuneo_irpef;
 	private java.lang.Boolean fl_no_detr_cuneo_irpef;
 
+	public BigDecimal getIm_cred_irpef_par_det_goduto() {
+		return im_cred_irpef_par_det_goduto;
+	}
+
+	public void setIm_cred_irpef_par_det_goduto(BigDecimal im_cred_irpef_par_det_goduto) {
+		this.im_cred_irpef_par_det_goduto = im_cred_irpef_par_det_goduto;
+	}
+
+	public BigDecimal getIm_cred_irpef_par_det_dovuto() {
+		return im_cred_irpef_par_det_dovuto;
+	}
+
+	public void setIm_cred_irpef_par_det_dovuto(BigDecimal im_cred_irpef_par_det_dovuto) {
+		this.im_cred_irpef_par_det_dovuto = im_cred_irpef_par_det_dovuto;
+	}
+
 	// IM_CREDITO_IRPEF_GODUTO(15,2)
 	private java.math.BigDecimal im_credito_irpef_goduto;
+	private java.math.BigDecimal im_cred_irpef_par_det_goduto;
+	private java.math.BigDecimal im_cred_irpef_par_det_dovuto;
 
 	public BigDecimal getDetrazioni_rid_cuneo_dovuto() {
 		return detrazioni_rid_cuneo_dovuto;

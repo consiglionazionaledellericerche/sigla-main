@@ -97,7 +97,7 @@ it.cnr.jada.bulk.OggettoBulk rebuildDocumento(it.cnr.jada.UserContext param0, it
 it.cnr.jada.util.RemoteIterator cercaObbligazioni(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 byte[] lanciaStampa(it.cnr.jada.UserContext userContext,java.lang.Long pg_stampa) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext aUC,it.cnr.jada.bulk.OggettoBulk oggetto) throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-boolean VerificaDuplicati(it.cnr.jada.UserContext aUC,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fatturaAttiva)throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean verificaDuplicati(it.cnr.jada.UserContext aUC, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fatturaAttiva)throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findListaModalitaPagamentoWS(it.cnr.jada.UserContext userContext,String terzo,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaBancheWS(it.cnr.jada.UserContext userContext,String terzo,String modalita,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaRigheperNCWS(it.cnr.jada.UserContext userContext,String uo,String terzo,String ti_causale,String esercizio,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;

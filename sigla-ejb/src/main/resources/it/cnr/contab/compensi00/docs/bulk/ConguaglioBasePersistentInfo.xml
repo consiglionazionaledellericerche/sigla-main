@@ -612,6 +612,20 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+				columnName="IM_CRED_IRPEF_PAR_DET_GODUTO"
+				propertyName="im_cred_irpef_par_det_goduto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="IM_CRED_IRPEF_PAR_DET_DOVUTO"
+				propertyName="im_cred_irpef_par_det_dovuto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
 				columnName="IM_BONUS_IRPEF_GODUTO"
 				propertyName="im_bonus_irpef_goduto"
 				sqlTypeName="DECIMAL"
@@ -806,6 +820,10 @@
 			name="fl_no_credito_cuneo_irpef" />
 	<persistentProperty
 			name="fl_no_detr_cuneo_irpef" />
+	<persistentProperty
+			name="im_cred_irpef_par_det_goduto" />
+	<persistentProperty
+			name="im_cred_irpef_par_det_dovuto" />
 	<persistentProperty
 		name="im_credito_irpef_goduto" />	
 	<persistentProperty

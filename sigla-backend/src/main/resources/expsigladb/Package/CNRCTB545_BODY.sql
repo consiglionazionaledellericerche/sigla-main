@@ -828,7 +828,8 @@ BEGIN
            IMPONIBILE_LORDO,
            IM_DEDUZIONE_IRPEF,
            IM_DEDUZIONE_FAMILY,
-           IM_CORI_SOSPESO)
+           IM_CORI_SOSPESO,
+           fl_credito_pareggio_detrazioni)
    VALUES (aRecContributoRitenuta.cd_cds,
            aRecContributoRitenuta.cd_unita_organizzativa,
            aRecContributoRitenuta.esercizio,
@@ -861,7 +862,8 @@ BEGIN
            aRecContributoRitenuta.imponibile_lordo,
            aRecContributoRitenuta.im_deduzione_irpef,
            aRecContributoRitenuta.im_deduzione_family,
-           aRecContributoRitenuta.im_cori_sospeso);
+           aRecContributoRitenuta.im_cori_sospeso,
+           aRecContributoRitenuta.fl_credito_pareggio_detrazioni);
 
 END insContributoRitenuta;
 
