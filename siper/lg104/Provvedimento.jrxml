@@ -9,7 +9,7 @@
 	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
 	<property name="net.sf.jasperreports.default.pdf.font.name" value="/home/rpagano/git/siper/siper_ejb/src/main/resources/it/cnr/lg104/risorse/DejaVuSans.ttf"/>
 	<property name="net.sf.jasperreports.default.pdf.embedded" value="true"/>
-	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/home/rpagano/git/siper/siper_ejb/src/main/resources/it/cnr/lg104/risorse/AdobeRGB1998.icc"/>
+	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/AdobeRGB1998.icc"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -300,7 +300,7 @@ $F{dip_nominativo}.trim()+" ha chiesto di poter usufruire dei benefici previsti 
 		<band height="90" splitType="Stretch">
 			<image scaleImage="FillFrame" onErrorType="Icon">
 				<reportElement key="image-1" x="0" y="0" width="529" height="80"/>
-				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"Logo CNR-2010-ITA-09-high.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ITA-09-high.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
