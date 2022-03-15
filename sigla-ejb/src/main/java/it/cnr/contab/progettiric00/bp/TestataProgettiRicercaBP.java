@@ -165,7 +165,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 	    		button.setDisabledImg("img/open16.gif");
 	    		button.setTitle("Apri Contratto");
 	    		button.setIconClass("fa fa-folder-open-o text-primary");
-	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	    		button.setButtonClass("btn-sm btn-outline-secondary btn-title");
 	            button.setHref("javascript:submitForm('doOpenContratto(" + getInputPrefix() + ")')");
 	            boolean isButtonEnable = Optional.ofNullable(this.getModel()).isPresent();
 	            button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));

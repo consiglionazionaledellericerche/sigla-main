@@ -103,7 +103,7 @@
                                             bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money" : "img/compressed.gif",
                                             "Entrate",
                                             "if (disableDblClick()) submitForm('doContrattazioneEntrate')",
-                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            "btn-outline-primary btn-title btn-block",
                                             pdg_selezionato && bp.isPrevEntrataEnable(HttpActionContext.getUserInfo(request)),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
@@ -113,7 +113,7 @@
                                             bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase" : "img/transfer.gif",
                                             "Spese",
                                             "if (disableDblClick()) submitForm('doContrattazioneSpese')",
-                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            "btn-outline-primary btn-title btn-block",
                                             pdg_selezionato && bp.isPrevSpesaEnable(HttpActionContext.getUserInfo(request)),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
@@ -141,7 +141,7 @@
                                             bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money" : "img/compressed.gif",
                                             "Entrate",
                                             "if (disableDblClick()) submitForm('doGestionaleEntrate')",
-                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            "btn-outline-primary btn-title btn-block",
                                             pdg_selezionato && bp.isGestionaleAccessibile() && bp.isPrevEntrataEnable(HttpActionContext.getUserInfo(request)),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
@@ -151,7 +151,7 @@
                                             bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase" : "img/transfer.gif",
                                             "Spese",
                                             "if (disableDblClick()) submitForm('doGestionaleSpese')",
-                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            "btn-outline-primary btn-title btn-block",
                                             pdg_selezionato && bp.isGestionaleAccessibile() && bp.isPrevSpesaEnable(HttpActionContext.getUserInfo(request)),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>

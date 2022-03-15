@@ -19,7 +19,7 @@
 								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif",
 								"Liquidazione Massiva Provvisoria",
 								"javascript:submitForm('doLiquidazioneMassivaProvvisoria')",
-								"btn-secondary btn-outline-secondary btn-title",
+								"btn-outline-secondary btn-title",
 								true,
 								bp.getParentRoot().isBootstrap()); %>
 				</td>
