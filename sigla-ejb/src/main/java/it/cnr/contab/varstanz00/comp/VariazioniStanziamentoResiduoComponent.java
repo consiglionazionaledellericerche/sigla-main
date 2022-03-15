@@ -392,12 +392,18 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				});
 			}
 
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			/*
 			if (isProgettoWithPianoEconomico) {
-				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo*/
+				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo
 				sql.addSQLClause(FindClause.AND, columnMapName + ".PG_PROGETTO_ASSOCIATO", SQLBuilder.EQUALS, optProgetto.get().getPg_progetto());
 				sql.addSQLClause(FindClause.AND, columnMapName + ".ESERCIZIO_PIANO_ASSOCIATO", SQLBuilder.EQUALS, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
 			}
-				//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
+			*/
+			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
 				optProgetto.orElseThrow(() -> new ApplicationException("Errore: Progetto non valorizzato sulla riga della variazione!"));
 

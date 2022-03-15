@@ -621,11 +621,17 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
 					sql.addSQLClause(FindClause.AND,columnMapName+".CD_TIPO_UNITA",SQLBuilder.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
 
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			/*
 			if (isProgettoWithPianoEconomico) {
-				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo*/
+				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo
 				sql.addSQLClause(FindClause.AND, columnMapName + ".PG_PROGETTO_ASSOCIATO", SQLBuilder.EQUALS, optProgetto.get().getPg_progetto());
 				sql.addSQLClause(FindClause.AND, columnMapName + ".ESERCIZIO_PIANO_ASSOCIATO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
 			}
+			*/
 
 			/*
 			 * controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per 
