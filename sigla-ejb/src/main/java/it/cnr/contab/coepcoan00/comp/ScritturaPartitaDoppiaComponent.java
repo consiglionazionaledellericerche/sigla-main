@@ -544,12 +544,22 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	{
 		Scrittura_partita_doppiaBulk scrittura = (Scrittura_partita_doppiaBulk) bulk;
 		scrittura.setIm_scrittura( scrittura.getImTotaleAvere());
-		if ( scrittura.getTerzo() == null || scrittura.getTerzo().getCd_terzo() == null )
-			scrittura.setTerzo( getTerzoNullo());
+		if ( scrittura.getTerzo() == null || scrittura.getTerzo().getCd_terzo() == null ) {
+            scrittura.setTerzo(getTerzoNullo());
+            scrittura.getAllMovimentiColl().stream().forEach(el->el.setTerzo(scrittura.getTerzo()));
+        }
 		makeBulkPersistent(userContext,scrittura);
 		aggiornaSaldiCoge( userContext, scrittura );
 		return bulk;
 	}
+
+	@Override
+	protected OggettoBulk eseguiModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+		Scrittura_partita_doppiaBulk scrittura = (Scrittura_partita_doppiaBulk) oggettobulk;
+		scrittura.getAllMovimentiColl().stream().forEach(el->el.setTerzo(scrittura.getTerzo()));
+		return super.eseguiModificaConBulk(usercontext, oggettobulk);
+	}
+
 	/**
 	 *
 	 * Nome: Storno e riemissione di una scrittura

@@ -136,7 +136,7 @@
                        				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-link text-success" : "img/edit16.gif",
                        				null,
                        				"javascript:submitForm('doPrendiInCarico')",
-                       				"btn-secondary btn-outline-secondary btn-title",
+                       				"btn-outline-secondary btn-title",
                        				true,
                        				bp.getParentRoot().isBootstrap());
 		             %>

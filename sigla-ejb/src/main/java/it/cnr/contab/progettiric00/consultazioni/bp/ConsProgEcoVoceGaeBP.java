@@ -17,20 +17,15 @@
 
 package it.cnr.contab.progettiric00.consultazioni.bp;
 
-import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBulk;
-import it.cnr.contab.preventvar00.ejb.ConsAssCompPerDataComponentSession;
-import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk;
+import it.cnr.contab.progettiric00.consultazioni.ejb.ConsProgEcoVociGaeComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -47,16 +42,10 @@ public class ConsProgEcoVoceGaeBP extends BulkBP
 	}
 
 	protected void init(Config config,ActionContext context) throws BusinessProcessException {
-		
-			ConsProgettiEcoVociGaeBulk bulk = new ConsProgettiEcoVociGaeBulk();
-			
-			CompoundFindClause clauses = new CompoundFindClause();
-			Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
-            clauses.addClause("AND","esercizio",SQLBuilder.EQUALS,esercizio);
-			bulk.setTipoStampa(ConsProgettiEcoVociGaeBulk.DETTAGLIATA);
-
-			setModel(context,bulk);
-			bulk.setEsercizio_piano(esercizio);
+		V_saldi_piano_econom_progcdrBulk bulk = new V_saldi_piano_econom_progcdrBulk();
+		bulk.setEsercizio_piano(CNRUserContext.getEsercizio(context.getUserContext()));
+		bulk.setTipoStampa(V_saldi_piano_econom_progcdrBulk.DETTAGLIATA);
+		setModel(context,bulk);
 		super.init(config,context);
 	}
 
@@ -65,28 +54,20 @@ public class ConsProgEcoVoceGaeBP extends BulkBP
 		return true;
 	}
 
-	public RemoteIterator find(ActionContext actioncontext, CompoundFindClause clauses, OggettoBulk bulk, OggettoBulk context, String property) throws BusinessProcessException {
-		try {
-			CRUDComponentSession cs = (CRUDComponentSession) createComponentSession("CNRPDG00_EJB_PdGPreventivoComponentSession");
-			if (cs == null) return null;
-			return EJBCommonServices.openRemoteIterator(
-					actioncontext,
-					cs.cerca(
-							actioncontext.getUserContext(),
-							clauses,
-							bulk,
-							getModel(),
-							property));
-		} catch (it.cnr.jada.comp.ComponentException e) {
-			throw handleException(e);
-		} catch (java.rmi.RemoteException e) {
-			throw handleException(e);
+	public it.cnr.jada.ejb.CRUDComponentSession createComponentSession() throws BusinessProcessException {
+		return (ConsProgEcoVociGaeComponentSession) createComponentSession("CNRPROGETTIRIC00_EJB_ConsProgEcoVociGaeComponentSession", ConsProgEcoVociGaeComponentSession.class);
+	}
+
+	public RemoteIterator find(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, OggettoBulk oggettobulk1, String s) throws BusinessProcessException {
+		try{
+			return EJBCommonServices.openRemoteIterator(actioncontext, this.createComponentSession().cerca(actioncontext.getUserContext(), compoundfindclause, oggettobulk, oggettobulk1, s));
+		}catch(Exception exception){
+			throw new BusinessProcessException(exception);
 		}
 	}
 
-	public void valorizzaProgetto(ActionContext context, ConsProgettiEcoVociGaeBulk bulk) throws ValidationException{
+	public void valorizzaProgetto(ActionContext context, V_saldi_piano_econom_progcdrBulk bulk) throws ValidationException{
 		if (bulk.getPg_progetto()== null)
 			throw new ValidationException("Valorizzare il progetto");
 	}
-
 }

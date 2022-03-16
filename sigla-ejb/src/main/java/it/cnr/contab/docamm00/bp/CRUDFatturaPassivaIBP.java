@@ -306,16 +306,7 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 					//|| (!isAnnoDiCompetenza() && isEditing()) 
 					|| (fp != null && ((fp.isPagata() || fp.isCongelata()) && !isSearching()) );
 		}
-
-
-
-		//if (fp == null || !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
-		//getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(), isReadonly, getFieldValidationMap());
-		//else {
-		//getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(),isInputReadonlyDoc1210(),getFieldValidationMap());
-		//}
-
-		getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap(), this.getParentRoot().isBootstrap());	
+		getBulkInfo().writeFormField(out,fp,null,name,getInputPrefix(),1,1,getStatus(),isReadonly,getFieldValidationMap(), this.getParentRoot().isBootstrap());
 	}
 	public void writeFormInputDoc1210(javax.servlet.jsp.JspWriter out,String name) throws java.io.IOException {
 

@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericComponent implements IConfigurazione_cnrMgr, Cloneable, Serializable {
@@ -890,6 +891,17 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                     .map(Configurazione_cnrHome.class::cast)
                     .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
                     .getCdTerzoDiversiStipendi();
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+    public Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .getDataFineValiditaCaricoFamiliare(tiPersona);
         } catch (PersistencyException e) {
             throw handleException(e);
         }

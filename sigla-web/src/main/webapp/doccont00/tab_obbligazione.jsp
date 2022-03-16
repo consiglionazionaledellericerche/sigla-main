@@ -203,7 +203,7 @@
 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
 					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce",
 					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
-					"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+					"btn-outline-primary btn-title faa-parent animated-hover",
 					true, 
 					bp.getParentRoot().isBootstrap());%>
 			</td>

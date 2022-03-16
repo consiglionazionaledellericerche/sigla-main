@@ -774,7 +774,7 @@
             inputType="BUTTON"
             img="img/find16.gif"
             iconClass="fa fa-search text-primary"
-            buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
+            buttonClass="btn-outline-secondary btn-title text-primary"
             readonlyProperty="abledToInsertBank"
             label="Conto/i..."
             href="javascript:submitForm('doSearch(main.listabanche)')"/>
@@ -1058,6 +1058,30 @@
             layout="VERTICAL"
             enabledOnFreeSearch="false"
             caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="istruzioni_speciali_1"
+            property="lettera_pagamento_estero.istruzioni_speciali_1"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            inputType="TEXT"
+            maxLength="250"
+            inputSize="100"
+            label="Primo" />
+    <fieldProperty
+            name="istruzioni_speciali_2"
+            property="lettera_pagamento_estero.istruzioni_speciali_2"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            inputType="TEXT"
+            maxLength="250"
+            inputSize="100"
+            label="Secondo" />
+    <fieldProperty
+            name="istruzioni_speciali_3"
+            property="lettera_pagamento_estero.istruzioni_speciali_3"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            inputType="TEXT"
+            maxLength="250"
+            inputSize="100"
+            label="Terzo" />
 
     <fieldProperty
             name="fl_liquidazione_differita"
@@ -1469,6 +1493,12 @@
             name="commissioni_spese_estere"/>
     <formFieldProperty
             name="displayStatoTrasmissione"/>
+    <formFieldProperty
+            name="istruzioni_speciali_1" />
+    <formFieldProperty
+            name="istruzioni_speciali_2" />
+    <formFieldProperty
+            name="istruzioni_speciali_3" />
 
     <formFieldProperty
             name="fl_liquidazione_differita"

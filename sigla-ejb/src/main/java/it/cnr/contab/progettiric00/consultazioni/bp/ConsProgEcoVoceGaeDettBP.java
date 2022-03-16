@@ -22,6 +22,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.preventvar00.consultazioni.bp.ConsAssCompPerDataBP;
 import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBulk;
 import it.cnr.contab.preventvar00.ejb.ConsAssCompPerDataComponentSession;
+import it.cnr.contab.progettiric00.consultazioni.ejb.ConsProgEcoVociGaeComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -39,8 +40,8 @@ import java.util.Iterator;
 
 public class ConsProgEcoVoceGaeDettBP extends ConsultazioniBP
 {
-	public CRUDComponentSession createComponentSession() throws BusinessProcessException {
-		return (CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",ConsAssCompPerDataComponentSession.class);
+	public it.cnr.jada.ejb.CRUDComponentSession createComponentSession() throws BusinessProcessException {
+		return (ConsProgEcoVociGaeComponentSession) createComponentSession("CNRPROGETTIRIC00_EJB_ConsProgEcoVociGaeComponentSession", ConsProgEcoVociGaeComponentSession.class);
 	}
 
 	public void impostaColonne(Boolean isDettagliata){

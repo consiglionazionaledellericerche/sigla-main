@@ -23,26 +23,9 @@
  */
 package it.cnr.contab.varstanz00.comp;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -55,30 +38,15 @@ import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.CdrHome;
-import it.cnr.contab.config00.sto.bulk.CdrKey;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.CdsHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
-import it.cnr.contab.prevent00.bulk.V_assestato_residuoBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resHome;
+import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
 import it.cnr.contab.progettiric00.comp.RimodulazioneNonApprovataException;
@@ -92,11 +60,7 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrHome;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.contab.varstanz00.bulk.*;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -109,19 +73,25 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLExceptionHandler;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author mspasiano
@@ -370,49 +340,74 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		try{
 			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-	
+
+			Optional<ProgettoBulk> optProgetto = Optional.empty();
+			if (Optional.ofNullable(var_stanz_res_riga.getProgetto()).flatMap(el -> Optional.ofNullable(el.getPg_progetto())).isPresent()) {
+				ProgettoHome home = (ProgettoHome) getHome(userContext, ProgettoBulk.class);
+				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				optProgetto = Optional.ofNullable((ProgettoBulk) home.findByPrimaryKey(userContext, var_stanz_res_riga.getProgetto()));
+				getHomeCache(userContext).fetchAll(userContext);
+			}
+
 			if (clause == null) clause = ((OggettoBulk)elemento_voce).buildFindClauses(null);
-	
-			SQLBuilder sql = getHome(userContext, elemento_voce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
-	
+
+			boolean isProgettoWithPianoEconomico = optProgetto.map(ProgettoBulk::isPianoEconomicoRequired).orElse(Boolean.FALSE);
+
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			//String columnMapName = isProgettoWithPianoEconomico?"V_ELEMENTO_VOCE_PDG_SPE_PIAECO":"V_ELEMENTO_VOCE_PDG_SPE";
+			String columnMapName = "V_ELEMENTO_VOCE_PDG_SPE";
+
+			SQLBuilder sql = getHome(userContext, elemento_voce, columnMapName).createSQLBuilder();
+
 			if(clause != null) sql.addClause(clause);
-			sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+			sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
 				
 			sql.addTableToHeader("PARAMETRI_LIVELLI");
-			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+			sql.addSQLJoin(columnMapName+".ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
 	
 			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
-			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin(columnMapName+".ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
 			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 	
 			sql.openParenthesis(FindClause.AND);
-			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);	
-			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");	
+			sql.addSQLClause(FindClause.OR, columnMapName+".FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);
+			sql.addSQLClause(FindClause.OR, columnMapName+".FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");
 			sql.closeParenthesis();
-			sql.addSQLClause( FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_COMPETENZA", SQLBuilder.EQUALS, "N");
+			sql.addSQLClause( FindClause.AND, columnMapName+".FL_SOLO_COMPETENZA", SQLBuilder.EQUALS, "N");
 			if (var_stanz_res_riga.getLinea_di_attivita() != null)
-				sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",SQLBuilder.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
+				sql.addSQLClause(FindClause.AND,columnMapName+".CD_FUNZIONE",SQLBuilder.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
 				
 			if(!parCnrBulk.getFl_nuovo_pdg())
 				if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)
-					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
+					sql.addSQLClause(FindClause.AND,columnMapName+".CD_TIPO_UNITA",SQLBuilder.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
 
 			if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
 				Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext)))
 						.filter(cdrPersonale->!cdrPersonale.equals(var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()))
 						.ifPresent(cdrPersonale->{
-					sql.addSQLClause(FindClause.AND, "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
+					sql.addSQLClause(FindClause.AND, columnMapName+".FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
 				});
 			}
+
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			/*
+			if (isProgettoWithPianoEconomico) {
+				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo
+				sql.addSQLClause(FindClause.AND, columnMapName + ".PG_PROGETTO_ASSOCIATO", SQLBuilder.EQUALS, optProgetto.get().getPg_progetto());
+				sql.addSQLClause(FindClause.AND, columnMapName + ".ESERCIZIO_PIANO_ASSOCIATO", SQLBuilder.EQUALS, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
+			}
+			*/
 			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
-				Optional.ofNullable(var_stanz_res_riga.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
-						.orElseThrow(()->new ApplicationException("Errore: Progetto non valorizzato sulla riga della variazione!"));
-				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, var_stanz_res_riga.getProgetto());
-				getHomeCache(userContext).fetchAll(userContext);
-				if (progetto.isPianoEconomicoRequired()) {
+				optProgetto.orElseThrow(() -> new ApplicationException("Errore: Progetto non valorizzato sulla riga della variazione!"));
+
+				if (isProgettoWithPianoEconomico) {
 					/*
 						se il progetto è attivo (anno fine del progetto maggiore o uguale all'anno di esercizio) occorre sempre controllare le voci associate al piano economico del progetto
 					 */
@@ -425,7 +420,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 										calendar.setTime(dtFine);
 										return Optional.of(calendar.get(Calendar.YEAR));
 									})
-									.orElse(Optional.ofNullable(progetto.getOtherField().getAnnoFine()));
+									.orElse(Optional.ofNullable(optProgetto.get().getOtherField().getAnnoFine()));
 
 					if (optAnnoFineProgetto
 							.filter(annoFine -> annoFine.compareTo(CNRUserContext.getEsercizio(userContext)) >= 0)
@@ -445,14 +440,14 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						}
 
 						if (list.isEmpty() && listRim.isEmpty())
-							sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+							sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, -100);
 						else {
 							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 							//all'utente di effettuare una variazione negativa
 							List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
-									.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+									.cercaSaldoVoce(optProgetto.get().getPg_progetto()).stream()
 									.filter(el -> el.getAssestato().compareTo(BigDecimal.ZERO) > 0 ||
-											el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0)
+												el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0)
 									.collect(Collectors.toList());
 
 							sql.openParenthesis(FindClause.AND);
@@ -471,10 +466,10 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
 									sql.openParenthesis(FindClause.OR);
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, columnMapName+".CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 									sql.closeParenthesis();
 								}
 							}
@@ -483,10 +478,10 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElementoVoce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
 									sql.openParenthesis(FindClause.OR);
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
-									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, columnMapName+".TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, columnMapName+".CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 									sql.closeParenthesis();
 								}
 							}
@@ -500,21 +495,21 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 						//all'utente di effettuare una variazione negativa
 						List<V_saldi_voce_progettoBulk> vociConDisponibilita = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
-								.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+								.cercaSaldoVoce(optProgetto.get().getPg_progetto()).stream()
 								.filter(el -> el.getDispAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0 ||
 										el.getDispAssestatoCofinanziamento().compareTo(BigDecimal.ZERO) > 0)
 								.collect(Collectors.toList());
 
 						if (vociConDisponibilita.isEmpty())
-							sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+							sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, -100);
 						else {
 							sql.openParenthesis(FindClause.AND);
 							vociConDisponibilita.stream().forEach(voceNew->{
 								sql.openParenthesis(FindClause.OR);
-								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, var_stanz_res_riga.getEsercizio());
-								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
-								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
-								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+								sql.addSQLClause(FindClause.AND, columnMapName+".ESERCIZIO", SQLBuilder.EQUALS, var_stanz_res_riga.getEsercizio());
+								sql.addSQLClause(FindClause.AND, columnMapName+".TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+								sql.addSQLClause(FindClause.AND, columnMapName+".TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+								sql.addSQLClause(FindClause.AND, columnMapName+".CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 								sql.closeParenthesis();
 							});
 							sql.closeParenthesis();

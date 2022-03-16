@@ -31,9 +31,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import it.cnr.contab.client.docamm.Voce;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkList;
@@ -617,6 +619,42 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	 */
 	public boolean isRimodulatoImportoCofinanziato() {
 		return this.getImCofinanziatoRimodulato().compareTo(this.getProgetto().getImCofinanziato())!=0;
+	}
+
+	/**
+	 * Indica se si tratta di una rimodulazione rapida, ossia che nn necessita di validazione da parte di altri organi
+	 * Per consentire agli utenti di avere un minimo di flessibilità nella modifica dei piani economici si potrebbe rendere possibile, fermo restando l’importo per ciascuna categoria economica,
+	 * la modifica sulle diverse annualità nel caso in cui:
+	 *   • non sia già in corso una rimodulazione;
+	 *   • gli importi associati a ciascuna categoria non siano già stanziati/utilizzati (l’utilizzo deriva dalle variazioni ad esempio fatte per la copertura dei tempi determinati);
+	 *   • il progetto non risulti scaduto;
+	 *   • non venga modificata la categoria PER_TI.
+	 * @return boolean
+	 */
+	public boolean isRimodulazioneDiRapidaApprovazione() {
+		return !this.getProgetto().isProgettoScaduto() &&
+				isRimodulataRipartizioneTraEsercizi() &&
+				!this.getAllDetailsProgettoPianoEconomico().stream().anyMatch(el->Optional.ofNullable(el.getDispResiduaFinanziamentoRimodulato())
+								.map(disp->disp.compareTo(BigDecimal.ZERO)<0).orElse(Boolean.FALSE) ||
+						Optional.ofNullable(el.getDispResiduaCofinanziamentoRimodulato())
+								.map(disp->disp.compareTo(BigDecimal.ZERO)<0).orElse(Boolean.FALSE)) &&
+				!this.getDettagliRimodulazione().stream().filter(el->el.getVocePianoEconomico().isVocePersonaleTempoIndeterminato()).findAny().isPresent();
+	}
+
+	/**
+	 * Indica se è stato modificata la ripartizione degli importi tra gli esercizi lasciando invariati i saldi totali per le voci economiche
+	 *
+	 * @return boolean
+	 */
+	private boolean isRimodulataRipartizioneTraEsercizi() {
+		Map<Voce_piano_economico_prgBulk, List<Progetto_rimodulazione_ppeBulk>> mapVoce =
+				this.getDettagliRimodulazione().stream().collect(Collectors.groupingBy(Progetto_rimodulazione_ppeBulk::getVocePianoEconomico));
+
+		//Se per nessuna voce il saldo delle righe associate è diverso da 0 allora si tratta solo di rimodulazione degli importi tra esercizio
+		return !mapVoce.keySet().stream().anyMatch(voce->
+			mapVoce.get(voce).stream().map(Progetto_rimodulazione_ppeBulk::getImVarSpesaFinanziato).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0 ||
+			mapVoce.get(voce).stream().map(Progetto_rimodulazione_ppeBulk::getImVarSpesaCofinanziato).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0
+		);
 	}
 
 	@Override
