@@ -3028,29 +3028,12 @@ BEGIN
 
          Loop
             -- Calcolo del numero dei giorni
-            if tabella_date_ok(i).tDataA >= to_date('01/01/'||inEsercizio,'dd/mm/yyyy') then
                 numeroGG:=(numeroGG + (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1));
-                IF DATA_INIZIO_RID_CUNEO > tabella_date_ok(i).tDataDa THEN
-                    IF DATA_INIZIO_RID_CUNEO < tabella_date_ok(i).tDataA THEN
-                      numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (DATA_INIZIO_RID_CUNEO - tabella_date_ok(i).tDataDa );
-                      numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - DATA_INIZIO_RID_CUNEO + 1 );
-                    ELSE
-                      numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1);
-                    END IF;
-                ELSE
-                  numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1 );
-                END IF;
-            end if;
          End Loop;
-
-         IF numeroGG_CREDITO_1_SEM > 181 THEN
-            numeroGG_CREDITO_1_SEM := 181;
-         END IF;
 
          IF numeroGG > maxGGAnno THEN
             numeroGG:=maxGGAnno;
          END IF;
-         numeroGG_CREDITO_2_SEM := numeroGG - numeroGG_CREDITO_1_SEM;
       END IF;
 
    END;
@@ -4644,8 +4627,8 @@ BEGIN
                                  Lpad('0',10,'0');
 
                   aStringa:=aStringa ||Lpad((aRecEstrazioneCud.im_acconto_add_com_es_suc * 100), 10, '0');
-                  aStringa:=aStringa ||LPAD(aRecEstrazioneCud.gg_periodo_lavoro_sem1, 3, '0') ||
-                                       LPAD(aRecEstrazioneCud.gg_periodo_lavoro_sem2, 3, '0');
+                  aStringa:=aStringa ||LPAD('0', 3, '0') ||
+                                       LPAD('0', 3, '0');
 
                   IF LENGTH(aStringa) != 380 Then
                      IBMERR001.RAISE_ERR_GENERICO
