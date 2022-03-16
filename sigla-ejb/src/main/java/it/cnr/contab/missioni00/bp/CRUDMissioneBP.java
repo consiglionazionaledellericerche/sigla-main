@@ -94,7 +94,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                     isViewing() ? null : "javascript:submitForm('doFineConfigurazioneTappa')",
                     false,
                     "Fine Configurazione",
-                    "btn-title btn-outline-primary",
+                    "btn-sm btn-title btn-outline-primary",
                     HttpActionContext.isFromBootstrap(context));
             super.closeButtonGROUPToolbar(context);
         }
