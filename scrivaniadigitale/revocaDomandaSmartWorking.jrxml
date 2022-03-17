@@ -585,7 +585,7 @@
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
-	<field name="matricolaRichiedente" class="java.lang.Integer">
+	<field name="matricolaRichiedente" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="matricolaRichiedente"/>
 		<fieldDescription><![CDATA[matricolaRichiedente]]></fieldDescription>
 	</field>
@@ -597,7 +597,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="initiator"/>
 		<fieldDescription><![CDATA[initiator]]></fieldDescription>
 	</field>
-	<field name="linkToOtherWorkflows" class="java.lang.Integer">
+	<field name="linkToOtherWorkflows" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="linkToOtherWorkflows"/>
 		<fieldDescription><![CDATA[linkToOtherWorkflows]]></fieldDescription>
 	</field>
@@ -617,7 +617,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="pathFascicoloDocumenti"/>
 		<fieldDescription><![CDATA[pathFascicoloDocumenti]]></fieldDescription>
 	</field>
-	<field name="idDomanda" class="java.lang.Integer">
+	<field name="idDomanda" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idDomanda"/>
 		<fieldDescription><![CDATA[idDomanda]]></fieldDescription>
 	</field>
@@ -625,7 +625,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="nomeCognomeUtente"/>
 		<fieldDescription><![CDATA[nomeCognomeUtente]]></fieldDescription>
 	</field>
-	<field name="idStruttura" class="java.lang.Integer">
+	<field name="idStruttura" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idStruttura"/>
 		<fieldDescription><![CDATA[idStruttura]]></fieldDescription>
 	</field>
@@ -653,7 +653,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="profiloRichiedente"/>
 		<fieldDescription><![CDATA[profiloRichiedente]]></fieldDescription>
 	</field>
-	<field name="processInstanceId" class="java.lang.Integer">
+	<field name="processInstanceId" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="processInstanceId"/>
 		<fieldDescription><![CDATA[processInstanceId]]></fieldDescription>
 	</field>
@@ -661,11 +661,11 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="userNameDomanda"/>
 		<fieldDescription><![CDATA[userNameDomanda]]></fieldDescription>
 	</field>
-	<field name="livelloRichiedente" class="java.lang.Integer">
+	<field name="livelloRichiedente" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="livelloRichiedente"/>
 		<fieldDescription><![CDATA[livelloRichiedente]]></fieldDescription>
 	</field>
-	<field name="idAceStrutturaDomandaRichiedente" class="java.lang.Integer">
+	<field name="idAceStrutturaDomandaRichiedente" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idAceStrutturaDomandaRichiedente"/>
 		<fieldDescription><![CDATA[idAceStrutturaDomandaRichiedente]]></fieldDescription>
 	</field>
@@ -681,7 +681,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="statoFinaleDomanda"/>
 		<fieldDescription><![CDATA[statoFinaleDomanda]]></fieldDescription>
 	</field>
-	<field name="idNsipRichiedente" class="java.lang.Integer">
+	<field name="idNsipRichiedente" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="idNsipRichiedente"/>
 		<fieldDescription><![CDATA[idNsipRichiedente]]></fieldDescription>
 	</field>
