@@ -1,5 +1,13 @@
-## Release 6.4.16  -- _March 18, 2022_ 
+## Release 6.4.17  -- _March 18, 2022_ 
 **Changes**
+
+>**Stampa Progetti: risolta anomalia mancata stampa dettagli**
+>
+>[77bee9b03fe68e9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/77bee9b03fe68e9) raffaelepagano *March 18, 2022*
+
+>**Remove class btn-primary when btn-outline-primary is present**
+>
+>[4eca5c4e1ec5b95](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4eca5c4e1ec5b95) marco.spasiano *March 18, 2022*
 
 >**Modify docs**
 >
