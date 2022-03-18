@@ -130,12 +130,6 @@ Un utente amministrativo, abilitato all’inserimento dell’ordine di
 missione, non necessariamente deve aver accesso ad altre operazioni
 amministrative-contabili come consultare i versamenti delle ritenute.
 
-Accesso
--------
-
-Per fornire l'accesso ai servizi bisogna che l'amministratore delle utenze dell'istituto, provveda alla creazione dell'utenza in SIGLA
-attraverso :doc:`la funzione specifica<gestione_utenza>` ed in seguito assegni il ruolo **REST_SIGLA** all'utenza creata.
-
 **Velocità nel recupero delle informazioni**
 
 Le informazioni devono essere disponibili rapidamente.
@@ -166,6 +160,13 @@ sicurezza.
 
 Le richieste di informazioni provenienti dai vari sistemi non devono
 compromettere le prestazioni e i tempi di risposta di SIGLA.
+
+Accesso ai Servizi
+------------------
+
+Per fornire l'accesso ai servizi bisogna che l'amministratore delle utenze dell'istituto, provveda alla creazione dell'utenza in SIGLA
+attraverso :doc:`la funzione specifica<gestione_utenze>` ed in seguito assegni il ruolo **REST_SIGLA** all'utenza creata.
+
 
 Soluzioni possibili
 ===================
