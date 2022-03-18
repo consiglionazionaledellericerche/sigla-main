@@ -302,19 +302,13 @@
     <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).isPresent()) { %>
 	<div class="GroupLabel h3 text-primary" style="border-style:none; cursor:default; background-color:initial;">Dati Contabili</div>
 	<div class="Group">
-    <table class="Panel card border-info p-2">
+    <table class="Panel card border-info p-2 w-100">
 		<tr>
 		  	<% bp.getController().writeFormField(out,"statoOf");%>
 		</tr>
 		<tr>
-		  	<td colspan="4">
-		  		<table>
-		  			<tr>
-						<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
-						<td><% bp.getController().writeFormInput( out, "default","tipoFinanziamentoOf",bp.isROProgettoForStato(),null,null); %></td>
-		  			</tr>
-		  		</table>
-		  	</td>
+            <td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
+		  	<td colspan="4"><% bp.getController().writeFormInput( out, "default","tipoFinanziamentoOf",bp.isROProgettoForStato(),null,null); %></td>
 		</tr>	  
 		<tr>
 			<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
