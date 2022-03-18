@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Provvedimento - Cessazione" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="3a5d9bcb-29e7-4ad4-b9cf-42ac6f8d76e4">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.pdfa.conformance" value="pdfa1a"/>
+	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
+	<property name="net.sf.jasperreports.default.pdf.embedded" value="true"/>
+	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/AdobeRGB1998.icc"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/rpagano/git/sigla-reports/img/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="domanda_id" class="java.lang.String">
+		<fieldDescription><![CDATA[domanda_id]]></fieldDescription>
+	</field>
+	<field name="dip_nominativo" class="java.lang.String">
+		<fieldDescription><![CDATA[dip_nominativo]]></fieldDescription>
+	</field>
+	<field name="tab_descr_est" class="java.lang.String">
+		<fieldDescription><![CDATA[tab_descr_est]]></fieldDescription>
+	</field>
+	<field name="tipo_domanda" class="java.lang.String">
+		<fieldDescription><![CDATA[tipo_domanda]]></fieldDescription>
+	</field>
+	<field name="disab_cognome" class="java.lang.String">
+		<fieldDescription><![CDATA[disab_cognome]]></fieldDescription>
+	</field>
+	<field name="disab_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[disab_nome]]></fieldDescription>
+	</field>
+	<field name="provv_diritto_ricon" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_diritto_ricon]]></fieldDescription>
+	</field>
+	<field name="data_inizio_diritto" class="java.lang.String">
+		<fieldDescription><![CDATA[data_inizio_diritto]]></fieldDescription>
+	</field>
+	<field name="provv_data_fine" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_data_fine]]></fieldDescription>
+	</field>
+	<field name="provv_cod_assenza" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_cod_assenza]]></fieldDescription>
+	</field>
+	<field name="sede_id" class="java.lang.String">
+		<fieldDescription><![CDATA[sede_id]]></fieldDescription>
+	</field>
+	<field name="matricola" class="java.lang.String">
+		<fieldDescription><![CDATA[matricola]]></fieldDescription>
+	</field>
+	<field name="dip_pos_fasc" class="java.lang.String">
+		<fieldDescription><![CDATA[dip_pos_fasc]]></fieldDescription>
+	</field>
+	<field name="old_domanda" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[old_domanda]]></fieldDescription>
+	</field>
+	<field name="provv_num" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_num]]></fieldDescription>
+	</field>
+	<field name="provv_data" class="java.lang.String">
+		<fieldDescription><![CDATA[provv_data]]></fieldDescription>
+	</field>
+	<field name="data_fine_diritto" class="java.lang.String">
+		<fieldDescription><![CDATA[data_fine_diritto]]></fieldDescription>
+	</field>
+	<field name="data_fine_diritto2" class="java.lang.String">
+		<fieldDescription><![CDATA[data_fine_diritto2]]></fieldDescription>
+	</field>
+	<group name="Domanda_Id">
+		<groupExpression><![CDATA[$F{domanda_id}]]></groupExpression>
+		<groupHeader>
+			<band height="167">
+				<staticText>
+					<reportElement key="staticText-2" style="TNRG14" x="0" y="115" width="535" height="19" uuid="9fa39494-579e-408f-9d76-4db3f26b68a5"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Direzione Centrale Gestione delle Risorse]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-2" style="TNR11" x="56" y="89" width="479" height="16" uuid="efb618ed-88d9-424f-a8f7-6248f2ae795c"/>
+					<textFieldExpression><![CDATA[$F{dip_nominativo}.trim()+" Legge 104/92"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR11" x="0" y="32" width="100" height="14" uuid="c75978c7-8372-4f88-8dbd-7f11e1157066"/>
+					<textFieldExpression><![CDATA["Sede: "+$F{sede_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR11" x="0" y="15" width="112" height="14" uuid="52b4e3e9-13cc-477e-83c9-86a2dfb286c0"/>
+					<textFieldExpression><![CDATA["Pos. "+$F{dip_pos_fasc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-3" style="TNR12" x="0" y="134" width="535" height="31" uuid="95111215-c14c-41c2-bba6-981a59cbdc78"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Ufficio Gestione Risorse Umane
+Dott. Pierluigi Raimondi
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-1" style="TNRG11" x="0" y="89" width="56" height="16" uuid="8887bc45-1ee2-4c3e-ba93-7d4dcdd99ec8"/>
+					<text><![CDATA[Oggetto:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-1" style="TNR11" x="0" y="1" width="112" height="14" uuid="89ca2622-6c02-4f82-8cd0-e215e8697c64"/>
+					<textFieldExpression><![CDATA["Matricola: "+$F{matricola}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR11" x="0" y="46" width="144" height="14" uuid="78b1e3de-01b4-40ea-ac3c-9a859428443f"/>
+					<textFieldExpression><![CDATA["Cod. Assenza: "+$F{provv_cod_assenza}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement key="staticText-23" style="TNR11" x="389" y="20" width="133" height="14" uuid="98da9fd8-8530-4b0d-bcd6-752e5ab48772"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[IL DIRIGENTE]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Detail_1">
+		<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
+		<groupHeader>
+			<band height="59" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-4" style="TNR12" x="0" y="4" width="535" height="15" uuid="29976ab3-676f-47f0-9aaa-8a5ce7c6f0a2"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[IL DIRIGENTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-11" x="0" y="30" width="10" height="13" uuid="eb4cb962-a8c6-4466-a510-72b0b63aff72"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-5" style="TNR11" x="10" y="30" width="515" height="26" uuid="0b0fe0b2-d6ee-4550-abc3-6a395d43c145"/>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Visto il provvedimento del Direttore Generale n. 132 del 30.09.2019 di conferimento incarico di direzione dell'Ufficio Gestione Risorse Umane al Dott. Pierluigi Raimondi]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="Detail_2">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="19" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-3" style="TNR11" x="10" y="1" width="525" height="13" isRemoveLineWhenBlank="true" uuid="7e904a48-be8a-4360-8523-d40a018f8965"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Visto il proprio provvedimento n. "+$F{provv_num}+" in data "+$F{provv_data}+", mediante il quale è stato riconosciuto a "+
+$F{dip_nominativo}.trim()+" in servizio presso "+$F{tab_descr_est}+" - "+$F{sede_id}+
+", il diritto "+($F{provv_diritto_ricon}==null?"":"a "+$F{provv_diritto_ricon})+" ai sensi dell'art. 33 della Legge 5.2.1992, n.104, come modificato, da ultimo, dalla Legge 4.11.2010, n.183;"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-15" x="0" y="1" width="10" height="13" uuid="df7535d5-f684-42e6-8499-3f5858f7d727"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="Detail_3">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="19" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-7" style="TNR11" x="10" y="0" width="525" height="13" uuid="e87b0562-7054-460d-8be6-bb83732b70ab"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Considerato che "+$F{dip_nominativo}.trim()+" ha comunicato che a far data dal "+$F{data_fine_diritto}+" sono intervenuti eventi per i quali è venuto meno il diritto ad usufruire di tali benefici per prestare assistenza a "+
+$F{disab_cognome}+" "+$F{disab_nome}+";"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-21" x="0" y="0" width="10" height="13" uuid="5f7a498c-e73a-457f-8574-c313d2e1789f"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="TNR11" x="10" y="0" width="525" height="13" uuid="468db1e2-fb44-4478-9083-e3ee097a75c0"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Il dipendente "+$F{dip_nominativo}.trim()+" in servizio presso "+$F{tab_descr_est}+", a far data dal "+
+$F{data_fine_diritto2}+
+" non ha più diritto alla fruizione dei permessi mensili, ai sensi dell'art. 33 della Legge 5.2.1992, n.104, come modificato, da ultimo, dalla Legge 4.11.2010, n.183."]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement key="image-1" x="0" y="0" width="529" height="80" uuid="44048c73-524c-4cb2-a743-065ac912798a"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ITA-09-bg-white.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-19" style="TNR11" x="10" y="0" width="525" height="13" uuid="d07c35ad-bd0a-476b-b783-8faae2bb0607"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Ritenuta la necessità di provvedere;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" style="TNR12" x="0" y="17" width="535" height="16" uuid="4d1e82e2-92ae-4320-b561-552163738582"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DISPONE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" x="0" y="0" width="10" height="13" uuid="252301c0-50fb-4575-b689-81a7a435218f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="176" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement style="TNR9" x="0" y="0" width="88" height="11" uuid="afefca95-0369-4bc3-9986-4bb6c8cced42"/>
+				<textFieldExpression><![CDATA["(Id: "+$F{domanda_id}+")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
