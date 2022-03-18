@@ -1,5 +1,41 @@
-## Release 6.4.15  -- _March 15, 2022_ 
+## Release 6.4.16  -- _March 18, 2022_ 
 **Changes**
+
+>**Modify docs**
+>
+>[b1a055f4a50b076](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1a055f4a50b076) marco.spasiano *March 18, 2022*
+
+>**Modify docs**
+>
+>[55ea25cc970f3ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/55ea25cc970f3ab) marco.spasiano *March 18, 2022*
+
+>**Modify docs**
+>
+>[6d15970988f3923](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d15970988f3923) marco.spasiano *March 18, 2022*
+
+>**Modify docs**
+>
+>[60be377a9cb0977](https://github.com/consiglionazionaledellericerche/sigla-main/commit/60be377a9cb0977) marco.spasiano *March 18, 2022*
+
+>**FIX layout on jsp**
+>
+>[4de310a4e70d4a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4de310a4e70d4a1) marco.spasiano *March 18, 2022*
+
+>**Upgrade version of jada artifact to 7.0.26**
+>
+>[a11a5c0ccec75c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a11a5c0ccec75c4) marco.spasiano *March 16, 2022*
+
+>**Remove class btn-secondary when btn-outline-primary is present**
+>
+>[237b89b39d1cb3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/237b89b39d1cb3d) marco.spasiano *March 15, 2022*
+
+>**Remove class btn-secondary when btn-outline-secondary is present**
+>
+>[5602d89ff68046c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5602d89ff68046c) marco.spasiano *March 15, 2022*
+
+>**Fiz Rimodulazioni che non visualizzava il tab "Altri anni" nel caso in cui il progetto aveva data inizio e fine nello stesso anno.**
+>
+>[cb61e56e7187944](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb61e56e7187944) raffaelepagano *March 15, 2022*
 
 >**Variazioni Competenza e Residue: rimossa sulla lista voci di bilancio la voce piano economico associata del progetto**
 >
