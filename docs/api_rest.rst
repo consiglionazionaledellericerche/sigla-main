@@ -165,7 +165,7 @@ Accesso ai Servizi
 ------------------
 
 Per fornire l'accesso ai servizi bisogna che l'amministratore delle utenze dell'istituto, provveda alla creazione dell'utenza in SIGLA
-attraverso :doc:`la funzione specifica<gestione_utenze>` ed in seguito assegni il ruolo **REST_SIGLA** all'utenza creata.
+attraverso :doc:`la funzione specifica<funzionalita_servizio/utenze/gestione_utenze>` ed in seguito assegni il ruolo **REST_SIGLA** all'utenza creata.
 
 
 Soluzioni possibili
