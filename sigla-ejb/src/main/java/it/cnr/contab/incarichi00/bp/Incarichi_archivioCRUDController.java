@@ -19,6 +19,9 @@ package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -53,8 +56,17 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 				throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (10 Mb).");
 
 			if (allegato.isCurriculumVincitore()||allegato.isAggiornamentoCurriculumVincitore()||allegato.isConflittoInteressi()) {
-				if (file.length() > LUNGHEZZA_MAX_PERLA)
-					throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (1 Mb).");
+				try {
+					if (allegato instanceof Incarichi_repertorio_archivioBulk) {
+						Incarichi_parametriBulk parametri = Utility.createIncarichiProceduraComponentSession().getIncarichiParametri(actioncontext.getUserContext(),
+								(((Incarichi_repertorio_archivioBulk) allegato).getIncarichi_repertorio().getIncarichi_procedura()));
+						if (parametri != null && parametri.getFl_invio_fp().equals("Y")) {
+							if (file.length() > LUNGHEZZA_MAX_PERLA)
+								throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (1 Mb).");
+						}
+					}
+				} catch (Exception e) {
+				}
 				if (!file.getContentType().equals("application/pdf"))
 					throw new ValidationException("File non valido! Il formato del file consentito è il pdf.");
 			}

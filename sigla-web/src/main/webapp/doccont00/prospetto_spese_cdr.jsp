@@ -36,7 +36,7 @@
 		
 	</tr>
 </table>
-<table>
+<table class="w-100">
 	<tr>
 		<td>
 			<% bp.getSpeseCdr().setEnabled(false);

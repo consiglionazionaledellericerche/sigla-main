@@ -46,7 +46,7 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 		                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search" : "img/find24.gif",
 		                    bp.encodePath("Ricerca"),
 		                    "javascript:submitForm('doCercaConsegneDaEvadere')",
-		                    "btn-primary btn-outline-primary btn-title",
+		                    "btn-outline-primary btn-title",
 		                    bp.isEditable(),
 		                    bp.getParentRoot().isBootstrap()); %>
 					</td>

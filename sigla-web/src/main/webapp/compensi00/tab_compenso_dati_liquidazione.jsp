@@ -135,7 +135,7 @@
 			bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-calculator text-primary" : null,
 			"Esegui Calcolo",
 			"javascript:submitForm('doEseguiCalcolo')",
-			"btn-secondary btn-outline-secondary btn-title text-primary",
+			"btn-outline-secondary btn-title text-primary",
 			bp.isBottoneEseguiCalcoloEnabled(), 
 			bp.getParentRoot().isBootstrap());%>
 	</td>

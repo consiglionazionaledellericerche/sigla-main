@@ -151,6 +151,28 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="istruzioni_speciali_1"
+		property="istruzioni_speciali_1"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Istruzioni Speciali - Primo" />
+	<fieldProperty
+		name="istruzioni_speciali_2"
+		property="istruzioni_speciali_2"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Istruzioni Speciali - Secondo" />
+	<fieldProperty
+		name="istruzioni_speciali_3"
+		property="istruzioni_speciali_3"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Istruzioni Speciali - Terzo" />
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -175,6 +197,12 @@
 		name="stato_trasmissione" />
 	<formFieldProperty
 		name="motivo_pag" />
+	<formFieldProperty
+		name="istruzioni_speciali_1" />
+	<formFieldProperty
+		name="istruzioni_speciali_2" />
+	<formFieldProperty
+		name="istruzioni_speciali_3" />
 
 	<columnFieldProperty
 		name="esercizio" />

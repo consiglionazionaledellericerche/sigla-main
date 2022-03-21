@@ -52,7 +52,7 @@
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-save text-primary" : "img/save24.gif",
 				"Conferma",
 				"javascript:submitForm('doConfermaModificaCORI')", 
-				"btn-secondary btn-outline-secondary btn-title text-primary", 
+				"btn-outline-secondary btn-title text-primary",
 				bp.isBottoneConfermaModificaCORIEnabled(), 
 				bp.getParentRoot().isBootstrap()); %>
 		<% JSPUtils.button(out,
@@ -60,7 +60,7 @@
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-primary" : "img/undo24.gif",
 				"Annulla",
 				"javascript:submitForm('doAnnullaModificaCORI')", 
-				"btn-secondary btn-outline-secondary btn-title text-primary", 
+				"btn-outline-secondary btn-title text-primary",
 				bp.isBottoneAnnullaModificaCORIEnabled(), 
 				bp.getParentRoot().isBootstrap()); %>
 	</td>

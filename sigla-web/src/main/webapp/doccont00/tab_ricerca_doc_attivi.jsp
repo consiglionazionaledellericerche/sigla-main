@@ -72,7 +72,7 @@
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search" : "img/find24.gif",
                         bp.encodePath("Ricerca"),
                         "javascript:submitForm('doCercaDocAttivi')",
-                        "btn-primary btn-outline-primary btn-title btn-lg",
+                        "btn-outline-primary btn-title btn-lg",
                         true,
                         bp.getParentRoot().isBootstrap()); %>
 
@@ -91,7 +91,7 @@
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o" : "img/save24.gif",
                         bp.encodePath("Conferma"),
                         "javascript:submitForm('doAggiungiDocAttivi')",
-                        "btn-primary btn-outline-primary btn-title btn-lg",
+                        "btn-outline-primary btn-title btn-lg",
                         true,
                         bp.getParentRoot().isBootstrap()); %>
 			</td>
