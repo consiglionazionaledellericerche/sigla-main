@@ -35,6 +35,7 @@ import it.cnr.contab.pagopa.model.*;
 import it.cnr.contab.pagopa.model.pagamento.DatiSingoloPagamento;
 import it.cnr.contab.pagopa.model.pagamento.NotificaPagamento;
 import it.cnr.contab.pagopa.model.pagamento.Riscossioni;
+import it.cnr.contab.pagopa.model.pagamento.Transfer;
 import it.cnr.contab.pagopa.rest.PagopaService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -482,13 +483,13 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					pendenzaPagopaBulk.setStato(PendenzaPagopaBulk.STATO_RISCOSSA);
 			} else {
 					PagamentoPagopaBulk pagamentoPagopaBulk = new PagamentoPagopaBulk();
-					pagamentoPagopaBulk.setDtPagamento(new Timestamp(notificaPagamento.getRpt().getDatiVersamento().getDataEsecuzionePagamento().getTime()));
-					pagamentoPagopaBulk.setCcp(notificaPagamento.getRpt().getDatiVersamento().getCodiceContestoPagamento());
+					pagamentoPagopaBulk.setDtPagamento(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
 					pagamentoPagopaBulk.setPendenzaPagopa(pendenzaPagopaBulk);
 					pagamentoPagopaBulk.setStato(PagamentoPagopaBulk.STATO_PRENOTATO);
-					for (it.cnr.contab.pagopa.model.pagamento.DatiSingoloVersamento datiSingoloVersamento : notificaPagamento.getRpt().getDatiVersamento().getDatiSingoloVersamento()){
-						pagamentoPagopaBulk.setImporto(datiSingoloVersamento.getImportoSingoloVersamento());
-						pagamentoPagopaBulk.setCausale(datiSingoloVersamento.getCausaleVersamento());
+					for (Transfer transfer : notificaPagamento.getRpt().getTransferList().getTransfer()){
+						pagamentoPagopaBulk.setImporto(transfer.getTransferAmount());
+						pagamentoPagopaBulk.setCausale(transfer.getRemittanceInformation());
+						break;
 					}
 					pagamentoPagopaBulk.setToBeCreated();
 					pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);

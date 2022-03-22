@@ -14,128 +14,154 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "versioneOggetto",
-    "dominio",
-    "identificativoMessaggioRichiesta",
-    "dataOraMessaggioRichiesta",
-    "autenticazioneSoggetto",
-    "soggettoVersante",
-    "soggettoPagatore",
-    "enteBeneficiario",
-    "datiVersamento"
+        "creditorReferenceId",
+        "paymentAmount",
+        "dueDate",
+        "retentionDate",
+        "lastPayment",
+        "description",
+        "companyName",
+        "officeName",
+        "debtor",
+        "transferList",
+        "metadata"
 })
 @Generated("jsonschema2pojo")
 public class Rpt  implements Serializable {
 
-    @JsonProperty("versioneOggetto")
-    private String versioneOggetto;
-    @JsonProperty("dominio")
-    private Dominio dominio;
-    @JsonProperty("identificativoMessaggioRichiesta")
-    private String identificativoMessaggioRichiesta;
-    @JsonProperty("dataOraMessaggioRichiesta")
-    private String dataOraMessaggioRichiesta;
-    @JsonProperty("autenticazioneSoggetto")
-    private String autenticazioneSoggetto;
-    @JsonProperty("soggettoVersante")
-    private Object soggettoVersante;
-    @JsonProperty("soggettoPagatore")
-    private SoggettoPagatore soggettoPagatore;
-    @JsonProperty("enteBeneficiario")
-    private EnteBeneficiario enteBeneficiario;
-    @JsonProperty("datiVersamento")
-    private DatiVersamento datiVersamento;
+    @JsonProperty("creditorReferenceId")
+    private String creditorReferenceId;
+    @JsonProperty("paymentAmount")
+    private String paymentAmount;
+    @JsonProperty("dueDate")
+    private String dueDate;
+    @JsonProperty("retentionDate")
+    private String retentionDate;
+    @JsonProperty("lastPayment")
+    private Boolean lastPayment;
+    @JsonProperty("description")
+    private String description;
+    @JsonProperty("companyName")
+    private String companyName;
+    @JsonProperty("officeName")
+    private String officeName;
+    @JsonProperty("debtor")
+    private Debtor debtor;
+    @JsonProperty("transferList")
+    private TransferList transferList;
+    @JsonProperty("metadata")
+    private String metadata;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("versioneOggetto")
-    public String getVersioneOggetto() {
-        return versioneOggetto;
+    @JsonProperty("creditorReferenceId")
+    public String getCreditorReferenceId() {
+        return creditorReferenceId;
     }
 
-    @JsonProperty("versioneOggetto")
-    public void setVersioneOggetto(String versioneOggetto) {
-        this.versioneOggetto = versioneOggetto;
+    @JsonProperty("creditorReferenceId")
+    public void setCreditorReferenceId(String creditorReferenceId) {
+        this.creditorReferenceId = creditorReferenceId;
     }
 
-    @JsonProperty("dominio")
-    public Dominio getDominio() {
-        return dominio;
+    @JsonProperty("paymentAmount")
+    public String getPaymentAmount() {
+        return paymentAmount;
     }
 
-    @JsonProperty("dominio")
-    public void setDominio(Dominio dominio) {
-        this.dominio = dominio;
+    @JsonProperty("paymentAmount")
+    public void setPaymentAmount(String paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
-    @JsonProperty("identificativoMessaggioRichiesta")
-    public String getIdentificativoMessaggioRichiesta() {
-        return identificativoMessaggioRichiesta;
+    @JsonProperty("dueDate")
+    public String getDueDate() {
+        return dueDate;
     }
 
-    @JsonProperty("identificativoMessaggioRichiesta")
-    public void setIdentificativoMessaggioRichiesta(String identificativoMessaggioRichiesta) {
-        this.identificativoMessaggioRichiesta = identificativoMessaggioRichiesta;
+    @JsonProperty("dueDate")
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
-    @JsonProperty("dataOraMessaggioRichiesta")
-    public String getDataOraMessaggioRichiesta() {
-        return dataOraMessaggioRichiesta;
+    @JsonProperty("retentionDate")
+    public String getRetentionDate() {
+        return retentionDate;
     }
 
-    @JsonProperty("dataOraMessaggioRichiesta")
-    public void setDataOraMessaggioRichiesta(String dataOraMessaggioRichiesta) {
-        this.dataOraMessaggioRichiesta = dataOraMessaggioRichiesta;
+    @JsonProperty("retentionDate")
+    public void setRetentionDate(String retentionDate) {
+        this.retentionDate = retentionDate;
     }
 
-    @JsonProperty("autenticazioneSoggetto")
-    public String getAutenticazioneSoggetto() {
-        return autenticazioneSoggetto;
+    @JsonProperty("lastPayment")
+    public Boolean getLastPayment() {
+        return lastPayment;
     }
 
-    @JsonProperty("autenticazioneSoggetto")
-    public void setAutenticazioneSoggetto(String autenticazioneSoggetto) {
-        this.autenticazioneSoggetto = autenticazioneSoggetto;
+    @JsonProperty("lastPayment")
+    public void setLastPayment(Boolean lastPayment) {
+        this.lastPayment = lastPayment;
     }
 
-    @JsonProperty("soggettoVersante")
-    public Object getSoggettoVersante() {
-        return soggettoVersante;
+    @JsonProperty("description")
+    public String getDescription() {
+        return description;
     }
 
-    @JsonProperty("soggettoVersante")
-    public void setSoggettoVersante(Object soggettoVersante) {
-        this.soggettoVersante = soggettoVersante;
+    @JsonProperty("description")
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    @JsonProperty("soggettoPagatore")
-    public SoggettoPagatore getSoggettoPagatore() {
-        return soggettoPagatore;
+    @JsonProperty("companyName")
+    public String getCompanyName() {
+        return companyName;
     }
 
-    @JsonProperty("soggettoPagatore")
-    public void setSoggettoPagatore(SoggettoPagatore soggettoPagatore) {
-        this.soggettoPagatore = soggettoPagatore;
+    @JsonProperty("companyName")
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    @JsonProperty("enteBeneficiario")
-    public EnteBeneficiario getEnteBeneficiario() {
-        return enteBeneficiario;
+    @JsonProperty("officeName")
+    public String getOfficeName() {
+        return officeName;
     }
 
-    @JsonProperty("enteBeneficiario")
-    public void setEnteBeneficiario(EnteBeneficiario enteBeneficiario) {
-        this.enteBeneficiario = enteBeneficiario;
+    @JsonProperty("officeName")
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
     }
 
-    @JsonProperty("datiVersamento")
-    public DatiVersamento getDatiVersamento() {
-        return datiVersamento;
+    @JsonProperty("debtor")
+    public Debtor getDebtor() {
+        return debtor;
     }
 
-    @JsonProperty("datiVersamento")
-    public void setDatiVersamento(DatiVersamento datiVersamento) {
-        this.datiVersamento = datiVersamento;
+    @JsonProperty("debtor")
+    public void setDebtor(Debtor debtor) {
+        this.debtor = debtor;
+    }
+
+    @JsonProperty("transferList")
+    public TransferList getTransferList() {
+        return transferList;
+    }
+
+    @JsonProperty("transferList")
+    public void setTransferList(TransferList transferList) {
+        this.transferList = transferList;
+    }
+
+    @JsonProperty("metadata")
+    public String getMetadata() {
+        return metadata;
+    }
+
+    @JsonProperty("metadata")
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
     }
 
     @JsonAnyGetter
