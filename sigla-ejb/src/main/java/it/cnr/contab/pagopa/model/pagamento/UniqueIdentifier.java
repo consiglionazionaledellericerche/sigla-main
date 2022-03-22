@@ -1,5 +1,6 @@
 package it.cnr.contab.pagopa.model.pagamento;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "entityUniqueIdentifierValue"
 })
 @Generated("jsonschema2pojo")
-public class UniqueIdentifier {
+public class UniqueIdentifier implements Serializable {
 
     @JsonProperty("entityUniqueIdentifierType")
     private String entityUniqueIdentifierType;

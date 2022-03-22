@@ -1,5 +1,6 @@
 package it.cnr.contab.pagopa.model.pagamento;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "e-mail"
 })
 @Generated("jsonschema2pojo")
-public class Debtor {
+public class Debtor  implements Serializable {
 
     @JsonProperty("uniqueIdentifier")
     private UniqueIdentifier uniqueIdentifier;
