@@ -38,8 +38,7 @@
 				columnName="CCP"
 				propertyName="ccp"
 				sqlTypeName="VARCHAR"
-				columnSize="50"
-				nullable="false" />
+				columnSize="50"/>
 		<columnMapping
 				columnName="STATO"
 				propertyName="stato"
