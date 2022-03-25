@@ -2,7 +2,7 @@
 --  DDL for View V_CONS_RIEP_COMPENSI
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_CONS_RIEP_COMPENSI" ("CD_CDS", "CD_UNITA_ORGANIZZATIVA", "DS_UNITA_ORGANIZZATIVA", "ESERCIZIO", "PG_COMPENSO", "CODICE_FISCALE", "CD_TERZO", "COGNOME", "NOME", "DT_DA_COMPETENZA_COGE", "DT_A_COMPETENZA_COGE", "DT_TRASMISSIONE", "DT_PAGAMENTO", "IM_LORDO", "IM_FISCALE", "CD_TRATTAMENTO", "DS_TI_TRATTAMENTO", "TOT_COSTO", "IRAP_ENTE", "INPS_ENTE", "INPGI_ENTE", "ENPAPI_ENTE", "INAIL_ENTE", "IRPEF", "BONUSDL66", "INPS_PERCIPIENTE", "INPGI_PERCIPIENTE", "ENPAPI_PERCIPIENTE", "INAIL_PERCIPIENTE", "ADD_REG", "ADD_COM", "IMPONIBILE_IVA", "IMPORTO_IVA", "CASSA_RIVALSA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_CONS_RIEP_COMPENSI" ("CD_CDS", "CD_UNITA_ORGANIZZATIVA", "DS_UNITA_ORGANIZZATIVA", "ESERCIZIO", "PG_COMPENSO", "CODICE_FISCALE", "CD_TERZO", "COGNOME", "NOME", "DT_DA_COMPETENZA_COGE", "DT_A_COMPETENZA_COGE", "DT_TRASMISSIONE", "DT_PAGAMENTO", "IM_LORDO", "IM_FISCALE", "CD_TRATTAMENTO", "DS_TI_TRATTAMENTO", "TOT_COSTO", "IRAP_ENTE", "INPS_ENTE", "INPGI_ENTE", "ENPAPI_ENTE", "INAIL_ENTE", "IRPEF", "BONUSDL66", "INPS_PERCIPIENTE", "INPGI_PERCIPIENTE", "ENPAPI_PERCIPIENTE", "INAIL_PERCIPIENTE", "ADD_REG", "ADD_COM", "IMPONIBILE_IVA", "IMPORTO_IVA", "CASSA_RIVALSA", "CUNEODL320") AS
   SELECT   com.cd_cds, com.cd_unita_organizzativa, uo.ds_unita_organizzativa,
             com.esercizio, com.pg_compenso, ter.codice_fiscale, ter.cd_terzo,
             ter.cognome, ter.nome, com.dt_da_competenza_coge,
@@ -82,6 +82,7 @@
                                      '1004', DECODE
                                                  (tipo.cd_contributo_ritenuta,
                                                   'BONUSDL66', 0,
+                                                  'CUNEODL320', 0,
                                                   cr.ammontare
                                                  ),
                                      0
@@ -201,7 +202,22 @@
                             )
                     ),
                 0
-               ) cassa_rivalsa
+               ) cassa_rivalsa,
+                                          NVL
+                                             (SUM (DECODE (cr.ti_ente_percipiente,
+                                                           'E', 0,
+                                                           DECODE (tipo.cd_gruppo_cr,
+                                                                   '1004', DECODE
+                                                                               (tipo.cd_contributo_ritenuta,
+                                                                                'CUNEODL320', cr.ammontare,
+                                                                                0
+                                                                               ),
+                                                                   0
+                                                                  )
+                                                          )
+                                                  ),
+                                              0
+                                             ) cuneodl320
        FROM compenso com,
             v_anagrafico_terzo ter,
             contributo_ritenuta cr,

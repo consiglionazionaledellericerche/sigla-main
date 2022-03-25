@@ -26,6 +26,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
+import java.math.BigDecimal;
+
 public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -73,8 +75,17 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 //  IRPEF DECIMAL(22,0)
 	private java.math.BigDecimal irpef;
 
-//  BONUSDL66 DECIMAL(22,0)
+	public BigDecimal getCuneodl320() {
+		return cuneodl320;
+	}
+
+	public void setCuneodl320(BigDecimal cuneodl320) {
+		this.cuneodl320 = cuneodl320;
+	}
+
+	//  BONUSDL66 DECIMAL(22,0)
 	private java.math.BigDecimal bonusdl66;
+	private java.math.BigDecimal cuneodl320;
 
 //  INPS_PERCIPIENTE DECIMAL(22,0)
 	private java.math.BigDecimal inpsPercipiente;
@@ -412,7 +423,17 @@ public class VConsRiepCompensiBulk extends OggettoBulk implements Persistent {
 	private java.sql.Timestamp a_dt_pagamento = null;
 	private java.sql.Timestamp da_dt_competenza = null;
 	private java.sql.Timestamp a_dt_competenza = null;
+
+	public Boolean getDettagliata() {
+		return dettagliata;
+	}
+
+	public void setDettagliata(Boolean dettagliata) {
+		this.dettagliata = dettagliata;
+	}
+
 	private boolean isUOForPrintEnabled;
+	private Boolean dettagliata;
 	private Boolean groupTrattamento;
 	public Unita_organizzativaBulk getUoForPrint() {
 		return uoForPrint;
