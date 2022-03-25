@@ -2,8 +2,6 @@
 package it.cnr.contab.pagopa.model.pagamento;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
@@ -13,23 +11,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import it.cnr.contab.pagopa.model.Riscossione;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "idDominio",
-    "iuv",
-    "iur",
-    "indice",
-    "pendenza",
-    "idVocePendenza",
-    "rpp",
-    "stato",
-    "tipo",
-    "importo",
-    "data",
-    "commissioni",
-    "allegato"
+        "idDominio",
+        "iuv",
+        "iur",
+        "indice",
+        "pendenza",
+        "idVocePendenza",
+        "rpp",
+        "stato",
+        "tipo",
+        "importo",
+        "data",
+        "commissioni",
+        "allegato"
 })
 @Generated("jsonschema2pojo")
 public class Riscossioni  implements Serializable {
@@ -49,13 +46,13 @@ public class Riscossioni  implements Serializable {
     @JsonProperty("rpp")
     private String rpp;
     @JsonProperty("stato")
-    private Riscossione.StatoEnum stato;
+    private String stato;
     @JsonProperty("tipo")
     private String tipo;
     @JsonProperty("importo")
-    private BigDecimal importo;
+    private Double importo;
     @JsonProperty("data")
-    private Date data;
+    private String data;
     @JsonProperty("commissioni")
     private Object commissioni;
     @JsonProperty("allegato")
@@ -134,12 +131,12 @@ public class Riscossioni  implements Serializable {
     }
 
     @JsonProperty("stato")
-    public Riscossione.StatoEnum getStato() {
+    public String getStato() {
         return stato;
     }
 
     @JsonProperty("stato")
-    public void setStato(Riscossione.StatoEnum stato) {
+    public void setStato(String stato) {
         this.stato = stato;
     }
 
@@ -154,22 +151,22 @@ public class Riscossioni  implements Serializable {
     }
 
     @JsonProperty("importo")
-    public BigDecimal getImporto() {
+    public Double getImporto() {
         return importo;
     }
 
     @JsonProperty("importo")
-    public void setImporto(BigDecimal importo) {
+    public void setImporto(Double importo) {
         this.importo = importo;
     }
 
     @JsonProperty("data")
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
