@@ -465,14 +465,18 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					}
 
 					Riscossioni riscossioni = notificaPagamento.getRiscossioni().get(0);
-					pagamentoPagopaBulk.setDtPagamento(new Timestamp(riscossioni.getData().getTime()));
-					pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getDatiPagamento().getCodiceContestoPagamento());
+					java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+					pagamentoPagopaBulk.setDtPagamento(new Timestamp(formatter.parse(riscossioni.getData()).getTime()));
+					pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getReceiptId());
 					pagamentoPagopaBulk.setIur(riscossioni.getIur());
-					pagamentoPagopaBulk.setStato(riscossioni.getStato().getValue());
-					pagamentoPagopaBulk.setImporto(riscossioni.getImporto());
+					pagamentoPagopaBulk.setStato(riscossioni.getStato());
+					pagamentoPagopaBulk.setImporto(new BigDecimal(riscossioni.getImporto()));
 					pagamentoPagopaBulk.setRpp(riscossioni.getRpp());
-					DatiSingoloPagamento singoloPagamento = notificaPagamento.getRt().getDatiPagamento().getDatiSingoloPagamento().get(0);
-					pagamentoPagopaBulk.setCausale(singoloPagamento.getCausaleVersamento());
+
+					for (Transfer transfer : notificaPagamento.getRt().getTransferList().getTransfer()){
+						pagamentoPagopaBulk.setCausale(transfer.getRemittanceInformation());
+						break;
+					}
 					if (pagamentoNonTrovato){
 						pagamentoPagopaBulk.setToBeCreated();
 						pagamentoPagopaBulk = (PagamentoPagopaBulk) super.creaConBulk(userContext, pagamentoPagopaBulk);
