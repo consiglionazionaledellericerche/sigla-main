@@ -7,10 +7,6 @@
             com.esercizio, com.pg_compenso, ter.codice_fiscale, ter.cd_terzo,
             ter.cognome, ter.nome, com.dt_da_competenza_coge,
             com.dt_a_competenza_coge,
-/*            DECODE (com.stato_cofi,
-                    'P', NVL (dc.dt_trasmissione, com.dt_registrazione),
-                    dc.dt_trasmissione
-                   ) dt_trasmissione,*/
                         dc.dt_trasmissione,
             DECODE (com.stato_cofi,
                     'P', NVL (dc.dt_pagamento, com.dt_registrazione),
@@ -21,7 +17,61 @@
                     'Y', 0,
                     NVL (com.imponibile_fiscale, 0)
                    ) im_fiscale,
-            tipo_t.cd_trattamento, tipo_t.ds_ti_trattamento, 0 tot_costo,
+            tipo_t.cd_trattamento, tipo_t.ds_ti_trattamento,
+                NVL (com.im_lordo_percipiente, 0) +
+                NVL (SUM (DECODE (cr.ti_ente_percipiente,
+                                              'P', 0,
+                                              DECODE (tipo.cd_gruppo_cr,
+                                                      'IRAP', cr.ammontare,
+                                                      0
+                                                     )
+                                              )
+                                       ),
+                                 0
+                                ) +
+                NVL (SUM (DECODE (cr.ti_ente_percipiente,
+                                               'P', 0,
+                                               DECODE (tipo.cd_gruppo_cr,
+                                                       'CXX', cr.ammontare,
+                                                       'C10', cr.ammontare,
+                                                       0
+                                                      )
+                                              )
+                                      ),
+                                  0
+                                 ) +
+                NVL (SUM (DECODE (cr.ti_ente_percipiente,
+                                              'P', 0,
+                                              DECODE (tipo.cd_gruppo_cr,
+                                                      'CGS1', cr.ammontare,
+                                                      'TGS1', cr.ammontare,
+                                                      0
+                                                     )
+                                             )
+                                     ),
+                                 0
+                                ) +
+                NVL (SUM (DECODE (cr.ti_ente_percipiente,
+                                              'P', 0,
+                                              DECODE (tipo.cd_gruppo_cr,
+                                                      'ENPAPI', cr.ammontare,
+                                                      0
+                                                     )
+                                             )
+                                     ),
+                                 0
+                                ) +
+                NVL (SUM (DECODE (cr.ti_ente_percipiente,
+                                              'P', 0,
+                                              DECODE (tipo.cd_gruppo_cr,
+                                                      'X', cr.ammontare,
+                                                      0
+                                                     )
+                                             )
+                                     ),
+                                 0
+                                )
+            tot_costo,
             NVL (SUM (DECODE (cr.ti_ente_percipiente,
                               'P', 0,
                               DECODE (tipo.cd_gruppo_cr,
