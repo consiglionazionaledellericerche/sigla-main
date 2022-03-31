@@ -1,9 +1,9 @@
-## Release 6.4.18  -- _March 28, 2022_ 
+## Release 6.4.19  -- _March 31, 2022_ 
 **Changes**
 
->**Valorizzata colonna totale costo**
+>**Compress pdf for 1210**
 >
->[cd7bd2e3edd3cde](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd7bd2e3edd3cde) gianfranco.gasparro *March 28, 2022*
+>[701650b99bbe70b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/701650b99bbe70b) marco.spasiano *March 31, 2022*
 
 >**FIX publiccode validator CI**
 >
@@ -128,6 +128,14 @@
 >**Variazioni Residue: aggiunta sulla lista voci di bilancio anche la voce piano economico associata del progetto**
 >
 >[066ccb9938eded7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/066ccb9938eded7) raffaelepagano *February 04, 2022*
+
+
+## Release 6.4.18  -- _March 28, 2022_ 
+**Changes**
+
+>**Valorizzata colonna totale costo**
+>
+>[cd7bd2e3edd3cde](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd7bd2e3edd3cde) gianfranco.gasparro *March 28, 2022*
 
 
 ## Release 6.4.17  -- _March 18, 2022_ 
