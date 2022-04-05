@@ -18,6 +18,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -63,6 +64,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     public final static  Map<String,String> statoVariazioneSostituzioneKeys = StatoVariazioneSostituzione.KEYS;
 
     protected final static java.util.Dictionary classeDiPagamentoKeys = it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk.TI_PAGAMENTO_KEYS;
+    public static final String BOEST_MAX_LENGTH_DESCRIPTION = "boest.max.length.description";
     private it.cnr.jada.bulk.PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 
     private String cdUoScrivania;
@@ -884,6 +886,26 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
                     throw new ValidationException("La descrizione contienere caratteri speciali non supportati.");
             }
         }
+        final Integer maxLengthDescription = Optional.ofNullable(System.getProperty(BOEST_MAX_LENGTH_DESCRIPTION))
+                .map(Integer::valueOf)
+                .orElse(140);
+        if (getMandato_rigaColl()
+                .stream()
+                .anyMatch(mandato_rigaBulk -> Optional.ofNullable(mandato_rigaBulk.getModalita_pagamento())
+                        .flatMap(modalita_pagamentoBulk -> Optional.ofNullable(modalita_pagamentoBulk.getRif_modalita_pagamento()))
+                        .filter(rif_modalita_pagamentoBulk ->
+                                Optional.ofNullable(rif_modalita_pagamentoBulk.getTi_pagamento())
+                                        .map(s -> s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.IBAN))
+                                        .orElse(Boolean.FALSE) &&
+                                Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
+                                        .map(s -> s.equalsIgnoreCase(
+                                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO.value())
+                                        ).orElse(Boolean.FALSE)
+                        ).isPresent()
+                ) && getDs_mandato().length() > maxLengthDescription) {
+            throw new ValidationException("La descrizione del Mandato non può superare i " + maxLengthDescription + " caratteri!");
+        }
+
         //verifica sui sospesi
         for (Iterator i = getSospeso_det_uscColl().iterator(); i.hasNext(); )
             ((Sospeso_det_uscBulk) i.next()).validate();
