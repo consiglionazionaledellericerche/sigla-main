@@ -1,3 +1,19 @@
+## Release 6.4.20  -- _April 05, 2022_ 
+**Changes**
+
+>**Controllo sulla lunghezza massima della descrizione di un mandato di pagamento di tipo BOEST, la lunghezza può essere personalizzata con la variabile di ambiente "boest.max.length.description" il default è 140 caratteri**
+>
+>[0725a9e4968b1b1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0725a9e4968b1b1) marco.spasiano *April 05, 2022*
+
+>**FIX implemention of storage cloud with filesystem**
+>
+>[73aef358fb2edc5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/73aef358fb2edc5) marco.spasiano *April 05, 2022*
+
+>**FIX espressione regolare per la lunghezza del numero del coto che deve essere di 7 caratteri numerici**
+>
+>[ca20d3f8b6988bb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca20d3f8b6988bb) marco.spasiano *April 04, 2022*
+
+
 ## Release 6.4.19  -- _March 31, 2022_ 
 **Changes**
 
