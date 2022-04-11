@@ -100,7 +100,15 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
     private java.lang.String cd_cds_sospeso;
 	
     private java.sql.Timestamp dt_cancellazione;
-    
+
+	//  ISTRUZIONI_SPECIALI_1     VARCHAR2(250),
+	private java.lang.String istruzioni_speciali_1;
+
+	//  ISTRUZIONI_SPECIALI_2     VARCHAR2(250),
+	private java.lang.String istruzioni_speciali_2;
+	//  ISTRUZIONI_SPECIALI_3     VARCHAR2(250),
+	private java.lang.String istruzioni_speciali_3;
+
 	public Lettera_pagam_esteroBase() {
 		super();
 	}
@@ -294,5 +302,29 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	}
 	public void setDt_cancellazione(java.sql.Timestamp dt_cancellazione) {
 		this.dt_cancellazione = dt_cancellazione;
-	}	
+	}
+
+	public String getIstruzioni_speciali_1() {
+		return istruzioni_speciali_1;
+	}
+
+	public void setIstruzioni_speciali_1(String istruzioni_speciali_1) {
+		this.istruzioni_speciali_1 = istruzioni_speciali_1;
+	}
+
+	public String getIstruzioni_speciali_2() {
+		return istruzioni_speciali_2;
+	}
+
+	public void setIstruzioni_speciali_2(String istruzioni_speciali_2) {
+		this.istruzioni_speciali_2 = istruzioni_speciali_2;
+	}
+
+	public String getIstruzioni_speciali_3() {
+		return istruzioni_speciali_3;
+	}
+
+	public void setIstruzioni_speciali_3(String istruzioni_speciali_3) {
+		this.istruzioni_speciali_3 = istruzioni_speciali_3;
+	}
 }
