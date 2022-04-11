@@ -652,3 +652,4 @@ thorntail:
           - url-pattern: /restapi/*
             roles:
               - "default-roles-cnr"
+              - "default-roles-cnr.it"
