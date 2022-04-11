@@ -368,8 +368,11 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                                 .orElse(keycloakSecurityContext.getToken());
                     });
             if (idToken.isPresent()) {
-                utente.setCd_utente(idToken.get().getPreferredUsername());
-                utente.setCd_utente_uid(idToken.get().getPreferredUsername());
+                final String username_cnr = idToken
+                        .flatMap(t -> Optional.ofNullable(t.getOtherClaims().get("username_cnr")).map(String::valueOf))
+                        .orElse(idToken.get().getPreferredUsername());
+                utente.setCd_utente(username_cnr);
+                utente.setCd_utente_uid(username_cnr);
             }
             utente.setUtente_multiplo(ui.getUtente_multiplo());
             ui.setUtente(utente);
