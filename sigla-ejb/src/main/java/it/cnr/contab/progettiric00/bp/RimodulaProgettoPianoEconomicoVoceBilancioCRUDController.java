@@ -105,7 +105,7 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
     		button.setDisabledImg("img/undo16.gif");
     		button.setTitle("Annulla Eliminazione");
     		button.setIconClass("fa fa-fw fa-undo text-primary");
-    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+    		button.setButtonClass("btn-sm btn-outline-secondary btn-title");
             button.setHref("javascript:submitForm('doUndoRemoveFromCRUD(" + getInputPrefix() + ")')");
             boolean isButtonEnable = isShrinkable() && 
             						 Optional.ofNullable(getParentController().getModel())

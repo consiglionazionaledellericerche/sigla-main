@@ -20,6 +20,7 @@ import it.cnr.contab.compensi00.ejb.ConsRiepilogoCompensiComponentSession;
 import it.cnr.contab.docamm00.consultazioni.bp.ConsRiepilogoCompensiBP;
 import it.cnr.contab.docamm00.consultazioni.bp.VisConsRiepilogoCompensiBP;
 import it.cnr.contab.docamm00.consultazioni.bulk.VConsRiepCompensiBulk;
+import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -90,14 +91,19 @@ public Forward doCerca(ActionContext context) throws RemoteException, Instantiat
 			nbp.setIterator(context,ri);
 			nbp.disableSelection();
 			nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(VConsRiepCompensiBulk.class)); 
-			if (consRiepilogo.getGroupTrattamento()){
-				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE"));
-				nbp.setFreeSearchSet("CONSULTAZIONE");
+			if (consRiepilogo.getDettagliata()){
+				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("default"));
+				nbp.setFreeSearchSet("default");
 			} else {
-				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE_SENZA_TRATTAMENTO"));
-				nbp.setFreeSearchSet("CONSULTAZIONE_SENZA_TRATTAMENTO");
+				if (consRiepilogo.getGroupTrattamento()){
+					nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE"));
+					nbp.setFreeSearchSet("CONSULTAZIONE");
+				} else {
+					nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("CONSULTAZIONE_SENZA_TRATTAMENTO"));
+					nbp.setFreeSearchSet("CONSULTAZIONE_SENZA_TRATTAMENTO");
+				}
 			}
-			HookForward hook = (HookForward)context.findForward("seleziona"); 
+			HookForward hook = (HookForward)context.findForward("seleziona");
 			return context.addBusinessProcess(nbp); 
 				
 		
@@ -106,7 +112,23 @@ public Forward doCerca(ActionContext context) throws RemoteException, Instantiat
 	}
 	
 }
-public Forward doCloseForm(ActionContext actioncontext)
+	public Forward doOnChangeDettagliata(ActionContext context) {
+		try {
+			fillModel(context);
+			ConsRiepilogoCompensiBP bp= (ConsRiepilogoCompensiBP) context.getBusinessProcess();
+			VConsRiepCompensiBulk consRiepilogo = (VConsRiepCompensiBulk)bp.getModel();
+			if (consRiepilogo.getDettagliata()){
+				consRiepilogo.setGroupTrattamento(false);
+			}
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}
+
+	public Forward doCloseForm(ActionContext actioncontext)
 		throws BusinessProcessException
 	{
 		try

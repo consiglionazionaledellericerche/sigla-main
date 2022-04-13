@@ -28,8 +28,10 @@
 	<div class="Group" style="width:100%">
 		<table width="100%">
 		  	<tr>
+				<td><% bp.getController().writeFormLabel(out,"dettagliata"); %></td>
+				<td><% bp.getController().writeFormInput(out,"dettagliata"); %></td>
 				<td><% bp.getController().writeFormLabel(out,"groupTrattamento"); %></td>
-				<td><% bp.getController().writeFormInput(out,"groupTrattamento"); %></td>
+				<td><% bp.getController().writeFormInput(out,null,"groupTrattamento",(bulk!=null?bulk.getDettagliata():false),null,null); %></td>
 	  	  	</tr>
 		    <tr>
 	  			<td> <% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>

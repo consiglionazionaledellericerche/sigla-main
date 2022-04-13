@@ -53,7 +53,7 @@
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-pencil-square-o text-success" : "img/edit24.gif", 
 				"Modifica",
 				"javascript:submitForm('doEditaScadenza')", 
-				"btn-secondary btn-outline-secondary btn-title",
+				"btn-outline-secondary btn-title",
 				bp.isEditScadenzaButtonEnabled(),
 				bp.getParentRoot().isBootstrap()); 
 		%>
@@ -62,7 +62,7 @@
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif", 
 				"Conferma",
 				"javascript:submitForm('doConfermaScadenza')", 
-				"btn-secondary btn-outline-secondary btn-title",
+				"btn-outline-secondary btn-title",
 				bp.isConfermaScadenzaButtonEnabled(),
 				bp.getParentRoot().isBootstrap()); 
 		%>
@@ -71,7 +71,7 @@
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-warning" : "img/undo24.gif", 
 				"Annulla",
 				"javascript:submitForm('doUndoScadenza')",
-				"btn-secondary btn-outline-secondary btn-title",
+				"btn-outline-secondary btn-title",
 				bp.isUndoScadenzaButtonEnabled(),
 				bp.getParentRoot().isBootstrap()); %>		
 		<% if (bp instanceof CRUDAccertamentoResiduoBP && accertamento.isAccertamentoResiduo())  %>
@@ -80,7 +80,7 @@
 					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-trash text-danger" : "img/remove24.gif", 
 					"Azzera",
 					"javascript:submitForm('doAnnullaScadenza')", 
-					"btn-secondary btn-outline-secondary btn-title",
+					"btn-outline-secondary btn-title",
 					bp.isAnnullaScadenzaButtonEnabled(),
 					bp.getParentRoot().isBootstrap()); %>
 		</div>		

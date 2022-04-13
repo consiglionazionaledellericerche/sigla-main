@@ -85,7 +85,7 @@
 				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus text-info":"img/new24.gif",
 				bp.getParentRoot().isBootstrap()?"Crea/Ricerca impegno":"Crea/Ricerca<br>impegno",
 				"if (disableDblClick()) submitForm('doRicercaObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
+				"btn-outline-secondary btn-title text-primary",
 				bp.isBottoneCreaObbligazioneEnabled(), 
 				bp.getParentRoot().isBootstrap());%>
 		<% JSPUtils.button(out,
@@ -93,7 +93,7 @@
 				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash text-danger":"img/remove24.gif",
 				bp.getParentRoot().isBootstrap()?"Elimina impegno":"Elimina<br>impegno",
 				"if (disableDblClick()) submitForm('doEliminaObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
+				"btn-outline-secondary btn-title text-primary",
 				bp.isBottoneEliminaObbligazioneEnabled(), 
 				bp.getParentRoot().isBootstrap());%>
 		<% JSPUtils.button(out,
@@ -101,7 +101,7 @@
 				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat text-info":"img/redo24.gif",
 				bp.getParentRoot().isBootstrap()?"Aggiorna in manuale":"Aggiorna in<br>manuale",
 				"if (disableDblClick()) submitForm('doModificaManualeObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
+				"btn-outline-secondary btn-title text-primary",
 				bp.isBottoneModificaManualeObbligazioneEnabled(), 
 				bp.getParentRoot().isBootstrap());%>
 		<% JSPUtils.button(out,
@@ -109,7 +109,7 @@
 				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh text-info":"img/refresh24.gif",
 				bp.getParentRoot().isBootstrap()?"Aggiorna in automatico":"Aggiorna in<br>automatico",
 				"if (disableDblClick()) submitForm('doModificaAutomaticaObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
+				"btn-outline-secondary btn-title text-primary",
 				bp.isBottoneModificaAutomaticaObbligazioneEnabled(), 
 				bp.getParentRoot().isBootstrap());%>
 	</td>

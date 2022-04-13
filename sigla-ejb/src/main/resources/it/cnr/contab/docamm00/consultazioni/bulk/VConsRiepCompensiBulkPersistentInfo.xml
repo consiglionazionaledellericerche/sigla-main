@@ -168,6 +168,13 @@
 			columnScale="2"
 			nullable="true" />
 		<columnMapping
+				columnName="CUNEODL320"
+				propertyName="cuneodl320"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
 			columnName="INPS_PERCIPIENTE"
 			propertyName="inpsPercipiente"
 			sqlTypeName="DECIMAL"
@@ -277,6 +284,8 @@
 		name="irpef" />
 	<persistentProperty
 		name="bonusdl66" />
+	<persistentProperty
+			name="cuneodl320" />
 	<persistentProperty
 		name="inpsPercipiente" />
 	<persistentProperty
@@ -413,6 +422,13 @@
 		<columnMapping
 				columnName="BONUSDL66"
 				propertyName="bonusdl66"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="CUNEODL320"
+				propertyName="cuneodl320"
 				sqlTypeName="DECIMAL"
 				columnSize="22"
 				columnScale="2"
@@ -596,6 +612,13 @@
 				columnScale="2"
 				nullable="true" />
 		<columnMapping
+				columnName="CUNEODL320"
+				propertyName="cuneodl320"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
 				columnName="INPS_PERCIPIENTE"
 				propertyName="inpsPercipiente"
 				sqlTypeName="DECIMAL"
@@ -684,5 +707,35 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="true" />
+	</columnMap>
+	<columnMap
+			name="DETTAGLIATA"
+			tableName="V_CONS_RIEP_COMPENSI"
+			extends="CONSULTAZIONE" >
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4" />
+		<columnMapping
+				columnName="PG_COMPENSO"
+				propertyName="pg_compenso"
+				sqlTypeName="DECIMAL"
+				columnSize="10" />
+		<columnMapping
+				columnName="DT_DA_COMPETENZA_COGE"
+				propertyName="dtDaCompetenzaCoge"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<columnMapping
+				columnName="DT_A_COMPETENZA_COGE"
+				propertyName="dtACompetenzaCoge"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<columnMapping
+				columnName="DT_PAGAMENTO"
+				propertyName="dtPagamento"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
 	</columnMap>
 </SQLPersistentInfo>

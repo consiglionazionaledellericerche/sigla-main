@@ -234,7 +234,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 	    		button.setDisabledImg("img/open16.gif");
 	    		button.setTitle("Apri Variazione");
 	    		button.setIconClass("fa fa-folder-open-o text-primary");
-	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	    		button.setButtonClass("btn-sm btn-outline-secondary btn-title");
 	            button.setHref("javascript:submitForm('doOpenVariazione(" + getInputPrefix() + ")')");
 	            boolean isButtonEnable = Optional.ofNullable(this.getModel()).isPresent();
 	            button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));
@@ -441,9 +441,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		if (existAnnoCorrente)
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAnnoCorrente","Anno "+optProgetto.get().getEsercizio(),"/progettiric00/rimodula_progetto_piano_economico_anno_corrente.jsp" });
 			
-		if (!annoInizio.equals(optProgetto.get().getEsercizio()) || !annoFine.equals(optProgetto.get().getEsercizio()) ||
-				optProgettoRimodulazione.get().getDettagliPianoEconomicoAltriAnni().size()>0)
-			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/rimodula_progetto_piano_economico_altri_anni.jsp" });
+		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/rimodula_progetto_piano_economico_altri_anni.jsp" });
 
 		if (!optProgettoRimodulazione.get().getVociMovimentateNonAssociate().isEmpty())
 			hash.put(i++, new String[]{ "tabProgettoVociMovimentateNonAssociate","Voci Movimentate da Associare","/progettiric00/rimodula_progetto_piano_economico_voci_da_associare.jsp" });
