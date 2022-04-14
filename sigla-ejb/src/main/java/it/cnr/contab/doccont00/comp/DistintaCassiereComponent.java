@@ -36,20 +36,23 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.EnteBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
+import it.cnr.contab.doccont00.ejb.SospesoRiscontroComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupKey;
+import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
+import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
+import it.cnr.contab.logs.ejb.BatchControlComponentSession;
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -69,8 +72,11 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.bulk.StorageFile;
@@ -80,13 +86,11 @@ import org.apache.commons.io.IOUtils;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -94,13 +98,9 @@ import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
-import java.util.concurrent.CompletionException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -130,7 +130,7 @@ public class DistintaCassiereComponent extends
     public static final String SCOSTAMENTO = "0.03";
     public static final String VARIAZIONE = "VARIAZIONE";
     public static final String SOSTITUZIONE = "SOSTITUZIONE";
-
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("ddMMyyyy");
     final String regexBic = "[A-Z|a-z||0-9]{11}|[A-Z|a-z||0-9]{8}";
     final Pattern patternBic = Pattern.compile(regexBic, Pattern.MULTILINE);
 
@@ -1116,30 +1116,186 @@ public class DistintaCassiereComponent extends
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
      * @param file        il <code>V_ext_cassiere00Bulk</code> file da processare.
      **/
+
     private void callProcessaFile(UserContext userContext,
                                   V_ext_cassiere00Bulk file)
             throws it.cnr.jada.comp.ComponentException {
-
-        LoggableStatement cs = null;
+        Timestamp oggi = null;
+        BatchControlComponentSession batchControlComponentSession = (BatchControlComponentSession)it.cnr.jada.util.ejb.EJBCommonServices
+                .createEJB("BLOGS_EJB_BatchControlComponentSession");
+        String subjectError = "Errore Caricamento Giornaliera File: "+file.getNome_file();
         try {
-            cs = new LoggableStatement(getConnection(userContext), "{ call "
-                    + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-                    + "CNRCTB750.processaInterfaccia(?,?,?) }", false, this
-                    .getClass());
-            cs.setInt(1, file.getEsercizio().intValue());
-            cs.setString(2, file.getNome_file());
-            cs.setString(3, it.cnr.contab.utenze00.bp.CNRUserContext
-                    .getUser(userContext));
-            cs.executeQuery();
-        } catch (Throwable e) {
-            throw handleException(e);
-        } finally {
-            try {
-                if (cs != null)
-                    cs.close();
-            } catch (java.sql.SQLException e) {
-                throw handleException(e);
+            Date today = Calendar.getInstance().getTime();
+            oggi = new Timestamp(today.getTime());
+        } catch (javax.ejb.EJBException e) {
+            throw new it.cnr.jada.DetailedRuntimeException(e);
+        }
+
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone( ZoneId.systemDefault() );
+        Batch_log_tstaBulk log = new Batch_log_tstaBulk();
+        log.setDs_log("CICF-"+file.getNome_file()+" Start: "+ formatterTime.format(oggi.toInstant()));
+        log.setCd_log_tipo(Batch_log_tstaBulk.LOG_TIPO_INTERF_CASS00);
+        log.setNote("Caricamento interfaccia ritorno cassiere. File:"+file.getNome_file()+" Utente: "+userContext.getUser());
+        log.setToBeCreated();
+        try {
+            log = (Batch_log_tstaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log);
+        } catch (ComponentException | RemoteException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento in Batch_log_tsta "+e.getMessage());
+            throw new ComponentException(e);
+        }
+
+        Ext_cassiere00_logsBulk cassiere00_logsBulk = new Ext_cassiere00_logsBulk();
+        cassiere00_logsBulk.setNome_file(file.getNome_file());
+        cassiere00_logsBulk.setEsercizio(file.getEsercizio());
+        cassiere00_logsBulk.setPg_esecuzione(log.getPg_esecuzione());
+        cassiere00_logsBulk.setToBeCreated();
+        try {
+            cassiere00_logsBulk = (Ext_cassiere00_logsBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,cassiere00_logsBulk);
+        } catch (ComponentException | RemoteException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento in Ext_cassiere00_logs "+e.getMessage());
+            throw new ComponentException(e);
+        }
+
+        boolean tesoreriaUnica = false;
+        String ccEnte = null;
+        EnteBulk cdsEnte = null;
+        try {
+            tesoreriaUnica = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, file.getEsercizio()).getFl_tesoreria_unica();
+            ccEnte = Utility.createConfigurazioneCnrComponentSession().getContoCorrenteEnte(userContext, file.getEsercizio());
+            EnteHome aEnteHome = (EnteHome)getHome(userContext,EnteBulk.class);
+            java.util.List aL = aEnteHome.findAll();
+            if(aL.size() > 0){
+                cdsEnte = (EnteBulk) aL.get(0);
+            } else {
+                SendMail.sendErrorMail(subjectError, "Cds Ente non trovato!");
+                throw new ComponentException("Cds Ente non trovato!");
             }
+        } catch (RemoteException | PersistencyException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante la ricerca della tesoreria unica "+e.getMessage());
+            throw new ComponentException(e);
+        }
+
+        MovimentoContoEvidenzaHome home = (MovimentoContoEvidenzaHome)getHome(userContext, MovimentoContoEvidenzaBulk.class);
+        SospesoRiscontroComponentSession sess = (SospesoRiscontroComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                .createEJB("CNRDOCCONT00_EJB_SospesoRiscontroComponentSession");
+        List righeFile = new ArrayList();
+        try {
+            righeFile = home.recuperoRigheFile(file.getNome_file(), file.getEsercizio(), MovimentoContoEvidenzaBulk.STATO_RECORD_INIZIALE);
+        } catch (IntrospectionException | PersistencyException e) {
+            SendMail.sendErrorMail(subjectError, "Errore durante il recupero delle righe del file "+e.getMessage());
+            throw new ComponentException(e);
+        }
+
+        List listaRigheMovimentoContoEvidenza = (List) righeFile.stream().collect(Collectors.toList());
+
+        int totaleRighe = 0;
+        int contaErrori = 0;
+        int righeProcessate = 0;
+        for (Object bulk : listaRigheMovimentoContoEvidenza){
+            MovimentoContoEvidenzaBulk riga = (MovimentoContoEvidenzaBulk)bulk;
+            try {
+                totaleRighe++;
+                righeProcessate = righeProcessate + sess.caricamentoRigaGiornaleCassa(userContext, tesoreriaUnica, cdsEnte, riga);
+            } catch (Exception e) {
+                contaErrori++;
+                Batch_log_rigaBulk log_riga = new Batch_log_rigaBulk();
+                log_riga.setPg_esecuzione(log.getPg_esecuzione());
+                log_riga.setPg_riga(BigDecimal.valueOf(contaErrori));
+                log_riga.setTi_messaggio("E");
+                log_riga.setMessaggio(cdsEnte.getCd_unita_organizzativa()+"-"+file.getNome_file()+"-Riga-"+riga.getProgressivo());
+                log_riga.setTrace(log_riga.getMessaggio());
+                log_riga.setNote(e.getMessage());
+                log_riga.setToBeCreated();
+                try {
+                    log_riga = (Batch_log_rigaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log_riga);
+                } catch (ComponentException | RemoteException ex) {
+                    SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento dell'errore in Batch_log_rigaBulk "+ex.getMessage());
+                    throw new ComponentException(ex);
+                }
+
+                Ext_cassiere00_scartiBulk scarto = new Ext_cassiere00_scartiBulk();
+                scarto.setEsercizio(file.getEsercizio());
+                scarto.setNome_file(file.getNome_file());
+                scarto.setPg_esecuzione(log.getPg_esecuzione().longValue());
+                scarto.setPg_rec(riga.getProgressivo());
+                scarto.setDt_giornaliera(riga.getDataMovimento());
+
+                oggi = null;
+                try {
+                    Date today = Calendar.getInstance().getTime();
+                    oggi = new Timestamp(today.getTime());
+                } catch (javax.ejb.EJBException ex) {
+                    throw new ComponentException(ex);
+                }
+
+                scarto.setDt_elaborazione(oggi);
+                scarto.setCd_cds(cdsEnte.getCd_unita_organizzativa());
+                if (riga.isMandatoReversale()){
+                    scarto.setTipo_mov(riga.getTipoMovimento().substring(0,1));
+                    scarto.setCd_cds_manrev(scarto.getCd_cds());
+                    scarto.setEsercizio_manrev(riga.getEsercizio());
+                    scarto.setPg_manrev(riga.getNumeroDocumento().toString());
+                } else {
+                    scarto.setTipo_mov(Ext_cassiere00_scartiBulk.TIPO_MOVIMENTO_SOSPESO);
+                    scarto.setCd_cds_sr(scarto.getCd_cds());
+                    scarto.setEsercizio_sr(riga.getEsercizio());
+                    scarto.setTi_entrata_spesa_sr(riga.recuperoTipoSospesoEntrataSpesa());
+                    scarto.setTi_sospeso_riscontro_sr(riga.isTipoOperazioneStornato() ? SospesoBulk.TI_SOSPESO : SospesoBulk.TI_RISCONTRO);
+                    scarto.setCd_sr(riga.recuperoNumeroSospeso());
+                }
+                scarto.setAnomalia(e.getMessage());
+                scarto.setToBeCreated();
+                try {
+                    scarto = (Ext_cassiere00_scartiBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,scarto);
+                } catch (ComponentException | RemoteException ex) {
+                    SendMail.sendErrorMail(subjectError, "Errore durante il recupero dell'errore in Ext_cassiere00_scarti "+ex.getMessage());
+                    throw new ComponentException(ex);
+                }
+            }
+        }
+        try {
+            Date today = Calendar.getInstance().getTime();
+            oggi = new Timestamp(today.getTime());
+        } catch (javax.ejb.EJBException e) {
+            throw new ComponentException(e);
+        }
+        if (contaErrori > 0) {
+            log.setFl_errori(true);
+            log.setToBeUpdated();
+            try {
+                super.updateBulk(userContext, log);
+            } catch (PersistencyException e) {
+                SendMail.sendErrorMail(subjectError, "Errore durante l'aggiornamento di Batch_log_tsta "+e.getMessage());
+                throw new ComponentException(e);
+            }
+        }
+        Batch_log_rigaBulk log_riga = new Batch_log_rigaBulk();
+        log_riga.setPg_esecuzione(log.getPg_esecuzione());
+        log_riga.setPg_riga(BigDecimal.valueOf(contaErrori + 1));
+        log_riga.setTi_messaggio("I");
+        log_riga.setMessaggio("Caricamento "+cdsEnte.getCd_unita_organizzativa()+"-"+file.getNome_file()+". Righe elaborate: "+totaleRighe+". Righe processate: "+righeProcessate+". Errori: "+contaErrori);
+        log_riga.setNote("Termine operazione caricamento interfaccia ritorno cassiere."+ formatterTime.format(oggi.toInstant()));
+        log_riga.setToBeCreated();
+        try {
+            log_riga = (Batch_log_rigaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log_riga);
+        } catch (ComponentException | RemoteException ex) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento della riga di chiusura di Batch_log_riga "+ex.getMessage());
+            throw new ComponentException(ex);
+        }
+
+        MessaggioBulk messaggio = new MessaggioBulk();
+        String ds = "Caricamento interfaccia ritorno cassiere: "+file.getNome_file()+" es."+file.getEsercizio();
+        messaggio.setDs_messaggio("ATTN: "+ds);
+        messaggio.setCd_utente(userContext.getUser());
+        messaggio.setSoggetto(ds+" "+formatterTime.format(oggi.toInstant())+" (log esecuzione: "+log.getPg_esecuzione()+")");
+        messaggio.setCorpo("Operazione Completata. Righe elaborate: "+totaleRighe+". Righe processate: "+righeProcessate+". Errori: "+contaErrori);
+        messaggio.setPriorita(1);
+        messaggio.setToBeCreated();
+        try {
+            messaggio = (MessaggioBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,messaggio);
+        } catch (ComponentException | RemoteException ex) {
+            SendMail.sendErrorMail(subjectError, "Errore durante l'inserimento del Messaggio "+ex.getMessage());
+            throw new ComponentException(ex);
         }
     }
 
@@ -3043,23 +3199,24 @@ public class DistintaCassiereComponent extends
     protected void validaCreaModificaConBulk(UserContext userContext,
                                              OggettoBulk bulk) throws ComponentException {
         super.validaCreaModificaConBulk(userContext, bulk);
+        if (bulk instanceof Distinta_cassiereBulk){
+            Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) bulk;
 
-        Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) bulk;
-
-        try {
-            long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
-                    Distinta_cassiere_detBulk.class)).getNrDettagli(
-                    userContext, distinta);
-            if (nrDettagli == 0)
-                throw new ApplicationException(
-                        " La distinta deve avere almeno un dettaglio!");
-            // Controlla i documenti inseriti nella distinta
-            validaDocumentiContabiliAssociati(userContext, distinta);
-            if (distinta.getFl_annulli().booleanValue())
-                callCheckDocContForDistintaAnn(userContext, distinta);
-            callCheckDocContForDistinta(userContext, distinta);
-        } catch (Exception e) {
-            throw handleException(e);
+            try {
+                long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
+                        Distinta_cassiere_detBulk.class)).getNrDettagli(
+                        userContext, distinta);
+                if (nrDettagli == 0)
+                    throw new ApplicationException(
+                            " La distinta deve avere almeno un dettaglio!");
+                // Controlla i documenti inseriti nella distinta
+                validaDocumentiContabiliAssociati(userContext, distinta);
+                if (distinta.getFl_annulli().booleanValue())
+                    callCheckDocContForDistintaAnn(userContext, distinta);
+                callCheckDocContForDistinta(userContext, distinta);
+            } catch (Exception e) {
+                throw handleException(e);
+            }
         }
     }
 
@@ -3180,50 +3337,18 @@ public class DistintaCassiereComponent extends
     private void validaDocumentiContabiliAssociati(UserContext userContext,
                                                    Distinta_cassiereBulk distinta) throws ComponentException {
         try {
+            // if
+            // (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,
+            // distinta.getEsercizio()).getFl_siope().booleanValue()) {
             V_mandato_reversaleHome home = (V_mandato_reversaleHome) getHome(
                     userContext, V_mandato_reversaleBulk.class);
             SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
                     userContext, distinta, V_mandato_reversaleBulk.class, null);
-            List<V_mandato_reversaleBulk> list = home.fetchAll(sql);
+            List list = home.fetchAll(sql);
             for (Iterator i = list.iterator(); i.hasNext(); ) {
-                V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i.next();
-                if (bulk.isMandato()) {
-                    MandatoIHome mandatoHome = (MandatoIHome) getHome(userContext,MandatoIBulk.class);
-                    final MandatoBulk mandatoBulk = (MandatoBulk) mandatoHome.findByPrimaryKey(
-                            new MandatoIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()));
-                    final String cupNonValidi = mandatoHome.findCodiciSiopeCupCollegati(userContext, mandatoBulk)
-                            .stream()
-                            .filter(cupBulk -> {
-                                return Optional.ofNullable(cupBulk.getDt_canc())
-                                        .map(timestamp -> timestamp.before(distinta.getDt_emissione()))
-                                        .orElse(Boolean.FALSE);
-                            })
-                            .map(CupBulk::getCdCup)
-                            .distinct()
-                            .collect(Collectors.joining(","));
-                    if (Optional.ofNullable(cupNonValidi).filter(s -> !s.isEmpty()).isPresent()) {
-                        throw new ApplicationMessageFormatException("Il mandato {0}/{1} è legato ad un CUP {2} non più valido, Scollegarlo dalla distinta e ripetere l'operazione.",
-                                        bulk.getCd_cds(), String.valueOf(bulk.getPg_documento_cont()), cupNonValidi);
-                    }
-                } else if (bulk.isReversale()) {
-                    ReversaleIHome reversaleIHome = (ReversaleIHome) getHome(userContext,ReversaleIBulk.class);
-                    final ReversaleBulk reversaleBulk = (ReversaleBulk) reversaleIHome.findByPrimaryKey(
-                            new ReversaleIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()));
-                    final String cupNonValidi = reversaleIHome.findCodiciSiopeCupCollegati(userContext, reversaleBulk)
-                            .stream()
-                            .filter(cupBulk -> {
-                                return Optional.ofNullable(cupBulk.getDt_canc())
-                                        .map(timestamp -> timestamp.before(distinta.getDt_emissione()))
-                                        .orElse(Boolean.FALSE);
-                            })
-                            .map(CupBulk::getCdCup)
-                            .distinct()
-                            .collect(Collectors.joining(","));
-                    if (Optional.ofNullable(cupNonValidi).filter(s -> !s.isEmpty()).isPresent()) {
-                        throw new ApplicationMessageFormatException("La Reversale {0}/{1} è legata ad un CUP {2} non più valido, Scollegarlo dalla distinta e ripetere l'operazione.",
-                                bulk.getCd_cds(), String.valueOf(bulk.getPg_documento_cont()), cupNonValidi);
-                    }
-                }
+                V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
+                        .next();
+
                 if (Utility.createParametriCnrComponentSession()
                         .getParametriCnr(userContext, distinta.getEsercizio())
                         .getFl_siope().booleanValue()) {
@@ -5017,6 +5142,7 @@ public class DistintaCassiereComponent extends
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
+                        infoben.setDataScadenzaPagamento(xmlGregorianCalendar);
                         infoben.setDestinazione(LIBERA);
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
@@ -5113,7 +5239,8 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                         salta = true;
                                         break;
                                     }
@@ -5147,15 +5274,8 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else {
-                            throw new ApplicationMessageFormatException(
-                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
-                                    String.valueOf(bulk.getEsercizio()),
-                                    String.valueOf(bulk.getCd_cds()),
-                                    String.valueOf(bulk.getPg_documento_cont()),
-                                    totSiope,
-                                    infoben.getImportoBeneficiario());
-                        }
+                        } else
+                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5243,7 +5363,8 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                         salta = true;
                                         break;
                                     }
@@ -5277,15 +5398,8 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else {
-                            throw new ApplicationMessageFormatException(
-                                    "Impossibile generare il flusso, ripartizione per siope errata, sul Mandato {0}/{1}/{2} - Totale Siope {3} Importo Beneficiario {4}",
-                                    String.valueOf(bulk.getEsercizio()),
-                                    String.valueOf(bulk.getCd_cds()),
-                                    String.valueOf(bulk.getPg_documento_cont()),
-                                    totSiope,
-                                    infoben.getImportoBeneficiario());
-                        }
+                        } else
+                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5353,6 +5467,7 @@ public class DistintaCassiereComponent extends
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
+                        infoben.setDataScadenzaPagamento(xmlGregorianCalendar);
                         infoben.setDestinazione(LIBERA);
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
@@ -5854,13 +5969,6 @@ public class DistintaCassiereComponent extends
                                 codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                                 motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                             }
-                            Optional.ofNullable(fattura_passivaBulk.getDt_scadenza())
-                                    .orElseThrow(()-> new ApplicationMessageFormatException(
-                                            "Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture con data di scadenza non valorizzata!",
-                                            String.valueOf(bulk.getEsercizio()),
-                                            String.valueOf(bulk.getCd_cds()),
-                                            String.valueOf(bulk.getPg_documento_cont())
-                                    ));
                         }
                     }
                     codiciCIG = codiciCIG.stream().distinct().collect(Collectors.toList());

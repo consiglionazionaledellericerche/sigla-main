@@ -23,7 +23,9 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -294,5 +296,31 @@ public abstract class MandatoHome extends BulkHome {
         return stream.map(t -> t.getCdCup())
                 .distinct()
                 .collect(Collectors.toList());
+    }
+    public MandatoBulk findAndLockMandatoAnnullato(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+
+        return findAndLockMandato(cdCds, esercizio, pgMandato, true);
+    }
+
+    private MandatoBulk findAndLockMandato(String cdCds, Integer esercizio, Long pgMandato, Boolean annullato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause("AND", "cd_cds", sql.EQUALS, cdCds);
+        sql.addClause("AND", "esercizio", sql.EQUALS, esercizio);
+        sql.addClause("AND", "pg_mandato", sql.EQUALS, pgMandato);
+        sql.addClause("AND", "stato", annullato ? sql.EQUALS : sql.NOT_EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
+        List mandati = fetchAll(sql);
+        if (mandati == null || mandati.size() == 0) {
+            return null;
+        } else if (mandati.size() == 1) {
+            MandatoBulk man = (MandatoBulk) mandati.get(0);
+            lock(man);
+            return man;
+        } else {
+            throw new PersistencyException("Errore nel recupero del Mandato " + esercizio + "-" + pgMandato);
+        }
+    }
+
+    public MandatoBulk findAndLockMandatoNonAnnullato(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+        return findAndLockMandato(cdCds, esercizio, pgMandato, false);
     }
 }

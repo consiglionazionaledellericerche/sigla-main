@@ -89,6 +89,8 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException;
 
     java.lang.Integer getCdTerzoDiversiStipendi(UserContext userContext) throws ComponentException, RemoteException;
+
+    String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
     Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException, RemoteException;
 
 }

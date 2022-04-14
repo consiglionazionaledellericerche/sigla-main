@@ -638,4 +638,21 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
         }
     }
 
+    public String getContoCorrenteEnte(UserContext userContext, Integer esercizio)  throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (String) invoke("getContoCorrenteEnte", new Object[]{
+                    userContext,
+                    esercizio});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
 }

@@ -234,6 +234,58 @@
 		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		nullable="false"/>
 	<fieldProperty
+			name="pendenzaPagopa"
+			property="pendenzaPagopa"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			label="Avviso PagoPA"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			readonlyProperty="ROPendenzaSearchTool"
+			inputCssClass=""
+			nullable="true"/>
+	<fieldProperty
+			name="cdAvviso"
+			property="pendenzaPagopa.cdAvviso"
+			maxLength="20"
+			inputSize="15"
+			inputType="TEXT"
+			label="Codice Avviso"
+			readonlyPropertyOnEdit="ROpendenza"
+			readonlyPropertyOnInsert="ROpendenza"
+			readonlyPropertyOnSearch="ROpendenza"
+			enabledOnSearch="true"
+			nullable="true"/>
+	<fieldProperty
+			name="descrizionePendenza"
+			property="pendenzaPagopa.descrizione"
+			maxLength="300"
+			inputSize="30"
+			inputType="ROTEXT"
+			label="Descrizione"
+			enabledOnSearch="false"
+			nullable="true"/>
+	<fieldProperty
+			name="dtScadenzaPendenza"
+			property="pendenzaPagopa.dtScadenza"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Scadenza"
+			enabledOnSearch="false"
+			enabledOnInsert="false"
+			nullable="true"/>
+	<fieldProperty
+			name="importoPendenza"
+			property="pendenzaPagopa.importoPendenza"
+			inputType="TEXT"
+			formatName="it.cnr.contab.util.EuroFormat"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnFreeSearch="false"
+			label="Importo"
+			enabledOnSearch="false"
+			nullable="true"/>
+	<fieldProperty
 		name="codice_fiscale"
 		property="codice_fiscale"
 		maxLength="20"
@@ -931,6 +983,16 @@
 	<formFieldProperty
 		name="cliente" />
 	<formFieldProperty
+			name="pendenzaPagopa" />
+	<formFieldProperty
+			name="cdAvviso" />
+	<formFieldProperty
+			name="importoPendenza" />
+	<formFieldProperty
+			name="dtScadenzaPendenza" />
+	<formFieldProperty
+			name="descrizionePendenza" />
+	<formFieldProperty
 		name="cd_cliente" />
 	<formFieldProperty
 		name="cd_precedente" />
@@ -1160,6 +1222,7 @@
 		<columnFieldProperty name="cd_cliente" />
 		<columnFieldProperty name="cognome" />
 		<columnFieldProperty name="nome" />
+		<columnFieldProperty name="cd_avviso" />
 		<columnFieldProperty name="ragione_sociale" />
 		<columnFieldProperty name="ti_causale_emissione" />
 		<columnFieldProperty name="cd_tipo_sezionale" />
@@ -1179,6 +1242,7 @@
 	<columnFieldProperty name="dt_registrazione" />
 	<columnFieldProperty name="ds_fattura_attiva" />
 	<columnFieldProperty name="cd_cliente" />
+	<columnFieldProperty name="cd_avviso" />
 	<columnFieldProperty name="cognome" />
 	<columnFieldProperty name="nome" />
 	<columnFieldProperty name="ragione_sociale" />

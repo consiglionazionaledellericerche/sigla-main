@@ -179,9 +179,9 @@ public class MandatoComunicaDatiHome extends BulkHome {
         Map<MandatoComunicaDatiBulk, List<MandatoComunicaDatiBulk>> map = lista.stream().collect(
                 Collectors.groupingBy(
                         list -> new MandatoComunicaDatiBulk(list.getCd_cds(), list.getEsercizio(), list.getPg_mandato(),
-                                                            getYear(list.getDt_pagamento()).compareTo(list.getEsercizio())== 0 ? list.getDt_pagamento() : lastDateOfTheYear(list.getEsercizio()),
-                                                            "U."+list.getCdLiv4().substring(1), list.getDsLiv4(),
-                                                            list.getDenominazioneSede())));
+                                getYear(list.getDt_pagamento()).compareTo(list.getEsercizio())== 0 ? list.getDt_pagamento() : lastDateOfTheYear(list.getEsercizio()),
+                                "U."+list.getCdLiv4().substring(1), list.getDsLiv4(),
+                                list.getDenominazioneSede())));
         map.keySet().stream().forEach(comunica -> comunica.setImporto(map.get(comunica).stream().map(el->Optional.ofNullable(el.getImporto()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO)));
         List<MandatoComunicaDatiBulk> listaComunicaDati =  map.keySet().stream().sorted(Comparator.comparingLong(MandatoComunicaDatiBulk::getEsercizio)).sorted(Comparator.comparingLong(MandatoComunicaDatiBulk::getPg_mandato)).collect(Collectors.toList());
         return listaComunicaDati;

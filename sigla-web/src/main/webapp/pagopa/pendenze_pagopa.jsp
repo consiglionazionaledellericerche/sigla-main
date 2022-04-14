@@ -19,6 +19,16 @@
 <% CRUDPendenzaPagopaBP bp = (CRUDPendenzaPagopaBP)BusinessProcess.getBusinessProcess(request);
  PendenzaPagopaBulk bulk = (PendenzaPagopaBulk) bp.getModel();%>
 
+<script language="JavaScript">
+function doVisualizzaAvvisoPagamento() {
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/AvvisoPagamento<%=bulk.getCdAvviso()%>.html?methodName=visualizzaAvvisoPagamento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Avviso', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+}
+function doVisualizzaRt() {
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Rt<%=bulk.getCdIuv()%>.html?methodName=visualizzaRt&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Ricevuta Pagamento', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+}
+</script>
 </head>
 	<title>Posizioni Debitorie PagoPA</title>
 <body class="Form">
@@ -58,8 +68,26 @@
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "dtScadenza"); %></td>
 	</tr>
+	<tr>
+	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>
+	<td>
+	    <% bp.getController().writeFormInput( out, "cd_elemento_voce"); %>
+	    <% bp.getController().writeFormInput( out, "ds_elemento_voce"); %>
+      <% bp.getController().writeFormInput( out, "find_elemento_voce"); %>
+	</td>
+	</tr>
+	<tr>
+        <%
+				   if (bp.isInserting()) {
+				   } else if (bp.isSearching()) {
+				     bp.getController().writeFormField(out, "statoForSearch");
+				   } else {
+				     bp.getController().writeFormField(out, "statoForUpdate");
+				   }
+				%>
+	  </tr>
 	</table>
-</div>	
+</div>
 
 <div class="Group card p-2">
 	<table class="Panel">

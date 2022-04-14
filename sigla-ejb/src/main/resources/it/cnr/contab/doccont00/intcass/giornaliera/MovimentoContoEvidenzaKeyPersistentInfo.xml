@@ -47,7 +47,7 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			primary="true" />
+			primary="false" />
 		<columnMapping
 			columnName="PROGRESSIVO"
 			propertyName="progressivo"
@@ -67,7 +67,7 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="stato"
-		partOfOid="true" />
+		partOfOid="false" />
 	<persistentProperty
 		name="progressivo"
 		partOfOid="true" />

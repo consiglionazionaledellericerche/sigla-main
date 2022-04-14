@@ -8,6 +8,10 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
+import it.cnr.contab.pagopa.model.MovimentoCassaPagopa;
+import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.PendenzaResponse;
+import it.cnr.contab.util.Utility;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +26,27 @@ public class PagopaService {
     String baseUrl;
     String username;
     String password;
+    String usernameApp;
+    String passwordApp;
+
     private PagopaClient pagopaClient;
+    private PagopaClient pagopaDownloadClient;
+
+    public String getUsernameApp() {
+        return usernameApp;
+    }
+
+    public void setUsernameApp(String usernameApp) {
+        this.usernameApp = usernameApp;
+    }
+
+    public String getPasswordApp() {
+        return passwordApp;
+    }
+
+    public void setPasswordApp(String passwordApp) {
+        this.passwordApp = passwordApp;
+    }
 
     public String getBaseUrl() {
         return baseUrl;
@@ -66,9 +90,28 @@ public class PagopaService {
         pagopaClient = Feign.builder()
                 .decoder(new GsonDecoder(gsonParser))
                 .encoder(new GsonEncoder(gsonParser))
-                .requestInterceptor(new BasicAuthRequestInterceptor(username, password))
+                .requestInterceptor(new BasicAuthRequestInterceptor(usernameApp, passwordApp))
                 .errorDecoder(new ErrorDecoder.Default())
                 .retryer(new Retryer.Default())
                 .target(PagopaClient.class, baseUrl);
+
+        pagopaDownloadClient = Feign.builder()
+                .encoder(new GsonEncoder(gsonParser))
+                .requestInterceptor(new BasicAuthRequestInterceptor(usernameApp, passwordApp))
+                .errorDecoder(new ErrorDecoder.Default())
+                .retryer(new Retryer.Default())
+                .target(PagopaClient.class, baseUrl);
+    }
+    public PendenzaResponse creaPendenza(Long idPendenza, Pendenza pendenza){
+        return pagopaClient.creaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, true, pendenza);
+    }
+    public byte[] getAvviso(String idDominio, String numeroAvviso){
+        return pagopaDownloadClient.stampaAvviso(idDominio, numeroAvviso);
+    }
+    public byte[] getRt(String idDominio, String iuv, String ccp){
+        return pagopaDownloadClient.stampaRt(idDominio, iuv, ccp, true);
+    }
+    public MovimentoCassaPagopa riconciliaIncasso(String idDominio, MovimentoCassaPagopa movimentoCassaPagopa){
+        return pagopaClient.riconciliaIncasso(idDominio, movimentoCassaPagopa);
     }
 }
