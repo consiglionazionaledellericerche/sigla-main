@@ -1,3 +1,11 @@
+## Release 6.4.22  -- _April 15, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[a6cad81809c5172](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6cad81809c5172) gianfranco.gasparro *April 15, 2022*
+
+
 ## Release 6.4.21  -- _April 15, 2022_ 
 **Changes**
 
