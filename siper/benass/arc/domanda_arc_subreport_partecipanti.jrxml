@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="domanda_bstudio_subreport_carichi_fiscali" pageWidth="514" pageHeight="802" columnWidth="514" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="68ad68a4-7083-4f7d-bc7f-e492bd1e0bae">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AttivitaRicreativeCulturali"/>
+	<style name="Arial_Normal" isDefault="true" fontName="Arial" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Arial_Bold" fontName="Arial" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Arial_Italic" fontName="Arial" fontSize="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Oblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="SSH12" fontName="SansSerif" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="SSHG9" fontName="SansSerif" fontSize="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="SSHG12" fontName="SansSerif" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="SSHGC12" fontName="SansSerif" fontSize="12" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Oblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="SSH10" pdfFontName="Helvetica"/>
+	<style name="SSHG10" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SSHC10" fontName="SansSerif" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+	<style name="SSHGC10" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+	<style name="SSHC16" fontSize="16" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+	<style name="SSH14" fontSize="14"/>
+	<style name="SSHG8" fontSize="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman"/>
+	<style name="TNRG6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC6" fontName="Times New Roman" fontSize="6" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman"/>
+	<style name="TNRG7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC7" fontName="Times New Roman" fontSize="7" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC9" fontName="Times New Roman" fontSize="9" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<parameter name="DomandaId" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(1824)]]></defaultValueExpression>
+	</parameter>
+	<queryString language="JSON">
+		<![CDATA[partecipanti]]>
+	</queryString>
+	<field name="nominativo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="nominativo"/>
+		<fieldDescription><![CDATA[nominativo]]></fieldDescription>
+	</field>
+	<field name="data_nas" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="data_nas"/>
+		<fieldDescription><![CDATA[data_nas]]></fieldDescription>
+	</field>
+	<field name="rapporto_parentela" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="rapporto_parentela"/>
+		<fieldDescription><![CDATA[rapporto_parentela]]></fieldDescription>
+	</field>
+	<field name="disabile" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disabile"/>
+		<fieldDescription><![CDATA[disabile]]></fieldDescription>
+	</field>
+	<field name="intolleranze" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="intolleranze"/>
+		<fieldDescription><![CDATA[intolleranze]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="telefono"/>
+		<fieldDescription><![CDATA[telefono]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="52" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement key="staticText-28" style="SSH12" mode="Opaque" x="0" y="0" width="514" height="17" forecolor="#000000" backcolor="#CCCCCC" uuid="ceda5088-00a7-4ae7-a664-4f92fc9df871">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3">
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.25" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[1 - DICHIARAZIONE PARTECIPANTI ALL'EVENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SSHG8" x="9" y="21" width="150" height="16" uuid="9ebd26d1-0d69-4b2b-b629-ed85ea2b788d"/>
+				<text><![CDATA[Nominativo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SSHG8" x="160" y="21" width="80" height="16" uuid="5fa5cbb2-726c-4ed0-9f84-eddfccbf804a"/>
+				<text><![CDATA[Data Nascita]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SSHG8" x="243" y="21" width="90" height="16" uuid="6a6232f8-e9cd-4e63-ae12-c42312c1d298"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Rapporto Parentela]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SSHG8" x="333" y="21" width="60" height="16" uuid="e12df914-95cc-4d6d-91ae-3c4a105b5462">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Disabile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SSHG8" x="394" y="21" width="60" height="30" uuid="1df1b89e-5ac3-4b3e-b0e0-809214a49f8c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Intolleranze 
+Alimentari/
+Farmaci]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SSHG8" x="451" y="21" width="60" height="16" uuid="e7c5e432-eeb1-4498-8b42-0e449bcf947a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="7" y="2" width="156" height="13" uuid="075d63e1-094f-4fd8-a8a3-6b32b70eeee3"/>
+				<textFieldExpression><![CDATA[$F{nominativo}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="164" y="2" width="76" height="13" uuid="09954f41-84ac-4770-96ee-a081dae5e6e2"/>
+				<textFieldExpression><![CDATA[$F{data_nas}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="243" y="2" width="90" height="13" uuid="117c5175-4423-409b-a0e2-068cbfbc7e33">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[($F{rapporto_parentela}==null?"":$F{rapporto_parentela})]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="¤ #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="333" y="2" width="60" height="13" uuid="d7bddcd9-4c83-4d37-8189-4978897b6b93">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disabile}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="453" y="2" width="56" height="13" uuid="96b1359a-00aa-44a4-a9ab-4c2c68d39657"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="¤ #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="393" y="2" width="60" height="13" uuid="1ef99aa1-52e0-4651-a5c4-bd66abd0cdd5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{intolleranze}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
