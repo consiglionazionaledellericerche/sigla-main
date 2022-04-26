@@ -1,3 +1,11 @@
+## Release 6.4.23  -- _April 26, 2022_ 
+**Changes**
+
+>**Rilascio giornaliera di cassa in JAVA incluse modifiche pagoPA**
+>
+>[377abe3eefb5403](https://github.com/consiglionazionaledellericerche/sigla-main/commit/377abe3eefb5403) gianfranco.gasparro *April 26, 2022*
+
+
 ## Release 6.4.22  -- _April 15, 2022_ 
 **Changes**
 
