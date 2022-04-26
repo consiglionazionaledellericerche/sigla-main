@@ -1,5 +1,9 @@
-## Release 6.4.23  -- _April 26, 2022_ 
+## Release 6.4.24  -- _April 26, 2022_ 
 **Changes**
+
+>**Fix arrotondamento pagamento pagoPA**
+>
+>[061e2447f303694](https://github.com/consiglionazionaledellericerche/sigla-main/commit/061e2447f303694) gianfranco.gasparro *April 26, 2022*
 
 >**Rilascio giornaliera di cassa in JAVA incluse modifiche pagoPA**
 >
