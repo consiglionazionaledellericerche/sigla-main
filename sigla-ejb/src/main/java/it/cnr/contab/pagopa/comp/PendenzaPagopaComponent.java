@@ -57,6 +57,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -470,7 +471,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					pagamentoPagopaBulk.setCcp(notificaPagamento.getRt().getReceiptId());
 					pagamentoPagopaBulk.setIur(riscossioni.getIur());
 					pagamentoPagopaBulk.setStato(riscossioni.getStato());
-					pagamentoPagopaBulk.setImporto(new BigDecimal(riscossioni.getImporto()));
+					pagamentoPagopaBulk.setImporto((new BigDecimal(riscossioni.getImporto())).setScale(2, RoundingMode.HALF_EVEN));
 					pagamentoPagopaBulk.setRpp(riscossioni.getRpp());
 
 					for (Transfer transfer : notificaPagamento.getRt().getTransferList().getTransfer()){
