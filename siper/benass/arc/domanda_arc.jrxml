@@ -224,22 +224,16 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 				<rectangle>
 					<reportElement key="rectangle-2" style="SSH10" x="5" y="23" width="505" height="21" uuid="df1b4684-732f-4efa-bdae-af3649ee58a9"/>
 				</rectangle>
-				<staticText>
-					<reportElement key="staticText-33" style="SSH12" mode="Opaque" x="1" y="1" width="514" height="17" forecolor="#000000" backcolor="#CCCCCC" uuid="60c39efc-56db-4d6d-8576-7cb3f52f48eb">
+				<textField isBlankWhenNull="false">
+					<reportElement key="staticText-25" mode="Opaque" x="1" y="1" width="514" height="20" backcolor="#CCCCCC" uuid="254eeaba-841a-427a-9099-ebd09db8538e">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
-					<box leftPadding="3" rightPadding="3">
-						<pen lineWidth="0.25" lineColor="#CCCCCC"/>
-						<topPen lineWidth="0.25" lineColor="#CCCCCC"/>
-						<leftPen lineWidth="0.25" lineColor="#CCCCCC"/>
-						<bottomPen lineWidth="0.25" lineColor="#CCCCCC"/>
-						<rightPen lineWidth="0.25" lineColor="#CCCCCC"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[4 - DATI PER LA REPERIBILITA']]></text>
-				</staticText>
+					<textFieldExpression><![CDATA[$F{numSchedaReperibilita}+" - DATI PER LA REPERIBILITA'"]]></textFieldExpression>
+				</textField>
 				<textField isBlankWhenNull="false">
 					<reportElement key="textField-53" style="SSH12" x="11" y="27" width="139" height="14" isRemoveLineWhenBlank="true" uuid="617f091d-91d2-45c6-8b2f-906abc44cb7f"/>
 					<textElement>
@@ -311,10 +305,6 @@ new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
 				</textField>
 			</band>
 			<band height="25">
-				<printWhenExpression><![CDATA[$F{printProvinciaAeroportoStazione}.equals( "Y" )||
-($F{noteIntolleranze}!=null && $F{noteIntolleranze}!="")||
-($F{noteDisabilita}!=null && $F{noteDisabilita}!="")||
-($F{noteGeneriche}!=null && $F{noteGeneriche}!="")]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
 					<reportElement key="staticText-25" mode="Opaque" x="0" y="3" width="514" height="20" backcolor="#CCCCCC" uuid="7db9bf1c-e8a3-4e3c-8d30-509ff0a9a920">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -358,7 +348,6 @@ new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
 			</band>
 			<band height="25">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				<printWhenExpression><![CDATA[$F{noteGeneriche}!=null && $F{noteGeneriche}!=""]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
 					<reportElement key="textField-60" style="TNR10" x="11" y="2" width="493" height="22" uuid="998c9629-0801-42cf-9960-45e961c99c2a"/>
 					<textElement textAlignment="Justified" markup="styled"/>
