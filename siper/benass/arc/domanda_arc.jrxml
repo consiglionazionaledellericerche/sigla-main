@@ -164,6 +164,26 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="data_domanda"/>
 		<fieldDescription><![CDATA[data_domanda]]></fieldDescription>
 	</field>
+	<field name="printSchedaIsee" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="printSchedaIsee"/>
+		<fieldDescription><![CDATA[printSchedaIsee]]></fieldDescription>
+	</field>
+	<field name="printSchedaAltreInfo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="printSchedaAltreInfo"/>
+		<fieldDescription><![CDATA[printSchedaAltreInfo]]></fieldDescription>
+	</field>
+	<field name="printProvinciaAeroportoStazione" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="printProvinciaAeroportoStazione"/>
+		<fieldDescription><![CDATA[printProvinciaAeroportoStazione]]></fieldDescription>
+	</field>
+	<field name="printIntolleranzePartecipanti" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="printIntolleranzePartecipanti"/>
+		<fieldDescription><![CDATA[printIntolleranzePartecipanti]]></fieldDescription>
+	</field>
+	<field name="printTelefonoPartecipanti" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="printTelefonoPartecipanti"/>
+		<fieldDescription><![CDATA[printTelefonoPartecipanti]]></fieldDescription>
+	</field>
 	<field name="partecipanti" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="partecipanti"/>
 		<fieldDescription><![CDATA[partecipanti]]></fieldDescription>
@@ -188,6 +208,12 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<subreport>
 					<reportElement x="1" y="3" width="515" height="30" uuid="e59b64ca-cc63-489a-a4fa-7bc5f91748c5"/>
+					<subreportParameter name="printIntolleranzePartecipanti">
+						<subreportParameterExpression><![CDATA[$F{printIntolleranzePartecipanti}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="printTelefonoPartecipanti">
+						<subreportParameterExpression><![CDATA[$F{printTelefonoPartecipanti}]]></subreportParameterExpression>
+					</subreportParameter>
 					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("partecipanti")]]></dataSourceExpression>
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"domanda_arc_subreport_partecipanti.jasper"]]></subreportExpression>
 				</subreport>
@@ -243,6 +269,7 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 		<groupHeader>
 			<band splitType="Stretch"/>
 			<band height="50">
+				<printWhenExpression><![CDATA[$F{printSchedaIsee}.equals( "Y" )]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
 					<reportElement key="staticText-25" mode="Opaque" x="0" y="3" width="514" height="20" backcolor="#CCCCCC" uuid="cfa55e22-ab22-4e4c-ba68-a957e1e84100">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -270,7 +297,8 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 			</band>
 			<band height="23">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				<printWhenExpression><![CDATA[$F{ban_anno_inizio_val}<$F{ban_anno_fine_val} && ($F{indicatoreIseeAnno1}!=null || $F{indicatoreIseeAnno2}!=null)]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{printSchedaIsee}.equals( "Y" ) &&
+$F{ban_anno_inizio_val}<$F{ban_anno_fine_val} && ($F{indicatoreIseeAnno1}!=null || $F{indicatoreIseeAnno2}!=null)]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 					<reportElement key="textField-60" style="TNR10" x="11" y="0" width="493" height="23" uuid="0c6c2a37-1823-44db-9ba0-1fbb8cb0fdab">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -282,7 +310,11 @@ new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
 "L'indicatore della situazione economica equivalente (ISEE ORDINARIO) per l'anno "+($F{ban_anno_dichiarazione_redditi}.intValue()+1)+" non risulta inserito nell'apposita anagrafica (oppure non risulta confermato)"]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="52">
+			<band height="25">
+				<printWhenExpression><![CDATA[$F{printProvinciaAeroportoStazione}.equals( "Y" )||
+($F{noteIntolleranze}!=null && $F{noteIntolleranze}!="")||
+($F{noteDisabilita}!=null && $F{noteDisabilita}!="")||
+($F{noteGeneriche}!=null && $F{noteGeneriche}!="")]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
 					<reportElement key="staticText-25" mode="Opaque" x="0" y="3" width="514" height="20" backcolor="#CCCCCC" uuid="7db9bf1c-e8a3-4e3c-8d30-509ff0a9a920">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -292,33 +324,43 @@ new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
 					</textElement>
 					<textFieldExpression><![CDATA[$F{numSchedaAltreInfo}+" - ALTRE INFORMAZIONI"]]></textFieldExpression>
 				</textField>
+			</band>
+			<band height="25">
+				<printWhenExpression><![CDATA[$F{printProvinciaAeroportoStazione}.equals( "Y" )]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-					<reportElement key="textField-60" style="TNR10" x="11" y="27" width="493" height="22" uuid="47d52dfa-fe48-4c48-9608-804598ec8bda"/>
+					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="47d52dfa-fe48-4c48-9608-804598ec8bda">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
 					<textElement textAlignment="Justified" markup="styled"/>
 					<textFieldExpression><![CDATA["<style isBold='true'>Provincia Aeroporto/Stazione ferroviaria di partenza: </style>"+$F{provinciaAeroporto}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="25">
+			<band height="24">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<printWhenExpression><![CDATA[$F{noteIntolleranze}!=null && $F{noteIntolleranze}!=""]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-					<reportElement key="textField-60" style="TNR10" x="11" y="0" width="493" height="22" uuid="44e02b2d-e417-4781-80b0-a4b659267e37"/>
+					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="44e02b2d-e417-4781-80b0-a4b659267e37">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
 					<textElement textAlignment="Justified" markup="styled"/>
 					<textFieldExpression><![CDATA["<style isBold='true'>Note Intolleranze: </style>"+$F{noteIntolleranze}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="24">
-				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<band height="25">
 				<printWhenExpression><![CDATA[$F{noteDisabilita}!=null && $F{noteDisabilita}!=""]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-					<reportElement key="textField-60" style="TNR10" x="11" y="0" width="493" height="22" uuid="53825a11-d810-4069-b6bb-79cef0ae48c6"/>
+					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="53825a11-d810-4069-b6bb-79cef0ae48c6">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
 					<textElement textAlignment="Justified" markup="styled"/>
 					<textFieldExpression><![CDATA["<style isBold='true'>Note Disabilita: </style>"+$F{noteDisabilita}]]></textFieldExpression>
 				</textField>
 			</band>
 			<band height="25">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<printWhenExpression><![CDATA[$F{noteGeneriche}!=null && $F{noteGeneriche}!=""]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-					<reportElement key="textField-60" style="TNR10" x="11" y="0" width="493" height="22" uuid="998c9629-0801-42cf-9960-45e961c99c2a"/>
+					<reportElement key="textField-60" style="TNR10" x="11" y="2" width="493" height="22" uuid="998c9629-0801-42cf-9960-45e961c99c2a"/>
 					<textElement textAlignment="Justified" markup="styled"/>
 					<textFieldExpression><![CDATA["<style isBold='true'>Note Generiche: </style>"+$F{noteGeneriche}]]></textFieldExpression>
 				</textField>

@@ -45,9 +45,8 @@
 	<style name="TNRC7" fontName="Times New Roman" fontSize="7" isItalic="true" pdfFontName="Times-Italic"/>
 	<style name="TNRGC7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRGC9" fontName="Times New Roman" fontSize="9" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<parameter name="DomandaId" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(1824)]]></defaultValueExpression>
-	</parameter>
+	<parameter name="printTelefonoPartecipanti" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="printIntolleranzePartecipanti" class="java.lang.String"/>
 	<queryString language="JSON">
 		<![CDATA[partecipanti]]>
 	</queryString>
@@ -129,6 +128,7 @@
 				<reportElement style="SSHG8" x="394" y="21" width="60" height="30" uuid="1df1b89e-5ac3-4b3e-b0e0-809214a49f8c">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{printIntolleranzePartecipanti}.equals( "Y" )]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Intolleranze 
@@ -138,6 +138,7 @@ Farmaci]]></text>
 			<staticText>
 				<reportElement style="SSHG8" x="451" y="21" width="60" height="16" uuid="e7c5e432-eeb1-4498-8b42-0e449bcf947a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$P{printTelefonoPartecipanti}.equals( "Y" )]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Telefono]]></text>
@@ -169,13 +170,16 @@ Farmaci]]></text>
 				<textFieldExpression><![CDATA[$F{disabile}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR9" x="453" y="2" width="56" height="13" uuid="96b1359a-00aa-44a4-a9ab-4c2c68d39657"/>
+				<reportElement key="textField" style="TNR9" x="453" y="2" width="56" height="13" uuid="96b1359a-00aa-44a4-a9ab-4c2c68d39657">
+					<printWhenExpression><![CDATA[$P{printTelefonoPartecipanti}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" pattern="¤ #,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField" style="TNR9" x="393" y="2" width="60" height="13" uuid="1ef99aa1-52e0-4651-a5c4-bd66abd0cdd5">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$P{printIntolleranzePartecipanti}.equals( "Y" )]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{intolleranze}]]></textFieldExpression>
