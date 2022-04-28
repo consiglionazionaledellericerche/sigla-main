@@ -1,3 +1,11 @@
+## Release 6.4.26  -- _April 28, 2022_ 
+**Changes**
+
+>**Fix anomalie varie pagoPA**
+>
+>[91ed8aa226ee497](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91ed8aa226ee497) gianfranco.gasparro *April 28, 2022*
+
+
 ## Release 6.4.25  -- _April 28, 2022_ 
 **Changes**
 
