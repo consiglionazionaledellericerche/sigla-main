@@ -184,6 +184,14 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="printTelefonoPartecipanti"/>
 		<fieldDescription><![CDATA[printTelefonoPartecipanti]]></fieldDescription>
 	</field>
+	<field name="repertorioAnno" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="repertorioAnno"/>
+		<fieldDescription><![CDATA[repertorioAnno]]></fieldDescription>
+	</field>
+	<field name="repertorioId" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="repertorioId"/>
+		<fieldDescription><![CDATA[repertorioId]]></fieldDescription>
+	</field>
 	<field name="partecipanti" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="partecipanti"/>
 		<fieldDescription><![CDATA[partecipanti]]></fieldDescription>
@@ -255,6 +263,30 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 					</textElement>
 					<textFieldExpression><![CDATA["Email: " + ($F{emailRec}==null?"":$F{emailRec})]]></textFieldExpression>
 				</textField>
+			</band>
+			<band height="109">
+				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+					<reportElement key="textField-57" style="TNR9" x="11" y="0" width="491" height="28" uuid="4e3eda4c-1eff-47ac-a556-a911efb7f486"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA[($F{dip_sesso}.equals("M")?"Il sottoscritto ":"La sottoscritta ")+
+$F{dip_nominativo}.trim() + " DICHIARA di essere a conoscenza delle conseguenze civili e penali ai sensi dell'art. 76 DPR 445/2000 per coloro che rendono dichiarazioni non veritiere."]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-58" style="TNR9" x="11" y="29" width="491" height="39" uuid="39e3715f-8716-4714-9133-326d5fbd50e1"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA[($F{dip_sesso}.equals("M")?"Il sottoscritto ":"La sottoscritta ")+
+$F{dip_nominativo}.trim() + " prende atto, ai sensi dell'art.13 della Legge 196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali."]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-20" style="SSHG8" positionType="FixRelativeToBottom" x="5" y="72" width="502" height="26" isRemoveLineWhenBlank="true" forecolor="#FF0000" uuid="5830341e-ac25-42ca-b2e9-68bf3d187452">
+						<printWhenExpression><![CDATA[new Boolean($F{stato_domanda}.equals("SALVATAGGIO_DIP"))]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[(*) DOMANDA NON CONFERMATA: ricordarsi di confermare la domanda altrimenti risulterà non valida.]]></text>
+				</staticText>
 			</band>
 		</groupFooter>
 	</group>
@@ -413,59 +445,33 @@ new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="138" splitType="Stretch">
-			<staticText>
-				<reportElement key="staticText-20" style="SSHG8" positionType="FixRelativeToBottom" x="5" y="73" width="502" height="26" isRemoveLineWhenBlank="true" forecolor="#FF0000" uuid="5830341e-ac25-42ca-b2e9-68bf3d187452">
-					<printWhenExpression><![CDATA[new Boolean($F{stato_domanda}.equals("SALVATAGGIO_DIP"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="4"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+		<band height="51" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-3" style="TNR10" positionType="Float" x="8" y="3" width="188" height="15" uuid="a06f7b9f-b57e-471e-9813-8213f9b12c0b"/>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
 				</textElement>
-				<text><![CDATA[(*) DOMANDA NON CONFERMATA: ricordarsi di confermare la domanda altrimenti risulterà non valida.]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
-				<reportElement key="textField-27" style="TNR10" positionType="FixRelativeToBottom" x="445" y="119" width="61" height="19" uuid="d69243f1-74e1-4ac7-8b9d-96c3212915d6">
-					<printWhenExpression><![CDATA[new Boolean($F{stato_domanda}.equals("SALVATAGGIO_DIP"))]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Data Domanda: "+
+(new SimpleDateFormat("dd/MM/yyyy")).format($F{data_domanda})]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-28" style="TNR10" positionType="FixRelativeToBottom" x="5" y="119" width="273" height="19" uuid="2e833664-db04-44d9-a4d9-f742d7b335d3"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="10"/>
+				<reportElement key="textField-27" style="TNR10" positionType="Float" x="8" y="18" width="189" height="15" uuid="ca1f4f1d-7ae1-4aa7-9d25-e244e7e3925b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Data di conferma della domanda:  "+$F{data_domanda}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Identificativo: " + $F{domanda_id}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-29" style="TNR10" positionType="FixRelativeToBottom" x="278" y="98" width="229" height="19" uuid="a13c20e8-d967-48a9-b7c0-4633a2ef2e99"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["(id. " + $F{domanda_id} + ")"]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-				<reportElement key="textField-57" style="TNR9" x="11" y="1" width="491" height="28" uuid="4e3eda4c-1eff-47ac-a556-a911efb7f486"/>
-				<textElement textAlignment="Justified"/>
-				<textFieldExpression><![CDATA[($F{dip_sesso}.equals("M")?"Il sottoscritto ":"La sottoscritta ")+
-$F{dip_nominativo}.trim() + " DICHIARA di essere a conoscenza delle conseguenze civili e penali ai sensi dell'art. 76 DPR 445/2000 per coloro che rendono dichiarazioni non veritiere."]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-58" style="TNR9" x="11" y="30" width="491" height="39" uuid="39e3715f-8716-4714-9133-326d5fbd50e1"/>
-				<textElement textAlignment="Justified"/>
-				<textFieldExpression><![CDATA[($F{dip_sesso}.equals("M")?"Il sottoscritto ":"La sottoscritta ")+
-$F{dip_nominativo}.trim() + " prende atto, ai sensi dell'art.13 della Legge 196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali."]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-46" style="TNR10" x="377" y="119" width="69" height="19" uuid="e11f00aa-078d-45c2-911f-e5b7d613db67">
-					<printWhenExpression><![CDATA[new Boolean($F{stato_domanda}.equals("SALVATAGGIO_DIP"))]]></printWhenExpression>
+				<reportElement key="textField-27" style="TNR10" positionType="Float" x="8" y="33" width="189" height="15" printWhenGroupChanges="Dipendente" uuid="3ffb694a-34b6-44da-b634-a2508eb7a3a7">
+					<printWhenExpression><![CDATA[$F{repertorioAnno}!=null && $F{repertorioId}!=null]]></printWhenExpression>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[Data di stampa:]]></text>
-			</staticText>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Repertorio n. ARC " + $F{repertorioAnno}+" / "+$F{repertorioId}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
