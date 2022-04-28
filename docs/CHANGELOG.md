@@ -1,3 +1,11 @@
+## Release 6.4.25  -- _April 28, 2022_ 
+**Changes**
+
+>**Aggiunta gestione sospesi in incassi pagoPA**
+>
+>[ac964696cac9097](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac964696cac9097) gianfranco.gasparro *April 28, 2022*
+
+
 ## Release 6.4.24  -- _April 26, 2022_ 
 **Changes**
 
