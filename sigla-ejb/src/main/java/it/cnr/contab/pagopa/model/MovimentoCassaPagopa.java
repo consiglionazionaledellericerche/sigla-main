@@ -98,4 +98,20 @@ public class MovimentoCassaPagopa implements Serializable {
     public void setIdFlusso(String idFlusso) {
         this.idFlusso = idFlusso;
     }
+
+    @Override
+    public String toString() {
+        return "MovimentoCassaPagopa{" +
+                "importo=" + importo +
+                ", dataValuta='" + dataValuta + '\'' +
+                ", dataContabile='" + dataContabile + '\'' +
+                ", contoAccredito='" + contoAccredito + '\'' +
+                ", sct='" + sct + '\'' +
+                ", causale='" + causale + '\'' +
+                ", iuv='" + iuv + '\'' +
+                ", idFlusso='" + idFlusso + '\'' +
+                ", idRiconciliazione='" + idRiconciliazione + '\'' +
+                ", riscossioni=" + riscossioni +
+                '}';
+    }
 }

@@ -143,9 +143,9 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
             }
         }
 
-    public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws RemoteException, ComponentException{
+    public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws RemoteException, ComponentException{
         try {
-             invoke("riconciliaIncassoPagopa", new Object[]{
+             return (PendenzaPagopaBulk) invoke("riconciliaIncassoPagopa", new Object[]{
                     userContext,
                     movimentoContoEvidenzaBulk});
         } catch (RemoteException e) {

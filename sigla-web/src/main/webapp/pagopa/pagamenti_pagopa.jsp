@@ -68,6 +68,16 @@
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "rpp"); %></td>
 	</tr>
+    <tr>
+	<td><% bp.getController().writeFormLabel( out, "id_riconciliazione"); %></td>
+	<td colspan=2 >
+		<% bp.getController().writeFormInput( out, "id_riconciliazione"); %></td>
+	</tr>
+    <tr>
+	<td><% bp.getController().writeFormLabel( out, "cd_sospeso"); %></td>
+	<td colspan=2 >
+		<% bp.getController().writeFormInput( out, "cd_sospeso"); %></td>
+	</tr>
 	</table>
 </div>
 <%	bp.closeFormWindow(pageContext); %>

@@ -45,5 +45,5 @@ public interface PendenzaPagopaComponentSession extends it.cnr.jada.ejb.CRUDComp
     public Pendenza getPendenza(UserContext userContext, String numeroAvviso) throws RemoteException,  ComponentException, IntrospectionException, PersistencyException;
     public NotificaPagamento notificaPagamento(UserContext userContext, NotificaPagamento notificaPagamento, String iuv) throws RemoteException,  ComponentException, IntrospectionException, PersistencyException;
     public RemoteIterator cercaPagamenti(UserContext aUC, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, ComponentException;
-    public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws RemoteException, ComponentException ;
+    public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws RemoteException, ComponentException ;
 }

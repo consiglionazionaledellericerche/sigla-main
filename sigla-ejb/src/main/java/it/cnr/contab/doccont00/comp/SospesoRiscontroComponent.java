@@ -30,6 +30,7 @@ import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
 import it.cnr.contab.logs.ejb.BatchControlComponentSession;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.contab.pagopa.ejb.PendenzaPagopaComponentSession;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
@@ -2883,7 +2884,15 @@ public class SospesoRiscontroComponent extends CRUDComponent implements ISospeso
                             PendenzaPagopaComponentSession pendenzaPagopaComponentSession = (PendenzaPagopaComponentSession) EJBCommonServices
                                     .createEJB("CNRPAGOPA_EJB_ScadenzaPagopaComponentSession");
                             try {
-                                pendenzaPagopaComponentSession.riconciliaIncassoPagopa(userContext, riga);
+                                PendenzaPagopaBulk pendenza = pendenzaPagopaComponentSession.riconciliaIncassoPagopa(userContext, riga);
+                                if (pendenza != null){
+                                    Unita_organizzativaBulk uoPendenza = pendenza.getUnitaOrganizzativa();
+                                    uoPendenza = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(uoPendenza);
+                                    sospesoFiglio.setCds_origine(uoPendenza.getUnita_padre());
+                                    sospesoFiglio.setStato_sospeso(SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                                    sospesoFiglio.setToBeUpdated();
+                                    super.updateBulk(userContext, sospesoFiglio);
+                                }
                             } catch (Exception e){
                                 throw handleException(e);
                             }

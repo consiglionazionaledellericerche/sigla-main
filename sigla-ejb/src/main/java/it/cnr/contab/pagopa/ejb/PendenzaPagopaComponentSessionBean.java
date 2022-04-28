@@ -157,11 +157,12 @@ public class PendenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
             }
         }
 
-    public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk)  throws ComponentException, javax.ejb.EJBException {
+    public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk)  throws ComponentException, javax.ejb.EJBException {
         pre_component_invocation(userContext, componentObj);
         try {
-            ((PendenzaPagopaComponent)componentObj).riconciliaIncassoPagopa(userContext, movimentoContoEvidenzaBulk);
+            PendenzaPagopaBulk result = ((PendenzaPagopaComponent)componentObj).riconciliaIncassoPagopa(userContext, movimentoContoEvidenzaBulk);
             component_invocation_succes(userContext, componentObj);
+            return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(userContext, componentObj);
             throw e;

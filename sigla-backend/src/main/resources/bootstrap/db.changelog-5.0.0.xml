@@ -5102,4 +5102,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-sospeso-pagamento_pagopa">
+        <addColumn tableName="PAGAMENTO_PAGOPA">
+            <column name="cd_sospeso" remarks="Codice Identificativo Sospeso" type="VARCHAR(24)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
