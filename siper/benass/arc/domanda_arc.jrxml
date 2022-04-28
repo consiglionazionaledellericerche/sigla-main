@@ -266,19 +266,19 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 			</band>
 			<band height="109">
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-					<reportElement key="textField-57" style="TNR9" x="11" y="0" width="491" height="28" uuid="4e3eda4c-1eff-47ac-a556-a911efb7f486"/>
+					<reportElement key="textField-57" style="TNR9" x="11" y="5" width="491" height="28" uuid="4e3eda4c-1eff-47ac-a556-a911efb7f486"/>
 					<textElement textAlignment="Justified"/>
 					<textFieldExpression><![CDATA[($F{dip_sesso}.equals("M")?"Il sottoscritto ":"La sottoscritta ")+
 $F{dip_nominativo}.trim() + " DICHIARA di essere a conoscenza delle conseguenze civili e penali ai sensi dell'art. 76 DPR 445/2000 per coloro che rendono dichiarazioni non veritiere."]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-58" style="TNR9" x="11" y="29" width="491" height="39" uuid="39e3715f-8716-4714-9133-326d5fbd50e1"/>
+					<reportElement key="textField-58" style="TNR9" x="11" y="34" width="491" height="39" uuid="39e3715f-8716-4714-9133-326d5fbd50e1"/>
 					<textElement textAlignment="Justified"/>
 					<textFieldExpression><![CDATA[($F{dip_sesso}.equals("M")?"Il sottoscritto ":"La sottoscritta ")+
 $F{dip_nominativo}.trim() + " prende atto, ai sensi dell'art.13 della Legge 196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali."]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-20" style="SSHG8" positionType="FixRelativeToBottom" x="5" y="72" width="502" height="26" isRemoveLineWhenBlank="true" forecolor="#FF0000" uuid="5830341e-ac25-42ca-b2e9-68bf3d187452">
+					<reportElement key="staticText-20" style="SSHG8" positionType="FixRelativeToBottom" x="5" y="77" width="502" height="26" isRemoveLineWhenBlank="true" forecolor="#FF0000" uuid="5830341e-ac25-42ca-b2e9-68bf3d187452">
 						<printWhenExpression><![CDATA[new Boolean($F{stato_domanda}.equals("SALVATAGGIO_DIP"))]]></printWhenExpression>
 					</reportElement>
 					<box leftPadding="4"/>
@@ -453,8 +453,7 @@ new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Data Domanda: "+
-(new SimpleDateFormat("dd/MM/yyyy")).format($F{data_domanda})]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Data Domanda: "+$F{data_domanda}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField-27" style="TNR10" positionType="Float" x="8" y="18" width="189" height="15" uuid="ca1f4f1d-7ae1-4aa7-9d25-e244e7e3925b"/>
