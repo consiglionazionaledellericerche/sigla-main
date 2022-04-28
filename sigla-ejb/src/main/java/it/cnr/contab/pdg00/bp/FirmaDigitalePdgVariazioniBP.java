@@ -71,6 +71,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -433,7 +434,16 @@ public class FirmaDigitalePdgVariazioniBP extends
     public StorageObject getNodeFileFirmato(StorageObject nodePdf) throws ApplicationException {
         if (isTestSession())
             return null;
-        List<StorageObject> firmati = pdgVariazioniService.getRelationshipFromTarget(nodePdf.getKey(), SIGLAStoragePropertyNames.R_CNR_SIGNEDDOCUMENT.value());
+        List<StorageObject> firmati = Collections.emptyList();
+        try {
+            firmati = pdgVariazioniService.getRelationshipFromTarget(nodePdf.getKey(), SIGLAStoragePropertyNames.R_CNR_SIGNEDDOCUMENT.value());
+        } catch (Exception _ex) {
+            final String parentPath = nodePdf.getPath().substring(0, nodePdf.getPath().lastIndexOf(StorageDriver.SUFFIX));
+            firmati = pdgVariazioniService.getChildren(pdgVariazioniService.getStorageObjectByPath(parentPath).getKey())
+                    .stream()
+                    .filter(storageObject -> pdgVariazioniService.hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value()))
+                    .collect(Collectors.toList());
+        }
         if (firmati.size() == 1)
             return firmati.get(0);
         else
@@ -740,7 +750,8 @@ public class FirmaDigitalePdgVariazioniBP extends
         String nomeFileFirmato = pdgVariazioneDocumentNode.<String>getPropertyValue(StoragePropertyNames.NAME.value())
                                     .replace(".pdf", ".signed.pdf");
         SignP7M signP7M = new SignP7M(
-                pdgVariazioneDocumentNode.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
+                Optional.ofNullable(pdgVariazioneDocumentNode.<String>getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()))
+                        .orElse(pdgVariazioneDocumentNode.getKey()),
                 firmaOTPBulk.getUserName(),
                 firmaOTPBulk.getPassword(),
                 firmaOTPBulk.getOtp(),

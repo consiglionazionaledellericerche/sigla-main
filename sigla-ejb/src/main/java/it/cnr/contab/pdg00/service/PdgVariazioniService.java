@@ -204,8 +204,13 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                             return true;
                         }
                     })
-                    .map(storageObject -> storageObject.<BigInteger>getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
-                    .map(BigInteger::intValue)
+                    .map(storageObject -> storageObject.getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
+                    .map(o -> {
+                        if (o instanceof BigInteger) {
+                            return ((BigInteger)o).intValue();
+                        }
+                        return new BigInteger(String.valueOf(o)).intValue();
+                    })
                     .collect(Collectors.toList());
         } else {
             StringBuffer query = new StringBuffer("select var.cmis:objectId, ");

@@ -23,26 +23,9 @@
  */
 package it.cnr.contab.varstanz00.comp;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -55,30 +38,15 @@ import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.CdrHome;
-import it.cnr.contab.config00.sto.bulk.CdrKey;
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.CdsHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
-import it.cnr.contab.prevent00.bulk.V_assestato_residuoBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resHome;
+import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
 import it.cnr.contab.progettiric00.comp.RimodulazioneNonApprovataException;
@@ -92,14 +60,9 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrHome;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.contab.varstanz00.bulk.*;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -110,19 +73,25 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLExceptionHandler;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author mspasiano
@@ -383,7 +352,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			if (clause == null) clause = ((OggettoBulk)elemento_voce).buildFindClauses(null);
 
 			boolean isProgettoWithPianoEconomico = optProgetto.map(ProgettoBulk::isPianoEconomicoRequired).orElse(Boolean.FALSE);
-			String columnMapName = isProgettoWithPianoEconomico?"V_ELEMENTO_VOCE_PDG_SPE_PIAECO":"V_ELEMENTO_VOCE_PDG_SPE";
+
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			//String columnMapName = isProgettoWithPianoEconomico?"V_ELEMENTO_VOCE_PDG_SPE_PIAECO":"V_ELEMENTO_VOCE_PDG_SPE";
+			String columnMapName = "V_ELEMENTO_VOCE_PDG_SPE";
 
 			SQLBuilder sql = getHome(userContext, elemento_voce, columnMapName).createSQLBuilder();
 
@@ -417,12 +392,18 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				});
 			}
 
+			/**
+			 * Gestione disattivata su richiesta di Claudia Rosati che richiedeva che dovevano essere visualizzate le voci di piano economico
+			 * tenendo in considerazione anche della rimodulazione alla quale si appoggia la variazione
+			 */
+			/*
 			if (isProgettoWithPianoEconomico) {
-				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo*/
+				/*Limito la ricerca alle sole voci associate al progetto per l'anno del residuo
 				sql.addSQLClause(FindClause.AND, columnMapName + ".PG_PROGETTO_ASSOCIATO", SQLBuilder.EQUALS, optProgetto.get().getPg_progetto());
 				sql.addSQLClause(FindClause.AND, columnMapName + ".ESERCIZIO_PIANO_ASSOCIATO", SQLBuilder.EQUALS, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
 			}
-				//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
+			*/
+			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
 				optProgetto.orElseThrow(() -> new ApplicationException("Errore: Progetto non valorizzato sulla riga della variazione!"));
 

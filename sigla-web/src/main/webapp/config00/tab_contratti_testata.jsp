@@ -232,7 +232,7 @@
 						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 						"Accertato",
 						"javascript:submitForm('doVisualizzaDocContEtr')", 
-						"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+						"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 						bp.getParentRoot().isBootstrap() ? "Accertato" : "Visualizza gli accertamenti associati al contratto", 
 						((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContEtrButtonEnabled(), 
 						bp.getParentRoot().isBootstrap()); %>
@@ -244,7 +244,7 @@
 						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 						"Impegnato",
 						"javascript:submitForm('doVisualizzaDocContSpe')", 
-						"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+						"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 						bp.getParentRoot().isBootstrap() ? "Impegnato" : "Visualizza gli impegni associati al contratto", 
 						((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContSpeButtonEnabled(), 
 						bp.getParentRoot().isBootstrap()); %>
@@ -256,7 +256,7 @@
 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 							"Commesse associate",
 							"javascript:submitForm('doVisualizzaDocContForCommessaContratto')", 
-							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 							bp.getParentRoot().isBootstrap() ? "Commesse associate" : "Visualizza le commesse associate al contratto", 
 							((CRUDConfigAnagContrattoBP)bp).isVisualizzaCommessaButtonEnabled(), 
 							bp.getParentRoot().isBootstrap()); %>
@@ -271,7 +271,7 @@
 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 							"Liquidato Entrate",
 							"javascript:submitForm('doVisualizzaDocammContEtr')", 
-							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 							bp.getParentRoot().isBootstrap() ? "Liquidato Entrate" : "Visualizza i documenti amministrativi associati al contratto", 
 							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContEtrButtonEnabled(), 
 							bp.getParentRoot().isBootstrap()); %>
@@ -284,7 +284,7 @@
 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 							"Liquidato Spese",
 							"javascript:submitForm('doVisualizzaDocammContSpe')", 
-							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 							bp.getParentRoot().isBootstrap() ? "Liquidato Spese" : "Visualizza  i documenti amministrativi associati al contratto", 
 							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContSpeButtonEnabled(), 
 							bp.getParentRoot().isBootstrap()); %>
@@ -300,7 +300,7 @@
 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 							"Incassato",
 							"javascript:submitForm('doVisualizzaDoccontContEtr')", 
-							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 							bp.getParentRoot().isBootstrap() ? "Incassato" : "Visualizza le reversali associati al contratto", 
 							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContEtrButtonEnabled(), 
 							bp.getParentRoot().isBootstrap()); %>
@@ -313,7 +313,7 @@
 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
 							"Pagato",
 							"javascript:submitForm('doVisualizzaDoccontContSpe')", 
-							"btn-secondary btn-outline-primary btn-title btn-block faa-parent animated-hover",
+							"btn-outline-primary btn-title btn-block faa-parent animated-hover",
 							bp.getParentRoot().isBootstrap() ? "Pagato" : "Visualizza i mandati associati al contratto", 
 							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContSpeButtonEnabled(), 
 							bp.getParentRoot().isBootstrap()); %>

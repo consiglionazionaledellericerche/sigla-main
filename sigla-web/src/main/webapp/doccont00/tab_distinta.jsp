@@ -76,7 +76,7 @@ function doScaricaFirmato() {
                             bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
                             "Visualizza dettagli totali",
                             "javascript:submitForm('doVisualizzaDettagliTotali')",
-                            "btn-primary btn-outline-primary btn-title",
+                            "btn-outline-primary btn-title",
                             bp.isVisualizzaDettagliTotaliButtonEnabled(),
                             bp.getParentRoot().isBootstrap()); %>
                 </td>
@@ -109,7 +109,7 @@ function doScaricaFirmato() {
                          bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
                          "Visualizza dettagli totali trasmessi",
                          "javascript:submitForm('doVisualizzaDettagliTotaliTrasmessi')",
-                         "btn-primary btn-outline-primary btn-title",
+                         "btn-outline-primary btn-title",
                          bp.isVisualizzaDettagliTotaliTrasmessiButtonEnabled(),
                          bp.getParentRoot().isBootstrap()); %>
                 </td>

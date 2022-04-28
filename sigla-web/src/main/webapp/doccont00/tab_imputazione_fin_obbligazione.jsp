@@ -23,7 +23,7 @@
                     bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
                     bp.getParentRoot().isBootstrap() ?"Conferma" : null,
                     "javascript:submitForm('doCaricaLineeAttivita')",
-                    "btn-secondary btn-outline-secondary btn-title",
+                    "btn-outline-secondary btn-title",
                     obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
                     bp.getParentRoot().isBootstrap()); %>
             <% Button.write(out,
@@ -31,7 +31,7 @@
                     bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-lizard-o fa-flip-horizontal text-primary" : "img/zoom16.gif",
                     null,
                     "javascript:submitForm('doVisualizzaSpeseCdr')",
-                    "btn-secondary btn-outline-secondary btn-title",
+                    "btn-outline-secondary btn-title",
                     "Prospetto situazione spese",
                     bp.isVisualizzaSpeseCdrButtonEnabled(),
                     bp.getParentRoot().isBootstrap()); %>
@@ -50,7 +50,7 @@
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
                         bp.getParentRoot().isBootstrap() ?"Conferma" : null,
                         "javascript:submitForm('doConfermaLineeAttivita')",
-                        "btn-secondary btn-outline-secondary btn-title",
+                        "btn-outline-secondary btn-title",
                         obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
                         bp.getParentRoot().isBootstrap()); %>
         </td>

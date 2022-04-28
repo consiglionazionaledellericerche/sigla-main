@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr.si.sigla</groupId>
-	<version>6.4.14-SNAPSHOT</version>
+	<version>6.4.21-SNAPSHOT</version>
 	<artifactId>sigla-parent</artifactId>
 	<description>Sistema Informativo per la Gestione delle Linee di Attività</description>
 	<packaging>pom</packaging>
@@ -44,14 +44,14 @@
 		<sdi.fatturapa.version>0.0.1</sdi.fatturapa.version>
 		<ws.client.version>0.0.5</ws.client.version>
 		<spring.version>5.2.5.RELEASE</spring.version>
-		<jada.version>7.0.25</jada.version>
+		<jada.version>7.0.26</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.directory>target</project.build.directory>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.25</pdfbox.version>
-		<storage.cloud.version>2.0.16</storage.cloud.version>
+		<storage.cloud.version>2.0.18</storage.cloud.version>
 		<jackson.version>2.13.0</jackson.version>
 		<commons-io.version>2.7</commons-io.version>
 		<git.changelog.maven.plugin.version>1.61</git.changelog.maven.plugin.version>
