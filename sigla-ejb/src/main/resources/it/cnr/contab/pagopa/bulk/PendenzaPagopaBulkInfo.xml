@@ -228,6 +228,7 @@
 			name="find_elemento_voce"
 			property="elemento_voce"
 			inputType="SEARCHTOOL"
+			formName="searchtool"
 			enabledOnInsert="true"
 			enabledOnEdit="true"
 			enabledOnSearch="true"
