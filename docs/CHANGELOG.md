@@ -1,5 +1,9 @@
-## Release 6.4.26  -- _April 28, 2022_ 
+## Release 6.4.27  -- _April 29, 2022_ 
 **Changes**
+
+>**Aggiunto riferimento avviso pagoPA ai sospesi**
+>
+>[ad8dc495503f5af](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ad8dc495503f5af) gianfranco.gasparro *April 29, 2022*
 
 >**Fix anomalie varie pagoPA**
 >
