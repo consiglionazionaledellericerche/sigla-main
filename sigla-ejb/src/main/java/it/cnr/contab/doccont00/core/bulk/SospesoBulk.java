@@ -160,7 +160,7 @@ public class SospesoBulk extends SospesoBase {
     }
 
     private String getAvvisoPagoPAFromSospesoFiglio(){
-        if (getSospesiFigliColl() != null || getSospesiFigliColl().size() == 0)
+        if (getSospesiFigliColl() == null || getSospesiFigliColl().size() == 0)
             return null;
         SospesoBulk sospeso = (SospesoBulk)getSospesiFigliColl().get(0);
         return sospeso.getCd_avviso_pagopa();
