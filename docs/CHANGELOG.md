@@ -1,3 +1,15 @@
+## Release 6.4.28  -- _April 29, 2022_ 
+**Changes**
+
+>**Gestito sdoppia sospeso per avviso**
+>
+>[e271b071de0d76b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e271b071de0d76b) gianfranco.gasparro *April 29, 2022*
+
+>**Gestito sdoppia sospeso per avviso**
+>
+>[9231f646469dd9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9231f646469dd9c) gianfranco.gasparro *April 29, 2022*
+
+
 ## Release 6.4.27  -- _April 29, 2022_ 
 **Changes**
 
