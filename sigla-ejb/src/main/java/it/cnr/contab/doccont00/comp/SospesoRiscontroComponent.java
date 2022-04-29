@@ -2890,6 +2890,7 @@ public class SospesoRiscontroComponent extends CRUDComponent implements ISospeso
                                     uoPendenza = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(uoPendenza);
                                     sospesoFiglio.setCds_origine(uoPendenza.getUnita_padre());
                                     sospesoFiglio.setStato_sospeso(SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                                    sospesoFiglio.setCd_avviso_pagopa(pendenza.getCdAvviso());
                                     sospesoFiglio.setToBeUpdated();
                                     super.updateBulk(userContext, sospesoFiglio);
                                 }

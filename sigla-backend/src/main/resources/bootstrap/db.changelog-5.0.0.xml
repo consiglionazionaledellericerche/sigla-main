@@ -5109,4 +5109,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-avviso_pagopa-sospeso">
+        <addColumn tableName="SOSPESO">
+            <column name="cd_avviso_pagopa" remarks="Codice Avviso pagoPA" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

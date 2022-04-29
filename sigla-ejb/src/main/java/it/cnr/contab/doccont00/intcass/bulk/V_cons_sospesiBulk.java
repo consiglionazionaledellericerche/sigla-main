@@ -77,8 +77,17 @@ public class V_cons_sospesiBulk extends OggettoBulk implements Persistent{
  
 //    DS_STATO_SOSPESO VARCHAR(35)
 	private java.lang.String ds_stato_sospeso;
- 
-//    IM_ASS_MOD_1210 DECIMAL(22,0)
+	private java.lang.String cd_avviso_pagopa;
+
+	public String getCd_avviso_pagopa() {
+		return cd_avviso_pagopa;
+	}
+
+	public void setCd_avviso_pagopa(String cd_avviso_pagopa) {
+		this.cd_avviso_pagopa = cd_avviso_pagopa;
+	}
+
+	//    IM_ASS_MOD_1210 DECIMAL(22,0)
 	private java.math.BigDecimal im_ass_mod_1210;
  
 //    CD_SOSPESO_PADRE VARCHAR(24)
