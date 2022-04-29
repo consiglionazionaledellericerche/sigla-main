@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sospesiasscds" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sospesiasscds" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="6b204401-70bb-408f-9274-99906a114321">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -48,6 +48,7 @@ CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 	<field name="TI_CC_BI" class="java.lang.String"/>
 	<field name="CAUSALE" class="java.lang.String"/>
 	<field name="DS_ANAGRAFICO" class="java.lang.String"/>
+	<field name="CD_AVVISO_PAGOPA" class="java.lang.String"/>
 	<variable name="Im_disponibile_data" class="java.math.BigDecimal" resetType="Group" resetGroup="Data" calculation="Sum">
 		<variableExpression><![CDATA[$F{DISPONIBILE}]]></variableExpression>
 	</variable>
@@ -68,7 +69,7 @@ CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 		<groupFooter>
 			<band height="17" splitType="Stretch">
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9B" x="4" y="3" width="100" height="14"/>
+					<reportElement key="textField" style="TNR9B" x="4" y="3" width="100" height="14" uuid="3625a266-ca2f-4ebc-ae75-5f9eebce3a36"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -76,17 +77,17 @@ CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale del "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_REGISTRAZIONE})]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Totale del "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_REGISTRAZIONE})]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9B" x="212" y="3" width="68" height="14"/>
+					<reportElement key="textField" style="TNR9B" x="212" y="3" width="68" height="14" uuid="ddc613d5-3982-444c-a9e6-574fa5a20437"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Im_disponibile_data}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Im_disponibile_data}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9B" x="285" y="3" width="68" height="14"/>
+					<reportElement key="textField" style="TNR9B" x="285" y="3" width="68" height="14" uuid="dd8dbc60-43d1-4b73-b443-13c6b7aa67a4"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Im_sospeso_data}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Im_sospeso_data}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -100,43 +101,41 @@ CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 	<pageHeader>
 		<band height="112" splitType="Stretch">
 			<image isUsingCache="false" onErrorType="Blank">
-				<reportElement key="image-1" x="2" y="3" width="497" height="40"/>
+				<reportElement key="image-1" x="2" y="3" width="497" height="40" uuid="01993641-bb64-4b36-acd7-8745b7b8dd6d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement key="staticText-1" style="TNR16B" x="261" y="52" width="261" height="24"/>
+				<reportElement key="staticText-1" style="TNR16B" x="261" y="52" width="261" height="24" uuid="ffb160e5-e3a1-4276-83e8-76342019a673"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Stampa sospesi CNR assegnati ai Cds]]></text>
 			</staticText>
 			<line direction="BottomUp">
-				<reportElement key="line-1" x="4" y="80" width="775" height="1"/>
+				<reportElement key="line-1" x="4" y="80" width="775" height="1" uuid="cc130a3f-553c-4dca-a425-9c94c7c39510"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-2" style="TNR10B" x="4" y="83" width="35" height="28"/>
+				<reportElement key="staticText-2" style="TNR10B" x="4" y="83" width="35" height="28" uuid="6457ef3d-e4d6-4984-9f93-d64ee9ac3dc2"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Entrata
 /Spesa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-3" style="TNR10B" x="41" y="84" width="130" height="14"/>
+				<reportElement key="staticText-3" style="TNR10B" x="41" y="84" width="130" height="14" uuid="525f200e-1a24-498e-a4e5-f3e418efc87d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -147,7 +146,7 @@ CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 				<text><![CDATA[Codice sospeso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" style="TNR10B" x="173" y="84" width="37" height="28"/>
+				<reportElement key="staticText-4" style="TNR10B" x="173" y="84" width="37" height="28" uuid="44356bcf-74a9-424c-bcc7-2b5164b10def"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -159,7 +158,7 @@ CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 origine]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-5" style="TNR10B" x="212" y="84" width="68" height="28"/>
+				<reportElement key="staticText-5" style="TNR10B" x="212" y="84" width="68" height="28" uuid="a0662d25-6de5-4593-b793-7bd674bd62c5"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -171,7 +170,7 @@ origine]]></text>
 disponibile ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-6" style="TNR10B" x="285" y="84" width="68" height="28"/>
+				<reportElement key="staticText-6" style="TNR10B" x="285" y="84" width="68" height="28" uuid="7a42c31b-b0a3-476c-bc92-62d2b62f1236"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -183,7 +182,7 @@ disponibile ]]></text>
 sospeso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-8" style="TNR10B" x="355" y="84" width="57" height="28"/>
+				<reportElement key="staticText-8" style="TNR10B" x="355" y="84" width="57" height="28" uuid="d4b7ae46-287d-4b6e-95c5-4c4c0474a704"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -195,30 +194,38 @@ sospeso]]></text>
 banca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-9" style="TNR10B" x="414" y="84" width="144" height="14"/>
+				<reportElement key="staticText-9" style="TNR10B" x="414" y="84" width="144" height="14" uuid="f50f344a-cc13-4846-b190-9f680926b3e3"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Causale]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-10" style="TNR10B" x="560" y="84" width="220" height="14"/>
+				<reportElement key="staticText-10" style="TNR10B" x="560" y="84" width="140" height="14" uuid="ebd5522a-8b9a-47a1-82b8-9a32a64af949"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Descrizione]]></text>
 			</staticText>
 			<line direction="BottomUp">
-				<reportElement key="line-2" x="4" y="110" width="775" height="1"/>
+				<reportElement key="line-2" x="4" y="110" width="775" height="1" uuid="4379fb7f-1920-4936-b8f0-a76d065ff403"/>
 			</line>
+			<staticText>
+				<reportElement key="staticText-10" style="TNR10B" x="701" y="84" width="80" height="14" uuid="396465b7-8243-4588-829a-39995736c86a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[Descrizione]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -227,7 +234,7 @@ banca]]></text>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR8" x="4" y="2" width="33" height="14"/>
+				<reportElement key="textField" style="TNR8" x="4" y="2" width="33" height="14" uuid="581e98ec-9cd1-4c7a-880c-46784d31fc3f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -235,21 +242,20 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{TI_ENTRATA_SPESA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TI_ENTRATA_SPESA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR8" x="41" y="2" width="130" height="14"/>
+				<reportElement key="textField" style="TNR8" x="41" y="2" width="130" height="14" uuid="66d50e36-62b1-45d0-a6f7-0180588b673b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_SOSPESO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CD_SOSPESO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR8" x="173" y="2" width="37" height="14"/>
+				<reportElement key="textField" style="TNR8" x="173" y="2" width="37" height="14" uuid="04520aa1-0466-4485-9bd4-52d13dc2603d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -257,10 +263,10 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CDS_ORIGINE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CD_CDS_ORIGINE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR8" x="212" y="2" width="68" height="14"/>
+				<reportElement key="textField" style="TNR8" x="212" y="2" width="68" height="14" uuid="f048b716-a56c-4993-8e97-d8f5875a9f65"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -268,10 +274,10 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{DISPONIBILE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DISPONIBILE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField-4" style="TNR8" x="285" y="2" width="68" height="14"/>
+				<reportElement key="textField-4" style="TNR8" x="285" y="2" width="68" height="14" uuid="e03f9629-90f4-47c5-a121-9b18a231d92e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -279,10 +285,10 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_SOSPESO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{IM_SOSPESO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR8" x="355" y="2" width="57" height="14"/>
+				<reportElement key="textField" style="TNR8" x="355" y="2" width="57" height="14" uuid="ee14b447-799b-4c06-8f2c-9f50dc4a8ab6"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -290,29 +296,37 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_CC_BI}.compareTo("B")==0?"Banca d'Italia":"C/C")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{TI_CC_BI}.compareTo("B")==0?"Banca d'Italia":"C/C")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR8" positionType="Float" stretchType="RelativeToTallestObject" x="414" y="2" width="144" height="14"/>
+				<reportElement key="textField" style="TNR8" positionType="Float" stretchType="RelativeToTallestObject" x="414" y="2" width="144" height="14" uuid="800e0062-595e-45e3-88a6-9a954488ce36"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CAUSALE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CAUSALE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="560" y="2" width="220" height="14"/>
+				<reportElement key="textField" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="560" y="2" width="140" height="14" uuid="b7785c36-6f81-4dd0-b843-cb296612473c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_ANAGRAFICO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DS_ANAGRAFICO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="701" y="2" width="80" height="14" uuid="4bad14cb-6445-4715-b6c9-60268df358d3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{CD_AVVISO_PAGOPA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -322,7 +336,7 @@ banca]]></text>
 	<pageFooter>
 		<band height="21" splitType="Stretch">
 			<textField evaluationTime="Report" pattern="dd/MM/yyyy" isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNR10" x="6" y="3" width="103" height="17"/>
+				<reportElement key="textField-1" style="TNR10" x="6" y="3" width="103" height="17" uuid="36b2969b-23b7-4e8f-a756-142b780902a5"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -330,10 +344,10 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" style="TNR10" x="683" y="4" width="73" height="17"/>
+				<reportElement key="textField-2" style="TNR10" x="683" y="4" width="73" height="17" uuid="18db9bcf-c75a-491d-b56e-d5fb26ae66e4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -341,10 +355,10 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField-3" style="TNR10" x="756" y="4" width="25" height="17"/>
+				<reportElement key="textField-3" style="TNR10" x="756" y="4" width="25" height="17" uuid="069e4021-455e-461a-bd13-1d157020a1c3"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -352,25 +366,24 @@ banca]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
 		<band height="17" splitType="Stretch">
 			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR9B" x="210" y="2" width="70" height="14"/>
+				<reportElement key="textField" style="TNR9B" x="210" y="2" width="70" height="14" uuid="ddb1d53f-2231-46cc-b34e-666412c9f17a"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_disponibile}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Totale_disponibile}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR9B" x="285" y="2" width="68" height="14"/>
+				<reportElement key="textField" style="TNR9B" x="285" y="2" width="68" height="14" uuid="c32a5f86-1f44-4db9-97d2-3fc681b355f2"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_sospeso}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Totale_sospeso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-11" style="TNR9B" x="2" y="1" width="137" height="15"/>
-				<textElement/>
+				<reportElement key="staticText-11" style="TNR9B" x="2" y="1" width="137" height="15" uuid="ab8490e6-ca34-4353-9a8a-669b9f92ba01"/>
 				<text><![CDATA[Totale Generale]]></text>
 			</staticText>
 		</band>
