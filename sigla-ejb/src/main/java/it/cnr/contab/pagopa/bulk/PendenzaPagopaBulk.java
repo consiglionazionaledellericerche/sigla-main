@@ -132,7 +132,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 			setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
 		}
 
-		return super.initializeForInsert(bp,context);
+		return super.initializeForSearch(bp,context);
 	}
 
 	@Override

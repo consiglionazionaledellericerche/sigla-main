@@ -348,6 +348,7 @@
             inputCssClass=" w-50"
             inputType="TEXT"
             label="Avviso PagoPA"
+            enabledOnEdit="false"
             enabledOnSearch="true"
             caseSensitiveSearch="false"/>
     <formFieldProperty
