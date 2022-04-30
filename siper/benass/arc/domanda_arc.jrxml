@@ -140,7 +140,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="provinciaAeroporto"/>
 		<fieldDescription><![CDATA[provinciaAeroporto]]></fieldDescription>
 	</field>
-	<field name="indicatoreIseeAnno1" class="java.math.BigDecimal">
+	<field name="indicatoreIseeAnno1" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="indicatoreIseeAnno1"/>
 		<fieldDescription><![CDATA[indicatoreIseeAnno1]]></fieldDescription>
 	</field>
@@ -156,7 +156,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="noteGeneriche"/>
 		<fieldDescription><![CDATA[noteGeneriche]]></fieldDescription>
 	</field>
-	<field name="indicatoreIseeAnno2" class="java.math.BigDecimal">
+	<field name="indicatoreIseeAnno2" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="indicatoreIseeAnno2"/>
 		<fieldDescription><![CDATA[indicatoreIseeAnno2]]></fieldDescription>
 	</field>
@@ -309,7 +309,7 @@ $F{dip_nominativo}.trim() + " prende atto, ai sensi dell'art.13 della Legge 196/
 					<reportElement key="textField-60" style="TNR10" x="11" y="27" width="493" height="22" uuid="f4921654-a841-4ad3-9302-fbb8056d2295"/>
 					<textElement textAlignment="Justified"/>
 					<textFieldExpression><![CDATA[$F{indicatoreIseeAnno1}!=null?
-"L'indicatore della situazione economica equivalente (ISEE ORDINARIO) per l'anno " +$F{ban_anno_dichiarazione_redditi} + " è "+new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno1}):
+"L'indicatore della situazione economica equivalente (ISEE ORDINARIO) per l'anno è "+$F{indicatoreIseeAnno1}:
 ($F{ban_anno_inizio_val}<$F{ban_anno_fine_val}&& $F{indicatoreIseeAnno2}!=null)?
 "L'indicatore della situazione economica equivalente (ISEE ORDINARIO) per l'anno "+($F{ban_anno_dichiarazione_redditi})+" non risulta inserito nell'apposita anagrafica (oppure non risulta confermato)":
 ($F{ban_anno_inizio_val}<$F{ban_anno_fine_val}&& $F{indicatoreIseeAnno2}==null)?
@@ -317,7 +317,7 @@ $F{dip_nominativo}.trim() + " prende atto, ai sensi dell'art.13 della Legge 196/
 + " DICHIARA che per gli anni "+$F{ban_anno_dichiarazione_redditi}+ " e " + ($F{ban_anno_dichiarazione_redditi}.intValue()+1)+
 " non ha inserito, nell'apposita anagrafica, alcuna dichiarazione ISEE ORDINARIO (oppure non risulta confermata). Pertanto, ai fini della redazione della graduatoria e della determinazione dell'importo spettante sarà considerato un ISEE ORDINARIO presunto della fascia massima.":
 ($F{dip_sesso}.equals("M")?"Il sottoscritto":"La sottoscritta")
-+ " DICHIARA che per l'anno "+$F{ban_anno_dichiarazione_redditi}+
++ " DICHIARA che per " +$F{ban_anno_dichiarazione_redditi} + " l'anno "+$F{ban_anno_dichiarazione_redditi}+
 " non ha inserito, nell'apposita anagrafica, alcuna dichiarazione ISEE ORDINARIO (oppure non risulta confermata). Pertanto, ai fini della redazione della graduatoria e della determinazione dell'importo spettante sarà considerato un ISEE ORDINARIO presunto della fascia massima."]]></textFieldExpression>
 				</textField>
 			</band>
@@ -332,7 +332,7 @@ $F{ban_anno_inizio_val}<$F{ban_anno_fine_val} && ($F{indicatoreIseeAnno1}!=null 
 					<textElement textAlignment="Justified"/>
 					<textFieldExpression><![CDATA[$F{indicatoreIseeAnno2}!=null?
 "L'indicatore della situazione economica equivalente (ISEE ORDINARIO) per l'anno "+($F{ban_anno_dichiarazione_redditi}.intValue()+1)+" è "+
-new java.text.DecimalFormat("€ #,##0.00").format($F{indicatoreIseeAnno2}):
+$F{indicatoreIseeAnno2}:
 "L'indicatore della situazione economica equivalente (ISEE ORDINARIO) per l'anno "+($F{ban_anno_dichiarazione_redditi}.intValue()+1)+" non risulta inserito nell'apposita anagrafica (oppure non risulta confermato)"]]></textFieldExpression>
 				</textField>
 			</band>
