@@ -184,7 +184,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["$F{nameCall}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nameCall}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="621" splitType="Stretch">
