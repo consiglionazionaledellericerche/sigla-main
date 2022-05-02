@@ -24,6 +24,15 @@
 	<field name="anno" class="java.lang.String">
 		<fieldDescription><![CDATA[anno]]></fieldDescription>
 	</field>
+	<field name="annoFine" class="java.lang.String">
+		<fieldDescription><![CDATA[annoFine]]></fieldDescription>
+	</field>
+	<field name="tipoLaboratorio" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoLaboratorio]]></fieldDescription>
+	</field>
+	<field name="nameCall" class="java.lang.String">
+		<fieldDescription><![CDATA[nameCall]]></fieldDescription>
+	</field>
 	<field name="title" class="java.lang.String">
 		<fieldDescription><![CDATA[title]]></fieldDescription>
 	</field>
@@ -152,7 +161,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["LABORATORI:  " + $F{anno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["LABORATORI "+$F{tipoLaboratorio}+":  " + $F{anno}+" - "+$F{annoFine}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="621" splitType="Stretch">
@@ -1351,7 +1360,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<paragraph lineSpacing="Single"/>
 					</textElement>
-					<text><![CDATA[Name]]></text>
+					<text><![CDATA[Surname Name]]></text>
 				</staticText>
 				<subreport runToBottom="false">
 					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="531" height="13" uuid="8a89671f-4de8-4e84-afae-02ccd0ae7cf9"/>
@@ -1685,19 +1694,79 @@
 				<textFieldExpression><![CDATA[$F{bibliography}]]></textFieldExpression>
 			</textField>
 		</band>
+		<band height="75" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="21" y="10" width="259" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATE"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="21" y="41" width="259" height="16" uuid="3fb9cc3d-3b9a-42ca-8349-e7dad85269b4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATA"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="283" y="42" width="259" height="16" uuid="6a9ed8ad-2feb-4cb7-aa0a-b0474878fa2c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FIRMA"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="283" y="11" width="259" height="16" uuid="0fd6a375-d9df-4ea8-8c29-575393fd271a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SIGNATURE"]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<pageFooter>
 		<band height="72" splitType="Stretch">
-			<staticText>
-				<reportElement x="21" y="10" width="161" height="21" uuid="5934f960-b2b3-4b06-b944-d7ea3ab23f31">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
-				<text><![CDATA[Data]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="383" y="10" width="161" height="21" uuid="5ffc1b5f-8cdb-4640-9187-3d1c32c336b6"/>
-				<text><![CDATA[Firma]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="233" y="30" width="100" height="30" uuid="61ca4d08-1b5e-4347-964a-b4e8ddcdb557"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
