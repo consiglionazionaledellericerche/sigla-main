@@ -24,10 +24,10 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements Configurazione_cnrComponentSession {
-    public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext userContext, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
             return (it.cnr.contab.config00.bulk.Configurazione_cnrBulk) invoke("getConfigurazione", new Object[]{
-                    param0,
+                    userContext,
                     param1,
                     param2,
                     param3,

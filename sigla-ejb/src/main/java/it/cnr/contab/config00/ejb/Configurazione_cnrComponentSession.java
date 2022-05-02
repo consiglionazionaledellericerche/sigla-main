@@ -26,7 +26,18 @@ import java.sql.Timestamp;
 
 @Remote
 public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.GenericComponentSession {
-    it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    /**
+     *
+     * @param userContext
+     * @param esercizio
+     * @param unita_funzionale
+     * @param chiave_primaria
+     * @param chiave_secondaria
+     * @return Ritorna la configurazione in base ai parametri richiesti,
+     * @throws it.cnr.jada.comp.ComponentException
+     * @throws java.rmi.RemoteException
+     */
+    it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext userContext, java.lang.Integer esercizio, java.lang.String unita_funzionale, java.lang.String chiave_primaria, java.lang.String chiave_secondaria) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     java.sql.Timestamp getDt01(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
