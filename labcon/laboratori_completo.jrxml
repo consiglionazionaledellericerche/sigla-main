@@ -27,6 +27,9 @@
 	<field name="annoFine" class="java.lang.String">
 		<fieldDescription><![CDATA[annoFine]]></fieldDescription>
 	</field>
+	<field name="stringAnni" class="java.lang.String">
+		<fieldDescription><![CDATA[stringAnni]]></fieldDescription>
+	</field>
 	<field name="tipoLaboratorio" class="java.lang.String">
 		<fieldDescription><![CDATA[tipoLaboratorio]]></fieldDescription>
 	</field>
@@ -1155,6 +1158,25 @@
 				<textFieldExpression><![CDATA["Country: "]]></textFieldExpression>
 			</textField>
 		</band>
+		<band height="30" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="21" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Short curriculum vitae of the project coordinators"]]></textFieldExpression>
+			</textField>
+		</band>
 		<band height="75" splitType="Stretch">
 			<textField isBlankWhenNull="false">
 				<reportElement x="21" y="10" width="521" height="20" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
@@ -1481,6 +1503,24 @@
 				<reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
 			</break>
 		</band>
+		<band height="25" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="21" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Descrition of the joint lab project for "+$F{stringAnni}+" years"]]></textFieldExpression>
+			</textField>
+		</band>
 		<band height="75" splitType="Stretch">
 			<textField isBlankWhenNull="false">
 				<reportElement x="21" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
@@ -1566,7 +1606,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["WORKPLAN: "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["WORKPLAN AND METHODOLOGY: "]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
 				<reportElement style="table" x="21" y="30" width="521" height="30" uuid="2c2cb100-2ab4-421b-9250-0b5d5c0e2267">
