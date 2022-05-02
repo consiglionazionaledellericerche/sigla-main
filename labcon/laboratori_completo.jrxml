@@ -151,9 +151,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="80" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement x="23" y="39" width="521" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<reportElement x="21" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -165,6 +167,24 @@
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["LABORATORI "+$F{tipoLaboratorio}+":  " + $F{anno}+" - "+$F{annoFine}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="40" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="21" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$F{nameCall}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="621" splitType="Stretch">
