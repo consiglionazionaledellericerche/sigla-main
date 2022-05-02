@@ -1503,7 +1503,8 @@
 				<reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
 			</break>
 		</band>
-		<band height="25" splitType="Stretch">
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField isBlankWhenNull="false">
 				<reportElement x="21" y="10" width="521" height="16" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
