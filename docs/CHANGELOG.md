@@ -1,3 +1,43 @@
+## Release 6.4.29  -- _April 30, 2022_ 
+**Changes**
+
+>**Add avviso pagoPA su Gestione Sospesi/Riscontro ed aggiunto su stampa sospesi associati a reversali**
+>
+>[d6daa95cd13e129](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d6daa95cd13e129) gianfranco.gasparro *April 30, 2022*
+
+
+## Release 6.4.28  -- _April 29, 2022_ 
+**Changes**
+
+>**Gestito sdoppia sospeso per avviso**
+>
+>[e271b071de0d76b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e271b071de0d76b) gianfranco.gasparro *April 29, 2022*
+
+>**Gestito sdoppia sospeso per avviso**
+>
+>[9231f646469dd9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9231f646469dd9c) gianfranco.gasparro *April 29, 2022*
+
+
+## Release 6.4.27  -- _April 29, 2022_ 
+**Changes**
+
+>**Aggiunto riferimento avviso pagoPA ai sospesi**
+>
+>[ad8dc495503f5af](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ad8dc495503f5af) gianfranco.gasparro *April 29, 2022*
+
+>**Fix anomalie varie pagoPA**
+>
+>[91ed8aa226ee497](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91ed8aa226ee497) gianfranco.gasparro *April 28, 2022*
+
+
+## Release 6.4.25  -- _April 28, 2022_ 
+**Changes**
+
+>**Aggiunta gestione sospesi in incassi pagoPA**
+>
+>[ac964696cac9097](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac964696cac9097) gianfranco.gasparro *April 28, 2022*
+
+
 ## Release 6.4.24  -- _April 26, 2022_ 
 **Changes**
 

@@ -80,6 +80,30 @@
 			enabledOnSearch="true"
 			label="Codice Contesto Pagamento" />
 	<fieldProperty
+			name="id_riconciliazione"
+			property="id_riconciliazione"
+			inputType="ROTEXT"
+			inputSize="50"
+			maxLength="20"
+			enabledOnSearch="true"
+			label="Id Riconciliazione" />
+	<fieldProperty
+			name="riconciliazione"
+			property="riconciliazione"
+			inputType="ROTEXT"
+			inputSize="100"
+			maxLength="20"
+			enabledOnSearch="true"
+			label="Riconciliazione" />
+	<fieldProperty
+			name="cd_sospeso"
+			property="cd_sospeso"
+			inputType="ROTEXT"
+			inputSize="24"
+			maxLength="20"
+			enabledOnSearch="true"
+			label="Cod. Sospeso" />
+	<fieldProperty
 		name="dtPagamento"
 		property="dtPagamento"
 		inputType="TEXT"
@@ -138,6 +162,10 @@
 		name="dtPagamento"/>
 	<formFieldProperty
 			name="stato" />
+	<formFieldProperty
+			name="cd_sospeso" />
+	<formFieldProperty
+			name="id_riconciliazione" />
 	<columnFieldProperty
 			name="importo" />
 	<columnFieldProperty
@@ -145,15 +173,17 @@
 	<columnFieldProperty
 			name="iuv" />
 	<columnFieldProperty
+			name="stato" />
+	<columnFieldProperty
 		name="iur" />
 	<columnFieldProperty
-		name="ccp" />
+			name="cd_sospeso" />
 	<columnFieldProperty
 			name="rpp" />
 	<columnFieldProperty
 			name="causale" />
 	<columnFieldProperty
-			name="stato" />
+			name="id_riconciliazione" />
 	<findFieldProperty
 			name="iuv" />
 	<findFieldProperty
@@ -174,4 +204,8 @@
 		name="stato" />
 	<findFieldProperty
 		name="dtPagamento" />
+	<findFieldProperty
+			name="cd_sospeso" />
+	<findFieldProperty
+			name="id_riconciliazione" />
 </bulkInfo>

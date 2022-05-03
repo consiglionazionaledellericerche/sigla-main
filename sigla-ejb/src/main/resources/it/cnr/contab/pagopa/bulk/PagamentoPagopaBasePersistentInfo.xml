@@ -112,6 +112,12 @@
 				sqlTypeName="VARCHAR"
 				columnSize="100"
 				nullable="true" />
+		<columnMapping
+				columnName="CD_SOSPESO"
+				propertyName="cd_sospeso"
+				sqlTypeName="VARCHAR"
+				columnSize="24"
+				nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="iur" />
@@ -143,4 +149,6 @@
 			name="id_riconciliazione" />
 	<persistentProperty
 			name="riconciliazione" />
+	<persistentProperty
+			name="cd_sospeso" />
 </SQLPersistentInfo>

@@ -340,6 +340,17 @@
             enabledOnSearch="true"
             readonlyProperty="ROFind_mandato_riaccredito"
             caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cd_avviso_pagopa"
+            property="cd_avviso_pagopa"
+            maxLength="50"
+            inputSize="30"
+            inputCssClass=" w-50"
+            inputType="TEXT"
+            label="Avviso PagoPA"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
     <formFieldProperty
             name="statoText"/>
     <formFieldProperty
@@ -400,7 +411,8 @@
             name="destinazione"/>
     <formFieldProperty
             name="find_mandato_riaccredito"/>
-
+    <formFieldProperty
+            name="cd_avviso_pagopa"/>
     <columnFieldProperty
             name="ti_sospeso_riscontro"/>
     <columnFieldProperty
@@ -430,6 +442,8 @@
             name="tipo_contabilita"/>
     <columnFieldProperty
             name="destinazione"/>
+    <columnFieldProperty
+            name="cd_avviso_pagopa"/>
     <columnSet
             name="SospesiPadre">
         <columnFieldProperty
@@ -481,6 +495,8 @@
                 name="tipo_contabilita"/>
         <columnFieldProperty
                 name="destinazione"/>
+        <columnFieldProperty
+                name="cd_avviso_pagopa"/>
     </columnSet>
 
     <columnSet
@@ -606,6 +622,8 @@
         <columnFieldProperty
                 name="ds_anagrafico"/>
         <columnFieldProperty
+                name="cd_avviso_pagopa"/>
+        <columnFieldProperty
                 name="tipo_contabilita"/>
         <columnFieldProperty
                 name="destinazione"/>
@@ -643,7 +661,8 @@
             name="fl_stornato"/>
     <findFieldProperty
             name="dt_storno"/>
-
+    <findFieldProperty
+            name="cd_avviso_pagopa"/>
 
     <freeSearchSet
             name="SospesiCNR">

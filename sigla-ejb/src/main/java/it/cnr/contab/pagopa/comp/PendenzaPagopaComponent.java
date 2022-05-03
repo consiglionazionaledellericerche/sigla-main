@@ -87,7 +87,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		super.eliminaConBulk(usercontext, oggettobulk);
 	}
 
-	public void riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
+	public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
 		try {
 			MovimentoCassaPagopa movimentoCassaPagopa = new MovimentoCassaPagopa();
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
@@ -98,18 +98,41 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			movimentoCassaPagopa.setSct(movimentoContoEvidenzaBulk.getIdentificativoFlusso());
 			try  {
 				movimentoCassaPagopa = pagopaService.riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
+				logger.info(movimentoCassaPagopa.toString());
 			} catch (HttpClientErrorException.BadRequest e ){
-				movimentoCassaPagopa = null;
+				String error = "pagoPA: Errore durante la chiamata per la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso() +" "+e.getMessage();
+				logger.error(error);
+				SendMail.sendErrorMail("pagoPA: Errore durante la chiamata per la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso(), error);
+				throw handleException(e);
 			}
-			if (movimentoCassaPagopa != null && movimentoCassaPagopa.getRiscossioni() != null && !movimentoCassaPagopa.getRiscossioni().isEmpty()){
+			if (movimentoCassaPagopa.getRiscossioni() != null && !movimentoCassaPagopa.getRiscossioni().isEmpty()){
 				PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
 				for (RiscossioneMovimentoCassaPagopa riscossione : movimentoCassaPagopa.getRiscossioni()){
 					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, riscossione.getIur());
 					pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA.getValue());
 					pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
 					pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
+					pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
+					pagamentoPagopaBulk.setToBeUpdated();
+					super.modificaConBulk(userContext, pagamentoPagopaBulk);
+
+					PendenzaPagopaBulk pendenzaPagopaBulk = new PendenzaPagopaBulk();
+					pendenzaPagopaBulk.setId(pagamentoPagopaBulk.getIdPendenzaPagopa());
+					pendenzaPagopaBulk = (PendenzaPagopaBulk) getHome(userContext, pendenzaPagopaBulk).findByPrimaryKey(pendenzaPagopaBulk);
+					pendenzaPagopaBulk.setStato(PendenzaPagopaBulk.STATO_INCASSATA);
+					pendenzaPagopaBulk.setToBeUpdated();
+					pendenzaPagopaBulk = (PendenzaPagopaBulk) super.modificaConBulk(userContext, pendenzaPagopaBulk);
+					if (movimentoCassaPagopa.getRiscossioni().size() == 1){
+						return pendenzaPagopaBulk;
+					}
 				}
+			} else {
+				String error = "pagoPA: Errore durante la riconciliazione dell'incasso, riscossione non trovata: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso();
+				logger.error(error);
+				SendMail.sendErrorMail("pagoPA: Errore durante riconciliazione dell'incasso, riscossione non trovata: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso(), error);
+				throw new ComponentException(error);
 			}
+			return null;
 		} catch (Throwable t) {
 			String error = "pagoPA: Errore durante la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso() +" "+t.getMessage();
 			logger.error(error);

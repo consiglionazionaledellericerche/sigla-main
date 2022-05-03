@@ -19,6 +19,7 @@ package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -125,9 +126,13 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	}
 
 	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
-		setUnitaOrganizzativa(new Unita_organizzativaBulk());
-		setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
-		return super.initializeForInsert(bp,context);
+		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+		if (!Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equalsIgnoreCase(uo.getCd_tipo_unita())){
+			setUnitaOrganizzativa(new Unita_organizzativaBulk());
+			setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
+		}
+
+		return super.initializeForSearch(bp,context);
 	}
 
 	@Override

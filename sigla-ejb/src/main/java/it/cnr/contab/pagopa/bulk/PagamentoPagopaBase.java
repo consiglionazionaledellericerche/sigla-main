@@ -46,6 +46,14 @@ public class PagamentoPagopaBase extends PagamentoPagopaKey implements Keyed {
 
 	private Timestamp dtPagamento;
 
+	public String getCd_sospeso() {
+		return cd_sospeso;
+	}
+
+	public void setCd_sospeso(String cd_sospeso) {
+		this.cd_sospeso = cd_sospeso;
+	}
+
 	private BigDecimal importo;
 
 	private String iur;
@@ -54,6 +62,7 @@ public class PagamentoPagopaBase extends PagamentoPagopaKey implements Keyed {
 	private String rpp;
 	private String id_riconciliazione;
 	private String riconciliazione;
+	private String cd_sospeso;
 
 	private String ccp;
 

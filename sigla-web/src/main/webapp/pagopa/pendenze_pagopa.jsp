@@ -71,8 +71,6 @@ function doVisualizzaRt() {
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>
 	<td>
-	    <% bp.getController().writeFormInput( out, "cd_elemento_voce"); %>
-	    <% bp.getController().writeFormInput( out, "ds_elemento_voce"); %>
       <% bp.getController().writeFormInput( out, "find_elemento_voce"); %>
 	</td>
 	</tr>

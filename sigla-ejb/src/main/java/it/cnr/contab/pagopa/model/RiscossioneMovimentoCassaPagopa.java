@@ -116,4 +116,20 @@ public class RiscossioneMovimentoCassaPagopa implements Serializable {
     public void setRiconciliazione(String riconciliazione) {
         this.riconciliazione = riconciliazione;
     }
+
+    @Override
+    public String toString() {
+        return "RiscossioneMovimentoCassaPagopa{" +
+                "dominio=" + dominio +
+                ", iuv='" + iuv + '\'' +
+                ", iur='" + iur + '\'' +
+                ", indice=" + indice +
+                ", stato=" + stato +
+                ", tipo=" + tipo +
+                ", importo=" + importo +
+                ", data=" + data +
+                ", vocePendenza=" + vocePendenza +
+                ", riconciliazione='" + riconciliazione + '\'' +
+                '}';
+    }
 }
