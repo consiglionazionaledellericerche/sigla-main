@@ -1,5 +1,17 @@
-## Release 6.4.29  -- _April 30, 2022_ 
+## Release 6.4.30  -- _May 04, 2022_ 
 **Changes**
+
+>**Fix anomalia nel caso di caricamento storno sospeso**
+>
+>[b1ef7db3bb829d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ef7db3bb829d3) gianfranco.gasparro *May 04, 2022*
+
+>**Nuovo modello di pagamento delle lettere 1210**
+>
+>[a6405fa3ea6ac33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6405fa3ea6ac33) marco.spasiano *May 03, 2022*
+
+>**Nuovo modello di pagamento delle lettere 1210**
+>
+>[9ef9aef3df2b43a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ef9aef3df2b43a) marco.spasiano *May 02, 2022*
 
 >**Add avviso pagoPA su Gestione Sospesi/Riscontro ed aggiunto su stampa sospesi associati a reversali**
 >
