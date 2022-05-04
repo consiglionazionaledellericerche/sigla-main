@@ -225,7 +225,7 @@ public class SospesoHome extends BulkHome {
 		sql.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
 		sql.addClause("AND", "cd_sospeso", SQLBuilder.EQUALS, cd_sospeso);
 		sql.addClause("AND", "cd_sospeso_padre", SQLBuilder.ISNULL, null);
-		Collection coll = getHomeCache().getHome(Sospeso_det_etrBulk.class).fetchAll(sql);
+		Collection coll = getHomeCache().getHome(SospesoBulk.class).fetchAll(sql);
 
 		if (coll != null && !coll.isEmpty()){
 			return (SospesoBulk) coll.iterator().next();
