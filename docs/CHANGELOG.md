@@ -1,3 +1,11 @@
+## Release 6.4.29  -- _April 30, 2022_ 
+**Changes**
+
+>**Add avviso pagoPA su Gestione Sospesi/Riscontro ed aggiunto su stampa sospesi associati a reversali**
+>
+>[d6daa95cd13e129](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d6daa95cd13e129) gianfranco.gasparro *April 30, 2022*
+
+
 ## Release 6.4.28  -- _April 29, 2022_ 
 **Changes**
 

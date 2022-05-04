@@ -43,16 +43,16 @@
 				<div class="Group" style="width:90%">
 					<table>
 						<tr>
-							<% bp.writeFormFieldDoc1210(out, "bonifico_mezzo");%>
-						</tr>
-						<tr>
 							<% bp.writeFormFieldDoc1210(out, "divisa");%>
 						</tr>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out, "beneficiario");%>
 						</tr>
 						<tr>
-							<% bp.writeFormFieldDoc1210(out, "num_conto_ben");%>
+							<% bp.writeFormFieldDoc1210(out, "paese_beneficiario");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "indirizzo_beneficiario");%>
 						</tr>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out, "iban");%>
@@ -64,19 +64,13 @@
 							<% bp.writeFormFieldDoc1210(out, "indirizzo_swift");%>
 						</tr>
 						<tr>
+							<% bp.writeFormFieldDoc1210(out, "bic_banca_intermediaria");%>
+						</tr>
+						<tr>
 							<% bp.writeFormFieldDoc1210(out, "motivo_pag");%>
 						</tr>
 						<tr>
-							<% bp.writeFormFieldDoc1210(out, "ammontare_debito");%>
-						</tr>
-						<tr>
-							<% bp.writeFormFieldDoc1210(out, "conto_debito");%>
-						</tr>
-						<tr>
 							<% bp.writeFormFieldDoc1210(out, "commissioni_spese");%>
-						</tr>
-						<tr>
-							<% bp.writeFormFieldDoc1210(out, "commissioni_spese_estere");%>
 						</tr>
 					</table>
 				</div>
