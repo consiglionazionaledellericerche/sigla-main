@@ -30,7 +30,7 @@
           cd_responsabile_terzo, dt_inizio, dt_fine, dt_proroga,
           importo_progetto, importo_divisa, cd_divisa, note, stato, condiviso,
           durata_progetto, livello, cd_dipartimento, fl_utilizzabile, fl_piano_triennale,
-          dacr, utcr, duva, utuv, pg_ver_rec, cd_progetto, cd_programma, cd_missione,
+          dacr, utcr, duva, utuv, pg_ver_rec, cd_progetto, nvl(cd_programma, cd_dipartimento) cd_programma, cd_missione,
           pg_progetto_other_field
      FROM progetto_sip
     WHERE tipo_fase != 'X'
@@ -46,7 +46,7 @@
           cd_divisa, note, stato, condiviso, durata_progetto, livello,
           cd_dipartimento, fl_utilizzabile, fl_piano_triennale,
           dacr, utcr, duva, utuv, pg_ver_rec,
-          cd_progetto, cd_programma, cd_missione,
+          cd_progetto, nvl(cd_programma, cd_dipartimento) cd_programma, cd_missione,
           pg_progetto_other_field
      FROM progetto_sip
     WHERE tipo_fase = 'G'
@@ -62,7 +62,7 @@
           cd_divisa, note, stato, condiviso, durata_progetto, livello,
           cd_dipartimento, fl_utilizzabile, fl_piano_triennale,
           dacr, utcr, duva, utuv, pg_ver_rec,
-          cd_progetto, cd_programma, cd_missione,
+          cd_progetto, nvl(cd_programma, cd_dipartimento) cd_programma, cd_missione,
           pg_progetto_other_field
      FROM progetto_sip
     WHERE tipo_fase = 'P'
