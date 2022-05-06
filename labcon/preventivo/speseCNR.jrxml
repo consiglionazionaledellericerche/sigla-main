@@ -21,13 +21,13 @@
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
-	<field name="totalePersonaleCNR" class="java.lang.Integer">
+	<field name="totalePersonaleCNR" class="java.lang.String">
 		<fieldDescription><![CDATA[totalePersonaleCNR]]></fieldDescription>
 	</field>
-	<field name="totaleMissioniCNR" class="java.lang.Integer">
+	<field name="totaleMissioniCNR" class="java.lang.String">
 		<fieldDescription><![CDATA[totaleMissioniCNR]]></fieldDescription>
 	</field>
-	<field name="totaleAltrespeseCNR" class="java.lang.Integer">
+	<field name="totaleAltrespeseCNR" class="java.lang.String">
 		<fieldDescription><![CDATA[totaleAltrespeseCNR]]></fieldDescription>
 	</field>
 	<field name="laboratorio" class="java.lang.String">
