@@ -5142,7 +5142,6 @@ public class DistintaCassiereComponent extends
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
-                        infoben.setDataScadenzaPagamento(xmlGregorianCalendar);
                         infoben.setDestinazione(LIBERA);
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
@@ -5467,7 +5466,6 @@ public class DistintaCassiereComponent extends
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
-                        infoben.setDataScadenzaPagamento(xmlGregorianCalendar);
                         infoben.setDestinazione(LIBERA);
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
