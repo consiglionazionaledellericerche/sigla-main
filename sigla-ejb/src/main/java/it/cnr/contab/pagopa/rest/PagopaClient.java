@@ -19,7 +19,6 @@ import javax.ws.rs.QueryParam;
 @Headers({"Content-Type: application/json"})
 public interface PagopaClient {
 
-    //    http://govpay.test.si.cnr.it/govpay
     @RequestLine("PUT /backend/api/pendenze/rs/basic/v2/pendenze/{idA2A}/{idPendenza}?stampaAvviso={stampaAvviso}")
     PendenzaResponse creaPendenza(@Param("idA2A") String application, @Param("idPendenza") Long idPendenza, @Param("stampaAvviso") Boolean stampaAvviso, Pendenza pendenza);
 
@@ -34,5 +33,4 @@ public interface PagopaClient {
 
     @RequestLine("POST /backend/api/ragioneria/rs/basic/v2/riconciliazioni/{idDominio}")
     MovimentoCassaPagopa riconciliaIncasso(@Param("idDominio") String dominio, MovimentoCassaPagopa movimentoCassaPagopa);
-
 }
