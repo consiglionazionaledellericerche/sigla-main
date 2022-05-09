@@ -1,9 +1,35 @@
-## Release 6.4.30  -- _May 04, 2022_ 
+## Release 6.4.31  -- _May 09, 2022_ 
 **Changes**
 
->**Fix anomalia nel caso di caricamento storno sospeso**
+>**Rimossa la volorizzazione della data scadenza pagamento per gli F24EP**
+> * Dalle specifiche SIOPE+ risulta:
+> * 4.9 Data di effettuazione del pagamento
+> * L&#39;ente può dare disposizioni circa la data di effettuazione del pagamento compilando uno dei due
+> * campi &lt;data_esecuzione_pagamento&gt; oppure &lt;data_scadenza_pagamento&gt;, che sono tra loro
+> * alternativi.
+> * Linee guida per l’emissione degli Ordinativi di Pagamento e
+> * Incasso (OPI) gestiti attraverso il Sistema SIOPE+
+> * versione 1.5.1.a - Aprile 2020 Pag. 49 di 74
+> * L&#39;ente avvalora il campo &lt;data_esecuzione_pagamento&gt; se intende ordinare perentoriamente la
+> * data nella quale deve essere estinto il mandato, nella consapevolezza dei tempi necessari al
+> * perfezionamento del pagamento nei confronti del creditore.
+> * L&#39;ente avvalora il campo &lt;data_scadenza_pagamento&gt; nel caso in cui intenda indicare la data nella
+> * quale deve essere ragionevolmente assicurata la disponibilità al beneficiario, affidando alla
+> * valutazione della BT la scelta della data di addebitamento all&#39;ente stesso.
 >
->[b1ef7db3bb829d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ef7db3bb829d3) gianfranco.gasparro *May 04, 2022*
+>[ed97189899dc684](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ed97189899dc684) marco.spasiano *May 09, 2022*
+
+>**Fix anomalia inserimento fatture elettroniche omaggio**
+>
+>[491716f03d097d2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/491716f03d097d2) gianfranco.gasparro *May 06, 2022*
+
+>**Rimosso il riferimento alla VIEW PROGETTO_TEMP**
+>
+>[4486663450bd5d2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4486663450bd5d2) marco.spasiano *May 06, 2022*
+
+>**Rimosso il riferimento alla VIEW PROGETTO_TEMP**
+>
+>[e652b0883907c60](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e652b0883907c60) marco.spasiano *May 04, 2022*
 
 >**Nuovo modello di pagamento delle lettere 1210**
 >
@@ -12,6 +38,18 @@
 >**Nuovo modello di pagamento delle lettere 1210**
 >
 >[9ef9aef3df2b43a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ef9aef3df2b43a) marco.spasiano *May 02, 2022*
+
+
+## Release 6.4.30  -- _May 04, 2022_ 
+**Changes**
+
+>**Fix anomalia nel caso di caricamento storno sospeso**
+>
+>[b1ef7db3bb829d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ef7db3bb829d3) gianfranco.gasparro *May 04, 2022*
+
+
+## Release 6.4.29  -- _April 30, 2022_ 
+**Changes**
 
 >**Add avviso pagoPA su Gestione Sospesi/Riscontro ed aggiunto su stampa sospesi associati a reversali**
 >
