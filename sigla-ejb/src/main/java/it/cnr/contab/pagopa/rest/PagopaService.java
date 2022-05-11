@@ -8,6 +8,8 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
+import feign.httpclient.ApacheHttpClient;
+import it.cnr.contab.pagopa.model.AggiornaPendenza;
 import it.cnr.contab.pagopa.model.MovimentoCassaPagopa;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.pagopa.model.PendenzaResponse;
@@ -19,6 +21,9 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Locale;
 
 public class PagopaService {
@@ -88,6 +93,7 @@ public class PagopaService {
         log.info("Building PagopaService connection with {}", baseUrl);
 
         pagopaClient = Feign.builder()
+                .client(new ApacheHttpClient())
                 .decoder(new GsonDecoder(gsonParser))
                 .encoder(new GsonEncoder(gsonParser))
                 .requestInterceptor(new BasicAuthRequestInterceptor(usernameApp, passwordApp))
@@ -101,6 +107,11 @@ public class PagopaService {
                 .errorDecoder(new ErrorDecoder.Default())
                 .retryer(new Retryer.Default())
                 .target(PagopaClient.class, baseUrl);
+    }
+    public void aggiornaPendenza(Long idPendenza, AggiornaPendenza aggiornaPendenza){
+        ArrayList<AggiornaPendenza> listaAggiornaPendenza = new ArrayList<>();
+        listaAggiornaPendenza.add(aggiornaPendenza);
+        pagopaClient.aggiornaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, listaAggiornaPendenza);
     }
     public PendenzaResponse creaPendenza(Long idPendenza, Pendenza pendenza){
         return pagopaClient.creaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, true, pendenza);

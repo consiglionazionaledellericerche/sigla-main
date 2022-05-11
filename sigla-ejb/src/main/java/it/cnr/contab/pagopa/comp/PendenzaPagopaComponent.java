@@ -74,7 +74,11 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 	public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
 		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)super.modificaConBulk(usercontext, oggettobulk);
 		try {
-			generaPendenzaSuPagopa(usercontext, pendenzaPagopaBulk);
+			if (pendenzaPagopaBulk.isPendenzaAnnullata()){
+				annullaPendenzaSuPagopa(usercontext,pendenzaPagopaBulk);
+			} else {
+				generaPendenzaSuPagopa(usercontext, pendenzaPagopaBulk);
+			}
 		} catch (Throwable t) {
 			logger.info(t.getMessage());
 			throw handleException(t);
@@ -197,6 +201,15 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		PendenzaResponse pendenzaCreata = null;
 		try {
 			pendenzaCreata = pagopaService.creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
+		} catch (Exception e){
+			logger.error("Errore su creaPendenza",e);
+			throw new ComponentException("Errore nella creazione della pendenza"+e.getMessage());
+		}
+	}
+
+	private void annullaPendenzaSuPagopa(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException, IntrospectionException, PersistencyException {
+		try {
+			pagopaService.aggiornaPendenza(pendenzaPagopaBulk.getId(), new AnnullaPendenza());
 		} catch (Exception e){
 			logger.error("Errore su creaPendenza",e);
 			throw new ComponentException("Errore nella creazione della pendenza"+e.getMessage());

@@ -4,6 +4,7 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import feign.Response;
+import it.cnr.contab.pagopa.model.AggiornaPendenza;
 import it.cnr.contab.pagopa.model.MovimentoCassaPagopa;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.pagopa.model.PendenzaResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import java.util.ArrayList;
 
 @Headers({"Content-Type: application/json"})
 public interface PagopaClient {
@@ -22,6 +24,9 @@ public interface PagopaClient {
     @RequestLine("PUT /backend/api/pendenze/rs/basic/v2/pendenze/{idA2A}/{idPendenza}?stampaAvviso={stampaAvviso}")
     PendenzaResponse creaPendenza(@Param("idA2A") String application, @Param("idPendenza") Long idPendenza, @Param("stampaAvviso") Boolean stampaAvviso, Pendenza pendenza);
 
+    @RequestLine("PATCH /backend/api/pendenze/rs/basic/v2/pendenze/{idA2A}/{idPendenza}")
+    @Headers({"Content-Type: application/json"})
+    void aggiornaPendenza(@Param("idA2A") String application, @Param("idPendenza") Long idPendenza, ArrayList<AggiornaPendenza> aggiornaPendenza);
 
     @Headers({"Accept: application/pdf"})
     @RequestLine("GET /backend/api/pendenze/rs/basic/v2/avvisi/{idDominio}/{numeroAvviso}")
