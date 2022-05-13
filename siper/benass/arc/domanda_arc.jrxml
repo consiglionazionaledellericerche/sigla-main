@@ -240,7 +240,9 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="f6eb6423-86a8-4957-81c1-74f53dff36e1">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
-					<textElement textAlignment="Justified" markup="styled"/>
+					<textElement textAlignment="Justified" markup="styled">
+						<font isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Il richiedente DICHIARA che i partecipanti all'evento sono a proprio carico fiscale."]]></textFieldExpression>
 				</textField>
 			</band>
