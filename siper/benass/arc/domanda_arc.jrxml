@@ -144,6 +144,10 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="indicatoreIseeAnno1"/>
 		<fieldDescription><![CDATA[indicatoreIseeAnno1]]></fieldDescription>
 	</field>
+	<field name="eventoArc" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="eventoArc"/>
+		<fieldDescription><![CDATA[eventoArc]]></fieldDescription>
+	</field>
 	<field name="noteIntolleranze" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="noteIntolleranze"/>
 		<fieldDescription><![CDATA[noteIntolleranze]]></fieldDescription>
@@ -175,6 +179,10 @@
 	<field name="printProvinciaAeroportoStazione" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="printProvinciaAeroportoStazione"/>
 		<fieldDescription><![CDATA[printProvinciaAeroportoStazione]]></fieldDescription>
+	</field>
+	<field name="printDichiarazioneCaricoFiscale" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="printDichiarazioneCaricoFiscale"/>
+		<fieldDescription><![CDATA[printDichiarazioneCaricoFiscale]]></fieldDescription>
 	</field>
 	<field name="printIntolleranzePartecipanti" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="printIntolleranzePartecipanti"/>
@@ -225,6 +233,16 @@ $F{dip_nominativo}.trim() + ",  "+($F{dip_sesso}.equals("M")?"nato ":"nata ")
 					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("partecipanti")]]></dataSourceExpression>
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"domanda_arc_subreport_partecipanti.jasper"]]></subreportExpression>
 				</subreport>
+			</band>
+			<band height="27">
+				<printWhenExpression><![CDATA[$F{printDichiarazioneCaricoFiscale}.equals("Y")]]></printWhenExpression>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="f6eb6423-86a8-4957-81c1-74f53dff36e1">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" markup="styled"/>
+					<textFieldExpression><![CDATA["Il richiedente DICHIARA che i partecipanti all'evento sono a proprio carico fiscale."]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -348,6 +366,16 @@ $F{indicatoreIseeAnno2}:
 				</textField>
 			</band>
 			<band height="25">
+				<printWhenExpression><![CDATA[$F{eventoArc}!=null && $F{eventoArc}!=""]]></printWhenExpression>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="a89e7bca-eff7-43df-b3f2-b1f3a01fca2c">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" markup="styled"/>
+					<textFieldExpression><![CDATA["<style isBold='true'>Tipo Evento: </style>"+$F{eventoArc}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="25">
 				<printWhenExpression><![CDATA[$F{printProvinciaAeroportoStazione}.equals( "Y" )]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
 					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="47d52dfa-fe48-4c48-9608-804598ec8bda">
@@ -357,7 +385,7 @@ $F{indicatoreIseeAnno2}:
 					<textFieldExpression><![CDATA["<style isBold='true'>Provincia Aeroporto/Stazione ferroviaria di partenza: </style>"+$F{provinciaAeroporto}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="24">
+			<band height="25">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<printWhenExpression><![CDATA[$F{noteIntolleranze}!=null && $F{noteIntolleranze}!=""]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
@@ -369,6 +397,7 @@ $F{indicatoreIseeAnno2}:
 				</textField>
 			</band>
 			<band height="25">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<printWhenExpression><![CDATA[$F{noteDisabilita}!=null && $F{noteDisabilita}!=""]]></printWhenExpression>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
 					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="53825a11-d810-4069-b6bb-79cef0ae48c6">
@@ -381,7 +410,9 @@ $F{indicatoreIseeAnno2}:
 			<band height="25">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
-					<reportElement key="textField-60" style="TNR10" x="11" y="2" width="493" height="22" uuid="998c9629-0801-42cf-9960-45e961c99c2a"/>
+					<reportElement key="textField-60" style="TNR10" x="11" y="1" width="493" height="22" uuid="998c9629-0801-42cf-9960-45e961c99c2a">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
 					<textElement textAlignment="Justified" markup="styled"/>
 					<textFieldExpression><![CDATA["<style isBold='true'>Note Generiche: </style>"+($F{noteGeneriche}!=null && $F{noteGeneriche}!=""?$F{noteGeneriche}:"")]]></textFieldExpression>
 				</textField>
