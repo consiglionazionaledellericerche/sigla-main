@@ -1513,11 +1513,11 @@
 				</staticText>
 			</frame>
 			<staticText>
-				<reportElement x="152" y="4" width="226" height="16" uuid="82f91610-2d28-406b-b535-2a93714244ea"/>
+				<reportElement x="15" y="4" width="531" height="16" uuid="82f91610-2d28-406b-b535-2a93714244ea"/>
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Additional Team Member]]></text>
+				<text><![CDATA[Additional Team Member (Fondi C)]]></text>
 			</staticText>
 			<break>
 				<reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
