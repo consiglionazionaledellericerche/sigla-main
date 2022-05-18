@@ -141,6 +141,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_AVVISO_PAGOPA"
+				propertyName="cd_avviso_pagopa"
+				sqlTypeName="VARCHAR"
+				columnSize="50"
+				nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" />
@@ -182,7 +188,9 @@
 		name="cd_sospeso_padre" />
 	<persistentProperty
 		name="pg_man_rev" />
-		
+	<persistentProperty
+			name="cd_avviso_pagopa" />
+
 	<columnMap 
 		name="SOSREV"
 		tableName="V_CONS_SOSPESI">
@@ -282,6 +290,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_AVVISO_PAGOPA"
+				propertyName="cd_avviso_pagopa"
+				sqlTypeName="VARCHAR"
+				columnSize="50"
+				nullable="true" />
 	</columnMap>
 	
 	<columnMap 

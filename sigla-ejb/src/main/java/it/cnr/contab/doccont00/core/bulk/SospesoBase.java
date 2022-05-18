@@ -53,6 +53,14 @@ public class SospesoBase extends SospesoKey implements Keyed {
     // TI_CC_BI CHAR(1) NOT NULL
     private java.lang.String ti_cc_bi;
 
+    public String getCd_avviso_pagopa() {
+        return cd_avviso_pagopa;
+    }
+
+    public void setCd_avviso_pagopa(String cd_avviso_pagopa) {
+        this.cd_avviso_pagopa = cd_avviso_pagopa;
+    }
+
     // CD_SOSPESO_PADRE(20)
     private java.lang.String cd_sospeso_padre;
 
@@ -65,6 +73,7 @@ public class SospesoBase extends SospesoKey implements Keyed {
     private java.lang.String destinazione;
 
     private java.lang.String tipo_contabilita;
+    private java.lang.String cd_avviso_pagopa;
 
 	private String cd_cds_man_riaccr;
 	private Integer esercizio_man_riaccr;

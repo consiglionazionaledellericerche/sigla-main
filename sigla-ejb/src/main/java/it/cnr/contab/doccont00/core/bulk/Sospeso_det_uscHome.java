@@ -33,7 +33,7 @@ public class Sospeso_det_uscHome extends BulkHome {
  *
  * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
  */
-public Sospeso_det_uscHome(java.sql.Connection conn) {
+public Sospeso_det_uscHome(Connection conn) {
 	super(Sospeso_det_uscBulk.class,conn);
 }
 /**
@@ -43,13 +43,13 @@ public Sospeso_det_uscHome(java.sql.Connection conn) {
  * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
  * @param persistentCache	La PersistentCache in cui vengono cachati gli oggetti persistenti caricati da questo Home
  */
-public Sospeso_det_uscHome(java.sql.Connection conn,PersistentCache persistentCache) {
+public Sospeso_det_uscHome(Connection conn, PersistentCache persistentCache) {
 	super(Sospeso_det_uscBulk.class,conn,persistentCache);
 }
 /*
  * Calcola la somma degli importi dei dettagli del mandato associati al riscontro.
 */
-public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws it.cnr.jada.persistency.PersistencyException 
+public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws PersistencyException
 {
 	try
 	{

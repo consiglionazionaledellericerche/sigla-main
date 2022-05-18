@@ -582,7 +582,8 @@
 		<formFieldProperty
 			name="ds_variazione"
 			inputType="TEXT"
-			inputSize="50" />			
+			inputCssClass=" "
+			inputSize="80" />
     </form>    		
     	
 	<form name="variazioniEnte">

@@ -306,4 +306,22 @@ public abstract class ReversaleHome extends BulkHome {
                 .distinct()
                 .collect(Collectors.toList());
     }
+    public ReversaleBulk findAndLockReversaleNonAnnullata(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgReversale) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause("AND", "cd_cds",       sql.EQUALS, cdCds);
+        sql.addClause("AND", "esercizio",    sql.EQUALS, esercizio);
+        sql.addClause("AND", "pg_reversale", sql.EQUALS, pgReversale);
+        sql.addClause("AND","stato", sql.NOT_EQUALS, ReversaleBulk.STATO_REVERSALE_ANNULLATO);
+        List reversali = fetchAll(sql);
+        if (reversali == null || reversali.size() == 0){
+            return null;
+        } else if (reversali.size() == 1){
+            ReversaleBulk rev = (ReversaleBulk) reversali.get(0);
+            lock(rev);
+            return rev;
+        } else  {
+            throw new PersistencyException("Errore nel recupero della Reversale "+esercizio+"-"+pgReversale);
+        }
+    }
 }

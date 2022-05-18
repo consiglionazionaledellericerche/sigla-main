@@ -90,16 +90,27 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 		ti_ammontare_debitoKeys.put(AMMONTARE_DEBITO_CONTO_SPEC_DEBITORE, "conto spec debitore in");				
 	}
 
-	public final static String COMMISSIONE_SPESE_NOSTRO_CARICO = "N", COMMISSIONE_SPESE_CARICO_BENEFICIARIO = "B";
+	public final static String SHA = "Scelta1", OUR = "Scelta2", BEN = "Scelta3";
 	@SuppressWarnings("rawtypes")
 	public final static java.util.Dictionary ti_commissione_speseKeys;
 	static 
 	{
 		ti_commissione_speseKeys = new it.cnr.jada.util.OrderedHashtable();
-		ti_commissione_speseKeys.put(COMMISSIONE_SPESE_NOSTRO_CARICO, "nostro carico");
-		ti_commissione_speseKeys.put(COMMISSIONE_SPESE_CARICO_BENEFICIARIO, "a carico del beneficiario");
+		ti_commissione_speseKeys.put(SHA, "SHA -> L'Ordinante e il Beneficiario supportano ciascuno le spese della propria Banca");
+		ti_commissione_speseKeys.put(OUR, "OUR*** -> Tutte le spese – anche quelle della Banca del Beneficiario – sono a carico dell'Ordinante");
+		ti_commissione_speseKeys.put(BEN, "BEN*** -> Tutte le spese – anche quelle della Banca dell'Ordinante – sono a carico del Beneficiario");
 	}
-	
+	public enum Divisa {
+		AED,AUD,BGN,CAD,CHF,CNY,CZK,DKK,EUR,GBP,HKD,HUF,ILS,INR,JPY,KWD,
+		MAD,MXN,NOK,NZD,PLN,QAR,RON,RUB,SAR,SEK,SGD,THB,TND,TRY,USD,ZAR
+	}
+	public final static java.util.Dictionary ti_divisaKeys = new it.cnr.jada.util.OrderedHashtable();
+	static {
+		Arrays.asList(Divisa.values()).stream().forEach(divisa -> {
+			ti_divisaKeys.put(divisa.name(), divisa.name());
+		});
+	}
+
 	public Lettera_pagam_esteroBulk() {
 		super();
 		setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);

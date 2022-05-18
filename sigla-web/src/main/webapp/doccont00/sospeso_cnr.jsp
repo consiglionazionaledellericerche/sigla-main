@@ -74,6 +74,10 @@
                 <td><% bp.getSospesiFigli().writeFormLabel( out, "find_mandato_riaccredito"); %></td>
                 <td><% bp.getSospesiFigli().writeFormInput( out, "find_mandato_riaccredito"); %></td>
             </tr>
+            <tr>
+                <td><% bp.getSospesiFigli().writeFormLabel( out, "cd_avviso_pagopa"); %></td>
+                <td colspan=5><% bp.getSospesiFigli().writeFormInput(out,null,"cd_avviso_pagopa",true,null,null); %></td>
+            </tr>
         </table>
 	</div>
 

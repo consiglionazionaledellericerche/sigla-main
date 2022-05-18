@@ -902,4 +902,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_incasso();
     }
+    public String getIdReversaleAsString(){
+        return getCd_cds()+"-"+getEsercizio()+"-"+getPg_reversale();
+    }
 }

@@ -42,7 +42,7 @@
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
                         bp.encodePath("Disp.sui capitoli"),
                         "javascript:submitForm('doVisualizzaDispCassaCapitolo')",
-                        "btn-primary btn-outline-primary btn-title ml-3",
+                        "btn-outline-primary btn-title ml-3",
                         bp.isDispCassaCapitoloButtonEnabled(),
                         bp.getParentRoot().isBootstrap()); %>
                 </td>

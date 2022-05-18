@@ -2,7 +2,7 @@
 --  DDL for View V_CONS_SOSPESI
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_CONS_SOSPESI" ("ESERCIZIO", "TI_ENTRATA_SPESA", "CD_CDS", "CD_CDS_ORIGINE", "CD_SOSPESO", "LIVELLO", "DT_REGISTRAZIONE", "DS_ANAGRAFICO", "CAUSALE", "TI_CC_BI", "DES_TI_CC_BI", "STATO_VALIDITA", "DT_STORNO", "IM_SOSPESO", "IM_ASSOCIATO", "IM_DA_ASSOCIARE", "DS_STATO_SOSPESO", "IM_ASS_MOD_1210", "CD_SOSPESO_PADRE", "PG_MAN_REV") AS 
+  CREATE OR REPLACE FORCE VIEW "V_CONS_SOSPESI" ("ESERCIZIO", "TI_ENTRATA_SPESA", "CD_CDS", "CD_CDS_ORIGINE", "CD_SOSPESO", "LIVELLO", "DT_REGISTRAZIONE", "DS_ANAGRAFICO", "CAUSALE", "TI_CC_BI", "DES_TI_CC_BI", "STATO_VALIDITA", "DT_STORNO", "IM_SOSPESO", "IM_ASSOCIATO", "IM_DA_ASSOCIARE", "DS_STATO_SOSPESO", "IM_ASS_MOD_1210", "CD_SOSPESO_PADRE", "PG_MAN_REV", "CD_AVVISO_PAGOPA") AS
   SELECT esercizio, ti_entrata_spesa, cd_cds, cd_cds_origine, cd_sospeso,
           DECODE (cd_sospeso_padre, NULL, 1, 2),
                                                 -- LIVELLO 1: SOSPESO PADRE O FIGLIO
@@ -102,7 +102,7 @@
                                  )
                          )
                  ),
-          im_ass_mod_1210, cd_sospeso_padre, NULL pg_man_rev
+          im_ass_mod_1210, cd_sospeso_padre, NULL pg_man_rev, CD_AVVISO_PAGOPA
      FROM sospeso
     WHERE ti_sospeso_riscontro = 'S'
    UNION ALL
@@ -130,6 +130,7 @@
           0,                                                -- IM_ASS_MOD_1210
             cd_sospeso,                                    -- CD_SOSPESO_PADRE
                        sospeso_det_usc.pg_mandato pg_man_rev     -- PG_MAN_REV
+                       , NULL
      FROM sospeso_det_usc, mandato
     WHERE ti_sospeso_riscontro = 'S'
       AND ti_entrata_spesa = 'S'
@@ -162,6 +163,7 @@
           0,                                                -- IM_ASS_MOD_1210
             cd_sospeso,                                    -- CD_SOSPESO_PADRE
                        sospeso_det_etr.pg_reversale pg_man_rev   -- PG_MAN_REV
+                       , NULL
      FROM sospeso_det_etr, reversale
     WHERE ti_sospeso_riscontro = 'S'
       AND ti_entrata_spesa = 'E'
