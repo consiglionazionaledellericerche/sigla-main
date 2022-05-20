@@ -1,3 +1,11 @@
+## Release 6.4.33  -- _May 20, 2022_ 
+**Changes**
+
+>**Fix anomalia annullamento riscontro mandato**
+>
+>[bd6974da9796889](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd6974da9796889) gianfranco.gasparro *May 20, 2022*
+
+
 ## Release 6.4.32  -- _May 20, 2022_ 
 **Changes**
 
