@@ -2755,11 +2755,11 @@ public class SospesoRiscontroComponent extends CRUDComponent implements ISospeso
                             throw  new ComponentException("Non è possibile effettuare lo storno del Mandato "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+". Il mandato non è annullato o non esiste");
                         }
 
-                        Collection sospesi = mandatoHome.findSospeso_det_usc(userContext, man);
-                        if (sospesi == null || sospesi.size() == 0){
-                            throw  new ComponentException("Lo Storno fa riferimento al mandato "+man.getCd_cds()+"-"+ man.getEsercizio()+"-"+man.getPg_mandato()+" su cui non esiste il riscontro.");
+                        Collection riscontri = mandatoHome.findRiscontro_det_usc(userContext, man);
+                        if (riscontri == null || riscontri.size() == 0){
+                            throw  new ComponentException("Lo Storno fa riferimento al mandato "+man.getCd_unita_organizzativa()+"-"+ man.getEsercizio()+"-"+man.getPg_mandato()+" su cui non esiste il riscontro.");
                         }
-                        Sospeso_det_uscBulk riscontro = (Sospeso_det_uscBulk)sospesi.iterator().next();
+                        Sospeso_det_uscBulk riscontro = (Sospeso_det_uscBulk)riscontri.iterator().next();
                         riscontro.setIm_associato(riscontro.getIm_associato().add(riga.getImporto()));
                         riscontro.setToBeUpdated();
                         super.updateBulk(userContext, riscontro);
