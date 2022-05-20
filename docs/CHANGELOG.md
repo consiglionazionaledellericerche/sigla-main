@@ -1,3 +1,19 @@
+## Release 6.4.32  -- _May 20, 2022_ 
+**Changes**
+
+>**FIX IBAN autosize**
+>
+>[d2969abe0c59fcf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2969abe0c59fcf) SPASIANO MARCO *May 20, 2022*
+
+>**Fix anomalia in fase di approvazione Variazione Bilancio di progetti con e senza piano economico**
+>
+>[365f09548fef991](https://github.com/consiglionazionaledellericerche/sigla-main/commit/365f09548fef991) raffaelepagano *May 12, 2022*
+
+>**Gestito annullamento pendenza pagoPA**
+>
+>[a3312bb6016aceb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a3312bb6016aceb) gianfranco.gasparro *May 11, 2022*
+
+
 ## Release 6.4.31  -- _May 09, 2022_ 
 **Changes**
 
