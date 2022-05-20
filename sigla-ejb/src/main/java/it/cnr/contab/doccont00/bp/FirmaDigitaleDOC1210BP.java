@@ -209,7 +209,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                 fields.add(valorizzaField(pdAcroForm, "CAUSALE DEL PAGAMENTO", lettera.getMotivo_pag(), true));
                 fields.add(valorizzaField(pdAcroForm, "S", lettera.getCommissioni_spese(), false));
 				fields.add(valorizzaField(pdAcroForm, "A", "Scelta4", false));
-				fields.add(valorizzaField(pdAcroForm, "IBAN", configurazione.getVal01(), false));
+				fields.add(valorizzaField(pdAcroForm, "IBAN", configurazione.getVal01(), true));
 				fields.add(valorizzaField(pdAcroForm, "SPORTELLO", configurazione.getVal02(), false));
 				fields.add(valorizzaField(pdAcroForm, "CONTO", configurazione.getVal03(), false));
 				fields.add(valorizzaField(pdAcroForm, "LUOGO E DATA", "ROMA " + new SimpleDateFormat("dd/MM/yyyy").format(EJBCommonServices.getServerDate()), false));
