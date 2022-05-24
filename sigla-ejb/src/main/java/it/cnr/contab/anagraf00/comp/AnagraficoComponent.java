@@ -281,15 +281,15 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             ((AnagraficoBulk) bulk).setDataAvvioFattElettr(ipa.getDataAvvioSfe());
         } else {
             ((AnagraficoBulk) bulk).setCodiceAmministrazioneIpa(null);
-            if (((AnagraficoBulk) bulk).getDataAvvioFattElettr() == null){
-                	try {
-                		((AnagraficoBulk) bulk).setDataAvvioFattElettr(Utility.createConfigurazioneCnrComponentSession().
-                				getDt01(userContext, CNRUserContext.getEsercizio(userContext), null,"FATTURAZIONE_ELETTRONICA", "INIZIO_TRA_PRIVATI"));
-                	} catch (RemoteException e) {
-                		throw handleException(e);
-                	} catch (javax.ejb.EJBException ex) {
-                		throw handleException(ex);
-                	}
+            if (((AnagraficoBulk) bulk).getDataAvvioFattElettr() == null) {
+                try {
+                    ((AnagraficoBulk) bulk).setDataAvvioFattElettr(Utility.createConfigurazioneCnrComponentSession().
+                            getDt01(userContext, CNRUserContext.getEsercizio(userContext), null, "FATTURAZIONE_ELETTRONICA", "INIZIO_TRA_PRIVATI"));
+                } catch (RemoteException e) {
+                    throw handleException(e);
+                } catch (javax.ejb.EJBException ex) {
+                    throw handleException(ex);
+                }
             }
         }
     }
@@ -922,9 +922,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     }
 
     public SQLBuilder selectAnagraficoByClause(UserContext userContext,
-                                                   AssGruppoIvaAnagBulk ass,
-                                                   AnagraficoBulk anag_find,
-                                                   CompoundFindClause clause)
+                                               AssGruppoIvaAnagBulk ass,
+                                               AnagraficoBulk anag_find,
+                                               CompoundFindClause clause)
             throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         if (clause == null) clause = anag_find.buildFindClauses(null);
 
@@ -939,9 +939,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     }
 
     public SQLBuilder selectAnagraficoGruppoIvaByClause(UserContext userContext,
-                                               AssGruppoIvaAnagBulk ass,
-                                               AnagraficoBulk anag_find,
-                                               CompoundFindClause clause)
+                                                        AssGruppoIvaAnagBulk ass,
+                                                        AnagraficoBulk anag_find,
+                                                        CompoundFindClause clause)
             throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         if (clause == null) clause = anag_find.buildFindClauses(null);
 
@@ -966,9 +966,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param matricola   l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectMatricolaForPrintByClause(UserContext userContext, Stampa_previdenziale_dipendentiVBulk stampa, V_prev_dipBulk matricola, CompoundFindClause clauses) throws PersistencyException, ComponentException {
 
@@ -1109,9 +1109,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
 
 /*public SQLBuilder selectUoForPrintByClause (UserContext userContext, Stampa_previdenziale_dipendentiVBulk stampa, Unita_organizzativaBulk uo, CompoundFindClause clauses ) throws ComponentException
@@ -1211,8 +1211,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             if (carico_familiare.getTi_persona() != null && carico_familiare.getDt_fin_validita() != null) {
                 try {
                     Timestamp dataFineValiditaCarico = Utility.createConfigurazioneCnrComponentSession().getDataFineValiditaCaricoFamiliare(userContext, carico_familiare.getTi_persona());
-                    if (dataFineValiditaCarico != null && carico_familiare.getDt_fin_validita().compareTo(dataFineValiditaCarico) > 0){
-                        throw new ApplicationException("La data fine validità del carico familiare "+Carico_familiare_anagBulk.PERSONA.get(carico_familiare.getTi_persona())+" non deve superare la data di fine del beneficio stabilita che è " + new SimpleDateFormat("dd/MM/yyyy").format(dataFineValiditaCarico));
+                    if (dataFineValiditaCarico != null && carico_familiare.getDt_fin_validita().compareTo(dataFineValiditaCarico) > 0) {
+                        throw new ApplicationException("La data fine validità del carico familiare " + Carico_familiare_anagBulk.PERSONA.get(carico_familiare.getTi_persona()) + " non deve superare la data di fine del beneficio stabilita che è " + new SimpleDateFormat("dd/MM/yyyy").format(dataFineValiditaCarico));
                     }
                 } catch (ComponentException | RemoteException e) {
                     throw new ApplicationException(e);
@@ -1298,7 +1298,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                 ) ||
                                 (pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto()) &&
                                         pagamento_esternoDB.getIm_pagamento().compareTo(pagamento_esterno.getIm_pagamento()) != 0)
-                                ) {
+                        ) {
                             try {
                                 if (compensoHome.findCompensoConDataSuperiore(((CNRUserContext) userContext).getEsercizio(), anagrafico.getCd_anag(), pagamento_esterno.getDt_pagamento()).booleanValue())
                                     throw new ApplicationException(messaggio);
@@ -1318,14 +1318,14 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         //In questo caso il tipo di rapporto non era Occasionale e poi è stato aggiornato
                         if (pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto()) &&
                                 !pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())
-                                ) {
+                        ) {
                             imp_pag_esterno = pagamento_esterno.getIm_pagamento();
                             aggiornaMontantiPagEst(userContext, anagrafico.getCd_anag(), imp_pag_esterno);
                         }
                         //In questo caso il tipo di rapporto era Occasionale e poi è stato aggiornato
                         if (!pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto()) &&
                                 pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())
-                                ) {
+                        ) {
                             //Controllo se può aggiornare il record sui compensi attraverso la data
                             //in caso di risposta affermativa aggiorno il Montante
                             imp_pag_esterno = pagamento_esternoDB.getIm_pagamento().negate();
@@ -1336,7 +1336,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         if (pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto()) &&
                                 pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto()) &&
                                 pagamento_esternoDB.getIm_pagamento().compareTo(pagamento_esterno.getIm_pagamento()) != 0
-                                ) {
+                        ) {
                             //Controllo se può aggiornare il record sui compensi attraverso la data
                             //in caso di risposta affermativa aggiorno il Montante
                             if (pagamento_esternoDB.getIm_pagamento().compareTo(pagamento_esterno.getIm_pagamento()) == -1)
@@ -1451,8 +1451,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             || (anag_eserc.getFl_no_credito_cuneo_irpef() != null && anag_eserc.getFl_no_credito_cuneo_irpef().booleanValue())
                             || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())
                             || (anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
-                            || (anag_eserc.getContoCredito()!=null && anag_eserc.getContoCredito().getEsercizio()!=null && anag_eserc.getContoCredito().getCd_voce_ep()!=null)
-                            || (anag_eserc.getContoDebito()!=null && anag_eserc.getContoDebito().getEsercizio()!=null && anag_eserc.getContoDebito().getCd_voce_ep()!=null)) {
+                            || (anag_eserc.getContoCredito() != null && anag_eserc.getContoCredito().getEsercizio() != null && anag_eserc.getContoCredito().getCd_voce_ep() != null)
+                            || (anag_eserc.getContoDebito() != null && anag_eserc.getContoDebito().getEsercizio() != null && anag_eserc.getContoDebito().getCd_voce_ep() != null)) {
 
                         //inizializzo i flag se non valorizzati
                         if (anag_eserc.getFl_nofamilyarea() == null) {
@@ -1547,16 +1547,16 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
 
         // RIPULITURA CAMPI
         // vengono posti a null i campi non valorizzabili in base alla tipologia di anagrafica
-        if (!anagrafico.isGruppoIVA()){
+        if (!anagrafico.isGruppoIVA()) {
             anagrafico.setDtIniValGruppoIva(null);
         } else {
-            if (anagrafico.getDtIniValGruppoIva() == null){
+            if (anagrafico.getDtIniValGruppoIva() == null) {
                 throw new it.cnr.jada.comp.ApplicationException("La data inizio validità del gruppo IVA è obbligatoria.");
             }
-            if (anagrafico.getDt_canc() == null){
+            if (anagrafico.getDt_canc() == null) {
                 throw new it.cnr.jada.comp.ApplicationException("La data fine validità del gruppo IVA è obbligatoria.");
             }
-            if (anagrafico.getDtIniValGruppoIva().after(anagrafico.getDt_canc())){
+            if (anagrafico.getDtIniValGruppoIva().after(anagrafico.getDt_canc())) {
                 throw new it.cnr.jada.comp.ApplicationException("La data inizio validità del gruppo IVA deve essere precedente alla data di fine validità.");
             }
         }
@@ -1741,7 +1741,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 anagrafico.getPartita_iva() != null
                         || anagrafico.getCodice_fiscale() != null) {
             try {
-                AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(userContext, anagrafico);
+                AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, anagrafico);
                 SQLBuilder sql = anagraficoHome.createSQLBuilder();
                 sql.openParenthesis("AND");
                 sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, anagrafico.getPartita_iva());
@@ -1755,14 +1755,14 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 if (!anagrafico.isToBeCreated())
                     sql.addClause("AND", "cd_anag", SQLBuilder.NOT_EQUALS, anagrafico.getCd_anag());
 
-                 List<AnagraficoBulk> listaAnagrafica = anagraficoHome.fetchAll(sql);
+                List<AnagraficoBulk> listaAnagrafica = anagraficoHome.fetchAll(sql);
 /*                if (listaAnagrafica.size() > 1){
                     throw new ApplicationException("Esistono altre anagrafiche con questo codice fiscale o partita iva");
                 }*/
-                if (listaAnagrafica.size() > 0){
-                    for (AnagraficoBulk anagraficoConDatiUguali : listaAnagrafica){
-                        if ((!anagrafico.isGruppoIVA() && !anagraficoConDatiUguali.isGruppoIVA()) || (anagrafico.isGruppoIVA() && anagraficoConDatiUguali.isGruppoIVA())){
-                            throw new ApplicationException("Esiste già l'anagrafica "+anagraficoConDatiUguali.getCd_anag()+" con questo codice fiscale o partita iva");
+                if (listaAnagrafica.size() > 0) {
+                    for (AnagraficoBulk anagraficoConDatiUguali : listaAnagrafica) {
+                        if ((!anagrafico.isGruppoIVA() && !anagraficoConDatiUguali.isGruppoIVA()) || (anagrafico.isGruppoIVA() && anagraficoConDatiUguali.isGruppoIVA())) {
+                            throw new ApplicationException("Esiste già l'anagrafica " + anagraficoConDatiUguali.getCd_anag() + " con questo codice fiscale o partita iva");
                         }
                     }
                 }
@@ -1802,7 +1802,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 if (anagrafico.getPartita_iva() != null && !verificaStrutturaPiva(userContext, anagrafico))
                     throw new ApplicationMessageFormatException(
                             "Verificare la partita Iva non corrisponde al modello della sua nazionalità. " +
-                            "Modello di riferimento: '{0}'", Optional.ofNullable(anagrafico.getNazionalita())
+                                    "Modello di riferimento: '{0}'", Optional.ofNullable(anagrafico.getNazionalita())
                             .map(NazioneBulk::getStruttura_piva).orElse(""));
             } catch (ValidationException e) {
                 throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
@@ -1822,44 +1822,44 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     }
 
     private void controlliGruppoIVA(UserContext userContext, AnagraficoBulk anagrafico) throws ComponentException {
-        if (!anagrafico.getAssGruppoIva().isEmpty()){
+        if (!anagrafico.getAssGruppoIva().isEmpty()) {
             AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
             for (Iterator di = anagrafico.getAssGruppoIva().iterator(); di.hasNext(); ) {
                 AssGruppoIvaAnagBulk ass = (AssGruppoIvaAnagBulk) di.next();
 
-                if (ass.isToBeCreated()|| ass.isToBeUpdated()) {
+                if (ass.isToBeCreated() || ass.isToBeUpdated()) {
                     Collection coll = null;
-                        try {
-                            if (anagrafico.isGruppoIVA()){
-                                coll = anagraficoHome.findGruppiIvaAssociati(ass.getAnagrafico());
-                            } else {
-                                coll = anagraficoHome.findGruppiIvaAssociati(anagrafico);
-                            }
-                        } catch (IntrospectionException e) {
-                            throw handleException(e);
-                        } catch (PersistencyException e) {
-                            throw handleException(e);
+                    try {
+                        if (anagrafico.isGruppoIVA()) {
+                            coll = anagraficoHome.findGruppiIvaAssociati(ass.getAnagrafico());
+                        } else {
+                            coll = anagraficoHome.findGruppiIvaAssociati(anagrafico);
                         }
-                        if (!coll.isEmpty()){
-                                for (Iterator d = coll.iterator(); d.hasNext(); ) {
-                                    AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
-                                    if (anagrafico.isGruppoIVA()){
-                                        controlloCongruenzaDateGruppiIva(userContext, anagrafico, assColl.getAnagraficoGruppoIva());
-                                    } else {
-                                        controlloCongruenzaDateGruppiIva(userContext, ass.getAnagraficoGruppoIva(), assColl.getAnagraficoGruppoIva());
-                                    }
-                                }
+                    } catch (IntrospectionException e) {
+                        throw handleException(e);
+                    } catch (PersistencyException e) {
+                        throw handleException(e);
+                    }
+                    if (!coll.isEmpty()) {
+                        for (Iterator d = coll.iterator(); d.hasNext(); ) {
+                            AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
+                            if (anagrafico.isGruppoIVA()) {
+                                controlloCongruenzaDateGruppiIva(userContext, anagrafico, assColl.getAnagraficoGruppoIva());
+                            } else {
+                                controlloCongruenzaDateGruppiIva(userContext, ass.getAnagraficoGruppoIva(), assColl.getAnagraficoGruppoIva());
+                            }
                         }
                     }
                 }
-            if (anagrafico.isGruppoIVA()){
+            }
+            if (anagrafico.isGruppoIVA()) {
                 for (Iterator di = anagrafico.getAssGruppoIva().iterator(); di.hasNext(); ) {
                     AssGruppoIvaAnagBulk ass = (AssGruppoIvaAnagBulk) di.next();
                     try {
                         Collection coll = anagraficoHome.findGruppiIvaAssociati(ass.getAnagrafico());
                         for (Iterator d = coll.iterator(); d.hasNext(); ) {
                             AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
-                            if (!assColl.getAnagraficoGruppoIva().equalsByPrimaryKey(anagrafico)){
+                            if (!assColl.getAnagraficoGruppoIva().equalsByPrimaryKey(anagrafico)) {
                                 controlloCongruenzaDateGruppiIva(userContext, anagrafico, assColl.getAnagraficoGruppoIva());
                             }
                         }
@@ -1876,15 +1876,15 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     private void controlloCongruenzaDateGruppiIva(UserContext userContext, AnagraficoBulk anagrafico, AnagraficoBulk anagraficoAssBulk) throws ApplicationException, ComponentException {
         try {
             if (!anagrafico.isToBeCreated())
-                anagrafico = (AnagraficoBulk)getHome(userContext,anagrafico).findByPrimaryKey(anagrafico);
+                anagrafico = (AnagraficoBulk) getHome(userContext, anagrafico).findByPrimaryKey(anagrafico);
             if (!anagraficoAssBulk.isToBeCreated())
-                anagraficoAssBulk = (AnagraficoBulk)getHome(userContext,anagraficoAssBulk).findByPrimaryKey(anagraficoAssBulk);
+                anagraficoAssBulk = (AnagraficoBulk) getHome(userContext, anagraficoAssBulk).findByPrimaryKey(anagraficoAssBulk);
 
             if (anagraficoAssBulk.getDt_canc() != null && anagrafico.getDtIniValGruppoIva() != null && anagrafico.getDt_canc() != null && anagraficoAssBulk.getDtIniValGruppoIva() != null &&
-                ((anagraficoAssBulk.getDt_canc().compareTo(anagrafico.getDtIniValGruppoIva()) >= 0 &&
-                  anagrafico.getDt_canc().compareTo(anagraficoAssBulk.getDtIniValGruppoIva()) >= 0) ||
-                 (anagraficoAssBulk.getDtIniValGruppoIva().compareTo(anagrafico.getDt_canc()) <= 0 &&
-                  anagrafico.getDtIniValGruppoIva().compareTo(anagraficoAssBulk.getDt_canc()) <= 0))) {
+                    ((anagraficoAssBulk.getDt_canc().compareTo(anagrafico.getDtIniValGruppoIva()) >= 0 &&
+                            anagrafico.getDt_canc().compareTo(anagraficoAssBulk.getDtIniValGruppoIva()) >= 0) ||
+                            (anagraficoAssBulk.getDtIniValGruppoIva().compareTo(anagrafico.getDt_canc()) <= 0 &&
+                                    anagrafico.getDtIniValGruppoIva().compareTo(anagraficoAssBulk.getDt_canc()) <= 0))) {
                 throw new ApplicationException("Date incongruenti per i gruppi IVA associati all'anagrafico " + anagraficoAssBulk.getCd_anag());
             }
         } catch (PersistencyException e) {
@@ -2564,7 +2564,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             dataInCarico.get(GregorianCalendar.YEAR) == (dataFinCaricoFamiliare.get(GregorianCalendar.YEAR)) ||
                             dataFinCarico.get(GregorianCalendar.YEAR) == (dataInCaricoFamiliare.get(GregorianCalendar.YEAR)) ||
                             dataFinCarico.get(GregorianCalendar.YEAR) == (dataFinCaricoFamiliare.get(GregorianCalendar.YEAR)))
-                    )
+            )
                 throw new it.cnr.jada.comp.ApplicationException("Attenzione: Non è possibile inserire per lo stesso carico familiare più dettagli relativi ad uno stesso anno d'imposta!");
         }
     }
@@ -2578,33 +2578,34 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             throw handleException(e);
         }
     }
+
     public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
         if (!Optional.ofNullable(aceService).isPresent())
             return;
-                logger.info(anagraficoBulk.getCd_anag().toString());
-                anagraficoBulk = (AnagraficoBulk)inizializzaBulkPerModifica(userContext, anagraficoBulk);
-                try {
-            if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()){
+        logger.info(anagraficoBulk.getCd_anag().toString());
+        anagraficoBulk = (AnagraficoBulk) inizializzaBulkPerModifica(userContext, anagraficoBulk);
+        try {
+            if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()) {
                 Optional<String> personaId = Optional.ofNullable(aceService.getPersonaId(anagraficoBulk.getCodice_fiscale()));
                 List<RapportoBulk> rapportiValidi = new LinkedList<>();
                 boolean isExDipendente = false;
-                for (Object obj : anagraficoBulk.getRapporti()){
+                for (Object obj : anagraficoBulk.getRapporti()) {
                     RapportoBulk rapportoBulk = (RapportoBulk) obj;
                     Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
-                    if (tipo_rapportoBulk.isDipendente()){
+                    if (tipo_rapportoBulk.isDipendente()) {
                         isExDipendente = true;
                     }
                     if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
-                            rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente()  &&
-                            RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())){
+                            rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente() &&
+                            RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())) {
                         rapportiValidi.add(rapportoBulk);
                     }
                 }
 
                 if (!personaId.isPresent()) {
-                    for (RapportoBulk rapportoBulk : rapportiValidi){
+                    for (RapportoBulk rapportoBulk : rapportiValidi) {
                         if (rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.BORSA_DI_STUDIO) ||
-                                rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.ASSEGNI_DI_RICERCA)){
+                                rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.ASSEGNI_DI_RICERCA)) {
                             logger.error("Invio Dati ACE: Codice fiscale {} non trovato. Per il codice fiscale: {} non è stata trovata la persona in ACE", anagraficoBulk.getCodice_fiscale(), anagraficoBulk.getCodice_fiscale());
                             break;
                         }
@@ -2619,30 +2620,30 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         List<PersonaEntitaOrganizzativaWebDto> personeEO;
                         personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                 .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
-                        if (personeEO == null || personeEO.isEmpty()){
+                        if (personeEO == null || personeEO.isEmpty()) {
                             params = new HashMap<>();
                             params.put("persona", personaId.get());
                             params.put("tipoAppartenenza", TipoAppartenenza.SEDE);
                             personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                     .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
                         }
-                        if (personeEO == null || personeEO.isEmpty()){
-                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
+                        if (personeEO == null || personeEO.isEmpty()) {
+                            String error = "Per la persona: " + personaId.get() + " Anagrafico: " + anagraficoBulk.getCd_anag() + " non è stata trovata l'appartenenza in ACE";
                             logger.error(error);
                         } else {
                             PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
 
-                            if (rapportiValidi.size() > 0){
+                            if (rapportiValidi.size() > 0) {
                                 List<RapportoBulk> rapportiOrdinati = (List<RapportoBulk>) rapportiValidi.stream().sorted(Comparator.comparing(RapportoBulk::getDt_ini_validita)).collect(Collectors.toList());
                                 LocalDate dataFinePrecedente = null;
                                 RapportoBulk rapportoPrec = null;
                                 List<RapportoBulk> rapportiCongruenti = new LinkedList<>();
-                                for (RapportoBulk rapportoBulk : rapportiOrdinati){
-                                    if (rapportoPrec == null){
+                                for (RapportoBulk rapportoBulk : rapportiOrdinati) {
+                                    if (rapportoPrec == null) {
                                         rapportoPrec = rapportoBulk;
                                         rapportiCongruenti.add(rapportoBulk);
                                     } else {
-                                        if (rapportoPrec.getDt_fin_validita().compareTo(rapportoBulk.getDt_ini_validita()) < 0){
+                                        if (rapportoPrec.getDt_fin_validita().compareTo(rapportoBulk.getDt_ini_validita()) < 0) {
                                             rapportiCongruenti.add(rapportoBulk);
                                         } else {
                                             rapportiCongruenti = new LinkedList<>();
@@ -2651,16 +2652,16 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                         rapportoPrec = rapportoBulk;
                                     }
                                 }
-                                if (rapportiCongruenti.size() > 0){
+                                if (rapportiCongruenti.size() > 0) {
                                     RapportoBulk ultimoRapportoValido = rapportiCongruenti.stream().reduce((first, second) -> second).get();
                                     TipoContratto tipoContratto = Optional.ofNullable(ultimoRapportoValido.getCd_tipo_rapporto())
                                             .filter(s -> RapportoBulk.TIPOCONTRATTO_ACE.containsKey(ultimoRapportoValido.getCd_tipo_rapporto()))
                                             .map(s -> RapportoBulk.TIPOCONTRATTO_ACE.get(ultimoRapportoValido.getCd_tipo_rapporto()))
                                             .orElse(null);
-                                    if (ultimoRapportoValido.getCd_tipo_rapporto().equals("ASS") && !isExDipendente){
+                                    if (ultimoRapportoValido.getCd_tipo_rapporto().equals("ASS") && !isExDipendente) {
                                         tipoContratto = TipoContratto.ASSEGNISTA;
                                     }
-                                    if (tipoContratto != null && (personaWebDto.getTipoContratto() == null || tipoContratto.compareTo(personaWebDto.getTipoContratto()) != 0)){
+                                    if (tipoContratto != null && (personaWebDto.getTipoContratto() == null || tipoContratto.compareTo(personaWebDto.getTipoContratto()) != 0)) {
                                         personaWebDto.setTipoContratto(tipoContratto);
                                         personaWebDto.setDataCessazione(null);
                                         personaWebDto.setDataPrevistaCessazione(null);
@@ -2669,11 +2670,11 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                         aceService.updatePersona(personaWebDto);
                                     }
                                     boolean primoGiro = true;
-                                    for (RapportoBulk rapportoBulk : rapportiCongruenti){
-                                        if (primoGiro){
+                                    for (RapportoBulk rapportoBulk : rapportiCongruenti) {
+                                        if (primoGiro) {
                                             LocalDate dataFineRapporto = rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate();
 //                                            if (personaEO.getFineValidita() == null || !dataFineRapporto.isEqual(personaEO.getFineValidita())){
-                                                aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
+                                            aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
 //                                            }
                                             primoGiro = false;
                                         } else {
@@ -2696,16 +2697,19 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             }
                         }
                     } catch (Throwable _ex) {
-                        String error = "Per la persona con id: "  + personaId.get() +" è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: "+_ex.getMessage();
+                        String error = "Per la persona con id: " + personaId.get() + " è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: " + _ex.getMessage();
                         logger.error(error);
-                        SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con ID "  + personaId.get() , error);
+                        SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con ID " + personaId.get(), error);
                     }
                 }
             }
         } catch (Throwable e) {
-            throw handleException(e);
+            String error = "Per la persona con codice fiscale: " + anagraficoBulk.getCodice_fiscale() + " è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: " + e.getMessage();
+            logger.error(error);
+            SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con codice fiscale " + anagraficoBulk.getCodice_fiscale(), error);
         }
     }
+
     private void aggiornaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
         PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
         personaEntitaOrganizzativaDto.setId(personaEOWebDto.getId());
@@ -2722,6 +2726,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
 
         aceService.updatePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
     }
+
     public java.sql.Timestamp getCurrentDate() {
         try {
             return it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
