@@ -2695,7 +2695,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                 }
                             }
                         }
-                    } catch (Exception _ex) {
+                    } catch (Throwable _ex) {
                         String error = "Per la persona con id: "  + personaId.get() +" è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: "+_ex.getMessage();
                         logger.error(error);
                         SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con ID "  + personaId.get() , error);
