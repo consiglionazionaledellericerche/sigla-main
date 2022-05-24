@@ -1,3 +1,11 @@
+## Release 6.4.35  -- _May 24, 2022_ 
+**Changes**
+
+>**FIX jackson-databind to version 2.13.0**
+>
+>[574c601d9df9100](https://github.com/consiglionazionaledellericerche/sigla-main/commit/574c601d9df9100) marco.spasiano *May 24, 2022*
+
+
 ## Release 6.4.34  -- _May 24, 2022_ 
 **Changes**
 
