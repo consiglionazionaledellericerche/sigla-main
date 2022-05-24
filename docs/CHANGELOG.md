@@ -1,3 +1,15 @@
+## Release 6.4.34  -- _May 24, 2022_ 
+**Changes**
+
+>**Gestito errore in fase di aggiornamento dei dati di ACE**
+>
+>[a282b172e6c696f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a282b172e6c696f) marco.spasiano *May 24, 2022*
+
+>**FIX jackson-databind to version 2.13.0**
+>
+>[7a678e1ee0859ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a678e1ee0859ec) marco.spasiano *May 24, 2022*
+
+
 ## Release 6.4.33  -- _May 20, 2022_ 
 **Changes**
 
