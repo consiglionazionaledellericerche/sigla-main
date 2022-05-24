@@ -1,3 +1,19 @@
+## Release 6.4.37  -- _May 24, 2022_ 
+**Changes**
+
+>**Upgrade version of ace-client**
+>
+>[57bf42ea70ec63d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57bf42ea70ec63d) marco.spasiano *May 24, 2022*
+
+
+## Release 6.4.36  -- _May 24, 2022_ 
+**Changes**
+
+>**FIX jackson-databind to version 2.13.0**
+>
+>[794c2f77e81825d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/794c2f77e81825d) marco.spasiano *May 24, 2022*
+
+
 ## Release 6.4.35  -- _May 24, 2022_ 
 **Changes**
 
