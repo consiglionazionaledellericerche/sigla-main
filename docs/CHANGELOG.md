@@ -1,5 +1,9 @@
-## Release 6.4.38  -- _May 27, 2022_ 
+## Release 6.4.39  -- _June 03, 2022_ 
 **Changes**
+
+>**Conditioned the integration with PAGOPA to the "pagopa" spring profile**
+>
+>[1117518c5f8ce3f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1117518c5f8ce3f) marco.spasiano *June 03, 2022*
 
 >**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
 >
