@@ -378,7 +378,6 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 					if (terzoModPag != null){
 						SQLBuilder sqlModPag = modPagHome.createSQLBuilder();
 						sqlModPag.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, terzoModPag);
-						sqlModPag.addSQLClause(FindClause.AND, "FL_CANCELLATO", SQLBuilder.EQUALS, "N");
 						sqlModPag.openParenthesis(FindClause.AND);
 						for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : rifModPags) {
 							sqlModPag.addSQLClause(FindClause.OR, "CD_MODALITA_PAG", SQLBuilder.EQUALS, rif_modalita_pagamentoBulk.getCd_modalita_pag());
