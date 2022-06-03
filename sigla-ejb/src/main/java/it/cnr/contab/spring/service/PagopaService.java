@@ -1,4 +1,21 @@
-package it.cnr.contab.pagopa.rest;
+/*
+ * Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package it.cnr.contab.spring.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,25 +30,34 @@ import it.cnr.contab.pagopa.model.AggiornaPendenza;
 import it.cnr.contab.pagopa.model.MovimentoCassaPagopa;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.pagopa.model.PendenzaResponse;
+import it.cnr.contab.pagopa.rest.PagopaClient;
 import it.cnr.contab.util.Utility;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Locale;
 
+@Service
+@Profile("pagopa")
 public class PagopaService {
     private transient static final Logger log = LoggerFactory.getLogger(PagopaService.class);
+    @Value("${pagopa.govpay.base_url}")
     String baseUrl;
+    @Value("${pagopa.govpay.username}")
     String username;
+    @Value("${pagopa.govpay.password}")
     String password;
+    @Value("${pagopa.govpay.usernameApp}")
     String usernameApp;
+    @Value("${pagopa.govpay.passwordApp}")
     String passwordApp;
 
     private PagopaClient pagopaClient;
