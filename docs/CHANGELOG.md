@@ -1,3 +1,19 @@
+## Release 6.4.38  -- _May 27, 2022_ 
+**Changes**
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[2233045d89e1ce6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2233045d89e1ce6) marco.spasiano *May 27, 2022*
+
+>**Incarichi: modifiche per consentire anche la pubblicazione del file di tipo "Attestazione Direttore"**
+>
+>[af76105498ec252](https://github.com/consiglionazionaledellericerche/sigla-main/commit/af76105498ec252) raffaelepagano *May 26, 2022*
+
+>**Rimodulazione Progetti: nuova gestione validazione automatica settato sul tipo di finanziamento**
+>
+>[c252c6f9efc0258](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c252c6f9efc0258) raffaelepagano *May 25, 2022*
+
+
 ## Release 6.4.37  -- _May 24, 2022_ 
 **Changes**
 
