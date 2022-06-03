@@ -5116,4 +5116,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_fl_validazione_automatica">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_validazione_automatica" type="CHAR(1)" defaultValue="N" remarks="Indica che i progetti/rimodulazioni aventi i tipi di finanziamento possono essere validati direttamente - Dominio: S = Sì; N = No;">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
