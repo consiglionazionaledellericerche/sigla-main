@@ -1,3 +1,11 @@
+## Release 6.4.41  -- _June 03, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[7880e362685da5b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7880e362685da5b) gianfranco.gasparro *June 03, 2022*
+
+
 ## Release 6.4.40  -- _June 03, 2022_ 
 **Changes**
 
