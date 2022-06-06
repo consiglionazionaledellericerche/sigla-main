@@ -140,6 +140,32 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_TRASF_QUOTE_PROGETTI_ATTIVI"
+			propertyName="flTrasfQuoteProgettiAttivi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="LIMITE_GIORNI_DURATA_PROGETTO"
+			propertyName="limiteGiorniDurataProgetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true"/>
+		<columnMapping
+			columnName="LIMITE_GIORNI_PROROGA_PROGETTO"
+			propertyName="limiteGiorniProrogaProgetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true"/>
+		<columnMapping
+			columnName="FL_ATTIVO"
+			propertyName="flAttivo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -204,6 +230,14 @@
 		name="flAssociaContratto" />
 	<persistentProperty
 		name="flValidazioneAutomatica" />
+	<persistentProperty
+		name="flTrasfQuoteProgettiAttivi" />
+	<persistentProperty
+		name="limiteGiorniDurataProgetto" />
+	<persistentProperty
+		name="limiteGiorniProrogaProgetto" />
+	<persistentProperty
+		name="flAttivo" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

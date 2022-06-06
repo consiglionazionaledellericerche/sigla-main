@@ -150,6 +150,32 @@
             inputType="CHECKBOX"
             nullable="false"
             label="Consenti Validazione Automatica Progetto/Rimodulazione"/>
+    <fieldProperty
+            name="flTrasfQuoteProgettiAttivi"
+            property="flTrasfQuoteProgettiAttivi"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Consenti Trasferimento quote da Progetti Attivi (non scaduti)"/>
+    <fieldProperty
+            name="limiteGiorniDurataProgetto"
+            property="limiteGiorniDurataProgetto"
+            label="Limite giorni durata progetto (anno=365)"
+            inputType="TEXT"
+            maxLength="10"/>
+    <fieldProperty
+            name="limiteGiorniProrogaProgetto"
+            property="limiteGiorniProrogaProgetto"
+            label="Limite giorni proroga progetto (anno=365)"
+            inputType="TEXT"
+            maxLength="10"/>
+    <fieldProperty
+            name="flAttivo"
+            property="flAttivo"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Consenti associazione a nuovi progetti"/>
 
     <form
             name="searchtool">
@@ -194,6 +220,14 @@
             name="flAssociaContratto" />
     <formFieldProperty
             name="flValidazioneAutomatica" />
+    <formFieldProperty
+            name="flTrasfQuoteProgettiAttivi" />
+    <formFieldProperty
+            name="limiteGiorniDurataProgetto" />
+    <formFieldProperty
+            name="limiteGiorniProrogaProgetto" />
+    <formFieldProperty
+            name="flAttivo" />
 
     <findFieldProperty
             name="id"/>
@@ -231,6 +265,14 @@
             name="flAssociaContratto" />
     <findFieldProperty
             name="flValidazioneAutomatica" />
+    <findFieldProperty
+            name="flTrasfQuoteProgettiAttivi" />
+    <findFieldProperty
+            name="limiteGiorniDurataProgetto" />
+    <findFieldProperty
+            name="limiteGiorniProrogaProgetto" />
+    <findFieldProperty
+            name="flAttivo" />
 
     <columnFieldProperty
             name="id"/>
@@ -268,4 +310,12 @@
             name="flAssociaContratto" />
     <columnFieldProperty
             name="flValidazioneAutomatica" />
+    <columnFieldProperty
+            name="flTrasfQuoteProgettiAttivi" />
+    <columnFieldProperty
+            name="limiteGiorniDurataProgetto" />
+    <columnFieldProperty
+            name="limiteGiorniProrogaProgetto" />
+    <columnFieldProperty
+            name="flAttivo" />
 </bulkInfo>

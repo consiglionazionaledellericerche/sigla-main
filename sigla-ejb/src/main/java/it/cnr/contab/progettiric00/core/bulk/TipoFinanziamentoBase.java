@@ -73,6 +73,18 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 	//  FL_VALIDAZIONE_AUTOMATICA CHAR(1) NOT NULL
 	private Boolean flValidazioneAutomatica;
 
+	// LIMITE_GIORNI_DURATA_PROGETTO INTEGER
+	private java.lang.Integer limiteGiorniDurataProgetto;
+
+	// LIMITE_GIORNI_PROROGA_PROGETTO INTEGER
+	private java.lang.Integer limiteGiorniProrogaProgetto;
+
+	//  FL_TRASFERISCI_QUOTE_PROGETTI_ATTVI CHAR(1) NOT NULL
+	private Boolean flTrasfQuoteProgettiAttivi;
+
+	//  FL_ATTIVO CHAR(1) NOT NULL
+	private Boolean flAttivo;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: TIPO_FINANZIAMENTO
@@ -296,5 +308,37 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 
 	public void setFlValidazioneAutomatica(Boolean flValidazioneAutomatica) {
 		this.flValidazioneAutomatica = flValidazioneAutomatica;
+	}
+
+	public Integer getLimiteGiorniDurataProgetto() {
+		return limiteGiorniDurataProgetto;
+	}
+
+	public void setLimiteGiorniDurataProgetto(Integer limiteGiorniDurataProgetto) {
+		this.limiteGiorniDurataProgetto = limiteGiorniDurataProgetto;
+	}
+
+	public Integer getLimiteGiorniProrogaProgetto() {
+		return limiteGiorniProrogaProgetto;
+	}
+
+	public void setLimiteGiorniProrogaProgetto(Integer limiteGiorniProrogaProgetto) {
+		this.limiteGiorniProrogaProgetto = limiteGiorniProrogaProgetto;
+	}
+
+	public Boolean getFlTrasfQuoteProgettiAttivi() {
+		return flTrasfQuoteProgettiAttivi;
+	}
+
+	public void setFlTrasfQuoteProgettiAttivi(Boolean flTrasfQuoteProgettiAttivi) {
+		this.flTrasfQuoteProgettiAttivi = flTrasfQuoteProgettiAttivi;
+	}
+
+	public Boolean getFlAttivo() {
+		return flAttivo;
+	}
+
+	public void setFlAttivo(Boolean flAttivo) {
+		this.flAttivo = flAttivo;
 	}
 }

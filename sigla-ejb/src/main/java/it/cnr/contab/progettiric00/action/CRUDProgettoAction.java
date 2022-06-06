@@ -17,43 +17,25 @@
 
 package it.cnr.contab.progettiric00.action;
 
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.progettiric00.bp.AmministraTestataProgettiRicercaBP;
+import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
+import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
+import it.cnr.contab.progettiric00.core.bulk.*;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.jada.action.*;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.util.action.*;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-
-import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
-import it.cnr.contab.progettiric00.bp.AmministraTestataProgettiRicercaBP;
-import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
-import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
-import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
-import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
-import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcess;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.AbstractPrintBP;
-import it.cnr.jada.util.action.BulkBP;
-import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.CRUDController;
-import it.cnr.jada.util.action.FormField;
-import it.cnr.jada.util.action.OptionBP;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 
 /**
  * Azione che gestisce le richieste relative alla Gestione Progetto Risorse
@@ -240,11 +222,15 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
     }
 
     public it.cnr.jada.action.Forward doBringBackSearchTipoFinanziamentoOf(ActionContext context, ProgettoBulk progetto, TipoFinanziamentoBulk tipoFinanziamento) throws java.rmi.RemoteException {
-        if (tipoFinanziamento != null && !tipoFinanziamento.getFlPianoEcoFin()) {
-            if (progetto.isDettagliPianoEconomicoPresenti()) {
-                setErrorMessage(context, "Attenzione: non è possibile selezionare un tipo finanziamento che non prevede il piano economico essendo presente un piano economico sul progetto.");
-            	return context.findDefaultForward();
-            }
+        if (tipoFinanziamento != null) {
+			if (!tipoFinanziamento.getFlPianoEcoFin() && progetto.isDettagliPianoEconomicoPresenti()) {
+				setErrorMessage(context, "Attenzione: non è possibile selezionare un tipo finanziamento che non prevede il piano economico essendo presente un piano economico sul progetto.");
+				return context.findDefaultForward();
+			}
+			if (!tipoFinanziamento.getFlAttivo()) {
+				setErrorMessage(context, "Attenzione: non è possibile selezionare un tipo finanziamento non abilitato all'associazione ai progetti.");
+				return context.findDefaultForward();
+			}
         }
     	progetto.getOtherField().setTipoFinanziamento(tipoFinanziamento);
     	if (!progetto.isDatePianoEconomicoRequired()) {

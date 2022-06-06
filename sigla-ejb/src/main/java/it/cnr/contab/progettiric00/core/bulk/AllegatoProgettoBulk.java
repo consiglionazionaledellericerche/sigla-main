@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoRimodulazioneType;
 import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -32,6 +33,7 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 
     public final static Map<String,String> ti_allegatoKeys = Arrays.asList(AllegatoProgettoType.values())
             .stream()
+			.filter(el->!el.value().equals(AllegatoProgettoType.VALUTAZIONE_UTILIZZO_RISORSE.value()))
             .collect(Collectors.toMap(
             		AllegatoProgettoType::value,
             		AllegatoProgettoType::label,
@@ -53,6 +55,9 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	
 	public boolean isProvvedimentoCostituzione() {
 		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.PROVV_COSTITUZIONE.value())).orElse(Boolean.FALSE);
+	}
+	public boolean isValutazioneUtilizzoRisorse() {
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.VALUTAZIONE_UTILIZZO_RISORSE.value())).orElse(Boolean.FALSE);
 	}
 
 	public boolean isRichiestaAnticipo() {
@@ -113,6 +118,8 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 				name.add("CTRD");
 			if (this.isFinalStatementPayment())	
 				name.add("FSP");
+			if (this.isValutazioneUtilizzoRisorse())
+				name.add("VALR");
 			if (this.isGenerico()) {
 				name.add("GEN");
 
