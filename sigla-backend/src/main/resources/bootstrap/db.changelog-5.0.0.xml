@@ -5123,4 +5123,13 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione-cnr-remove-imputazione-manuale-voce-ep">
+        <sql>
+            DELETE FROM configurazione_cnr
+            WHERE esercizio = 0
+            AND cd_unita_funzionale = '*'
+            AND cd_chiave_primaria = 'ECONOMICO_PATRIMONIALE'
+            AND cd_chiave_secondaria = 'IMPUTAZIONE_MANUALE';
+        </sql>
+    </changeSet>
 </databaseChangeLog>
