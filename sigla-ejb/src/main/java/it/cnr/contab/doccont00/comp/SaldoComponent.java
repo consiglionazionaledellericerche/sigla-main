@@ -200,7 +200,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		private ProgettoBulk progetto;
 		private Progetto_rimodulazioneBulk rimodulazione;
 
-		private List<CtrlPianoEcoDett> dett = new ArrayList<CtrlPianoEcoDett>();
+		private List<CtrlPianoEcoDett> dett = new ArrayList<>();
 		
 		public ProgettoBulk getProgetto() {
 			return progetto;
@@ -263,17 +263,15 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isVoceSpeciale));
 		}
 		public BigDecimal getImpEntrataPositivi(){
-			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)>0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 		}
 		public BigDecimal getImpEntrataNegativi(){
-			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)<0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO).abs();
+			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)<0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO).abs();
 		}
 		public Timestamp getDtScadenza() {
-			return Optional.ofNullable(
-					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-					.orElse(null);
+			return Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine());
 		}
 		public Timestamp getDtScadenzaRimodulata() {
 			return Optional.ofNullable(this.getRimodulazione())
@@ -285,12 +283,12 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 					.map(dt->dt.before(dataRiferimento)).orElse(Boolean.FALSE);
 		}
 		private BigDecimal getImpSpesaPositivi(Stream<CtrlPianoEcoDett> stream){
-			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)>0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 		}
 		private BigDecimal getImpSpesaNegativi(Stream<CtrlPianoEcoDett> stream){
-			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)<0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO).abs();
+			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)<0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO).abs();
 		}
 		/**
 		 * Ritorna l'importo positivo della spesa al netto degli importi di Natura Reimpiego, Area e Cdr Personale
@@ -397,7 +395,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
 			saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
         if (saldo != null){
 			saldo.setIm_mandati_reversali( saldo.getIm_mandati_reversali().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
-			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
+			saldo.setUser( userContext.getUser());
 			updateBulk( userContext, saldo );
 		}		
 		return saldo;
@@ -480,7 +478,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 		if (saldo != null){			
 			importo = importo.setScale(2, importo.ROUND_HALF_UP);
 			saldo.setIm_obblig_imp_acr( saldo.getIm_obblig_imp_acr().add( importo) );
-			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
+			saldo.setUser( userContext.getUser());
 	
 			//se si tratta di un residuo devo aggiornare anche le variazioni più o meno
 			if ( ti_competenza_residuo.equals( saldo.TIPO_RESIDUO ))
@@ -540,7 +538,7 @@ public Voce_f_saldi_cmpBulk aggiornaPagamentiIncassi(UserContext userContext, Vo
 		Voce_f_saldi_cmpBulk saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
 		if (saldo != null){
 			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_UP) ));
-			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
+			saldo.setUser( userContext.getUser());
 			updateBulk( userContext, saldo );
 		}			
 		return saldo;
