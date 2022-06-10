@@ -43,8 +43,10 @@ public class SospesoBulk extends SospesoBase {
     public final static Dictionary stato_sospesoCNRKeys;
     public final static Dictionary tiStatoTextForSearchKeys;
     public final static Dictionary ti_entrata_spesaKeys;
+    public final static String RISC_PREFIX ="XSRC";
+    public final static String CODICE_SOSPESO_RISCONTRO_INIZIALE = "0000000001";
 
-	static private java.util.Hashtable ti_cc_biKeys;
+    static private java.util.Hashtable ti_cc_biKeys;
 
     static {
         ti_sospeso_riscontroKeys = new Hashtable();
@@ -83,16 +85,16 @@ public class SospesoBulk extends SospesoBase {
         ti_entrata_spesaKeys.put(TIPO_SPESA, "Spesa");
     }
 
-	protected it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev = new it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk();
+    protected it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk v_man_rev = new it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk();
     protected Sospeso_det_etrBulk dettaglio_etr;
 
-	protected Sospeso_det_uscBulk dettaglio_usc;
+    protected Sospeso_det_uscBulk dettaglio_usc;
     protected it.cnr.contab.config00.sto.bulk.CdsBulk cds = new it.cnr.contab.config00.sto.bulk.CdsBulk();
 
-	protected it.cnr.contab.config00.sto.bulk.CdsBulk cds_origine = new it.cnr.contab.config00.sto.bulk.CdsBulk();
+    protected it.cnr.contab.config00.sto.bulk.CdsBulk cds_origine = new it.cnr.contab.config00.sto.bulk.CdsBulk();
     protected MandatoIBulk mandatoRiaccredito;
 
-	protected Collection reversaliAccertamentiColl = new java.util.ArrayList();
+    protected Collection reversaliAccertamentiColl = new java.util.ArrayList();
     protected Collection mandatiImpegniColl = new java.util.ArrayList();
     protected Collection lettereColl = new java.util.ArrayList();
     protected BulkList sospesiFigliColl = new BulkList();
@@ -463,7 +465,7 @@ public class SospesoBulk extends SospesoBase {
     public boolean isROFind_mandato_riaccredito() {
         return isROFind_cds_origine() ||
                 Optional.ofNullable(getTi_entrata_spesa())
-                    .filter(s -> s.equalsIgnoreCase(TIPO_SPESA)).isPresent();
+                        .filter(s -> s.equalsIgnoreCase(TIPO_SPESA)).isPresent();
     }
 
     /**
@@ -640,5 +642,9 @@ if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
         setMandatoRiaccredito(Optional.ofNullable(mandatoRiaccredito)
                 .orElseGet(() -> new MandatoIBulk()));
         mandatoRiaccredito.setPg_mandato(pg_mandato_man_riaccr);
+    }
+
+    public Boolean isTipoEntrata(){
+        return Optional.ofNullable(getTi_entrata_spesa()).map(x -> x.equals(TIPO_ENTRATA)).orElse(false);
     }
 }

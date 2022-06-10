@@ -20,33 +20,32 @@ package it.cnr.contab.logs.ejb;
 import it.cnr.contab.logs.bulk.Batch_controlBulk;
 import it.cnr.contab.logs.comp.BatchControlComponent;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.ejb.CRUDComponentSessionBean;
 import it.cnr.jada.util.RemoteIterator;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
-import javax.ejb.Remove;
-import javax.ejb.SessionBean;
-import javax.ejb.Stateless;
+import javax.ejb.*;
+import java.rmi.RemoteException;
 
 @Stateless(name="BLOGS_EJB_BatchControlComponentSession")
 public class BatchControlComponentSessionBean extends CRUDComponentSessionBean implements BatchControlComponentSession{
-	@PostConstruct
-	public void ejbCreate() {
+    @PostConstruct
+    public void ejbCreate() {
         componentObj = new BatchControlComponent();
     }
-	@Remove
-	public void ejbRemove() throws javax.ejb.EJBException {
-		componentObj.release();
-	}
-	
-	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
+    @Remove
+    public void ejbRemove() throws javax.ejb.EJBException {
+        componentObj.release();
+    }
+
+    public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
         return new BatchControlComponentSessionBean();
     }
 
     public Batch_controlBulk attivaBatch(UserContext param0, Batch_controlBulk param1)
-        throws ComponentException, EJBException
+            throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -75,8 +74,8 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
         }
     }
 
-	public Batch_controlBulk disattivaBatch(UserContext param0, Batch_controlBulk param1)
-		throws ComponentException, EJBException
+    public Batch_controlBulk disattivaBatch(UserContext param0, Batch_controlBulk param1)
+            throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -106,7 +105,7 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
     }
 
     public Batch_controlBulk inizializzaParametri(UserContext param0, Batch_controlBulk param1)
-    	throws ComponentException, EJBException
+            throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -136,7 +135,7 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
     }
 
     public RemoteIterator listaBatch_control_jobs(UserContext param0)
-    	throws ComponentException, EJBException
+            throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -164,4 +163,36 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
             throw uncaughtError(param0, componentObj, e);
         }
     }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public OggettoBulk creaConBulkRequiresNew(UserContext param0, OggettoBulk  param1)
+            throws ComponentException, EJBException
+    {
+        pre_component_invocation(param0, componentObj);
+        try
+        {
+            OggettoBulk result = ((BatchControlComponent)componentObj).creaConBulkRequiresNew(param0, param1);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        }
+        catch(NoRollbackException e)
+        {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        }
+        catch(ComponentException e)
+        {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        }
+        catch(RuntimeException e)
+        {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        }
+        catch(Error e)
+        {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
 }

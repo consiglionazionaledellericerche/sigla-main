@@ -25,6 +25,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.TransactionalSessionImpl;
 
+import javax.ejb.EJBException;
 import java.lang.reflect.InvocationTargetException;
 import java.rmi.RemoteException;
 
@@ -32,7 +33,7 @@ import java.rmi.RemoteException;
 //            BatchControlComponentSession
 
 public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession
-    implements BatchControlComponentSession
+        implements BatchControlComponentSession
 {
 
     public TransactionalBatchControlComponentSession()
@@ -40,12 +41,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public Batch_controlBulk attivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (Batch_controlBulk)invoke("attivaBatch", new Object[] {
-                usercontext, batch_controlbulk
+                    usercontext, batch_controlbulk
             });
         }
         catch(RemoteException remoteexception)
@@ -69,12 +70,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
         }
     }
     public RemoteIterator cerca(UserContext usercontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (RemoteIterator)invoke("cerca", new Object[] {
-                usercontext, compoundfindclause, oggettobulk
+                    usercontext, compoundfindclause, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -99,12 +100,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public RemoteIterator cerca(UserContext usercontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, OggettoBulk oggettobulk1, String s)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (RemoteIterator)invoke("cerca", new Object[] {
-                usercontext, compoundfindclause, oggettobulk, oggettobulk1, s
+                    usercontext, compoundfindclause, oggettobulk, oggettobulk1, s
             });
         }
         catch(RemoteException remoteexception)
@@ -129,12 +130,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk)invoke("creaConBulk", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -159,12 +160,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk[] creaConBulk(UserContext usercontext, OggettoBulk aoggettobulk[])
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk[])invoke("creaConBulk", new Object[] {
-                usercontext, aoggettobulk
+                    usercontext, aoggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -189,12 +190,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public Batch_controlBulk disattivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (Batch_controlBulk)invoke("disattivaBatch", new Object[] {
-                usercontext, batch_controlbulk
+                    usercontext, batch_controlbulk
             });
         }
         catch(RemoteException remoteexception)
@@ -219,12 +220,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public void eliminaConBulk(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             invoke("eliminaConBulk", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -249,12 +250,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public void eliminaConBulk(UserContext usercontext, OggettoBulk aoggettobulk[])
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             invoke("eliminaConBulk", new Object[] {
-                usercontext, aoggettobulk
+                    usercontext, aoggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -279,12 +280,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk)invoke("inizializzaBulkPerInserimento", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -309,12 +310,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk)invoke("inizializzaBulkPerModifica", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -339,12 +340,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk[] inizializzaBulkPerModifica(UserContext usercontext, OggettoBulk aoggettobulk[])
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk[])invoke("inizializzaBulkPerModifica", new Object[] {
-                usercontext, aoggettobulk
+                    usercontext, aoggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -369,12 +370,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk inizializzaBulkPerRicerca(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk)invoke("inizializzaBulkPerRicerca", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -399,12 +400,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk inizializzaBulkPerRicercaLibera(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk)invoke("inizializzaBulkPerRicercaLibera", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -429,12 +430,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public Batch_controlBulk inizializzaParametri(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (Batch_controlBulk)invoke("inizializzaParametri", new Object[] {
-                usercontext, batch_controlbulk
+                    usercontext, batch_controlbulk
             });
         }
         catch(RemoteException remoteexception)
@@ -459,12 +460,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public RemoteIterator listaBatch_control_jobs(UserContext usercontext)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (RemoteIterator)invoke("listaBatch_control_jobs", new Object[] {
-                usercontext
+                    usercontext
             });
         }
         catch(RemoteException remoteexception)
@@ -489,12 +490,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk)
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk)invoke("modificaConBulk", new Object[] {
-                usercontext, oggettobulk
+                    usercontext, oggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -519,12 +520,12 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     }
 
     public OggettoBulk[] modificaConBulk(UserContext usercontext, OggettoBulk aoggettobulk[])
-        throws RemoteException, ComponentException
+            throws RemoteException, ComponentException
     {
         try
         {
             return (OggettoBulk[])invoke("modificaConBulk", new Object[] {
-                usercontext, aoggettobulk
+                    usercontext, aoggettobulk
             });
         }
         catch(RemoteException remoteexception)
@@ -547,4 +548,35 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
             }
         }
     }
+
+    public OggettoBulk creaConBulkRequiresNew(UserContext usercontext, OggettoBulk oggettoBulk)
+            throws RemoteException, ComponentException
+    {
+        try
+        {
+            return (OggettoBulk)invoke("creaBulkRequiresNew", new Object[] {
+                    usercontext, oggettoBulk
+            });
+        }
+        catch(RemoteException remoteexception)
+        {
+            throw remoteexception;
+        }
+        catch(InvocationTargetException invocationtargetexception)
+        {
+            try
+            {
+                throw invocationtargetexception.getTargetException();
+            }
+            catch(ComponentException componentexception)
+            {
+                throw componentexception;
+            }
+            catch(Throwable throwable)
+            {
+                throw new RemoteException("Uncaugth exception", throwable);
+            }
+        }
+    }
+
 }

@@ -25,6 +25,9 @@ import java.math.BigDecimal;
 public class Batch_log_tstaBulk extends Batch_log_tstaBase
 {
 
+    public static String  LOG_TIPO_INTERF_CASS00 = "INTERF_CASS00";
+
+
     public Batch_log_tstaBulk()
     {
     }

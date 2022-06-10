@@ -34,15 +34,15 @@ public class Batch_log_rigaBulk extends Batch_log_rigaBase
         super(bigdecimal, bigdecimal1);
     }
     public String getCssClassTrace(){
-    	if(getTi_messaggio().compareTo("E")==0)
-    		return "TableColumnRedBold";
-    	else
-    		return null; 
+        if(getTi_messaggio().compareTo("E")==0)
+            return "TableColumnRedBold";
+        else
+            return null;
     }
     public String getCssClassTi_messaggio(){
-    	if(getTi_messaggio().compareTo("E")==0)
-     		return "TableColumnRedBold";
-    	else
-    		return null; 
+        if(getTi_messaggio().compareTo("E")==0)
+            return "TableColumnRedBold";
+        else
+            return null;
     }
 }

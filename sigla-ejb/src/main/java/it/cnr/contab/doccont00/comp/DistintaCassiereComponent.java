@@ -338,7 +338,7 @@ public class DistintaCassiereComponent extends
                     if (DateServices.isAnnoMaggEsScriv(userContext)) {
                         if (mandato.getDt_trasmissione().after(
                                 Optional.ofNullable(mandato.getDt_annullamento())
-                                    .orElse(mandato.getDt_trasmissione())
+                                        .orElse(mandato.getDt_trasmissione())
                         ))
                             mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
                                     userContext, mandato.getDt_trasmissione()));
@@ -351,8 +351,8 @@ public class DistintaCassiereComponent extends
                                 .getTs_valido(userContext));
                     }
                     if (Optional.ofNullable(mandato.getStatoVarSos())
-                                .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
-                                .orElse(Boolean.FALSE)){
+                            .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                            .orElse(Boolean.FALSE)){
                         mandato.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value());
                     }
                 } else {
@@ -1559,17 +1559,17 @@ public class DistintaCassiereComponent extends
                 } else {
                     sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.dt_firma", SQLBuilder.ISNOTNULL, null);
                     sql.openParenthesis(FindClause.AND);
-                        sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
+                    sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
                             MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
-                        sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.esito_operazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ACQUISITO.value());
+                    sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.esito_operazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ACQUISITO.value());
                     sql.closeParenthesis();
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
                 sql.openParenthesis(FindClause.AND);
-                    sql.addSQLClause(FindClause.AND, "v_mandato_reversale_dist_ann.stato_var_sos", SQLBuilder.NOT_EQUALS,
+                sql.addSQLClause(FindClause.AND, "v_mandato_reversale_dist_ann.stato_var_sos", SQLBuilder.NOT_EQUALS,
                         StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value());
-                    sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.stato_var_sos", SQLBuilder.ISNULL, null);
+                sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.stato_var_sos", SQLBuilder.ISNULL, null);
                 sql.closeParenthesis();
                 sql.addSQLJoin("v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT");
                 sql.addSQLJoin("v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT");
@@ -3325,7 +3325,7 @@ public class DistintaCassiereComponent extends
             ComponentException, PersistencyException, EJBException,
             RemoteException {
         return ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class))
-                    .isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(userContext),distinta.getCd_unita_organizzativa());
+                .isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(userContext),distinta.getCd_unita_organizzativa());
     }
 
     /**
@@ -4688,19 +4688,19 @@ public class DistintaCassiereComponent extends
                 .orElse(Boolean.FALSE);
         if (bulk.isReversale()) {
             isVariazioneDefinitiva = Optional.ofNullable(getHome(userContext, V_mandato_reversaleBulk.class)
-                .findByPrimaryKey(
-                        new V_mandato_reversaleBulk(
-                                bulk.getEsercizio(),
-                                bulk.getCd_tipo_documento_cont_padre(),
-                                bulk.getCd_cds(),
-                                bulk.getPg_documento_cont_padre())
-                ))
-                .filter(V_mandato_reversaleBulk.class::isInstance)
-                .map(V_mandato_reversaleBulk.class::cast)
-                .filter(V_mandato_reversaleBulk::isMandato)
-                .flatMap(v_mandato_reversaleBulk -> Optional.ofNullable(v_mandato_reversaleBulk.getStatoVarSos()))
-                .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
-                .orElse(Boolean.FALSE);
+                    .findByPrimaryKey(
+                            new V_mandato_reversaleBulk(
+                                    bulk.getEsercizio(),
+                                    bulk.getCd_tipo_documento_cont_padre(),
+                                    bulk.getCd_cds(),
+                                    bulk.getPg_documento_cont_padre())
+                    ))
+                    .filter(V_mandato_reversaleBulk.class::isInstance)
+                    .map(V_mandato_reversaleBulk.class::cast)
+                    .filter(V_mandato_reversaleBulk::isMandato)
+                    .flatMap(v_mandato_reversaleBulk -> Optional.ofNullable(v_mandato_reversaleBulk.getStatoVarSos()))
+                    .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .orElse(Boolean.FALSE);
         }
         if (isVariazioneDefinitiva) {
             return VARIAZIONE;
@@ -4731,7 +4731,7 @@ public class DistintaCassiereComponent extends
     }
 
     private Reversale creaReversaleFlussoSiopeplus(UserContext userContext,
-                                                                V_mandato_reversaleBulk bulk) throws ComponentException,
+                                                   V_mandato_reversaleBulk bulk) throws ComponentException,
             RemoteException, BusinessProcessException {
         try {
             final ObjectFactory objectFactory = new ObjectFactory();
@@ -4804,9 +4804,9 @@ public class DistintaCassiereComponent extends
                             clas.setCodiceCge(doc.getCdSiope());
                             clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
                             CtClassificazioneDatiSiopeEntrate ctClassificazioneDatiSiopeEntrate = objectFactory.createCtClassificazioneDatiSiopeEntrate();
-                                ctClassificazioneDatiSiopeEntrate.getContent().add(
-                                        objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeNc(StTipoDebitoNonCommerciale.NON_COMMERCIALE)
-                                );
+                            ctClassificazioneDatiSiopeEntrate.getContent().add(
+                                    objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeNc(StTipoDebitoNonCommerciale.NON_COMMERCIALE)
+                            );
                             clas.setClassificazioneDatiSiopeEntrate(ctClassificazioneDatiSiopeEntrate);
                             infover.getClassificazione().add(clas);
                             oldDoc = doc;
@@ -5190,12 +5190,12 @@ public class DistintaCassiereComponent extends
                     if (obb_conto && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         piazzatura.setNumeroContoCorrenteBeneficiario(
                                 Optional.ofNullable(docContabile.getNumeroConto())
-                                    .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
-                                            "sul Mandato {0}/{1}/{2}",
-                                            String.valueOf(bulk.getEsercizio()),
-                                            String.valueOf(bulk.getCd_cds()),
-                                            String.valueOf(bulk.getPg_documento_cont())
-                                            ))
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
                         );
                         infoben.setPiazzatura(piazzatura);
                     }
@@ -5859,9 +5859,9 @@ public class DistintaCassiereComponent extends
     }
 
     private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(UserContext userContext,
-                                       ObjectFactory objectFactory,
-                                       V_mandato_reversaleBulk bulk,
-                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
+                                                                         ObjectFactory objectFactory,
+                                                                         V_mandato_reversaleBulk bulk,
+                                                                         String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
 
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
@@ -5889,7 +5889,7 @@ public class DistintaCassiereComponent extends
                     .stream()
                     .filter(mandato_siopeBulk ->
                             mandato_siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)
-                     )
+                    )
                     .findAny();
 
             final Optional<Mandato_siopeBulk> mandatoDaCompenso = siopeBulks
@@ -6206,7 +6206,7 @@ public class DistintaCassiereComponent extends
                     .map(Long.class::cast)
                     .orElse(new Long(0));
         } catch (PersistencyException e) {
-           throw handleException(e);
+            throw handleException(e);
         }
     }
 

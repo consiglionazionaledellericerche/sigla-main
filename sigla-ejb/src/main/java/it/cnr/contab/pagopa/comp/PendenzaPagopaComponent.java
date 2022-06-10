@@ -115,7 +115,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA.getValue());
 					pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
 					pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
-					//pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
+					pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
 					pagamentoPagopaBulk.setToBeUpdated();
 					super.modificaConBulk(userContext, pagamentoPagopaBulk);
 
