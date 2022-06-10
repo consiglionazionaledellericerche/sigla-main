@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 //            Batch_log_tstaKey
 
 public class Batch_log_tstaBase extends Batch_log_tstaKey
-    implements Keyed
+        implements Keyed
 {
 
     public Batch_log_tstaBase()
@@ -87,6 +87,15 @@ public class Batch_log_tstaBase extends Batch_log_tstaKey
         pg_job = bigdecimal;
     }
 
+    public String getCd_log_tipo() {
+        return cd_log_tipo;
+    }
+
+    public void setCd_log_tipo(String cd_log_tipo) {
+        this.cd_log_tipo = cd_log_tipo;
+    }
+
+    private String cd_log_tipo;
     private String ds_log;
     private Boolean fl_errori;
     private String note;

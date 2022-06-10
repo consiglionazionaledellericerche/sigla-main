@@ -144,7 +144,7 @@ Si ricorda che ad ogni anagrafica di tipo “persona fisica” possono essere as
 
 Inoltre è necessario sapere che le date di inizio e fine validità vengono confrontate al momento della registrazione:
 
-- di un :doc:`Incarico<incarichi>`, con le date di inizio e di fine;
+- di un :doc:`Incarico<incarichi_di_collaborazione/incarichi-sigla>`, con le date di inizio e di fine;
 - di un :doc:`Compenso<compensi>`, con le date di competenza economica;
 - di una :doc:`Minicarriera<minicarriere>`, con le date di inizio e fine della minicarriera stessa.
 

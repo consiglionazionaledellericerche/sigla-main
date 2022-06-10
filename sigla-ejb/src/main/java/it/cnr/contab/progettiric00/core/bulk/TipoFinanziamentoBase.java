@@ -69,7 +69,10 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 	
 //  FL_ASSOCIA_CONTRATTO CHAR(1) NOT NULL
 	private Boolean flAssociaContratto;
-	
+
+	//  FL_VALIDAZIONE_AUTOMATICA CHAR(1) NOT NULL
+	private Boolean flValidazioneAutomatica;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: TIPO_FINANZIAMENTO
@@ -285,5 +288,13 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 	
 	public void setFlAssociaContratto(Boolean flAssociaContratto) {
 		this.flAssociaContratto = flAssociaContratto;
+	}
+
+	public Boolean getFlValidazioneAutomatica() {
+		return flValidazioneAutomatica;
+	}
+
+	public void setFlValidazioneAutomatica(Boolean flValidazioneAutomatica) {
+		this.flValidazioneAutomatica = flValidazioneAutomatica;
 	}
 }

@@ -22,7 +22,11 @@
 package it.cnr.contab.doccont00.intcass.giornaliera;
 import java.sql.Connection;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
 public class MovimentoContoEvidenzaHome extends BulkHome {
 	public MovimentoContoEvidenzaHome(Connection conn) {
 		super(MovimentoContoEvidenzaBulk.class, conn);
@@ -31,5 +35,15 @@ public class MovimentoContoEvidenzaHome extends BulkHome {
 		super(MovimentoContoEvidenzaBulk.class, conn, persistentCache);
 	}
 
+	public java.util.List recuperoRigheFile(String nomeFile, Integer esercizio, String stato) throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+
+		sql.addClause("AND","esercizio",SQLBuilder.EQUALS, esercizio);
+		sql.addClause("AND","identificativoFlusso",SQLBuilder.EQUALS, nomeFile);
+		sql.addClause("AND","stato",SQLBuilder.EQUALS, stato);
+		sql.addOrderBy("progressivo");
+		return fetchAll(sql);
+
+	}
 
 }

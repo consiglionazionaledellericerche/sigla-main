@@ -398,7 +398,7 @@ public class BancaBulk extends BancaBase {
             }
         } else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equals(getTi_pagamento()) && (isTABA() || isRegolarizzazione())) {
             // SE è BANCA_ITALIA
-            final String regex = "^[0-9]{7}";
+            final String regex = "^[0-9]{7}$";
             final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
             Optional.ofNullable(getNumero_conto())
                     .filter(s -> pattern.matcher(s).find())

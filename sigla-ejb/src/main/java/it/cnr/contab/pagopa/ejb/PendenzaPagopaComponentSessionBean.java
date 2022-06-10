@@ -19,10 +19,16 @@ package it.cnr.contab.pagopa.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.contab.pagopa.comp.PendenzaPagopaComponent;
+import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.pagamento.NotificaPagamento;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.RemoteIterator;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -51,7 +57,7 @@ public class PendenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
         } catch (it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(userContext, componentObj);
             throw e;
-        } catch (it.cnr.jada.comp.ComponentException e) {
+        } catch (ComponentException e) {
             component_invocation_failure(userContext, componentObj);
             throw e;
         } catch (RuntimeException e) {
@@ -60,6 +66,113 @@ public class PendenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
             throw uncaughtError(userContext, componentObj, e);
         }
     }
+    public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws  ComponentException, javax.ejb.EJBException{
+    pre_component_invocation(userContext, componentObj);
+        try {
+        byte[] result = ((PendenzaPagopaComponent)componentObj).stampaAvviso(userContext, pendenzaPagopaBulk);
+        component_invocation_succes(userContext, componentObj);
+        return result;
+    } catch (it.cnr.jada.comp.NoRollbackException e) {
+        component_invocation_succes(userContext, componentObj);
+        throw e;
+    } catch (ComponentException e) {
+        component_invocation_failure(userContext, componentObj);
+        throw e;
+    } catch (RuntimeException e) {
+        throw uncaughtRuntimeException(userContext, componentObj, e);
+    } catch (Error e) {
+        throw uncaughtError(userContext, componentObj, e);
+    }
+}
+    public byte[] stampaRt(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws  ComponentException, javax.ejb.EJBException{
+        pre_component_invocation(userContext, componentObj);
+        try {
+            byte[] result = ((PendenzaPagopaComponent)componentObj).stampaRt(userContext, pendenzaPagopaBulk);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
+    public Pendenza getPendenza(UserContext userContext, String numeroAvviso) throws ComponentException, IntrospectionException, PersistencyException, javax.ejb.EJBException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            Pendenza result = ((PendenzaPagopaComponent)componentObj).getPendenza(userContext, numeroAvviso);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
+    public NotificaPagamento notificaPagamento(UserContext userContext, NotificaPagamento notificaPagamento, String iuv) throws ComponentException, IntrospectionException, PersistencyException, javax.ejb.EJBException {
+            pre_component_invocation(userContext, componentObj);
+            try {
+                NotificaPagamento result = ((PendenzaPagopaComponent)componentObj).notificaPagamento(userContext, notificaPagamento, iuv);
+                component_invocation_succes(userContext, componentObj);
+                return result;
+            } catch (it.cnr.jada.comp.NoRollbackException e) {
+                component_invocation_succes(userContext, componentObj);
+                throw e;
+            } catch (ComponentException e) {
+                component_invocation_failure(userContext, componentObj);
+                throw e;
+            } catch (RuntimeException e) {
+                throw uncaughtRuntimeException(userContext, componentObj, e);
+            } catch (Error e) {
+                throw uncaughtError(userContext, componentObj, e);
+            }
+        }
+        public RemoteIterator cercaPagamenti(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk)  throws ComponentException, javax.ejb.EJBException {
+            pre_component_invocation(userContext, componentObj);
+            try {
+                RemoteIterator result = ((PendenzaPagopaComponent)componentObj).cercaPagamenti(userContext, pendenzaPagopaBulk);
+                component_invocation_succes(userContext, componentObj);
+                return result;
+            } catch (it.cnr.jada.comp.NoRollbackException e) {
+                component_invocation_succes(userContext, componentObj);
+                throw e;
+            } catch (ComponentException e) {
+                component_invocation_failure(userContext, componentObj);
+                throw e;
+            } catch (RuntimeException e) {
+                throw uncaughtRuntimeException(userContext, componentObj, e);
+            } catch (Error e) {
+                throw uncaughtError(userContext, componentObj, e);
+            }
+        }
 
-
+    public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk)  throws ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            PendenzaPagopaBulk result = ((PendenzaPagopaComponent)componentObj).riconciliaIncassoPagopa(userContext, movimentoContoEvidenzaBulk);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
 }

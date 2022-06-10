@@ -756,11 +756,14 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 			createReportRimodulazione(userContext, rimodulazione);
 
-			//Se la rimodulazione rispetta sia le condizioni di rapida approvazione nonchè consiste nella sola diversa distribuzione degli importi tra anni
-			// rispettando la ripartizione per categorie economiche allora provvedo direttamente alla validazione (che dovrebbe in automatico anche approvare)
-			if (!rimodulazione.isRimodulatoImportoFinanziato() && !rimodulazione.isRimodulatoImportoCofinanziato() &&
-				!rimodulazione.isRimodulatoDtProroga() && !rimodulazione.isRimodulatoDtInizio() && !rimodulazione.isRimodulatoDtFine() &&
-				rimodulazione.isRimodulazioneDiRapidaApprovazione()) {
+			//Se la rimodulazione rispetta uno dei seguenti casi:
+			// 1) le condizioni di rapida approvazione nonchè consiste nella sola diversa distribuzione degli importi tra anni rispettando la ripartizione per categorie economiche;
+			// oppure
+			// 2) il tipo di finanziamento prevede la validazione automatica
+			// allora provvedo direttamente alla validazione (che dovrebbe in automatico anche approvare)
+			if ((!rimodulazione.isRimodulatoImportoFinanziato() && !rimodulazione.isRimodulatoImportoCofinanziato() &&
+				 !rimodulazione.isRimodulatoDtProroga() && !rimodulazione.isRimodulatoDtInizio() && !rimodulazione.isRimodulatoDtFine() &&
+				 rimodulazione.isRimodulazioneDiRapidaApprovazione()) || rimodulazione.getProgetto().getOtherField().getTipoFinanziamento().getFlValidazioneAutomatica()) {
 				return this.valida(userContext, rimodulazione);
 			}
 

@@ -63,6 +63,10 @@
 			<% bp.getController().writeFormLabel( out, "im_associato_figli"); %>
 			<% bp.getController().writeFormInput( out, "im_associato_figli"); %></td>
 	</tr>
+	<tr>
+		<td><% bp.getController().writeFormLabel( out, "cd_avviso_pagopa"); %></td>
+		<td><% bp.getController().writeFormInput( out,"cd_avviso_pagopa"); %>
+	</tr>
 	</table>
   <% if( sospeso.getTi_sospeso_riscontro() != null && (sospeso.getTi_sospeso_riscontro().equals( sospeso.TI_RISCONTRO )) ) { %>
   <div class="Group">		

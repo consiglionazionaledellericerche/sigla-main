@@ -41,7 +41,7 @@ import javax.sql.DataSource;
 //            IBatchControlMgr
 
 public class BatchControlComponent extends CRUDComponent
-    implements IBatchControlMgr
+        implements IBatchControlMgr
 {
 
     public BatchControlComponent()
@@ -49,13 +49,13 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public Batch_controlBulk attivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
-        	LoggableStatement callablestatement =new LoggableStatement( getConnection(usercontext),
-        			"{  call " + EJBCommonServices.getDefaultSchema() 
-        			+ "IBMUTL210.attivaBatch( ?, ?, ?, ? ) }",false,this.getClass());
+            LoggableStatement callablestatement =new LoggableStatement( getConnection(usercontext),
+                    "{  call " + EJBCommonServices.getDefaultSchema()
+                            + "IBMUTL210.attivaBatch( ?, ?, ?, ? ) }",false,this.getClass());
             try
             {
                 callablestatement.setBigDecimal(1, batch_controlbulk.getPg_batch());
@@ -80,13 +80,13 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public OggettoBulk creaBatchDinamico(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
-        	LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
-        			"{  call " + EJBCommonServices.getDefaultSchema() 
-        			+ "IBMUTL210.CREABATCHDINAMICO(?, ?, ?, ?)}",false,this.getClass());
+            LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
+                    "{  call " + EJBCommonServices.getDefaultSchema()
+                            + "IBMUTL210.CREABATCHDINAMICO(?, ?, ?, ?)}",false,this.getClass());
             try
             {
                 callablestatement.setString(1, batch_controlbulk.getDs_batch());
@@ -110,13 +110,13 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public OggettoBulk creaBatchStatico(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
-        	LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
-        			"{  call " + EJBCommonServices.getDefaultSchema() 
-        			+ "IBMUTL210.CREABATCH(?, ?, ?, 'N', ? , ?)}",false,this.getClass());
+            LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
+                    "{  call " + EJBCommonServices.getDefaultSchema()
+                            + "IBMUTL210.CREABATCH(?, ?, ?, 'N', ? , ?)}",false,this.getClass());
             try
             {
                 callablestatement.setString(1, batch_controlbulk.getDs_batch());
@@ -141,7 +141,7 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public String creaChiamataProcedura(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         StringBuffer stringbuffer = new StringBuffer();
         stringbuffer.append(batch_controlbulk.getProcedura().getPackage_name());
@@ -156,81 +156,81 @@ public class BatchControlComponent extends CRUDComponent
             stringbuffer.append(',');
             switch(batch_procedura_parametrobulk.getTipoParametro())
             {
-            default:
-                break;
+                default:
+                    break;
 
-            case 0: // '\0'
-                if(batch_procedura_parametrobulk.getValore_varchar() != null)
-                {
-                    stringbuffer.append('\'');
-                    stringbuffer.append(batch_procedura_parametrobulk.getValore_varchar());
-                    stringbuffer.append('\'');
-                }
-                break;
+                case 0: // '\0'
+                    if(batch_procedura_parametrobulk.getValore_varchar() != null)
+                    {
+                        stringbuffer.append('\'');
+                        stringbuffer.append(batch_procedura_parametrobulk.getValore_varchar());
+                        stringbuffer.append('\'');
+                    }
+                    break;
 
-            case 1: // '\001'
-                if(batch_procedura_parametrobulk.getValore_number() != null)
-                    stringbuffer.append(batch_procedura_parametrobulk.getValore_number());
-                break;
+                case 1: // '\001'
+                    if(batch_procedura_parametrobulk.getValore_number() != null)
+                        stringbuffer.append(batch_procedura_parametrobulk.getValore_number());
+                    break;
 
-            case 2: // '\002'
-                if(batch_procedura_parametrobulk.getValore_date() != null)
-                {
-                    stringbuffer.append("TODATE('");
-                    stringbuffer.append(oracleDateFormat.format(batch_procedura_parametrobulk.getValore_date()));
-                    stringbuffer.append("','YYYYMMDDHH24MISS')");
-                }
-                break;
+                case 2: // '\002'
+                    if(batch_procedura_parametrobulk.getValore_date() != null)
+                    {
+                        stringbuffer.append("TODATE('");
+                        stringbuffer.append(oracleDateFormat.format(batch_procedura_parametrobulk.getValore_date()));
+                        stringbuffer.append("','YYYYMMDDHH24MISS')");
+                    }
+                    break;
             }
         }
 
         stringbuffer.append(");");
         return stringbuffer.toString();
     }
-	public void aggiornaViewSnapshot(UserContext usercontext) throws ComponentException{
-		try {
-			Connection connInformix = EJBCommonServices.getDatasource("java:/jdbc/GECO").getConnection();
-			LoggableStatement aPS=null;
-		    try {
-			 aPS=new LoggableStatement(connInformix,
-			  "select * from progetto",true,this.getClass());
-		     java.sql.ResultSet aRS= aPS.executeQuery();
-		     while(aRS.next()) {
-			  System.out.println(aRS.getString("descr_prog"));    
-			 }
-		     try{aRS.close();}catch( java.sql.SQLException e ){};
-			} catch (java.sql.SQLException e) {
-				throw handleException(e);
-			} finally {
-			 if(aPS != null) 
-		         try{aPS.close();}catch( java.sql.SQLException e ){};
-		    }	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		try
-		{
-			LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
-					"{  call " + EJBCommonServices.getDefaultSchema() 
-					+ "CNRMAT001.aggiornaMatView_RealTime }",false,this.getClass());
-			try
-			{
-				callablestatement.execute();
-			}
-			finally
-			{
-				callablestatement.close();
-			}
-		}
-		catch(Throwable throwable)
-		{
-			//throw handleException(throwable);
-		}
-		
-	}
+    public void aggiornaViewSnapshot(UserContext usercontext) throws ComponentException{
+        try {
+            Connection connInformix = EJBCommonServices.getDatasource("java:/jdbc/GECO").getConnection();
+            LoggableStatement aPS=null;
+            try {
+                aPS=new LoggableStatement(connInformix,
+                        "select * from progetto",true,this.getClass());
+                java.sql.ResultSet aRS= aPS.executeQuery();
+                while(aRS.next()) {
+                    System.out.println(aRS.getString("descr_prog"));
+                }
+                try{aRS.close();}catch( java.sql.SQLException e ){};
+            } catch (java.sql.SQLException e) {
+                throw handleException(e);
+            } finally {
+                if(aPS != null)
+                    try{aPS.close();}catch( java.sql.SQLException e ){};
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
+                    "{  call " + EJBCommonServices.getDefaultSchema()
+                            + "CNRMAT001.aggiornaMatView_RealTime }",false,this.getClass());
+            try
+            {
+                callablestatement.execute();
+            }
+            finally
+            {
+                callablestatement.close();
+            }
+        }
+        catch(Throwable throwable)
+        {
+            //throw handleException(throwable);
+        }
+
+    }
     public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk)
-        throws ComponentException
+            throws ComponentException
     {
         Batch_controlBulk batch_controlbulk = (Batch_controlBulk)oggettobulk;
         if(batch_controlbulk.getIntervallo() == null)
@@ -240,13 +240,13 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public Batch_controlBulk disattivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
-        	LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
-        			"{  call " + EJBCommonServices.getDefaultSchema()
-        			+ "IBMUTL210.disattivaBatch( ?, ?) }",false,this.getClass());
+            LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
+                    "{  call " + EJBCommonServices.getDefaultSchema()
+                            + "IBMUTL210.disattivaBatch( ?, ?) }",false,this.getClass());
             try
             {
                 callablestatement.setBigDecimal(1, batch_controlbulk.getPg_batch());
@@ -266,14 +266,14 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public void eliminaConBulk(UserContext usercontext, OggettoBulk oggettobulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
             Batch_controlBulk batch_controlbulk = (Batch_controlBulk)oggettobulk;
             LoggableStatement callablestatement = new LoggableStatement(getConnection(usercontext),
-            		"{  call " + EJBCommonServices.getDefaultSchema() 
-            		+ "IBMUTL210.RIMUOVIBATCH( ?, ?) }",false,this.getClass());
+                    "{  call " + EJBCommonServices.getDefaultSchema()
+                            + "IBMUTL210.RIMUOVIBATCH( ?, ?) }",false,this.getClass());
             try
             {
                 callablestatement.setBigDecimal(1, batch_controlbulk.getPg_batch());
@@ -292,7 +292,7 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
@@ -307,7 +307,7 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public Batch_controlBulk inizializzaParametri(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
@@ -316,7 +316,7 @@ public class BatchControlComponent extends CRUDComponent
             if(batch_controlbulk.getProcedura() == null || batch_controlbulk.getProcedura().getObject_name() == null || batch_controlbulk.getProcedura().getPackage_name() == null)
                 return batch_controlbulk;
             LoggableStatement statement = new LoggableStatement(getConnection(usercontext),
-            		"SELECT ARGUMENT_NAME,DATA_TYPE FROM USER_ARGUMENTS WHERE OBJECT_NAME = ? AND PACKAGE_NAME = ? ORDER BY POSITION",true,this.getClass());
+                    "SELECT ARGUMENT_NAME,DATA_TYPE FROM USER_ARGUMENTS WHERE OBJECT_NAME = ? AND PACKAGE_NAME = ? ORDER BY POSITION",true,this.getClass());
             try
             {
                 statement.setString(1, batch_controlbulk.getProcedura().getObject_name());
@@ -328,7 +328,7 @@ public class BatchControlComponent extends CRUDComponent
                         if(!resultset.next())
                             break;
 
-                    while(resultset.next()) 
+                    while(resultset.next())
                     {
                         Batch_procedura_parametroBulk batch_procedura_parametrobulk = new Batch_procedura_parametroBulk(batch_controlbulk.getProcedura().getCd_procedura(), resultset.getString(1), null);
                         String s = resultset.getString(2);
@@ -360,12 +360,12 @@ public class BatchControlComponent extends CRUDComponent
                 }
                 finally
                 {
-					try{resultset.close();}catch( java.sql.SQLException e ){};
+                    try{resultset.close();}catch( java.sql.SQLException e ){};
                 }
             }
             finally
             {
-				try{statement.close();}catch( java.sql.SQLException e ){};
+                try{statement.close();}catch( java.sql.SQLException e ){};
             }
             return batch_controlbulk;
         }
@@ -376,13 +376,13 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public RemoteIterator listaBatch_control_jobs(UserContext usercontext)
-        throws ComponentException
+            throws ComponentException
     {
         return iterator(usercontext, getHome(usercontext, it.cnr.contab.logs.bulk.V_batch_control_jobsBulk.class).createSQLBuilder(), it.cnr.contab.logs.bulk.V_batch_control_jobsBulk.class, null);
     }
 
     public void salvaValoriParametri(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
+            throws ComponentException
     {
         try
         {
@@ -424,7 +424,7 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public SQLBuilder selectBatch_log_tstaByClause(UserContext usercontext, Batch_controlBulk batch_controlbulk, Batch_log_tstaBulk batch_log_tstabulk, CompoundFindClause compoundfindclause)
-        throws ComponentException
+            throws ComponentException
     {
         SQLBuilder sqlbuilder = getHome(usercontext, batch_log_tstabulk).createSQLBuilder();
         sqlbuilder.addClause(compoundfindclause);
@@ -433,7 +433,7 @@ public class BatchControlComponent extends CRUDComponent
     }
 
     public SQLBuilder selectProceduraByClause(UserContext usercontext, Batch_controlBulk batch_controlbulk, Batch_proceduraBulk batch_procedurabulk, CompoundFindClause compoundfindclause)
-        throws ComponentException
+            throws ComponentException
     {
         SQLBuilder sqlbuilder = getHome(usercontext, batch_procedurabulk).createSQLBuilder();
         sqlbuilder.addClause(compoundfindclause);
@@ -447,4 +447,8 @@ public class BatchControlComponent extends CRUDComponent
 
     private static final DateFormat oracleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
+    public OggettoBulk creaConBulkRequiresNew(UserContext userContext, OggettoBulk  oggettoBulk)
+            throws ComponentException {
+        return super.creaConBulk(userContext,oggettoBulk);
+    }
 }

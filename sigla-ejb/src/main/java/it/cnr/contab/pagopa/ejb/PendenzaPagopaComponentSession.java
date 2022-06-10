@@ -19,9 +19,15 @@ package it.cnr.contab.pagopa.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
+import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.pagamento.NotificaPagamento;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.RemoteIterator;
 
 import javax.ejb.Remote;
 import java.math.BigDecimal;
@@ -34,4 +40,10 @@ import java.sql.Timestamp;
 @Remote
 public interface PendenzaPagopaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
     public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws RemoteException,  ComponentException;
+    public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException,  ComponentException;
+    public byte[] stampaRt(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException,  ComponentException;
+    public Pendenza getPendenza(UserContext userContext, String numeroAvviso) throws RemoteException,  ComponentException, IntrospectionException, PersistencyException;
+    public NotificaPagamento notificaPagamento(UserContext userContext, NotificaPagamento notificaPagamento, String iuv) throws RemoteException,  ComponentException, IntrospectionException, PersistencyException;
+    public RemoteIterator cercaPagamenti(UserContext aUC, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, ComponentException;
+    public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws RemoteException, ComponentException ;
 }

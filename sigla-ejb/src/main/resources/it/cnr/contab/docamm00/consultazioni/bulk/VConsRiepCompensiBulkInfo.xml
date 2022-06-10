@@ -36,10 +36,10 @@
 		nullable="false" label="Descrizione Trattamento" />
 	<fieldProperty name="esercizio" property="esercizio"
 		inputType="TEXT" inputSize="4" maxLength="4" enabledOnEdit="false"
-		nullable="false" label="esercizio" />
+		nullable="false" label="Esercizio" />
 	<fieldProperty name="pgCompenso" property="pg_compenso"
 		inputType="TEXT" inputSize="10" maxLength="10" enabledOnEdit="false"
-		nullable="false" label="pgCompenso" />
+		nullable="false" label="N. Compenso" />
 	<fieldProperty name="codiceFiscale" property="codiceFiscale"
 		inputType="TEXT" inputSize="20" maxLength="20" enabledOnEdit="false"
 		label="Codice Fiscale" />
@@ -53,18 +53,15 @@
 		cols="60" rows="5" maxLength="50" enabledOnEdit="false" label="Nome" />
 	<fieldProperty name="dtDaCompetenzaCoge" property="dtDaCompetenzaCoge"
 		inputType="TEXT" formatName="date_short" enabledOnEdit="false"
-		nullable="false" label="dtDaCompetenzaCoge" />
-	<fieldProperty name="dtDaCompetenzaCoge" property="dtDaCompetenzaCoge"
-		inputType="TEXT" formatName="date_short" enabledOnEdit="false"
-		nullable="false" label="dtDaCompetenzaCoge" />
+		nullable="false" label="Da Data Competenza" />
 	<fieldProperty name="dtACompetenzaCoge" property="dtACompetenzaCoge"
 		inputType="TEXT" formatName="date_short" enabledOnEdit="false"
-		nullable="false" label="dtACompetenzaCoge" />
+		nullable="false" label="A Data Competenza" />
 	<fieldProperty name="dtTrasmissione" property="dtTrasmissione"
 		inputType="TEXT" formatName="date_short" enabledOnEdit="false"
 		label="dtTrasmissione" />
 	<fieldProperty name="dtPagamento" property="dtPagamento"
-		inputType="TEXT" formatName="date_short" enabledOnEdit="false" label="dtPagamento" />
+		inputType="TEXT" formatName="date_short" enabledOnEdit="false" label="Data Pagamento" />
 	<fieldProperty name="imLordo" property="imLordo"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="TEXT" inputSize="22" maxLength="22" enabledOnEdit="false"
@@ -108,6 +105,10 @@
 		inputType="TEXT" inputSize="22" maxLength="22" enabledOnEdit="false"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Bonus dl 66" />
+	<fieldProperty name="cuneodl320" property="cuneodl320"
+				   inputType="TEXT" inputSize="22" maxLength="22" enabledOnEdit="false"
+				   formatName="it.cnr.contab.util.EuroFormat"
+				   label="Cuneo dl 320" />
 	<fieldProperty name="inpsPercipiente" property="inpsPercipiente"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="TEXT" inputSize="22" maxLength="22" enabledOnEdit="false"
@@ -156,6 +157,14 @@
 		maxLength="80" inputSize="60" inputType="ROTEXT" label="Descrizione UO" />
 
 
+	<fieldProperty
+			name="dettagliata"
+			property="dettagliata"
+			inputType="CHECKBOX"
+			enabledOnSearch="false"
+			label="Dettagliata"
+			command="doOnChangeDettagliata"
+			nullable="false"/>
 	<fieldProperty
 		name="groupTrattamento"
 		property="groupTrattamento"
@@ -272,6 +281,7 @@
 	<formFieldProperty name="totCosto" />
 	<formFieldProperty name="irpef" />
 	<formFieldProperty name="bonusdl66" />
+	<formFieldProperty name="cuneodl320" />
 	<formFieldProperty name="inpsPercipiente" />
 	<formFieldProperty name="inailPercipiente" />
 	<formFieldProperty name="addReg" />
@@ -288,6 +298,7 @@
 	<formFieldProperty name="codice_fiscale" />
 	<formFieldProperty name="findUoForPrint" />
 	<formFieldProperty name="groupTrattamento" />
+	<formFieldProperty name="dettagliata" />
 	<formFieldProperty name="cdUoForPrint" />
 	<formFieldProperty name="dsUoForPrint" />
 	<formFieldProperty name="da_dt_competenza" />
@@ -322,6 +333,7 @@
 	<findFieldProperty name="totCosto" />
 	<findFieldProperty name="irpef" />
 	<findFieldProperty name="bonusdl66" />
+	<findFieldProperty name="cuneodl320" />
 	<findFieldProperty name="inpsPercipiente" />
 	<findFieldProperty name="inailPercipiente" />
 	<findFieldProperty name="addReg" />
@@ -366,6 +378,7 @@
 	<columnFieldProperty name="totCosto" />
 	<columnFieldProperty name="irpef" />
 	<columnFieldProperty name="bonusdl66" />
+	<columnFieldProperty name="cuneodl320" />
 	<columnFieldProperty name="inpsPercipiente" />
 	<columnFieldProperty name="inailPercipiente" />
 	<columnFieldProperty name="addReg" />
@@ -399,6 +412,7 @@
 		<columnFieldProperty name="imFiscale" />
 		<columnFieldProperty name="irpef" />
 		<columnFieldProperty name="bonusdl66" />
+		<columnFieldProperty name="cuneodl320" />
 		<columnFieldProperty name="inpsPercipiente" />
 		<columnFieldProperty name="inailPercipiente" />
 		<columnFieldProperty name="inpgiPercipiente" />
@@ -427,6 +441,41 @@
 		<columnFieldProperty name="imFiscale" />
 		<columnFieldProperty name="irpef" />
 		<columnFieldProperty name="bonusdl66" />
+		<columnFieldProperty name="cuneodl320" />
+		<columnFieldProperty name="inpsPercipiente" />
+		<columnFieldProperty name="inailPercipiente" />
+		<columnFieldProperty name="inpgiPercipiente" />
+		<columnFieldProperty name="enpapiPercipiente" />
+		<columnFieldProperty name="addReg" />
+		<columnFieldProperty name="addCom" />
+	</columnSet>
+	<columnSet name="default">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="pgCompenso" />
+		<columnFieldProperty name="dtDaCompetenzaCoge" />
+		<columnFieldProperty name="dtACompetenzaCoge" />
+		<columnFieldProperty name="dtPagamento" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" />
+		<columnFieldProperty name="dsUnitaOrganizzativa" />
+		<columnFieldProperty name="cdTrattamento" />
+		<columnFieldProperty name="dsTiTrattamento" />
+		<columnFieldProperty name="cognome" />
+		<columnFieldProperty name="nome" />
+		<columnFieldProperty name="codiceFiscale" />
+		<columnFieldProperty name="imLordo" />
+		<columnFieldProperty name="irapEnte" />
+		<columnFieldProperty name="inpsEnte" />
+		<columnFieldProperty name="inpgiEnte" />
+		<columnFieldProperty name="enpapiEnte" />
+		<columnFieldProperty name="inailEnte" />
+		<columnFieldProperty name="totCosto" />
+		<columnFieldProperty name="cassaRivalsa" />
+		<columnFieldProperty name="imponibileIva" />
+		<columnFieldProperty name="importoIva" />
+		<columnFieldProperty name="imFiscale" />
+		<columnFieldProperty name="irpef" />
+		<columnFieldProperty name="bonusdl66" />
+		<columnFieldProperty name="cuneodl320" />
 		<columnFieldProperty name="inpsPercipiente" />
 		<columnFieldProperty name="inailPercipiente" />
 		<columnFieldProperty name="inpgiPercipiente" />
@@ -455,6 +504,7 @@
 		<findFieldProperty name="cassaRivalsa" />
 		<findFieldProperty name="irpef" />
 		<findFieldProperty name="bonusdl66" />
+		<findFieldProperty name="cuneodl320" />
 		<findFieldProperty name="inpsPercipiente" />
 		<findFieldProperty name="inailPercipiente" />
 		<findFieldProperty name="inpgiPercipiente" />
@@ -481,6 +531,41 @@
 		<findFieldProperty name="cassaRivalsa" />
 		<findFieldProperty name="irpef" />
 		<findFieldProperty name="bonusdl66" />
+		<findFieldProperty name="cuneodl320" />
+		<findFieldProperty name="inpsPercipiente" />
+		<findFieldProperty name="inailPercipiente" />
+		<findFieldProperty name="inpgiPercipiente" />
+		<findFieldProperty name="enpapiPercipiente" />
+		<findFieldProperty name="addReg" />
+		<findFieldProperty name="addCom" />
+	</freeSearchSet>
+	<freeSearchSet name="DETTAGLIATA">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="pgCompenso" />
+		<findFieldProperty name="dtDaCompetenzaCoge" />
+		<findFieldProperty name="dtACompetenzaCoge" />
+		<findFieldProperty name="dtPagamento" />
+		<findFieldProperty name="cd_unita_organizzativa" />
+		<findFieldProperty name="ds_unita_organizzativa" />
+		<findFieldProperty name="cd_trattamento" />
+		<findFieldProperty name="ds_ti_trattamento" />
+		<findFieldProperty name="cognome" />
+		<findFieldProperty name="nome" />
+		<findFieldProperty name="codiceFiscale" />
+		<findFieldProperty name="imLordo" />
+		<findFieldProperty name="irapEnte" />
+		<findFieldProperty name="inpsEnte" />
+		<findFieldProperty name="inpgiEnte" />
+		<findFieldProperty name="enpapiEnte" />
+		<findFieldProperty name="inailEnte" />
+		<findFieldProperty name="totCosto" />
+		<findFieldProperty name="imFiscale" />
+		<findFieldProperty name="imponibileIva" />
+		<findFieldProperty name="importoIva" />
+		<findFieldProperty name="cassaRivalsa" />
+		<findFieldProperty name="irpef" />
+		<findFieldProperty name="bonusdl66" />
+		<findFieldProperty name="cuneodl320" />
 		<findFieldProperty name="inpsPercipiente" />
 		<findFieldProperty name="inailPercipiente" />
 		<findFieldProperty name="inpgiPercipiente" />

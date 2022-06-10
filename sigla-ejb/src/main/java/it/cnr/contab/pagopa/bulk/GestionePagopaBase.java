@@ -27,10 +27,10 @@ public class GestionePagopaBase extends GestionePagopaKey implements Keyed {
 	// ID_TIPO_ATTO_BOLLO NUMBER NOT NULL
 	private Integer idTipoPendenzaPagopa;
 
-	private java.sql.Timestamp dtIniValidita;
-	private java.sql.Timestamp dtFinValidita;
-	private java.lang.Boolean posizioneDebitoria;
-	private java.lang.Boolean posizioneCreditoria;
+	private Timestamp dtIniValidita;
+	private Timestamp dtFinValidita;
+	private Boolean posizioneDebitoria;
+	private Boolean posizioneCreditoria;
 
 	public GestionePagopaBase() {
 		super();

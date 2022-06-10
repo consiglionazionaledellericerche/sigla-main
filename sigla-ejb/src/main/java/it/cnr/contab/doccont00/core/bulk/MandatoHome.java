@@ -23,7 +23,9 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -148,13 +150,20 @@ public abstract class MandatoHome extends BulkHome {
      * @return result i sospesi associati al mandato
      */
     public Collection findSospeso_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+        return findRiscontroSospeso_det_usc(userContext, mandato, SospesoBulk.TI_SOSPESO);
+    }
+
+    public Collection findRiscontro_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+        return findRiscontroSospeso_det_usc(userContext, mandato, SospesoBulk.TI_RISCONTRO);
+    }
+    public Collection findRiscontroSospeso_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato, String sospesoRiscontro) throws PersistencyException, IntrospectionException {
         PersistentHome home = getHomeCache().getHome(Sospeso_det_uscBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
         sql.addClause("AND", "cd_cds_mandato", sql.EQUALS, mandato.getCd_cds());
         sql.addClause("AND", "pg_mandato", sql.EQUALS, mandato.getPg_mandato());
-        sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO);
-//	sql.addClause( "AND", "stato", sql.EQUALS, Sospeso_det_uscBulk.STATO_DEFAULT);	
+        sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospesoRiscontro);
+//	sql.addClause( "AND", "stato", sql.EQUALS, Sospeso_det_uscBulk.STATO_DEFAULT);
         Collection result = home.fetchAll(sql);
         getHomeCache().fetchAll(userContext);
         return result;
@@ -294,5 +303,31 @@ public abstract class MandatoHome extends BulkHome {
         return stream.map(t -> t.getCdCup())
                 .distinct()
                 .collect(Collectors.toList());
+    }
+    public MandatoBulk findAndLockMandatoAnnullato(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+
+        return findAndLockMandato(cdCds, esercizio, pgMandato, true);
+    }
+
+    private MandatoBulk findAndLockMandato(String cdCds, Integer esercizio, Long pgMandato, Boolean annullato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause("AND", "cd_cds", sql.EQUALS, cdCds);
+        sql.addClause("AND", "esercizio", sql.EQUALS, esercizio);
+        sql.addClause("AND", "pg_mandato", sql.EQUALS, pgMandato);
+        sql.addClause("AND", "stato", annullato ? sql.EQUALS : sql.NOT_EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
+        List mandati = fetchAll(sql);
+        if (mandati == null || mandati.size() == 0) {
+            return null;
+        } else if (mandati.size() == 1) {
+            MandatoBulk man = (MandatoBulk) mandati.get(0);
+            lock(man);
+            return man;
+        } else {
+            throw new PersistencyException("Errore nel recupero del Mandato " + esercizio + "-" + pgMandato);
+        }
+    }
+
+    public MandatoBulk findAndLockMandatoNonAnnullato(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+        return findAndLockMandato(cdCds, esercizio, pgMandato, false);
     }
 }

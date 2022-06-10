@@ -185,7 +185,9 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		CAUSALE.put(CONT,"Contenzioso");
 	}
 	public final static java.util.Dictionary ti_bonifico_mezzoKeys = Lettera_pagam_esteroBulk.ti_bonifico_mezzoKeys, 
-			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys, ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys;
+			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys,
+			ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys,
+			ti_divisaKeys = Lettera_pagam_esteroBulk.ti_divisaKeys;
 	
 	private java.sql.Timestamp dt_termine_creazione_docamm = null;
 	private CarichiInventarioTable carichiInventarioHash = null;
