@@ -976,12 +976,12 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						contrattiService.updateProperties(storageFile, storageFile.getStorageObject());
 					}
 					if (allegato!=null) {
-						if (procedura.isProceduraAnnullata() || procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
+						if (procedura.isProceduraAnnullata() || procedura.isProceduraProvvisoria() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()))
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
-						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
+						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()))
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
 						else
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
@@ -1762,12 +1762,12 @@ public class IncarichiProceduraComponent extends CRUDComponent {
                         contrattiService.addAspect(storageObject, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
                     });
 					if (allegato!=null && optStorage.isPresent()) {
-						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
+						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()))
 							contrattiService.setInheritedPermission(optStorage.get(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(optStorage.get(), true);
-						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()))
 							contrattiService.setInheritedPermission(optStorage.get(), true);
 						else
 							contrattiService.setInheritedPermission(optStorage.get(), false);
@@ -1809,12 +1809,12 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						nodeRemoveAspect.add(nodeAllegato);
 					}
 					if (allegato!=null && nodeAllegato!=null) {
-						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
+						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || allegato.isAnnullato() ||
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);

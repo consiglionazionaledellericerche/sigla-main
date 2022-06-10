@@ -1,3 +1,95 @@
+## Release 6.4.41  -- _June 03, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[7880e362685da5b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7880e362685da5b) gianfranco.gasparro *June 03, 2022*
+
+
+## Release 6.4.40  -- _June 03, 2022_ 
+**Changes**
+
+>**Corretto completamento dati pagamento fattura elettronica escludendo le modalità non valide**
+>
+>[5d23aa3355e0b2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d23aa3355e0b2e) gianfranco.gasparro *June 03, 2022*
+
+>**Fix anomalia annullamento riscontro mandato**
+>
+>[bd6974da9796889](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd6974da9796889) gianfranco.gasparro *May 20, 2022*
+
+
+## Release 6.4.39  -- _June 03, 2022_ 
+**Changes**
+
+>**Conditioned the integration with PAGOPA to the "pagopa" spring profile**
+>
+>[1117518c5f8ce3f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1117518c5f8ce3f) marco.spasiano *June 03, 2022*
+
+>**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
+>
+>[2233045d89e1ce6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2233045d89e1ce6) marco.spasiano *May 27, 2022*
+
+>**Incarichi: modifiche per consentire anche la pubblicazione del file di tipo "Attestazione Direttore"**
+>
+>[af76105498ec252](https://github.com/consiglionazionaledellericerche/sigla-main/commit/af76105498ec252) raffaelepagano *May 26, 2022*
+
+>**Rimodulazione Progetti: nuova gestione validazione automatica settato sul tipo di finanziamento**
+>
+>[c252c6f9efc0258](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c252c6f9efc0258) raffaelepagano *May 25, 2022*
+
+
+## Release 6.4.37  -- _May 24, 2022_ 
+**Changes**
+
+>**Upgrade version of ace-client**
+>
+>[57bf42ea70ec63d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57bf42ea70ec63d) marco.spasiano *May 24, 2022*
+
+
+## Release 6.4.36  -- _May 24, 2022_ 
+**Changes**
+
+>**FIX jackson-databind to version 2.13.0**
+>
+>[794c2f77e81825d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/794c2f77e81825d) marco.spasiano *May 24, 2022*
+
+
+## Release 6.4.35  -- _May 24, 2022_ 
+**Changes**
+
+>**FIX jackson-databind to version 2.13.0**
+>
+>[574c601d9df9100](https://github.com/consiglionazionaledellericerche/sigla-main/commit/574c601d9df9100) marco.spasiano *May 24, 2022*
+
+
+## Release 6.4.34  -- _May 24, 2022_ 
+**Changes**
+
+>**Gestito errore in fase di aggiornamento dei dati di ACE**
+>
+>[a282b172e6c696f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a282b172e6c696f) marco.spasiano *May 24, 2022*
+
+>**FIX jackson-databind to version 2.13.0**
+>
+>[7a678e1ee0859ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a678e1ee0859ec) marco.spasiano *May 24, 2022*
+
+
+## Release 6.4.32  -- _May 20, 2022_ 
+**Changes**
+
+>**FIX IBAN autosize**
+>
+>[d2969abe0c59fcf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2969abe0c59fcf) SPASIANO MARCO *May 20, 2022*
+
+>**Fix anomalia in fase di approvazione Variazione Bilancio di progetti con e senza piano economico**
+>
+>[365f09548fef991](https://github.com/consiglionazionaledellericerche/sigla-main/commit/365f09548fef991) raffaelepagano *May 12, 2022*
+
+>**Gestito annullamento pendenza pagoPA**
+>
+>[a3312bb6016aceb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a3312bb6016aceb) gianfranco.gasparro *May 11, 2022*
+
+
 ## Release 6.4.31  -- _May 09, 2022_ 
 **Changes**
 

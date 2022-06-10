@@ -5273,8 +5273,13 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else
-                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+                        } else {
+                            throw new ApplicationMessageFormatException("Impossibile generare il flusso, ripartizione per siope errata " +
+                                    "sul Mandato {0}/{1}/{2}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()));
+                        }
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5397,8 +5402,13 @@ public class DistintaCassiereComponent extends
                                 clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
-                        } else
-                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+                        } else {
+                            throw new ApplicationMessageFormatException("Impossibile generare il flusso, ripartizione per siope errata " +
+                                    "sul Mandato {0}/{1}/{2}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()));
+                        }
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile

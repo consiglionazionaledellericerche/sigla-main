@@ -73,11 +73,11 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi())) {%>
+	    	  (allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group card m-2 border-warning"><table>
-				<% if (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()) { %>
+				<% if (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -86,6 +86,7 @@ function doScaricaFile() {
 					al fine di rispettare le norme in materia di tutela dei dati personali, <%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
 					prima di allegare il file
 					<%if (allegato.isConflittoInteressi()) {%>dell'<b><i>Attestazione di avvenuta verifica insussistenza cause di conflitto di interesse'</i></b>
+					<%} else if (allegato.isAttestazioneDirettore()) {%>dell'<b><i>Attestazione del direttore di avvenuta verifica insussistenza cause di conflitto di interesse'</i></b>
                     <%} else {%>del curriculum
                     <%}%>
                     da pubblicare sul sito internet istituzionale del CNR <%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
@@ -96,7 +97,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<% } %>
- 				<% if (allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()) { %>
+ 				<% if (allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>

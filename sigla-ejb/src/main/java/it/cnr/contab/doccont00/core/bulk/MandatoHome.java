@@ -148,13 +148,20 @@ public abstract class MandatoHome extends BulkHome {
      * @return result i sospesi associati al mandato
      */
     public Collection findSospeso_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+        return findRiscontroSospeso_det_usc(userContext, mandato, SospesoBulk.TI_SOSPESO);
+    }
+
+    public Collection findRiscontro_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+        return findRiscontroSospeso_det_usc(userContext, mandato, SospesoBulk.TI_RISCONTRO);
+    }
+    public Collection findRiscontroSospeso_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato, String sospesoRiscontro) throws PersistencyException, IntrospectionException {
         PersistentHome home = getHomeCache().getHome(Sospeso_det_uscBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
         sql.addClause("AND", "cd_cds_mandato", sql.EQUALS, mandato.getCd_cds());
         sql.addClause("AND", "pg_mandato", sql.EQUALS, mandato.getPg_mandato());
-        sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, SospesoBulk.TI_SOSPESO);
-//	sql.addClause( "AND", "stato", sql.EQUALS, Sospeso_det_uscBulk.STATO_DEFAULT);	
+        sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospesoRiscontro);
+//	sql.addClause( "AND", "stato", sql.EQUALS, Sospeso_det_uscBulk.STATO_DEFAULT);
         Collection result = home.fetchAll(sql);
         getHomeCache().fetchAll(userContext);
         return result;
