@@ -1937,9 +1937,14 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    	}
 
 			if (optTipoFin.map(TipoFinanziamentoBulk::isGestionale).orElse(Boolean.FALSE)) {
+				Optional.ofNullable(progetto.getOtherField()).map(Progetto_other_fieldBulk::getImFinanziato).filter(impfin->impfin.compareTo(BigDecimal.ZERO)==0)
+						.orElseThrow(()-> new ApplicationException("Attenzione: Su un progetto di tipo gestionale non è possibile valorizzare il campo Importo Finanziato!"));
+
 				ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				List<ProgettoBulk> progettiAttiviByTipoFinanziamento = progettoHome.selectProgettiAttiviByTipoFinanziamento(userContext, TipoFinanziamentoBulk.CODICE_GEST);
-				progettiAttiviByTipoFinanziamento.stream().filter(el->el.getUnita_organizzativa().getCd_cds().equals(CNRUserContext.getCd_cds(userContext))).findAny().ifPresent(el->{
+				progettiAttiviByTipoFinanziamento.stream().filter(el->el.getUnita_organizzativa().getCd_cds().equals(CNRUserContext.getCd_cds(userContext)))
+						.filter(el->!el.getPg_progetto().equals(progetto.getPg_progetto()))
+						.findAny().ifPresent(el->{
 					throw new ApplicationRuntimeException("Attenzione: Esiste già un progetto gestionale attivo ("+el.getCd_progetto()+") nell'ambito del cds "+el.getUnita_organizzativa().getCd_cds()+".");
 				});
 			}
@@ -2064,12 +2069,12 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di fine del progetto!"));
 
 			//Controllo il limite di durata del progetto se il campo apposito su TIPO_FINANZIAMENTO è impostato ed il progetto prevede il controllo
-			if (!progetto.getOtherField().getFlControlliDateDisabled()) {
-				Optional.ofNullable(progetto.getOtherField().getTipoFinanziamento().getLimiteGiorniDurataProgetto()).ifPresent(limiteGiorni -> {
-					Optional.ofNullable(progetto.getOtherField().getDtInizio())
+			if (!optOtherField.filter(Progetto_other_fieldBulk::getFlControlliDateDisabled).isPresent()) {
+				optOtherField.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento())).map(TipoFinanziamentoBulk::getLimiteGiorniDurataProgetto).ifPresent(limiteGiorni -> {
+					optOtherField.map(Progetto_other_fieldBulk::getDtInizio)
 							.orElseThrow(() -> new ApplicationRuntimeException("Attenzione: E' necessario indicare la data di inizio del progetto in quanto deve essere effettuato il controllo sulla sua durata massima!"));
 
-					Optional.ofNullable(progetto.getOtherField().getDtFine())
+					optOtherField.map(Progetto_other_fieldBulk::getDtFine)
 							.orElseThrow(() -> new ApplicationRuntimeException("Attenzione: E' necessario indicare la data di fine del progetto in quanto deve essere effettuato il controllo sulla sua durata massima!"));
 
 					GregorianCalendar dataLimite = new GregorianCalendar();
@@ -2087,9 +2092,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				});
 
 				//Controllo il limite di proroga del progetto se il campo apposito su TIPO_FINANZIAMENTO è impostato
-				Optional.ofNullable(progetto.getOtherField().getDtProroga()).ifPresent(dtProroga -> {
-					Optional.ofNullable(progetto.getOtherField().getTipoFinanziamento().getLimiteGiorniProrogaProgetto()).ifPresent(limiteGiorni -> {
-						Optional.ofNullable(progetto.getOtherField().getDtFine())
+				optOtherField.map(Progetto_other_fieldBulk::getDtProroga).ifPresent(dtProroga -> {
+					optOtherField.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento())).map(TipoFinanziamentoBulk::getLimiteGiorniProrogaProgetto).ifPresent(limiteGiorni -> {
+						optOtherField.map(Progetto_other_fieldBulk::getDtFine)
 								.orElseThrow(() -> new ApplicationRuntimeException("Attenzione: E' necessario indicare la data di fine del progetto in quanto deve essere effettuato il controllo sulla sua proroga massima!"));
 
 						GregorianCalendar dataLimite = new GregorianCalendar();
