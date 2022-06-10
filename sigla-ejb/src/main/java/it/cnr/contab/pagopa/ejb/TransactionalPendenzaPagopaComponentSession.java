@@ -34,7 +34,7 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements PendenzaPagopaComponentSession {
-    public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws RemoteException, ComponentException {
         try {
             return (PendenzaPagopaBulk) invoke("generaPosizioneDebitoria", new Object[]{
                     userContext,
@@ -45,7 +45,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         } catch (java.lang.reflect.InvocationTargetException e) {
             try {
                 throw e.getTargetException();
-            } catch (it.cnr.jada.comp.ComponentException ex) {
+            } catch (ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
                 throw new RemoteException("Uncaugth exception", ex);
@@ -53,7 +53,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         }
     }
 
-    public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, ComponentException {
         try {
             return (byte[]) invoke("stampaAvviso", new Object[]{
                     userContext,
@@ -63,7 +63,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         } catch (java.lang.reflect.InvocationTargetException e) {
             try {
                 throw e.getTargetException();
-            } catch (it.cnr.jada.comp.ComponentException ex) {
+            } catch (ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
                 throw new RemoteException("Uncaugth exception", ex);
@@ -71,7 +71,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         }
     }
 
-    public byte[] stampaRt(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public byte[] stampaRt(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, ComponentException {
         try {
             return (byte[]) invoke("stampaRt", new Object[]{
                     userContext,
@@ -81,7 +81,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         } catch (java.lang.reflect.InvocationTargetException e) {
             try {
                 throw e.getTargetException();
-            } catch (it.cnr.jada.comp.ComponentException ex) {
+            } catch (ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
                 throw new RemoteException("Uncaugth exception", ex);
@@ -99,7 +99,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         } catch (java.lang.reflect.InvocationTargetException e) {
             try {
                 throw e.getTargetException();
-            } catch (it.cnr.jada.comp.ComponentException ex) {
+            } catch (ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
                 throw new RemoteException("Uncaugth exception", ex);
@@ -118,7 +118,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
             } catch (java.lang.reflect.InvocationTargetException e) {
                 try {
                     throw e.getTargetException();
-                } catch (it.cnr.jada.comp.ComponentException ex) {
+                } catch (ComponentException ex) {
                     throw ex;
                 } catch (Throwable ex) {
                     throw new RemoteException("Uncaugth exception", ex);
@@ -135,7 +135,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
             } catch (java.lang.reflect.InvocationTargetException e) {
                 try {
                     throw e.getTargetException();
-                } catch (it.cnr.jada.comp.ComponentException ex) {
+                } catch (ComponentException ex) {
                     throw ex;
                 } catch (Throwable ex) {
                     throw new RemoteException("Uncaugth exception", ex);
@@ -153,7 +153,7 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         } catch (java.lang.reflect.InvocationTargetException e) {
             try {
                 throw e.getTargetException();
-            } catch (it.cnr.jada.comp.ComponentException ex) {
+            } catch (ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
                 throw new RemoteException("Uncaugth exception", ex);

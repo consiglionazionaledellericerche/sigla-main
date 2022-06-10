@@ -115,7 +115,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 					pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA.getValue());
 					pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
 					pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
-					pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
+					//pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
 					pagamentoPagopaBulk.setToBeUpdated();
 					super.modificaConBulk(userContext, pagamentoPagopaBulk);
 
@@ -361,13 +361,13 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		return codiceAvviso;
 	}
 
-	public it.cnr.jada.persistency.sql.SQLBuilder selectElemento_voceByClause(
+	public SQLBuilder selectElemento_voceByClause(
 			UserContext aUC,
 			PendenzaPagopaBulk pendenzaPagopaBulk,
 			Elemento_voceBulk elemento_voceBulk,
 			CompoundFindClause clauses)
 			throws ComponentException {
-		it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, elemento_voceBulk).createSQLBuilder();
+		SQLBuilder sql = getHome(aUC, elemento_voceBulk).createSQLBuilder();
 		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(aUC));
 		sql.addSQLClause("AND", "TI_GESTIONE", sql.EQUALS, "E");
 		sql.addClause(clauses);
@@ -427,7 +427,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		}
 	}
 
-	protected Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	protected Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, PersistencyException
 	{
 		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
 		sql.addOrderBy("id");
