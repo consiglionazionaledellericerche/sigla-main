@@ -89,9 +89,6 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
 
-<<<<<<<<< Temporary merge branch 1
-    String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
-=========
     Boolean isAttivaEconomica(UserContext userContext) throws ComponentException, RemoteException;
 
     Boolean isAttivaEconomicaPura(UserContext userContext) throws ComponentException, RemoteException;
@@ -113,6 +110,7 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     java.lang.Integer getCdTerzoDiversiStipendi(UserContext userContext) throws ComponentException, RemoteException;
 
     String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
+
     Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException, RemoteException;
 
 }
