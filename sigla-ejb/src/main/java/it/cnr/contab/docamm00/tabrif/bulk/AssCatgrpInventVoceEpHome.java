@@ -73,7 +73,9 @@ public AssCatgrpInventVoceEpHome(Connection conn, PersistentCache persistentCach
 
 public SQLBuilder selectContoByClause(it.cnr.jada.UserContext userContext, AssCatgrpInventVoceEpBulk assCatgrpInventVoceEpBulk, ContoHome contoHome, ContoBulk conto, CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
 		SQLBuilder sql = contoHome.createSQLBuilder();
+		sql.addClause(clause);
 		sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+		sql.addOrderBy("cd_voce_ep");
 		return sql;
 	}
 }

@@ -92,6 +92,10 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 		setFl_gestione_inventario(Boolean.FALSE);
 	if (getFl_gestione_magazzino()==null)
 		setFl_gestione_magazzino(Boolean.FALSE);
+	if (getFl_gestione_targa()==null)
+		setFl_gestione_targa(Boolean.FALSE);
+	if (getFl_gestione_seriale()==null)
+		setFl_gestione_seriale(Boolean.FALSE);
 
 	setNodoPadre(new Categoria_gruppo_inventBulk());
 	return this;

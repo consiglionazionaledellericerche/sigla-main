@@ -237,7 +237,7 @@
 			maxLength="1"
 			enabledOnEdit="true"
 			nullable="false"
-			label="Flag Consumo" />
+			label="Consumo" />
 
 	<fieldProperty
 			name="qtaCaricoLotto"

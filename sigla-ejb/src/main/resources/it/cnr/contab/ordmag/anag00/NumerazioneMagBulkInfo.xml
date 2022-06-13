@@ -140,9 +140,8 @@
 		name="corrente" />
 	<findFieldProperty
 		name="dtCancellazione" />
-
 	<columnFieldProperty
-		name="cdMagazzino" />
+			name="cdNumeratoreMag" />
 	<columnFieldProperty
-		name="dsMagazzino" />
+			name="corrente" />
 </bulkInfo>

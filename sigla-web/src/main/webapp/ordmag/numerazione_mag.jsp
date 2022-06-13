@@ -17,7 +17,7 @@ MagazzinoBulk mag = (MagazzinoBulk)bp.getModel();
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
-<title>Abilitazione Magazzino/Categorie</title>
+<title>Numerazione per Magazzino</title>
 </head>
 <body class="Form">
 <%
