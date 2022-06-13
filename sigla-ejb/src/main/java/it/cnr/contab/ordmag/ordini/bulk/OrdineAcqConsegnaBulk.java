@@ -35,6 +35,7 @@ import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -56,6 +57,8 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	private LuogoConsegnaMagBulk luogoConsegnaMag =  new LuogoConsegnaMagBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	private ContoBulk contoBulk =  new ContoBulk();
+
+	private FatturaOrdineBulk fatturaOrdineBulk = null;
 
 	protected BulkList righeRichiestaCollegate= new BulkList();
 	
@@ -390,10 +393,10 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) 
 	{
-		inizializza();
+		inizializza(context.getUserContext());
 		return this;
 	}
-	public OggettoBulk inizializza() 
+	public OggettoBulk inizializza(UserContext userContext)
 	{
 		setStato(STATO_INSERITA);
 		setStatoFatt(STATO_FATT_NON_ASSOCIATA);
@@ -402,6 +405,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 		setImIva(BigDecimal.ZERO);
 		setImIvaDivisa(BigDecimal.ZERO);
 		setImTotaleConsegna(BigDecimal.ZERO);
+		setDtPrevConsegna(recuperoDataDefaultPrevistaConsegna(userContext));
 		return this;
 	}
 	
@@ -544,4 +548,12 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 				)
 				.isPresent();
 	}
+	public FatturaOrdineBulk getFatturaOrdineBulk() {
+		return fatturaOrdineBulk;
+	}
+
+	public void setFatturaOrdineBulk(FatturaOrdineBulk fatturaOrdineBulk) {
+		this.fatturaOrdineBulk = fatturaOrdineBulk;
+	}
+
 }

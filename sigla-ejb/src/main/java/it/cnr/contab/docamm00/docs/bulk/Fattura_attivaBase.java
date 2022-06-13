@@ -650,7 +650,7 @@ public void setFl_san_marino(java.lang.Boolean fl_san_marino) {
 	this.fl_san_marino = fl_san_marino;
 }
 /* 
- * Setter dell'attributo fl_stampa
+ * Setter dell'attributo fl_stampaStoreService
  */
 public void setFl_stampa(java.lang.Boolean fl_stampa) {
 	this.fl_stampa = fl_stampa;

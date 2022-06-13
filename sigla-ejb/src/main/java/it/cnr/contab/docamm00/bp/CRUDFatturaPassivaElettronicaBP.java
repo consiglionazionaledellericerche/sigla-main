@@ -570,43 +570,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    		action.doOnModalitaPagamentoChange(context);	    		
 	    	}
 			fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
-			if (fatturaPassivaDiRiferimento == null) {
-				FatturaPassivaRigaCRUDController dettaglioController = nbp.getDettaglio();			
-				for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
-					Fattura_passiva_rigaBulk rigaFattura = documentoEleTestata.getInstanceRiga();			
-					int i = dettaglioController.addDetail(rigaFattura);
-					dettaglioController.setDirty(true);
-					dettaglioController.setModelIndex(context, i);
-					rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
-					if(documentoEleLinea.getLineaDescrizione().length()>199)
-						rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione().substring(0, 199));
-					else
-						rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
-					rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
-					rigaFattura.setQuantita(documentoEleLinea.getLineaQuantita());
-					action.doOnQuantitaChange(context);
-					rigaFattura.setPrezzo_unitario(documentoEleLinea.getLineaPrezzounitario());
-					action.doCalcolaTotaliDiRiga(context);
-					if (documentoEleTestata.getModalitaPagamento() != null)
-						rigaFattura.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());
-
-			    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime())); 
-			    	GregorianCalendar gcDataMinimaRiga = new GregorianCalendar(), gcDataMassimaRiga = new GregorianCalendar();
-			    	gcDataMinimaRiga.setTime(documentoEleLinea.getInizioDatacompetenza()==null?gcDataMinima.getTime():documentoEleLinea.getInizioDatacompetenza());
-			    	gcDataMassimaRiga.setTime(documentoEleLinea.getFineDatacompetenza()==null?gcDataMassima.getTime():documentoEleLinea.getFineDatacompetenza());
-			    	
-			    	if (fatturaPassivaBulk.getFl_fattura_compenso()) {
-						rigaFattura.setDt_da_competenza_coge(new Timestamp(gcDataMinimaRiga.getTime().getTime()));
-						rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));	
-			    	} else {
-			    		if (gcDataMinimaRiga.get(Calendar.YEAR)<gcDataMinima.get(Calendar.YEAR))
-			    			gcDataMinimaRiga = gcDataMinima;
-			    		if (gcDataMassimaRiga.get(Calendar.YEAR)<gcDataMinima.get(Calendar.YEAR))
-			    			gcDataMassimaRiga = gcDataMinima;
-						rigaFattura.setDt_da_competenza_coge(new Timestamp(gcDataMinimaRiga.getTime().getTime()));
-						rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));	
-			    	}
-				}				
+			if (fatturaPassivaDiRiferimento == null && !fatturaPassivaBulk.getFlDaOrdini()) {
+				caricaRigheFatturaDaFatturazioneElettronica(context, fatturaPassivaBulk, nbp, action, documentoEleTestata, gcDataMinima, gcDataMassima);
 			}
 			nbp.initializeModelForEditAllegati(context, fatturaPassivaBulk);
 			return fatturaPassivaBulk;
@@ -615,6 +580,45 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		} catch (ComponentException e) {
 			throw handleException(e);		
 		}			
+	}
+
+	private void caricaRigheFatturaDaFatturazioneElettronica(ActionContext context, Fattura_passivaBulk fatturaPassivaBulk, CRUDFatturaPassivaBP nbp, CRUDFatturaPassivaAction action, DocumentoEleTestataBulk documentoEleTestata, GregorianCalendar gcDataMinima, GregorianCalendar gcDataMassima) throws BusinessProcessException {
+		FatturaPassivaRigaCRUDController dettaglioController = nbp.getDettaglio();
+		for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
+			Fattura_passiva_rigaBulk rigaFattura = documentoEleTestata.getInstanceRiga();
+			int i = dettaglioController.addDetail(rigaFattura);
+			dettaglioController.setDirty(true);
+			dettaglioController.setModelIndex(context, i);
+			rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
+			if(documentoEleLinea.getLineaDescrizione().length()>199)
+				rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione().substring(0, 199));
+			else
+				rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
+			rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
+			rigaFattura.setQuantita(documentoEleLinea.getLineaQuantita());
+			action.doOnQuantitaChange(context);
+			rigaFattura.setPrezzo_unitario(documentoEleLinea.getLineaPrezzounitario());
+			action.doCalcolaTotaliDiRiga(context);
+			if (documentoEleTestata.getModalitaPagamento() != null)
+				rigaFattura.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());
+
+			//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime()));
+			GregorianCalendar gcDataMinimaRiga = new GregorianCalendar(), gcDataMassimaRiga = new GregorianCalendar();
+			gcDataMinimaRiga.setTime(documentoEleLinea.getInizioDatacompetenza()==null? gcDataMinima.getTime():documentoEleLinea.getInizioDatacompetenza());
+			gcDataMassimaRiga.setTime(documentoEleLinea.getFineDatacompetenza()==null? gcDataMassima.getTime():documentoEleLinea.getFineDatacompetenza());
+
+			if (fatturaPassivaBulk.getFl_fattura_compenso()) {
+				rigaFattura.setDt_da_competenza_coge(new Timestamp(gcDataMinimaRiga.getTime().getTime()));
+				rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));
+			} else {
+				if (gcDataMinimaRiga.get(Calendar.YEAR)< gcDataMinima.get(Calendar.YEAR))
+					gcDataMinimaRiga = gcDataMinima;
+				if (gcDataMassimaRiga.get(Calendar.YEAR)< gcDataMinima.get(Calendar.YEAR))
+					gcDataMassimaRiga = gcDataMinima;
+				rigaFattura.setDt_da_competenza_coge(new Timestamp(gcDataMinimaRiga.getTime().getTime()));
+				rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));
+			}
+		}
 	}
 
 	private Voce_ivaBulk recuperaCodiceIVA(DocumentoEleTestataBulk documentoEleTestata, DocumentoEleLineaBulk documentoEleLinea) {

@@ -20,9 +20,17 @@
  * Date 28/06/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Keyed;
+import it.cnr.jada.util.DateUtils;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed {
 	public BigDecimal getQuantitaOrig() {
@@ -431,5 +439,27 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 	}
 	public void setVecchiaConsegna(java.lang.Integer vecchiaConsegna) {
 		this.vecchiaConsegna = vecchiaConsegna;
+	}
+	public static Timestamp recuperoDataDefaultPrevistaConsegna(UserContext userContext){
+		BigDecimal value = null;
+		try {
+			value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, 0, "*", Configurazione_cnrBulk.PK_PARAMETRI_ORDINI, Configurazione_cnrBulk.SK_GG_DT_PREV_CONSEGNA).getIm01();
+		} catch (
+				RemoteException e) {
+		} catch (Exception e) {
+		}
+		if (value!= null){
+			java.sql.Timestamp oggi = null;
+			try {
+				oggi = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+			} catch (javax.ejb.EJBException e) {
+				throw new it.cnr.jada.DetailedRuntimeException(e);
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(oggi);
+			cal.add(Calendar.DAY_OF_WEEK, value.intValue());
+			return DateUtils.truncate(new Timestamp(cal.getTime().getTime()));
+		}
+		return null;
 	}
 }

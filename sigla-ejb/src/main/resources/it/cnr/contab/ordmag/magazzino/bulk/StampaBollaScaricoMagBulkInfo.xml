@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+			name="findUnitaOperativaAbilitata"
+			property="unitaOperativaAbilitata"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			command=""
+			nullable="false"
+			label="Unità Operativa" />
+
+	<fieldProperty
+			name="cdUnitaOperativa"
+			property="unitaOperativaAbilitata.cdUnitaOperativa"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Codice Unità Operativa" />
+
+	<fieldProperty
+			name="findUnitaOperativaDest"
+			property="unitaOperativaDestinazione"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			command=""
+			label="Unità Operativa Destinazione" />
+
+	<fieldProperty
+			name="cdUnitaOperativaDest"
+			property="unitaOperativaDestinazione.cdUnitaOperativa"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="false"
+			label="Codice Unità Operativa" />
+
+	<fieldProperty
+			name="findMagazzino"
+			property="magazzinoAbilitato"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			nullable="false"
+			label="Magazzino" />
+
+	<fieldProperty
+			name="findDaBeneServizio"
+			property="daBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="Da Articolo" />
+
+	<fieldProperty
+			name="findABeneServizio"
+			property="aBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="A Articolo" />
+
+	<fieldProperty
+			name="daData"
+			property="daData"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			command="doOnDataDaChange"
+			label="Da Data" />
+
+	<fieldProperty
+			name="aData"
+			property="aData"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			label="A Data" />
+
+	<fieldProperty
+			name="daNumBolla"
+			property="daNumBolla"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			command="doOnPgBollaDaChange"
+			label="Da Numero Bolla" />
+
+	<fieldProperty
+			name="aNumBolla"
+			property="aNumBolla"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			label="A Numero Bolla" />
+
+	<fieldProperty
+			name="cdsMagForPrint"
+			property="cdsMagForPrint"/>
+	<fieldProperty
+			name="cdMagazzinoForPrint"
+			property="cdMagazzinoForPrint"/>
+
+	<fieldProperty
+			name="descUnitaOperativaDestForPrint"
+			property="descUnitaOperativaDestForPrint"/>
+	<fieldProperty
+			name="cdDaBeneForPrint"
+			property="cdDaBeneForPrint"/>
+	<fieldProperty
+			name="cdABeneForPrint"
+			property="cdABeneForPrint"/>
+	<fieldProperty
+			name="descDaBeneForPrint"
+			property="descDaBeneForPrint"/>
+	<fieldProperty
+			name="descABeneForPrint"
+			property="descABeneForPrint"/>
+	<fieldProperty
+			name="cdDaDataForPrint"
+			property="cdDaDataForPrint"/>
+	<fieldProperty
+			name="cdADataForPrint"
+			property="cdADataForPrint"/>
+	<fieldProperty
+			name="daNumBollaForPrint"
+			property="daNumBollaForPrint"/>
+	<fieldProperty
+			name="aNumBollaForPrint"
+			property="aNumBollaForPrint"/>
+
+
+
+
+
+	<formFieldProperty name="findUnitaOperativaAbilitata" />
+	<formFieldProperty name="findUnitaOperativaDest" />
+	<formFieldProperty name="findMagazzino" />
+	<formFieldProperty name="findDaBeneServizio" />
+	<formFieldProperty name="findABeneServizio" />
+	<formFieldProperty name="daData" />
+	<formFieldProperty name="aData" />
+	<formFieldProperty name="daNumBolla" />
+	<formFieldProperty name="aNumBolla" />
+
+
+
+
+	<printForm
+			name="/ordmag/bolla_scarico.jasper">
+		<printFieldProperty
+				name="cdUnitaOperativa"
+				parameterPosition="1"
+				parameterType="STRING"
+				paramNameJR="cd_unita_operativa"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdMagazzinoForPrint"
+				parameterPosition="2"
+				parameterType="STRING"
+				paramNameJR="cd_magazzino"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdsMagForPrint"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="cd_cds"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdUnitaOperativaDest"
+				parameterPosition="4"
+				parameterType="STRING"
+				paramNameJR="cd_uop_dest"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdDaBeneForPrint"
+				parameterPosition="5"
+				parameterType="STRING"
+				paramNameJR="cd_bene_servizio_da"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdABeneForPrint"
+				parameterPosition="6"
+				parameterType="STRING"
+				paramNameJR="cd_bene_servizio_a"
+				paramTypeJR="java.lang.String"/>
+		<printFieldProperty
+				name="cdDaDataForPrint"
+				parameterPosition="7"
+				parameterType="DATE"
+				paramNameJR="dt_bolla_sca_da"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="cdADataForPrint"
+				parameterPosition="8"
+				parameterType="DATE"
+				paramNameJR="dt_bolla_sca_a"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="daNumBollaForPrint"
+				parameterPosition="9"
+				parameterType="STRING"
+				paramNameJR="pg_bolla_sca_da"
+				paramTypeJR="java.lang.Long"/>
+
+		<printFieldProperty
+				name="aNumBollaForPrint"
+				parameterPosition="10"
+				parameterType="STRING"
+				paramNameJR="pg_bolla_sca_a"
+				paramTypeJR="java.lang.Long"/>
+
+	</printForm>
+</bulkInfo>

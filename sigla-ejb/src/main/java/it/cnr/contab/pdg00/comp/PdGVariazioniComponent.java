@@ -197,7 +197,9 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 							.getEsercizio(userContext)));
 			pdg_variazione.setTi_causale_respintaKeys(testataHome
 					.loadCausaliMancataApprovazione(userContext));
+			pdg_variazione.setFl_cda(new Boolean(false));
 			pdg_variazione.setFl_visto_dip_variazioni(new Boolean(false));
+			pdg_variazione.setFl_cda(new Boolean(false));
 			inizializzaSommeAZero(pdg_variazione);
 			return super.inizializzaBulkPerInserimento(userContext,
 					pdg_variazione);

@@ -28,8 +28,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_generico_passivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.DocumentoGenericoWizardBulk;
 import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.*;
@@ -40,13 +39,17 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	
 	private boolean fl_imputazione_manuale;
 	private MandatoIBulk mandatoPerResiduo;
-	
+	private char ti_entrate_spese;
+
+	//Indica se il mandato da generare deve essere diviso tra competenza/residuo o unico
+	private boolean flGeneraMandatoUnico;
+
 	protected BancaBulk banca = new BancaBulk();
 	protected Modalita_pagamentoBulk modalita_pagamento = new Modalita_pagamentoBulk();
 	protected List modalita_pagamentoOptions;
 	protected List bancaOptions;
 
-	private Documento_genericoBulk modelloDocumento;
+	private DocumentoGenericoWizardBulk modelloDocumento;
 
 	private String ti_impegni;
 	private String ti_automatismo;
@@ -63,7 +66,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	};	
 
 	protected java.util.Collection impegniSelezionatiColl = new java.util.LinkedList();
-	protected java.util.Collection docPassiviSelezionatiColl = new java.util.LinkedList();
+	protected java.util.Collection<V_doc_passivo_obbligazione_wizardBulk> docPassiviSelezionatiColl = new java.util.LinkedList();
 	protected boolean impegniModificati = false;
 
 	public final static String IMPEGNI_TIPO_COMPETENZA	= "C";
@@ -136,7 +139,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	/**
 	 * @return java.util.Collection
 	 */
-	public java.util.Collection getMandatiColl() {
+	public java.util.Collection<MandatoBulk> getMandatiColl() {
 		return mandatiColl;
 	}
 	
@@ -159,7 +162,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 				setTi_automatismo( AUTOMATISMO_DA_IMPEGNI );
 		}
 		setTi_mandato( TIPO_PAGAMENTO );
-		Documento_generico_passivoBulk docPassivo = new Documento_generico_passivoBulk();
+		DocumentoGenericoWizardBulk docPassivo = new DocumentoGenericoWizardBulk();
 		docPassivo.setTi_istituz_commerc(TipoIVA.COMMERCIALE.value());
 		setModelloDocumento(docPassivo);
 		return this;
@@ -253,25 +256,13 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 		}		
 	}
 
-	/**
-	 * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
-	 * inizializzandone alcuni campi
-	 * @param mr dettaglio da aggiungere alla lista
-	 * @return int
-	 */
-	public int addToImpegniSelezionatiColl( List impegni) 
+	public int addToImpegniSelezionatiColl( List impegni)
 	{
 		impegniSelezionatiColl.addAll(impegni);
 		return impegniSelezionatiColl.size()-1;
 	}
 	
-	/**
-	 * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
-	 * inizializzandone alcuni campi
-	 * @param mr dettaglio da aggiungere alla lista
-	 * @return int
-	 */
-	public int addToMandato_rigaColl( Mandato_rigaBulk riga) 
+	public int addToMandato_rigaColl( Mandato_rigaBulk riga)
 	{
 		riga.setStato( riga.STATO_INIZIALE );
 		riga.setModalita_pagamentoOptions( getModalita_pagamentoOptions());
@@ -282,13 +273,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 		return mandato_rigaColl.size()-1;
 	}
 
-	/**
-	 * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
-	 * inizializzandone alcuni campi
-	 * @param mr dettaglio da aggiungere alla lista
-	 * @return int
-	 */
-	public int addToMandato_rigaColl( Mandato_rigaBulk riga, V_obbligazioneBulk impegno ) 
+	public int addToMandato_rigaColl( Mandato_rigaBulk riga, V_obbligazioneBulk impegno )
 	{
 		mandato_rigaColl.add(riga);
 		return mandato_rigaColl.size()-1;
@@ -440,7 +425,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	}
 
 	public Dictionary getTi_istituz_commercKeys() {
-		return Documento_genericoBulk.TIPO;
+		return DocumentoGenericoWizardBulk.TIPO;
 	}
 
 	public boolean isROCreditore() {
@@ -475,7 +460,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 		return getMandatiColl().size()>0;
 	}
 
-	public java.util.Collection getDocPassiviSelezionatiColl() {
+	public java.util.Collection<V_doc_passivo_obbligazione_wizardBulk> getDocPassiviSelezionatiColl() {
 		return docPassiviSelezionatiColl;
 	}
 
@@ -484,12 +469,64 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 		this.docPassiviSelezionatiColl = docPassiviSelezionatiColl;
 	}
 
-	public Documento_genericoBulk getModelloDocumento() {
+	public DocumentoGenericoWizardBulk getModelloDocumento() {
 		return modelloDocumento;
 	}
 	
-
-	public void setModelloDocumento(Documento_genericoBulk modelloDocumento) {
+	public void setModelloDocumento(DocumentoGenericoWizardBulk modelloDocumento) {
 		this.modelloDocumento = modelloDocumento;
 	}
+
+	public char getTi_entrate_spese() {
+		return ti_entrate_spese;
+	}
+
+	public void setTi_entrate_spese(char ti_entrate_spese) {
+		this.ti_entrate_spese = ti_entrate_spese;
+	}
+
+	public boolean isFlGeneraMandatoUnico() {
+		return flGeneraMandatoUnico;
+	}
+
+	public void setFlGeneraMandatoUnico(boolean flGeneraMandatoUnico) {
+		this.flGeneraMandatoUnico = flGeneraMandatoUnico;
+	}
+
+	public static MandatoAutomaticoWizardBulk createBy(MandatoAutomaticoWizardBulk mandatoWizard) {
+		MandatoAutomaticoWizardBulk mandatoCloneWizard = new MandatoAutomaticoWizardBulk();
+		mandatoWizard.setTi_automatismo(ReversaleAutomaticaWizardBulk.AUTOMATISMO_DA_ACCERTAMENTI);
+		mandatoCloneWizard.setEsercizio(mandatoWizard.getEsercizio());
+		mandatoCloneWizard.setCds(mandatoWizard.getCds());
+		mandatoCloneWizard.setUnita_organizzativa(mandatoWizard.getUnita_organizzativa());
+		mandatoCloneWizard.setCd_cds_origine(mandatoWizard.getCd_cds_origine());
+		mandatoCloneWizard.setCd_uo_origine(mandatoWizard.getCd_uo_origine());
+		mandatoCloneWizard.setDt_emissione(mandatoWizard.getDt_emissione());
+		mandatoCloneWizard.setUser(mandatoWizard.getUser());
+
+		Mandato_terzoBulk mandatoTerzo = new Mandato_terzoIBulk();
+		mandatoTerzo.setTipoBollo(mandatoWizard.getMandato_terzo().getTipoBollo());
+		mandatoTerzo.setTerzo(mandatoWizard.getMandato_terzo().getTerzo());
+		mandatoCloneWizard.setMandato_terzo(mandatoTerzo);
+
+		DocumentoGenericoWizardBulk modelloDocumento = new DocumentoGenericoWizardBulk();
+
+		modelloDocumento.setEsercizio(mandatoWizard.getModelloDocumento().getEsercizio());
+		modelloDocumento.setCd_cds(mandatoWizard.getModelloDocumento().getCd_cds());
+		modelloDocumento.setCd_unita_organizzativa(mandatoWizard.getModelloDocumento().getCd_unita_organizzativa());
+		modelloDocumento.setCd_cds_origine(mandatoWizard.getModelloDocumento().getCd_cds_origine());
+		modelloDocumento.setCd_uo_origine(mandatoWizard.getModelloDocumento().getCd_uo_origine());
+		modelloDocumento.setTipo_documento(mandatoWizard.getModelloDocumento().getTipo_documento());
+		modelloDocumento.setData_registrazione(mandatoWizard.getModelloDocumento().getData_registrazione());
+		modelloDocumento.setDt_da_competenza_coge(mandatoWizard.getModelloDocumento().getDt_da_competenza_coge());
+		modelloDocumento.setDt_a_competenza_coge(mandatoWizard.getModelloDocumento().getDt_a_competenza_coge());
+		modelloDocumento.setDs_documento_generico(mandatoWizard.getModelloDocumento().getDs_documento_generico());
+		modelloDocumento.setTi_istituz_commerc(mandatoWizard.getModelloDocumento().getTi_istituz_commerc());
+		modelloDocumento.setUser(mandatoWizard.getModelloDocumento().getUser());
+
+		mandatoCloneWizard.setModelloDocumento(modelloDocumento);
+
+		return mandatoCloneWizard;
+	}
+
 }

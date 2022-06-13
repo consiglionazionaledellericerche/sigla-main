@@ -141,6 +141,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+				columnName="IMPONIBILE_ERRATO"
+				propertyName="imponibileErrato"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cdVoceIvaRett" />
@@ -158,6 +164,8 @@
 		name="imIvaDivisa" />
 	<persistentProperty
 		name="imImponibile" />
+	<persistentProperty
+			name="imponibileErrato" />
 	<persistentProperty
 		name="imIva" />
 	<persistentProperty

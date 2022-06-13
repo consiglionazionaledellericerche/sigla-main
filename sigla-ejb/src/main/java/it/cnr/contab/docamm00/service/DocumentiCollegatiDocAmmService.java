@@ -31,11 +31,6 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageException;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
-import it.cnr.si.spring.storage.bulk.StorageFile;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
@@ -44,6 +39,11 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.slf4j.Logger;
@@ -72,32 +72,10 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     private final static String FILE_FATTURA_XML_FIRMATO = "fattura_elettronica_xml_post_firma";
     private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 
-    public List<String> getNodeRefDocumentoAttivo(Fattura_attivaBulk fattura) throws DetailedException {
-        return getNodeRefDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
-    }
-
-    public List<String> getNodeRefDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
-        String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-        List<StorageObject> results = getDocuments(folder, TIPO_ALLEGATO_FATTURA_DOPO_PROTOCOLLO);
-        if (results.size() == 0) {
-            results = getDocuments(folder, TIPO_ALLEGATO_FATTURA_PRIMA_PROTOCOLLO);
-            if (results.size() == 0) {
-                return null;
-            } else {
-                return results.stream()
-                        .map(StorageObject::getKey)
-                        .collect(Collectors.toList());
-            }
-        } else {
-            return results.stream()
-                    .map(StorageObject::getKey)
-                    .collect(Collectors.toList());
-        }
-    }
-
-    private List<String> getNodeRefFatturaAttivaXmlFirmato(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
-        String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-        List<StorageObject> results = getDocuments(folder, FILE_FATTURA_XML_FIRMATO);
+    private List<String> getNodeRefFatturaAttivaXmlFirmato(Fattura_attivaBulk fattura) throws DetailedException {
+       // String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+        String folder = getPathFolderFatturaAttiva(fattura);
+        List<StorageObject> results = getDocuments(folder,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value());
         if (results.size() == 0)
             return null;
         else {
@@ -105,11 +83,11 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                     .map(StorageObject::getKey)
                     .collect(Collectors.toList());
         }
-    }
 
-    public List<String> getNodeRefAllegatiDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
-        String folder = getFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-        List<StorageObject> results = getDocuments(folder, TIPO_ALLEGATO_NON_INVIATO_SDI);
+    }
+    public List<String> getNodeRefAllegatiDocumentoAttivo(Fattura_attivaBulk fattura) throws DetailedException {
+        String folder = getPathFolderFatturaAttiva(fattura);
+        List<StorageObject> results = getDocuments(folder, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ALLEGATI_NON_INVIATI_SDI.value());
         if (results.size() == 0) {
             return null;
         } else {
@@ -119,55 +97,25 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
-    private List<StorageObject> getDocuments(String folder, String tipoAllegato) throws ApplicationException {
-        StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
-        query.append(" join sigla_fatture_attachment:" + tipoAllegato + " allegati on doc.cmis:objectId = allegati.cmis:objectId");
-        query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
-        List<StorageObject> results = search(query.toString());
-        return results;
+    private List<StorageObject> getChildrenByPath(String path){
+        return Optional.ofNullable(this.getStorageObjectByPath( path,true,false)).map(so->this.getChildren(so.getKey())).orElse(Collections.emptyList());
     }
 
-    private String getFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo,
-                                            Long pgFattura) throws DetailedException, ApplicationException {
-        return getNodeFolderDocumentoAttivo(esercizio, cds, cdUo, pgFattura).getKey();
+    private List<StorageObject> getDocuments(List<StorageObject>  childrens, String tipoAllegato){
+        return childrens.stream().filter(storageObject -> hasAspect(storageObject,tipoAllegato)).collect(Collectors.toList());
     }
 
-    private StorageObject getNodeFolderDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException, ApplicationException {
-        StorageObject storageObject = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
-        if (storageObject == null) {
-            throw new ApplicationException("Non esistono documenti collegati alla fattura.  Anno:" + esercizio + " cds:" + cds + " uo:" + cdUo + " numero:" + pgFattura);
-        }
-        return storageObject;
+    private List<StorageObject> getDocuments(StorageObject  soFolder, String tipoAllegato){
+        return Optional.ofNullable(soFolder).map(s->getDocuments(s.getKey(),tipoAllegato)).orElse(Collections.emptyList());
     }
 
-    public StorageObject recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura) throws DetailedException {
-        int posizionePunto = cdUo.indexOf(".");
-        StringBuffer query = new StringBuffer("select fat.cmis:objectId from sigla_fatture:fatture_attive fat join strorg:uo uo on fat.cmis:objectId = uo.cmis:objectId ");
-        query.append(" join strorg:cds cds on fat.cmis:objectId = cds.cmis:objectId ");
-        query.append(" where fat.sigla_fatture:esercizio = ").append(esercizio);
-        query.append(" and fat.sigla_fatture:pg_fattura = ").append(pgFattura);
-        query.append(" and uo.strorguo:codice like '").append(cdUo.substring(0, posizionePunto) + "%").append("'");
-        query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
-        //		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
-        //		query.append(" order by doc.cmis:creationDate DESC");
-        List<StorageObject> resultsFolder = search(query.toString());
-        if (resultsFolder.size() == 0)
-            return null;
-        else if (resultsFolder.size() > 1) {
-            throw new ApplicationException("Errore di sistema, esistono sul documentale piu' fatture.  Anno:" + esercizio + " cds:" + cds + " uo:" + cdUo + " numero:" + pgFattura);
-        } else {
-            return resultsFolder.get(0);
-        }
+    private List<StorageObject> getDocuments(String folder, String tipoAllegato)  {
+        List<StorageObject>  children= getChildrenByPath(folder);
+        return getDocuments(children,tipoAllegato);
     }
 
-    public InputStream getStreamDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception {
-        List<String> ids = getNodeRefDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-        return getStream(ids);
-    }
-
-    public InputStream getStreamAllegatiDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception {
-        List<String> ids = getNodeRefAllegatiDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
-        return getStream(ids);
+    public StorageObject recuperoFolderFattura(Fattura_attivaBulk fattura)  {
+       return  this.getStorageObjectByPath( getPathFolderFatturaAttiva(fattura),true,true);
     }
 
     private InputStream getStream(List<String> ids)
@@ -196,17 +144,42 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         return null;
     }
 
-    public InputStream getStreamXmlFirmatoFatturaAttiva(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception {
-        List<String> ids = getNodeRefFatturaAttivaXmlFirmato(esercizio, cds, cdUo, pgFattura);
+    public List<String> getNodeRefDocumentoAttivo(Fattura_attivaBulk fattura) throws DetailedException {
+        List<StorageObject>  children = getChildrenByPath(getPathFolderFatturaAttiva(fattura));
+        List<StorageObject> results = getDocuments(children,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
+        if (results.size() == 0) {
+            results = getDocuments(children,StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_DOPO_PROTOCOLLO.value());
+            if (results.size() == 0) {
+                return null;
+            } else {
+                return results.stream()
+                        .map(StorageObject::getKey)
+                        .collect(Collectors.toList());
+            }
+        } else {
+            return results.stream()
+                    .map(StorageObject::getKey)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    private String getPathFolderFatturaAttiva(Fattura_attivaBulk fattura){
+        StorageFolderFatturaAttiva storageFolderFatturaAttiva= new StorageFolderFatturaAttiva(fattura);
+        return storageFolderFatturaAttiva.getCMISPath();
+    }
+    public InputStream getStreamDocumentoAttivo(Fattura_attivaBulk fattura) throws Exception {
+        List<String> ids = getNodeRefDocumentoAttivo(fattura);
         return getStream(ids);
     }
 
-    public InputStream getStreamDocumento(Fattura_attivaBulk fattura) throws Exception {
-        return getStreamDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
+    public InputStream getStreamAllegatiDocumentoAttivo(Fattura_attivaBulk fattura) throws Exception {
+        List<String> ids = getNodeRefAllegatiDocumentoAttivo(fattura);
+        return getStream(ids);
     }
 
     public InputStream getStreamAllegatiDocumento(Fattura_attivaBulk fattura) throws Exception {
-        return getStreamAllegatiDocumentoAttivo(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
+
+        return getStreamAllegatiDocumentoAttivo(fattura);
     }
 
     private void archiviaFileCMIS(UserContext userContext, DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService,
@@ -217,7 +190,9 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
             StorageFileFatturaAttiva storageFile = new StorageFileFatturaAttiva(file, fattura,
                     "application/pdf", "FAPP" + fattura.constructCMISNomeFile() + ".pdf");
             String path = storageFile.getStorageParentPath();
-            StorageObject folder = documentiCollegatiDocAmmService.getStorageObjectByPath(path);
+
+            //StorageObject folder = documentiCollegatiDocAmmService.getStorageObjectByPath(path);
+            StorageObject folder = recuperoFolderFattura( fattura);
             try {
                 Optional.ofNullable(documentiCollegatiDocAmmService.restoreSimpleDocument(
                         storageFile,
@@ -227,6 +202,8 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                         path,
                         true
                 )).ifPresent(storageObject -> {
+                    storageFile.setStorageObject(storageObject);
+                    storageFileCreate.add(storageFile);
                     List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
                     aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
                     documentiCollegatiDocAmmService.updateProperties(storageFile.getCMISFolder(fattura), folder);
@@ -235,8 +212,8 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                                     StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
                                     aspects),
                             storageObject);
-                    storageFile.setStorageObject(storageObject);
-                    storageFileCreate.add(storageFile);
+                    //storageFile.setStorageObject(storageObject);
+                    //storageFileCreate.add(storageFile);
                 });
             } catch (StorageException _ex) {
                 if (_ex.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
@@ -433,20 +410,11 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     	String path = folder.getCMISPathForSearch();
     	return SpringUtil.getBean("storeService", StoreService.class).getStorageObjectByPath(path);
     }
-    
-	protected List<StorageObject> recuperoDocumento(StorageObject node, String tipoDocumento) {
-		return Optional.ofNullable(node) 
-             .map(StorageObject::getKey)
-             .map(key -> getChildren(key))
-			 .map(lista -> lista.stream()
-			 .filter(storageObj -> storageObj.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(tipoDocumento))
-			 .collect(Collectors.toList())).orElse(new ArrayList<StorageObject>());
-	}
-	
+
     private List<StorageObject> getStorageObjectFatturaAttiva(Fattura_attivaBulk fattura, String tipoDocumento) throws DetailedException {
     	StorageObject node = recuperoFolderFatturaByPath(fattura);
     	
-        List<StorageObject> results = recuperoDocumento(node, tipoDocumento);
+        List<StorageObject> results = getDocuments(node, tipoDocumento);
         if (results.size() == 0)
             return null;
         else {
@@ -456,7 +424,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     private List<String> getDocumentoFatturaAttiva(Fattura_attivaBulk fattura, String tipoDocumento) throws DetailedException {
     	StorageObject node = recuperoFolderFatturaByPath(fattura);
     	
-        List<StorageObject> results = recuperoDocumento(node, tipoDocumento);
+        List<StorageObject> results = getDocuments(node, tipoDocumento);
         if (results.size() == 0)
             return null;
         else {

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_mandato"
+		property="mandatoRiga.pg_mandato"
+		inputType="TEXT"
+		label="Nr. mandato"/>
+		
+	<formFieldProperty
+		name="pg_mandato" />
+
+    <columnSet name="mandatoAutomatico">
+       <columnFieldProperty
+			name="pg_documento_amm"
+			label="Nr. Documento"
+			inputType="ROTEXT"/>
+  	   <columnFieldProperty
+			name="nr_fattura_fornitore"
+			label="Nr. Fattura"
+			inputType="ROTEXT"/>		
+	   <columnFieldProperty
+			name="ds_tipo_documento_amm"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="cd_terzo"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="cd_terzo_cessionario"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="esercizio_ori_obbligazione"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="pg_obbligazione"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="pg_mandato"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="fl_pgiro"
+			inputType="ROTEXT"
+			columnStyle="text-align: center"/>
+	   <columnFieldProperty
+			name="dt_scadenza"
+			inputType="ROTEXT"
+			columnStyle="width:80px"/>
+	   <columnFieldProperty
+			name="im_mandato_riga"
+			inputType="ROTEXT"
+			columnStyle="text-align: right"/>
+	   <columnFieldProperty
+			name="ti_pagamento"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+    </columnSet>
+</bulkInfo>

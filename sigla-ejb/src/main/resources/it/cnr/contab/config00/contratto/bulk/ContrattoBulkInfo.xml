@@ -127,6 +127,7 @@
                 name="responsabile"
                 property="responsabile"
                 inputType="SEARCHTOOL"
+                formName="searchtool"
                 enabledOnSearch="true"
                 label="Responsabile procedimento/RUP" />
         <fieldProperty
@@ -660,6 +661,7 @@
 				inputType="SEARCHTOOL"
 				label="Progetto"
 				formName="form_searchtool_progetto"
+                VIEWBusinessProcessName="TestataProgettiRicercaBP"
 				readonlyProperty="ROProgetto"
 				enabledOnInsert="true"
 		      	enabledOnEdit="true"

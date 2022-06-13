@@ -21,9 +21,19 @@
 */
 package it.cnr.contab.inventario01.bulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.util.List;
+
 public class Buono_carico_scarico_dettHome extends BulkHome {
 	public Buono_carico_scarico_dettHome(java.sql.Connection conn) {
 		super(Buono_carico_scarico_dettBulk.class, conn);
@@ -90,5 +100,20 @@ public class Buono_carico_scarico_dettHome extends BulkHome {
 		sql.addClause("AND","nr_inventario",sql.EQUALS,bene.getNr_inventario());
 		sql.addClause("AND","progressivo",sql.EQUALS,bene.getProgressivo());
 		return fetchAll(sql);
+	}
+	public Buono_carico_scarico_dettBulk findCaricoDaOrdine(Inventario_beniBulk inventario_beniBulk) throws PersistencyException {
+		SQLBuilder sqlBuilder = createSQLBuilder();
+		sqlBuilder.setAutoJoins(true);
+		sqlBuilder.generateJoin("buono_cs", "BUONO_CARICO_SCARICO");
+		sqlBuilder.generateJoin(Buono_carico_scaricoBulk.class, Tipo_carico_scaricoBulk.class, "tipoMovimento", "TIPO_CARICO_SCARICO");
+		sqlBuilder.addSQLClause(FindClause.AND, "TIPO_CARICO_SCARICO.FL_DA_ORDINI", SQLBuilder.EQUALS, "Y");
+		sqlBuilder.addSQLClause(FindClause.AND, "BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO", SQLBuilder.EQUALS, inventario_beniBulk.getPg_inventario());
+		sqlBuilder.addSQLClause(FindClause.AND, "BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO", SQLBuilder.EQUALS, inventario_beniBulk.getNr_inventario());
+		sqlBuilder.addSQLClause(FindClause.AND, "BUONO_CARICO_SCARICO_DETT.PROGRESSIVO", SQLBuilder.EQUALS, inventario_beniBulk.getProgressivo());
+		List lista = fetchAll(sqlBuilder);
+		if (lista != null && !lista.isEmpty()){
+			return (Buono_carico_scarico_dettBulk) lista.get(0);
+		}
+		return null;
 	}
 }

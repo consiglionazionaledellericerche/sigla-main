@@ -18,10 +18,6 @@
 package it.cnr.contab.util00.bp;
 
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageException;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
@@ -32,26 +28,29 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 import javax.servlet.ServletException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
     private static final long serialVersionUID = 1L;
     protected StoreService storeService;
-    private CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this) {
+    private final CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this) {
 
         public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
             addChildDetail(oggettobulk);
             return super.addDetail(oggettobulk);
         }
-
-        ;
 
         protected OggettoBulk getDetail(int i) {
             OggettoBulk oggettoBulk = super.getDetail(i);
@@ -59,19 +58,13 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             return oggettoBulk;
         }
 
-        ;
-
         public boolean isGrowable() {
             return isChildGrowable(super.isGrowable());
         }
 
-        ;
-
         public boolean isShrinkable() {
             return isPossibileCancellazione((AllegatoGenericoBulk) getModel()) && super.isShrinkable();
         }
-
-        ;
 
         public OggettoBulk removeDetail(int i) {
             AllegatoGenericoBulk all = (AllegatoGenericoBulk) getDetails().get(i);
@@ -120,10 +113,15 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     protected void addChildDetail(OggettoBulk oggettobulk) {
     }
 
+    protected StoreService getBeanStoreService(ActionContext actioncontext)
+            throws BusinessProcessException {
+        return SpringUtil.getBean("storeService", StoreService.class);
+    }
     @Override
     protected void initialize(ActionContext actioncontext)
             throws BusinessProcessException {
-        storeService = SpringUtil.getBean("storeService", StoreService.class);
+        //storeService = SpringUtil.getBean("storeService", StoreService.class);
+        storeService=getBeanStoreService( actioncontext);
         super.initialize(actioncontext);
     }
 
@@ -151,7 +149,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 (storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
         );
         ((HttpActionContext) actioncontext).getResponse().setContentType(
-                (String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+                storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
         );
         OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
         ((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
@@ -198,9 +196,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                 allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                 allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                    allegato.setLastModificationDate(
-                            storageObject.<Calendar>getPropertyValue(StoragePropertyNames.LAST_MODIFIED.value())
-                                    .getTime());
+                allegato.setLastModificationDate(
+                        Optional.ofNullable(storageObject.<Calendar>getPropertyValue(StoragePropertyNames.LAST_MODIFIED.value()))
+                                .map(calendar -> calendar.getTime())
+                                .orElse(new Date()));
 
                 allegato.setRelativePath(
                         Optional.ofNullable(storageObject.getPath())
@@ -266,9 +265,9 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             throws BusinessProcessException {
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) getModel();
         for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
-        	if (!allegato.getDaNonEliminare()){
+            if (!allegato.getDaNonEliminare()) {
                 storeService.delete(allegato.getStorageKey());
-        	}
+            }
         }
         super.delete(actioncontext);
     }

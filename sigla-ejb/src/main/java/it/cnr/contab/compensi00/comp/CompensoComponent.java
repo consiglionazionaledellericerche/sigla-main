@@ -559,7 +559,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * @return il nuovo progressivo da utilizzare
 	 * 
 	 **/
-	private Long assegnaProgressivo(UserContext userContext,
+	public Long assegnaProgressivo(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
 
 		try {
@@ -6753,8 +6753,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 								"La tipologia della natura dell'impegno è diversa da quella del contratto prescelto.");
 				}
 			} catch (it.cnr.jada.persistency.PersistencyException e) {
-				throw handleException(e);
-			} catch (it.cnr.jada.persistency.IntrospectionException e) {
 				throw handleException(e);
 			}
 		}		

@@ -203,7 +203,7 @@
 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
 					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce",
 					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
-					"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+					"btn-outline-primary btn-title faa-parent animated-hover",
 					true, 
 					bp.getParentRoot().isBootstrap());%>
 			</td>
@@ -223,6 +223,24 @@
 				    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce_next"); %>
 				    <% bp.getController().writeFormInput(out,"default","find_elemento_voce_next"); %>
 				</td>				 
+			</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+    <%}%>
+  	<% if (bp.isVariazioneAutomaticaEnabled() && !bp.isSearching() && obbligazione.getPg_obbligazione()==null){ %>
+	<tr>
+		<td colspan="3">
+			<div class="Group" style="border-color:red">
+			<table>
+			<tr>
+				<% bp.getController().writeFormField(out,"default","findGaeDestinazioneFinale"); %>
+			</tr>
+			<tr>
+        		<td><% bp.getController().writeFormLabel( out, "cdCdrDestinazioneFinale"); %></td>
+        		<td><% bp.getController().writeFormInput(out,"default","cdCdrDestinazioneFinale"); %>
+				    <% bp.getController().writeFormInput(out,"default","dsCdrDestinazioneFinale"); %></td>
 			</tr>
 			</table>
 			</div>

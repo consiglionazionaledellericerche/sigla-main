@@ -17,8 +17,10 @@
 
 package it.cnr.contab.config00.contratto.bulk;
 
-import java.io.File;
+import java.io.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.util.Utility;
@@ -33,6 +35,8 @@ import it.cnr.si.spring.storage.config.StoragePropertyNames;
 public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements StorageTypeName {
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
+	//allegato da webService
+	private byte[] bytes;
 	private File file;
 	private String contentType;
 	private String nome;
@@ -132,13 +136,14 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 		return nodeId != null;
 	}
 
-	public File getFile() {
-		return file;
+	public byte[] getBytes() {
+		return bytes;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
 	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -212,6 +217,35 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 	public String getDocumentName() {
 		StringBuffer name = new StringBuffer();
 		String tipo = getType();
+		if (tipo.equals(CONTRATTO_FLUSSO))
+			name.append("CTR");
+		else if (tipo.equals(DECISIONE_CONTRATTARE_FLUSSO))
+			name.append("DEC");
+		else if (tipo.equals(AGGIUDICAZIONE_FLUSSO))
+			name.append("AGG");
+		else if (tipo.equals(ALLEGATO_FLUSSO))
+			name.append("ALL");
+		else if (tipo.equals(REVOCA_FLUSSO))
+			name.append("REV");
+		else if (tipo.equals(RICHIESTA_ACQUISTO_FLUSSO))
+			name.append("RIC");
+		else if (tipo.equals(AVVISO_POST_INFORMAZIONE_FLUSSO))
+			name.append("AVV");
+		else if (tipo.equals(STIPULA_FLUSSO))
+			name.append("STI");
+		else if (tipo.equals(ELENCO_VERBALI_FLUSSO))
+			name.append("ELV");
+		else if (tipo.equals(NOMINA_COMMISSIONE_FLUSSO))
+			name.append("COMM");
+		else if (tipo.equals(AMMESSI_ESCLUSI_FLUSSO))
+			name.append("AMM");
+		else if (tipo.equals(LETTERA_INVITO_FLUSSO))
+			name.append("LET");
+		else if (tipo.equals(BANDO_AVVISI_FLUSSO))
+			name.append("BAN");
+		else if (tipo.equals(MODIFICHE_VARIANTI_FLUSSO))
+			name.append("MOD");
+
 		name.append("-").append(contrattoBulk.getUnita_organizzativa().getCd_unita_organizzativa());
 		name.append("-").append(contrattoBulk.getEsercizio()).append(contrattoBulk.getStato()).append(Utility.lpad(contrattoBulk.getPg_contratto(), 9, '0'));
 		name.append(".").append(getNome()==null?"Progetto.link":getNome());
@@ -255,6 +289,39 @@ public class AllegatoContrattoFlussoDocumentBulk extends OggettoBulk implements 
 
 	public void setLabel(String label) {
 		this.label = label;
-	}	
+	}
 
-}	
+	@StorageProperty(name="cmis:secondaryObjectTypeIds")
+	public List<String> getAspect() {
+		List<String> results = new ArrayList<String>();
+		results.add(getType());
+		return results;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public boolean existBytes(){
+		if ( file==null && bytes==null)
+			return Boolean.FALSE;
+		return Boolean.TRUE;
+
+	}
+	public InputStream getInputStream()  {
+		if ( file!=null) {
+			try {
+				return new FileInputStream(file);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		if ( bytes!=null)
+			return  new ByteArrayInputStream(bytes);
+		return null;
+	}
+}

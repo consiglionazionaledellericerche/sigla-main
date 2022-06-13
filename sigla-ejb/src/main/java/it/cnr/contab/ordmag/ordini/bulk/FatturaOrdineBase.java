@@ -48,7 +48,8 @@ public class FatturaOrdineBase extends FatturaOrdineKey implements Keyed {
  
 //    IM_IMPONIBILE DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imImponibile;
- 
+
+	private java.math.BigDecimal imponibileErrato;
 //    IM_IVA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIva;
  
@@ -57,8 +58,16 @@ public class FatturaOrdineBase extends FatturaOrdineKey implements Keyed {
  
 //    IM_IVA_ND DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIvaNd;
- 
-//    IM_TOTALE_CONSEGNA DECIMAL(15,2) NOT NULL
+
+	public BigDecimal getImponibileErrato() {
+		return imponibileErrato;
+	}
+
+	public void setImponibileErrato(BigDecimal imponibileErrato) {
+		this.imponibileErrato = imponibileErrato;
+	}
+
+	//    IM_TOTALE_CONSEGNA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imTotaleConsegna;
  
 //    STATO_ASS VARCHAR(3) NOT NULL

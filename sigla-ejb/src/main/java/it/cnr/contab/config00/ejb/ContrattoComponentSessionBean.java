@@ -27,6 +27,7 @@ import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
 import it.cnr.contab.config00.comp.ContrattoComponent;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -376,9 +377,9 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}	
-	public ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException {
+	public ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto,boolean statoDefinitivo) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException {
 		try {
-			ContrattoBulk result = ((ContrattoComponent)componentObj).creaContrattoDaFlussoAcquisti(userContext, contratto);
+			ContrattoBulk result = ((ContrattoComponent)componentObj).creaContrattoDaFlussoAcquisti(userContext, contratto,statoDefinitivo);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -392,5 +393,25 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 		} catch(Error e) {
 			throw uncaughtError(userContext,componentObj,e);
 		}
-	}	
+	}
+
+	@Override
+	public void archiviaAllegati(UserContext userContext, ContrattoBulk contratto,boolean attFromFlussoStoredInSigla) throws ComponentException {
+		try {
+			((ContrattoComponent)componentObj).archiviaAllegati(userContext, contratto,attFromFlussoStoredInSigla);
+			component_invocation_succes(userContext,componentObj);
+			return;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+
+	}
 }

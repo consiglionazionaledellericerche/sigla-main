@@ -17,14 +17,6 @@
 
 package it.cnr.contab.progettiric00.bp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.servlet.http.HttpSession;
-
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
@@ -33,9 +25,7 @@ import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
@@ -43,8 +33,6 @@ import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
@@ -66,9 +54,18 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
-import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGenericoTypeBulk, ProgettoBulk> implements IProgettoBP {
     protected SimpleDetailCRUDController crudPianoEconomicoAnnoCorrente = new ProgettoPianoEconomicoCRUDController("PianoEconomicoAnnoCorrente", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAnnoCorrente", this) {
@@ -135,9 +132,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private boolean flInformix = false;
     private boolean flPrgPianoEconomico = false;
     
-    private boolean isBilancioChiuso = false;
-    private boolean isUoCdsCollegata = false;
-    
     private Integer annoFromPianoEconomico;
     private Integer esercizioScrivania;
     private String cdrScrivania;
@@ -153,7 +147,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private SimpleDetailCRUDController crudDettagliPartner_esterni = new SimpleDetailCRUDController("DettagliPartner_esterni", Progetto_partner_esternoBulk.class, "dettagliPartner_esterni", this);
     private SimpleDetailCRUDController crudPianoEconomicoTotale = new ProgettoPianoEconomicoCRUDController("PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this) {
         public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
-            ((Progetto_piano_economicoBulk) oggettobulk).setEsercizio_piano(Integer.valueOf(0));
+            ((Progetto_piano_economicoBulk) oggettobulk).setEsercizio_piano(0);
             return super.addDetail(oggettobulk);
         }
 
@@ -162,7 +156,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new SimpleDetailCRUDController("PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this);
     private SimpleDetailCRUDController pianoEconomicoVociBilancioDaAssociare = new SimpleDetailCRUDController("VociMovimentateNonAssociate", V_saldi_voce_progettoBulk.class, "vociMovimentateNonAssociate", this);
     private SimpleDetailCRUDController contrattiAssociati = new SimpleDetailCRUDController("ContrattiAssociati", ContrattoBulk.class, "contratti", this) {
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException ,javax.servlet.ServletException {
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException {
 			super.openButtonGROUPToolbar(context);
 
 			{
@@ -171,23 +165,17 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 	    		button.setDisabledImg("img/open16.gif");
 	    		button.setTitle("Apri Contratto");
 	    		button.setIconClass("fa fa-folder-open-o text-primary");
-	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	    		button.setButtonClass("btn-sm btn-outline-secondary btn-title");
 	            button.setHref("javascript:submitForm('doOpenContratto(" + getInputPrefix() + ")')");
 	            boolean isButtonEnable = Optional.ofNullable(this.getModel()).isPresent();
 	            button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));
 			}
             
             super.closeButtonGROUPToolbar(context);			
-		};    	
+		}
     };
 
-    private final SimpleDetailCRUDController crudProgetto_anagrafico = new SimpleDetailCRUDController("Progetto_anagrafico", Progetto_anagraficoBulk.class, "anagraficheProgetto", this){
-        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
-            Progetto_anagraficoBulk riga = (Progetto_anagraficoBulk) getCrudProgetto_anagrafico().getModel();
-            super.validateForDelete(context,riga);
-
-        }
-    };
+    private final SimpleDetailCRUDController crudProgetto_anagrafico = new SimpleDetailCRUDController("Progetto_anagrafico", Progetto_anagraficoBulk.class, "anagraficheProgetto", this);
 
     /**
      * TestataProgettiRicercaBP constructor comment.
@@ -216,20 +204,16 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
         try {
             Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext()));
-            setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+            setFlNuovoPdg(parCnr.getFl_nuovo_pdg());
             Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
-            setFlInformix(parEnte.getFl_informix().booleanValue());
-            setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
+            setFlInformix(parEnte.getFl_informix());
+            setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco());
             esercizioScrivania = CNRUserContext.getEsercizio(actioncontext.getUserContext());
             cdrScrivania = CNRUserContext.getCd_cdr(actioncontext.getUserContext());
             uoScrivania = (Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
-            isUoCdsCollegata = uoScrivania.getFl_uo_cds();
-
-            Pdg_esercizioBulk pdgEsercizio = Utility.createProgettoRicercaComponentSession().getPdgEsercizio(actioncontext.getUserContext());
-            isBilancioChiuso = Optional.ofNullable(pdgEsercizio).map(el -> el.getStato().equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)).orElse(Boolean.FALSE);
 
             it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
-            BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+            BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
             if (Optional.ofNullable(annoFrom).isPresent())
                 setAnnoFromPianoEconomico(annoFrom.intValue());
 
@@ -525,11 +509,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 
         hash.put(i++, new String[]{"tabTestata", "Testata", "/progettiric00/progetto_ricerca_testata_commesse.jsp"});
 
-        if (this.isFlNuovoPdg() &&
-                (isUoCdsCollegata ||
-                        (progetto.getCd_unita_organizzativa() != null &&
-                                progetto.getCd_unita_organizzativa().equals(uo)))) {
-
+        if (this.isFlNuovoPdg()) {
             if (this.isFlPrgPianoEconomico() &&
                     ((progetto.isPianoEconomicoRequired() && 
                             Optional.ofNullable(progetto.getOtherField()).flatMap(el -> Optional.ofNullable(el.getDtInizio())).isPresent() &&

@@ -57,6 +57,19 @@
   </tr>
   </table>
   </fieldset>
+  <fieldset class="fieldset">
+	<legend class="GroupLabel">Importo Incremento Fisso</legend>
+	<table>
+   <tr>
+    <td><% bp.getController().writeFormLabel(out,"imIncrFisso");%></td>
+    <td><% bp.getController().writeFormInput(out,"imIncrFisso");%></td>
+    <td><% bp.getController().writeFormLabel(out,"imInfIncrFisso");%></td>
+    <td><% bp.getController().writeFormInput(out,"imInfIncrFisso");%></td>
+    <td><% bp.getController().writeFormLabel(out,"imSupIncrFisso");%></td>
+    <td><% bp.getController().writeFormInput(out,"imSupIncrFisso");%></td>
+  </tr>
+  </table>
+  </fieldset>
   <table>
   <tr>
     <td><% bp.getController().writeFormLabel(out,"dt_inizio_validita");%></td>

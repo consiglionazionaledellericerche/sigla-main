@@ -47,7 +47,7 @@
 			name="dsUnitaOperativa"
 			property="movimentiMag.unitaOperativaOrd.dsUnitaOperativa"
 			maxLength="200"
-			inputSize="200"
+			inputSize="80"
 			inputType="TEXT"
 			label="Descr. Uop"
 			caseSensitiveSearch="false"
@@ -60,7 +60,7 @@
 			maxLength="10"
 			inputSize="10"
 			inputType="TEXT"
-			label="Fornitore"
+			label="Codice Terzo"
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
 			enabledOnEdit = "false"
@@ -69,9 +69,9 @@
 			name="dsTerzo"
 			property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.ordineAcq.ragioneSociale"
 			maxLength="100"
-			inputSize="100"
+			inputSize="80"
 			inputType="TEXT"
-			label="Fornitore"
+			label="Descr Terzo"
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
 			enabledOnEdit = "false"
@@ -79,8 +79,8 @@
 	<fieldProperty
 			name="ordine"
 			property="movimentiMag.lottoMag.ordineAcqConsegna.consegnaOrdineString"
-			maxLength="30"
-			inputSize="30"
+			maxLength="50"
+			inputSize="17"
 			inputType="TEXT"
 			label="Ordine"
 			caseSensitiveSearch="false"
@@ -93,7 +93,7 @@
 		inputType="ROTEXT"
 		maxLength="10"
 		inputSize="10"
-		label="Dt Consegna"
+		label="Data Consegna"
 		formatName="date_short"
 		caseSensitiveSearch="false"
 		enabledOnInsert = "false"
@@ -105,7 +105,7 @@
 			inputType="ROTEXT"
 			maxLength="10"
 			inputSize="10"
-			label="Dt Bolla"
+			label="Data Bolla"
 			formatName="date_short"
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
@@ -252,7 +252,15 @@
 		caseSensitiveSearch="false"/>
 
 
-	/*****************************************************	
+	<fieldProperty
+			name="cd_bene_servizio"
+			property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.beneServizio.cd_bene_servizio"
+			maxLength="15"
+			inputSize="15"
+			inputType="ROTEXT"
+			nullable="false"
+			label="Bene/Servizio"/>
+	/*****************************************************
 	* Riferimento all'oggetto complesso categoria_Bene **/
 	<fieldProperty
 		name="cd_categoria_bene"
@@ -279,6 +287,14 @@
 		inputType="ROTEXT"
 		label="Categoria"
 		caseSensitiveSearch="false"/>
+	<fieldProperty
+			name="notaRiga"
+			property="movimentiMag.lottoMag.ordineAcqConsegna.ordineAcqRiga.notaRiga"
+			maxLength="1000"
+			inputSize="80"
+			inputType="ROTEXT"
+			label="Nota Ordine"
+			caseSensitiveSearch="false"/>
 
 	/*****************************************************
 	* Riferimento a ISTITUZIONALE_COMMERCIALE **/	
@@ -464,6 +480,10 @@
 		name="perc_primo_anno" />
 	<formFieldProperty
 		name="imponibile_ammortamento" />
+	<formFieldProperty
+			name="notaRiga" />
+	<formFieldProperty
+			name="cd_bene_servizio" />
 
 	<formFieldProperty
 		name="cd_barre" />
@@ -496,6 +516,9 @@
 			name="numeroBolla"
 			style="width:80px" />
 	<columnFieldProperty
+			name="dtRiferimento"
+			style="width:50px" />
+	<columnFieldProperty
 		name="ds_assegnatario"
 		style="width:300px"/>	
 	<columnFieldProperty
@@ -518,16 +541,9 @@
 			name="targa"
 			style="width:30px"/>
 	<columnFieldProperty
-			name="dsUnitaOperativa"
-			style="width:120px"/>
+			name="dsUnitaOperativa"/>
 	<findFieldProperty
 		name="etichetta" />
-	<findFieldProperty
-		name="id_bene_origineForFreeSearch" />
-	<findFieldProperty
-		name="nr_inventario" />
-	<findFieldProperty
-		name="progressivo" />
 	<findFieldProperty
 		name="ds_bene" />
 	<findFieldProperty
@@ -548,8 +564,6 @@
 		name="targa" />
 	<findFieldProperty
 		name="seriale" />	
-	<findFieldProperty
-		name="fl_totalmente_scaricato" />
 	<findFieldProperty
 			name="stato" />
 </bulkInfo>

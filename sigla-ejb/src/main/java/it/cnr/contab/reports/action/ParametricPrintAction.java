@@ -17,6 +17,12 @@
 
 package it.cnr.contab.reports.action;
 
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.Stampa_consumiBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.Stampa_consumiHome;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.reports.bp.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.jada.action.*;
@@ -67,10 +73,18 @@ public Forward doPrint(ActionContext context) {
 			}
 			switch(printFieldProperty.getParamType()) {
 				case PrintFieldProperty.TYPE_DATE:
-					param.setValoreParam(ReportPrintBP.DATE_FORMAT.format((java.sql.Timestamp)value));
+					if(value != null) {
+						param.setValoreParam(ReportPrintBP.DATE_FORMAT.format((java.sql.Timestamp) value));
+					}else{
+						param.setValoreParam(null);
+					}
 					break;
 				case PrintFieldProperty.TYPE_TIMESTAMP:
-					param.setValoreParam(ReportPrintBP.TIMESTAMP_FORMAT.format((java.sql.Timestamp)value));
+					if(value != null) {
+						param.setValoreParam(ReportPrintBP.TIMESTAMP_FORMAT.format((java.sql.Timestamp) value));
+					}else{
+						param.setValoreParam(null);
+					}
 					break;
 				case PrintFieldProperty.TYPE_STRING:
 				default:
@@ -91,4 +105,6 @@ public Forward doPrint(ActionContext context) {
 		return handleException(context,e);
 	}
 }
+
+
 }

@@ -126,7 +126,7 @@ public class Fattura_attivaHome extends BulkHome {
     public void aggiornaMetadatiFattura(Fattura_attivaBulk fattura) {
         DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
         StorageObject so = documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura);
-        if (so != null){
+        if (so != null ){
             documentiCollegatiDocAmmService.updateMetadataFromBulk(so, new StorageFolderFatturaAttiva(fattura));
         }
     }

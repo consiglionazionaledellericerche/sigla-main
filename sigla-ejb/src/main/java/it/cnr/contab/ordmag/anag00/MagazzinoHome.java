@@ -178,6 +178,19 @@ public class MagazzinoHome extends BulkHome {
 		return sql;
 	}
 
+	public SQLBuilder selectMagazziniAbilitatiByClause(UserContext userContext, UnitaOperativaOrdBulk unitaOperativa, String tipoOperazione, CompoundFindClause compoundfindclause, String tipoGestione) throws PersistencyException {
+		SQLBuilder sql = selectMagazziniAbilitatiByClause(userContext, unitaOperativa, tipoOperazione, compoundfindclause);
+		if (tipoGestione != null){
+			sql.openParenthesis( "AND");
+			sql.addSQLClause(FindClause.AND, "MAGAZZINO.TIPO_GESTIONE", SQLBuilder.EQUALS, tipoGestione);
+			sql.addSQLClause("OR","MAGAZZINO.TIPO_GESTIONE",SQLBuilder.ISNULL, null );
+			sql.closeParenthesis();
+
+
+		}
+		return sql;
+	}
+
 	public SQLBuilder selectUnitaOperativaOrdByClause(UserContext userContext, MagazzinoBulk magazzinoBulk, UnitaOperativaOrdHome  unitaOperativaOrdHome, UnitaOperativaOrdBulk unitaOperativaOrdBulk, CompoundFindClause clause)  throws PersistencyException,ComponentException, EJBException, RemoteException {
 		SQLBuilder sql = unitaOperativaOrdHome.selectByClause(clause);
 

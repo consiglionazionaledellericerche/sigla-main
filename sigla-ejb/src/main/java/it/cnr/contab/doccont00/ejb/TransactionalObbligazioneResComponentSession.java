@@ -773,6 +773,25 @@ public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppia
 		}
 	}
 }
+	public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomaticoLight(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, DatiFinanziariScadenzeDTO dati)  throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk)invoke("sdoppiaScadenzaInAutomaticoLight",new Object[] {
+					param0,
+					param1,
+					dati});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
 public String controllaDettagliScadenzaObbligazione(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk param1, it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (String)invoke("controllaDettagliScadenzaObbligazione",new Object[] {

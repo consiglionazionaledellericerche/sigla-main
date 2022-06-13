@@ -86,10 +86,16 @@ public class Pdg_variazioneHome extends BulkHome {
 
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk pdg) throws PersistencyException,ApplicationException {
 		try {
+			String jndiName = "CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession";
+			//Nel caso in cui la variazione viene creata in automatico da altri processi (tipo obbligazione) allora la richiesta deve usare la stessa
+			// transazione e non crearne una nuova, in modo che se la procedura va in errore  il numeratore non viene incrementato inutilmente
+			if (Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_AUTOMATICA.equals(((Pdg_variazioneBulk)pdg).getTiMotivazioneVariazione()))
+				jndiName = "CNRCONFIG00_TABNUM_EJB_TREQUIRED_Numerazione_baseComponentSession";
+
 			it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession numerazione =
 				(it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession)
-					it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession",
-																	it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession.class);
+					it.cnr.jada.util.ejb.EJBCommonServices.createEJB(jndiName,
+							it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession.class);
 			((Pdg_variazioneBulk)pdg).setPg_variazione_pdg(
 				 numerazione.creaNuovoProgressivo(userContext,CNRUserContext.getEsercizio(userContext), "PDG_VARIAZIONE", "PG_VARIAZIONE_PDG", CNRUserContext.getUser(userContext))
 			);

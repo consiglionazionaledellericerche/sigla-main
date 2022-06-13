@@ -210,6 +210,12 @@
             nullable="false"
             label="imImponibileDivisa"/>
     <fieldProperty
+            name="imponibileErrato"
+            property="imponibileErrato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Imponibile per Nota di Credito"/>
+    <fieldProperty
             name="imIvaDivisa"
             property="imIvaDivisa"
             inputType="TEXT"
@@ -300,6 +306,9 @@
             name="prezzoUnitarioRett"
             command="doRettificaConsegna"/>
     <formFieldProperty
+            name="imponibileErrato"
+            command="doRettificaConsegna"/>
+    <formFieldProperty
             name="sconto1Rett"
             command="doRettificaConsegna"/>
     <formFieldProperty
@@ -359,6 +368,8 @@
             name="imTotaleConsegna"/>
     <findFieldProperty
             name="statoAss"/>
+    <findFieldProperty
+            name="imponibileErrato"/>
 
     <columnFieldProperty
             name="dtPrevConsegna"
@@ -456,6 +467,11 @@
             property="sconto3Rett"
             headerLabel="Rettifiche"
             label="% Sc 3"/>
+    <columnFieldProperty
+            name="imponibileErrato"
+            property="imponibileErrato"
+            headerLabel="Rettifiche"
+            label="Imponibile per Nota Credito"/>
     <columnFieldProperty
             name="imImponibile"/>
     <columnFieldProperty

@@ -65,8 +65,8 @@
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"im_credito_irpef"); %></td>
-	<td><% bp.getController().writeFormInput(out,"im_credito_irpef_dovuto"); %></td>
-	<td><% bp.getController().writeFormInput(out,"im_credito_irpef_goduto"); %></td>
+	<td><% bp.getController().writeFormInput(out,"totaleCreditoIrpefDovuto"); %></td>
+	<td><% bp.getController().writeFormInput(out,"totaleCreditoIrpefGoduto"); %></td>
 	<td><% bp.getController().writeFormInput(out,"im_credito_irpef"); %></td>
   </tr>
 </table>

@@ -22,6 +22,7 @@ import it.cnr.jada.comp.ComponentException;
 
 import javax.ejb.Remote;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 @Remote
 public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.GenericComponentSession {
@@ -90,5 +91,12 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     Boolean isImpegnoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
 
     Boolean isAccertamentoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
+
+    Boolean isAttachRestContrStoredFromSigla(UserContext userContext)throws ComponentException, RemoteException;
+
+    Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException;
+
+    java.lang.Integer getCdTerzoDiversiStipendi(UserContext userContext) throws ComponentException, RemoteException;
+    Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException, RemoteException;
 
 }

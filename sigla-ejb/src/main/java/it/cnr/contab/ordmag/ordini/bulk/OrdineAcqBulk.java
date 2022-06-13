@@ -50,6 +50,9 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import org.apache.commons.lang.StringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -910,8 +913,13 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
-        archivioAllegati.add(allegato);
-        return archivioAllegati.size() - 1;
+            Optional.ofNullable(allegato)
+                    .filter(AllegatoOrdineBulk.class::isInstance)
+                    .map(AllegatoOrdineBulk.class::cast)
+                    .ifPresent(el->el.setOrdine(this));
+            archivioAllegati.add(allegato);
+            return archivioAllegati.size()-1;
+
     }
 
     public String constructCMISNomeFile() {
@@ -956,16 +964,23 @@ public class OrdineAcqBulk extends OrdineAcqBase
         return clone;
     }
 
+    public boolean isOrdineMepa(){
+        return this.getContratto().getFl_mepa()!=null && this.getContratto().getFl_mepa();
+    }
     public Dictionary getStatoKeysForUpdate() {
 
         Dictionary stato = new it.cnr.jada.util.OrderedHashtable();
+
         if (isStatoInserito()) {
             stato.put(STATO_INSERITO, "Inserito");
             stato.put(STATO_IN_APPROVAZIONE, "In Approvazione");
         } else if (isStatoInApprovazione()) {
             stato.put(STATO_INSERITO, "Inserito");
             stato.put(STATO_IN_APPROVAZIONE, "In Approvazione");
-            stato.put(STATO_ALLA_FIRMA, "Alla firma");
+            if ( isOrdineMepa())
+                stato.put(STATO_DEFINITIVO, "Definitivo");
+            else
+                stato.put(STATO_ALLA_FIRMA, "Alla firma");
         } else {
             stato.put(STATO_INSERITO, "Inserito");
             stato.put(STATO_IN_APPROVAZIONE, "In Approvazione");
@@ -977,6 +992,7 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) {
+        setFl_mepa(false);
         setStato(STATO_INSERITO);
         java.sql.Timestamp dataReg = null;
         try {
@@ -1019,19 +1035,21 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     public void sostituisciConsegnaFromObbligazioniHash(OrdineAcqConsegnaBulk consegnaAggiornata){
-        Vector consAssociate = (Vector)ordineObbligazioniHash.get(consegnaAggiornata.getObbligazioneScadenzario());
-        OrdineAcqConsegnaBulk consegnaBulk = null;
-        for (Iterator i = consAssociate.iterator(); i.hasNext();){
-            OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
-            if (cons.equalsByPrimaryKey(consegnaAggiornata)){
-                consegnaBulk = cons;
+        if (consegnaAggiornata.getObbligazioneScadenzario() != null && consegnaAggiornata.getObbligazioneScadenzario().getPg_obbligazione() != null){
+            Vector consAssociate = (Vector)ordineObbligazioniHash.get(consegnaAggiornata.getObbligazioneScadenzario());
+            OrdineAcqConsegnaBulk consegnaBulk = null;
+            for (Iterator i = consAssociate.iterator(); i.hasNext();){
+                OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
+                if (cons.equalsByPrimaryKey(consegnaAggiornata)){
+                    consegnaBulk = cons;
+                }
             }
-        }
 
-        if (consegnaBulk != null) {
-            consAssociate.remove(consegnaBulk);
-            consAssociate.add(consegnaAggiornata);
-            ordineObbligazioniHash.put(consegnaAggiornata.getObbligazioneScadenzario(), consAssociate);
+            if (consegnaBulk != null) {
+                consAssociate.remove(consegnaBulk);
+                consAssociate.add(consegnaAggiornata);
+                ordineObbligazioniHash.put(consegnaAggiornata.getObbligazioneScadenzario(), consAssociate);
+            }
         }
     }
 
@@ -1578,4 +1596,12 @@ public class OrdineAcqBulk extends OrdineAcqBase
         }
         return false;
     }
+
+    @Override
+    public void validate() throws ValidationException {
+        if ( getNumerazioneOrd() == null || StringUtils.isEmpty(getNumerazioneOrd().getCdNumeratore()) || StringUtils.isEmpty(getNumerazioneOrd().getCdUnitaOperativa()))
+            throw new ValidationException( "Il campo Numeratore è obbligatorio." );
+
+    }
+
 }

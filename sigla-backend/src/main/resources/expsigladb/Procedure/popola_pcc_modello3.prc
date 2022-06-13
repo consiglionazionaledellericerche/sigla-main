@@ -1,4 +1,4 @@
-CREATE OR REPLACE procedure PCIR009.popola_pcc_modello3 is
+CREATE OR REPLACE procedure popola_pcc_modello3 is
 begin
 declare
 cursor testata_pag is

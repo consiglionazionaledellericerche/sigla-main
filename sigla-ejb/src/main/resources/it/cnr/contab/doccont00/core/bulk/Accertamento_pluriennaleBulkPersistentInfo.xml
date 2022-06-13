@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_pluriennaleBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_pluriennaleHome">
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_PLURIENNALE">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="accertamento.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="accertamento.esercizio_originale" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento.pg_accertamento" />
+		<columnMapping
+			columnName="CD_CDS_RIF"
+			propertyName="accertamentoRif.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_RIF"
+			propertyName="accertamentoRif.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE_RIF"
+			propertyName="accertamentoRif.esercizio_originale" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_RIF"
+			propertyName="accertamentoRif.pg_accertamento" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="accertamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="accertamentoRif"
+	/>
+</SQLPersistentInfo>

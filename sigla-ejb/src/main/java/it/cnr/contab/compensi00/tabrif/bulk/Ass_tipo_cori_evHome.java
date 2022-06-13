@@ -22,13 +22,30 @@
 package it.cnr.contab.compensi00.tabrif.bulk;
 import java.sql.Connection;
 
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
 public class Ass_tipo_cori_evHome extends BulkHome {
 	public Ass_tipo_cori_evHome(Connection conn) {
 		super(Ass_tipo_cori_evBulk.class, conn);
 	}
+
 	public Ass_tipo_cori_evHome(Connection conn, PersistentCache persistentCache) {
 		super(Ass_tipo_cori_evBulk.class, conn, persistentCache);
+	}
+
+	public Ass_tipo_cori_evBulk getAssCoriEv(int esercizio, String aTipoCori, String aTiAppartenenza, String aTiGestione, String aTipoEntePercipiente) throws PersistencyException {
+		Ass_tipo_cori_evBulk bulk = new Ass_tipo_cori_evBulk();
+		bulk.setElemento_voce(new Elemento_voceBulk(null, esercizio, aTiAppartenenza, aTiGestione));
+		bulk.setTi_ente_percepiente(aTipoEntePercipiente);
+		bulk.setContributo_ritenuta(new Tipo_contributo_ritenutaBulk(aTipoCori, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
+
+		return (Ass_tipo_cori_evBulk)findByPrimaryKey(bulk);
 	}
 }

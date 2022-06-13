@@ -25,7 +25,12 @@ import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -40,6 +45,7 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import javax.xml.registry.infomodel.User;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -138,6 +144,8 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 
 	private it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk anagrafico;
 	private Unita_organizzativaBulk unita_organizzativa;
+	private TerzoBulk terzo_selected;
+
 
 	public CRUDTerzoBP(String function) throws BusinessProcessException {
 		super(function);
@@ -163,6 +171,12 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 	}
 
 	public CRUDTerzoBP(String function,
+						Unita_organizzativaBulk unita_organizzativa,
+						TerzoBulk terzoSelected) throws BusinessProcessException {
+							this(function,unita_organizzativa);
+						this.terzo_selected=terzoSelected;
+	}
+	public CRUDTerzoBP(String function,
 			Unita_organizzativaBulk unita_organizzativa)
 			throws BusinessProcessException {
 		this(function);
@@ -177,8 +191,52 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 			setMessage("Terzo non modificabile (terzo speciale)");
 	}
 
-	public boolean isGestoreIstat(UserContext context, TerzoBulk terzoBulk)
+
+	private boolean isUserLoggedOnEnte(UserContext usercontext) throws ComponentException, RemoteException {
+		CNRUserContext.getCd_unita_organizzativa(usercontext);
+
+		Unita_organizzativaBulk unita_organizzativaBulk = ( Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findByPrimaryKey(usercontext,
+				new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
+		if ( unita_organizzativaBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+			return Boolean.TRUE;
+		return false;
+	}
+	private boolean isEnbaleIpaPcc(UserContext usercontext, TerzoBulk terzoBulk, boolean isIpa) throws ComponentException, RemoteException {
+		if (isUserLoggedOnEnte(usercontext))
+			return Boolean.FALSE;
+
+		if (!terzoBulk.isNotGestoreIstat())
+			return Boolean.FALSE;
+		if (isIpa){
+			if (!terzoBulk.getAnagrafico().isStrutturaCNR())
+				return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+	public boolean isEnableChangeCodIpa(UserContext usercontext, TerzoBulk terzoBulk)
 			throws ComponentException, RemoteException {
+
+		return isEnbaleIpaPcc( usercontext,terzoBulk,true);
+	}
+
+
+
+	public boolean isEnableChangePCC(UserContext usercontext, TerzoBulk terzoBulk)
+			throws ComponentException, RemoteException {
+
+		return isEnbaleIpaPcc( usercontext,terzoBulk,false);
+	}
+
+	public boolean isGestoreIstat(UserContext usercontext, TerzoBulk terzoBulk)
+			throws ComponentException, RemoteException {
+
+		CNRUserContext.getCd_unita_organizzativa(usercontext);
+
+		Unita_organizzativaBulk unita_organizzativaBulk = ( Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findByPrimaryKey(usercontext,
+				new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
+		if ( unita_organizzativaBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+			return Boolean.FALSE;
+
 		return !terzoBulk.isNotGestoreIstat();
 	}
 
@@ -327,6 +385,13 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 		return unita_organizzativa;
 	}
 
+	protected TerzoBulk getTerzoEdit(it.cnr.jada.action.ActionContext context) throws BusinessProcessException, ComponentException, RemoteException {
+		if ( Optional.ofNullable(terzo_selected).isPresent())
+			return terzo_selected;
+		return ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession())
+				.cercaTerzoPerUnitaOrganizzativa(
+						context.getUserContext(), unita_organizzativa);
+	}
 	protected void initialize(it.cnr.jada.action.ActionContext context)
 			throws it.cnr.jada.action.BusinessProcessException {
 		try {
@@ -336,9 +401,8 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 				else
 					reset(context);
 			} else {
-				TerzoBulk terzo = ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession())
-						.cercaTerzoPerUnitaOrganizzativa(
-								context.getUserContext(), unita_organizzativa);
+
+				TerzoBulk terzo = getTerzoEdit(context);
 				if (terzo == null) {
 					if (isEditable())
 						reset(context,

@@ -217,6 +217,7 @@ public ProgettoRicercaComponent() {
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
 				validaPianoEconomico(uc, (ProgettoBulk)bulk);
+				validaAnagraficheProgetto(uc, (ProgettoBulk)bulk);
 			}catch(Throwable throwable){
 	            throw handleException(throwable);
 	        }
@@ -266,12 +267,21 @@ public ProgettoRicercaComponent() {
 					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoAltriAnni(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni().indexOf(e));
 				  });
 
+				  List<OggettoBulk> dettagliAnagraficheProgettoCopy = new BulkList<OggettoBulk>();
+				  dettagliAnagraficheProgettoCopy.addAll(((ProgettoBulk)bulk).getAnagraficheProgetto());
+				  dettagliAnagraficheProgettoCopy.stream().forEach(e->{
+					  e.setToBeDeleted();
+					  ((ProgettoBulk)bulk).removeFromAnagraficheProgetto(((ProgettoBulk)bulk).getAnagraficheProgetto().indexOf(e));
+				  });
+
 				  for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
 					  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
 				  }
 				  for(int i = 0; ((ProgettoBulk)bulk).getDettagliPartner_esterni().size() > i; i++) {
 					  ((Progetto_partner_esternoBulk) ((ProgettoBulk)bulk).getDettagliPartner_esterni().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
 				  }
+
+
 
 				  ProgettoBulk progettoPrev = (ProgettoBulk)getHome(aUC, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
 				  if (progettoPrev!=null)
@@ -284,8 +294,9 @@ public ProgettoRicercaComponent() {
 				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagli());
 				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
 				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
-				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());				  
-				  
+				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
+				  makeBulkListPersistent(aUC, ((ProgettoBulk)bulk).getAnagraficheProgetto());
+
 				  if (((ProgettoBulk)bulk).getOtherField()!=null)
 					getHome(aUC, Progetto_other_fieldBulk.class).delete(((ProgettoBulk)bulk).getOtherField(), aUC);
 
@@ -656,6 +667,7 @@ public ProgettoRicercaComponent() {
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
 			validaPianoEconomico(uc, (ProgettoBulk)bulk);
+			validaAnagraficheProgetto(uc, (ProgettoBulk)bulk);
 		}catch(Throwable throwable){
 			throw handleException(throwable);
 		}
@@ -1420,11 +1432,12 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
                    "è già stata collegata al preventivo decisionale del progetto -  parte entrate.");
 
     		Pdg_modulo_speseHome homeSpe = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
-			homeSpe.createSQLBuilder().addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());
-    		homeSpe.createSQLBuilder().addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
-    		homeSpe.createSQLBuilder().addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());
+			SQLBuilder sqlSpe = homeEtr.createSQLBuilder();
+			sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());
+			sqlSpe.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
+			sqlSpe.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());
 
-    		List resultSpe = homeSpe.fetchAll(homeSpe.createSQLBuilder());
+    		List resultSpe = homeSpe.fetchAll(sqlSpe);
     		if (!resultSpe.isEmpty())
     			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto "+
                    "è già stata collegata al preventivo decisionale del progetto -  parte spese.");
@@ -1574,7 +1587,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue(), rimodulazione);
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
 		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
-		   		validaAnagraficheProgetto(userContext, progetto);
+
 	   		};
     	} catch(Throwable e) {
     		throw handleException(e);

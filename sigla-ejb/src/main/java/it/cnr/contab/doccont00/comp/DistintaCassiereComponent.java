@@ -48,6 +48,8 @@ import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupKey;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -3178,18 +3180,50 @@ public class DistintaCassiereComponent extends
     private void validaDocumentiContabiliAssociati(UserContext userContext,
                                                    Distinta_cassiereBulk distinta) throws ComponentException {
         try {
-            // if
-            // (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,
-            // distinta.getEsercizio()).getFl_siope().booleanValue()) {
             V_mandato_reversaleHome home = (V_mandato_reversaleHome) getHome(
                     userContext, V_mandato_reversaleBulk.class);
             SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
                     userContext, distinta, V_mandato_reversaleBulk.class, null);
-            List list = home.fetchAll(sql);
+            List<V_mandato_reversaleBulk> list = home.fetchAll(sql);
             for (Iterator i = list.iterator(); i.hasNext(); ) {
-                V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
-                        .next();
-
+                V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i.next();
+                if (bulk.isMandato()) {
+                    MandatoIHome mandatoHome = (MandatoIHome) getHome(userContext,MandatoIBulk.class);
+                    final MandatoBulk mandatoBulk = (MandatoBulk) mandatoHome.findByPrimaryKey(
+                            new MandatoIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()));
+                    final String cupNonValidi = mandatoHome.findCodiciSiopeCupCollegati(userContext, mandatoBulk)
+                            .stream()
+                            .filter(cupBulk -> {
+                                return Optional.ofNullable(cupBulk.getDt_canc())
+                                        .map(timestamp -> timestamp.before(distinta.getDt_emissione()))
+                                        .orElse(Boolean.FALSE);
+                            })
+                            .map(CupBulk::getCdCup)
+                            .distinct()
+                            .collect(Collectors.joining(","));
+                    if (Optional.ofNullable(cupNonValidi).filter(s -> !s.isEmpty()).isPresent()) {
+                        throw new ApplicationMessageFormatException("Il mandato {0}/{1} è legato ad un CUP {2} non più valido, Scollegarlo dalla distinta e ripetere l'operazione.",
+                                        bulk.getCd_cds(), String.valueOf(bulk.getPg_documento_cont()), cupNonValidi);
+                    }
+                } else if (bulk.isReversale()) {
+                    ReversaleIHome reversaleIHome = (ReversaleIHome) getHome(userContext,ReversaleIBulk.class);
+                    final ReversaleBulk reversaleBulk = (ReversaleBulk) reversaleIHome.findByPrimaryKey(
+                            new ReversaleIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()));
+                    final String cupNonValidi = reversaleIHome.findCodiciSiopeCupCollegati(userContext, reversaleBulk)
+                            .stream()
+                            .filter(cupBulk -> {
+                                return Optional.ofNullable(cupBulk.getDt_canc())
+                                        .map(timestamp -> timestamp.before(distinta.getDt_emissione()))
+                                        .orElse(Boolean.FALSE);
+                            })
+                            .map(CupBulk::getCdCup)
+                            .distinct()
+                            .collect(Collectors.joining(","));
+                    if (Optional.ofNullable(cupNonValidi).filter(s -> !s.isEmpty()).isPresent()) {
+                        throw new ApplicationMessageFormatException("La Reversale {0}/{1} è legata ad un CUP {2} non più valido, Scollegarlo dalla distinta e ripetere l'operazione.",
+                                bulk.getCd_cds(), String.valueOf(bulk.getPg_documento_cont()), cupNonValidi);
+                    }
+                }
                 if (Utility.createParametriCnrComponentSession()
                         .getParametriCnr(userContext, distinta.getEsercizio())
                         .getFl_siope().booleanValue()) {
@@ -5808,6 +5842,13 @@ public class DistintaCassiereComponent extends
                                 codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                                 motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                             }
+                            Optional.ofNullable(fattura_passivaBulk.getDt_scadenza())
+                                    .orElseThrow(()-> new ApplicationMessageFormatException(
+                                            "Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture con data di scadenza non valorizzata!",
+                                            String.valueOf(bulk.getEsercizio()),
+                                            String.valueOf(bulk.getCd_cds()),
+                                            String.valueOf(bulk.getPg_documento_cont())
+                                    ));
                         }
                     }
                     codiciCIG = codiciCIG.stream().distinct().collect(Collectors.toList());

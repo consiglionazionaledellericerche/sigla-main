@@ -260,7 +260,8 @@
             		"SEARCHTOOL" --> Corrisponde a diversi (in genere due, tipo "Codice e Descrizione") campi di input html (se valorizzato l'attributo "formName"),
             						altrimenti presenta solamente tre pulsanti atti a riplire i campi, effettuare la ricerca, effettuare la ricerca libera.
             		"CRUDTOOL" --> Corrisponde ad un bottone html utilizzato per effettuare operazioni di CRUD su una mappa diversa.
-            		"DESCTOOL" --> Corrisponde ad campo di input html a cui è associato una "descProperty" da valorizzare per mostrare una 
+					"VIEWTOOL" --> Corrisponde ad un bottone html utilizzato per effettuare operazioni di visualizzazione su una mappa diversa.
+            		"DESCTOOL" --> Corrisponde ad campo di input html a cui è associato una "descProperty" da valorizzare per mostrare una
             						property ulteriore a quella di base.
             	</xsd:documentation>
             </xsd:annotation>
@@ -277,6 +278,7 @@
 					<xsd:enumeration value="SELECT" />
             		<xsd:enumeration value="CHECKBOX" />
             		<xsd:enumeration value="CRUDTOOL" />
+					<xsd:enumeration value="VIEWTOOL" />
             		<xsd:enumeration value="BUTTON" />
             		<xsd:enumeration value="DESCTOOL" />
             		<xsd:enumeration value="FILE" />
@@ -455,6 +457,13 @@
         			bottone del CRUDTOOL
         		</xsd:documentation>
         	</xsd:annotation></xsd:attribute>
+		<xsd:attribute name="VIEWBusinessProcessName" type="xsd:string" use="optional" >
+			<xsd:annotation>
+				<xsd:documentation>
+					Nome del BP da utilizzare sull'attivazione del
+					bottone del VIEWTOOL
+				</xsd:documentation>
+			</xsd:annotation></xsd:attribute>
         <xsd:attribute name="img" type="xsd:string" use="optional" >
         	<xsd:annotation>
         		<xsd:documentation>

@@ -17,41 +17,37 @@
 
 package it.cnr.contab.pdg00.comp;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.ejb.EJBException;
-
+import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.compensi00.docs.bulk.*;
+import it.cnr.contab.compensi00.ejb.AssTipoCORIEvComponentSession;
+import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.CdrHome;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
+import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
+import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.doccont00.core.AccertamentoWizard;
+import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
+import it.cnr.contab.doccont00.core.ObbligazioneWizard;
+import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.ejb.MandatoAutomaticoComponentSession;
+import it.cnr.contab.doccont00.ejb.ReversaleAutomaticaComponentSession;
+import it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloHome;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Costi_dipendenteVBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Stampa_imponibili_dipendentiVBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Stampa_ripartizione_costiVBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Stipendi_coanBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadBulk;
-import it.cnr.contab.pdg00.cdip.bulk.V_cdp_matricolaBulk;
-import it.cnr.contab.pdg00.cdip.bulk.V_cdp_stato_mensilitaBulk;
-import it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk;
-import it.cnr.contab.pdg00.cdip.bulk.V_dipendenteHome;
+import it.cnr.contab.pdg00.cdip.bulk.*;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_gestBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
@@ -61,22 +57,21 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.TipoIVA;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.OutdatedResourceException;
-import it.cnr.jada.bulk.ROWrapper;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.IPrintMgr;
-import it.cnr.jada.comp.RicercaComponent;
+import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.*;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
+
+import javax.ejb.EJBException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CostiDipendenteComponent extends RicercaComponent implements ICostiDipendenteMgr, IPrintMgr {
 /**
@@ -258,18 +253,21 @@ public OggettoBulk caricaCosto_dipendente(UserContext userContext,Costi_dipenden
  */
 public void contabilizzaFlussoStipendialeMensile(UserContext userContext,int mese) throws ComponentException {
 	try {
-		
-		LoggableStatement stm = new LoggableStatement(getConnection(userContext),
-				"{  call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
-				+ "CNRCTB680.contabilFlussoStipCOFI(?, ?, ?)}",false,this.getClass());
-		try {
-			stm.setInt(1, CNRUserContext.getEsercizio(userContext).intValue());
-			stm.setInt(2,mese);		
-			stm.setString(3,CNRUserContext.getUser(userContext));
-			stm.execute();
-		} finally {
+		if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaPura(userContext))
+			innerContabilizzaFlussoStipendialeMensile(userContext, CNRUserContext.getEsercizio(userContext).intValue(), mese);
+		else {
+			LoggableStatement stm = new LoggableStatement(getConnection(userContext),
+					"{  call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+							+ "CNRCTB680.contabilFlussoStipCOFI(?, ?, ?)}", false, this.getClass());
+			try {
+				stm.setInt(1, CNRUserContext.getEsercizio(userContext).intValue());
+				stm.setInt(2, mese);
+				stm.setString(3, CNRUserContext.getUser(userContext));
+				stm.execute();
+			} finally {
+			}
 		}
-	} catch(java.sql.SQLException e) {
+	} catch(Exception e) {
 		throw handleException(e);
 	}
 }
@@ -1196,11 +1194,11 @@ public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_impon
   * Post: Viene restituito l'SQLBuilder per filtrare le UO
   *		  in base al cds di scrivania
   *
-  * @param userContext	lo userContext che ha generato la richiesta
-  * @param stampa		l'OggettoBulk che rappresenta il contesto della ricerca.
-  * @param uo			l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
+  * @param usercontext	lo userContext che ha generato la richiesta
+  * @param stampa_ripartizione_costivbulk		l'OggettoBulk che rappresenta il contesto della ricerca.
+  * @param unita_organizzativabulk			l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
   *						costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
-  * @param				clauses L'albero logico delle clausole da applicare alla ricerca
+  * @param	compoundfindclause L'albero logico delle clausole da applicare alla ricerca
   * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
   *			della query.
   *
@@ -2176,4 +2174,627 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 		throw handleException( e );
 	}
 }
+
+	public void innerContabilizzaFlussoStipendialeMensile(UserContext userContext, int aEsercizio, int aMese) throws ComponentException {
+		try {
+			boolean isCNR = Utility.createParametriEnteComponentSession().getParametriEnte(userContext).isEnteCNR();
+
+			Stipendi_cofiHome stipendi_cofiHome = (Stipendi_cofiHome)getHome(userContext, it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk.class);
+			java.util.Collection<Stipendi_cofiBulk> stipendiCofi = stipendi_cofiHome.findStipendiCofiAnno(aEsercizio);
+
+			int lastMesePagato = stipendiCofi.stream()
+									.filter(el->el.getMese().compareTo(15)<0)
+									.filter(Stipendi_cofiBulk::isLiquidato)
+									.mapToInt(Stipendi_cofiBulk::getMese).max().orElse(0);
+
+			if (aMese>15) {
+				if (isCNR)
+					throw new ApplicationException("Il mese deve avere un valore compreso tra 1 e 15");
+				if (lastMesePagato == 0)
+					throw new ApplicationException("Non è possibile effettuare pagamenti 'Straordinari' senza aver effettuato almeno un pagamento stipendiale nell'anno" + aEsercizio);
+			} else if (aMese != 15) {
+				if (aMese < 1 || aMese > 13)
+					throw new ApplicationException("Il mese deve essere compreso tra 1 (Gennaio) e 13 (Mese Tredicesima)");
+
+				//se il mese è > 1 verifico che la liquidazione del mese precedente sia stata fatta
+				if (lastMesePagato==aMese)
+					throw new ApplicationException("Dati stipendiali non trovati o contabilizzazione già effettuata per mese n."+aMese+" es."+aEsercizio);
+				if (lastMesePagato != aMese - 1)
+					throw new ApplicationException("Dati stipendiali non trovati o ultimo mese pagato (" + lastMesePagato + ") diverso da quello precedente al corrente (" + aMese + ")");
+			}
+
+			Stipendi_cofiBulk stipendiCofiBulk = stipendiCofi.stream().filter(el->el.getEsercizio().equals(aEsercizio)).filter(el->el.getMese().equals(aMese)).findAny()
+					.orElseThrow(()->new ApplicationRuntimeException("StipendiCofi non esistente per mese n. " + aMese + " es. " + aEsercizio + "."));
+
+			String cdrPersonale = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(aEsercizio))
+					.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale nell'anno "+aEsercizio+"."));
+			CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
+			cdrPersonaleBulk.setUnita_padre((Unita_organizzativaBulk)getHome(userContext,Unita_organizzativaBulk.class).findByPrimaryKey(cdrPersonaleBulk.getUnita_padre()));
+
+			GregorianCalendar aDateInizioComp = new GregorianCalendar();
+			GregorianCalendar aDateFineComp = new GregorianCalendar();
+			if (aMese == 13) {
+				aDateInizioComp = new GregorianCalendar(aEsercizio, 11, 1);
+				aDateFineComp = new GregorianCalendar(aEsercizio, 11, 31);
+			} else if (aMese < 13) {
+				aDateInizioComp = new GregorianCalendar(aEsercizio, aMese-1, 1);
+				aDateFineComp = new GregorianCalendar(aEsercizio, aMese-1, 1);
+				aDateFineComp.set(Calendar.DAY_OF_MONTH, aDateFineComp.getActualMaximum(Calendar.DAY_OF_MONTH));
+			}
+
+			GregorianCalendar aDateCont = new GregorianCalendar();
+			if (LocalDate.now().getYear() == aEsercizio + 1)
+				aDateCont = new GregorianCalendar(aEsercizio, 11, 31);
+			else if (LocalDate.now().getYear() < aEsercizio )
+				aDateCont = new GregorianCalendar(aEsercizio, 0, 1);
+			else if (LocalDate.now().getYear() > aEsercizio ) {
+				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+				throw new ApplicationException("La data di sistema (" + formatter.format(aDateCont) + ") è superiore all''esercizio di scrivania (" + aEsercizio + ") di almeno 2 anni");
+			}
+
+			aDateCont.set(Calendar.HOUR_OF_DAY, aDateCont.getActualMinimum(Calendar.HOUR_OF_DAY));
+			aDateCont.set(Calendar.MINUTE, aDateCont.getActualMinimum(Calendar.MINUTE));
+			aDateCont.set(Calendar.SECOND, aDateCont.getActualMinimum(Calendar.SECOND));
+			aDateCont.set(Calendar.MILLISECOND, aDateCont.getActualMinimum(Calendar.MILLISECOND));
+
+			aDateInizioComp.set(Calendar.HOUR_OF_DAY, aDateCont.getActualMinimum(Calendar.HOUR_OF_DAY));
+			aDateInizioComp.set(Calendar.MINUTE, aDateInizioComp.getActualMinimum(Calendar.MINUTE));
+			aDateInizioComp.set(Calendar.SECOND, aDateInizioComp.getActualMinimum(Calendar.SECOND));
+			aDateInizioComp.set(Calendar.MILLISECOND, aDateInizioComp.getActualMinimum(Calendar.MILLISECOND));
+
+			aDateFineComp.set(Calendar.HOUR_OF_DAY, aDateCont.getActualMinimum(Calendar.HOUR_OF_DAY));
+			aDateFineComp.set(Calendar.MINUTE, aDateFineComp.getActualMinimum(Calendar.MINUTE));
+			aDateFineComp.set(Calendar.SECOND, aDateFineComp.getActualMinimum(Calendar.SECOND));
+			aDateFineComp.set(Calendar.MILLISECOND, aDateFineComp.getActualMinimum(Calendar.MILLISECOND));
+
+			MandatoAutomaticoWizardBulk mandatoWizard = new MandatoAutomaticoWizardBulk();
+			mandatoWizard.setTi_automatismo(MandatoAutomaticoWizardBulk.AUTOMATISMO_DA_IMPEGNI);
+			mandatoWizard.setEsercizio(aEsercizio);
+			mandatoWizard.setCds(cdrPersonaleBulk.getUnita_padre().getUnita_padre());
+			mandatoWizard.setUnita_organizzativa(cdrPersonaleBulk.getUnita_padre());
+			mandatoWizard.setCd_cds_origine(cdrPersonaleBulk.getUnita_padre().getUnita_padre().getCd_unita_organizzativa());
+			mandatoWizard.setCd_uo_origine(cdrPersonaleBulk.getUnita_padre().getCd_unita_organizzativa());
+			mandatoWizard.setDt_emissione(new java.sql.Timestamp(aDateCont.getTime().getTime()));
+			mandatoWizard.setUser(CNRUserContext.getUser(userContext));
+			mandatoWizard.setDs_mandato("Mandato di liquidazione stipendi_cofi mese:"+aMese);
+
+			DocumentoGenericoWizardBulk modelloDocumento = new DocumentoGenericoWizardBulk();
+
+			modelloDocumento.setEsercizio(aEsercizio);
+			modelloDocumento.setCd_cds(cdrPersonaleBulk.getUnita_padre().getUnita_padre().getCd_unita_organizzativa());
+			modelloDocumento.setCd_unita_organizzativa(cdrPersonaleBulk.getUnita_padre().getCd_unita_organizzativa());
+			modelloDocumento.setCd_cds_origine(cdrPersonaleBulk.getUnita_padre().getUnita_padre().getCd_unita_organizzativa());
+			modelloDocumento.setCd_uo_origine(cdrPersonaleBulk.getUnita_padre().getCd_unita_organizzativa());
+			modelloDocumento.setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_STIPENDI_SPESA.getValue()));
+			modelloDocumento.setData_registrazione(new java.sql.Timestamp(aDateCont.getTime().getTime()));
+			modelloDocumento.setDt_da_competenza_coge(new java.sql.Timestamp(aDateInizioComp.getTime().getTime()));
+			modelloDocumento.setDt_a_competenza_coge(new java.sql.Timestamp(aDateFineComp.getTime().getTime()));
+			modelloDocumento.setDs_documento_generico("Generico di versamento stipendi mese:" + aMese);
+			modelloDocumento.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
+			modelloDocumento.setUser(CNRUserContext.getUser(userContext));
+
+			mandatoWizard.setModelloDocumento(modelloDocumento);
+
+			/******************* CREO IL MANDATO **************/
+			//Per il mandato non setto il terzo in quanto deve essere creato con quelli indicati sugli impegni di spesa
+			Mandato_terzoBulk mandatoTerzo = new Mandato_terzoIBulk();
+			mandatoTerzo.setTipoBollo(((Tipo_bolloHome)getHome( userContext, Tipo_bolloBulk.class )).findTipoBolloStipendi(Tipo_bolloBulk.TIPO_SPESA));
+			mandatoWizard.setMandato_terzo(mandatoTerzo);
+
+			MandatoBulk mandatoStipendio = this.createMandatoStipendio(userContext, stipendiCofiBulk, mandatoWizard);
+
+			/******************* CREO IL COMPENSO **************/
+			//Per il compenso setto come terzo quello diversi per stipendi
+			MandatoAutomaticoWizardBulk compensoWizard = MandatoAutomaticoWizardBulk.createBy(mandatoWizard);
+			Integer cdTerzoStipendi = Utility.createConfigurazioneCnrComponentSession().getCdTerzoDiversiStipendi(userContext);
+			compensoWizard.getMandato_terzo().setTerzo((TerzoBulk)(getHome(userContext, TerzoBulk.class)).findByPrimaryKey(new TerzoBulk(cdTerzoStipendi)));
+
+			CompensoBulk compensoBulk = this.createCompensoStipendio(userContext, stipendiCofiBulk, compensoWizard, mandatoStipendio);
+
+			/******************* CREO LE RITENUTE **************/
+			ReversaleAutomaticaWizardBulk reversaleWizard = ReversaleAutomaticaWizardBulk.createBy(mandatoWizard);
+			reversaleWizard.setStato_coge(MandatoBulk.STATO_COGE_X);
+			reversaleWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_ENTRATA.getValue()));
+			reversaleWizard.getModelloDocumento().setTerzoWizardBulk(mandatoStipendio.getMandato_terzo().getTerzo());
+			reversaleWizard.getModelloDocumento().setDs_documento_generico("CORI - mese:" + stipendiCofiBulk.getMese() + " es:" + stipendiCofiBulk.getEsercizio());
+
+			//Imposto le variabili da utilizzare per il caricamento degli oggetti
+			Documento_generico_rigaBulk docRiga = new Documento_generico_rigaBulk();
+			docRiga.setTerzo_uo_cds(((TerzoHome)getHome(userContext, TerzoBulk.class)).findTerzoPerUo(cdrPersonaleBulk.getUnita_padre()));
+			docRiga.setModalita_pagamento_uo_cds(((TerzoHome)getHome(userContext, TerzoBulk.class)).findModalitaPagamentoPerUo(userContext, cdrPersonaleBulk.getUnita_padre()).getRif_modalita_pagamento());
+			docRiga.setBanca_uo_cds(((TerzoHome)getHome(userContext, TerzoBulk.class)).findBancaPerUo(userContext, cdrPersonaleBulk.getUnita_padre()));
+
+			reversaleWizard.getModelloDocumento().addToDocumento_generico_dettColl(docRiga);
+
+			Mandato_rigaBulk mandatoRiga = mandatoStipendio.getMandato_rigaColl().stream().findFirst().get();
+			reversaleWizard.getReversale_terzo().setTerzo(mandatoStipendio.getMandato_terzo().getTerzo());
+			reversaleWizard.setModalita_pagamento(mandatoRiga.getModalita_pagamento());
+			reversaleWizard.setBanca(mandatoRiga.getBanca());
+
+			this.createRitenuteStipendio(userContext, stipendiCofiBulk, reversaleWizard, mandatoWizard, mandatoStipendio, compensoBulk);
+
+			//Aggiorno la riga della liquidazione
+			stipendiCofiBulk.setEsercizio_mandato(mandatoStipendio.getEsercizio());
+			stipendiCofiBulk.setCd_cds_mandato(mandatoStipendio.getCd_cds());
+			stipendiCofiBulk.setPg_mandato(mandatoStipendio.getPg_mandato());
+
+			Mandato_rigaBulk riga = mandatoStipendio.getMandato_rigaColl().stream().findFirst().get();
+
+			stipendiCofiBulk.setEsercizio_doc_gen(riga.getEsercizio_doc_amm());
+			stipendiCofiBulk.setCd_tipo_doc_gen(riga.getCd_tipo_documento_amm());
+			stipendiCofiBulk.setCd_cds_doc_gen(riga.getCd_cds_doc_amm());
+			stipendiCofiBulk.setCd_uo_doc_gen(riga.getCd_uo_doc_amm());
+			stipendiCofiBulk.setPg_doc_gen(riga.getPg_doc_amm());
+
+			stipendiCofiBulk.setEsercizio_comp(compensoBulk.getEsercizio());
+			stipendiCofiBulk.setCd_cds_comp(compensoBulk.getCd_cds());
+			stipendiCofiBulk.setCd_uo_comp(compensoBulk.getCd_unita_organizzativa());
+			stipendiCofiBulk.setPg_comp(compensoBulk.getPg_compenso());
+
+			stipendiCofiBulk.setToBeUpdated();
+			makeBulkPersistent(userContext, stipendiCofiBulk);
+
+			//Effettuo scritture prima nota
+			Scrittura_partita_doppiaBulk scritturaPartitaDoppiaBulk = Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, compensoBulk);
+			makeBulkPersistent(userContext, scritturaPartitaDoppiaBulk);
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	private MandatoBulk createMandatoStipendio(UserContext userContext, Stipendi_cofiBulk stipendiCofiBulk, MandatoAutomaticoWizardBulk mandatoWizard) throws ComponentException {
+		try {
+			Integer aEsercizio = stipendiCofiBulk.getEsercizio();
+			Integer aMese = stipendiCofiBulk.getMese();
+
+			java.util.Collection<ObbligazioneWizard> listaObbligazioniWizard = new ArrayList<>();
+
+			Stipendi_cofi_obb_scadHome stipendi_cofi_obb_scadHome = (Stipendi_cofi_obb_scadHome)getHome(userContext, it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadBulk.class);
+			java.util.Collection<Stipendi_cofi_obb_scadBulk> stipendiCofiObbScadColl = stipendi_cofi_obb_scadHome.findStipendiCofiObbScad(userContext, aEsercizio, aMese);
+
+			for (java.util.Iterator<Stipendi_cofi_obb_scadBulk> i = stipendiCofiObbScadColl.iterator();i.hasNext();) {
+				Stipendi_cofi_obb_scadBulk el = i.next();
+				try {
+					ObbligazioneHome obbligazioneHome = (ObbligazioneHome) getHome(userContext, ObbligazioneBulk.class);
+					ObbligazioneBulk obbligazione = obbligazioneHome.findObbligazione(el.getStipendi_cofi_obb().getObbligazioni());
+					obbligazione.setObbligazione_scadenzarioColl(new BulkList(obbligazioneHome.findObbligazione_scadenzarioList(obbligazione)));
+
+					TerzoHome terzohome = (TerzoHome) getHome(userContext, TerzoBulk.class);
+					obbligazione.setCreditore((TerzoBulk) terzohome.findByPrimaryKey(obbligazione.getCreditore()));
+					obbligazione.getCreditore().setAnagrafico((AnagraficoBulk) getHome(userContext, AnagraficoBulk.class).findByPrimaryKey(obbligazione.getCreditore().getAnagrafico()));
+
+					//Recupero la scadenza su cui dovrebbero esserci le disponibilità
+					Optional<Obbligazione_scadenzarioBulk> scadenzarioDisp = obbligazione.getObbligazione_scadenzarioColl().stream()
+							.filter(scad -> scad.getPg_obbligazione_scadenzario().compareTo(Long.valueOf(15)) < 0)
+							.sorted(Comparator.comparing(Obbligazione_scadenzarioBulk::getPg_obbligazione_scadenzario).reversed())
+							.findFirst()
+							.filter(scad -> scad.getIm_associato_doc_amm().compareTo(BigDecimal.ZERO) == 0)
+							.filter(scad -> scad.getIm_associato_doc_contabile().compareTo(BigDecimal.ZERO) == 0);
+
+					if (!scadenzarioDisp.isPresent())
+						throw new ApplicationRuntimeException("Scadenza di obbligazione n. " + obbligazione.getPg_obbligazione() +
+								" con disponibilità residue non individuata.");
+					else if (scadenzarioDisp.get().getIm_scadenza().compareTo(el.getIm_totale()) < 0)
+						throw new ApplicationRuntimeException("Disponibilità residua dell'obbligazione n. " +
+								obbligazione.getEsercizio() + "/" + obbligazione.getEsercizio_originale() + "/" +
+								obbligazione.getCd_cds() + "/" + obbligazione.getPg_obbligazione() +
+								" (" + new it.cnr.contab.util.EuroFormat().format(scadenzarioDisp.get().getIm_scadenza()) +
+								") non sufficiente per il pagamento del mese n. " + aMese + " es. " + aEsercizio + " (" +
+								new it.cnr.contab.util.EuroFormat().format(el.getIm_totale()) + ").");
+
+					Optional<Obbligazione_scadenzarioBulk> scadenzario;
+
+					if (aMese < 15) {
+						if (scadenzarioDisp.get().getPg_obbligazione_scadenzario().compareTo(Long.valueOf(aMese)) > 0)
+							throw new ApplicationRuntimeException("Scadenza dell'obbligazione n. " + obbligazione.getPg_obbligazione() +
+									" con disponibilità (prog." + scadenzarioDisp.get().getPg_obbligazione_scadenzario() +
+									" ) è superiore a quello atteso per il pagamento del mese n. " + aMese + " es. " + aEsercizio + ".");
+						else if (scadenzarioDisp.get().getPg_obbligazione_scadenzario().compareTo(Long.valueOf(aMese)) < 0) {
+							while (scadenzarioDisp.get().getPg_obbligazione_scadenzario().compareTo(Long.valueOf(aMese)) < 0) {
+								DatiFinanziariScadenzeDTO dati = new DatiFinanziariScadenzeDTO();
+								dati.setNuovoImportoScadenzaVecchia(BigDecimal.ZERO);
+								dati.setNuovoPgObbligazioneScadenzario(scadenzarioDisp.get().getPg_obbligazione_scadenzario() + 1);
+								scadenzarioDisp = Optional.ofNullable((Obbligazione_scadenzarioBulk) Utility.createObbligazioneComponentSession().sdoppiaScadenzaInAutomaticoLight(userContext, scadenzarioDisp.get(), dati));
+							}
+						}
+						//Sdoppio la scadenza se necessario
+						if (el.getIm_totale().compareTo(scadenzarioDisp.get().getIm_scadenza()) != 0) {
+							DatiFinanziariScadenzeDTO dati = new DatiFinanziariScadenzeDTO();
+							dati.setNuovoImportoScadenzaVecchia(el.getIm_totale());
+							dati.setNuovoPgObbligazioneScadenzario(scadenzarioDisp.get().getPg_obbligazione_scadenzario() + 1);
+							Utility.createObbligazioneComponentSession().sdoppiaScadenzaInAutomaticoLight(userContext, scadenzarioDisp.get(), dati);
+						}
+						scadenzario = scadenzarioDisp;
+					} else { // if (aMese>=15)
+						scadenzario = obbligazione.getObbligazione_scadenzarioColl().stream()
+								.filter(scad -> scad.getPg_obbligazione_scadenzario().compareTo(Long.valueOf(aMese)) == 0)
+								.findFirst();
+
+						if (scadenzario.filter(scad -> scad.getIm_associato_doc_amm().compareTo(BigDecimal.ZERO) != 0 || scad.getIm_associato_doc_contabile().compareTo(BigDecimal.ZERO) != 0).isPresent())
+							throw new ApplicationRuntimeException("Scadenza di obbligazione n. " + obbligazione.getPg_obbligazione() +
+									" associata a liquidazione stipendi mese n. " + aMese + " es. " + aEsercizio + " già associata a documenti contabili o amministrativi.");
+						else if (scadenzario.filter(scad -> scad.getIm_scadenza().compareTo(el.getIm_totale()) != 0).isPresent())
+							throw new ApplicationRuntimeException("Scadenza di obbligazione n. " + obbligazione.getPg_obbligazione() +
+									" di importo diverso da quello previsto per la liquidazione stipendi mese n. " + aMese + " es. " + aEsercizio + ".");
+
+						if (!scadenzario.isPresent()) {
+							DatiFinanziariScadenzeDTO dati = new DatiFinanziariScadenzeDTO();
+							dati.setNuovoImportoScadenzaVecchia(scadenzarioDisp.get().getIm_scadenza().subtract(el.getIm_totale()));
+							dati.setNuovoPgObbligazioneScadenzario(Long.valueOf(aMese));
+							Optional.ofNullable((Obbligazione_scadenzarioBulk) Utility.createObbligazioneComponentSession().sdoppiaScadenzaInAutomaticoLight(userContext, scadenzarioDisp.get(), dati));
+						}
+					}
+
+					Collection<Modalita_pagamentoBulk> modalita_pagamentoBulks =
+							((TerzoHome) getHome(userContext, TerzoBulk.class)).findModalita_pagamento(obbligazione.getCreditore());
+
+					Modalita_pagamentoBulk modalitaPagamentoBulk = modalita_pagamentoBulks
+							.stream()
+							.sorted(Comparator.comparing(Modalita_pagamentoBulk::getDacr).reversed())
+							.findFirst().orElse(null);
+
+					Collection<BancaBulk> bancaBulks =
+							((AnagraficoHome) getHome(userContext, AnagraficoBulk.class)).findBanca(obbligazione.getCreditore().getAnagrafico());
+
+					//Cerco la banca associata al terzo e la prendo in ordine inverso di data creazione se ne esistono troppe valide
+					BancaBulk bancaBulk = bancaBulks
+							.stream()
+							.filter(banca->banca.getTerzo().equalsByPrimaryKey(obbligazione.getCreditore()))
+							.filter(banca->!banca.getFl_cancellato())
+							.sorted(Comparator.comparing(BancaBulk::getDacr).reversed())
+							.findFirst().orElse(null);
+
+					V_obbligazioneBulk vObbligazioneBulk = ((V_obbligazioneHome)getHome( userContext, V_obbligazioneBulk.class )).findImpegno(scadenzario.get());
+					vObbligazioneBulk.setIm_da_trasferire(el.getIm_totale());
+
+					ObbligazioneWizard obbligazioneWizardBulk = new ObbligazioneWizard(vObbligazioneBulk);
+					obbligazioneWizardBulk.setTerzoWizardBulk(obbligazione.getCreditore());
+					obbligazioneWizardBulk.setModalitaPagamentoWizardBulk(modalitaPagamentoBulk);
+					obbligazioneWizardBulk.setBancaWizardBulk(bancaBulk);
+					obbligazioneWizardBulk.setDescrizioneRigaDocumentoWizard("Generico di versamento stipendi mese:"+aMese);
+					obbligazioneWizardBulk.setDescrizioneRigaMandatoWizard("Riga liquidazione stipendi voce del piano:"+obbligazione.getCd_elemento_voce());
+
+					listaObbligazioniWizard.add(obbligazioneWizardBulk);
+				} catch (Exception e) {
+					throw handleException(e);
+				}
+			}
+
+			mandatoWizard.setTi_automatismo(MandatoAutomaticoWizardBulk.AUTOMATISMO_DA_IMPEGNI);
+			mandatoWizard.setImpegniSelezionatiColl(listaObbligazioniWizard);
+			mandatoWizard.setFlGeneraMandatoUnico(Boolean.TRUE);
+
+			MandatoAutomaticoComponentSession mandatoAutomaticoComponent = (MandatoAutomaticoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_MandatoAutomaticoComponentSession", MandatoAutomaticoComponentSession.class);
+			mandatoWizard = (MandatoAutomaticoWizardBulk)mandatoAutomaticoComponent.creaMandatoAutomatico(userContext, mandatoWizard);
+			if (mandatoWizard.getMandatiColl().size()>1)
+				throw new ApplicationRuntimeException("Errore in fase di creazione mandati. Risulta essere stato emesso più di un mandato.");
+			MandatoBulk mandatoBulk = mandatoWizard.getMandatiColl().stream().filter(MandatoBulk.class::isInstance).map(MandatoBulk.class::cast).findFirst()
+					.orElseThrow(()->new DetailedRuntimeException("Errore in fase di creazione mandati. Non risulta esserne stato emesso alcuno."));
+			return (MandatoBulk)Utility.createMandatoComponentSession().inizializzaBulkPerModifica(userContext, mandatoBulk);
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	private CompensoBulk createCompensoStipendio(UserContext userContext, Stipendi_cofiBulk stipendiCofiBulk, MandatoAutomaticoWizardBulk mandatoWizard, MandatoBulk mandatoStipendio) throws ComponentException {
+		try {
+			Integer aEsercizio = stipendiCofiBulk.getEsercizio();
+			Integer aMese = stipendiCofiBulk.getMese();
+
+			CompensoBulk compensoBulk = new CompensoBulk();
+			compensoBulk.setCd_cds(mandatoWizard.getCd_cds());
+			compensoBulk.setCd_unita_organizzativa(mandatoWizard.getCd_unita_organizzativa());
+			compensoBulk.setCd_cds_origine(mandatoWizard.getCd_cds());
+			compensoBulk.setCd_uo_origine(mandatoWizard.getCd_unita_organizzativa());
+			compensoBulk.setEsercizio(aEsercizio);
+			compensoBulk.initialize();
+
+			compensoBulk = (CompensoBulk)Utility.createCompensoComponentSession().inizializzaBulkPerInserimento(userContext, compensoBulk);
+
+			compensoBulk.setDt_registrazione(mandatoWizard.getDt_emissione());
+
+			compensoBulk.setDs_compenso("Liquidazione stipendi mese n." + aMese + " es.:" + aEsercizio + ".");
+			compensoBulk.setTi_anagrafico(AnagraficoBulk.DIVERSI);
+
+			Integer cdTerzoStipendi = Utility.createConfigurazioneCnrComponentSession().getCdTerzoDiversiStipendi(userContext);
+			V_terzo_per_compensoHome terzohome = (V_terzo_per_compensoHome)getHome(userContext, V_terzo_per_compensoBulk.class, "DISTINCT_TERZO");
+			V_terzo_per_compensoBulk terzoStipendi = terzohome.loadVTerzo(userContext, Tipo_rapportoBulk.DIPENDENTE, cdTerzoStipendi, compensoBulk.getDt_registrazione(), compensoBulk.getDt_registrazione());
+			compensoBulk.setV_terzo(terzoStipendi);
+
+			compensoBulk.setCd_terzo(terzoStipendi.getCd_terzo());
+			compensoBulk.setRagione_sociale(terzoStipendi.getRagione_sociale());
+			compensoBulk.setNome(terzoStipendi.getNome());
+			compensoBulk.setCognome(terzoStipendi.getCognome());
+			compensoBulk.setCodice_fiscale(terzoStipendi.getCodice_fiscale());
+			compensoBulk.setPartita_iva(terzoStipendi.getPartita_iva());
+
+			Collection<Modalita_pagamentoBulk> modalita_pagamentoBulks = ((TerzoHome)getHome(userContext, TerzoBulk.class)).findModalita_pagamento(terzoStipendi.getTerzo());
+
+			Modalita_pagamentoBulk modalitaPagamentoBulk = modalita_pagamentoBulks
+					.stream()
+					.sorted(Comparator.comparing(Modalita_pagamentoBulk::getDacr).reversed())
+					.findFirst().orElse(null);
+
+			Collection<BancaBulk> bancaBulks = ((AnagraficoHome)getHome(userContext, AnagraficoBulk.class)).findBanca(terzoStipendi.getAnagrafico());
+
+			BancaBulk bancaBulk = bancaBulks
+					.stream()
+					.sorted(Comparator.comparing(BancaBulk::getDacr).reversed())
+					.findFirst().orElse(null);
+
+			compensoBulk.setModalitaPagamento(modalitaPagamentoBulk.getRif_modalita_pagamento());
+			compensoBulk.setBanca(bancaBulk);
+
+			Tipo_rapportoHome tipoRapportoHome = (Tipo_rapportoHome)getHome(userContext, Tipo_rapportoBulk.class);
+			Tipo_rapportoBulk tipoRapporto = (Tipo_rapportoBulk)tipoRapportoHome.findByPrimaryKey(new Tipo_rapportoBulk(Pdg_modulo_gestBulk.CAT_STIPENDI));
+
+			compensoBulk.setTipoRapporto(tipoRapporto);
+
+			Tipo_trattamentoHome tipoTrattamentoHome = (Tipo_trattamentoHome)getHome(userContext, Tipo_trattamentoBulk.class);
+			Tipo_trattamentoBulk tipoTrattamentoBulk = Optional.ofNullable(tipoTrattamentoHome.findTipoTrattamentoCompenso())
+					.orElseThrow(()->new ComponentException("Non è stato possibile individuare il tipo trattamento utile per generare il compenso degli stipendi"));
+			compensoBulk.setTipoTrattamento(tipoTrattamentoBulk);
+
+			compensoBulk.setFl_senza_calcoli(Boolean.TRUE);
+			compensoBulk.setFl_diaria(Boolean.FALSE);
+
+			compensoBulk.setStato_cofi(CompensoBulk.STATO_PAGATO);
+			compensoBulk.setStato_coge(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COGE);
+			compensoBulk.setStato_coan(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COAN);
+			compensoBulk.setTi_associato_manrev(Fattura_passivaBulk.ASSOCIATO_A_MANDATO);
+
+			compensoBulk.setDt_emissione_mandato(compensoBulk.getDt_registrazione());
+			compensoBulk.setDt_da_competenza_coge(mandatoWizard.getModelloDocumento().getDt_da_competenza_coge());
+			compensoBulk.setDt_a_competenza_coge(mandatoWizard.getModelloDocumento().getDt_a_competenza_coge());
+			compensoBulk.setStato_pagamento_fondo_eco("N");
+			compensoBulk.setTi_istituz_commerc(mandatoWizard.getModelloDocumento().getTi_istituz_commerc());
+			compensoBulk.setFl_compenso_stipendi(Boolean.TRUE);
+
+			String aClassCoriSpec = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, aEsercizio, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_CORI_STIPENDI_EXTRA);
+			Stipendi_cofi_coriHome stipendi_cofi_coriHome = (Stipendi_cofi_coriHome)getHome(userContext, it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_coriBulk.class);
+			java.util.Collection<Stipendi_cofi_coriBulk> stipendiCofiCoriColl = stipendi_cofi_coriHome.findStipendiCofiCori(aEsercizio, aMese);
+
+			compensoBulk.setContributi(new ArrayList<>());
+
+			for (java.util.Iterator<Stipendi_cofi_coriBulk> i = stipendiCofiCoriColl.iterator();i.hasNext();) {
+				Stipendi_cofi_coriBulk el = i.next();
+				Tipo_contributo_ritenutaHome tipoContributoRitenutaHome = (Tipo_contributo_ritenutaHome)getHome(userContext, Tipo_contributo_ritenutaBulk.class);
+				Tipo_contributo_ritenutaBulk tipoContributoRitenutaBulk = tipoContributoRitenutaHome.findTipoCORIValido(el.getCd_contributo_ritenuta(), tipoContributoRitenutaHome.getServerDate());
+				boolean isCoriSpeciale = tipoContributoRitenutaBulk.getCd_classificazione_cori().equals(aClassCoriSpec);
+
+				if (el.getAmmontare().compareTo(BigDecimal.ZERO)!=0) {
+					Ass_tipo_cori_evBulk aEffCori = findAssociazioneCoriVoce(userContext, el.getEsercizio(), el.getCd_contributo_ritenuta(),
+							Elemento_voceHome.APPARTENENZA_CNR, Elemento_voceHome.GESTIONE_ENTRATE, el.getTi_ente_percipiente());
+
+					aEffCori = (Ass_tipo_cori_evBulk)((AssTipoCORIEvComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOMPENSI00_EJB_AssTipoCORIEvComponentSession", AssTipoCORIEvComponentSession.class)).inizializzaBulkPerModifica(userContext, aEffCori);
+
+					Contributo_ritenutaBulk contributoRitenutaBulk = new Contributo_ritenutaBulk();
+					contributoRitenutaBulk.setCompenso(compensoBulk);
+					contributoRitenutaBulk.setDettagli(new BulkList());
+					contributoRitenutaBulk.setCd_contributo_ritenuta(aEffCori.getCd_contributo_ritenuta());
+
+					contributoRitenutaBulk.setDt_ini_validita(aEffCori.getContributo_ritenuta().getDt_ini_validita());
+					contributoRitenutaBulk.setMontante(BigDecimal.ZERO);
+					contributoRitenutaBulk.setImponibile(BigDecimal.ZERO);
+					contributoRitenutaBulk.setAliquota(BigDecimal.ZERO);
+					contributoRitenutaBulk.setBase_calcolo(BigDecimal.ZERO);
+					contributoRitenutaBulk.setAmmontare(el.getAmmontare());
+					contributoRitenutaBulk.setAmmontare_lordo(el.getAmmontare());
+					contributoRitenutaBulk.setImponibile_lordo(BigDecimal.ZERO);
+					contributoRitenutaBulk.setIm_deduzione_irpef(BigDecimal.ZERO);
+					contributoRitenutaBulk.setIm_deduzione_family(BigDecimal.ZERO);
+					contributoRitenutaBulk.setIm_cori_sospeso(BigDecimal.ZERO);
+					contributoRitenutaBulk.setTi_ente_percipiente(el.getTi_ente_percipiente());
+					contributoRitenutaBulk.setStato_cofi_cr(compensoBulk.getStato_cofi());
+
+					if (el.getAmmontare().compareTo(BigDecimal.ZERO)>0) {
+						//Creo l'accertamento partita di giro che poi legherò alla reversale
+						AccertamentoPGiroBulk accertamentoPGiroBulk = new AccertamentoPGiroBulk();
+						accertamentoPGiroBulk.setEsercizio(aEsercizio);
+						accertamentoPGiroBulk.setEsercizio_originale(aEsercizio);
+						accertamentoPGiroBulk.setEsercizio_competenza(aEsercizio);
+						accertamentoPGiroBulk.setCds(mandatoWizard.getCds());
+						accertamentoPGiroBulk.setUnita_organizzativa(mandatoWizard.getUnita_organizzativa());
+						accertamentoPGiroBulk.setCd_uo_origine(mandatoWizard.getCd_uo_origine());
+						accertamentoPGiroBulk.setCd_cds_origine(mandatoWizard.getCd_cds_origine());
+						accertamentoPGiroBulk.setFl_calcolo_automatico(Boolean.TRUE);
+						accertamentoPGiroBulk.setRiportato("N");
+						accertamentoPGiroBulk.setFl_isTronco(isCoriSpeciale);
+
+						accertamentoPGiroBulk = (AccertamentoPGiroBulk)Utility.createAccertamentoPGiroComponentSession().inizializzaBulkPerInserimento(userContext, accertamentoPGiroBulk);
+
+						Ass_partita_giroHome assPartitaGiroHome = (Ass_partita_giroHome) getHome(userContext, Ass_partita_giroBulk.class);
+						Ass_partita_giroBulk assPartitaGiro = assPartitaGiroHome.getAssociazionePGiroFor(aEffCori.getElemento_voce());
+
+						accertamentoPGiroBulk.setElemento_voceContr(new Elemento_voceBulk(assPartitaGiro.getCd_voce_clg(), assPartitaGiro.getEsercizio(), assPartitaGiro.getTi_appartenenza_clg(), assPartitaGiro.getTi_gestione_clg()));
+						accertamentoPGiroBulk.setCapitolo((V_voce_f_partita_giroBulk) getHome( userContext, V_voce_f_partita_giroBulk.class ).findByPrimaryKey(new V_voce_f_partita_giroBulk(aEffCori.getElemento_voce().getCd_voce(),
+																						aEffCori.getElemento_voce().getEsercizio(),
+																						aEffCori.getElemento_voce().getTi_appartenenza(),
+																						aEffCori.getElemento_voce().getTi_gestione())));
+						accertamentoPGiroBulk.setIm_accertamento(el.getAmmontare());
+						accertamentoPGiroBulk.setDt_registrazione(compensoBulk.getDt_registrazione());
+						accertamentoPGiroBulk.setDs_accertamento("CORI-D mese:"+el.getMese()+" es:"+el.getEsercizio()+" CORI:"+el.getCd_contributo_ritenuta());
+						accertamentoPGiroBulk.setDebitore(mandatoStipendio.getMandato_terzo().getTerzo());
+						accertamentoPGiroBulk.setToBeCreated();
+
+						accertamentoPGiroBulk = (AccertamentoPGiroBulk)Utility.createAccertamentoPGiroComponentSession().creaConBulk(userContext, accertamentoPGiroBulk);
+
+						contributoRitenutaBulk.setCd_cds_accertamento(accertamentoPGiroBulk.getCd_cds());
+						contributoRitenutaBulk.setEsercizio_accertamento(accertamentoPGiroBulk.getEsercizio());
+						contributoRitenutaBulk.setEsercizio_ori_accertamento(accertamentoPGiroBulk.getEsercizio_originale());
+						contributoRitenutaBulk.setPg_accertamento(accertamentoPGiroBulk.getPg_accertamento());
+						contributoRitenutaBulk.setPg_accertamento_scadenzario(Long.valueOf(1));
+					} else {
+						//Creo l'obbligazione
+						ImpegnoPGiroBulk obbligazionePGiroBulk = new ImpegnoPGiroBulk();
+						obbligazionePGiroBulk.setEsercizio(aEsercizio);
+						obbligazionePGiroBulk.setEsercizio_originale(aEsercizio);
+						obbligazionePGiroBulk.setEsercizio_competenza(aEsercizio);
+						obbligazionePGiroBulk.setCds(mandatoWizard.getCds());
+						obbligazionePGiroBulk.setUnita_organizzativa(mandatoWizard.getUnita_organizzativa());
+						obbligazionePGiroBulk.setCd_uo_origine(mandatoWizard.getCd_uo_origine());
+						obbligazionePGiroBulk.setCd_cds_origine(mandatoWizard.getCd_cds_origine());
+						obbligazionePGiroBulk.setFl_isTronco(isCoriSpeciale);
+						obbligazionePGiroBulk.setFl_calcolo_automatico(Boolean.TRUE);
+						obbligazionePGiroBulk.setFl_calcolo_automatico(Boolean.TRUE);
+						obbligazionePGiroBulk.setFl_spese_costi_altrui(Boolean.FALSE);
+						obbligazionePGiroBulk.setFl_gara_in_corso(Boolean.FALSE);
+						obbligazionePGiroBulk.setStato_obbligazione(ObbligazioneBulk.STATO_OBB_DEFINITIVO);
+						obbligazionePGiroBulk.setRiportato("N");
+						obbligazionePGiroBulk.setIm_costi_anticipati(BigDecimal.ZERO);
+
+						obbligazionePGiroBulk = (ImpegnoPGiroBulk)Utility.createObbligazionePGiroComponentSession().inizializzaBulkPerInserimento(userContext, obbligazionePGiroBulk);
+
+						Ass_partita_giroHome assPartitaGiroHome = (Ass_partita_giroHome) getHome(userContext, Ass_partita_giroBulk.class);
+						Ass_partita_giroBulk assPartitaGiro = assPartitaGiroHome.getAssociazionePGiroFor(aEffCori.getElemento_voce());
+
+						obbligazionePGiroBulk.setElemento_voceContr(new Elemento_voceBulk(assPartitaGiro.getCd_voce(),assPartitaGiro.getEsercizio(), assPartitaGiro.getTi_appartenenza(), assPartitaGiro.getTi_gestione()));
+						obbligazionePGiroBulk.setElemento_voce(new Elemento_voceBulk(assPartitaGiro.getCd_voce_clg(), assPartitaGiro.getEsercizio(), assPartitaGiro.getTi_appartenenza_clg(), assPartitaGiro.getTi_gestione_clg()));
+						obbligazionePGiroBulk.setIm_obbligazione(el.getAmmontare());
+						obbligazionePGiroBulk.setDt_registrazione(compensoBulk.getDt_registrazione());
+						obbligazionePGiroBulk.setDs_obbligazione("CORI-D mese:"+el.getMese()+" es:"+el.getEsercizio()+" CORI:"+el.getCd_contributo_ritenuta());
+						obbligazionePGiroBulk.setCreditore(mandatoStipendio.getMandato_terzo().getTerzo());
+						obbligazionePGiroBulk.setStato_obbligazione(ObbligazioneBulk.STATO_OBB_DEFINITIVO);
+						obbligazionePGiroBulk.setToBeCreated();
+
+						obbligazionePGiroBulk = (ImpegnoPGiroBulk)Utility.createObbligazionePGiroComponentSession().creaConBulk(userContext, obbligazionePGiroBulk);
+
+						contributoRitenutaBulk.setObbligazioneScadenzario(obbligazionePGiroBulk.getObbligazione_scadenzarioColl().stream().findFirst().orElse(null));
+					}
+					contributoRitenutaBulk.setToBeCreated();
+					compensoBulk.getContributi().add(contributoRitenutaBulk);
+				}
+			}
+
+			//creo il compenso temporaneo
+			compensoBulk.setPg_compenso(Utility.createCompensoComponentSession().assegnaProgressivo(userContext, compensoBulk));
+			compensoBulk.setIm_cr_ente(compensoBulk.getContributi().stream().map(Contributo_ritenutaBulk::getAmmontareEnte).reduce(BigDecimal.ZERO, BigDecimal::add));
+			compensoBulk.setIm_cr_percipiente(compensoBulk.getContributi().stream().map(Contributo_ritenutaBulk::getAmmontarePercepiente).reduce(BigDecimal.ZERO, BigDecimal::add));
+			compensoBulk.setIm_totale_compenso(mandatoStipendio.getIm_mandato());
+			compensoBulk.setIm_lordo_percipiente(mandatoStipendio.getIm_mandato().subtract(compensoBulk.getIm_cr_ente()));
+			compensoBulk.setIm_netto_percipiente(mandatoStipendio.getIm_mandato().subtract(compensoBulk.getIm_cr_ente()).subtract(compensoBulk.getIm_cr_percipiente()));
+			compensoBulk.setToBeCreated();
+			makeBulkPersistent(userContext, compensoBulk);
+
+			return (CompensoBulk)Utility.createCompensoComponentSession().inizializzaBulkPerModifica(userContext, compensoBulk);
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	private Ass_tipo_cori_evBulk findAssociazioneCoriVoce(UserContext userContext, int esercizio, String cdTipoCori, String tiAppartenenza, String tiGestione, String tipoEntePercipiente) throws ComponentException, PersistencyException {
+		Ass_tipo_cori_evHome assTipoCoriVoceHome = (Ass_tipo_cori_evHome) getHome(userContext, Ass_tipo_cori_evBulk.class);
+		Ass_tipo_cori_evBulk assTipoCori = assTipoCoriVoceHome.getAssCoriEv(esercizio, cdTipoCori, tiAppartenenza, tiGestione, tipoEntePercipiente);
+		return Optional.ofNullable(assTipoCori).orElseThrow(()->new ApplicationException("Associazione tra tipo contributo/ritenuta e voce bilancio non trovata (" +
+				"Tipo Cori: " + cdTipoCori +
+				" - Esercizio: " + esercizio +
+				" - Appartenenza: " + tiAppartenenza +
+				" - Gestione: " + tiGestione +
+				" - Tipo Ente Percipiente: " + tipoEntePercipiente + ")."));
+	}
+
+	private void createRitenuteStipendio(UserContext userContext, Stipendi_cofiBulk stipendiCofiBulk, ReversaleAutomaticaWizardBulk reversaleWizard, MandatoAutomaticoWizardBulk mandatoWizard, MandatoBulk mandatoCompensoBulk, CompensoBulk compensoBulk) throws ComponentException {
+		try {
+			//Cerco il terzo utilizzato per il mandato che deve essere usato per creare anche la reversale
+
+			//Devo creare il documento generico di entrata per ogni riga del compenso
+			List<AccertamentoWizard> listAccertamenti = compensoBulk.getContributi().stream().filter(el->Optional.ofNullable(el.getPg_accertamento()).isPresent()).map(el->{
+				try {
+					Accertamento_scadenzarioBulk as = (Accertamento_scadenzarioBulk)getHome(userContext, Accertamento_scadenzarioBulk.class)
+							.findByPrimaryKey(new Accertamento_scadenzarioBulk(el.getCd_cds_accertamento(), el.getEsercizio_accertamento(), el.getEsercizio_ori_accertamento(), el.getPg_accertamento(), el.getPg_accertamento_scadenzario()));
+					AccertamentoWizard accertamentoWizardBulk = new AccertamentoWizard(as);
+					accertamentoWizardBulk.setDescrizioneRigaDocumentoWizard("CORI - mese:" + stipendiCofiBulk.getMese() + " es:" + stipendiCofiBulk.getEsercizio() + " CORI:" + el.getCd_contributo_ritenuta());
+					accertamentoWizardBulk.setDescrizioneRigaReversaleWizard("CORI - mese:" + stipendiCofiBulk.getMese() + " es:" + stipendiCofiBulk.getEsercizio() + " CORI:" + el.getCd_contributo_ritenuta());
+					return accertamentoWizardBulk;
+				} catch (Exception e) {
+					throw new DetailedRuntimeException(e);
+				}
+			}).collect(Collectors.toList());
+
+			Optional<Documento_genericoBulk> documentoAttivo = Optional.empty();
+			if (listAccertamenti.size()>0) {
+				reversaleWizard.setAccertamentiSelezionatiColl(listAccertamenti);
+				reversaleWizard.setDs_reversale("CORI - mese:" + stipendiCofiBulk.getMese() + " es:" + stipendiCofiBulk.getEsercizio());
+				reversaleWizard.setTi_automatismo(ReversaleAutomaticaWizardBulk.AUTOMATISMO_DA_ACCERTAMENTI);
+
+				ReversaleAutomaticaComponentSession reversaleAutomaticaComponent = (ReversaleAutomaticaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ReversaleAutomaticaComponentSession", ReversaleAutomaticaComponentSession.class);
+				reversaleWizard = (ReversaleAutomaticaWizardBulk)reversaleAutomaticaComponent.creaReversaleAutomatica(userContext, reversaleWizard);
+				if (reversaleWizard.getReversaliColl().size()>1)
+					throw new ApplicationRuntimeException("Errore in fase di creazione reversale. Risulta essere stata emessa più di una reversale.");
+				ReversaleBulk reversaleBulk = reversaleWizard.getReversaliColl().stream().findFirst()
+						.orElseThrow(()->new ComponentException("Errore in fase di creazione reversale. Non risulta esserne stata emessa alcuna."));
+				reversaleBulk = (ReversaleBulk)Utility.createReversaleComponentSession().inizializzaBulkPerModifica(userContext, reversaleBulk);
+
+				//Lego la reversale al compenso
+				Ass_comp_doc_cont_nmpBulk assReversaleCompenso = new Ass_comp_doc_cont_nmpBulk();
+				assReversaleCompenso.setCompenso(compensoBulk);
+				assReversaleCompenso.setCd_cds_doc(reversaleBulk.getCd_cds());
+				assReversaleCompenso.setEsercizio_doc(reversaleBulk.getEsercizio());
+				assReversaleCompenso.setCd_tipo_doc(V_doc_cont_compBulk.TIPO_DOC_CONT_REVERSALE);
+				assReversaleCompenso.setPg_doc(reversaleBulk.getPg_reversale());
+				assReversaleCompenso.setToBeCreated();
+				makeBulkPersistent(userContext, assReversaleCompenso);
+
+				//Lego la reversale al mandato
+				Ass_mandato_reversaleBulk assMandatoReversale = new Ass_mandato_reversaleBulk();
+				assMandatoReversale.setMandato(mandatoCompensoBulk);
+				assMandatoReversale.setReversale(reversaleBulk);
+				assMandatoReversale.setTi_origine(Ass_mandato_reversaleBulk.TIPO_ORIGINE_SPESA);
+				assMandatoReversale.setToBeCreated();
+				makeBulkPersistent(userContext, assMandatoReversale);
+
+				//Aggiorno i totali ritenute sul mandato
+				mandatoCompensoBulk.setIm_ritenute(reversaleBulk.getIm_reversale());
+				mandatoCompensoBulk.setToBeUpdated();
+				makeBulkPersistent(userContext, mandatoCompensoBulk);
+
+			}
+
+			List<ObbligazioneWizard> listObbligazioni = compensoBulk.getContributi().stream().filter(el->Optional.ofNullable(el.getPg_obbligazione()).isPresent()).map(el->{
+				try {
+					V_obbligazioneBulk vObbligazioneBulk = (V_obbligazioneBulk)getHome(userContext, V_obbligazioneBulk.class)
+							.findByPrimaryKey(new V_obbligazioneBulk(el.getCd_cds_obbligazione(), el.getEsercizio_obbligazione(), el.getEsercizio_ori_obbligazione(), el.getPg_obbligazione(), el.getPg_obbligazione_scadenzario()));
+					ObbligazioneWizard obbligazioneWizardBulk = new ObbligazioneWizard(vObbligazioneBulk);
+					return obbligazioneWizardBulk;
+				} catch (Exception e) {
+					throw new DetailedRuntimeException(e);
+				}
+			}).collect(Collectors.toList());
+
+			Optional<Documento_genericoBulk> documentoPassivo = Optional.empty();
+			if (listObbligazioni.size()>0) {
+				mandatoWizard.getModelloDocumento().setTipo_documento(new Tipo_documento_ammBulk(TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_SPESA.getValue()));
+				mandatoWizard.setImpegniSelezionatiColl(listObbligazioni);
+				mandatoWizard.setTi_automatismo(MandatoAutomaticoWizardBulk.AUTOMATISMO_DA_IMPEGNI);
+				mandatoWizard.setFlGeneraMandatoUnico(Boolean.TRUE);
+
+				MandatoAutomaticoComponentSession mandatoAutomaticoComponent = (MandatoAutomaticoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_MandatoAutomaticoComponentSession", MandatoAutomaticoComponentSession.class);
+				mandatoWizard = (MandatoAutomaticoWizardBulk)mandatoAutomaticoComponent.creaMandatoAutomatico(userContext, mandatoWizard);
+				if (mandatoWizard.getMandatiColl().size()>1)
+					throw new ApplicationRuntimeException("Errore in fase di creazione mandati. Risulta essere stato emesso più di un mandato.");
+				MandatoBulk mandatoBulk = mandatoWizard.getMandatiColl().stream().findFirst()
+						.orElseThrow(()->new DetailedRuntimeException("Errore in fase di creazione mandati. Non risulta esserne stato emesso alcuno."));
+				mandatoBulk = (MandatoBulk)Utility.createMandatoComponentSession().inizializzaBulkPerModifica(userContext, mandatoBulk);
+
+				//Lego il mandato al compenso
+				Ass_comp_doc_cont_nmpBulk assReversaleCompenso = new Ass_comp_doc_cont_nmpBulk();
+				assReversaleCompenso.setCompenso(compensoBulk);
+				assReversaleCompenso.setCd_cds_doc(mandatoBulk.getCd_cds());
+				assReversaleCompenso.setEsercizio_doc(mandatoBulk.getEsercizio());
+				assReversaleCompenso.setCd_tipo_doc(V_doc_cont_compBulk.TIPO_DOC_CONT_MANDATO);
+				assReversaleCompenso.setPg_doc(mandatoBulk.getPg_mandato());
+				assReversaleCompenso.setToBeCreated();
+				makeBulkPersistent(userContext, assReversaleCompenso);
+
+				//Lego il mandato al mandato
+				Ass_mandato_mandatoBulk assMandatoMandato = new Ass_mandato_mandatoBulk();
+				assMandatoMandato.setMandato(mandatoCompensoBulk);
+				assMandatoMandato.setMandatoColl(mandatoBulk);
+				assMandatoMandato.setToBeCreated();
+				makeBulkPersistent(userContext, assMandatoMandato);
+			}
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
 }

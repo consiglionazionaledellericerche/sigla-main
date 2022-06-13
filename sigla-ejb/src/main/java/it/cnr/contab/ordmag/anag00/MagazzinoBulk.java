@@ -21,6 +21,7 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -720,6 +721,10 @@ public class MagazzinoBulk extends MagazzinoBase {
 			case "FMA":  return this.getTipoMovimentoMagCarFma();
 			default: return null;
 		}
+	}
+	public Dictionary getTipoGestioneKeys() {
+
+		return Bene_servizioBulk.TIPO_CONSEGNA;
 	}
 
 }

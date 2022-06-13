@@ -18,6 +18,7 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -181,14 +182,22 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         String cds = ((HttpActionContext) actioncontext).getParameter("cds");
         String cdUo = ((HttpActionContext) actioncontext).getParameter("cdUo");
         Long pgFattura = Long.valueOf(((HttpActionContext) actioncontext).getParameter("pgFattura"));
-        StorageObject storageObject = documentiCollegatiDocAmmService.recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+
+        FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
+                "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
+                FatturaAttivaSingolaComponentSession.class);
+
+       Fattura_attivaBulk fattura = ( Fattura_attivaBulk) componentFatturaAttiva.findByPrimaryKey(actioncontext.getUserContext(), new Documento_amministrativo_attivoBulk(cds,cdUo,esercizio,pgFattura) );
+        //StorageObject storageObject = documentiCollegatiDocAmmService.recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+        StorageObject storageObject = documentiCollegatiDocAmmService.recuperoFolderFattura(fattura);
         InputStream is = null;
         if (storageObject == null) {
-            is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
+            is = getStreamNewDocument(actioncontext, fattura);
         } else {
-            is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+            //is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+            is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(fattura);
             if (is == null) {
-                is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
+                is = getStreamNewDocument(actioncontext, fattura);
             }
         }
         if (is != null) {
@@ -206,16 +215,16 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
     }
 
     private InputStream getStreamNewDocument(ActionContext actioncontext,
-                                             Integer esercizio, String cds, String cdUo, Long pgFattura)
+                                             Fattura_attivaBulk fattura )
             throws Exception {
         InputStream is;
         FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
                 "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
                 FatturaAttivaSingolaComponentSession.class);
         UserContext userContext = actioncontext.getUserContext();
-        Fattura_attivaBulk fattura = componentFatturaAttiva.ricercaFatturaByKey(userContext, esercizio.longValue(), cds, cdUo, pgFattura);
         SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fattura);
-        is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+        //is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
+        is = documentiCollegatiDocAmmService.getStreamDocumentoAttivo(fattura);
         return is;
     }
 

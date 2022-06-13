@@ -11,30 +11,18 @@
 
 <%	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)BusinessProcess.getBusinessProcess(request);
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
-	String collapseIconClass = bp.getFattureRigaOrdiniController().isRettificheCollapse() ? "fa-chevron-circle-down" : "fa-chevron-circle-up";
+	String collapseIconClass = bp.getFatturaOrdiniController().isRettificheCollapse() ? "fa-chevron-circle-down" : "fa-chevron-circle-up";
 %>
 
 <% bp.getCrudDocEleAcquistoColl().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
 <% bp.getCrudDocEleAcquistoColl().closeHTMLTable(pageContext);%>
 <div class="card">
     <fieldset class="fieldset mt-1 mb-1">
-        <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di fattura</legend>
+        <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di consegna selezionate</legend>
         <table width="100%">
             <tr>
                 <td>
-                    <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","200px"); %>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-</div>
-<div class="card">
-    <fieldset class="fieldset mb-1">
-        <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di consegna</legend>
-        <table width="100%">
-            <tr>
-                <td>
-                    <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","100%"); %>
+                    <% bp.getFatturaOrdiniController().writeHTMLTable(pageContext,"default",false,false,true,"100%","400px"); %>
                 </td>
             </tr>
         </table>
@@ -47,18 +35,23 @@
         </h5>
     </div>
     <div class="card-block">
-        <% if (!bp.getFattureRigaOrdiniController().isRettificheCollapse()) { %>
+        <% if (!bp.getFatturaOrdiniController().isRettificheCollapse()) { %>
             <table cellpadding="5px">
                 <tr>
-                    <% bp.getFattureRigaOrdiniController().writeFormField(out, "voceIva"); %>
-                    <% bp.getFattureRigaOrdiniController().writeFormField(out, "prezzoUnitarioRett"); %>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "voceIva"); %>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "prezzoUnitarioRett"); %>
                 </tr>
             </table>
             <table cellpadding="5">
                 <tr>
-                    <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto1Rett"); %>
-                    <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto2Rett"); %>
-                    <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto3Rett"); %>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "sconto1Rett"); %>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "sconto2Rett"); %>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "sconto3Rett"); %>
+                </tr>
+            </table>
+            <table cellpadding="5px">
+                <tr>
+                    <% bp.getFatturaOrdiniController().writeFormField(out, "imponibileErrato"); %>
                 </tr>
             </table>
         <% } %>

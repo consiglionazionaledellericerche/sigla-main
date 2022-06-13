@@ -64,7 +64,7 @@ public interface ContrattoLocal {
      * GET  /restapi/contratto -> return Contratto
      */
     @GET
-    @RolesAllowed(SIGLARoles.PARCO_AUTO)
+    @RolesAllowed({SIGLARoles.CONTRATTO,SIGLARoles.PARCO_AUTO})
     @ApiOperation(value = "Recupera i dati dei contratti",
             notes = "Accesso consentito solo alle utenze abilitate al ruolo REST_PARCO_AUTO",
             response = ContrattoDatiSintesiBulk.class,

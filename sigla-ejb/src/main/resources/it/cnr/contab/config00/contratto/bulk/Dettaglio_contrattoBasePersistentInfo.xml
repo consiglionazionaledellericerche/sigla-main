@@ -113,6 +113,12 @@
 				sqlTypeName="VARCHAR"
 				columnSize="20"
 				nullable="false" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="3"
+				nullable="false" />
 
 	</defaultColumnMap>
 	<persistentProperty
@@ -149,4 +155,6 @@
 			name="duva" />
 	<persistentProperty
 			name="utuv" />
+	<persistentProperty
+			name="stato" />
 </SQLPersistentInfo>

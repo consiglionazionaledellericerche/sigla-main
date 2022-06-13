@@ -173,13 +173,11 @@
 	<fieldProperty
 		name="codiceUnivocoPcc"
 		property="codiceUnivocoPcc"
-		readonlyPropertyOnEdit="notGestoreIstat"
 		label="Codice Pcc"
 		inputType="TEXT" />	
 	<fieldProperty
 		name="denominazionePcc"
 		property="denominazionePcc"
-		readonlyPropertyOnEdit="notGestoreIstat"
 		label="Denominazione Pcc"
 		cols="60"
 		rows="2"

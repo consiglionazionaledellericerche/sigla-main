@@ -19,6 +19,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -245,6 +246,30 @@ public abstract class MandatoHome extends BulkHome {
         Optional.ofNullable(mandato)
                 .ifPresent(mandatoBulk -> sql.addClause(mandatoBulk.buildFindClauses(null)));
         return fetchAll(sql);
+    }
+
+    /**
+     * Recupera tutti i CUP collegati al Mandato.
+     *
+     * @param mandatoBulk Mandato in uso.
+     * @return java.util.Collection Collezione di oggetti <code>CUP</code>
+     */
+    public java.util.Collection<CupBulk> findCodiciSiopeCupCollegati(UserContext usercontext, MandatoBulk mandatoBulk) throws PersistencyException {
+        PersistentHome mandatoSiopeCupHome = getHomeCache().getHome(MandatoSiopeCupIBulk.class);
+        SQLBuilder sql = mandatoSiopeCupHome.createSQLBuilder();
+        sql.setAutoJoins(true);
+        sql.generateJoin("mandato_siopeI", "MANDATO_SIOPE");
+
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.CD_CDS", SQLBuilder.EQUALS, mandatoBulk.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.ESERCIZIO", SQLBuilder.EQUALS, mandatoBulk.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.PG_MANDATO", SQLBuilder.EQUALS, mandatoBulk.getPg_mandato());
+        final Stream<MandatoSiopeCupBulk> stream = mandatoSiopeCupHome.fetchAll(sql)
+                .stream()
+                .filter(MandatoSiopeCupBulk.class::isInstance)
+                .map(MandatoSiopeCupBulk.class::cast);
+        getHomeCache().fetchAll(usercontext);
+        return stream.filter(mandatoSiopeCupBulk -> Optional.ofNullable(mandatoSiopeCupBulk.getCdCup()).isPresent())
+                .map(MandatoSiopeCupBulk::getCup).collect(Collectors.toList());
     }
 
     /**

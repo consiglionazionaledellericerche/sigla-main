@@ -257,6 +257,8 @@
 	<action path="/ConsAccertamentiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsNonAcquisitiAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsNonAcquisitiAction"/>
+	<action path="/ConsBeneServizioAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
 
 	<businessProcess name="ConsObbligazioniBP"
 					 className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
@@ -1482,7 +1484,7 @@
 					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
-					value="it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk" />
+					value="it.cnr.contab.progettiric00.core.bulk.ProgettoContrattoBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsProgettiAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
@@ -1836,6 +1838,14 @@
 		<init-param name="bulkClassName"
 					value="it.cnr.contab.utenze00.bulk.UtenteBulk" />
 		<init-param name="defaultAction" value="ConsUtenteGestAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="ConsBeneServizioBP"
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk" />
+		<init-param name="defaultAction" value="ConsBeneServizioAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 </action-mappings>

@@ -6475,11 +6475,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         return pg_stampa;
     }
 
-    public byte[] lanciaStampa(
-            UserContext userContext,
-            Long pg_stampa) throws PersistencyException, ComponentException {
+    public byte[] lanciaStampa(UserContext userContext, Long pg_stampa) throws PersistencyException, ComponentException {
         try {
-
             File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + getOutputFileName("fatturaattiva_ncd.jasper", pg_stampa));
             Print_spoolerBulk print = new Print_spoolerBulk();
             print.setPgStampa(pg_stampa);
@@ -7274,6 +7271,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         Bene_servizioHome beneServizioHome = (Bene_servizioHome) getHome(userContext, Bene_servizioBulk.class);
         it.cnr.jada.persistency.sql.SQLBuilder sql = beneServizioHome.createSQLBuilder();
         sql.addClause("AND", "ti_bene_servizio", sql.EQUALS, dettaglio.getFattura_attiva().getTi_bene_servizio());
+        sql.addClause("AND", "fl_gestione_magazzino", SQLBuilder.EQUALS, false);
+
         sql.addClause(clauses);
         return sql;
     }

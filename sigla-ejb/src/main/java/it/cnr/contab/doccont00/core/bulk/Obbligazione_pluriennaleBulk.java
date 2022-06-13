@@ -1,6 +1,6 @@
 /*
  * Created by BulkGenerator 2.0 [07/12/2009]
- * Date 15/09/2021
+ * Date 20/09/2021
  */
 package it.cnr.contab.doccont00.core.bulk;
 import it.cnr.jada.action.ActionContext;
@@ -11,7 +11,7 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 	 * [OBBLIGAZIONE ]
 	 **/
 	private ObbligazioneBulk obbligazione =  new ObbligazioneBulk();
-	private ObbligazioneBulk obbligazioneRif = new ObbligazioneBulk();
+	private ObbligazioneBulk obbligazioneRif =  new ObbligazioneBulk();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: OBBLIGAZIONE_PLURIENNALE
@@ -19,21 +19,13 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 	public Obbligazione_pluriennaleBulk() {
 		super();
 	}
-	public Obbligazione_pluriennaleBulk(ObbligazioneBulk obbligazione) {
-		setObbligazione(obbligazione);
-		setEsercizio( obbligazione.getEsercizio() );
-		setEsercizioOriginale( obbligazione.getEsercizio_originale() );
-		setPgObbligazione( obbligazione.getPg_obbligazione() );
-		setCdCds( obbligazione.getCd_cds() );
-	}
-
-
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: OBBLIGAZIONE_PLURIENNALE
 	 **/
-	public Obbligazione_pluriennaleBulk(Long idObbligazionePlur) {
-		super(idObbligazionePlur);
+	public Obbligazione_pluriennaleBulk(String cdCds, Integer esercizio, Integer esercizioOriginale, Long pgObbligazione, Integer anno) {
+		super(cdCds, esercizio, esercizioOriginale, pgObbligazione, anno);
+		setObbligazione( new ObbligazioneBulk(cdCds,esercizio,esercizioOriginale,pgObbligazione) );
 	}
 	public ObbligazioneBulk getObbligazione() {
 		return obbligazione;
@@ -42,13 +34,9 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 		this.obbligazione=obbligazione;
 	}
 
-	public ObbligazioneBulk getObbligazioneRif() {
-		return obbligazioneRif;
-	}
+	public ObbligazioneBulk getObbligazioneRif() {return obbligazioneRif;}
 
-	public void setObbligazioneRif(ObbligazioneBulk obbligazioneRif) {
-		this.obbligazioneRif = obbligazioneRif;
-	}
+	public void setObbligazioneRif(ObbligazioneBulk obbligazioneRif) {this.obbligazioneRif = obbligazioneRif;}
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -191,5 +179,24 @@ public class Obbligazione_pluriennaleBulk extends Obbligazione_pluriennaleBase {
 	 **/
 	public void setPgObbligazioneRif(Long pgObbligazioneRif)  {
 		this.getObbligazioneRif().setPg_obbligazione(pgObbligazioneRif);
+	}
+
+	public Obbligazione_pluriennaleBulk clone(ObbligazioneBulk obbligazione, it.cnr.jada.action.ActionContext context){
+		Obbligazione_pluriennaleBulk nuovo = null;
+
+		try {
+			nuovo = (Obbligazione_pluriennaleBulk)getClass().newInstance();
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+		nuovo.setObbligazione(obbligazione);
+		nuovo.setAnno(this.getAnno());
+		nuovo.setImporto(this.getImporto());
+		nuovo.setObbligazioneRif(this.getObbligazioneRif());
+		nuovo.setCrudStatus(TO_BE_CREATED);
+
+		return nuovo;
 	}
 }

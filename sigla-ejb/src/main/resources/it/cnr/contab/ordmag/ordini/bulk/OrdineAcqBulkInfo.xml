@@ -425,7 +425,7 @@
 		inputType="BUTTON"
 		img="img/find16.gif"
 		iconClass="fa fa-search text-primary"
-		buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
+		buttonClass="btn-outline-secondary btn-title text-primary"
 		label="Conto/i..."
 		href="javascript:submitForm('doSearch(main.listabanche)')" />
 
@@ -708,6 +708,15 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+			name="fl_mepa"
+			property="fl_mepa"
+			inputType="CHECKBOX"
+			nullable="false"
+			enabledOnSearch="false"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			label="MEPA" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -730,6 +739,8 @@
 		name="esercizio" />
 	<formFieldProperty
 		name="tiAttivita" />
+	<formFieldProperty
+			name="fl_mepa" />
 	<formFieldProperty
 		name="tiAttivitaSearch" />
 	<formFieldProperty
@@ -900,6 +911,8 @@
 	<findFieldProperty
 		name="referenteEsterno" />
 	<findFieldProperty
+			name="fl_mepa" />
+	<findFieldProperty
 		name="cdTipoOrdine" />
 	<findFieldProperty name="tiAttivitaSearch" />
 	<findFieldProperty
@@ -950,6 +963,8 @@
 		name="dataOrdineDef" />
 	<columnFieldProperty
 		name="referenteEsterno" />
+	<columnFieldProperty
+			name="fl_mepa" />
 	<columnFieldProperty
 		name="cdTipoOrdine" />
 	<columnFieldProperty

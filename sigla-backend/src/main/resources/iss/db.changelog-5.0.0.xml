@@ -42,6 +42,12 @@
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="attivazione-variazione-automatica-spesa">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="Y"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='VARIAZIONE_AUTOMATICA' AND CD_CHIAVE_SECONDARIA='SPESA'</where>
+        </update>
+    </changeSet>
     <changeSet author="ciro.salvio" id="attivazione-impegni_pluriennali">
         <update tableName="configurazione_cnr">
             <column name="val01" type="STRING" value="Y"/>
@@ -58,6 +64,13 @@
         <update tableName="configurazione_cnr">
             <column name="val01" type="STRING" value="Y"/>
             <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='PROGETTI' AND CD_CHIAVE_SECONDARIA='ASS_PROGETTI_ANGAGRAFICO'</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="ciro.salvio" id="attivazione-att_managed_attachments_restContr">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="Y"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='CONTRATTI' AND CD_CHIAVE_SECONDARIA='ATT_REST_CONTR_STORED_FROM_SIGLA'</where>
         </update>
     </changeSet>
 </databaseChangeLog>

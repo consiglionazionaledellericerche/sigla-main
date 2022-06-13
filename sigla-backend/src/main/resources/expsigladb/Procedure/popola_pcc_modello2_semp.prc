@@ -1,4 +1,4 @@
-CREATE OR REPLACE procedure PCIR009.popola_pcc_modello2_SEMP is
+CREATE OR REPLACE procedure popola_pcc_modello2_SEMP is
 begin
 declare
 cursor testata is
