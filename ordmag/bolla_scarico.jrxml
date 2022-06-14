@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="35"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sigla-test"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="esercizio" class="java.lang.Integer"/>
+	<parameter name="pg_bolla_sca" class="java.lang.Long"/>
+	<parameter name="cd_cds" class="java.lang.String"/>
+	<parameter name="cd_numeratore_mag" class="java.lang.String"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:/iss/SIGLA_FORK_REPORT_ISS/sigla-reports/img/ISS/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_magazzino" class="java.lang.String"/>
+	<parameter name="cd_unita_operativa" class="java.lang.String"/>
+	<parameter name="cd_bene_servizio_da" class="java.lang.String"/>
+	<parameter name="cd_bene_servizio_a" class="java.lang.String"/>
+	<parameter name="pg_bolla_sca_da" class="java.lang.Long"/>
+	<parameter name="pg_bolla_sca_a" class="java.lang.Long"/>
+	<parameter name="dt_bolla_sca_da" class="java.sql.Date"/>
+	<parameter name="dt_bolla_sca_a" class="java.sql.Date"/>
+	<parameter name="cd_uop_dest" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select b.cd_cds,b.cd_magazzino,
+b.esercizio,
+b.cd_numeratore_mag,
+b.pg_bolla_sca,
+b.dt_bolla_sca,
+ma.ds_magazzino,
+dest.CD_UNITA_OPERATIVA cd_uo_dest,
+dest.ds_unita_operativa ds_uo_dest,
+bene.cd_bene_servizio,bene.ds_bene_servizio,bene.unita_misura,
+l.esercizio esercizio_lotto,l.cd_numeratore_mag numeratore_lotto,
+l.pg_lotto,m.lotto_fornitore,m.quantita,m.prezzo_unitario,m.coeff_conv,m.cd_divisa
+ from  Bolla_scarico_mag b
+inner join magazzino ma
+on b.cd_magazzino=ma.cd_magazzino
+and b.cd_cds=ma.cd_cds
+inner join  unita_operativa_ord dest
+on b.cd_uop_dest=dest.CD_UNITA_OPERATIVA
+inner join Bolla_scarico_riga_mag r on
+b.cd_cds=r.cd_cds
+and b.cd_magazzino=r.cd_magazzino
+and b.esercizio=r.esercizio
+and b.cd_numeratore_mag=r.cd_numeratore_mag
+and b.pg_bolla_sca=r.pg_bolla_sca
+inner join movimenti_mag m 
+on r.pg_movimento=m.pg_movimento
+inner join lotto_mag l on 
+l.cd_cds=m.cd_cds_lotto
+and l.cd_magazzino=m.cd_magazzino_lotto
+and l.esercizio=m.esercizio_lotto
+and l.cd_numeratore_mag=m.cd_numeratore_lotto
+and l.pg_lotto=m.pg_lotto
+inner join bene_servizio bene on 
+bene.CD_BENE_SERVIZIO=l.CD_BENE_SERVIZIO
+where ( $P{esercizio} is null or b.esercizio=$P{esercizio}) 
+and  ( $P{cd_cds} is null or b.cd_cds=$P{cd_cds} )
+and ( $P{cd_magazzino} is null or b.cd_magazzino=$P{cd_magazzino} )
+and ( $P{cd_numeratore_mag} is null or b.cd_numeratore_mag=$P{cd_numeratore_mag} )
+and (  $P{pg_bolla_sca}  is null or b.pg_bolla_sca=$P{pg_bolla_sca}  )
+and (  $P{pg_bolla_sca_da}  is null or $P{pg_bolla_sca_da} =-1 or  b.pg_bolla_sca>=$P{pg_bolla_sca_da}  )
+and (  $P{pg_bolla_sca_a}  is null or $P{pg_bolla_sca_a} =-1 or b.pg_bolla_sca<=$P{pg_bolla_sca_a}  )
+and (  $P{dt_bolla_sca_da}  is null or b.dt_bolla_sca>=$P{dt_bolla_sca_da}  )
+and (  $P{dt_bolla_sca_a}  is null or b.dt_bolla_sca<=$P{dt_bolla_sca_a}  )
+and (  $P{cd_bene_servizio_da}  is null  
+	or 	$P{cd_bene_servizio_da} ='*'
+	or bene.CD_BENE_SERVIZIO>=$P{cd_bene_servizio_da}
+)
+and (  $P{cd_bene_servizio_a}  is null 
+or 	$P{cd_bene_servizio_a} ='*'
+or	bene.CD_BENE_SERVIZIO<=$P{cd_bene_servizio_a}
+)
+and ( $P{cd_uop_dest}  is null or $P{cd_uop_dest} ='*' or b.cd_uop_dest=$P{cd_uop_dest} )
+order by b.esercizio,b.cd_magazzino,b.cd_numeratore_mag,b.dt_bolla_sca,b.pg_bolla_sca]]>
+	</queryString>
+	<field name="CD_CDS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CD_CDS"/>
+	</field>
+	<field name="CD_MAGAZZINO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CD_MAGAZZINO"/>
+	</field>
+	<field name="ESERCIZIO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ESERCIZIO"/>
+	</field>
+	<field name="CD_NUMERATORE_MAG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CD_NUMERATORE_MAG"/>
+	</field>
+	<field name="PG_BOLLA_SCA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PG_BOLLA_SCA"/>
+	</field>
+	<field name="DT_BOLLA_SCA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="DT_BOLLA_SCA"/>
+	</field>
+	<field name="DS_MAGAZZINO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DS_MAGAZZINO"/>
+	</field>
+	<field name="CD_UO_DEST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CD_UO_DEST"/>
+	</field>
+	<field name="DS_UO_DEST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DS_UO_DEST"/>
+	</field>
+	<field name="CD_BENE_SERVIZIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CD_BENE_SERVIZIO"/>
+	</field>
+	<field name="DS_BENE_SERVIZIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DS_BENE_SERVIZIO"/>
+	</field>
+	<field name="UNITA_MISURA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UNITA_MISURA"/>
+	</field>
+	<field name="ESERCIZIO_LOTTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ESERCIZIO_LOTTO"/>
+	</field>
+	<field name="NUMERATORE_LOTTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERATORE_LOTTO"/>
+	</field>
+	<field name="PG_LOTTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PG_LOTTO"/>
+	</field>
+	<field name="LOTTO_FORNITORE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LOTTO_FORNITORE"/>
+	</field>
+	<field name="QUANTITA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="QUANTITA"/>
+	</field>
+	<field name="PREZZO_UNITARIO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PREZZO_UNITARIO"/>
+	</field>
+	<field name="COEFF_CONV" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="COEFF_CONV"/>
+	</field>
+	<field name="CD_DIVISA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CD_DIVISA"/>
+	</field>
+	<variable name="TOTALE" class="java.math.BigDecimal" resetType="Group" resetGroup="Bolla" calculation="Sum">
+		<variableExpression><![CDATA[$F{QUANTITA}.multiply($F{COEFF_CONV}).multiply( $F{PREZZO_UNITARIO})]]></variableExpression>
+	</variable>
+	<variable name="TOTALE_RIGA" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{QUANTITA}.multiply($F{COEFF_CONV}).multiply( $F{PREZZO_UNITARIO})]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="Bolla" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{ESERCIZIO}+"-"+$F{CD_CDS}+"-"+$F{ESERCIZIO}+"-"+$F{CD_MAGAZZINO}+"-"+$F{CD_NUMERATORE_MAG}+"-"+$F{PG_BOLLA_SCA}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="0" y="6" width="801" height="13" uuid="d0ebeb3e-b951-4367-9e64-2e899d353f79"/>
+					<textElement textAlignment="Center" markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["BOLLA DI SCARICO " +
+" N. " + $F{PG_BOLLA_SCA}+ " del "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_BOLLA_SCA})]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="50">
+				<textField>
+					<reportElement key="staticText-1" style="TNR10" x="1" y="0" width="802" height="13" uuid="0c14b83b-c476-40c2-aa1f-69ae2f6e0dca"/>
+					<textElement markup="none"/>
+					<textFieldExpression><![CDATA["Magazzino: " + $F{CD_MAGAZZINO} + " " + $F{DS_MAGAZZINO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNR10" x="1" y="17" width="802" height="13" uuid="3efb29a9-bd9e-4e08-a880-66a0568d402f"/>
+					<textElement markup="none"/>
+					<textFieldExpression><![CDATA["UO Detinazione: " + $F{CD_UO_DEST} + " " + $F{DS_UO_DEST}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="35">
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="1" y="1" width="82" height="26" uuid="9781249d-8b08-4772-9596-4c3d5b11452e"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ARTICOLO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="110" y="1" width="82" height="26" uuid="51acb115-cc9c-4d81-b856-28ac2e7e3c7b"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIZIONE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="280" y="1" width="29" height="26" uuid="4b171c71-4371-4237-abe1-4917e2708081"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[U.M.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="330" y="1" width="90" height="26" uuid="015ea14b-2fe5-4384-95b4-4a8bd9f38ea7"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Q.TA' SCARICATA]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="29" width="802" height="1" uuid="2be8e675-d488-41cc-86f5-1f09ac898fd1"/>
+				</line>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="510" y="1" width="130" height="26" uuid="d4edc7bc-84c1-49b1-9816-d3dbb3b2f829"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[IDENTIFICATIVO LOTTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="650" y="1" width="151" height="26" uuid="c61ca695-a23f-446f-9822-678c7dde44e7"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[LOTTO FORNITORE/PRODUZ.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="433" y="1" width="67" height="26" uuid="7af106b1-9f6f-4700-ab26-bc44dddb951a"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALORE]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="79">
+				<line>
+					<reportElement x="0" y="2" width="802" height="1" uuid="5c5f8055-7ffc-484a-8d78-b24b083a4d0e"/>
+				</line>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement key="textField-11" style="TNR10" x="640" y="9" width="127" height="13" isRemoveLineWhenBlank="true" uuid="5d2d5b01-0dea-4035-ba8d-c464d58f4bdf"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTALE}==null?BigDecimal.ZERO:new DecimalFormat("#,##0.00").format($V{TOTALE})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="530" y="2" width="90" height="26" uuid="afd15a84-6851-4ea7-b6ec-7e2d4e5d0e82"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valore Totale Bolla]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="11" y="40" width="90" height="26" uuid="ee755162-d8c0-4d71-93c9-1cb658fe08d1"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Firma per Rcevuta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="433" y="40" width="200" height="26" uuid="ab48fdf6-413b-4212-a013-b2b540f6ea32"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Firma del Responsabile di Magazzino]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement key="image-1" x="0" y="0" width="802" height="41" uuid="fc584efd-e1bd-4b99-b160-de23e440a320"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25">
+			<textField isBlankWhenNull="true">
+				<reportElement x="433" y="4" width="70" height="17" uuid="f3373c51-7491-4532-905d-9610d74950a9"/>
+				<textFieldExpression><![CDATA[$V{TOTALE_RIGA}==null?BigDecimal.ZERO:new DecimalFormat("#,##0.00").format($V{TOTALE_RIGA})]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="0" y="4" width="99" height="13" isRemoveLineWhenBlank="true" uuid="bc311e66-9def-4f95-bb5b-5795d90f47d1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CD_BENE_SERVIZIO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="282" y="4" width="40" height="13" isRemoveLineWhenBlank="true" uuid="1be6e79c-82d4-41dc-92d1-dfc8d44f9923"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNITA_MISURA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="110" y="4" width="155" height="13" isRemoveLineWhenBlank="true" uuid="77d0fb5f-b67c-493f-bc66-9e74b98b98e2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DS_BENE_SERVIZIO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="335" y="4" width="90" height="13" isRemoveLineWhenBlank="true" uuid="82ef0373-47b4-4b92-bc48-5a0252a43141"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUANTITA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="513" y="4" width="127" height="13" isRemoveLineWhenBlank="true" uuid="85a990e9-fdc5-44f5-a376-2231389d778f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESERCIZIO_LOTTO}+"/"+$F{NUMERATORE_LOTTO}+"/"+$F{PG_LOTTO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="650" y="4" width="151" height="13" isRemoveLineWhenBlank="true" uuid="c24c6f12-ee0f-432a-bbea-f7e451e38f02"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOTTO_FORNITORE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="0" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="0" width="40" height="20" uuid="581306bb-5afb-4ca2-ab69-25b1e76d90fc"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="197" height="20" uuid="c8b2c202-b6e3-428a-b7ea-e58e4eb3e7f8"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="802" height="1" uuid="198750be-9ef7-4204-9d4a-437c10f0a4b4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

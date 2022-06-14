@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final utlizzo versione della libreria JasperReports6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StampaConsumi" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11c15183-8e09-4419-b27d-a899adb1799d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConsumiDataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="390"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="596"/>
+	<parameter name="daDataMovimento" class="java.util.Date"/>
+	<parameter name="aDataMovimento" class="java.util.Date"/>
+	<parameter name="dataRiferimento" class="java.util.Date"/>
+	<parameter name="descCatGruppoDa" class="java.lang.String"/>
+	<parameter name="descCatGruppoA" class="java.lang.String"/>
+	<parameter name="descDaBene" class="java.lang.String"/>
+	<parameter name="descABene" class="java.lang.String"/>
+	<parameter name="descMagazzino" class="java.lang.String"/>
+	<parameter name="descDaUnitaOper" class="java.lang.String"/>
+	<parameter name="descAUnitaOper" class="java.lang.String"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:/iss/SIGLA_FORK_REPORT_ISS/sigla-reports/img/ISS/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="JSON">
+		<![CDATA[]]>
+	</queryString>
+	<field name="sigla_uo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="sigla_uo"/>
+		<fieldDescription><![CDATA[sigla_uo]]></fieldDescription>
+	</field>
+	<field name="desc_uo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="desc_uo"/>
+		<fieldDescription><![CDATA[desc_uo]]></fieldDescription>
+	</field>
+	<field name="cod_magazzino" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="cod_magazzino"/>
+		<fieldDescription><![CDATA[cod_magazzino]]></fieldDescription>
+	</field>
+	<field name="desc_magazzino" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="desc_magazzino"/>
+		<fieldDescription><![CDATA[desc_magazzino]]></fieldDescription>
+	</field>
+	<field name="cod_articolo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="cod_articolo"/>
+		<fieldDescription><![CDATA[cod_articolo]]></fieldDescription>
+	</field>
+	<field name="desc_articolo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="desc_articolo"/>
+		<fieldDescription><![CDATA[desc_articolo]]></fieldDescription>
+	</field>
+	<field name="cod_cat_gruppo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="cod_cat_gruppo"/>
+		<fieldDescription><![CDATA[cod_cat_gruppo]]></fieldDescription>
+	</field>
+	<field name="cod_categoria" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="cod_categoria"/>
+		<fieldDescription><![CDATA[cod_categoria]]></fieldDescription>
+	</field>
+	<field name="cod_gruppo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="cod_gruppo"/>
+		<fieldDescription><![CDATA[cod_gruppo]]></fieldDescription>
+	</field>
+	<field name="desc_cat_gruppo" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="desc_cat_gruppo"/>
+		<fieldDescription><![CDATA[desc_cat_gruppo]]></fieldDescription>
+	</field>
+	<field name="unita_misura" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="unita_misura"/>
+		<fieldDescription><![CDATA[unita_misura]]></fieldDescription>
+	</field>
+	<field name="importo_unitario" class="java.math.BigDecimal">
+		<property name="net.sf.jasperreports.json.field.expression" value="importo_unitario"/>
+		<fieldDescription><![CDATA[importo_unitario]]></fieldDescription>
+	</field>
+	<field name="giacenza" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="giacenza"/>
+		<fieldDescription><![CDATA[giacenza]]></fieldDescription>
+	</field>
+	<variable name="CostoPerArticolo" class="java.math.BigDecimal" resetType="Group" resetGroup="Gruppo Articolo" calculation="Sum">
+		<variableExpression><![CDATA[$F{importo_unitario}.multiply(new BigDecimal($F{giacenza}))]]></variableExpression>
+	</variable>
+	<variable name="TotalePerArticolo" class="java.math.BigDecimal" resetType="Group" resetGroup="Gruppo Articolo" calculation="Sum">
+		<variableExpression><![CDATA[$F{giacenza}]]></variableExpression>
+	</variable>
+	<variable name="CostoPerCatGruppo" class="java.math.BigDecimal" resetType="Group" resetGroup="Gruppo Categoria/gruppo" calculation="Sum">
+		<variableExpression><![CDATA[$F{importo_unitario}.multiply(new BigDecimal($F{giacenza}))]]></variableExpression>
+	</variable>
+	<variable name="CostoPerMagazzino" class="java.math.BigDecimal" resetType="Group" resetGroup="Gruppo Magazzino" calculation="Sum">
+		<variableExpression><![CDATA[$F{importo_unitario}.multiply(new BigDecimal($F{giacenza}))]]></variableExpression>
+	</variable>
+	<variable name="CostoPerUo" class="java.math.BigDecimal" resetType="Group" resetGroup="GruppoUO" incrementType="Group" incrementGroup="GruppoUO" calculation="Sum">
+		<variableExpression><![CDATA[$V{CostoPerMagazzino}]]></variableExpression>
+	</variable>
+	<group name="GruppoUO" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{sigla_uo}]]></groupExpression>
+		<groupHeader>
+			<band height="118">
+				<staticText>
+					<reportElement x="-1" y="58" width="480" height="30" uuid="6b204ffb-f4d4-4a39-867d-3025071c181b"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Stampa prelievi per Unità Organizzativa]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="479" y="58" width="76" height="30" uuid="d350a4d3-a20c-4539-98df-3a61e8ff1c8e"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<text><![CDATA[I.S.S.
+Istituto Superiore Sanita`]]></text>
+				</staticText>
+				<frame>
+					<reportElement positionType="Float" isPrintRepeatedValues="false" x="-2" y="96" width="557" height="20" printWhenGroupChanges="GruppoUO" uuid="e95498d7-650a-4d76-a9ff-089c8ea11ccb">
+						<property name="ShowOutOfBoundContent" value="false"/>
+					</reportElement>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="201" y="0" width="269" height="20" printWhenGroupChanges="GruppoUO" uuid="57e897ec-b098-43cf-a757-0aaa0c2bafca"/>
+						<textElement verticalAlignment="Top"/>
+						<textFieldExpression><![CDATA[$F{desc_uo}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="111" y="0" width="90" height="20" printWhenGroupChanges="GruppoUO" uuid="0717b987-13c5-438a-b7d2-28feaa6988c2"/>
+						<textElement verticalAlignment="Top">
+							<font size="10"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{sigla_uo}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="0" y="0" width="110" height="20" printWhenGroupChanges="GruppoUO" uuid="6f6e0d2e-5e5d-4c42-b3e0-2673a95c61b4"/>
+						<textElement verticalAlignment="Top"/>
+						<text><![CDATA[Unità Organizzativa]]></text>
+					</staticText>
+					<textField textAdjust="StretchHeight" evaluationTime="Group" evaluationGroup="GruppoUO">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="470" y="0" width="87" height="20" printWhenGroupChanges="GruppoUO" uuid="18c6194d-cf7e-4be8-8d17-04456087f041"/>
+						<box rightPadding="5"/>
+						<textElement textAlignment="Right"/>
+						<textFieldExpression><![CDATA[$V{CostoPerUo}==null?BigDecimal.ZERO:new DecimalFormat("#,##0.00").format($V{CostoPerUo})]]></textFieldExpression>
+					</textField>
+				</frame>
+				<image onErrorType="Blank">
+					<reportElement x="0" y="1" width="378" height="50" uuid="295a0e58-5f48-4969-a723-84fc08fe1475"/>
+					<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<group name="Gruppo Magazzino">
+		<groupExpression><![CDATA[$F{cod_magazzino}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<frame>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="-1" y="0" width="556" height="20" printWhenGroupChanges="Gruppo Magazzino" uuid="13da7a80-18ce-4393-825e-07e825d98f08">
+						<property name="ShowOutOfBoundContent" value="false"/>
+					</reportElement>
+					<textField>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="201" y="0" width="269" height="20" printWhenGroupChanges="Gruppo Magazzino" uuid="98d6ab69-3b49-4fa9-9bea-d31acebed2f1"/>
+						<textElement verticalAlignment="Top"/>
+						<textFieldExpression><![CDATA[$F{desc_magazzino}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="111" y="0" width="90" height="20" printWhenGroupChanges="Gruppo Magazzino" uuid="34123b98-5a65-47eb-ab5d-7653aede338a"/>
+						<textElement verticalAlignment="Top"/>
+						<textFieldExpression><![CDATA[$F{cod_magazzino}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="0" y="0" width="110" height="20" printWhenGroupChanges="Gruppo Magazzino" uuid="ada4ac7f-9b43-4f5c-b9d8-b03f3b4cd13a">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						</reportElement>
+						<textElement verticalAlignment="Top"/>
+						<text><![CDATA[Magazzino]]></text>
+					</staticText>
+					<textField textAdjust="StretchHeight" evaluationTime="Group" evaluationGroup="Gruppo Magazzino">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="470" y="0" width="86" height="20" printWhenGroupChanges="Gruppo Magazzino" uuid="e90b0dca-cd7f-4271-8b60-a98d658e5405"/>
+						<box rightPadding="5"/>
+						<textElement textAlignment="Right"/>
+						<textFieldExpression><![CDATA[$V{CostoPerMagazzino}==null?BigDecimal.ZERO:new DecimalFormat("#,##0.00").format($V{CostoPerMagazzino})]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<group name="Gruppo Categoria/gruppo">
+		<groupExpression><![CDATA[$F{cod_cat_gruppo}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<frame>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="-2" y="0" width="557" height="20" printWhenGroupChanges="Gruppo Categoria/gruppo" uuid="864b9805-1840-4213-a742-bdfa85e7345f">
+						<property name="ShowOutOfBoundContent" value="false"/>
+					</reportElement>
+					<textField evaluationTime="Group" evaluationGroup="Gruppo Categoria/gruppo">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="470" y="2" width="87" height="20" printWhenGroupChanges="Gruppo Categoria/gruppo" uuid="acf2cc72-c3f3-4de8-8b04-6101a9aed1c7"/>
+						<box rightPadding="5"/>
+						<textElement textAlignment="Right"/>
+						<textFieldExpression><![CDATA[$V{CostoPerCatGruppo}==null?BigDecimal.ZERO:new DecimalFormat("#,##0.00").format($V{CostoPerCatGruppo})]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="201" y="2" width="269" height="20" printWhenGroupChanges="Gruppo Categoria/gruppo" uuid="3db8a5a1-0e04-4a91-b653-e16b68c8570c"/>
+						<textElement verticalAlignment="Top"/>
+						<textFieldExpression><![CDATA[$F{desc_cat_gruppo}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="111" y="2" width="90" height="20" printWhenGroupChanges="Gruppo Categoria/gruppo" uuid="9149c768-f07a-4272-a9c9-e7c9e2977284"/>
+						<textElement verticalAlignment="Top"/>
+						<textFieldExpression><![CDATA[$F{cod_categoria}+" / "+$F{cod_gruppo}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" isPrintRepeatedValues="false" x="0" y="2" width="110" height="20" printWhenGroupChanges="Gruppo Categoria/gruppo" uuid="c395f4d7-2c8a-4c79-b286-a1d0e1cc30ee"/>
+						<textElement verticalAlignment="Top"/>
+						<text><![CDATA[Cat/Gruppo]]></text>
+					</staticText>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="10"/>
+		</groupFooter>
+	</group>
+	<group name="Gruppo Articolo">
+		<groupExpression><![CDATA[$F{cod_articolo}]]></groupExpression>
+		<groupHeader>
+			<band height="38">
+				<staticText>
+					<reportElement positionType="Float" x="79" y="5" width="200" height="30" uuid="93462b14-fdb9-4085-a363-3cf94a83167e"/>
+					<box leftPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Descrizione Articolo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="-1" y="5" width="80" height="30" uuid="dbb5128e-3b15-46b6-9904-fd199dd52049"/>
+					<box leftPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Codice articolo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="409" y="5" width="60" height="30" uuid="d527a37b-9737-40e7-84d9-398c84d633e9"/>
+					<box leftPadding="0" rightPadding="0">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Quantità]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="379" y="5" width="30" height="30" uuid="97a33039-4754-4c0e-bf90-72876bb6dfb7"/>
+					<box leftPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[U.M.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="469" y="5" width="86" height="30" uuid="f66f9701-3b71-4c9a-99e0-adbaa9d90b32"/>
+					<box leftPadding="0" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Costo Effettivo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="279" y="5" width="100" height="30" uuid="1b6420cd-cd24-4279-9f5a-2cda6c7f34ab"/>
+					<box leftPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Destinatario]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="30">
+				<frame>
+					<reportElement positionType="Float" x="-2" y="0" width="556" height="30" uuid="83ca4b90-fbba-4cf3-8281-9252c12c542b"/>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" x="-1" y="0" width="81" height="30" uuid="84e266a0-6e40-4eee-93b7-596f073b6bd5"/>
+						<box leftPadding="0"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle"/>
+						<textFieldExpression><![CDATA[$F{cod_articolo}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" x="80" y="0" width="200" height="30" uuid="1dbb834d-476f-40bf-a2e5-c9b35d6f39fc"/>
+						<box leftPadding="5"/>
+						<textElement verticalAlignment="Middle"/>
+						<textFieldExpression><![CDATA[$F{desc_articolo}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="30" uuid="1dd0573e-6c17-4752-b365-466d363f8450"/>
+						<box leftPadding="5"/>
+						<textElement verticalAlignment="Middle"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" x="380" y="0" width="30" height="30" uuid="14255c32-5156-4d8d-af75-57e615f828ce"/>
+						<box leftPadding="0"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle"/>
+						<textFieldExpression><![CDATA[$F{unita_misura}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" x="410" y="0" width="60" height="30" uuid="d0e956a4-4794-4398-8a65-d0b8e61c77ef"/>
+						<box leftPadding="0" bottomPadding="5" rightPadding="0"/>
+						<textElement textAlignment="Right" verticalAlignment="Middle"/>
+						<textFieldExpression><![CDATA[$V{TotalePerArticolo}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" stretchType="ElementGroupHeight" x="470" y="0" width="86" height="30" uuid="3e9690d8-860f-421a-b185-260d85f50592"/>
+						<box leftPadding="5" rightPadding="5"/>
+						<textElement textAlignment="Right" verticalAlignment="Middle"/>
+						<textFieldExpression><![CDATA[$V{CostoPerArticolo}==null?BigDecimal.ZERO:new DecimalFormat("#,##0.00").format($V{CostoPerArticolo})]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="392">
+			<staticText>
+				<reportElement x="0" y="82" width="556" height="30" uuid="6b1b957c-30a2-462c-a5ff-c8101ee81fa1"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parametri di Stampa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="103" width="556" height="30" uuid="839b4642-fbc4-4987-85bb-a6dd8a09bcc1"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valori Selezionati]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="133" width="556" height="30" uuid="5c1d168b-be97-4542-a32c-ae94d02b82dd"/>
+				<box topPadding="5"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[PRELIEVI PER UO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="163" width="100" height="19" uuid="71b23017-ea83-4730-b6d0-05996c65409b"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[Valuta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="163" width="456" height="19" uuid="13a0a993-e5fa-47f0-925a-72f32656b112"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[EUR-EURO]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="192" width="556" height="20" uuid="ce838863-2101-46ff-93b7-43c09ffb4867">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="100" height="20" uuid="b086584e-f082-49cc-8210-2efab61ed570"/>
+					<box leftPadding="2"/>
+					<text><![CDATA[Dalla UO]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement stretchType="ElementGroupHeight" x="100" y="0" width="180" height="20" uuid="7c64be83-2950-4977-bb07-74c77fa73670"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descDaUnitaOper}.equals("*")?"":$P{descDaUnitaOper}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="20" uuid="2706fd81-47a8-4add-bf6d-8b37a5ed3ece"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[Dalla UO]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement x="380" y="0" width="176" height="20" uuid="7272d676-b5dc-456a-9f5e-84c52192832c"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descAUnitaOper}.equals("*")?"":$P{descAUnitaOper}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="0" y="217" width="556" height="20" uuid="3a5bf2df-51e2-4f10-b3f7-75bf99527e18">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="100" height="20" uuid="69e64516-5c72-40e9-aa1c-488699435001">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box leftPadding="2"/>
+					<text><![CDATA[Magazzino]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="100" y="0" width="456" height="20" uuid="6a692f4a-19bb-4ef5-bd28-77994bb291bb"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descMagazzino}.equals("*")?"":$P{descMagazzino}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="245" width="100" height="20" uuid="03307c40-a43e-4c2d-9025-0a5e9fde5e25">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5" leftPadding="2"/>
+				<text><![CDATA[Data Competenza]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="100" y="245" width="456" height="20" uuid="21985dba-87dc-4059-8c63-000c78051f60">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5" leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{dataRiferimento})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="270" width="100" height="20" uuid="3c8d9732-057c-4284-921a-b83821bf4642">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5" leftPadding="2"/>
+				<text><![CDATA[Da Data Movimento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="100" y="270" width="180" height="20" uuid="753a6c54-ef1c-4f99-9fb6-eeaaeca7e304"/>
+				<box topPadding="5" leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{daDataMovimento})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="280" y="270" width="100" height="20" uuid="f7ef563a-5130-4198-9541-28b11939d6e2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5"/>
+				<text><![CDATA[A Data Movimento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="380" y="272" width="176" height="18" uuid="d47be077-0576-4468-976f-e2e5867af830"/>
+				<box topPadding="5" leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{aDataMovimento})]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="0" y="302" width="556" height="20" uuid="2318eb18-86d3-4d07-97cc-996da8583330"/>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="100" height="20" uuid="1dc0f8d7-f4dd-403b-af2a-cbdd19ff4a2f"/>
+					<box leftPadding="2"/>
+					<text><![CDATA[Da Categoria/Gruppo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="100" y="0" width="180" height="20" uuid="b1d9be1d-a4b1-461f-b872-11cbd0ba797a"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descCatGruppoDa}.equals("*")?"":$P{descCatGruppoDa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="20" uuid="fc75e392-b169-4cd2-a0c7-41b02202ff64"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[A Categoria/Gruppo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="380" y="0" width="176" height="20" uuid="04a41d37-1e10-4320-8ad5-d896037befc1"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descCatGruppoA}.equals("*")?"":$P{descCatGruppoA}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="0" y="332" width="556" height="30" uuid="3de8c894-8828-4a20-966b-747085e61498"/>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="100" height="30" uuid="03128720-f611-4df4-9c11-97dcf522e3b3"/>
+					<box leftPadding="2"/>
+					<text><![CDATA[Da Articolo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="100" y="0" width="180" height="30" uuid="592e0ac6-21da-42fd-a4e5-81e93c8279a7"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descDaBene}.equals("*")?"":$P{descDaBene}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="30" uuid="7701ed27-f4a8-46ea-b05e-3d8c582bab0a"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[A Articolo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="380" y="0" width="176" height="30" uuid="8619efdb-1ba6-40e7-ba02-a68c9c22525f"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descABene}.equals("*")?"":$P{descABene}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<break>
+				<reportElement x="0" y="381" width="98" height="1" uuid="3e0216ab-bdd6-4541-97b9-3922838fb241"/>
+			</break>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="2" width="378" height="50" uuid="f2945b37-72f2-49b8-adbf-b1856128073b"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="30">
+			<textField>
+				<reportElement x="429" y="4" width="127" height="22" uuid="551e2956-450d-4f83-84d2-874294d39322"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="437">
+			<staticText>
+				<reportElement x="180" y="386" width="218" height="30" uuid="19b4422e-f150-4939-8a7e-5ff5174044fb"/>
+				<text><![CDATA[Nessun dato da stampare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="346" width="480" height="30" uuid="957706ef-1838-451f-a605-4a8a408f6d6b"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stampa prelievi per Unità Organizzativa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="346" width="76" height="30" uuid="65815d5f-e35b-4607-84c6-1d43030140a9"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<text><![CDATA[I.S.S.
+Istituto Superiore Sanita`]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="71" width="556" height="30" uuid="e3771361-f11f-4bc3-b58e-8ead22f4d458"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valori Selezionati]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="101" width="556" height="30" uuid="436a351a-0c3b-4b75-b4e4-ef880f8d51f1"/>
+				<box topPadding="5"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[PRELIEVI PER UO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="131" width="100" height="19" uuid="847271e8-bfa6-466b-bbe7-3dbece8ecc3f"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[Valuta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="131" width="456" height="19" uuid="258639e0-9817-4a4e-920f-9f8467893354"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[EUR-EURO]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="160" width="556" height="20" uuid="247d2a3b-f3ad-4d7a-8682-b75fc02e78d0">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="100" height="20" uuid="1210f14e-ee8c-47c4-b456-f2affa9e34f9"/>
+					<box leftPadding="2"/>
+					<text><![CDATA[Dalla UO]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement stretchType="ElementGroupHeight" x="100" y="0" width="180" height="20" uuid="c05c70c9-2fae-40cd-829b-bb1e27cdee66"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descDaUnitaOper}.equals("*")?"":$P{descDaUnitaOper}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="20" uuid="5e344144-73cb-4690-8940-244300bda4a1"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[Dalla UO]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement x="380" y="0" width="176" height="20" uuid="8f5e6c95-7606-482a-bcf9-be18ab8bf260"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descAUnitaOper}.equals("*")?"":$P{descAUnitaOper}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="0" y="185" width="556" height="20" uuid="8301c18e-5d01-4470-beec-c7e9d8d1c3b7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="100" height="20" uuid="3149f0d1-91fd-4a66-978c-b78628f511c2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box leftPadding="2"/>
+					<text><![CDATA[Magazzino]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="100" y="0" width="456" height="20" uuid="69d60ce3-ee05-45ba-81f8-3e8cfc84d88c"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descMagazzino}.equals("*")?"":$P{descMagazzino}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="213" width="100" height="20" uuid="156af12f-8832-4773-a2db-473362877f71">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5" leftPadding="2"/>
+				<text><![CDATA[Data Competenza]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="100" y="213" width="456" height="20" uuid="c6baf15f-1555-4656-b090-45cd82196dd7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5" leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{dataRiferimento})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="238" width="100" height="20" uuid="2369f687-c2a1-4bb2-9583-f058b94451ca">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5" leftPadding="2"/>
+				<text><![CDATA[Da Data Movimento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="100" y="238" width="180" height="20" uuid="c6513be0-6db1-4c7a-9f01-6e52ded0dac9"/>
+				<box topPadding="5" leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{daDataMovimento})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="280" y="238" width="100" height="20" uuid="d1cbc697-278d-44f2-b4cf-3d00d12db44c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5"/>
+				<text><![CDATA[A Data Movimento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="380" y="240" width="176" height="18" uuid="8680fb3e-2d2d-463e-ba7c-c8cb31818eee"/>
+				<box topPadding="5" leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{aDataMovimento})]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="0" y="270" width="556" height="20" uuid="7c835517-ad26-4f93-ad54-60061ae2931e"/>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="100" height="20" uuid="abefb43b-45e1-4da2-9053-a86062577525"/>
+					<box leftPadding="2"/>
+					<text><![CDATA[Da Categoria/Gruppo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="100" y="0" width="180" height="20" uuid="c53aa163-4503-475b-a477-a0e4ada54777"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descCatGruppoDa}.equals("*")?"":$P{descCatGruppoDa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="20" uuid="1a78309d-628e-4286-bbaf-34fe2d5ed02d"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[A Categoria/Gruppo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="380" y="0" width="176" height="20" uuid="85a995e5-d6b9-462b-b000-734b38be7d3d"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descCatGruppoA}.equals("*")?"":$P{descCatGruppoA}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="0" y="300" width="556" height="30" uuid="cb8ee892-cc05-4b4a-85d1-a959a0b62575"/>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="100" height="30" uuid="4426a765-62ee-454e-8819-0d13aebc07e8"/>
+					<box leftPadding="2"/>
+					<text><![CDATA[Da Articolo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="100" y="0" width="180" height="30" uuid="5d1cebed-ef2c-4e5e-96f8-d2057f4a8d22"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descDaBene}.equals("*")?"":$P{descDaBene}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="280" y="0" width="100" height="30" uuid="23cb5f86-a1ec-4a5f-9920-f4b82e884ff8"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[A Articolo]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement positionType="Float" stretchType="ElementGroupHeight" x="380" y="0" width="176" height="30" uuid="f52f2842-fdd4-4472-b8d8-de861081c3ac"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$P{descABene}.equals("*")?"":$P{descABene}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="1" width="378" height="50" uuid="80834ceb-a0a2-4329-a32d-5b217bd0c473"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</noData>
+</jasperReport>

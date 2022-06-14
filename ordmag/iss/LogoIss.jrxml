@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final utlizzo versione della libreria JasperReports6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LogoIss" pageWidth="300" pageHeight="100" whenNoDataType="AllSectionsNoDetail" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ae622b7-8b50-4d53-94bf-082187ab5631">
+	<style name="LogoIss" markup="styled" fontSize="10" isBold="false"/>
+	<style name="NORMAL" isDefault="true" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="BOLD" style="NORMAL" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TITLE" style="BOLD" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="100">
+			<staticText>
+				<reportElement style="LogoIss" x="100" y="0" width="200" height="20" uuid="09a4f531-ada2-4d13-8c98-bb719f3e7879">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[  ISTITUTO SUPERIORE DI SANITA']]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="LogoIss" x="100" y="20" width="200" height="15" uuid="3f6a79dc-d2f3-4062-8e39-06dcb0a6a6be">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" markup="none">
+					<font isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[      Viale Regina Elena,299-00161 Roma]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="35" width="200" height="1" uuid="4707a8b7-6241-46d2-8b3d-59f770b9d980">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement style="LogoIss" x="100" y="40" width="200" height="14" uuid="48f32f0e-b822-421b-aa22-5decf0d4ccb4">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEGRAMMI:ISTISAN-00161 ROMA - TELEX 0649901]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="LogoIss" x="101" y="54" width="199" height="16" uuid="436c9a9a-2445-4bfb-a9d4-4dbb826626ec"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[     CODICE FISCALE N. 80211730587]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="LogoIss" x="100" y="70" width="200" height="20" uuid="de0677aa-c2c0-421c-a3f9-06436de54d84"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[            PARTITA IVA N. 0365773100]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="7" width="100" height="90" uuid="e8c8a221-d03b-4711-9dc4-49d792b6840d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{DIR_SUBREPORT}+ "iss.bmp"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+</jasperReport>
