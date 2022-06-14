@@ -27,6 +27,43 @@ public class ImportoOrdine implements Serializable {
 	BigDecimal importoIva;
 	BigDecimal importoIvaDetraibile;
 	BigDecimal importoIvaInd;
+	BigDecimal imponibilePerNotaCredito;
+	BigDecimal importoIvaPerNotaCredito;
+	BigDecimal importoIvaDetraibilePerNotaCredito;
+	BigDecimal importoIvaIndPerNotaCredito;
+
+	public BigDecimal getImponibilePerNotaCredito() {
+		return imponibilePerNotaCredito;
+	}
+
+	public void setImponibilePerNotaCredito(BigDecimal imponibilePerNotaCredito) {
+		this.imponibilePerNotaCredito = imponibilePerNotaCredito;
+	}
+
+	public BigDecimal getImportoIvaPerNotaCredito() {
+		return importoIvaPerNotaCredito;
+	}
+
+	public void setImportoIvaPerNotaCredito(BigDecimal importoIvaPerNotaCredito) {
+		this.importoIvaPerNotaCredito = importoIvaPerNotaCredito;
+	}
+
+	public BigDecimal getImportoIvaDetraibilePerNotaCredito() {
+		return importoIvaDetraibilePerNotaCredito;
+	}
+
+	public void setImportoIvaDetraibilePerNotaCredito(BigDecimal importoIvaDetraibilePerNotaCredito) {
+		this.importoIvaDetraibilePerNotaCredito = importoIvaDetraibilePerNotaCredito;
+	}
+
+	public BigDecimal getImportoIvaIndPerNotaCredito() {
+		return importoIvaIndPerNotaCredito;
+	}
+
+	public void setImportoIvaIndPerNotaCredito(BigDecimal importoIvaIndPerNotaCredito) {
+		this.importoIvaIndPerNotaCredito = importoIvaIndPerNotaCredito;
+	}
+
 	BigDecimal arrAliIva;
 	public BigDecimal getImponibile() {
 		return imponibile;
@@ -48,6 +85,9 @@ public class ImportoOrdine implements Serializable {
 	}
 	public BigDecimal getTotale() {
 		return Utility.nvl(getImponibile()).add(Utility.nvl(getImportoIva())).add(Utility.nvl(getArrAliIva()));
+	}
+	public BigDecimal getTotalePerNotaCredito() {
+		return Utility.nvl(getImponibilePerNotaCredito()).add(Utility.nvl(getImportoIvaPerNotaCredito())).add(Utility.nvl(getArrAliIva()));
 	}
 	public BigDecimal getArrAliIva() {
 		return arrAliIva;

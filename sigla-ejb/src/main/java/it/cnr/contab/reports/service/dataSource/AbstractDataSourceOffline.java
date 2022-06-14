@@ -15,7 +15,6 @@ public abstract class AbstractDataSourceOffline implements PrintDataSourceOfflin
     public Print_spoolerBulk getPrintSpooler(UserContext userContext, Print_spoolerBulk printSpooler, BulkHome bulkHome) throws ComponentException {
         if (Optional.of(printSpooler).isPresent()){
             String ds =getDataSourceOffline(userContext,printSpooler,bulkHome);
-            //String jsonDs ="ciao";
             Print_spooler_paramBulk pDs = new Print_spooler_paramBulk(REPORT_DATA_SOURCE,printSpooler.getPgStampa());
             pDs.setParamType( String.class.getCanonicalName());
             int posDs=printSpooler.getParams().indexOfByPrimaryKey(pDs);

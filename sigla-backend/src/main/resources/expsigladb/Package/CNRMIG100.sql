@@ -187,5 +187,4 @@ procedure endLogRibaltamentoAltro(aEs number, aPgEsec number, aStato in out char
 -- Insert in RIBALTAMENTO_LOG
 procedure ins_RIBALTAMENTO_LOG (aDest RIBALTAMENTO_LOG%rowtype);
 --
-procedure JOB_RIBALTAMENTO_PDGP(job number, pg_exec number, next_date date, aEs number);
 end;

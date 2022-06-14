@@ -1195,7 +1195,13 @@ public void cancellaObbligazioneProvvisoria (UserContext aUC,ObbligazioneBulk ob
 
 		//imposto a TO_BE_DELETED l'obbligazione e tutte le sue scadenze e tutte le sue scad_voce
 		obbligazione.setToBeDeleted();
-//		aggiornaCapitoloSaldoObbligazione( aUC, obbligazione );
+
+
+		obbligazione.getObbligazioniPluriennali().stream().forEach(e->{
+			e.setToBeDeleted();
+		});
+
+		//		aggiornaCapitoloSaldoObbligazione( aUC, obbligazione );
 		makeBulkPersistent( aUC, obbligazione );
 		aggiornaCapitoloSaldoObbligazione( aUC, obbligazione, CANCELLAZIONE );		
 	}
@@ -1775,6 +1781,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	validaCampi(uc, obbligazione);
 	validaObbligazionePluriennale(uc, obbligazione);
 
+
 	try {
 		if (Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(uc) && obbligazione.getGaeDestinazioneFinale()!=null &&
 				obbligazione.getGaeDestinazioneFinale().getCd_linea_attivita()!=null) {
@@ -1812,7 +1819,6 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	validaImputazioneFinanziaria( uc, obbligazione );
 
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
-
 
 	//esegue il check di disponibilita di cassa
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
@@ -6032,13 +6038,13 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				throw new ApplicationException("Impostare Anno Impegno Pluriennale");
 			}
 			if( !isAnnoPluriennaleSuccessivo(bulk.getEsercizio(),obbPlur.getAnno())){
-				throw new ApplicationException("L'anno deve essere successivo all'anno corrente");
+				throw new ApplicationException("L'anno dell'Obbligazione Pluriennale deve essere successivo all'anno corrente");
 			}
 			if(isAnnoDuplicato(bulk)){
-				throw new ApplicationException("Risulta presente più volte lo stesso anno");
+				throw new ApplicationException("Risulta presente più volte lo stesso anno per l'Obbligazione Pluriennale");
 			}
-			if(obbPlur.getImporto() == null || obbPlur.getImporto().compareTo(new BigDecimal(0)) == 0){
-				throw new ApplicationException("Impostare Importo");
+			if(obbPlur.getImporto() == null){
+				throw new ApplicationException("Impostare Importo dell'Obbligazione Pluriennale");
 			}
 		}
 	}
@@ -6060,6 +6066,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		return Boolean.TRUE;
 
 	}
+
 
 	public SQLBuilder selectGaeDestinazioneFinaleByClause(UserContext userContext, ObbligazioneBulk obbligazione, WorkpackageBulk lineaAttivita, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 		WorkpackageHome home = (WorkpackageHome)getHome(userContext, lineaAttivita,"V_LINEA_ATTIVITA_VALIDA");

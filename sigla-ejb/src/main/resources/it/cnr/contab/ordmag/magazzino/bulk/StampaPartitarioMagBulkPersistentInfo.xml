@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
   ~
@@ -17,18 +16,7 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.pagopa.bulk.PagamentoPagopaKey" >
-	<defaultColumnMap
-		tableName="PAGAMENTO_PAGOPA" >
-		<columnMapping
-			columnName="ID"
-			propertyName="id"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			nullable="false"
-			primary="true" />
-	</defaultColumnMap>
-	<persistentProperty
-		name="id"
-		partOfOid="true" />
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagBulk"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagHome" >
+
 </SQLPersistentInfo>

@@ -497,6 +497,7 @@ public class ContrattoHome extends BulkHome {
         sql.addSQLClause("AND", "ESERCIZIO_CONTRATTO", sql.EQUALS, contratto.getEsercizio());
         sql.addSQLClause("AND", "STATO_CONTRATTO", SQLBuilder.EQUALS, contratto.getStato());
         sql.addSQLClause("AND", "PG_CONTRATTO", sql.EQUALS, contratto.getPg_contratto());
+        sql.addSQLClause("AND", "STATO", sql.EQUALS, Dettaglio_contrattoBulk.STATO_VALIDO);
 
         sql.setOrderBy("ID", it.cnr.jada.util.OrderConstants.ORDER_ASC);
         return dettHome.fetchAll(sql);

@@ -194,16 +194,16 @@ public class BatchControlComponent extends CRUDComponent
 		    try {
 			 aPS=new LoggableStatement(connInformix,
 			  "select * from progetto",true,this.getClass());
-		     java.sql.ResultSet aRS= aPS.executeQuery();
+		     ResultSet aRS= aPS.executeQuery();
 		     while(aRS.next()) {
 			  System.out.println(aRS.getString("descr_prog"));    
 			 }
-		     try{aRS.close();}catch( java.sql.SQLException e ){};
-			} catch (java.sql.SQLException e) {
+		     try{aRS.close();}catch( SQLException e ){};
+			} catch (SQLException e) {
 				throw handleException(e);
 			} finally {
 			 if(aPS != null) 
-		         try{aPS.close();}catch( java.sql.SQLException e ){};
+		         try{aPS.close();}catch( SQLException e ){};
 		    }	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -349,9 +349,9 @@ public class BatchControlComponent extends CRUDComponent
                             sqlbuilder.addOrderBy("PG_VALORE_PARAMETRO DESC");
                             batch_procedura_parametrobulk.setValoriRiutilizzabili(new ArrayList());
                             Batch_procedura_parametroBulk batch_procedura_parametrobulk1;
-                            for(it.cnr.jada.persistency.sql.SQLBroker sqlbroker = getHome(usercontext, batch_procedura_parametrobulk).createBroker(sqlbuilder); sqlbroker.next(); batch_procedura_parametrobulk.getValoriRiutilizzabili().add(batch_procedura_parametrobulk1))
+                            for(SQLBroker sqlbroker = getHome(usercontext, batch_procedura_parametrobulk).createBroker(sqlbuilder); sqlbroker.next(); batch_procedura_parametrobulk.getValoriRiutilizzabili().add(batch_procedura_parametrobulk1))
                             {
-                                batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk)sqlbroker.fetch(it.cnr.contab.logs.bulk.Batch_procedura_parametroBulk.class);
+                                batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk)sqlbroker.fetch(Batch_procedura_parametroBulk.class);
                                 batch_procedura_parametrobulk1.setTipoParametro(batch_procedura_parametrobulk.getTipoParametro());
                             }
 
@@ -360,12 +360,12 @@ public class BatchControlComponent extends CRUDComponent
                 }
                 finally
                 {
-					try{resultset.close();}catch( java.sql.SQLException e ){};
+					try{resultset.close();}catch( SQLException e ){};
                 }
             }
             finally
             {
-				try{statement.close();}catch( java.sql.SQLException e ){};
+				try{statement.close();}catch( SQLException e ){};
             }
             return batch_controlbulk;
         }
@@ -378,7 +378,7 @@ public class BatchControlComponent extends CRUDComponent
     public RemoteIterator listaBatch_control_jobs(UserContext usercontext)
         throws ComponentException
     {
-        return iterator(usercontext, getHome(usercontext, it.cnr.contab.logs.bulk.V_batch_control_jobsBulk.class).createSQLBuilder(), it.cnr.contab.logs.bulk.V_batch_control_jobsBulk.class, null);
+        return iterator(usercontext, getHome(usercontext, V_batch_control_jobsBulk.class).createSQLBuilder(), V_batch_control_jobsBulk.class, null);
     }
 
     public void salvaValoriParametri(UserContext usercontext, Batch_controlBulk batch_controlbulk)

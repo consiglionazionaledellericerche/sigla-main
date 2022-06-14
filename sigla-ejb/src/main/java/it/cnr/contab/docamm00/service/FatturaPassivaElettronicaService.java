@@ -93,6 +93,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
     @Value("${pec.sdi.replyTo:}")
     private String replyTo;
 
+
+
     private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
             pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
             pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm,
@@ -100,6 +102,16 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
             pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn,
             pecSDISubjectMancataConsegnaPecTerm;
     private List<String> pecScanFolderName, pecScanReceiptFolderName, pecHostAddress;
+
+    public Boolean getEmailSDIInAttachement() {
+        return emailSDIInAttachement;
+    }
+
+    public void setEmailSDIInAttachement(Boolean emailSDIInAttachement) {
+        this.emailSDIInAttachement = emailSDIInAttachement;
+    }
+
+    private Boolean emailSDIInAttachement;
 
 
     public void afterPropertiesSet() throws Exception {
@@ -330,7 +342,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     private void riceviFattura(Message message, String userName) throws ComponentException {
         try {
-            List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+            List<BodyPart> bodyParts = estraiBodyPart(message.getContent(),emailSDIInAttachement);
             if (bodyParts.isEmpty()) {
                 logger.warn("Il messaggio con id:" + message.getMessageNumber() + " recuperato dalla casella PEC:" + userName +
                         " non ha file allegati.");
@@ -377,7 +389,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
                             bodyPartMetadati.getFileName(),
                             new DataHandler(byteArrayDataSourceMetadati));
                 } else {
-
+                    logger.info("Il messaggio con id:" + message.getMessageNumber() + " e oggetto:"+ message.getSubject()+" recuperato dalla casella PEC:" + userName + " è stato prcessato ma la fattura è già presente.");
                 }
             } else {
                 logger.warn("Il messaggio con id:" + message.getMessageNumber() + " recuperato dalla casella PEC:" + userName + " è stato precessato ma gli allegati presenti non sono conformi.");
@@ -409,7 +421,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
                 if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)) {
                     logger.info(messageIDWithUser);
                     try {
-                        List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+                        List<BodyPart> bodyParts = estraiBodyPart(message.getContent(),emailSDIInAttachement);
                         if (bodyParts.isEmpty()) {
                             logger.warn("Il messaggio con id:" + message.getMessageNumber() + " recuperato dalla casella PEC:" + userName +
                                     " non ha file allegati.");
@@ -993,7 +1005,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     private BodyPart estraiBodyPartXmlNotificaFatturaAttiva(Message message) throws ComponentException {
         try {
-            List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+            List<BodyPart> bodyParts = estraiBodyPart(message.getContent(),emailSDIInAttachement);
             for (BodyPart bodyPart : bodyParts) {
                 String fileName = extractFileName(bodyPart);
 
@@ -1009,7 +1021,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
 
     private BodyPart estraiBodyPartZipNotificaFatturaAttiva(Message message) throws ComponentException {
         try {
-            List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+            List<BodyPart> bodyParts = estraiBodyPart(message.getContent(),emailSDIInAttachement);
             for (BodyPart bodyPart : bodyParts) {
                 String fileName = extractFileName(bodyPart);
 
@@ -1077,7 +1089,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
         email.setMsg("Invio Fattura Elettronica. " + idFattura);
         email.attach(fatturaAttivaSigned, idFattura, "");
         // send the email
-        email.send();
+//        email.send();
     }
 
     public void inviaPECFornitore(UserContext userContext, DataSource attach, String filename, String emailPEC, String subject, String msg) throws ComponentException, EmailException {
@@ -1100,27 +1112,27 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
         email.send();
     }
 
-    private List<BodyPart> estraiBodyPart(Object content, Boolean perAllegati) throws MessagingException, IOException {
+    private List<BodyPart> estraiBodyPart(Object content, Boolean perAllegati,Boolean isEmailInAttachement) throws MessagingException, IOException {
         List<BodyPart> results = new ArrayList<BodyPart>();
-        estraiParte(content, results, perAllegati);
+        estraiParte(content, results, perAllegati,isEmailInAttachement);
         return results;
     }
 
-    private List<BodyPart> estraiBodyPart(Object content) throws MessagingException, IOException {
-        return estraiBodyPart(content, true);
+    private List<BodyPart> estraiBodyPart(Object content,Boolean isEmailInAttachement) throws MessagingException, IOException {
+        return estraiBodyPart(content, true,isEmailInAttachement);
     }
 
-    private void estraiParte(Object obj, List<BodyPart> bodyParts, Boolean perAllegati) throws MessagingException, IOException {
+    private void estraiParte(Object obj, List<BodyPart> bodyParts, Boolean perAllegati,boolean isEmailInAttachement) throws MessagingException, IOException {
         if (obj instanceof MimeMultipart) {
             MimeMultipart multipart = (MimeMultipart) obj;
             for (int j = 0; j < multipart.getCount(); j++) {
                 BodyPart bodyPart = multipart.getBodyPart(j);
-                estraiParte(bodyPart.getContent(), bodyParts, perAllegati);
+                estraiParte(bodyPart.getContent(), bodyParts, perAllegati,isEmailInAttachement);
             }
         } else if (obj instanceof MimeBodyPart) {
             MimeBodyPart multipart = (MimeBodyPart) obj;
-            estraiParte(multipart.getContent(), bodyParts, perAllegati);
-        } else if (obj instanceof MimeMessage) {
+            estraiParte(multipart.getContent(), bodyParts, perAllegati,isEmailInAttachement);
+        } else if (obj instanceof MimeMessage && !isEmailInAttachement) {
             MimeMessage mimemessage = (MimeMessage) obj;
             if (!perAllegati && mimemessage.getSubject() != null && mimemessage.getSubject().contains(pecSDISubjectNotificaEsitoTerm)) {
                 int partenza = mimemessage.getSubject().indexOf(pecSDISubjectNotificaEsitoTerm);
@@ -1133,6 +1145,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
             } else {
                 forwardedEmail(mimemessage.getContent(), bodyParts, perAllegati);
             }
+        }else if ( obj instanceof MimeMessage && isEmailInAttachement){
+            estraiParte(((MimeMessage) obj).getContent(), bodyParts, perAllegati,false);
+
         }
     }
 
@@ -1153,7 +1168,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean {
                 } else {
                     if (bodyPart instanceof MimeBodyPart) {
                         MimeBodyPart body = (MimeBodyPart) bodyPart;
-                        estraiParte(body.getContent(), bodyParts, perAllegati);
+                        estraiParte(body.getContent(), bodyParts, perAllegati,false);
                     }
                 }
             }

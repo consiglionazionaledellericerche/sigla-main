@@ -193,6 +193,13 @@ public class OrdineAcqComponent
 					}
 					parametriCons.setQtaOrd(cons.getQuantita());
 					parametriCons.setArrAliIva(cons.getArrAliIva());
+					if (cons.getFatturaOrdineBulk() != null){
+						impostoVoceIvaRett(userContext, cons.getFatturaOrdineBulk(), parametriCons);
+						parametriCons.setPrezzoRet(cons.getFatturaOrdineBulk().getPrezzoUnitarioRett());
+						parametriCons.setSconto1Ret(cons.getFatturaOrdineBulk().getSconto1Rett());
+						parametriCons.setSconto2Ret(cons.getFatturaOrdineBulk().getSconto2Rett());
+						parametriCons.setSconto3Ret(cons.getFatturaOrdineBulk().getSconto3Rett());
+					}
 					ImportoOrdine importo = calcoloImportoOrdine(parametriCons);
 					cons.setImImponibile(importo.getImponibile());
 					cons.setImImponibileDivisa(importo.getImponibile());
@@ -220,6 +227,7 @@ public class OrdineAcqComponent
 					cons.setImTotaleConsegna(BigDecimal.ZERO);
 					cons.setToBeUpdated();
 				}
+				ordine.sostituisciConsegnaFromObbligazioniHash(cons);
 			}
 		}
 		impostaTotaliOrdine(ordine);
@@ -259,6 +267,7 @@ public class OrdineAcqComponent
 		parametri.setSconto2Ret(fatturaOrdine.getSconto2Rett());
 		parametri.setSconto3(riga.getSconto3());
 		parametri.setSconto3Ret(fatturaOrdine.getSconto3Rett());
+		parametri.setImponibileErratoPerNotaCredito(fatturaOrdine.getImponibileErrato());
 		Voce_ivaHome voce_ivaHome = (Voce_ivaHome)  getHome(userContext, Voce_ivaBulk.class);
 		Voce_ivaBulk voce_iva = null;
 		try {
@@ -268,15 +277,7 @@ public class OrdineAcqComponent
 		}
 		parametri.setVoceIva(voce_iva);
 
-		if (fatturaOrdine.getCdVoceIvaRett() != null){
-			Voce_ivaBulk voce_ivaBulk = new Voce_ivaBulk(fatturaOrdine.getCdVoceIvaRett());
-			try {
-				voce_ivaBulk = (Voce_ivaBulk) voce_ivaHome.findByPrimaryKey(voce_ivaBulk);
-			} catch (PersistencyException e) {
-				throw new ComponentException(e);
-			}
-			parametri.setVoceIvaRet(voce_ivaBulk);
-		}
+		impostoVoceIvaRett(userContext, fatturaOrdine, parametri);
 
 		OrdineAcqConsegnaBulk cons = new OrdineAcqConsegnaBulk(fatturaOrdine.getCdCdsOrdine(), fatturaOrdine.getCdUnitaOperativa(), fatturaOrdine.getEsercizioOrdine(), fatturaOrdine.getCdNumeratore(), fatturaOrdine.getNumero(), fatturaOrdine.getRiga(), fatturaOrdine.getConsegna());
 		OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)  getHome(userContext, OrdineAcqConsegnaBulk.class);
@@ -294,9 +295,29 @@ public class OrdineAcqComponent
 		fatturaOrdine.setImIva(importo.getImportoIva());
 		fatturaOrdine.setImIvaDivisa(importo.getImportoIva());
 		fatturaOrdine.setImIvaD(importo.getImportoIvaDetraibile());
-		fatturaOrdine.setImIvaNd(importo.getImportoIvaInd());
 		fatturaOrdine.setImTotaleConsegna(importo.getTotale());
+		fatturaOrdine.setImIvaNd(importo.getImportoIvaInd());
+
+		fatturaOrdine.setImponibilePerNotaCredito(Utility.nvl(importo.getImponibilePerNotaCredito(), fatturaOrdine.getImImponibile()));
+		fatturaOrdine.setImportoIvaPerNotaCredito(Utility.nvl(importo.getImportoIvaPerNotaCredito(), fatturaOrdine.getImIva()));
+		fatturaOrdine.setImportoIvaIndPerNotaCredito(Utility.nvl(importo.getImportoIvaIndPerNotaCredito(), fatturaOrdine.getImIvaNd()));
+		fatturaOrdine.setImportoIvaDetraibilePerNotaCredito(Utility.nvl(importo.getImportoIvaDetraibilePerNotaCredito(), fatturaOrdine.getImIvaD()));
+		fatturaOrdine.setTotaleConsegnaPerNotaCredito(Utility.nvl(importo.getTotalePerNotaCredito(), fatturaOrdine.getImTotaleConsegna()));
+
 		return fatturaOrdine;
+	}
+
+	private void impostoVoceIvaRett(UserContext userContext, FatturaOrdineBulk fatturaOrdine, ParametriCalcoloImportoOrdine parametri) throws ComponentException {
+		Voce_ivaHome voce_ivaHome = (Voce_ivaHome)  getHome(userContext, Voce_ivaBulk.class);
+		if (fatturaOrdine.getCdVoceIvaRett() != null){
+			Voce_ivaBulk voce_ivaBulk = new Voce_ivaBulk(fatturaOrdine.getCdVoceIvaRett());
+			try {
+				voce_ivaBulk = (Voce_ivaBulk) voce_ivaHome.findByPrimaryKey(voce_ivaBulk);
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+			parametri.setVoceIvaRet(voce_ivaBulk);
+		}
 	}
 
 	public void impostaTotaliOrdine(OrdineAcqBulk ordine) {
@@ -905,6 +926,7 @@ public class OrdineAcqComponent
 			} else if (contrattoBulk.isDettaglioContrattoPerCategoriaGruppo()){
 				sql.addSQLJoin("BENE_SERVIZIO.CD_CATEGORIA_GRUPPO", SQLBuilder.EQUALS,"DETTAGLIO_CONTRATTO.CD_CATEGORIA_GRUPPO");
 			}
+			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.STATO", SQLBuilder.NOT_EQUALS, Dettaglio_contrattoBulk.STATO_ANNULLATO);
 			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.PG_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getPg_contratto());
 			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.ESERCIZIO_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getEsercizio());
 			sql.addSQLClause("AND", "DETTAGLIO_CONTRATTO.STATO_CONTRATTO", SQLBuilder.EQUALS, riga.getOrdineAcq().getContratto().getStato());
@@ -915,7 +937,7 @@ public class OrdineAcqComponent
 
 	public SQLBuilder selectObbligazioneScadenzarioByClause(UserContext userContext, OrdineAcqConsegnaBulk consegna,
 															Obbligazione_scadenzarioBulk obblScad,
-															CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+															CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException, IntrospectionException, RemoteException {
 
 		Obbligazione_scadenzarioHome obblScadHome = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
 		Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
@@ -923,7 +945,7 @@ public class OrdineAcqComponent
 		filtro.setIm_importo(consegna.getImTotaleConsegna());
 
 		java.util.List listaCapitoli;
-		try {
+
 			listaCapitoli = recuperoListaCapitoliSelezionabili(userContext, consegna);
 			filtro.setListaVociSelezionabili(listaCapitoli);
 			filtro.setContratto(consegna.getOrdineAcqRiga().getOrdineAcq().getContratto());
@@ -937,9 +959,7 @@ public class OrdineAcqComponent
 
 			SQLBuilder sql = ricercaObbligazioni(userContext, filtro, obblScadHome);
 			return sql;
-		} catch (ComponentException | IntrospectionException | RemoteException e) {
-			throw new PersistencyException(e);
-		}
+
 	}
 
 	private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContext, OrdineAcqConsegnaBulk consegna)
@@ -972,7 +992,7 @@ public class OrdineAcqComponent
 												 MagazzinoBulk mag,
 												 CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
-		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, riga.getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
+		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, riga.getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause, riga.getDspTipoConsegna());
 
 		return sql;
 	}
@@ -981,7 +1001,7 @@ public class OrdineAcqComponent
 											  MagazzinoBulk mag,
 											  CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
-		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, cons.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
+		SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, cons.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause, cons.getTipoConsegna());
 
 		return sql;
 	}
@@ -1257,8 +1277,12 @@ public class OrdineAcqComponent
 					if (!abilHome.isUtenteAbilitato(usercontext, TipoOperazioneOrdBulk.OPERAZIONE_APPROVAZIONE_ORDINE, ordine.getCdUnitaOperativa())){
 						throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato ad operare su ordini in approvazione");
 					}
-					if (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito())){
+
+					if ((!ordine.isOrdineMepa() ) && (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito()))){
 						throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o alla firma");
+					}
+					if (ordine.isOrdineMepa()  && (!(ordine.isStatoDefinitivo() || ordine.isStatoInserito()))){
+						throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o Definitivo");
 					}
 					if (ordine.isStatoAllaFirma()){
 						for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
@@ -1395,6 +1419,15 @@ public class OrdineAcqComponent
 		} else {
 			voceIva = parametri.getVoceIva();
 		}
+		ImportoOrdine importoOrdine = new ImportoOrdine();
+		importoOrdine = calcoloDettagliImporti(importoOrdine, parametri, imponibile, voceIva, false);
+		if (parametri.getImponibileErratoPerNotaCredito() != null){
+			importoOrdine = calcoloDettagliImporti(importoOrdine, parametri, parametri.getImponibileErratoPerNotaCredito(), voceIva, true);
+		}
+		return importoOrdine;
+	}
+
+	private ImportoOrdine calcoloDettagliImporti(ImportoOrdine importoOrdine, ParametriCalcoloImportoOrdine parametri, BigDecimal imponibile, Voce_ivaBulk voceIva, Boolean calcoloTotaliPerNotaCredito) {
 		BigDecimal importoIva = Utility.round6Decimali((Utility.divide(imponibile, Utility.CENTO, 6)).multiply(voceIva.getPercentuale()));
 		BigDecimal ivaNonDetraibile = Utility.round6Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
 		BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
@@ -1407,12 +1440,18 @@ public class OrdineAcqComponent
 			ivaDetraibile = ivaDetraibile.add(Utility.nvl(parametri.getArrAliIva()));
 		}
 		importoIva = importoIva.add(ivaDetraibile);
-		ImportoOrdine importoOrdine = new ImportoOrdine();
-		importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
-		importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
-		importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
-		importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
-		importoOrdine.setArrAliIva(BigDecimal.ZERO);
+		if (calcoloTotaliPerNotaCredito){
+			importoOrdine.setImponibilePerNotaCredito(Utility.round2Decimali(imponibile));
+			importoOrdine.setImportoIvaPerNotaCredito(Utility.round2Decimali(importoIva));
+			importoOrdine.setImportoIvaIndPerNotaCredito(Utility.round2Decimali(ivaNonDetraibile));
+			importoOrdine.setImportoIvaDetraibilePerNotaCredito(Utility.round2Decimali(ivaDetraibile));
+		} else {
+			importoOrdine.setImponibile(Utility.round2Decimali(imponibile));
+			importoOrdine.setImportoIva(Utility.round2Decimali(importoIva));
+			importoOrdine.setImportoIvaInd(Utility.round2Decimali(ivaNonDetraibile));
+			importoOrdine.setImportoIvaDetraibile(Utility.round2Decimali(ivaDetraibile));
+			importoOrdine.setArrAliIva(BigDecimal.ZERO);
+		}
 		return importoOrdine;
 	}
 
@@ -2575,8 +2614,8 @@ public class OrdineAcqComponent
 			(
 					UserContext aUC,
 					OrdineAcqConsegnaBulk consegna)
-			throws ComponentException {
-		try {
+			throws ComponentException, PersistencyException {
+
 			if (!isUoImpegnoDaUopDestinazione(aUC)){
 				return recuperoUoOrdinante(aUC, consegna);
 			} else {
@@ -2607,9 +2646,7 @@ public class OrdineAcqComponent
 					}
 				}
 			}
-		} catch (Exception e) {
-			throw handleException(e);
-		}
+
 		return null;
 	}
 

@@ -202,7 +202,7 @@ public Forward doBringBackSearchFind_elemento_voce(ActionContext context, Obblig
 {
 	try 
 	{
-		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
+		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);	
 		if ( capitolo != null ){
 			if(obbligazione!=null && !obbligazione.isFromDocAmm() && obbligazione.getCd_elemento_voce()!=null &&
 					obbligazione.getCd_iniziale_elemento_voce()!=null &&
@@ -328,7 +328,7 @@ public Forward doConfermaLineeAttivita(ActionContext context)
 	try {
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
 		fillModel( context );
-		ObbligazioneBulk obbligazione = (ObbligazioneBulk)bp.getModel();
+		ObbligazioneBulk obbligazione = (ObbligazioneBulk)bp.getModel();		
 		if (bp.isDirty() && obbligazione.hasDettagli() )
 			return openConfirm(context,"Attenzione i dettagli delle scadenze saranno persi. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmConfermaLineeAttivita");		
 		return doConfirmConfermaLineeAttivita(context,OptionBP.YES_BUTTON);			

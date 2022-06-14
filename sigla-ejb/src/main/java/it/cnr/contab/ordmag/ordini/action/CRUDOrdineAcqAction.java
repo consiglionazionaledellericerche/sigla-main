@@ -135,6 +135,12 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             ordine.setProcedureAmministrative(null);
             ordine.setTerzoCdr(null);
             ordine.setReferenteEsterno(null);
+            ordine.setFl_mepa(false);
+            // cancella anche il fornitore
+            ordine.setFornitore(new TerzoBulk());
+            ordine.setRagioneSociale(null);
+            ordine.setCodiceFiscale(null);
+            ordine.setPartitaIva(null);
             return context.findDefaultForward();
 
         } catch (Exception e) {
@@ -164,6 +170,7 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             ordine.setFirmatarioPers(contratto.getFirmatario());
             ordine.setProcedureAmministrative(contratto.getProcedura_amministrativa());
             ordine.setTerzoCdr(contratto.getFigura_giuridica_interna());
+            ordine.setFl_mepa(contratto.getFl_mepa());
             ordine.setReferenteEsterno(contratto.getResp_esterno());
             if (ordine.getFornitore() == null || (ordine.getFornitore() != null && ordine.getFornitore().getCd_terzo() == null))
                 ordine.setFornitore(contratto.getFigura_giuridica_esterna());
@@ -204,11 +211,13 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             riga.setDsBeneServizio(bene.getDs_bene_servizio());
             riga.setCdBeneServizio(bene.getCd_bene_servizio());
             ContrattoBulk contrattoBulk = riga.getOrdineAcq().getContratto();
-            if (contrattoBulk != null && contrattoBulk.isDettaglioContrattoPerArticoli()) {
+            if (contrattoBulk != null) {
                 try {
-                    Dettaglio_contrattoBulk dettaglio_contrattoBulk = bp.recuperoDettaglioContratto(context, riga);
-                    riga.setDettaglioContratto(dettaglio_contrattoBulk);
-                    if (riga.getDettaglioContratto() != null){
+                    if (contrattoBulk.isDettaglioContrattoPerArticoli() || contrattoBulk.isDettaglioContrattoPerCategoriaGruppo() ){
+                        Dettaglio_contrattoBulk dettaglio_contrattoBulk = bp.recuperoDettaglioContratto(context, riga);
+                        riga.setDettaglioContratto(dettaglio_contrattoBulk);
+                    }
+                    if (contrattoBulk.isDettaglioContrattoPerArticoli()){
                         riga.setUnitaMisura(riga.getDettaglioContratto().getUnitaMisura());
                         riga.setCoefConv(riga.getDettaglioContratto().getCoefConv());
                         riga.setPrezzoUnitario(riga.getDettaglioContratto().getPrezzoUnitario());

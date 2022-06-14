@@ -16,10 +16,15 @@
  */
 
 package it.cnr.contab.anagraf00.ejb;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 import it.cnr.contab.anagraf00.comp.TerzoComponent;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.RemoteIterator;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -203,6 +208,29 @@ public it.cnr.contab.anagraf00.core.bulk.TerzoBulk completaTerzo(it.cnr.jada.Use
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+
+	@Override
+	public RemoteIterator cercaTerziPerUnitaOrganizzativa(UserContext param0, Unita_organizzativaBulk param1) throws ComponentException, RemoteException, PersistencyException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.jada.util.RemoteIterator result = ((TerzoComponent)componentObj).cercaTerziPerUnitaOrganizzativa(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.persistency.PersistencyException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 
 }
 

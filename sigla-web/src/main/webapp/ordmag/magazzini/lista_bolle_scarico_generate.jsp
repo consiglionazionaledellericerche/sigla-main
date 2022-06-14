@@ -22,12 +22,12 @@ ListaBolleScaricoGenerateBP bp = (ListaBolleScaricoGenerateBP)BusinessProcess.ge
 		bp.openFormWindow(pageContext);
 %>
 <script language="JavaScript">
-function doStampaBollaScarico(esercizio, cdCds , cdMagazzino, cdNumeratore, pgBolla) {	
+function doStampaBollaScarico(esercizio, cdCds , cdMagazzino, cdNumeratore, pgBolla) {
   doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/StampaBollaScarico '+esercizio+'-'+cdCds+'-'+cdMagazzino+'-'+cdNumeratore+'-'+pgBolla+'.pdf?esercizio='+esercizio+'&cds='+cdCds+'&magazzino='+cdMagazzino+'&numeratore='+cdNumeratore+'&pgBolla='+pgBolla+'&methodName=stampaBollaScarico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 </head>
-
+Ciao
 <body class="Form">
 
 	<table class="Panel" height="100%" width="100%">

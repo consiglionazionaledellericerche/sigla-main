@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.util.Calendar;
 import java.util.List;
 
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -89,10 +90,17 @@ public class BollaScaricoMagHome extends BulkHome {
 	public Persistent completeBulkRowByRow(UserContext userContext,
 			Persistent persistent) throws PersistencyException {
 		BollaScaricoMagBulk bolla = (BollaScaricoMagBulk)persistent;
-		bolla.setStampaBollaScarico("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-				"doStampaBollaScarico("+bolla.getEsercizio()+",\""+bolla.getCdCds()+"\",\""+bolla.getCdMagazzino()+"\","+bolla.getCdNumeratoreMag()+"\","+bolla.getPgBollaSca()+"\"); return false' "+
-				"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-				"title='Visualizza Documenti Collegati'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
+		if (((CNRUserContext)userContext).isFromBootstrap()) {
+			bolla.setStampaBollaScarico("<a class='btn btn-link' onclick='"+
+					"doStampaBollaScarico("+bolla.getEsercizio()+",\""+bolla.getCdCds()+"\",\""+bolla.getCdMagazzino()+"\",\""+bolla.getCdNumeratoreMag()+"\","+bolla.getPgBollaSca()+"); return false' "+
+					"title='Stampa Bolla Scarico'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");
+		} else {
+			bolla.setStampaBollaScarico("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) " +
+					"doStampaBollaScarico("+bolla.getEsercizio()+",\""+bolla.getCdCds()+"\",\""+bolla.getCdMagazzino()+"\",\""+bolla.getCdNumeratoreMag()+"\","+bolla.getPgBollaSca()+"); return false' "+
+					"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' " +
+					"title='Stampa Bolla Scarico'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
+		}
+
 		return super.completeBulkRowByRow(userContext, persistent);
 	}
 	

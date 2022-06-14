@@ -20,40 +20,123 @@
 <%	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
 
-<table>
-  <tr>
-    Ciao Nuovo
-    <table >
-       <tr>
-            <td><% bp.getController().writeFormLabel(out,"findMagazzino"); %></td>
-            <td colspan="5"><% bp.getController().writeFormInput(out,"findMagazzino"); %></td>
-       </tr>
-       <tr>
-            <td><% bp.getController().writeFormLabel(out,"findCatGrp"); %></td>
-            <td colspan="5"><% bp.getController().writeFormInput(out,"findCatGrp"); %></td>
-        </tr>
-       <tr>
-            <td><% bp.getController().writeFormLabel(out,"dataInventario"); %></td>
-            <td><% bp.getController().writeFormInput(out,"dataInventario"); %></td>
-        </tr>
-        <tr>
-            <td><% bp.getController().writeFormLabel(out,"flRaggCatGruppo"); %></td>
-            <td><% bp.getController().writeFormInput(out,"flRaggCatGruppo"); %></td>
-        </tr>
-        <tr>
-            <td><% bp.getController().writeFormLabel(out,"flDettaglioArticolo"); %></td>
-            <td><% bp.getController().writeFormInput(out,"flDettaglioArticolo"); %></td>
-        </tr>
-        <tr>
-            <td><% bp.getController().writeFormLabel(out,"ordinamento"); %></td>
-            <td><% bp.getController().writeFormInput(out,"ordinamento"); %></td>
-        </tr>
-    </table>
+<div class="Group card p-2" style="width:100%">
+		<table width="100%">
+			<tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "daDataMovimento");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "daDataMovimento");
+                    %>
+                </td>
+                <td class="pl-5">
+                    <%
+                        bp.getController().writeFormLabel(out, "aDataMovimento");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "aDataMovimento");
+                    %>
+                </td>
+            </tr>
 
-	<td></td>
-	<td></td>
-  </tr>
-  </table>
+			<tr>
+				<td >
+					<%
+						bp.getController().writeFormLabel(out, "dataRiferimento");
+					%>
+				</td>
+				<td colspan="3">
+					<%
+						bp.getController().writeFormInput(out, "dataRiferimento");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "findMagazzino");
+					%>
+				</td>
+				<td colspan="3">
+					<%
+						bp.getController().writeFormInput(out, "findMagazzino");
+					%>
+				</td>
+			</tr>
 
+			<tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "findDaUnitaOperativa");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findDaUnitaOperativa");
+                    %>
+                </td>
+                <td class="pl-5">
+                    <%
+                        bp.getController().writeFormLabel(out, "findAUnitaOperativa");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findAUnitaOperativa");
+                    %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "findDaCatGrp");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findDaCatGrp");
+                    %>
+                </td>
+                <td class="pl-5">
+                    <%
+                        bp.getController().writeFormLabel(out, "findACatGrp");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findACatGrp");
+                    %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "findDaBeneServizio");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findDaBeneServizio");
+                    %>
+                </td>
+                <td class="pl-5">
+                    <%
+                        bp.getController().writeFormLabel(out, "findABeneServizio");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findABeneServizio");
+                    %>
+                </td>
+            </tr>
+        </table>
+</div>
 
 </body>

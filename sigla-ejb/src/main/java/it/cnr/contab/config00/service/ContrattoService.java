@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
@@ -43,13 +44,23 @@ import it.cnr.jada.comp.ApplicationException;
 public class ContrattoService extends StoreService {
 	private transient static final Logger logger = LoggerFactory.getLogger(ContrattoService.class);
 	private String folderFlowsName;
+	private boolean uniOrgInPathWithDot;
+
 	public String getFolderFlowsName() {
 		return folderFlowsName;
 	}
-
 	public void setFolderFlowsName(String folderFlowsName) {
 		this.folderFlowsName = folderFlowsName;
 	}
+
+	public boolean isUniOrgInPathWithDot() {
+		return uniOrgInPathWithDot;
+	}
+
+	public void setUniOrgInPathWithDot(boolean uniOrgInPathWithDot) {
+		this.uniOrgInPathWithDot = uniOrgInPathWithDot;
+	}
+
 	public StorageObject getFolderContratto(ContrattoBulk contratto) throws ApplicationException{
 		return Optional.ofNullable(getStorageObjectByPath(getCMISPathFolderContratto(contratto)))
 				.orElseGet(() -> {
@@ -65,13 +76,19 @@ public class ContrattoService extends StoreService {
 				});
 	}
 
+	private String unitaOrganizzativaInThePathFromFlow(ContrattoBulk contrattoBulk){
+		if (!uniOrgInPathWithDot)
+			return Optional.ofNullable(contrattoBulk.getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse("").replace(".", "");
+		return contrattoBulk.getUnita_organizzativa().getCd_unita_organizzativa();
+	}
 	private List<String> getBasePath(ContrattoBulk contrattoBulk) {
+
 		if (contrattoBulk.isFromFlussoAcquisti()){
 			return Arrays.asList(
 					SpringUtil.getBean(StorePath.class).getPathComunicazioniAl(),
 					getFolderFlowsName(),
 					"acquisti",
-					Optional.ofNullable(contrattoBulk.getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse("").replace(".", ""),
+					unitaOrganizzativaInThePathFromFlow(contrattoBulk),
 					Optional.ofNullable(contrattoBulk.getEsercizio())
 							.map(esercizio -> String.valueOf(esercizio))
 							.orElse("0")
@@ -175,6 +192,8 @@ public class ContrattoService extends StoreService {
 		return result;
 	}
 
+
+
 	public String getCMISPathAlternativo(AllegatoContrattoDocumentBulk allegato) {
 		return Arrays.asList(
 				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
@@ -187,11 +206,18 @@ public class ContrattoService extends StoreService {
 		);
 	}
 
+	public String getCMISPathAllegati(ContrattoBulk contratto){
+		List<String > l = new ArrayList<String>(getBasePath(contratto));
+		l.add(contratto.getCMISFolderName());
+		return l.stream().collect(Collectors.joining(StorageDriver.SUFFIX));
+	}
+	/*
 	public String getCMISPath(AllegatoContrattoDocumentBulk allegato) {
+
 		if (allegato.getContrattoBulk().isFromFlussoAcquisti()){
 			return Arrays.asList(
 					SpringUtil.getBean(StorePath.class).getPathComunicazioniAl(),
-					"flows-demo",
+					getFolderFlowsName(),
 					"acquisti",
 					Optional.ofNullable(allegato.getContrattoBulk().getUnita_organizzativa()).map(Unita_organizzativaBulk::getCd_unita_organizzativa).orElse("").replace(".", ""),
 					Optional.ofNullable(allegato.getContrattoBulk().getEsercizio())
@@ -215,12 +241,13 @@ public class ContrattoService extends StoreService {
 		);
 
 	}
-
+*/
 	public void costruisciAlberaturaAlternativa(AllegatoContrattoDocumentBulk allegato, StorageObject source) throws ApplicationException {
 		try {
 			copyNode(source, getStorageObjectByPath(getCMISPathAlternativo(allegato), true));
 		} catch (StorageException _ex) {
-			logger.error("Errore in costruisciAlberaturaAlternativa per il nodo " + source.getKey(), _ex);
+			//logger.error("Errore in costruisciAlberaturaAlternativa per il nodo " + source.getKey(), _ex);
+			throw  new ApplicationException(_ex);
 		}
 	}
 

@@ -38,7 +38,8 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
-import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.BonusHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -78,6 +79,7 @@ import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriHome;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -101,6 +103,7 @@ import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
@@ -172,7 +175,7 @@ import java.util.Vector;
  * 
  * @author: Roberto Fantino
  */
-public class CompensoComponent extends ScritturaPartitaDoppiaFromDocumentoComponent implements
+public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		ICompensoMgr, Cloneable, IPrintMgr, Serializable {
 	/**
 	 * CompensoComponent constructor comment.
@@ -2683,7 +2686,29 @@ public class CompensoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
-		caricaScrittura(userContext, compenso);
+		try {
+			if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+					.filter(Configurazione_cnrHome.class::isInstance)
+					.map(Configurazione_cnrHome.class::cast)
+					.orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
+				Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+						.filter(Scrittura_partita_doppiaHome.class::isInstance)
+						.map(Scrittura_partita_doppiaHome.class::cast)
+						.orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+
+				final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(compenso);
+				if (scritturaOpt.isPresent()) {
+					Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+					scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+							.findMovimentiDareColl(userContext, scrittura)));
+					scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
+							.findMovimentiAvereColl(userContext, scrittura)));
+					compenso.setScrittura_partita_doppia(scrittura);
+				}
+			}
+		} catch (PersistencyException e) {
+			throw handleException(compenso, e);
+		}
 		return compenso;
 	}
 

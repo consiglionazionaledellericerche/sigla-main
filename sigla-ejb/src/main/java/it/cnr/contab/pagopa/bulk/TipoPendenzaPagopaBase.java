@@ -28,8 +28,8 @@ public class TipoPendenzaPagopaBase extends TipoPendenzaPagopaKey implements Key
 	private Integer divisoreCheckDigit;
 	private Integer lunghezzaIuv;
 	private Integer lunghezzaIuvBase;
-	private java.lang.Boolean applicationCode;
-	private java.lang.Boolean codiceSegregazione;
+	private Boolean applicationCode;
+	private Boolean codiceSegregazione;
 
 	public Integer getDivisoreCheckDigit() {
 		return divisoreCheckDigit;
@@ -47,7 +47,7 @@ public class TipoPendenzaPagopaBase extends TipoPendenzaPagopaKey implements Key
 		this.descrizione = descrizione;
 	}
 
-	private java.lang.Boolean iuvCheckDigit;
+	private Boolean iuvCheckDigit;
 
 	private String applicationCodeDefault;
 

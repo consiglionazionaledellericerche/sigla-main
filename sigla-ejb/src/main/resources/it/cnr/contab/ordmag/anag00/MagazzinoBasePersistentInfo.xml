@@ -249,6 +249,11 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+				columnName="TIPO_GESTIONE"
+				propertyName="tipoGestione"
+				sqlTypeName="CHAR"
+				columnSize="3" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dsMagazzino" />
@@ -328,4 +333,6 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+			name="tipoGestione" />
 </SQLPersistentInfo>

@@ -206,9 +206,9 @@
           a.pg_fattura_passiva, 'GEN' cd_numeratore, a.pg_ver_rec, a.cd_cds_origine,
           a.cd_uo_origine, a.ti_fattura, b.stato_cofi,
           a.stato_pagamento_fondo_eco, a.dt_pagamento_fondo_eco,
-          oc.cd_cds_obbl, oc.esercizio_obbl,
-          oc.esercizio_orig_obbl, oc.pg_obbligazione,
-          oc.pg_obbligazione_scad, a.dt_fattura_fornitore,
+          os.cd_cds, os.esercizio,
+          os.ESERCIZIO_ORIGINALE , os.pg_obbligazione,
+          os.PG_OBBLIGAZIONE_SCADENZARIO, a.dt_fattura_fornitore,
           a.nr_fattura_fornitore, a.cd_terzo, b.cd_terzo_cessionario,
           a.cognome, a.nome, a.ragione_sociale,
           DECODE (b.cd_terzo_cessionario,
@@ -269,8 +269,7 @@
           fattura_passiva_riga b,
           lettera_pagam_estero c,
           banca d,
-          fattura_ordine fo,
-          ordine_acq_consegna oc,
+          OBBLIGAZIONE_SCADENZARIO os,
           tipo_sezionale t
     WHERE a.cd_tipo_sezionale = t.cd_tipo_sezionale
       AND b.cd_cds = a.cd_cds
@@ -285,18 +284,12 @@
       AND c.pg_lettera(+) = a.pg_lettera
       AND d.cd_terzo = b.cd_terzo
       AND d.pg_banca = b.pg_banca
-      AND fo.cd_cds = b.cd_cds
-      AND fo.cd_unita_organizzativa = b.cd_unita_organizzativa
-      AND fo.esercizio = b.esercizio
-      AND fo.pg_fattura_passiva = b.pg_fattura_passiva
-      AND fo.progressivo_riga = b.progressivo_riga
-      AND fo.cd_cds_ordine = oc.cd_cds
-      AND fo.cd_unita_operativa = oc.cd_unita_operativa
-      AND fo.esercizio_ordine = oc.esercizio
-      AND fo.cd_numeratore = oc.cd_numeratore
-      AND fo.numero = oc.numero
-      AND fo.riga = oc.riga
-      AND fo.consegna = oc.consegna
+      AND os.cd_cds = b.cd_cds
+      AND os.esercizio = b.ESERCIZIO_OBBLIGAZIONE
+      AND os.PG_OBBLIGAZIONE = b.PG_OBBLIGAZIONE
+      AND os.PG_OBBLIGAZIONE_SCADENZARIO = b.PG_OBBLIGAZIONE_SCADENZARIO
+      AND os.ESERCIZIO_ORIGINALE = b.ESERCIZIO_ORI_OBBLIGAZIONE
+      AND os.FL_ASSOCIATA_ORDINE = 'N'
    UNION ALL
    SELECT a.cd_cds, a.cd_unita_organizzativa, a.esercizio, 'FATTURA_A',
           a.pg_fattura_attiva, 'GEN' cd_numeratore, a.pg_ver_rec, a.cd_cds_origine,
@@ -509,3 +502,4 @@ alla selezione nella costruzione di un mandato. La vista è stata scorporata da
 V_DOC_PASSIVO_OBBLIGAZIONE.
 I record con FL_SELEZIONE = ''Y'' sono quelli, se non pagati, che possono essere oggetto di
 associazione ad un nuovo mandato';
+

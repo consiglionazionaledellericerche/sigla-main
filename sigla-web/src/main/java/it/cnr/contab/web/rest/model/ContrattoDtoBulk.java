@@ -20,14 +20,20 @@ package it.cnr.contab.web.rest.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBase;
 
+import java.io.Serializable;
 import java.util.List;
 
 @JsonInclude(value= JsonInclude.Include.NON_NULL)
-public class ContrattoDtoBulk extends ContrattoBase {
+public class ContrattoDtoBulk extends ContrattoBase  implements Serializable {
     private Integer esercizio;
     private String cd_unita_organizzativa;
     private List<DittaInvitataExt> listaDitteInvitateExt;
     private List<UoAbilitataExt> listaUoAbilitateExt;
+    private List<DettaglioContrattoDtoBulk> dettaglioContratto;
+    private List<AttachmentContratto> attachments;
+    private EnumTipoDettaglioContratto tipoDettaglioContratto;
+
+
     private String cdCupExt;
 
     public String getCdCupExt() {
@@ -37,6 +43,7 @@ public class ContrattoDtoBulk extends ContrattoBase {
     public void setCdCupExt(String cdCupExt) {
         this.cdCupExt = cdCupExt;
     }
+
 
     @Override
     public Integer getEsercizio() {
@@ -72,5 +79,29 @@ public class ContrattoDtoBulk extends ContrattoBase {
 
     public void setListaUoAbilitateExt(List<UoAbilitataExt> listaUoAbilitateExt) {
         this.listaUoAbilitateExt = listaUoAbilitateExt;
+    }
+
+    public List<DettaglioContrattoDtoBulk> getDettaglioContratto() {
+        return dettaglioContratto;
+    }
+
+    public void setDettaglioContratto(List<DettaglioContrattoDtoBulk> dettaglioContratto) {
+        this.dettaglioContratto = dettaglioContratto;
+    }
+
+    public List<AttachmentContratto> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<AttachmentContratto> attachments) {
+        this.attachments = attachments;
+    }
+
+    public EnumTipoDettaglioContratto getTipoDettaglioContratto() {
+        return tipoDettaglioContratto;
+    }
+
+    public void setTipoDettaglioContratto(EnumTipoDettaglioContratto tipoDettaglioContratto) {
+        this.tipoDettaglioContratto = tipoDettaglioContratto;
     }
 }

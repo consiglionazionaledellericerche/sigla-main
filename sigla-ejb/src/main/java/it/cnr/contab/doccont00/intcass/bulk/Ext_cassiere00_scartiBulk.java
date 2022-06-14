@@ -29,7 +29,7 @@ public class Ext_cassiere00_scartiBulk extends Ext_cassiere00_scartiBase {
 	public Ext_cassiere00_scartiBulk() {
 		super();
 	}
-	public Ext_cassiere00_scartiBulk(java.lang.Integer esercizio, java.lang.String nome_file, java.lang.Long pg_esecuzione, java.lang.Long pg_rec) {
+	public Ext_cassiere00_scartiBulk(Integer esercizio, String nome_file, Long pg_esecuzione, Long pg_rec) {
 		super(esercizio, nome_file, pg_esecuzione, pg_rec);
 	}
 }

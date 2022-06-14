@@ -26,8 +26,7 @@
     <property name="now" value="now()" dbms="postgresql"/>
 
     <property name="esercizio_corrente" value="to_number(to_char(SYSDATE, 'YYYY'))" dbms="oracle"/>
-    <property name="esercizio_corrente" value="date_part('year', now())" dbms="postgresql"/>
-    <property name="esercizio_corrente" value="YEAR(now())" dbms="h2"/>
+    <property name="esercizio_corrente" value="date_part('year', now())" dbms="postgresql,h2"/>
 
     <property name="date.type" value="DATE" dbms="oracle"/>
     <property name="date.type" value="DATETIME" dbms="postgresql"/>
@@ -48,8 +47,8 @@
     <include file="iss/db.changelog-5.0.0.xml"/>
 
     <!-- Attenzione inserire i changeset prima della compilazione degli invalidi-->
-    <include file="liquibase/views.xml"/>
     <include file="liquibase/oracle-sql4.xml"/>
+    <include file="liquibase/views.xml"/>
     <include file="liquibase/function-postgres.xml"/>
     <include file="liquibase/function-h2.xml"/>
     <include file="liquibase/oracle_compile_objects.xml"/>

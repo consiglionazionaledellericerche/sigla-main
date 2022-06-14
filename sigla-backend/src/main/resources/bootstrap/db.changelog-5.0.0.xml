@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
   ~
@@ -4722,12 +4722,9 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
-
-
     <changeSet author="ciro.salvio" id="addColumn-Flag_pluriennale_obbligazione">
         <addColumn tableName="obbligazione">
             <column name="fl_pluriennale"
-                    defaultValue="N"
                     remarks="Indica se l'impegno deve essere creato in automatico per gli anni configurati in OBBLIGAZIONE_PLURIENNALE. VALORI: S=Obbligazione Pluriennale; N/= Obbligazione non pluriennale"
                     type="CHAR(1)"/>
         </addColumn>
@@ -5032,6 +5029,127 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </createIndex>
     </changeSet>
 
+    <changeSet id="alter-table-pk-obbligazione-pluriennale" author="valentina.tomada">
+
+        <dropPrimaryKey tableName="obbligazione_pluriennale"></dropPrimaryKey>
+        <dropColumn tableName="obbligazione_pluriennale" columnName="id_obbligazione_plur"></dropColumn>
+        <addPrimaryKey tableName="obbligazione_pluriennale" constraintName="obbligazione_pluriennale_pkey" columnNames="cd_cds_rif,esercizio_rif,esercizio_originale_rif,pg_obbligazione_rif,anno"></addPrimaryKey>
+
+    </changeSet>
+    <changeSet id="alter-table-pk-obbligazione-pluriennale02" author="valentina.tomada">
+
+        <dropPrimaryKey tableName="obbligazione_pluriennale"></dropPrimaryKey>
+        <addPrimaryKey tableName="obbligazione_pluriennale" constraintName="obbligazione_pluriennale_pkey" columnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione,anno"></addPrimaryKey>
+
+    </changeSet>
+
+    <changeSet author="valentina.tomada" id="create-table-accertamento-pluriennale">
+        <createTable remarks="Accertamento Pluriennale" tableName="accertamento_pluriennale">
+
+            <column name="anno" remarks="Anno Accertamento Pluriennale - chiave primaria" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds" remarks="Cds dell'accertamento - chiave primaria  " type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio dell'accertamento - chiave primaria" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_originale" remarks="Esercizio Originale dell'accertamento - chiave primaria" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_accertamento" remarks="Numero dell'accertamento - chiave primaria" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="importo" remarks="Importo totale" type="numeric(15, 2)"/>
+
+            <column name="cd_cds_rif" remarks="Cds dell'accertamento di riferimento " type="VARCHAR(30)"/>
+            <column name="esercizio_rif" remarks="Esercizio dell'accertamento di riferimento" type="INT"/>
+            <column name="esercizio_originale_rif" remarks="Esercizio Originale dell'accertamento di riferimento" type="INT"/>
+            <column name="pg_accertamento_rif" remarks="Numero dell'accertamento di riferimento" type="BIGINT"/>
+
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="accertamento_pluriennale" constraintName="accertamento_pluriennale_pkey" columnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento,anno"></addPrimaryKey>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento" baseTableName="accertamento_pluriennale" constraintName="fk_accertamento_pluriennale01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento" referencedTableName="accertamento"/>
+        <addForeignKeyConstraint baseColumnNames="cd_cds_rif,esercizio_rif,esercizio_originale_rif,pg_accertamento_rif" baseTableName="accertamento_pluriennale" constraintName="fk_accertamento_pluriennale02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_accertamento" referencedTableName="accertamento"/>
+
+        <createIndex indexName="fx_accertamento_pluriennale00" tableName="accertamento_pluriennale">
+            <column name="cd_cds"/>
+            <column name="esercizio"/>
+            <column name="esercizio_originale"/>
+            <column name="pg_accertamento"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="addColumn-ordine_acq_riga-id_dettaglio_contratto">
+        <addColumn tableName="DETTAGLIO_CONTRATTO">
+            <column name="stato" remarks="Stato del Dettaglio Contratto:&#10;VAL = Valido,&#10;ANN = Annullato" type="VARCHAR(3)" defaultValue="VAL">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-mepa-ordine_acq">
+        <addColumn tableName="ordine_acq">
+            <column name="fl_mepa" defaultValue="N" type="CHAR(1)" remarks="Indica se si tratta di ordine MEPA. Dominio: Y = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="valentina.tomada" id="update-table-print_priority_stampa_consumi">
+        <update tableName="print_priority">
+            <column name="report_name" value='/ordmag/stampa_consumi.jasper' />
+            <where>report_name='/ordmag/iss/magazzino/stampa_consumi.jasper'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-tipo_gestione-magazzino">
+        <addColumn tableName="magazzino">
+            <column name="tipo_gestione" type="VARCHAR(3)" remarks="Indica se il magazzino gestisce solo ordini con una determinata gestione"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="alter_documento_ele_allegati_cmis_node_ref">
+        <modifyDataType tableName="documento_ele_allegati" columnName="cmis_node_ref" newDataType="VARCHAR(500)"/>
+    </changeSet>
+    <changeSet id="bene_servizio_rest" author="ciro.salvio">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSBENESERVIZIO"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Servizio REST per bene e servizio"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSBENESERVIZIO"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsBeneServizioBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
     <changeSet author="raffaele.pagano" id="inserimento-batch-apertura-anno-contabile">
         <insert tableName="batch_procedura">
             <column name="cd_procedura" type="STRING" value="RIBALTAMENTOPDGP"/>
@@ -5050,6 +5168,32 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="nome_parametro" type="STRING" value="AES"/>
             <column name="pg_valore_parametro" type="NUMERIC" value="1"/>
             <column name="valore_number" type="NUMERIC" value="2022"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-fatt-elettronica-ass_bp_accesso">
+        <update tableName="ass_bp_accesso">
+            <column name="business_process" value='SelezionatoreDocAmmFatturazioneElettronica' type="VARCHAR(200)"/>
+            <where>CD_ACCESSO = 'AMMDOCFATTELETTVM'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-fatt-elettronica-albero_main">
+        <update tableName="albero_main">
+            <column name="business_process" value='SelezionatoreDocAmmFatturazioneElettronica' type="VARCHAR(200)"/>
+            <where>CD_ACCESSO = 'AMMDOCFATTELETTVM'</where>
+        </update>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="configurazione_cnr_esercizio_manage_attach_rest_conatratti">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="CONTRATTI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="ATT_REST_CONTR_STORED_FROM_SIGLA"/>
+            <column name="val01" type="STRING" value="N"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="STRING" value="SYSTEM"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
@@ -5083,6 +5227,50 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="NOTE" type="VARCHAR(2000)" remarks="Annotazioni"/>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="add-column-imponibile_errato-to-fattura_ordine">
+        <addColumn tableName="FATTURA_ORDINE">
+            <column name="IMPONIBILE_ERRATO" type="numeric(15, 2)" remarks="Imponibile errato, in attesa di nota di credito"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="voce_menu_stampa_bolla_scarico_mag" author="ciro.salvio">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="MAGSTPBOLSCA"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Stampa Bolle di Scarico"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="MAGSTPBOLSCA"/>
+            <column name="business_process" type="VARCHAR(200)" value="StampaBollaScaricoMagBP"/>
+            <!--<column name="ti_funzione" type="CHAR(1)" value="M"/>-->
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.MAG.STAMPE.BOLSCARMAG"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Stampa Bolle di Scarico"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="MAGSTPBOLSCA"/>
+            <column name="business_process" type="VARCHAR(200)" value="StampaBollaScaricoMagBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="15"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLSCARMAG"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.MAG.STAMPE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 
     <changeSet author="raffaele.pagano" id="configurazione-add-stipendi-codice-bollo">
         <insert tableName="configurazione_cnr">
@@ -5096,6 +5284,70 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="print_priority_stampa_bolla_scarico_mag">
+        <insert tableName="print_priority">
+            <column name="report_name" type="VARCHAR(1500)" value="/ordmag/bolla_scarico.jasper"/>
+            <column name="priority" type="SMALLINT"  value="1" />
+            <column name="ds_report" type="VARCHAR(300)" value="Stampa Bolla di Scarico"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet id="voce_menu_stampa_partitario_mag" author="ciro.salvio">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="MAGPARTITARIO"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Stampa Partitario Magazzino"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="MAGPARTITARIO"/>
+            <column name="business_process" type="VARCHAR(200)" value="StampaPartitarioMagBP"/>
+            <!--<column name="ti_funzione" type="CHAR(1)" value="M"/>-->
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.MAG.STAMPE.MAGPARTITARIO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Stampa Partitario Magazzino"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="MAGPARTITARIO"/>
+            <column name="business_process" type="VARCHAR(200)" value="StampaPartitarioMagBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="15"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="MAGPARTITARIO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.MAG.STAMPE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="ciro.salvio" id="print_priority_stampa_partitario_magazzino">
+        <insert tableName="print_priority">
+            <column name="report_name" type="VARCHAR(1500)" value="/ordmag/partitario_magazzino.jasper"/>
+            <column name="priority" type="SMALLINT"  value="1" />
+            <column name="ds_report" type="VARCHAR(300)" value="Stampa Partitario Magazzino"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
     <changeSet author="gianfranco.gasparro" id="detrazioni_lavoro_add_imp_incr_fisso">

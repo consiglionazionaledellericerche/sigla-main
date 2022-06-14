@@ -175,13 +175,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 		}
     };
 
-    private final SimpleDetailCRUDController crudProgetto_anagrafico = new SimpleDetailCRUDController("Progetto_anagrafico", Progetto_anagraficoBulk.class, "anagraficheProgetto", this){
-        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
-            Progetto_anagraficoBulk riga = (Progetto_anagraficoBulk) getCrudProgetto_anagrafico().getModel();
-            super.validateForDelete(context,riga);
-
-        }
-    };
+    private final SimpleDetailCRUDController crudProgetto_anagrafico = new SimpleDetailCRUDController("Progetto_anagrafico", Progetto_anagraficoBulk.class, "anagraficheProgetto", this);
 
     /**
      * TestataProgettiRicercaBP constructor comment.

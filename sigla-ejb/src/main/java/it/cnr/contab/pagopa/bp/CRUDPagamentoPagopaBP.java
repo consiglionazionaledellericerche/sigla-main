@@ -32,8 +32,8 @@ public class CRUDPagamentoPagopaBP extends SimpleCRUDBP {
         this.pendenza = pendenza;
     }
 
-    protected void initialize(it.cnr.jada.action.ActionContext context)
-            throws it.cnr.jada.action.BusinessProcessException {
+    protected void initialize(ActionContext context)
+            throws BusinessProcessException {
         setEditable(false);
         try {
                 if (getPendenza() == null)

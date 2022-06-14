@@ -121,29 +121,6 @@
 				sqlTypeName="DECIMAL"
 				columnSize="10"/>
 		<columnMapping
-				columnName="CD_ELEMENTO_VOCE"
-				propertyName="cd_elemento_voce"
-				sqlTypeName="VARCHAR"
-				columnSize="20"
-				nullable="false" />
-		<columnMapping
-				columnName="TI_GESTIONE"
-				propertyName="ti_gestione"
-				sqlTypeName="CHAR"
-				columnSize="1"
-				nullable="false" />
-		<columnMapping
-				columnName="TI_APPARTENENZA"
-				propertyName="ti_appartenenza"
-				sqlTypeName="CHAR"
-				columnSize="1"
-				nullable="false" />
-		<columnMapping
-				columnName="ESERCIZIO_VOCE"
-				propertyName="esercizioVoce"
-				sqlTypeName="DECIMAL"
-				columnSize="4"/>
-		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"

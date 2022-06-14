@@ -10,12 +10,14 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventHome;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -43,5 +45,17 @@ public class Dettaglio_contrattoHome extends BulkHome {
 		Dettaglio_contrattoBulk dettaglio = (Dettaglio_contrattoBulk)bulk;
 		if (dettaglio.getId() == null)
 			dettaglio.setId(recuperoProgressivoDettaglio(userContext));
+	}
+
+
+	@Override
+	public void delete(Persistent persistent, UserContext userContext) throws PersistencyException {
+		Dettaglio_contrattoBulk dettaglio=(Dettaglio_contrattoBulk)persistent;
+		if ( ContrattoBulk.STATO_PROVVISORIO.equals(dettaglio.getContratto().getStato()))
+			super.delete(persistent,userContext);
+		else{
+			dettaglio.setStato(Dettaglio_contrattoBulk.STATO_ANNULLATO);
+			super.update(persistent, userContext);
+		}
 	}
 }

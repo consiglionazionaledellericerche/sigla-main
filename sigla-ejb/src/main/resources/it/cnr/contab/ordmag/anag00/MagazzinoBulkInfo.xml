@@ -437,6 +437,19 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data Cancellazione" />
+	<fieldProperty
+			name="tipoGestione"
+			property="tipoGestione"
+			maxLength="1"
+			inputSize="20"
+			inputType="SELECT"
+			keysProperty="tipoGestioneKeys"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
+			label="Tipo Gestione"
+			caseSensitiveSearch="false" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -502,6 +515,8 @@
 		name="abilTuttiBeniServ" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	<formFieldProperty
+			name="tipoGestione" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
@@ -646,6 +661,8 @@
 		name="abilTuttiBeniServ" />
 	<columnFieldProperty
 		name="dtCancellazione" />
+	<columnFieldProperty
+			name="tipoGestione" />
 	<columnSet name="default" >
 		<columnFieldProperty name="cdMagazzino"/>
 		<columnFieldProperty name="dsMagazzino"/>

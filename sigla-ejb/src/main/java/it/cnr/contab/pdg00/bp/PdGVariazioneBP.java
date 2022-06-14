@@ -739,7 +739,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                     el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));
                     el.setStorageMatricola(el.getIdMatricola());
                     if (Optional.ofNullable(el.getProgettoRimodulazione()).isPresent())
-                    	el.setProgettoRimodulatoForSearch(el.getProgettoRimodulazione().getProgetto());
+                        el.setProgettoRimodulatoForSearch(el.getProgettoRimodulazione().getProgetto());
                 });
         return bulk;
     }
@@ -751,29 +751,29 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     private void setAttivaGestioneVariazioniTrasferimento(boolean attivaGestioneVariazioniTrasferimento) {
         this.attivaGestioneVariazioniTrasferimento = attivaGestioneVariazioniTrasferimento;
     }
-    
+
     public void findAndSetRimodulazione(ActionContext actioncontext, ProgettoBulk progetto) throws BusinessProcessException {
-    	try {
-    		if (Optional.ofNullable(progetto).isPresent()) {
-	    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(this.createComponentSession().find(actioncontext.getUserContext(), ProgettoBulk.class, "findRimodulazioni", progetto.getPg_progetto()));
-	    		((Pdg_variazioneBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
-    		}
-    	} catch (Throwable e) {
-	        throw handleException(e);
-	    }
+        try {
+            if (Optional.ofNullable(progetto).isPresent()) {
+                List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(this.createComponentSession().find(actioncontext.getUserContext(), ProgettoBulk.class, "findRimodulazioni", progetto.getPg_progetto()));
+                ((Pdg_variazioneBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
+            }
+        } catch (Throwable e) {
+            throw handleException(e);
+        }
     }
-    
+
     public String[][] getTabs(HttpSession session) {
         TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
         int i = 0;
 
         pages.put(i++, new String[]{"tabTestata", "Testata", "/pdg00/tab_pdg_variazione_testata.jsp"});
         pages.put(i++, new String[]{"tabCDR", "CDR abilitati a concorrervi", "/pdg00/tab_ass_pdg_variazione_cdr.jsp"});
-        
+
         if (Optional.ofNullable(this.getAnnoFromPianoEconomico())
-        			.filter(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
-        			.isPresent())
-        	pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg00/tab_pdg_variazione_rimodulazione.jsp"});
+                .filter(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
+                .isPresent())
+            pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg00/tab_pdg_variazione_rimodulazione.jsp"});
 
         pages.put(i++, new String[]{"tabArchivio", "Archivio Consultazioni", "/pdg00/tab_pdg_variazione_archivio.jsp"});
         pages.put(i++, new String[]{"tabRiepilogo", "Riepilogo per CdR/Dipartimento", "/pdg00/tab_pdg_variazione_riepilogo.jsp"});
@@ -784,7 +784,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
         return tabs;
     }
-    
+
     protected Integer getAnnoFromPianoEconomico() {
         return annoFromPianoEconomico;
     }

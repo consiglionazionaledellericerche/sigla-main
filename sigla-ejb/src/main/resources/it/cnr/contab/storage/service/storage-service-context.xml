@@ -35,6 +35,7 @@
     <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" />
     <bean id="contrattoService" class="it.cnr.contab.config00.service.ContrattoService"> 
             <property name="folderFlowsName" value="${contratto.flows.folder}"/>
+            <property name="uniOrgInPathWithDot" value="${contratto.flows.uniorgwithdot}"/>
     </bean>
     <bean id="contabiliService" class="it.cnr.contab.doccont00.service.ContabiliService" />
 

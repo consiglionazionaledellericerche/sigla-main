@@ -127,6 +127,7 @@
                 name="responsabile"
                 property="responsabile"
                 inputType="SEARCHTOOL"
+                formName="searchtool"
                 enabledOnSearch="true"
                 label="Responsabile procedimento/RUP" />
         <fieldProperty
@@ -976,9 +977,7 @@
         <columnFieldProperty
                 name="fig_giur_est"/>
         <columnFieldProperty
-                name="cd_terzo_resp"
-                textTruncate="true"
-                headerStyle="max-width: 13ch"/>
+                name="cd_terzo_resp"/>
         <columnFieldProperty
                 name="cd_terzo_firmatario"/>
         <columnFieldProperty
@@ -1008,9 +1007,7 @@
         <columnFieldProperty
                 name="cdCig" />                
         <columnFieldProperty
-                name="cdCigFatturaAttiva"
-                textTruncate="true"
-                headerStyle="max-width: 13ch"/>
+                name="cdCigFatturaAttiva"/>
         <columnFieldProperty
                 name="dt_inizio_validita"/>
         <columnFieldProperty

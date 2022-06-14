@@ -39,13 +39,13 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public static final String STATO_IN_PAGAMENTO = "INP";
 	public static final String STATO_RISCOSSA = "RIS";
 	public static final String STATO_ANNULLATO = "ANN";
-	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce;
+	private Elemento_voceBulk elemento_voce;
 	private Unita_organizzativaBulk unitaOrganizzativa;
 	protected TerzoBulk terzo;
 	private TipoPendenzaPagopaBulk tipoPendenzaPagopa;
 	private final static Dictionary statoKeys;
 	static {
-		statoKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoKeys = new OrderedHashtable();
 		statoKeys.put(STATO_APERTA,"Aperta");
 		statoKeys.put(STATO_INCASSATA,"Incassata");
 		statoKeys.put(STATO_RISCOSSA,"Riscossa");
@@ -62,7 +62,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 		this.elemento_voce = elemento_voce;
 	}
 
-	public final java.util.Dictionary getStatoKeys() {
+	public final Dictionary getStatoKeys() {
 		return statoKeys;
 	}
 
@@ -81,41 +81,41 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 		this.unitaOrganizzativa = unitaOrganizzativa;
 	}
-	public java.lang.String getCd_elemento_voce() {
-		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+	public String getCd_elemento_voce() {
+		Elemento_voceBulk elemento_voce = this.getElemento_voce();
 		if (elemento_voce == null)
 			return null;
 		return elemento_voce.getCd_elemento_voce();
 	}
-	public java.lang.String getTi_appartenenza() {
-		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+	public String getTi_appartenenza() {
+		Elemento_voceBulk elemento_voce = this.getElemento_voce();
 		if (elemento_voce == null)
 			return null;
 		return elemento_voce.getTi_appartenenza();
 	}
-	public java.lang.String getTi_gestione() {
-		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+	public String getTi_gestione() {
+		Elemento_voceBulk elemento_voce = this.getElemento_voce();
 		if (elemento_voce == null)
 			return null;
 		return elemento_voce.getTi_gestione();
 	}
 
-	public java.lang.Integer getEsercizioVoce() {
-		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+	public Integer getEsercizioVoce() {
+		Elemento_voceBulk elemento_voce = this.getElemento_voce();
 		if (elemento_voce == null)
 			return null;
 		return elemento_voce.getEsercizio();
 	}
-	public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
+	public void setCd_elemento_voce(String cd_elemento_voce) {
 		this.getElemento_voce().setCd_elemento_voce(cd_elemento_voce);
 	}
-	public void setTi_appartenenza(java.lang.String ti_appartenenza) {
+	public void setTi_appartenenza(String ti_appartenenza) {
 		this.getElemento_voce().setTi_appartenenza(ti_appartenenza);
 	}
-	public void setTi_gestione(java.lang.String ti_gestione) {
+	public void setTi_gestione(String ti_gestione) {
 		this.getElemento_voce().setTi_gestione(ti_gestione);
 	}
-	public void setEsercizioVoce(java.lang.Integer esercizioVoce) {
+	public void setEsercizioVoce(Integer esercizioVoce) {
 		this.getElemento_voce().setEsercizio(esercizioVoce);
 	}
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
@@ -126,7 +126,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	}
 
 	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
-		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+		Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		if (!Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equalsIgnoreCase(uo.getCd_tipo_unita())){
 			setUnitaOrganizzativa(new Unita_organizzativaBulk());
 			setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
@@ -174,10 +174,10 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public void setIdTipoPendenzaPagopa(Integer idTipoPendenzaPagopa) {
 		Optional.ofNullable(getTipoPendenzaPagopa()).ifPresent(el->el.setId(idTipoPendenzaPagopa));
 	}
-	public void setCd_terzo(java.lang.Integer cd_terzo) {
+	public void setCd_terzo(Integer cd_terzo) {
 		Optional.ofNullable(getTerzo()).ifPresent(el->el.setCd_terzo(cd_terzo));
 	}
-	public java.lang.Integer getCd_terzo() {
+	public Integer getCd_terzo() {
 		return Optional.ofNullable(getTerzo())
 				.map(TerzoBulk::getCd_terzo)
 				.orElse(null);
@@ -225,7 +225,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 		return clone;
 	}
 	public Dictionary getStatoKeysForUpdate() {
-		Dictionary stato = new it.cnr.jada.util.OrderedHashtable();
+		Dictionary stato = new OrderedHashtable();
 		if (isPendenzaAperta()){
 			stato.put(STATO_APERTA,"Aperta");
 			stato.put(STATO_ANNULLATO,"Annullata");

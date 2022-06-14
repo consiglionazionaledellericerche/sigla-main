@@ -32,12 +32,13 @@ public class Stampa_inventarioBulk extends AbilitazioneMagazzinoBulk {
 
     private Categoria_gruppo_inventBulk catgrp;
 
-    private Boolean flDettaglioArticolo = Boolean.TRUE;
+    private Boolean flDettaglioArticolo = Boolean.FALSE;
 
-    private Boolean flRaggCatGruppo = Boolean.TRUE;
+    private Boolean flRaggCatGruppo = Boolean.FALSE;
 
     private String ordinamento;
 
+    public static final String TUTTI = "%";
     public static final String ORD_CODICE="C";
     public static final String ORD_DENOMINAZIONE="D";
     public final static java.util.Dictionary <String,String> TIPO_ORDINAMENTO;
@@ -80,25 +81,25 @@ public class Stampa_inventarioBulk extends AbilitazioneMagazzinoBulk {
 
     public String getCdsMagForPrint() {
         if (this.getMagazzinoAbilitato() == null)
-            return "%";
+            return TUTTI;
         if (this.getMagazzinoAbilitato().getCdCds() == null)
-            return "%";
+            return TUTTI;
 
         return this.getMagazzinoAbilitato().getCdCds();
     }
     public String getCdMagazzinoForPrint() {
         if (this.getMagazzinoAbilitato() == null)
-            return "%";
+            return TUTTI;
         if (this.getMagazzinoAbilitato().getCdMagazzino() == null)
-            return "%";
+            return TUTTI;
 
         return super.getMagazzinoAbilitato().getCdMagazzino();
     }
     public String getCdCatGrpForPrint() {
         if (this.getCatgrp() == null)
-            return "%";
+            return TUTTI;
         if (this.getCatgrp().getCd_categoria_gruppo() == null)
-            return "%";
+            return TUTTI;
 
         return this.getCatgrp().getCd_categoria_gruppo();
     }

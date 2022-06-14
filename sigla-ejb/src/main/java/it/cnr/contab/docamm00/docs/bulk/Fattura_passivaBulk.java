@@ -25,10 +25,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBase;
+import it.cnr.contab.docamm00.fatturapa.bulk.*;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -51,6 +48,7 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -192,7 +190,7 @@ public abstract class Fattura_passivaBulk
     private BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl = new BulkList<DocumentoEleAcquistoBulk>();
     private Collection fattura_passiva_consuntivoColl = new Vector();
     private ObbligazioniTable fattura_passiva_obbligazioniHash = null;
-    private FatturaRigaOrdiniTable fatturaRigaOrdiniHash = null;
+    private BulkList fattura_passiva_ordini = new BulkList();
     private Map fattura_passiva_ass_totaliMap = null;
     private CarichiInventarioTable carichiInventarioHash = null;
     private AssociazioniInventarioTable associazioniInventarioHash = null;
@@ -226,6 +224,7 @@ public abstract class Fattura_passivaBulk
     private boolean isDeleting = false;
     private AutofatturaBulk autofattura = null;
     ;
+    private java.util.Vector ordiniCancellati = new Vector();
     private java.util.Vector dettagliCancellati = new Vector();
     private java.util.Vector documentiContabiliCancellati = new Vector();
     private Lettera_pagam_esteroBulk lettera_pagamento_estero = null;
@@ -345,6 +344,21 @@ public abstract class Fattura_passivaBulk
             getDocumentiContabiliCancellati().addElement(dettaglio);
     }
 
+    public Vector getOrdiniCancellati() {
+        return ordiniCancellati;
+    }
+
+    public void setOrdiniCancellati(Vector ordiniCancellati) {
+        this.ordiniCancellati = ordiniCancellati;
+    }
+
+    public void addToOrdiniCancellati(FatturaOrdineBulk bulk) {
+
+        if (bulk != null && ((OggettoBulk) bulk).getCrudStatus() == OggettoBulk.NORMAL) {
+            getOrdiniCancellati().addElement(bulk);
+        }
+    }
+
     public void addToFattura_passiva_ass_totaliMap(
             Accertamento_scadenzarioBulk accertamento, java.math.BigDecimal totale) {
 
@@ -414,50 +428,21 @@ public abstract class Fattura_passivaBulk
         return fattura_passiva_dettColl.size() - 1;
     }
 
-    public int addToFattura_passiva_intrastatColl(Fattura_passiva_intraBulk dettaglio) {
+    public int addToFattura_passiva_ordini(FatturaOrdineBulk fatturaOrdineBulk) {
 
-        dettaglio.initialize();
-        dettaglio.setFattura_passiva(this);
+        Fattura_passiva_rigaIBulk fattura_passiva_rigaIBulk = new Fattura_passiva_rigaIBulk();
+        fattura_passiva_rigaIBulk.setFattura_passiva(this);
+        fatturaOrdineBulk.setFatturaPassivaRiga(fattura_passiva_rigaIBulk);
+        fatturaOrdineBulk.setCdCds(getCd_cds());
+        fatturaOrdineBulk.setCdUnitaOrganizzativa(getCd_unita_organizzativa());
+        fatturaOrdineBulk.setEsercizio(getEsercizio());
+        fatturaOrdineBulk.setPgFatturaPassiva(getPg_fattura_passiva());
+        fatturaOrdineBulk.setToBeCreated();
 
-        long max = 0;
-        for (Iterator i = fattura_passiva_dettColl.iterator(); i.hasNext(); ) {
-            long prog = ((Fattura_passiva_rigaBulk) i.next()).getProgressivo_riga().longValue();
-            if (prog > max) max = prog;
-        }
-        dettaglio.setPg_riga_intra(new Long(max + 1));
-        if (getFornitore() != null && getFornitore().getAnagrafico() != null &&
-                getFornitore().getAnagrafico().getComune_fiscale() != null) {
-            NazioneBulk nazione = getFornitore().getAnagrafico().getComune_fiscale().getNazione();
-            if (getTi_bene_servizio().compareTo(Bene_servizioBulk.BENE) == 0) {
-                dettaglio.setNazione_origine(nazione);
-                dettaglio.setNazione_provenienza(nazione);
-            } else
-                dettaglio.setNazione_provenienza(nazione);
-        }
-        //if (fatturaPassiva != null && fatturaPassiva.getFl_intra_ue() != null &&
-        //fatturaPassiva.getFl_intra_ue().booleanValue())	{
-        for (Iterator i = fattura_passiva_dettColl.iterator(); i.hasNext(); ) {
-            Fattura_passiva_rigaBulk riga = ((Fattura_passiva_rigaBulk) i.next());
-            if (riga.getBene_servizio().getFl_obb_intrastat_acq().booleanValue())
-                dettaglio.setAmmontare_euro(dettaglio.getAmmontare_euro().add(riga.getIm_imponibile()));
-            if (!this.isDefaultValuta() &&
-                    ((this.getFornitore() != null &&
-                            this.getFornitore().getAnagrafico() != null &&
-                            this.getFornitore().getAnagrafico().getNazionalita() != null &&
-                            this.getFornitore().getAnagrafico().getNazionalita().getDivisa() != null) ||
-                            this.getFornitore().getAnagrafico().getComune_fiscale() != null &&
-                                    this.getFornitore().getAnagrafico().getComune_fiscale().getNazione() != null &&
-                                    this.getFornitore().getAnagrafico().getComune_fiscale().getNazione().getDivisa() != null)) {
-                dettaglio.setAmmontare_divisa(dettaglio.getAmmontare_divisa().add(riga.getIm_totale_divisa()));
-            }
-        }
-        dettaglio.setModalita_trasportoColl(getModalita_trasportoColl());
-        dettaglio.setCondizione_consegnaColl(getCondizione_consegnaColl());
-        dettaglio.setModalita_incassoColl(getModalita_incassoColl());
-        dettaglio.setModalita_erogazioneColl(getModalita_erogazioneColl());
+        fattura_passiva_ordini.add(fatturaOrdineBulk);
+        setToBeCreated();
 
-        fattura_passiva_intrastatColl.add(dettaglio);
-        return fattura_passiva_intrastatColl.size() - 1;
+        return fattura_passiva_ordini.size() - 1;
     }
 
     public void addToFattura_passiva_obbligazioniHash(
@@ -491,16 +476,7 @@ public abstract class Fattura_passivaBulk
             removeFromDocumentiContabiliCancellati(obbligazione);
     }
 
-    public void addToFatturaRigaOrdiniHash(
-            Fattura_passiva_rigaBulk rigaFattura,
-            FatturaOrdineBulk fatturaOrdineBulk) {
-        fatturaRigaOrdiniHash = Optional.ofNullable(fatturaRigaOrdiniHash)
-                                    .orElseGet(() -> new FatturaRigaOrdiniTable());
-        rigaFattura.addToFatturaOrdineColl(fatturaOrdineBulk);
-        fatturaRigaOrdiniHash.put(rigaFattura, rigaFattura.getFatturaOrdineColl());
-    }
-
-    public int addToRiferimenti_bancari(Fattura_passiva_rigaBulk os) {
+      public int addToRiferimenti_bancari(Fattura_passiva_rigaBulk os) {
         riferimenti_bancari.add(os);
         os.setFattura_passiva(this);
 
@@ -522,7 +498,9 @@ public abstract class Fattura_passivaBulk
             for (Iterator i = getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
                 if (!riga.isAnnullato()) {
-                    riga.calcolaCampiDiRiga();
+                    if (!isDaOrdini()){
+                        riga.calcolaCampiDiRiga();
+                    }
                     totaleImponibileDivisa = totaleImponibileDivisa.add(riga.getIm_totale_divisa());
                     imp = imp.add(riga.getIm_imponibile());
                     iva = iva.add(riga.getIm_iva());
@@ -709,6 +687,7 @@ public abstract class Fattura_passivaBulk
                 fattura_passiva_dettColl,
                 fattura_passiva_intrastatColl,
                 riferimenti_bancari,
+                fattura_passiva_ordini,
                 docEleAllegatiColl
         };
     }
@@ -1161,13 +1140,6 @@ public abstract class Fattura_passivaBulk
         fattura_passiva_obbligazioniHash = newFattura_passiva_obbligazioniHash;
     }
 
-    public FatturaRigaOrdiniTable getFatturaRigaOrdiniHash() {
-        return fatturaRigaOrdiniHash;
-    }
-
-    public void setFatturaRigaOrdiniHash(FatturaRigaOrdiniTable fatturaRigaOrdiniHash) {
-        this.fatturaRigaOrdiniHash = fatturaRigaOrdiniHash;
-    }
 
     /**
      * Insert the method's description here.
@@ -2825,14 +2797,25 @@ public abstract class Fattura_passivaBulk
         if (element != null && element.getObbligazione_scadenziario() != null)
             removeFromFattura_passiva_obbligazioniHash(element);
 
-        Optional.ofNullable(element)
-                .ifPresent(fattura_passiva_rigaBulk -> removeFromFatturaRigaOrdiniHash(fattura_passiva_rigaBulk));
+        return (Fattura_passiva_rigaBulk) fattura_passiva_dettColl.remove(indiceDiLinea);
+    }
+
+    public Fattura_passiva_rigaBulk removeFromFattura_passiva_ordini(int indiceDiLinea) {
+
         return (Fattura_passiva_rigaBulk) fattura_passiva_dettColl.remove(indiceDiLinea);
     }
 
     public Fattura_passiva_intraBulk removeFromFattura_passiva_intrastatColl(int index) {
 
         return (Fattura_passiva_intraBulk) fattura_passiva_intrastatColl.remove(index);
+    }
+
+    public BulkList getFattura_passiva_ordini() {
+        return fattura_passiva_ordini;
+    }
+
+    public void setFattura_passiva_ordini(BulkList fattura_passiva_ordini) {
+        this.fattura_passiva_ordini = fattura_passiva_ordini;
     }
 
     public void removeFromFattura_passiva_obbligazioniHash(
@@ -2847,14 +2830,6 @@ public abstract class Fattura_passivaBulk
             }
         } else
             addToDocumentiContabiliCancellati(rigaFattura.getObbligazione_scadenziario());
-    }
-
-    public void removeFromFatturaRigaOrdiniHash(
-            Fattura_passiva_rigaBulk rigaFattura) {
-        Optional.ofNullable(fatturaRigaOrdiniHash)
-                .ifPresent(fatturaRigaOrdiniTable -> fatturaRigaOrdiniTable.remove(rigaFattura));
-        Optional.ofNullable(rigaFattura.getFatturaOrdineColl())
-                .ifPresent(fatturaOrdineBulks -> fatturaOrdineBulks.clear());
     }
 
     /**
@@ -3546,5 +3521,41 @@ public abstract class Fattura_passivaBulk
     @Override
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
+    }
+
+    public BigDecimal getTotaleImponibileFatturaElettronica() {
+        BigDecimal importo = BigDecimal.ZERO;
+        if (isElettronica()){
+            for (Iterator i = getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+                DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+                String key = null;
+                Hashtable<String, BigDecimal> currentMap = null;
+                if (rigaEle.getImponibileImporto() != null) {
+                    importo = importo.add(rigaEle.getImponibileImporto());
+                }
+            }
+        }
+        return importo;
+    }
+
+    public BigDecimal getTotaleIvaFatturaElettronica() {
+        BigDecimal importo = BigDecimal.ZERO;
+        if (isElettronica()){
+            for (Iterator i = getDocumentoEleTestata().getDocEleIVAColl().iterator(); i.hasNext(); ) {
+                DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
+                String key = null;
+                Hashtable<String, BigDecimal> currentMap = null;
+                if (rigaEle.getImposta() != null) {
+                    importo = importo.add(rigaEle.getImposta());
+                }
+            }
+        }
+        return importo;
+    }
+
+    public boolean isDaOrdini(){
+        return  Optional.ofNullable(getFlDaOrdini())
+                .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
+                .orElse(false);
     }
 }

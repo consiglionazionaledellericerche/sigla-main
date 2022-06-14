@@ -83,7 +83,7 @@ public Forward doBringBackCRUDCreaTerzo(ActionContext context, PendenzaPagopaBul
 /**
  * Gestisce un comando di cancellazione.
  */
-public Forward doElimina(ActionContext context) throws java.rmi.RemoteException {
+public Forward doElimina(ActionContext context) throws RemoteException {
 	try {
 		fillModel(context);
 
@@ -132,7 +132,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 		int count = ri.countElements();
 		if (count == 0) {
 			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
-			throw new it.cnr.jada.comp.ApplicationException("Nessun Pagamento Esistente");
+			throw new ApplicationException("Nessun Pagamento Esistente");
 			} else {
 			ConsultazioniBP nbp = (ConsultazioniBP)context.createBusinessProcess("CRUDConsPagamentoPagopaBP");
 			nbp.setIterator(context,ri);

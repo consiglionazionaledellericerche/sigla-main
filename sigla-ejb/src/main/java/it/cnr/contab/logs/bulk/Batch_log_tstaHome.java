@@ -31,12 +31,12 @@ public class Batch_log_tstaHome extends BulkHome
 
     public Batch_log_tstaHome(Connection connection)
     {
-        super(it.cnr.contab.logs.bulk.Batch_log_tstaBulk.class, connection);
+        super(Batch_log_tstaBulk.class, connection);
     }
 
     public Batch_log_tstaHome(Connection connection, PersistentCache persistentcache)
     {
-        super(it.cnr.contab.logs.bulk.Batch_log_tstaBulk.class, connection, persistentcache);
+        super(Batch_log_tstaBulk.class, connection, persistentcache);
     }
     public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
         Batch_log_tstaBulk batch = (Batch_log_tstaBulk)bulk;

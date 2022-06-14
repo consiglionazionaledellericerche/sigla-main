@@ -35,16 +35,7 @@ import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoAttivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteBulk;
-import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrBulk;
-import it.cnr.contab.doccont00.core.bulk.V_pdg_obbligazione_speBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
@@ -52,6 +43,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -76,12 +68,18 @@ public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
 	private final SimpleDetailCRUDController lineeDiAttivita = new SimpleDetailCRUDController("LineeDiAttivita",V_pdg_accertamento_etrBulk.class,"lineeAttivitaColl",this);
 	private final SimpleDetailCRUDController nuoveLineeDiAttivita = new SimpleDetailCRUDController("NuoveLineeDiAttivita",Linea_attivitaBulk.class,"nuoveLineeAttivitaColl",this);
 
+	private final SimpleDetailCRUDController crudAccertamento_pluriennale = new SimpleDetailCRUDController("AccertamentiPluriennali", Accertamento_pluriennaleBulk.class,"accertamentiPluriennali",this);
+
+
+
 	// "editingScadenza" viene messo a True solo quando si modifica una scadenza (bottone "editing scadenza")
 	private boolean editingScadenza = false;
 	private boolean siope_attiva = false;
 	private boolean enableVoceNext = false;
 
-public CRUDAccertamentoBP() {
+
+
+	public CRUDAccertamentoBP() {
 	super();
 	setTab("tab","tabAccertamento");			// Mette il fuoco sul primo TabAccertamento di Tab
 	setTab("tabScadenzario","tabScadenza");
@@ -1019,4 +1017,10 @@ public boolean isCopiaAccertamentoButtonHidden() {
 	
 	return isEditOnly();
 }
+
+	public SimpleDetailCRUDController getCrudAccertamento_pluriennale() {
+		return crudAccertamento_pluriennale;
+	}
+
+
 }

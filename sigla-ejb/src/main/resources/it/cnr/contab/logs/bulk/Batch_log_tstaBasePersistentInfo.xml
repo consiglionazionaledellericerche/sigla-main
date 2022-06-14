@@ -77,11 +77,6 @@
 			propertyName="pg_batch"
 			sqlTypeName="DECIMAL"
 			columnSize="22" />
-		<columnMapping
-				columnName="CD_LOG_TIPO"
-				propertyName="cd_log_tipo"
-				sqlTypeName="VARCHAR"
-				columnSize="20" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_errori" />
@@ -93,8 +88,6 @@
 		name="dacr" />
 	<persistentProperty
 		name="ds_log" />
-	<persistentProperty
-			name="cd_log_tipo" />
 	<persistentProperty
 		name="duva" />
 	<persistentProperty

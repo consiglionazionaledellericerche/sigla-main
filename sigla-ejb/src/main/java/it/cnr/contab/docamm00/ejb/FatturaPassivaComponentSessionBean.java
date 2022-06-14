@@ -1336,13 +1336,13 @@ public class FatturaPassivaComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
         }
     }
 
-    public List<EvasioneOrdineRigaBulk> findContabilizzaRigaByClause(UserContext userContext,
-                                                                     Fattura_passiva_rigaBulk fatturaPassivaRiga,
+    public List<EvasioneOrdineRigaBulk> findRicercaOrdiniByClause(UserContext userContext,
+                                                                     Fattura_passivaBulk fatturaPassiva,
                                                                      CompoundFindClause findclause)
             throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
         pre_component_invocation(userContext, componentObj);
         try {
-            List<EvasioneOrdineRigaBulk> result = (((FatturaPassivaComponent) componentObj).findContabilizzaRigaByClause(userContext, fatturaPassivaRiga, findclause));
+            List<EvasioneOrdineRigaBulk> result = (((FatturaPassivaComponent) componentObj).findRicercaOrdiniByClause(userContext, fatturaPassiva, findclause));
             component_invocation_succes(userContext, componentObj);
             return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {

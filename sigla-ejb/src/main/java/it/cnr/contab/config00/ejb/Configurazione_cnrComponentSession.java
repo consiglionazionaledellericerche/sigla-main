@@ -85,9 +85,9 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(UserContext userContext) throws ComponentException, RemoteException;
 
-    Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
+    Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, RemoteException;
 
-    Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
+    Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, RemoteException;
 
     Boolean isAttivaEconomica(UserContext userContext) throws ComponentException, RemoteException;
 
@@ -102,6 +102,9 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     Boolean isImpegnoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
 
     Boolean isAccertamentoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
+
+
+    Boolean isAttachRestContrStoredFromSigla(UserContext userContext)throws ComponentException, RemoteException;
 
     Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException;
 

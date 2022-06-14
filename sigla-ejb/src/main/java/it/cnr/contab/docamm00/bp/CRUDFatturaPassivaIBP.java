@@ -422,5 +422,16 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 			throw handleException(ex);
 		}
 	}
+	public boolean isSelezionaOrdiniButtonEnabled() {
+
+		return (isEditing() || isInserting()) && getModel() != null
+				&& !((Fattura_passivaBulk) getModel()).isGenerataDaCompenso()
+				&& (isAnnoDiCompetenza());
+	}
+
+	public boolean isSelezionaOrdiniButtonHidden() {
+
+		return isSearching() || isDeleting();
+	}
 
 }

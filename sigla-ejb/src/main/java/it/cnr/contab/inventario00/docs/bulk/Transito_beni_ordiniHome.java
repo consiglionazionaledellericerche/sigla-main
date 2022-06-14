@@ -27,6 +27,8 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -121,4 +123,15 @@ public Transito_beni_ordiniHome(java.sql.Connection conn, PersistentCache persis
 	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
 		return super.completeBulkRowByRow(userContext, persistent);
 	}
+	public List findTransitiBeniOrdini(MovimentiMagBulk movimento) throws PersistencyException {
+		SQLBuilder sqlBuilder = createSQLBuilder();
+		sqlBuilder.openParenthesis(FindClause.AND);
+		sqlBuilder.addSQLClause(FindClause.OR, "STATO", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_COMPLETO);
+		sqlBuilder.addSQLClause(FindClause.OR, "STATO", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_INSERITO);
+		sqlBuilder.addSQLClause(FindClause.OR, "STATO", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_TRASFERITO);
+		sqlBuilder.closeParenthesis();
+		sqlBuilder.addSQLClause(FindClause.AND, "ID_MOVIMENTI_MAG", SQLBuilder.EQUALS, movimento.getPgMovimento());
+		return fetchAll(sqlBuilder);
+	}
+
 }

@@ -51,6 +51,52 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 	public FatturaOrdineBulk() {
 		super();
 	}
+	BigDecimal imponibilePerNotaCredito;
+	BigDecimal importoIvaPerNotaCredito;
+	BigDecimal totaleConsegnaPerNotaCredito;
+
+	public BigDecimal getTotaleConsegnaPerNotaCredito() {
+		return totaleConsegnaPerNotaCredito;
+	}
+
+	public void setTotaleConsegnaPerNotaCredito(BigDecimal totaleConsegnaPerNotaCredito) {
+		this.totaleConsegnaPerNotaCredito = totaleConsegnaPerNotaCredito;
+	}
+
+	public BigDecimal getImponibilePerNotaCredito() {
+		return imponibilePerNotaCredito;
+	}
+
+	public void setImponibilePerNotaCredito(BigDecimal imponibilePerNotaCredito) {
+		this.imponibilePerNotaCredito = imponibilePerNotaCredito;
+	}
+
+	public BigDecimal getImportoIvaPerNotaCredito() {
+		return importoIvaPerNotaCredito;
+	}
+
+	public void setImportoIvaPerNotaCredito(BigDecimal importoIvaPerNotaCredito) {
+		this.importoIvaPerNotaCredito = importoIvaPerNotaCredito;
+	}
+
+	public BigDecimal getImportoIvaDetraibilePerNotaCredito() {
+		return importoIvaDetraibilePerNotaCredito;
+	}
+
+	public void setImportoIvaDetraibilePerNotaCredito(BigDecimal importoIvaDetraibilePerNotaCredito) {
+		this.importoIvaDetraibilePerNotaCredito = importoIvaDetraibilePerNotaCredito;
+	}
+
+	public BigDecimal getImportoIvaIndPerNotaCredito() {
+		return importoIvaIndPerNotaCredito;
+	}
+
+	public void setImportoIvaIndPerNotaCredito(BigDecimal importoIvaIndPerNotaCredito) {
+		this.importoIvaIndPerNotaCredito = importoIvaIndPerNotaCredito;
+	}
+
+	BigDecimal importoIvaDetraibilePerNotaCredito;
+	BigDecimal importoIvaIndPerNotaCredito;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: FATTURA_ORDINE
@@ -342,5 +388,17 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
         setImIva(getImImponibile().multiply(percentualeIva)
 				.divide(BigDecimal.TEN.multiply(BigDecimal.TEN)).setScale(2, RoundingMode.HALF_UP));
         setImTotaleConsegna(getImImponibile().add(getImIva()));
+	}
+	public BigDecimal getImponibilePerRigaFattura() {
+		if (getImponibilePerNotaCredito() != null && getImponibilePerNotaCredito().compareTo(BigDecimal.ZERO) > 0){
+			return getImponibilePerNotaCredito();
+		}
+		return getImImponibile();
+	}
+	public BigDecimal getIvaPerRigaFattura() {
+		if (getImportoIvaPerNotaCredito() != null && getImportoIvaPerNotaCredito().compareTo(BigDecimal.ZERO) > 0){
+			return getImportoIvaPerNotaCredito();
+		}
+		return getImIva();
 	}
 }

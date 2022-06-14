@@ -36,11 +36,11 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
         componentObj = new BatchControlComponent();
     }
 	@Remove
-	public void ejbRemove() throws javax.ejb.EJBException {
+	public void ejbRemove() throws EJBException {
 		componentObj.release();
 	}
 	
-	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
+	public static CRUDComponentSessionBean newInstance() throws EJBException {
         return new BatchControlComponentSessionBean();
     }
 

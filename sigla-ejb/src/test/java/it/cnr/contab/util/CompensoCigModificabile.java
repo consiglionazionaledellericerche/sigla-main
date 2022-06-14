@@ -35,7 +35,7 @@ public class CompensoCigModificabile {
         final CompensoBulk compensoBulk = new CompensoBulk();
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(!crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(!crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -50,7 +50,7 @@ public class CompensoCigModificabile {
         compensoBulk.setTipoTrattamento(tipo_trattamentoBulk);
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(!crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(!crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -65,7 +65,7 @@ public class CompensoCigModificabile {
         compensoBulk.setTipoTrattamento(tipo_trattamentoBulk);
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(!crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(!crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -89,7 +89,7 @@ public class CompensoCigModificabile {
 
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -114,7 +114,7 @@ public class CompensoCigModificabile {
 
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -138,7 +138,7 @@ public class CompensoCigModificabile {
 
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -165,7 +165,7 @@ public class CompensoCigModificabile {
 
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(!crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(!crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }
@@ -187,7 +187,7 @@ public class CompensoCigModificabile {
 
         try {
             crudCompensoBP.setModel(null, compensoBulk);
-            Assert.isTrue(crudCompensoBP.isCigModificabile(), "CIG non modificabile");
+            Assert.isTrue(crudCompensoBP.isCigModificabile());
         } catch (BusinessProcessException e) {
         }
     }

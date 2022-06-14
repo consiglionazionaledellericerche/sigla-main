@@ -49,7 +49,6 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -80,11 +79,7 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 				EJBCommonServices.closeRemoteIterator(actioncontext,bp.detachIterator());
 				bp.setIterator(actioncontext, ((RimodulaProgettoRicercaComponentSession)
 						bp.createComponentSession("CNRPROGETTIRIC00_EJB_RimodulaProgettoRicercaComponentSession", RimodulaProgettoRicercaComponentSession.class)).
-						cerca(actioncontext.getUserContext(), Optional.ofNullable(bp.getCondizioneCorrente())
-								.map(CondizioneComplessaBulk::creaFindClause)
-								.filter(CompoundFindClause.class::isInstance)
-								.map(CompoundFindClause.class::cast)
-								.orElseGet(() -> new CompoundFindClause()), bulk));
+						cerca(actioncontext.getUserContext(), null, bulk));
 				bp.refresh(actioncontext);
 				bulk.setStato(statoRimodulazione);
 				return actioncontext.findDefaultForward();

@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
  *
- *     This program is free software: you can redistribute it and/or modify *     it under the terms of the GNU Affero General Public License as
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
  *     published by the Free Software Foundation, either version 3 of the
  *     License, or (at your option) any later version.
  *
@@ -765,6 +766,18 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		this.tot_doccont_cont_etr = tot_doccont_cont_etr;
 	}
 
+	public java.lang.String getCd_tipo_norma_perla () {
+		if(getTipoNormaPerla() != null)
+			return getTipoNormaPerla().getCd_tipo_norma();
+		return null;
+	}
+	/*
+	 *  (non-Javadoc)
+	 * @see it.cnr.contab.config00.contratto.bulk.ContrattoBase#setCd_tipo_contratto(java.lang.String)
+	 */
+	public void setCd_tipo_norma_perla(java.lang.String cd_tipo_norma_perla)  {
+		this.getTipoNormaPerla().setCd_tipo_norma(cd_tipo_norma_perla);
+	}
 
 	public BulkList<AllegatoContrattoDocumentBulk> getArchivioAllegati() {
 		return archivioAllegati;

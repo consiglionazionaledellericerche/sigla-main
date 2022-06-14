@@ -35,7 +35,7 @@ import java.util.UUID;
 
 @Stateless(name = "CNRCONFIG00_EJB_Configurazione_cnrComponentSession")
 public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements Configurazione_cnrComponentSession {
-    private it.cnr.contab.config00.comp.Configurazione_cnrComponent componentObj;
+    private Configurazione_cnrComponent componentObj;
     private transient final static Logger logger = LoggerFactory.getLogger(Configurazione_cnrComponentSessionBean.class);
 
     public static Configurazione_cnrComponentSessionBean newInstance() throws EJBException {
@@ -60,10 +60,10 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
 
     @PostConstruct
     public void ejbCreate() {
-        componentObj = new it.cnr.contab.config00.comp.Configurazione_cnrComponent();
+        componentObj = new Configurazione_cnrComponent();
     }
 
-    public void shutdowHook() throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException{
+    public void shutdowHook() throws ComponentException, EJBException{
         UserContext param0 = new AdminUserContext(UUID.randomUUID().toString());
         pre_component_invocation(param0, componentObj);
         try {
@@ -537,7 +537,6 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
         }
     }
 
-
     @Override
     public Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, RemoteException {
         pre_component_invocation(userContext, componentObj);
@@ -714,6 +713,26 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
             throw uncaughtRuntimeException(param0, componentObj, e);
         } catch (Error e) {
             throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    @Override
+    public Boolean isAttachRestContrStoredFromSigla(UserContext userContext) throws ComponentException, RemoteException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            Boolean result = componentObj.isAttachRestContrStoredFromSigla(userContext);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
         }
     }
 

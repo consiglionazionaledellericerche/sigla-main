@@ -41,7 +41,7 @@ public class Sospeso_det_etrHome extends BulkHome {
  *
  * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
  */
-public Sospeso_det_etrHome(java.sql.Connection conn) {
+public Sospeso_det_etrHome(Connection conn) {
 	super(Sospeso_det_etrBulk.class,conn);
 }
 /**
@@ -51,13 +51,13 @@ public Sospeso_det_etrHome(java.sql.Connection conn) {
  * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
  * @param persistentCache	La PersistentCache in cui vengono cachati gli oggetti persistenti caricati da questo Home
  */
-public Sospeso_det_etrHome(java.sql.Connection conn,PersistentCache persistentCache) {
+public Sospeso_det_etrHome(Connection conn, PersistentCache persistentCache) {
 	super(Sospeso_det_etrBulk.class,conn,persistentCache);
 }
 /*
  * Calcola la somma degli importi dei dettagli della reversale associati al riscontro.
 */
-public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws IntrospectionException, it.cnr.jada.persistency.PersistencyException
+public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws IntrospectionException, PersistencyException
 	{
 
 		BigDecimal impTotale = Utility.ZERO;

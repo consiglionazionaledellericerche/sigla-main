@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.jada.action.ActionContext;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public class ContabilizzaOrdineBP extends SelezionatoreListaBP implements SearchProvider {
 
-    private Fattura_passiva_rigaBulk fattura_passiva_rigaBulk;
+    private Fattura_passivaBulk fattura_passivaBulk;
 
     public ContabilizzaOrdineBP(String s) {
         super(s);
@@ -46,8 +47,8 @@ public class ContabilizzaOrdineBP extends SelezionatoreListaBP implements Search
         setColumns(getBulkInfo().getColumnFieldPropertyDictionary("fattura_passiva"));
     }
 
-    public void setFattura_passiva_rigaBulk(Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) {
-        this.fattura_passiva_rigaBulk = fattura_passiva_rigaBulk;
+    public void setFattura_passivaBulk(Fattura_passivaBulk fattura_passivaBulk) {
+        this.fattura_passivaBulk = fattura_passivaBulk;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ContabilizzaOrdineBP extends SelezionatoreListaBP implements Search
                     ((RicercaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession"))
                             .cerca(
                                 actioncontext.getUserContext(), compoundfindclause,
-                                oggettobulk, fattura_passiva_rigaBulk, "contabilizzaRiga"
+                                oggettobulk, fattura_passivaBulk, "ricercaOrdini"
                             )
             );
         } catch (Exception exception) {

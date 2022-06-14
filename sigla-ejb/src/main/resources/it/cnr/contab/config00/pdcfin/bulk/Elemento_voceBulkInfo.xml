@@ -18,10 +18,10 @@
 
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xmlns="https://contab.cnr.it/schema/SIGLA"
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
-	<fieldProperty 
+	<fieldProperty
 		name="find_elemento_padre"
 		property="elemento_padre"
 		inputType="SEARCHTOOL"
@@ -73,369 +73,369 @@
 		enabledOnEdit="false"
 		/>
 
-	<fieldProperty
-		name="fl_limite_ass_obblig"
-		property="fl_limite_ass_obblig"
-		label="Controllo limite ass."
-		enabledOnEdit="false"		
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" 
-		/>
+    <fieldProperty
+            name="fl_limite_ass_obblig"
+            property="fl_limite_ass_obblig"
+            label="Controllo limite ass."
+            enabledOnEdit="false"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+    />
 
-	<fieldProperty
-		name="fl_voce_personale"
-		property="fl_voce_personale"
-		label="Voce del personale"
-		enabledOnEdit="false"		
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" 
-		/>
+    <fieldProperty
+            name="fl_voce_personale"
+            property="fl_voce_personale"
+            label="Voce del personale"
+            enabledOnEdit="false"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+    />
 
-	<fieldProperty
-		name="ds_elemento_voce"
-		property="ds_elemento_voce"
-		label="Descrizione"
-		inputType="TEXT"
-		maxLength="300"
-		inputSize="60"
-		enabledOnSearch="true"
-		/>
-	<fieldProperty
-		name="searchtool_ds_elemento_voce"
-		property="ds_elemento_voce"
-		label="Descrizione"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="300"
-		enabledOnSearch="true"
-		/>
-	<fieldProperty
-		name="simple_searchtool_ds_elemento_voce"
-		property="ds_elemento_voce"
-		label="Descrizione"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="300"
-		enabledOnSearch="false"
-		/>
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		label="Esercizio"
-		inputType="TEXT"
-		maxLength="4"
-		inputSize="6"
-		enabledOnEdit="false"
-		enabledOnInsert="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" 
-		/>
-	<fieldProperty
-		name="ti_appartenenza"
-		property="ti_appartenenza"
-		keysProperty="ti_appartenenzaKeys"
-		label="Appartenenza"
-		inputType="SELECT"
-		/>
-	<fieldProperty
-		name="ti_elemento_voce"
-		property="ti_elemento_voce"
-		label="ti_elemento_voce"
-		inputType="TEXT"
-		/>
-	<fieldProperty
-		name="ti_gestione"
-		property="ti_gestione"
-		keysProperty="ti_gestioneKeys"
-		label="Gestione"
-		inputType="SELECT"
-		/>
-	<fieldProperty
-		name="fl_partita_giro"
-		property="fl_partita_giro"
-		label="Partita di giro"
-		enabledOnEdit="false"
-		enabledOnInsert="false"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" 
-		/>
-	<fieldProperty
-		name="fl_missioni"
-		property="fl_missioni"
-		label="Utilizzabile per Missioni"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="find_capoconto_fin"
-		property="capoconto_fin"
-		inputType="SEARCHTOOL"
-		label="Categoria Economica/Finanziaria"
-		formName="searchtool"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		/>
-	<fieldProperty
-		name="cd_capoconto_fin"
-		property="capoconto_fin.cd_capoconto_fin"
-		label="Categoria Economica/Finanziaria"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="4"
-		readonlyProperty="ROCapocontoFin"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		/>
-	<fieldProperty
-		name="ds_capoconto_fin"
-		property="capoconto_fin.ds_capoconto_fin"
-		inputSize="20"
-		label="Descrizione Categoria Economica/Finanziaria"
-		inputType="ROTEXT"
-		/>
-	<fieldProperty
-		name="classificazione_entrate"
-		property="classificazione_entrate"
-		inputType="SEARCHTOOL"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="Classificazione di Entrata" />		
-	<fieldProperty
-		name="esercizio_cla_e"
-		property="classificazione_entrate.esercizio"
-		maxLength="4"
-		inputSize="4"
-		inputType="TEXT"
-		label="Esercizio Classificazione Entrata" />
-	<fieldProperty
-		name="cod_cla_e"
-		property="classificazione_entrate.codice_cla_e"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="Codice Classificazione Entrata"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="classificazione_spese"
-		property="classificazione_spese"
-		inputType="SEARCHTOOL"
-		formName="searchtoolbase"
-		enabledOnSearch="true"
-		label="Classificazione di Spesa" />		
-	<fieldProperty
-		name="esercizio_cla_s"
-		property="classificazione_spese.esercizio"
-		maxLength="4"
-		inputSize="4"
-		inputType="TEXT"
-		label="Esercizio Classificazione Spesa" />
-	<fieldProperty
-		name="cod_cla_s"
-		property="classificazione_spese.codice_cla_s"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="Codice Classificazione Spesa"
-		caseSensitiveSearch="false" />						
-	<fieldProperty
-		name="fl_recon"
-		property="fl_recon"
-		label="Soggetto a controllo indicazione contratto su Documento Contabile"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="id_classificazione"
-		property="v_classificazione_voci.id_classificazione"
-		maxLength="7"
-		inputSize="7"
-		inputType="TEXT"
-		enabledOnEdit="false"
-		enabledOnInsert="false"				
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false" 
-		label="Identificativo Classificazione Ufficiale" />
-	<fieldProperty
-		name="cd_classificazione"
-		property="v_classificazione_voci.cd_classificazione"
-		maxLength="34"
-		inputSize="34"
-		inputType="TEXT"
-		enabledOnEdit="false"
-		enabledOnInsert="false"				
-		label="Codice Classificazione Ufficiale" />
-	<fieldProperty
-		name="find_classificazione_voci"
-		property="v_classificazione_voci"
-		inputType="SEARCHTOOL"
-		formName="searchtool"
-		columnSet="searchtool"
-		freeSearchSet="searchtool"
-		enabledOnSearch="true"
-		label="Classificazione Ufficiale" />		
-	<fieldProperty
-		name="fl_voce_fondo"
-		property="fl_voce_fondo"
-		label="Fondo di spesa"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="fl_inv_beni_patr"
-		property="fl_inv_beni_patr"
-		label="Obbliga Inventariazione per Beni Patrimoniali"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" 
-		/>
-	<fieldProperty
-		name="fl_check_terzo_siope"
-		property="fl_check_terzo_siope"
-		label="Obbligo di congruenza tra Tipologia Istat del Terzo e del Codice SIOPE su Mandati/Reversali"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="fl_inv_beni_comp"
-		property="fl_inv_beni_comp"
-		label="Soggetta ad inventario utilizzabile da Compenso"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />	
-	<fieldProperty
-		name="fl_limite_spesa"
-		property="fl_limite_spesa"
-		label="Soggetto a limite spesa"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />	
-	<fieldProperty
-		name="fl_soggetto_prelievo"
-		property="fl_soggetto_prelievo"
-		label="Soggetto a prelievo"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="fl_prelievo"
-		property="fl_prelievo"
-		label="Utilizzato per prelievo"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />	
-	<fieldProperty
-		name="perc_prelievo_pdgp_entrate"
-		property="perc_prelievo_pdgp_entrate"
-		label="Percentuale di prelievo" 
-		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
-		inputType="TEXT"
-		inputSize="7"
-		maxLength="7"
-		nullable="true" />			
-	<fieldProperty
-		name="fl_solo_competenza"
-		property="fl_solo_competenza"
-		label="Solo competenza"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="fl_solo_residuo"
-		property="fl_solo_residuo"
-		label="Solo residuo"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />		
-	<fieldProperty
-		name="fl_azzera_residui"
-		property="fl_azzera_residui"
-		label="Azzera residuo"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />			
-	<fieldProperty
-		name="fl_trovato"
-		property="fl_trovato"
-		keysProperty="indicazioneTrovatoKeys"
-		label="Capitolo per documenti amministrativi collegati con Brevetti/Trovati"
-		enabledOnEdit="true"
-		enabledOnInsert="true"				
-		inputType="SELECT"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true" />
-	<fieldProperty
-		name="voce_piano_economico"
-		property="voce_piano_economico"
-		inputType="SEARCHTOOL"
-		formName="searchtool"
-		label="Voce del piano economico" />
-	<fieldProperty
-		name="gg_deroga_obbl_comp_prg_scad"
-		property="gg_deroga_obbl_comp_prg_scad"
-		label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di competenza"
-		inputType="TEXT"
-		maxLength="10" />
-	<fieldProperty
-		name="gg_deroga_obbl_res_prg_scad"
-		property="gg_deroga_obbl_res_prg_scad"
-		label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo"
-		inputType="TEXT"
-		maxLength="10" />
-	<fieldProperty
-		name="flComunicaPagamenti"
-		property="flComunicaPagamenti"
-		label="Pubblica Pagamenti"
-		enabledOnEdit="true"
-		enabledOnInsert="true"
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="fl_limite_competenza"
-		property="fl_limite_competenza"
-		label="Applicazione Limite Competenza"
-		enabledOnEdit="true"
-		enabledOnInsert="true"
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="blocco_impegni_natfin"
-		property="blocco_impegni_natfin"
-		keysProperty="blocco_impegni_natfinKeys"
-		label="Blocco Impegni per Natura/Finanziamento"
-		inputType="SELECT"
-		nullable="false"
-		enabledOnEdit="true"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"/>
+    <fieldProperty
+            name="ds_elemento_voce"
+            property="ds_elemento_voce"
+            label="Descrizione"
+            inputType="TEXT"
+            maxLength="300"
+            inputSize="60"
+            enabledOnSearch="true"
+    />
+    <fieldProperty
+            name="searchtool_ds_elemento_voce"
+            property="ds_elemento_voce"
+            label="Descrizione"
+            inputType="TEXT"
+            inputSize="20"
+            maxLength="300"
+            enabledOnSearch="true"
+    />
+    <fieldProperty
+            name="simple_searchtool_ds_elemento_voce"
+            property="ds_elemento_voce"
+            label="Descrizione"
+            inputType="TEXT"
+            inputSize="20"
+            maxLength="300"
+            enabledOnSearch="false"
+    />
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            label="Esercizio"
+            inputType="TEXT"
+            maxLength="4"
+            inputSize="6"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+    />
+    <fieldProperty
+            name="ti_appartenenza"
+            property="ti_appartenenza"
+            keysProperty="ti_appartenenzaKeys"
+            label="Appartenenza"
+            inputType="SELECT"
+    />
+    <fieldProperty
+            name="ti_elemento_voce"
+            property="ti_elemento_voce"
+            label="ti_elemento_voce"
+            inputType="TEXT"
+    />
+    <fieldProperty
+            name="ti_gestione"
+            property="ti_gestione"
+            keysProperty="ti_gestioneKeys"
+            label="Gestione"
+            inputType="SELECT"
+    />
+    <fieldProperty
+            name="fl_partita_giro"
+            property="fl_partita_giro"
+            label="Partita di giro"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+    />
+    <fieldProperty
+            name="fl_missioni"
+            property="fl_missioni"
+            label="Utilizzabile per Missioni"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="find_capoconto_fin"
+            property="capoconto_fin"
+            inputType="SEARCHTOOL"
+            label="Categoria Economica/Finanziaria"
+            formName="searchtool"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+    />
+    <fieldProperty
+            name="cd_capoconto_fin"
+            property="capoconto_fin.cd_capoconto_fin"
+            label="Categoria Economica/Finanziaria"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="4"
+            readonlyProperty="ROCapocontoFin"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+    />
+    <fieldProperty
+            name="ds_capoconto_fin"
+            property="capoconto_fin.ds_capoconto_fin"
+            inputSize="20"
+            label="Descrizione Categoria Economica/Finanziaria"
+            inputType="ROTEXT"
+    />
+    <fieldProperty
+            name="classificazione_entrate"
+            property="classificazione_entrate"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            enabledOnSearch="true"
+            label="Classificazione di Entrata"/>
+    <fieldProperty
+            name="esercizio_cla_e"
+            property="classificazione_entrate.esercizio"
+            maxLength="4"
+            inputSize="4"
+            inputType="TEXT"
+            label="Esercizio Classificazione Entrata"/>
+    <fieldProperty
+            name="cod_cla_e"
+            property="classificazione_entrate.codice_cla_e"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="Codice Classificazione Entrata"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="classificazione_spese"
+            property="classificazione_spese"
+            inputType="SEARCHTOOL"
+            formName="searchtoolbase"
+            enabledOnSearch="true"
+            label="Classificazione di Spesa"/>
+    <fieldProperty
+            name="esercizio_cla_s"
+            property="classificazione_spese.esercizio"
+            maxLength="4"
+            inputSize="4"
+            inputType="TEXT"
+            label="Esercizio Classificazione Spesa"/>
+    <fieldProperty
+            name="cod_cla_s"
+            property="classificazione_spese.codice_cla_s"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="Codice Classificazione Spesa"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="fl_recon"
+            property="fl_recon"
+            label="Soggetto a controllo indicazione contratto su Documento Contabile"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="id_classificazione"
+            property="v_classificazione_voci.id_classificazione"
+            maxLength="7"
+            inputSize="7"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            label="Identificativo Classificazione Ufficiale"/>
+    <fieldProperty
+            name="cd_classificazione"
+            property="v_classificazione_voci.cd_classificazione"
+            maxLength="34"
+            inputSize="34"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            label="Codice Classificazione Ufficiale"/>
+    <fieldProperty
+            name="find_classificazione_voci"
+            property="v_classificazione_voci"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            columnSet="searchtool"
+            freeSearchSet="searchtool"
+            enabledOnSearch="true"
+            label="Classificazione Ufficiale"/>
+    <fieldProperty
+            name="fl_voce_fondo"
+            property="fl_voce_fondo"
+            label="Fondo di spesa"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_inv_beni_patr"
+            property="fl_inv_beni_patr"
+            label="Obbliga Inventariazione per Beni Patrimoniali"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+    />
+    <fieldProperty
+            name="fl_check_terzo_siope"
+            property="fl_check_terzo_siope"
+            label="Obbligo di congruenza tra Tipologia Istat del Terzo e del Codice SIOPE su Mandati/Reversali"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_inv_beni_comp"
+            property="fl_inv_beni_comp"
+            label="Soggetta ad inventario utilizzabile da Compenso"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_limite_spesa"
+            property="fl_limite_spesa"
+            label="Soggetto a limite spesa"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_soggetto_prelievo"
+            property="fl_soggetto_prelievo"
+            label="Soggetto a prelievo"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_prelievo"
+            property="fl_prelievo"
+            label="Utilizzato per prelievo"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="perc_prelievo_pdgp_entrate"
+            property="perc_prelievo_pdgp_entrate"
+            label="Percentuale di prelievo"
+            formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+            inputType="TEXT"
+            inputSize="7"
+            maxLength="7"
+            nullable="true"/>
+    <fieldProperty
+            name="fl_solo_competenza"
+            property="fl_solo_competenza"
+            label="Solo competenza"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_solo_residuo"
+            property="fl_solo_residuo"
+            label="Solo residuo"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_azzera_residui"
+            property="fl_azzera_residui"
+            label="Azzera residuo"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_trovato"
+            property="fl_trovato"
+            keysProperty="indicazioneTrovatoKeys"
+            label="Capitolo per documenti amministrativi collegati con Brevetti/Trovati"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="SELECT"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"/>
+    <fieldProperty
+            name="voce_piano_economico"
+            property="voce_piano_economico"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            label="Voce del piano economico"/>
+    <fieldProperty
+            name="gg_deroga_obbl_comp_prg_scad"
+            property="gg_deroga_obbl_comp_prg_scad"
+            label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di competenza"
+            inputType="TEXT"
+            maxLength="10"/>
+    <fieldProperty
+            name="gg_deroga_obbl_res_prg_scad"
+            property="gg_deroga_obbl_res_prg_scad"
+            label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo"
+            inputType="TEXT"
+            maxLength="10"/>
+    <fieldProperty
+            name="flComunicaPagamenti"
+            property="flComunicaPagamenti"
+            label="Pubblica Pagamenti"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="fl_limite_competenza"
+            property="fl_limite_competenza"
+            label="Applicazione Limite Competenza"
+            enabledOnEdit="true"
+            enabledOnInsert="true"
+            inputType="CHECKBOX"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="blocco_impegni_natfin"
+            property="blocco_impegni_natfin"
+            keysProperty="blocco_impegni_natfinKeys"
+            label="Blocco Impegni per Natura/Finanziamento"
+            inputType="SELECT"
+            nullable="false"
+            enabledOnEdit="true"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"/>
     <fieldProperty
             name="cd_voce_piano_associato"
             property="cd_voce_piano_associato"
@@ -444,42 +444,42 @@
             inputType="TEXT"
             label="Voce Piano Economico" />
 
-	<form
-		name="searchtool" >
-		<formFieldProperty
-		    inputSize="20"
-			name="searchtool_cd_elemento_voce" />
-		<formFieldProperty
-		    inputSize="60"
-			name="searchtool_ds_elemento_voce" />
-	</form>
-	<form
-		name="simple_searchtool" >
-		<formFieldProperty
-		    inputSize="20"
-			name="searchtool_cd_elemento_voce" />
-		<formFieldProperty
-		    inputSize="60"
-			name="simple_searchtool_ds_elemento_voce" />
-	</form>
-	<form
-		name="searchtoolclass" >
-		<formFieldProperty
-		    inputSize="20"
-			name="esercizio_cla_e" />
-		<formFieldProperty
-		    inputSize="60"
-			name="cod_cla_e" />
-	</form>
-	<form
-		name="searchtoolclasspe" >
-		<formFieldProperty
-		    inputSize="20"
-			name="esercizio_cla_s" />
-		<formFieldProperty
-		    inputSize="60"
-			name="cod_cla_s" />
-	</form>
+    <form
+            name="searchtool">
+        <formFieldProperty
+                inputSize="20"
+                name="searchtool_cd_elemento_voce"/>
+        <formFieldProperty
+                inputSize="60"
+                name="searchtool_ds_elemento_voce"/>
+    </form>
+    <form
+            name="simple_searchtool">
+        <formFieldProperty
+                inputSize="20"
+                name="searchtool_cd_elemento_voce"/>
+        <formFieldProperty
+                inputSize="60"
+                name="simple_searchtool_ds_elemento_voce"/>
+    </form>
+    <form
+            name="searchtoolclass">
+        <formFieldProperty
+                inputSize="20"
+                name="esercizio_cla_e"/>
+        <formFieldProperty
+                inputSize="60"
+                name="cod_cla_e"/>
+    </form>
+    <form
+            name="searchtoolclasspe">
+        <formFieldProperty
+                inputSize="20"
+                name="esercizio_cla_s"/>
+        <formFieldProperty
+                inputSize="60"
+                name="cod_cla_s"/>
+    </form>
 
     <columnFieldProperty
             name="esercizio"
@@ -532,31 +532,31 @@
 	<columnFieldProperty
             name="fl_voce_fondo"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
 	<columnFieldProperty
             name="fl_recon"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
 	<columnFieldProperty
             name="fl_inv_beni_patr"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_check_terzo_siope"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_limite_spesa"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_soggetto_prelievo"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_prelievo"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="perc_prelievo_pdgp_entrate"
             textTruncate="true"
@@ -564,85 +564,85 @@
     <columnFieldProperty
             name="fl_solo_competenza"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_solo_residuo"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_azzera_residui"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
     <columnFieldProperty
             name="fl_trovato"
             textTruncate="true"
-            headerStyle="max-width: 8ch"/>
+            headerStyle="max-width: 13ch"/>
 
-<columnSet
-	name="restService">
-		
-	<columnFieldProperty
-		name="esercizio"
-		/>
-	<columnFieldProperty
-		name="cd_elemento_voce"
-		label = "Codice"
-		/>
-	<columnFieldProperty
-		name="ds_elemento_voce"
-		/>
-	<columnFieldProperty
-		name="fl_solo_residuo"
-		/>
-</columnSet>	
+    <columnSet
+            name="restService">
 
-<columnSet
-	name="impegnoPGiro">
-		
-	<columnFieldProperty
-		name="esercizio"
-		/>
-	<columnFieldProperty
-		name="cd_elemento_voce"
-		label = "Codice"
-		/>
-	<columnFieldProperty
-		name="ds_elemento_voce"
-		/>
-	<columnFieldProperty
-		name="cd_elemento_padre"
-		/>
-	<columnFieldProperty
-		name="fl_partita_giro"
-		/>
-	<columnFieldProperty
-		name="fl_recon"
-		/>		
-</columnSet>	
+        <columnFieldProperty
+                name="esercizio"
+        />
+        <columnFieldProperty
+                name="cd_elemento_voce"
+                label="Codice"
+        />
+        <columnFieldProperty
+                name="ds_elemento_voce"
+        />
+        <columnFieldProperty
+                name="fl_solo_residuo"
+        />
+    </columnSet>
 
-<columnSet
-	name="impegno">
-		
-	<columnFieldProperty
-		name="esercizio"
-		/>
-	<columnFieldProperty
-		name="cd_elemento_voce"
-		label = "Codice"
-		/>
-	<columnFieldProperty
-		name="ds_elemento_voce"
-		/>
-	<columnFieldProperty
-		name="cd_elemento_padre"
-		/>
-	<columnFieldProperty
-		name="fl_partita_giro"
-		/>
-	<columnFieldProperty
-		name="fl_recon"
-		/>		
-</columnSet>	
+    <columnSet
+            name="impegnoPGiro">
+
+        <columnFieldProperty
+                name="esercizio"
+        />
+        <columnFieldProperty
+                name="cd_elemento_voce"
+                label="Codice"
+        />
+        <columnFieldProperty
+                name="ds_elemento_voce"
+        />
+        <columnFieldProperty
+                name="cd_elemento_padre"
+        />
+        <columnFieldProperty
+                name="fl_partita_giro"
+        />
+        <columnFieldProperty
+                name="fl_recon"
+        />
+    </columnSet>
+
+    <columnSet
+            name="impegno">
+
+        <columnFieldProperty
+                name="esercizio"
+        />
+        <columnFieldProperty
+                name="cd_elemento_voce"
+                label="Codice"
+        />
+        <columnFieldProperty
+                name="ds_elemento_voce"
+        />
+        <columnFieldProperty
+                name="cd_elemento_padre"
+        />
+        <columnFieldProperty
+                name="fl_partita_giro"
+        />
+        <columnFieldProperty
+                name="fl_recon"
+        />
+    </columnSet>
 
     <columnSet name="piano_economico">
         <columnFieldProperty
@@ -656,206 +656,206 @@
                 name="cd_voce_piano_associato" />
     </columnSet>
 
-	<formFieldProperty
-		name="searchtool_cd_elemento_voce" />
-	<formFieldProperty
-		name="searchtool_ds_elemento_voce" />
-	<formFieldProperty
-		name="cd_elemento_padre"
-		/>
-	<formFieldProperty
-		name="cd_elemento_voce"
-		/>
-	<formFieldProperty
-		name="cd_proprio_elemento"
-		/>
-	<formFieldProperty
-		name="ds_elemento_voce"
-		/>
-	<formFieldProperty
-		name="ds_elemento_padre"
-		/>
-	<formFieldProperty
-		name="find_elemento_padre"
-		/>
-	<formFieldProperty
-		name="esercizio"
-		/>
-	<formFieldProperty
-		name="fl_limite_ass_obblig"
+    <formFieldProperty
+            name="searchtool_cd_elemento_voce"/>
+    <formFieldProperty
+            name="searchtool_ds_elemento_voce"/>
+    <formFieldProperty
+            name="cd_elemento_padre"
+    />
+    <formFieldProperty
+            name="cd_elemento_voce"
+    />
+    <formFieldProperty
+            name="cd_proprio_elemento"
+    />
+    <formFieldProperty
+            name="ds_elemento_voce"
+    />
+    <formFieldProperty
+            name="ds_elemento_padre"
+    />
+    <formFieldProperty
+            name="find_elemento_padre"
+    />
+    <formFieldProperty
+            name="esercizio"
+    />
+    <formFieldProperty
+            name="fl_limite_ass_obblig"
     />
 
     <formFieldProperty
-		name="fl_voce_personale"
+            name="fl_voce_personale"
     />
-   <formFieldProperty
-		name="fl_partita_giro"
+    <formFieldProperty
+            name="fl_partita_giro"
     />
-   <formFieldProperty
-		name="fl_missioni"
+    <formFieldProperty
+            name="fl_missioni"
     />
-	<formFieldProperty
-			name="flComunicaPagamenti"
-	/>
-	<formFieldProperty
-		name="find_capoconto_fin"
+    <formFieldProperty
+            name="flComunicaPagamenti"
     />
-   <formFieldProperty
-		name="cd_capoconto_fin"
+    <formFieldProperty
+            name="find_capoconto_fin"
     />
-   <formFieldProperty
-		name="ds_capoconto_fin"
+    <formFieldProperty
+            name="cd_capoconto_fin"
     />
-   <formFieldProperty
-		name="esercizio_cla_e" />
-   <formFieldProperty
-		name="cod_cla_e" />	
-   <formFieldProperty
-		name="esercizio_cla_s" />
-   <formFieldProperty
-		name="cod_cla_s" />				
-   <formFieldProperty
-		name="classificazione_entrate" />    
-   <formFieldProperty
-		name="classificazione_spese" />    		
-   <formFieldProperty
-		name="fl_recon" />
-   <formFieldProperty
-		name="id_classificazione" />
-   <formFieldProperty
-		name="cd_classificazione" />
-   <formFieldProperty
-		name="find_classificazione_voci" />
-   <formFieldProperty
-		name="fl_voce_fondo" />
-   <formFieldProperty
-		name="fl_check_terzo_siope" />
-   <formFieldProperty
-		name="fl_inv_beni_patr" />
-	<formFieldProperty
-		name="fl_inv_beni_comp" />
-   <formFieldProperty
-		name="fl_limite_spesa" />
-	<formFieldProperty
-		name="fl_soggetto_prelievo" />
-	<formFieldProperty
-		name="fl_prelievo" />
-	<formFieldProperty
-		name="perc_prelievo_pdgp_entrate"/>		
-	<formFieldProperty
-		name="fl_solo_competenza" />		
-	<formFieldProperty
-		name="fl_solo_residuo"/>		
-	<formFieldProperty
-		name="fl_azzera_residui"/>		
-	<formFieldProperty
-		name="fl_trovato" />
-	<formFieldProperty 
-		name="voce_piano_economico" />
-	<formFieldProperty
-		name="gg_deroga_obbl_comp_prg_scad" />
-	<formFieldProperty
-		name="gg_deroga_obbl_res_prg_scad" />
-	<formFieldProperty
-		name="fl_limite_competenza" />
-	<formFieldProperty
-		name="blocco_impegni_natfin" />
+    <formFieldProperty
+            name="ds_capoconto_fin"
+    />
+    <formFieldProperty
+            name="esercizio_cla_e"/>
+    <formFieldProperty
+            name="cod_cla_e"/>
+    <formFieldProperty
+            name="esercizio_cla_s"/>
+    <formFieldProperty
+            name="cod_cla_s"/>
+    <formFieldProperty
+            name="classificazione_entrate"/>
+    <formFieldProperty
+            name="classificazione_spese"/>
+    <formFieldProperty
+            name="fl_recon"/>
+    <formFieldProperty
+            name="id_classificazione"/>
+    <formFieldProperty
+            name="cd_classificazione"/>
+    <formFieldProperty
+            name="find_classificazione_voci"/>
+    <formFieldProperty
+            name="fl_voce_fondo"/>
+    <formFieldProperty
+            name="fl_check_terzo_siope"/>
+    <formFieldProperty
+            name="fl_inv_beni_patr"/>
+    <formFieldProperty
+            name="fl_inv_beni_comp"/>
+    <formFieldProperty
+            name="fl_limite_spesa"/>
+    <formFieldProperty
+            name="fl_soggetto_prelievo"/>
+    <formFieldProperty
+            name="fl_prelievo"/>
+    <formFieldProperty
+            name="perc_prelievo_pdgp_entrate"/>
+    <formFieldProperty
+            name="fl_solo_competenza"/>
+    <formFieldProperty
+            name="fl_solo_residuo"/>
+    <formFieldProperty
+            name="fl_azzera_residui"/>
+    <formFieldProperty
+            name="fl_trovato"/>
+    <formFieldProperty
+            name="voce_piano_economico"/>
+    <formFieldProperty
+            name="gg_deroga_obbl_comp_prg_scad"/>
+    <formFieldProperty
+            name="gg_deroga_obbl_res_prg_scad"/>
+    <formFieldProperty
+            name="fl_limite_competenza"/>
+    <formFieldProperty
+            name="blocco_impegni_natfin"/>
 
-	<findFieldProperty
-		name="esercizio"
-		/>
-	<findFieldProperty
-		name="cd_elemento_voce"
-		inputType="TEXT"
-		/>
-	<findFieldProperty
-		name="cd_proprio_elemento"
-		/>
-	<findFieldProperty
-		name="ds_elemento_voce"
-		/>
-	<findFieldProperty
-		name="cd_capoconto_fin"
-		/>
-	<findFieldProperty
-		name="esercizio_cla_e" />
-	<findFieldProperty
-		name="cod_cla_e" />
-	<findFieldProperty
-		name="esercizio_cla_s" />
-	<findFieldProperty
-		name="cod_cla_s" />		
-	<findFieldProperty
-		name="fl_recon" />		
-	<findFieldProperty
-		name="fl_inv_beni_patr" />		
     <findFieldProperty
-		name="fl_check_terzo_siope" />
-	<findFieldProperty
-		name="id_classificazione" />		
-	<findFieldProperty
-		name="fl_voce_fondo" />
-	<findFieldProperty
-		name="fl_limite_spesa" />
-	<findFieldProperty
-		name="fl_soggetto_prelievo" />
-	<findFieldProperty
-		name="fl_prelievo" />	
-	<findFieldProperty
-		name="fl_solo_competenza" />		
-	<findFieldProperty
-		name="fl_solo_residuo"/>		
-	<findFieldProperty
-		name="fl_azzera_residui"/>			
-	<findFieldProperty
-		name="fl_trovato" />
-	<findFieldProperty
-		name="ti_gestione" />
-	<findFieldProperty
-		name="gg_deroga_obbl_comp_prg_scad" />
-	<findFieldProperty
-		name="gg_deroga_obbl_res_prg_scad" />
-	<findFieldProperty
-		name="blocco_impegni_natfin" />
+            name="esercizio"
+    />
+    <findFieldProperty
+            name="cd_elemento_voce"
+            inputType="TEXT"
+    />
+    <findFieldProperty
+            name="cd_proprio_elemento"
+    />
+    <findFieldProperty
+            name="ds_elemento_voce"
+    />
+    <findFieldProperty
+            name="cd_capoconto_fin"
+    />
+    <findFieldProperty
+            name="esercizio_cla_e"/>
+    <findFieldProperty
+            name="cod_cla_e"/>
+    <findFieldProperty
+            name="esercizio_cla_s"/>
+    <findFieldProperty
+            name="cod_cla_s"/>
+    <findFieldProperty
+            name="fl_recon"/>
+    <findFieldProperty
+            name="fl_inv_beni_patr"/>
+    <findFieldProperty
+            name="fl_check_terzo_siope"/>
+    <findFieldProperty
+            name="id_classificazione"/>
+    <findFieldProperty
+            name="fl_voce_fondo"/>
+    <findFieldProperty
+            name="fl_limite_spesa"/>
+    <findFieldProperty
+            name="fl_soggetto_prelievo"/>
+    <findFieldProperty
+            name="fl_prelievo"/>
+    <findFieldProperty
+            name="fl_solo_competenza"/>
+    <findFieldProperty
+            name="fl_solo_residuo"/>
+    <findFieldProperty
+            name="fl_azzera_residui"/>
+    <findFieldProperty
+            name="fl_trovato"/>
+    <findFieldProperty
+            name="ti_gestione"/>
+    <findFieldProperty
+            name="gg_deroga_obbl_comp_prg_scad"/>
+    <findFieldProperty
+            name="gg_deroga_obbl_res_prg_scad"/>
+    <findFieldProperty
+            name="blocco_impegni_natfin"/>
 
-	<form
-		name="searchtool_x_var_stanz_res" >
-		<formFieldProperty
-			name="cd_elemento_voce"
-			enabledOnInsert = "true"
-			enabledOnEdit = "true"
-			enabledOnSearch = "true"
-			enabledOnFreeSearch = "true"
-			inputType="TEXT"
-			inputSize="30" />
-		<formFieldProperty
-			name="ds_elemento_voce"
-			enabledOnInsert = "true"
-			enabledOnEdit = "true"
-			enabledOnSearch = "true"
-			enabledOnFreeSearch = "true"
-			inputType="TEXT"
-			inputSize="50" />
-	</form>
-	<freeSearchSet name="impegnoPGiro">
-		<findFieldProperty
-			name="esercizio"
-			/>
-		<findFieldProperty
-			name="cd_elemento_voce"
-			label = "Codice"
-			/>
-		<findFieldProperty
-			name="ds_elemento_voce"
-			/>
-		<findFieldProperty
-			name="cd_elemento_padre"
-			/>
-		<findFieldProperty
-			name="fl_partita_giro"
-			/>
-		<findFieldProperty
-			name="fl_recon"
-			/>		
-	</freeSearchSet>
+    <form
+            name="searchtool_x_var_stanz_res">
+        <formFieldProperty
+                name="cd_elemento_voce"
+                enabledOnInsert="true"
+                enabledOnEdit="true"
+                enabledOnSearch="true"
+                enabledOnFreeSearch="true"
+                inputType="TEXT"
+                inputSize="30"/>
+        <formFieldProperty
+                name="ds_elemento_voce"
+                enabledOnInsert="true"
+                enabledOnEdit="true"
+                enabledOnSearch="true"
+                enabledOnFreeSearch="true"
+                inputType="TEXT"
+                inputSize="50"/>
+    </form>
+    <freeSearchSet name="impegnoPGiro">
+        <findFieldProperty
+                name="esercizio"
+        />
+        <findFieldProperty
+                name="cd_elemento_voce"
+                label="Codice"
+        />
+        <findFieldProperty
+                name="ds_elemento_voce"
+        />
+        <findFieldProperty
+                name="cd_elemento_padre"
+        />
+        <findFieldProperty
+                name="fl_partita_giro"
+        />
+        <findFieldProperty
+                name="fl_recon"
+        />
+    </freeSearchSet>
 </bulkInfo>
