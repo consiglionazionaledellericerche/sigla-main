@@ -2332,6 +2332,13 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				movimentoCoge.setEsercizio(mandatoBulk.getEsercizio());
 				movimentoCoge.setCd_unita_organizzativa(mandatoBulk.getCd_uo_origine());
 				movimentoCoge.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
+			} else if (doccoge instanceof AnticipoBulk) {
+				AnticipoBulk anticipo = (AnticipoBulk) doccoge;
+
+				movimentoCoge.setCd_cds(anticipo.getCd_cds_origine());
+				movimentoCoge.setEsercizio(anticipo.getEsercizio());
+				movimentoCoge.setCd_unita_organizzativa(anticipo.getCd_uo_origine());
+				movimentoCoge.setTi_istituz_commerc(TipoIVA.ISTITUZIONALE.value());
 			}
 
 			if (aPartita!=null) {
