@@ -4841,29 +4841,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
         fattura_passiva = valorizzaInfoDocEle(userContext, fattura_passiva);
         fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(userContext));
+        caricaScrittura(userContext, fattura_passiva);
 
-        try {
-            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
-                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                        .map(Scrittura_partita_doppiaHome.class::cast)
-                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(fattura_passiva);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                    fattura_passiva.setScrittura_partita_doppia(scrittura);
-                }
-            }
-        } catch (PersistencyException e) {
-            throw handleException(fattura_passiva, e);
-        }
         return fattura_passiva;
     }
 
