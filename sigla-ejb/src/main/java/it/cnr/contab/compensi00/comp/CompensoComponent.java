@@ -38,6 +38,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
@@ -175,7 +176,7 @@ import java.util.Vector;
  * 
  * @author: Roberto Fantino
  */
-public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
+public class CompensoComponent extends ScritturaPartitaDoppiaFromDocumentoComponent implements
 		ICompensoMgr, Cloneable, IPrintMgr, Serializable {
 	/**
 	 * CompensoComponent constructor comment.

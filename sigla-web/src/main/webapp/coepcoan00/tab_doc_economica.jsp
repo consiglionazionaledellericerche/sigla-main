@@ -14,9 +14,9 @@
     IDocAmmEconomicaBP bp = (IDocAmmEconomicaBP)BusinessProcess.getBusinessProcess(request);
     Scrittura_partita_doppiaBulk scrittura =
                 Optional.ofNullable(bp.getModel())
-                    .filter(IDocumentoAmministrativoBulk.class::isInstance)
-                    .map(IDocumentoAmministrativoBulk.class::cast)
-                    .map(IDocumentoAmministrativoBulk::getScrittura_partita_doppia)
+                    .filter(IDocumentoCogeBulk.class::isInstance)
+                    .map(IDocumentoCogeBulk.class::cast)
+                    .map(IDocumentoCogeBulk::getScrittura_partita_doppia)
                     .orElse(new Scrittura_partita_doppiaBulk());
 %>
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

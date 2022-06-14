@@ -25,6 +25,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaHome;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -94,7 +95,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FatturaAttivaSingolaComponent
-        extends it.cnr.jada.comp.CRUDComponent
+        extends ScritturaPartitaDoppiaFromDocumentoComponent
         implements ICRUDMgr, IFatturaAttivaSingolaMgr, Cloneable, Serializable {
     private transient final static Logger logger = LoggerFactory.getLogger(FatturaAttivaSingolaComponent.class);
     private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
@@ -2497,7 +2498,12 @@ public class FatturaAttivaSingolaComponent
 //^^@@
     public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk)
             throws ComponentException {
+        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk = Optional.ofNullable(bulk)
+                .filter(Scrittura_partita_doppiaBulk.class::isInstance)
+                .map(Scrittura_partita_doppiaBulk.class::cast);
 
+        if (optionalScritturaPartitaDoppiaBulk.isPresent())
+            return super.creaConBulk(userContext, bulk);
         return creaConBulk(userContext, bulk, null);
     }
 
@@ -3521,7 +3527,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     * Gestisce un cambiamento di pagina su un controllo tabbed
      */
     private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 
@@ -3549,7 +3555,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     * Gestisce un cambiamento di pagina su un controllo tabbed
      */
     private Consuntivo_rigaVBulk getRigaConsuntivoFor(Fattura_attiva_rigaBulk rigaFatturaAttiva) {
 
@@ -4789,7 +4795,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
      * Post: Tutte le modifiche effettuate sul compenso vengono annullate, mentre rimangono valide le
      * modifiche apportate al doc. amministrativo che ha aperto il compenso
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      */
     public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -5256,7 +5262,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
      * Pre:  Una richiesta di impostare un savepoint e' stata generata
      * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      */
     public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
