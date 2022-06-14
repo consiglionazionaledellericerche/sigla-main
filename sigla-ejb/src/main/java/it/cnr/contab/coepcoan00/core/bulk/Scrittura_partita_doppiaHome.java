@@ -100,25 +100,27 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
         try {
             Scrittura_partita_doppiaBulk scrittura = (Scrittura_partita_doppiaBulk) bulk;
 
-            LoggableStatement cs = new LoggableStatement(getConnection(),
-                    "{ ? = call " +
-                            it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-                            "CNRCTB200.getNextProgressivo(?, ?, ?, ?, ?)}", false, this.getClass());
-            try {
-                cs.registerOutParameter(1, java.sql.Types.NUMERIC);
-                cs.setObject(2, scrittura.getEsercizio());
-                cs.setString(3, scrittura.getCd_cds());
-                cs.setString(4, scrittura.getCd_unita_organizzativa());
-                cs.setString(5, Scrittura_partita_doppiaBulk.TIPO_COGE);
-                cs.setString(6, scrittura.getUser());
-                cs.executeQuery();
+            if (scrittura.getPg_scrittura()==null) {
+                LoggableStatement cs = new LoggableStatement(getConnection(),
+                        "{ ? = call " +
+                                it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+                                "CNRCTB200.getNextProgressivo(?, ?, ?, ?, ?)}", false, this.getClass());
+                try {
+                    cs.registerOutParameter(1, java.sql.Types.NUMERIC);
+                    cs.setObject(2, scrittura.getEsercizio());
+                    cs.setString(3, scrittura.getCd_cds());
+                    cs.setString(4, scrittura.getCd_unita_organizzativa());
+                    cs.setString(5, Scrittura_partita_doppiaBulk.TIPO_COGE);
+                    cs.setString(6, scrittura.getUser());
+                    cs.executeQuery();
 
-                Long result = new Long(cs.getLong(1));
-                scrittura.setPg_scrittura(result);
-            } catch (java.lang.Exception e) {
-                throw new ComponentException(e);
-            } finally {
-                cs.close();
+                    Long result = new Long(cs.getLong(1));
+                    scrittura.setPg_scrittura(result);
+                } catch (java.lang.Exception e) {
+                    throw new ComponentException(e);
+                } finally {
+                    cs.close();
+                }
             }
         } catch (java.lang.Exception e) {
             throw new ComponentException(e);
