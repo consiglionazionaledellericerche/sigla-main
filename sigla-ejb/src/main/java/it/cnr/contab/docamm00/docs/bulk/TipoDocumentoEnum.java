@@ -200,6 +200,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isMissione())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isGenericoCoriVersamentoSpesa())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		return null;
 	}
 
