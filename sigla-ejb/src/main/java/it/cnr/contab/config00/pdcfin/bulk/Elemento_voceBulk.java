@@ -72,6 +72,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	private V_classificazione_vociBulk v_classificazione_voci;
 	private boolean isGestoreIstat;
 	protected Voce_piano_economico_prgBulk voce_piano_economico;
+	protected String cd_voce_piano_associato;
 
 	public Elemento_voceBulk( ) 
 	{
@@ -474,5 +475,13 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	public boolean isAttivoBloccoResiduiNatfinResidui() {
 		return BLOCCO_IMPEGNI_NATFIN_RESIDUI.equals(getBlocco_impegni_natfin()) ||
 				BLOCCO_IMPEGNI_NATFIN_ALL.equals(getBlocco_impegni_natfin());
+	}
+
+	public String getCd_voce_piano_associato() {
+		return cd_voce_piano_associato;
+	}
+
+	public void setCd_voce_piano_associato(String cd_voce_piano_associato) {
+			this.cd_voce_piano_associato = cd_voce_piano_associato;
 	}
 }

@@ -95,6 +95,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public final static String NON_CONTABILIZZATO_IN_COAN = "N";
 	public final static String CONTABILIZZATO_IN_COAN = "C";
 	public final static String DA_RICONTABILIZZARE_IN_COAN = "R";
+	public final static String DA_NON_REGISTRARE_IN_COAN= "X";
 
 	public final static Dictionary TIPO;
 	public final static Dictionary STATO_COGE;
@@ -184,7 +185,9 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		CAUSALE.put(CONT,"Contenzioso");
 	}
 	public final static java.util.Dictionary ti_bonifico_mezzoKeys = Lettera_pagam_esteroBulk.ti_bonifico_mezzoKeys, 
-			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys, ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys;
+			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys,
+			ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys,
+			ti_divisaKeys = Lettera_pagam_esteroBulk.ti_divisaKeys;
 	
 	private java.sql.Timestamp dt_termine_creazione_docamm = null;
 	private CarichiInventarioTable carichiInventarioHash = null;
@@ -896,7 +899,6 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		super.initializeForInsert(bp,context);
 
 		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
-		setCd_unita_organizzativa(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
 		setCd_cds(null); // ho aggiunto CD_CDS nelle findFieldProperties -> imposto a NULL per escluderlo dai filtri di ricerca
 		if (bp instanceof CRUDDocumentoGenericoPassivoBP && ((CRUDDocumentoGenericoPassivoBP)bp).isSpesaBP()){
 			setStato_cofi(this.STATO_CONTABILIZZATO);
@@ -913,6 +915,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 				setCd_unita_organizzativa(uo.getCd_unita_organizzativa());
 				setCd_uo_origine(uo.getCd_unita_organizzativa());
 			}
+		} else if (bp instanceof CRUDDocumentoGenericoAttivoBP){
+			setCd_uo_origine(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
 		}
 
 		return this;

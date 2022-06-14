@@ -132,7 +132,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddBandoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Avviso da pubblicare",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 				}
 				if (procedura.getDecisioneAContrattare() == null) {
@@ -142,7 +142,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddDecisioneAContrattareToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Decisione a Contrattare",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 				}
 				if (procedura.getProgetto()==null) {
@@ -156,7 +156,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddProgettoToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Progetto",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					} catch (Exception e) {}
@@ -167,7 +167,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 						true,
 						"Allegato Generico",
-						"btn btn-sm btn-secondary btn-outline-secondary",
+						"btn btn-sm btn-outline-secondary",
 						isFromBootstrap);
 				super.writeHTMLToolbar(context, false, false, delete, false, false);
 			} else if (procedura != null && isGrowable() &&
@@ -179,7 +179,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Allegato Generico",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()), false, false);
 			}
@@ -311,7 +311,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddBandoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Avviso da pubblicare",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 				}
 				if (procedura.getDecisioneAContrattare() == null) {
@@ -321,7 +321,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddDecisioneAContrattareToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Decisione a Contrattare",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 				}
 				if (procedura.getProgetto()==null) {
@@ -333,7 +333,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"javascript:submitForm('doAddProgettoToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Progetto",
-								"btn btn-sm btn-secondary btn-outline-secondary",
+								"btn btn-sm btn-outline-secondary",
 								isFromBootstrap);
 					}
 				}
@@ -350,7 +350,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Contratto",
-								"btn btn-sm btn-secondary btn-outline-secondary",
+								"btn btn-sm btn-outline-secondary",
 								isFromBootstrap);
 					}
 					if (parametri!=null) {
@@ -362,7 +362,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Curriculum Vincitore",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							} else {
 								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -371,7 +371,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Aggiornamento Curriculum Vincitore",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							}
 						}
@@ -383,7 +383,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Attestazione Insussistenza Conflitto Interessi",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							}
 						}
@@ -395,7 +395,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Attestazione Direttore",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							}
 						}
@@ -408,7 +408,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Decreto di Nomina",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					}
@@ -420,7 +420,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"javascript:submitForm('doAddAttoEsitoControlloToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore",
-								"btn btn-sm btn-secondary btn-outline-secondary",
+								"btn btn-sm btn-outline-secondary",
 								isFromBootstrap);
 					}
 				}
@@ -430,7 +430,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 						true,
 						"Allegato Generico",
-						"btn btn-sm btn-secondary btn-outline-secondary",
+						"btn btn-sm btn-outline-secondary",
 						isFromBootstrap);
 
 				innerDelete = delete;
@@ -453,7 +453,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Contratto",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 						innerDelete = Optional.ofNullable(getModel())
@@ -476,7 +476,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Curriculum Vincitore",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							} else {
 								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -485,7 +485,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Aggiornamento Curriculum Vincitore",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 
 								innerDelete = innerDelete || Optional.ofNullable(getModel())
@@ -513,7 +513,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Attestazione Insussistenza Conflitto Interessi",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							}
 						}
@@ -525,7 +525,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
 										true,
 										"Attestazione Direttore",
-										"btn btn-sm btn-secondary btn-outline-secondary",
+										"btn btn-sm btn-outline-secondary",
 										isFromBootstrap);
 							}
 						}
@@ -538,7 +538,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Decreto di Nomina",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					}
@@ -549,7 +549,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Allegato Generico",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 
 				innerDelete = innerDelete || Optional.ofNullable(getModel())
@@ -623,7 +623,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									incarico.isIncaricoDefinitivo())? command : null,
 							true,
 							"Salva Definitivo",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 				}
 
@@ -641,7 +641,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									!((Incarichi_repertorioBulk)getModel()).isIncaricoDefinitivo())? command : null,
 							true,
 							"Annulla Definitivo",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 
 					if (bp.isConcludiMonoIncaricoButtonHidden() && isEditing()) {
@@ -655,7 +655,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										getModel()==null )? command2 : null,
 								true,
 								"Concludi Incarico",
-								"btn btn-sm btn-secondary btn-outline-secondary",
+								"btn btn-sm btn-outline-secondary",
 								isFromBootstrap);
 					}
 				}
@@ -745,7 +745,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Attestazione Insussistenza Conflitto Interessi",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					}
@@ -757,7 +757,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Attestazione Direttore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					}
@@ -770,7 +770,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Decreto di Nomina",
-								"btn btn-sm btn-secondary btn-outline-secondary",
+								"btn btn-sm btn-outline-secondary",
 								isFromBootstrap);
 					}
 				}
@@ -782,7 +782,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddAttoEsitoControlloToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 				}
 				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -791,7 +791,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 						true,
 						"Allegato Generico",
-						"btn btn-sm btn-secondary btn-outline-secondary",
+						"btn btn-sm btn-outline-secondary",
 						isFromBootstrap);
 				innerDelete = delete;
 			} else if (incarico != null && isGrowable() &&
@@ -822,7 +822,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Curriculum Vincitore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						} else {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
@@ -831,7 +831,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Aggiornamento Curriculum Vincitore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 
 							innerDelete = innerDelete || Optional.ofNullable(getModel())
@@ -859,7 +859,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Attestazione Insussistenza Conflitto Interessi",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					}
@@ -871,7 +871,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"javascript:submitForm('doAddAttestazioneDirettoreToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Attestazione Direttore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
+									"btn btn-sm btn-outline-secondary",
 									isFromBootstrap);
 						}
 					}
@@ -882,7 +882,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Allegato Generico",
-							"btn btn-sm btn-secondary btn-outline-secondary",
+							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 
 				innerDelete = innerDelete || Optional.ofNullable(getModel())

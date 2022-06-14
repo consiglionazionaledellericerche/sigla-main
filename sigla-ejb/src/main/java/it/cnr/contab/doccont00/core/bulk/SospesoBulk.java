@@ -43,6 +43,8 @@ public class SospesoBulk extends SospesoBase {
     public final static Dictionary stato_sospesoCNRKeys;
     public final static Dictionary tiStatoTextForSearchKeys;
     public final static Dictionary ti_entrata_spesaKeys;
+    public final static String RISC_PREFIX ="XSRC";
+    public final static String CODICE_SOSPESO_RISCONTRO_INIZIALE = "0000000001";
 
 	static private java.util.Hashtable ti_cc_biKeys;
 
@@ -152,9 +154,16 @@ public class SospesoBulk extends SospesoBase {
         figlio.setCd_cds_origine(null);
         figlio.setCd_uo_origine(null);
         figlio.setStato_sospeso(SospesoBulk.STATO_SOSP_INIZIALE);
-
+        figlio.setCd_avviso_pagopa(getAvvisoPagoPAFromSospesoFiglio());
         this.sospesiFigliColl.add(figlio);
         return sospesiFigliColl.size() - 1;
+    }
+
+    private String getAvvisoPagoPAFromSospesoFiglio(){
+        if (getSospesiFigliColl() == null || getSospesiFigliColl().size() == 0)
+            return null;
+        SospesoBulk sospeso = (SospesoBulk)getSospesiFigliColl().get(0);
+        return sospeso.getCd_avviso_pagopa();
     }
 
     /* assegna un sospeso ad un cds impostandone lo stato a assegnato e il cds origine */
@@ -633,5 +642,9 @@ if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
         setMandatoRiaccredito(Optional.ofNullable(mandatoRiaccredito)
                 .orElseGet(() -> new MandatoIBulk()));
         mandatoRiaccredito.setPg_mandato(pg_mandato_man_riaccr);
+    }
+
+    public Boolean isTipoEntrata(){
+        return Optional.ofNullable(getTi_entrata_spesa()).map(x -> x.equals(TIPO_ENTRATA)).orElse(false);
     }
 }

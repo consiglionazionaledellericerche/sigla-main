@@ -133,6 +133,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_VALIDAZIONE_AUTOMATICA"
+			propertyName="flValidazioneAutomatica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -195,6 +202,8 @@
 		name="flQuadraContratto" />
 	<persistentProperty
 		name="flAssociaContratto" />
+	<persistentProperty
+		name="flValidazioneAutomatica" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

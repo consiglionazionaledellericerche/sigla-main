@@ -1274,7 +1274,7 @@ public SQLBuilder findObbligazione_scad_voceDistinctList( ObbligazioneBulk obbli
  * @throws IntrospectionException	
  * @throws PersistencyException	
  */
-public java.util.List findObbligazione_scadenzarioList( ObbligazioneBulk obbligazione ) throws IntrospectionException,PersistencyException 
+public java.util.List findObbligazione_scadenzarioList( ObbligazioneBulk obbligazione ) throws PersistencyException
 {
 	PersistentHome osHome = getHomeCache().getHome(Obbligazione_scadenzarioBulk.class);
 	SQLBuilder sql = osHome.createSQLBuilder();
@@ -1295,7 +1295,7 @@ public java.util.List findObbligazione_scadenzarioList( ObbligazioneBulk obbliga
  * @throws PersistencyException	
  * @throws IntrospectionException	
  */
-public ObbligazioneBulk findObbligazione(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException
+public ObbligazioneBulk findObbligazione(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException
 {
 	if (obbligazione.isObbligazioneResiduo())
 		return findObbligazioneRes(obbligazione);
@@ -1313,7 +1313,7 @@ public ObbligazioneBulk findObbligazione(ObbligazioneBulk obbligazione) throws i
  * @throws PersistencyException	
  * @throws IntrospectionException	
  */
-public ObbligazioneOrdBulk findObbligazioneOrd(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException
+public ObbligazioneOrdBulk findObbligazioneOrd(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException
 {
 	return	(ObbligazioneOrdBulk) findByPrimaryKey( new ObbligazioneOrdBulk( obbligazione.getCd_cds(), obbligazione.getEsercizio(),obbligazione.getEsercizio_originale(),obbligazione.getPg_obbligazione()));
 }
@@ -1326,7 +1326,7 @@ public ObbligazioneOrdBulk findObbligazioneOrd(ObbligazioneBulk obbligazione) th
  * @throws PersistencyException	
  * @throws IntrospectionException	
  */
-public ObbligazioneResBulk findObbligazioneRes(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException
+public ObbligazioneResBulk findObbligazioneRes(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException
 {
 	return	(ObbligazioneResBulk) findByPrimaryKey( new ObbligazioneResBulk( obbligazione.getCd_cds(), obbligazione.getEsercizio(), obbligazione.getEsercizio_originale(), obbligazione.getPg_obbligazione()));
 }
@@ -1339,7 +1339,7 @@ public ObbligazioneResBulk findObbligazioneRes(ObbligazioneBulk obbligazione) th
  * @throws PersistencyException	
  * @throws IntrospectionException	
  */
-public ObbligazioneRes_impropriaBulk findObbligazioneRes_impropria(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException
+public ObbligazioneRes_impropriaBulk findObbligazioneRes_impropria(ObbligazioneBulk obbligazione) throws it.cnr.jada.persistency.PersistencyException
 {
 	return	(ObbligazioneRes_impropriaBulk) findByPrimaryKey( new ObbligazioneRes_impropriaBulk( obbligazione.getCd_cds(), obbligazione.getEsercizio(), obbligazione.getEsercizio_originale(), obbligazione.getPg_obbligazione()));
 }

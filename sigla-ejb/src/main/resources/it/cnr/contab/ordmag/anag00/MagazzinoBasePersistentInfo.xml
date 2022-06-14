@@ -86,38 +86,32 @@
 			columnName="CD_CDS_SCA_UO"
 			propertyName="cdCdsScaUo"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
+			columnSize="30" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_SCA_UO"
 			propertyName="cdTipoMovimentoScaUo"
 			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="false" />
+			columnSize="3"/>
 		<columnMapping
 			columnName="CD_CDS_TRA_SCA"
 			propertyName="cdCdsTraSca"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
+			columnSize="30" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_TRA_SCA"
 			propertyName="cdTipoMovimentoTraSca"
 			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="false" />
+			columnSize="3" />
 		<columnMapping
 			columnName="CD_CDS_TRA_CAR"
 			propertyName="cdCdsTraCar"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
+			columnSize="30" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_TRA_CAR"
 			propertyName="cdTipoMovimentoTraCar"
 			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="false" />
+			columnSize="3" />
 		<columnMapping
 			columnName="CD_CDS_RV_POS"
 			propertyName="cdCdsRvPos"
@@ -146,14 +140,12 @@
 			columnName="CD_CDS_CHI"
 			propertyName="cdCdsChi"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
+			columnSize="30" />
 		<columnMapping
 			columnName="CD_TIPO_MOVIMENTO_CHI"
 			propertyName="cdTipoMovimentoChi"
 			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="false" />
+			columnSize="3" />
 		<columnMapping
 			columnName="DT_ULT_VAL_SCA"
 			propertyName="dtUltValSca"

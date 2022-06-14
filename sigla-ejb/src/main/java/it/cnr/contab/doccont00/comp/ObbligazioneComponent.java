@@ -1774,7 +1774,36 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	
 	validaCampi(uc, obbligazione);
 	validaObbligazionePluriennale(uc, obbligazione);
-	
+
+	try {
+		if (Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(uc) && obbligazione.getGaeDestinazioneFinale()!=null &&
+				obbligazione.getGaeDestinazioneFinale().getCd_linea_attivita()!=null) {
+			Utility.createCRUDPdgVariazioneGestionaleComponentSession().generaVariazioneAutomaticaDaObbligazione(uc, obbligazione);
+			//Essendo stata effettuata la variazione possiamo cambiare sull'impegno lìimputazione della GAE emttendo quella di destinazione
+			final WorkpackageBulk gaeFinale = obbligazione.getGaeDestinazioneFinale();
+			obbligazione.getObbligazione_scadenzarioColl().stream().flatMap(el -> el.getObbligazione_scad_voceColl().stream())
+					.forEach(osv -> {
+						osv.setLinea_attivita(gaeFinale);
+					});
+
+			if (obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre().getCd_unita_organizzativa()!=obbligazione.getCd_unita_organizzativa()) {
+				obbligazione.setUnita_organizzativa(obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre());
+				obbligazione.setCd_cds_origine(obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre().getCd_unita_padre());
+				obbligazione.setCd_uo_origine(obbligazione.getGaeDestinazioneFinale().getCentro_responsabilita().getUnita_padre().getCd_unita_organizzativa());
+			}
+
+			// carica le linee di attività da PDG
+			obbligazione.setLineeAttivitaColl(listaLineeAttivitaPerCapitoliCdr(uc, obbligazione));
+			obbligazione.refreshLineeAttivitaSelezionateColl();
+
+			// carica le nuove linee di attività
+			ObbligazioneHome obbligHome = (ObbligazioneHome) getHome(uc, obbligazione.getClass());
+			obbligazione = obbligHome.refreshNuoveLineeAttivitaColl(uc, obbligazione);
+		}
+	} catch ( Exception e ) {
+		throw handleException(e);
+	}
+
 	/* simona 23.10.2002 : invertito l'ordine della verifica e della generzione dettagli x problema 344 */
 	generaDettagliScadenzaObbligazione( uc, obbligazione, null );	
 	verificaObbligazione( uc, obbligazione );
@@ -1785,7 +1814,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
 
 
-	//esegue il check di disponibilita di cassa 
+	//esegue il check di disponibilita di cassa
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
 	verificaCoperturaContratto( uc, obbligazione);
 	verificaCoerenzaGaeContratto(uc, obbligazione);
@@ -2546,7 +2575,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		return super.modificaConBulk(usercontext, aoggettobulk);
 	}
 
-	/**
+/**
   *  Obbligazione non esiste
   *    PreCondition:
   *      L'obbligazione richiesta non esiste.
@@ -3226,7 +3255,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		makeBulkListPersistent( aUC, obbligazione.getObbligazione_scadenzarioColl());
 
 		makeBulkListPersistent( aUC, obbligazione.getObbligazioniPluriennali());
-		
+
 		//esegue il check di disponibilita di cassa
 		controllaDisponibilitaCassaPerVoce( aUC, obbligazione, MODIFICA );
 
@@ -5300,8 +5329,6 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			return prcImputazioneFinanziariaTable;
 		} catch (PersistencyException e) {
 			throw handleException( e );
-		} catch (IntrospectionException e) {
-			throw handleException( e );
 		}
 	}
 	/*
@@ -5350,8 +5377,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			BigDecimal newImportoOsv = Utility.ZERO, totImporto = Utility.ZERO;
 			ObbligazioneHome obbligazioneHome = (ObbligazioneHome) getHome( userContext, ObbligazioneBulk.class );
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk)obbligazioneHome.findByPrimaryKey(scadenzaVecchia.getObbligazione());
-			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, (OggettoBulk)obbligazione);
-			
+			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, obbligazione);
+
 			//cerco nell'obbligazione riletto la scadenza indicata
 			for (Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk)s.next();
@@ -5364,17 +5391,18 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				}
 			}
 
-			if (scadenzaVecchia == null) 
-				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");	
+			if (scadenzaVecchia == null)
+				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");
 
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
 			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
 			scadenzaNuova.setDs_scadenza(nuovaDescrizione!=null ? nuovaDescrizione : scadenzaVecchia.getDs_scadenza());
+			scadenzaNuova.setPg_obbligazione(dati.getNuovoPgObbligazioneScadenzario());
 			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 		
 			// Rigenero i relativi dettagli	
-			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);	
-		
+			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);
+
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scad_voceBulk osvOld = (Obbligazione_scad_voceBulk)s.next();
 				if (nuovaGae != null && cdr != null){
@@ -5385,15 +5413,15 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 						osvOld.setToBeUpdated();
 					}
 				} else {
-					newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
+					newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP);
 					
 					aggiornaImportoScadVoceScadenzaNuova(newImportoOsv, scadenzaNuova, osvOld);
 						
 					osvOld.setIm_voce(newImportoOsv);
 					osvOld.setToBeUpdated();
 				}
-			}		
-		
+			}
+
 			//Quadro la sommatoria sulla vecchia scadenza
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); )
 				totImporto = totImporto.add(((Obbligazione_scad_voceBulk)s.next()).getIm_voce()); 
@@ -5402,8 +5430,14 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				//recupero il primo dettaglio e lo aggiorno per quadrare
 				for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 					Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk)s.next();
-					if (osv.getIm_voce().add(nuovoImportoScadenzaVecchia.subtract(totImporto)).compareTo(Utility.ZERO)!=-1) {
-						osv.setIm_voce(osv.getIm_voce().add(nuovoImportoScadenzaVecchia.subtract(totImporto)));
+					BigDecimal arrotondamento = nuovoImportoScadenzaVecchia.subtract(totImporto);
+					if (osv.getIm_voce().add(arrotondamento).compareTo(Utility.ZERO)!=-1) {
+						osv.setIm_voce(osv.getIm_voce().add(arrotondamento));
+						scadenzaNuova.getObbligazione_scad_voceColl().stream()
+								.filter(el->el.getCd_centro_responsabilita().equals(osv.getCd_centro_responsabilita()))
+								.filter(el->el.getCd_linea_attivita().equals(osv.getCd_linea_attivita()))
+								.findFirst()
+								.ifPresent(osvNew->osvNew.setIm_voce(osvNew.getIm_voce().subtract(arrotondamento)));
 						break;
 					}
 				}
@@ -5445,17 +5479,95 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			throw handleException( e );
 		}
 	}
-private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbligazione_scadenzarioBulk scadenzaNuova,
-		Obbligazione_scad_voceBulk osvOld) {
-	for (Iterator n = scadenzaNuova.getObbligazione_scad_voceColl().iterator(); n.hasNext(); ) {
-		Obbligazione_scad_voceBulk osvNew = (Obbligazione_scad_voceBulk)n.next();
-		if (osvNew.getCd_centro_responsabilita().equals(osvOld.getCd_centro_responsabilita()) &&
-		    osvNew.getCd_linea_attivita().equals(osvOld.getCd_linea_attivita()) 
-//		    && osvNew.getCd_voce().equals(osvOld.getCd_voce())
-		    )
-			osvNew.setIm_voce(osvOld.getIm_voce().subtract(newImportoOsv));
+	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomaticoLight( UserContext userContext, IScadenzaDocumentoContabileBulk scad, DatiFinanziariScadenzeDTO dati) throws ComponentException
+	{
+		BigDecimal nuovoImportoScadenzaVecchia = dati.getNuovoImportoScadenzaVecchia();
+		Obbligazione_scadenzarioBulk scadenzaVecchia = (Obbligazione_scadenzarioBulk)scad;
+		if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 0  )
+			throw handleException( new ApplicationException( "Sdoppiamento in automatico non necessario!" ));
+		if (  nuovoImportoScadenzaVecchia.compareTo( new BigDecimal(0)) < 0  )
+			throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));
+		if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 1 )
+			throw new ApplicationException("L'importo nuovo da assegnare alla scadenza dell'impegno deve essere inferiore al valore originario!");
+
+		try {
+			java.math.BigDecimal importoAssociatoScadenzaVecchia = scadenzaVecchia.getIm_associato_doc_amm();
+			java.math.BigDecimal vecchioImportoScadenzaVecchia = scadenzaVecchia.getIm_scadenza();
+			java.math.BigDecimal importoScadenzaNuova = vecchioImportoScadenzaVecchia.subtract(nuovoImportoScadenzaVecchia);
+
+			ObbligazioneHome obbligazioneHome = (ObbligazioneHome) getHome(userContext, ObbligazioneBulk.class);
+			ObbligazioneBulk obbligazione = obbligazioneHome.findObbligazione(scadenzaVecchia.getObbligazione());
+			obbligazione.setObbligazione_scadenzarioColl(new BulkList(obbligazioneHome.findObbligazione_scadenzarioList(obbligazione)));
+
+			//cerco nell'obbligazione riletto la scadenza indicata
+			scadenzaVecchia = obbligazione.getObbligazione_scadenzarioColl().stream().filter(el->el.equalsByPrimaryKey(scad)).findFirst()
+					.orElseThrow(()->new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!"));
+
+			Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
+			scadenzaVecchia.setObbligazione_scad_voceColl(new BulkList(osHome.findObbligazione_scad_voceList(userContext, scadenzaVecchia)));
+
+			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
+			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
+			scadenzaNuova.setDt_scadenza(scadenzaVecchia.getDt_scadenza());
+			scadenzaNuova.setDs_scadenza(scadenzaVecchia.getDs_scadenza());
+			scadenzaNuova.setIm_scadenza(importoScadenzaNuova);
+			if (dati.getNuovoPgObbligazioneScadenzario()!=null)
+				scadenzaNuova.setPg_obbligazione_scadenzario(dati.getNuovoPgObbligazioneScadenzario());
+			else
+				scadenzaNuova.setPg_obbligazione_scadenzario(obbligazione.getObbligazione_scadenzarioColl().stream().mapToLong(Obbligazione_scadenzarioBulk::getPg_obbligazione).max().getAsLong()+1);
+
+			scadenzaNuova.setToBeCreated();
+			makeBulkPersistent(userContext, scadenzaNuova);
+
+			BigDecimal impDaRipartire = nuovoImportoScadenzaVecchia;
+			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
+				Obbligazione_scad_voceBulk osvOld = (Obbligazione_scad_voceBulk)s.next();
+
+				BigDecimal importoOsvOld = BigDecimal.ZERO;
+				if (!s.hasNext())
+					importoOsvOld = impDaRipartire;
+				else
+					importoOsvOld = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP);
+
+				impDaRipartire = impDaRipartire.subtract(importoOsvOld);
+
+				BigDecimal importoOsvNew = osvOld.getIm_voce().subtract(importoOsvOld);
+
+				osvOld.setIm_voce(importoOsvOld);
+				osvOld.setToBeUpdated();
+				makeBulkPersistent(userContext, osvOld);
+
+				Obbligazione_scad_voceBulk osvNew = new Obbligazione_scad_voceBulk();
+				osvNew.setObbligazione_scadenzario(scadenzaNuova);
+				osvNew.setLinea_attivita(osvOld.getLinea_attivita());
+				osvNew.setTi_gestione(osvOld.getTi_gestione());
+				osvNew.setTi_appartenenza(osvOld.getTi_appartenenza());
+				osvNew.setCd_voce(osvOld.getCd_voce());
+				osvNew.setIm_voce(importoOsvNew);
+				osvNew.setToBeCreated();
+				makeBulkPersistent(userContext, osvNew);
+			};
+
+			scadenzaVecchia.setIm_scadenza(nuovoImportoScadenzaVecchia);
+			scadenzaVecchia.setToBeUpdated();
+			makeBulkPersistent(userContext, scadenzaVecchia);
+
+			return scadenzaNuova;
+		} catch (PersistencyException e) {
+			throw handleException( e );
+		}
 	}
-}
+	private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbligazione_scadenzarioBulk scadenzaNuova,
+			Obbligazione_scad_voceBulk osvOld) {
+		for (Iterator n = scadenzaNuova.getObbligazione_scad_voceColl().iterator(); n.hasNext(); ) {
+			Obbligazione_scad_voceBulk osvNew = (Obbligazione_scad_voceBulk)n.next();
+			if (osvNew.getCd_centro_responsabilita().equals(osvOld.getCd_centro_responsabilita()) &&
+				osvNew.getCd_linea_attivita().equals(osvOld.getCd_linea_attivita())
+	//		    && osvNew.getCd_voce().equals(osvOld.getCd_voce())
+				)
+				osvNew.setIm_voce(osvOld.getIm_voce().subtract(newImportoOsv));
+		}
+	}
 	private void aggiornaObbligazioneModificaTemporanea(UserContext userContext,Obbligazione_modificaBulk obbligazioneModTemporanea) throws ComponentException {
 
 		try {
@@ -5947,5 +6059,19 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 		}
 		return Boolean.TRUE;
 
+	}
+
+	public SQLBuilder selectGaeDestinazioneFinaleByClause(UserContext userContext, ObbligazioneBulk obbligazione, WorkpackageBulk lineaAttivita, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+		WorkpackageHome home = (WorkpackageHome)getHome(userContext, lineaAttivita,"V_LINEA_ATTIVITA_VALIDA");
+		SQLBuilder sql = home.createSQLBuilder();
+
+		sql.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.openParenthesis(FindClause.AND);
+		sql.addSQLClause("OR", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
+		sql.addSQLClause("OR", "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+		sql.closeParenthesis();
+
+		sql.addClause(clauses);
+		return sql;
 	}
 }

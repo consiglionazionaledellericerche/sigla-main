@@ -20,12 +20,7 @@ package it.cnr.contab.progettiric00.comp;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,6 +33,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazione_wizardBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
@@ -63,10 +59,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
@@ -299,43 +292,23 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	
 	public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
-		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
-
-		Optional<String> optCdUo = Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
-				.map(Progetto_rimodulazioneBulk.class::cast).flatMap(el->Optional.ofNullable(el.getProgetto()))
-				.flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()));
-
-		Optional<String> optCdUo2 = Optional.empty();
-
-		if (clauses!=null){
-			Enumeration<SimpleFindClause> e = clauses.getClauses();
-			while(e.hasMoreElements()){
-				FindClause findClause = e.nextElement();
-				if (findClause instanceof SimpleFindClause)
-					if (((SimpleFindClause)findClause).getPropertyName().equals("progetto.unita_organizzativa.cd_unita_organizzativa"))
-						optCdUo2 = Optional.of(((SimpleFindClause)findClause).getValue().toString());
-			}
-		}
-		
+		final BulkHome progetto_rimodulazione_completo = getHome(userContext, Progetto_rimodulazioneBulk.class, "PROGETTO_RIMODULAZIONE_COMPLETO");
+		SQLBuilder sql = progetto_rimodulazione_completo.createSQLBuilder();
+		sql.addClause(clauses);
+		sql.addClause(bulk.buildFindClauses(true));
 	    Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 		boolean isUoEnte = ((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa());
 	    
-	    if (optCdUo.isPresent() || optCdUo2.isPresent() || !isUoEnte) {
-	 	    sql.addTableToHeader("V_PROGETTO_PADRE");
-			sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
-			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
-			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-			if (optCdUo.isPresent())
-				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo.get());
-			if (optCdUo2.isPresent())
-				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo2.get());
-			if (!isUoEnte) {
-				try {
-			    	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
-					sql.addSQLExistsClause(FindClause.AND,progettohome.abilitazioniCommesse(userContext));
-				} catch (Exception e) {
-					throw handleException(e);
-				}
+		sql.addTableToHeader("V_PROGETTO_PADRE");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
+		sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+		if (!isUoEnte) {
+			try {
+				ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+				sql.addSQLExistsClause(FindClause.AND,progettohome.abilitazioniCommesse(userContext));
+			} catch (Exception e) {
+				throw handleException(e);
 			}
 		}
 		return sql;
@@ -759,6 +732,18 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			rimodulazione.setToBeUpdated();
 			rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 			createReportRimodulazione(userContext, rimodulazione);
+
+			//Se la rimodulazione rispetta uno dei seguenti casi:
+			// 1) le condizioni di rapida approvazione nonchè consiste nella sola diversa distribuzione degli importi tra anni rispettando la ripartizione per categorie economiche;
+			// oppure
+			// 2) il tipo di finanziamento prevede la validazione automatica
+			// allora provvedo direttamente alla validazione (che dovrebbe in automatico anche approvare)
+			if ((!rimodulazione.isRimodulatoImportoFinanziato() && !rimodulazione.isRimodulatoImportoCofinanziato() &&
+				 !rimodulazione.isRimodulatoDtProroga() && !rimodulazione.isRimodulatoDtInizio() && !rimodulazione.isRimodulatoDtFine() &&
+				 rimodulazione.isRimodulazioneDiRapidaApprovazione()) || rimodulazione.getProgetto().getOtherField().getTipoFinanziamento().getFlValidazioneAutomatica()) {
+				return this.valida(userContext, rimodulazione);
+			}
+
 			return rimodulazione;
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
@@ -954,7 +939,8 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			   			}
 			   		});
        		
-			if (!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty() ||
+			if (((!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty())
+					&& !rimodulazione.isRimodulazioneDiRapidaApprovazione()) ||
 				rimodulazione.isRimodulatoImportoFinanziato() || rimodulazione.isRimodulatoImportoCofinanziato())
 				rimodulazione.getArchivioAllegati().stream()
 							 .filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
@@ -1024,5 +1010,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				});
 
 		return rimodulazione;
+	}
+
+	@Override
+	protected Query select(UserContext usercontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, String homeMethodName) throws ComponentException, PersistencyException {
+		return super.select(usercontext, compoundfindclause, oggettobulk, homeMethodName);
 	}
 }

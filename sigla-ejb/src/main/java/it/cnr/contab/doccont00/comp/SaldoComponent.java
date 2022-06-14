@@ -1964,6 +1964,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									//recupero il record se presente altrimenti ne creo uno nuovo
 									CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
 											.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+											.filter(el -> Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
 											.filter(el -> el.getProgettoPianoEconomico().getPg_progetto().equals(progetto.getPg_progetto()))
 											.filter(el -> el.getProgettoPianoEconomico().getCd_unita_organizzativa().equals(progettoPianoEconomico.getCd_unita_organizzativa()))
 											.filter(el -> el.getProgettoPianoEconomico().getCd_voce_piano().equals(progettoPianoEconomico.getCd_voce_piano()))
@@ -2337,8 +2338,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
 				/*
 				 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+				 * oppure
+				 * la variazione è generata automaticamente (es. in fase di emissione obbligazione)
 				 */
-				if (uoScrivania.isUoEnte() && variazione.getCentro_responsabilita().getUnita_padre().isUoEnte())
+				if (variazione.getCentro_responsabilita().getUnita_padre().isUoEnte() &&
+						(uoScrivania.isUoEnte() || Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_AUTOMATICA.equals(variazione.getTiMotivazioneVariazione())))
 					return;
 
 				/*
@@ -2574,6 +2578,38 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(cdUo -> cdUo.equals(cdrPersonaleBulk.getCd_unita_organizzativa()))
 					.orElse(Boolean.FALSE);
 
+			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
+			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isVariazioneMaggioriEntrateSpese)
+					.orElse(Boolean.FALSE);
+
+			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
+			boolean isVariazioneCompetenzaMinoriEntrateSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isVariazioneMinoriEntrateSpese)
+					.orElse(Boolean.FALSE);
+
+			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
+			boolean isVariazioneStornoSpese = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getTipo_variazione)
+					.map(Tipo_variazioneBulk::isStornoSpesa)
+					.orElse(Boolean.FALSE)  ||
+					Optional.of(variazione)
+							.filter(Var_stanz_resBulk.class::isInstance)
+							.map(Var_stanz_resBulk.class::cast)
+							.map(Var_stanz_resBulk::isVariazioneStorno)
+							.orElse(Boolean.FALSE);
+
+			boolean isVariazioneMonoProgetto = listCtrlPianoEco.stream().map(CtrlPianoEco::getProgetto)
+					.map(ProgettoBulk::getPg_progetto).distinct().count()==1;
+
 			if (isAttivaGestioneTrasferimenti) {
 				//se non è una variazione di personale non possono essere movimentate voci del personale
 				if (isVariazionePersonale) {
@@ -2628,29 +2664,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									+ "in una variazione non effettuata per 'Trasferimenti per personale'.");
 					});
 				}
-		
-				if (isVariazioneArea) {
-					if (isCDRAreaVariazione) {
-						listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
-							.findFirst().ifPresent(el->{
-								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' non è possibile "
-										+ "assegnare fondi ad una Area di Ricerca.");
-						});
-						
-						listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
-							.findFirst().orElseThrow(()->
-								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' è necessario "
-										+ "sottrarre fondi ad Aree di Ricerca."));
-	
-						listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiArea()).compareTo(BigDecimal.ZERO)>0)
-							.findFirst().ifPresent(el->{
-								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' non è possibile "
-										+ "sottrarre fondi a CDR non qualificati come Aree di Ricerca.");
-						});
-					} else {
+
+			 	if (isVariazioneArea) {
+					if (isCDRAreaVariazione)
+						//24/02/2022 Su indicazione di Sabrina Miceli l'unico modo di un'area di ricerca di trasferire fondi ad altri CDR è con variazione generica.
+						//E' stato pertanto chiesto di bloccare la possibilità per un'area di ricerca di effettuare variazioni di tipo Area
+						throw new DetailedRuntimeException("Attenzione! Non è possibile per un'Area di Ricerca predisporre variazione di tipo 'Trasferimenti da Aree di Ricerca.");
+					else {
 						listCtrlPianoEco.stream()
 							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
 							.findFirst().orElseThrow(()->
@@ -2672,14 +2692,19 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						});
 					}
 				} else if (!isCDRAreaVariazione) {
-					//Il controllo non vale se la variazione viene fatta dal CDR Area
-					listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
-									el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
-							.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
-								+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
-					});
+					//L'area può sempre ricevere somme su un progetto cui partecipa se le stesse provengono dallo stesso progetto
+					//Questa condizione è garantita dal monoprogetto e da storno spese
+					//Indicazioni avute da Sabrina Miceli il 10/11/2021
+					if (!isVariazioneMonoProgetto || !isVariazioneStornoSpese) {
+						//Il controllo non vale se la variazione viene fatta dal CDR Area
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
+										el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
+									+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
+						});
+					}
 				}
 
 				if (isVariazioneRagioneria) {
@@ -2735,35 +2760,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
 				});
 			}
-			
-			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
-			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isVariazioneMaggioriEntrateSpese)
-					.orElse(Boolean.FALSE);
-			
-			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
-			boolean isVariazioneCompetenzaMinoriEntrateSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isVariazioneMinoriEntrateSpese)
-					.orElse(Boolean.FALSE);
-	
-			//se è una variazione di competenza per minori entrate/spese controllo solo che non siano stati assegnati erroneamente fondi a progetti
-			boolean isVariazioneStornoSpese = Optional.of(variazione)
-					.filter(Pdg_variazioneBulk.class::isInstance)
-					.map(Pdg_variazioneBulk.class::cast)
-					.map(Pdg_variazioneBulk::getTipo_variazione)
-					.map(Tipo_variazioneBulk::isStornoSpesa)
-					.orElse(Boolean.FALSE)  ||
-					Optional.of(variazione)
-					.filter(Var_stanz_resBulk.class::isInstance)
-					.map(Var_stanz_resBulk.class::cast)
-					.map(Var_stanz_resBulk::isVariazioneStorno)
-					.orElse(Boolean.FALSE);
 			
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
@@ -2895,27 +2891,33 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				/**
 				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
 				 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+				 * 	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
 				 */
 				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaPositiviNetti()
+								  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 								  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
 								  .compareTo(BigDecimal.ZERO)>0)
 						.filter(el->el.getImpSpesaPositiviNetti()
+									  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
 										  .compareTo(el.getImpSpesaNegativiNetti()
+												   .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 											  	   .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO))>0)
 						.findFirst().ifPresent(el->{
 						throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
 								el.getProgetto().getCd_progetto()+" (" + 
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaPositiviNetti()
+										  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) +
 								") non compensati da un equivalente prelievo nell'ambito dello stesso progetto ("+
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaNegativiNetti()
+										  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
 		
 					/**
@@ -2928,21 +2930,26 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNetti()
+								      .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
 									  .compareTo(BigDecimal.ZERO)>0)
 						.filter(el->el.getImpSpesaNegativiNetti()
-									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
+									  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
+								      .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
 									  .compareTo(el.getImpSpesaPositiviNetti()
+ 											       .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 											  	   .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO))>0)
 						.findFirst().ifPresent(el->{
 						throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi al progetto "+
 								el.getProgetto().getCd_progetto()+" (" + 
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaNegativiNetti()
+										  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) +
 								") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto ("+
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaPositiviNetti()
+										  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) + ")");});
 				}
 				
@@ -2950,7 +2957,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				 * 40. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stessa area
 				 *    (regola non valida per Trasferimenti a Ragioneria)
-				 */
+				 *    08/03/2022 Controllo eliminato su richiesta di Sabrina Miceli (Segnalazione Helpdesk 107720)
 				if (!isVariazioneRagioneria) {
 					listCtrlPianoEco.stream()
 							.filter(el -> !el.isScaduto(dataChiusura))
@@ -2964,6 +2971,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");
 					});
 				}
+			 	*/
 
 				/**
 				 * 50. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 
@@ -3068,9 +3076,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.filter(el->el.isNaturaFonteEsterna())
 						.map(CtrlPianoEcoDett::getImporto)
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-
-				boolean isVariazioneMonoProgetto = listCtrlPianoEco.stream().map(CtrlPianoEco::getProgetto)
-						.map(ProgettoBulk::getPg_progetto).distinct().count()==1;
 
 				{
 					/**

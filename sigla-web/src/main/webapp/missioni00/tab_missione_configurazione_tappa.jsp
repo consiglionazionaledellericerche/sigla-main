@@ -104,7 +104,7 @@
                                 bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-pencil-square-o text-success" : "img/edit24.gif",
                                 "Modifica",
                                 "javascript:submitForm('doEditaTappa')",
-                                "btn-secondary btn-outline-secondary btn-title",
+                                "btn-outline-secondary btn-title",
                                 bp.isEditTappaButtonEnabled(),
                                 bp.getParentRoot().isBootstrap()); %>
                         <% JSPUtils.button(out,
@@ -112,7 +112,7 @@
                                 bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/save24.gif",
                                 "Conferma",
                                 "javascript:submitForm('doConfermaTappa')",
-                                "btn-secondary btn-outline-secondary btn-title",
+                                "btn-outline-secondary btn-title",
                                 bp.isConfermaTappaButtonEnabled(),
                                 bp.getParentRoot().isBootstrap()); %>
                         <% JSPUtils.button(out,
@@ -120,7 +120,7 @@
                                 bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo text-warning" : "img/undo24.gif",
                                 "Annulla",
                                 "javascript:submitForm('doUndoTappa')",
-                                "btn-secondary btn-outline-secondary btn-title",
+                                "btn-outline-secondary btn-title",
                                 bp.isUndoTappaButtonEnabled(),
                                 bp.getParentRoot().isBootstrap()); %>
                     </div>

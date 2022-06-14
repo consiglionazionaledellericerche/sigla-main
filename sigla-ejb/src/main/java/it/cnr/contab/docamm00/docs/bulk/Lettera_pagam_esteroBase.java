@@ -100,7 +100,24 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
     private java.lang.String cd_cds_sospeso;
 	
     private java.sql.Timestamp dt_cancellazione;
-    
+
+	//  INDIRIZZO_BENEFICIARIO     VARCHAR2(250),
+	private java.lang.String indirizzo_beneficiario;
+
+	//  BIC_BANCA_INTERMEDIARIA     VARCHAR2(100),
+	private java.lang.String bic_banca_intermediaria;
+
+	//  PAESE_BENEFICIARIO     VARCHAR2(100),
+	private java.lang.String paese_beneficiario;
+
+	//  ISTRUZIONI_SPECIALI_1     VARCHAR2(250),
+	private java.lang.String istruzioni_speciali_1;
+
+	//  ISTRUZIONI_SPECIALI_2     VARCHAR2(250),
+	private java.lang.String istruzioni_speciali_2;
+	//  ISTRUZIONI_SPECIALI_3     VARCHAR2(250),
+	private java.lang.String istruzioni_speciali_3;
+
 	public Lettera_pagam_esteroBase() {
 		super();
 	}
@@ -294,5 +311,54 @@ public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements
 	}
 	public void setDt_cancellazione(java.sql.Timestamp dt_cancellazione) {
 		this.dt_cancellazione = dt_cancellazione;
-	}	
+	}
+
+	public String getIstruzioni_speciali_1() {
+		return istruzioni_speciali_1;
+	}
+
+	public void setIstruzioni_speciali_1(String istruzioni_speciali_1) {
+		this.istruzioni_speciali_1 = istruzioni_speciali_1;
+	}
+
+	public String getIstruzioni_speciali_2() {
+		return istruzioni_speciali_2;
+	}
+
+	public void setIstruzioni_speciali_2(String istruzioni_speciali_2) {
+		this.istruzioni_speciali_2 = istruzioni_speciali_2;
+	}
+
+	public String getIstruzioni_speciali_3() {
+		return istruzioni_speciali_3;
+	}
+
+	public void setIstruzioni_speciali_3(String istruzioni_speciali_3) {
+		this.istruzioni_speciali_3 = istruzioni_speciali_3;
+	}
+
+	public String getIndirizzo_beneficiario() {
+		return indirizzo_beneficiario;
+	}
+
+	public void setIndirizzo_beneficiario(String indirizzo_beneficiario) {
+		this.indirizzo_beneficiario = indirizzo_beneficiario;
+	}
+
+	public String getBic_banca_intermediaria() {
+		return bic_banca_intermediaria;
+	}
+
+	public void setBic_banca_intermediaria(String bic_banca_intermediaria) {
+		this.bic_banca_intermediaria = bic_banca_intermediaria;
+	}
+
+	public String getPaese_beneficiario() {
+		return paese_beneficiario;
+	}
+
+	public void setPaese_beneficiario(String paese_beneficiario) {
+		this.paese_beneficiario = paese_beneficiario;
+	}
 }
+

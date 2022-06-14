@@ -24,7 +24,11 @@ import java.util.Optional;
 
 import javax.ejb.RemoveException;
 
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
@@ -45,13 +49,9 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.CRUDController;
-import it.cnr.jada.util.action.FormBP;
-import it.cnr.jada.util.action.OptionBP;
-import it.cnr.jada.util.action.SelezionatoreListaAction;
-import it.cnr.jada.util.action.SelezionatoreListaBP;
-import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
@@ -80,7 +80,11 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 				EJBCommonServices.closeRemoteIterator(actioncontext,bp.detachIterator());
 				bp.setIterator(actioncontext, ((RimodulaProgettoRicercaComponentSession)
 						bp.createComponentSession("CNRPROGETTIRIC00_EJB_RimodulaProgettoRicercaComponentSession", RimodulaProgettoRicercaComponentSession.class)).
-						cerca(actioncontext.getUserContext(), null, bulk));
+						cerca(actioncontext.getUserContext(), Optional.ofNullable(bp.getCondizioneCorrente())
+								.map(CondizioneComplessaBulk::creaFindClause)
+								.filter(CompoundFindClause.class::isInstance)
+								.map(CompoundFindClause.class::cast)
+								.orElseGet(() -> new CompoundFindClause()), bulk));
 				bp.refresh(actioncontext);
 				bulk.setStato(statoRimodulazione);
 				return actioncontext.findDefaultForward();
@@ -695,6 +699,26 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		catch(Throwable throwable)
 		{
 			return handleException(actioncontext, throwable);
+		}
+	}
+
+	public Forward doConsultaProgetto(ActionContext context) {
+		try {
+			fillModel(context);
+			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+			bp.validate(context);
+			Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk) bp.getModel();
+			try {
+				TestataProgettiRicercaBP crudbp = (TestataProgettiRicercaBP)context.getUserInfo().createBusinessProcess(context, "TestataProgettiRicercaBP", new Object[]{bp.isEditable() ? "MR" : "R"});
+				crudbp.setModel(context, crudbp.initializeModelForEdit(context, bulk.getProgetto()));
+				crudbp.setStatus(FormController.VIEW);
+				return context.addBusinessProcess(crudbp);
+			} catch (Throwable e) {
+				return handleException(context, e);
+			}
+		}catch(Throwable ex){
+			return handleException(context, ex);
 		}
 	}
 }

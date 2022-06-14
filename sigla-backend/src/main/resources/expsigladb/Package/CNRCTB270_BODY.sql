@@ -423,6 +423,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
          aPdgVariazione.DT_APPROVAZIONE:=Trunc(Sysdate);
          aPdgVariazione.TIPOLOGIA:='STO_S_TOT';
          aPdgVariazione.TIPOLOGIA_FIN:='FES';
+         aPdgVariazione.TI_MOTIVAZIONE_VARIAZIONE:='RAG';
          aPdgVariazione.FL_VISTO_DIP_VARIAZIONI:='N';
          aPdgVariazione.DACR:=aTSNow;
          aPdgVariazione.UTCR:=aUser;
@@ -465,6 +466,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
          aVarStanzRes.STATO:='APP';
          aVarStanzRes.TIPOLOGIA:='STO';
          aVarStanzRes.TIPOLOGIA_FIN:='FES';
+         aVarStanzRes.TI_MOTIVAZIONE_VARIAZIONE:='RAG';
          aVarStanzRes.DACR:=aTSNow;
          aVarStanzRes.UTCR:=aUser;
          aVarStanzRes.DUVA:=aTSNow;

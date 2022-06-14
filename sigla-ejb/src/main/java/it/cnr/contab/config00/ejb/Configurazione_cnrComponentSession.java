@@ -22,10 +22,22 @@ import it.cnr.jada.comp.ComponentException;
 
 import javax.ejb.Remote;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 @Remote
 public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.GenericComponentSession {
-    it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(UserContext param0, Integer param1, String param2, String param3, String param4) throws ComponentException, RemoteException;
+    /**
+     *
+     * @param userContext
+     * @param esercizio
+     * @param unita_funzionale
+     * @param chiave_primaria
+     * @param chiave_secondaria
+     * @return Ritorna la configurazione in base ai parametri richiesti,
+     * @throws it.cnr.jada.comp.ComponentException
+     * @throws java.rmi.RemoteException
+     */
+    it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext userContext, java.lang.Integer esercizio, java.lang.String unita_funzionale, java.lang.String chiave_primaria, java.lang.String chiave_secondaria) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     java.sql.Timestamp getDt01(UserContext param0, Integer param1, String param2, String param3, String param4) throws ComponentException, RemoteException;
 
@@ -73,9 +85,9 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(UserContext userContext) throws ComponentException, RemoteException;
 
-    Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, RemoteException;
+    Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
 
-    Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, RemoteException;
+    Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
 
     Boolean isAttivaEconomica(UserContext userContext) throws ComponentException, RemoteException;
 
@@ -90,5 +102,12 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     Boolean isImpegnoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
 
     Boolean isAccertamentoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
+
+    Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException;
+
+    java.lang.Integer getCdTerzoDiversiStipendi(UserContext userContext) throws ComponentException, RemoteException;
+
+    String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
+    Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException, RemoteException;
 
 }

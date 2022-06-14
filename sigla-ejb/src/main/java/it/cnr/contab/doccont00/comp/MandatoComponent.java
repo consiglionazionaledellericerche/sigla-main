@@ -23,8 +23,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
@@ -89,7 +88,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
+public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoComponent implements
         IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 
     public final static String INSERIMENTO_MANDATO_ACTION = "I";
@@ -97,8 +96,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     public final static String MODIFICA_MANDATO_ACTION = "M";
 
     public final static String VSX_PROC_NAME = "CNRCTB037.vsx_man_acc";
-    private transient static final Logger logger = LoggerFactory.getLogger(MandatoComponent.class);
     public static final int DS_MANDATO_MAX_LENGTH = 300;
+    private transient static final Logger logger = LoggerFactory.getLogger(MandatoComponent.class);
 
     // @@<< CONSTRUCTORCST
     public MandatoComponent() {
@@ -774,11 +773,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             } else {
                 cd_terzo = mandato.getMandato_terzo().getCd_terzo();
-                ti_pagamento = ((Mandato_rigaIBulk) mandato
-                        .getMandato_rigaColl().get(0)).getBanca()
+                ti_pagamento = mandato
+                        .getMandato_rigaColl().get(0).getBanca()
                         .getTi_pagamento();
-                pGiro = ((Mandato_rigaIBulk) mandato.getMandato_rigaColl().get(
-                        0)).getFl_pgiro();
+                pGiro = mandato.getMandato_rigaColl().get(
+                        0).getFl_pgiro();
                 ti_competenza_residuo = mandato.getTi_competenza_residuo();
             }
             for (Iterator i = docPassivi.iterator(); i.hasNext(); ) {
@@ -967,9 +966,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             for (Ass_mandato_reversaleBulk ass_mandato_reversaleBulk : ass) {
                 ReversaleBulk reversale =
                         Optional.ofNullable(super.findByPrimaryKey(userContext,
-                                new ReversaleIBulk(ass_mandato_reversaleBulk.getCd_cds_reversale(),
-                                        ass_mandato_reversaleBulk.getEsercizio_reversale(),
-                                        ass_mandato_reversaleBulk.getPg_reversale())))
+                                        new ReversaleIBulk(ass_mandato_reversaleBulk.getCd_cds_reversale(),
+                                                ass_mandato_reversaleBulk.getEsercizio_reversale(),
+                                                ass_mandato_reversaleBulk.getPg_reversale())))
                                 .filter(ReversaleBulk.class::isInstance)
                                 .map(ReversaleBulk.class::cast)
                                 .orElse(null);
@@ -1012,7 +1011,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     public void annullaDocumentoGenerico(UserContext userContext,
                                          MandatoBulk mandato) throws ComponentException {
         try {
-            Mandato_rigaBulk riga = (Mandato_rigaBulk) mandato
+            Mandato_rigaBulk riga = mandato
                     .getMandato_rigaColl().get(0);
             DocumentoGenericoComponentSession docSession = createDocumentoGenericoComponentSession();
             Documento_genericoBulk docGenerico = (Documento_genericoBulk) docSession
@@ -1440,7 +1439,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             MandatoBulk mandato) throws it.cnr.jada.comp.ComponentException {
         try {
             return iterator(userContext, ((MandatoAccreditamentoHome) getHome(
-                    userContext, MandatoAccreditamentoBulk.class))
+                            userContext, MandatoAccreditamentoBulk.class))
                             .selectImpegno(mandato), V_impegnoBulk.class,
                     getFetchPolicyName("find"));
         } catch (Throwable e) {
@@ -1470,7 +1469,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         try {
 
             return iterator(userContext, ((SospesoHome) getHome(userContext,
-                    SospesoBulk.class)).selectSospesiDiSpesa(mandato, clausole, Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
+                            SospesoBulk.class)).selectSospesiDiSpesa(mandato, clausole, Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()),
                     SospesoBulk.class, getFetchPolicyName("find"));
         } catch (Throwable e) {
             throw handleException(e);
@@ -1751,7 +1750,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (Optional.ofNullable(mandatoAnnPerSostituzione).isPresent()) {
                     if (Optional.ofNullable(mandatoAnnPerSostituzione.getPg_mandato_riemissione()).isPresent()) {
                         Optional<MandatoBulk> mandatoBulk = Optional.ofNullable(super.findByPrimaryKey(userContext,
-                                new MandatoIBulk(mandatoAnnPerSostituzione.getCd_cds(), mandatoAnnPerSostituzione.getEsercizio(), mandatoAnnPerSostituzione.getPg_mandato_riemissione())))
+                                        new MandatoIBulk(mandatoAnnPerSostituzione.getCd_cds(), mandatoAnnPerSostituzione.getEsercizio(), mandatoAnnPerSostituzione.getPg_mandato_riemissione())))
                                 .filter(MandatoBulk.class::isInstance)
                                 .map(MandatoBulk.class::cast);
                         if (mandatoBulk.isPresent()) {
@@ -1798,8 +1797,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     if (!((CNRUserContext) userContext)
                             .getCd_unita_organizzativa().equals(
                                     ente.getCd_unita_organizzativa()))
-                        if (!((Mandato_rigaIBulk) mandato.getMandato_rigaColl()
-                                .get(0)).getFl_pgiro().booleanValue())
+                        if (!mandato.getMandato_rigaColl()
+                                .get(0).getFl_pgiro().booleanValue())
                             // Il mandato è stato emesso dal CDS su capitoli di
                             // spesa propri
                             if (reversale.getCd_unita_organizzativa().equals(
@@ -2040,7 +2039,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // Carico automaticamente i codici SIOPE e visualizzo quelli ancora
             // collegabili se la gestione è attiva
             if (Utility.createParametriCnrComponentSession().getParametriCnr(
-                    userContext, mandato.getEsercizio()).getFl_siope()
+                            userContext, mandato.getEsercizio()).getFl_siope()
                     .booleanValue()) {
                 riga = (MandatoAccreditamento_rigaBulk) aggiornaLegameSIOPE(
                         userContext, riga);
@@ -2162,13 +2161,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // Carico automaticamente i codici SIOPE e visualizzo quelli ancora
             // collegabili se la gestione è attiva
             if (Utility.createParametriCnrComponentSession().getParametriCnr(
-                    userContext, mandato.getEsercizio()).getFl_siope()
+                            userContext, mandato.getEsercizio()).getFl_siope()
                     .booleanValue()) {
                 riga = (Mandato_rigaIBulk) aggiornaLegameSIOPE(userContext,
                         riga);
                 riga = (Mandato_rigaIBulk) setCodiciSIOPECollegabili(
                         userContext, riga);
             }
+
+            riga.setDs_mandato_riga(Optional.ofNullable(riga.getDs_mandato_riga()).orElse(
+                    Optional.of(docPassivo).filter(V_doc_passivo_obbligazione_wizardBulk.class::isInstance).map(V_doc_passivo_obbligazione_wizardBulk.class::cast)
+                            .map(V_doc_passivo_obbligazione_wizardBulk::getDescrizioneRigaMandatoWizard).orElse(null)));
 
             return riga;
         } catch (Exception e) {
@@ -2330,8 +2333,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 cd_uo = ((Unita_organizzativaBulk) result.get(0))
                         .getCd_unita_organizzativa();
             } else {
-                cd_uo = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoAccreditamentoSac(CNRUserContext.getEsercizio(userContext)))
-                        .orElseThrow(()->new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
+                cd_uo = Optional.ofNullable(((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getUoAccreditamentoSac(CNRUserContext.getEsercizio(userContext)))
+                        .orElseThrow(() -> new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC per l'esercizio " + CNRUserContext.getEsercizio(userContext) + "."));
             }
 
             // imposto il terzo
@@ -3610,9 +3613,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Ass_mandato_reversaleBulk). Viene caricato i dati del beneficiario del
      * mandato (Mandato_terzoBulk)
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> il mandato da inizializzare per la
-     *             modifica
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> il mandato da inizializzare per la
+     *                    modifica
      * @return mandato il Mandato inizializzato per la modifica
      */
     public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,
@@ -3678,19 +3681,19 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (mandato instanceof MandatoAccreditamentoBulk) {
                 ((MandatoAccreditamentoBulk) mandato)
-                        .setModalita_pagamento(((Mandato_rigaBulk) mandato
-                                .getMandato_rigaColl().get(0))
+                        .setModalita_pagamento(mandato
+                                .getMandato_rigaColl().get(0)
                                 .getModalita_pagamento());
                 ((MandatoAccreditamentoBulk) mandato)
-                        .setModalita_pagamentoOptions(((Mandato_rigaBulk) mandato
-                                .getMandato_rigaColl().get(0))
+                        .setModalita_pagamentoOptions(mandato
+                                .getMandato_rigaColl().get(0)
                                 .getModalita_pagamentoOptions());
                 ((MandatoAccreditamentoBulk) mandato)
-                        .setBanca(((Mandato_rigaBulk) mandato
-                                .getMandato_rigaColl().get(0)).getBanca());
+                        .setBanca(mandato
+                                .getMandato_rigaColl().get(0).getBanca());
                 ((MandatoAccreditamentoBulk) mandato)
-                        .setBancaOptions(((Mandato_rigaBulk) mandato
-                                .getMandato_rigaColl().get(0))
+                        .setBancaOptions(mandato
+                                .getMandato_rigaColl().get(0)
                                 .getBancaOptions());
                 ((MandatoAccreditamentoBulk) mandato)
                         .setImpegniSelezionatiColl(findImpegni(userContext,
@@ -3784,28 +3787,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
-        try {
-            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
-                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                        .map(Scrittura_partita_doppiaHome.class::cast)
-                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(mandato);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                    mandato.setScrittura_partita_doppia(scrittura);
-                }
-            }
-        } catch (PersistencyException e) {
-            throw handleException(mandato, e);
-        }
+        caricaScrittura(userContext, mandato);
         return mandato;
     }
 
@@ -3981,7 +3963,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                     .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
             if (uo.isUoCds() ||
-                    ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(userContext),cd_uo)) {
+                    ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(userContext), cd_uo)) {
                 stampa.setUoEmittenteForPrint(new Unita_organizzativaBulk());
                 stampa.setFindUOForPrintEnabled(true);
             } else {
@@ -4599,7 +4581,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         || manAcc.getBanca().getPg_banca() == null)
                     throw new ApplicationException(
                             "Deve essere selezionata una modalità di pagamento e una coordinata bancaria ");
-                Mandato_rigaBulk riga = (Mandato_rigaBulk) mandato
+                Mandato_rigaBulk riga = mandato
                         .getMandato_rigaColl().get(0);
                 if (!riga.getCd_modalita_pag().equals(
                         manAcc.getModalita_pagamento().getCd_modalita_pag())
@@ -5373,15 +5355,15 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             for (Mandato_siopeBulk siopeBulk : codiciSiope.get(codiceSiope)) {
                 if (siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)) {
                     final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(
-                            fattura_passivaHome.findByPrimaryKey(
-                                    new Fattura_passiva_IBulk(
-                                            siopeBulk.getCd_cds_doc_amm(),
-                                            siopeBulk.getCd_uo_doc_amm(),
-                                            siopeBulk.getEsercizio_doc_amm(),
-                                            siopeBulk.getPg_doc_amm()
+                                    fattura_passivaHome.findByPrimaryKey(
+                                            new Fattura_passiva_IBulk(
+                                                    siopeBulk.getCd_cds_doc_amm(),
+                                                    siopeBulk.getCd_uo_doc_amm(),
+                                                    siopeBulk.getEsercizio_doc_amm(),
+                                                    siopeBulk.getPg_doc_amm()
+                                            )
                                     )
-                            )
-                    ).filter(Fattura_passivaBulk.class::isInstance)
+                            ).filter(Fattura_passivaBulk.class::isInstance)
                             .map(Fattura_passivaBulk.class::cast)
                             .orElseThrow(() -> new ComponentException("Fattura non trovata!"));
                     if (!(fattura_passivaBulk.isEstera() ||
@@ -5397,7 +5379,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             /**
              * Validazione del codice CIG
              */
-            for(CigBulk cigBulk : codiciCIG.stream()
+            for (CigBulk cigBulk : codiciCIG.stream()
                     .map(s -> new CigBulk(s))
                     .map(cigBulk -> {
                         try {
@@ -5408,7 +5390,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     })
                     .filter(CigBulk.class::isInstance)
                     .map(CigBulk.class::cast)
-                    .collect(Collectors.toList())){
+                    .collect(Collectors.toList())) {
                 try {
                     cigBulk.validate();
                 } catch (ValidationException e) {
@@ -5567,7 +5549,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     if (asDB != null) {
                         newSet.add(asDB);
                         if (asDB.getIm_scadenza().subtract(
-                                asDB.getIm_associato_doc_contabile())
+                                        asDB.getIm_associato_doc_contabile())
                                 .compareTo(new BigDecimal(0)) > 0)
                             im_accertamento_disponibile = im_accertamento_disponibile
                                     .add(asDB
@@ -5752,7 +5734,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         try {
             if (mandato.getMandato_rigaColl().size() == 0)
                 return;
-            Mandato_rigaBulk riga = (Mandato_rigaBulk) mandato
+            Mandato_rigaBulk riga = mandato
                     .getMandato_rigaColl().get(0);
 
             /*
@@ -5786,8 +5768,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         .filter(s -> s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.BANCA_ITALIA))
                         .isPresent() &&
                         !Arrays.asList(
-                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value(),
-                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value())
+                                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value(),
+                                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value())
                                 .contains(Optional.ofNullable(rifModPag)
                                         .map(Rif_modalita_pagamentoBase::getTipo_pagamento_siope)
                                         .orElse(null)
@@ -6432,7 +6414,14 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         SQLBuilder sql = getHome(userContext, CupBulk.class).createSQLBuilder();
         sql.openParenthesis("AND");
         sql.addClause("AND", "dt_canc", SQLBuilder.ISNULL, null);
-        sql.addClause("OR", "dt_canc", SQLBuilder.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+        sql.addClause("OR", "dt_canc", SQLBuilder.GREATER,
+                Optional.ofNullable(bulk)
+                        .flatMap(mandatoSiopeCupIBulk -> Optional.ofNullable(mandatoSiopeCupIBulk.getMandatoSiope()))
+                        .flatMap(mandato_siopeBulk -> Optional.ofNullable(mandato_siopeBulk.getMandato_riga()))
+                        .flatMap(mandato_rigaBulk -> Optional.ofNullable(mandato_rigaBulk.getMandato()))
+                        .flatMap(mandatoBulk -> Optional.ofNullable(mandatoBulk.getDt_emissione()))
+                        .orElse(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())
+        );
         sql.closeParenthesis();
         sql.addClause(clauses);
         return sql;

@@ -17,12 +17,11 @@
 //	boolean isAbilitato = !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni()));
 %>
-<div class="Group card">
-<fieldset class="fieldset">
+<fieldset class="fieldset card">
 	<% if (!bp.getParametriCnr().getFl_regolamento_2006().booleanValue() && bk.getDesTipoVariazione()!=null) { %>
 		<legend class="GroupLabel cardLabel card-header text-primary"><% bp.getController().writeFormInput(out,null,"desTipoVariazione",true,"GroupLabel cardLabel card-header text-primary","style=\"border-style : none; cursor:default;\"");%></legend>
 	<% } %> 
-<table class="Panel w-100">	
+<table class="card-block m-2">
   <TR>
    	<% bp.getController().writeFormField(out,"esercizio");%>
     <TD colspan="4">
@@ -121,31 +120,53 @@
    <TD colspan="5"><% bp.getController().writeFormInput(out,"default","riferimenti",isAbilitato,null,null);%></TD>
   </TR>
 </table>
-<%
-if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEnte())) { 
-%>
-<BR>
-<div class="GroupLabel font-weight-bold text-primary ml-2">Motivazione della Mancata Approvazione</div>
-<div class="Group card p-3 m-1 w-100" style="width:80%">
-	<table class="Panel w-100" align="left" cellspacing=1 cellpadding=1>
-	  <tr>
-        <TD><% bp.getController().writeFormLabel(out,"cd_causale_respinta");%></TD>
-        <TD colspan="5"><% bp.getController().writeFormInput(out,"default","cd_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
-      </tr>
-	  <tr>
-        <TD><% bp.getController().writeFormLabel(out,"ds_causale_respinta");%></TD>
-        <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
-      </tr>
-   	</table>
-</div>	
-<%
-}
-%>
 </fieldset>
-</div>
+
+<% if (bp.isUoEnte() && (bp.isSearching() || !bk.isPropostaProvvisoria())) { %>
+    <% if (bp.getParent().isBootstrap()) { %><BR><% } %>
+    <fieldset class="fieldset card">
+        <table class="card-block m-2">
+           <tr><% bp.getController().writeFormField(out,"fl_cda");%></tr>
+           <tr>
+                <td><% bp.getController().writeFormLabel(out,"assegnazione");%></td>
+                <td><% bp.getController().writeFormInput(out,"assegnazione");
+                       if (!bp.isSearching())
+                       	    JSPUtils.button(out,
+                       				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-link text-success" : "img/edit16.gif",
+                       				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-link text-success" : "img/edit16.gif",
+                       				null,
+                       				"javascript:submitForm('doPrendiInCarico')",
+                       				"btn-outline-secondary btn-title",
+                       				true,
+                       				bp.getParentRoot().isBootstrap());
+		             %>
+		        </td>
+		   </tr>
+           <tr><% bp.getController().writeFormField(out,"im_incassato");%></tr>
+           <tr><% bp.getController().writeFormField(out,"note");%></tr>
+        </table>
+    </fieldset>
+<% } %>
+
+<% if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEnte())) { %>
+<fieldset class="fieldset card">
+    <legend class="GroupLabel card-header h3 text-primary">Motivazione della Mancata Approvazione</legend>
+	<table class="card-block m-2">
+          <tr>
+            <TD><% bp.getController().writeFormLabel(out,"cd_causale_respinta");%></TD>
+            <TD colspan="5"><% bp.getController().writeFormInput(out,"default","cd_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
+          </tr>
+          <tr>
+            <TD><% bp.getController().writeFormLabel(out,"ds_causale_respinta");%></TD>
+            <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
+          </tr>
+    </table>
+</fieldset>
+<% } %>
+
 <% if (bp.getParent().isBootstrap()) {%><BR><% } %>
-<div class="Group card">
-	<table class="Panel w-100" cellspacing=1 cellpadding=1>
+<fieldset class="fieldset card">
+	<table class="card-block m-2">
 	  <tr>
 	     <td></td>
 	     <td align=center><span class="GroupLabel font-weight-bold text-primary">Variazioni +</span></td>
@@ -187,22 +208,4 @@ if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEn
       </tr>  
 <% } %>
    	</table>
-</div>	
-<% if (bk != null && bk.getStato() != null && 
-       bk.getVar_bilancio() != null && bk.getVar_bilancio().getPg_variazione() != null){ %>
-<BR>
-<div class="GroupLabel font-weight-bold text-primary ml-2">Variazione al bilancio dell'Ente</div>          
-<div class="Group card p-3 w-100">
-	<table>      
-		<tr>
-		    <td><% bp.getController().writeFormLabel(out,"pg_variazione_bilancio");%></td>
-			<td class="w-100">
-			    <div class="input-group input-group-searchtool">
-					<% bp.getController().writeFormInput(out,"pg_variazione_bilancio");%>
-					<% bp.getController().writeFormInput(out,"ds_variazione_bilancio");%>
-				</div>
-			</td>         
-		</tr>
-	</table>
-</div>
-<%}%>
+</fieldset>

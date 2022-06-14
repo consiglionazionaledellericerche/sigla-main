@@ -1420,11 +1420,12 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
                    "è già stata collegata al preventivo decisionale del progetto -  parte entrate.");
 
     		Pdg_modulo_speseHome homeSpe = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
-			homeSpe.createSQLBuilder().addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());
-    		homeSpe.createSQLBuilder().addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
-    		homeSpe.createSQLBuilder().addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());
+			SQLBuilder sqlSpe = homeEtr.createSQLBuilder();
+			sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());
+			sqlSpe.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
+			sqlSpe.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());
 
-    		List resultSpe = homeSpe.fetchAll(homeSpe.createSQLBuilder());
+    		List resultSpe = homeSpe.fetchAll(sqlSpe);
     		if (!resultSpe.isEmpty())
     			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto "+
                    "è già stata collegata al preventivo decisionale del progetto -  parte spese.");

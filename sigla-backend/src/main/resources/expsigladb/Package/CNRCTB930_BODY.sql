@@ -1414,7 +1414,7 @@ BEGIN
               -- fino a 705 caratteri
 
                aStringa:= aStringa || LPAD(to_char(trunc(sysdate),'DDMMYYYY'), 8, '0'); -- data stampa
-               aStringa:= aStringa || RPAD('IL VICEPRESIDENTE LUCIO d''ALESSANDRO', 50, ' ');
+               aStringa:= aStringa || RPAD('LA PRESIDENTE MARIA CHIARA CARROZZA', 50, ' ');
                aStringa:= aStringa || RPAD(' ', 3, ' ');
 
                aStringa:= aStringa || LPAD('0', 6, '0'); -- num pagina

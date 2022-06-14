@@ -29,6 +29,7 @@ public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 	String cdLineaAttivita;
 	String cdVoce;
 	String cdCentroResponsabilita;
+	Long nuovoPgObbligazioneScadenzario;
 	
 	public BigDecimal getNuovoImportoScadenzaVecchia() {
 		return nuovoImportoScadenzaVecchia;
@@ -73,5 +74,13 @@ public class DatiFinanziariScadenzeDTO implements Serializable, Cloneable{
 
 	public void setMantieniImportoAssociatoScadenza(Boolean mantieniImportoAssociatoScadenza) {
 		this.mantieniImportoAssociatoScadenza = mantieniImportoAssociatoScadenza;
+	}
+
+	public Long getNuovoPgObbligazioneScadenzario() {
+		return nuovoPgObbligazioneScadenzario;
+	}
+
+	public void setNuovoPgObbligazioneScadenzario(Long nuovoPgObbligazioneScadenzario) {
+		this.nuovoPgObbligazioneScadenzario = nuovoPgObbligazioneScadenzario;
 	}
 }

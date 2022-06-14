@@ -159,7 +159,7 @@
   </businessProcess>
   <businessProcess name="CRUDNumerazioneMagBP" className="it.cnr.contab.ordmag.anag00.bp.CRUDNumerazioneMagBP">
     <forward name="default" path="/ordmag/numerazione_mag.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.NumerazioneMagBulk"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.MagazzinoBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
   <businessProcess name="CRUDNumerazioneOrdBP" className="it.cnr.jada.util.action.SimpleCRUDBP">

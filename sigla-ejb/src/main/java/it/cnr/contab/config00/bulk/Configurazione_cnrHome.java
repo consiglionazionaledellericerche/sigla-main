@@ -26,6 +26,8 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -190,6 +192,13 @@ public class Configurazione_cnrHome extends BulkHome {
                 .orElse(null);
     }
 
+    public String getContoCorrenteEnte(Integer esercizio) throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CONTO_CORRENTE_SPECIALE, Configurazione_cnrBulk.SK_ENTE))
+                .map(Configurazione_cnrBulk::getVal01)
+                .orElse(null);
+    }
+
     /**
      * Ritorna il codice cdr del personale
      * <p><b>chiave_primaria: CDR_SPECIALE</b>
@@ -348,4 +357,59 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
                 .orElse(Boolean.TRUE);
     }
+
+    /**
+     *
+     * @param userContext
+     * @return É attivo il blocco delle scritture di economica
+     * @throws PersistencyException
+     */
+    public boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws PersistencyException{
+        return Optional.ofNullable(
+                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                                Configurazione_cnrBulk.PK_VARIAZIONE_AUTOMATICA,
+                                Configurazione_cnrBulk.SK_SPESA)
+                )
+                .map(Configurazione_cnrBulk::getVal01)
+                .map(s -> Boolean.valueOf(s.equalsIgnoreCase("Y")))
+                .orElse(Boolean.FALSE);
+    }
+
+    /**
+     * Ritorna il codice terzo da utilizzare come DIVERSI_STIPENDI in fase di emissione mandati stipendi
+     * <p><b>chiave_primaria: TERZO_SPECIALE</b>
+     * <p><b>chiave_secondaria: DIVERSI_STIPENDI</b>
+     *
+     * @throws PersistencyException
+     */
+    public Integer getCdTerzoDiversiStipendi() throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(null,Configurazione_cnrBulk.PK_TERZO_SPECIALE, Configurazione_cnrBulk.SK_DIVERSI_STIPENDI))
+                .map(Configurazione_cnrBulk::getIm01)
+                .map(BigDecimal::intValue)
+                .orElse(null);
+    }
+
+
+    /**
+     * Ritorna il codice bollo da utilizzare per la genersazione dei madati stipendi
+     * <p><b>chiave_primaria: STIPENDI</b>
+     * <p><b>chiave_secondaria: CODICE_BOLLO</b>
+     *
+     * @throws PersistencyException
+     */
+    public String getCodiceBolloStipendi() throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(null,Configurazione_cnrBulk.PK_STIPENDI, Configurazione_cnrBulk.SK_CODICE_BOLLO))
+                .map(Configurazione_cnrBulk::getVal01)
+                .orElse(null);
+    }
+
+    public Timestamp getDataFineValiditaCaricoFamiliare(String tiPersona) throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(null,Configurazione_cnrBulk.PK_BLOCCO_DETRAZIONI, tiPersona))
+                .map(Configurazione_cnrBulk::getDt01)
+                .orElse(null);
+    }
+
 }

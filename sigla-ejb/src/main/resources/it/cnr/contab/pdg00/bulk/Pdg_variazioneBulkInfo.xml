@@ -212,7 +212,9 @@
         enabledOnSearch="true"		
 		maxLength="500"
 		nullable="true"
+		inputCssClass="w-100 "
 		label="Motivazione mancata app." />
+
 	<fieldProperty
 		name="dt_app_formale"
 		property="dt_app_formale"
@@ -520,7 +522,46 @@
 		inputSize="10" 
 		enabledOnSearch="true"
 		label="Nr. Rimodulazione" />
-			
+
+	<fieldProperty
+		name="fl_cda"
+		property="fl_cda"
+		label="Cda"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="true"	/>
+	<fieldProperty
+		name="assegnazione"
+		property="assegnazione"
+		label="Assegnata a"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="true"	/>
+	<fieldProperty
+		name="im_incassato"
+		property="im_incassato"
+		label="Importo Incassato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="note"
+		property="note"
+		label="Note"
+		cols="80"
+		rows="4"
+		maxLength="2000"
+		inputType="TEXTAREA"
+		enabledOnSearch="true"
+		inputCssClass="w-100 "
+		nullable="true" />
+
     <form
         name="searchtool">
 	 	<formFieldProperty
@@ -541,7 +582,8 @@
 		<formFieldProperty
 			name="ds_variazione"
 			inputType="TEXT"
-			inputSize="50" />			
+			inputCssClass=" "
+			inputSize="80" />
     </form>    		
     	
 	<form name="variazioniEnte">
@@ -658,7 +700,16 @@
 		name="pgRimodulazione" />
 	<formFieldProperty
 		name="pgGenRimodulazione" />
-							
+
+	<formFieldProperty
+		name="fl_cda" />
+	<formFieldProperty
+		name="assegnazione"	/>
+	<formFieldProperty
+		name="im_incassato" />
+	<formFieldProperty
+		name="note" />
+
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -715,8 +766,16 @@
 		name="cdProgettoRimodulazione" />
 	<findFieldProperty
 		name="pgRimodulazione" />
-		
-		
+
+	<findFieldProperty
+		name="fl_cda" />
+	<findFieldProperty
+		name="assegnazione"	/>
+	<findFieldProperty
+		name="im_incassato" />
+	<findFieldProperty
+		name="note" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

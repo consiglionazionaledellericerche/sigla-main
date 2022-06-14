@@ -361,17 +361,50 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
                 	sqlRifModPag.addClause(FindClause.AND, "tipoPagamentoSdi", SQLBuilder.EQUALS, docTestata.getBeneficiarioModPag());
                 	List<Rif_modalita_pagamentoBulk> rifModPags = rifModPagHome.fetchAll(sqlRifModPag);
                 	boolean trovataModPag = Boolean.FALSE;
-                	for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : rifModPags) {
-                		Modalita_pagamentoBulk modalitaPagamento = 
-                				(Modalita_pagamentoBulk) modPagHome.findByPrimaryKey(new Modalita_pagamentoBulk(
-								rif_modalita_pagamentoBulk.getCd_modalita_pag(), docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo()));
-                		if (modalitaPagamento != null) {
-                			trovataModPag = Boolean.TRUE;
-                			docTestata.setModalitaPagamento(modalitaPagamento);
-                			break;
-                		}
+
+                	Integer terzoModPag = null;
+					if (docTestata.getDocumentoEleTrasmissione().getSoggettoEmittente() != null &&
+							docTestata.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
+						if (docTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo() != null)
+							terzoModPag = docTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo();
+						else if (docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo() != null)
+							terzoModPag =  docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo();
+						else
+							terzoModPag =  docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo();
+					} else {
+						terzoModPag = docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo();
 					}
-                	if (!trovataModPag) {                		
+
+					if (terzoModPag != null){
+						SQLBuilder sqlModPag = modPagHome.createSQLBuilder();
+						sqlModPag.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, terzoModPag);
+						sqlModPag.openParenthesis(FindClause.AND);
+						for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : rifModPags) {
+							sqlModPag.addSQLClause(FindClause.OR, "CD_MODALITA_PAG", SQLBuilder.EQUALS, rif_modalita_pagamentoBulk.getCd_modalita_pag());
+						}
+						sqlModPag.closeParenthesis();
+						List<Modalita_pagamentoBulk> modPags = modPagHome.fetchAll(sqlModPag);
+						if (modPags != null){
+							for (Modalita_pagamentoBulk modalita_pagamentoBulk : modPags) {
+								trovataModPag = Boolean.TRUE;
+								docTestata.setModalitaPagamento(modalita_pagamentoBulk);
+								break;
+							}
+						}
+					} else {
+						for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : rifModPags) {
+							Modalita_pagamentoBulk modalitaPagamento =
+									(Modalita_pagamentoBulk) modPagHome.findByPrimaryKey(new Modalita_pagamentoBulk(
+											rif_modalita_pagamentoBulk.getCd_modalita_pag(), docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo()));
+							if (modalitaPagamento != null) {
+								trovataModPag = Boolean.TRUE;
+								docTestata.setModalitaPagamento(modalitaPagamento);
+								break;
+							}
+						}
+					}
+
+                	if (!trovataModPag) {
                 		anomalieTestata.add("Modalità di pagamento non trovata");
                 	}
         		}
@@ -494,6 +527,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     @SuppressWarnings("unchecked")
 	public SQLBuilder selectModalitaPagamentoByClause(UserContext usercontext, DocumentoEleTestataBulk docTestata, 
     		Modalita_pagamentoBulk modalita_pagamentoBulk, CompoundFindClause compoundfindclause) throws ComponentException, PersistencyException{
+
     	Rif_modalita_pagamentoHome rifModPagHome = (Rif_modalita_pagamentoHome) getHome(usercontext,Rif_modalita_pagamentoBulk.class);
     	SQLBuilder sqlRifModPag = rifModPagHome.selectByClause(compoundfindclause);
     	sqlRifModPag.addClause(FindClause.AND, "tipoPagamentoSdi", SQLBuilder.EQUALS, docTestata.getBeneficiarioModPag());
@@ -559,11 +593,17 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     	    	sqlFatturaPassiva.addClause(FindClause.AND, "fornitore", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getPrestatore());
     	    	sqlFatturaPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa());
     	    	sqlFatturaPassiva.setOrderBy("dt_registrazione",  it.cnr.jada.util.OrderConstants.ORDER_ASC);
-    	    	List<?> fatture = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
-    	    		if (fatture.isEmpty()){
-    	    			throw new ApplicationException("Fattura collegata alla nota non trovata!");
-    	    		}
-    	    		return (Fattura_passivaBulk) fatture.get(fatture.size()-1);
+    	    	List<Fattura_passivaBulk> fatture = fatturaPassivaHome.fetchAll(fatturaPassivaHome.createBroker(sqlFatturaPassiva));
+				if (fatture.isEmpty()){
+					throw new ApplicationException("Fattura collegata alla nota non trovata!");
+				}
+				final Optional<Fattura_passivaBulk> fatturaByImporto = fatture.stream()
+						.filter(fattura_passivaBulk -> fattura_passivaBulk.getIm_totale_fattura().equals(oggettobulk.getImportoDocumento()))
+						.findAny();
+				if (fatturaByImporto.isPresent()) {
+					return fatturaByImporto.get();
+				}
+				return (Fattura_passivaBulk) fatture.get(fatture.size()-1);
     		}
 			return (Fattura_passivaBulk) fattureCol.get(0);
 		} catch (PersistencyException e) {

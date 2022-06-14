@@ -1995,7 +1995,7 @@
             a.esercizio_fine,
             a.cd_area_scientifica,
             a.id_funzione_pubblica,
-            a.codiceAooIpa,
+            a.codiceaooipa,
             a.dacr,
             a.utcr,
             a.duva,
@@ -2032,7 +2032,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa,
             v_unita_organizzativa_valida uo_cds
             WHERE ((uo_cds.fl_uo_cds = 'Y'::bpchar) AND ((uo_cds.cd_tipo_unita)::text &lt;&gt; 'SAC'::text) AND ((unita_organizzativa.cd_unita_padre)::text = (uo_cds.cd_unita_padre)::text) AND (uo_cds.esercizio = unita_organizzativa.esercizio))
@@ -2063,7 +2063,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa
             WHERE ((unita_organizzativa.fl_uo_cds = 'N'::bpchar) AND ((unita_organizzativa.cd_tipo_unita)::text &lt;&gt; 'SAC'::text))
             UNION ALL
@@ -2093,7 +2093,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa,
             v_unita_organizzativa_valida uo_rubrica,
             v_cdr_valido cdr,
@@ -2126,7 +2126,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa
             WHERE ((unita_organizzativa.fl_rubrica = 'N'::bpchar) AND ((unita_organizzativa.cd_tipo_unita)::text = 'SAC'::text));</createView>
     </changeSet>
@@ -2157,7 +2157,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa,
             v_unita_organizzativa_valida uo_cds
             WHERE ((uo_cds.fl_uo_cds = 'Y')
@@ -2190,7 +2190,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa
             WHERE ((unita_organizzativa.fl_uo_cds = 'N')
                 AND ((unita_organizzativa.cd_tipo_unita) &lt;&gt; 'SAC'))
@@ -2221,7 +2221,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa,
             v_unita_organizzativa_valida uo_rubrica,
             v_cdr_valido cdr,
@@ -2265,7 +2265,7 @@
             unita_organizzativa.esercizio_fine,
             unita_organizzativa.cd_area_scientifica,
             unita_organizzativa.id_funzione_pubblica,
-            unita_organizzativa.codiceAooIpa
+            unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa_valida unita_organizzativa
             WHERE ((unita_organizzativa.fl_rubrica = 'N')
                 AND ((unita_organizzativa.cd_tipo_unita) = 'SAC'));
@@ -2299,7 +2299,7 @@
             v_unita_organizzativa.esercizio_fine,
             v_unita_organizzativa.cd_area_scientifica,
             v_unita_organizzativa.id_funzione_pubblica,
-            v_unita_organizzativa.codiceAooIpa
+            v_unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa,
             utente,
             configurazione_cnr
@@ -2335,7 +2335,7 @@
             v_unita_organizzativa.esercizio_fine,
             v_unita_organizzativa.cd_area_scientifica,
             v_unita_organizzativa.id_funzione_pubblica,
-            v_unita_organizzativa.codiceAooIpa
+            v_unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa,
             utente utente_templ,
             utente,
@@ -2372,7 +2372,7 @@
             v_unita_organizzativa.esercizio_fine,
             v_unita_organizzativa.cd_area_scientifica,
             v_unita_organizzativa.id_funzione_pubblica,
-            v_unita_organizzativa.codiceAooIpa
+            v_unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa,
             utente,
             configurazione_cnr
@@ -2410,7 +2410,7 @@
             v_unita_organizzativa.esercizio_fine,
             v_unita_organizzativa.cd_area_scientifica,
             v_unita_organizzativa.id_funzione_pubblica,
-            v_unita_organizzativa.codiceAooIpa
+            v_unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa,
             utente,
             configurazione_cnr
@@ -2454,7 +2454,7 @@
             v_unita_organizzativa.esercizio_fine,
             v_unita_organizzativa.cd_area_scientifica,
             v_unita_organizzativa.id_funzione_pubblica,
-            v_unita_organizzativa.codiceAooIpa
+            v_unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa,
             utente utente_templ,
             utente,
@@ -2499,7 +2499,7 @@
             v_unita_organizzativa.esercizio_fine,
             v_unita_organizzativa.cd_area_scientifica,
             v_unita_organizzativa.id_funzione_pubblica,
-            v_unita_organizzativa.codiceAooIpa
+            v_unita_organizzativa.codiceaooipa
             FROM v_unita_organizzativa,
             utente,
             configurazione_cnr

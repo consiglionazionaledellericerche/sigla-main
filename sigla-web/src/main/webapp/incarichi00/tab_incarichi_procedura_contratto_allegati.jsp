@@ -61,11 +61,11 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isConflittoInteressi())) {%>
+	    	  (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group Group card p-2 bg-danger text-white h5"><table>
-				<% if (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isConflittoInteressi()) { %>
+				<% if (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isAttestazioneDirettore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel">Attenzione:</span>
 			    </td>
@@ -75,6 +75,7 @@ function doScaricaFile() {
 					prima di allegare il file
 					<%if (allegato.isContratto()) {%>del contratto
 					<%} else if (allegato.isCurriculumVincitore()) {%>del curriculum
+					<%} else if (allegato.isAttestazioneDirettore()) {%>dell''Attestazione del direttore di avvenuta verifica insussistenza cause di conflitto di interesse'
 					<%} else {%>dell''Attestazione di avvenuta verifica insussistenza cause di conflitto di interesse'
 					<%}%>
 					da pubblicare sul sito internet istituzionale del CNR <br>

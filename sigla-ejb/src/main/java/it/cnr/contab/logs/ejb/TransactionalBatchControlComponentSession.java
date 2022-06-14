@@ -25,6 +25,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.TransactionalSessionImpl;
 
+import javax.ejb.EJBException;
 import java.lang.reflect.InvocationTargetException;
 import java.rmi.RemoteException;
 
@@ -547,4 +548,35 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
             }
         }
     }
+
+    public OggettoBulk creaConBulkRequiresNew(UserContext usercontext, OggettoBulk oggettoBulk)
+            throws RemoteException, ComponentException
+    {
+        try
+        {
+            return (OggettoBulk)invoke("creaBulkRequiresNew", new Object[] {
+                    usercontext, oggettoBulk
+            });
+        }
+        catch(RemoteException remoteexception)
+        {
+            throw remoteexception;
+        }
+        catch(InvocationTargetException invocationtargetexception)
+        {
+            try
+            {
+                throw invocationtargetexception.getTargetException();
+            }
+            catch(ComponentException componentexception)
+            {
+                throw componentexception;
+            }
+            catch(Throwable throwable)
+            {
+                throw new RemoteException("Uncaugth exception", throwable);
+            }
+        }
+    }
+
 }

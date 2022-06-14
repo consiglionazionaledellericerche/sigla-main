@@ -234,6 +234,58 @@
 		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		nullable="false"/>
 	<fieldProperty
+			name="pendenzaPagopa"
+			property="pendenzaPagopa"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			label="Avviso PagoPA"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			readonlyProperty="ROPendenzaSearchTool"
+			inputCssClass=""
+			nullable="true"/>
+	<fieldProperty
+			name="cdAvviso"
+			property="pendenzaPagopa.cdAvviso"
+			maxLength="20"
+			inputSize="15"
+			inputType="TEXT"
+			label="Codice Avviso"
+			readonlyPropertyOnEdit="ROpendenza"
+			readonlyPropertyOnInsert="ROpendenza"
+			readonlyPropertyOnSearch="ROpendenza"
+			enabledOnSearch="true"
+			nullable="true"/>
+	<fieldProperty
+			name="descrizionePendenza"
+			property="pendenzaPagopa.descrizione"
+			maxLength="300"
+			inputSize="30"
+			inputType="ROTEXT"
+			label="Descrizione"
+			enabledOnSearch="false"
+			nullable="true"/>
+	<fieldProperty
+			name="dtScadenzaPendenza"
+			property="pendenzaPagopa.dtScadenza"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Scadenza"
+			enabledOnSearch="false"
+			enabledOnInsert="false"
+			nullable="true"/>
+	<fieldProperty
+			name="importoPendenza"
+			property="pendenzaPagopa.importoPendenza"
+			inputType="TEXT"
+			formatName="it.cnr.contab.util.EuroFormat"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnFreeSearch="false"
+			label="Importo"
+			enabledOnSearch="false"
+			nullable="true"/>
+	<fieldProperty
 		name="codice_fiscale"
 		property="codice_fiscale"
 		maxLength="20"
@@ -297,7 +349,7 @@
 		inputType="BUTTON"
 		img="img/find16.gif"
 		iconClass="fa fa-search text-primary"
-		buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
+		buttonClass="btn-outline-secondary btn-title text-primary"
 		readonlyProperty="abledToInsertUOBank"
 		label="Conto/i..."
 		href="javascript:submitForm('doSearch(main.listabancheuo)')" />
@@ -646,14 +698,18 @@
 		maxLength="6"
 		inputSize="6"
 		inputType="ROTEXT"
-		label="Codice IPA"/>	
+		label="Codice IPA"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
 	<fieldProperty
 		name="codiceInvioSdi"
 		property="codiceInvioSdi"
 		maxLength="30"
 		inputSize="30"
 		label="Identificativo SDI"
-		inputType="ROTEXT"/>
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
 	<fieldProperty
 		name="statoInvioSdi"
 		property="statoInvioSdi"
@@ -892,8 +948,8 @@
 	<findFieldProperty name="ti_bene_servizioForSearch" />
 	<findFieldProperty name="flFatturaElettronica"/>
 	<findFieldProperty name="statoInvioSdi" />
-	<findFieldProperty name="codiceInvioSdi" />
-	<findFieldProperty name="codiceUnivocoUfficioIpa" />
+	<findFieldProperty name="codiceInvioSdi" inputType="TEXT"/>
+	<findFieldProperty name="codiceUnivocoUfficioIpa" inputType="TEXT"/>
 	<findFieldProperty name="dtConsegnaSdi" />
 	<findFieldProperty name="dt_ordine" />
 	<findFieldProperty name="fl_ordine_elettronico" />
@@ -926,6 +982,16 @@
 		name="ti_causale_emissione" />
 	<formFieldProperty
 		name="cliente" />
+	<formFieldProperty
+			name="pendenzaPagopa" />
+	<formFieldProperty
+			name="cdAvviso" />
+	<formFieldProperty
+			name="importoPendenza" />
+	<formFieldProperty
+			name="dtScadenzaPendenza" />
+	<formFieldProperty
+			name="descrizionePendenza" />
 	<formFieldProperty
 		name="cd_cliente" />
 	<formFieldProperty
@@ -1156,6 +1222,7 @@
 		<columnFieldProperty name="cd_cliente" />
 		<columnFieldProperty name="cognome" />
 		<columnFieldProperty name="nome" />
+		<columnFieldProperty name="cd_avviso" />
 		<columnFieldProperty name="ragione_sociale" />
 		<columnFieldProperty name="ti_causale_emissione" />
 		<columnFieldProperty name="cd_tipo_sezionale" />
@@ -1175,6 +1242,7 @@
 	<columnFieldProperty name="dt_registrazione" />
 	<columnFieldProperty name="ds_fattura_attiva" />
 	<columnFieldProperty name="cd_cliente" />
+	<columnFieldProperty name="cd_avviso" />
 	<columnFieldProperty name="cognome" />
 	<columnFieldProperty name="nome" />
 	<columnFieldProperty name="ragione_sociale" />

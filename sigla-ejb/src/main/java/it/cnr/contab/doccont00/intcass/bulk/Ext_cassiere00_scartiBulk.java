@@ -24,6 +24,8 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class Ext_cassiere00_scartiBulk extends Ext_cassiere00_scartiBase {
+	public final static String TIPO_MOVIMENTO_SOSPESO = "S";
+
 	public Ext_cassiere00_scartiBulk() {
 		super();
 	}

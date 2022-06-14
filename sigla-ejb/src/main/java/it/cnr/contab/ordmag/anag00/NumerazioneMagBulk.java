@@ -23,10 +23,20 @@ package it.cnr.contab.ordmag.anag00;
 
 import it.cnr.jada.bulk.OggettoBulk;
 
+import java.util.Dictionary;
+
 public class NumerazioneMagBulk extends NumerazioneMagBase {
 	public final static String NUMERAZIONE_LOTTO = "LOT";
 	public final static String NUMERAZIONE_EVASIONE_ORDINE = "RIS";
 	public final static String NUMERAZIONE_BOLLA_SCARICO = "BOL";
+
+	public final static Dictionary NUMERATORI_MAG;
+	static {
+		NUMERATORI_MAG = new it.cnr.jada.util.OrderedHashtable();
+		NUMERATORI_MAG.put(NUMERAZIONE_LOTTO, "Lotti");
+		NUMERATORI_MAG.put(NUMERAZIONE_EVASIONE_ORDINE, "Evasione Ordine");
+		NUMERATORI_MAG.put(NUMERAZIONE_BOLLA_SCARICO, "Bolle di Scarico");
+	}
 
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
@@ -99,4 +109,8 @@ public class NumerazioneMagBulk extends NumerazioneMagBase {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
 		return super.initialize(bp,context);
 	}
+	public Dictionary getNumeratoriMagKeys() {
+		return NUMERATORI_MAG;
+	}
+
 }

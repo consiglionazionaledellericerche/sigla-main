@@ -850,8 +850,6 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
      * Gestisce il caricamento delle nuove linee di attività
      *
      * @param context   <code>ActionContext</code> in uso.
-     * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
-     * @param latt      Oggetto di tipo <code>Linea_attivitaBulk</code>
      * @return <code>Forward</code>
      */
     public Forward doBringBackCRUDCrea_linea_attivita(ActionContext context) {
@@ -1195,5 +1193,4 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
     		return handleException(context,e);
     	}
     }
-
 }

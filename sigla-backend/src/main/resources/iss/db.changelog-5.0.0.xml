@@ -60,4 +60,10 @@
             <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='PROGETTI' AND CD_CHIAVE_SECONDARIA='ASS_PROGETTI_ANGAGRAFICO'</where>
         </update>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="attivazione-variazione-automatica-spesa">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="Y"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='VARIAZIONE_AUTOMATICA' AND CD_CHIAVE_SECONDARIA='SPESA'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

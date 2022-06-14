@@ -19,14 +19,20 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -37,6 +43,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class ReversaleHome extends BulkHome {
     public ReversaleHome(Class clazz, java.sql.Connection conn) {
@@ -251,5 +259,72 @@ public abstract class ReversaleHome extends BulkHome {
         Optional.ofNullable(reversale)
                 .ifPresent(mandatoBulk -> sql.addClause(mandatoBulk.buildFindClauses(null)));
         return fetchAll(sql);
+    }
+
+
+    /**
+     * Recupera tutti i CUP collegati alla Reversale.
+     *
+     * @param reversaleBulk Reversale in uso.
+     * @return java.util.Collection Collezione di oggetti <code>CUP</code>
+     */
+    public java.util.Collection<CupBulk> findCodiciSiopeCupCollegati(UserContext usercontext, ReversaleBulk reversaleBulk) throws PersistencyException {
+        PersistentHome reversaleSiopeCupHome = getHomeCache().getHome(ReversaleSiopeCupIBulk.class);
+        SQLBuilder sql = reversaleSiopeCupHome.createSQLBuilder();
+        sql.setAutoJoins(true);
+        sql.generateJoin("reversale_siopeI", "REVERSALE_SIOPE");
+
+        sql.addSQLClause(FindClause.AND, "REVERSALE_SIOPE.CD_CDS", SQLBuilder.EQUALS, reversaleBulk.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "REVERSALE_SIOPE.ESERCIZIO", SQLBuilder.EQUALS, reversaleBulk.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "REVERSALE_SIOPE.PG_REVERSALE", SQLBuilder.EQUALS, reversaleBulk.getPg_reversale());
+        final Stream<ReversaleSiopeCupBulk> stream = reversaleSiopeCupHome.fetchAll(sql)
+                .stream()
+                .filter(ReversaleSiopeCupBulk.class::isInstance)
+                .map(ReversaleSiopeCupBulk.class::cast);
+        getHomeCache().fetchAll(usercontext);
+        return stream.filter(reversaleSiopeCupBulk -> Optional.ofNullable(reversaleSiopeCupBulk.getCdCup()).isPresent())
+                .map(ReversaleSiopeCupBulk::getCup).collect(Collectors.toList());
+    }
+
+    /**
+     * Recupera tutti i Codici CUP collegati alla Reversale.
+     *
+     * @param reversaleBulk Reversale in uso.
+     * @return java.util.Collection Collezione di oggetti <code>CUP</code>
+     */
+    public java.util.Collection<String> findCodiciCupCollegati(UserContext usercontext, ReversaleBulk reversaleBulk) throws PersistencyException {
+        PersistentHome reversaleCupHome = getHomeCache().getHome(ReversaleCupIBulk.class);
+        SQLBuilder sql = reversaleCupHome.createSQLBuilder();
+        sql.setAutoJoins(true);
+        sql.generateJoin("reversale_rigaI", "REVERSALE_RIGA");
+
+        sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.CD_CDS", SQLBuilder.EQUALS, reversaleBulk.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.ESERCIZIO", SQLBuilder.EQUALS, reversaleBulk.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.PG_MANDATO", SQLBuilder.EQUALS, reversaleBulk.getPg_reversale());
+        final Stream<ReversaleCupBulk> stream = reversaleCupHome.fetchAll(sql)
+                .stream()
+                .filter(ReversaleCupBulk.class::isInstance)
+                .map(ReversaleCupBulk.class::cast);
+        return stream.map(t -> t.getCdCup())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+    public ReversaleBulk findAndLockReversaleNonAnnullata(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgReversale) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause("AND", "cd_cds",       sql.EQUALS, cdCds);
+        sql.addClause("AND", "esercizio",    sql.EQUALS, esercizio);
+        sql.addClause("AND", "pg_reversale", sql.EQUALS, pgReversale);
+        sql.addClause("AND","stato", sql.NOT_EQUALS, ReversaleBulk.STATO_REVERSALE_ANNULLATO);
+        List reversali = fetchAll(sql);
+        if (reversali == null || reversali.size() == 0){
+            return null;
+        } else if (reversali.size() == 1){
+            ReversaleBulk rev = (ReversaleBulk) reversali.get(0);
+            lock(rev);
+            return rev;
+        } else  {
+            throw new PersistencyException("Errore nel recupero della Reversale "+esercizio+"-"+pgReversale);
+        }
     }
 }

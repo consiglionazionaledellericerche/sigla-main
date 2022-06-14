@@ -17,16 +17,12 @@
 
 package it.cnr.contab.progettiric00.consultazioni.action;
 
-import it.cnr.contab.preventvar00.consultazioni.bp.ConsAssCompPerDataBP;
-import it.cnr.contab.preventvar00.consultazioni.bp.ConsAssCompPerDataDettagliBP;
-import it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBulk;
 import it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeBP;
 import it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeDettBP;
-import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk;
+import it.cnr.contab.progettiric00.consultazioni.ejb.ConsProgEcoVociGaeComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.BulkAction;
 
 import javax.ejb.RemoveException;
@@ -39,21 +35,17 @@ public class ConsProgEcoVociGaeAction extends BulkAction {
 public Forward doCerca(ActionContext context) throws RemoteException, InstantiationException, RemoveException{
 	try {
 		ConsProgEcoVoceGaeBP bp= (ConsProgEcoVoceGaeBP) context.getBusinessProcess();
-		ConsProgettiEcoVociGaeBulk selezione = (ConsProgettiEcoVociGaeBulk)bp.getModel();
+		V_saldi_piano_econom_progcdrBulk selezione = (V_saldi_piano_econom_progcdrBulk)bp.getModel();
 		bp.fillModel(context); 
 		bp.valorizzaProgetto(context,selezione);
 
-		
 		ConsProgEcoVoceGaeDettBP dettBP = (ConsProgEcoVoceGaeDettBP) context.createBusinessProcess("ConsProgEcoVoceGaeDettBP");
-		CompoundFindClause clause = new CompoundFindClause();
-		clause.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, selezione.getPg_progetto());
-		if (selezione.getTipoStampa().equals(ConsProgettiEcoVociGaeBulk.SINTETICA)){
-			clause.addClause("AND", ConsProgettiEcoVociGaeBulk.SINTETICA, SQLBuilder.EQUALS, true);
+		if (selezione.getTipoStampa().equals(V_saldi_piano_econom_progcdrBulk.SINTETICA))
 			dettBP.impostaColonne(false);
-		} else {
+		else
 			dettBP.impostaColonne(true);
-		}
-		it.cnr.jada.util.RemoteIterator ri = dettBP.createComponentSession().cerca(context.getUserContext(), clause, selezione);
+
+		it.cnr.jada.util.RemoteIterator ri = ((ConsProgEcoVociGaeComponentSession)dettBP.createComponentSession()).findProgetti(context.getUserContext(), selezione);
 		
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		if (ri.countElements() == 0) {

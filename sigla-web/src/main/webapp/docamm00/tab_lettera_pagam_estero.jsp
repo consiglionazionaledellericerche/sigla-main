@@ -43,16 +43,16 @@
 				<div class="Group" style="width:90%">
 					<table>
 						<tr>
-							<% bp.writeFormFieldDoc1210(out, "bonifico_mezzo");%>
-						</tr>
-						<tr>
 							<% bp.writeFormFieldDoc1210(out, "divisa");%>
 						</tr>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out, "beneficiario");%>
 						</tr>
 						<tr>
-							<% bp.writeFormFieldDoc1210(out, "num_conto_ben");%>
+							<% bp.writeFormFieldDoc1210(out, "paese_beneficiario");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "indirizzo_beneficiario");%>
 						</tr>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out, "iban");%>
@@ -64,24 +64,37 @@
 							<% bp.writeFormFieldDoc1210(out, "indirizzo_swift");%>
 						</tr>
 						<tr>
+							<% bp.writeFormFieldDoc1210(out, "bic_banca_intermediaria");%>
+						</tr>
+						<tr>
 							<% bp.writeFormFieldDoc1210(out, "motivo_pag");%>
-						</tr>
-						<tr>
-							<% bp.writeFormFieldDoc1210(out, "ammontare_debito");%>
-						</tr>
-						<tr>
-							<% bp.writeFormFieldDoc1210(out, "conto_debito");%>
 						</tr>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out, "commissioni_spese");%>
 						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<div class="GroupLabel h3 text-primary">Istruzioni Speciali</div>
+				<div class="Group card" style="width:100%">
+					<table width="100%">
 						<tr>
-							<% bp.writeFormFieldDoc1210(out, "commissioni_spese_estere");%>
+							<% bp.writeFormFieldDoc1210(out, "istruzioni_speciali_1");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "istruzioni_speciali_2");%>
+						</tr>
+						<tr>
+							<% bp.writeFormFieldDoc1210(out, "istruzioni_speciali_3");%>
 						</tr>
 					</table>
 				</div>
 			</td>
-		</tr>		
+		</tr>
+
 		<tr>
 			<td colspan="4">
 				<div class="GroupLabel h3 text-primary">Sospeso</div>

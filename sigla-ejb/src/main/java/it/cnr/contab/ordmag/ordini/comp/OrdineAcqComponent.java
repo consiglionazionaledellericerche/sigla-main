@@ -392,7 +392,7 @@ public class OrdineAcqComponent
 			throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
 		}
 		try {
-			if (Utility.createConfigurazioneCnrComponentSession().isEconomicaPatrimonialeAttivaImputazioneManuale(userContext) && (consegna.getContoBulk() == null || consegna.getContoBulk().getCd_voce_ep() == null)){
+			if (!Utility.createConfigurazioneCnrComponentSession().isBloccoScrittureProposte(userContext) && (consegna.getContoBulk() == null || consegna.getContoBulk().getCd_voce_ep() == null)){
 				throw new ApplicationException ("E' necessario indicare il conto di Economico Patrimoniale.");
 			}
 		} catch (RemoteException e) {
@@ -1943,8 +1943,6 @@ public class OrdineAcqComponent
 						Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome)getHome(userContext, Obbligazione_scadenzarioBulk.class);
 						try {
 							scadenza.setObbligazione_scad_voceColl( new BulkList( osHome.findObbligazione_scad_voceList(userContext, scadenza )));
-						} catch (IntrospectionException introspectionException) {
-							throw new ComponentException(introspectionException);
 						} catch (PersistencyException persistencyException) {
 							throw new ComponentException(persistencyException);
 						}

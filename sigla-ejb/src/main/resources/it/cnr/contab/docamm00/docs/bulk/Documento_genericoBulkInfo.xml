@@ -252,7 +252,7 @@
 		inputSize="30"
 		inputType="TEXT"
 		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
+		enabledOnFreeSearch="true"
 		label="UO Origine" />
 	<fieldProperty
 		name="esercizio"
@@ -507,7 +507,8 @@
 		name="divisa"
 		property="lettera_pagamento_estero.divisa"
 		readonlyProperty="ROStatoTrasmissioneLettera"
-		inputType="TEXT"
+		inputType="SELECT"
+		keysProperty="ti_divisaKeys"
 		nullable="false"
 		label="Divisa"
 		enabledOnSearch="true"
@@ -523,19 +524,32 @@
 		inputType="TEXTAREA"
 		cols="75"
 		rows="2"
-		label="Beneficiario"
-		caseSensitiveSearch="false" />		
+		label="Nominativo Beneficiario"
+		caseSensitiveSearch="false" />
 	<fieldProperty
-		name="num_conto_ben"
-		property="lettera_pagamento_estero.num_conto_ben"
+		name="paese_beneficiario"
+		property="lettera_pagamento_estero.paese_beneficiario"
 		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
+		nullable="false"
+		maxLength="100"
+		inputSize="100"
 		inputType="TEXT"
-		label="Conto n°"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
+		label="Paese Beneficiario"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="indirizzo_beneficiario"
+		property="lettera_pagamento_estero.indirizzo_beneficiario"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
+		maxLength="250"
+		inputSize="250"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="2"
+		label="Indirizzo Beneficiario"
+		caseSensitiveSearch="false" />
+
 	<fieldProperty
 		name="iban"
 		property="lettera_pagamento_estero.iban"
@@ -543,7 +557,8 @@
 		maxLength="250"
 		inputSize="100"		
 		inputType="TEXT"
-		label="IBAN"
+		nullable="false"
+		label="IBAN/Conto Beneficiario"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false" />		
@@ -551,10 +566,11 @@
 		name="indirizzo"
 		property="lettera_pagamento_estero.indirizzo"
 		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
 		maxLength="250"
 		inputSize="100"		
 		inputType="TEXT"
-		label="Presso/tramite"
+		label="Anagrafica Banca Beneficiario"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false" />		
@@ -562,18 +578,32 @@
 		name="indirizzo_swift"
 		property="lettera_pagamento_estero.indirizzo_swift"
 		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
 		maxLength="250"
 		inputSize="100"		
 		inputType="TEXT"
-		label="Indirizzo - SWIFT/BIC"
+		label="SWIFT/BIC/Routing Number"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="bic_banca_intermediaria"
+		property="lettera_pagamento_estero.bic_banca_intermediaria"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="true"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="SWIFT/BIC Banca Intermediaria"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+
 	<fieldProperty
 		name="motivo_pag"
 		property="lettera_pagamento_estero.motivo_pag"
 		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
+		maxLength="140"
 		inputSize="100"		
 		inputType="TEXT"
 		label="MOTIVO DEL PAGAMENTO"
@@ -617,25 +647,36 @@
 		inputSize="1"
 		inputType="RADIOGROUP"
 		keysProperty="ti_commissione_speseKeys"
-		label="Vostre commissioni e spese:"
+		label="Commissioni e spese"
 		nullable="false"
 		layout="VERTICAL"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>
 	<fieldProperty
-		name="commissioni_spese_estere"
-		property="lettera_pagamento_estero.commissioni_spese_estere"
+		name="istruzioni_speciali_1"
+		property="lettera_pagamento_estero.istruzioni_speciali_1"
 		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="1"
-		inputSize="1"
-		inputType="RADIOGROUP"
-		keysProperty="ti_commissione_speseKeys"
-		label="Eventuali commissioni e spese&lt;br&gt;della Vostra Corrispondente estera:"
-		nullable="false"
-		layout="VERTICAL"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false"/>
-	
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Primo" />
+	<fieldProperty
+		name="istruzioni_speciali_2"
+		property="lettera_pagamento_estero.istruzioni_speciali_2"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Secondo" />
+	<fieldProperty
+		name="istruzioni_speciali_3"
+		property="lettera_pagamento_estero.istruzioni_speciali_3"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Terzo" />
+
 	<fieldProperty
 		name="valutaForSearch"
 		property="valuta"
@@ -715,13 +756,17 @@
 	<formFieldProperty
 		name="beneficiario" />
 	<formFieldProperty
-		name="num_conto_ben" />
+		name="indirizzo_beneficiario" />
+	<formFieldProperty
+		name="paese_beneficiario" />
 	<formFieldProperty
 		name="iban"/>		
 	<formFieldProperty
 		name="indirizzo"/>		
 	<formFieldProperty
-		name="indirizzo_swift"/>		
+		name="indirizzo_swift"/>
+	<formFieldProperty
+		name="bic_banca_intermediaria"/>
 	<formFieldProperty
 		name="motivo_pag"/>		
 	<formFieldProperty
@@ -731,11 +776,12 @@
 	<formFieldProperty
 		name="commissioni_spese"/>
 	<formFieldProperty
-		name="commissioni_spese_estere"/>
-				
-	
-	
-		
+		name="istruzioni_speciali_1" />
+	<formFieldProperty
+		name="istruzioni_speciali_2" />
+	<formFieldProperty
+		name="istruzioni_speciali_3" />
+
 	<formFieldProperty 
 		name="ti_istituz_commerc"/>
 	<formFieldProperty 

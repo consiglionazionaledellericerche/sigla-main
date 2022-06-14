@@ -21,10 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
-import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -32,7 +29,6 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
@@ -88,7 +84,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
+public class FatturaPassivaComponent extends ScritturaPartitaDoppiaFromDocumentoComponent
         implements IFatturaPassivaMgr, Cloneable, Serializable {
     private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
 
@@ -2859,9 +2855,9 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     if (fattura_passiva.getStato_liquidazione() == null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0) {
                         if (fattura_passiva instanceof Fattura_passiva_IBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
                             throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
-                        if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
-                            throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
                     }
+                    if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
+                        throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
                 }
             }
             validaFattura(userContext, fattura_passiva);
@@ -4511,29 +4507,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
         fattura_passiva = valorizzaInfoDocEle(userContext, fattura_passiva);
         fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(userContext));
-
-        try {
-            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
-                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                        .map(Scrittura_partita_doppiaHome.class::cast)
-                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(fattura_passiva);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                    fattura_passiva.setScrittura_partita_doppia(scrittura);
-                }
-            }
-        } catch (PersistencyException e) {
-            throw handleException(fattura_passiva, e);
-        }
+        caricaScrittura(userContext, fattura_passiva);
         return fattura_passiva;
     }
 
@@ -7738,10 +7712,17 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
                 fatturaPassiva.getIm_totale_fattura() != null &&
                 (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(totaleFat) != 0) {   //se non è previsto arrotondamento restituisco l'errore
-            if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento() == null)
-                throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: " + totaleFat + " diverso da quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
+            if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento() == null) {
+                if (!existsVoceIvaWithNaturaAndPercentuale(aUC, fatturaPassiva)) {
+                    throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: " + totaleFat + " diverso da quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
+                } else {
+                    fatturaPassiva.aggiornaImportiTotali();
+                    if(!fatturaPassiva.getIm_totale_imponibile().equals(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento())) {
+                        throw new it.cnr.jada.comp.ApplicationException("Imponibile Fattura: " + fatturaPassiva.getIm_totale_imponibile() + " diverso da quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + "!");
+                    }
+                }
                 //controllo se c'è quadratura a meno di arrotondamento
-            else if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
+            } else if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() != null &&
                     totaleFat != null &&
                     ((((noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).subtract(totaleFat)).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
                 throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: " + totaleFat + " non coerente con quello inserito nel documento elettronico: " + (noSegno ? fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().abs() : fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()) + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");
@@ -7770,6 +7751,21 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throw handleException(e);
         }
     }
+
+    private boolean existsVoceIvaWithNaturaAndPercentuale(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
+        return fatturaPassiva.isCommerciale() &&
+                fatturaPassiva
+                .getFattura_passiva_dettColl()
+                .stream()
+                .map(Fattura_passiva_rigaBulk::getVoce_iva)
+                .filter(voce_ivaBulk -> {
+                    return Optional.ofNullable(voce_ivaBulk.getNaturaOperNonImpSdi()).isPresent() &&
+                                Optional.ofNullable(voce_ivaBulk.getPercentuale())
+                                        .filter(bigDecimal -> bigDecimal.compareTo(BigDecimal.ZERO) != 0)
+                                        .isPresent();
+                }).findAny().isPresent();
+    }
+
 
     private void controllaQuadaraturaNatura(UserContext aUC, boolean noSegno, Fattura_passivaBulk fatturaPassiva, boolean checkIVA) throws ComponentException {
         Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
@@ -7812,7 +7808,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
             String key = null;
             Hashtable<String, BigDecimal> currentMap = null;
-            if (rigaEle.getImponibileImporto() != null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0) {
+            if (rigaEle.getImponibileImporto() != null && (rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0 || (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().compareTo(BigDecimal.ZERO) == 0))) {
                 if (rigaEle.getNatura() != null) {
                     key = rigaEle.getNatura();
                     currentMap = mapNaturaEle;
@@ -7899,11 +7895,14 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 (codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE) == 0))
             codiciNaturaSqu = new StringBuffer();
 
-        if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0)
-            throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
-                    (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
-                    (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
-                    (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+        if (codiciNaturaSqu.length() > 0 || codiciIvaSqu.length() > 0) {
+            if (!existsVoceIvaWithNaturaAndPercentuale(aUC, fatturaPassiva)) {
+                throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per " +
+                        (codiciIvaSqu.length() > 0 ? "le aliquote IVA: " + codiciIvaSqu : "") +
+                        (codiciIvaSqu.length() > 0 && codiciNaturaSqu.length() > 0 ? " e " : "") +
+                        (codiciNaturaSqu.length() > 0 ? "i codici natura : " + codiciNaturaSqu : "") + "!");
+            }
+        }
 
     }
 
@@ -8274,37 +8273,5 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             sql.addClause(clause);
         sql.addOrderBy("cd_Unita_Organizzativa, cd_Cig");
         return sql;
-    }
-
-    @Override
-    protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
-        super.validaCreaModificaConBulk(usercontext, oggettobulk);
-        try {
-            if (Optional.ofNullable(getHome(usercontext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(usercontext)) {
-                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
-                        .filter(IDocumentoCogeBulk.class::isInstance)
-                        .map(IDocumentoCogeBulk.class::cast);
-                if (optionalIDocumentoCogeBulk.isPresent()){
-                    final Optional<Scrittura_partita_doppiaBulk> optionalScrittura_partita_doppiaBulk = Optional.ofNullable(optionalIDocumentoCogeBulk.get())
-                            .map(IDocumentoCogeBulk::getScrittura_partita_doppia);
-                    if (optionalScrittura_partita_doppiaBulk.isPresent()) {
-                        if (optionalScrittura_partita_doppiaBulk.get().isToBeCreated()) {
-                            creaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
-                        } else if (optionalScrittura_partita_doppiaBulk.get().isToBeUpdated()) {
-                            modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
-                        }
-                    } else {
-                        final Scrittura_partita_doppiaBulk scrittura_partita_doppiaBulk =
-                                Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get());
-                        creaConBulk(usercontext, scrittura_partita_doppiaBulk);
-                    }
-                }
-            }
-        } catch (PersistencyException | RemoteException e) {
-            throw handleException(e);
-        }
     }
 }

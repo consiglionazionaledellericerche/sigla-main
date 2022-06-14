@@ -97,7 +97,7 @@
 	 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/book_closed.gif",
 	 							bp.getParentRoot().isBootstrap() ? "Avvia Procedura Conferimento Incarico":"Avvia Procedura<BR>Conferimento<BR>Incarico", 
 		  	 	 			 	"javascript:submitForm('doRichiediContratto')", 
-		  						"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+		  						"btn-outline-primary btn-title faa-parent animated-hover",
 		  	 	 			 	"Avvia Procedura Conferimento Incarico", 
 		  	 	 			 	((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), 
 		  	 	 			 	bp.getParentRoot().isBootstrap()); %>
@@ -118,7 +118,7 @@
 	 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/book_closed.gif",
 	 							bp.getParentRoot().isBootstrap() ? "Avvia Procedura Conferimento Incarico":"Avvia Procedura<BR>Conferimento<BR>Incarico", 
 		 	 	 				"javascript:submitForm('doRichiediContratto')", 
-		 						"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+		 						"btn-outline-primary btn-title faa-parent animated-hover",
 		 	 	 				"Avvia Procedura Conferimento Incarico", 
 		 	 	 				((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), 
 		 	 	 				bp.getParentRoot().isBootstrap()); %>

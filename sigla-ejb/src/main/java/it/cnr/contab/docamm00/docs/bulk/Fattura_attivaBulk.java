@@ -1761,15 +1761,15 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
         return isROClienteSearchTool();
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (10/4/2001 2:42:26 PM)
-     * @return boolean
-     */
-    @JsonIgnore
-    public boolean isROclienteForSearch() {
-        return isROcliente();
-    }
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/4/2001 2:42:26 PM)
+	 * @return boolean
+	 */
+	@JsonIgnore
+	public boolean isROclienteForSearch() {
+		return isROcliente();
+	}
 
     /**
      * Insert the method's description here.
@@ -2460,4 +2460,16 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
     }
+
+	@JsonIgnore
+	public boolean isROPendenzaSearchTool() {
+		return 	(fattura_attiva_accertamentiHash != null &&
+				!fattura_attiva_accertamentiHash.isEmpty());
+	}
+
+
+	@JsonIgnore
+	public boolean isROpendenza() {
+		return isROPendenzaSearchTool() || getPendenzaPagopa() == null;
+	}
 }

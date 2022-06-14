@@ -34,6 +34,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericComponent implements IConfigurazione_cnrMgr, Cloneable, Serializable {
@@ -109,10 +110,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getDt01();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -126,10 +127,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public Timestamp getDt01(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getDt01();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -161,10 +162,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getDt02();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -178,10 +179,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public Timestamp getDt02(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getDt02();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -213,10 +214,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getIm01();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -230,10 +231,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public BigDecimal getIm01(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getIm01();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -265,10 +266,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getIm02();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -282,10 +283,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public BigDecimal getIm02(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getIm02();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -317,10 +318,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getVal01();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -334,10 +335,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public String getVal01(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getVal01();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -369,10 +370,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getVal02();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -386,10 +387,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public String getVal02(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getVal02();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -421,10 +422,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getVal03();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -438,10 +439,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public String getVal03(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getVal03();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -473,10 +474,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             if (esercizio == null) esercizio = new Integer(0);
             if (unita_funzionale == null) unita_funzionale = ASTERISCO;
             if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
             if (bulk == null) return null;
             return bulk.getVal04();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -490,10 +491,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public String getVal04(UserContext userContext, String chiave_primaria) throws ComponentException {
         try {
-            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
+            Configurazione_cnrBulk bulk = (Configurazione_cnrBulk) getHome(userContext, Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, ASTERISCO, ASTERISCO, new Integer(0)));
             if (bulk == null) return null;
             return bulk.getVal04();
-        } catch (PersistencyException e) {
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -565,6 +566,22 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         }
     }
 
+    /**
+     * Ritorna il conto corrente ENTE
+     * <p><b>chiave_primaria: CONTO_CORRENTE_SPECIALE</b>
+     * <p><b>chiave_secondaria: ENTE</b>
+     *
+     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @return String - il codice uo della Ragioneria
+     * @throws ComponentException, PersistencyException
+     */
+    public String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException {
+        try {
+            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getContoCorrenteEnte(esercizio);
+        }catch (PersistencyException e){
+            throw handleException(e);
+        }
+    }
     /**
      * Ritorna il codice cdr del personale
      * <p><b>chiave_primaria: ELEMENTO_VOCE_SPECIALE</b>
@@ -837,6 +854,49 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                             throw new PersistencyError(e);
                         }
                     });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione che, in fase di assunzione impegno, consente di creare in automatico sull'impegno di spesa
+     * una variazione di storno bilancio con cui vengono in automatico spostate le somme dalla GAE selezionata sull'impegno ad una GAE alternativa
+     * indicata direttamente dall'utente
+     * @throws PersistencyException
+     */
+    public boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .isVariazioneAutomaticaSpesa(userContext);
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    public Integer getCdTerzoDiversiStipendi(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .getCdTerzoDiversiStipendi();
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+    public Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .getDataFineValiditaCaricoFamiliare(tiPersona);
         } catch (PersistencyException e) {
             throw handleException(e);
         }

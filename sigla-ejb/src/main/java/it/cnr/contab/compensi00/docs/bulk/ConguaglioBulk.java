@@ -242,10 +242,16 @@ public java.math.BigDecimal getIm_irpef() {
 }
 public java.math.BigDecimal getIm_credito_irpef() {
 
-	if (getIm_credito_irpef_dovuto()==null || getIm_credito_irpef_goduto()==null)
-		return null;
-	return getIm_credito_irpef_dovuto().add(getIm_credito_irpef_goduto().negate());
+	return getTotaleCreditoIrpefDovuto().add(getTotaleCreditoIrpefGoduto().negate());
 }
+	public java.math.BigDecimal getTotaleCreditoIrpefGoduto() {
+
+		return Utility.nvl(getIm_credito_irpef_goduto()).add(Utility.nvl(getIm_cred_irpef_par_det_goduto()));
+	}
+	public java.math.BigDecimal getTotaleCreditoIrpefDovuto() {
+
+		return Utility.nvl(getIm_credito_irpef_dovuto()).add(Utility.nvl(getIm_cred_irpef_par_det_dovuto()));
+	}
 	public java.math.BigDecimal getIm_bonus_irpef() {
 
 		if (getIm_bonus_irpef_dovuto()==null || getIm_bonus_irpef_goduto()==null)
@@ -677,6 +683,7 @@ private void resetImportiDovuto(){
 	setIm_deduzione_family_dovuto(new java.math.BigDecimal(0));
 	setIm_credito_irpef_dovuto(new java.math.BigDecimal(0));
 	setIm_bonus_irpef_dovuto(new java.math.BigDecimal(0));
+	setIm_cred_irpef_par_det_dovuto(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.
@@ -706,6 +713,7 @@ private void resetImportiGoduto(){
 	setIm_deduzione_family_goduto(new java.math.BigDecimal(0));
 	setIm_credito_irpef_goduto(new java.math.BigDecimal(0));
 	setIm_bonus_irpef_goduto(new java.math.BigDecimal(0));
+	setIm_cred_irpef_par_det_goduto(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.

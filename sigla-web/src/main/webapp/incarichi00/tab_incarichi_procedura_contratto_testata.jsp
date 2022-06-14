@@ -39,7 +39,7 @@ if (bp.getModel()!=null &&
 		          			bp.getParentRoot().isBootstrap()?"fa fa-fw fa-handshake-o text-primary":"img/edit16.gif", 
 		          			"Carica Contratto", 
 		          			"if (disableDblClick()) javascript:submitForm('doAddToCRUD(main.IncarichiColl)')", 
-		          			"btn-secondary btn-outline-secondary btn-title text-primary", 
+		          			"btn-outline-secondary btn-title text-primary",
 		          			true, 
 		          			bp.getParentRoot().isBootstrap());%>
 		          	</td>

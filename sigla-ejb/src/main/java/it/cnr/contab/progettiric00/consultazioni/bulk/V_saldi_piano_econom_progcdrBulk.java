@@ -16,18 +16,14 @@
  */
 
 package it.cnr.contab.progettiric00.consultazioni.bulk;
-import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 
-public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persistent {
+public class V_saldi_piano_econom_progcdrBulk extends OggettoBulk implements Persistent {
 	public final static java.util.Dictionary <String,String> TIPOLOGIA_STAMPA_KEYS;
 	private java.lang.String tipoStampa;
 	public final static String SINTETICA = "SINTETICA";
@@ -47,139 +43,56 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 		TIPOLOGIA_STAMPA_KEYS.put(DETTAGLIATA,"Dettagliata per Voce e GAE");
 	}
 
-
-	public ConsProgettiEcoVociGaeBulk() {
-		super();
-	}
-
-	public static java.util.Dictionary getTipologiaStampaKeys() {
-		return TIPOLOGIA_STAMPA_KEYS;
-	}
-
-	public String getCd_linea_attivita() {
-		return cd_linea_attivita;
-	}
-
-	public void setCd_linea_attivita(String cd_linea_attivita) {
-		this.cd_linea_attivita = cd_linea_attivita;
-	}
-
-	public String getCd_voce_piano() {
-		return cd_voce_piano;
-	}
-
-	public void setCd_voce_piano(String cd_voce_piano) {
-		this.cd_voce_piano = cd_voce_piano;
-	}
-
-	public String getCd_elemento_voce() {
-		return cd_elemento_voce;
-	}
-
-	public void setCd_elemento_voce(String cd_elemento_voce) {
-		this.cd_elemento_voce = cd_elemento_voce;
-	}
-
-	public String getDs_elemento_voce() {
-		return ds_elemento_voce;
-	}
-
-	public void setDs_elemento_voce(String ds_elemento_voce) {
-		this.ds_elemento_voce = ds_elemento_voce;
-	}
-
-	public BigDecimal getIm_spesa_finanziato() {
-		return im_spesa_finanziato;
-	}
-
-	public void setIm_spesa_finanziato(BigDecimal im_spesa_finanziato) {
-		this.im_spesa_finanziato = im_spesa_finanziato;
-	}
-
-	public BigDecimal getIm_spesa_cofinanziato() {
-		return im_spesa_cofinanziato;
-	}
-
-	public void setIm_spesa_cofinanziato(BigDecimal im_spesa_cofinanziato) {
-		this.im_spesa_cofinanziato = im_spesa_cofinanziato;
-	}
-
-	public BigDecimal getManris_fin() {
-		return manris_fin;
-	}
-
-	public void setManris_fin(BigDecimal manris_fin) {
-		this.manris_fin = manris_fin;
-	}
-
-	public BigDecimal getManris_cofin() {
-		return manris_cofin;
-	}
-
-	public void setManris_cofin(BigDecimal manris_cofin) {
-		this.manris_cofin = manris_cofin;
-	}
-
-	//	ESERCIZIO DECIMAL(4,0)
-	private Integer esercizio_piano;
-
-	private String  cd_centro_responsabilita;
-
-	protected it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk findProgettoForPrint;
-
-	private String  ds_cdr;
+	private Integer esercizio;
 
 	private Integer pg_progetto;
 
 	private String  cd_progetto;
 
-	private String  cd_linea_attivita;
+	private String  ds_progetto;
 
-	private String  cd_voce_piano;
+	private String cd_voce_piano;
+
+	private Integer esercizio_piano;
+
+	private java.math.BigDecimal im_spesa_finanziato;
+
+	private java.math.BigDecimal im_spesa_cofinanziato;
 
 	private String  cd_elemento_voce;
 
 	private String  ds_elemento_voce;
 
-	private String  ds_progetto;
+	private String  cd_linea_attivita;
 
-	private java.math.BigDecimal im_spesa_finanziato;
-		
-	private java.math.BigDecimal im_spesa_cofinanziato;
+	private String cd_centro_responsabilita;
+
+	private String  ds_cdr;
 
 	private java.math.BigDecimal assestato_fin;
 
 	private java.math.BigDecimal assestato_cofin;
 
 	private java.math.BigDecimal impacc_fin;
-	
+
 	private java.math.BigDecimal impacc_cofin;
 
 	private java.math.BigDecimal manris_fin;
 
 	private java.math.BigDecimal manris_cofin;
 
-	public String getCd_centro_responsabilita() {
-		return cd_centro_responsabilita;
-	}
-	public void setCd_centro_responsabilita(String cd_centro_responsabilita) {
-		this.cd_centro_responsabilita = cd_centro_responsabilita;
+	protected ProgettoBulk findProgettoForPrint;
+
+	public V_saldi_piano_econom_progcdrBulk() {
+		super();
 	}
 
-	public Integer getEsercizio_piano() {
-		return esercizio_piano;
+	public Integer getEsercizio() {
+		return esercizio;
 	}
 
-	public void setEsercizio_piano(Integer esercizio_piano) {
-		this.esercizio_piano = esercizio_piano;
-	}
-
-	public String getDs_cdr() {
-		return ds_cdr;
-	}
-
-	public void setDs_cdr(String ds_cdr) {
-		this.ds_cdr = ds_cdr;
+	public void setEsercizio(Integer esercizio) {
+		this.esercizio = esercizio;
 	}
 
 	public Integer getPg_progetto() {
@@ -204,6 +117,78 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 
 	public void setDs_progetto(String ds_progetto) {
 		this.ds_progetto = ds_progetto;
+	}
+
+	public String getCd_voce_piano() {
+		return cd_voce_piano;
+	}
+
+	public void setCd_voce_piano(String cd_voce_piano) {
+		this.cd_voce_piano = cd_voce_piano;
+	}
+
+	public Integer getEsercizio_piano() {
+		return esercizio_piano;
+	}
+
+	public void setEsercizio_piano(Integer esercizio_piano) {
+		this.esercizio_piano = esercizio_piano;
+	}
+
+	public BigDecimal getIm_spesa_finanziato() {
+		return im_spesa_finanziato;
+	}
+
+	public void setIm_spesa_finanziato(BigDecimal im_spesa_finanziato) {
+		this.im_spesa_finanziato = im_spesa_finanziato;
+	}
+
+	public BigDecimal getIm_spesa_cofinanziato() {
+		return im_spesa_cofinanziato;
+	}
+
+	public void setIm_spesa_cofinanziato(BigDecimal im_spesa_cofinanziato) {
+		this.im_spesa_cofinanziato = im_spesa_cofinanziato;
+	}
+
+	public String getCd_elemento_voce() {
+		return cd_elemento_voce;
+	}
+
+	public void setCd_elemento_voce(String cd_elemento_voce) {
+		this.cd_elemento_voce = cd_elemento_voce;
+	}
+
+	public String getDs_elemento_voce() {
+		return ds_elemento_voce;
+	}
+
+	public void setDs_elemento_voce(String ds_elemento_voce) {
+		this.ds_elemento_voce = ds_elemento_voce;
+	}
+
+	public String getCd_linea_attivita() {
+		return cd_linea_attivita;
+	}
+
+	public void setCd_linea_attivita(String cd_linea_attivita) {
+		this.cd_linea_attivita = cd_linea_attivita;
+	}
+
+	public String getCd_centro_responsabilita() {
+		return cd_centro_responsabilita;
+	}
+
+	public void setCd_centro_responsabilita(String cd_centro_responsabilita) {
+		this.cd_centro_responsabilita = cd_centro_responsabilita;
+	}
+
+	public String getDs_cdr() {
+		return ds_cdr;
+	}
+
+	public void setDs_cdr(String ds_cdr) {
+		this.ds_cdr = ds_cdr;
 	}
 
 	public BigDecimal getAssestato_fin() {
@@ -238,15 +223,34 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 		this.impacc_cofin = impacc_cofin;
 	}
 
-	public Progetto_sipBulk getFindProgettoForPrint() {
+	public BigDecimal getManris_fin() {
+		return manris_fin;
+	}
+
+	public void setManris_fin(BigDecimal manris_fin) {
+		this.manris_fin = manris_fin;
+	}
+
+	public BigDecimal getManris_cofin() {
+		return manris_cofin;
+	}
+
+	public void setManris_cofin(BigDecimal manris_cofin) {
+		this.manris_cofin = manris_cofin;
+	}
+
+	public ProgettoBulk getFindProgettoForPrint() {
 		return findProgettoForPrint;
 	}
 
-	public void setFindProgettoForPrint(Progetto_sipBulk findProgetto) {
+	public void setFindProgettoForPrint(ProgettoBulk findProgetto) {
 		this.findProgettoForPrint = findProgetto;
 		if (getFindProgettoForPrint() != null){
 			setPg_progetto(getFindProgettoForPrint().getPg_progetto());
 		}
 	}
 
+	public static java.util.Dictionary getTipologiaStampaKeys() {
+		return TIPOLOGIA_STAMPA_KEYS;
+	}
 }

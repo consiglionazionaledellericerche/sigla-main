@@ -25,10 +25,8 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaHome;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -56,6 +54,8 @@ import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.contab.inventario01.bulk.*;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaHome;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -94,7 +94,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FatturaAttivaSingolaComponent
-        extends it.cnr.jada.comp.CRUDComponent
+        extends ScritturaPartitaDoppiaFromDocumentoComponent
         implements ICRUDMgr, IFatturaAttivaSingolaMgr, Cloneable, Serializable {
     private transient final static Logger logger = LoggerFactory.getLogger(FatturaAttivaSingolaComponent.class);
     private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
@@ -2612,6 +2612,8 @@ public class FatturaAttivaSingolaComponent
 
         fattura = (Fattura_attivaBulk) super.creaConBulk(userContext, fattura);
 
+//        gestionePagopa(userContext, fattura);
+
         aggiornaScarichiInventario(userContext, fattura);
         String messaggio = aggiornaAssociazioniInventario(userContext, fattura);
         // Restore dell'hash map dei saldi
@@ -2845,7 +2847,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         }
 
         super.eliminaConBulk(aUC, fattura_attiva);
-
+//        gestionePagopa(aUC, fattura_attiva);
         try {
             if (fattura_attiva instanceof Fattura_attiva_IBulk)
                 aggiornaAccertamentiSuCancellazione(
@@ -3887,28 +3889,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         } catch (it.cnr.jada.persistency.IntrospectionException e) {
             throw handleException(fattura, e);
         }
-        try {
-            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
-                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                        .map(Scrittura_partita_doppiaHome.class::cast)
-                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(fattura);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                    fattura.setScrittura_partita_doppia(scrittura);
-                }
-            }
-        } catch (PersistencyException e) {
-            throw handleException(fattura, e);
-        }
+        caricaScrittura(userContext, fattura);
         return fattura;
     }
 //^^@@
@@ -4435,6 +4416,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         }
         fattura = (Fattura_attivaBulk) super.modificaConBulk(userContext, fattura);
 
+//        gestionePagopa(userContext, fattura);
         aggiornaScarichiInventario(userContext, fattura);
         String messaggio = aggiornaAssociazioniInventario(userContext, fattura);
 
@@ -4945,6 +4927,21 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                 fatturaAttiva.getFl_liquidazione_differita().booleanValue())
             sql.addSQLClause("AND", "ANAGRAFICO.FL_FATTURAZIONE_DIFFERITA", sql.EQUALS, "Y");
 
+        sql.addClause(clauses);
+        return sql;
+    }
+    public it.cnr.jada.persistency.sql.SQLBuilder selectPendenzaPagopaByClause(
+            UserContext aUC,
+            Fattura_attivaBulk fatturaAttiva,
+            PendenzaPagopaBulk pendenza,
+            CompoundFindClause clauses)
+            throws ComponentException {
+        it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, pendenza).createSQLBuilder();
+        sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, CNRUserContext.getCd_unita_organizzativa(aUC));
+        if (fatturaAttiva.getCliente() != null && fatturaAttiva.getCliente().getCd_terzo() != null){
+            sql.addSQLClause("AND", "CD_TERZO", sql.EQUALS, fatturaAttiva.getCliente().getCd_terzo());
+        }
+        sql.addSQLClause("AND", "STATO", sql.EQUALS, PendenzaPagopaBulk.STATO_APERTA);
         sql.addClause(clauses);
         return sql;
     }
@@ -5562,9 +5559,57 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         controllaContabilizzazioneDiTutteLeRighe(aUC, fatturaAttiva);
         controllaQuadraturaAccertamenti(aUC, fatturaAttiva);
         controllaQuadraturaIntrastat(aUC, fatturaAttiva);
+//        controlliCongruenzaPagopa(aUC, fatturaAttiva);
     }
-//^^@@
 
+    private void controlliCongruenzaPagopa(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ComponentException {
+        try {
+            if (fatturaAttiva.getPendenzaPagopa() != null){
+                PendenzaPagopaHome homePendenza = (PendenzaPagopaHome) getHome(aUC, PendenzaPagopaBulk.class);
+                PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk) homePendenza.findByPrimaryKey(fatturaAttiva.getPendenzaPagopa());
+                if (fatturaAttiva.getCliente().getCd_terzo().compareTo(pendenzaPagopaBulk.getCd_terzo()) != 0){
+                    throw new it.cnr.jada.comp.ApplicationException("Il codice cliente della fattura non coincide con il codice cliente dell'avviso PagoPA.");
+                }
+                if (fatturaAttiva.getIm_totale_fattura().compareTo(pendenzaPagopaBulk.getImportoPendenza()) != 0){
+                    throw new it.cnr.jada.comp.ApplicationException("L'importo totale della fattura non coincide con l'importo totale dell'avviso PagoPA.");
+                }
+            }
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    private void gestionePagopa(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ComponentException {
+/*        try {
+            if (fatturaAttiva.isToBeUpdated() || fatturaAttiva.isToBeDeleted()) {
+                    Fattura_attivaBulk fatturaDB = (Fattura_attivaBulk) getTempHome(aUC, fatturaAttiva.getClass())
+                            .findByPrimaryKey(fatturaAttiva);
+                    if (fatturaDB.getPendenzaPagopa() != null){
+                        if (fatturaAttiva.isToBeDeleted() || fatturaAttiva.getPendenzaPagopa() == null){
+                            cambiaStatoPendenza(aUC, fatturaDB, PendenzaPagopaBulk.STATO_APERTA);
+                        } else if (!fatturaAttiva.getPendenzaPagopa().equals(fatturaDB.getPendenzaPagopa()))
+                            cambiaStatoPendenza(aUC, fatturaDB, PendenzaPagopaBulk.STATO_APERTA);
+                            cambiaStatoPendenza(aUC, fatturaAttiva, PendenzaPagopaBulk.STATO_ASSOCIATO);
+                    } else if (fatturaAttiva.getPendenzaPagopa() != null && fatturaAttiva.isToBeUpdated()){
+                        cambiaStatoPendenza(aUC, fatturaAttiva, PendenzaPagopaBulk.STATO_ASSOCIATO);
+                    }
+            } else if (fatturaAttiva.getPendenzaPagopa() != null){
+                cambiaStatoPendenza(aUC, fatturaAttiva, PendenzaPagopaBulk.STATO_ASSOCIATO);
+            }
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }*/
+    }
+
+    private void cambiaStatoPendenza(UserContext aUC, Fattura_attivaBulk fattura, String statoValido) throws ComponentException, PersistencyException {
+        PendenzaPagopaHome homePendenza = (PendenzaPagopaHome) getHome(aUC, PendenzaPagopaBulk.class);
+        PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk) homePendenza.findByPrimaryKey(fattura.getPendenzaPagopa());
+        pendenzaPagopaBulk.setStato(statoValido);
+        pendenzaPagopaBulk.setToBeUpdated();
+        homePendenza.update(pendenzaPagopaBulk, aUC);
+    }
+
+    //^^@@
     public void controlliQuadraturaTotaleFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva, BulkList dettaglio, Boolean totaleAliquotaIva)
             throws ApplicationException, ComponentException {
     	HashMap<BigDecimal, BigDecimal> mappaAliquote = new HashMap<>();
@@ -6475,11 +6520,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         return pg_stampa;
     }
 
-    public byte[] lanciaStampa(
-            UserContext userContext,
-            Long pg_stampa) throws PersistencyException, ComponentException {
+    public byte[] lanciaStampa(UserContext userContext, Long pg_stampa) throws PersistencyException, ComponentException {
         try {
-
             File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + getOutputFileName("fatturaattiva_ncd.jasper", pg_stampa));
             Print_spoolerBulk print = new Print_spoolerBulk();
             print.setPgStampa(pg_stampa);

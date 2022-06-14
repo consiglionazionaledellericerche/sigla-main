@@ -30,11 +30,12 @@ import javax.ejb.EJBException;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Stateless(name = "CNRCONFIG00_EJB_Configurazione_cnrComponentSession")
 public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements Configurazione_cnrComponentSession {
-    private Configurazione_cnrComponent componentObj;
+    private it.cnr.contab.config00.comp.Configurazione_cnrComponent componentObj;
     private transient final static Logger logger = LoggerFactory.getLogger(Configurazione_cnrComponentSessionBean.class);
 
     public static Configurazione_cnrComponentSessionBean newInstance() throws EJBException {
@@ -59,10 +60,10 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
 
     @PostConstruct
     public void ejbCreate() {
-        componentObj = new Configurazione_cnrComponent();
+        componentObj = new it.cnr.contab.config00.comp.Configurazione_cnrComponent();
     }
 
-    public void shutdowHook() throws ComponentException, EJBException{
+    public void shutdowHook() throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException{
         UserContext param0 = new AdminUserContext(UUID.randomUUID().toString());
         pre_component_invocation(param0, componentObj);
         try {
@@ -536,6 +537,7 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
         }
     }
 
+
     @Override
     public Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, RemoteException {
         pre_component_invocation(userContext, componentObj);
@@ -714,4 +716,81 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
             throw uncaughtError(param0, componentObj, e);
         }
     }
+
+    @Override
+    public Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            Boolean result = componentObj.isVariazioneAutomaticaSpesa(userContext);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
+
+    public Integer getCdTerzoDiversiStipendi(UserContext userContext) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            Integer result = componentObj.getCdTerzoDiversiStipendi(userContext);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
+
+    public String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            String result = componentObj.getContoCorrenteEnte(userContext, esercizio);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
+    public Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(userContext, componentObj);
+        try {
+            Timestamp result = componentObj.getDataFineValiditaCaricoFamiliare(userContext, tiPersona);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(userContext, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(userContext, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(userContext, componentObj, e);
+        }
+    }
+
 }
