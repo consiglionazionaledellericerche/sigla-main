@@ -3019,9 +3019,9 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     if (fattura_passiva.getStato_liquidazione() == null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0) {
                         if (fattura_passiva instanceof Fattura_passiva_IBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
                             throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
-                        if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
-                            throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
                     }
+                    if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
+                        throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
                 }
             }
             validaFattura(userContext, fattura_passiva);

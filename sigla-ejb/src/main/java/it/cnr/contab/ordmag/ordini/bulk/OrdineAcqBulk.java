@@ -1591,7 +1591,7 @@ public class OrdineAcqBulk extends OrdineAcqBase
         return this.getDataOrdine();
     }
     public boolean isROContratto(){
-        if (getContratto() != null && getContratto().getTipo_dettaglio_contratto() != null && getRigheOrdineColl().size() > 0){
+        if (getContratto() != null && getRigheOrdineColl().size() > 0){
             return true;
         }
         return false;

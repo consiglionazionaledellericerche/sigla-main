@@ -701,7 +701,7 @@ public class OrdineAcqComponent
 	private UnitaOperativaOrdBulk recuperoUopDest(UserContext usercontext, OrdineAcqConsegnaBulk cons)
 			throws ComponentException, PersistencyException {
 		UnitaOperativaOrdHome home = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
-		UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(cons.getCdUnitaOperativa()));
+		UnitaOperativaOrdBulk uop = (UnitaOperativaOrdBulk)home.findByPrimaryKey(new UnitaOperativaOrdBulk(cons.getCdUopDest()));
 		return uop;
 	}
 
