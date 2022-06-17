@@ -25,7 +25,9 @@ package it.cnr.contab.doccont00.core.bulk;
 
 public class V_doc_passivo_obbligazione_wizardBulk extends V_doc_passivo_obbligazioneBulk {
 	Mandato_rigaBulk mandatoRiga;
-	
+
+	String descrizioneRigaMandatoWizard;
+
 	public V_doc_passivo_obbligazione_wizardBulk() {
 		super();
 	}
@@ -36,5 +38,13 @@ public class V_doc_passivo_obbligazione_wizardBulk extends V_doc_passivo_obbliga
 
 	public void setMandatoRiga(Mandato_rigaBulk mandatoRiga) {
 		this.mandatoRiga = mandatoRiga;
+	}
+
+	public String getDescrizioneRigaMandatoWizard() {
+		return descrizioneRigaMandatoWizard;
+	}
+
+	public void setDescrizioneRigaMandatoWizard(String descrizioneRigaMandatoWizard) {
+		this.descrizioneRigaMandatoWizard = descrizioneRigaMandatoWizard;
 	}
 }

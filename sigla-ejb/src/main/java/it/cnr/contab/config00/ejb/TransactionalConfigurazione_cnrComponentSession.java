@@ -21,6 +21,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements Configurazione_cnrComponentSession {
     public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(UserContext param0, Integer param1, String param2, String param3, String param4) throws RemoteException, ComponentException {
@@ -670,6 +671,38 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
                 throw ex;
             } catch (Throwable ex) {
                 throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+    public Integer getCdTerzoDiversiStipendi(UserContext userContext)  throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (Integer) invoke("getCdTerzoDiversiStipendi", new Object[]{
+                    userContext});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+    public Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona)  throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (Timestamp) invoke("getDataFineValiditaCaricoFamiliare", new Object[]{
+                    userContext, tiPersona});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
             }
         }
     }

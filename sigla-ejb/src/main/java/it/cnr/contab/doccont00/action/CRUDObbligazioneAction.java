@@ -17,37 +17,19 @@
 
 package it.cnr.contab.doccont00.action;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Optional;
-
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
-import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
-import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
-import it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP;
-import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
+import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -65,6 +47,14 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Optional;
 /**
  * (Obbligazione)
  */

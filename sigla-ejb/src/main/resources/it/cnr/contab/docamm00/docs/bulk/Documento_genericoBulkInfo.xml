@@ -635,7 +635,31 @@
 		layout="VERTICAL"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>
-	
+	<fieldProperty
+		name="istruzioni_speciali_1"
+		property="lettera_pagamento_estero.istruzioni_speciali_1"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Primo" />
+	<fieldProperty
+		name="istruzioni_speciali_2"
+		property="lettera_pagamento_estero.istruzioni_speciali_2"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Secondo" />
+	<fieldProperty
+		name="istruzioni_speciali_3"
+		property="lettera_pagamento_estero.istruzioni_speciali_3"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		maxLength="250"
+		inputSize="100"
+		label="Terzo" />
+
 	<fieldProperty
 		name="valutaForSearch"
 		property="valuta"
@@ -732,10 +756,13 @@
 		name="commissioni_spese"/>
 	<formFieldProperty
 		name="commissioni_spese_estere"/>
-				
-	
-	
-		
+	<formFieldProperty
+		name="istruzioni_speciali_1" />
+	<formFieldProperty
+		name="istruzioni_speciali_2" />
+	<formFieldProperty
+		name="istruzioni_speciali_3" />
+
 	<formFieldProperty 
 		name="ti_istituz_commerc"/>
 	<formFieldProperty 
@@ -811,7 +838,7 @@
 		name="findTipoDocumentoGenerico" />
 				
 	<columnFieldProperty
-		name="tipo_doc" />
+		name="cd_tipo_documento_amm" />
 	<columnFieldProperty
 		name="pg_documento_generico" />
 	<columnFieldProperty

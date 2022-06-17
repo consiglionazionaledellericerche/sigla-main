@@ -17,17 +17,21 @@
 
 <action-mappings>
     <action
-            path="/StampaMagConsumiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+            path="/StampaMagConsumiAction" actionClass="it.cnr.contab.ordmag.magazzino.action.StampaConsumiAction">
     </action>
     <action
             path="/StampaInventarioAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
     </action>
-
+    <action
+            path="/StampaBollaScaricoMagAction" actionClass="it.cnr.contab.ordmag.magazzino.action.StampaBollaScaricoMagAction">
+    </action>
+    <action
+            path="/StampaPartitarioMagAction" actionClass="it.cnr.contab.ordmag.magazzino.action.StampaPartitarioMagAction">
+    </action>
 
     <businessProcess name="StampaConsumiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
         <forward name="default" path="/ordmag/magazzini/stampa_consumi.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.Stampa_consumiBulk" />
-        <init-param name="printbp" value="OfflineReportPrintBP"/>
        <init-param name="defaultAction" value="StampaMagConsumiAction" />
         <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
         <init-param name="printbp" value="OfflineReportPrintBP"/>
@@ -46,5 +50,22 @@
         <init-param name="repotWhitDsOffLine" value="true"/>
     </businessProcess>
 
+    <businessProcess name="StampaBollaScaricoMagBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+        <forward name="default" path="/ordmag/magazzini/stampaBollaScaricoMag.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.StampaBollaScaricoMagBulk" />
+        <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="defaultAction" value="StampaBollaScaricoMagAction" />
+        <init-param name="reportName" value="/ordmag/bolla_scarico.jasper" />
+    </businessProcess>
+    <businessProcess name="StampaPartitarioMagBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+        <forward name="default" path="/ordmag/magazzini/stampaPartitarioMag.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagBulk" />
+        <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="defaultAction" value="StampaPartitarioMagAction" />
+        <init-param name="reportName" value="/ordmag/partitario_magazzino.jasper" />
+        <init-param name="repotWhitDsOffLine" value="true"/>
+    </businessProcess>
 
 </action-mappings>

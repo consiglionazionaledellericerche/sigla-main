@@ -100,7 +100,28 @@
 			propertyName="im_detrazione_minima"
 			sqlTypeName="DECIMAL"
 			columnSize="15"
-			columnScale="2" />				
+			columnScale="2" />
+		<columnMapping
+				columnName="IM_INCR_FISSO"
+				propertyName="imIncrFisso"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="IM_INF_INCR_FISSO"
+				propertyName="imInfIncrFisso"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="IM_SUP_INCR_FISSO"
+				propertyName="imSupIncrFisso"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -127,5 +148,11 @@
 	<persistentProperty
 		name="denominatore" />	
 	<persistentProperty
-		name="im_detrazione_minima" />				
+		name="im_detrazione_minima" />
+	<persistentProperty
+			name="imIncrFisso" />
+	<persistentProperty
+			name="imInfIncrFisso" />
+	<persistentProperty
+			name="imSupIncrFisso" />
 </SQLPersistentInfo>

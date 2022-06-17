@@ -305,7 +305,8 @@
         tDtIniValCori TIPO_CONTRIBUTO_RITENUTA.dt_ini_validita%TYPE,
         tImCreditoIrpefGoduto CONTRIBUTO_RITENUTA.ammontare%TYPE,
         tImCreditoIrpefDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE,
-        tImCreditoMaxDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE
+        tImCreditoMaxDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE,
+        PAREGGIO_DETRAZIONI VARCHAR2(1)
        );
    TYPE tCreditoIrpef IS TABLE OF recCreditoIrpef
         INDEX BY BINARY_INTEGER;
@@ -333,6 +334,8 @@
    glbDeduzioneFamilyGoduto NUMBER(15,2);
    glbImportoIrpefSospesoGoduto NUMBER(15,2);
    glbImportoCreditoIrpefGoduto NUMBER(15,2);
+   glbImportoCredIrpParDetGoduto NUMBER(15,2);
+   glbImportoCredIrpParDetDovuto NUMBER(15,2);
    glbImportoBonusIrpefGoduto NUMBER(15,2);
 
    glbImportoIrpefDovuto NUMBER(15,2);

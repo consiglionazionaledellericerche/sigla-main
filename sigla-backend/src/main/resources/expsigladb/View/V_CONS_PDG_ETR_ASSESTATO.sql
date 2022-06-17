@@ -100,7 +100,7 @@ Group BY pdg_preventivo_etr_det.esercizio,
         Pdg_preventivo_ETR_det.ESERCIZIO_PDG_VARIAZIONE,
         Pdg_preventivo_ETR_det.PG_VARIAZIONE_PDG
 Having Sum(Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ESR, 0))!=0
-UNION All -- DIPARTIMENTI VARIAZIONI PIU
+union -- DIPARTIMENTI VARIAZIONI PIU
 Select  Pdg_preventivo_etr_det.esercizio,
         nvl(p.peso,1000) PESO_DIP,
         Nvl(v_linea_attivita_valida.cd_programma, Null) DIP,
@@ -182,7 +182,7 @@ Group BY pdg_preventivo_etr_det.esercizio,
         Pdg_preventivo_ETR_det.ESERCIZIO_PDG_VARIAZIONE,
         Pdg_preventivo_ETR_det.PG_VARIAZIONE_PDG
 Having Sum(Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ESR, 0))!=0
-UNION All  -- DIPARTIMENTI VARIAZIONI MENO
+union  -- DIPARTIMENTI VARIAZIONI MENO
 Select  Pdg_preventivo_etr_det.esercizio,
         nvl(p.peso,1000) PESO_DIP,
         Nvl(v_linea_attivita_valida.cd_programma, Null) DIP,
@@ -264,11 +264,11 @@ Group BY pdg_preventivo_etr_det.esercizio,
         Pdg_preventivo_ETR_det.ESERCIZIO_PDG_VARIAZIONE,
         Pdg_preventivo_ETR_det.PG_VARIAZIONE_PDG
 Having Sum(Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ESR, 0))!=0
-Union All -- SAC INIZIALE
+union -- SAC INIZIALE
 Select  Pdg_preventivo_etr_det.esercizio,
          nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA CDS,
         CDS.DS_UNITA_ORGANIZZATIVA DES_CDS,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA UO,
@@ -319,7 +319,7 @@ And     unita_organizzativa.CD_TIPO_UNITA = 'SAC'
 GROUP BY Pdg_preventivo_etr_det.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA,
         CDS.DS_UNITA_ORGANIZZATIVA ,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA,
@@ -341,11 +341,11 @@ GROUP BY Pdg_preventivo_etr_det.esercizio,
         Pdg_preventivo_ETR_det.ESERCIZIO_PDG_VARIAZIONE,
         Pdg_preventivo_ETR_det.PG_VARIAZIONE_PDG
 Having Sum(Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ESR, 0))!=0
-Union All -- SAC VARIAZIONI PIU'
+union -- SAC VARIAZIONI PIU'
 Select  Pdg_preventivo_etr_det.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA CDS,
         CDS.DS_UNITA_ORGANIZZATIVA DES_CDS,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA UO,
@@ -399,7 +399,7 @@ And Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ES
 Group BY Pdg_preventivo_etr_det.esercizio,
          nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA,
         CDS.DS_UNITA_ORGANIZZATIVA,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA,
@@ -421,11 +421,11 @@ Group BY Pdg_preventivo_etr_det.esercizio,
         Pdg_preventivo_ETR_det.ESERCIZIO_PDG_VARIAZIONE,
         Pdg_preventivo_ETR_det.PG_VARIAZIONE_PDG
 Having Sum(Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ESR, 0))!=0
-Union All -- SAC VARIAZIONI MENO
+union -- SAC VARIAZIONI MENO
 Select  Pdg_preventivo_etr_det.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA CDS,
         CDS.DS_UNITA_ORGANIZZATIVA DES_CDS,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA UO,
@@ -479,7 +479,7 @@ And Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ES
 Group BY Pdg_preventivo_etr_det.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA,
         CDS.DS_UNITA_ORGANIZZATIVA,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA,
@@ -502,7 +502,7 @@ Group BY Pdg_preventivo_etr_det.esercizio,
         Pdg_preventivo_ETR_det.PG_VARIAZIONE_PDG
 Having Sum(Nvl(Pdg_preventivo_etr_det.IM_RA_RCE, 0)+Nvl(Pdg_preventivo_etr_det.IM_RC_ESR, 0))!=0
 --Nuova Gestione
-Union All
+union
 Select  Pdg_modulo_entrate_gest.esercizio, -- DIPARTIMENTI INIZIALE
         nvl(p.peso,1000) PESO_DIP,
         Nvl(v_linea_attivita_valida.cd_programma, Null) DIP,
@@ -577,7 +577,7 @@ Group BY Pdg_modulo_entrate_gest.esercizio,
         V_CLASSIFICAZIONE_VOCI.CD_LIVELLO6,
         V_CLASSIFICAZIONE_VOCI.CD_LIVELLO7
 Having Nvl(Sum(Pdg_modulo_entrate_gest.IM_ENTRATA), 0)!=0
-UNION All -- DIPARTIMENTI VARIAZIONI PIU
+union -- DIPARTIMENTI VARIAZIONI PIU
 Select  Pdg_variazione_riga_gest.esercizio,
         nvl(p.peso,1000) PESO_DIP,
         Nvl( v_linea_attivita_valida.cd_programma, Null) DIP,
@@ -659,7 +659,7 @@ Group BY Pdg_variazione_riga_gest.esercizio,
         Pdg_variazione_riga_gest.ESERCIZIO,
         Pdg_variazione_riga_gest.PG_VARIAZIONE_PDG
 Having Nvl(Sum(Pdg_variazione_riga_gest.IM_ENTRATA), 0)!=0
-UNION All  -- DIPARTIMENTI VARIAZIONI MENO
+union  -- DIPARTIMENTI VARIAZIONI MENO
 Select  Pdg_variazione_riga_gest.esercizio,
         nvl(p.peso,1000) PESO_DIP,
         Nvl(v_linea_attivita_valida.cd_programma, Null) DIP,
@@ -741,11 +741,11 @@ Group BY Pdg_variazione_riga_gest.esercizio,
         Pdg_variazione_riga_gest.ESERCIZIO,
         Pdg_variazione_riga_gest.PG_VARIAZIONE_PDG
 Having Nvl(Sum(Pdg_variazione_riga_gest.IM_ENTRATA), 0)!=0
-Union All -- SAC INIZIALE
+union -- SAC INIZIALE
 Select  Pdg_modulo_entrate_gest.esercizio,
          nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA CDS,
         CDS.DS_UNITA_ORGANIZZATIVA DES_CDS,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA UO,
@@ -794,7 +794,7 @@ And     pdg_modulo_entrate_gest.CATEGORIA_DETTAGLIO     = 'DIR'
 GROUP BY Pdg_modulo_entrate_gest.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA,
         CDS.DS_UNITA_ORGANIZZATIVA ,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA,
@@ -814,11 +814,11 @@ GROUP BY Pdg_modulo_entrate_gest.esercizio,
         V_CLASSIFICAZIONE_VOCI.CD_LIVELLO6,
         V_CLASSIFICAZIONE_VOCI.CD_LIVELLO7
 Having Nvl(Sum(Pdg_modulo_entrate_gest.IM_ENTRATA), 0)!=0
-Union All -- SAC VARIAZIONI PIU'
+union -- SAC VARIAZIONI PIU'
 Select  Pdg_variazione_riga_gest.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA CDS,
         CDS.DS_UNITA_ORGANIZZATIVA DES_CDS,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA UO,
@@ -872,7 +872,7 @@ And     Pdg_variazione_riga_gest.CATEGORIA_DETTAGLIO    = 'DIR'
 Group BY Pdg_variazione_riga_gest.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA,
         CDS.DS_UNITA_ORGANIZZATIVA,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA,
@@ -894,11 +894,11 @@ Group BY Pdg_variazione_riga_gest.esercizio,
         Pdg_variazione_riga_gest.ESERCIZIO,
         Pdg_variazione_riga_gest.PG_VARIAZIONE_PDG
 Having Nvl(Sum(Pdg_variazione_riga_gest.IM_ENTRATA), 0)!=0
-Union All -- SAC VARIAZIONI MENO
+union -- SAC VARIAZIONI MENO
 Select  Pdg_variazione_riga_gest.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA CDS,
         CDS.DS_UNITA_ORGANIZZATIVA DES_CDS,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA UO,
@@ -952,7 +952,7 @@ And     Pdg_variazione_riga_gest.CATEGORIA_DETTAGLIO    = 'DIR'
 Group BY Pdg_variazione_riga_gest.esercizio,
         nvl( peso,1000),
         'SAC',
-        'dipartimento SAC',
+        'Amministrazione dell''Ente',
         CDS.CD_UNITA_ORGANIZZATIVA,
         CDS.DS_UNITA_ORGANIZZATIVA,
         UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA,

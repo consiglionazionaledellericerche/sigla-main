@@ -79,4 +79,12 @@ public final java.util.Dictionary getStatoKeys() {
 	public static java.util.Dictionary getMeseKeys() {
 		return meseKeys;
 	}
+
+	public boolean isLiquidato() {
+		return Stipendi_cofiBulk.STATO_LIQUIDATO.equals(this.getStato());
+	}
+
+	public boolean isNonLiquidato() {
+		return Stipendi_cofiBulk.STATO_NON_LIQUIDATO.equals(this.getStato());
+	}
 }

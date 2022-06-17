@@ -2663,29 +2663,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									+ "in una variazione non effettuata per 'Trasferimenti per personale'.");
 					});
 				}
-		
-				if (isVariazioneArea) {
-					if (isCDRAreaVariazione) {
-						listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
-							.findFirst().ifPresent(el->{
-								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' non è possibile "
-										+ "assegnare fondi ad una Area di Ricerca.");
-						});
-						
-						listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
-							.findFirst().orElseThrow(()->
-								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' è necessario "
-										+ "sottrarre fondi ad Aree di Ricerca."));
-	
-						listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiArea()).compareTo(BigDecimal.ZERO)>0)
-							.findFirst().ifPresent(el->{
-								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' non è possibile "
-										+ "sottrarre fondi a CDR non qualificati come Aree di Ricerca.");
-						});
-					} else {
+
+			 	if (isVariazioneArea) {
+					if (isCDRAreaVariazione)
+						//24/02/2022 Su indicazione di Sabrina Miceli l'unico modo di un'area di ricerca di trasferire fondi ad altri CDR è con variazione generica.
+						//E' stato pertanto chiesto di bloccare la possibilità per un'area di ricerca di effettuare variazioni di tipo Area
+						throw new DetailedRuntimeException("Attenzione! Non è possibile per un'Area di Ricerca predisporre variazione di tipo 'Trasferimenti da Aree di Ricerca.");
+					else {
 						listCtrlPianoEco.stream()
 							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
 							.findFirst().orElseThrow(()->
@@ -2906,27 +2890,33 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				/**
 				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
 				 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+				 * 	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
 				 */
 				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaPositiviNetti()
+								  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 								  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
 								  .compareTo(BigDecimal.ZERO)>0)
 						.filter(el->el.getImpSpesaPositiviNetti()
+									  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
 										  .compareTo(el.getImpSpesaNegativiNetti()
+												   .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 											  	   .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO))>0)
 						.findFirst().ifPresent(el->{
 						throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
 								el.getProgetto().getCd_progetto()+" (" + 
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaPositiviNetti()
+										  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) +
 								") non compensati da un equivalente prelievo nell'ambito dello stesso progetto ("+
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaNegativiNetti()
+										  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
 		
 					/**
@@ -2939,21 +2929,26 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNetti()
+								      .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
 									  .compareTo(BigDecimal.ZERO)>0)
 						.filter(el->el.getImpSpesaNegativiNetti()
-									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
+									  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
+								      .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
 									  .compareTo(el.getImpSpesaPositiviNetti()
+ 											       .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 											  	   .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO))>0)
 						.findFirst().ifPresent(el->{
 						throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi al progetto "+
 								el.getProgetto().getCd_progetto()+" (" + 
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaNegativiNetti()
+										  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) +
 								") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto ("+
 								new it.cnr.contab.util.EuroFormat().format(
 										el.getImpSpesaPositiviNetti()
+										  .add(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) + ")");});
 				}
 				
@@ -2961,7 +2956,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				 * 40. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stessa area
 				 *    (regola non valida per Trasferimenti a Ragioneria)
-				 */
+				 *    08/03/2022 Controllo eliminato su richiesta di Sabrina Miceli (Segnalazione Helpdesk 107720)
 				if (!isVariazioneRagioneria) {
 					listCtrlPianoEco.stream()
 							.filter(el -> !el.isScaduto(dataChiusura))
@@ -2975,6 +2970,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");
 					});
 				}
+			 	*/
 
 				/**
 				 * 50. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 

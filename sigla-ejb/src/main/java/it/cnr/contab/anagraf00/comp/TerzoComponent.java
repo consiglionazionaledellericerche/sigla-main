@@ -76,14 +76,28 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
         }
     }
 
+    public RemoteIterator cercaTerziPerUnitaOrganizzativa(UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+        try {
+
+            return iterator(
+                    userContext,
+                    selectTerziPerUnitaOrganizzativaByClause(userContext, unita_organizzativaBulk),
+                    TerzoBulk.class,
+                    null);
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
     public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext, Unita_organizzativaBulk unita_organizzativa) throws ComponentException {
         try {
+            /*
             SQLBuilder sql = getHome(userContext, TerzoBulk.class).createSQLBuilder();
             sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
             sql.addSQLClause("AND", "(DT_CANC >= SYSDATE OR DT_CANC IS NULL)");
             sql.addSQLClause("AND", "(DT_FINE_RAPPORTO >= SYSDATE OR DT_FINE_RAPPORTO IS NULL)");
-
-            it.cnr.jada.persistency.Broker broker = getHome(userContext, TerzoBulk.class).createBroker(sql);
+*/
+            it.cnr.jada.persistency.Broker broker = getHome(userContext, TerzoBulk.class).createBroker(selectTerziPerUnitaOrganizzativaByClause(userContext,unita_organizzativa));
             if (!broker.next()) return null;
             TerzoBulk terzo = (TerzoBulk) broker.fetch(TerzoBulk.class);
             // eliminato controllo terzo unico per UO
@@ -274,6 +288,14 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
         return sql;
     }
 
+    public SQLBuilder selectTerziPerUnitaOrganizzativaByClause(UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+
+        SQLBuilder sql = getHome(userContext, TerzoBulk.class).createSQLBuilder();
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, unita_organizzativaBulk.getCd_unita_organizzativa());
+        sql.addSQLClause("AND", "(DT_CANC >= SYSDATE OR DT_CANC IS NULL)");
+        sql.addSQLClause("AND", "(DT_FINE_RAPPORTO >= SYSDATE OR DT_FINE_RAPPORTO IS NULL)");
+        return sql;
+    }
 
     public SQLBuilder selectModalita_pagamento_disponibiliByClause(UserContext userContext, TerzoBulk terzo) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 

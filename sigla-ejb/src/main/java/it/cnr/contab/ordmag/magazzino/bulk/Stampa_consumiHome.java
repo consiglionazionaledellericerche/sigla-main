@@ -120,7 +120,6 @@ public class Stampa_consumiHome extends BulkHome {
 		Print_spooler_paramBulk articoloAParam=params.stream().
 				filter(e->e.getNomeParam().equals(ARTICOLO_A)).findFirst().get();
 
-
 		Date dataMovimentoDa = null;
 		Date dataMovimentoA = null;
 		Date dataRiferimento = null;
@@ -131,32 +130,19 @@ public class Stampa_consumiHome extends BulkHome {
 			dataMovimentoDa =dateFormatter.parse(dataMovimentoDaParam.getValoreParam());
 			dataMovimentoA =dateFormatter.parse(dataMovimentoAParam.getValoreParam());
 			dataRiferimento =dateFormatter.parse(dataRiferimentoParam.getValoreParam());
-
-
-
-
-
-
-
-
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
 
 		List<StampaConsumiDTO> consumiDto = new ArrayList<StampaConsumiDTO>();
 		try {
 			MovimentiMagHome movimentoMagHome = (MovimentiMagHome) getHomeCache().getHome(MovimentiMagBulk.class);
 			SQLBuilder sql = movimentoMagHome.createSQLBuilder();
-
 			sql.generateJoin(MovimentiMagBulk.class, TipoMovimentoMagBulk.class, "tipoMovimentoMag","TIPO_MOVIMENTO_MAG");
-
 			// stato movimento = STATO_INSERITO (INS)
 			sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.STATO", SQLBuilder.EQUALS, MovimentiMagBulk.STATO_INSERITO);
-
 			// data movimento compresa tra
 			sql.addSQLClause("AND", "MOVIMENTI_MAG.DT_MOVIMENTO BETWEEN ? AND ?");
-
 			if(dataMovimentoDa.compareTo(dataMovimentoA) !=0) {
 					// data movimento compresa tra quelle in input (DA/A)
 					sql.addParameter(new Timestamp(dataMovimentoDa.getTime()), Types.DATE, 0);
@@ -170,7 +156,6 @@ public class Stampa_consumiHome extends BulkHome {
 					sql.addParameter(new Timestamp(dataMovimentoDa.getTime()), Types.DATE, 0);
 					sql.addParameter(new Timestamp(giornoDopoDataMov.getTime()), Types.DATE, 1);
 			}
-
 			//data riferimento uguale a quella in input (fatta between perchè l'uguaglianza viene fatta sul timestamp dunque considera anche l'orario 00:00:00)
 			cal.setTime(dataRiferimento);
 			cal.add(Calendar.DATE, 1); //minus number would decrement the days
@@ -180,10 +165,8 @@ public class Stampa_consumiHome extends BulkHome {
 			sql.addParameter(new Timestamp(dataRiferimento.getTime()), Types.DATE, 0);
 			sql.addParameter(new Timestamp(giornoDopoDataRif.getTime()), Types.DATE, 1);
 			//sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_RIFERIMENTO", SQLBuilder.GREATER_EQUALS, new Timestamp(dataRiferimento.getTime()));
-
 			// tipo movimento = Y
 			sql.addSQLClause(FindClause.AND, "TIPO_MOVIMENTO_MAG.FL_CONSUMO", SQLBuilder.EQUALS, "Y");
-
 			sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
 			sql.addTableToHeader("BENE_SERVIZIO", "BENE_SERVIZIO");
 			sql.addSQLJoin("BENE_SERVIZIO.CD_BENE_SERVIZIO", "LOTTO_MAG.CD_BENE_SERVIZIO");
@@ -195,7 +178,6 @@ public class Stampa_consumiHome extends BulkHome {
 			if (!unitaOpDaParam.getValoreParam().equals(Stampa_consumiBulk.TUTTI) && !unitaOpAParam.getValoreParam().equals(Stampa_consumiBulk.TUTTI)) {
 				// uo compresa tra
 				sql.generateJoin(MovimentiMagBulk.class, UnitaOperativaOrdBulk.class, "unitaOperativaOrd", "UNITA_OPERATIVA_ORD");
-
 				if(!unitaOpDaParam.getValoreParam().equals(unitaOpAParam.getValoreParam())) {
 					// l'UO compresa tra quelle in input
 					sql.addSQLClause("AND", "UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA BETWEEN ? AND ?");

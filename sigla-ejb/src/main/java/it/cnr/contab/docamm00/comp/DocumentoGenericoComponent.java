@@ -21,25 +21,24 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.EnteBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.CambioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.CambioHome;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.AccertamentoWizard;
+import it.cnr.contab.doccont00.core.ObbligazioneWizard;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
@@ -69,7 +68,7 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 public class DocumentoGenericoComponent
-        extends it.cnr.jada.comp.CRUDComponent
+        extends ScritturaPartitaDoppiaFromDocumentoComponent
         implements ICRUDMgr, IDocumentoGenericoMgr, Cloneable, IPrintMgr, Serializable {
 
     public final static String TIPO_TOTALE_COMPLETO = "C";
@@ -972,23 +971,13 @@ public class DocumentoGenericoComponent
 
         if (scadenza != null) {
             try {
-                it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession h =
-                        (it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession) it.cnr.jada.util.ejb
-                                .EJBCommonServices
-                                .createEJB(
-                                        "CNRDOCCONT00_EJB_AccertamentoAbstractComponentSession",
-                                        it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession.class);
-                AccertamentoBulk accertamento =
-                        (AccertamentoBulk) h.inizializzaBulkPerModifica(
-                                context,
-                                scadenza.getAccertamento());
-                it.cnr.jada.bulk.BulkList scadenze = accertamento.getAccertamento_scadenzarioColl();
-                scadenza =
-                        (Accertamento_scadenzarioBulk) scadenze.get(
-                                scadenze.indexOfByPrimaryKey(scadenza));
-            } catch (java.rmi.RemoteException e) {
-                throw handleException(scadenza, e);
-            } catch (javax.ejb.EJBException e) {
+                AccertamentoHome accertHome = (AccertamentoHome) getHome( context, AccertamentoBulk.class);
+                Accertamento_scadenzarioHome asHome = (Accertamento_scadenzarioHome) getHome( context, Accertamento_scadenzarioBulk.class );
+                AccertamentoBulk accertamentoBulk = (AccertamentoBulk)accertHome.findByPrimaryKey(scadenza.getAccertamento());
+                accertamentoBulk.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamentoBulk ) ));
+                scadenza = accertamentoBulk.getAccertamento_scadenzarioColl().get(accertamentoBulk.getAccertamento_scadenzarioColl().indexOfByPrimaryKey(scadenza));
+                scadenza.setAccertamento_scad_voceColl( new BulkList( asHome.findAccertamento_scad_voceList(context, scadenza )));
+            } catch (Exception e) {
                 throw handleException(scadenza, e);
             }
             return scadenza;
@@ -1003,34 +992,13 @@ public class DocumentoGenericoComponent
 
         if (scadenza != null) {
             try {
-                //it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession h =
-                //(it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession) it
-                //.ibm
-                //.bframe
-                //.util
-                //.ejb
-                //.EJBCommonServices
-                //.createEJB(
-                //"CNRDOCCONT00_EJB_ObbligazioneComponentSession",
-                //it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession.class);
-                it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession h =
-                        (it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession) it.cnr.jada.util.ejb
-                                .EJBCommonServices
-                                .createEJB(
-                                        "CNRDOCCONT00_EJB_ObbligazioneComponentSession",
-                                        it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession.class);
-                ObbligazioneBulk obbligazione =
-                        (ObbligazioneBulk) h.inizializzaBulkPerModifica(
-                                context,
-                                scadenza.getObbligazione());
-                it.cnr.jada.bulk.BulkList scadenze =
-                        obbligazione.getObbligazione_scadenzarioColl();
-                scadenza =
-                        (Obbligazione_scadenzarioBulk) scadenze.get(
-                                scadenze.indexOfByPrimaryKey(scadenza));
-            } catch (java.rmi.RemoteException e) {
-                throw handleException(scadenza, e);
-            } catch (javax.ejb.EJBException e) {
+                ObbligazioneHome obbligHome = (ObbligazioneHome) getHome( context, ObbligazioneBulk.class);
+                Obbligazione_scadenzarioHome osHome = (Obbligazione_scadenzarioHome) getHome( context, Obbligazione_scadenzarioBulk.class );
+                ObbligazioneBulk obbligazioneBulk = (ObbligazioneBulk)obbligHome.findByPrimaryKey(scadenza.getObbligazione());
+                obbligazioneBulk.setObbligazione_scadenzarioColl( new BulkList( obbligHome.findObbligazione_scadenzarioList( obbligazioneBulk ) ));
+                scadenza = obbligazioneBulk.getObbligazione_scadenzarioColl().get(obbligazioneBulk.getObbligazione_scadenzarioColl().indexOfByPrimaryKey(scadenza));
+                scadenza.setObbligazione_scad_voceColl( new BulkList( osHome.findObbligazione_scad_voceList(context, scadenza )));
+            } catch (Exception e) {
                 throw handleException(scadenza, e);
             }
             return scadenza;
@@ -3521,29 +3489,7 @@ public class DocumentoGenericoComponent
         } catch (it.cnr.jada.persistency.IntrospectionException e) {
             throw handleException(generico, e);
         }
-        try {
-            if (Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
-                    .filter(Configurazione_cnrHome.class::isInstance)
-                    .map(Configurazione_cnrHome.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found")).isAttivaEconomicaParallela(userContext)) {
-                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
-                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
-                        .map(Scrittura_partita_doppiaHome.class::cast)
-                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-
-                final Optional<Scrittura_partita_doppiaBulk> scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(generico);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                    generico.setScrittura_partita_doppia(scrittura);
-                }
-            }
-        } catch (PersistencyException e) {
-            throw handleException(generico, e);
-        }
+        caricaScrittura(userContext, generico);
         return generico;
     }
 //^^@@
@@ -5749,8 +5695,6 @@ public class DocumentoGenericoComponent
                                                 }
                                             }
                                         }
-                                    } catch (IntrospectionException e1) {
-                                        throw new ComponentException(e1);
                                     } catch (PersistencyException e1) {
                                         throw new ComponentException(e1);
                                     }
@@ -6158,4 +6102,237 @@ public class DocumentoGenericoComponent
         return eliminaLetteraPagamentoEstero(context, docGen, true);
     }
 
+    public Documento_genericoBulk creaDocumentoGenericoDaImpegni(UserContext userContext, DocumentoGenericoWizardBulk wizard, java.util.Collection<ObbligazioneWizard> impegniColl) throws ComponentException {
+        try {
+            wizard.setTi_entrate_spese(Documento_genericoBulk.SPESE);
+            wizard.setTipo_documento(Optional.ofNullable(wizard.getTipo_documento()).orElse(new Tipo_documento_ammBulk( Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S)));
+            wizard.setDs_documento_generico(Optional.ofNullable(wizard.getDs_documento_generico()).orElse("DOCUMENTO AUTOMATICO CREATO DA IMPEGNI"));
+
+            Documento_genericoBulk documentoGenericoBulk = this.docGenerico_creaDocumentoGenerico( userContext, wizard );
+
+            for ( Iterator<ObbligazioneWizard> i = impegniColl.iterator(); i.hasNext(); ) {
+                ObbligazioneWizard obbligazioneWizard = i.next();
+                V_obbligazioneBulk impegno = obbligazioneWizard.getObbligazioneBulk();
+
+                Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk)getHome(userContext,Obbligazione_scadenzarioBulk.class).findAndLock(new Obbligazione_scadenzarioBulk(impegno.getCd_cds(), impegno.getEsercizio(), impegno.getEsercizio_originale(), impegno.getPg_obbligazione(), impegno.getPg_obbligazione_scadenzario()));
+
+                if (os.getIm_scadenza().compareTo(impegno.getIm_scadenza())!=0 ||
+                        os.getIm_associato_doc_amm().compareTo(impegno.getIm_associato_doc_amm())!= 0 ||
+                        os.getIm_associato_doc_contabile().compareTo(impegno.getIm_associato_doc_contabile()) !=0 )
+                    throw new ApplicationException("Operazione non possibile! E' stata utilizzata da un altro utente la scadenza nr." + impegno.getPg_obbligazione_scadenzario() + " dell'impegno " + impegno.getEsercizio_originale() + "/" + impegno.getPg_obbligazione());
+
+                if (impegno.getIm_disponibile().compareTo(impegno.getIm_da_trasferire())>0)
+                    Utility.createObbligazioneComponentSession().sdoppiaScadenzaInAutomatico( userContext, os, impegno.getIm_da_trasferire() );
+
+                Documento_generico_rigaBulk docRigaWizard = documentoGenericoBulk.getDocumento_generico_dettColl().stream().findFirst().orElse(new Documento_generico_rigaBulk());
+                docRigaWizard.setTerzo(Optional.ofNullable(docRigaWizard.getTerzo()).orElse(wizard.getTerzoWizardBulk()));
+                docRigaWizard.setModalita_pagamento(Optional.ofNullable(docRigaWizard.getModalita_pagamento()).orElse(Optional.ofNullable(wizard.getModalitaPagamentoWizardBulk()).map(Modalita_pagamentoBulk::getRif_modalita_pagamento).orElse(null)));
+                docRigaWizard.setBanca(Optional.ofNullable(docRigaWizard.getBanca()).orElse(wizard.getBancaWizardBulk()));
+                docRigaWizard.setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO.equals(wizard.getTi_associato_manrev())?CompensoBulk.ASSOCIATO_MANREV:CompensoBulk.NON_ASSOCIATO_MANREV);
+
+                docGenerico_creaDocumentoGenericoRiga( userContext, docRigaWizard, documentoGenericoBulk, obbligazioneWizard );
+            }
+
+            //Aggiorno il totale sul documento
+            documentoGenericoBulk.setIm_totale(documentoGenericoBulk.getDocumento_generico_dettColl().stream().map(Documento_generico_rigaBulk::getIm_riga).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+            return (Documento_genericoBulk)this.creaConBulk( userContext, documentoGenericoBulk );
+        } catch (Exception e)	{
+            throw handleException(e);
+        }
+    }
+
+    /**
+     * Metodo per creare un documento generico di entrata partendo da una lista di accertamenti
+     *
+     * @param userContext
+     * @param wizard
+     * @param accertamentiColl
+     * @return
+     * @throws ComponentException
+     */
+    public Documento_genericoBulk creaDocumentoGenericoDaAccertamenti(UserContext userContext, DocumentoGenericoWizardBulk wizard, java.util.Collection<AccertamentoWizard> accertamentiColl) throws ComponentException {
+        try {
+            wizard.setTi_entrate_spese(Documento_genericoBulk.ENTRATE);
+            wizard.setTipo_documento(Optional.ofNullable(wizard.getTipo_documento()).orElse(new Tipo_documento_ammBulk( Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E)));
+            wizard.setDs_documento_generico(Optional.ofNullable(wizard.getDs_documento_generico()).orElse("DOCUMENTO AUTOMATICO CREATO DA ACCERTAMENTI"));
+
+            Documento_genericoBulk documentoGenericoBulk = docGenerico_creaDocumentoGenerico( userContext, wizard);
+
+            Documento_generico_rigaBulk docRigaWizard = wizard.getDocumento_generico_dettColl().stream().findFirst().orElse(new Documento_generico_rigaBulk());
+            docRigaWizard.setTerzo(Optional.ofNullable(docRigaWizard.getTerzo()).orElse(wizard.getTerzoWizardBulk()));
+            docRigaWizard.setModalita_pagamento(Optional.ofNullable(docRigaWizard.getModalita_pagamento()).orElse(Optional.ofNullable(wizard.getModalitaPagamentoWizardBulk()).map(Modalita_pagamentoBulk::getRif_modalita_pagamento).orElse(null)));
+            docRigaWizard.setBanca(Optional.ofNullable(docRigaWizard.getBanca()).orElse(wizard.getBancaWizardBulk()));
+            docRigaWizard.setTi_associato_manrev(Documento_genericoBulk.ASSOCIATO_A_MANDATO.equals(wizard.getTi_associato_manrev())?CompensoBulk.ASSOCIATO_MANREV:CompensoBulk.NON_ASSOCIATO_MANREV);
+
+            for ( Iterator<AccertamentoWizard> i = accertamentiColl.iterator(); i.hasNext(); )
+                docGenerico_creaDocumentoGenericoRiga( userContext, docRigaWizard, documentoGenericoBulk, i.next());
+
+            //Aggiorno il totale sul documento
+            documentoGenericoBulk.setIm_totale(documentoGenericoBulk.getDocumento_generico_dettColl().stream().map(Documento_generico_rigaBulk::getIm_riga).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+            return (Documento_genericoBulk)this.creaConBulk( userContext, documentoGenericoBulk );
+        } catch (Exception e)	{
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *  creazione documento amm.generico per mandato automatico
+     *    PreCondition:
+     *      E' stata generata la richiesta di creazione di un documento generico di spesa di tipo TRASF_S a partire
+     *      da un mandato automatico
+     *    PostCondition:
+     *      Un documento viene creato con un numero di righe pari al numero di impegni selezionati dall'utente di tipo
+     *      uguale al tipo del mandato(competenza o residuo)
+     *
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param wizard <code>MandatoAutomaticoWizardBulk</code> il mandato automatico
+     *
+     * @return documento <code>Documento_genericoBulk</code> il documento generico di spesa creato
+     */
+    private Documento_genericoBulk docGenerico_creaDocumentoGenerico (UserContext userContext, DocumentoGenericoWizardBulk wizard) throws ComponentException {
+        try {
+            Documento_genericoBulk documento = new Documento_genericoBulk();
+            documento.setToBeCreated();
+            documento.setUser(wizard.getUser());
+            documento.setTi_entrate_spese(wizard.getTi_entrate_spese());
+            documento.setEsercizio(wizard.getEsercizio());
+            documento.setCd_cds(wizard.getCd_cds());
+            documento.setCd_unita_organizzativa(wizard.getCd_unita_organizzativa());
+            documento.setCd_cds_origine(wizard.getCd_cds_origine());
+            documento.setCd_uo_origine(wizard.getCd_uo_origine());
+            documento.setTipo_documento(wizard.getTipo_documento());
+            documento.setTi_istituz_commerc(wizard.getTi_istituz_commerc());
+            documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
+            if (documento.getTipoDocumentoEnum().isScritturaEconomicaRequired()) {
+                documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
+                documento.setStato_coan(Documento_genericoBulk.NON_CONTABILIZZATO_IN_COAN);
+            } else {
+                documento.setStato_coge(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COGE);
+                documento.setStato_coan(Documento_genericoBulk.DA_NON_REGISTRARE_IN_COAN);
+            }
+            documento.setStato_pagamento_fondo_eco(Documento_genericoBulk.NO_FONDO_ECO);
+            documento.setTi_associato_manrev(Optional.ofNullable(wizard.getTi_associato_manrev()).orElse(Documento_genericoBulk.NON_ASSOCIATO_A_MANDATO));
+            documento.setData_registrazione(wizard.getData_registrazione());
+            documento.setDt_scadenza(wizard.getData_registrazione());
+            documento.setDt_a_competenza_coge(wizard.getDt_a_competenza_coge());
+            documento.setDt_da_competenza_coge(wizard.getDt_da_competenza_coge());
+            documento.setDs_documento_generico(wizard.getDs_documento_generico());
+
+            DivisaBulk divisa = new DivisaBulk( Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), "*", Configurazione_cnrBulk.PK_CD_DIVISA,Configurazione_cnrBulk.SK_EURO ));
+            documento.setValuta( divisa );
+            documento.setCambio( new BigDecimal(1));
+
+            return documento;
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *  creazione riga di documento amm.generico di spesa per mandato automatico da impegno
+     *    PreCondition:
+     *      E' stata generata la richiesta di creazione di una riga di documento generico di spesa di tipo TRASF_S
+     *      a partire da un impegno selezionato dall'utente nel mandato di accreditamento
+     *    PostCondition:
+     *      Un riga di documento viene creata con i dati relativi al terzo (codice terzo, coordinate bancarie, modalità di
+     *      pagamento) derivati da quelli che l'utente ha specificato nel mandato e i dati relativi all'importo derivati dall'impegno selezionato
+     *      dall'utente nel mandato; viene inoltre aggiornato l'importo associato ai documenti amministrativi della scadenza di obbligazione
+     *      che rappresenta l'impegno( scadenza.im_associato_doc_amm = scadenza.im_associato_doc_amm + documento_riga.im_riga)
+     *
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param documento <code>Documento_genericoBulk</code> il documento generico di spesa
+     * @param impacc <code>V_obbligazioneBulk</code> o <code>Accertamento_scadenzarioBulk</code>l'impegno o accertamento selezionato dall'utente nel mandato di accreditamento
+     *
+     * @return riga <code>Documento_generico_rigaBulk</code> la riga del documento generico di spesa creata
+     */
+
+    private Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserContext userContext, Documento_generico_rigaBulk wizard, Documento_genericoBulk documento, Object impacc) throws ComponentException {
+        try {
+            Documento_generico_rigaBulk riga = new Documento_generico_rigaBulk();
+            riga.setToBeCreated();
+            riga.setUser( documento.getUser() );
+            riga.setCd_cds( documento.getCd_cds());
+            riga.setCd_unita_organizzativa( documento.getCd_unita_organizzativa());
+            riga.setCd_tipo_documento_amm( documento.getCd_tipo_documento_amm() );
+            riga.setStato_cofi( Documento_generico_rigaBulk.STATO_CONTABILIZZATO );
+            riga.setDt_da_competenza_coge( Optional.ofNullable(documento.getDt_da_competenza_coge()).orElse(documento.getData_registrazione()));
+            riga.setDt_a_competenza_coge( Optional.ofNullable(documento.getDt_a_competenza_coge()).orElse(documento.getData_registrazione()));
+
+            if (impacc instanceof ObbligazioneWizard) {
+                ObbligazioneWizard impegnoWizard = (ObbligazioneWizard)impacc;
+                V_obbligazioneBulk impegno = impegnoWizard.getObbligazioneBulk();
+
+                riga.setTerzo(Optional.ofNullable(Optional.ofNullable(impegnoWizard.getTerzoWizardBulk()).orElse(wizard.getTerzo())).orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Terzo da associare al documento generico passivo non individuato.")));
+                riga.setModalita_pagamento(Optional.ofNullable(Optional.ofNullable(impegnoWizard.getModalitaPagamentoWizardBulk()).map(Modalita_pagamentoBulk::getRif_modalita_pagamento).orElse(wizard.getModalita_pagamento())).orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Modalità di pagamento da associare al documento generico passivo non individuata.")));
+                riga.setBanca(Optional.ofNullable(Optional.ofNullable(impegnoWizard.getBancaWizardBulk()).orElse(wizard.getBanca())).orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Modalità di pagamento Banca da associare al documento generico passivo non individuata.")));
+
+                riga.setTerzo_uo_cds(wizard.getTerzo_uo_cds());
+                riga.setModalita_pagamento_uo_cds(wizard.getModalita_pagamento_uo_cds());
+                riga.setBanca_uo_cds(wizard.getBanca_uo_cds());
+
+                riga.setDs_riga(Optional.ofNullable(impegnoWizard.getDescrizioneRigaDocumentoWizard()).orElse(documento.getDs_documento_generico()));
+
+                riga.setIm_riga(impegno.getIm_da_trasferire());;
+                riga.setIm_riga_divisa(impegno.getIm_da_trasferire());
+
+                Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) getHome( userContext, Obbligazione_scadenzarioBulk.class ).findByPrimaryKey( new Obbligazione_scadenzarioBulk( impegno.getCd_cds(), impegno.getEsercizio(), impegno.getEsercizio_originale(), impegno.getPg_obbligazione(), impegno.getPg_obbligazione_scadenzario()));
+                getHomeCache(userContext).fetchAll(userContext);
+                riga.setObbligazione_scadenziario( scadenza );
+
+                //aggiorno im_assciato_doc_amm della scadenza
+                lockBulk( userContext, scadenza.getObbligazione());
+
+                scadenza.setIm_associato_doc_amm( scadenza.getIm_associato_doc_amm().add(riga.getIm_riga()));
+                updateBulk( userContext, scadenza );
+            } else {
+                AccertamentoWizard accertamentoWizard = (AccertamentoWizard) impacc;
+
+                Accertamento_scadenzarioBulk accertamentoScadenzario = accertamentoWizard.getAccertamentoScadenzarioBulk();
+
+                Accertamento_scadenzarioBulk accertamentoScadenzarioDB = (Accertamento_scadenzarioBulk)getHome(userContext,Accertamento_scadenzarioBulk.class).findAndLock(accertamentoScadenzario);
+                AccertamentoBulk accertamentoDB = (AccertamentoBulk)getHome(userContext,AccertamentoBulk.class).findAndLock(accertamentoScadenzario.getAccertamento());
+                getHomeCache(userContext).fetchAll(userContext);
+                if (accertamentoScadenzarioDB.getIm_scadenza().compareTo(accertamentoScadenzario.getIm_scadenza())!=0 ||
+                        accertamentoScadenzarioDB.getIm_associato_doc_amm().compareTo(accertamentoScadenzario.getIm_associato_doc_amm())!= 0 ||
+                        accertamentoScadenzarioDB.getIm_associato_doc_contabile().compareTo(accertamentoScadenzario.getIm_associato_doc_contabile()) !=0 )
+                    throw new ApplicationException("Operazione non possibile! E' stata utilizzata da un altro utente la scadenza nr." + accertamentoScadenzario.getPg_accertamento_scadenzario() + " dell'accertamento " + accertamentoScadenzario.getEsercizio_originale() + "/" + accertamentoScadenzario.getPg_accertamento());
+
+                riga.setTerzo(Optional.ofNullable(Optional.ofNullable(accertamentoWizard.getTerzoWizardBulk()).orElse(wizard.getTerzo())).orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Terzo da associare al documento generico passivo non individuato.")));
+                riga.setModalita_pagamento(Optional.ofNullable(Optional.ofNullable(accertamentoWizard.getModalitaPagamentoWizardBulk()).map(Modalita_pagamentoBulk::getRif_modalita_pagamento).orElse(wizard.getModalita_pagamento())).orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Modalità di pagamento da associare al documento generico passivo non individuata.")));
+                riga.setBanca(Optional.ofNullable(Optional.ofNullable(accertamentoWizard.getBancaWizardBulk()).orElse(wizard.getBanca())).orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Modalità di pagamento Banca da associare al documento generico passivo non individuata.")));
+
+                riga.setTerzo_uo_cds(wizard.getTerzo_uo_cds());
+                riga.setModalita_pagamento_uo_cds(wizard.getModalita_pagamento_uo_cds());
+                riga.setBanca_uo_cds(wizard.getBanca_uo_cds());
+
+                riga.setDs_riga(Optional.ofNullable(accertamentoWizard.getDescrizioneRigaDocumentoWizard()).orElse(documento.getDs_documento_generico()));
+
+                riga.setIm_riga(accertamentoScadenzarioDB.getIm_scadenza());
+                riga.setIm_riga_divisa(accertamentoScadenzarioDB.getIm_scadenza());
+                riga.setAccertamento_scadenziario(accertamentoScadenzarioDB);
+
+                //aggiorno im_assciato_doc_amm della scadenza
+                accertamentoScadenzarioDB.setIm_associato_doc_amm( accertamentoScadenzario.getIm_associato_doc_amm().add(riga.getIm_riga()));
+                updateBulk( userContext, accertamentoScadenzarioDB );
+            }
+
+            AnagraficoBulk anagrafico = (AnagraficoBulk) getHome( userContext, AnagraficoBulk.class ).findByPrimaryKey( riga.getTerzo().getAnagrafico());
+            riga.getTerzo().setAnagrafico( anagrafico );
+            riga.setRagione_sociale( anagrafico.getRagione_sociale());
+            riga.setNome( anagrafico.getNome());
+            riga.setCognome( anagrafico.getCognome());
+            riga.setCodice_fiscale( anagrafico.getCodice_fiscale());
+            riga.setPartita_iva( anagrafico.getPartita_iva());
+            riga.setTi_associato_manrev(Optional.ofNullable(wizard.getTi_associato_manrev()).orElse(CompensoBulk.NON_ASSOCIATO_MANREV));
+
+            riga.setDocumento_generico( documento );
+            documento.getDocumento_generico_dettColl().add(  riga );
+
+            return riga;
+        }
+        catch ( Exception e )
+        {
+            throw handleException( e )	;
+        }
+    }
 }

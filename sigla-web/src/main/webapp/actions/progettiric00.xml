@@ -148,7 +148,7 @@
   <businessProcess
           name="ConsProgEcoVoceGaeBP" className="it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeBP">
     <forward name="default" path="/progettiric00/cons_prog_eco_voci_gae.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
     <init-param name="defaultAction" value="ConsProgEcoVociGaeAction"/>
   </businessProcess>
@@ -156,8 +156,8 @@
   <businessProcess
           name="ConsProgEcoVoceGaeDettBP" className="it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeDettBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"/>
-    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.V_saldi_piano_econom_progcdrBulk"/>
+    <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ConsProgEcoVociGaeComponentSession"/>
     <init-param name="defaultAction" value="ConsultazioniAction"/>
     <init-param name="multiSelezione" value="Y" />
   </businessProcess>

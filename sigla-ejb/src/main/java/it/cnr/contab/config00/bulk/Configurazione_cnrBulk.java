@@ -22,6 +22,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_SDI = "SDI";
     public final static String PK_EMAIL_PEC = "EMAIL_PEC";
     public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
+    public final static String PK_BLOCCO_DETRAZIONI = "BLOCCO_DETRAZIONI";
     /**
      * VAL01 Y -> presente l'economico patrimoniale parallela, N -> presente l'economico patrimoniale parallela
      * VAL02 Y -> blocco scritture proposte, N -> è possibile modificare le scritture
@@ -30,12 +31,16 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_TIPO_ECONOMICO_PATRIMONIALE = "TIPO_ECONOMICO_PATRIMONIALE";
     public final static String SK_ASSOCIAZIONE_CONTI = "ASSOCIAZIONE_CONTI";
 
+    public final static String PK_TRATTAMENTO_SPECIALE = "TIPO_TRATTAMENTO_SPECIALE";
+    public final static String SK_TRATTAMENTO_STIPENDI = "TRATTAMENTO_STIPENDI";
+
     public final static String SK_IMPUTAZIONE_MANUALE = "IMPUTAZIONE_MANUALE";
 
     public final static String SK_CODICE_DIVERSI_PGIRO = "CODICE_DIVERSI_PGIRO";
     public final static String SK_CODICE_DIVERSI_IMPEGNI = "CODICE_DIVERSI_IMPEGNI";
     public final static String PK_OBBLIGATORIETA_ORDINI = "OBBLIGATORIETA_ORDINI";
     public final static String PK_PARAMETRI_ORDINI = "PARAMETRI_ORDINI";
+    public final static String SK_DIVERSI_STIPENDI = "DIVERSI_STIPENDI";
 
     public final static String PK_RIDUZIONE_CUNEO_DL_3_2020 = "RIDUZIONE_CUNEO_DL_3_2020";
     public final static String SK_DATA_INIZIO = "DATA_INIZIO";
@@ -159,6 +164,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
     public final static String PK_CORI_SPECIALE = "CORI_SPECIALE";
     public final static String SK_IVA = "IVA";
+    public final static String SK_CORI_STIPENDI_EXTRA = "CORI_STIPENDI_EXTRA";
 
     public final static String PK_VOCEEP_SPECIALE = "VOCEEP_SPECIALE";
     public final static String SK_IVA_CREDITO = "IVA_CREDITO";
@@ -167,6 +173,9 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
     public final static String PK_VARIAZIONE_AUTOMATICA = "VARIAZIONE_AUTOMATICA";
     public final static String SK_SPESA = "SPESA";
+
+    public final static String PK_STIPENDI = "STIPENDI";
+    public final static String SK_CODICE_BOLLO = "CODICE_BOLLO";
 
     public Configurazione_cnrBulk() {
         super();

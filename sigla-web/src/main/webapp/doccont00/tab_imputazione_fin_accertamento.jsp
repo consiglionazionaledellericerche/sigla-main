@@ -23,7 +23,7 @@
 					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
 					bp.getParentRoot().isBootstrap() ?"Conferma" : null,
 					"javascript:submitForm('doCaricaLineeAttivita')",
-					"btn-secondary btn-outline-secondary btn-title",
+					"btn-outline-secondary btn-title",
 					accertamento.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
 					bp.getParentRoot().isBootstrap()); %>
 		</td>
@@ -40,7 +40,7 @@
 						bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
 						bp.getParentRoot().isBootstrap() ?"Conferma" : null,
 						"javascript:submitForm('doConfermaLineeAttivita')", 
-						"btn-secondary btn-outline-secondary btn-title",
+						"btn-outline-secondary btn-title",
 						accertamento.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
 						bp.getParentRoot().isBootstrap()); %>
 		</td>

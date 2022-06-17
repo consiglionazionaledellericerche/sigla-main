@@ -6475,11 +6475,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         return pg_stampa;
     }
 
-    public byte[] lanciaStampa(
-            UserContext userContext,
-            Long pg_stampa) throws PersistencyException, ComponentException {
+    public byte[] lanciaStampa(UserContext userContext, Long pg_stampa) throws PersistencyException, ComponentException {
         try {
-
             File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + getOutputFileName("fatturaattiva_ncd.jasper", pg_stampa));
             Print_spoolerBulk print = new Print_spoolerBulk();
             print.setPgStampa(pg_stampa);

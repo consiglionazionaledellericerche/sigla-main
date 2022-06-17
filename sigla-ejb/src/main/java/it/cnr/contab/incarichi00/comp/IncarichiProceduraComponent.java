@@ -938,7 +938,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 										contrattiService.copyNode(storageObject, contrattiService.getStorageObjectByPath(alternativePath, true));
 									} catch (StorageException e) {
 									}
-								allegato.setCms_node_ref(storageObject.getKey());
+								allegato.setCms_node_ref(Optional.ofNullable(storageObject.getPropertyValue("alfcmis:nodeRef")).map(String::valueOf).orElse(storageObject.getKey()));
 								allegato.setToBeUpdated();
 								updateBulk(userContext, allegato);
 							} catch (StorageException e) {

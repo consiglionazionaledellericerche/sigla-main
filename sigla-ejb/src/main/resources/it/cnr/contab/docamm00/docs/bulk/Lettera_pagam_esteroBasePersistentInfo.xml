@@ -185,8 +185,23 @@
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dt_cancellazione"
 			sqlTypeName="TIMESTAMP"
-			columnSize="7" />		
-																																			
+			columnSize="7" />
+		<columnMapping
+			columnName="ISTRUZIONI_SPECIALI_1"
+			propertyName="istruzioni_speciali_1"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="ISTRUZIONI_SPECIALI_2"
+			propertyName="istruzioni_speciali_2"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="ISTRUZIONI_SPECIALI_3"
+			propertyName="istruzioni_speciali_3"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -247,5 +262,11 @@
 	<persistentProperty
 		name="commissioni_spese_estere"/>
 	<persistentProperty
-		name="dt_cancellazione"/>	
+		name="dt_cancellazione"/>
+	<persistentProperty
+		name="istruzioni_speciali_1"/>
+	<persistentProperty
+		name="istruzioni_speciali_2"/>
+	<persistentProperty
+		name="istruzioni_speciali_3"/>
 </SQLPersistentInfo>

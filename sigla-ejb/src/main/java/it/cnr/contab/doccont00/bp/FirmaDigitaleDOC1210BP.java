@@ -190,6 +190,9 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                 fields.add(valorizzaField(pdAcroForm, "CONTO_PROVVISORIO_"+lettera.getAmmontare_debito(), lettera.getConto_debito(), false));
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false));
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false));
+				fields.add(valorizzaField(pdAcroForm, "ISTRUZIONI_SPECIALI_1", Optional.ofNullable(lettera.getIstruzioni_speciali_1()).orElse(""), true));
+				fields.add(valorizzaField(pdAcroForm, "ISTRUZIONI_SPECIALI_2", Optional.ofNullable(lettera.getIstruzioni_speciali_2()).orElse(""), true));
+				fields.add(valorizzaField(pdAcroForm, "ISTRUZIONI_SPECIALI_3", Optional.ofNullable(lettera.getIstruzioni_speciali_3()).orElse(""), true));
 
                 try {
 					pdAcroForm.flatten(fields.stream()

@@ -661,6 +661,7 @@
 				inputType="SEARCHTOOL"
 				label="Progetto"
 				formName="form_searchtool_progetto"
+                VIEWBusinessProcessName="TestataProgettiRicercaBP"
 				readonlyProperty="ROProgetto"
 				enabledOnInsert="true"
 		      	enabledOnEdit="true"

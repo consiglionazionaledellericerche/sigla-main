@@ -176,6 +176,11 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+			name="stampaBollaScarico"
+			property="stampaBollaScarico"
+			inputType="TEXT"
+			label="Stampa Bolla di Scarico" />
 	<columnSet
 		name="bollaScaricoforPrint">
 		<columnFieldProperty
@@ -198,6 +203,8 @@
 			name="cdMagazzinoDest" />
 		<columnFieldProperty
 			name="dsMagazzinoDest" />
+		<columnFieldProperty name="stampaBollaScarico" label="Bolla di Scarico"/>
+
 	</columnSet>
 	<form
 		name="searchtool">

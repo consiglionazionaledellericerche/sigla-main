@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+			name="findUnitaOperativaOrd"
+			property="unitaOperativaAbilitata"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Unità Operativa" />
+	<fieldProperty
+			name="findMagazzino"
+			property="magazzinoAbilitato"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="Magazzino" />
+	<fieldProperty
+			name="findDaFornitore"
+			property="daFornitore"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="false"
+			completeOnSave="false"
+			CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+			inputCssClass=""
+			label="Da Fornitore"
+			nullable="false"/>
+	<fieldProperty
+			name="findAFornitore"
+			property="aFornitore"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="false"
+			completeOnSave="false"
+			CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+			inputCssClass=""
+			label="A Fornitore"
+			nullable="false"/>
+
+	<fieldProperty
+			name="findDaBeneServizio"
+			property="daBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="Da Articolo" />
+
+	<fieldProperty
+			name="findABeneServizio"
+			property="aBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			label="A Articolo" />
+
+	<fieldProperty
+		name="daDataMovimento"
+		property="daDataMovimento"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		command="doOnDataInizioMovimentoChange"
+		label="Da Data Movimento"/>
+	<fieldProperty
+			name="aDataMovimento"
+			property="aDataMovimento"
+			inputType="TEXT"
+			formatName="date_short"
+			maxLength="10"
+			inputSize="10"
+			nullable="false"
+			command="doOnDataFineMovimentoChange"
+			label="A Data Movimento"/>
+	<fieldProperty
+			name="daDataCompetenza"
+			property="daDataCompetenza"
+			inputType="TEXT"
+			formatName="date_short"
+			maxLength="10"
+			inputSize="10"
+			nullable="false"
+			command="doOnDataInizioCompotenzaChange"
+			label="Da Data Competenza"/>
+	<fieldProperty
+			name="aDataCompetenza"
+			property="aDataCompetenza"
+			inputType="TEXT"
+			formatName="date_short"
+			maxLength="10"
+			inputSize="10"
+			nullable="false"
+			command="doOnDataFineCompotenzaChange"
+			label="A Data Competenza"/>
+
+	<formFieldProperty name="daDataMovimento" />
+	<formFieldProperty name="aDataMovimento" />
+	<formFieldProperty name="daDataCompetenza" />
+	<formFieldProperty name="aDataCompetenza" />
+
+	<formFieldProperty name="findUnitaOperativaOrd"/>
+	<formFieldProperty name="findMagazzino" />
+	<formFieldProperty name="findDaBeneServizio" />
+	<formFieldProperty name="findABeneServizio" />
+	<formFieldProperty name="findDaFornitore" />
+	<formFieldProperty name="findAFornitore" />
+
+	<printForm
+		name="/ordmag/partitatio_magazzino.jasper">
+		<printFieldProperty
+			name="daDataMovimento"
+			parameterPosition="0"
+			parameterType="DATE"
+			paramNameJR="daDataMovimento"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="aDataMovimento"
+				parameterPosition="1"
+				parameterType="DATE"
+				paramNameJR="aDataMOvimento"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="daDataCompentenza"
+				parameterPosition="2"
+				parameterType="DATE"
+				paramNameJR="daDataCompentenza"
+				paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+				name="aDataCompentenza"
+				parameterPosition="3"
+				parameterType="DATE"
+				paramNameJR="aDataCompentenza"
+				paramTypeJR="java.lang.Date"/>
+		<printFieldProperty
+				name="cdMagazzinoForPrint"
+				parameterPosition="4"
+				parameterType="STRING"
+				paramNameJR="cdMagazzino"
+				paramTypeJR="java.lang.String"/>
+
+	</printForm>
+</bulkInfo>

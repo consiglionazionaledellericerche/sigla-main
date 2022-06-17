@@ -93,7 +93,7 @@ public class CRUDScadenzeController extends it.cnr.jada.util.action.SimpleDetail
                     !(isInputReadonly() || getDetails().isEmpty() || ((CRUDObbligazioneBP) getParentController()).isSearching()) ? command : null,
                     true,
                     "Raggruppa",
-                    "btn-sm btn-secondary btn-outline-secondary btn-title",
+                    "btn-sm btn-outline-secondary btn-title",
                     HttpActionContext.isFromBootstrap(context));
         }
         super.closeButtonGROUPToolbar(context);
