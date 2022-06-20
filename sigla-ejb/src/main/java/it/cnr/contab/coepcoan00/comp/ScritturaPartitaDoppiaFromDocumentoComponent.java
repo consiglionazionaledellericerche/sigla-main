@@ -20,6 +20,22 @@ package it.cnr.contab.coepcoan00.comp;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
+import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.ejb.AnticipoComponentSession;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -28,8 +44,14 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent {
@@ -138,5 +160,146 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         } catch (RemoteException e) {
             throw handleException(e);
         }
+    }
+
+    public void loadAllScritture(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException {
+        List<IDocumentoCogeBulk> allDocuments = new ArrayList<>();
+
+        {
+            PersistentHome anticipoHome = getHome(userContext, AnticipoBulk.class);
+            SQLBuilder sql = anticipoHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            anticipoHome.fetchAll(sql).stream().forEach(anticipo->{
+                try {
+                    AnticipoComponentSession component = (AnticipoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_AnticipoComponentSession", AnticipoComponentSession.class);
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) anticipo));
+                } catch (ComponentException | RemoteException e) {
+                throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome missioneHome = getHome(userContext, MissioneBulk.class);
+            SQLBuilder sql = missioneHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            missioneHome.fetchAll(sql).stream().forEach(missione->{
+                try {
+                    MissioneComponentSession component = (MissioneComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession", MissioneComponentSession.class);
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) missione));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome compensoHome = getHome(userContext, CompensoBulk.class);
+            SQLBuilder sql = compensoHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            compensoHome.fetchAll(sql).stream().forEach(compenso->{
+                try {
+                    CompensoComponentSession component = Utility.createCompensoComponentSession();
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) compenso));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome docgenHome = getHome(userContext, Documento_genericoBulk.class);
+            SQLBuilder sql = docgenHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            docgenHome.fetchAll(sql).stream().forEach(docgen->{
+                try {
+                    DocumentoGenericoComponentSession component = Utility.createDocumentoGenericoComponentSession();
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) docgen));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome fatattHome = getHome(userContext, Fattura_attivaBulk.class);
+            SQLBuilder sql = fatattHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            fatattHome.fetchAll(sql).stream().forEach(fatatt->{
+                try {
+                    FatturaAttivaSingolaComponentSession component = Utility.createFatturaAttivaSingolaComponentSession();
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) fatatt));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Fattura_passivaBulk.class);
+            SQLBuilder sql = fatpasHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            fatpasHome.fetchAll(sql).stream().forEach(fatpas->{
+                try {
+                    FatturaPassivaComponentSession component = Utility.createFatturaPassivaComponentSession();
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) fatpas));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome mandatoHome = getHome(userContext, MandatoBulk.class);
+            SQLBuilder sql = mandatoHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            mandatoHome.fetchAll(sql).stream().forEach(mandato->{
+                try {
+                    MandatoComponentSession component = Utility.createMandatoComponentSession();
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) mandato));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+        {
+            PersistentHome reversaleHome = getHome(userContext, ReversaleBulk.class);
+            SQLBuilder sql = reversaleHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            reversaleHome.fetchAll(sql).stream().forEach(reversale->{
+                try {
+                    ReversaleComponentSession component = Utility.createReversaleComponentSession();
+                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) reversale));
+                } catch (ComponentException | RemoteException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        }
+
+        allDocuments.stream().sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)).forEach(el->{
+            try {
+                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, el);
+                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk =
+                        Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                                .proposeScritturaPartitaDoppia(userContext, el));
+                optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
+                    //Elimino vecchia scrittura
+                    try {
+                        optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
+                        this.removeScrittura(userContext, oldScrittura);
+                    } catch (ComponentException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                });
+                //Ricreo
+                if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
+                    super.creaConBulk(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+            } catch (ComponentException | RemoteException e) {
+                throw new DetailedRuntimeException(e);
+            }
+        });
+
     }
 }
