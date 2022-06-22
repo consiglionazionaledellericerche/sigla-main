@@ -108,7 +108,7 @@
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PEIODO MONITORAGGIO: " + $F{mese}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="19" splitType="Stretch">
