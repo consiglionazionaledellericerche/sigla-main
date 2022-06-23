@@ -25,8 +25,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.SendMail;
 import org.springframework.util.StringUtils;
 
 import javax.activation.DataHandler;
@@ -370,6 +372,23 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
+	private String getMailAddress(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
+		UtenteBulk utente = new UtenteBulk(fattura.getUtcr());
+		try {
+			utente = (UtenteBulk) getHome(userContext, UtenteBulk.class).findByPrimaryKey(utente);
+			if (utente != null){
+				if (utente.getCd_utente_uid() != null){
+					return utente.getCd_utente_uid()+"@cnr.it";
+				}
+			}
+			String eMailReferente = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_MAIL_REFERENTE_TECNICO);
+			return eMailReferente;
+		} catch (PersistencyException | RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+
 	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws ComponentException {
 		try {
 
@@ -405,8 +424,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				}
 
 				ContattiTrasmittenteType contattiTrasmittenteType = factory.createContattiTrasmittenteType();
-				String eMailReferente = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_MAIL_REFERENTE_TECNICO);
-				contattiTrasmittenteType.setEmail(eMailReferente);
+				contattiTrasmittenteType.setEmail(getMailAddress(userContext, fattura));
 				String telefonoReferente = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_TELEFONO_REFERENTE_TECNICO);
 				contattiTrasmittenteType.setTelefono(telefonoReferente);
 				datiTrasmissione.setContattiTrasmittente(contattiTrasmittenteType);
