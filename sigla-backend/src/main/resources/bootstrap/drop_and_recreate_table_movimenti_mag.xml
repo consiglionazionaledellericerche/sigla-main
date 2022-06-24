@@ -209,22 +209,6 @@
     <changeSet author="gianfranco.gasparro" id="recreate_constraint_transito_beni_ordini_fk00">
         <addForeignKeyConstraint baseColumnNames="id_movimenti_mag" baseTableName="transito_beni_ordini" constraintName="transito_beni_ordini_fk00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_movimento" referencedTableName="movimenti_mag"/>
     </changeSet>
-    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk01">
-        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
-                                   constraintName="movimenti_mag_fk01"/>
-    </changeSet>
-    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk04">
-        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
-                                   constraintName="movimenti_mag_fk04"/>
-    </changeSet>
-    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk05">
-        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
-                                   constraintName="movimenti_mag_fk05"/>
-    </changeSet>
-    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk07">
-        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
-                                   constraintName="movimenti_mag_fk07"/>
-    </changeSet>
     <changeSet id="drop-column-movimenti_mag-cd_cds_ordine" author="gianfranco.gasparro">
         <dropColumn tableName="movimenti_mag" columnName="cd_cds_ordine"></dropColumn>
     </changeSet>
