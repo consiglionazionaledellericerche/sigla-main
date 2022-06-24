@@ -1,5 +1,37 @@
-## Release 6.4.38  -- _May 27, 2022_ 
+## Release 6.4.42  -- _June 04, 2022_ 
 **Changes**
+
+>**Remove Database user on create VIEWS and PROCEDURE for Oracle**
+>
+>[088ed25d1b2dc63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/088ed25d1b2dc63) marco.spasiano *June 04, 2022*
+
+
+## Release 6.4.41  -- _June 03, 2022_ 
+**Changes**
+
+>**Fix**
+>
+>[7880e362685da5b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7880e362685da5b) gianfranco.gasparro *June 03, 2022*
+
+
+## Release 6.4.40  -- _June 03, 2022_ 
+**Changes**
+
+>**Corretto completamento dati pagamento fattura elettronica escludendo le modalità non valide**
+>
+>[5d23aa3355e0b2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d23aa3355e0b2e) gianfranco.gasparro *June 03, 2022*
+
+>**Fix anomalia annullamento riscontro mandato**
+>
+>[bd6974da9796889](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd6974da9796889) gianfranco.gasparro *May 20, 2022*
+
+
+## Release 6.4.39  -- _June 03, 2022_ 
+**Changes**
+
+>**Conditioned the integration with PAGOPA to the "pagopa" spring profile**
+>
+>[1117518c5f8ce3f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1117518c5f8ce3f) marco.spasiano *June 03, 2022*
 
 >**Aggiunti i dettagli del mandato al messaggio "Impossibile generare il flusso, ripartizione per siope errata"**
 >
@@ -48,14 +80,6 @@
 >**FIX jackson-databind to version 2.13.0**
 >
 >[7a678e1ee0859ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a678e1ee0859ec) marco.spasiano *May 24, 2022*
-
-
-## Release 6.4.33  -- _May 20, 2022_ 
-**Changes**
-
->**Fix anomalia annullamento riscontro mandato**
->
->[bd6974da9796889](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd6974da9796889) gianfranco.gasparro *May 20, 2022*
 
 
 ## Release 6.4.32  -- _May 20, 2022_ 

@@ -5123,6 +5123,63 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione-cnr-remove-imputazione-manuale-voce-ep">
+        <sql>
+            DELETE FROM configurazione_cnr
+            WHERE esercizio = 0
+            AND cd_unita_funzionale = '*'
+            AND cd_chiave_primaria = 'ECONOMICO_PATRIMONIALE'
+            AND cd_chiave_secondaria = 'IMPUTAZIONE_MANUALE';
+        </sql>
+    </changeSet>
+    <changeSet id="fix_configurazione_cnr_gestione_ordini" author="gianfranco.gasparro">
+        <delete tableName="configurazione_cnr">
+            <where>cd_chiave_primaria='ORDINI' AND CD_CHIAVE_SECONDARIA = 'GESTIONE'</where>
+        </delete>
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="ORDINI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="GESTIONE"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <include file="bootstrap/modify_tipo_movimento_mag.xml"/>
+    <changeSet author="sigla" id="1516802834820-144">
+        <addDefaultValue tableName="tipo_movimento_mag" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_movimento_mag" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_movimento_mag.csv" quotchar="&quot;" separator="," tableName="tipo_movimento_mag"/>
+
+        <dropDefaultValue tableName="tipo_movimento_mag" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_movimento_mag" columnName="duva"/>
+    </changeSet>
+    <include file="bootstrap/drop_not_null_constraint_magazzino.xml"/>
+    <changeSet id="drop-column-ordine_acq-ti_istituz_commerc" author="gianfranco.gasparro">
+        <dropColumn tableName="ordine_acq" columnName="ti_istituz_commerc"></dropColumn>
+    </changeSet>
+    <changeSet id="add-tipo_documento_amm-ordini" author="gianfranco.gasparro">
+        <insert tableName="tipo_documento_amm ">
+            <column name="CD_TIPO_DOCUMENTO_AMM" type="STRING" value="ORDINE"/>
+            <column name="DS_TIPO_DOCUMENTO_AMM" type="STRING" value="GESTIONE ORDINI"/>
+            <column name="TI_ENTRATA_SPESA" type="STRING" value="S"/>
+            <column name="FL_DOC_GENERICO" type="STRING" value="N"/>
+            <column name="FL_UTILIZZO_DOC_GENERICO" type="STRING" value="N"/>
+            <column name="FL_SOLO_PARTITA_GIRO" type="STRING" value="N"/>
+            <column name="FL_MANREV_UTENTE" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <include file="bootstrap/drop_and_recreate_table_movimenti_mag.xml"/>
     <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_limite_giorni_durata_progetto">
         <addColumn tableName="tipo_finanziamento">
             <column name="limite_giorni_durata_progetto" remarks="Limite in giorni della durata di un progetto (anno=365 giorni)" type="BIGINT"/>

@@ -191,22 +191,22 @@
         <formFieldProperty
               name="esercizio_originale" 
               enabledOnSearch="true"
-			  inputSize="5"
-			  inputCssClass="w-10"/>
+			  inputSize="4"
+			  inputCssClass="w-4"/>
         <formFieldProperty
               name="pg_obbligazione" 
               enabledOnSearch="true"
 			  inputSize="10"
-			  inputCssClass="w-20"/>
+			  inputCssClass="w-10"/>
         <formFieldProperty
               name="pg_obbligazione_scadenzario" 
               enabledOnSearch="true"
 			  inputSize="3"
-			  inputCssClass="w-10"/>
+			  inputCssClass="w-3"/>
         <formFieldProperty
               name="ds_scadenza"
 			  inputSize="20"
-			  inputCssClass="w-100"/>
+			  inputCssClass="w-60"/>
     </form>
     	
 	<columnFieldProperty
