@@ -58,7 +58,7 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
         codiceKeys.put(CODICE_ATT_COMM_SUB, "Attività commerciale (CNR sub contraente)");
         codiceKeys.put(CODICE_GEST, "Gestionale");
         codiceKeys.put(CODICE_DON, "Donazioni");
-    };
+    }
 
     /**
      * Created by BulkGenerator 2.0 [07/12/2009]
@@ -94,13 +94,9 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
         setFlAssociaContratto(Boolean.FALSE);
         setFlValidazioneAutomatica(Boolean.FALSE);
         setFlTrasfQuoteProgettiAttivi(Boolean.FALSE);
+        setFlRiceviQuoteProgettiAttivi(Boolean.FALSE);
         setFlAttivo(Boolean.TRUE);
         return super.initializeForInsert(crudbp, actioncontext);
-    }
-
-    @Override
-    public OggettoBulk initializeForSearch(CRUDBP crudbp, ActionContext actioncontext) {
-        return super.initializeForSearch(crudbp, actioncontext);
     }
 
     public Dictionary getCodiceKeys() {

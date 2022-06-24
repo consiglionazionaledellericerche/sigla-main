@@ -81,7 +81,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
-	private class CtrlDispPianoEco {
+	private static class CtrlDispPianoEco {
 		public CtrlDispPianoEco(ProgettoBulk progetto, Progetto_piano_economicoBulk progettoPianoEconomico) {
 			super();
 			this.progetto = progetto;
@@ -118,7 +118,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			this.impCofinanziato = impCofinanziato;
 		}
 	}
-	private class CtrlPianoEcoDett {
+	private static class CtrlPianoEcoDett {
 		private String tipoNatura;
 		private boolean isUoArea;
 		private boolean isCdrPersonale;
@@ -192,7 +192,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			return Elemento_voceHome.GESTIONE_SPESE.equals(getTipoDett());
 		}
 	}
-	private class CtrlPianoEco {
+	private static class CtrlPianoEco {
 		public CtrlPianoEco(ProgettoBulk progetto) {
 			super();
 			this.progetto = progetto;
@@ -1659,16 +1659,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			throw new ApplicationException("Errore nella call del metodo getMessaggioSfondamentoPianoEconomico. Contattare il CED.");
 
         try {
-        	Configurazione_cnrComponentSession configSession = (Configurazione_cnrComponentSession)Utility.createConfigurazioneCnrComponentSession();
-			String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
-			BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+        	Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+			String cdNaturaReimpiego = configSession.getVal01(userContext, 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+			BigDecimal annoFrom = configSession.getIm01(userContext, 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 
 			Integer esercizioVariazione = Optional.ofNullable(isVariazioneCompetenza?Optional.of(variazione).map(Pdg_variazioneBulk.class::cast).map(Pdg_variazioneBulk::getEsercizio).orElse(null)
 																				    :Optional.of(variazione).map(Var_stanz_resBulk.class::cast).map(Var_stanz_resBulk::getEsercizio_residuo).orElse(null))
 					                              .orElseThrow(()->new ApplicationException("Esercizio Variazione non individuata."));
 
 			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).filter(el->el.compareTo(esercizioVariazione)<=0).isPresent()) {
-				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<CtrlDispPianoEco>();
+				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<>();
 
 				Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
 				Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
@@ -2857,8 +2857,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				//CONTROLLI SU SINGOLO PROGETTO
 				//Controlli non attivi per variazioni maggiori entrate/spese che non possono avere importi negativi essendo già stato fatto
 				//questo controllo prima
-				/**
-				 * 10. se un progetto è scaduto non è possibile attribuire fondi 
+				/*
+				  10. se un progetto è scaduto non è possibile attribuire fondi
 				 */
 				listCtrlPianoEco.stream()
 					.filter(el->el.isScaduto(dataChiusura))
@@ -2869,9 +2869,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								" in quanto scaduto ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDtScadenza()) +
 								") rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dataChiusura)+").");});
 
-				/**
-				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
-				 *    dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria)
+				/*
+				  20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
+				     dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria)
 				 */
 				if (!isVariazioneArea && !isVariazioneRagioneria)
 					listCtrlPianoEco.stream()
@@ -2886,10 +2886,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
 		
-				/**
-				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
-				 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
-				 * 	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
+				/*
+				  30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto
+				  	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+				  	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
 				 */
 				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
@@ -2918,12 +2918,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
 		
-					/**
-					 * 31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
-					 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
-					 *     
-					 *     N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
-					 *     controllo effettuato al punto 90
+					/*
+					  31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto
+					  	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+
+					      N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
+					      controllo effettuato al punto 90
 					 */
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))

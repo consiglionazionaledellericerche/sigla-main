@@ -147,6 +147,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_RICEV_QUOTE_PROGETTI_ATTIVI"
+			propertyName="flRiceviQuoteProgettiAttivi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="LIMITE_GIORNI_DURATA_PROGETTO"
 			propertyName="limiteGiorniDurataProgetto"
 			sqlTypeName="DECIMAL"
@@ -232,6 +239,8 @@
 		name="flValidazioneAutomatica" />
 	<persistentProperty
 		name="flTrasfQuoteProgettiAttivi" />
+	<persistentProperty
+		name="flRiceviQuoteProgettiAttivi" />
 	<persistentProperty
 		name="limiteGiorniDurataProgetto" />
 	<persistentProperty

@@ -82,6 +82,9 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 	//  FL_TRASFERISCI_QUOTE_PROGETTI_ATTVI CHAR(1) NOT NULL
 	private Boolean flTrasfQuoteProgettiAttivi;
 
+	//  FL_RICEVI_QUOTE_PROGETTI_ATTVI CHAR(1) NOT NULL
+	private Boolean flRiceviQuoteProgettiAttivi;
+
 	//  FL_ATTIVO CHAR(1) NOT NULL
 	private Boolean flAttivo;
 
@@ -332,6 +335,14 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 
 	public void setFlTrasfQuoteProgettiAttivi(Boolean flTrasfQuoteProgettiAttivi) {
 		this.flTrasfQuoteProgettiAttivi = flTrasfQuoteProgettiAttivi;
+	}
+
+	public Boolean getFlRiceviQuoteProgettiAttivi() {
+		return flRiceviQuoteProgettiAttivi;
+	}
+
+	public void setFlRiceviQuoteProgettiAttivi(Boolean flRiceviQuoteProgettiAttivi) {
+		this.flRiceviQuoteProgettiAttivi = flRiceviQuoteProgettiAttivi;
 	}
 
 	public Boolean getFlAttivo() {
