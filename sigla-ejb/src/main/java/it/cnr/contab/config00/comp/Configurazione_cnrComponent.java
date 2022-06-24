@@ -521,27 +521,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         }
     }
 
-    public Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(UserContext userContext) throws ComponentException {
-        try {
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
-                    Configurazione_cnrBulk.SK_IMPUTAZIONE_MANUALE,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        try {
-                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-                                    .orElse(Boolean.FALSE);
-                        } catch (PersistencyException|ComponentException e) {
-                            throw new PersistencyError(e);
-                        }
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-
     private Optional<Boolean> val01YesNo(UserContext userContext, Configurazione_cnrKey configurazioneCnrKey) throws PersistencyException, ComponentException {
         final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
         return Optional.ofNullable(home.findByPrimaryKey(configurazioneCnrKey))

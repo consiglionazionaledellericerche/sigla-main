@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="gianfranco.gasparro" id="drop_constraint_bolla_scarico_riga_mag_fk06">
+        <dropForeignKeyConstraint  baseTableName="bolla_scarico_riga_mag"
+                                   constraintName="bolla_scarico_riga_mag_fk06"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="drop_constraint_transito_beni_ordini_00">
+        <dropForeignKeyConstraint  baseTableName="transito_beni_ordini"
+                                   constraintName="fk_transito_beni_ordini00"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="drop_table_movimenti_mag">
+        <dropTable  tableName="movimenti_mag"
+                    cascadeConstraints="true"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="recreate_table_movimenti_mag">
+        <createTable remarks="Archivio dei Movimenti" tableName="movimenti_mag">
+            <column name="pg_movimento" remarks="Progressivo movimento. E&quot; un numero univoco determinato dalla sequence MOV_SEQ" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_movimento" remarks="Data del movimento" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds_tipo_movimento" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_tipo_movimento" remarks="Codice della Tipologia del movimento" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_bolla" remarks="Data della Bolla - riportata dall&quot;archivio MGRIS" type="${date.type}"/>
+            <column name="numero_bolla" remarks="Numero della bolla - riportato dall&quot;archivio MGRIS" type="VARCHAR(30)"/>
+            <column name="dt_riferimento" remarks="Data di Competenza" type="${date.type}"/>
+            <column name="cd_cds_ordine" remarks="Codice del cds" type="VARCHAR(30)"/>
+            <column name="cd_unita_operativa_ordine" remarks="Codice unita' operativa" type="VARCHAR(30)"/>
+            <column name="esercizio_ordine" remarks="Esercizio" type="SMALLINT"/>
+            <column name="cd_numeratore_ordine" remarks="Codice del numeratore dell'ordine" type="VARCHAR(3)"/>
+            <column name="numero_ordine" remarks="Numero dell'ordine" type="INT"/>
+            <column name="riga_ordine" remarks="Riga dell'ordine" type="INT"/>
+            <column name="consegna" remarks="Consegna dell'ordine" type="INT"/>
+            <column name="cd_terzo" remarks="Codice del Fornitore" type="BIGINT"/>
+            <column name="cd_unita_misura" remarks="Codice dell&quot;unita&quot; di misura - e l&quot;unita di misura con la quale si effettua il movimento(carico o scarico)" type="VARCHAR(3)"/>
+            <column name="quantita" remarks="Quantita&quot; movimentata in unita di misura minima" type="numeric(12, 5)"/>
+            <column name="coeff_conv" remarks="Coefficiente di conserzione fra l&quot;unita di misura minima e quella riportata nel campo UNIMIS_C" type="numeric(12, 5)"/>
+            <column name="cd_uop" remarks="Codice unita&quot; organizzativa - In realta e il magazzino che &quot;riceve&quot;  il movimento- Tale campo viene riempito solo dagli scarichi e contiene un codice UO o Magazzino  a seconda del tipo di scarico" type="VARCHAR(30)"/>
+            <column name="dt_scadenza" remarks="Data scadenza del Lotto - riportata da MGGIA" type="${date.type}"/>
+            <column name="lotto_fornitore" remarks="Codice identificativo del Lotto del Fornitore" type="VARCHAR(30)"/>
+            <column name="cd_cds_lotto" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_magazzino_lotto" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_lotto" remarks="Chiave del Lotto" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_numeratore_lotto" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_lotto" remarks="Chiave del Lotto" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds_mag" remarks="Codice CDS del Magazzino" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_magazzino" remarks="Codice del Magazzino" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_bene_servizio" remarks="Codice articolo/servizio oggetto del movimento" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_iva" remarks="Codice IVA - L&quot;IVA non viene considarata nella Gsetione del Magazzino" type="VARCHAR(10)"/>
+            <column name="sconto1" remarks="Percentuale del 1° sconto" type="numeric(5, 2)"/>
+            <column name="sconto2" remarks="Percentuale del 2° sconto" type="numeric(5, 2)"/>
+            <column name="sconto3" remarks="Percentuale del 3° sconto" type="numeric(5, 2)"/>
+            <column name="cd_cds_bolla_sca" type="VARCHAR(30)"/>
+            <column name="cd_magazzino_bolla_sca" type="VARCHAR(10)"/>
+            <column name="esercizio_bolla_sca" remarks="Gestito dall&quot;applicativo" type="BIGINT"/>
+            <column name="cd_numeratore_bolla_sca" type="VARCHAR(3)"/>
+            <column name="pg_bolla_sca" remarks="Gestito dall&quot;applicativo" type="INT"/>
+            <column name="importo" remarks="Prezzo Unitario. Viene impiegato solo nei carichi. Per loscarico il prezzo unitario viene riportato nei campi IMPCEEF_N o IMPCMP_N o IMPFIFO o IMPLIFO a seconda del tipo di valorizzazione" type="numeric(21, 6)"/>
+            <column name="importo_ceff" remarks="Importo C. Eff." type="numeric(19, 2)"/>
+            <column name="importo_cmp" remarks="Importo CMP per movimento" type="numeric(19, 2)"/>
+            <column name="importo_fifo" remarks="Importo FIFO" type="numeric(19, 2)"/>
+            <column name="importo_lifo" remarks="IMporto LIFO" type="numeric(19, 2)"/>
+            <column name="importo_cmpp" remarks="Importo CMP  per periodo" type="numeric(19, 2)"/>
+            <column name="importo_cmpist" remarks="Importo CMP istantaneo" type="numeric(21, 6)"/>
+            <column name="cd_divisa" remarks="Valuta" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cambio" remarks="Valore del cambio" type="numeric(15, 4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prezzo_unitario" remarks="Prezzo Unitario" type="numeric(21, 6)"/>
+            <column name="stato" remarks="Indica lo stato del movimento" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_cancellazione" type="${date.type}"/>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_movimento_rif" type="BIGINT"/>
+            <column name="pg_movimento_ann" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_primary_key_movimenti_mag">
+        <addPrimaryKey columnNames="pg_movimento" constraintName="movimenti_mag_pkey" tableName="movimenti_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk00">
+        <addForeignKeyConstraint baseColumnNames="cd_cds_tipo_movimento,cd_tipo_movimento" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,cd_tipo_movimento" referencedTableName="tipo_movimento_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk02">
+        <addForeignKeyConstraint baseColumnNames="cd_terzo" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_terzo" referencedTableName="terzo"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk03">
+        <addForeignKeyConstraint baseColumnNames="cd_unita_misura" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_misura" referencedTableName="unita_misura"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk06">
+        <addForeignKeyConstraint baseColumnNames="cd_uop" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk06" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_operativa" referencedTableName="unita_operativa_ord"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk09">
+        <addForeignKeyConstraint baseColumnNames="cd_divisa" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk09" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_divisa" referencedTableName="divisa"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk10">
+        <addForeignKeyConstraint baseColumnNames="cd_cds_lotto,cd_magazzino_lotto,esercizio_lotto,cd_numeratore_lotto,pg_lotto" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk10" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,cd_magazzino,esercizio,cd_numeratore_mag,pg_lotto" referencedTableName="lotto_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_constraint_movimenti_mag_movimenti_mag_fk11">
+        <addForeignKeyConstraint baseColumnNames="cd_cds_bolla_sca,cd_magazzino_bolla_sca,esercizio_bolla_sca,cd_numeratore_bolla_sca,pg_bolla_sca" baseTableName="movimenti_mag" constraintName="movimenti_mag_fk11" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,cd_magazzino,esercizio,cd_numeratore_mag,pg_bolla_sca" referencedTableName="bolla_scarico_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG00">
+        <createIndex indexName="FX_MOVIMENTI_MAG00" tableName="MOVIMENTI_MAG">
+            <column name="CD_CDS_TIPO_MOVIMENTO"/>
+            <column name="CD_TIPO_MOVIMENTO"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG02">
+        <createIndex indexName="FX_MOVIMENTI_MAG02" tableName="MOVIMENTI_MAG">
+            <column name="CD_TERZO"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG03">
+        <createIndex indexName="FX_MOVIMENTI_MAG03" tableName="MOVIMENTI_MAG">
+            <column name="CD_UNITA_MISURA"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG06">
+        <createIndex indexName="FX_MOVIMENTI_MAG06" tableName="MOVIMENTI_MAG">
+            <column name="CD_UOP"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG09">
+        <createIndex indexName="FX_MOVIMENTI_MAG09" tableName="MOVIMENTI_MAG">
+            <column name="CD_DIVISA"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG10">
+        <createIndex indexName="FX_MOVIMENTI_MAG10" tableName="MOVIMENTI_MAG">
+            <column name="CD_CDS_LOTTO"/>
+            <column name="CD_MAGAZZINO_LOTTO"/>
+            <column name="ESERCIZIO_LOTTO"/>
+            <column name="CD_NUMERATORE_LOTTO"/>
+            <column name="PG_LOTTO"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index_FX_MOVIMENTI_MAG11">
+        <createIndex indexName="FX_MOVIMENTI_MAG11" tableName="MOVIMENTI_MAG">
+            <column name="CD_CDS_BOLLA_SCA"/>
+            <column name="CD_MAGAZZINO_BOLLA_SCA"/>
+            <column name="ESERCIZIO_BOLLA_SCA"/>
+            <column name="CD_NUMERATORE_BOLLA_SCA"/>
+            <column name="PG_BOLLA_SCA"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="recreate_constraint_bolla_scarico_riga_mag_fk06">
+        <addForeignKeyConstraint baseColumnNames="pg_movimento" baseTableName="bolla_scarico_riga_mag" constraintName="bolla_scarico_riga_mag_fk06" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_movimento" referencedTableName="movimenti_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="recreate_constraint_transito_beni_ordini_fk00">
+        <addForeignKeyConstraint baseColumnNames="id_movimenti_mag" baseTableName="transito_beni_ordini" constraintName="transito_beni_ordini_fk00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_movimento" referencedTableName="movimenti_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk01">
+        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
+                                   constraintName="movimenti_mag_fk01"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk04">
+        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
+                                   constraintName="movimenti_mag_fk04"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk05">
+        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
+                                   constraintName="movimenti_mag_fk05"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="drop_constraint_movimenti_mag_fk07">
+        <dropForeignKeyConstraint  baseTableName="movimenti_mag"
+                                   constraintName="movimenti_mag_fk07"/>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_cds_ordine" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_cds_ordine"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_unita_operativa_ordine" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_unita_operativa_ordine"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-esercizio_ordine" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="esercizio_ordine"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_numeratore_ordine" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_numeratore_ordine"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-numero_ordine" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="numero_ordine"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-riga_ordine" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="riga_ordine"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-consegna" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="consegna"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_cds_mag" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_cds_mag"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_magazzino" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_magazzino"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_bene_servizio" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_bene_servizio"></dropColumn>
+    </changeSet>
+    <changeSet id="drop-column-movimenti_mag-cd_voce_iva" author="gianfranco.gasparro">
+        <dropColumn tableName="movimenti_mag" columnName="cd_voce_iva"></dropColumn>
+    </changeSet>
+</databaseChangeLog>

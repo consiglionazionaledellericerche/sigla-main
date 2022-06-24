@@ -74,16 +74,16 @@
 		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
-		name="cdNumeratoreMag"
-		property="cdNumeratoreMag"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		nullable="false"
-		label="Codice Numeratore" />
+			name="cdNumeratoreMag"
+			property="cdNumeratoreMag"
+			inputType="SELECT"
+			inputSize="20"
+			maxLength="20"
+			enabledOnInsert="true"
+			enabledOnEdit="false"
+			nullable="false"
+			keysProperty="numeratoriMagKeys"
+			label="Codice Numeratore" />
 	<fieldProperty
 		name="corrente"
 		property="corrente"
@@ -140,9 +140,8 @@
 		name="corrente" />
 	<findFieldProperty
 		name="dtCancellazione" />
-
 	<columnFieldProperty
-		name="cdMagazzino" />
+			name="cdNumeratoreMag" />
 	<columnFieldProperty
-		name="dsMagazzino" />
+			name="corrente" />
 </bulkInfo>

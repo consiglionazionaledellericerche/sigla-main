@@ -1,3 +1,11 @@
+## Release 6.4.42  -- _June 04, 2022_ 
+**Changes**
+
+>**Remove Database user on create VIEWS and PROCEDURE for Oracle**
+>
+>[088ed25d1b2dc63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/088ed25d1b2dc63) marco.spasiano *June 04, 2022*
+
+
 ## Release 6.4.41  -- _June 03, 2022_ 
 **Changes**
 

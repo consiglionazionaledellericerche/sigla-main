@@ -17,7 +17,7 @@ MagazzinoBulk mag = (MagazzinoBulk)bp.getModel();
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
-<title>Abilitazione Magazzino/Categorie</title>
+<title>Numerazione per Magazzino</title>
 </head>
 <body class="Form">
 <%
@@ -51,12 +51,9 @@ MagazzinoBulk mag = (MagazzinoBulk)bp.getModel();
 		<tr></tr>
 		<tr></tr>
 		<tr>
-		   <TD><% bp.getController().writeFormLabel(out,"cdNumeratoreMag");%></TD>
-		   <TD><% bp.getController().writeFormInput(out,null,"cdNumeratoreMag", !mag.isInQuery(),null,null);%></TD>
-		</tr>
-		<tr>
-		   <TD><% bp.getController().writeFormLabel(out,"corrente");%></TD>
-		   <TD><% bp.getController().writeFormInput(out,"corrente");%></TD>
+		   <TD><% bp.getNumerazioneMagController().writeFormField(out,"cdNumeratoreMag");%></TD>
+		   <TD><% bp.getNumerazioneMagController().writeFormLabel(out,"corrente");%></TD>
+		   <TD><% bp.getNumerazioneMagController().writeFormInput(out,"corrente");%></TD>
 		</tr>
 	</table>
 <%	bp.closeFormWindow(pageContext); %>

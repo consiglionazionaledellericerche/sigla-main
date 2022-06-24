@@ -518,25 +518,6 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
         }
     }
 
-    public Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
-        pre_component_invocation(param0, componentObj);
-        try {
-            java.lang.Boolean result = componentObj.isEconomicaPatrimonialeAttivaImputazioneManuale(param0);
-            component_invocation_succes(param0, componentObj);
-            return result;
-        } catch (it.cnr.jada.comp.NoRollbackException e) {
-            component_invocation_succes(param0, componentObj);
-            throw e;
-        } catch (it.cnr.jada.comp.ComponentException e) {
-            component_invocation_failure(param0, componentObj);
-            throw e;
-        } catch (RuntimeException e) {
-            throw uncaughtRuntimeException(param0, componentObj, e);
-        } catch (Error e) {
-            throw uncaughtError(param0, componentObj, e);
-        }
-    }
-
     @Override
     public Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException, RemoteException {
         pre_component_invocation(userContext, componentObj);
