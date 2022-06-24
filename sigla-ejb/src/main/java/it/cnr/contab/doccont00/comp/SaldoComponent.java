@@ -2525,6 +2525,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoRagioneria)
 					.orElse(Boolean.FALSE);
 
+			boolean isVariazioneTrasferimentoEsigenzeFinanziarie = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::isMotivazioneTrasferimentoEsigenzeFinanziarie)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoEsigenzeFinanziarie)
+					.orElse(Boolean.FALSE);
+
 			boolean isCDRAreaVariazione = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
@@ -2758,7 +2769,33 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
 				});
 			}
-			
+
+			if (isVariazioneTrasferimentoEsigenzeFinanziarie) {
+				listCtrlPianoEco.stream()
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlTrasfQuoteProgettiAttivi())
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlRiceviQuoteProgettiAttivi())
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per Esigenze Finanziarie' non è possibile "
+									+ "movimentare progetti la cui tipologia di finanziamento non prevede trasferimento/acquisizione di fondi da progetti attivi (Progetto non valido: "+el.getProgetto().getCd_progetto()+").");
+						});
+
+				listCtrlPianoEco.stream()
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlRiceviQuoteProgettiAttivi())
+						.filter(el->el.getImpSpesaPositivi().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile assegnare fondi a progetti la cui tipologia di finanziamento non prevede " +
+									"acquisizione di fondi da progetti attivi (Progetto non valido: "+el.getProgetto().getCd_progetto()+").");
+						});
+
+				listCtrlPianoEco.stream()
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlTrasfQuoteProgettiAttivi())
+						.filter(el->el.getImpSpesaNegativi().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile sottrarre fondi a progetti la cui tipologia di finanziamento non prevede " +
+									"trasferimento di fondi da progetti attivi (Progetto non valido: "+el.getProgetto().getCd_progetto()+").");
+						});
+			}
+
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
 					.map(CtrlPianoEco::getImpSpesaPositiviVoceSpeciale)
@@ -2853,8 +2890,20 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										.map(Var_stanz_resBulk::getDt_chiusura)
 										.orElseThrow(()->new DetailedRuntimeException("Attenzione! Operazione non possibile in "
 												+ "quanto non risulta ancora impostata la data chiusura della variazione.")));
-		
-				//CONTROLLI SU SINGOLO PROGETTO
+
+
+				if (isVariazioneTrasferimentoEsigenzeFinanziarie) {
+					listCtrlPianoEco.stream()
+							.filter(el->el.isScaduto(dataChiusura))
+							.filter(el->el.getProgetto().getOtherField().getTipoFinanziamento().getFlTrasfQuoteProgettiAttivi())
+							.filter(el->el.getImpSpesaNegativi().compareTo(BigDecimal.ZERO) != 0)
+							.findFirst().ifPresent(el -> {
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per Esigenze Finanziarie' non è possibile " +
+										"trasferire fondi da progetti scaduti (Progetto non valido: " + el.getProgetto().getCd_progetto() + ").");
+							});
+				}
+
+					//CONTROLLI SU SINGOLO PROGETTO
 				//Controlli non attivi per variazioni maggiori entrate/spese che non possono avere importi negativi essendo già stato fatto
 				//questo controllo prima
 				/*

@@ -158,6 +158,13 @@
             nullable="false"
             label="Consenti Trasferimento quote da Progetti Attivi (non scaduti)"/>
     <fieldProperty
+            name="flRiceviQuoteProgettiAttivi"
+            property="flRiceviQuoteProgettiAttivi"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Consenti Acquisizione quote da Progetti Attivi (non scaduti)"/>
+    <fieldProperty
             name="limiteGiorniDurataProgetto"
             property="limiteGiorniDurataProgetto"
             label="Limite giorni durata progetto (anno=365)"
@@ -223,6 +230,8 @@
     <formFieldProperty
             name="flTrasfQuoteProgettiAttivi" />
     <formFieldProperty
+            name="flRiceviQuoteProgettiAttivi" />
+    <formFieldProperty
             name="limiteGiorniDurataProgetto" />
     <formFieldProperty
             name="limiteGiorniProrogaProgetto" />
@@ -268,6 +277,8 @@
     <findFieldProperty
             name="flTrasfQuoteProgettiAttivi" />
     <findFieldProperty
+            name="flRiceviQuoteProgettiAttivi" />
+    <findFieldProperty
             name="limiteGiorniDurataProgetto" />
     <findFieldProperty
             name="limiteGiorniProrogaProgetto" />
@@ -312,6 +323,8 @@
             name="flValidazioneAutomatica" />
     <columnFieldProperty
             name="flTrasfQuoteProgettiAttivi" />
+    <columnFieldProperty
+            name="flRiceviQuoteProgettiAttivi" />
     <columnFieldProperty
             name="limiteGiorniDurataProgetto" />
     <columnFieldProperty
