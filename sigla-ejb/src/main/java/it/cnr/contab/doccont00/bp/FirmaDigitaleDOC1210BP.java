@@ -17,6 +17,7 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -150,13 +151,21 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
             } else {
                 field.setValue(
                         Optional.ofNullable(fieldValue)
-                            .map(s -> s.replace("\r", " "))
-                                .map(s -> s.replace("\n", " "))
-                            .orElseThrow(() -> new ApplicationMessageFormatException(
-									"Predisposizione non possibile. Il valore del campo [{0}] non può essere nullo!", fieldName
+							.map(s -> s.replace("\r", " "))
+							.map(s -> s.replace("\n", " "))
+							.orElseThrow(() -> new ApplicationMessageFormatException(
+								"Predisposizione non possibile. Il valore del campo [{0}] non può essere nullo!", fieldName
 							)));
+				if (autosize) {
+					Optional.ofNullable(field)
+						.filter(PDTextField.class::isInstance)
+						.map(PDTextField.class::cast)
+						.ifPresent(pdTextField -> {
+							pdTextField.setDefaultAppearance("/Helv 0 Tf 0 0 0 rg");
+						});
+				}
             }
-        }
+		}
         return field;
 	}
 
@@ -168,31 +177,50 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 			if (selectedElements == null || selectedElements.isEmpty())
 				throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			final Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession()
+					.getConfigurazione(
+							actioncontext.getUserContext(),
+							0,
+							"*",
+							"PAGAMENTO_ESTERO",
+							"IBAN_SPORTELLO_CONTO"
+					);
+
 			for (Lettera_pagam_esteroBulk lettera : selectedElements) {
 				PDDocument document = PDDocument.load(this.getClass().getResourceAsStream("1210.pdf"));
 				PDDocumentCatalog pdCatalog = document.getDocumentCatalog();
 				PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
                 List<PDField> fields = new ArrayList<PDField>();
-				fields.add(valorizzaField(pdAcroForm, "LUOGO", "ROMA", false));
-                fields.add(valorizzaField(pdAcroForm, "DATA", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()), false));
-                fields.add(valorizzaField(pdAcroForm, "NUM_RIF", String.valueOf(lettera.getPg_lettera()) + " - " + lettera.getCd_unita_organizzativa(), false));
-                fields.add(valorizzaField(pdAcroForm, "BONIFICO_MEZZO_"+lettera.getBonifico_mezzo(), "X", false));
-                fields.add(valorizzaField(pdAcroForm, "DIVISA", lettera.getDivisa(), false));
+                fields.add(valorizzaField(pdAcroForm, "DATA ESECUZIONE", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()), false));
+				fields.add(valorizzaField(pdAcroForm, "IDENTIFICATIVO_INTERNO", String.valueOf(lettera.getPg_lettera()) + " - " + lettera.getCd_unita_organizzativa(), false));
+				fields.add(valorizzaField(pdAcroForm, "DATA VALUTA BENEFICIARIO", "", false));
+				fields.add(valorizzaField(pdAcroForm, "CONTO TRANSITORIO NOMINATIVO NOP", "", false));
+				fields.add(valorizzaField(pdAcroForm, "PAESE BENEFICIARIO", lettera.getPaese_beneficiario(), false));
+				fields.add(valorizzaField(pdAcroForm, "DIVISA", lettera.getDivisa(), false));
                 fields.add(valorizzaField(pdAcroForm, "IMPORTO", new java.text.DecimalFormat("#,##0.00").format(lettera.getIm_pagamento()), false));
-                fields.add(valorizzaField(pdAcroForm, "IMPORTO_LETTERE", Utility.NumberToText(lettera.getIm_pagamento()), false));
-                fields.add(valorizzaField(pdAcroForm, "BENEFICIARIO_1", lettera.getBeneficiario(), true));
-                fields.add(valorizzaField(pdAcroForm, "NUM_CONTO", lettera.getNum_conto_ben(), true));
-                fields.add(valorizzaField(pdAcroForm, "IBAN", lettera.getIban(), false));
-                fields.add(valorizzaField(pdAcroForm, "PRESSO_TRAMITE", lettera.getIndirizzo(), true));
-                fields.add(valorizzaField(pdAcroForm, "SWIFT_BIC_ADDRESS", lettera.getIndirizzo_swift(), false));
-                fields.add(valorizzaField(pdAcroForm, "MOTIVO_PAGAMENTO", lettera.getMotivo_pag(), true));
-                fields.add(valorizzaField(pdAcroForm, "AMMONTARE_DEBITO_"+lettera.getAmmontare_debito(), "X", false));
-                fields.add(valorizzaField(pdAcroForm, "CONTO_PROVVISORIO_"+lettera.getAmmontare_debito(), lettera.getConto_debito(), false));
-                fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false));
-                fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false));
-				fields.add(valorizzaField(pdAcroForm, "ISTRUZIONI_SPECIALI_1", Optional.ofNullable(lettera.getIstruzioni_speciali_1()).orElse(""), true));
-				fields.add(valorizzaField(pdAcroForm, "ISTRUZIONI_SPECIALI_2", Optional.ofNullable(lettera.getIstruzioni_speciali_2()).orElse(""), true));
-				fields.add(valorizzaField(pdAcroForm, "ISTRUZIONI_SPECIALI_3", Optional.ofNullable(lettera.getIstruzioni_speciali_3()).orElse(""), true));
+                fields.add(valorizzaField(pdAcroForm, "IMPORTO IN LETTERE", Utility.NumberToText(lettera.getIm_pagamento()), false));
+                fields.add(valorizzaField(pdAcroForm, "NOMINATIVO BENEFICIARIO", lettera.getBeneficiario(), true));
+				fields.add(valorizzaField(pdAcroForm, "INDIRIZZO BENEFICIARIO", lettera.getIndirizzo_beneficiario(), true));
+				fields.add(valorizzaField(pdAcroForm, "INDIRIZZO BENEFICIARIO_2", "", true));
+				fields.add(valorizzaField(pdAcroForm, "ANAGRAFICA BANCA BENEFICIARIA Opzionale", lettera.getIndirizzo(), true));
+                fields.add(valorizzaField(pdAcroForm, "IBAN o CONTO BENEFICIARIO", lettera.getIban(), false));
+                fields.add(valorizzaField(pdAcroForm, "BIC BANCA BENEFICIARIA o CODICI ROUTING", lettera.getIndirizzo_swift(), false));
+				fields.add(valorizzaField(pdAcroForm, "BIC BANCA INTERMEDIARIA Opzionale", Optional.ofNullable(lettera.getBic_banca_intermediaria()).orElse(""), false));
+                fields.add(valorizzaField(pdAcroForm, "CAUSALE DEL PAGAMENTO", lettera.getMotivo_pag(), true));
+                fields.add(valorizzaField(pdAcroForm, "S", lettera.getCommissioni_spese(), false));
+				fields.add(valorizzaField(pdAcroForm, "A", "Scelta4", false));
+				fields.add(valorizzaField(pdAcroForm, "IBAN", configurazione.getVal01(), true));
+				fields.add(valorizzaField(pdAcroForm, "SPORTELLO", configurazione.getVal02(), false));
+				fields.add(valorizzaField(pdAcroForm, "CONTO", configurazione.getVal03(), false));
+				fields.add(valorizzaField(pdAcroForm, "LUOGO E DATA", "ROMA " + new SimpleDateFormat("dd/MM/yyyy").format(EJBCommonServices.getServerDate()), false));
+
+				fields.add(valorizzaField(pdAcroForm,
+						"ULTERIORI INFORMAZIONI Opzionale",
+						Optional.ofNullable(lettera.getIstruzioni_speciali_1()).orElse("") +
+								Optional.ofNullable(lettera.getIstruzioni_speciali_2()).orElse("") +
+								Optional.ofNullable(lettera.getIstruzioni_speciali_3()).orElse(""),
+						true)
+				);
 
                 try {
 					pdAcroForm.flatten(fields.stream()

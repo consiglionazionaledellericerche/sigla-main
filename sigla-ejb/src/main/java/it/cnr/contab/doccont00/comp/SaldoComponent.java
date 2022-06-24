@@ -1964,6 +1964,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									//recupero il record se presente altrimenti ne creo uno nuovo
 									CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
 											.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+											.filter(el -> Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
 											.filter(el -> el.getProgettoPianoEconomico().getPg_progetto().equals(progetto.getPg_progetto()))
 											.filter(el -> el.getProgettoPianoEconomico().getCd_unita_organizzativa().equals(progettoPianoEconomico.getCd_unita_organizzativa()))
 											.filter(el -> el.getProgettoPianoEconomico().getCd_voce_piano().equals(progettoPianoEconomico.getCd_voce_piano()))

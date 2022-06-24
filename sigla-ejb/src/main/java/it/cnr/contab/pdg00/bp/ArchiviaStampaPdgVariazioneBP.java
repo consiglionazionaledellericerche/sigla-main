@@ -49,6 +49,8 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.upload.UploadedFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -63,6 +65,8 @@ import java.util.stream.Stream;
 import javax.servlet.ServletException;
 
 public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
+	private transient static final Logger logger = LoggerFactory.getLogger(ArchiviaStampaPdgVariazioneBP.class);
+
 	private SimpleDetailCRUDController crudArchivioAllegati = new SimpleDetailCRUDController( "ArchivioAllegati", AllegatoPdGVariazioneDocumentBulk.class, "archivioAllegati", this){
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			AllegatoPdGVariazioneDocumentBulk allegato = (AllegatoPdGVariazioneDocumentBulk)oggettobulk;
@@ -351,8 +355,12 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 							new FileInputStream(allegato.getFile()),
 							allegato.getContentType(),
 							allegato.getNome(), cmisPath);
-					pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode.getKey(),
-							node.getKey(), SIGLAStoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+					try {
+						pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode.getKey(),
+								node.getKey(), SIGLAStoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+					} catch (Exception _ex) {
+						logger.error("Cannot create relationship for node {}", node.getKey());
+					}
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);

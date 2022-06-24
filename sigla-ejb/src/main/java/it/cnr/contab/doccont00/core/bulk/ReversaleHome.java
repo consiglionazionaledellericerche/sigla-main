@@ -23,9 +23,12 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -305,5 +308,23 @@ public abstract class ReversaleHome extends BulkHome {
         return stream.map(t -> t.getCdCup())
                 .distinct()
                 .collect(Collectors.toList());
+    }
+    public ReversaleBulk findAndLockReversaleNonAnnullata(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgReversale) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause("AND", "cd_cds",       sql.EQUALS, cdCds);
+        sql.addClause("AND", "esercizio",    sql.EQUALS, esercizio);
+        sql.addClause("AND", "pg_reversale", sql.EQUALS, pgReversale);
+        sql.addClause("AND","stato", sql.NOT_EQUALS, ReversaleBulk.STATO_REVERSALE_ANNULLATO);
+        List reversali = fetchAll(sql);
+        if (reversali == null || reversali.size() == 0){
+            return null;
+        } else if (reversali.size() == 1){
+            ReversaleBulk rev = (ReversaleBulk) reversali.get(0);
+            lock(rev);
+            return rev;
+        } else  {
+            throw new PersistencyException("Errore nel recupero della Reversale "+esercizio+"-"+pgReversale);
+        }
     }
 }

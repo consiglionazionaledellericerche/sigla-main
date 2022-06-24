@@ -1628,5 +1628,5 @@
 
         <dropDefaultValue tableName="log_registry" columnName="dacr"/>
         <dropDefaultValue tableName="log_registry" columnName="duva"/>
-    </changeSet>    
+    </changeSet>
 </databaseChangeLog>

@@ -24,10 +24,10 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements Configurazione_cnrComponentSession {
-    public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(UserContext param0, Integer param1, String param2, String param3, String param4) throws RemoteException, ComponentException {
+    public it.cnr.contab.config00.bulk.Configurazione_cnrBulk getConfigurazione(it.cnr.jada.UserContext userContext, java.lang.Integer param1, java.lang.String param2, java.lang.String param3, java.lang.String param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
             return (it.cnr.contab.config00.bulk.Configurazione_cnrBulk) invoke("getConfigurazione", new Object[]{
-                    param0,
+                    userContext,
                     param1,
                     param2,
                     param3,
@@ -555,17 +555,17 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
     @Override
     public Boolean isAttivaEconomicaParallela(UserContext userContext) throws ComponentException, RemoteException {
         try {
-            return (Boolean) invoke("isAttivaEconomicaParallela", new Object[]{
+            return (java.lang.Boolean) invoke("isAttivaEconomicaParallela", new Object[]{
                     userContext});
-        } catch (RemoteException e) {
+        } catch (java.rmi.RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {
             try {
                 throw e.getTargetException();
-            } catch (ComponentException ex) {
+            } catch (it.cnr.jada.comp.ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
             }
         }
     }
@@ -640,6 +640,7 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             }
         }
     }
+
     @Override
     public Boolean isVariazioneAutomaticaSpesa(UserContext userContext) throws ComponentException, RemoteException {
         try {
@@ -686,7 +687,7 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             } catch (it.cnr.jada.comp.ComponentException ex) {
                 throw ex;
             } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
             }
         }
     }
@@ -707,4 +708,21 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
         }
     }
 
+    public String getContoCorrenteEnte(UserContext userContext, Integer esercizio)  throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (String) invoke("getContoCorrenteEnte", new Object[]{
+                    userContext,
+                    esercizio});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
 }

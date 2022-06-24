@@ -43,8 +43,10 @@ public class SospesoBulk extends SospesoBase {
     public final static Dictionary stato_sospesoCNRKeys;
     public final static Dictionary tiStatoTextForSearchKeys;
     public final static Dictionary ti_entrata_spesaKeys;
+    public final static String RISC_PREFIX ="XSRC";
+    public final static String CODICE_SOSPESO_RISCONTRO_INIZIALE = "0000000001";
 
-	static private java.util.Hashtable ti_cc_biKeys;
+	static private Hashtable ti_cc_biKeys;
 
     static {
         ti_sospeso_riscontroKeys = new Hashtable();
@@ -87,14 +89,14 @@ public class SospesoBulk extends SospesoBase {
     protected Sospeso_det_etrBulk dettaglio_etr;
 
 	protected Sospeso_det_uscBulk dettaglio_usc;
-    protected it.cnr.contab.config00.sto.bulk.CdsBulk cds = new it.cnr.contab.config00.sto.bulk.CdsBulk();
+    protected CdsBulk cds = new CdsBulk();
 
-	protected it.cnr.contab.config00.sto.bulk.CdsBulk cds_origine = new it.cnr.contab.config00.sto.bulk.CdsBulk();
+	protected CdsBulk cds_origine = new CdsBulk();
     protected MandatoIBulk mandatoRiaccredito;
 
-	protected Collection reversaliAccertamentiColl = new java.util.ArrayList();
-    protected Collection mandatiImpegniColl = new java.util.ArrayList();
-    protected Collection lettereColl = new java.util.ArrayList();
+	protected Collection reversaliAccertamentiColl = new ArrayList();
+    protected Collection mandatiImpegniColl = new ArrayList();
+    protected Collection lettereColl = new ArrayList();
     protected BulkList sospesiFigliColl = new BulkList();
     private boolean manRevRiportato;
     private String statoText;
@@ -104,9 +106,9 @@ public class SospesoBulk extends SospesoBase {
         super();
     }
 
-    public SospesoBulk(java.lang.String cd_cds, java.lang.String cd_sospeso, java.lang.Integer esercizio, java.lang.String ti_entrata_spesa, java.lang.String ti_sospeso_riscontro) {
+    public SospesoBulk(String cd_cds, String cd_sospeso, Integer esercizio, String ti_entrata_spesa, String ti_sospeso_riscontro) {
         super(cd_cds, cd_sospeso, esercizio, ti_entrata_spesa, ti_sospeso_riscontro);
-        setCds(new it.cnr.contab.config00.sto.bulk.CdsBulk(cd_cds));
+        setCds(new CdsBulk(cd_cds));
     }
 
     public Collection getLettereColl() {
@@ -152,9 +154,16 @@ public class SospesoBulk extends SospesoBase {
         figlio.setCd_cds_origine(null);
         figlio.setCd_uo_origine(null);
         figlio.setStato_sospeso(SospesoBulk.STATO_SOSP_INIZIALE);
-
+        figlio.setCd_avviso_pagopa(getAvvisoPagoPAFromSospesoFiglio());
         this.sospesiFigliColl.add(figlio);
         return sospesiFigliColl.size() - 1;
+    }
+
+    private String getAvvisoPagoPAFromSospesoFiglio(){
+        if (getSospesiFigliColl() == null || getSospesiFigliColl().size() == 0)
+            return null;
+        SospesoBulk sospeso = (SospesoBulk)getSospesiFigliColl().get(0);
+        return sospeso.getCd_avviso_pagopa();
     }
 
     /* assegna un sospeso ad un cds impostandone lo stato a assegnato e il cds origine */
@@ -179,43 +188,43 @@ public class SospesoBulk extends SospesoBase {
      * @see it.cnr.jada.comp.GenericComponent
      */
     public BulkCollection[] getBulkLists() {
-        return new it.cnr.jada.bulk.BulkCollection[]{
+        return new BulkCollection[]{
                 sospesiFigliColl};
     }
 
-    public java.lang.String getCd_cds() {
-        it.cnr.contab.config00.sto.bulk.CdsBulk cds = this.getCds();
+    public String getCd_cds() {
+        CdsBulk cds = this.getCds();
         if (cds == null)
             return null;
         return cds.getCd_unita_organizzativa();
     }
 
-    public void setCd_cds(java.lang.String cd_cds) {
+    public void setCd_cds(String cd_cds) {
         this.getCds().setCd_unita_organizzativa(cd_cds);
     }
 
-    public java.lang.String getCd_cds_origine() {
-        it.cnr.contab.config00.sto.bulk.CdsBulk cds_origine = this.getCds_origine();
+    public String getCd_cds_origine() {
+        CdsBulk cds_origine = this.getCds_origine();
         if (cds_origine == null)
             return null;
         return cds_origine.getCd_unita_organizzativa();
     }
 
-    public void setCd_cds_origine(java.lang.String cd_cds_origine) {
+    public void setCd_cds_origine(String cd_cds_origine) {
         this.getCds_origine().setCd_unita_organizzativa(cd_cds_origine);
     }
 
     /**
      * @return it.cnr.contab.config00.sto.bulk.CdsBulk
      */
-    public it.cnr.contab.config00.sto.bulk.CdsBulk getCds() {
+    public CdsBulk getCds() {
         return cds;
     }
 
     /**
      * @param newCds it.cnr.contab.config00.sto.bulk.CdsBulk
      */
-    public void setCds(it.cnr.contab.config00.sto.bulk.CdsBulk newCds) {
+    public void setCds(CdsBulk newCds) {
         cds = newCds;
     }
 
@@ -225,7 +234,7 @@ public class SospesoBulk extends SospesoBase {
      *
      * @return it.cnr.contab.config00.sto.bulk.CdsBulk
      */
-    public it.cnr.contab.config00.sto.bulk.CdsBulk getCds_origine() {
+    public CdsBulk getCds_origine() {
         return cds_origine;
     }
 
@@ -235,7 +244,7 @@ public class SospesoBulk extends SospesoBase {
      *
      * @param newCds_origine it.cnr.contab.config00.sto.bulk.CdsBulk
      */
-    public void setCds_origine(it.cnr.contab.config00.sto.bulk.CdsBulk newCds_origine) {
+    public void setCds_origine(CdsBulk newCds_origine) {
         cds_origine = newCds_origine;
     }
 
@@ -267,7 +276,7 @@ public class SospesoBulk extends SospesoBase {
         dettaglio_usc = newDettaglio_usc;
     }
 
-    public java.math.BigDecimal getIm_associato_figli() {
+    public BigDecimal getIm_associato_figli() {
         if (getIm_associato() != null && getIm_associato().compareTo(new BigDecimal(0)) > 0)
             return getIm_associato();
         BigDecimal importo = new BigDecimal(0);
@@ -281,7 +290,7 @@ public class SospesoBulk extends SospesoBase {
      *
      * @return <code>BigDecimal</code> l'importo disponibile calcolato del sospeso
      */
-    public java.math.BigDecimal getIm_disponibile() {
+    public BigDecimal getIm_disponibile() {
         if (getIm_sospeso() != null)
             return getIm_sospeso().subtract(getIm_associato());
         return new BigDecimal(0);
@@ -346,7 +355,7 @@ public class SospesoBulk extends SospesoBase {
      *
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getSospesiFigliColl() {
+    public BulkList getSospesiFigliColl() {
         return sospesiFigliColl;
     }
 
@@ -356,7 +365,7 @@ public class SospesoBulk extends SospesoBase {
      *
      * @param newFigliColl it.cnr.jada.bulk.BulkList
      */
-    public void setSospesiFigliColl(it.cnr.jada.bulk.BulkList newFigliColl) {
+    public void setSospesiFigliColl(BulkList newFigliColl) {
         sospesiFigliColl = newFigliColl;
     }
 
@@ -366,8 +375,8 @@ public class SospesoBulk extends SospesoBase {
      *
      * @return java.util.Hashtable ti_cc_biKeys
      */
-    public java.util.Hashtable getTi_cc_biKeys() {
-        Hashtable ti_cc_biKeys = new java.util.Hashtable();
+    public Hashtable getTi_cc_biKeys() {
+        Hashtable ti_cc_biKeys = new Hashtable();
         ti_cc_biKeys.put("C", "C/C");
         ti_cc_biKeys.put("B", "Banca d'Italia");
         return ti_cc_biKeys;
@@ -498,7 +507,7 @@ public class SospesoBulk extends SospesoBase {
             throw new ValidationException("Il campo PROGRESSIVO DOC.CONTABILE è obbligatorio.");
 
         // verifica sul campo IMPORTO
-        if ((getIm_sospeso() == null) || getIm_sospeso().compareTo(new java.math.BigDecimal(0)) <= 0)
+        if ((getIm_sospeso() == null) || getIm_sospeso().compareTo(new BigDecimal(0)) <= 0)
             throw new ValidationException("L' IMPORTO deve essere maggiore di 0.");
 
         // verifica sul campo DATA REGISTRAZIONE
@@ -633,5 +642,9 @@ if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
         setMandatoRiaccredito(Optional.ofNullable(mandatoRiaccredito)
                 .orElseGet(() -> new MandatoIBulk()));
         mandatoRiaccredito.setPg_mandato(pg_mandato_man_riaccr);
+    }
+
+    public Boolean isTipoEntrata(){
+        return Optional.ofNullable(getTi_entrata_spesa()).map(x -> x.equals(TIPO_ENTRATA)).orElse(false);
     }
 }

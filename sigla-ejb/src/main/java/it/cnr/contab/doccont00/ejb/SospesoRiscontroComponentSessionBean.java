@@ -19,8 +19,13 @@ package it.cnr.contab.doccont00.ejb;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.doccont00.comp.SospesoRiscontroComponent;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -31,20 +36,20 @@ import it.cnr.jada.util.RemoteIterator;
 public class SospesoRiscontroComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements SospesoRiscontroComponentSession{
 @PostConstruct
 	public void ejbCreate() {
-	componentObj = new it.cnr.contab.doccont00.comp.SospesoRiscontroComponent();
+	componentObj = new SospesoRiscontroComponent();
 }
-public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
+public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
 	return new SospesoRiscontroComponentSessionBean();
 }
-public void cambiaStato(it.cnr.jada.UserContext param0,java.util.Collection param1,java.lang.String param2,java.lang.String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+public void cambiaStato(UserContext param0, java.util.Collection param1, String param2, String param3) throws ComponentException, EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {
 		((SospesoRiscontroComponent)componentObj).cambiaStato(param0,param1,param2,param3);
 		component_invocation_succes(param0,componentObj);
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
+	} catch(NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
+	} catch(ComponentException e) {
 		component_invocation_failure(param0,componentObj);
 		throw e;
 	} catch(RuntimeException e) {
@@ -53,16 +58,16 @@ public void cambiaStato(it.cnr.jada.UserContext param0,java.util.Collection para
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+public OggettoBulk inizializzaBulkPerStampa(UserContext param0, OggettoBulk param1) throws ComponentException, EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		it.cnr.jada.bulk.OggettoBulk result = ((SospesoRiscontroComponent)componentObj).inizializzaBulkPerStampa(param0,param1);
+		OggettoBulk result = ((SospesoRiscontroComponent)componentObj).inizializzaBulkPerStampa(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
+	} catch(NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
+	} catch(ComponentException e) {
 		component_invocation_failure(param0,componentObj);
 		throw e;
 	} catch(RuntimeException e) {
@@ -71,16 +76,16 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserCon
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+public OggettoBulk stampaConBulk(UserContext param0, OggettoBulk param1) throws ComponentException, EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		it.cnr.jada.bulk.OggettoBulk result = ((SospesoRiscontroComponent)componentObj).stampaConBulk(param0,param1);
+		OggettoBulk result = ((SospesoRiscontroComponent)componentObj).stampaConBulk(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
+	} catch(NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
+	} catch(ComponentException e) {
 		component_invocation_failure(param0,componentObj);
 		throw e;
 	} catch(RuntimeException e) {
@@ -107,4 +112,24 @@ public RemoteIterator cercaSospesiPerStato(UserContext usercontext, CompoundFind
         throw uncaughtError(usercontext, componentObj, error);
     }
 }
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public Integer caricamentoRigaGiornaleCassa(UserContext param0, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws ComponentException, EJBException, it.cnr.jada.persistency.PersistencyException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			Integer caricato = ((SospesoRiscontroComponent) componentObj).caricamentoRigaGiornaleCassa(param0, tesoreriaUnica, cdsEnte, riga);
+			component_invocation_succes(param0, componentObj);
+			return caricato;
+		} catch (NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+
 }

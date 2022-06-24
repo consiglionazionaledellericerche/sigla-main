@@ -1,6 +1,7 @@
 
 package it.cnr.contab.pagopa.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +36,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "dataPromemoriaScadenza",
     "voci"
 })
-public class Pendenza {
+public class Pendenza implements Serializable {
+
+    @JsonProperty("idA2A")
+    private String idA2A = null;
+
+    @JsonProperty("idPendenza")
+    private String idPendenza = null;
 
     @JsonProperty("idTipoPendenza")
     private String idTipoPendenza;
     @JsonProperty("idDominio")
-    private Integer idDominio;
+    private String idDominio;
     @JsonProperty("idUnitaOperativa")
     private String idUnitaOperativa;
     @JsonProperty("causale")
@@ -50,7 +57,7 @@ public class Pendenza {
     @JsonProperty("importo")
     private BigDecimal importo;
     @JsonProperty("numeroAvviso")
-    private Long numeroAvviso;
+    private String numeroAvviso;
     @JsonProperty("tassonomia")
     private String tassonomia;
     @JsonProperty("tassonomiaAvviso")
@@ -61,6 +68,8 @@ public class Pendenza {
     private String divisione;
     @JsonProperty("dataValidita")
     private String dataValidita;
+    @JsonProperty("dataCaricamento")
+    private String dataCaricamento;
     @JsonProperty("dataScadenza")
     private String dataScadenza;
     @JsonProperty("annoRiferimento")
@@ -77,8 +86,17 @@ public class Pendenza {
     private String dataPromemoriaScadenza;
     @JsonProperty("voci")
     private List<Voci> voci = null;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public StatoPendenzaVerificata getStato() {
+        return stato;
+    }
+
+    public void setStato(StatoPendenzaVerificata stato) {
+        this.stato = stato;
+    }
+
+    @JsonProperty("stato")
+    private StatoPendenzaVerificata stato;
 
     @JsonProperty("idTipoPendenza")
     public String getIdTipoPendenza() {
@@ -91,12 +109,12 @@ public class Pendenza {
     }
 
     @JsonProperty("idDominio")
-    public Integer getIdDominio() {
+    public String getIdDominio() {
         return idDominio;
     }
 
     @JsonProperty("idDominio")
-    public void setIdDominio(Integer idDominio) {
+    public void setIdDominio(String idDominio) {
         this.idDominio = idDominio;
     }
 
@@ -141,12 +159,12 @@ public class Pendenza {
     }
 
     @JsonProperty("numeroAvviso")
-    public Long getNumeroAvviso() {
+    public String getNumeroAvviso() {
         return numeroAvviso;
     }
 
     @JsonProperty("numeroAvviso")
-    public void setNumeroAvviso(Long numeroAvviso) {
+    public void setNumeroAvviso(String numeroAvviso) {
         this.numeroAvviso = numeroAvviso;
     }
 
@@ -280,14 +298,15 @@ public class Pendenza {
         this.voci = voci;
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    public void setIdA2A(String idA2A) {
+        this.idA2A = idA2A;
     }
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setIdPendenza(String idPendenza) {
+        this.idPendenza = idPendenza;
     }
 
+    public void setDataCaricamento(String dataCaricamento) {
+        this.dataCaricamento = dataCaricamento;
+    }
 }

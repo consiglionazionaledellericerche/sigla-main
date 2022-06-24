@@ -76,17 +76,21 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
 
     @Override
     public OggettoBulk initializeForInsert(CRUDBP crudbp, ActionContext actioncontext) {
-        setFlPianoEcoFin(null);
-        setFlAssCatVociInd(null);
-        setFlAssCatVociDet(null);
-        setFlAssCatVociAltro(null);
-        setFlPrevEntSpesa(null);
-        setFlRipCostiPers(null);
-        setFlQuadPdgpEconom(null);
-        setFlContrValProg(null);
-        setFlPianoRend(null);
-        setFlVarCons(null);
-        setFlIncCons(null);
+        setFlPianoEcoFin(Boolean.FALSE);
+        setFlAssCatVociInd(Boolean.FALSE);
+        setFlAssCatVociDet(Boolean.FALSE);
+        setFlAssCatVociAltro(Boolean.FALSE);
+        setFlPrevEntSpesa(Boolean.FALSE);
+        setFlRipCostiPers(Boolean.FALSE);
+        setFlQuadPdgpEconom(Boolean.FALSE);
+        setFlContrValProg(Boolean.FALSE);
+        setFlPianoRend(Boolean.FALSE);
+        setFlVarCons(Boolean.FALSE);
+        setFlIncCons(Boolean.FALSE);
+        setFlAllPrevFin(Boolean.FALSE);
+        setFlQuadraContratto(Boolean.FALSE);
+        setFlAssociaContratto(Boolean.FALSE);
+        setFlValidazioneAutomatica(Boolean.FALSE);
         return super.initializeForInsert(crudbp, actioncontext);
     }
 

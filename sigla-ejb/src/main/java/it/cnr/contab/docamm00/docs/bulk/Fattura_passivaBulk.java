@@ -108,7 +108,9 @@ public abstract class Fattura_passivaBulk
     public final static Dictionary STATO_LIQUIDAZIONE;
     public final static Dictionary CAUSALE;
     public final static java.util.Dictionary ti_bonifico_mezzoKeys = Lettera_pagam_esteroBulk.ti_bonifico_mezzoKeys,
-            ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys, ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys;
+            ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys,
+            ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys,
+            ti_divisaKeys = Lettera_pagam_esteroBulk.ti_divisaKeys;
 
     static {
         TIPO = new it.cnr.jada.util.OrderedHashtable();

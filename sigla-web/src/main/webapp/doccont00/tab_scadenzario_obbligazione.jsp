@@ -34,7 +34,7 @@
 	<tr>
 		<td colspan="3">
 		      <% bp.getScadenzario().setEnabled( !bp.isEditingScadenza());
-			     bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione",true,false,true,"100%","100px"); %>
+			     bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione",true,false,true,"100%","300px"); %>
 		</td>
 	</tr>
   	<tr>

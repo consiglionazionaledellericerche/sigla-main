@@ -158,8 +158,8 @@
 		<columnMapping
 			columnName="COMMISSIONI_SPESE"
 			propertyName="commissioni_spese"
-			sqlTypeName="CHAR"
-			columnSize="1"/>
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
 		<columnMapping
 			columnName="COMMISSIONI_SPESE_ESTERE"
 			propertyName="commissioni_spese_estere"
@@ -186,6 +186,21 @@
 			propertyName="dt_cancellazione"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
+		<columnMapping
+			columnName="INDIRIZZO_BENEFICIARIO"
+			propertyName="indirizzo_beneficiario"
+			sqlTypeName="VARCHAR"
+			columnSize="250"/>
+		<columnMapping
+			columnName="BIC_BANCA_INTERMEDIARIA"
+			propertyName="bic_banca_intermediaria"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		<columnMapping
+			columnName="PAESE_BENEFICIARIO"
+			propertyName="paese_beneficiario"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
 		<columnMapping
 			columnName="ISTRUZIONI_SPECIALI_1"
 			propertyName="istruzioni_speciali_1"
@@ -263,6 +278,12 @@
 		name="commissioni_spese_estere"/>
 	<persistentProperty
 		name="dt_cancellazione"/>
+	<persistentProperty
+		name="indirizzo_beneficiario"/>
+	<persistentProperty
+		name="bic_banca_intermediaria"/>
+	<persistentProperty
+		name="paese_beneficiario"/>
 	<persistentProperty
 		name="istruzioni_speciali_1"/>
 	<persistentProperty

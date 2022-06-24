@@ -595,6 +595,7 @@
 		label="Voce del piano"
 		enabledOnSearch="true"
 		completeOnSave="false" />
+
 	<fieldProperty
 		name="findGaeDestinazioneFinale"
 		property="gaeDestinazioneFinale"
@@ -657,7 +658,7 @@
 		/>
 	<columnFieldProperty
 		name="motivazione"
-		/>		
+		/>
 
 	<formFieldProperty
 		name="cd_cds"
@@ -850,6 +851,7 @@
 	<formFieldProperty
 		name="dsCdrDestinazioneFinale" />
 
+
 	<form name="searchtool">
         <formFieldProperty
               name="cd_cds" 
@@ -942,5 +944,6 @@
 		/>		
 	<findFieldProperty
 		name="ds_gara_in_corso"
-		/>		
+		/>
+
 </bulkInfo>

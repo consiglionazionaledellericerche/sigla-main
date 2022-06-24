@@ -1186,6 +1186,9 @@
 	<action path="/ConsGAEResSpeVocAction"
 			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
 	</action>
+	<action path="/ConsGAEResSpeVocAction"
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
+	</action>
 	<businessProcess name="ConsGAEResEtrBP"
 					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />

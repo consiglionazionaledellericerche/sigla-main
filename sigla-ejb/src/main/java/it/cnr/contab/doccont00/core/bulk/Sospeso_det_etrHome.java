@@ -18,13 +18,21 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.sql.*;
+
+import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.prevent01.bulk.Pdg_approvato_dip_areaBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 import java.math.*;
+import java.util.Collection;
 
 public class Sospeso_det_etrHome extends BulkHome {
 /**
@@ -33,7 +41,7 @@ public class Sospeso_det_etrHome extends BulkHome {
  *
  * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
  */
-public Sospeso_det_etrHome(java.sql.Connection conn) {
+public Sospeso_det_etrHome(Connection conn) {
 	super(Sospeso_det_etrBulk.class,conn);
 }
 /**
@@ -43,66 +51,28 @@ public Sospeso_det_etrHome(java.sql.Connection conn) {
  * @param conn	La java.sql.Connection su cui vengono effettuate le operazione di persistenza
  * @param persistentCache	La PersistentCache in cui vengono cachati gli oggetti persistenti caricati da questo Home
  */
-public Sospeso_det_etrHome(java.sql.Connection conn,PersistentCache persistentCache) {
+public Sospeso_det_etrHome(Connection conn, PersistentCache persistentCache) {
 	super(Sospeso_det_etrBulk.class,conn,persistentCache);
 }
 /*
  * Calcola la somma degli importi dei dettagli della reversale associati al riscontro.
 */
-public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws it.cnr.jada.persistency.PersistencyException 
-{
-	try
+public BigDecimal calcolaTotDettagli( V_mandato_reversaleBulk man_rev ) throws IntrospectionException, PersistencyException
 	{
-		LoggableStatement ps = new LoggableStatement(getConnection(),
-			"SELECT SUM( IM_ASSOCIATO ) " +			
-			"FROM " +
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 			
-			"SOSPESO_DET_ETR WHERE " +
-			"ESERCIZIO = ? AND CD_CDS = ? AND PG_REVERSALE = ? AND STATO = ? AND TI_SOSPESO_RISCONTRO = ?" ,
-			true,this.getClass());
-		try
-		{
-			ps.setObject( 1, man_rev.getEsercizio() );
-			ps.setString( 2, man_rev.getCd_cds() );
-			ps.setObject( 3, man_rev.getPg_documento_cont() );
-			ps.setString( 4, Sospeso_det_etrBulk.STATO_DEFAULT );
-			ps.setString( 5, SospesoBulk.TI_RISCONTRO );
-		
-			ResultSet rs = ps.executeQuery();
-			BigDecimal result; 
-			try
+
+		BigDecimal impTotale = Utility.ZERO;
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, man_rev.getEsercizio());
+		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, man_rev.getCd_cds());
+		sql.addSQLClause("AND", "PG_REVERSALE", sql.EQUALS, man_rev.getPg_documento_cont());
+		sql.addSQLClause("AND", "STATO", sql.EQUALS, Sospeso_det_etrBulk.STATO_DEFAULT);
+		sql.addSQLClause("AND", "TI_SOSPESO_RISCONTRO", sql.EQUALS, SospesoBulk.TI_RISCONTRO);
+		Collection coll = fetchAll(sql);
+			for (java.util.Iterator i = coll.iterator(); i.hasNext();)
 			{
-				if(rs.next())
-				{
-					result =  rs.getBigDecimal(1);
-					if ( result == null )
-						result = new BigDecimal(0);
-				}		
-				else
-					result =  new BigDecimal(0);
-				return result;	
+				Sospeso_det_etrBulk sospDet = (Sospeso_det_etrBulk) i.next();
+				impTotale = impTotale.add(Utility.nvl(sospDet.getIm_associato()));
 			}
-			catch( SQLException e )
-			{
-				throw new PersistencyException( e );
-			}
-			finally
-			{
-				try{rs.close();}catch( java.sql.SQLException e ){};
-			}
-		}
-		catch( SQLException e )
-		{
-			throw new PersistencyException( e );
-		}
-		finally
-		{
-			try{ps.close();}catch( java.sql.SQLException e ){};	
-		}
+			return impTotale;
 	}
-	catch ( SQLException e )
-	{
-			throw new PersistencyException( e );
-	}
-}
 }

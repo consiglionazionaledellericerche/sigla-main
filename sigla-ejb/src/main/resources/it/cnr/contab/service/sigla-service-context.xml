@@ -100,12 +100,6 @@
 		<property name="serverPrint" value="${print.server.name}"/>
 		<property name="printDsOfflineImplemented" ref="mapPrintDsOfflineImplemented"/>
 	</bean>
-  
-	<bean id="pagopaService" class="it.cnr.contab.pagopa.rest.PagopaService">
-		<property name="baseUrl" value="${pagopa.govpay.base_url}"/>
-		<property name="username" value="${pagopa.govpay.username}"/>
-		<property name="password" value="${pagopa.govpay.password}"/>
-	</bean>
 
 	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
 		<property name="fatturazioneElettronicaClient" ref="fatturazioneElettronicaClient"/>

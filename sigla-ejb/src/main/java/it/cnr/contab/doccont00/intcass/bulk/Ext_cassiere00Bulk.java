@@ -24,12 +24,15 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Ext_cassiere00Bulk extends Ext_cassiere00Base {
 
+	public final static String TIPO_RECORD_01 = "01";
+	public final static String TIPO_RECORD_30 = "30";
+	public final static String TIPO_RECORD_32 = "32";
 	private SimpleBulkList logs;
 
 public Ext_cassiere00Bulk() {
 	super();
 }
-public Ext_cassiere00Bulk(java.lang.Integer esercizio,java.lang.String nome_file,java.lang.Long pg_rec) {
+public Ext_cassiere00Bulk(Integer esercizio, String nome_file, Long pg_rec) {
 	super(esercizio,nome_file,pg_rec);
 }
 public int addToLogs (Ext_cassiere00_logsBulk nuovoRigo)
@@ -45,7 +48,7 @@ public int addToLogs (Ext_cassiere00_logsBulk nuovoRigo)
  * Creation date: (22/04/2003 17.22.47)
  * @return it.cnr.jada.bulk.SimpleBulkList
  */
-public it.cnr.jada.bulk.SimpleBulkList getLogs() {
+public SimpleBulkList getLogs() {
 	return logs;
 }
 public Ext_cassiere00_logsBulk removeFromLogs( int indiceDiLinea ) {
@@ -59,7 +62,7 @@ public Ext_cassiere00_logsBulk removeFromLogs( int indiceDiLinea ) {
  * Creation date: (22/04/2003 17.22.47)
  * @param newLogs it.cnr.jada.bulk.SimpleBulkList
  */
-public void setLogs(it.cnr.jada.bulk.SimpleBulkList newLogs) {
+public void setLogs(SimpleBulkList newLogs) {
 	logs = newLogs;
 }
 }
