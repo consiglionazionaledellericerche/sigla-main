@@ -21,8 +21,10 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.action.FindBP;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,5 +36,32 @@ public class Ass_mandato_mandatoHome extends BulkHome {
 
 	public Ass_mandato_mandatoHome(java.sql.Connection conn, PersistentCache persistentCache) {
 		super(Ass_mandato_mandatoBulk.class,conn,persistentCache);
+	}
+
+	public Collection findByMandato( it.cnr.jada.UserContext userContext, MandatoBulk mandato ) throws PersistencyException, IntrospectionException
+	{
+		PersistentHome home = getHomeCache().getHome( Ass_mandato_mandatoBulk.class );
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, mandato.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds",SQLBuilder.EQUALS, mandato.getCds().getCd_unita_organizzativa() );
+		sql.addClause(FindClause.AND,"pg_mandato",SQLBuilder.EQUALS, mandato.getPg_mandato() );
+		Collection result = home.fetchAll( sql);
+		getHomeCache().fetchAll(userContext);
+		return result;
+	}
+
+	public Collection findByMandatoCollegato( it.cnr.jada.UserContext userContext, MandatoBulk mandato ) throws PersistencyException {
+		return this.findByMandatoCollegato(userContext, mandato, true);
+	}
+
+	public Collection findByMandatoCollegato( it.cnr.jada.UserContext userContext, MandatoBulk mandato, boolean fetchAll ) throws PersistencyException {
+		PersistentHome home = getHomeCache().getHome( Ass_mandato_mandatoBulk.class );
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio_coll",SQLBuilder.EQUALS, mandato.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds_coll",SQLBuilder.EQUALS, mandato.getCds().getCd_unita_organizzativa() );
+		sql.addClause(FindClause.AND,"pg_mandato_coll",SQLBuilder.EQUALS, mandato.getPg_mandato() );
+		Collection result = home.fetchAll( sql);
+		if (fetchAll) getHomeCache().fetchAll(userContext);
+		return result;
 	}
 }

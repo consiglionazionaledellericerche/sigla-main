@@ -18,13 +18,13 @@
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.doccont00.core.bulk.Ass_mandato_mandatoBulk"
 	homeClassName="it.cnr.contab.doccont00.core.bulk.Ass_mandato_mandatoHome" >
-	<defaultColumnMap tableName="ASS_COMP_DOC_CONT_NMP">
+	<defaultColumnMap tableName="ASS_MANDATO_MANDATO">
 		<columnMapping
 				columnName="ESERCIZIO"
 				propertyName="mandato.esercizio" />
 		<columnMapping
 				columnName="CD_CDS"
-				propertyName="mandato.cd_cds" />
+				propertyName="mandato.cds.cd_unita_organizzativa" />
 		<columnMapping
 				columnName="PG_MANDATO"
 				propertyName="mandato.pg_mandato" />
@@ -33,7 +33,7 @@
 				propertyName="mandatoColl.esercizio" />
 		<columnMapping
 				columnName="CD_CDS_COLL"
-				propertyName="mandatoColl.cd_cds" />
+				propertyName="mandatoColl.cds.cd_unita_organizzativa" />
 		<columnMapping
 				columnName="PG_MANDATO_COLL"
 				propertyName="mandatoColl.pg_mandato" />

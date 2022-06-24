@@ -17,11 +17,15 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class Documento_genericoHome extends BulkHome implements
@@ -149,5 +153,18 @@ public class Documento_genericoHome extends BulkHome implements
 			throw it.cnr.jada.persistency.sql.SQLExceptionHandler.getInstance()
 					.handleSQLException(e, spesa);
 		}
+	}
+
+	public java.util.List findDocumentoGenericoRigheList(Documento_genericoBulk generico ) throws PersistencyException
+	{
+		PersistentHome home = getHomeCache().getHome(Documento_generico_rigaBulk.class);
+		it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "pg_documento_generico", SQLBuilder.EQUALS, generico.getPg_documento_generico());
+		sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, generico.getCd_cds());
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, generico.getEsercizio());
+		sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, generico.getCd_unita_organizzativa());
+		sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, generico.getCd_tipo_documento_amm());
+
+		return home.fetchAll(sql);
 	}
 }

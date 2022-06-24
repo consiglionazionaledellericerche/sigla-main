@@ -20,6 +20,7 @@ package it.cnr.contab.coepcoan00.ejb;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 
 import javax.ejb.Remote;
 

@@ -3350,17 +3350,8 @@ public class DocumentoGenericoComponent
             //brokerTD.close();
             //}
             //generico =(Documento_genericoBulk) super.inizializzaBulkPerModifica(userContext, generico);
-            it.cnr.jada.bulk.BulkHome home = getHome(userContext, Documento_generico_rigaBulk.class);
-            it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
-            sql.addClause("AND", "pg_documento_generico", SQLBuilder.EQUALS, generico.getPg_documento_generico());
-            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, generico.getCd_cds());
-            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, generico.getEsercizio());
-            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, generico.getCd_unita_organizzativa());
-            sql.addClause("AND", "cd_tipo_documento_amm", SQLBuilder.EQUALS, generico.getCd_tipo_documento_amm());
-
-            getHomeCache(userContext).fetchAll(userContext);
-
-            generico.setDocumento_generico_dettColl(new it.cnr.jada.bulk.BulkList(home.fetchAll(sql)));
+            Documento_genericoHome home = (Documento_genericoHome)getHome(userContext, Documento_genericoBulk.class);
+            generico.setDocumento_generico_dettColl(new it.cnr.jada.bulk.BulkList(home.findDocumentoGenericoRigheList(generico)));
 
             //to be chkd
             generico.setTi_entrate_spese(generico.getTipo_documento().getTi_entrata_spesa().charAt(0));

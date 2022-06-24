@@ -43,6 +43,10 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws PersistencyException {
+        return this.findMovimentiAvereColl(userContext, scrittura, true);
+    }
+
+    public Collection findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
         SQLBuilder sql = getHomeCache().getHome(Movimento_cogeBulk.class).createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
@@ -50,11 +54,15 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
         sql.addClause("AND", "pg_scrittura", SQLBuilder.EQUALS, scrittura.getPg_scrittura());
         sql.addClause("AND", "sezione", SQLBuilder.EQUALS, Movimento_cogeBulk.SEZIONE_AVERE);
         List result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
-        getHomeCache().fetchAll(userContext);
+        if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
     }
 
     public Collection findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws PersistencyException {
+        return this.findMovimentiDareColl(userContext, scrittura, true);
+    }
+
+    public Collection findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
         SQLBuilder sql = getHomeCache().getHome(Movimento_cogeBulk.class).createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
@@ -62,7 +70,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
         sql.addClause("AND", "pg_scrittura", SQLBuilder.EQUALS, scrittura.getPg_scrittura());
         sql.addClause("AND", "sezione", SQLBuilder.EQUALS, Movimento_cogeBulk.SEZIONE_DARE);
         List result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
-        getHomeCache().fetchAll(userContext);
+        if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
     }
 

@@ -21,6 +21,12 @@ import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
+import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaFromDocumentoComponentSession;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
@@ -30,16 +36,18 @@ import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -55,12 +63,12 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import org.slf4j.LoggerFactory;
 
+import javax.batch.api.partition.PartitionAnalyzer;
+import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.Source;
@@ -76,10 +84,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -88,6 +94,8 @@ import java.util.stream.Stream;
 public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, Fattura_passivaBulk> implements
         IDocumentoAmministrativoBP, IGenericSearchDocAmmBP, VoidableBP,
         IDefferedUpdateSaldiBP, FatturaPassivaElettronicaBP, IDocAmmEconomicaBP {
+
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(CRUDFatturaPassivaBP.class);
 
     private final SimpleDetailCRUDController crudRiferimentiBanca = new SimpleDetailCRUDController(
             "RifBanca", Fattura_passiva_rigaBulk.class, "riferimenti_bancari",
@@ -568,10 +576,10 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     }
 
-    public OggettoBulk initializeModelForEdit(ActionContext context,
-                                              OggettoBulk bulk) throws BusinessProcessException {
-
+    public OggettoBulk initializeModelForEdit(ActionContext context, OggettoBulk bulk) throws BusinessProcessException {
         try {
+            this.loadAllScritture(context.getUserContext(), 2022, "ASR");
+
             if (bulk != null) {
                 Fattura_passivaBulk fp = (Fattura_passivaBulk) bulk;
                 fp.setDettagliCancellati(new java.util.Vector());
@@ -1851,5 +1859,21 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         } catch (PersistencyException | RemoteException | ComponentException e) {
             throw handleException(e);
         }
+    }
+
+    public void loadAllScritture(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException, RemoteException {
+        ScritturaPartitaDoppiaFromDocumentoComponentSession component = Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession();
+        List<IDocumentoCogeBulk> allDocuments = component.getAllDocumentiCoge(userContext, esercizio, cdCds).stream()
+                .filter(el->Optional.ofNullable(el.getDt_contabilizzazione()).isPresent()).sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione))
+                .collect(Collectors.toList());
+
+        Collection<List<IDocumentoCogeBulk>> splitList = (Collection<List<IDocumentoCogeBulk>>) Utility.splitListBySize(allDocuments, 100);
+        splitList.stream().forEach(el->{
+            try {
+                component.loadScritture(userContext, el);
+            } catch (Exception e) {
+                throw new DetailedRuntimeException(e);
+            }
+        });
     }
 }

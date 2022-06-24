@@ -255,18 +255,20 @@ public class MandatoIHome extends MandatoHome {
      * @param mandato <code>MandatoBulk</code> il mandato
      * @return result la riga del mandato
      */
-    public Collection findMandato_riga(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+    public Collection findMandato_riga(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException {
+        return this.findMandato_riga(userContext, mandato, true);
+    }
+
+    public Collection findMandato_riga(it.cnr.jada.UserContext userContext, MandatoBulk mandato, boolean fetchAll) throws PersistencyException {
         PersistentHome home = getHomeCache().getHome(Mandato_rigaIBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
         sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
         sql.addClause("AND", "pg_mandato", sql.EQUALS, mandato.getPg_mandato());
         Collection result = home.fetchAll(sql);
-        getHomeCache().fetchAll(userContext);
+        if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
-
     }
-
 
     /**
      * Metodo per cercare la righe siope del mandato.
@@ -291,14 +293,18 @@ public class MandatoIHome extends MandatoHome {
      * @param mandato <code>MandatoBulk</code> il mandato
      * @return istanza di <code>Mandato_terzoBulk</code>
      */
-    public Mandato_terzoBulk findMandato_terzo(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+    public Mandato_terzoBulk findMandato_terzo(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException {
+        return this.findMandato_terzo(userContext, mandato, true);
+    }
+
+    public Mandato_terzoBulk findMandato_terzo(it.cnr.jada.UserContext userContext, MandatoBulk mandato, boolean fetchAll) throws PersistencyException {
         PersistentHome home = getHomeCache().getHome(Mandato_terzoIBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
         sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
         sql.addClause("AND", "pg_mandato", sql.EQUALS, mandato.getPg_mandato());
         Collection result = home.fetchAll(sql);
-        getHomeCache().fetchAll(userContext);
+        if (fetchAll) getHomeCache().fetchAll(userContext);
         return (Mandato_terzoBulk) result.iterator().next();
 
     }

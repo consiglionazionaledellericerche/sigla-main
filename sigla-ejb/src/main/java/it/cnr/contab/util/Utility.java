@@ -28,28 +28,30 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
 import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaComponentSession;
+import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaFromDocumentoComponentSession;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.doccont00.ejb.*;
 import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
 import it.cnr.contab.ordmag.magazzino.ejb.TransitoBeniOrdiniComponentSession;
-import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
-import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneRigaGestComponent;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneRigaGestComponentSession;
-import it.cnr.contab.progettiric00.comp.RimodulaProgettoRicercaComponent;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
@@ -64,10 +66,8 @@ import org.springframework.core.type.filter.AssignableTypeFilter;
 
 import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
 import it.cnr.contab.bollo00.ejb.AttoBolloComponentSession;
-import it.cnr.contab.bollo00.comp.TipoAttoBolloComponent;
 import it.cnr.contab.bollo00.ejb.TipoAttoBolloComponentSession;
 import it.cnr.contab.client.docamm.FatturaAttiva;
-import it.cnr.contab.config00.comp.CRUDConfigAssEvoldEvnewComponent;
 import it.cnr.contab.config00.ejb.CRUDConfigAssEvoldEvnewComponentSession;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -276,6 +276,14 @@ public final class Utility {
 		} else {
 			return NumberToTextRicorsiva(n);
 		}
+	}
+
+	public static Collection<? extends List<?>> splitListBySize(List<?> intList, int size) {
+		if (!intList.isEmpty() && size > 0) {
+			final AtomicInteger counter = new AtomicInteger(0);
+			return intList.stream().collect(Collectors.groupingBy(it -> counter.getAndIncrement() / size)).values();
+		}
+		return null;
 	}
 
 	public static void main(String[] args) {
@@ -553,5 +561,8 @@ public final class Utility {
 	}
 	public static ObbligazionePGiroComponentSession createObbligazionePGiroComponentSession() throws javax.ejb.EJBException{
 		return (ObbligazionePGiroComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession", ObbligazionePGiroComponentSession.class);
+	}
+	public static ScritturaPartitaDoppiaFromDocumentoComponentSession createScritturaPartitaDoppiaFromDocumentoComponentSession() throws javax.ejb.EJBException{
+		return (ScritturaPartitaDoppiaFromDocumentoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaFromDocumentoComponentSession", ScritturaPartitaDoppiaFromDocumentoComponentSession.class);
 	}
 }

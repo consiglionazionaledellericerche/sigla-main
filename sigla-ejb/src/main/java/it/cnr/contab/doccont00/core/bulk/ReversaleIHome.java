@@ -125,16 +125,19 @@ public class ReversaleIHome extends ReversaleHome {
      * @param reversale <code>ReversaleBulk</code> la reversale
      * @return result la riga della reversale
      */
-    public Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException, IntrospectionException {
+    public Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException {
+        return this.findReversale_riga(userContext, reversale, true);
+    }
+
+    public Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException {
         PersistentHome home = getHomeCache().getHome(Reversale_rigaIBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, reversale.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, reversale.getCd_cds());
         sql.addClause("AND", "pg_reversale", SQLBuilder.EQUALS, reversale.getPg_reversale());
         Collection result = home.fetchAll(sql);
-        getHomeCache().fetchAll(userContext);
+        if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
-
     }
 
     /**
@@ -143,22 +146,24 @@ public class ReversaleIHome extends ReversaleHome {
      * @param reversale <code>ReversaleBulk</code> la reversale
      * @return istanza di <code>Reversale_terzoBulk</code>
      */
-    public Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException, IntrospectionException {
+    public Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException {
+        return this.findReversale_terzo(userContext, reversale, true);
+    }
+
+    public Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException {
         PersistentHome home = getHomeCache().getHome(Reversale_terzoBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, reversale.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, reversale.getCd_cds());
         sql.addClause("AND", "pg_reversale", SQLBuilder.EQUALS, reversale.getPg_reversale());
         Collection result = home.fetchAll(sql);
-        getHomeCache().fetchAll(userContext);
+        if (fetchAll) getHomeCache().fetchAll(userContext);
         return (Reversale_terzoBulk) result.iterator().next();
-
     }
 
     /**
      * Carica la reversale <reversale> con tutti gli oggetti complessi
      *
-     * @param reversale
      * @return
      * @throws PersistencyException
      */

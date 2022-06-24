@@ -21,40 +21,36 @@ import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
-import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
-import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.missioni00.ejb.AnticipoComponentSession;
-import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.NoRollbackException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ScritturaPartitaDoppiaFromDocumentoComponent.class);
+
     private Optional<Scrittura_partita_doppiaBulk> getScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
         try {
             Optional<Scrittura_partita_doppiaBulk> scritturaOpt = Optional.empty();
@@ -78,22 +74,6 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
     }
 
-    private void removeScrittura(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws ComponentException {
-        try {
-            scrittura.getAllMovimentiColl().forEach(movcoge->{
-               movcoge.setToBeDeleted();
-               try {
-                  super.deleteBulk(userContext, movcoge);
-               } catch (ComponentException | PersistencyException e) {
-                  throw new DetailedRuntimeException(e);
-               }
-            });
-            scrittura.setToBeDeleted();
-            super.deleteBulk(userContext, scrittura);
-        } catch (ComponentException | PersistencyException e) {
-            throw handleException(scrittura, e);
-        }
-    }
     protected void caricaScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
         this.getScrittura(userContext, documentoCogeBulk).ifPresent(documentoCogeBulk::setScrittura_partita_doppia);
     }
@@ -162,128 +142,95 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
     }
 
-    public void loadAllScritture(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException {
-        List<IDocumentoCogeBulk> allDocuments = new ArrayList<>();
+    public void createScrittura(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws ComponentException {
+        super.creaConBulk(userContext, scrittura);
+    }
 
+    public void removeScrittura(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws ComponentException {
+        try {
+            scrittura.getAllMovimentiColl().forEach(movcoge->{
+                movcoge.setToBeDeleted();
+                try {
+                    super.deleteBulk(userContext, movcoge);
+                } catch (ComponentException | PersistencyException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+            scrittura.setToBeDeleted();
+            super.deleteBulk(userContext, scrittura);
+        } catch (PersistencyException e) {
+            throw handleException(scrittura, e);
+        }
+    }
+
+    public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException {
+        List<IDocumentoCogeBulk> allDocuments = new ArrayList<>();
         {
             PersistentHome anticipoHome = getHome(userContext, AnticipoBulk.class);
             SQLBuilder sql = anticipoHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            anticipoHome.fetchAll(sql).stream().forEach(anticipo->{
-                try {
-                    AnticipoComponentSession component = (AnticipoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_AnticipoComponentSession", AnticipoComponentSession.class);
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) anticipo));
-                } catch (ComponentException | RemoteException e) {
-                throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(anticipoHome.fetchAll(sql));
         }
         {
             PersistentHome missioneHome = getHome(userContext, MissioneBulk.class);
             SQLBuilder sql = missioneHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            missioneHome.fetchAll(sql).stream().forEach(missione->{
-                try {
-                    MissioneComponentSession component = (MissioneComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRMISSIONI00_EJB_MissioneComponentSession", MissioneComponentSession.class);
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) missione));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(missioneHome.fetchAll(sql));
         }
         {
             PersistentHome compensoHome = getHome(userContext, CompensoBulk.class);
             SQLBuilder sql = compensoHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            compensoHome.fetchAll(sql).stream().forEach(compenso->{
-                try {
-                    CompensoComponentSession component = Utility.createCompensoComponentSession();
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) compenso));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(compensoHome.fetchAll(sql));
         }
         {
             PersistentHome docgenHome = getHome(userContext, Documento_genericoBulk.class);
             SQLBuilder sql = docgenHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            docgenHome.fetchAll(sql).stream().forEach(docgen->{
-                try {
-                    DocumentoGenericoComponentSession component = Utility.createDocumentoGenericoComponentSession();
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) docgen));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(docgenHome.fetchAll(sql));
         }
         {
-            PersistentHome fatattHome = getHome(userContext, Fattura_attivaBulk.class);
+            PersistentHome fatattHome = getHome(userContext, Documento_amministrativo_attivoBulk.class);
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            fatattHome.fetchAll(sql).stream().forEach(fatatt->{
-                try {
-                    FatturaAttivaSingolaComponentSession component = Utility.createFatturaAttivaSingolaComponentSession();
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) fatatt));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(fatattHome.fetchAll(sql));
         }
         {
-            PersistentHome fatpasHome = getHome(userContext, Fattura_passivaBulk.class);
+            PersistentHome fatpasHome = getHome(userContext, Documento_amministrativo_passivoBulk.class);
             SQLBuilder sql = fatpasHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            fatpasHome.fetchAll(sql).stream().forEach(fatpas->{
-                try {
-                    FatturaPassivaComponentSession component = Utility.createFatturaPassivaComponentSession();
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) fatpas));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
         }
         {
-            PersistentHome mandatoHome = getHome(userContext, MandatoBulk.class);
+            PersistentHome mandatoHome = getHome(userContext, MandatoIBulk.class);
             SQLBuilder sql = mandatoHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            mandatoHome.fetchAll(sql).stream().forEach(mandato->{
-                try {
-                    MandatoComponentSession component = Utility.createMandatoComponentSession();
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) mandato));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(mandatoHome.fetchAll(sql));
         }
         {
-            PersistentHome reversaleHome = getHome(userContext, ReversaleBulk.class);
+            PersistentHome reversaleHome = getHome(userContext, ReversaleIBulk.class);
             SQLBuilder sql = reversaleHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            reversaleHome.fetchAll(sql).stream().forEach(reversale->{
-                try {
-                    ReversaleComponentSession component = Utility.createReversaleComponentSession();
-                    allDocuments.add((IDocumentoCogeBulk)component.inizializzaBulkPerModifica(userContext, (OggettoBulk) reversale));
-                } catch (ComponentException | RemoteException e) {
-                    throw new DetailedRuntimeException(e);
-                }
-            });
+            allDocuments.addAll(reversaleHome.fetchAll(sql));
         }
 
-        allDocuments.stream().sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)).forEach(el->{
-            try {
-                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, el);
-                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk =
-                        Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                .proposeScritturaPartitaDoppia(userContext, el));
+        return allDocuments;
+    }
+
+    public void loadScrittura(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+        try {
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
+            if (!optionalScritturaPartitaDoppiaOldBulk.isPresent()) {
+                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, documentoCoge));
+
                 optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
                     //Elimino vecchia scrittura
                     try {
@@ -295,11 +242,26 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 });
                 //Ricreo
                 if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
-                    super.creaConBulk(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
-            } catch (ComponentException | RemoteException e) {
+                    this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+            }
+        } catch (RemoteException e) {
+            throw handleException(e);
+        }
+    }
+
+    public void loadScritture(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
+        documentiCoge.forEach(documentoCoge->{
+            try {
+                this.loadScrittura(userContext, documentoCoge);
+                logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
+            } catch (NoRollbackException e) {
+                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
+                        " - Anomalia: " + e.getMessage());
+            } catch (Exception e) {
+                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
+                        " - Anomalia: " + e.getMessage());
                 throw new DetailedRuntimeException(e);
             }
         });
-
     }
 }

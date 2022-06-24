@@ -132,6 +132,8 @@ public abstract class ReversaleHome extends BulkHome {
      */
     public abstract Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException, IntrospectionException;
 
+    public abstract Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException, IntrospectionException;
+
     /**
      * <!-- @TODO: da completare -->
      *
@@ -141,6 +143,8 @@ public abstract class ReversaleHome extends BulkHome {
      * @throws IntrospectionException
      */
     public abstract Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException, IntrospectionException;
+
+    public abstract Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException, IntrospectionException;
 
     /**
      * Metodo per cercare i sospesi associati alla reversale.

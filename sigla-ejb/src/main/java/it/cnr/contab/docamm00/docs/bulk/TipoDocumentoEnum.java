@@ -42,7 +42,8 @@ public enum TipoDocumentoEnum {
 	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E),
 	MANDATO(Numerazione_doc_contBulk.TIPO_MAN),
 	REVERSALE(Numerazione_doc_contBulk.TIPO_REV),
-	GEN_STIPENDI_SPESA("GEN_STIP_S");
+	GEN_STIPENDI_SPESA("GEN_STIP_S"),
+	REGOLA_E("REGOLA_E");
 
 	private final String value;
 
@@ -147,13 +148,18 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_ENTRATA.equals(this);
 	}
 
+	public boolean isGenericoMandatoRegolarizzazione() {
+		return TipoDocumentoEnum.REGOLA_E.equals(this);
+	}
+
 	/**
 	 * Indica se per il tipo di documento deve essere prevista la registrazione della prima nota contabile
 	 */
 	public boolean isScritturaEconomicaRequired() {
 		return !this.isGenericoCoriAccantonamentoSpesa() &&
 				!this.isGenericoCoriAccantonamentoEntrata() &&
-				!this.isGenericoStipendiSpesa();
+				!this.isGenericoStipendiSpesa() &&
+				!this.isGenericoMandatoRegolarizzazione();
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {
