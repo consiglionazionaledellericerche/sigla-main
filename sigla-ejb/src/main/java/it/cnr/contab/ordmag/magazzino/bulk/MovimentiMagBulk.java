@@ -177,6 +177,24 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setCdUop(String cdUop)  {
 		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUop);
 	}
+	public String getCdCdsMag() {
+		MagazzinoBulk mag = this.getMagazzinoUt();
+		if (mag == null)
+			return null;
+		return getMagazzinoUt().getCdCds();
+	}
+	public void setCdCdsMag(String cdCdsMag)  {
+		this.getMagazzinoUt().setCdCds(cdCdsMag);
+	}
+	public String getCdMagazzino() {
+		MagazzinoBulk mag = this.getMagazzinoUt();
+		if (mag == null)
+			return null;
+		return getMagazzinoUt().getCdMagazzino();
+	}
+	public void setCdMagazzino(String cdMagazzino)  {
+		this.getMagazzinoUt().setCdMagazzino(cdMagazzino);
+	}
 	public String getCdCdsLotto() {
 		LottoMagBulk lottoMag = this.getLottoMag();
 		if (lottoMag == null)

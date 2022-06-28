@@ -1820,7 +1820,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
 
-	//esegue il check di disponibilita di cassa 
+	//esegue il check di disponibilita di cassa
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
 	verificaCoperturaContratto( uc, obbligazione);
 	verificaCoerenzaGaeContratto(uc, obbligazione);
@@ -2581,7 +2581,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		return super.modificaConBulk(usercontext, aoggettobulk);
 	}
 
-	/**
+/**
   *  Obbligazione non esiste
   *    PreCondition:
   *      L'obbligazione richiesta non esiste.

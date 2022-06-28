@@ -31,21 +31,21 @@ import java.rmi.RemoteException;
 
 @Stateless(name="BLOGS_EJB_BatchControlComponentSession")
 public class BatchControlComponentSessionBean extends CRUDComponentSessionBean implements BatchControlComponentSession{
-    @PostConstruct
-    public void ejbCreate() {
+	@PostConstruct
+	public void ejbCreate() {
         componentObj = new BatchControlComponent();
     }
-    @Remove
-    public void ejbRemove() throws javax.ejb.EJBException {
-        componentObj.release();
-    }
-
-    public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
+	@Remove
+	public void ejbRemove() throws EJBException {
+		componentObj.release();
+	}
+	
+	public static CRUDComponentSessionBean newInstance() throws EJBException {
         return new BatchControlComponentSessionBean();
     }
 
     public Batch_controlBulk attivaBatch(UserContext param0, Batch_controlBulk param1)
-            throws ComponentException, EJBException
+        throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -74,8 +74,8 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
         }
     }
 
-    public Batch_controlBulk disattivaBatch(UserContext param0, Batch_controlBulk param1)
-            throws ComponentException, EJBException
+	public Batch_controlBulk disattivaBatch(UserContext param0, Batch_controlBulk param1)
+		throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -105,7 +105,7 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
     }
 
     public Batch_controlBulk inizializzaParametri(UserContext param0, Batch_controlBulk param1)
-            throws ComponentException, EJBException
+    	throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try
@@ -135,7 +135,7 @@ public class BatchControlComponentSessionBean extends CRUDComponentSessionBean i
     }
 
     public RemoteIterator listaBatch_control_jobs(UserContext param0)
-            throws ComponentException, EJBException
+    	throws ComponentException, EJBException
     {
         pre_component_invocation(param0, componentObj);
         try

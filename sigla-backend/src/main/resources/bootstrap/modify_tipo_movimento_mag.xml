@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="gianfranco.gasparro" id="drop_table_tipo_movimento_mag_az">
+        <dropTable tableName="tipo_movimento_mag_az"></dropTable>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add_column_tipo_movimento_mag_after_drop">
+        <addColumn tableName="TIPO_MOVIMENTO_MAG">
+            <column name="RIPORTA_LOTTO_FORNITORE" type="CHAR(1)" defaultValue="N" remarks="Riporta il lotto fornitore sul lotto movimentato. Dominio: Y = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AGG_DATA_ULTIMO_CARICO" type="CHAR(1)" defaultValue="N" remarks="Aggiorna data ultimo carico sui lotti. Dominio: Y = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_QTA_MAGAZZINO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento delle giacenze di magazzino. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_QTA_VAL_MAGAZZINO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento delle giacenze a valore di magazzino. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_VALORE_LOTTO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento del valore dei lotti. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_QTA_INIZIO_ANNO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento della quantità di inizio anno. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FL_MOVIMENTA_LOTTI_BLOCCATI" type="CHAR(1)" defaultValue="N" remarks="Indica se è possibile movimentare lotti bloccati. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CD_CDS_RIF" type="VARCHAR(30)" remarks="Cds del movimento di riferimento"/>
+            <column name="CD_TIPO_MOVIMENTO_RIF" type="VARCHAR(3)" remarks="Tipo movimento di riferimento"/>
+            <column name="GENERA_BOLLA_SCARICO" type="CHAR(1)" defaultValue="N" remarks="Indica se il movimento deve generare bolle di scarico. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FL_CONSUMO" type="CHAR(1)" defaultValue="N" remarks="Indica se il movimento è un consumo. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

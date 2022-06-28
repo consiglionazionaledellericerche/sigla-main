@@ -17,61 +17,61 @@
   -->
 
 <bulkInfo
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="https://contab.cnr.it/schema/SIGLA"
-        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA"
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
-    <fieldProperty
-            name="find_elemento_padre"
-            property="elemento_padre"
-            inputType="SEARCHTOOL"
-            enabledOnSearch="true"
-    />
-    <fieldProperty
-            name="cd_elemento_padre"
-            property="elemento_padre.cd_elemento_voce"
-            label="Voce padre"
-            inputType="TEXT"
-            maxLength="30"
-            inputSize="6"
-            enabledOnSearch="true"
-            readonlyProperty="ROElemento_padre"
-    />
-    <fieldProperty
-            name="ds_elemento_padre"
-            property="elemento_padre.ds_elemento_voce"
-            inputSize="20"
-            label=""
-            inputType="ROTEXT"
-    />
-    <fieldProperty
-            name="cd_elemento_voce"
-            property="cd_elemento_voce"
-            label="Codice completo"
-            inputType="ROTEXT"
-            maxLength="30"
-            inputSize="30"
-            enabledOnSearch="true"
-    />
-    <fieldProperty
-            name="searchtool_cd_elemento_voce"
-            property="cd_elemento_voce"
-            label="Codice completo"
-            inputType="TEXT"
-            maxLength="30"
-            inputSize="15"
-            enabledOnSearch="true"
-    />
-    <fieldProperty
-            name="cd_proprio_elemento"
-            property="cd_proprio_elemento"
-            label="Codice proprio"
-            inputType="TEXT"
-            maxLength="30"
-            inputSize="20"
-            enabledOnSearch="true"
-            enabledOnEdit="false"
-    />
+	<fieldProperty
+		name="find_elemento_padre"
+		property="elemento_padre"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_elemento_padre"
+		property="elemento_padre.cd_elemento_voce"
+		label="Voce padre"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="6"
+		enabledOnSearch="true"
+		readonlyProperty="ROElemento_padre"
+		/>
+	<fieldProperty
+		name="ds_elemento_padre"
+		property="elemento_padre.ds_elemento_voce"
+		inputSize="20"
+		label=""
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		label="Codice completo"
+		inputType="ROTEXT"
+		maxLength="30"
+		inputSize="30"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="searchtool_cd_elemento_voce"
+		property="cd_elemento_voce"
+		label="Codice completo"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="15"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_proprio_elemento"
+		property="cd_proprio_elemento"
+		label="Codice proprio"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="20"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		/>
 
     <fieldProperty
             name="fl_limite_ass_obblig"
@@ -496,15 +496,15 @@
     <columnFieldProperty
             name="fl_partita_giro"
 			textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="fl_missioni"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="flComunicaPagamenti"
             textTruncate="true"
-            headerStyle="max-width: 13ch"/>
+            headerStyle="max-width: 8ch"/>
     <columnFieldProperty
             name="cd_capoconto_fin"
             textTruncate="true"

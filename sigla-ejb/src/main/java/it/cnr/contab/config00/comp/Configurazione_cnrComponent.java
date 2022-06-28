@@ -859,26 +859,35 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
+
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione che, in fase di assunzione impegno, consente di creare in automatico sull'impegno di spesa
+     * una variazione di storno bilancio con cui vengono in automatico spostate le somme dalla GAE selezionata sull'impegno ad una GAE alternativa
+     * indicata direttamente dall'utente
+     * @throws PersistencyException
+     */
     public Boolean isAttachRestContrStoredFromSigla(UserContext userContext) throws ComponentException, RemoteException {
         try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_GESTIONE_CONTRATTI,
-                    Configurazione_cnrBulk.SK_ATT_REST_STORED_FROM_SIGLA,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        try {
-                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-                                    .orElse(Boolean.FALSE);
-                        } catch (PersistencyException|ComponentException e) {
-                            throw new PersistencyError(e);
-                        }
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
+        Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+        Configurazione_cnrBulk.PK_GESTIONE_CONTRATTI,
+        Configurazione_cnrBulk.SK_ATT_REST_STORED_FROM_SIGLA,
+        ASTERISCO,
+        CNRUserContext.getEsercizio(userContext));
+        return val01YesNo(userContext, configurazioneCnrKey)
+        .orElseGet(() -> {
+        try {
+        return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+        .orElse(Boolean.FALSE);
+        } catch (PersistencyException|ComponentException e) {
+        throw new PersistencyError(e);
         }
-    }
+        });
+        } catch (PersistencyException e) {
+        throw handleException(e);
+        }
+        }
 
     /**
      *

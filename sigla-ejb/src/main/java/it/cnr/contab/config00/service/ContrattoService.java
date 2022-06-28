@@ -17,29 +17,28 @@
 
 package it.cnr.contab.config00.service;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
-import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
-import it.cnr.si.spring.storage.StorageDriver;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StorageException;
-import it.cnr.si.spring.storage.StoreService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ContrattoService extends StoreService {
 	private transient static final Logger logger = LoggerFactory.getLogger(ContrattoService.class);

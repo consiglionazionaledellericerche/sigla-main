@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 //            Batch_log_tstaKey
 
 public class Batch_log_tstaBase extends Batch_log_tstaKey
-        implements Keyed
+    implements Keyed
 {
 
     public Batch_log_tstaBase()

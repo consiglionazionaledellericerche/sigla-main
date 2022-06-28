@@ -17,9 +17,13 @@
 
 package it.cnr.contab.logs.bulk;
 
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 
 public class Batch_log_tstaHome extends BulkHome
@@ -27,11 +31,18 @@ public class Batch_log_tstaHome extends BulkHome
 
     public Batch_log_tstaHome(Connection connection)
     {
-        super(it.cnr.contab.logs.bulk.Batch_log_tstaBulk.class, connection);
+        super(Batch_log_tstaBulk.class, connection);
     }
 
     public Batch_log_tstaHome(Connection connection, PersistentCache persistentcache)
     {
-        super(it.cnr.contab.logs.bulk.Batch_log_tstaBulk.class, connection, persistentcache);
+        super(Batch_log_tstaBulk.class, connection, persistentcache);
+    }
+    public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException,it.cnr.jada.comp.ComponentException {
+        Batch_log_tstaBulk batch = (Batch_log_tstaBulk)bulk;
+        if (batch.getPg_esecuzione() == null)
+            batch.setPg_esecuzione(new BigDecimal(this.fetchNextSequenceValue(userContext,"IBMSEQ00_BATCH_LOG")));
+        if (batch.getPg_job() == null)
+            batch.setPg_job(new BigDecimal(this.fetchNextSequenceValue(userContext,"IBMSEQ00_DYNA_JOB")));
     }
 }

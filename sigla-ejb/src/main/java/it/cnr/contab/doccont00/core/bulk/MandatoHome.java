@@ -105,7 +105,7 @@ public abstract class MandatoHome extends BulkHome {
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
                     ;
                 }
@@ -114,7 +114,7 @@ public abstract class MandatoHome extends BulkHome {
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
                 ;
             }
@@ -131,7 +131,7 @@ public abstract class MandatoHome extends BulkHome {
      * @throws PersistencyException
      * @throws IntrospectionException
      */
-    public abstract Collection findMandato_riga(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException;
+    public abstract Collection findMandato_riga(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException;
 
     /**
      * <!-- @TODO: da completare -->
@@ -141,7 +141,7 @@ public abstract class MandatoHome extends BulkHome {
      * @throws PersistencyException
      * @throws IntrospectionException
      */
-    public abstract Mandato_terzoBulk findMandato_terzo(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException;
+    public abstract Mandato_terzoBulk findMandato_terzo(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException;
 
     /**
      * Metodo per cercare i sospesi associati al mandato.
@@ -149,14 +149,14 @@ public abstract class MandatoHome extends BulkHome {
      * @param mandato <code>MandatoBulk</code> il mandato
      * @return result i sospesi associati al mandato
      */
-    public Collection findSospeso_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+    public Collection findSospeso_det_usc(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
         return findRiscontroSospeso_det_usc(userContext, mandato, SospesoBulk.TI_SOSPESO);
     }
 
-    public Collection findRiscontro_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+    public Collection findRiscontro_det_usc(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
         return findRiscontroSospeso_det_usc(userContext, mandato, SospesoBulk.TI_RISCONTRO);
     }
-    public Collection findRiscontroSospeso_det_usc(it.cnr.jada.UserContext userContext, MandatoBulk mandato, String sospesoRiscontro) throws PersistencyException, IntrospectionException {
+    public Collection findRiscontroSospeso_det_usc(UserContext userContext, MandatoBulk mandato, String sospesoRiscontro) throws PersistencyException, IntrospectionException {
         PersistentHome home = getHomeCache().getHome(Sospeso_det_uscBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
@@ -176,7 +176,7 @@ public abstract class MandatoHome extends BulkHome {
      * @throws PersistencyException
      */
 
-    public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException, ComponentException {
+    public void initializePrimaryKeyForInsert(UserContext userContext, OggettoBulk bulk) throws PersistencyException, ComponentException {
         try {
             MandatoBulk mandato = (MandatoBulk) bulk;
             Long pg;
@@ -206,7 +206,7 @@ public abstract class MandatoHome extends BulkHome {
      * @return
      * @throws PersistencyException
      */
-    public java.util.Hashtable loadTipoDocumentoKeys(MandatoBulk bulk) throws PersistencyException {
+    public Hashtable loadTipoDocumentoKeys(MandatoBulk bulk) throws PersistencyException {
         SQLBuilder sql = getHomeCache().getHome(Tipo_documento_ammBulk.class).createSQLBuilder();
         sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, "S");
         List result = getHomeCache().getHome(Tipo_documento_ammBulk.class).fetchAll(sql);
@@ -226,7 +226,7 @@ public abstract class MandatoHome extends BulkHome {
      * @return
      * @throws PersistencyException
      */
-    public java.util.Hashtable loadTipoDocumentoPerRicercaKeys(MandatoBulk bulk) throws PersistencyException {
+    public Hashtable loadTipoDocumentoPerRicercaKeys(MandatoBulk bulk) throws PersistencyException {
         SQLBuilder sql = getHomeCache().getHome(Tipo_documento_ammBulk.class).createSQLBuilder();
 //	sql.addClause( "AND", "ti_entrata_spesa", sql.EQUALS, "S" );
         sql.openParenthesis("AND");
@@ -250,7 +250,7 @@ public abstract class MandatoHome extends BulkHome {
      * @throws IntrospectionException
      * @throws PersistencyException
      */
-    public java.util.List findMandato(MandatoBulk mandato) throws IntrospectionException, PersistencyException {
+    public List findMandato(MandatoBulk mandato) throws IntrospectionException, PersistencyException {
         final SQLBuilder sql = createSQLBuilder();
         Optional.ofNullable(mandato)
                 .ifPresent(mandatoBulk -> sql.addClause(mandatoBulk.buildFindClauses(null)));
@@ -263,7 +263,7 @@ public abstract class MandatoHome extends BulkHome {
      * @param mandatoBulk Mandato in uso.
      * @return java.util.Collection Collezione di oggetti <code>CUP</code>
      */
-    public java.util.Collection<CupBulk> findCodiciSiopeCupCollegati(UserContext usercontext, MandatoBulk mandatoBulk) throws PersistencyException {
+    public Collection<CupBulk> findCodiciSiopeCupCollegati(UserContext usercontext, MandatoBulk mandatoBulk) throws PersistencyException {
         PersistentHome mandatoSiopeCupHome = getHomeCache().getHome(MandatoSiopeCupIBulk.class);
         SQLBuilder sql = mandatoSiopeCupHome.createSQLBuilder();
         sql.setAutoJoins(true);
@@ -287,7 +287,7 @@ public abstract class MandatoHome extends BulkHome {
      * @param mandatoBulk Mandato in uso.
      * @return java.util.Collection Collezione di oggetti <code>CUP</code>
      */
-    public java.util.Collection<String> findCodiciCupCollegati(UserContext usercontext, MandatoBulk mandatoBulk) throws PersistencyException {
+    public Collection<String> findCodiciCupCollegati(UserContext usercontext, MandatoBulk mandatoBulk) throws PersistencyException {
         PersistentHome mandatoCupHome = getHomeCache().getHome(MandatoCupIBulk.class);
         SQLBuilder sql = mandatoCupHome.createSQLBuilder();
         sql.setAutoJoins(true);
@@ -304,7 +304,7 @@ public abstract class MandatoHome extends BulkHome {
                 .distinct()
                 .collect(Collectors.toList());
     }
-    public MandatoBulk findAndLockMandatoAnnullato(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+    public MandatoBulk findAndLockMandatoAnnullato(UserContext userContext, String cdCds, Integer esercizio, Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
 
         return findAndLockMandato(cdCds, esercizio, pgMandato, true);
     }
@@ -327,7 +327,7 @@ public abstract class MandatoHome extends BulkHome {
         }
     }
 
-    public MandatoBulk findAndLockMandatoNonAnnullato(it.cnr.jada.UserContext userContext,java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
+    public MandatoBulk findAndLockMandatoNonAnnullato(UserContext userContext, String cdCds, Integer esercizio, Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
         return findAndLockMandato(cdCds, esercizio, pgMandato, false);
     }
 }

@@ -538,18 +538,20 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 	    		List<BollaScaricoMagBulk> listaBolleScarico = new ArrayList<>();
 	
 				listaMovimenti.stream()
-	   				.collect(Collectors.groupingBy(MovimentiMagBulk::getUnitaOperativaOrd,
-	   							Collectors.groupingBy(MovimentiMagBulk::getMagazzinoUt,
-	   									Collectors.groupingBy(MovimentiMagBulk::getDtRiferimento))))
-	   				.entrySet().stream().forEach(unitaOperativaSet->{
-	   					unitaOperativaSet.getValue().entrySet().stream().forEach(magazzinoSet->{
-	   						magazzinoSet.getValue().entrySet().stream().forEach(dtRiferimentoSet->{
+						.collect(Collectors.groupingBy(MovimentiMagBulk::getCdUop,
+								Collectors.groupingBy(MovimentiMagBulk::getCdCdsMag,
+										Collectors.groupingBy(MovimentiMagBulk::getCdMagazzino,
+												Collectors.groupingBy(MovimentiMagBulk::getDtRiferimento)))))
+								.entrySet().stream().forEach(unitaOperativaSet->{
+									unitaOperativaSet.getValue().entrySet().stream().forEach(cdsMagSet->{
+										cdsMagSet.getValue().entrySet().stream().forEach(codmagSet->{
+											codmagSet.getValue().entrySet().stream().forEach(dtRiferimentoSet->{
 	   	    	    			BollaScaricoMagBulk bollaScarico = new BollaScaricoMagBulk();
 	   							try {
 		   	    					bollaScarico.setDtBollaSca(dtRiferimentoSet.getKey());
-		   	    					bollaScarico.setMagazzino(magazzinoSet.getKey());
+		   	    					bollaScarico.setMagazzino(new MagazzinoBulk(cdsMagSet.getKey(), codmagSet.getKey()));
 		   	    					bollaScarico.setStato(OrdineAcqBulk.STATO_INSERITO);
-		   	    					bollaScarico.setUnitaOperativaOrd(unitaOperativaSet.getKey());
+		   	    					bollaScarico.setUnitaOperativaOrd(new UnitaOperativaOrdBulk(unitaOperativaSet.getKey()));
 		   	    					bollaScarico.setToBeCreated();
 	
 		   	    					dtRiferimentoSet.getValue().stream().forEach(movimento->{
@@ -563,6 +565,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, IP
 	   								throw new DetailedRuntimeException(ex);
 	   							}
 	   						});
+										});
 	   					});
 					});
 				listaBolleScarico.stream().forEach(bollaScarico->{

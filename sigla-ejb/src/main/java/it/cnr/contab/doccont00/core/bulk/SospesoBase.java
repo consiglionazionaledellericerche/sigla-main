@@ -21,22 +21,22 @@ import it.cnr.jada.persistency.Keyed;
 
 public class SospesoBase extends SospesoKey implements Keyed {
     // CAUSALE VARCHAR(200)
-    private java.lang.String causale;
+    private String causale;
 
     // CD_CDS_ORIGINE VARCHAR(30)
-    private java.lang.String cd_cds_origine;
+    private String cd_cds_origine;
 
     // CD_UO_ORIGINE VARCHAR(30)
-    private java.lang.String cd_uo_origine;
+    private String cd_uo_origine;
 
     // DS_ANAGRAFICO VARCHAR(200)
-    private java.lang.String ds_anagrafico;
+    private String ds_anagrafico;
 
     // DT_REGISTRAZIONE TIMESTAMP NOT NULL
     private java.sql.Timestamp dt_registrazione;
 
     // FL_STORNATO CHAR(1) NOT NULL
-    private java.lang.Boolean fl_stornato;
+    private Boolean fl_stornato;
 
     // IM_ASSOCIATO DECIMAL(15,2) NOT NULL
     private java.math.BigDecimal im_associato;
@@ -48,10 +48,10 @@ public class SospesoBase extends SospesoKey implements Keyed {
     private java.math.BigDecimal im_sospeso;
 
     // STATO_SOSPESO CHAR(1) NOT NULL
-    private java.lang.String stato_sospeso;
+    private String stato_sospeso;
 
     // TI_CC_BI CHAR(1) NOT NULL
-    private java.lang.String ti_cc_bi;
+    private String ti_cc_bi;
 
     public String getCd_avviso_pagopa() {
         return cd_avviso_pagopa;
@@ -62,18 +62,18 @@ public class SospesoBase extends SospesoKey implements Keyed {
     }
 
     // CD_SOSPESO_PADRE(20)
-    private java.lang.String cd_sospeso_padre;
+    private String cd_sospeso_padre;
 
     // CD_PROPRIO_SOSPESO(20)
-    private java.lang.String cd_proprio_sospeso;
+    private String cd_proprio_sospeso;
 
     // DT_STORNO TIMESTAMP NULL
     private java.sql.Timestamp dt_storno;
 
-    private java.lang.String destinazione;
+    private String destinazione;
 
-    private java.lang.String tipo_contabilita;
-    private java.lang.String cd_avviso_pagopa;
+    private String tipo_contabilita;
+    private String cd_avviso_pagopa;
 
 	private String cd_cds_man_riaccr;
 	private Integer esercizio_man_riaccr;
@@ -83,51 +83,51 @@ public class SospesoBase extends SospesoKey implements Keyed {
         super();
     }
 
-    public SospesoBase(java.lang.String cd_cds, java.lang.String cd_sospeso, java.lang.Integer esercizio, java.lang.String ti_entrata_spesa, java.lang.String ti_sospeso_riscontro) {
+    public SospesoBase(String cd_cds, String cd_sospeso, Integer esercizio, String ti_entrata_spesa, String ti_sospeso_riscontro) {
         super(cd_cds, cd_sospeso, esercizio, ti_entrata_spesa, ti_sospeso_riscontro);
     }
 
-    public java.lang.String getDestinazione() {
+    public String getDestinazione() {
         return destinazione;
     }
 
-    public void setDestinazione(java.lang.String destinazione) {
+    public void setDestinazione(String destinazione) {
         this.destinazione = destinazione;
     }
 
-    public java.lang.String getTipo_contabilita() {
+    public String getTipo_contabilita() {
         return tipo_contabilita;
     }
 
-    public void setTipo_contabilita(java.lang.String tipo_contabilita) {
+    public void setTipo_contabilita(String tipo_contabilita) {
         this.tipo_contabilita = tipo_contabilita;
     }
 
     /*
      * Getter dell'attributo causale
      */
-    public java.lang.String getCausale() {
+    public String getCausale() {
         return causale;
     }
 
     /*
      * Setter dell'attributo causale
      */
-    public void setCausale(java.lang.String causale) {
+    public void setCausale(String causale) {
         this.causale = causale;
     }
 
     /*
      * Getter dell'attributo cd_cds_origine
      */
-    public java.lang.String getCd_cds_origine() {
+    public String getCd_cds_origine() {
         return cd_cds_origine;
     }
 
     /*
      * Setter dell'attributo cd_cds_origine
      */
-    public void setCd_cds_origine(java.lang.String cd_cds_origine) {
+    public void setCd_cds_origine(String cd_cds_origine) {
         this.cd_cds_origine = cd_cds_origine;
     }
 
@@ -137,7 +137,7 @@ public class SospesoBase extends SospesoKey implements Keyed {
      *
      * @return java.lang.String
      */
-    public java.lang.String getCd_proprio_sospeso() {
+    public String getCd_proprio_sospeso() {
         return cd_proprio_sospeso;
     }
 
@@ -147,7 +147,7 @@ public class SospesoBase extends SospesoKey implements Keyed {
      *
      * @param newCd_proprio_sospeso java.lang.String
      */
-    public void setCd_proprio_sospeso(java.lang.String newCd_proprio_sospeso) {
+    public void setCd_proprio_sospeso(String newCd_proprio_sospeso) {
         cd_proprio_sospeso = newCd_proprio_sospeso;
     }
 
@@ -157,7 +157,7 @@ public class SospesoBase extends SospesoKey implements Keyed {
      *
      * @return java.lang.String
      */
-    public java.lang.String getCd_sospeso_padre() {
+    public String getCd_sospeso_padre() {
         return cd_sospeso_padre;
     }
 
@@ -167,35 +167,35 @@ public class SospesoBase extends SospesoKey implements Keyed {
      *
      * @param newCd_sospeso_padre java.lang.String
      */
-    public void setCd_sospeso_padre(java.lang.String newCd_sospeso_padre) {
+    public void setCd_sospeso_padre(String newCd_sospeso_padre) {
         cd_sospeso_padre = newCd_sospeso_padre;
     }
 
     /*
      * Getter dell'attributo cd_uo_origine
      */
-    public java.lang.String getCd_uo_origine() {
+    public String getCd_uo_origine() {
         return cd_uo_origine;
     }
 
     /*
      * Setter dell'attributo cd_uo_origine
      */
-    public void setCd_uo_origine(java.lang.String cd_uo_origine) {
+    public void setCd_uo_origine(String cd_uo_origine) {
         this.cd_uo_origine = cd_uo_origine;
     }
 
     /*
      * Getter dell'attributo ds_anagrafico
      */
-    public java.lang.String getDs_anagrafico() {
+    public String getDs_anagrafico() {
         return ds_anagrafico;
     }
 
     /*
      * Setter dell'attributo ds_anagrafico
      */
-    public void setDs_anagrafico(java.lang.String ds_anagrafico) {
+    public void setDs_anagrafico(String ds_anagrafico) {
         this.ds_anagrafico = ds_anagrafico;
     }
 
@@ -216,14 +216,14 @@ public class SospesoBase extends SospesoKey implements Keyed {
     /*
      * Getter dell'attributo fl_stornato
      */
-    public java.lang.Boolean getFl_stornato() {
+    public Boolean getFl_stornato() {
         return fl_stornato;
     }
 
     /*
      * Setter dell'attributo fl_stornato
      */
-    public void setFl_stornato(java.lang.Boolean fl_stornato) {
+    public void setFl_stornato(Boolean fl_stornato) {
         this.fl_stornato = fl_stornato;
     }
 
@@ -272,28 +272,28 @@ public class SospesoBase extends SospesoKey implements Keyed {
     /*
      * Getter dell'attributo stato_sospeso
      */
-    public java.lang.String getStato_sospeso() {
+    public String getStato_sospeso() {
         return stato_sospeso;
     }
 
     /*
      * Setter dell'attributo stato_sospeso
      */
-    public void setStato_sospeso(java.lang.String stato_sospeso) {
+    public void setStato_sospeso(String stato_sospeso) {
         this.stato_sospeso = stato_sospeso;
     }
 
     /*
      * Getter dell'attributo ti_cc_bi
      */
-    public java.lang.String getTi_cc_bi() {
+    public String getTi_cc_bi() {
         return ti_cc_bi;
     }
 
     /*
      * Setter dell'attributo ti_cc_bi
      */
-    public void setTi_cc_bi(java.lang.String ti_cc_bi) {
+    public void setTi_cc_bi(String ti_cc_bi) {
         this.ti_cc_bi = ti_cc_bi;
     }
 

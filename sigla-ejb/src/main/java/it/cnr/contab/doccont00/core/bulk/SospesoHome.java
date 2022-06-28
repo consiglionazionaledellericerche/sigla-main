@@ -54,7 +54,7 @@ import java.util.List;
 public class SospesoHome extends BulkHome {
 	/**
 	 * <!-- @TODO: da completare --> Costruisce un SospesoHome
-	 *
+	 * 
 	 * @param conn
 	 *            La java.sql.Connection su cui vengono effettuate le operazione
 	 *            di persistenza
@@ -65,7 +65,7 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * <!-- @TODO: da completare --> Costruisce un SospesoHome
-	 *
+	 * 
 	 * @param conn
 	 *            La java.sql.Connection su cui vengono effettuate le operazione
 	 *            di persistenza
@@ -79,8 +79,8 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * <!-- @TODO: da completare -->
-	 *
-	 *
+	 * 
+	 * 
 	 * @param sospeso
 	 * @throws PersistencyException
 	 * @throws BusyResourceException
@@ -129,13 +129,13 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di entrata (associati alla reversale).
-	 *
+	 * 
 	 * @param reversale
 	 *            <code>ReversaleBulk</code> la reversale
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi di entrata associati alla
 	 *         reversale
-	 *
+	 * 
 	 */
 	public Collection findSospesiDiEntrata(ReversaleBulk reversale,boolean tesoreriaUnica)
 			throws IntrospectionException, PersistencyException {
@@ -146,12 +146,12 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di spesa (associati al mandato).
-	 *
+	 * 
 	 * @param mandato
 	 *            <code>MandatoBulk</code> il mandato
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi di spesa associati al mandato
-	 *
+	 * 
 	 */
 	public Collection findSospesiDiSpesa(MandatoBulk mandato,boolean tesoreriaUnica)
 			throws IntrospectionException, PersistencyException {
@@ -161,15 +161,15 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi figli di un sospeso
-	 *
+	 * 
 	 * @param sospeso
 	 *            <code>SospesoBulk</code> il sospeso
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi figli di un sospeso
-	 *
+	 * 
 	 */
 	public Collection findSospesiFigliColl(UserContext userContext,
-										   SospesoBulk sospeso) throws IntrospectionException,
+                                           SospesoBulk sospeso) throws IntrospectionException,
 			PersistencyException {
 		SQLBuilder sql = createSQLBuilder();
 		sql
@@ -190,13 +190,13 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di entrata.
-	 *
+	 * 
 	 * @param sospeso
 	 *            <code>SospesoBulk</code> il sospeso
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi di entrata associati alla
 	 *         reversale
-	 *
+	 * 
 	 */
 	public Collection findSospeso_det_etrColl(SospesoBulk sospeso)
 			throws IntrospectionException, PersistencyException {
@@ -236,13 +236,13 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di entrata.
-	 *
+	 * 
 	 * @param sospeso
 	 *            <code>SospesoBulk</code> il sospeso
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi di entrata associati alla
 	 *         reversale
-	 *
+	 * 
 	 */
 	public Collection findSospeso_det_etrCollEsteso(SospesoBulk sospeso)
 			throws IntrospectionException, PersistencyException {
@@ -261,12 +261,12 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di spesa.
-	 *
+	 * 
 	 * @param sospeso
 	 *            <code>SospesoBulk</code> il sospeso
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi di spesa associati al mandato
-	 *
+	 * 
 	 */
 	public Collection findSospeso_det_uscColl(SospesoBulk sospeso)
 			throws IntrospectionException, PersistencyException {
@@ -288,12 +288,12 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di spesa.
-	 *
+	 * 
 	 * @param sospeso
 	 *            <code>SospesoBulk</code> il sospeso
-	 *
+	 * 
 	 * @return <code>Collection</code> i sospesi di spesa associati al mandato
-	 *
+	 * 
 	 */
 	public Collection findSospeso_det_uscCollEsteso(SospesoBulk sospeso)
 			throws IntrospectionException, PersistencyException {
@@ -313,16 +313,16 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di entrata (associati alla reversale).
-	 *
+	 * 
 	 * @param reversale
 	 *            <code>ReversaleBulk</code> la reversale
-	 *
+	 * 
 	 * @return <code>SQLBuilder</code> la query per recuperare i sospesi di
 	 *         entrata associati alla reversale
-	 *
+	 * 
 	 */
 	public SQLBuilder selectSospesiDiEntrata(ReversaleBulk reversale,
-											 CompoundFindClause clausole,boolean tesoreriaUnica) throws PersistencyException{
+			CompoundFindClause clausole,boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
 		Unita_organizzativa_enteBulk uoEnte=null;
 		if (clausole != null)
@@ -331,9 +331,9 @@ public class SospesoHome extends BulkHome {
 		if (!tesoreriaUnica)
 			sql.addClause("AND", "cd_cds", sql.EQUALS, reversale.getCd_cds());
 		else{
-			uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
-			if (uoEnte!=null)
-				sql.addClause("AND", "cd_cds", sql.EQUALS, uoEnte.getCd_cds());
+			 uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+			 if (uoEnte!=null)
+				 sql.addClause("AND", "cd_cds", sql.EQUALS, uoEnte.getCd_cds());
 		}
 		// sql.addClause( "AND", "cd_uo_origine", sql.EQUALS,
 		// reversale.getCd_uo_origine() );
@@ -380,7 +380,7 @@ public class SospesoHome extends BulkHome {
 			if (reversale.isBanca_italia())
 				sql.addClause("AND", "ti_cc_bi", sql.EQUALS,
 						SospesoBulk.TIPO_BANCA_ITALIA);
-				// carica i sospesi CC per conto corrente speciale (ente)
+			// carica i sospesi CC per conto corrente speciale (ente)
 			else
 				sql.addClause("AND", "ti_cc_bi", sql.EQUALS,
 						SospesoBulk.TIPO_CC);
@@ -392,13 +392,13 @@ public class SospesoHome extends BulkHome {
 
 	/**
 	 * Metodo per cercare i sospesi di spesa (associati al mandato).
-	 *
+	 * 
 	 * @param mandato
 	 *            <code>MandatoBulk</code> il mandato
-	 *
+	 * 
 	 * @return <code>SQLBuilder</code> la query per recuperare i sospesi di
 	 *         spesa associati al mandato
-	 *
+	 * 
 	 */
 	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato, CompoundFindClause clausole, boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
@@ -409,9 +409,9 @@ public class SospesoHome extends BulkHome {
 		if (!tesoreriaUnica)
 			sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
 		else{
-			uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
-			if (uoEnte!=null)
-				sql.addClause("AND", "cd_cds", sql.EQUALS, uoEnte.getCd_cds());
+			 uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+			 if (uoEnte!=null)
+				 sql.addClause("AND", "cd_cds", sql.EQUALS, uoEnte.getCd_cds());
 		}
 		//altrimenti dovrebbe essere sempre 999
 		// sql.addClause( "AND", "cd_uo_origine", sql.EQUALS,
