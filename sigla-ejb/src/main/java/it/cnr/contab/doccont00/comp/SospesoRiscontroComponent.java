@@ -26,30 +26,41 @@ import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
+import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
+import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
+import it.cnr.contab.logs.ejb.BatchControlComponentSession;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
+import it.cnr.contab.pagopa.ejb.PendenzaPagopaComponentSession;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
-public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent implements ISospesoRiscontroMgr, ICRUDMgr, Cloneable, Serializable, IPrintMgr {
+public class SospesoRiscontroComponent extends CRUDComponent implements ISospesoRiscontroMgr, ICRUDMgr, Cloneable, Serializable, IPrintMgr {
     /**
      * SospesoRiscontroComponent constructor comment.
      */
@@ -79,11 +90,11 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             if (Numerazione_doc_contBulk.TIPO_MAN.equals(v_man_rev.getCd_tipo_documento_cont()))
 
                 cs = new LoggableStatement(getConnection(userContext), "{  call " +
-                        it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+                        EJBCommonServices.getDefaultSchema() +
                         "CNRCTB037.riscontroMandato(?, ?, ?, ?, ?)}", false, this.getClass());
             else
                 cs = new LoggableStatement(getConnection(userContext), "{  call " +
-                        it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+                        EJBCommonServices.getDefaultSchema() +
                         "CNRCTB037.riscontroReversale(?, ?, ?, ?, ?)}", false, this.getClass());
 
             try {
@@ -305,7 +316,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     private void aggiornaStatoDocContabile(UserContext userContext, Sospeso_det_etrBulk dettaglio, V_mandato_reversaleBulk v_man_rev) throws ComponentException {
         try {
-            java.math.BigDecimal totDettagli = new BigDecimal(0);
+            BigDecimal totDettagli = new BigDecimal(0);
             Sospeso_det_etrHome sospeso_det_etrHome = (Sospeso_det_etrHome) getHome(userContext, Sospeso_det_etrBulk.class);
             totDettagli = sospeso_det_etrHome.calcolaTotDettagli(v_man_rev);
 
@@ -343,7 +354,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     private void aggiornaStatoDocContabile(UserContext userContext, Sospeso_det_uscBulk dettaglio, V_mandato_reversaleBulk v_man_rev) throws ComponentException {
         try {
-            java.math.BigDecimal totDettagli = new BigDecimal(0);
+            BigDecimal totDettagli = new BigDecimal(0);
             Sospeso_det_uscHome sospeso_det_uscHome = (Sospeso_det_uscHome) getHome(userContext, Sospeso_det_uscBulk.class);
             totDettagli = sospeso_det_uscHome.calcolaTotDettagli(v_man_rev);
 
@@ -432,7 +443,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      *                    null nel caso di nuovoStato = IN SOSPESO
      */
 
-    public void cambiaStato(it.cnr.jada.UserContext userContext, Collection sospesi, String nuovoStato, String cd_cds) throws ComponentException {
+    public void cambiaStato(UserContext userContext, Collection sospesi, String nuovoStato, String cd_cds) throws ComponentException {
         SospesoBulk sospeso;
         try {
             for (Iterator i = sospesi.iterator(); i.hasNext(); ) {
@@ -476,7 +487,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      * delle clausole di ricerca.
      * @return Un RemoteIterator sul risultato della ricerca
      */
-    public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext, it.cnr.jada.persistency.sql.CompoundFindClause clausole, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+    public RemoteIterator cerca(UserContext userContext, CompoundFindClause clausole, OggettoBulk bulk) throws ComponentException {
         try {
             if (bulk instanceof SelezionaSospesiCNRBulk)
                 return iterator(userContext,
@@ -767,11 +778,11 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * Validazione dell'oggetto in fase di stampa
      */
-    private Timestamp getDataOdierna(it.cnr.jada.UserContext userContext) throws ComponentException {
+    private Timestamp getDataOdierna(UserContext userContext) throws ComponentException {
 
         try {
             return getHome(userContext, SospesoBulk.class).getServerDate();
-        } catch (it.cnr.jada.persistency.PersistencyException ex) {
+        } catch (PersistencyException ex) {
             throw handleException(ex);
         }
     }
@@ -1008,7 +1019,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_riscontriVBulk stampa) throws it.cnr.jada.comp.ComponentException {
+    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_riscontriVBulk stampa) throws ComponentException {
 
         stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
 
@@ -1022,7 +1033,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_cnr_assoc_cdsVBulk stampa) throws it.cnr.jada.comp.ComponentException {
+    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_cnr_assoc_cdsVBulk stampa) throws ComponentException {
 
         String cd_cds_scrivania = CNRUserContext.getCd_cds(userContext);
         stampa.setCd_cds(cd_cds_scrivania);
@@ -1043,7 +1054,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             }
 
 
-        } catch (it.cnr.jada.persistency.PersistencyException pe) {
+        } catch (PersistencyException pe) {
             throw new ComponentException(pe);
         }
     }
@@ -1051,7 +1062,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_cnr_assoc_manVBulk stampa) throws it.cnr.jada.comp.ComponentException {
+    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_cnr_assoc_manVBulk stampa) throws ComponentException {
 
         String cd_cds_scrivania = CNRUserContext.getCd_cds(userContext);
         stampa.setCd_cds(cd_cds_scrivania);
@@ -1071,7 +1082,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             }
 
 
-        } catch (it.cnr.jada.persistency.PersistencyException pe) {
+        } catch (PersistencyException pe) {
             throw new ComponentException(pe);
         }
     }
@@ -1079,7 +1090,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_cnr_assoc_revVBulk stampa) throws it.cnr.jada.comp.ComponentException {
+    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_cnr_assoc_revVBulk stampa) throws ComponentException {
 
         stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
 
@@ -1100,7 +1111,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 stampa.setIsUOForPrintEnabled(true);
             }
 
-        } catch (it.cnr.jada.persistency.PersistencyException pe) {
+        } catch (PersistencyException pe) {
             throw new ComponentException(pe);
         }
     }
@@ -1108,7 +1119,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_da_assegnareVBulk stampa) throws it.cnr.jada.comp.ComponentException {
+    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesi_da_assegnareVBulk stampa) throws ComponentException {
 
         stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
 
@@ -1132,7 +1143,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesiVBulk stampa) throws it.cnr.jada.comp.ComponentException {
+    private void inizializzaBulkPerStampa(UserContext userContext, Stampa_sospesiVBulk stampa) throws ComponentException {
 
         stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
 
@@ -1144,7 +1155,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * inizializzaBulkPerStampa method comment.
      */
-    public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+    public OggettoBulk inizializzaBulkPerStampa(UserContext userContext, OggettoBulk bulk) throws ComponentException {
 
 
         if (bulk instanceof Stampa_riscontriVBulk)
@@ -1169,7 +1180,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     protected boolean isAssocRiscontroEntrataDocContAnnullabile(UserContext userContext, SospesoBulk riscontro) throws ComponentException {
         try {
-            String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
+            String schema = EJBCommonServices.getDefaultSchema();
             LoggableStatement ps = null;
             ps = new LoggableStatement(getConnection(userContext),
                     "select b.riportato " +
@@ -1195,14 +1206,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
 				}
 
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
 			}
         } catch (Exception e) {
@@ -1218,7 +1229,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     protected boolean isAssocRiscontroSpesaDocContAnnullabile(UserContext userContext, SospesoBulk riscontro) throws ComponentException {
         try {
-            String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
+            String schema = EJBCommonServices.getDefaultSchema();
             LoggableStatement ps = null;
             ps = new LoggableStatement(getConnection(userContext),
                     "select b.riportato " +
@@ -1248,14 +1259,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
 				}
 
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
 			}
         } catch (Exception e) {
@@ -1284,7 +1295,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             Integer esercizio = CNRUserContext.getEsercizio(userContext);
             EsercizioHome home = (EsercizioHome) getHome(userContext, EsercizioBulk.class);
             return home.isEsercizioChiuso(userContext, esercizio, cd_cds);
-        } catch (it.cnr.jada.persistency.PersistencyException e) {
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -1381,7 +1392,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      * @param bulk istanza di SospesoBulk che deve essere utilizzata per la ricerca
      * @return sql Query con le clausole aggiuntive
      */
-    public Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    public Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, PersistencyException {
         if (bulk instanceof SospesoBulk) {
             SospesoBulk sospeso = (SospesoBulk) bulk;
 
@@ -1439,9 +1450,9 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             sql.addSQLClause("AND", "fl_stornato", SQLBuilder.EQUALS, "N");
             sql.addSQLClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
             if (!seleziona.getRicercaSospesiRiaccredito()) {
-                sql.addSQLClause("AND", "IM_SOSPESO - IM_ASSOCIATO", SQLBuilder.GREATER, new java.math.BigDecimal(0));
+                sql.addSQLClause("AND", "IM_SOSPESO - IM_ASSOCIATO", SQLBuilder.GREATER, new BigDecimal(0));
             }
-            sql.addSQLClause("AND", "IM_ASS_MOD_1210", SQLBuilder.EQUALS, new java.math.BigDecimal(0));
+            sql.addSQLClause("AND", "IM_ASS_MOD_1210", SQLBuilder.EQUALS, new BigDecimal(0));
 
             if (seleziona.getTi_entrata_spesa().equals(SelezionaSospesiCNRBulk.TIPO_ENTRATA))
                 sql.addSQLClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS, SospesoBulk.TIPO_ENTRATA);
@@ -1500,7 +1511,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
         return null;
     }
 
-    private Query selectForListaSospesi(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    private Query selectForListaSospesi(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, PersistencyException {
         Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
         if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa()))
             throw new ApplicationException("Funzione non consentita per utente non abilitato a " + uoEnte.getCd_unita_organizzativa());
@@ -1539,13 +1550,13 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      * @param clauses clausole di ricerca gia' specificate dall'utente
      * @return il SQLBuilder con le clausole aggiuntive
      */
-    public SQLBuilder selectCdsByClause(UserContext userContext, ListaSospesiBulk bulk, CdsBulk cds, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    public SQLBuilder selectCdsByClause(UserContext userContext, ListaSospesiBulk bulk, CdsBulk cds, CompoundFindClause clauses) throws ComponentException, PersistencyException {
         SQLBuilder sql = getHome(userContext, cds.getClass()).createSQLBuilder();
         sql.addClause(clauses);
         return sql;
     }
 
-    public SQLBuilder selectMandatoRiaccreditoByClause(UserContext userContext, SospesoBulk bulk, MandatoBulk mandatoBulk, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    public SQLBuilder selectMandatoRiaccreditoByClause(UserContext userContext, SospesoBulk bulk, MandatoBulk mandatoBulk, CompoundFindClause clauses) throws ComponentException, PersistencyException {
         MandatoIHome mandatoHome = Optional.ofNullable(getHome(userContext, MandatoIBulk.class))
                 .filter(MandatoIHome.class::isInstance)
                 .map(MandatoIHome.class::cast)
@@ -1626,7 +1637,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
 
 
         // Recupera il Cd_Cds di scrivania
-        String cd_cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
+        String cd_cds_scrivania = CNRUserContext.getCd_cds(userContext);
 
         CdsHome cds_home = (CdsHome) getHome(userContext, CdsBulk.class);
         CdsBulk cds_scrivania;
@@ -1634,7 +1645,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
         try {
             // Costruisce il CdsBulk di scrivania
             cds_scrivania = (CdsBulk) cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
-        } catch (it.cnr.jada.persistency.PersistencyException pe) {
+        } catch (PersistencyException pe) {
             throw handleException(pe);
         }
 
@@ -1689,7 +1700,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      * @param clauses clausole di ricerca gia' specificate dall'utente
      * @return il SQLBuilder con le clausole aggiuntive
      */
-    public SQLBuilder selectV_man_rev_for_searchByClause(UserContext userContext, SospesoBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    public SQLBuilder selectV_man_rev_for_searchByClause(UserContext userContext, SospesoBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, PersistencyException {
         SQLBuilder sql = getHome(userContext, V_mandato_reversaleBulk.class).createSQLBuilder();
         /*
          * Se il sospeso è di tipo entrata, eseguo il caricamento delle reversali
@@ -1755,7 +1766,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      * @param clauses clausole di ricerca gia' specificate dall'utente
      * @return il SQLBuilder con le clausole aggiuntive
      */
-    public SQLBuilder selectV_man_revByClause(UserContext userContext, SospesoBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    public SQLBuilder selectV_man_revByClause(UserContext userContext, SospesoBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, PersistencyException {
         SQLBuilder sql = getHome(userContext, V_mandato_reversaleBulk.class).createSQLBuilder();
         /*
          * Se il sospeso è di tipo entrata, eseguo il caricamento delle reversali
@@ -1788,7 +1799,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * stampaConBulk method comment.
      */
-    public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+    public OggettoBulk stampaConBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException {
 
 
         if (bulk instanceof Stampa_riscontriVBulk)
@@ -1877,7 +1888,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * Validazione dell'oggetto in fase di stampa
      */
-    private void validateBulkForPrintSospesi_Riscontri(it.cnr.jada.UserContext userContext, Stampa_sospesi_da_assegnareVBulk stampa) throws ComponentException {
+    private void validateBulkForPrintSospesi_Riscontri(UserContext userContext, Stampa_sospesi_da_assegnareVBulk stampa) throws ComponentException {
 
         try {
             Timestamp dataOdierna = getDataOdierna(userContext);
@@ -1890,7 +1901,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
 
 
-            java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
+            Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
 
             // La Data di Inizio Periodo è superiore alla data di Fine Periodo
             if (stampa.getDataInizio().compareTo(stampa.getDataFine()) > 0)
@@ -1934,7 +1945,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
     /**
      * Validazione dell'oggetto in fase di stampa
      */
-    private void validateBulkForPrintSospesi_Riscontri(it.cnr.jada.UserContext userContext, Stampa_sospesi_riscontriVBulk stampa) throws ComponentException {
+    private void validateBulkForPrintSospesi_Riscontri(UserContext userContext, Stampa_sospesi_riscontriVBulk stampa) throws ComponentException {
 
         try {
             Timestamp dataOdierna = getDataOdierna(userContext);
@@ -1947,7 +1958,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
 
 
-            java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
+            Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
 
             // La Data di Inizio Periodo è superiore alla data di Fine Periodo
             if (stampa.getDataInizio().compareTo(stampa.getDataFine()) > 0)
@@ -1996,7 +2007,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
 
     protected void verificaAnnullabilitaRiscontroEntrata(UserContext userContext, SospesoBulk riscontro) throws ComponentException {
         try {
-            String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
+            String schema = EJBCommonServices.getDefaultSchema();
             LoggableStatement ps = null;
             ps = new LoggableStatement(getConnection(userContext),
                     "select a.esercizio, A.cd_cds, a.esercizio_ori_accertamento, a.pg_accertamento, b.fl_pgiro, b.riportato " +
@@ -2035,14 +2046,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
 				}
 
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
 			}
         } catch (Exception e) {
@@ -2058,7 +2069,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     protected void verificaAnnullabilitaRiscontroEntrataPGiro(UserContext userContext, int esercizio, String cd_cds, int esercizio_ori_accertamento, long pg_accertamento) throws ComponentException {
         try {
-            String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
+            String schema = EJBCommonServices.getDefaultSchema();
             LoggableStatement ps = null;
             ps = new LoggableStatement(getConnection(userContext),
                     "select d.esercizio, d.cd_cds, d.esercizio_originale, d.pg_obbligazione, d.riportato " +
@@ -2100,14 +2111,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
 				}
 
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
 			}
         } catch (Exception e) {
@@ -2141,7 +2152,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     protected void verificaAnnullabilitaRiscontroSpesa(UserContext userContext, SospesoBulk riscontro) throws ComponentException {
         try {
-            String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
+            String schema = EJBCommonServices.getDefaultSchema();
             LoggableStatement ps = null;
             ps = new LoggableStatement(getConnection(userContext),
                     "select a.esercizio, A.cd_cds, a.esercizio_ori_obbligazione, a.pg_obbligazione, b.fl_pgiro, b.riportato " +
@@ -2179,14 +2190,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
 				}
 
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
 			}
         } catch (Exception e) {
@@ -2202,7 +2213,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      */
     protected void verificaAnnullabilitaRiscontroSpesaPGiro(UserContext userContext, int esercizio, String cd_cds, int esercizio_ori_obbligazione, long pg_obbligazione) throws ComponentException {
         try {
-            String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
+            String schema = EJBCommonServices.getDefaultSchema();
             LoggableStatement ps = null;
             ps = new LoggableStatement(getConnection(userContext),
                     "select d.esercizio, d.cd_cds, d.esercizio_originale, d.pg_accertamento, d.riportato " +
@@ -2244,14 +2255,14 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 } finally {
                     try {
                         rs.close();
-                    } catch (java.sql.SQLException e) {
+                    } catch (SQLException e) {
                     }
 				}
 
             } finally {
                 try {
                     ps.close();
-                } catch (java.sql.SQLException e) {
+                } catch (SQLException e) {
                 }
 			}
         } catch (Exception e) {
@@ -2356,7 +2367,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
 
             if (sospeso.isToBeCreated()) {
                 Timestamp lastDayOfTheYear = DateServices.getLastDayOfYear(sospeso.getEsercizio().intValue());
-                Timestamp today = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+                Timestamp today = EJBCommonServices.getServerDate();
 
                 if (today.after(lastDayOfTheYear) &&
                         sospeso.getDt_registrazione().compareTo(lastDayOfTheYear) != 0)
@@ -2370,7 +2381,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                 }
             }
 
-            java.math.BigDecimal totDettagli;
+            BigDecimal totDettagli;
             if (SospesoBulk.TI_RISCONTRO.equals(sospeso.getTi_sospeso_riscontro())) {
                 V_mandato_reversaleHome v_man_revHome = (V_mandato_reversaleHome) getHome(aUC, V_mandato_reversaleBulk.class);
                 List result;
@@ -2447,7 +2458,7 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
      * TRUE in tutti gli altri casi
      */
 
-    protected void verificaStatoEsercizio(UserContext userContext, Integer es, String cd_cds) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+    protected void verificaStatoEsercizio(UserContext userContext, Integer es, String cd_cds) throws ComponentException, PersistencyException {
         EsercizioBulk esercizio = (EsercizioBulk) getHome(userContext, EsercizioBulk.class).findByPrimaryKey(
                 new EsercizioBulk(cd_cds, es));
         if (esercizio == null)
@@ -2511,6 +2522,389 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             return iterator(usercontext, sql, SospesoBulk.class, getFetchPolicyName("find"));
         } catch (Throwable throwable) {
             throw handleException(throwable);
+        }
+    }
+
+    private void aggiornaSaldiCapitoli(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws ComponentException, PersistencyException {
+        V_mandato_reversale_scad_voceHome homeManRevScadVode = (V_mandato_reversale_scad_voceHome)getHome(userContext, V_mandato_reversale_scad_voceBulk.class);
+        List mandatiReversaliScadVoce = homeManRevScadVode.findMandatiReversali(mandato_reversaleBulk);
+        for (Object obj : mandatiReversaliScadVoce){
+            V_mandato_reversale_scad_voceBulk mandatoReversaleScadVoce = (V_mandato_reversale_scad_voceBulk) obj;
+            Voce_f_saldi_cdr_lineaBulk saldo = new Voce_f_saldi_cdr_lineaBulk();
+            saldo.setEsercizio(mandatoReversaleScadVoce.getEsercizio());
+            saldo.setEsercizio_res(mandatoReversaleScadVoce.getEsercizio_originale());
+            saldo.setCd_centro_responsabilita(mandatoReversaleScadVoce.getCd_centro_responsabilita());
+            saldo.setCd_linea_attivita(mandatoReversaleScadVoce.getCd_linea_attivita());
+            saldo.setTi_appartenenza(mandatoReversaleScadVoce.getTi_appartenenza());
+            saldo.setTi_gestione(mandatoReversaleScadVoce.getTi_gestione());
+            saldo.setCd_voce(mandatoReversaleScadVoce.getCd_voce());
+
+            Voce_f_saldi_cdr_lineaHome home = (Voce_f_saldi_cdr_lineaHome) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
+            saldo = (Voce_f_saldi_cdr_lineaBulk) home.findByPrimaryKey(saldo);
+            if (saldo != null){
+                try {
+                    home.lock(saldo);
+                } catch (OutdatedResourceException | BusyResourceException e) {
+                    throw new ComponentException(e);
+                }
+                saldo.setIm_pagamenti_incassi(saldo.getIm_pagamenti_incassi().add(mandatoReversaleScadVoce.getIm_voce().setScale(2, RoundingMode.HALF_EVEN)));
+                saldo.setToBeUpdated();
+                super.updateBulk(userContext, saldo);
+            } else {
+                throw new ComponentException("Non è stata trovata la linea di saldo");
+            }
+        }
+    }
+
+    private Integer aggiornaRigaProcessata(UserContext userContext, MovimentoContoEvidenzaBulk riga) throws PersistencyException, ComponentException {
+        riga.setStato(MovimentoContoEvidenzaBulk.STATO_RECORD_PROCESSATO);
+        riga.setToBeUpdated();
+        super.updateBulk(userContext, riga);
+        return 1;
+    }
+
+    public Integer caricamentoRigaGiornaleCassa(UserContext userContext, boolean tesoreriaUnica, EnteBulk cdsEnte, MovimentoContoEvidenzaBulk riga) throws ComponentException, PersistencyException {
+        try {
+            SospesoHome homeSospeso = (SospesoHome)getHome(userContext, SospesoBulk.class);
+            Integer esercizio = riga.getEsercizio();
+            if (riga.isMandatoReversale()){
+                if (riga.isTipoOperazioneEseguitoRegolarizzato()){
+                    if (riga.isReversale()){
+                        ReversaleBulk rev = new ReversaleIBulk();
+                        ReversaleHome reversaleHome = (ReversaleHome) getHome(userContext, rev);
+                        try {
+                            rev = reversaleHome.findAndLockReversaleNonAnnullata(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());
+                        } catch (OutdatedResourceException | BusyResourceException e) {
+                            throw  new ComponentException(e);
+                        }
+
+                        if (rev == null){
+                            throw  new ComponentException("Reversale "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" annullata o non esistente");
+                        }
+
+                        V_mandato_reversaleBulk v_man_rev = new V_mandato_reversaleBulk();
+                        v_man_rev.setEsercizio(rev.getEsercizio());
+                        v_man_rev.setCd_cds(rev.getCd_cds());
+                        v_man_rev.setPg_documento_cont(rev.getPg_documento_cont());
+
+                        Sospeso_det_etrHome homeSospesoEtr = (Sospeso_det_etrHome)getHome(userContext, Sospeso_det_etrBulk.class);
+                        BigDecimal importoGiaRiscontrato = homeSospesoEtr.calcolaTotDettagli(v_man_rev);
+                        if (importoGiaRiscontrato.compareTo(rev.getIm_reversale()) == 0){
+                            throw new ComponentException("La reversale "+rev.getIdReversaleAsString()+" risulta già completamente riscontrata (totale dei riscontri ed importo "+
+                                    " della reversale pari a "+rev.getIm_reversale().doubleValue());
+                        } else if (importoGiaRiscontrato.add(riga.getImporto()).compareTo(rev.getIm_reversale()) > 0){
+                            throw new ComponentException("Impossibile riscontrare la reversale "+rev.getIdReversaleAsString()+" per "+ riga.getImporto().doubleValue()+". Risulta già riscontrata per "+importoGiaRiscontrato.doubleValue()+
+                                    "  e pertanto il totale dei riscontri supererebbe l''importo della reversale stessa che è di "+rev.getIm_reversale().doubleValue());
+                        }
+                        SospesoBulk sospeso = new SospesoBulk();
+                        sospeso.setCd_cds(rev.getCd_cds());
+                        sospeso.setEsercizio(rev.getEsercizio());
+                        sospeso.setTi_entrata_spesa(SospesoBulk.TIPO_ENTRATA);
+                        sospeso.setTi_sospeso_riscontro(SospesoBulk.TI_RISCONTRO);
+                        sospeso.setCd_cds_origine(rev.getCd_cds());
+                        sospeso.setDt_registrazione(riga.getDataMovimento());
+                        sospeso.setDs_anagrafico(riga.getAnagraficaCliente());
+                        sospeso.setCausale(riga.getCausale());
+                        if (riga.isTipoEsecuzioneBancaItalia()){
+                            sospeso.setTi_cc_bi(SospesoBulk.TIPO_BANCA_ITALIA);
+                        } else {
+                            sospeso.setTi_cc_bi(SospesoBulk.TIPO_CC);
+                        }
+                        sospeso.setFl_stornato(false);
+                        sospeso.setIm_sospeso(riga.getImporto());
+                        sospeso.setIm_associato(riga.getImporto());
+                        sospeso.setStato_sospeso(SospesoBulk.STATO_SOSP_NON_APPLICATA);
+                        sospeso.setIm_ass_mod_1210(BigDecimal.ZERO);
+                        sospeso.setCd_sospeso(homeSospeso.recuperoNextCodiceSospeso(userContext, sospeso));
+                        sospeso.setToBeCreated();
+                        super.insertBulk(userContext, sospeso);
+                        Sospeso_det_etrBulk sospDet = new Sospeso_det_etrBulk();
+                        sospDet.setCd_cds(rev.getCd_cds());
+                        sospDet.setEsercizio(rev.getEsercizio());
+                        sospDet.setPg_reversale(rev.getPg_reversale());
+                        sospDet.setTi_entrata_spesa(sospeso.getTi_entrata_spesa());
+                        sospDet.setTi_sospeso_riscontro(sospeso.getTi_sospeso_riscontro());
+                        sospDet.setCd_sospeso(sospeso.getCd_sospeso());
+                        sospDet.setIm_associato(sospeso.getIm_associato());
+                        sospDet.setCd_cds_reversale(rev.getCd_cds());
+                        sospDet.setStato(Sospeso_det_etrBulk.STATO_DEFAULT);
+                        sospDet.setToBeCreated();
+                        super.insertBulk(userContext, sospDet);
+
+                        BigDecimal importoGiaRiscontratoAggiornato = homeSospesoEtr.calcolaTotDettagli(v_man_rev);
+                        rev.setIm_incassato(importoGiaRiscontratoAggiornato);
+                        rev.setToBeUpdated();
+                        if (importoGiaRiscontratoAggiornato.compareTo(rev.getIm_reversale()) == 0){
+                            rev.setStato(ReversaleBulk.STATO_REVERSALE_INCASSATO);
+                            rev.setDt_incasso(riga.getDataMovimento());
+                            BulkList listaRighe = new BulkList(((ReversaleHome) getHome(userContext, rev.getClass())).findReversale_riga(userContext, rev));
+                            for (Object oggettoBulk : listaRighe){
+                                Reversale_rigaBulk revRiga = (Reversale_rigaBulk) oggettoBulk;
+                                revRiga.setStato(ReversaleBulk.STATO_REVERSALE_INCASSATO);
+                                revRiga.setToBeUpdated();
+                                super.updateBulk(userContext, revRiga);
+                            }
+                            V_mandato_reversaleBulk manRev = new V_mandato_reversaleBulk();
+                            manRev.setEsercizio(rev.getEsercizio());
+                            manRev.setCd_cds(rev.getCd_cds());
+                            manRev.setPg_documento_cont(rev.getPg_reversale());
+                            manRev.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_REV);
+                            aggiornaSaldiCapitoli(userContext, manRev);
+                        }
+                        super.updateBulk(userContext,rev);
+                        return aggiornaRigaProcessata(userContext, riga);
+                    } else if (riga.isMandato()){
+                        MandatoBulk man = new MandatoIBulk();
+                        MandatoHome mandatoHomeHome = (MandatoHome) getHome(userContext, man);
+                        try {
+                            man = mandatoHomeHome.findAndLockMandatoNonAnnullato(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());
+                        } catch (OutdatedResourceException | BusyResourceException e) {
+                            throw  new ComponentException(e);
+                        }
+
+                        if (man == null){
+                            throw  new ComponentException("Mandato "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" annullato o non esistente");
+                        }
+
+                        V_mandato_reversaleBulk v_man_rev = new V_mandato_reversaleBulk();
+                        v_man_rev.setEsercizio(man.getEsercizio());
+                        v_man_rev.setCd_cds(man.getCd_cds());
+                        v_man_rev.setPg_documento_cont(man.getPg_documento_cont());
+
+                        Sospeso_det_uscHome homeSospesoUsc = (Sospeso_det_uscHome)getHome(userContext, Sospeso_det_uscBulk.class);
+                        BigDecimal importoGiaRiscontrato = homeSospesoUsc.calcolaTotDettagli(v_man_rev);
+                        if (importoGiaRiscontrato.compareTo(man.getIm_mandato()) == 0){
+                            throw new ComponentException("Il mandato "+man.getIdMandatoAsString()+" risulta già completamente riscontrato (totale dei riscontri ed importo "+
+                                    " del mandato pari a "+man.getIm_mandato().doubleValue());
+                        } else if (importoGiaRiscontrato.add(riga.getImporto()).compareTo(man.getIm_mandato()) > 0){
+                            throw new ComponentException("Impossibile riscontrare il mandato "+man.getIdMandatoAsString()+" per "+ riga.getImporto().doubleValue()+". Risulta già riscontrato per "+importoGiaRiscontrato.doubleValue()+
+                                    "  e pertanto il totale dei riscontri supererebbe l''importo del mandato stesso che è di "+man.getIm_mandato().doubleValue());
+                        }
+                        SospesoBulk sospeso = new SospesoBulk();
+                        sospeso.setCd_cds(man.getCd_cds());
+                        sospeso.setEsercizio(man.getEsercizio());
+                        sospeso.setTi_entrata_spesa(SospesoBulk.TIPO_SPESA);
+                        sospeso.setTi_sospeso_riscontro(SospesoBulk.TI_RISCONTRO);
+                        sospeso.setCd_cds_origine(man.getCd_cds());
+                        sospeso.setDt_registrazione(riga.getDataMovimento());
+                        sospeso.setDs_anagrafico(riga.getAnagraficaCliente());
+                        sospeso.setCausale(riga.getCausale());
+                        if (riga.isTipoEsecuzioneBancaItalia()){
+                            sospeso.setTi_cc_bi(SospesoBulk.TIPO_BANCA_ITALIA);
+                        } else {
+                            sospeso.setTi_cc_bi(SospesoBulk.TIPO_CC);
+                        }
+                        sospeso.setFl_stornato(false);
+                        sospeso.setIm_sospeso(riga.getImporto());
+                        sospeso.setIm_associato(riga.getImporto());
+                        sospeso.setStato_sospeso(SospesoBulk.STATO_SOSP_NON_APPLICATA);
+                        sospeso.setIm_ass_mod_1210(BigDecimal.ZERO);
+                        sospeso.setCd_sospeso(homeSospeso.recuperoNextCodiceSospeso(userContext, sospeso));
+                        sospeso.setToBeCreated();
+                        super.insertBulk(userContext, sospeso);
+                        Sospeso_det_uscBulk sospDet = new Sospeso_det_uscBulk();
+                        sospDet.setCd_cds(man.getCd_cds());
+                        sospDet.setEsercizio(man.getEsercizio());
+                        sospDet.setPg_mandato(man.getPg_mandato());
+                        sospDet.setTi_entrata_spesa(sospeso.getTi_entrata_spesa());
+                        sospDet.setTi_sospeso_riscontro(sospeso.getTi_sospeso_riscontro());
+                        sospDet.setCd_sospeso(sospeso.getCd_sospeso());
+                        sospDet.setIm_associato(sospeso.getIm_associato());
+                        sospDet.setStato(Sospeso_det_uscBulk.STATO_DEFAULT);
+                        sospDet.setCd_cds_mandato(man.getCd_cds());
+                        sospDet.setToBeCreated();
+                        super.insertBulk(userContext, sospDet);
+
+                        BigDecimal importoGiaRiscontratoAggiornato = homeSospesoUsc.calcolaTotDettagli(v_man_rev);
+                        man.setIm_pagato(importoGiaRiscontratoAggiornato);
+                        man.setToBeUpdated();
+                        if (importoGiaRiscontratoAggiornato.compareTo(man.getIm_mandato()) == 0){
+                            //Riscontro mandato
+                            man.setStato(MandatoBulk.STATO_MANDATO_PAGATO);
+                            man.setDt_pagamento(riga.getDataMovimento());
+                            BulkList listaRighe = new BulkList(((MandatoHome) getHome(userContext, man.getClass())).findMandato_riga(userContext, man));
+                            for (Object oggettoBulk : listaRighe){
+                                Mandato_rigaBulk manRiga = (Mandato_rigaBulk) oggettoBulk;
+                                manRiga.setStato(MandatoBulk.STATO_MANDATO_PAGATO);
+                                manRiga.setToBeUpdated();
+                                super.updateBulk(userContext, manRiga);
+                            }
+                            V_mandato_reversaleBulk manRev = new V_mandato_reversaleBulk();
+                            manRev.setEsercizio(man.getEsercizio());
+                            manRev.setCd_cds(man.getCd_cds());
+                            manRev.setPg_documento_cont(man.getPg_mandato());
+                            manRev.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_MAN);
+                            aggiornaSaldiCapitoli(userContext, manRev);
+                        }
+                        super.updateBulk(userContext, man);
+                        return aggiornaRigaProcessata(userContext, riga);
+                    } else {
+                        throw  new ComponentException("Il Tipo Ordinativo "+ riga.getTipoDocumento()+" non è compatibile, può assumere solo i valori R (Reversale) e M (Mandato)");
+                    }
+                } else if (riga.isTipoOperazioneStornato()){
+                    if (riga.isMandato()){
+                        MandatoBulk man = new MandatoIBulk();
+                        MandatoHome mandatoHome = (MandatoHome) getHome(userContext, man);
+                        try {
+                            man = mandatoHome.findAndLockMandatoAnnullato(userContext, tesoreriaUnica ? null : cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.getNumeroDocumento());
+                        } catch (OutdatedResourceException | BusyResourceException e) {
+                            throw  new ComponentException(e);
+                        }
+
+                        if (man == null){
+                            throw  new ComponentException("Non è possibile effettuare lo storno del Mandato "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+". Il mandato non è annullato o non esiste");
+                        }
+
+                        Collection riscontri = mandatoHome.findRiscontro_det_usc(userContext, man);
+                        if (riscontri == null || riscontri.size() == 0){
+                            throw  new ComponentException("Lo Storno fa riferimento al mandato "+man.getCd_unita_organizzativa()+"-"+ man.getEsercizio()+"-"+man.getPg_mandato()+" su cui non esiste il riscontro.");
+                        }
+                        Sospeso_det_uscBulk riscontro = (Sospeso_det_uscBulk)riscontri.iterator().next();
+                        riscontro.setIm_associato(riscontro.getIm_associato().add(riga.getImporto()));
+                        riscontro.setToBeUpdated();
+                        super.updateBulk(userContext, riscontro);
+
+                        SospesoBulk sospesoBulk = riscontro.getSospeso();
+                        sospesoBulk =  (SospesoBulk)homeSospeso.findByPrimaryKey(sospesoBulk);
+                        sospesoBulk.setIm_associato(sospesoBulk.getIm_associato().add(riga.getImporto()));
+                        sospesoBulk.setIm_sospeso(sospesoBulk.getIm_sospeso().add(riga.getImporto()));
+                        sospesoBulk.setFl_stornato(true);
+                        sospesoBulk.setDt_storno(riga.getDataMovimento());
+                        sospesoBulk.setToBeUpdated();
+                        super.updateBulk(userContext, sospesoBulk);
+
+                        man.setStato_trasmissione_annullo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+                        man.setToBeUpdated();
+                        super.updateBulk(userContext,man);
+
+                        return aggiornaRigaProcessata(userContext, riga);
+                    }
+                }
+            } else if (riga.isSospeso()){
+                if (riga.isTipoOperazioneStornato()){
+                    SospesoBulk sospeso = homeSospeso.findSospesoDaStornare(cdsEnte.getCd_unita_organizzativa(), riga.getEsercizio(), riga.recuperoTipoSospesoEntrataSpesa(), riga.recuperoNumeroSospeso());
+                    if (sospeso == null){
+                        throw new ComponentException("Sospeso da stornare non trovato: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento());
+                    }
+                    try {
+                        homeSospeso.lock(sospeso);
+                    } catch (OutdatedResourceException | BusyResourceException e) {
+                        throw new ComponentException(e);
+                    }
+                    if (riga.getImporto().abs().compareTo(sospeso.getIm_sospeso()) != 0){
+                        throw new ComponentException("Si sta tentando di stornare il sospeso: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" per "+ riga.getImporto().doubleValue()+" ma tale importo è differente rispetto all''importo che il sospeso già possiede che è di "+sospeso.getIm_sospeso().doubleValue());
+                    }
+                    Collection sospesiCollegati = homeSospeso.findSospesiFigliColl(userContext, sospeso);
+                    for (Iterator i = sospesiCollegati.iterator(); i.hasNext(); ) {
+                        SospesoBulk sospesoCollegato = (SospesoBulk) i.next();
+                        try {
+                            homeSospeso.lock(sospesoCollegato);
+                        } catch (OutdatedResourceException | BusyResourceException e) {
+                            throw new ComponentException(e);
+                        }
+                        if (sospesoCollegato.getIm_ass_mod_1210().compareTo(BigDecimal.ZERO) != 0){
+                            throw new ComponentException("Impossibile stornare il sospeso: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" risulta associato a 1210 per "+sospesoCollegato.getIm_ass_mod_1210().doubleValue());
+                        }
+                        if (sospesoCollegato.getIm_associato().compareTo(BigDecimal.ZERO) != 0){
+                            throw new ComponentException("Impossibile stornare il sospeso: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" risulta associato a documenti autorizzatori per "+sospesoCollegato.getIm_ass_mod_1210().doubleValue());
+                        }
+                        if (sospesoCollegato.isTipoEntrata()){
+                            Collection dettagliCollegati = homeSospeso.findSospeso_det_etrColl(sospesoCollegato);
+                            if (dettagliCollegati != null && dettagliCollegati.size() > 0){
+                                throw new ComponentException("Il sospeso: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" non risulta associato a reversali ma esistono associazioni con reversali non annullate "+((Sospeso_det_etrBulk)dettagliCollegati.iterator().next()).getPg_reversale());
+                            }
+                        } else {
+                            Collection dettagliCollegati = homeSospeso.findSospeso_det_uscColl(sospesoCollegato);
+                            if (dettagliCollegati != null && dettagliCollegati.size() > 0){
+                                throw new ComponentException("Il sospeso: "+ riga.getEsercizio()+"-"+ riga.getNumeroDocumento()+" non risulta associato a mandati ma esistono associazioni con mandati non annullate "+((Sospeso_det_uscBulk)dettagliCollegati.iterator().next()).getPg_mandato());
+                            }
+                        }
+                        sospesoCollegato.setFl_stornato(true);
+                        sospesoCollegato.setDt_storno(riga.getDataMovimento());
+                        sospesoCollegato.setToBeUpdated();
+                        super.updateBulk(userContext, sospesoCollegato);
+                    }
+                    sospeso.setFl_stornato(true);
+                    sospeso.setDt_storno(riga.getDataMovimento());
+                    sospeso.setToBeUpdated();
+                    super.updateBulk(userContext, sospeso);
+                    return aggiornaRigaProcessata(userContext, riga);
+                } else if (riga.isTipoOperazioneEseguito()){
+                    SospesoBulk sospeso = new SospesoBulk();
+                    sospeso.setCd_cds(cdsEnte.getCd_unita_organizzativa());
+                    sospeso.setEsercizio(riga.getEsercizio());
+                    sospeso.setTi_entrata_spesa(riga.recuperoTipoSospesoEntrataSpesa());
+                    sospeso.setTi_sospeso_riscontro(SospesoBulk.TI_SOSPESO);
+                    sospeso.setCd_sospeso(riga.recuperoNumeroSospeso());
+
+                    SospesoBulk sospesoBulk = (SospesoBulk) homeSospeso.findByPrimaryKey(sospeso);
+                    if (sospesoBulk != null){
+                        if (riga.isCodiceRiferimentoInternoPagamentoStipendi()){
+                            sospesoBulk.setIm_sospeso(sospesoBulk.getIm_sospeso().add(riga.getImporto().abs()));
+                            sospesoBulk.setToBeUpdated();
+                            super.updateBulk(userContext,sospesoBulk);
+
+                            sospeso.setCd_sospeso(sospeso.getCd_sospeso()+"."+sospeso.getNextCdSospesoFiglio());
+                            SospesoBulk sospesoFiglio = (SospesoBulk) homeSospeso.findByPrimaryKey(sospeso);
+                            sospesoFiglio.setToBeUpdated();
+                            super.updateBulk(userContext,sospesoFiglio);
+                        } else {
+                            throw new ComponentException("Impossibile inserire il sospeso: "+sospesoBulk.getEsercizio()+"-"+sospesoBulk.getTi_entrata_spesa()+"-"+sospesoBulk.getTi_sospeso_riscontro()+"-"+
+                                    sospesoBulk.getCd_sospeso()+", già esiste.");
+                        }
+                    } else {
+                        sospeso.setDt_registrazione(riga.getDataMovimento());
+                        sospeso.setDs_anagrafico(riga.getAnagraficaCliente());
+                        sospeso.setCausale(riga.getCausale());
+                        if (riga.isCodiceRiferimentoInternoBancaItalia() || riga.isTipoEsecuzioneBancaItalia()){
+                            sospeso.setTi_cc_bi(SospesoBulk.TIPO_BANCA_ITALIA);
+                        } else {
+                            sospeso.setTi_cc_bi(SospesoBulk.TIPO_CC);
+                        }
+                        sospeso.setFl_stornato(false);
+                        sospeso.setIm_sospeso(riga.getImporto().abs());
+                        sospeso.setIm_associato(BigDecimal.ZERO);
+                        sospeso.setStato_sospeso(SospesoBulk.STATO_SOSP_INIZIALE);
+                        sospeso.setIm_ass_mod_1210(BigDecimal.ZERO);
+                        sospeso.setTipo_contabilita(riga.getTipoContabilita());
+                        sospeso.setDestinazione(riga.getDestinazione());
+
+                        SospesoBulk sospesoFiglio = (SospesoBulk)sospeso.clone();
+
+                        sospeso.setToBeCreated();
+                        super.insertBulk(userContext, sospeso);
+
+                        sospesoFiglio.setCd_sospeso_padre(sospeso.getCd_sospeso());
+                        sospesoFiglio.setCd_sospeso(sospesoFiglio.getCd_sospeso()+"."+sospeso.getNextCdSospesoFiglio());
+                        sospesoFiglio.setCd_proprio_sospeso(sospeso.getNextCdSospesoFiglio());
+                        sospesoFiglio.setToBeCreated();
+                        super.insertBulk(userContext, sospesoFiglio);
+
+                        if (riga.isIncassoPagopa()){
+                            PendenzaPagopaComponentSession pendenzaPagopaComponentSession = (PendenzaPagopaComponentSession) EJBCommonServices
+                                    .createEJB("CNRPAGOPA_EJB_ScadenzaPagopaComponentSession");
+                            try {
+                                PendenzaPagopaBulk pendenza = pendenzaPagopaComponentSession.riconciliaIncassoPagopa(userContext, riga);
+                                if (pendenza != null){
+                                    Unita_organizzativaBulk uoPendenza = pendenza.getUnitaOrganizzativa();
+                                    uoPendenza = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(uoPendenza);
+                                    sospesoFiglio.setCds_origine(uoPendenza.getUnita_padre());
+                                    sospesoFiglio.setStato_sospeso(SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                                    sospesoFiglio.setCd_avviso_pagopa(pendenza.getCdAvviso());
+                                    sospesoFiglio.setToBeUpdated();
+                                    super.updateBulk(userContext, sospesoFiglio);
+                                }
+                            } catch (Exception e){
+                                throw handleException(e);
+                            }
+                        }
+                    }
+                    return aggiornaRigaProcessata(userContext, riga);
+                }
+            }
+            return 0;
+        } catch (IntrospectionException e){
+            throw new ComponentException(e);
         }
     }
 }

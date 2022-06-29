@@ -29,5 +29,49 @@
             <column name="istruzioni_speciali_3" type="VARCHAR(250)" remarks="Istruzioni speciali sul documento 1210."/>
         </addColumn>
     </changeSet>
+    <changeSet author="marco.spasiano" id="add_column_indirizzo_on_lettera">
+        <addColumn tableName="LETTERA_PAGAM_ESTERO">
+            <column name="indirizzo_beneficiario" type="VARCHAR(250)" remarks="Indirizzo Beneficiario"/>
+            <column name="bic_banca_intermediaria" type="VARCHAR(100)" remarks="SWIFT/BIC Banca Intermediaria"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="modify_column_commissioni_spese_on_lettera">
+        <modifyDataType tableName="LETTERA_PAGAM_ESTERO" columnName="commissioni_spese" newDataType="VARCHAR(10)"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="add_column_paese_beneficiario_on_lettera">
+        <addColumn tableName="LETTERA_PAGAM_ESTERO">
+            <column name="paese_beneficiario" type="VARCHAR(100)" remarks="Paese Beneficiario"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione-cnr-add-pagemento-estero">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="PAGAMENTO_ESTERO"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="IBAN_SPORTELLO_CONTO"/>
+            <column name="val01" type="STRING" value="IT75N0100503392000000218150"/>
+            <column name="val02" type="STRING" value="6392"/>
+            <column name="val03" type="STRING" value="218150"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione-cnr-add-distinta-estero">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="DISTINTA_ESTERO"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DIMENSIONE_MASSIMA_MB"/>
+            <column name="im01" type="NUMERIC" value="8"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

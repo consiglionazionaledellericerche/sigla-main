@@ -44,7 +44,7 @@ public class NumerazioneOrdHome extends BulkHome {
 
 	public SQLBuilder selectUnitaOperativaOrdByClause(it.cnr.jada.UserContext userContext, NumerazioneOrdBulk numerazioneOrdBulk, UnitaOperativaOrdHome unitaOperativaOrdHome,UnitaOperativaOrdBulk unitaOperativaOrdBulk,CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
 		SQLBuilder sql = unitaOperativaOrdHome.createSQLBuilder();
-		sql.addSQLClause(FindClause.AND,"CD_UNITA_OPERATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext));
+		sql.addSQLClause(FindClause.AND,"CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
 		sql.addClause(clause);
 		return sql;
 	}

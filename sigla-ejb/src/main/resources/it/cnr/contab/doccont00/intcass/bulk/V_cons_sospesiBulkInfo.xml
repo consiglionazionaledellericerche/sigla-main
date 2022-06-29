@@ -162,7 +162,13 @@
 		inputSize="22"
 		maxLength="22"
 		label="pg_man_rev" />
-		
+	<fieldProperty
+			name="cd_avviso_pagopa"
+			property="cd_avviso_pagopa"
+			inputSize="30"
+			inputType="TEXT"
+			label="Avviso PagoPA"/>
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -203,6 +209,8 @@
 		name="cd_sospeso_padre" />
 	<formFieldProperty
 		name="pg_man_rev" />
+	<formFieldProperty
+			name="cd_avviso_pagopa" />
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -243,6 +251,8 @@
 		name="cd_sospeso_padre" />
 	<findFieldProperty
 		name="pg_man_rev" />
+	<findFieldProperty
+			name="cd_avviso_pagopa" />
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -283,7 +293,8 @@
 		name="cd_sospeso_padre" />
 	<columnFieldProperty
 		name="pg_man_rev" />
-		
+	<columnFieldProperty
+			name="cd_avviso_pagopa" />
 	<!-- Consultazione Sospesi di Entrata -->
 	
 	<columnSet name="SOSREV">
@@ -300,6 +311,7 @@
 			<columnFieldProperty name="im_sospeso"/>
 			<columnFieldProperty name="im_associato" label="Importo Associato a Reversali" />
 			<columnFieldProperty name="im_da_associare" label="Importo da Associare a Reversali" />
+			<columnFieldProperty name="cd_avviso_pagopa" label="Avviso PagoPA" />
 	</columnSet>
 	
 	<columnSet name="SOSREVRDETT">
@@ -316,6 +328,7 @@
 			<columnFieldProperty name="im_sospeso"/>
 			<columnFieldProperty name="im_associato" label="Importo Associato a Reversali"/>
 			<columnFieldProperty name="im_da_associare" label="Importo da Associare a Reversali"/>
+		    <columnFieldProperty name="cd_avviso_pagopa" label="Avviso PagoPA" />
 	</columnSet>
 	
 	<columnSet name="SOSREVRDETTREV">
@@ -344,6 +357,7 @@
 			<findFieldProperty name="im_sospeso"/>
 			<findFieldProperty name="im_associato" label="Importo Associato a Reversali" />
 			<findFieldProperty name="im_da_associare" label="Importo da Associare a Reversali" />
+		    <findFieldProperty name="cd_avviso_pagopa" label="Avviso PagoPA" />
 	</freeSearchSet>
 	
 	<freeSearchSet name="SOSREVRDETT">
@@ -360,6 +374,7 @@
 			<findFieldProperty name="im_sospeso"/>
 			<findFieldProperty name="im_associato" label="Importo Associato a Reversali"/>
 			<findFieldProperty name="im_da_associare" label="Importo da Associare a Reversali"/>
+		    <findFieldProperty name="cd_avviso_pagopa" label="Avviso PagoPA" />
 	</freeSearchSet>
 	
 	<freeSearchSet name="SOSREVRDETTREV">

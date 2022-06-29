@@ -7805,7 +7805,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             DocumentoEleIvaBulk rigaEle = (DocumentoEleIvaBulk) i.next();
             String key = null;
             Hashtable<String, BigDecimal> currentMap = null;
-            if (rigaEle.getImponibileImporto() != null && rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0) {
+            if (rigaEle.getImponibileImporto() != null && (rigaEle.getImponibileImporto().compareTo(BigDecimal.ZERO) != 0 || (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().compareTo(BigDecimal.ZERO) == 0))) {
                 if (rigaEle.getNatura() != null) {
                     key = rigaEle.getNatura();
                     currentMap = mapNaturaEle;

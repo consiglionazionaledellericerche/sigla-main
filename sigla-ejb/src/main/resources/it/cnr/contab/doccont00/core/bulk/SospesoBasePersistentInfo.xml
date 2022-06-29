@@ -159,6 +159,11 @@
                 propertyName="esercizio_man_riaccr"
                 sqlTypeName="DECIMAL"
                 columnSize="4"/>
+        <columnMapping
+                columnName="CD_AVVISO_PAGOPA"
+                propertyName="cd_avviso_pagopa"
+                sqlTypeName="VARCHAR"
+                columnSize="50"/>
     </defaultColumnMap>
     <persistentProperty
             name="pg_ver_rec"/>
@@ -208,4 +213,6 @@
 			name="pg_mandato_man_riaccr"/>
 	<persistentProperty
 			name="esercizio_man_riaccr"/>
+    <persistentProperty
+            name="cd_avviso_pagopa"/>
 </SQLPersistentInfo>

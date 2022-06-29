@@ -123,6 +123,7 @@ public class ConsSospesiEntSpeComponent extends CRUDComponent {
 			sql.addColumn("CD_SOSPESO_PADRE");
 			sql.addColumn("TI_ENTRATA_SPESA");
 			sql.addColumn("LIVELLO");
+			sql.addColumn("CD_AVVISO_PAGOPA");
 		}
 		
 			

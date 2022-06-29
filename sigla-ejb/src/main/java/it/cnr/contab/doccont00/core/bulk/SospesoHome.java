@@ -17,21 +17,20 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
-import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLExceptionHandler;
+import it.cnr.jada.persistency.sql.*;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -118,11 +117,11 @@ public class SospesoHome extends BulkHome {
 			} finally {
 				try {
 					ps.close();
-				} catch (java.sql.SQLException e) {
+				} catch (SQLException e) {
 				}
 				;
 			}
-		} catch (java.sql.SQLException e) {
+		} catch (SQLException e) {
 			throw SQLExceptionHandler.getInstance().handleSQLException(e,
 					sospeso);
 		}
@@ -169,8 +168,8 @@ public class SospesoHome extends BulkHome {
 	 * @return <code>Collection</code> i sospesi figli di un sospeso
 	 * 
 	 */
-	public Collection findSospesiFigliColl(it.cnr.jada.UserContext userContext,
-			SospesoBulk sospeso) throws IntrospectionException,
+	public Collection findSospesiFigliColl(UserContext userContext,
+                                           SospesoBulk sospeso) throws IntrospectionException,
 			PersistencyException {
 		SQLBuilder sql = createSQLBuilder();
 		sql
@@ -214,6 +213,25 @@ public class SospesoHome extends BulkHome {
 				Sospeso_det_etrBulk.STATO_DEFAULT);
 		return getHomeCache().getHome(Sospeso_det_etrBulk.class).fetchAll(sql);
 
+	}
+
+	public SospesoBulk findSospesoDaStornare(String cdsEnte, Integer esercizio, String ti_entrata_spesa, String cd_sospeso)
+			throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+		sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, cdsEnte);
+		sql.addClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS,
+				ti_entrata_spesa);
+		sql.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
+		sql.addClause("AND", "cd_sospeso", SQLBuilder.EQUALS, cd_sospeso);
+		sql.addClause("AND", "cd_sospeso_padre", SQLBuilder.ISNULL, null);
+		Collection coll = getHomeCache().getHome(SospesoBulk.class).fetchAll(sql);
+
+		if (coll != null && !coll.isEmpty()){
+			return (SospesoBulk) coll.iterator().next();
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -304,7 +322,7 @@ public class SospesoHome extends BulkHome {
 	 * 
 	 */
 	public SQLBuilder selectSospesiDiEntrata(ReversaleBulk reversale,
-			it.cnr.jada.persistency.sql.CompoundFindClause clausole,boolean tesoreriaUnica) throws PersistencyException{
+			CompoundFindClause clausole,boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
 		Unita_organizzativa_enteBulk uoEnte=null;
 		if (clausole != null)
@@ -349,7 +367,7 @@ public class SospesoHome extends BulkHome {
 		sql.closeParenthesis();
 
 		sql.addSQLClause("AND", "IM_SOSPESO - IM_ASSOCIATO", sql.GREATER,
-				new java.math.BigDecimal(0));
+				new BigDecimal(0));
 		for (Iterator i = reversale.getSospeso_det_etrColl().iterator(); i
 				.hasNext();)
 			sql.addClause("AND", "cd_sospeso", sql.NOT_EQUALS,
@@ -382,7 +400,7 @@ public class SospesoHome extends BulkHome {
 	 *         spesa associati al mandato
 	 * 
 	 */
-	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato,it.cnr.jada.persistency.sql.CompoundFindClause clausole, boolean tesoreriaUnica) throws PersistencyException{
+	public SQLBuilder selectSospesiDiSpesa(MandatoBulk mandato, CompoundFindClause clausole, boolean tesoreriaUnica) throws PersistencyException{
 		SQLBuilder sql = createSQLBuilder();
 		if (clausole != null)
 			sql.addClause(clausole);
@@ -428,7 +446,7 @@ public class SospesoHome extends BulkHome {
 
 		sql.openParenthesis("AND");
 		sql.addSQLClause("AND", "IM_SOSPESO - IM_ASSOCIATO", sql.GREATER,
-				new java.math.BigDecimal(0));
+				new BigDecimal(0));
 		for (Iterator i = mandato.getSospeso_det_uscColl().deleteIterator(); i
 				.hasNext();)
 			sql.addClause("OR", "cd_sospeso", sql.EQUALS,
@@ -445,7 +463,7 @@ public class SospesoHome extends BulkHome {
 		sql.openParenthesis("AND");
 		sql.openParenthesis("AND"); // tutti quelli non associati 1210
 		sql.addSQLClause("AND", "IM_SOSPESO - IM_ASS_MOD_1210", sql.GREATER,
-				new java.math.BigDecimal(0));
+				new BigDecimal(0));
 		sql.closeParenthesis();
 		if (mandato instanceof MandatoIBulk
 				&& ((MandatoIBulk) mandato).getSospesiDa1210List().size() > 0) {
@@ -502,5 +520,33 @@ public class SospesoHome extends BulkHome {
 		} catch (IntrospectionException e) {
 		}
 		return super.completeBulkRowByRow(userContext, persistent);
+	}
+	public String recuperoNextCodiceSospeso(UserContext userContext, OggettoBulk bulk) throws PersistencyException, ComponentException {
+		SospesoBulk sospesoBulk = (SospesoBulk)bulk;
+		if (sospesoBulk.getCd_sospeso() == null){
+
+			CompoundFindClause clause = new CompoundFindClause();
+			clause.addClause("AND", "esercizio", SQLBuilder.EQUALS, sospesoBulk
+					.getEsercizio());
+			clause.addClause("AND", "cd_cds", SQLBuilder.EQUALS, sospesoBulk.getCd_cds());
+			clause.addClause("AND", "ti_entrata_spesa", SQLBuilder.EQUALS, sospesoBulk
+					.getTi_entrata_spesa());
+			clause.addClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS,SospesoBulk.TI_RISCONTRO);
+			clause.addClause("AND", "cd_sospeso", SQLBuilder.LIKE, SospesoBulk.RISC_PREFIX+"%");
+			String maxSospeso = SospesoBulk.RISC_PREFIX+SospesoBulk.CODICE_SOSPESO_RISCONTRO_INIZIALE;
+			try {
+				Object max = findMax( sospesoBulk, "cd_sospeso", maxSospeso, true,  clause);
+				maxSospeso = (String) max;
+				if (maxSospeso.length() != 14){
+					throw new ComponentException("Esistono numerazioni di riscontro non compatibili con la numerazione automatica generata dall'interfaccia di riscontro automatica. La lunghezza del codice sospeso è diversa da 14 caratteri.");
+				}
+				Long num = new Long(maxSospeso.substring(4,14));
+				String nextCd = SospesoBulk.RISC_PREFIX+String.format("%10s", (num+1)).replace(' ', '0');
+				return nextCd;
+			} catch (BusyResourceException e) {
+				throw new ComponentException(e);
+			}
+		}
+		return null;
 	}
 }

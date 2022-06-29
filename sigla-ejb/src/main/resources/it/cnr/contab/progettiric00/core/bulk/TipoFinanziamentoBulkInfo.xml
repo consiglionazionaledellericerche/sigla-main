@@ -142,7 +142,15 @@
             enabledOnSearch="true"
             inputType="CHECKBOX"
             nullable="false"
-            label="Consenti Associazione Progetto/Contratti"/>            
+            label="Consenti Associazione Progetto/Contratti"/>
+    <fieldProperty
+            name="flValidazioneAutomatica"
+            property="flValidazioneAutomatica"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Consenti Validazione Automatica Progetto/Rimodulazione"/>
+
     <form
             name="searchtool">
         <formFieldProperty
@@ -184,6 +192,8 @@
             name="flQuadraContratto" />
     <formFieldProperty
             name="flAssociaContratto" />
+    <formFieldProperty
+            name="flValidazioneAutomatica" />
 
     <findFieldProperty
             name="id"/>
@@ -219,7 +229,9 @@
             name="flQuadraContratto" />
     <findFieldProperty
             name="flAssociaContratto" />
-                                    
+    <findFieldProperty
+            name="flValidazioneAutomatica" />
+
     <columnFieldProperty
             name="id"/>
     <columnFieldProperty
@@ -253,5 +265,7 @@
     <columnFieldProperty
             name="flQuadraContratto" />
     <columnFieldProperty
-            name="flAssociaContratto" />            
+            name="flAssociaContratto" />
+    <columnFieldProperty
+            name="flValidazioneAutomatica" />
 </bulkInfo>

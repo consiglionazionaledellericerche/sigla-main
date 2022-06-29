@@ -17,10 +17,12 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
@@ -36,7 +38,9 @@ import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.contab.util.Apparence;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.PdfSignApparence;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -61,6 +65,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -68,6 +73,7 @@ import java.util.*;
 
 public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
     private static final long serialVersionUID = 1L;
+
     private static final Logger log = LoggerFactory.getLogger(CRUDDistintaCassiere1210BP.class);
     private final LetteraRemoteDetailCRUDController distintaCassiere1210LettereDaCollegare = new LetteraRemoteDetailCRUDController("DistintaCassiere1210LettereDaCollegare", Lettera_pagam_esteroBulk.class,
             "distintaCassiere1210LettereDaCollegare", "CNRDOCCONT00_EJB_DistintaCassiereComponentSession", this);
@@ -439,6 +445,22 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
             throw new ApplicationException("\nAlla distinta risulta allegato un documento non in formato PDF" +
                     ", pertanto è stato escluso dalla selezione.");
         }
+        final Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession()
+                .getConfigurazione(
+                        actionContext.getUserContext(),
+                        0,
+                        "*",
+                        "DISTINTA_ESTERO",
+                        "DIMENSIONE_MASSIMA_MB"
+                );
+
+        final BigInteger dimension = BigInteger.valueOf(out.size()).divide(BigInteger.valueOf(1024)).divide(BigInteger.valueOf(1024));
+        if (dimension.compareTo(configurazione.getIm01().toBigInteger()) > 0) {
+            throw new ApplicationMessageFormatException("La dimensione della distinta {0}Mbytes supera la dimensione massima consentita {1}Mbytes!",
+                    dimension,
+                    configurazione.getIm01().toBigInteger());
+        }
+
         documentiContabiliService.restoreSimpleDocument(
             distintaCassiere1210Bulk,
             new ByteArrayInputStream(out.toByteArray()),

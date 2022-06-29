@@ -33,6 +33,19 @@
 		<columnMapping
 				columnName="CD_TERZO"
 				propertyName="terzo.cd_terzo" />
+		<columnMapping
+				columnName="ESERCIZIO_VOCE"
+				propertyName="elemento_voce.esercizio"
+				fetchOnly="true"/>
+		<columnMapping
+				columnName="CD_ELEMENTO_VOCE"
+				propertyName="elemento_voce.cd_elemento_voce"/>
+		<columnMapping
+				columnName="TI_GESTIONE"
+				propertyName="elemento_voce.ti_gestione"/>
+		<columnMapping
+				columnName="TI_APPARTENENZA"
+				propertyName="elemento_voce.ti_appartenenza"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -41,4 +54,6 @@
 			name="terzo" />
 	<persistentProperty
 		name="tipoPendenzaPagopa" />
+	<persistentProperty
+			name="elemento_voce" />
 </SQLPersistentInfo>

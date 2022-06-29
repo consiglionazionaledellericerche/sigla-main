@@ -20,6 +20,7 @@
  * Date 02/10/2018
  */
 package it.cnr.contab.doccont00.intcass.giornaliera;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
@@ -28,6 +29,29 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	/**
 	 * [INFORMAZIONI_CONTO_EVIDENZA null]
 	 **/
+
+	public final static String CAUSALE_PAGOPA_CUMULATIVO = "/PUR/";
+	public final static String CAUSALE_PAGOPA_SINGOLO_STRUTTURATO = "/RFS/";
+	public final static String CAUSALE_PAGOPA_SINGOLO_STANDARD = "/RFB/";
+
+	public final static String RIFERIMENTO_INTERNO_BANCA_ITALIA = "FZPBP1";
+	public final static String RIFERIMENTO_INTERNO_PAGAMENTO_STIPENDI = "PAGSTIP";
+	public final static String STATO_RECORD_INIZIALE = "I";
+	public final static String STATO_RECORD_PROCESSATO = "P";
+	public final static String TIPO_MOVIMENTO_ENTRATA = "ENTRATA";
+	public final static String TIPO_DOCUMENTO_MANDATO = "MANDATO";
+	public final static String INIZIO_TIPO_DOCUMENTO_SOSPESO = "SOSPESO";
+	public final static String TIPO_DOCUMENTO_REVERSALE = "REVERSALE";
+	public final static String TIPO_OPERAZIONE_ESEGUITO = "ESEGUITO";
+	public final static String TIPO_OPERAZIONE_REGOLARIZZATO = "REGOLARIZZATO";
+	public final static String TIPO_OPERAZIONE_STORNATO = "STORNATO";
+	public final static String TIPO_ESECUZIONE_BANCA_ITALIA = "ACCREDITO BANCA D'ITALIA";
+	public final static String TIPO_ESECUZIONE_TESORERIA_TAB_A = "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A";
+	public final static String TIPO_ESECUZIONE_TESORERIA_TAB_B = "ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B";
+	public final static String TIPO_ESECUZIONE_REG_BANCA_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
+	public final static String TIPO_ESECUZIONE_REG_TESORERIA_TAB_A = "REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A";
+	public final static String TIPO_ESECUZIONE_REG_TESORERIA_TAB_B = "REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B";
+
 	private InformazioniContoEvidenzaBulk informazioniContoEvidenza =  new InformazioniContoEvidenzaBulk();
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -108,5 +132,51 @@ public class MovimentoContoEvidenzaBulk extends MovimentoContoEvidenzaBase {
 	 **/
 	public void setContoEvidenza(java.lang.String contoEvidenza)  {
 		this.getInformazioniContoEvidenza().setContoEvidenza(contoEvidenza);
+	}
+	public Boolean isMandatoReversale(){
+		return getTipoDocumento() != null && (isMandato() || isReversale());
+	}
+	public Boolean isMandato(){
+		return getTipoDocumento() != null && getTipoDocumento().equals(TIPO_DOCUMENTO_MANDATO);
+	}
+	public Boolean isReversale(){
+		return getTipoDocumento() != null && getTipoDocumento().equals(TIPO_DOCUMENTO_REVERSALE);
+	}
+	public Boolean isTipoOperazioneEseguitoRegolarizzato(){
+		return getTipoOperazione() != null && (isTipoOperazioneEseguito() || isTipoOperazioneRegolarizzato());
+	}
+	public Boolean isTipoOperazioneEseguito(){
+		return getTipoOperazione() != null  && getTipoOperazione().equals(TIPO_OPERAZIONE_ESEGUITO);
+	}
+	public Boolean isTipoOperazioneRegolarizzato(){
+		return getTipoOperazione() != null  && getTipoOperazione().equals(TIPO_OPERAZIONE_REGOLARIZZATO);
+	}
+	public Boolean isTipoOperazioneStornato(){
+		return getTipoOperazione() != null  && getTipoOperazione().equals(TIPO_OPERAZIONE_STORNATO);
+	}
+	public Boolean isTipoEsecuzioneBancaItalia(){
+		return getTipoEsecuzione() != null  && (getTipoEsecuzione().equals(TIPO_ESECUZIONE_BANCA_ITALIA) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_TESORERIA_TAB_A) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_TESORERIA_TAB_B)
+				||getTipoEsecuzione().equals(TIPO_ESECUZIONE_REG_BANCA_ITALIA) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_REG_TESORERIA_TAB_A) ||getTipoEsecuzione().equals(TIPO_ESECUZIONE_REG_TESORERIA_TAB_B));
+	}
+	public Boolean isSospeso(){
+		return getTipoDocumento() != null && getTipoDocumento().startsWith(INIZIO_TIPO_DOCUMENTO_SOSPESO);
+	}
+	public Boolean isMovimentoEntrata(){
+		return getTipoMovimento() != null && getTipoMovimento().equals(TIPO_MOVIMENTO_ENTRATA);
+	}
+	public Boolean isCodiceRiferimentoInternoBancaItalia(){
+		return getCodiceRifInterno() != null && getCodiceRifInterno().startsWith(RIFERIMENTO_INTERNO_BANCA_ITALIA);
+	}
+	public Boolean isCodiceRiferimentoInternoPagamentoStipendi(){
+		return getCodiceRifInterno() != null && getCodiceRifInterno().startsWith(RIFERIMENTO_INTERNO_PAGAMENTO_STIPENDI);
+	}
+	public String recuperoTipoSospesoEntrataSpesa(){
+		return isMovimentoEntrata() ?  SospesoBulk.TIPO_ENTRATA : SospesoBulk.TIPO_SPESA;
+	}
+	public String recuperoNumeroSospeso(){
+		return String.format("%018d", getNumeroDocumento());
+	}
+	public Boolean isIncassoPagopa (){
+		return getCausale() != null && (getCausale().startsWith(CAUSALE_PAGOPA_CUMULATIVO) || getCausale().startsWith(CAUSALE_PAGOPA_SINGOLO_STRUTTURATO)|| getCausale().startsWith(CAUSALE_PAGOPA_SINGOLO_STANDARD));
 	}
 }
