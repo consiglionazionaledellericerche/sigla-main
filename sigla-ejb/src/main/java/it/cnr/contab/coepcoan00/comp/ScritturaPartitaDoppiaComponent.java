@@ -213,18 +213,25 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 
 		public void openDettaglioPatrimoniale(IDocumentoCogeBulk docamm, String cdConto, BigDecimal importo, boolean registraPartita) {
-			this.addDettaglioPatrimoniale(docamm, cdConto, importo, registraPartita, true);
+			DettaglioPrimaNota dettPN = this.addDettaglioPatrimoniale(docamm, cdConto, importo, registraPartita, true);
+			dettPN.setModificabile(Boolean.TRUE);
+		}
+
+		public void closeDettaglioPatrimoniale(IDocumentoCogeBulk docamm, String cdConto, BigDecimal importo, boolean registraPartita, boolean isModificabile) {
+			DettaglioPrimaNota dettPN = this.addDettaglioPatrimoniale(docamm, cdConto, importo, registraPartita, false);
+			dettPN.setModificabile(isModificabile);
+
 		}
 
 		public void closeDettaglioPatrimoniale(IDocumentoCogeBulk docamm, String cdConto, BigDecimal importo, boolean registraPartita) {
-			this.addDettaglioPatrimoniale(docamm, cdConto, importo, registraPartita, false);
+			this.closeDettaglioPatrimoniale(docamm, cdConto, importo, registraPartita, false);
 		}
 
-		public void addDettaglioPatrimoniale(IDocumentoCogeBulk docamm, String cdConto, BigDecimal importo, boolean registraPartita, boolean isOpen) {
+		public DettaglioPrimaNota addDettaglioPatrimoniale(IDocumentoCogeBulk docamm, String cdConto, BigDecimal importo, boolean registraPartita, boolean isOpen) {
 			if (isOpen)
-				this.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), docamm.getTipoDocumentoEnum().getSezionePatrimoniale(), cdConto, importo, registraPartita?docamm:null);
+				return this.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), docamm.getTipoDocumentoEnum().getSezionePatrimoniale(), cdConto, importo, registraPartita?docamm:null);
 			else
-				this.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(docamm.getTipoDocumentoEnum().getSezionePatrimoniale()), cdConto, importo, registraPartita?docamm:null);
+				return this.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(docamm.getTipoDocumentoEnum().getSezionePatrimoniale()), cdConto, importo, registraPartita?docamm:null);
 		}
 
 		public DettaglioPrimaNota addDettaglio(String tipoDettaglio, String sezione, String cdConto, BigDecimal importo) {
@@ -1620,8 +1627,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			//Registrazione conto COSTO MISSIONE
 			BigDecimal imCostoMissione = missione.getIm_totale_missione();
+			Pair<Voce_epBulk, Voce_epBulk> pairContoCostoMissione = this.findPairCosto(userContext, missione);
 			if (imCostoMissione.compareTo(BigDecimal.ZERO)!=0) {
-				Pair<Voce_epBulk, Voce_epBulk> pairContoCostoMissione = this.findPairCosto(userContext, missione);
 				testataPrimaNota.openDettaglioCostoRicavo(missione, pairContoCostoMissione.getFirst().getCd_voce_ep(), imCostoMissione);
 				testataPrimaNota.openDettaglioPatrimoniale(missione, pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoMissione, true);
 			}
@@ -1640,12 +1647,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					BigDecimal imCostoAnticipo = anticipoDB.getIm_anticipo();
 					Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = this.findPairCosto(userContext, anticipoDB);
 					testataPrimaNota.closeDettaglioCostoRicavo(anticipo, pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
-					testataPrimaNota.closeDettaglioPatrimoniale(anticipo, pairContoCostoAnticipo.getSecond().getCd_voce_ep(), imCostoAnticipo, true);
+					//Inserisco il dettaglio patrimoniale come modificabile in quanto non è altro che riduzione del debito verso fornitore registrato dalla missione
+					//dovuto all'anticipo
+					testataPrimaNota.closeDettaglioPatrimoniale(missione, pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoAnticipo, true, true);
 				} catch (ComponentException|RemoteException|PersistencyException e) {
 					throw new ApplicationRuntimeException(e);
 				}
 			});
-			return this.generaScrittura(userContext, missione, Collections.singletonList(testataPrimaNota), false);
+			return this.generaScrittura(userContext, missione, Collections.singletonList(testataPrimaNota), true);
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
@@ -2266,22 +2275,29 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		testataPrimaNota.forEach(testata->{
 			if (accorpaConti) {
 				//Prima analizzo i conti patrimoniali con partita
-				//I conti patrimoniali devono essere accorpati per partita
-				Map<IDocumentoCogeBulk, Map<String, Map<String, List<DettaglioPrimaNota>>>> mapPartitePatrimoniali = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
+				//I conti patrimoniali devono essere accorpati per partita e distinti tra modificabili e non
+				Map<IDocumentoCogeBulk, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapPartitePatrimoniali =
+						testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
 						.filter(el->Optional.ofNullable(el.getPartita()).isPresent())
-						.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita, Collectors.groupingBy(DettaglioPrimaNota::getTipoDett, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
+						.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
+								Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+										Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))));
 
 				mapPartitePatrimoniali.keySet().forEach(aPartita -> {
-					Map<String, Map<String, List<DettaglioPrimaNota>>> mapTipoDettPatrimoniali = mapPartitePatrimoniali.get(aPartita);
+					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettPatrimoniali = mapPartitePatrimoniali.get(aPartita);
 					mapTipoDettPatrimoniali.keySet().forEach(aTipoDett -> {
-						Map<String, List<DettaglioPrimaNota>> mapContiPatrimoniali = mapTipoDettPatrimoniali.get(aTipoDett);
-						mapContiPatrimoniali.keySet().forEach(aContoPatrimoniale -> {
-							try {
-								Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
-								addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita);
-							} catch (ComponentException e) {
-								throw new ApplicationRuntimeException(e);
-							}
+						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettPatrimoniali.get(aTipoDett);
+						mapModificabile.keySet().forEach(aTipoModific -> {
+							Map<String, List<DettaglioPrimaNota>> mapContiPatrimoniali = mapModificabile.get(aTipoModific);
+							mapContiPatrimoniali.keySet().forEach(aContoPatrimoniale -> {
+								try {
+									Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
+									Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita);
+									Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+								} catch (ComponentException e) {
+									throw new ApplicationRuntimeException(e);
+								}
+							});
 						});
 					});
 				});
