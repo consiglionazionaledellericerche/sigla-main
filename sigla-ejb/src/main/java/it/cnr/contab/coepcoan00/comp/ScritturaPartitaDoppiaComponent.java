@@ -987,7 +987,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			clauses = it.cnr.jada.persistency.sql.CompoundFindClause.and(clauses,bulk.buildFindClauses(Boolean.FALSE));
 		/* COMPORTAMENTO DI DEFAULT - FINE */
 
-		ridefinisciClausoleConTimestamp( userContext, clauses );
+		if (clauses != null)
+			ridefinisciClausoleConTimestamp(userContext, clauses);
 
 		if(bulk instanceof Movimento_cogeBulk)
 		{
@@ -1520,8 +1521,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//Nel caso dei compensi rilevo subito il costo prelevando le informazioni dalla riga del compenso stesso
 			//Registrazione conto COSTO COMPENSO
 			BigDecimal imCostoCompenso = compenso.getIm_lordo_percipiente();
+			Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
 			if (imCostoCompenso.compareTo(BigDecimal.ZERO)!=0) {
-				Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
 				testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCompenso);
 				testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCompenso, true);
 			}
@@ -1534,9 +1535,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					.forEach(cori->{
 						try {
 							BigDecimal imCostoCori = cori.getAmmontare();
-							Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCori = this.findPairCostoCompenso(userContext, cori);
-							testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
-							testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, false);
+							if (imCostoCori.compareTo(BigDecimal.ZERO)!=0) {
+								// Se la tipologia di contributo ritenuta è IVA o RIVALSA il conto ritornato è quello di costo principale del compenso
+								if (compenso.isIstituzionale() && Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
+										.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori).map(el -> el.isTipoIva() || el.isTipoRivalsa()).isPresent()) {
+									testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCori);
+									testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, true);
+								} else {
+									Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCori = this.findPairCostoCompenso(userContext, cori);
+									testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
+									testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, false);
+								}
+							}
 						} catch (ComponentException|PersistencyException e) {
 							throw new ApplicationRuntimeException(e);
 						}
@@ -1554,7 +1564,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				}
 			});
 
-			return this.generaScrittura(userContext, compenso, Collections.singletonList(testataPrimaNota), false);
+			return this.generaScrittura(userContext, compenso, Collections.singletonList(testataPrimaNota), true);
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
@@ -1787,10 +1797,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			throw new ApplicationException("La scrittura Prima Nota associata al compenso del mandato presenta in Avere movimenti di conti patrimoniali " +
 					"per un importo non coincidente con quello del mandato stesso.");
 
+		// Se la tipologia di contributo ritenuta è IVA o RIVALSA non calcolo le ritenute perchè vanno direttamene al fornitore
+		BigDecimal imRitenuteCosti = BigDecimal.ZERO;
+		if (compenso.isIstituzionale()) {
+			imRitenuteCosti = righeCori.stream().filter(el -> el.getTipoContributoRitenuta().getClassificazioneCori().isTipoIva() ||
+							el.getTipoContributoRitenuta().getClassificazioneCori().isTipoRivalsa()).map(Contributo_ritenutaBulk::getAmmontare)
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+		}
+
 		BigDecimal imRitenute = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		if (imRitenute.compareTo(rigaMandato.getIm_ritenute_riga())!=0)
+		if (imRitenute.subtract(imRitenuteCosti).compareTo(rigaMandato.getIm_ritenute_riga())!=0)
 			throw new ApplicationException("L'importo delle righe ritenute del compenso associato al mandato non corrisponde con l'importo ritenute associato al mandato.");
 
 		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
@@ -1805,11 +1823,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		righeCori.forEach(cori->{
 			try {
 				BigDecimal imCori = cori.getAmmontare();
-				Pair<Voce_epBulk, Voce_epBulk> pairContoCori = this.findPairContiMandato(userContext, cori);
-				Voce_epBulk contoPatrimonialeClose = cori.isContributoPercipiente()?contoPatrimonialePartita:pairContoCori.getFirst();
-				Voce_epBulk contoVersamentoCori = pairContoCori.getSecond();
-				testataPrimaNota.closeDettaglioPatrimoniale(compenso, contoPatrimonialeClose.getCd_voce_ep(), imCori, cori.isContributoPercipiente());
-				testataPrimaNota.openDettaglioPatrimoniale(compenso, contoVersamentoCori.getCd_voce_ep(), imCori, false);
+
+				if (imCori.compareTo(BigDecimal.ZERO)!=0) {
+					// Se la tipologia di contributo ritenuta è IVA o RIVALSA non registro la ritenuta in quanto già registrata in fase di chiusura debito mandato (imNettoMandato contiene imCori)
+					if (!(compenso.isIstituzionale() && Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
+							.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori).filter(el -> el.isTipoIva() || el.isTipoRivalsa()).isPresent())) {
+						Pair<Voce_epBulk, Voce_epBulk> pairContoCori = this.findPairContiMandato(userContext, cori);
+						Voce_epBulk contoPatrimonialeClose = cori.isContributoPercipiente()?contoPatrimonialePartita:pairContoCori.getFirst();
+						Voce_epBulk contoVersamentoCori = pairContoCori.getSecond();
+						testataPrimaNota.closeDettaglioPatrimoniale(compenso, contoPatrimonialeClose.getCd_voce_ep(), imCori, cori.isContributoPercipiente());
+						testataPrimaNota.openDettaglioPatrimoniale(compenso, contoVersamentoCori.getCd_voce_ep(), imCori, false);
+					}
+				}
 			} catch (ComponentException|PersistencyException e) {
 				throw new ApplicationRuntimeException(e);
 			}
@@ -2403,28 +2428,35 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				//Prima analizzo i conti con partita
 				//I conti devono essere accorpati per partita
 				{
-					Map<IDocumentoCogeBulk, Map<String, Map<String, List<DettaglioPrimaNota>>>> mapPartite = testata.getDett().stream()
+					Map<IDocumentoCogeBulk, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapPartite = testata.getDett().stream()
 							.filter(el -> Optional.ofNullable(el.getPartita()).isPresent())
-							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita, Collectors.groupingBy(DettaglioPrimaNota::getTipoDett, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
+							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
+									Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+											Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))));
 
 					mapPartite.keySet().forEach(aPartita -> {
-						Map<String, Map<String, List<DettaglioPrimaNota>>> mapTipoDett = mapPartite.get(aPartita);
+						Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDett = mapPartite.get(aPartita);
 						mapTipoDett.keySet().forEach(aTipoDett -> {
-							Map<String, List<DettaglioPrimaNota>> mapConti = mapTipoDett.get(aTipoDett);
-							mapConti.keySet().forEach(aConto -> {
-								try {
-									BigDecimal imDare = mapConti.get(aConto).stream()
-											.filter(DettaglioPrimaNota::isSezioneDare)
-											.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-									addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita);
+							Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDett.get(aTipoDett);
+							mapModificabile.keySet().forEach(aTipoModific -> {
+								Map<String, List<DettaglioPrimaNota>> mapConti = mapModificabile.get(aTipoModific);
+								mapConti.keySet().forEach(aConto -> {
+									try {
+										BigDecimal imDare = mapConti.get(aConto).stream()
+												.filter(DettaglioPrimaNota::isSezioneDare)
+												.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
+										Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita))
+												.ifPresent(el->el.setFl_modificabile(aTipoModific));
 
-									BigDecimal imAvere = mapConti.get(aConto).stream()
-											.filter(DettaglioPrimaNota::isSezioneAvere)
-											.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-									addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita);
-								} catch (ComponentException e) {
-									throw new ApplicationRuntimeException(e);
-								}
+										BigDecimal imAvere = mapConti.get(aConto).stream()
+												.filter(DettaglioPrimaNota::isSezioneAvere)
+												.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
+										Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita))
+												.ifPresent(el->el.setFl_modificabile(aTipoModific));
+									} catch (ComponentException e) {
+										throw new ApplicationRuntimeException(e);
+									}
+								});
 							});
 						});
 					});
@@ -2432,26 +2464,32 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 				//Poi analizzo i conti senza partita
 				{
-					Map<String, Map<String, List<DettaglioPrimaNota>>> mapTipoDett = testata.getDett().stream()
+					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDett = testata.getDett().stream()
 							.filter(el -> !Optional.ofNullable(el.getPartita()).isPresent())
-							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett, Collectors.groupingBy(DettaglioPrimaNota::getCdConto)));
+							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+									Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
 
 					mapTipoDett.keySet().forEach(aTipoDett -> {
-						Map<String, List<DettaglioPrimaNota>> mapConti = mapTipoDett.get(aTipoDett);
-						mapConti.keySet().forEach(aConto -> {
-							try {
-								BigDecimal imDare = mapConti.get(aConto).stream()
-										.filter(DettaglioPrimaNota::isSezioneDare)
-										.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-								addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare);
+						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDett.get(aTipoDett);
+						mapModificabile.keySet().forEach(aTipoModific -> {
+							Map<String, List<DettaglioPrimaNota>> mapConti = mapModificabile.get(aTipoModific);
+							mapConti.keySet().forEach(aConto -> {
+								try {
+									BigDecimal imDare = mapConti.get(aConto).stream()
+											.filter(DettaglioPrimaNota::isSezioneDare)
+											.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
+									Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare))
+											.ifPresent(el->el.setFl_modificabile(aTipoModific));
 
-								BigDecimal imAvere = mapConti.get(aConto).stream()
-										.filter(DettaglioPrimaNota::isSezioneAvere)
-										.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-								addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere);
-							} catch (ComponentException e) {
-								throw new ApplicationRuntimeException(e);
-							}
+									BigDecimal imAvere = mapConti.get(aConto).stream()
+											.filter(DettaglioPrimaNota::isSezioneAvere)
+											.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
+									Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere))
+											.ifPresent(el->el.setFl_modificabile(aTipoModific));
+								} catch (ComponentException e) {
+									throw new ApplicationRuntimeException(e);
+								}
+							});
 						});
 					});
 				}
