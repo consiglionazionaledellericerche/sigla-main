@@ -291,12 +291,6 @@ public class Configurazione_cnrHome extends BulkHome {
     }
 
 
-    public String getContoCorrenteEnte(Integer esercizio) throws PersistencyException {
-        return Optional.ofNullable(
-                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CONTO_CORRENTE_SPECIALE, Configurazione_cnrBulk.SK_ENTE))
-                .map(Configurazione_cnrBulk::getVal01)
-                .orElse(null);
-    }
     /**
      *
      * @param userContext
