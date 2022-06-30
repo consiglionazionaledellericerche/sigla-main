@@ -1746,10 +1746,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				Movimento_cogeBulk dettPN= (Movimento_cogeBulk) i.next();
 				BigDecimal imRiga = imNettoMandato.multiply(dettPN.getIm_movimento()).divide(totContiEp,2, RoundingMode.HALF_EVEN);
 				if (imRiga.compareTo(imDaRipartire)>0 || !i.hasNext()) {
-					testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imDaRipartire);
+					testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imDaRipartire, partita);
 					break;
 				}
-				testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imRiga);
+				testataPrimaNota.addDettaglio(partita.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.getControSezione(partita.getTipoDocumentoEnum().getSezionePatrimoniale()), dettPN.getCd_voce_ep(), imRiga, partita);
 				imDaRipartire = imDaRipartire.subtract(imRiga);
 			};
 		}
