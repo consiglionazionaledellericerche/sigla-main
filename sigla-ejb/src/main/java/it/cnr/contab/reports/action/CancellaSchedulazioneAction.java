@@ -17,24 +17,17 @@
 
 package it.cnr.contab.reports.action;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.AbstractAction;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.AdminUserContext;
-import it.cnr.jada.action.BusinessProcess;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.action.*;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.FormAction;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import javax.ejb.EJBException;
+import java.rmi.RemoteException;
 
 public class CancellaSchedulazioneAction extends FormAction{
 	@Override
@@ -55,11 +48,8 @@ public class CancellaSchedulazioneAction extends FormAction{
 				return super.doDefault(actioncontext);
 			}
 			String msg = "Si conferma la cancellazione dell'indirizzo "+indirizzoEMail+"<BR>dalla lista di distribuzione della stampa \""+printSpooler.getDsStampa()+"\"?";
-			OptionBP option = openConfirm( actioncontext, msg, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCancellaSchedulazione");
-			return option;
-		} catch (ComponentException e) {
-			handleException(actioncontext, e);
-		} catch (BusinessProcessException e) {
+			return openConfirm( actioncontext, msg, OptionBP.CONFIRM_YES_NO, "doConfirmCancellaSchedulazione");
+		} catch (ComponentException | BusinessProcessException e) {
 			handleException(actioncontext, e);
 		}
 		return super.doDefault(actioncontext);
@@ -77,7 +67,7 @@ public class CancellaSchedulazioneAction extends FormAction{
 		}
 		return actioncontext.findDefaultForward();
 	}
-	private OfflineReportComponentSession geComponent(ActionContext actioncontext) throws EJBException, RemoteException{
+	private OfflineReportComponentSession geComponent(ActionContext actioncontext) throws EJBException {
 		return (it.cnr.contab.reports.ejb.OfflineReportComponentSession)EJBCommonServices.createEJB("BREPORTS_EJB_OfflineReportComponentSession",it.cnr.contab.reports.ejb.OfflineReportComponentSession.class);
 	}
 }

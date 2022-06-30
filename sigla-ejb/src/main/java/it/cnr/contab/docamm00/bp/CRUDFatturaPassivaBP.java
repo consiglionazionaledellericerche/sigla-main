@@ -578,7 +578,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public OggettoBulk initializeModelForEdit(ActionContext context, OggettoBulk bulk) throws BusinessProcessException {
         try {
-//            this.loadAllScritture(context.getUserContext(), 2022, "103");
+            //this.loadAllScritture(context.getUserContext(), 2022, "080");
 
             if (bulk != null) {
                 Fattura_passivaBulk fp = (Fattura_passivaBulk) bulk;

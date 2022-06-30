@@ -19,6 +19,7 @@
 <body class="Form">
 
 <% CRUDBatchControlBP bp = (CRUDBatchControlBP)BusinessProcess.getBusinessProcess(request);
+Batch_controlBulk  model = (Batch_controlBulk)bp.getModel();
 	 bp.openFormWindow(pageContext); %>
 
 	<formFieldProperty
@@ -38,6 +39,8 @@
 				<% bp.getController().writeFormInput(out,null,"ds_batch",false,null,"style=\"width:100%\"");%>
 			</td>
 		</tr>
+		<% if (model==null || model.getProcedura()==null || !model.getProcedura().isProceduraJava()) { %>
+		pippo
 		<tr>
 			<td colspan="5">
 				Lasciando vuoto "Intervallo" il batch verrà eseguito immediatamente e solo una volta
@@ -53,6 +56,7 @@
 			<% bp.getController().writeFormField(out,"intervallo_calcolato");%>
 			<% bp.getController().writeFormField(out,"tipo_intervallo");%>
 		</tr>
+		<% } %>
 	</table>
 	<table class="Group" style="width:100%">
 	  <tr>

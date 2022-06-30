@@ -17,7 +17,11 @@
 
 package it.cnr.contab.logs.comp;
 
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaFromDocumentoComponentSession;
 import it.cnr.contab.logs.bulk.*;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -28,11 +32,14 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.springframework.scheduling.annotation.Async;
 
+import java.rmi.RemoteException;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 import javax.sql.DataSource;
@@ -102,6 +109,18 @@ public class BatchControlComponent extends CRUDComponent
             {
                 callablestatement.close();
             }
+        }
+        catch(Throwable throwable)
+        {
+            throw handleException(throwable);
+        }
+    }
+
+    public OggettoBulk creaBatchDinamicoJava(UserContext userContext, Batch_controlBulk batch_controlbulk) throws ComponentException {
+        try {
+            ScritturaPartitaDoppiaFromDocumentoComponentSession component = Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession();
+            List<IDocumentoCogeBulk> allDocuments = component.getAllDocumentiCoge(userContext, 2022, "084");
+            return batch_controlbulk;
         }
         catch(Throwable throwable)
         {
@@ -233,10 +252,14 @@ public class BatchControlComponent extends CRUDComponent
         throws ComponentException
     {
         Batch_controlBulk batch_controlbulk = (Batch_controlBulk)oggettobulk;
-        if(batch_controlbulk.getIntervallo() == null)
-            return creaBatchDinamico(usercontext, batch_controlbulk);
-        else
-            return creaBatchStatico(usercontext, batch_controlbulk);
+        if (!batch_controlbulk.getProcedura().isProceduraJava()) {
+            if(batch_controlbulk.getIntervallo() == null)
+                return creaBatchDinamico(usercontext, batch_controlbulk);
+            else
+                return creaBatchStatico(usercontext, batch_controlbulk);
+        } else
+            return creaBatchDinamicoJava(usercontext, batch_controlbulk);
+
     }
 
     public Batch_controlBulk disattivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk)
@@ -315,57 +338,78 @@ public class BatchControlComponent extends CRUDComponent
             batch_controlbulk.setParametri(arraylist);
             if(batch_controlbulk.getProcedura() == null || batch_controlbulk.getProcedura().getObject_name() == null || batch_controlbulk.getProcedura().getPackage_name() == null)
                 return batch_controlbulk;
-            LoggableStatement statement = new LoggableStatement(getConnection(usercontext),
-            		"SELECT ARGUMENT_NAME,DATA_TYPE FROM USER_ARGUMENTS WHERE OBJECT_NAME = ? AND PACKAGE_NAME = ? ORDER BY POSITION",true,this.getClass());
-            try
-            {
-                statement.setString(1, batch_controlbulk.getProcedura().getObject_name());
-                statement.setString(2, batch_controlbulk.getProcedura().getPackage_name());
-                ResultSet resultset = statement.executeQuery();
+
+            if (batch_controlbulk.getProcedura().getObject_name().equals("PROCEDURE_JAVA")) {
+                Batch_proceduraBulk.getParametriProceduraJava(batch_controlbulk.getProcedura().getCd_procedura()).stream().forEach(el->{
+                    try {
+                        SQLBuilder sqlbuilder = getHome(usercontext, Batch_procedura_parametroBulk.class).createSQLBuilder();
+                        sqlbuilder.addClause(FindClause.AND, "cd_procedura", SQLBuilder.EQUALS, el.getCd_procedura());
+                        sqlbuilder.addClause(FindClause.AND, "nome_parametro", SQLBuilder.EQUALS, el.getNome_parametro());
+                        sqlbuilder.addOrderBy("PG_VALORE_PARAMETRO DESC");
+                        el.setValoriRiutilizzabili(new ArrayList());
+                        Batch_procedura_parametroBulk batch_procedura_parametrobulk1;
+                        for (SQLBroker sqlbroker = getHome(usercontext, Batch_procedura_parametroBulk.class).createBroker(sqlbuilder); sqlbroker.next(); el.getValoriRiutilizzabili().add(batch_procedura_parametrobulk1)) {
+                            batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk) sqlbroker.fetch(Batch_procedura_parametroBulk.class);
+                            batch_procedura_parametrobulk1.setTipoParametro(el.getTipoParametro());
+                        }
+                        arraylist.add(el);
+                    } catch (ComponentException | PersistencyException e) {
+                        throw new ApplicationRuntimeException(e);
+                    }
+                });
+            } else {
+                LoggableStatement statement = new LoggableStatement(getConnection(usercontext),
+                        "SELECT ARGUMENT_NAME,DATA_TYPE FROM USER_ARGUMENTS WHERE OBJECT_NAME = ? AND PACKAGE_NAME = ? ORDER BY POSITION",true,this.getClass());
                 try
                 {
-                    for(int i = 0; i < 3; i++)
-                        if(!resultset.next())
-                            break;
-
-                    while(resultset.next()) 
+                    statement.setString(1, batch_controlbulk.getProcedura().getObject_name());
+                    statement.setString(2, batch_controlbulk.getProcedura().getPackage_name());
+                    ResultSet resultset = statement.executeQuery();
+                    try
                     {
-                        Batch_procedura_parametroBulk batch_procedura_parametrobulk = new Batch_procedura_parametroBulk(batch_controlbulk.getProcedura().getCd_procedura(), resultset.getString(1), null);
-                        String s = resultset.getString(2);
-                        if("VARCHAR".equalsIgnoreCase(s) || "VARCHAR2".equalsIgnoreCase(s) || "CHAR".equalsIgnoreCase(s))
-                            batch_procedura_parametrobulk.setTipoParametro(0);
-                        else
-                        if("NUMBER".equalsIgnoreCase(s))
-                            batch_procedura_parametrobulk.setTipoParametro(1);
-                        else
-                        if("DATE".equalsIgnoreCase(s))
-                            batch_procedura_parametrobulk.setTipoParametro(2);
-                        if(batch_procedura_parametrobulk.getTipoParametro() != -1)
-                        {
-                            arraylist.add(batch_procedura_parametrobulk);
-                            SQLBuilder sqlbuilder = getHome(usercontext, batch_procedura_parametrobulk).createSQLBuilder();
-                            sqlbuilder.addClause("AND", "cd_procedura", 8192, batch_procedura_parametrobulk.getCd_procedura());
-                            sqlbuilder.addClause("AND", "nome_parametro", 8192, batch_procedura_parametrobulk.getNome_parametro());
-                            sqlbuilder.addOrderBy("PG_VALORE_PARAMETRO DESC");
-                            batch_procedura_parametrobulk.setValoriRiutilizzabili(new ArrayList());
-                            Batch_procedura_parametroBulk batch_procedura_parametrobulk1;
-                            for(SQLBroker sqlbroker = getHome(usercontext, batch_procedura_parametrobulk).createBroker(sqlbuilder); sqlbroker.next(); batch_procedura_parametrobulk.getValoriRiutilizzabili().add(batch_procedura_parametrobulk1))
-                            {
-                                batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk)sqlbroker.fetch(Batch_procedura_parametroBulk.class);
-                                batch_procedura_parametrobulk1.setTipoParametro(batch_procedura_parametrobulk.getTipoParametro());
-                            }
+                        for(int i = 0; i < 3; i++)
+                            if(!resultset.next())
+                                break;
 
+                        while(resultset.next())
+                        {
+                            Batch_procedura_parametroBulk batch_procedura_parametrobulk = new Batch_procedura_parametroBulk(batch_controlbulk.getProcedura().getCd_procedura(), resultset.getString(1), null);
+                            String s = resultset.getString(2);
+                            if("VARCHAR".equalsIgnoreCase(s) || "VARCHAR2".equalsIgnoreCase(s) || "CHAR".equalsIgnoreCase(s))
+                                batch_procedura_parametrobulk.setTipoParametro(0);
+                            else
+                            if("NUMBER".equalsIgnoreCase(s))
+                                batch_procedura_parametrobulk.setTipoParametro(1);
+                            else
+                            if("DATE".equalsIgnoreCase(s))
+                                batch_procedura_parametrobulk.setTipoParametro(2);
+                            if(batch_procedura_parametrobulk.getTipoParametro() != -1)
+                            {
+                                arraylist.add(batch_procedura_parametrobulk);
+                                SQLBuilder sqlbuilder = getHome(usercontext, batch_procedura_parametrobulk).createSQLBuilder();
+                                sqlbuilder.addClause(FindClause.AND, "cd_procedura", SQLBuilder.EQUALS, batch_procedura_parametrobulk.getCd_procedura());
+                                sqlbuilder.addClause(FindClause.AND, "nome_parametro", SQLBuilder.EQUALS, batch_procedura_parametrobulk.getNome_parametro());
+                                sqlbuilder.addOrderBy("PG_VALORE_PARAMETRO DESC");
+                                batch_procedura_parametrobulk.setValoriRiutilizzabili(new ArrayList());
+                                Batch_procedura_parametroBulk batch_procedura_parametrobulk1;
+                                for(SQLBroker sqlbroker = getHome(usercontext, batch_procedura_parametrobulk).createBroker(sqlbuilder); sqlbroker.next(); batch_procedura_parametrobulk.getValoriRiutilizzabili().add(batch_procedura_parametrobulk1))
+                                {
+                                    batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk)sqlbroker.fetch(Batch_procedura_parametroBulk.class);
+                                    batch_procedura_parametrobulk1.setTipoParametro(batch_procedura_parametrobulk.getTipoParametro());
+                                }
+
+                            }
                         }
+                    }
+                    finally
+                    {
+                        try{resultset.close();}catch( SQLException e ){};
                     }
                 }
                 finally
                 {
-					try{resultset.close();}catch( SQLException e ){};
+                    try{statement.close();}catch( SQLException e ){};
                 }
-            }
-            finally
-            {
-				try{statement.close();}catch( SQLException e ){};
             }
             return batch_controlbulk;
         }
