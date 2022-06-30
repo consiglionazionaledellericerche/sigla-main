@@ -339,6 +339,26 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
     }
 
     @Override
+    public void asyncDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, RemoteException {
+        try {
+            invoke("getAllDocumentiCoge", new Object[]{
+                    param0,
+                    param1,
+                    param2});
+        } catch (RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+    @Override
     public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, RemoteException {
         try {
             return (List<IDocumentoCogeBulk>)invoke("getAllDocumentiCoge", new Object[]{

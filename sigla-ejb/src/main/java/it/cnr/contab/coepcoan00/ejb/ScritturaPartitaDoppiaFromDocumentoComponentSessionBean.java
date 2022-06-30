@@ -27,6 +27,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -79,6 +80,25 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 			throw uncaughtError(param0, componentObj, e);
 		}
 	}
+	@Asynchronous
+	public void asyncDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).getAllDocumentiCoge(param0, param1, param2);
+			component_invocation_succes(param0, componentObj);
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+
 
 	public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException {
 		pre_component_invocation(param0, componentObj);

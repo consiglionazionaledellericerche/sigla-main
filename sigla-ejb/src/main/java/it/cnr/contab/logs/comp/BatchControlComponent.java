@@ -119,7 +119,11 @@ public class BatchControlComponent extends CRUDComponent
     public OggettoBulk creaBatchDinamicoJava(UserContext userContext, Batch_controlBulk batch_controlbulk) throws ComponentException {
         try {
             ScritturaPartitaDoppiaFromDocumentoComponentSession component = Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession();
-            List<IDocumentoCogeBulk> allDocuments = component.getAllDocumentiCoge(userContext, 2022, "084");
+            component.asyncDocumentiCoge(
+                    userContext,
+                    2022,
+                    "084"
+            );
             return batch_controlbulk;
         }
         catch(Throwable throwable)
