@@ -2920,9 +2920,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 				/*
 				  20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
-				     dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria)
+				     dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria o per esigenze finanziarie)
+			  	  10/06/2022 - regola non valida per variazioni di tipo Trasferimento Finanziario - documento analisi cda
 				 */
-				if (!isVariazioneArea && !isVariazioneRagioneria)
+				if (!isVariazioneArea && !isVariazioneRagioneria && !isVariazioneTrasferimentoEsigenzeFinanziarie)
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
@@ -2939,8 +2940,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				  30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto
 				  	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
 				  	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
+  				  	  10/06/2022 - regola non valida per variazioni di tipo Trasferimento Finanziario - documento analisi cda
 				 */
-				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
+				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk) && !isVariazioneTrasferimentoEsigenzeFinanziarie) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))

@@ -33,7 +33,6 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 
     public final static Map<String,String> ti_allegatoKeys = Arrays.asList(AllegatoProgettoType.values())
             .stream()
-			.filter(el->!el.value().equals(AllegatoProgettoType.VALUTAZIONE_UTILIZZO_RISORSE.value()))
             .collect(Collectors.toMap(
             		AllegatoProgettoType::value,
             		AllegatoProgettoType::label,

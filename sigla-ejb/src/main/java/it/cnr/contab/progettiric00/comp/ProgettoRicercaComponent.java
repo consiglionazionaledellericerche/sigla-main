@@ -2059,7 +2059,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			boolean ctrlDtFine = progetto.isDatePianoEconomicoRequired() || optOtherField.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent();
 			boolean ctrlStato = !optOtherField.filter(Progetto_other_fieldBulk::isStatoApprovato).isPresent() &&
 								!optOtherField.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent();
-					
+
 			if (ctrlDtInizio)
 	    		Optional.ofNullable(progetto.getOtherField().getDtInizio())
 	    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di inizio del progetto!"));
@@ -2114,6 +2114,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			}
 
 			if (ctrlDtInizio || ctrlDtFine || ctrlStato) {
+				Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+
 				it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
 		   		BigDecimal annoFrom = configSession.getIm01(userContext, 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 
@@ -2145,7 +2148,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 										+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
 			    			   });
 
-		    		if (ctrlDtFine && Optional.ofNullable(progetto.getOtherField().getDtFineEffettiva()).isPresent()) {
+					//Non effettuo controllo su data fine obbligazioni se collegata la Uo Ente che può inserire obbligazioni in deroga
+		    		if (ctrlDtFine && Optional.ofNullable(progetto.getOtherField().getDtFineEffettiva()).isPresent() && !uoScrivania.isUoEnte()) {
 			    		listObb.stream()
 							   .filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0)
 			    			   .filter(el->!el.isObbligazioneResiduo())
@@ -2208,22 +2212,27 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			    			   });
 
 		    		if (ctrlDtFine)
-			    		listVar.stream()
-			    			   .filter(el->!el.isAnnullata())
-							   .filter(el->!el.isRespinta())
-							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
-							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
-				 			   .max(Comparator.comparing(Pdg_variazioneBase::getDt_chiusura))
-				 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
-				 			   .ifPresent(el->{
-			    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
-				    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
-				    				   		+ " associata al progetto con data di chiusura "
-				    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+						/*
+						 * esclude dalle variazioni quelle effettuote dalla UO Ente, se lei stessa collegata,
+						 * in quanto la variazione di data successiva può essere stata effettuata proprio da lei che è autorizzata
+						 */
+						listVar.stream()
+								.filter(el -> !el.isAnnullata())
+								.filter(el -> !el.isRespinta())
+								.filter(el -> Optional.ofNullable(el.getDt_chiusura()).isPresent())
+								.filter(el -> !Optional.ofNullable(el.getDt_annullamento()).isPresent())
+								.filter(el->!uoScrivania.isUoEnte() || el.getCentro_responsabilita().getUnita_padre().isUoEnte())
+								.max(Comparator.comparing(Pdg_variazioneBase::getDt_chiusura))
+								.filter(el -> el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+								.ifPresent(el -> {
+									throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
+											+ el.getEsercizio() + "/" + el.getPg_variazione_pdg()
+											+ " associata al progetto con data di chiusura "
+											+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
 											+ " superiore alla data di fine/proroga "
 											+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
 											+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
-		 			   });
+								});
 	    		}
 
 	    		//cerco la data min e max di variazioni di bilancio di residuo
@@ -2244,7 +2253,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 							   .filter(el->!el.isRespinta())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
-			    			   .min(Comparator.comparing(Var_stanz_resBase::getDt_chiusura))
+							   .min(Comparator.comparing(Var_stanz_resBase::getDt_chiusura))
 			    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
 			    			   .ifPresent(el->{
 			    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
@@ -2257,11 +2266,16 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			    			   });
 
 		    		if (ctrlDtFine)
+						/*
+						 * esclude dalle variazioni quelle effettuote dalla UO Ente, se lei stessa collegata,
+						 * in quanto la variazione di data successiva può essere stata effettuata proprio da lei che è autorizzata
+						 */
 			    		listVar.stream()
  					           .filter(el->!el.isAnnullata())
 							   .filter(el->!el.isRespinta())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
+							   .filter(el->!uoScrivania.isUoEnte() || el.getCentroDiResponsabilita().getUnita_padre().isUoEnte())
 				 			   .max(Comparator.comparing(Var_stanz_resBase::getDt_chiusura))
 				 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
 				 			   .ifPresent(el->{
@@ -2279,7 +2293,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			throw handleException(e);
 		}
     }
-    
+
     public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws ComponentException {
     	try {
     		ProgettoHome testataHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
