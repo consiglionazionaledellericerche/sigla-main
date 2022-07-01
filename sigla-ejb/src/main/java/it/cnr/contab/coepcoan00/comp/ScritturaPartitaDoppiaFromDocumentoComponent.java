@@ -44,9 +44,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ScritturaPartitaDoppiaFromDocumentoComponent.class);
@@ -224,8 +223,22 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
 
         return allDocuments;
     }
-
-    public void loadScrittura(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+    public void loadScritturePatrimoniali(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
+        documentiCoge.forEach(documentoCoge->{
+            try {
+                this.loadScrittura(userContext, documentoCoge);
+                logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
+            } catch (NoRollbackException e) {
+                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
+                        " - Anomalia: " + e.getMessage());
+            } catch (Exception e) {
+                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
+                        " - Anomalia: " + e.getMessage());
+                throw new DetailedRuntimeException(e);
+            }
+        });
+    }
+    private void loadScrittura(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
             if (!optionalScritturaPartitaDoppiaOldBulk.isPresent()) {
@@ -247,21 +260,5 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         } catch (RemoteException e) {
             throw handleException(e);
         }
-    }
-
-    public void loadScritture(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
-        documentiCoge.forEach(documentoCoge->{
-            try {
-                this.loadScrittura(userContext, documentoCoge);
-                logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
-            } catch (NoRollbackException e) {
-                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
-                        " - Anomalia: " + e.getMessage());
-            } catch (Exception e) {
-                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
-                        " - Anomalia: " + e.getMessage());
-                throw new DetailedRuntimeException(e);
-            }
-        });
     }
 }

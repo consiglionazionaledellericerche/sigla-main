@@ -50,15 +50,15 @@ public class Batch_controlBulk extends Batch_controlBase
                 break;
 
             case 1: // '\001'
-                setIntervallo(new Long(intervallo_calcolato.longValue() * 60L));
+                setIntervallo(intervallo_calcolato * 60L);
                 break;
 
             case 2: // '\002'
-                setIntervallo(new Long(intervallo_calcolato.longValue() * 60L * 60L));
+                setIntervallo(intervallo_calcolato * 60L * 60L);
                 break;
 
             case 3: // '\003'
-                setIntervallo(new Long(intervallo_calcolato.longValue() * 60L * 60L * 24L));
+                setIntervallo(intervallo_calcolato * 60L * 60L * 24L);
                 break;
             }
     }
@@ -69,31 +69,31 @@ public class Batch_controlBulk extends Batch_controlBase
         {
             if(getIntervallo() == null)
                 return null;
-            long l = getIntervallo().longValue();
+            long l = getIntervallo();
             if(l % 0x15180L == 0L)
             {
-                setIntervallo_calcolato(new Long(l / 0x15180L));
+                setIntervallo_calcolato(l / 0x15180L);
                 setTipo_intervallo(3);
             } else
             if(l % 3600L == 0L)
             {
-                setIntervallo_calcolato(new Long(l / 3600L));
+                setIntervallo_calcolato(l / 3600L);
                 setTipo_intervallo(2);
             } else
             if(l % 60L == 0L)
             {
-                setIntervallo_calcolato(new Long(l / 60L));
+                setIntervallo_calcolato(l / 60L);
                 setTipo_intervallo(1);
             } else
             {
-                setIntervallo_calcolato(new Long(l));
+                setIntervallo_calcolato(l);
                 setTipo_intervallo(0);
             }
         }
         return intervallo_calcolato;
     }
 
-    public List getParametri()
+    public List<Batch_procedura_parametroBulk> getParametri()
     {
         return parametri;
     }
@@ -118,7 +118,7 @@ public class Batch_controlBulk extends Batch_controlBase
         intervallo_calcolato = long1;
     }
 
-    public void setParametri(List list)
+    public void setParametri(List<Batch_procedura_parametroBulk> list)
     {
         parametri = list;
     }
@@ -141,10 +141,8 @@ public class Batch_controlBulk extends Batch_controlBase
         calcolaIntervalloReale();
         if(getIntervallo() != null && getDt_partenza() == null)
             throw new ValidationException("Se si specifica l'intervallo \350 necessario specificare l'ora di partenza.");
-        if(getIntervallo() != null && getIntervallo().longValue() == 0L)
+        if(getIntervallo() != null && getIntervallo() == 0L)
             throw new ValidationException("Intervallo non valido");
-        else
-            return;
     }
 
     public static final int TIPO_INTERVALLO_SEC = 0;
@@ -152,7 +150,7 @@ public class Batch_controlBulk extends Batch_controlBase
     public static final int TIPO_INTERVALLO_ORE = 2;
     public static final int TIPO_INTERVALLO_GIORNI = 3;
     public static final OrderedHashtable tipo_intervalloKeys;
-    private List parametri;
+    private List<Batch_procedura_parametroBulk> parametri;
     private Batch_proceduraBulk procedura;
     private int tipo_intervallo;
     private Long intervallo_calcolato;
@@ -160,9 +158,9 @@ public class Batch_controlBulk extends Batch_controlBase
     static 
     {
         tipo_intervalloKeys = new OrderedHashtable();
-        tipo_intervalloKeys.put(new Integer(0), "secondi");
-        tipo_intervalloKeys.put(new Integer(1), "minuti");
-        tipo_intervalloKeys.put(new Integer(2), "ore");
-        tipo_intervalloKeys.put(new Integer(3), "giorni");
+        tipo_intervalloKeys.put(0, "secondi");
+        tipo_intervalloKeys.put(1, "minuti");
+        tipo_intervalloKeys.put(2, "ore");
+        tipo_intervalloKeys.put(3, "giorni");
     }
 }

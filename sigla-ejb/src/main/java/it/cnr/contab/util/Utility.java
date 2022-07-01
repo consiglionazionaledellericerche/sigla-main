@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.coepcoan00.ejb.AsyncScritturaPartitaDoppiaFromDocumentoComponentSession;
 import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaComponentSession;
 import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaFromDocumentoComponentSession;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
@@ -564,5 +565,8 @@ public final class Utility {
 	}
 	public static ScritturaPartitaDoppiaFromDocumentoComponentSession createScritturaPartitaDoppiaFromDocumentoComponentSession() throws javax.ejb.EJBException{
 		return (ScritturaPartitaDoppiaFromDocumentoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaFromDocumentoComponentSession", ScritturaPartitaDoppiaFromDocumentoComponentSession.class);
+	}
+	public static AsyncScritturaPartitaDoppiaFromDocumentoComponentSession createAsyncScritturaPartitaDoppiaFromDocumentoComponentSession() throws javax.ejb.EJBException{
+		return (AsyncScritturaPartitaDoppiaFromDocumentoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCOEPCOAN00_EJB_AsyncScritturaPartitaDoppiaFromDocumentoComponentSession", ScritturaPartitaDoppiaFromDocumentoComponentSession.class);
 	}
 }

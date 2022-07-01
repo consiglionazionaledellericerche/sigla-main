@@ -1313,6 +1313,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			else if (doccoge.getTipoDocumentoEnum().isCompenso()) {
 				if (((CompensoBulk) doccoge).getFl_compenso_stipendi())
 					return this.proposeScritturaPartitaDoppiaCompensoStipendi(userContext, (CompensoBulk) doccoge);
+				else if (((CompensoBulk) doccoge).getFl_compenso_conguaglio())
+					return this.proposeScritturaPartitaDoppiaCompensoConguagli(userContext, (CompensoBulk) doccoge);
 				else
 					return this.proposeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk) doccoge);
 			} else if (doccoge.getTipoDocumentoEnum().isMissione())
@@ -1394,7 +1396,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								.filter(el -> el.getCd_elemento_voce() != null).orElseGet(() -> {
 									try {
 										AccertamentoHome home = (AccertamentoHome) getHome(userContext, AccertamentoBulk.class);
-										return (AccertamentoBulk) home.findByPrimaryKey((AccertamentoBulk) (((Documento_generico_rigaBulk)rigaDocAmm).getAccertamento_scadenziario().getAccertamento()));
+										return (AccertamentoBulk) home.findByPrimaryKey((((Documento_generico_rigaBulk)rigaDocAmm).getAccertamento_scadenziario().getAccertamento()));
 									} catch (ComponentException | PersistencyException e) {
 										throw new DetailedRuntimeException(e);
 									}
@@ -1521,10 +1523,13 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//Nel caso dei compensi rilevo subito il costo prelevando le informazioni dalla riga del compenso stesso
 			//Registrazione conto COSTO COMPENSO
 			BigDecimal imCostoCompenso = compenso.getIm_lordo_percipiente();
-			Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
-			if (imCostoCompenso.compareTo(BigDecimal.ZERO)!=0) {
-				testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCompenso);
-				testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCompenso, true);
+
+			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
+			if (imCostoCompenso.compareTo(BigDecimal.ZERO)>=0){
+				if (imCostoCompenso.compareTo(BigDecimal.ZERO)!=0) {
+					testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCompenso);
+					testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCompenso, true);
+				}
 			}
 
 			//Registrazione conto CONTRIBUTI-RITENUTE
@@ -1536,9 +1541,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						try {
 							BigDecimal imCostoCori = cori.getAmmontare();
 							if (imCostoCori.compareTo(BigDecimal.ZERO)!=0) {
-								// Se la tipologia di contributo ritenuta è IVA o RIVALSA il conto ritornato è quello di costo principale del compenso
 								if (compenso.isIstituzionale() && Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
 										.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori).map(el -> el.isTipoIva() || el.isTipoRivalsa()).isPresent()) {
+									// Se la tipologia di contributo ritenuta è IVA o RIVALSA il conto ritornato è quello di costo principale del compenso
 									testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCori);
 									testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, true);
 								} else {
@@ -1568,6 +1573,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
+	}
+
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompensoConguagli(UserContext userContext, CompensoBulk compenso) throws ComponentException {
+		throw new ApplicationException("Gestione da effettuare.");
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompensoStipendi(UserContext userContext, CompensoBulk compenso) throws ComponentException {
@@ -2179,6 +2188,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Voce_epBulk voceCosto = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), cori.getSezioneCostoRicavo(), cori.getTi_ente_percipiente());
 		Voce_epBulk voceContropartita = this.findContoContropartitaCosto(userContext, voceCosto);
 		return Pair.of(voceCosto, voceContropartita);
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairRicavoCompenso(UserContext userContext, Contributo_ritenutaBulk cori) throws ComponentException, PersistencyException, RemoteException {
+		AccertamentoHome accertamentohome = (AccertamentoHome) getHome(userContext, AccertamentoBulk.class);
+		AccertamentoBulk accertamentoBulk = (AccertamentoBulk) accertamentohome.findByPrimaryKey(new AccertamentoBulk(cori.getCd_cds_accertamento(), cori.getEsercizio_accertamento(), cori.getEsercizio_ori_accertamento(), cori.getPg_accertamento()));
+		Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, new Elemento_voceBulk(accertamentoBulk.getCd_elemento_voce(), accertamentoBulk.getEsercizio(), accertamentoBulk.getTi_appartenenza(), accertamentoBulk.getTi_gestione()));
+		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, cori.getCompenso().getTerzo(), new Elemento_voceBulk(accertamentoBulk.getCd_elemento_voce(), accertamentoBulk.getEsercizio(), accertamentoBulk.getTi_appartenenza(), accertamentoBulk.getTi_gestione()), Movimento_cogeBulk.TipoRiga.CREDITO.value());
+		return Pair.of(aContoCosto, aContoContropartita);
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairContiMandato(UserContext userContext, Contributo_ritenutaBulk cori) throws ComponentException, PersistencyException {

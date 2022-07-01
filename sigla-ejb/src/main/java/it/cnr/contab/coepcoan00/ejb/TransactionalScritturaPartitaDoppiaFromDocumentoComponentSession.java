@@ -337,27 +337,6 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
             }
         }
     }
-
-    @Override
-    public void asyncDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, RemoteException {
-        try {
-            invoke("getAllDocumentiCoge", new Object[]{
-                    param0,
-                    param1,
-                    param2});
-        } catch (RemoteException e) {
-            throw e;
-        } catch (java.lang.reflect.InvocationTargetException e) {
-            try {
-                throw e.getTargetException();
-            } catch (ComponentException ex) {
-                throw ex;
-            } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
-            }
-        }
-    }
-
     @Override
     public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, RemoteException {
         try {
@@ -377,30 +356,10 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
             }
         }
     }
-
     @Override
-    public void loadScrittura(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
+    public void loadScritturePatrimoniali(UserContext param0, List<IDocumentoCogeBulk> param1) throws ComponentException, RemoteException {
         try {
-            invoke("loadScrittura", new Object[]{
-                    param0,
-                    param1});
-        } catch (RemoteException e) {
-            throw e;
-        } catch (java.lang.reflect.InvocationTargetException e) {
-            try {
-                throw e.getTargetException();
-            } catch (ComponentException ex) {
-                throw ex;
-            } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
-            }
-        }
-    }
-
-    @Override
-    public void loadScritture(UserContext param0, List<IDocumentoCogeBulk> param1) throws ComponentException, RemoteException {
-        try {
-            invoke("loadScritture", new Object[]{
+            invoke("loadScritturePatrimoniali", new Object[]{
                     param0,
                     param1});
         } catch (RemoteException e) {
