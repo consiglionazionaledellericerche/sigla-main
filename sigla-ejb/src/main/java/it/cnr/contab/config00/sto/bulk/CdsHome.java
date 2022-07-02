@@ -403,4 +403,13 @@ public java.util.List findUoCds(it.cnr.jada.UserContext context,String cds) thro
 
 	return uoHome.fetchAll(sql);
 }
+	public java.util.List findAllCds(it.cnr.jada.UserContext context, int esercizio) throws PersistencyException, IntrospectionException
+	{
+
+		PersistentHome uoHome = getHomeCache().getHome(CdsBulk.class, "V_CDS_VALIDO");
+		SQLBuilder sql = uoHome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS, esercizio);
+
+		return uoHome.fetchAll(sql);
+	}
 }

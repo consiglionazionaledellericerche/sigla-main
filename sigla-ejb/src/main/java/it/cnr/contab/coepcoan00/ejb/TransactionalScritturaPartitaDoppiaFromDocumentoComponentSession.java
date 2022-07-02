@@ -374,4 +374,23 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
             }
         }
     }
+
+    @Override
+    public void loadScritturaPatrimoniale(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
+        try {
+            invoke("loadScritturaPatrimoniale", new Object[]{
+                    param0,
+                    param1});
+        } catch (RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
 }

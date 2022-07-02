@@ -226,7 +226,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
     public void loadScritturePatrimoniali(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
         documentiCoge.forEach(documentoCoge->{
             try {
-                this.loadScrittura(userContext, documentoCoge);
+                this.loadScritturaPatrimoniale(userContext, documentoCoge);
                 logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
             } catch (NoRollbackException e) {
                 logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
@@ -238,7 +238,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             }
         });
     }
-    private void loadScrittura(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+    public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
             if (!optionalScritturaPartitaDoppiaOldBulk.isPresent()) {

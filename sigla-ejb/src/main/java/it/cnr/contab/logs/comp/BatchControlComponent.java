@@ -227,7 +227,8 @@ public class BatchControlComponent extends CRUDComponent
                 return creaBatchDinamico(usercontext, batch_controlbulk);
             else
                 return creaBatchStatico(usercontext, batch_controlbulk);
-        }
+        } else
+            salvaValoriParametri(usercontext, batch_controlbulk);
         return oggettobulk;
     }
 
