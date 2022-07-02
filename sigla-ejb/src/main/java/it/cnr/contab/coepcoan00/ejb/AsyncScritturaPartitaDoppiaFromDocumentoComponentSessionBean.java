@@ -180,8 +180,10 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 					throw new DetailedRuntimeException(ex);
 				}
 			}
-		} catch (DetailedRuntimeException ignored) {
+		} catch (DetailedRuntimeException ex) {
+			logger.error("Caricamento automatico scritture prima nota in errore. Errore: " + ex.getMessage());
 		} catch (Exception ex) {
+			logger.error("Caricamento automatico scritture prima nota in errore. Errore: " + ex.getMessage());
 			SendMail.sendErrorMail(subjectError, "Caricamento automatico scritture prima nota in errore. Errore: " + ex.getMessage());
 			throw ex;
 		}
