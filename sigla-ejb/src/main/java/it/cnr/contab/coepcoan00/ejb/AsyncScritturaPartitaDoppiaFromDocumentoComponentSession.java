@@ -17,14 +17,11 @@
 
 package it.cnr.contab.coepcoan00.ejb;
 
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import javax.ejb.Remote;
-import java.util.List;
 
 @Remote
 public interface AsyncScritturaPartitaDoppiaFromDocumentoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {

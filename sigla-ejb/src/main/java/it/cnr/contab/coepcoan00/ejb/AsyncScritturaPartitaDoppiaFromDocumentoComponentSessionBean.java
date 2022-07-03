@@ -19,13 +19,13 @@ package it.cnr.contab.coepcoan00.ejb;
 
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
 import it.cnr.contab.logs.ejb.BatchControlComponentSession;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.SendMail;
@@ -33,16 +33,12 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.Asynchronous;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,16 +58,9 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 
 			DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 			Batch_log_tstaBulk log = new Batch_log_tstaBulk();
-			Timestamp now;
-			try {
-				Date today = Calendar.getInstance().getTime();
-				now = new Timestamp(today.getTime());
-			} catch (EJBException e) {
-				throw new DetailedRuntimeException(e);
-			}
 			log.setDs_log("Registrazione Coge/Coan Java");
 			log.setCd_log_tipo(Batch_log_tstaBulk.LOG_TIPO_CONTAB_COGECOAN00);
-			log.setNote("Batch di registrazione economica Java. Esercizio: " + param1 + " - CDS: *  Start: " + formatterTime.format(now.toInstant()));
+			log.setNote("Batch di registrazione economica Java. Esercizio: " + param1 + " - CDS: *  Start: " + formatterTime.format(DateServices.getDataOdierna().toInstant()));
 			log.setToBeCreated();
 
 			BatchControlComponentSession batchControlComponentSession = (BatchControlComponentSession) EJBCommonServices
@@ -158,7 +147,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 				log_riga.setPg_riga(BigDecimal.valueOf(listLogRighe.size() + 1));
 				log_riga.setTi_messaggio("I");
 				log_riga.setMessaggio("Caricamento automatico scritture prima nota. Righe elaborate: " + listRigheAll.size() + ". Righe processate: " + listInsertAll.size() + ". Errori: " + listErrorAll.size());
-				log_riga.setNote("Termine operazione caricamento automatico scritture prima nota." + formatterTime.format(now.toInstant()));
+				log_riga.setNote("Termine operazione caricamento automatico scritture prima nota." + formatterTime.format(DateServices.getDataOdierna().toInstant()));
 				log_riga.setToBeCreated();
 				try {
 					listLogRighe.add((Batch_log_rigaBulk) batchControlComponentSession.creaConBulkRequiresNew(param0, log_riga));
@@ -172,7 +161,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 				log_riga.setPg_riga(BigDecimal.valueOf(listLogRighe.size() + 1));
 				log_riga.setTi_messaggio("E");
 				log_riga.setMessaggio("Caricamento automatico scritture prima nota in errore. Errore: " + ex.getMessage());
-				log_riga.setNote("Termine operazione caricamento automatico scritture prima nota." + formatterTime.format(now.toInstant()));
+				log_riga.setNote("Termine operazione caricamento automatico scritture prima nota." + formatterTime.format(DateServices.getDataOdierna().toInstant()));
 				log_riga.setToBeCreated();
 				try {
 					listLogRighe.add((Batch_log_rigaBulk) batchControlComponentSession.creaConBulkRequiresNew(param0, log_riga));

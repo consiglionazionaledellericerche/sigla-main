@@ -1535,14 +1535,17 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//Registrazione conto CONTRIBUTI-RITENUTE
 			//Vengono registrati tutti i CORI a carico Ente
 			//Se anticipo risulta maggiore/uguale al compenso allora vengono registrati anche i CORI carico percipiente perchè il mandato non verrà emesso
-			boolean isCompensoMaggioreAnticipo = compenso.getIm_netto_percipiente().compareTo(optAnticipo.map(AnticipoBulk::getIm_anticipo).orElse(BigDecimal.ZERO))>0;
+			boolean isCompensoMaggioreAnticipo = optAnticipo.map(AnticipoBulk::getIm_anticipo).map(imAnticipo->
+					compenso.getIm_netto_percipiente().compareTo(imAnticipo)>0).orElse(Boolean.TRUE);
+
 			righeCori.stream().filter(el->!isCompensoMaggioreAnticipo || el.isContributoEnte())
 					.forEach(cori->{
 						try {
 							BigDecimal imCostoCori = cori.getAmmontare();
 							if (imCostoCori.compareTo(BigDecimal.ZERO)!=0) {
-								if (compenso.isIstituzionale() && Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
-										.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori).map(el -> el.isTipoIva() || el.isTipoRivalsa()).isPresent()) {
+								if (Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
+										.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori)
+										.filter(el -> (el.isTipoIva() && compenso.isIstituzionale()) || el.isTipoRivalsa()).isPresent()) {
 									// Se la tipologia di contributo ritenuta è IVA o RIVALSA il conto ritornato è quello di costo principale del compenso
 									testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCori);
 									testataPrimaNota.openDettaglioPatrimoniale(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, true);
@@ -1794,6 +1797,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 
+		//Questa istruzione serve per evitare che nel recuperare la scrittura partita doppia del compenso venga di nuvo ricaricato
+		//l'oggetto
+		compenso.setContributi(righeCori);
+
 		//recupero la scrittura del compenso
 		Scrittura_partita_doppiaBulk scritturaCompenso = this.proposeScritturaPartitaDoppiaCompenso(userContext, compenso);
 
@@ -1807,20 +1814,28 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					"per un importo non coincidente con quello del mandato stesso.");
 
 		// Se la tipologia di contributo ritenuta è IVA o RIVALSA non calcolo le ritenute perchè vanno direttamene al fornitore
-		BigDecimal imRitenuteCosti = BigDecimal.ZERO;
-		if (compenso.isIstituzionale()) {
-			imRitenuteCosti = righeCori.stream().filter(el -> el.getTipoContributoRitenuta().getClassificazioneCori().isTipoIva() ||
-							el.getTipoContributoRitenuta().getClassificazioneCori().isTipoRivalsa()).map(Contributo_ritenutaBulk::getAmmontare)
+		BigDecimal imRitenuteCosti = righeCori.stream().filter(el -> (el.getTipoContributoRitenuta().getClassificazioneCori().isTipoIva() && compenso.isIstituzionale()) ||
+					el.getTipoContributoRitenuta().getClassificazioneCori().isTipoRivalsa()).map(Contributo_ritenutaBulk::getAmmontare)
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
-		}
 
-		BigDecimal imRitenute = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
+		BigDecimal imRitenutePositive = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
+				.filter(el->el.compareTo(BigDecimal.ZERO)>0)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		if (imRitenute.subtract(imRitenuteCosti).compareTo(rigaMandato.getIm_ritenute_riga())!=0)
+		BigDecimal imRitenuteNegative = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.reduce(BigDecimal.ZERO, BigDecimal::add).abs();
+
+		//Aggiungo eventuali quote da trattenere indicate sul compenso
+		imRitenutePositive = imRitenutePositive.add(Optional.ofNullable(compenso.getIm_netto_da_trattenere()).orElse(BigDecimal.ZERO));
+
+		if (imRitenutePositive.subtract(imRitenuteCosti).compareTo(rigaMandato.getIm_ritenute_riga())!=0)
 			throw new ApplicationException("L'importo delle righe ritenute del compenso associato al mandato non corrisponde con l'importo ritenute associato al mandato.");
 
-		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
+		//Per il calcolo del netto mandato effettuo la sottrazione tra:
+		//1. il lordo mandato calcolato aggiungendo anche le righe ritenute negative che hanno sicuramente generato un mandato vincolato
+		//2. le ritenute positive
+		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().add(imRitenuteNegative).subtract(rigaMandato.getIm_ritenute_riga());
 
 		//Chiudo il patrimoniale principale del compenso.... quello con la partita
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
@@ -1835,8 +1850,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 				if (imCori.compareTo(BigDecimal.ZERO)!=0) {
 					// Se la tipologia di contributo ritenuta è IVA o RIVALSA non registro la ritenuta in quanto già registrata in fase di chiusura debito mandato (imNettoMandato contiene imCori)
-					if (!(compenso.isIstituzionale() && Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
-							.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori).filter(el -> el.isTipoIva() || el.isTipoRivalsa()).isPresent())) {
+					if (!Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
+							.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori).filter(el -> (el.isTipoIva() && compenso.isIstituzionale()) || el.isTipoRivalsa()).isPresent()) {
 						Pair<Voce_epBulk, Voce_epBulk> pairContoCori = this.findPairContiMandato(userContext, cori);
 						Voce_epBulk contoPatrimonialeClose = cori.isContributoPercipiente()?contoPatrimonialePartita:pairContoCori.getFirst();
 						Voce_epBulk contoVersamentoCori = pairContoCori.getSecond();
