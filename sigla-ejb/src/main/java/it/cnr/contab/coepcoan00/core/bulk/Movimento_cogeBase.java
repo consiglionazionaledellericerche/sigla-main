@@ -65,6 +65,9 @@ public class Movimento_cogeBase extends Movimento_cogeKey implements Keyed {
     // FL_MODIFICABILE CHAR(1)
     private java.lang.Boolean fl_modificabile;
 
+    // CD_CONTRIBUTO_RITENUTA VARCHAR(10) NOT NULL (PK)
+    private java.lang.String cd_contributo_ritenuta;
+
     public Movimento_cogeBase() {
         super();
     }
@@ -243,5 +246,13 @@ public class Movimento_cogeBase extends Movimento_cogeKey implements Keyed {
 
     public void setFl_modificabile(Boolean fl_modificabile) {
         this.fl_modificabile = fl_modificabile;
+    }
+
+    public String getCd_contributo_ritenuta() {
+        return cd_contributo_ritenuta;
+    }
+
+    public void setCd_contributo_ritenuta(String cd_contributo_ritenuta) {
+        this.cd_contributo_ritenuta = cd_contributo_ritenuta;
     }
 }

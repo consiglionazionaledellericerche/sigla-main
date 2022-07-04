@@ -241,22 +241,20 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
     public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
-            if (!optionalScritturaPartitaDoppiaOldBulk.isPresent()) {
-                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, documentoCoge));
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, documentoCoge));
 
-                optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
-                    //Elimino vecchia scrittura
-                    try {
-                        optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
-                        this.removeScrittura(userContext, oldScrittura);
-                    } catch (ComponentException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                });
-                //Ricreo
-                if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
-                    this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
-            }
+            optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
+                //Elimino vecchia scrittura
+                try {
+                    optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
+                    this.removeScrittura(userContext, oldScrittura);
+                } catch (ComponentException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+            //Ricreo
+            if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
+                this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
         } catch (RemoteException e) {
             throw handleException(e);
         }

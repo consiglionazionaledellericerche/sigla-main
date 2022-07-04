@@ -5665,4 +5665,10 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </insert>
     </changeSet>
     <include file="bootstrap/drop_and_recreate_table_movimenti_mag.xml"/>
+
+    <changeSet author="raffaele.pagano" id="movimento_coge_add_column_cd_contributo">
+        <addColumn tableName="MOVIMENTO_COGE">
+            <column name="CD_CONTRIBUTO_RITENUTA" type="VARCHAR(10)" remarks="Codice contributo ritenuta"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
