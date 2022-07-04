@@ -5238,8 +5238,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5367,8 +5366,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5403,7 +5401,8 @@ public class DistintaCassiereComponent extends
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                         } else {
-                            throw new ApplicationMessageFormatException("Impossibile generare il flusso, ripartizione per siope errata " +
+                            throw new ApplicationMessageFormatException("Impossibile generare il flusso, " +
+                                    "ripartizione per siope errata " +
                                     "sul Mandato {0}/{1}/{2}",
                                     String.valueOf(bulk.getEsercizio()),
                                     String.valueOf(bulk.getCd_cds()),
@@ -5510,8 +5509,7 @@ public class DistintaCassiereComponent extends
                         if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                             for (Iterator<Mandato.InformazioniBeneficiario.Classificazione> it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                 Mandato.InformazioniBeneficiario.Classificazione presente = it.next();
-                                if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                        Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                     salta = true;
                                     break;
                                 }

@@ -63,7 +63,7 @@ public class SIOPEPlusTest extends DeploymentsOracle {
         compoundFindClause.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, LocalDate.now().getYear() - 1);
         compoundFindClause.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
         compoundFindClause.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
-        compoundFindClause.addClause(FindClause.AND, "pg_documento_cont", SQLBuilder.LESS_EQUALS, 10000);
+        compoundFindClause.addClause(FindClause.AND, "pg_documento_cont", SQLBuilder.LESS_EQUALS, 100000);
 
         BulkLoaderIterator remoteIterator =
                 Optional.ofNullable(crudComponentSession.cerca(
