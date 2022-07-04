@@ -60,7 +60,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 			Batch_log_tstaBulk log = new Batch_log_tstaBulk();
 			log.setDs_log("Registrazione Coge/Coan Java");
 			log.setCd_log_tipo(Batch_log_tstaBulk.LOG_TIPO_CONTAB_COGECOAN00);
-			log.setNote("Batch di registrazione economica Java. Esercizio: " + param1 + " - CDS: *  Start: " + formatterTime.format(DateServices.getDataOdierna().toInstant()));
+			log.setNote("Batch di registrazione economica Java. Esercizio: " + param1 + " - CDS: *  Start: " + formatterTime.format(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().toInstant()));
 			log.setToBeCreated();
 
 			BatchControlComponentSession batchControlComponentSession = (BatchControlComponentSession) EJBCommonServices
@@ -161,7 +161,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 				log_riga.setPg_riga(BigDecimal.valueOf(listLogRighe.size() + 1));
 				log_riga.setTi_messaggio("E");
 				log_riga.setMessaggio("Caricamento automatico scritture prima nota in errore. Errore: " + ex.getMessage());
-				log_riga.setNote("Termine operazione caricamento automatico scritture prima nota." + formatterTime.format(DateServices.getDataOdierna().toInstant()));
+				log_riga.setNote("Termine operazione caricamento automatico scritture prima nota." + formatterTime.format(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().toInstant()));
 				log_riga.setToBeCreated();
 				try {
 					listLogRighe.add((Batch_log_rigaBulk) batchControlComponentSession.creaConBulkRequiresNew(param0, log_riga));
@@ -169,6 +169,15 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 					SendMail.sendErrorMail("Errore caricamento scritture patrimoniali", "Errore durante l'inserimento della riga di chiusura di Batch_log_riga " + ex2.getMessage());
 					throw new DetailedRuntimeException(ex);
 				}
+			}
+
+			log.setNote(log.getNote()+" - End: "+ formatterTime.format(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().toInstant()));
+			log.setToBeUpdated();
+			try {
+				log = (Batch_log_tstaBulk) batchControlComponentSession.modificaConBulkRequiresNew(param0, log);
+			} catch (ComponentException | RemoteException ex) {
+				SendMail.sendErrorMail(subjectError, "Errore durante l'aggiornamento della riga di testata di Batch_log " + ex.getMessage());
+				throw new ComponentException(ex);
 			}
 		} catch (DetailedRuntimeException ex) {
 			logger.error("Caricamento automatico scritture prima nota in errore. Errore: " + ex.getMessage());
