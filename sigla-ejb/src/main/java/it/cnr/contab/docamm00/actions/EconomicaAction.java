@@ -50,6 +50,7 @@ public abstract class EconomicaAction extends CRUDAction {
             bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
             bp.setDirty(true);
+//            return super.doSalva(actionContext);
         } catch (ComponentException | RemoteException e) {
             return handleException(actionContext, e);
         }

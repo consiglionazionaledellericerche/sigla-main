@@ -174,7 +174,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 			log.setNote(log.getNote()+" - End: "+ formatterTime.format(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().toInstant()));
 			log.setToBeUpdated();
 			try {
-				log = (Batch_log_tstaBulk) batchControlComponentSession.modificaConBulkRequiresNew(param0, log);
+				batchControlComponentSession.modificaConBulkRequiresNew(param0, log);
 			} catch (ComponentException | RemoteException ex) {
 				SendMail.sendErrorMail(subjectError, "Errore durante l'aggiornamento della riga di testata di Batch_log " + ex.getMessage());
 				throw new ComponentException(ex);

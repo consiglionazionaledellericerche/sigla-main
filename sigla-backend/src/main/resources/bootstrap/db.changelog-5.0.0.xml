@@ -5671,4 +5671,37 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="CD_CONTRIBUTO_RITENUTA" type="VARCHAR(10)" remarks="Codice contributo ritenuta"/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="ass_tipo_cori_voce_ep_add_column_cd_voce_ep_contr_comp">
+        <addColumn tableName="ASS_TIPO_CORI_VOCE_EP">
+            <column name="CD_VOCE_EP_CONTR_COMP" type="VARCHAR(45)" remarks="Conto del piano di contropartita di competenza. Viene utilizzato nel caso in cui la gestione del tipo contributo è di competenza."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="ass_tipo_cori_voce_ep_alter_column_cd_voce_ep_contr">
+        <dropNotNullConstraint tableName="ASS_TIPO_CORI_VOCE_EP" columnName="CD_VOCE_EP_CONTR"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="voce_ep_add_column_fl_conto_versamento">
+        <addColumn tableName="VOCE_EP">
+            <column name="FL_CONTO_VERSAMENTO" type="CHAR(1)" remarks="Indica se è un conto di tipo versamento."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="configurazione_cnr-add-conto-anticipo">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="VOCEEP_SPECIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="CREDITO_DEBITO_ANTICIPO"/>
+            <column name="val01" type="STRING" value="A71001"/>
+            <column name="val02" type="STRING" value="P71001"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

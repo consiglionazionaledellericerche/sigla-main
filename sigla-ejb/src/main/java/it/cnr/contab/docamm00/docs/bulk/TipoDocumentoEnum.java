@@ -182,7 +182,7 @@ public enum TipoDocumentoEnum {
 		if (this.isCompenso())
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isAnticipo())
-			return Movimento_cogeBulk.TipoRiga.COSTO.value();
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isMissione())
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		return null;
