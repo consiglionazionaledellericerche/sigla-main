@@ -39,6 +39,7 @@ import java.rmi.RemoteException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,7 +104,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 					List<String> listInsert = new ArrayList<>();
 					List<String> listError = new ArrayList<>();
 
-					allDocuments.forEach(documentoCoge -> {
+					allDocuments.stream().sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)).forEach(documentoCoge -> {
 						try {
 							listRigheAll.add("X");
 							session.loadScritturaPatrimoniale(param0, documentoCoge);
