@@ -21,10 +21,18 @@
  */
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
+import it.cnr.contab.pagopa.model.Documento;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.sql.Connection;
+import java.util.Collection;
 
 public class Ass_comp_doc_cont_nmpHome extends BulkHome {
 	public Ass_comp_doc_cont_nmpHome(Connection conn) {
@@ -32,5 +40,18 @@ public class Ass_comp_doc_cont_nmpHome extends BulkHome {
 	}
 	public Ass_comp_doc_cont_nmpHome(Connection conn, PersistentCache persistentCache) {
 		super(Ass_comp_doc_cont_nmpBulk.class, conn, persistentCache);
+	}
+
+	public Collection<Ass_comp_doc_cont_nmpBulk> findByDocumento(it.cnr.jada.UserContext userContext, Documento_amministrativo_passivoBulk docamm ) throws PersistencyException
+	{
+		PersistentHome home = getHomeCache().getHome( Ass_mandato_mandatoBulk.class );
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio_doc",SQLBuilder.EQUALS, docamm.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds_doc",SQLBuilder.EQUALS, docamm.getCd_cds() );
+		sql.addClause(FindClause.AND,"pg_doc",SQLBuilder.EQUALS, docamm.getPg_doc() );
+		sql.addClause(FindClause.AND,"cd_tipo_doc",SQLBuilder.EQUALS, docamm.getCd_tipo_doc() );
+		Collection result = home.fetchAll( sql);
+		getHomeCache().fetchAll(userContext);
+		return result;
 	}
 }

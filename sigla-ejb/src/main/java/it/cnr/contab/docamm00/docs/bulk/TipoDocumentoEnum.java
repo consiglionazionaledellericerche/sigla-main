@@ -159,7 +159,8 @@ public enum TipoDocumentoEnum {
 		return !this.isGenericoCoriAccantonamentoSpesa() &&
 				!this.isGenericoCoriAccantonamentoEntrata() &&
 				!this.isGenericoStipendiSpesa() &&
-				!this.isGenericoMandatoRegolarizzazione();
+				!this.isGenericoMandatoRegolarizzazione() &&
+				!this.isGenericoCoriVersamentoSpesa();
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {
@@ -207,6 +208,8 @@ public enum TipoDocumentoEnum {
 		if (this.isMissione())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isGenericoCoriVersamentoSpesa())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isGenericoCoriAccantonamentoSpesa())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		return null;
 	}
@@ -270,6 +273,8 @@ public enum TipoDocumentoEnum {
 		if (this.isGenericoEntrata()||this.isGenericoCoriAccantonamentoEntrata())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isGenericoCoriVersamentoSpesa())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isGenericoCoriAccantonamentoSpesa())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
