@@ -41,6 +41,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Stateless(name = "CNRCOEPCOAN00_EJB_AsyncScritturaPartitaDoppiaFromDocumentoComponentSession")
@@ -104,7 +105,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 					List<String> listInsert = new ArrayList<>();
 					List<String> listError = new ArrayList<>();
 
-					allDocuments.stream().sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)).forEach(documentoCoge -> {
+					allDocuments.stream().filter(el-> Optional.ofNullable(el.getDt_contabilizzazione()).isPresent()).sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)).forEach(documentoCoge -> {
 						try {
 							listRigheAll.add("X");
 							session.loadScritturaPatrimoniale(param0, documentoCoge);
