@@ -3191,18 +3191,19 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					 * 	(regola non valida per trasferimenti ad Aree)
 					 */
 					if (!isVariazioneArea && !isVariazioneRagioneria) {
-						listCtrlPianoEco.stream()
-								.filter(el -> !el.isScaduto(dataChiusura))
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
-								.findFirst().ifPresent(el -> {
-							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
-									el.getProgetto().getCd_progetto() + " (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
-									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
-						});
+						if (!isVariazioneTrasferimentoEsigenzeFinanziarie)
+							listCtrlPianoEco.stream()
+									.filter(el -> !el.isScaduto(dataChiusura))
+									.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
+									.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
+									.findFirst().ifPresent(el -> {
+								throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
+										el.getProgetto().getCd_progetto() + " (" +
+										new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
+										") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
+										"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
+										new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
+							});
 
 						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
 								.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO) > 0)
