@@ -90,10 +90,16 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                                 optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isReversale()
                 )){
                     if (Utility.createConfigurazioneCnrComponentSession().isBloccoScrittureProposte(usercontext)) {
+                        Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
+                        try {
+                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                                                .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                        } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
+                        }
+
+                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
                         final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(usercontext, optionalIDocumentoCogeBulk.get());
-                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk =
-                                Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                        .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
                         optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
                             //Elimino vecchia scrittura
                             try {
@@ -126,9 +132,13 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                                 super.modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
                             }
                         } else {
-                            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk =
-                                    Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                            .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                            Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk;
+                            try {
+                                optionalScritturaPartitaDoppiaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                                        .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                            } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                                optionalScritturaPartitaDoppiaBulk = Optional.empty();
+                            }
                             if (optionalScritturaPartitaDoppiaBulk.isPresent()) {
                                 super.creaConBulk(usercontext, optionalScritturaPartitaDoppiaBulk.get());
                             }
@@ -241,7 +251,16 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
     public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
-            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, documentoCoge));
+
+            Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
+            try {
+                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                        .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+            } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
+            }
+
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
 
             optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
                 //Elimino vecchia scrittura
