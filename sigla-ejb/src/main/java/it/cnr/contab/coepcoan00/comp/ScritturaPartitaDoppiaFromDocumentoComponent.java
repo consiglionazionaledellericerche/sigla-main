@@ -281,7 +281,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 documentoCoge.setStato_coge(Fattura_passivaBulk.REGISTRATO_IN_COGE);
             }
             ((OggettoBulk)documentoCoge).setToBeUpdated();
-            makeBulkPersistent(userContext, (OggettoBulk) documentoCoge);
+            updateBulk(userContext, (OggettoBulk) documentoCoge);
         } catch (RemoteException|PersistencyException e) {
             throw handleException(e);
         }
