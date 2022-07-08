@@ -120,7 +120,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 							log_riga.setTi_messaggio("E");
 							log_riga.setMessaggio("Esercizio:" + documentoCoge.getEsercizio() + "-CdUo:" + documentoCoge.getCd_uo() + "-CdTipoDoc:" + documentoCoge.getCd_tipo_doc() + "-PgDoc:" + documentoCoge.getPg_doc());
 							log_riga.setTrace(log_riga.getMessaggio());
-							log_riga.setNote(e.getMessage().substring(0,3999));
+							log_riga.setNote(e.getMessage().substring(0,e.getMessage().length()>3999?3999:e.getMessage().length()));
 							log_riga.setToBeCreated();
 							try {
 								listLogRighe.add((Batch_log_rigaBulk) batchControlComponentSession.creaConBulkRequiresNew(param0, log_riga));
