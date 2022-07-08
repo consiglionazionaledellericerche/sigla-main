@@ -132,6 +132,10 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_SPESA.equals(this);
 	}
 
+	public boolean isGenericoEntrataIncassoIva() {
+		return TipoDocumentoEnum.GEN_IVA_E.equals(this);
+	}
+
 	public boolean isGenericoSpesa() {
 		return TipoDocumentoEnum.GENERICO_S.equals(this);
 	}
@@ -160,7 +164,8 @@ public enum TipoDocumentoEnum {
 				!this.isGenericoCoriAccantonamentoEntrata() &&
 				!this.isGenericoStipendiSpesa() &&
 				!this.isGenericoMandatoRegolarizzazione() &&
-				!this.isGenericoCoriVersamentoSpesa();
+				!this.isGenericoCoriVersamentoSpesa() &&
+				!this.isGenericoEntrataIncassoIva();
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {
@@ -247,6 +252,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isCompenso())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
 

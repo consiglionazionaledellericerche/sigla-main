@@ -17,7 +17,6 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 
 /**
@@ -43,4 +42,6 @@ public interface IDocumentoCogeBulk {
     void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia);
 
     java.sql.Timestamp getDt_contabilizzazione();
+
+    void setStato_coge(java.lang.String stato_coge);
 }

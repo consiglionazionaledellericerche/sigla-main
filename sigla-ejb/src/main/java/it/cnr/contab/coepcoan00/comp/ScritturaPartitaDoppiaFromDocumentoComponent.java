@@ -24,6 +24,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
@@ -33,7 +34,6 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.NoRollbackException;
@@ -44,8 +44,9 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ScritturaPartitaDoppiaFromDocumentoComponent.class);
@@ -250,6 +251,8 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
     }
     public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
+            documentoCoge.setStato_coge(Fattura_passivaBulk.NON_REGISTRATO_IN_COGE);
+
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
 
             Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
@@ -258,6 +261,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                         .proposeScritturaPartitaDoppia(userContext, documentoCoge));
             } catch (ScritturaPartitaDoppiaNotRequiredException e) {
                 optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
+                documentoCoge.setStato_coge(Fattura_passivaBulk.NON_PROCESSARE_IN_COGE);
             }
 
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
@@ -272,8 +276,12 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 }
             });
             //Ricreo
-            if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
+            if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
                 this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                documentoCoge.setStato_coge(Fattura_passivaBulk.REGISTRATO_IN_COGE);
+            }
+            ((OggettoBulk)documentoCoge).setToBeUpdated();
+            modificaConBulk(userContext, (OggettoBulk) documentoCoge);
         } catch (RemoteException e) {
             throw handleException(e);
         }
