@@ -111,7 +111,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 							session.loadScritturaPatrimoniale(param0, documentoCoge);
 							listInsert.add("X");
 							listInsertAll.add("X");
-						} catch (Exception e) {
+						} catch (Throwable e) {
 							listError.add("X");
 							listErrorAll.add("X");
 							Batch_log_rigaBulk log_riga = new Batch_log_rigaBulk();

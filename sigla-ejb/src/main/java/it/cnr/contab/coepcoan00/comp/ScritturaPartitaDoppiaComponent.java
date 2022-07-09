@@ -1742,6 +1742,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//recupero il documento generico passivo leggendolo dalla tabelle stipendiCofiBulk
 			Stipendi_cofiBulk stipendiCofiBulk = ((Stipendi_cofiHome)getHome(userContext, Stipendi_cofiBulk.class)).findStipendiCofi(compenso);
 
+			if (!Optional.ofNullable(stipendiCofiBulk).isPresent())
+				throw new ApplicationException("Il compenso " + compenso.getEsercizio() + "/" + compenso.getCd_cds() + "/" + compenso.getPg_compenso() +
+						" non risulta pagare uno stipendio. Proposta di prima nota non possibile.");
+
 			Documento_genericoBulk documentoGenericoPassivoBulk = (Documento_genericoBulk)getHome(userContext, Documento_genericoBulk.class)
 					.findByPrimaryKey(new Documento_genericoBulk(stipendiCofiBulk.getCd_cds_doc_gen(), stipendiCofiBulk.getCd_tipo_doc_gen(),
 							stipendiCofiBulk.getCd_uo_doc_gen(), stipendiCofiBulk.getEsercizio_doc_gen(), stipendiCofiBulk.getPg_doc_gen()));
