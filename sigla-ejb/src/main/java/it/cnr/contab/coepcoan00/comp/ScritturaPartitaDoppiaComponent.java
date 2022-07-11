@@ -42,6 +42,8 @@ import it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_cori_detBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleBulk;
+import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaVBulk;
@@ -61,7 +63,6 @@ import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.action.SelezionatoreSearchBP;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 
@@ -544,6 +545,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		@Override
 		public void setStato_coge(String stato_coge) {
+		}
+
+		@Override
+		public String getStato_coge() {
+			return null;
 		}
 	}
 	/**
@@ -1377,7 +1383,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoCogeBulk doccoge) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
-			if (!doccoge.getTipoDocumentoEnum().isScritturaEconomicaRequired())
+			if (doccoge.getTipoDocumentoEnum().isGenericoStipendiSpesa())
+				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di pagamento stipendi. " +
+						"La scrittura principale viene eseguita sul compenso associato.");
+			else if (doccoge.getTipoDocumentoEnum().isGenericoCoriVersamentoSpesa())
+				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di versamento contributi/ritenute. " +
+						"La scrittura principale viene eseguita sul compenso associato.");
+			else if (doccoge.getTipoDocumentoEnum().isChiusuraFondo())
+				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di chiusura fondo economale. " +
+						"La scrittura principale viene eseguita sulla reversale associata.");
+			else if (!doccoge.getTipoDocumentoEnum().isScritturaEconomicaRequired())
 				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per la tipologia di documento selezionato.");
 			else if (doccoge.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo() || doccoge.getTipoDocumentoEnum().isDocumentoAmministrativoAttivo())
 				return this.proposeScritturaPartitaDoppiaDocumento(userContext, (IDocumentoAmministrativoBulk) doccoge);
@@ -1390,7 +1405,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					return this.proposeScritturaPartitaDoppiaCompensoConguagli(userContext, (CompensoBulk) doccoge);
 				else
 					return this.proposeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk) doccoge);
-			} else if (doccoge.getTipoDocumentoEnum().isMissione())
+			} else if (doccoge.getTipoDocumentoEnum().isAperturaFondo())
+				return this.proposeScritturaPartitaDoppiaAperturaFondo(userContext, (Documento_genericoBulk) doccoge);
+			else if (doccoge.getTipoDocumentoEnum().isMissione())
 				return this.proposeScritturaPartitaDoppiaMissione(userContext, (MissioneBulk) doccoge);
 			else if (doccoge.getTipoDocumentoEnum().isRimborso())
 				return this.proposeScritturaPartitaDoppiaRimborso(userContext, (RimborsoBulk) doccoge);
@@ -1818,6 +1835,44 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAperturaFondo(UserContext userContext, Documento_genericoBulk documento) throws ComponentException {
+		try {
+			if (!documento.getTipoDocumentoEnum().isAperturaFondo())
+				throw new ApplicationException("Il documento " + documento.getEsercizio() + "/" + documento.getCd_tipo_doc() + "/" +
+						documento.getCd_uo()+"/"+documento.getPg_documento_generico() +
+						" non risulta essere di tipo 'Apertura Fondo Econmale'. Proposta di prima nota non possibile.");
+
+			List<IDocumentoAmministrativoRigaBulk> righeDocamm = Optional.ofNullable(documento.getChildren()).filter(el->!el.isEmpty()).orElseGet(()->{
+				try {
+					Documento_genericoHome home = (Documento_genericoHome) getHome(userContext, Documento_genericoBulk.class);
+					return home.findDocumentoGenericoRigheList(documento);
+				} catch (ComponentException | PersistencyException e) {
+					throw new DetailedRuntimeException(e);
+				}
+			});
+
+			if (righeDocamm.size() != 1)
+				throw new ApplicationException("Il documento " + documento.getEsercizio() + "/" + documento.getCd_tipo_doc() + "/" +
+						documento.getCd_uo()+"/"+documento.getPg_documento_generico() +
+						" ha un numero di righe non coerente con l'unica prevista per un documento di apertura fondo economale. Proposta di prima nota non possibile.");
+
+			Integer cdTerzo = righeDocamm.get(0).getCd_terzo();
+
+			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(cdTerzo, documento.getDt_da_competenza_coge(), documento.getDt_a_competenza_coge());
+
+			//Registrazione conto COSTO ANTICIPO
+			BigDecimal imCosto = documento.getIm_totale();
+			if (imCosto.compareTo(BigDecimal.ZERO)!=0) {
+				Pair<Voce_epBulk, Voce_epBulk> pairContoCosto = this.findPairContiEconomo(userContext, documento);
+				testataPrimaNota.openDettaglioCostoRicavoPartita(documento, pairContoCosto.getFirst().getCd_voce_ep(), imCosto, cdTerzo);
+				testataPrimaNota.openDettaglioPatrimonialePartita(documento, pairContoCosto.getSecond().getCd_voce_ep(), imCosto, cdTerzo);
+			}
+			return this.generaScrittura(userContext, documento, Collections.singletonList(testataPrimaNota), false);
+		} catch (PersistencyException|RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaRimborso(UserContext userContext, RimborsoBulk rimborso) throws ComponentException {
 		try {
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(rimborso.getCd_terzo(), rimborso.getDt_da_competenza_coge(), rimborso.getDt_a_competenza_coge());
@@ -1900,11 +1955,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandato(UserContext userContext, MandatoBulk mandato) throws ComponentException {
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandato(UserContext userContext, MandatoBulk mandato) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
 			//Il mandato vincolato ad altri mandati non deve generare scritture patrimoniali in quanto rilevate in fase di pagamento mandato
 			if (((Ass_mandato_mandatoHome)getHome(userContext, Ass_mandato_mandatoBulk.class)).findByMandatoCollegato(userContext, mandato, false).stream().findFirst().isPresent())
-				return null;
+				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto il mandato risulta vincolato ad un altro mandato di pagamento.");
 
 			//Se le righe del mandato non sono valorizzate le riempio io
 			if (!Optional.ofNullable(mandato.getMandato_rigaColl()).filter(el->!el.isEmpty()).isPresent()) {
@@ -1942,6 +1997,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				else if (mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
 						.anyMatch(el->TipoDocumentoEnum.fromValue(el).isGenericoCoriAccantonamentoSpesa()))
 					return this.proposeScritturaPartitaDoppiaMandatoAccantonamentoCori(userContext, mandato);
+
 				TestataPrimaNota testataPrimaNota = new TestataPrimaNota(mandato.getMandato_terzo().getCd_terzo(), null, null);
 				if (mandato.isMandatoRegolarizzazione() && mandato.getCd_cds().equals(mandato.getCd_cds_origine()) &&
 						mandato.getUnita_organizzativa().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
@@ -1952,6 +2008,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() ||
 								TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() ||
 								TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo() ||
+								TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAperturaFondo() ||
 								TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isMissione())
 							addDettagliPrimaNotaMandatoDocumentiVari(userContext, testataPrimaNota, rigaMandato);
 					} catch (ComponentException|PersistencyException|RemoteException e) {
@@ -2033,7 +2090,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		// Se la tipologia di contributo ritenuta è IVA o RIVALSA non calcolo le ritenute perchè vanno direttamente al fornitore
 		BigDecimal imRitenuteFittizie = righeCori.stream()
-				.filter(el -> el.isContributoEnte())
+				.filter(Contributo_ritenutaBulk::isContributoEnte)
 				.filter(el -> el.isTipoContributoRivalsa() || el.isTipoContributoIva())
 				.map(Contributo_ritenutaBulk::getAmmontare)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -2217,11 +2274,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 				//dovrei trovare tra i saldi proprio l'import liquidato
 				//Il conto aperto deve essere solo uno
-				if (saldiCori.values().stream().filter(el->el.getSecond().compareTo(BigDecimal.ZERO)!=0).collect(Collectors.toList()).size()>1)
+				if (saldiCori.values().stream().filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() >1)
 					throw new ApplicationRuntimeException("Per il compenso "+compenso.getEsercizio()+"/"+compenso.getCd_cds()+"/"+compenso.getPg_compenso()+
 							" e per il contributo "+detail.getCd_contributo_ritenuta()+" esiste più di un conto che presenta un saldo positivo.");
 
-				saldiCori.keySet().stream().forEach(cdVoceEp->{
+				saldiCori.keySet().forEach(cdVoceEp->{
 					Pair<String, BigDecimal> saldoVoce = saldiCori.get(cdVoceEp);
 					if (saldoVoce.getSecond().compareTo(BigDecimal.ZERO)!=0)
 						if (saldoVoce.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE)) {
@@ -2321,6 +2378,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversale(UserContext userContext, ReversaleBulk reversale) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
+			if (((Ass_mandato_reversaleHome) getHome(userContext, Ass_mandato_reversaleBulk.class)).findMandati(userContext, reversale, false).stream().findFirst().isPresent())
+				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto la reversale risulta vincolata ad un mandato di pagamento.");
+
 			//Se le righe del mandato non sono valorizzate le riempio io
 			if (!Optional.ofNullable(reversale.getReversale_rigaColl()).filter(el->!el.isEmpty()).isPresent()) {
 				reversale.setReversale_rigaColl(new BulkList(((ReversaleHome) getHome(
@@ -2335,30 +2395,91 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				});
 			}
 
-			if (!Optional.ofNullable(reversale.getReversale_terzo()).isPresent())
+			if (!Optional.ofNullable(reversale.getReversale_terzo()).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).isPresent())
 				reversale.setReversale_terzo(((ReversaleHome) getHome(userContext, reversale.getClass())).findReversale_terzo(userContext, reversale, false));
 
-			//La reversale vincolata non deve generare scritture patrimoniali in quanto rilevate in fase di pagamento mandato
-			if (((Ass_mandato_reversaleHome)getHome(userContext, Ass_mandato_reversaleBulk.class)).findMandati(userContext, reversale, false).stream().findFirst().isPresent())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto la reversale risulta vincolata ad un mandato di pagamento.");
+			if (!Optional.ofNullable(reversale.getUnita_organizzativa()).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).isPresent())
+				reversale.setUnita_organizzativa((Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(reversale.getUnita_organizzativa()));
+
 			//Il documento deve essere annullato o esitato altrimenti esce
-			else if (reversale.isAnnullato())
+			if (reversale.isAnnullato())
 				return this.proposeScritturaPartitaDoppiaManRevAnnullato(userContext, reversale);
 			else if (reversale.isIncassato()) {
+				if (reversale.getReversale_rigaColl().stream().map(Reversale_rigaBulk::getCd_tipo_documento_amm)
+						.anyMatch(el->TipoDocumentoEnum.fromValue(el).isChiusuraFondo()))
+					return this.proposeScritturaPartitaDoppiaReversaleChiusuraFondo(userContext, reversale);
+
+				//La reversale vincolata non deve generare scritture patrimoniali in quanto rilevate in fase di pagamento mandato
+				//Il documento deve essere annullato o esitato altrimenti esce
 				TestataPrimaNota testataPrimaNota = new TestataPrimaNota(reversale.getReversale_terzo().getCd_terzo(), null, null);
 
 				reversale.getReversale_rigaColl().forEach(rigaReversale -> {
 					try {
-						if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo())
+						if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() ||
+							TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isChiusuraFondo())
 							addDettagliPrimaNotaReversaleDocumentiVari(userContext, testataPrimaNota, rigaReversale);
-					} catch (ComponentException|PersistencyException|RemoteException e) {
+					} catch (ComponentException | PersistencyException | RemoteException e) {
 						throw new ApplicationRuntimeException(e);
 					}
 				});
 				return this.generaScrittura(userContext, reversale, Collections.singletonList(testataPrimaNota), true);
 			}
 			return null;
-		} catch (PersistencyException|IntrospectionException e) {
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversaleChiusuraFondo(UserContext userContext, ReversaleBulk reversale) throws ComponentException {
+		if (reversale.getReversale_rigaColl().stream().map(Reversale_rigaBulk::getCd_tipo_documento_amm)
+				.noneMatch(el->TipoDocumentoEnum.fromValue(el).isChiusuraFondo()))
+			throw new ApplicationException("La reversale " + reversale.getEsercizio() + "/" + reversale.getCds() + "/" + reversale.getPg_reversale() +
+					" non risulta essere a fronte di una chiusura fondo economale. Proposta di prima nota non possibile.");
+
+		if (reversale.getReversale_rigaColl().isEmpty() || reversale.getReversale_rigaColl().size()>1)
+			throw new ApplicationException("La reversale " + reversale.getEsercizio() + "/" + reversale.getCds() + "/" + reversale.getPg_reversale() +
+					" ha un numero di righe non coerente con l'unica prevista per una reversale di chiusura fondo economale. Proposta di prima nota non possibile.");
+
+		try {
+			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(reversale.getReversale_terzo().getCd_terzo(), null, null);
+
+			Fondo_economaleBulk fondoEconomaleBulk = ((Fondo_economaleHome)getHome(userContext, Fondo_economaleBulk.class)).findFondoByReversale(reversale);
+
+			if (!Optional.ofNullable(fondoEconomaleBulk).isPresent())
+				throw new ApplicationException("La reversale " + reversale.getEsercizio() + "/" + reversale.getCds() + "/" + reversale.getPg_reversale() +
+						" non risulta associata a nessun fondo economale. Proposta di prima nota non possibile.");
+
+			//recupero le righe del mandato principale di apertura fondo economale per risalire al documento generico
+			Collection<Mandato_rigaBulk> righeMandato = ((MandatoHome) getHome(userContext, MandatoIBulk.class)).findMandato_riga(userContext,
+					new MandatoIBulk(fondoEconomaleBulk.getCd_cds(), fondoEconomaleBulk.getEsercizio(), fondoEconomaleBulk.getPg_mandato()));
+
+			if (righeMandato.size() !=1)
+				throw new ApplicationException("Il mandato " + fondoEconomaleBulk.getEsercizio() + "/" + fondoEconomaleBulk.getCd_cds() + "/" + fondoEconomaleBulk.getPg_mandato() +
+						" risulta avere un numero di righe non coerente per un mandato di apertura fondo economale. Proposta di prima nota non possibile.");
+
+			Mandato_rigaBulk rigaMandato = righeMandato.stream().findAny().orElse(null);
+
+			Documento_genericoHome home = (Documento_genericoHome) getHome(userContext, Documento_genericoBulk.class);
+			Documento_genericoBulk docamm = (Documento_genericoBulk)home.findByPrimaryKey(new Documento_genericoBulk(rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_tipo_documento_amm(),
+					rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm()));
+
+			List<Documento_generico_rigaBulk> righeDocamm = home.findDocumentoGenericoRigheList(docamm);
+			if (righeDocamm.size() !=1)
+				throw new ApplicationException("Il documento generico " + docamm.getEsercizio() + "/" + docamm.getCd_cds() + "/" + docamm.getPg_documento_generico() +
+						" risulta avere un numero di righe non coerente per un documento generico di apertura fondo economale. Proposta di prima nota non possibile.");
+
+			Documento_generico_rigaBulk rigaDocamm = righeDocamm.get(0);
+
+			//2. chiudere il conto credito per anticipo
+			List<Movimento_cogeBulk> allMovimentiPrimaNota = this.findMovimentiPrimaNota(userContext,docamm);
+			String contoPatrimonialeAperturaCredito = this.findMovimentoAperturaCreditoEconomo(allMovimentiPrimaNota, docamm, rigaDocamm.getCd_terzo()).getCd_voce_ep();
+			Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
+
+			testataPrimaNota.closeDettaglioCostoRicavoPartita(docamm, contoPatrimonialeAperturaCredito, reversale.getIm_reversale(), rigaDocamm.getCd_terzo());
+			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_DARE, voceEpBanca.getCd_voce_ep(), reversale.getIm_reversale());
+
+			return this.generaScrittura(userContext, reversale, Collections.singletonList(testataPrimaNota), true);
+		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
 	}
@@ -2367,6 +2488,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		if (!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoPassivo() &&
 				!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() &&
 				!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAnticipo() &&
+				!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isAperturaFondo() &&
 				!TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isMissione())
 			throw new ApplicationException("La riga del mandato " + rigaMandato.getEsercizio() + "/" + rigaMandato.getCd_cds() + "/" + rigaMandato.getPg_mandato() +
 					" non risulta pagare un documento/anticipo/missione. Proposta di prima nota non possibile.");
@@ -2416,7 +2538,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private void addDettagliPrimaNotaReversaleDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Reversale_rigaBulk rigaReversale) throws ComponentException, PersistencyException, RemoteException {
-		if (!TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo())
+		if (!TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoAmministrativoAttivo() &&
+				!TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isChiusuraFondo())
 			throw new ApplicationException("La riga della reversale " + rigaReversale.getEsercizio() + "/" + rigaReversale.getCd_cds() + "/" + rigaReversale.getPg_reversale() +
 					" non risulta pagare un documento. Proposta di prima nota non possibile.");
 
@@ -2426,9 +2549,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		//La partita non deve essere registrata in caso di versamento ritenute
 		IDocumentoCogeBulk partita;
-		if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isGenericoEntrata()) {
+		if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isGenericoEntrata())
 			partita = (Documento_generico_attivoBulk) getHome(userContext, Documento_generico_attivoBulk.class).findByPrimaryKey(new Documento_generico_attivoBulk(rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_tipo_documento_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm()));
-		} else
+		else
 			partita = new Partita(rigaReversale.getCd_tipo_documento_amm(), rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm(),
 				rigaReversale.getCd_terzo(), TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()));
 
@@ -2533,7 +2656,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				" - Sezione: " + sezione + ")."));
 	}
 
-	private Voce_epBulk findContoBanca(UserContext userContext, int esercizio) throws ComponentException, RemoteException, PersistencyException {
+	private Voce_epBulk findContoBanca(UserContext userContext, int esercizio) throws ComponentException, RemoteException {
 		Configurazione_cnrBulk configBanca = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, esercizio, null, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_BANCA);
 
 		return Optional.ofNullable(configBanca).flatMap(el->Optional.ofNullable(el.getVal01())).map(el->{
@@ -2560,7 +2683,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}).orElseThrow(()->new ApplicationException("Manca la configurazione del conto CREDITO anticipo nella tabella CONFIGURAZIONE_CNR per l'esercizio "+anticipo.getEsercizio()
 				+" ("+Configurazione_cnrBulk.PK_VOCEEP_SPECIALE+"-"+Configurazione_cnrBulk.SK_CREDITO_DEBITO_ANTICIPO+"-VAL01)"));
 
-		Voce_epBulk aContoDebitoAnticipo = Optional.ofNullable(configBanca).flatMap(el->Optional.ofNullable(el.getVal02())).map(el->{
+		Voce_epBulk aContoDebitoAnticipo = Optional.of(configBanca).flatMap(el->Optional.ofNullable(el.getVal02())).map(el->{
 			try {
 				Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
 				return (Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(configBanca.getVal02(), anticipo.getEsercizio()));
@@ -2571,6 +2694,33 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				+" ("+Configurazione_cnrBulk.PK_VOCEEP_SPECIALE+"-"+Configurazione_cnrBulk.SK_CREDITO_DEBITO_ANTICIPO+"-VAL02)"));
 
 		return Pair.of(aContoCreditoAnticipo, aContoDebitoAnticipo);
+
+	}
+
+	private Pair<Voce_epBulk, Voce_epBulk> findPairContiEconomo(UserContext userContext, Documento_genericoBulk documento) throws ComponentException, RemoteException, PersistencyException {
+		Configurazione_cnrBulk configBanca = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, documento.getEsercizio(), null, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_CREDITO_DEBITO_ECONOMO);
+
+		Voce_epBulk aContoCredito = Optional.ofNullable(configBanca).flatMap(el->Optional.ofNullable(el.getVal01())).map(el->{
+			try {
+				Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
+				return (Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(configBanca.getVal01(), documento.getEsercizio()));
+			} catch(ComponentException|PersistencyException ex) {
+				throw new DetailedRuntimeException(ex);
+			}
+		}).orElseThrow(()->new ApplicationException("Manca la configurazione del conto CREDITO anticipo nella tabella CONFIGURAZIONE_CNR per l'esercizio "+documento.getEsercizio()
+				+" ("+Configurazione_cnrBulk.PK_VOCEEP_SPECIALE+"-"+Configurazione_cnrBulk.SK_CREDITO_DEBITO_ECONOMO+"-VAL01)"));
+
+		Voce_epBulk aContoDebito = Optional.of(configBanca).flatMap(el->Optional.ofNullable(el.getVal02())).map(el->{
+			try {
+				Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
+				return (Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(configBanca.getVal02(), documento.getEsercizio()));
+			} catch(ComponentException|PersistencyException ex) {
+				throw new DetailedRuntimeException(ex);
+			}
+		}).orElseThrow(()->new ApplicationException("Manca la configurazione del conto DEBITO anticipo nella tabella CONFIGURAZIONE_CNR per l'esercizio "+documento.getEsercizio()
+				+" ("+Configurazione_cnrBulk.PK_VOCEEP_SPECIALE+"-"+Configurazione_cnrBulk.SK_CREDITO_DEBITO_ECONOMO+"-VAL02)"));
+
+		return Pair.of(aContoCredito, aContoDebito);
 
 	}
 
@@ -2813,10 +2963,29 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				.collect(Collectors.toList());
 
 		if (result.size()>1)
-			throw new ApplicationException("Errore nell'individuazione del singolo movimento di prima nota di apertura credito dell'anticipo' "
+			throw new ApplicationException("Errore nell'individuazione del singolo movimento di prima nota di apertura credito dell'anticipo "
 					+docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getPg_doc()+": sono state individuate troppe righe.");
 		return result.stream().findFirst()
 				.orElseThrow(()->new ApplicationRuntimeException("Errore nell'individuazione del singolo movimento di prima nota di apertura credito dell'anticipo "
+						+docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getPg_doc()+": non è stata individuata nessuna riga."));
+	}
+
+	private Movimento_cogeBulk findMovimentoAperturaCreditoEconomo(List<Movimento_cogeBulk> movimentiCoge, Documento_genericoBulk docamm, Integer cdTerzo) throws ComponentException {
+		List<Movimento_cogeBulk> result = movimentiCoge.stream()
+				.filter(el->docamm.getTipoDocumentoEnum().getSezioneEconomica().equals(el.getSezione()))
+				.filter(el->docamm.getTipoDocumentoEnum().getTipoEconomica().equals(el.getTi_riga()))
+				.filter(el->docamm.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
+				.filter(el->docamm.getEsercizio().equals(el.getEsercizio_documento()))
+				.filter(el->docamm.getPg_doc().equals(el.getPg_numero_documento()))
+				.filter(el->cdTerzo.equals(el.getCd_terzo()))
+				.filter(el->el.getCd_contributo_ritenuta()==null)
+				.collect(Collectors.toList());
+
+		if (result.size()>1)
+			throw new ApplicationException("Errore nell'individuazione del singolo movimento di prima nota di apertura credito dell'economo "
+					+docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getPg_doc()+": sono state individuate troppe righe.");
+		return result.stream().findFirst()
+				.orElseThrow(()->new ApplicationRuntimeException("Errore nell'individuazione del singolo movimento di prima nota di apertura credito dell'economo "
 						+docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getPg_doc()+": non è stata individuata nessuna riga."));
 	}
 

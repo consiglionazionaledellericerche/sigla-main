@@ -3558,4 +3558,8 @@ public abstract class Fattura_passivaBulk
                 .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
                 .orElse(false);
     }
+
+    public boolean isRegistratoInFondoEconomale() {
+        return REGISTRATO_IN_FONDO_ECO.equalsIgnoreCase(getStato_pagamento_fondo_eco());
+    }
 }

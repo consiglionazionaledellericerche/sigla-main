@@ -1979,4 +1979,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public Timestamp getDt_contabilizzazione() {
 		return this.getData_registrazione();
 	}
+
+	public boolean isRegistratoInFondoEconomale() {
+		return REGISTRATO_IN_FONDO_ECO.equalsIgnoreCase(getStato_pagamento_fondo_eco());
+	}
 }

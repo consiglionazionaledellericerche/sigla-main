@@ -20,6 +20,7 @@ package it.cnr.contab.coepcoan00.ejb;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
 import it.cnr.contab.logs.ejb.BatchControlComponentSession;
@@ -105,7 +106,11 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 					List<String> listInsert = new ArrayList<>();
 					List<String> listError = new ArrayList<>();
 
-					allDocuments.stream().filter(el-> Optional.ofNullable(el.getDt_contabilizzazione()).isPresent()).sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)).forEach(documentoCoge -> {
+					allDocuments.stream().filter(el-> Optional.ofNullable(el.getDt_contabilizzazione()).isPresent())
+							.filter(el-> MandatoBulk.STATO_COGE_N.equals(el.getStato_coge()) || MandatoBulk.STATO_COGE_R.equals(el.getStato_coge()))
+							.sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione))
+							.sorted(Comparator.comparing(el->el.getTipoDocumentoEnum().getOrdineCostruzione()))
+							.forEach(documentoCoge -> {
 						try {
 							listRigheAll.add("X");
 							session.loadScritturaPatrimoniale(param0, documentoCoge);

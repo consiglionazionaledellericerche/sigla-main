@@ -44,4 +44,6 @@ public interface IDocumentoCogeBulk {
     java.sql.Timestamp getDt_contabilizzazione();
 
     void setStato_coge(java.lang.String stato_coge);
+
+    java.lang.String getStato_coge();
 }

@@ -1608,4 +1608,10 @@ public class OrdineAcqBulk extends OrdineAcqBase
     public void setStato_coge(String stato_coge) {
         //TODO Da implementare
     }
+
+    @Override
+    public String getStato_coge() {
+        //TODO Da implementare
+        return null;
+    }
 }

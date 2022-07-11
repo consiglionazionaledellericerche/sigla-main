@@ -17,8 +17,21 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public enum TipoDocumentoEnum {
 	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO),
@@ -165,7 +178,8 @@ public enum TipoDocumentoEnum {
 				!this.isGenericoStipendiSpesa() &&
 				!this.isGenericoMandatoRegolarizzazione() &&
 				!this.isGenericoCoriVersamentoSpesa() &&
-				!this.isGenericoEntrataIncassoIva();
+				!this.isGenericoEntrataIncassoIva() &&
+				!this.isChiusuraFondo();
 	}
 
 	public static TipoDocumentoEnum fromValue(String v) {
@@ -189,6 +203,10 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
+		if (this.isAperturaFondo())
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
+		if (this.isChiusuraFondo())
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isMissione())
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		return null;
@@ -209,6 +227,10 @@ public enum TipoDocumentoEnum {
 		if (this.isCompenso())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isAnticipo())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isAperturaFondo())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isChiusuraFondo())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isMissione())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
@@ -235,6 +257,10 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isAperturaFondo())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isChiusuraFondo())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
@@ -273,6 +299,10 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isAperturaFondo())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isChiusuraFondo())
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
@@ -284,5 +314,22 @@ public enum TipoDocumentoEnum {
 		if (this.isGenericoCoriAccantonamentoSpesa())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
+	}
+
+	//Ritorna l'ordine di costruzione dei documenti.... ad esempio la fattura viene proma del mandato
+	public int getOrdineCostruzione() {
+		if (this.isAnticipo())
+			return 1;
+		if (this.isMissione())
+			return 2;
+		if (this.isCompenso())
+			return 3;
+		if (this.isDocumentoAmministrativoPassivo() || this.isAperturaFondo() || this.isGenericoCoriVersamentoSpesa() ||
+			this.isGenericoCoriAccantonamentoSpesa() || this.isGenericoMandatoRegolarizzazione() ||
+			this.isDocumentoAmministrativoAttivo() || this.isChiusuraFondo() || this.isGenericoCoriAccantonamentoEntrata() || this.isGenericoEntrataIncassoIva())
+			return 4;
+		if (this.isMandato())
+			return 5;
+		return 6;
 	}
 }
