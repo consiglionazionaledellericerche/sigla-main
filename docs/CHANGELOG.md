@@ -1,3 +1,59 @@
+## Release 6.4.45  -- _July 12, 2022_ 
+**Changes**
+
+>**FIX test**
+>
+>[b4d8838df665cd3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4d8838df665cd3) marco.spasiano *July 12, 2022*
+
+>**FIX test**
+>
+>[6c5e3e49257991a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c5e3e49257991a) marco.spasiano *July 12, 2022*
+
+>**FIX liquibase test on h2**
+>
+>[34896373b0df3d6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34896373b0df3d6) marco.spasiano *July 12, 2022*
+
+>**FIX create SIOPE+ flow with same SIOPE code and different CUP code**
+>
+>[5be52a6cb2c1674](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5be52a6cb2c1674) marco.spasiano *July 12, 2022*
+
+
+## Release 6.4.44  -- _July 11, 2022_ 
+**Changes**
+
+>**Upgrade version of jada artifact**
+>
+>[c744b731cac0708](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c744b731cac0708) marco.spasiano *July 11, 2022*
+
+>**FIX create SIOPE+ flow with same SIOPE code and different CUP code**
+>
+>[7b6eeb7109966b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b6eeb7109966b4) marco.spasiano *July 04, 2022*
+
+>**Fix dbchangelog**
+>
+>[f691eb77fffdb55](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f691eb77fffdb55) gianfranco.gasparro *June 24, 2022*
+
+>**Inviato alla fatturazione elettronica riferimento mail dell'utente che ha creato la fattura**
+>
+>[6120ddf63fdbee1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6120ddf63fdbee1) gianfranco.gasparro *June 23, 2022*
+
+>**Fix anomalie varie Gestione ordini e magazzino**
+>
+>[34fd1c0dcdeab3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34fd1c0dcdeab3d) gianfranco.gasparro *June 13, 2022*
+
+>**Fix Pannellino Economica: non caricava la partita in fase di contabilizzazione del mandato**
+>
+>[ebd3387bb29bc73](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ebd3387bb29bc73) raffaelepagano *June 13, 2022*
+
+>**Fix anomalie varie Gestione ordini e magazzino**
+>
+>[ebdac326221d37c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ebdac326221d37c) gianfranco.gasparro *June 13, 2022*
+
+>**Economica: rimozione parametro doppione in Configurazione Cnr**
+>
+>[1b6c891fd9e0fa7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b6c891fd9e0fa7) raffaelepagano *June 08, 2022*
+
+
 ## Release 6.4.42  -- _June 04, 2022_ 
 **Changes**
 
