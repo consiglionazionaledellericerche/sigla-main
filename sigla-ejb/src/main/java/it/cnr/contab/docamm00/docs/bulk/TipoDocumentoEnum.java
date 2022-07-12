@@ -113,12 +113,54 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.NOTA_DEBITO_ATTIVA.equals(this);
 	}
 
+	/**
+	 * Indica se il tipo di documento rientra tra quelli amministrativi passivi (fattura, nota credito e nota debito)
+	 * @return true se il tipo di documento rientra tra quelli amministrativi passivi (fattura, nota credito e nota debito)
+	 */
 	public boolean isDocumentoAmministrativoPassivo() {
-		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva() || this.isGenericoSpesa() || this.isGenericoStipendiSpesa();
+		return this.isFatturaPassiva() || this.isNotaDebitoPassiva() || this.isNotaCreditoPassiva();
 	}
 
+	/**
+	 * Indica se il tipo di documento rientra tra quelli amministrativi attivi (fattura, nota credito e nota debito)
+	 * @return true se il tipo di documento rientra tra quelli amministrativi attivi (fattura, nota credito e nota debito)
+	 */
 	public boolean isDocumentoAmministrativoAttivo() {
-		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva() || this.isGenericoEntrata() || this.isGenericoCoriAccantonamentoEntrata();
+		return this.isFatturaAttiva() || this.isNotaDebitoAttiva() || this.isNotaCreditoAttiva();
+	}
+
+	/**
+	 * Indica se il tipo di documento rientra tra quelli generici passivi
+	 * @return true se il tipo di documento rientra tra quelli generici passivi
+	 */
+	public boolean isDocumentoGenericoPassivo() {
+		return this.isGenericoSpesa() || this.isAperturaFondo() || this.isGenericoCoriAccantonamentoSpesa() ||
+				this.isGenericoCoriVersamentoSpesa() || this.isReintegroFondo() || this.isGenericoStipendiSpesa();
+	}
+
+	/**
+	 * Indica se il tipo di documento rientra tra quelli generici attivi
+	 * @return true se il tipo di documento rientra tra quelli generici attivi
+	 */
+	public boolean isDocumentoGenericoAttivo() {
+		return this.isGenericoEntrata() || this.isChiusuraFondo() || this.isGenericoCoriAccantonamentoEntrata() ||
+				this.isGenericoCoriVersamentoEntrata() || this.isGenericoEntrataIncassoIva() || this.isGenericoMandatoRegolarizzazione();
+	}
+
+	/**
+	 * Indica se il tipo di documento è passivo (amministrativo o generico)
+	 * @return true se il tipo di documento è passivo (amministrativo o generico)
+	 */
+	public boolean isDocumentoPassivo() {
+		return this.isDocumentoAmministrativoPassivo() || this.isDocumentoGenericoPassivo();
+	}
+
+	/**
+	 * Indica se il tipo di documento è attivo (amministrativo o generico)
+	 * @return true se il tipo di documento è attivo (amministrativo o generico)
+	 */
+	public boolean isDocumentoAttivo() {
+		return this.isDocumentoAmministrativoAttivo() || this.isDocumentoGenericoAttivo();
 	}
 
 	public boolean isMandato() {
@@ -133,12 +175,20 @@ public enum TipoDocumentoEnum {
 		return TipoDocumentoEnum.GEN_AP_FON.equals(this);
 	}
 
+	public boolean isReintegroFondo() {
+		return TipoDocumentoEnum.GEN_REINTEGRO_FONDO.equals(this);
+	}
+
 	public boolean isChiusuraFondo() {
 		return TipoDocumentoEnum.GEN_CH_FON.equals(this);
 	}
 
 	public boolean isGenericoCoriVersamentoSpesa() {
 		return TipoDocumentoEnum.GEN_CORI_VERSAMENTO_SPESA.equals(this);
+	}
+
+	public boolean isGenericoCoriVersamentoEntrata() {
+		return TipoDocumentoEnum.GEN_CORI_VERSAMENTO_ENTRATA.equals(this);
 	}
 
 	public boolean isGenericoCoriAccantonamentoSpesa() {
@@ -257,12 +307,12 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.SEZIONE_DARE;
-		if (this.isAperturaFondo())
-			return Movimento_cogeBulk.SEZIONE_DARE;
-		if (this.isChiusuraFondo())
-			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isDocumentoPassivo())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isDocumentoAttivo())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
 
@@ -270,16 +320,16 @@ public enum TipoDocumentoEnum {
 	 * Indica quale sezione (Dare/Avere) per il conto di tipo iva viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getSezioneIva() {
-		if (this.isFatturaPassiva())
-			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isNotaCreditoPassiva())
+		if (this.isFatturaPassiva() || this.isNotaDebitoPassiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
-		if (this.isFatturaAttiva())
+		if (this.isNotaCreditoPassiva())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isFatturaAttiva() || this.isNotaDebitoAttiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isCompenso())
-			return Movimento_cogeBulk.SEZIONE_AVERE;
+			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}
 
@@ -287,11 +337,11 @@ public enum TipoDocumentoEnum {
 	 * Indica quale sezione (Dare/Avere) per il conto di tipo patrimoniale viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getSezionePatrimoniale() {
-		if (this.isFatturaPassiva())
+		if (this.isFatturaPassiva() || this.isNotaDebitoPassiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isNotaCreditoPassiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
-		if (this.isFatturaAttiva())
+		if (this.isFatturaAttiva() || this.isNotaDebitoAttiva())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isNotaCreditoAttiva())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
@@ -299,20 +349,12 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isAperturaFondo())
-			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isChiusuraFondo())
-			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isMissione())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
+		if (this.isDocumentoPassivo())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isGenericoEntrata()||this.isGenericoCoriAccantonamentoEntrata())
+		if (this.isDocumentoAttivo())
 			return Movimento_cogeBulk.SEZIONE_DARE;
-		if (this.isGenericoCoriVersamentoSpesa())
-			return Movimento_cogeBulk.SEZIONE_AVERE;
-		if (this.isGenericoCoriAccantonamentoSpesa())
-			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
 
@@ -324,9 +366,7 @@ public enum TipoDocumentoEnum {
 			return 2;
 		if (this.isCompenso())
 			return 3;
-		if (this.isDocumentoAmministrativoPassivo() || this.isAperturaFondo() || this.isGenericoCoriVersamentoSpesa() ||
-			this.isGenericoCoriAccantonamentoSpesa() || this.isGenericoMandatoRegolarizzazione() ||
-			this.isDocumentoAmministrativoAttivo() || this.isChiusuraFondo() || this.isGenericoCoriAccantonamentoEntrata() || this.isGenericoEntrataIncassoIva())
+		if (this.isDocumentoPassivo() || this.isDocumentoAttivo())
 			return 4;
 		if (this.isMandato())
 			return 5;

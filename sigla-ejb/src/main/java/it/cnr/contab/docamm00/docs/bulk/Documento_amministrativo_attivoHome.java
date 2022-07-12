@@ -30,44 +30,12 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
  * @author: Roberto Peli
  */
 public class Documento_amministrativo_attivoHome extends Fattura_attivaHome {
-    /**
-     * Documento_amministrativo_passivoHome constructor comment.
-     *
-     * @param clazz      java.lang.Class
-     * @param connection java.sql.Connection
-     */
-    protected Documento_amministrativo_attivoHome(Class clazz, java.sql.Connection connection) {
-        super(clazz, connection);
-    }
-
-    /**
-     * Documento_amministrativo_passivoHome constructor comment.
-     *
-     * @param clazz           java.lang.Class
-     * @param connection      java.sql.Connection
-     * @param persistentCache it.cnr.jada.persistency.PersistentCache
-     */
-    protected Documento_amministrativo_attivoHome(Class clazz, java.sql.Connection connection, it.cnr.jada.persistency.PersistentCache persistentCache) {
-        super(clazz, connection, persistentCache);
-    }
-
-    /**
-     * Documento_amministrativo_passivoHome constructor comment.
-     *
-     * @param conn java.sql.Connection
-     */
     public Documento_amministrativo_attivoHome(java.sql.Connection conn) {
-        super(conn);
+        super(Documento_amministrativo_attivoBulk.class, conn);
     }
 
-    /**
-     * Documento_amministrativo_passivoHome constructor comment.
-     *
-     * @param conn            java.sql.Connection
-     * @param persistentCache it.cnr.jada.persistency.PersistentCache
-     */
     public Documento_amministrativo_attivoHome(java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
-        super(conn, persistentCache);
+        super(Documento_amministrativo_attivoBulk.class, conn, persistentCache);
     }
 
     public SQLBuilder selectByClauseForFattureAttiveDaFirmare(UserContext context, Documento_amministrativo_attivoBulk oggettobulk, CompoundFindClause compoundfindclause) {

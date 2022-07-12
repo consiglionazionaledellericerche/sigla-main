@@ -21,10 +21,7 @@ import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
@@ -208,7 +205,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            allDocuments.addAll(fatattHome.fetchAll(sql));
+            allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
         }
         {
             PersistentHome fatpasHome = getHome(userContext, Documento_amministrativo_passivoBulk.class);

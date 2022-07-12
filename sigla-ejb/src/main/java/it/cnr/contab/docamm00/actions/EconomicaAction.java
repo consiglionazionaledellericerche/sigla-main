@@ -46,9 +46,6 @@ public abstract class EconomicaAction extends CRUDAction {
                     actionContext.getUserContext(),
                     documentoCogeBulk)
             );
-            Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession().loadScritturaPatrimoniale(
-                    actionContext.getUserContext(),
-                    documentoCogeBulk);
             bp.getMovimentiAvere().reset(actionContext);
             bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");

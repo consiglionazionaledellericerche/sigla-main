@@ -17,6 +17,8 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (12/13/2001 4:02:04 PM)

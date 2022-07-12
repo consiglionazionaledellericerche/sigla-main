@@ -3502,8 +3502,6 @@ public abstract class Fattura_passivaBulk
                 if (this.getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())
                     return true;
             }
-            if (this.getFl_split_payment().booleanValue())
-                return true;
         }
         return false;
     }

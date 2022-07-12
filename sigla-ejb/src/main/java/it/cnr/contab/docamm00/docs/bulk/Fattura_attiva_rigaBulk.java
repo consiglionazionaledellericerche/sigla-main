@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * Creation date: (9/5/2001 5:02:18 PM)
  * @author: Ardire Alfonso
  */
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;

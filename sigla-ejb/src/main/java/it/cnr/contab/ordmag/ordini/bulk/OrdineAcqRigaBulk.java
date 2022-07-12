@@ -28,6 +28,7 @@ import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;

@@ -58,7 +58,9 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @JsonInclude(value = Include.NON_NULL)
-public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements IDocumentoAmministrativoBulk, Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
+public abstract class Fattura_attivaBulk extends Fattura_attivaBase
+        implements IDocumentoAmministrativoBulk,
+        Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
         AllegatoParentBulk {
     public final static String BENEDUREVOLE = "B";
     public final static String CONTRATTO = "C";

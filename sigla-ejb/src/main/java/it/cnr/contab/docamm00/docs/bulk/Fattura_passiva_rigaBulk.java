@@ -767,5 +767,4 @@ public abstract class Fattura_passiva_rigaBulk
 	public void setCig(CigBulk cig) {
 		this.cig = cig;
 	}
-
 }
