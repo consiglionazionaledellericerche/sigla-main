@@ -87,6 +87,8 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 					try {
 						listCdCds = Utility.createUnita_organizzativaComponentSession().findListaCds(param0, param1).stream()
 								.map(CdsBulk::getCd_unita_organizzativa).collect(Collectors.toList());
+						if (!listCdCds.stream().filter(el->el.equals("999")).findAny().isPresent())
+							listCdCds.add("999");
 					} catch (ComponentException | RemoteException ex) {
 						SendMail.sendErrorMail(subjectError, "Errore durante la ricerca di tutti i centri di spesa - Errore: " + ex.getMessage());
 						throw new DetailedRuntimeException(ex);
