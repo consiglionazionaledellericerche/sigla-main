@@ -12,7 +12,7 @@ stages:
 variables:
   M2_REPO: "/builds/dev/sigla-main/.m2/repository"
   MAVEN_OPTS: "-Djava.awt.headless=true -Dsonar.host.url=$SONAR_HOST_URL"
-  MAVEN_CLI_OPTS: "-s .m2/settings.xml -DskipTests -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Pall-test,CMIS -Dnexus.url=$NEXUS_URL -Dnexus.login=$NEXUS_USERNAME -Dnexus.pwd=$NEXUS_PASSWORD -Dace.passwod=$ACE_PASSWORD --batch-mode --errors --fail-at-end --show-version"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Pall-test,CMIS -Dnexus.url=$NEXUS_URL -Dnexus.login=$NEXUS_USERNAME -Dnexus.pwd=$NEXUS_PASSWORD -Dace.passwod=$ACE_PASSWORD --batch-mode --errors --fail-at-end --show-version"
   MAVEN_CLI_CENTRAL_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Pprod,CMIS,maven-central,release-version,docs -Dnexus.url=$NEXUS_URL -Dsonatype.login=$SONATYPE_USERNAME -Dsonatype.pwd=$SONATYPE_PASSWORD --batch-mode --errors --fail-at-end --show-version"
   CONTAINER_TEST_IMAGE: $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
   CONTAINER_RELEASE_IMAGE: $CI_PROJECT_PATH:latest
