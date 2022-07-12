@@ -5238,8 +5238,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5367,8 +5366,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
