@@ -1597,6 +1597,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						}
 						testataPrimaNota.openDettaglioPatrimonialePartita(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo);
 
+						//Se intraUE o extraUE sposto l'IVA anzichè darla al Fornitore (quindi chiudo il debito) la rilevo come debito verso Erario
+						if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast)
+								.map(el->el.getFl_intra_ue() || el.getFl_extra_ue()).orElse(Boolean.FALSE)) {
+							Voce_epBulk aContoIvaDebito = this.findContoIvaDebito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
+							testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, true);
+							testataPrimaNota.closeDettaglioIva(docamm, aContoIvaDebito.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIva);
+						}
+
 						if (isSplitPayment) {
 							Voce_epBulk aContoIvaSplit;
 							if (rigaDettFinVoce.getDocamm().getTipoDocumentoEnum().isDocumentoAmministrativoPassivo())
