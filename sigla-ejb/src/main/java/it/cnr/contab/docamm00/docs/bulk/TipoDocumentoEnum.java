@@ -245,20 +245,20 @@ public enum TipoDocumentoEnum {
 	 * Indica quale tipo di conto di economica (costo/ricavo) viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getTipoEconomica() {
-		if (this.isDocumentoAmministrativoPassivo())
-			return Movimento_cogeBulk.TipoRiga.COSTO.value();
-		if (this.isDocumentoAmministrativoAttivo())
-			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
-		if (this.isCompenso())
-			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isAnticipo())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
+		if (this.isMissione())
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
+		if (this.isCompenso())
+			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isAperturaFondo())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		if (this.isChiusuraFondo())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
-		if (this.isMissione())
+		if (this.isDocumentoPassivo())
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
+		if (this.isDocumentoAttivo())
+			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
 		return null;
 	}
 
@@ -266,28 +266,20 @@ public enum TipoDocumentoEnum {
 	 * Indica quale tipo di conto patrimoniale (debito/credito) viene movimentato dalla scrittura PN del tipo documento
 	 */
 	public String getTipoPatrimoniale() {
-		if (this.isFatturaPassiva()||this.isGenericoSpesa()||this.isGenericoStipendiSpesa())
-			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isNotaCreditoPassiva())
-			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isFatturaAttiva()||this.isGenericoEntrata()||this.isGenericoCoriAccantonamentoEntrata())
-			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
-		if (this.isNotaCreditoAttiva())
-			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
-		if (this.isCompenso())
-			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isAnticipo())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isMissione())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isCompenso())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isAperturaFondo())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isChiusuraFondo())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isMissione())
+		if (this.isDocumentoPassivo())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isGenericoCoriVersamentoSpesa())
-			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
-		if (this.isGenericoCoriAccantonamentoSpesa())
-			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		if (this.isDocumentoAttivo())
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		return null;
 	}
 

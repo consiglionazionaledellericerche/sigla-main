@@ -115,6 +115,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 							.forEach(documentoCoge -> {
 						try {
 							listRigheAll.add("X");
+							logger.info("Documento in elaborazione: "+documentoCoge.getEsercizio()+"/"+documentoCoge.getCd_cds()+"/"+documentoCoge.getCd_tipo_doc()+"/"+documentoCoge.getPg_doc());
 							session.loadScritturaPatrimoniale(param0, documentoCoge);
 							listInsert.add("X");
 							listInsertAll.add("X");
