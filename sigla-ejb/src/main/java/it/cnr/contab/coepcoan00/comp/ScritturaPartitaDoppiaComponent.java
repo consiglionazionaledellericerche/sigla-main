@@ -1747,8 +1747,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 									}
 								} else { //Contributo Percipiente
 									if (compenso.getFl_split_payment().equals(Boolean.TRUE)) {
-										Voce_epBulk voceCosto = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), cori.getSezioneCostoRicavo(), cori.getTi_ente_percipiente());
-										testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), voceCosto.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+										//Rilevo il conto IVA Credito/Debito di tipo SPLIT e apro il conto ritenute split
+										Voce_epBulk aContoCreditoRitenuteSplit = this.findContoCreditoRitenuteSplitPayment(userContext, compenso.getEsercizio());
+										testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), aContoCreditoRitenuteSplit.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
 										testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
 									}
 								}
@@ -1757,31 +1758,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
 								testataPrimaNota.openDettaglioPatrimonialeCori(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
 							}
-
-
-
-/**
-
-							if (Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
-									.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori)
-									.filter(el -> (el.isTipoIva() && compenso.isIstituzionale()) || el.isTipoRivalsa()).isPresent()) {
-								// Se la tipologia di contributo ritenuta è IVA istituzionale o RIVALSA va tutto sul costo principale del compenso
-								testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCori);
-								testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
-							} else if (Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
-										.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori)
-										.filter(el -> el.isTipoIva() && compenso.isCommerciale()).isPresent()) {
-								// Se la tipologia di contributo ritenuta è IVA Commerciale il conto è del tributo ma la contropartita è del compenso
-								Voce_epBulk voceCosto = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), cori.getSezioneCostoRicavo(), cori.getTi_ente_percipiente());
-								testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), voceCosto.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-								testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
-							} else {
-								pairContoCostoCori = this.findPairCostoCompenso(userContext, cori);
-								testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
-								testataPrimaNota.openDettaglioPatrimonialeCori(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-							}
- */
-						} catch (ComponentException|PersistencyException e) {
+						} catch (ComponentException|PersistencyException|RemoteException e) {
 							throw new ApplicationRuntimeException(e);
 						}
 					});
@@ -2198,8 +2175,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				// L'Iva, sia per compensa istituzionale che commerciale, va sempre a costo,
 				if (!cori.isTipoContributoRivalsa() && !(cori.isTipoContributoIva() && cori.isContributoEnte())) {
 					if (cori.isTipoContributoIva() && cori.isContributoPercipiente()) {
-						String contoToClose = this.findMovimentoAperturaCoriIVACompenso(allMovimentiPrimaNotaCompenso, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta()).getCd_voce_ep();
-						testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), contoToClose, imCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+						Movimento_cogeBulk movimentoToClose = this.findMovimentoAperturaCoriIVACompenso(allMovimentiPrimaNotaCompenso, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+						testataPrimaNota.addDettaglio(movimentoToClose.getTi_riga(), Movimento_cogeBulk.getControSezione(movimentoToClose.getSezione()), movimentoToClose.getCd_voce_ep(), imCori, compenso, movimentoToClose.getCd_terzo(), cori.getCd_contributo_ritenuta());
 						testataPrimaNota.closeDettaglioPatrimonialePartita(compenso, contoPatrimonialePartita, imCori, compenso.getCd_terzo());
 					} else {
 						Pair<Voce_epBulk, Voce_epBulk> pairContoCori = this.findPairContiMandato(userContext, cori);
@@ -3016,8 +2993,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Movimento_cogeBulk findMovimentoAperturaCoriIVACompenso(List<Movimento_cogeBulk> movimentiCoge, CompensoBulk docamm, Integer cdTerzo, String cdCori) throws ComponentException {
 
 		List<Movimento_cogeBulk> result = movimentiCoge.stream()
-				.filter(el->Movimento_cogeBulk.getControSezione(docamm.getTipoDocumentoEnum().getSezioneIva()).equals(el.getSezione()))
-				.filter(el-> (docamm.getFl_split_payment()?Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value():Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value())
+				.filter(el->docamm.getTipoDocumentoEnum().getSezioneIva().equals(el.getSezione()))
+				.filter(el-> (docamm.getFl_split_payment()?Movimento_cogeBulk.TipoRiga.CREDITO.value():Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value())
 						.equals(el.getTi_riga()))
 				.filter(el->docamm.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
 				.filter(el->docamm.getEsercizio().equals(el.getEsercizio_documento()))
