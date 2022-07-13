@@ -1529,7 +1529,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		 * Il flag registraIva viene quindi impostatao a true
 		 */
 		final boolean isCommercialeWithAutofattura = this.hasAutofattura(userContext, docamm);
-		final boolean registraIva = this.registraIvaCoge(userContext, docamm) || isCommercialeWithAutofattura;
 
 		final boolean isSplitPayment;
 		if (docamm instanceof Fattura_passivaBulk)
@@ -1583,20 +1582,21 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 					//Registro IVA
 					//Il flag registraIva è sempre impostato a true se fattura istituzionale o isCommercialeWithAutofattura
-					if (registraIva && imIva.compareTo(BigDecimal.ZERO)!=0) {
+					if (imIva.compareTo(BigDecimal.ZERO)!=0) {
 						Voce_epBulk aContoIva;
 						if (rigaDettFinVoce.getDocamm().getTipoDocumentoEnum().isDocumentoAmministrativoPassivo())
 							aContoIva = this.findContoIvaCredito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
 						else
 							aContoIva = this.findContoIvaDebito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
 
-						testataPrimaNota.openDettaglioIva(docamm, aContoIva.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIva);
 						if (isCommercialeWithAutofattura)
-							testataPrimaNota.openDettaglioPatrimonialePartita(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo);
+							testataPrimaNota.openDettaglioIva(docamm, aContoIva.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIva);
 						else { //è una fattura istituzionale e quindi l'IVA va a costo
 							if (!isFatturaPassivaDaOrdini)
 								testataPrimaNota.openDettaglioCostoRicavo(docamm, pairContoCosto.getFirst().getCd_voce_ep(), imIva);
 						}
+						testataPrimaNota.openDettaglioPatrimonialePartita(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo);
+
 						if (isSplitPayment) {
 							Voce_epBulk aContoIvaSplit;
 							if (rigaDettFinVoce.getDocamm().getTipoDocumentoEnum().isDocumentoAmministrativoPassivo())
@@ -1632,11 +1632,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							.reduce(BigDecimal.ZERO, BigDecimal::add);
 					testataPrimaNota.openDettaglioCostoRicavo(docamm, conto, imImponibile);
 
-					if (registraIva) {
-						BigDecimal imIva = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getIvaPerRigaFattura)
-								.reduce(BigDecimal.ZERO, BigDecimal::add);
+					BigDecimal imIva = righeFatturaOrdine.stream().map(FatturaOrdineBulk::getIvaPerRigaFattura)
+							.reduce(BigDecimal.ZERO, BigDecimal::add);
+					if (imIva.compareTo(BigDecimal.ZERO)!=0)
 						testataPrimaNota.openDettaglioCostoRicavo(docamm, conto, imIva);
-					}
 				}));
 			}
 		})));
@@ -2559,20 +2558,28 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		List<Movimento_cogeBulk> movimenti = this.findMovimentiPrimaNota(userContext, partita);
 		List<Movimento_cogeBulk> dettPnPatrimonialePartita = this.findMovimentiPatrimoniali(movimenti,partita);
-		List<Movimento_cogeBulk> dettPnCreditoSplit = movimenti.stream().filter(el->el.getSezione().equals(partita.getTipoDocumentoEnum().getSezioneEconomica()))
-				.filter(el->Movimento_cogeBulk.TipoRiga.CREDITO.value().equals(el.getTi_riga())).collect(Collectors.toList());
+		List<Movimento_cogeBulk> dettPnCreditoSplit = Collections.emptyList();
 
-		final BigDecimal totContiEp = BigDecimal.valueOf(dettPnPatrimonialePartita.stream()
+		//Cerco il saldo della partita data dal totale dei movimenti patrimoniali
+		BigDecimal saldoPatrimonialePartita = BigDecimal.valueOf(dettPnPatrimonialePartita.stream()
 						.mapToDouble(el->el.getIm_movimento().doubleValue())
 						.sum());
 
-		final BigDecimal totContiCreditoSplit = BigDecimal.valueOf(dettPnCreditoSplit.stream()
-				.mapToDouble(el->el.getIm_movimento().doubleValue())
-				.sum());
+		//E se si tratta di documenti amministrativi, ridotto della quota carico split da trattenere
+		if (partita instanceof Documento_amministrativo_passivoBulk || partita instanceof Documento_amministrativo_attivoBulk) {
+			dettPnCreditoSplit = movimenti.stream().filter(el->el.getSezione().equals(partita.getTipoDocumentoEnum().getSezioneEconomica()))
+					.filter(el->Movimento_cogeBulk.TipoRiga.CREDITO.value().equals(el.getTi_riga())).collect(Collectors.toList());
 
-		if (imNettoRigaMandato.compareTo(totContiEp.subtract(totContiCreditoSplit))!=0)
-			throw new ApplicationException("L'importo netto della riga del mandato "+rigaMandato.getEsercizio()+"/"+rigaMandato.getCd_cds()+"/"+rigaMandato.getPg_mandato()+
-					" è diverso dal saldo fornitore del documento associato.");
+			saldoPatrimonialePartita = saldoPatrimonialePartita.subtract(BigDecimal.valueOf(dettPnCreditoSplit.stream()
+				.mapToDouble(el->el.getIm_movimento().doubleValue())
+				.sum()));
+		}
+
+		if (imNettoRigaMandato.compareTo(saldoPatrimonialePartita)!=0)
+			throw new ApplicationException("L'importo netto ("+ new it.cnr.contab.util.EuroFormat().format(imNettoRigaMandato) +
+					") della riga del mandato "+rigaMandato.getEsercizio()+"/"+rigaMandato.getCd_cds()+"/"+rigaMandato.getPg_mandato()+
+					" è diverso dal saldo fornitore ("+ new it.cnr.contab.util.EuroFormat().format(saldoPatrimonialePartita) + ") del documento associato "+
+					partita.getCd_tipo_doc()+"/"+partita.getEsercizio()+"/"+partita.getCd_uo()+"/"+partita.getPg_doc()+".");
 
 		//Chiudo i conti patrimoniali
 		dettPnPatrimonialePartita.stream().forEach(dettPN->
