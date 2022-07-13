@@ -53,6 +53,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
@@ -63,6 +64,7 @@ import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.action.SimpleNestedFormController;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 
@@ -2049,12 +2051,51 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						mandato.getUnita_organizzativa().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
 					return null;
 
-				mandato.getMandato_rigaColl().forEach(rigaMandato -> {
-					try {
-						addDettagliPrimaNotaMandatoDocumentiVari(userContext, testataPrimaNota, rigaMandato);
-					} catch (ComponentException|PersistencyException|RemoteException e) {
-						throw new ApplicationRuntimeException(e);
-					}
+				//raggruppo i mandatiRiga per Partita
+				Map<Integer, Map<String, Map<String, Map<String, Map<Long, List<Mandato_rigaBulk>>>>>> mapRigheMandato =
+					mandato.getMandato_rigaColl().stream()
+						.collect(Collectors.groupingBy(Mandato_rigaBulk::getEsercizio_doc_amm,
+							Collectors.groupingBy(Mandato_rigaBulk::getCd_tipo_documento_amm,
+								Collectors.groupingBy(Mandato_rigaBulk::getCd_cds_doc_amm,
+										Collectors.groupingBy(Mandato_rigaBulk::getCd_uo_doc_amm,
+												Collectors.groupingBy(Mandato_rigaBulk::getPg_doc_amm))))));
+
+				mapRigheMandato.keySet().forEach(aEsercizioDocamm -> {
+					Map<String, Map<String, Map<String, Map<Long, List<Mandato_rigaBulk>>>>> mapEsercizioDocamm = mapRigheMandato.get(aEsercizioDocamm);
+					mapEsercizioDocamm.keySet().forEach(aTipoDocamm -> {
+						Map<String, Map<String, Map<Long, List<Mandato_rigaBulk>>>> mapTipoDocamm = mapEsercizioDocamm.get(aTipoDocamm);
+						mapTipoDocamm.keySet().forEach(aCdCdsDocamm -> {
+							Map<String, Map<Long, List<Mandato_rigaBulk>>> mapCdCdsDocamm = mapTipoDocamm.get(aCdCdsDocamm);
+							mapCdCdsDocamm.keySet().forEach(aCdUoDocamm -> {
+								Map<Long, List<Mandato_rigaBulk>> mapCdUoDocamm = mapCdCdsDocamm.get(aCdUoDocamm);
+								mapCdUoDocamm.keySet().forEach(aPgDocamm -> {
+									try {
+										List<Mandato_rigaBulk> listRighe = mapCdUoDocamm.get(aPgDocamm);
+
+										IDocumentoAmministrativoBulk partita;
+										if (TipoDocumentoEnum.fromValue(aTipoDocamm).isDocumentoAmministrativoPassivo()) {
+											partita = (Documento_amministrativo_passivoBulk) getHome(userContext, Documento_amministrativo_passivoBulk.class)
+													.findByPrimaryKey(new Documento_amministrativo_passivoBulk(aCdCdsDocamm, aCdUoDocamm, aEsercizioDocamm, aPgDocamm));
+										} else if (TipoDocumentoEnum.fromValue(aTipoDocamm).isDocumentoAmministrativoAttivo()) {
+											partita = (Documento_amministrativo_attivoBulk) getHome(userContext, Documento_amministrativo_passivoBulk.class)
+													.findByPrimaryKey(new Documento_amministrativo_attivoBulk(aCdCdsDocamm, aCdUoDocamm, aEsercizioDocamm, aPgDocamm));
+										} else if (TipoDocumentoEnum.fromValue(aTipoDocamm).isGenericoSpesa()) {
+											partita = (Documento_generico_passivoBulk) getHome(userContext, Documento_generico_passivoBulk.class)
+													.findByPrimaryKey(new Documento_generico_passivoBulk(aCdCdsDocamm, aTipoDocamm, aCdUoDocamm, aEsercizioDocamm, aPgDocamm));
+										} else if (TipoDocumentoEnum.fromValue(aTipoDocamm).isMissione()) {
+											partita = (MissioneBulk) getHome(userContext, MissioneBulk.class)
+													.findByPrimaryKey(new MissioneBulk(aCdCdsDocamm,aCdUoDocamm, aEsercizioDocamm, aPgDocamm));
+										} else
+											throw new ApplicationRuntimeException("Scrittura Economica non gestita per la tipologia di documento "+aTipoDocamm +
+													" collegato al mandato "+ mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_manrev() +".");
+										addDettagliPrimaNotaMandatoDocumentiVari(userContext, testataPrimaNota, partita, mandato, listRighe);
+									} catch (ComponentException | PersistencyException | RemoteException e) {
+										throw new ApplicationRuntimeException(e);
+									}
+								});
+							});
+						});
+					});
 				});
 				return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 			}
@@ -2520,65 +2561,79 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
-	private void addDettagliPrimaNotaMandatoDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Mandato_rigaBulk rigaMandato) throws ComponentException, PersistencyException, RemoteException {
-		final BigDecimal imNettoRigaMandato = rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga());
-
-		//La partita non deve essere registrata in caso di versamento ritenute
-		IDocumentoCogeBulk partita;
-		if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isFatturaPassiva() || TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isNotaDebitoPassiva() ||
-				TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isNotaCreditoPassiva()) {
-			partita = (Documento_amministrativo_passivoBulk) getHome(userContext, Documento_amministrativo_passivoBulk.class).findByPrimaryKey(new Documento_amministrativo_passivoBulk(rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm()));
-		} else if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isFatturaAttiva() || TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isNotaDebitoAttiva() ||
-				TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isNotaCreditoAttiva()) {
-			partita = (Documento_amministrativo_attivoBulk) getHome(userContext, Documento_amministrativo_attivoBulk.class).findByPrimaryKey(new Documento_amministrativo_attivoBulk(rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm()));
-		} else if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isGenericoSpesa()) {
-			partita = (Documento_generico_passivoBulk) getHome(userContext, Documento_generico_passivoBulk.class).findByPrimaryKey(new Documento_generico_passivoBulk(rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_tipo_documento_amm(), rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm()));
-		} else if (TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()).isMissione()) {
-			partita = (MissioneBulk) getHome(userContext, MissioneBulk.class).findByPrimaryKey(new MissioneBulk(rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm()));
-		} else
-			partita = new Partita(rigaMandato.getCd_tipo_documento_amm(), rigaMandato.getCd_cds_doc_amm(), rigaMandato.getCd_uo_doc_amm(), rigaMandato.getEsercizio_doc_amm(), rigaMandato.getPg_doc_amm(), rigaMandato.getCd_terzo(),
-					TipoDocumentoEnum.fromValue(rigaMandato.getCd_tipo_documento_amm()));
+	private void addDettagliPrimaNotaMandatoDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, IDocumentoAmministrativoBulk docamm, MandatoBulk mandato, List<Mandato_rigaBulk> righeMandato) throws ComponentException, PersistencyException, RemoteException {
+		final BigDecimal imLordoRigheMandato = righeMandato.stream().map(Mandato_rigaBase::getIm_mandato_riga).reduce(BigDecimal.ZERO, BigDecimal::add);
+		final BigDecimal imRitenuteRigheMandato = righeMandato.stream().map(Mandato_rigaBase::getIm_ritenute_riga).reduce(BigDecimal.ZERO, BigDecimal::add);
+		final BigDecimal imNettoRigheMandato = imLordoRigheMandato.subtract(imRitenuteRigheMandato);
 
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
 
-		List<Movimento_cogeBulk> movimenti = this.findMovimentiPrimaNota(userContext, partita);
-		List<Movimento_cogeBulk> dettPnPatrimonialePartita = this.findMovimentiPatrimoniali(movimenti,partita);
-		List<Movimento_cogeBulk> dettPnCreditoSplit = Collections.emptyList();
+		final String cdCoriIvaSplit = this.findCodiceTributoIvaSplit(userContext);
 
-		//Cerco il saldo della partita data dal totale dei movimenti patrimoniali
-		BigDecimal saldoPatrimonialePartita = dettPnPatrimonialePartita.stream()
-				.map(Movimento_cogeBulk::getIm_movimento)
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		//recupero tutti i movimenti della partita per ottenere il saldo
+		Map<String, Pair<String, BigDecimal>> saldiPartita = ((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiPartita(docamm, mandato.getMandato_terzo().getCd_terzo());
 
-		//E se si tratta di documenti amministrativi, ridotto della quota carico split da trattenere
-		if (partita instanceof Documento_amministrativo_passivoBulk || partita instanceof Documento_amministrativo_attivoBulk) {
-			dettPnCreditoSplit = movimenti.stream().filter(el->el.getSezione().equals(partita.getTipoDocumentoEnum().getSezioneEconomica()))
-					.filter(el->Movimento_cogeBulk.TipoRiga.CREDITO.value().equals(el.getTi_riga())).collect(Collectors.toList());
+		if (saldiPartita.keySet().size()>1)
+			throw new ApplicationException("Errore nell'individuazione del conto patrimoniale da utilizzare per la scrittura di chiusura del debito " +
+					"del documento associato "+	docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+": risultano" +
+					" movimentati più di un conto patrimoniale.");
+		String cdVocePatrimoniale = saldiPartita.keySet().stream().findAny()
+				.orElseThrow(()->new ApplicationException("Errore nell'individuazione del conto patrimoniale da utilizzare per la scrittura di chiusura del debito " +
+						"del documento associato "+	docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+": non risulta" +
+						" movimentato nessun conto patrimoniale."));
 
-			BigDecimal saldoCreditoSplit = dettPnCreditoSplit.stream()
-					.map(Movimento_cogeBulk::getIm_movimento)
-					.reduce(BigDecimal.ZERO, BigDecimal::add);
+		//Trovo il saldo partita
+		BigDecimal saldoPartita = saldiPartita.get(cdVocePatrimoniale).getSecond();
 
-			saldoPatrimonialePartita = saldoPatrimonialePartita.subtract(saldoCreditoSplit);
+		if (saldiPartita.get(cdVocePatrimoniale).equals(Movimento_cogeBulk.SEZIONE_DARE))
+			throw new ApplicationException("Il debito verso il fornitore del documento "+
+					docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+
+					" associato al mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
+					" risulta essere nullo. Non è possibile effettuare la scrittura prima nota.");
+
+		//recupero tutti i movimenti cori split della partita per ottenere il saldo
+		Map<String, Pair<String, BigDecimal>> saldiCoriSplit = ((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, mandato.getMandato_terzo().getCd_terzo(), cdCoriIvaSplit);
+		Voce_epBulk aContoCreditoRitenuteSplit = this.findContoCreditoRitenuteSplitPayment(userContext, docamm.getEsercizio());
+
+		//Ricerco il conto patrimoniale della ritenuta split della partita recuperato da CONFIGURAZIONE_CNR
+		Optional<String> optCdVoceCoriSplit = saldiCoriSplit.keySet().stream().filter(el->el.equals(aContoCreditoRitenuteSplit.getCd_voce_ep())).findAny();
+
+		if (optCdVoceCoriSplit.isPresent()) {
+			String sezioneCoriSplit = saldiCoriSplit.get(optCdVoceCoriSplit.get()).getFirst();
+			BigDecimal saldoCoriSplit = saldiCoriSplit.get(optCdVoceCoriSplit.get()).getSecond();
+
+			//Effettuo il controllo di non sfondamento
+			if (sezioneCoriSplit.equals(Movimento_cogeBulk.SEZIONE_AVERE) && saldoCoriSplit.compareTo(BigDecimal.ZERO)>=0)
+				throw new ApplicationException("Il credito split payment verso il fornitore del documento "+
+						docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+
+						" associato al mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
+						" risulta essere nullo. Non è possibile effettuare la scrittura prima nota.");
+
+			if (sezioneCoriSplit.equals(Movimento_cogeBulk.SEZIONE_DARE) && saldoCoriSplit.compareTo(imRitenuteRigheMandato)<0)
+				throw new ApplicationException("Il credito split payment verso il fornitore del documento "+
+						docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+
+						" associato al mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
+						" risulta essere inferiore ("+ new it.cnr.contab.util.EuroFormat().format(saldoCoriSplit) +
+						" ) rispetto alle ritenute presenti sul mandato ("+ new it.cnr.contab.util.EuroFormat().format(imRitenuteRigheMandato)+").");
+
+			//Trovo il saldo cori
+			saldoPartita = saldoPartita.subtract(saldoCoriSplit);
 		}
 
-		if (imNettoRigaMandato.compareTo(saldoPatrimonialePartita)!=0)
-			throw new ApplicationException("L'importo netto ("+ new it.cnr.contab.util.EuroFormat().format(imNettoRigaMandato) +
-					") della riga del mandato "+rigaMandato.getEsercizio()+"/"+rigaMandato.getCd_cds()+"/"+rigaMandato.getPg_mandato()+
-					" è diverso dal saldo fornitore ("+ new it.cnr.contab.util.EuroFormat().format(saldoPatrimonialePartita) + ") del documento associato "+
-					partita.getCd_tipo_doc()+"/"+partita.getEsercizio()+"/"+partita.getCd_uo()+"/"+partita.getPg_doc()+".");
+		//Effettuo il controllo di non sfondamento
+		if (imNettoRigheMandato.compareTo(saldoPartita)!=0)
+			throw new ApplicationException("L'importo netto ("+ new it.cnr.contab.util.EuroFormat().format(imNettoRigheMandato) +
+					") delle righe del mandato "+mandato.getEsercizio()+"/"+mandato.getCd_cds()+"/"+mandato.getPg_mandato()+
+					" è maggiore dal saldo fornitore ("+ new it.cnr.contab.util.EuroFormat().format(saldoPartita) + ") del documento associato "+
+					docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+".");
 
-		//Chiudo i conti patrimoniali
-		dettPnPatrimonialePartita.stream().forEach(dettPN->
-			testataPrimaNota.addDettaglio(dettPN.getTi_riga(), Movimento_cogeBulk.getControSezione(dettPN.getSezione()), dettPN.getCd_voce_ep(), dettPN.getIm_movimento(), partita, dettPN.getCd_terzo(), null)
-		);
 
-		//Chiudo i conti ritenute
-		dettPnCreditoSplit.stream().forEach(dettPN->
-			testataPrimaNota.addDettaglio(dettPN.getTi_riga(), Movimento_cogeBulk.getControSezione(dettPN.getSezione()), dettPN.getCd_voce_ep(), dettPN.getIm_movimento(), partita, dettPN.getCd_terzo(), dettPN.getCd_contributo_ritenuta())
-		);
-
-		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), partita.getTipoDocumentoEnum().getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoRigaMandato);
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, imNettoRigheMandato, docamm, mandato.getMandato_terzo().getCd_terzo(), null);
+		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), imNettoRigheMandato);
+		optCdVoceCoriSplit.ifPresent(CdVoceCoriSplit->{
+			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, imRitenuteRigheMandato, docamm, mandato.getMandato_terzo().getCd_terzo(), null);
+			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, optCdVoceCoriSplit.get(), imRitenuteRigheMandato, docamm, mandato.getMandato_terzo().getCd_terzo(), cdCoriIvaSplit);
+		});
 	}
 
 	private void addDettagliPrimaNotaReversaleDocumentiVari(UserContext userContext, TestataPrimaNota testataPrimaNota, Reversale_rigaBulk rigaReversale) throws ComponentException, PersistencyException, RemoteException {

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -130,34 +131,60 @@ public class Movimento_cogeHome extends BulkHome {
 
 	}
 
-	public Collection<Movimento_cogeBulk> getMovimentiPartita(IDocumentoCogeBulk documentoCoge, Integer cdTerzo) throws PersistencyException {
+	public List<Movimento_cogeBulk> getMovimentiPartita(IDocumentoAmministrativoBulk docamm, Integer cdTerzo) throws PersistencyException {
 		SQLBuilder sql = this.createSQLBuilder();
-		sql.addClause(FindClause.AND,"esercizio_documento",SQLBuilder.EQUALS, documentoCoge.getEsercizio() );
-		sql.addClause(FindClause.AND,"cd_cds_documento",SQLBuilder.EQUALS, documentoCoge.getCd_cds() );
-		sql.addClause(FindClause.AND,"cd_uo_documento",SQLBuilder.EQUALS, documentoCoge.getCd_uo() );
-		sql.addClause(FindClause.AND,"pg_numero_documento",SQLBuilder.EQUALS, documentoCoge.getPg_doc() );
-		sql.addClause(FindClause.AND,"cd_tipo_documento",SQLBuilder.EQUALS, documentoCoge.getCd_tipo_doc() );
+		sql.addClause(FindClause.AND,"esercizio_documento",SQLBuilder.EQUALS, docamm.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds_documento",SQLBuilder.EQUALS, docamm.getCd_cds() );
+		sql.addClause(FindClause.AND,"cd_uo_documento",SQLBuilder.EQUALS, docamm.getCd_uo() );
+		sql.addClause(FindClause.AND,"pg_numero_documento",SQLBuilder.EQUALS, docamm.getPg_doc() );
+		sql.addClause(FindClause.AND,"cd_tipo_documento",SQLBuilder.EQUALS, docamm.getCd_tipo_doc() );
 		sql.addClause(FindClause.AND,"cd_terzo",SQLBuilder.EQUALS, cdTerzo );
 		sql.addClause(FindClause.AND,"cd_contributo_ritenuta",SQLBuilder.ISNULL, null );
 		return this.fetchAll(sql);
 	}
 
-	public Collection<Movimento_cogeBulk> getMovimentiCori(IDocumentoCogeBulk documentoCoge, Integer cdTerzo, String cdCori) throws PersistencyException {
+	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiPartita(IDocumentoAmministrativoBulk docamm, Integer cdTerzo) throws PersistencyException {
+		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
+
+		Collection<Movimento_cogeBulk> allMovimentiCoge = this.getMovimentiPartita(docamm, cdTerzo);
+
+		Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream().collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
+
+		mapVoceEp.keySet().forEach(cdVoceEp->{
+			List<Movimento_cogeBulk> movimentiList = mapVoceEp.get(cdVoceEp);
+			BigDecimal totaleDare = movimentiList.stream()
+					.filter(Movimento_cogeBulk::isSezioneDare)
+					.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			BigDecimal totaleAvere = movimentiList.stream()
+					.filter(Movimento_cogeBulk::isSezioneAvere)
+					.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			BigDecimal saldo = totaleDare.subtract(totaleAvere);
+			if (saldo.compareTo(BigDecimal.ZERO)>=0)
+				result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_DARE, saldo));
+			else
+				result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_AVERE, saldo.abs()));
+		});
+		return result;
+	}
+
+	public List<Movimento_cogeBulk> getMovimentiCori(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, String cdCori) throws PersistencyException {
 		SQLBuilder sql = this.createSQLBuilder();
-		sql.addClause(FindClause.AND,"esercizio_documento",SQLBuilder.EQUALS, documentoCoge.getEsercizio() );
-		sql.addClause(FindClause.AND,"cd_cds_documento",SQLBuilder.EQUALS, documentoCoge.getCd_cds() );
-		sql.addClause(FindClause.AND,"cd_uo_documento",SQLBuilder.EQUALS, documentoCoge.getCd_uo() );
-		sql.addClause(FindClause.AND,"pg_numero_documento",SQLBuilder.EQUALS, documentoCoge.getPg_doc() );
-		sql.addClause(FindClause.AND,"cd_tipo_documento",SQLBuilder.EQUALS, documentoCoge.getCd_tipo_doc() );
+		sql.addClause(FindClause.AND,"esercizio_documento",SQLBuilder.EQUALS, docamm.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds_documento",SQLBuilder.EQUALS, docamm.getCd_cds() );
+		sql.addClause(FindClause.AND,"cd_uo_documento",SQLBuilder.EQUALS, docamm.getCd_uo() );
+		sql.addClause(FindClause.AND,"pg_numero_documento",SQLBuilder.EQUALS, docamm.getPg_doc() );
+		sql.addClause(FindClause.AND,"cd_tipo_documento",SQLBuilder.EQUALS, docamm.getCd_tipo_doc() );
 		sql.addClause(FindClause.AND,"cd_terzo",SQLBuilder.EQUALS, cdTerzo );
 		sql.addClause(FindClause.AND,"cd_contributo_ritenuta",SQLBuilder.EQUALS, cdCori );
 		return this.fetchAll(sql);
 	}
 
-	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(IDocumentoCogeBulk documentoCoge, Integer cdTerzo, String cdCori) throws PersistencyException {
+	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, String cdCori) throws PersistencyException {
 		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
 
-		Collection<Movimento_cogeBulk> allMovimentiCoge = getMovimentiCori(documentoCoge, cdTerzo, cdCori);
+		Collection<Movimento_cogeBulk> allMovimentiCoge = getMovimentiCori(docamm, cdTerzo, cdCori);
 
 		Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream().collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
 
