@@ -2538,18 +2538,20 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		List<Movimento_cogeBulk> dettPnCreditoSplit = Collections.emptyList();
 
 		//Cerco il saldo della partita data dal totale dei movimenti patrimoniali
-		BigDecimal saldoPatrimonialePartita = BigDecimal.valueOf(dettPnPatrimonialePartita.stream()
-						.mapToDouble(el->el.getIm_movimento().doubleValue())
-						.sum());
+		BigDecimal saldoPatrimonialePartita = dettPnPatrimonialePartita.stream()
+				.map(Movimento_cogeBulk::getIm_movimento)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		//E se si tratta di documenti amministrativi, ridotto della quota carico split da trattenere
 		if (partita instanceof Documento_amministrativo_passivoBulk || partita instanceof Documento_amministrativo_attivoBulk) {
 			dettPnCreditoSplit = movimenti.stream().filter(el->el.getSezione().equals(partita.getTipoDocumentoEnum().getSezioneEconomica()))
 					.filter(el->Movimento_cogeBulk.TipoRiga.CREDITO.value().equals(el.getTi_riga())).collect(Collectors.toList());
 
-			saldoPatrimonialePartita = saldoPatrimonialePartita.subtract(BigDecimal.valueOf(dettPnCreditoSplit.stream()
-				.mapToDouble(el->el.getIm_movimento().doubleValue())
-				.sum()));
+			BigDecimal saldoCreditoSplit = dettPnCreditoSplit.stream()
+					.map(Movimento_cogeBulk::getIm_movimento)
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			saldoPatrimonialePartita = saldoPatrimonialePartita.subtract(saldoCreditoSplit);
 		}
 
 		if (imNettoRigaMandato.compareTo(saldoPatrimonialePartita)!=0)
