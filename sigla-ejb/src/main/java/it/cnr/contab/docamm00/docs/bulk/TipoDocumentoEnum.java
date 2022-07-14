@@ -152,7 +152,8 @@ public enum TipoDocumentoEnum {
 	 * @return true se il tipo di documento è passivo (amministrativo o generico)
 	 */
 	public boolean isDocumentoPassivo() {
-		return this.isDocumentoAmministrativoPassivo() || this.isDocumentoGenericoPassivo();
+		return this.isDocumentoAmministrativoPassivo() || this.isDocumentoGenericoPassivo() ||
+				this.isAnticipo() || this.isMissione() || this.isCompenso();
 	}
 
 	/**

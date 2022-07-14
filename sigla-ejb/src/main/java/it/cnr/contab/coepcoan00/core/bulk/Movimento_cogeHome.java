@@ -26,6 +26,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_generico_passivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -148,7 +151,12 @@ public class Movimento_cogeHome extends BulkHome {
 
 		Collection<Movimento_cogeBulk> allMovimentiCoge = this.getMovimentiPartita(docamm, cdTerzo);
 
-		Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream().collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
+		Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream()
+				.filter(el->
+						(docamm.getTipoDocumentoEnum().isDocumentoPassivo() && el.getTi_riga().equals(Movimento_cogeBulk.TipoRiga.DEBITO.value())) ||
+						(docamm.getTipoDocumentoEnum().isDocumentoAttivo() && el.getTi_riga().equals(Movimento_cogeBulk.TipoRiga.CREDITO.value()))
+				)
+				.collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
 
 		mapVoceEp.keySet().forEach(cdVoceEp->{
 			List<Movimento_cogeBulk> movimentiList = mapVoceEp.get(cdVoceEp);
