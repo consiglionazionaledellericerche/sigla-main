@@ -2667,7 +2667,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					" movimentato nessun conto patrimoniale.");
 		else if (saldiPartita.keySet().size() == 1) {
 			String cdVocePatrimoniale = saldiPartita.keySet().stream().findAny().orElse(null);
-			contiPatrimonialiDaChiudere.put(cdVocePatrimoniale, Pair.of(Movimento_cogeBulk.SEZIONE_DARE, Pair.of(imLordoRigheMandato,imRitenuteRigheMandato)));
+			BigDecimal imponibile = imLordoRigheMandato.subtract(imRitenuteRigheMandato);
+			BigDecimal imposta = imRitenuteRigheMandato;
+			contiPatrimonialiDaChiudere.put(cdVocePatrimoniale, Pair.of(Movimento_cogeBulk.SEZIONE_DARE, Pair.of(imponibile,imposta)));
 		} else {
 			List<IDocumentoAmministrativoRigaBulk> righeDocamm = this.getRigheDocamm(userContext, docamm);
 
@@ -2678,10 +2680,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						ObbligazioneBulk obbligazioneDB = (ObbligazioneBulk) obbligazionehome.findByPrimaryKey(
 								new ObbligazioneBulk(el.getMandatoRiga().getCd_cds(), el.getMandatoRiga().getEsercizio_obbligazione(),
 										el.getMandatoRiga().getEsercizio_ori_obbligazione(), el.getMandatoRiga().getPg_obbligazione()));
-						BigDecimal imImponibile = el.getDocammRighe().stream().filter(el2->Optional.ofNullable(el2.getIm_imponibile()).isPresent()).map(IDocumentoAmministrativoRigaBulk::getIm_imponibile).reduce(BigDecimal.ZERO, BigDecimal::add);
-						BigDecimal imIva = el.getDocammRighe().stream().filter(el2->Optional.ofNullable(el2.getIm_iva()).isPresent()).map(IDocumentoAmministrativoRigaBulk::getIm_iva).reduce(BigDecimal.ZERO, BigDecimal::add);
+						BigDecimal imponibile = el.getDocammRighe().stream().filter(el2->Optional.ofNullable(el2.getIm_imponibile()).isPresent()).map(IDocumentoAmministrativoRigaBulk::getIm_imponibile).reduce(BigDecimal.ZERO, BigDecimal::add);
+						BigDecimal imposta = el.getDocammRighe().stream().filter(el2->Optional.ofNullable(el2.getIm_iva()).isPresent()).map(IDocumentoAmministrativoRigaBulk::getIm_iva).reduce(BigDecimal.ZERO, BigDecimal::add);
 						return new DettaglioFinanziario(docamm, cdTerzoDocAmm, obbligazioneDB.getElemento_voce(), null, null,
-								imImponibile, imIva);
+								imponibile, imposta);
 					} catch (ComponentException | PersistencyException e) {
 						throw new ApplicationRuntimeException(e);
 					}
@@ -2754,15 +2756,17 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					docamm.getCd_tipo_doc()+"/"+docamm.getEsercizio()+"/"+docamm.getCd_uo()+"/"+docamm.getPg_doc()+".");
 
 		contiPatrimonialiDaChiudere.keySet().forEach(cdVocePatrimoniale->{
-			BigDecimal importoLordoMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getFirst();
-			BigDecimal importoRitenuteMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getSecond();
-			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, importoLordoMandato.subtract(importoRitenuteMandato), docamm, cdTerzoDocAmm, null);
+			BigDecimal imponibileConto = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getFirst();
+			BigDecimal impostaConto = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getSecond();
+			BigDecimal importoLordoConto = imponibileConto.add(impostaConto);
+			BigDecimal importoNettoConto = importoLordoConto.subtract(impostaConto);
+			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, importoNettoConto, docamm, cdTerzoDocAmm, null);
 		});
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), imNettoRigheMandato);
 		optCdVoceCoriSplit.ifPresent(CdVoceCoriSplit->{
 			contiPatrimonialiDaChiudere.keySet().forEach(cdVocePatrimoniale->{
-				BigDecimal importoRitenuteMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getSecond();
-				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, importoRitenuteMandato, docamm, cdTerzoDocAmm, null);
+				BigDecimal impostaConto = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getSecond();
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, impostaConto, docamm, cdTerzoDocAmm, null);
 			});
 			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, optCdVoceCoriSplit.get(), imRitenuteRigheMandato, docamm, cdTerzoDocAmm, cdCoriIvaSplit);
 		});
