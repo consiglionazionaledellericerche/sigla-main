@@ -56,17 +56,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                         .filter(Scrittura_partita_doppiaHome.class::isInstance)
                         .map(Scrittura_partita_doppiaHome.class::cast)
                         .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(documentoCogeBulk);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                }
+                scritturaOpt = partitaDoppiaHome.getScrittura(userContext, documentoCogeBulk);
             }
             return scritturaOpt;
-        } catch (PersistencyException | ComponentException | RemoteException e) {
+        } catch (ComponentException | RemoteException e) {
             throw handleException((OggettoBulk) documentoCogeBulk, e);
         }
     }

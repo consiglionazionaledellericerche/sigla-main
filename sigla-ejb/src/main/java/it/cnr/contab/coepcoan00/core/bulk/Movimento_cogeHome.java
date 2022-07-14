@@ -19,20 +19,14 @@ package it.cnr.contab.coepcoan00.core.bulk;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_generico_passivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 import org.springframework.data.util.Pair;
 
@@ -59,9 +53,9 @@ public class Movimento_cogeHome extends BulkHome {
 	}
 	/**
 	 * Imposta il pg_movimento di un oggetto <code>Movimento_cogeBulk</code>.
-	 * @param userContext
+	 * @param userContext userContext
 	 * @param bulk <code>Movimento_cogeBulk</code>
-	 * @exception PersistencyException
+	 * @exception PersistencyException PersistencyException
 	*/
 
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk bulk) throws PersistencyException
@@ -103,9 +97,9 @@ public class Movimento_cogeHome extends BulkHome {
 				try
 				{
 					if(rs.next())
-						x = new Long(rs.getLong(1) + 1);
+						x = rs.getLong(1) + 1;
 					else
-						x = new Long(0);
+						x = 0L;
 				}
 				catch( SQLException e )
 				{
@@ -113,7 +107,7 @@ public class Movimento_cogeHome extends BulkHome {
 				}
 				finally
 				{
-					try{rs.close();}catch( java.sql.SQLException e ){};
+					try{rs.close();}catch( java.sql.SQLException e ){}
 				}
 			}
 			catch( SQLException e )
@@ -122,7 +116,7 @@ public class Movimento_cogeHome extends BulkHome {
 			}
 			finally
 			{
-				try{ps.close();}catch( java.sql.SQLException e ){};
+				try{ps.close();}catch( java.sql.SQLException e ){}
 			}
 
 			mov.setPg_movimento( x );
@@ -134,7 +128,7 @@ public class Movimento_cogeHome extends BulkHome {
 
 	}
 
-	public List<Movimento_cogeBulk> getMovimentiPartita(IDocumentoAmministrativoBulk docamm, Integer cdTerzo) throws PersistencyException {
+	public List<Movimento_cogeBulk> getMovimentiPartita(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
 		SQLBuilder sql = this.createSQLBuilder();
 		sql.addClause(FindClause.AND,"esercizio_documento",SQLBuilder.EQUALS, docamm.getEsercizio() );
 		sql.addClause(FindClause.AND,"cd_cds_documento",SQLBuilder.EQUALS, docamm.getCd_cds() );
@@ -143,13 +137,17 @@ public class Movimento_cogeHome extends BulkHome {
 		sql.addClause(FindClause.AND,"cd_tipo_documento",SQLBuilder.EQUALS, docamm.getCd_tipo_doc() );
 		sql.addClause(FindClause.AND,"cd_terzo",SQLBuilder.EQUALS, cdTerzo );
 		sql.addClause(FindClause.AND,"cd_contributo_ritenuta",SQLBuilder.ISNULL, null );
-		return this.fetchAll(sql);
+		List<Movimento_cogeBulk> allMovimentiCoge = this.fetchAll(sql);
+
+		if (scritturaToExclude.isPresent())
+			return allMovimentiCoge.stream().filter(el->!el.getScrittura().equalsByPrimaryKey(scritturaToExclude.get())).collect(Collectors.toList());
+		return allMovimentiCoge;
 	}
 
-	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiPartita(IDocumentoAmministrativoBulk docamm, Integer cdTerzo) throws PersistencyException {
+	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiPartita(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
 		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
 
-		Collection<Movimento_cogeBulk> allMovimentiCoge = this.getMovimentiPartita(docamm, cdTerzo);
+		Collection<Movimento_cogeBulk> allMovimentiCoge = this.getMovimentiPartita(docamm, cdTerzo, scritturaToExclude);
 
 		Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream()
 				.filter(el->
@@ -177,7 +175,7 @@ public class Movimento_cogeHome extends BulkHome {
 		return result;
 	}
 
-	public List<Movimento_cogeBulk> getMovimentiCori(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, String cdCori) throws PersistencyException {
+	public List<Movimento_cogeBulk> getMovimentiCori(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
 		SQLBuilder sql = this.createSQLBuilder();
 		sql.addClause(FindClause.AND,"esercizio_documento",SQLBuilder.EQUALS, docamm.getEsercizio() );
 		sql.addClause(FindClause.AND,"cd_cds_documento",SQLBuilder.EQUALS, docamm.getCd_cds() );
@@ -186,13 +184,18 @@ public class Movimento_cogeHome extends BulkHome {
 		sql.addClause(FindClause.AND,"cd_tipo_documento",SQLBuilder.EQUALS, docamm.getCd_tipo_doc() );
 		sql.addClause(FindClause.AND,"cd_terzo",SQLBuilder.EQUALS, cdTerzo );
 		sql.addClause(FindClause.AND,"cd_contributo_ritenuta",SQLBuilder.EQUALS, cdCori );
-		return this.fetchAll(sql);
+
+		List<Movimento_cogeBulk> allMovimentiCoge = this.fetchAll(sql);
+
+		if (scritturaToExclude.isPresent())
+			return allMovimentiCoge.stream().filter(el->!el.getScrittura().equalsByPrimaryKey(scritturaToExclude.get())).collect(Collectors.toList());
+		return allMovimentiCoge;
 	}
 
-	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, String cdCori) throws PersistencyException {
+	public Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(IDocumentoAmministrativoBulk docamm, Integer cdTerzo, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
 		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
 
-		Collection<Movimento_cogeBulk> allMovimentiCoge = getMovimentiCori(docamm, cdTerzo, cdCori);
+		Collection<Movimento_cogeBulk> allMovimentiCoge = this.getMovimentiCori(docamm, cdTerzo, cdCori, scritturaToExclude);
 
 		Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream().collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
 
