@@ -593,4 +593,9 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	public void setDettaglioContratto(Dettaglio_contrattoBulk dettaglioContratto) {
 		this.dettaglioContratto = dettaglioContratto;
 	}
+
+	@Override
+	public TerzoBulk getTerzo() {
+		return this.getOrdineAcq().getFornitore();
+	}
 }

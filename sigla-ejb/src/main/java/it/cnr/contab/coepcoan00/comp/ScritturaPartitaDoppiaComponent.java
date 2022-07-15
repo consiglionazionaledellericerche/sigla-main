@@ -49,6 +49,7 @@ import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaVBulk;
 import it.cnr.contab.missioni00.docs.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiHome;
@@ -1483,13 +1484,25 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		List<DettaglioFinanziario> righeDettFin = this.getRigheDocamm(userContext, docamm).stream()
 				.map(rigaDocAmm->{
-					Integer cdTerzo;
+					//Attenzione: recupero il terzo dal docamm perchè sulle righe potrebbe non essere valorizzato
+					TerzoBulk terzo;
 					if (docamm instanceof Fattura_passivaBulk)
-						cdTerzo = ((Fattura_passivaBulk)docamm).getCd_terzo();
+						terzo = ((Fattura_passivaBulk) docamm).getFornitore();
 					else if (docamm instanceof Fattura_attivaBulk)
-						cdTerzo = ((Fattura_attivaBulk)docamm).getCd_terzo();
+						terzo = ((Fattura_attivaBulk)docamm).getCliente();
+					else if (docamm instanceof OrdineAcqBulk)
+						terzo = ((OrdineAcqBulk)docamm).getFornitore();
 					else
-						cdTerzo = rigaDocAmm.getCd_terzo();
+						terzo = rigaDocAmm.getTerzo();
+
+					terzo = Optional.ofNullable(terzo).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+						try {
+							TerzoHome terzohome = (TerzoHome) getHome(userContext, TerzoBulk.class);
+							return (TerzoBulk) terzohome.findByPrimaryKey(rigaDocAmm.getTerzo());
+						} catch (ComponentException | PersistencyException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					});
 
 					if (Optional.ofNullable(rigaDocAmm.getScadenzaDocumentoContabile()).filter(Obbligazione_scadenzarioBulk.class::isInstance).isPresent()) {
 						ObbligazioneBulk obbligazioneDB = Optional.of(rigaDocAmm.getScadenzaDocumentoContabile().getFather()).filter(ObbligazioneBulk.class::isInstance).map(ObbligazioneBulk.class::cast)
@@ -1514,7 +1527,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 										throw new DetailedRuntimeException(e);
 									}
 								});
-						return new DettaglioFinanziario(docamm, cdTerzo,
+						return new DettaglioFinanziario(docamm, terzo.getCd_terzo(),
 								new Elemento_voceBulk(accertamentoDB.getCd_elemento_voce(), accertamentoDB.getEsercizio(), accertamentoDB.getTi_appartenenza(), accertamentoDB.getTi_gestione()),
 								rigaDocAmm.getDt_da_competenza_coge(), rigaDocAmm.getDt_a_competenza_coge(),
 								rigaDocAmm.getIm_imponibile(), rigaDocAmm.getIm_iva());
@@ -1530,7 +1543,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 										throw new DetailedRuntimeException(e);
 									}
 								});
-						return new DettaglioFinanziario(docamm, cdTerzo,
+						return new DettaglioFinanziario(docamm, terzo.getCd_terzo(),
 								new Elemento_voceBulk(accertamentoDB.getCd_elemento_voce(), accertamentoDB.getEsercizio(), accertamentoDB.getTi_appartenenza(), accertamentoDB.getTi_gestione()),
 								rigaDocAmm.getDt_da_competenza_coge(), rigaDocAmm.getDt_a_competenza_coge(),
 								rigaDocAmm.getIm_imponibile(), rigaDocAmm.getIm_iva());
@@ -2792,19 +2805,15 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (imNettoRigheMandato.compareTo(saldoPartita)>0) {
 				contiPatrimonialiDaChiudere.keySet().forEach(cdVocePatrimoniale->{
 					BigDecimal importoLordoMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getFirst();
-					BigDecimal importoRitenuteMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getSecond();
-					BigDecimal importoNettoMandato = importoLordoMandato.subtract(importoRitenuteMandato);
 					BigDecimal saldoContoPartita = saldiPartita.get(cdVocePatrimoniale).getSecond();
-					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, cdVocePatrimoniale, importoNettoMandato.subtract(saldoContoPartita), docamm, cdTerzoDocAmm, null);
+					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, cdVocePatrimoniale, importoLordoMandato.subtract(saldoContoPartita), docamm, cdTerzoDocAmm, null);
 				});
 				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.COSTO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVoceCosto, imNettoRigheMandato.subtract(saldoPartita), null, cdTerzoDocAmm, null);
 			} else {
 				contiPatrimonialiDaChiudere.keySet().forEach(cdVocePatrimoniale->{
 					BigDecimal importoLordoMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getFirst();
-					BigDecimal importoRitenuteMandato = contiPatrimonialiDaChiudere.get(cdVocePatrimoniale).getSecond().getSecond();
-					BigDecimal importoNettoMandato = importoLordoMandato.subtract(importoRitenuteMandato);
 					BigDecimal saldoContoPartita = saldiPartita.get(cdVocePatrimoniale).getSecond();
-					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, saldoContoPartita.subtract(importoNettoMandato), docamm, cdTerzoDocAmm, null);
+					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, saldoContoPartita.subtract(importoLordoMandato), docamm, cdTerzoDocAmm, null);
 				});
 				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.COSTO.value(), Movimento_cogeBulk.SEZIONE_AVERE, cdVoceCosto, saldoPartita.subtract(imNettoRigheMandato), null, cdTerzoDocAmm, null);
 			}

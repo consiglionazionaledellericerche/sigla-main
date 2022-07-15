@@ -90,6 +90,8 @@ public interface IDocumentoAmministrativoRigaBulk {
 
 	java.lang.Integer getCd_terzo();
 
+	TerzoBulk getTerzo();
+
 	java.sql.Timestamp getDt_da_competenza_coge();
 
 	java.sql.Timestamp getDt_a_competenza_coge();

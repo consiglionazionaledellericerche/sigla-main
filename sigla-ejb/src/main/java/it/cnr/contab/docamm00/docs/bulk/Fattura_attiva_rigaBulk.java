@@ -490,4 +490,9 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	public Integer getCd_terzo() {
 		return this.getFattura_attiva().getCd_terzo();
 	}
+
+	@Override
+	public TerzoBulk getTerzo() {
+		return this.getFattura_attiva().getCliente();
+	}
 }
