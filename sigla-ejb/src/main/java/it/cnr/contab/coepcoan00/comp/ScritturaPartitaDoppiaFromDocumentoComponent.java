@@ -194,14 +194,42 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             allDocuments.addAll(docgenHome.fetchAll(sql));
         }
         {
-            PersistentHome fatattHome = getHome(userContext, Documento_amministrativo_attivoBulk.class);
+            PersistentHome fatattHome = getHome(userContext, Fattura_attiva_IBulk.class);
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
             allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
         }
         {
-            PersistentHome fatpasHome = getHome(userContext, Documento_amministrativo_passivoBulk.class);
+            PersistentHome fatattHome = getHome(userContext, Nota_di_credito_attivaBulk.class);
+            SQLBuilder sql = fatattHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatattHome = getHome(userContext, Nota_di_debito_attivaBulk.class);
+            SQLBuilder sql = fatattHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Fattura_passiva_IBulk.class);
+            SQLBuilder sql = fatpasHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Nota_di_creditoBulk.class);
+            SQLBuilder sql = fatpasHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Nota_di_debitoBulk.class);
             SQLBuilder sql = fatpasHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
@@ -221,7 +249,6 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
             allDocuments.addAll(reversaleHome.fetchAll(sql));
         }
-
         return allDocuments;
     }
     public void loadScritturePatrimoniali(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
