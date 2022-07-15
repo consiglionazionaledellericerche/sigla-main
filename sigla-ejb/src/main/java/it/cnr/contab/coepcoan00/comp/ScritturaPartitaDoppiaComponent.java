@@ -1483,17 +1483,25 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non necessaria in quanto fattura generata da compenso. La scrittura di prima nota viene creata direttamente dal compenso stesso");
 
 		List<DettaglioFinanziario> righeDettFin = this.getRigheDocamm(userContext, docamm).stream()
-				.map(rigaDocAmm->{
+				.map(rigaDocAmm-> {
 					//Attenzione: recupero il terzo dal docamm perchè sulle righe potrebbe non essere valorizzato
 					TerzoBulk terzo;
 					if (docamm instanceof Fattura_passivaBulk)
 						terzo = ((Fattura_passivaBulk) docamm).getFornitore();
 					else if (docamm instanceof Fattura_attivaBulk)
-						terzo = ((Fattura_attivaBulk)docamm).getCliente();
+						terzo = ((Fattura_attivaBulk) docamm).getCliente();
 					else if (docamm instanceof OrdineAcqBulk)
-						terzo = ((OrdineAcqBulk)docamm).getFornitore();
-					else
+						terzo = ((OrdineAcqBulk) docamm).getFornitore();
+					else {
 						terzo = rigaDocAmm.getTerzo();
+						if (TipoDocumentoEnum.fromValue(docamm.getCd_tipo_doc()).isDocumentoGenericoAttivo()) {
+							((Documento_genericoBulk) docamm).setTi_entrate_spese(Documento_genericoBulk.ENTRATE);
+							((Documento_generico_rigaBulk) rigaDocAmm).setDocumento_generico((Documento_genericoBulk)docamm);
+						} else if (TipoDocumentoEnum.fromValue(docamm.getCd_tipo_doc()).isDocumentoGenericoPassivo()) {
+							((Documento_genericoBulk) docamm).setTi_entrate_spese(Documento_genericoBulk.SPESE);
+							((Documento_generico_rigaBulk) rigaDocAmm).setDocumento_generico((Documento_genericoBulk)docamm);
+						}
+					}
 
 					if (Optional.ofNullable(rigaDocAmm.getScadenzaDocumentoContabile()).filter(Obbligazione_scadenzarioBulk.class::isInstance).isPresent()) {
 						ObbligazioneBulk obbligazioneDB = Optional.of(rigaDocAmm.getScadenzaDocumentoContabile().getFather()).filter(ObbligazioneBulk.class::isInstance).map(ObbligazioneBulk.class::cast)
