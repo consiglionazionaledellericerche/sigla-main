@@ -1495,15 +1495,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					else
 						terzo = rigaDocAmm.getTerzo();
 
-					terzo = Optional.ofNullable(terzo).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
-						try {
-							TerzoHome terzohome = (TerzoHome) getHome(userContext, TerzoBulk.class);
-							return (TerzoBulk) terzohome.findByPrimaryKey(rigaDocAmm.getTerzo());
-						} catch (ComponentException | PersistencyException e) {
-							throw new DetailedRuntimeException(e);
-						}
-					});
-
 					if (Optional.ofNullable(rigaDocAmm.getScadenzaDocumentoContabile()).filter(Obbligazione_scadenzarioBulk.class::isInstance).isPresent()) {
 						ObbligazioneBulk obbligazioneDB = Optional.of(rigaDocAmm.getScadenzaDocumentoContabile().getFather()).filter(ObbligazioneBulk.class::isInstance).map(ObbligazioneBulk.class::cast)
 								.filter(el -> el.getCd_elemento_voce() != null).orElseGet(() -> {
