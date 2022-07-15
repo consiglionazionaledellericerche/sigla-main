@@ -2819,8 +2819,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		//La partita non deve essere registrata in caso di versamento ritenute
 		IDocumentoCogeBulk partita;
-		if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isGenericoEntrata())
+		if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isDocumentoGenericoAttivo())
 			partita = (Documento_generico_attivoBulk) getHome(userContext, Documento_generico_attivoBulk.class).findByPrimaryKey(new Documento_generico_attivoBulk(rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_tipo_documento_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm()));
+		else if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isFatturaAttiva())
+			partita = (Fattura_attiva_IBulk) getHome(userContext, Fattura_attiva_IBulk.class).findByPrimaryKey(new Fattura_attiva_IBulk(rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm()));
+		else if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isNotaCreditoAttiva())
+			partita = (Nota_di_credito_attivaBulk) getHome(userContext, Nota_di_credito_attivaBulk.class).findByPrimaryKey(new Nota_di_credito_attivaBulk(rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm()));
+		else if (TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()).isNotaDebitoAttiva())
+			partita = (Nota_di_debito_attivaBulk) getHome(userContext, Nota_di_debito_attivaBulk.class).findByPrimaryKey(new Nota_di_debito_attivaBulk(rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm()));
 		else
 			partita = new Partita(rigaReversale.getCd_tipo_documento_amm(), rigaReversale.getCd_cds_doc_amm(), rigaReversale.getCd_uo_doc_amm(), rigaReversale.getEsercizio_doc_amm(), rigaReversale.getPg_doc_amm(),
 				rigaReversale.getCd_terzo(), TipoDocumentoEnum.fromValue(rigaReversale.getCd_tipo_documento_amm()));
