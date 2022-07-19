@@ -3352,4 +3352,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
     }
+
+    public boolean isIstituzionale() {
+        return TipoIVA.ISTITUZIONALE.value().equals(this.getTi_istituz_commerc());
+    }
 }

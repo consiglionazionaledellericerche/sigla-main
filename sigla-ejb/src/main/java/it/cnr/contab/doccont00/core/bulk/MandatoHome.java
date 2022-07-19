@@ -131,7 +131,9 @@ public abstract class MandatoHome extends BulkHome {
      * @throws PersistencyException
      * @throws IntrospectionException
      */
-    public abstract Collection findMandato_riga(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException;
+    public abstract Collection findMandato_riga(UserContext userContext, MandatoBulk mandato) throws PersistencyException;
+
+    public abstract Collection findMandato_riga(UserContext userContext, MandatoBulk mandato, boolean fetchAll) throws PersistencyException;
 
     /**
      * <!-- @TODO: da completare -->
@@ -141,7 +143,9 @@ public abstract class MandatoHome extends BulkHome {
      * @throws PersistencyException
      * @throws IntrospectionException
      */
-    public abstract Mandato_terzoBulk findMandato_terzo(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException;
+    public abstract Mandato_terzoBulk findMandato_terzo(UserContext userContext, MandatoBulk mandato) throws PersistencyException;
+
+    public abstract Mandato_terzoBulk findMandato_terzo(UserContext userContext, MandatoBulk mandato, boolean fetchAll) throws PersistencyException;
 
     /**
      * Metodo per cercare i sospesi associati al mandato.
@@ -172,7 +176,7 @@ public abstract class MandatoHome extends BulkHome {
     /**
      * Imposta il pg_mandato di un oggetto <code>MandatoBulk</code>.
      *
-     * @param mandato <code>OggettoBulkBulk</code>
+     * @param bulk <code>OggettoBulkBulk</code>
      * @throws PersistencyException
      */
 

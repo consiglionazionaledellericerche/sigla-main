@@ -26,6 +26,8 @@ import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import java.rmi.RemoteException;
 
 @Stateless(name = "CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaComponentSession")
