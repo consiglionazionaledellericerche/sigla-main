@@ -42,7 +42,10 @@ import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,10 +63,12 @@ public class SIOPEPlusTest extends DeploymentsOracle {
     public void testMandatoFlusso() throws Exception {
         final CNRUserContext testUserContext = new CNRUserContext();
         final CompoundFindClause compoundFindClause = new CompoundFindClause();
-        compoundFindClause.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, LocalDate.now().getYear() - 1);
+        compoundFindClause.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, LocalDate.now().getYear());
         compoundFindClause.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
-        compoundFindClause.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
-        compoundFindClause.addClause(FindClause.AND, "pg_documento_cont", SQLBuilder.LESS_EQUALS, 10000);
+        compoundFindClause.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.ISNOTNULL, null);
+        compoundFindClause.addClause(FindClause.AND, "dt_emissione", SQLBuilder.GREATER_EQUALS,
+                Timestamp.valueOf(LocalDateTime.now().minusWeeks(3))
+        );
 
         BulkLoaderIterator remoteIterator =
                 Optional.ofNullable(crudComponentSession.cerca(
@@ -83,6 +88,8 @@ public class SIOPEPlusTest extends DeploymentsOracle {
                                         .filter(V_mandato_reversaleBulk.class::isInstance)
                                         .map(V_mandato_reversaleBulk.class::cast)
                                         .orElseThrow(() -> new DetailedRuntimeException("Cannot find element"));
+                                if (bulk.getDs_documento_cont().startsWith("Mandato di versamento CORI") || bulk.getDs_documento_cont().contains("F24EP"))
+                                    continue;
                                 logger.info("Mandato {}/{}/{}/{}", bulk.getEsercizio(), bulk.getCd_cds(), bulk.getCd_tipo_documento_cont(), bulk.getPg_documento_cont());
                                 final Mandato mandato = distintaCassiereComponentSession.creaMandatoFlussoSiopeplus(testUserContext, bulk);
                                 assertEquals(
@@ -96,6 +103,16 @@ public class SIOPEPlusTest extends DeploymentsOracle {
                                         bulk.getIm_documento_cont().setScale(2, RoundingMode.HALF_UP),
                                         mandato.getImportoMandato().setScale(2, RoundingMode.HALF_UP)
                                 );
+                                assertEquals(mandato.getImportoMandato().setScale(2, RoundingMode.HALF_UP),
+                                mandato
+                                        .getInformazioniBeneficiario()
+                                        .stream()
+                                        .map(Mandato.InformazioniBeneficiario::getClassificazione)
+                                        .collect(Collectors.toList())
+                                        .stream()
+                                        .flatMap(List::stream)
+                                        .map(classificazione -> classificazione.getImporto())
+                                        .reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, RoundingMode.HALF_UP));
                             } catch (ComponentException | RemoteException e) {
                                 if (e.getMessage().contains("CIG")) {
                                     logger.error(e.getMessage());
