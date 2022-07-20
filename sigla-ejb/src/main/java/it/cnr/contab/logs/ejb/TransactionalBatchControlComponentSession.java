@@ -554,7 +554,7 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
     {
         try
         {
-            return (OggettoBulk)invoke("creaBulkRequiresNew", new Object[] {
+            return (OggettoBulk)invoke("creaConBulkRequiresNew", new Object[] {
                     usercontext, oggettoBulk
             });
         }
@@ -579,4 +579,33 @@ public class TransactionalBatchControlComponentSession extends it.cnr.jada.ejb.T
         }
     }
 
+    public OggettoBulk modificaConBulkRequiresNew(UserContext usercontext, OggettoBulk oggettoBulk)
+            throws RemoteException, ComponentException
+    {
+        try
+        {
+            return (OggettoBulk)invoke("modificaConBulkRequiresNew", new Object[] {
+                    usercontext, oggettoBulk
+            });
+        }
+        catch(RemoteException remoteexception)
+        {
+            throw remoteexception;
+        }
+        catch(InvocationTargetException invocationtargetexception)
+        {
+            try
+            {
+                throw invocationtargetexception.getTargetException();
+            }
+            catch(ComponentException componentexception)
+            {
+                throw componentexception;
+            }
+            catch(Throwable throwable)
+            {
+                throw new RemoteException("Uncaugth exception", throwable);
+            }
+        }
+    }
 }

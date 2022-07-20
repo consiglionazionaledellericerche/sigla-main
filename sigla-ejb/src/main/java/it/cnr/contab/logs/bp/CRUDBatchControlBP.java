@@ -17,12 +17,24 @@
 
 package it.cnr.contab.logs.bp;
 
+import it.cnr.contab.coepcoan00.ejb.AsyncScritturaPartitaDoppiaFromDocumentoComponentSession;
+import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaFromDocumentoComponentSession;
+import it.cnr.contab.logs.bulk.Batch_controlBulk;
+import it.cnr.contab.logs.bulk.Batch_procedura_parametroBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.jsp.Button;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 
 public class CRUDBatchControlBP extends SimpleCRUDBP
 {
@@ -60,4 +72,30 @@ public class CRUDBatchControlBP extends SimpleCRUDBP
     }
 
     private final SimpleDetailCRUDController parametri;
+
+    @Override
+    public void save(ActionContext actioncontext) throws ValidationException, BusinessProcessException {
+        try {
+            Batch_controlBulk batch_controlbulk = (Batch_controlBulk) this.getModel();
+            if (batch_controlbulk.getProcedura().isProceduraJava() && "REGISTRACOGECOANJAVA".equals(batch_controlbulk.getProcedura().getCd_procedura())) {
+                AsyncScritturaPartitaDoppiaFromDocumentoComponentSession component = Utility.createAsyncScritturaPartitaDoppiaFromDocumentoComponentSession();
+                BigDecimal esercizio = batch_controlbulk.getParametri().stream()
+                        .filter(el->el.getNome_parametro().equals("AES"))
+                        .findAny()
+                        .map(Batch_procedura_parametroBulk::getValore_number)
+                        .orElseThrow(()->new ValidationException("Valorizzare il parametro Esercizio!"));
+
+                String cdcds = batch_controlbulk.getParametri().stream()
+                        .filter(el->el.getNome_parametro().equals("ACDCDS"))
+                        .findAny()
+                        .map(Batch_procedura_parametroBulk::getValore_varchar)
+                        .orElseThrow(()->new ValidationException("Valorizzare il parametro Centro di Spesa!"));
+
+                component.asyncLoadScritturePatrimoniali(actioncontext.getUserContext(), esercizio.intValue(), cdcds);
+            }
+            super.save(actioncontext);
+        } catch (ComponentException | PersistencyException | RemoteException e){
+            throw handleException(e);
+        }
+    }
 }

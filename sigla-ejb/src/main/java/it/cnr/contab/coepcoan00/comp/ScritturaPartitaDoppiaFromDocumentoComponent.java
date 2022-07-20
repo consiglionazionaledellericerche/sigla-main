@@ -21,9 +21,7 @@ import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
@@ -33,7 +31,6 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.NoRollbackException;
@@ -59,17 +56,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                         .filter(Scrittura_partita_doppiaHome.class::isInstance)
                         .map(Scrittura_partita_doppiaHome.class::cast)
                         .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
-                scritturaOpt = partitaDoppiaHome.findByDocumentoAmministrativo(documentoCogeBulk);
-                if (scritturaOpt.isPresent()) {
-                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(((Scrittura_partita_doppiaHome) getHome(userContext, scrittura.getClass()))
-                            .findMovimentiAvereColl(userContext, scrittura)));
-                }
+                scritturaOpt = partitaDoppiaHome.getScrittura(userContext, documentoCogeBulk);
             }
             return scritturaOpt;
-        } catch (PersistencyException | ComponentException | RemoteException e) {
+        } catch (ComponentException | RemoteException e) {
             throw handleException((OggettoBulk) documentoCogeBulk, e);
         }
     }
@@ -91,10 +81,16 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                                 optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isReversale()
                 )){
                     if (Utility.createConfigurazioneCnrComponentSession().isBloccoScrittureProposte(usercontext)) {
+                        Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
+                        try {
+                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                                                .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                        } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
+                        }
+
+                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
                         final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(usercontext, optionalIDocumentoCogeBulk.get());
-                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk =
-                                Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                        .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
                         optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
                             //Elimino vecchia scrittura
                             try {
@@ -127,9 +123,13 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                                 super.modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
                             }
                         } else {
-                            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk =
-                                    Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                            .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                            Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk;
+                            try {
+                                optionalScritturaPartitaDoppiaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                                        .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                            } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                                optionalScritturaPartitaDoppiaBulk = Optional.empty();
+                            }
                             if (optionalScritturaPartitaDoppiaBulk.isPresent()) {
                                 super.creaConBulk(usercontext, optionalScritturaPartitaDoppiaBulk.get());
                             }
@@ -194,14 +194,42 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             allDocuments.addAll(docgenHome.fetchAll(sql));
         }
         {
-            PersistentHome fatattHome = getHome(userContext, Documento_amministrativo_attivoBulk.class);
+            PersistentHome fatattHome = getHome(userContext, Fattura_attiva_IBulk.class);
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
-            allDocuments.addAll(fatattHome.fetchAll(sql));
+            allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
         }
         {
-            PersistentHome fatpasHome = getHome(userContext, Documento_amministrativo_passivoBulk.class);
+            PersistentHome fatattHome = getHome(userContext, Nota_di_credito_attivaBulk.class);
+            SQLBuilder sql = fatattHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatattHome = getHome(userContext, Nota_di_debito_attivaBulk.class);
+            SQLBuilder sql = fatattHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Fattura_passiva_IBulk.class);
+            SQLBuilder sql = fatpasHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Nota_di_creditoBulk.class);
+            SQLBuilder sql = fatpasHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
+        }
+        {
+            PersistentHome fatpasHome = getHome(userContext, Nota_di_debitoBulk.class);
             SQLBuilder sql = fatpasHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
@@ -221,38 +249,12 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
             allDocuments.addAll(reversaleHome.fetchAll(sql));
         }
-
         return allDocuments;
     }
-
-    public void loadScrittura(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
-        try {
-            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
-            if (!optionalScritturaPartitaDoppiaOldBulk.isPresent()) {
-                final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(userContext, documentoCoge));
-
-                optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
-                    //Elimino vecchia scrittura
-                    try {
-                        optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
-                        this.removeScrittura(userContext, oldScrittura);
-                    } catch (ComponentException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                });
-                //Ricreo
-                if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
-                    this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
-            }
-        } catch (RemoteException e) {
-            throw handleException(e);
-        }
-    }
-
-    public void loadScritture(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
+    public void loadScritturePatrimoniali(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
         documentiCoge.forEach(documentoCoge->{
             try {
-                this.loadScrittura(userContext, documentoCoge);
+                this.loadScritturaPatrimoniale(userContext, documentoCoge);
                 logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
             } catch (NoRollbackException e) {
                 logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
@@ -263,5 +265,42 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 throw new DetailedRuntimeException(e);
             }
         });
+    }
+    public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+        try {
+            documentoCoge.setStato_coge(Fattura_passivaBulk.NON_REGISTRATO_IN_COGE);
+
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(userContext, documentoCoge);
+
+            Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
+            try {
+                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                        .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+            } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
+                documentoCoge.setStato_coge(Fattura_passivaBulk.NON_PROCESSARE_IN_COGE);
+            }
+
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
+
+            optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
+                //Elimino vecchia scrittura
+                try {
+                    optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
+                    this.removeScrittura(userContext, oldScrittura);
+                } catch (ComponentException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+            //Ricreo
+            if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
+                this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                documentoCoge.setStato_coge(Fattura_passivaBulk.REGISTRATO_IN_COGE);
+            }
+            ((OggettoBulk)documentoCoge).setToBeUpdated();
+            updateBulk(userContext, (OggettoBulk) documentoCoge);
+        } catch (RemoteException|PersistencyException e) {
+            throw handleException(e);
+        }
     }
 }

@@ -32,13 +32,14 @@ import java.rmi.RemoteException;
 @Remote
 public interface BatchControlComponentSession extends CRUDComponentSession{
 	
-	public Batch_controlBulk attivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk) throws RemoteException, ComponentException;
+	Batch_controlBulk attivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk) throws RemoteException, ComponentException;
 
-	public Batch_controlBulk disattivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk) throws RemoteException, ComponentException;
+	Batch_controlBulk disattivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk) throws RemoteException, ComponentException;
 	
-    public RemoteIterator listaBatch_control_jobs(UserContext usercontext) throws RemoteException, ComponentException;
+    RemoteIterator listaBatch_control_jobs(UserContext usercontext) throws RemoteException, ComponentException;
     
-    public Batch_controlBulk inizializzaParametri(UserContext usercontext, Batch_controlBulk batch_controlbulk) throws RemoteException, ComponentException;
+    Batch_controlBulk inizializzaParametri(UserContext usercontext, Batch_controlBulk batch_controlbulk) throws RemoteException, ComponentException;
 
-    public OggettoBulk creaConBulkRequiresNew(UserContext usercontext, OggettoBulk oggettoBulk) throws RemoteException, ComponentException;
+    OggettoBulk creaConBulkRequiresNew(UserContext usercontext, OggettoBulk oggettoBulk) throws RemoteException, ComponentException;
+    OggettoBulk modificaConBulkRequiresNew(UserContext usercontext, OggettoBulk oggettoBulk) throws RemoteException, ComponentException;
 }

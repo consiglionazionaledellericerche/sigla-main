@@ -17,10 +17,10 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -28,10 +28,11 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Scrittura_partita_doppiaHome extends BulkHome {
     public Scrittura_partita_doppiaHome(java.sql.Connection conn) {
@@ -42,49 +43,47 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
         super(Scrittura_partita_doppiaBulk.class, conn, persistentCache);
     }
 
-    public Collection findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws PersistencyException {
+    public Collection<Movimento_cogeBulk> findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws PersistencyException {
         return this.findMovimentiAvereColl(userContext, scrittura, true);
     }
 
-    public Collection findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
+    public Collection<Movimento_cogeBulk> findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
         SQLBuilder sql = getHomeCache().getHome(Movimento_cogeBulk.class).createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
         sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, scrittura.getCd_unita_organizzativa());
         sql.addClause("AND", "pg_scrittura", SQLBuilder.EQUALS, scrittura.getPg_scrittura());
         sql.addClause("AND", "sezione", SQLBuilder.EQUALS, Movimento_cogeBulk.SEZIONE_AVERE);
-        List result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
+        List<Movimento_cogeBulk> result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
         if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
     }
 
-    public Collection findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws PersistencyException {
+    public Collection<Movimento_cogeBulk> findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws PersistencyException {
         return this.findMovimentiDareColl(userContext, scrittura, true);
     }
 
-    public Collection findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
+    public Collection<Movimento_cogeBulk> findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
         SQLBuilder sql = getHomeCache().getHome(Movimento_cogeBulk.class).createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
         sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, scrittura.getCd_unita_organizzativa());
         sql.addClause("AND", "pg_scrittura", SQLBuilder.EQUALS, scrittura.getPg_scrittura());
         sql.addClause("AND", "sezione", SQLBuilder.EQUALS, Movimento_cogeBulk.SEZIONE_DARE);
-        List result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
+        List<Movimento_cogeBulk> result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
         if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
     }
 
     /**
      *
-     * @param documentoCogeBulk
+     * @param documentoCogeBulk documentoCogeBulk
      * @return la prima scrittura generata dal documento
-     * @throws PersistencyException
+     * @throws PersistencyException PersistencyException
      */
     public Optional<Scrittura_partita_doppiaBulk> findByDocumentoAmministrativo(IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException {
         return findByDocumentoCoge(documentoCogeBulk)
-                .stream()
-                .sorted((t1, t2) -> t1.getPg_scrittura().compareTo(t2.getPg_scrittura()))
-                .findFirst();
+                .stream().min(Comparator.comparing(Scrittura_partita_doppiaKey::getPg_scrittura));
     }
 
 	public List<Scrittura_partita_doppiaBulk> findByDocumentoCoge(IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException {
@@ -101,7 +100,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
      * Imposta il pg_scrittura di un oggetto <code>Scrittura_partita_doppiaBulk</code>.
      *
      * @param bulk <code>OggettoBulk</code>
-     * @throws PersistencyException
+     * @throws ComponentException ComponentException
      */
 
     public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws ComponentException {
@@ -122,7 +121,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
                     cs.setString(6, scrittura.getUser());
                     cs.executeQuery();
 
-                    Long result = new Long(cs.getLong(1));
+                    Long result = cs.getLong(1);
                     scrittura.setPg_scrittura(result);
                 } catch (java.lang.Exception e) {
                     throw new ComponentException(e);
@@ -131,6 +130,23 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
                 }
             }
         } catch (java.lang.Exception e) {
+            throw new ComponentException(e);
+        }
+    }
+
+    public Optional<Scrittura_partita_doppiaBulk> getScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
+        try {
+            Optional<Scrittura_partita_doppiaBulk> scritturaOpt = Optional.empty();
+            if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(userContext)) {
+                scritturaOpt = this.findByDocumentoAmministrativo(documentoCogeBulk);
+                if (scritturaOpt.isPresent()) {
+                    Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
+                    scrittura.setMovimentiDareColl(new BulkList(this.findMovimentiDareColl(userContext, scrittura)));
+                    scrittura.setMovimentiAvereColl(new BulkList(this.findMovimentiAvereColl(userContext, scrittura)));
+                }
+            }
+            return scritturaOpt;
+        } catch (PersistencyException | RemoteException e) {
             throw new ComponentException(e);
         }
     }

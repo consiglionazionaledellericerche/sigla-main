@@ -589,8 +589,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public OggettoBulk initializeModelForEdit(ActionContext context, OggettoBulk bulk) throws BusinessProcessException {
         try {
-            //this.loadAllScritture(context.getUserContext(), 2022, "080");
-
             if (bulk != null) {
                 Fattura_passivaBulk fp = (Fattura_passivaBulk) bulk;
                 fp.setDettagliCancellati(new java.util.Vector());
@@ -1870,21 +1868,5 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         } catch (PersistencyException | RemoteException | ComponentException e) {
             throw handleException(e);
         }
-    }
-
-    public void loadAllScritture(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException, RemoteException {
-        ScritturaPartitaDoppiaFromDocumentoComponentSession component = Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession();
-        List<IDocumentoCogeBulk> allDocuments = component.getAllDocumentiCoge(userContext, esercizio, cdCds).stream()
-                .filter(el->Optional.ofNullable(el.getDt_contabilizzazione()).isPresent()).sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione))
-                .collect(Collectors.toList());
-
-        Collection<List<IDocumentoCogeBulk>> splitList = (Collection<List<IDocumentoCogeBulk>>) Utility.splitListBySize(allDocuments, 100);
-        splitList.stream().forEach(el->{
-            try {
-                component.loadScritture(userContext, el);
-            } catch (Exception e) {
-                throw new DetailedRuntimeException(e);
-            }
-        });
     }
 }

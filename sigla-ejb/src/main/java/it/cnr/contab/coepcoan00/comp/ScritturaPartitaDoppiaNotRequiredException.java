@@ -15,26 +15,17 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.logs.bulk;
+package it.cnr.contab.coepcoan00.comp;
 
-import java.math.BigDecimal;
+import it.cnr.jada.bulk.ValidationException;
 
-// Referenced classes of package it.cnr.contab.logs.bulk:
-//            Batch_log_tstaBase
-
-public class Batch_log_tstaBulk extends Batch_log_tstaBase
-{
-
-    public static String  LOG_TIPO_INTERF_CASS00 = "INTERF_CASS00";
-
-    public static String  LOG_TIPO_CONTAB_COGECOAN00 = "CONTAB_COGECOAN00";
-
-    public Batch_log_tstaBulk()
+public class ScritturaPartitaDoppiaNotRequiredException extends ValidationException {
+    public ScritturaPartitaDoppiaNotRequiredException()
     {
     }
 
-    public Batch_log_tstaBulk(BigDecimal bigdecimal)
+    public ScritturaPartitaDoppiaNotRequiredException(String s)
     {
-        super(bigdecimal);
+        super(s);
     }
 }

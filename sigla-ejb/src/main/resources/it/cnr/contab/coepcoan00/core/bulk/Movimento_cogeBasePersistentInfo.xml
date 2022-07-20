@@ -126,6 +126,11 @@
 			sqlTypeName="DECIMAL"
 			columnSize="10" />
 		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
 			columnName="FL_MODIFICABILE"
 			propertyName="fl_modificabile"
 			sqlTypeName="CHAR"
@@ -170,6 +175,8 @@
 		name="esercizio_documento" />
 	<persistentProperty
 		name="pg_numero_documento"/>
+	<persistentProperty
+		name="cd_contributo_ritenuta"/>
 	<persistentProperty
 		name="fl_modificabile" />
 </SQLPersistentInfo>

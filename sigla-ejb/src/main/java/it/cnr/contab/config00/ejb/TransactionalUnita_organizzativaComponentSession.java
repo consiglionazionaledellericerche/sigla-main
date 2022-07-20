@@ -17,6 +17,7 @@
 
 package it.cnr.contab.config00.ejb;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -326,6 +327,25 @@ public class TransactionalUnita_organizzativaComponentSession extends it.cnr.jad
                     dominio,
                     tipoRicerca,
                     cds});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+    public List<CdsBulk> findListaCds(UserContext userContext, int esercizio) throws ComponentException,
+            RemoteException {
+        try {
+            return (List<CdsBulk>) invoke("findListaCds", new Object[]{
+                    userContext,
+                    esercizio});
         } catch (java.rmi.RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {

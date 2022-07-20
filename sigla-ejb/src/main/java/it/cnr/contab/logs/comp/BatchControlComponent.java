@@ -17,32 +17,24 @@
 
 package it.cnr.contab.logs.comp;
 
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
-import it.cnr.contab.coepcoan00.ejb.ScritturaPartitaDoppiaFromDocumentoComponentSession;
 import it.cnr.contab.logs.bulk.*;
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import org.springframework.scheduling.annotation.Async;
 
-import java.rmi.RemoteException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.ejb.EJBException;
-import javax.sql.DataSource;
+import java.util.ArrayList;
 
 // Referenced classes of package it.cnr.contab.logs.comp:
 //            IBatchControlMgr
@@ -69,9 +61,9 @@ public class BatchControlComponent extends CRUDComponent
                 callablestatement.setString(2, usercontext.getUser());
                 Timestamp timestamp = getHome(usercontext, batch_controlbulk).getServerTimestamp();
                 long l = timestamp.getTime() - batch_controlbulk.getDt_partenza().getTime();
-                long l1 = batch_controlbulk.getIntervallo().longValue() * 1000L;
+                long l1 = batch_controlbulk.getIntervallo() * 1000L;
                 callablestatement.setTimestamp(3, new Timestamp(batch_controlbulk.getDt_partenza().getTime() + ((l - 1L) / l1 + 1L) * l1));
-                callablestatement.setLong(4, batch_controlbulk.getIntervallo().longValue());
+                callablestatement.setLong(4, batch_controlbulk.getIntervallo());
                 callablestatement.execute();
             }
             finally
@@ -102,8 +94,7 @@ public class BatchControlComponent extends CRUDComponent
                 callablestatement.setTimestamp(4, null);
                 callablestatement.execute();
                 salvaValoriParametri(usercontext, batch_controlbulk);
-                Batch_controlBulk batch_controlbulk1 = batch_controlbulk;
-                return batch_controlbulk1;
+                return batch_controlbulk;
             }
             finally
             {
@@ -115,23 +106,6 @@ public class BatchControlComponent extends CRUDComponent
             throw handleException(throwable);
         }
     }
-
-    public OggettoBulk creaBatchDinamicoJava(UserContext userContext, Batch_controlBulk batch_controlbulk) throws ComponentException {
-        try {
-            ScritturaPartitaDoppiaFromDocumentoComponentSession component = Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession();
-            component.asyncDocumentiCoge(
-                    userContext,
-                    2022,
-                    "084"
-            );
-            return batch_controlbulk;
-        }
-        catch(Throwable throwable)
-        {
-            throw handleException(throwable);
-        }
-    }
-
     public OggettoBulk creaBatchStatico(UserContext usercontext, Batch_controlBulk batch_controlbulk)
         throws ComponentException
     {
@@ -146,11 +120,10 @@ public class BatchControlComponent extends CRUDComponent
                 callablestatement.setString(2, creaChiamataProcedura(usercontext, batch_controlbulk));
                 callablestatement.setString(3, usercontext.getUser());
                 callablestatement.setTimestamp(4, batch_controlbulk.getDt_partenza());
-                callablestatement.setLong(5, batch_controlbulk.getIntervallo().longValue());
+                callablestatement.setLong(5, batch_controlbulk.getIntervallo());
                 callablestatement.execute();
                 salvaValoriParametri(usercontext, batch_controlbulk);
-                Batch_controlBulk batch_controlbulk1 = batch_controlbulk;
-                return batch_controlbulk1;
+                return batch_controlbulk;
             }
             finally
             {
@@ -163,54 +136,48 @@ public class BatchControlComponent extends CRUDComponent
         }
     }
 
-    public String creaChiamataProcedura(UserContext usercontext, Batch_controlBulk batch_controlbulk)
-        throws ComponentException
-    {
+    public String creaChiamataProcedura(UserContext usercontext, Batch_controlBulk batch_controlbulk) {
         StringBuffer stringbuffer = new StringBuffer();
         stringbuffer.append(batch_controlbulk.getProcedura().getPackage_name());
         stringbuffer.append('.');
         stringbuffer.append(batch_controlbulk.getProcedura().getObject_name());
         stringbuffer.append("(job,pg_exec,next_date");
-        for(Iterator iterator = batch_controlbulk.getParametri().iterator(); iterator.hasNext();)
-        {
-            Batch_procedura_parametroBulk batch_procedura_parametrobulk = (Batch_procedura_parametroBulk)iterator.next();
-            if(batch_procedura_parametrobulk.getValoreRiutilizzato() != null)
+        for (Object o : batch_controlbulk.getParametri()) {
+            Batch_procedura_parametroBulk batch_procedura_parametrobulk = (Batch_procedura_parametroBulk) o;
+            if (batch_procedura_parametrobulk.getValoreRiutilizzato() != null)
                 batch_procedura_parametrobulk = batch_procedura_parametrobulk.getValoreRiutilizzato();
             stringbuffer.append(',');
-            switch(batch_procedura_parametrobulk.getTipoParametro())
-            {
-            default:
-                break;
+            switch (batch_procedura_parametrobulk.getTipoParametro()) {
+                default:
+                    break;
 
-            case 0: // '\0'
-                if(batch_procedura_parametrobulk.getValore_varchar() != null)
-                {
-                    stringbuffer.append('\'');
-                    stringbuffer.append(batch_procedura_parametrobulk.getValore_varchar());
-                    stringbuffer.append('\'');
-                }
-                break;
+                case 0: // '\0'
+                    if (batch_procedura_parametrobulk.getValore_varchar() != null) {
+                        stringbuffer.append('\'');
+                        stringbuffer.append(batch_procedura_parametrobulk.getValore_varchar());
+                        stringbuffer.append('\'');
+                    }
+                    break;
 
-            case 1: // '\001'
-                if(batch_procedura_parametrobulk.getValore_number() != null)
-                    stringbuffer.append(batch_procedura_parametrobulk.getValore_number());
-                break;
+                case 1: // '\001'
+                    if (batch_procedura_parametrobulk.getValore_number() != null)
+                        stringbuffer.append(batch_procedura_parametrobulk.getValore_number());
+                    break;
 
-            case 2: // '\002'
-                if(batch_procedura_parametrobulk.getValore_date() != null)
-                {
-                    stringbuffer.append("TODATE('");
-                    stringbuffer.append(oracleDateFormat.format(batch_procedura_parametrobulk.getValore_date()));
-                    stringbuffer.append("','YYYYMMDDHH24MISS')");
-                }
-                break;
+                case 2: // '\002'
+                    if (batch_procedura_parametrobulk.getValore_date() != null) {
+                        stringbuffer.append("TODATE('");
+                        stringbuffer.append(oracleDateFormat.format(batch_procedura_parametrobulk.getValore_date()));
+                        stringbuffer.append("','YYYYMMDDHH24MISS')");
+                    }
+                    break;
             }
         }
 
         stringbuffer.append(");");
         return stringbuffer.toString();
     }
-	public void aggiornaViewSnapshot(UserContext usercontext) throws ComponentException{
+	public void aggiornaViewSnapshot(UserContext usercontext) {
 		try {
 			Connection connInformix = EJBCommonServices.getDatasource("java:/jdbc/GECO").getConnection();
 			LoggableStatement aPS=null;
@@ -221,13 +188,13 @@ public class BatchControlComponent extends CRUDComponent
 		     while(aRS.next()) {
 			  System.out.println(aRS.getString("descr_prog"));    
 			 }
-		     try{aRS.close();}catch( SQLException e ){};
-			} catch (SQLException e) {
+		     try{aRS.close();}catch( SQLException e ){}
+            } catch (SQLException e) {
 				throw handleException(e);
 			} finally {
 			 if(aPS != null) 
-		         try{aPS.close();}catch( SQLException e ){};
-		    }	
+		         try{aPS.close();}catch( SQLException e ){}
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -253,17 +220,16 @@ public class BatchControlComponent extends CRUDComponent
 		
 	}
     public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk)
-        throws ComponentException
-    {
-        Batch_controlBulk batch_controlbulk = (Batch_controlBulk)oggettobulk;
+        throws ComponentException {
+        Batch_controlBulk batch_controlbulk = (Batch_controlBulk) oggettobulk;
         if (!batch_controlbulk.getProcedura().isProceduraJava()) {
-            if(batch_controlbulk.getIntervallo() == null)
+            if (batch_controlbulk.getIntervallo() == null)
                 return creaBatchDinamico(usercontext, batch_controlbulk);
             else
                 return creaBatchStatico(usercontext, batch_controlbulk);
         } else
-            return creaBatchDinamicoJava(usercontext, batch_controlbulk);
-
+            salvaValoriParametri(usercontext, batch_controlbulk);
+        return oggettobulk;
     }
 
     public Batch_controlBulk disattivaBatch(UserContext usercontext, Batch_controlBulk batch_controlbulk)
@@ -344,7 +310,7 @@ public class BatchControlComponent extends CRUDComponent
                 return batch_controlbulk;
 
             if (batch_controlbulk.getProcedura().getObject_name().equals("PROCEDURE_JAVA")) {
-                Batch_proceduraBulk.getParametriProceduraJava(batch_controlbulk.getProcedura().getCd_procedura()).stream().forEach(el->{
+                Batch_proceduraBulk.getParametriProceduraJava(batch_controlbulk.getProcedura().getCd_procedura()).forEach(el->{
                     try {
                         SQLBuilder sqlbuilder = getHome(usercontext, Batch_procedura_parametroBulk.class).createSQLBuilder();
                         sqlbuilder.addClause(FindClause.AND, "cd_procedura", SQLBuilder.EQUALS, el.getCd_procedura());
@@ -407,12 +373,12 @@ public class BatchControlComponent extends CRUDComponent
                     }
                     finally
                     {
-                        try{resultset.close();}catch( SQLException e ){};
+                        try{resultset.close();}catch( SQLException e ){}
                     }
                 }
                 finally
                 {
-                    try{statement.close();}catch( SQLException e ){};
+                    try{statement.close();}catch( SQLException e ){}
                 }
             }
             return batch_controlbulk;
@@ -434,25 +400,20 @@ public class BatchControlComponent extends CRUDComponent
     {
         try
         {
-            for(Iterator iterator = batch_controlbulk.getParametri().iterator(); iterator.hasNext();)
-            {
-                Batch_procedura_parametroBulk batch_procedura_parametrobulk = (Batch_procedura_parametroBulk)iterator.next();
-                for(int i = batch_procedura_parametrobulk.getValoriRiutilizzabili().size() - 1; i > 5; i--)
-                    deleteBulk(usercontext, (Batch_procedura_parametroBulk)batch_procedura_parametrobulk.getValoriRiutilizzabili().get(i));
+            for (Object o : batch_controlbulk.getParametri()) {
+                Batch_procedura_parametroBulk batch_procedura_parametrobulk = (Batch_procedura_parametroBulk) o;
+                for (int i = batch_procedura_parametrobulk.getValoriRiutilizzabili().size() - 1; i > 5; i--)
+                    deleteBulk(usercontext, (Batch_procedura_parametroBulk) batch_procedura_parametrobulk.getValoriRiutilizzabili().get(i));
 
-                if(batch_procedura_parametrobulk.getValoreRiutilizzato() != null)
-                {
+                if (batch_procedura_parametrobulk.getValoreRiutilizzato() != null) {
                     batch_procedura_parametrobulk = batch_procedura_parametrobulk.getValoreRiutilizzato();
-                    if(batch_procedura_parametrobulk.getCrudStatus() == 5)
+                    if (batch_procedura_parametrobulk.getCrudStatus() == 5)
                         deleteBulk(usercontext, batch_procedura_parametrobulk);
                     batch_procedura_parametrobulk.setPg_valore_parametro(null);
-                } else
-                {
-                    for(Iterator iterator1 = batch_procedura_parametrobulk.getValoriRiutilizzabili().iterator(); iterator1.hasNext();)
-                    {
-                        Batch_procedura_parametroBulk batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk)iterator1.next();
-                        if(batch_procedura_parametrobulk1.getValore().equals(batch_procedura_parametrobulk.getValore()))
-                        {
+                } else {
+                    for (Object value : batch_procedura_parametrobulk.getValoriRiutilizzabili()) {
+                        Batch_procedura_parametroBulk batch_procedura_parametrobulk1 = (Batch_procedura_parametroBulk) value;
+                        if (batch_procedura_parametrobulk1.getValore().equals(batch_procedura_parametrobulk.getValore())) {
                             deleteBulk(usercontext, batch_procedura_parametrobulk1);
                             break;
                         }
@@ -460,7 +421,7 @@ public class BatchControlComponent extends CRUDComponent
 
                 }
                 batch_procedura_parametrobulk.setUser(usercontext.getUser());
-                if(batch_procedura_parametrobulk.getValore_date() != null || batch_procedura_parametrobulk.getValore_varchar() != null || batch_procedura_parametrobulk.getValore_number() != null)
+                if (batch_procedura_parametrobulk.getValore_date() != null || batch_procedura_parametrobulk.getValore_varchar() != null || batch_procedura_parametrobulk.getValore_number() != null)
                     insertBulk(usercontext, batch_procedura_parametrobulk);
             }
 

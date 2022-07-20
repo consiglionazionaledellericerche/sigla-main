@@ -15,26 +15,15 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.logs.bulk;
+package it.cnr.contab.coepcoan00.ejb;
 
-import java.math.BigDecimal;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 
-// Referenced classes of package it.cnr.contab.logs.bulk:
-//            Batch_log_tstaBase
+import javax.ejb.Remote;
 
-public class Batch_log_tstaBulk extends Batch_log_tstaBase
-{
-
-    public static String  LOG_TIPO_INTERF_CASS00 = "INTERF_CASS00";
-
-    public static String  LOG_TIPO_CONTAB_COGECOAN00 = "CONTAB_COGECOAN00";
-
-    public Batch_log_tstaBulk()
-    {
-    }
-
-    public Batch_log_tstaBulk(BigDecimal bigdecimal)
-    {
-        super(bigdecimal);
-    }
+@Remote
+public interface AsyncScritturaPartitaDoppiaFromDocumentoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
+    void asyncLoadScritturePatrimoniali(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException, java.rmi.RemoteException;
 }

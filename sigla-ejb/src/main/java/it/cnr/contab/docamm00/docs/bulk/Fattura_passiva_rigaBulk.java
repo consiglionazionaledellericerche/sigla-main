@@ -104,11 +104,6 @@ public abstract class Fattura_passiva_rigaBulk
         super(cd_cds, cd_unita_organizzativa, esercizio, pg_fattura_passiva, progressivo_riga);
     }
 
-    /**
-     * Insert the method's description here.
-     *
-     * @param newAccertamento it.cnr.contab.doccont00.core.bulk.AccertamentoBulk
-     */
     public void calcolaCampiDiRiga() {
 
         if (getQuantita() == null) setQuantita(new java.math.BigDecimal(1));
@@ -768,4 +763,8 @@ public abstract class Fattura_passiva_rigaBulk
 		this.cig = cig;
 	}
 
+    @Override
+    public TerzoBulk getTerzo() {
+        return this.getFornitore();
+    }
 }

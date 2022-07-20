@@ -130,9 +130,9 @@ public abstract class ReversaleHome extends BulkHome {
      * @throws PersistencyException
      * @throws IntrospectionException
      */
-    public abstract Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException, IntrospectionException;
+    public abstract Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException;
 
-    public abstract Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException, IntrospectionException;
+    public abstract Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException;
 
     /**
      * <!-- @TODO: da completare -->
@@ -142,9 +142,9 @@ public abstract class ReversaleHome extends BulkHome {
      * @throws PersistencyException
      * @throws IntrospectionException
      */
-    public abstract Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException, IntrospectionException;
+    public abstract Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException;
 
-    public abstract Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException, IntrospectionException;
+    public abstract Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException;
 
     /**
      * Metodo per cercare i sospesi associati alla reversale.

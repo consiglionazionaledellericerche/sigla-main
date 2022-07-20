@@ -298,8 +298,12 @@ public class Configurazione_cnrHome extends BulkHome {
      * @throws PersistencyException
      */
     public boolean isAttivaEconomica(UserContext userContext) throws PersistencyException {
+        return isAttivaEconomica(CNRUserContext.getEsercizio(userContext));
+    }
+
+    public boolean isAttivaEconomica(int esercizio) throws PersistencyException {
         return Optional.ofNullable(
-                        this.getConfigurazione(CNRUserContext.getEsercizio(userContext), null,
+                        this.getConfigurazione(esercizio, null,
                                 Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
                                 Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE)
                 )
