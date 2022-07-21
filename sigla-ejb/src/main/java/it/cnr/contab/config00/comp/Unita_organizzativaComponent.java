@@ -35,6 +35,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDDuplicateKeyException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
@@ -1578,6 +1579,14 @@ public class Unita_organizzativaComponent extends it.cnr.jada.comp.CRUDComponent
 
             return home.fetchAll(sql);
         } catch (it.cnr.jada.persistency.PersistencyException ex) {
+            throw handleException(ex);
+        }
+    }
+
+    public java.util.List<CdsBulk> findListaCds(UserContext userContext, int esercizio) throws ComponentException {
+        try {
+            return ((CdsHome)getHome(userContext, CdsBulk.class)).findAllCds(userContext, esercizio);
+        } catch (it.cnr.jada.persistency.PersistencyException | IntrospectionException ex) {
             throw handleException(ex);
         }
     }

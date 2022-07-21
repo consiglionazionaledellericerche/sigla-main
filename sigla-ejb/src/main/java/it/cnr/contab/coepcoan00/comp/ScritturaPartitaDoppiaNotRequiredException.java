@@ -15,35 +15,17 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.coepcoan00.core.bulk;
+package it.cnr.contab.coepcoan00.comp;
 
-import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
+import it.cnr.jada.bulk.ValidationException;
 
-/**
- * Insert the type's description here.
- * Creation date: (4/17/2002 5:49:25 PM)
- * @author: Roberto Peli
- */
-public interface IDocumentoCogeBulk {
-    String getCd_tipo_doc();
+public class ScritturaPartitaDoppiaNotRequiredException extends ValidationException {
+    public ScritturaPartitaDoppiaNotRequiredException()
+    {
+    }
 
-    String getCd_cds();
-
-    String getCd_uo();
-
-    Integer getEsercizio();
-
-    Long getPg_doc();
-
-    TipoDocumentoEnum getTipoDocumentoEnum();
-
-    Scrittura_partita_doppiaBulk getScrittura_partita_doppia();
-
-    void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia);
-
-    java.sql.Timestamp getDt_contabilizzazione();
-
-    void setStato_coge(java.lang.String stato_coge);
-
-    java.lang.String getStato_coge();
+    public ScritturaPartitaDoppiaNotRequiredException(String s)
+    {
+        super(s);
+    }
 }

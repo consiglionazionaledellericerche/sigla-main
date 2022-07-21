@@ -22,9 +22,22 @@ import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponen
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.comp.CompensoComponent;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Asynchronous;
@@ -32,7 +45,8 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import java.rmi.RemoteException;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Stateless(name = "CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaFromDocumentoComponentSession")
 public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScritturaPartitaDoppiaFromDocumentoComponentSession {
@@ -80,26 +94,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 			throw uncaughtError(param0, componentObj, e);
 		}
 	}
-	@Asynchronous
-	public void asyncDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException {
-		pre_component_invocation(param0, componentObj);
-		try {
-			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).getAllDocumentiCoge(param0, param1, param2);
-			component_invocation_succes(param0, componentObj);
-		} catch (it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0, componentObj);
-			throw e;
-		} catch (ComponentException e) {
-			component_invocation_failure(param0, componentObj);
-			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(param0, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(param0, componentObj, e);
-		}
-	}
-
-
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException {
 		pre_component_invocation(param0, componentObj);
 		try {
@@ -119,17 +114,12 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 		}
 	}
 
-	public void loadScrittura(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, PersistencyException {
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void loadScritturePatrimoniali(UserContext param0, List<IDocumentoCogeBulk> param1) {
 		pre_component_invocation(param0, componentObj);
 		try {
-			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).loadScrittura(param0, param1);
+			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).loadScritturePatrimoniali(param0, param1);
 			component_invocation_succes(param0, componentObj);
-		} catch (it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0, componentObj);
-			throw e;
-		} catch (it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0, componentObj);
-			throw e;
 		} catch (RuntimeException e) {
 			throw uncaughtRuntimeException(param0, componentObj, e);
 		} catch (Error e) {
@@ -137,11 +127,15 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 		}
 	}
 
-	public void loadScritture(UserContext param0, List<IDocumentoCogeBulk> param1) {
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void loadScritturaPatrimoniale(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException{
 		pre_component_invocation(param0, componentObj);
 		try {
-			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).loadScritture(param0, param1);
+			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).loadScritturaPatrimoniale(param0, param1);
 			component_invocation_succes(param0, componentObj);
+		} catch (ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
 		} catch (RuntimeException e) {
 			throw uncaughtRuntimeException(param0, componentObj, e);
 		} catch (Error e) {

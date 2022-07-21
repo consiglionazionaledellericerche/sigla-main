@@ -60,6 +60,7 @@
             <% bp.getMovimentiDare().writeFormField(out, "ti_riga");%>
             <% bp.getMovimentiDare().writeFormField(out, "partita");%>
             <% bp.getMovimentiDare().writeFormField(out, "terzo_movimento");%>
+            <% bp.getMovimentiDare().writeFormField(out, "cd_contributo_ritenuta");%>
         </tr>
     </table>
 <% } %>
@@ -84,6 +85,7 @@
             <% bp.getMovimentiAvere().writeFormField(out, "ti_riga");%>
             <% bp.getMovimentiAvere().writeFormField(out, "partita");%>
             <% bp.getMovimentiAvere().writeFormField(out, "terzo_movimento");%>
+            <% bp.getMovimentiAvere().writeFormField(out, "cd_contributo_ritenuta");%>
         </tr>
     </table>
     <% } %>

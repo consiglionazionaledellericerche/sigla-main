@@ -3356,4 +3356,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
     public boolean isIstituzionale() {
         return TipoIVA.ISTITUZIONALE.value().equals(this.getTi_istituz_commerc());
     }
+
+    public boolean isCommerciale() {
+        return TipoIVA.COMMERCIALE.value().equals(this.getTi_istituz_commerc());
+    }
 }

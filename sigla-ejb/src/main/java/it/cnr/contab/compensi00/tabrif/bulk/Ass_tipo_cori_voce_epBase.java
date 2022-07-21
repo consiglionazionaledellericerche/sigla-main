@@ -27,7 +27,10 @@ public class Ass_tipo_cori_voce_epBase extends Ass_tipo_cori_voce_epKey implemen
  
 //    CD_VOCE_EP_CONTR VARCHAR(45) NOT NULL
 	private java.lang.String cd_voce_ep_contr;
- 
+
+	//    CD_VOCE_EP_CONTR_COMP VARCHAR(45)
+	private java.lang.String cd_voce_ep_contr_comp;
+
 	public Ass_tipo_cori_voce_epBase() {
 		super();
 	}

@@ -224,8 +224,12 @@
 		name="partita"
 		property="partita"
 		inputType="ROTEXT"
-		label="Partita"
-	/>
+		label="Partita"	/>
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		inputType="ROTEXT"
+		label="Codice CO/RI" />
 	<fieldProperty
 		name="terzo_movimento"
 		property="terzo"
@@ -286,6 +290,8 @@
 		name="partita" />
 	<formFieldProperty
 		name="terzo_movimento" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
 
 
 	<columnFieldProperty

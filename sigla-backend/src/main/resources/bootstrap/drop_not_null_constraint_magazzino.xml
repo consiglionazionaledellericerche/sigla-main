@@ -24,20 +24,28 @@
 
     <changeSet author="gianfranco.gasparro" id="drop_not_null_constraint_magazzino">
         <dropNotNullConstraint  columnName="cd_cds_tra_sca"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_tipo_movimento_tra_sca"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_cds_tra_car"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_tipo_movimento_tra_car"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_cds_chi"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_tipo_movimento_chi"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_cds_sca_uo"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
         <dropNotNullConstraint  columnName="cd_tipo_movimento_sca_uo"
+                                columnDataType="VARCHAR"
                                 tableName="magazzino"/>
     </changeSet>
 </databaseChangeLog>

@@ -3502,8 +3502,6 @@ public abstract class Fattura_passivaBulk
                 if (this.getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())
                     return true;
             }
-            if (this.getFl_split_payment().booleanValue())
-                return true;
         }
         return false;
     }
@@ -3557,5 +3555,9 @@ public abstract class Fattura_passivaBulk
         return  Optional.ofNullable(getFlDaOrdini())
                 .filter(daOrdini -> daOrdini.equals(Boolean.TRUE))
                 .orElse(false);
+    }
+
+    public boolean isRegistratoInFondoEconomale() {
+        return REGISTRATO_IN_FONDO_ECO.equalsIgnoreCase(getStato_pagamento_fondo_eco());
     }
 }

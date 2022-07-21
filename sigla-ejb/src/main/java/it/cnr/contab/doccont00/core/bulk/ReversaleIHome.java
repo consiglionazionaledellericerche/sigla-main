@@ -125,10 +125,12 @@ public class ReversaleIHome extends ReversaleHome {
      * @param reversale <code>ReversaleBulk</code> la reversale
      * @return result la riga della reversale
      */
+    @Override
     public Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale) throws PersistencyException {
         return this.findReversale_riga(userContext, reversale, true);
     }
 
+    @Override
     public Collection findReversale_riga(it.cnr.jada.UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException {
         PersistentHome home = getHomeCache().getHome(Reversale_rigaIBulk.class);
         SQLBuilder sql = home.createSQLBuilder();

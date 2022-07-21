@@ -70,12 +70,12 @@ public class Stampa_vpg_reversaleHome extends ReversaleHome {
 	 * @throws PersistencyException
 	 * @throws IntrospectionException
 	 */
-	public java.util.Collection findReversale_riga(it.cnr.jada.UserContext userContext,ReversaleBulk reversale) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException {
+	public java.util.Collection findReversale_riga(it.cnr.jada.UserContext userContext,ReversaleBulk reversale) throws it.cnr.jada.persistency.PersistencyException {
 		return null;
 	}
 
 	@Override
-	public Collection findReversale_riga(UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException, IntrospectionException {
+	public Collection findReversale_riga(UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException {
 		return null;
 	}
 
@@ -88,19 +88,21 @@ public class Stampa_vpg_reversaleHome extends ReversaleHome {
 	 * @throws PersistencyException
 	 * @throws IntrospectionException
 	 */
-	public Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext,ReversaleBulk reversale) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException {
+	public Reversale_terzoBulk findReversale_terzo(it.cnr.jada.UserContext userContext,ReversaleBulk reversale) {
 		return null;
 	}
 
 	@Override
-	public Reversale_terzoBulk findReversale_terzo(UserContext userContext, ReversaleBulk reversale, boolean fetchAll) throws PersistencyException, IntrospectionException {
+	public Reversale_terzoBulk findReversale_terzo(UserContext userContext, ReversaleBulk reversale, boolean fetchAll) {
 		return null;
 	}
 
 	/**
 	 * Carica la reversale <reversale> con tutti gli oggetti complessi
 	 *
-	 * @param reversale
+	 * @param cdCds
+	 * @param esercizio
+	 * @param pgReversale
 	 * @return
 	 * @throws PersistencyException
 	 */

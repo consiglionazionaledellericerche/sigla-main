@@ -40,7 +40,6 @@ Batch_controlBulk  model = (Batch_controlBulk)bp.getModel();
 			</td>
 		</tr>
 		<% if (model==null || model.getProcedura()==null || !model.getProcedura().isProceduraJava()) { %>
-		pippo
 		<tr>
 			<td colspan="5">
 				Lasciando vuoto "Intervallo" il batch verrà eseguito immediatamente e solo una volta

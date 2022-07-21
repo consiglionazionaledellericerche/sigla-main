@@ -18,9 +18,12 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
 import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Classificazione_coriBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBulk;
 import it.cnr.jada.bulk.*;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class Contributo_ritenutaBulk extends Contributo_ritenutaBase {
 
@@ -247,5 +250,17 @@ public class Contributo_ritenutaBulk extends Contributo_ritenutaBase {
 	public String getSezioneCostoRicavo() {
 		String mySezione = this.getCompenso().getTipoDocumentoEnum().getSezioneEconomica();
 		return this.getAmmontare().compareTo(BigDecimal.ZERO)<0?Movimento_cogeBulk.getControSezione(mySezione):mySezione;
+	}
+
+	public boolean isTipoContributoIva() {
+		return Optional.ofNullable(this.getTipoContributoRitenuta())
+				.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori)
+				.filter(Classificazione_coriBulk::isTipoIva).isPresent();
+	}
+
+	public boolean isTipoContributoRivalsa() {
+		return Optional.ofNullable(this.getTipoContributoRitenuta())
+				.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori)
+				.filter(Classificazione_coriBulk::isTipoRivalsa).isPresent();
 	}
 }

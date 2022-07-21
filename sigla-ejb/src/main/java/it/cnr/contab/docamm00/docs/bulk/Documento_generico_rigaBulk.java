@@ -769,6 +769,9 @@ public void setPg_documento_generico(Long pg_documento_generico) {
 public void setCd_terzo(java.lang.Integer cd_terzo) {
 	this.getTerzo().setCd_terzo(cd_terzo);
 }
+
+
+@Override
 public java.lang.Integer getCd_terzo() {
 	it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo = this.getTerzo();
 	if (terzo == null)
