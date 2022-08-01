@@ -3191,7 +3191,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					 * 	(regola non valida per trasferimenti ad Aree)
 					 */
 					if (!isVariazioneArea && !isVariazioneRagioneria) {
-						if (!isVariazioneTrasferimentoEsigenzeFinanziarie)
+						if (!isVariazioneTrasferimentoEsigenzeFinanziarie) {
 							listCtrlPianoEco.stream()
 									.filter(el -> !el.isScaduto(dataChiusura))
 									.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
@@ -3205,22 +3205,23 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
 							});
 
-						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
-								.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO) > 0)
-								.map(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()))
-								.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
-
-						if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO) > 0) {
-							BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
-									.filter(el -> !el.isScaduto(dataChiusura))
-									.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
-									.map(CtrlPianoEco::getImpSpesaNegativiVoceSpeciale)
+							BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
+									.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO) > 0)
+									.map(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()))
 									.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
-							if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso)) != 0)
-								throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
-										+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
-										+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce " + cdVoceSpeciale
-										+ " (" + new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti) + ").");
+
+							if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO) > 0) {
+								BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
+										.filter(el -> !el.isScaduto(dataChiusura))
+										.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
+										.map(CtrlPianoEco::getImpSpesaNegativiVoceSpeciale)
+										.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
+								if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso)) != 0)
+									throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
+											+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
+											+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce " + cdVoceSpeciale
+											+ " (" + new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti) + ").");
+							}
 						}
 					} else {
 						/**
