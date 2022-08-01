@@ -1204,6 +1204,12 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
 
             fillModel(actioncontext);
 
+            if( riga.getAnno()==null)
+                throw new ApplicationException("Bisogna impostare un anno");
+
+            if ((( AccertamentoBulk)bp.getModel()).getAccertamentiPluriennali().stream().filter(p->p.getAnno().equals(riga.getAnno())).count()>1)
+                throw new ApplicationException("L'anno impostato già esiste nella lista dei pluriennali");
+
             if(riga.getAnno().compareTo(annoCorrente) <= 0){
                 throw new ApplicationException("L'anno di Accertamento Pluriennale deve essere successivo all'anno corrente");
             }
