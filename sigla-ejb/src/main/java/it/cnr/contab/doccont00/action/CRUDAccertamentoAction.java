@@ -848,8 +848,6 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
      * Gestisce il caricamento delle nuove linee di attività
      *
      * @param context   <code>ActionContext</code> in uso.
-     * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
-     * @param latt      Oggetto di tipo <code>Linea_attivitaBulk</code>
      * @return <code>Forward</code>
      */
     public Forward doBringBackCRUDCrea_linea_attivita(ActionContext context) {
@@ -1205,6 +1203,12 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
             Integer annoCorrente = model.getEsercizio();
 
             fillModel(actioncontext);
+
+            if( riga.getAnno()==null)
+                throw new ApplicationException("Bisogna impostare un anno");
+
+            if ((( AccertamentoBulk)bp.getModel()).getAccertamentiPluriennali().stream().filter(p->p.getAnno().equals(riga.getAnno())).count()>1)
+                throw new ApplicationException("L'anno impostato già esiste nella lista dei pluriennali");
 
             if(riga.getAnno().compareTo(annoCorrente) <= 0){
                 throw new ApplicationException("L'anno di Accertamento Pluriennale deve essere successivo all'anno corrente");

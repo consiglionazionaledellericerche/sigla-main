@@ -63,7 +63,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 /**
  * (Obbligazione)
  */
@@ -1443,6 +1446,12 @@ public Forward handleException(ActionContext context, Throwable ex)
 			Integer annoCorrente = model.getEsercizio();
 
 			fillModel(actioncontext);
+
+			if( riga.getAnno()==null)
+				throw new ApplicationException("Bisogna impostare un anno");
+
+			if ((( ObbligazioneOrdBulk)bp.getModel()).getObbligazioniPluriennali().stream().filter(p->p.getAnno().equals(riga.getAnno())).count()>1)
+				throw new ApplicationException("L'anno impostato già esiste nella lista dei pluriennali");
 
 			if(riga.getAnno().compareTo(annoCorrente) <= 0){
 				throw new ApplicationException("L'anno di Obbligazione Pluriennale deve essere successivo all'anno corrente");
