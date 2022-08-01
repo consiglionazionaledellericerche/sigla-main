@@ -95,7 +95,6 @@
 		<entry key="/ordmag/partitario_magazzino.jasper" value-ref="StampaPartitarioMagJsonDataSource" />
 	</util:map>
 
-
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
 		<property name="serverPrint" value="${print.server.name}"/>
 		<property name="printDsOfflineImplemented" ref="mapPrintDsOfflineImplemented"/>
