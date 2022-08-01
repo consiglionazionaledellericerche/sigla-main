@@ -21,6 +21,7 @@ import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.util.EuroFormat;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkInfo;
@@ -123,7 +124,7 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
                     .mapToDouble(value -> value.getImIva().doubleValue())
                     .sum());
             final BigDecimal totaleImponibilePerNotaCredito = BigDecimal.valueOf(fatturaOrdineBulks.stream()
-                    .mapToDouble(value -> value.getImponibilePerRigaFattura().doubleValue())
+                    .mapToDouble(value -> Utility.nvl(value.getImponibileErrato(), value.getImponibilePerRigaFattura()).doubleValue())
                     .sum());
             final BigDecimal totaleIvaPerNotaCredito = BigDecimal.valueOf(fatturaOrdineBulks.stream()
                     .mapToDouble(value -> value.getIvaPerRigaFattura().doubleValue())
