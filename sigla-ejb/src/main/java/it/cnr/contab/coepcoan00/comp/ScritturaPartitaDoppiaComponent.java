@@ -3221,13 +3221,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocAmm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
+		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
 		boolean isAttivaEconomica = ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(docamm.getEsercizio());
 		if (isAttivaEconomica)
 			return ((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, cdTerzoDocAmm, cdCori, scritturaToExclude);
 		else {
 			try {
-				Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
-
 				Collection<Movimento_cogeBulk> allMovimentiCoge = proposeScritturaPartitaDoppia(userContext, docamm).getAllMovimentiColl()
 						.stream().filter(el->docamm.getEsercizio().equals(el.getEsercizio_documento()))
 						.filter(el->docamm.getCd_cds().equals(el.getCd_cds_documento()))
@@ -3256,12 +3255,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					else
 						result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_AVERE, saldo.abs()));
 				});
-				return result;
-
 			} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
 			}
 		}
-		return null;
+		return result;
 	}
 
 	/**
