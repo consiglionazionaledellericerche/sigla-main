@@ -21,7 +21,6 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -223,7 +222,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             if (Optional.ofNullable(annoFrom).isPresent())
                 setAnnoFromPianoEconomico(annoFrom.intValue());
 
-            attivaAnagraficaProgetto = Utility.createConfigurazioneCnrComponentSession().isAssPrgAnagraficoAttiva(actioncontext.getUserContext());
         } catch (Throwable e) {
             throw new BusinessProcessException(e);
         }

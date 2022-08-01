@@ -25,8 +25,6 @@ import java.util.Optional;
 
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
-import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.progettiric00.bp.AmministraTestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;

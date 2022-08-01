@@ -5329,8 +5329,6 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			return prcImputazioneFinanziariaTable;
 		} catch (PersistencyException e) {
 			throw handleException( e );
-		} catch (IntrospectionException e) {
-			throw handleException( e );
 		}
 	}
 	/*
