@@ -4861,10 +4861,18 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
 
             <column name="importo" remarks="Importo totale" type="numeric(15, 2)"/>
 
-            <column name="cd_cds_rif" remarks="Cds dell'obbligazione di riferimento " type="VARCHAR(30)"/>
-            <column name="esercizio_rif" remarks="Esercizio dell'obbligazione di riferimento" type="INT"/>
-            <column name="esercizio_originale_rif" remarks="Esercizio Originale dell'obbligazione di riferimento" type="INT"/>
-            <column name="pg_obbligazione_rif" remarks="Numero dell'obbligazione di riferimento" type="BIGINT"/>
+            <column name="cd_cds_rif" remarks="Cds dell'obbligazione di riferimento " type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_rif" remarks="Esercizio dell'obbligazione di riferimento" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_originale_rif" remarks="Esercizio Originale dell'obbligazione di riferimento" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_obbligazione_rif" remarks="Numero dell'obbligazione di riferimento" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
                 <constraints nullable="false"/>
