@@ -279,12 +279,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     public OggettoBulk createEmptyModelForSearch(it.cnr.jada.action.ActionContext context)
             throws it.cnr.jada.action.BusinessProcessException {
         setAnnoDiCompetenza(true);
-        OggettoBulk emptyModel = super.createEmptyModelForSearch(context);
-        Optional.ofNullable(emptyModel)
-                .filter(Fattura_passivaBulk.class::isInstance)
-                .map(Fattura_passivaBulk.class::cast)
-                .ifPresent(fattura_passivaBulk -> fattura_passivaBulk.setFlDaOrdini(isAttivoOrdini()));
-        return emptyModel;
+        return super.createEmptyModelForSearch(context);
     }
 
     public OggettoBulk createEmptyModel(it.cnr.jada.action.ActionContext context)

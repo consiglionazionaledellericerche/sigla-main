@@ -1639,10 +1639,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							else
 								aContoIvaSplit = this.findContoIvaCredito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
 
-							//Rilevo il conto IVA Credito/Debito di tipo SPLIT (a secondo se doc attivo o passivo) e apro il conto ritenute split
-							Voce_epBulk aContoCreditoRitenuteSplit = this.findContoCreditoRitenuteSplitPayment(userContext, docamm.getEsercizio());
+							//Rilevo il conto IVA Credito/Debito di tipo SPLIT (a secondo se doc attivo o passivo) e lo compenso con il debito verso il fornitore
 							testataPrimaNota.closeDettaglioIvaSplit(docamm, aContoIvaSplit.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIvaSplit);
-							testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), docamm.getTipoDocumentoEnum().getSezioneEconomica(), aContoCreditoRitenuteSplit.getCd_voce_ep(), imIva, docamm, aCdTerzo, cdCoriIvaSplit);
+							testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, true);
 						}
 					}
 				} catch (ComponentException|PersistencyException|RemoteException e) {
