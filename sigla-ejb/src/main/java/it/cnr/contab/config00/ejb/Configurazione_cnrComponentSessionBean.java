@@ -72,7 +72,7 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
         } catch (it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(param0, componentObj);
             throw e;
-        } catch (ComponentException e) {
+        } catch (it.cnr.jada.comp.ComponentException e) {
             component_invocation_failure(param0, componentObj);
             throw e;
         } catch (RuntimeException e) {

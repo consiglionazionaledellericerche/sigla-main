@@ -41,6 +41,7 @@ import it.cnr.jada.util.DateUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -100,9 +101,7 @@ public class MandatoComunicaDatiHome extends BulkHome {
         sql.addSQLJoin("v_mandato_reversale_voce.ti_gestione","V_CLASSIFICAZIONE_VOCI_ALL.ti_gestione");
         sql.addSQLJoin("v_mandato_reversale_voce.cd_voce","V_CLASSIFICAZIONE_VOCI_ALL.cd_livello6");
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(aData.getTime());
-        int anno = cal.get(Calendar.YEAR);
+        int anno = LocalDateTime.now().getYear();
 
         sql.openParenthesis(FindClause.AND);
         sql.openParenthesis(FindClause.AND);

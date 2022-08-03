@@ -30,10 +30,13 @@ import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.ordmag.anag00.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class OrdineAcqRigaHome extends BulkHome {
@@ -72,6 +75,16 @@ public class OrdineAcqRigaHome extends BulkHome {
 			return (Dettaglio_contrattoBulk) righe.iterator().next();
 		}
 		return null;
+	}
+
+	public SQLBuilder selectDspUopDestByClause(UserContext userContext, OrdineAcqRigaBulk riga,
+													  UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
+													  CompoundFindClause compoundfindclause) throws PersistencyException{
+		SQLBuilder sql = unitaOperativaHome.selectByClause(userContext, compoundfindclause);
+
+		sql.addSQLClause("AND","UNITA_OPERATIVA_ORD.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+
+		return sql;
 	}
 
 

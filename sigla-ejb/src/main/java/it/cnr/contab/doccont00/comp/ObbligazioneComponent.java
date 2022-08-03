@@ -6051,6 +6051,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 
 	private boolean isAnnoDuplicato(ObbligazioneBulk bulk){
 		if ( bulk.getObbligazioniPluriennali().stream()
+				.filter(op -> Optional.ofNullable(op.getAnno()).isPresent())
 				.collect(Collectors.groupingBy(Obbligazione_pluriennaleBulk::getAnno, Collectors.counting()))
 				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
 			return Boolean.TRUE;
