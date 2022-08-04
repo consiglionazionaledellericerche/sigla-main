@@ -5329,7 +5329,13 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="esercizio_originale"/>
             <column name="pg_accertamento"/>
         </createIndex>
-
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_cuu_ordine">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="CODICE_UNIVOCO_UFFICIO_ORDINE" type="VARCHAR(10)" remarks="Codice Univoco Ufficio Ordine">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
     </changeSet>
 
 

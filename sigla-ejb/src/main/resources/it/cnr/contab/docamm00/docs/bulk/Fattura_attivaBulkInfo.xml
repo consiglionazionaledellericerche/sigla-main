@@ -919,6 +919,14 @@
 			label="Ordine Elettronico"
 			keysProperty="extra_ueKeys"
 			enabledOnEdit="true"/>
+	<fieldProperty
+			name="codiceUnivocoUfficioOrdine"
+			property="codiceUnivocoUfficioOrdine"
+			label="Codice Univoco Ufficio Ordine"
+			inputType="TEXT"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"/>
 
 	<findFieldProperty name="pg_fattura_attiva"/>
 	<findFieldProperty name="protocollo_iva" />	
@@ -953,6 +961,7 @@
 	<findFieldProperty name="dtConsegnaSdi" />
 	<findFieldProperty name="dt_ordine" />
 	<findFieldProperty name="fl_ordine_elettronico" />
+	<findFieldProperty name="codiceUnivocoUfficioOrdine" />
 
 	<formFieldProperty
 		name="statoFattElett" />
@@ -1093,6 +1102,7 @@
 	<formFieldProperty
 			name="dt_ordine" />
 	<formFieldProperty name="fl_ordine_elettronico" />
+	<formFieldProperty name="codiceUnivocoUfficioOrdine" />
 
 	<formFieldProperty
 		name="sezionaliFlagsRadioGroup" />
@@ -1222,7 +1232,6 @@
 		<columnFieldProperty name="cd_cliente" />
 		<columnFieldProperty name="cognome" />
 		<columnFieldProperty name="nome" />
-		<columnFieldProperty name="cd_avviso" />
 		<columnFieldProperty name="ragione_sociale" />
 		<columnFieldProperty name="ti_causale_emissione" />
 		<columnFieldProperty name="cd_tipo_sezionale" />
@@ -1242,7 +1251,6 @@
 	<columnFieldProperty name="dt_registrazione" />
 	<columnFieldProperty name="ds_fattura_attiva" />
 	<columnFieldProperty name="cd_cliente" />
-	<columnFieldProperty name="cd_avviso" />
 	<columnFieldProperty name="cognome" />
 	<columnFieldProperty name="nome" />
 	<columnFieldProperty name="ragione_sociale" />
