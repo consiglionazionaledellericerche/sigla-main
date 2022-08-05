@@ -52,7 +52,7 @@
 		name="importo"
 		property="importo"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.Importo2CifreFormat"
+		formatName="it.cnr.contab.util.Importo2CifrePositivoFormat"
 		enabledOnEdit="true"
 		label="Importo totale" />
 	<fieldProperty
