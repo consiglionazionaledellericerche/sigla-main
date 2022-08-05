@@ -1639,10 +1639,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							else
 								aContoIvaSplit = this.findContoIvaCredito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
 
-							//Rilevo il conto IVA Credito/Debito di tipo SPLIT (a secondo se doc attivo o passivo) e apro il conto ritenute split
-							Voce_epBulk aContoCreditoRitenuteSplit = this.findContoCreditoRitenuteSplitPayment(userContext, docamm.getEsercizio());
+							//Rilevo il conto IVA Credito/Debito di tipo SPLIT (a secondo se doc attivo o passivo) e lo compenso con il debito verso il fornitore
 							testataPrimaNota.closeDettaglioIvaSplit(docamm, aContoIvaSplit.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIvaSplit);
-							testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), docamm.getTipoDocumentoEnum().getSezioneEconomica(), aContoCreditoRitenuteSplit.getCd_voce_ep(), imIva, docamm, aCdTerzo, cdCoriIvaSplit);
+							testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, true);
 						}
 					}
 				} catch (ComponentException|PersistencyException|RemoteException e) {
@@ -3221,13 +3220,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocAmm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
+		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
 		boolean isAttivaEconomica = ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(docamm.getEsercizio());
 		if (isAttivaEconomica)
 			return ((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, cdTerzoDocAmm, cdCori, scritturaToExclude);
 		else {
 			try {
-				Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
-
 				Collection<Movimento_cogeBulk> allMovimentiCoge = proposeScritturaPartitaDoppia(userContext, docamm).getAllMovimentiColl()
 						.stream().filter(el->docamm.getEsercizio().equals(el.getEsercizio_documento()))
 						.filter(el->docamm.getCd_cds().equals(el.getCd_cds_documento()))
@@ -3256,12 +3254,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					else
 						result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_AVERE, saldo.abs()));
 				});
-				return result;
-
 			} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
 			}
 		}
-		return null;
+		return result;
 	}
 
 	/**
