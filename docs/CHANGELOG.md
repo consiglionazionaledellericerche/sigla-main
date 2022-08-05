@@ -1,3 +1,19 @@
+## Release 6.4.47  -- _August 05, 2022_ 
+**Changes**
+
+>**É consentito inserire solo importi positii sui pluriennali**
+>
+>[d21be700b259e87](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d21be700b259e87) marco.spasiano *August 05, 2022*
+
+>**clone Accertamenti Pluriennali**
+>
+>[4dc284e80d68e28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4dc284e80d68e28) cirosalvio *August 05, 2022*
+
+>**Aggiunto il controllo del Privilegio su Impegni e Accertamenti pluriennali**
+>
+>[5211e82f450c878](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5211e82f450c878) marco.spasiano *August 05, 2022*
+
+
 ## Release 6.4.46  -- _August 04, 2022_ 
 **Changes**
 
