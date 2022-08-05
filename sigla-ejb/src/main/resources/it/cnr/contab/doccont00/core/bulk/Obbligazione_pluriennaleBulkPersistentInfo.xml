@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_pluriennaleBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_pluriennaleHome">
+	<defaultColumnMap
+		tableName="OBBLIGAZIONE_PLURIENNALE">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="CD_CDS_RIF"
+			propertyName="obbligazioneRif.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_RIF"
+			propertyName="obbligazioneRif.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE_RIF"
+			propertyName="obbligazioneRif.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_RIF"
+			propertyName="obbligazioneRif.pg_obbligazione" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="obbligazione"
+		partOfOid="true" />
+	<persistentProperty
+			name="obbligazioneRif"
+	/>
+</SQLPersistentInfo>

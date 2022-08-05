@@ -29,6 +29,8 @@ import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.*;
 
 import java.math.BigDecimal;
@@ -791,6 +793,50 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 		{
 			return handleException(actioncontext, throwable);
 		}
+	}
+
+	public Forward doOnDataInizioAnagraficaProgettoChange(ActionContext actioncontext) {
+		try {
+			checkDataInizioFine(actioncontext,false);
+			return actioncontext.findDefaultForward();
+		} catch (Throwable e) {
+			return handleException(actioncontext, e);
+		}
+	}
+	public Forward doOnDataFineAnagraficaProgettoChange(ActionContext actioncontext) {
+		try {
+			checkDataInizioFine(actioncontext,true);
+			return actioncontext.findDefaultForward();
+		} catch (Throwable e) {
+			return handleException(actioncontext, e);
+		}
+	}
+
+	private void checkDataInizioFine(ActionContext context,boolean originDataFine) throws FillException, ApplicationException {
+		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
+		ProgettoBulk model=(ProgettoBulk)bp.getModel();
+		Progetto_anagraficoBulk riga = (Progetto_anagraficoBulk) bp.getCrudProgetto_anagrafico().getModel();
+		Timestamp dataOld = getDataOldCheck(riga,originDataFine);
+
+		fillModel(context);
+		if ( riga.getDataFine() != null &&
+				riga.getDataInizio().compareTo(riga.getDataFine()) >= 0){
+			setDataOldCheck( riga,dataOld,originDataFine);
+			if ( originDataFine)
+				throw new ApplicationException("La Data Fine deve essere maggiore della Data Inizio");
+			throw new ApplicationException("La Data Inizio deve essere minore della Data Fine");
+		}
+
+	}
+	private void setDataOldCheck(Progetto_anagraficoBulk riga, Timestamp dataOld,boolean originDataFine ){
+		if ( originDataFine)
+			riga.setDataFine(dataOld);
+		riga.setDataInizio(dataOld);
+	}
+	private Timestamp getDataOldCheck(Progetto_anagraficoBulk riga, boolean originDataFine ){
+		if ( originDataFine)
+			return riga.getDataFine();
+		return riga.getDataInizio();
 	}
 }
 

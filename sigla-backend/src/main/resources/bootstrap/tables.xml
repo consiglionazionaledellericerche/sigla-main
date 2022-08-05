@@ -19039,6 +19039,7 @@
             <column name="im_iva_d" remarks="IVA detraibile dell'ordine" type="numeric(15, 2)"/>
             <column name="im_totale_ordine" remarks="Totale ordine" type="numeric(15, 2)"/>
             <column name="cd_uop_ordine" remarks="Codice unita' operativa" type="VARCHAR(30)"/>
+            <column name="ti_istituz_commerc" remarks="Istituzionale Commerciale" type="VARCHAR(1)"/>
         </createTable>
     </changeSet>
     <changeSet author="sigla" id="1517416281033-425">

@@ -1,3 +1,127 @@
+## Release 6.4.46  -- _August 04, 2022_ 
+**Changes**
+
+>**Aggiunto campo Codice Univoco Ufficio Ordine per Fattura Elettronica**
+>
+>[7d2e25445490b1c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7d2e25445490b1c) gianfranco.gasparro *August 04, 2022*
+
+>**Aggiunto il controllo del Privilegio su Impegni e Accertamenti pluriennali**
+>
+>[50fd894550e83fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/50fd894550e83fd) marco.spasiano *August 04, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[974ec43906c88de](https://github.com/consiglionazionaledellericerche/sigla-main/commit/974ec43906c88de) marco.spasiano *August 02, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[6308dfdceb057e9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6308dfdceb057e9) marco.spasiano *August 02, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[113272bf5e60da4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/113272bf5e60da4) cirosalvio *August 02, 2022*
+
+>**Obbligazione pluriennale : clone**
+>
+>[8cddea285c60e3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8cddea285c60e3a) tomada_valentina *August 02, 2022*
+
+>**Accertamento Pluriennale - inserimento dati obbligazione di riferimento**
+>
+>[d7311b37d29198e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d7311b37d29198e) tomada_valentina *August 02, 2022*
+
+>**FIX riga pluriennale senza anno valorizzato**
+>
+>[fe5888cca9e5dc0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe5888cca9e5dc0) marco.spasiano *August 02, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[cef173b1fbd5cc2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cef173b1fbd5cc2) marco.spasiano *August 02, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[f81f5af32a55131](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f81f5af32a55131) tomada_valentina *August 01, 2022*
+
+>**Obbligazione Pluriennale - cancellazione**
+>
+>[3b600abf5184116](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b600abf5184116) tomada_valentina *August 01, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[d88c4b4f574a047](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d88c4b4f574a047) tomada_valentina *August 01, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[a1ef066509ff16f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1ef066509ff16f) marco.spasiano *August 01, 2022*
+
+>**Progetto Anagrafico**
+>
+>[d6edff190be7338](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d6edff190be7338) tomada_valentina *August 01, 2022*
+
+>**New feature: Impegni e Accertamenti pluriennali**
+>
+>[f43fdefe7b525cc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f43fdefe7b525cc) tomada_valentina *August 01, 2022*
+
+>**Change arubaRemoteSignService.url for test**
+>
+>[40ed6c3c27d5740](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40ed6c3c27d5740) marco.spasiano *July 19, 2022*
+
+
+## Release 6.4.45  -- _July 12, 2022_ 
+**Changes**
+
+>**FIX test**
+>
+>[b4d8838df665cd3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4d8838df665cd3) marco.spasiano *July 12, 2022*
+
+>**FIX test**
+>
+>[6c5e3e49257991a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c5e3e49257991a) marco.spasiano *July 12, 2022*
+
+>**FIX liquibase test on h2**
+>
+>[34896373b0df3d6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34896373b0df3d6) marco.spasiano *July 12, 2022*
+
+>**FIX create SIOPE+ flow with same SIOPE code and different CUP code**
+>
+>[5be52a6cb2c1674](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5be52a6cb2c1674) marco.spasiano *July 12, 2022*
+
+
+## Release 6.4.44  -- _July 11, 2022_ 
+**Changes**
+
+>**Upgrade version of jada artifact**
+>
+>[c744b731cac0708](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c744b731cac0708) marco.spasiano *July 11, 2022*
+
+>**FIX create SIOPE+ flow with same SIOPE code and different CUP code**
+>
+>[7b6eeb7109966b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b6eeb7109966b4) marco.spasiano *July 04, 2022*
+
+>**Fix dbchangelog**
+>
+>[f691eb77fffdb55](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f691eb77fffdb55) gianfranco.gasparro *June 24, 2022*
+
+>**Inviato alla fatturazione elettronica riferimento mail dell'utente che ha creato la fattura**
+>
+>[6120ddf63fdbee1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6120ddf63fdbee1) gianfranco.gasparro *June 23, 2022*
+
+>**Fix anomalie varie Gestione ordini e magazzino**
+>
+>[34fd1c0dcdeab3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34fd1c0dcdeab3d) gianfranco.gasparro *June 13, 2022*
+
+>**Fix Pannellino Economica: non caricava la partita in fase di contabilizzazione del mandato**
+>
+>[ebd3387bb29bc73](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ebd3387bb29bc73) raffaelepagano *June 13, 2022*
+
+>**Fix anomalie varie Gestione ordini e magazzino**
+>
+>[ebdac326221d37c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ebdac326221d37c) gianfranco.gasparro *June 13, 2022*
+
+>**Economica: rimozione parametro doppione in Configurazione Cnr**
+>
+>[1b6c891fd9e0fa7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b6c891fd9e0fa7) raffaelepagano *June 08, 2022*
+
+
 ## Release 6.4.42  -- _June 04, 2022_ 
 **Changes**
 

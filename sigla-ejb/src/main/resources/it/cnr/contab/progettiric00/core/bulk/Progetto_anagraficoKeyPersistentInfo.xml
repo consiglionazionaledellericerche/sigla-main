@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_anagraficoKey">
+	<defaultColumnMap
+		tableName="PROGETTO_ANAGRAFICO">
+		<columnMapping
+			columnName="ID_PRG_ANAGRAFICO"
+			propertyName="idPrgAnagrafico"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="idPrgAnagrafico"
+		partOfOid="true" />
+</SQLPersistentInfo>

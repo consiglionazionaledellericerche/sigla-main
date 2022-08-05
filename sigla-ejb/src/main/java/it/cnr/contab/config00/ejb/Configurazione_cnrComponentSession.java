@@ -102,4 +102,9 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException, java.rmi.RemoteException;
     Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException, RemoteException;
 
+    Boolean isImpegnoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
+
+    Boolean isAccertamentoPluriennaleAttivo(UserContext param0) throws ComponentException, RemoteException;
+
+
 }

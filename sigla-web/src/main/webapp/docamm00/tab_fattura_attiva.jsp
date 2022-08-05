@@ -244,6 +244,14 @@
 				<% bp.getController().writeFormInput(out,null,"fl_ordine_elettronico",false,null,"");%>
 	    	</td>
       </tr>
+      <tr>
+	       <td>
+				<% bp.getController().writeFormLabel(out,"codiceUnivocoUfficioOrdine");%>
+		   </td>
+		   <td colspan=3>
+				<% bp.getController().writeFormInput(out,null,"codiceUnivocoUfficioOrdine",false,null,"");%>
+    		</td>
+      </tr>
     </table>
    </div>
 

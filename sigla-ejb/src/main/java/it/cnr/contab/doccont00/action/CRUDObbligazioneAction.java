@@ -27,9 +27,18 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
+import it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP;
+import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -54,7 +63,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 /**
  * (Obbligazione)
  */
@@ -1421,6 +1433,33 @@ public Forward handleException(ActionContext context, Throwable ex)
 			return context.findDefaultForward();	
 		}
 		catch(Throwable e) {return handleException(context,e);}
+	}
+
+	public Forward doOnAnnoObbligazionePluriennaleChange(ActionContext actioncontext) {
+		try {
+
+
+			CRUDObbligazioneBP  bp = (CRUDObbligazioneBP ) getBusinessProcess(actioncontext);
+			ObbligazioneBulk model=(ObbligazioneBulk)bp.getModel();
+			Obbligazione_pluriennaleBulk riga = (Obbligazione_pluriennaleBulk) bp.getCrudObbligazione_pluriennale().getModel();
+
+			Integer annoCorrente = model.getEsercizio();
+
+			fillModel(actioncontext);
+
+			if( riga.getAnno()==null)
+				throw new ApplicationException("Bisogna impostare un anno");
+
+			if ((( ObbligazioneOrdBulk)bp.getModel()).getObbligazioniPluriennali().stream().filter(p->p.getAnno().equals(riga.getAnno())).count()>1)
+				throw new ApplicationException("L'anno impostato già esiste nella lista dei pluriennali");
+
+			if(riga.getAnno().compareTo(annoCorrente) <= 0){
+				throw new ApplicationException("L'anno di Obbligazione Pluriennale deve essere successivo all'anno corrente");
+			}
+			return actioncontext.findDefaultForward();
+		} catch (Throwable e) {
+			return handleException(actioncontext, e);
+		}
 	}
 }
 

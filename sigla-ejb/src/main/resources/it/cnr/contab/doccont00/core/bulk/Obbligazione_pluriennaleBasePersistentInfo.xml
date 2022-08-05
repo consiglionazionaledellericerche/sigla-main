@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_pluriennaleBase"
+	keyClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_pluriennaleKey"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_pluriennaleHome">
+	<defaultColumnMap
+		tableName="OBBLIGAZIONE_PLURIENNALE">
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_RIF"
+			propertyName="cdCdsRif"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RIF"
+			propertyName="esercizioRif"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE_RIF"
+			propertyName="esercizioOriginaleRif"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_RIF"
+			propertyName="pgObbligazioneRif"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="importo" />
+	<persistentProperty
+		name="cdCdsRif" />
+	<persistentProperty
+		name="esercizioRif" />
+	<persistentProperty
+		name="esercizioOriginaleRif" />
+	<persistentProperty
+		name="pgObbligazioneRif" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

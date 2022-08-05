@@ -24,10 +24,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
 import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -36,6 +33,7 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
@@ -1193,4 +1191,32 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
     		return handleException(context,e);
     	}
     }
+
+    public Forward doOnAnnoAccertamentoPluriennaleChange(ActionContext actioncontext) {
+        try {
+
+
+            CRUDAccertamentoBP  bp = (CRUDAccertamentoBP ) getBusinessProcess(actioncontext);
+            AccertamentoBulk model=(AccertamentoBulk)bp.getModel();
+            Accertamento_pluriennaleBulk riga = (Accertamento_pluriennaleBulk) bp.getCrudAccertamento_pluriennale().getModel();
+
+            Integer annoCorrente = model.getEsercizio();
+
+            fillModel(actioncontext);
+
+            if( riga.getAnno()==null)
+                throw new ApplicationException("Bisogna impostare un anno");
+
+            if ((( AccertamentoBulk)bp.getModel()).getAccertamentiPluriennali().stream().filter(p->p.getAnno().equals(riga.getAnno())).count()>1)
+                throw new ApplicationException("L'anno impostato già esiste nella lista dei pluriennali");
+
+            if(riga.getAnno().compareTo(annoCorrente) <= 0){
+                throw new ApplicationException("L'anno di Accertamento Pluriennale deve essere successivo all'anno corrente");
+            }
+            return actioncontext.findDefaultForward();
+        } catch (Throwable e) {
+            return handleException(actioncontext, e);
+        }
+    }
+
 }

@@ -175,6 +175,14 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 		}
     };
 
+    private final SimpleDetailCRUDController crudProgetto_anagrafico = new SimpleDetailCRUDController("Progetto_anagrafico", Progetto_anagraficoBulk.class, "anagraficheProgetto", this){
+        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+            Progetto_anagraficoBulk riga = (Progetto_anagraficoBulk) getCrudProgetto_anagrafico().getModel();
+            super.validateForDelete(context,riga);
+
+        }
+    };
+
     /**
      * TestataProgettiRicercaBP constructor comment.
      */
@@ -189,6 +197,12 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
      */
     public TestataProgettiRicercaBP(String function) {
         super(function);
+    }
+
+    private boolean attivaAnagraficaProgetto = false;
+
+    public boolean isAttivaAnagraficaProgetto() {
+        return attivaAnagraficaProgetto;
     }
 
     @Override
@@ -516,6 +530,9 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         }
 
         if (!isSearching()) {
+            if(isAttivaAnagraficaProgetto()) {
+                hash.put(i++, new String[]{"tabAnagrafico", "Anagrafiche", "/progettiric00/progetto_anagrafico.jsp"});
+            }
             hash.put(i++, new String[]{"tabContratti", "Contratti", "/progettiric00/progetto_contratti_associati.jsp"});
             hash.put(i++, new String[]{"tabAllegati", "Allegati", "/util00/tab_allegati.jsp"});
         }
@@ -1117,5 +1134,9 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         } catch (ComponentException | RemoteException e) {
             throw handleException(e);
         }
+    }
+
+    public SimpleDetailCRUDController getCrudProgetto_anagrafico() {
+        return crudProgetto_anagrafico;
     }
 }

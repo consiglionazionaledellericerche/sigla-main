@@ -124,7 +124,7 @@ public ProgettoRicercaComponent() {
 
 			//Parametri_cdsBulk param = parametriCds(uc, (ProgettoBulk)bulk);
 			// inserimento automatico del codice
-			if (((ProgettoBulk) bulk).getParametriCds().getFl_progetto_numeratore())
+			if (((ProgettoBulk)bulk).getParametriCds().getFl_progetto_numeratore())
 				((ProgettoBulk)bulk).setCd_progetto(creaCodiceProgetto(uc, (ProgettoBulk)bulk) );
 
 			java.math.BigDecimal sq_progetto;
@@ -148,6 +148,9 @@ public ProgettoRicercaComponent() {
 			}	                
 			for(int i = 0; ((ProgettoBulk)bulk).getDettagli().size() > i; i++) {
 			 ((Progetto_uoBulk) ((ProgettoBulk)bulk).getDettagli().get(i)).setPg_progetto(sq_progetto.intValue());
+			}
+			for(int i=0; ((ProgettoBulk)bulk).getAnagraficheProgetto().size() > i; i++){
+				((ProgettoBulk)bulk).getAnagraficheProgetto().get(i).setPgProgetto(sq_progetto.intValue());
 			}
 
 			((ProgettoBulk)bulk).setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
@@ -176,6 +179,7 @@ public ProgettoRicercaComponent() {
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getAnagraficheProgetto());
 
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
@@ -284,7 +288,9 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliFinanziatori(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliFinanziatori(testata)));
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
-						
+
+						testata.setAnagraficheProgetto(new it.cnr.jada.bulk.BulkList(testataHome.findAnagraficheProgetto(userContext,testata)));
+
 						testata = initializePianoEconomico(userContext, testata, true);
 
 						// controllo per evitare che il progetto padre sia modificabile nel caso
@@ -327,7 +333,7 @@ public ProgettoRicercaComponent() {
 				sql_exists.addTableToHeader("LINEA_ATTIVITA");
 				sql_exists.addSQLJoin("PDG_PREVENTIVO_ETR_DET.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 				sql_exists.addSQLJoin("PDG_PREVENTIVO_ETR_DET.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");
-				sql_exists.addSQLClause("AND","PROGETTO.PG_PROGETTO_PADRE", SQLBuilder.EQUALS,testata.getPg_progetto());
+				sql_exists.addSQLClause(FindClause.AND,"PROGETTO.PG_PROGETTO_PADRE",SQLBuilder.EQUALS,testata.getPg_progetto());
 				if (sql_exists.executeExistsQuery(getConnection(userContext)))
 					return false;
 				sql_exists = getHome(userContext,Pdg_preventivo_spe_detBulk.class).createSQLBuilder();
@@ -336,7 +342,7 @@ public ProgettoRicercaComponent() {
 				sql_exists.addTableToHeader("LINEA_ATTIVITA");
 				sql_exists.addSQLJoin("PDG_PREVENTIVO_SPE_DET.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 				sql_exists.addSQLJoin("PDG_PREVENTIVO_SPE_DET.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");
-				sql_exists.addSQLClause("AND","PROGETTO.PG_PROGETTO_PADRE",SQLBuilder.EQUALS,testata.getPg_progetto());
+				sql_exists.addSQLClause(FindClause.AND,"PROGETTO.PG_PROGETTO_PADRE",SQLBuilder.EQUALS,testata.getPg_progetto());
 				return !sql_exists.executeExistsQuery(getConnection(userContext));
 			} catch(java.sql.SQLException e) {
 				throw handleException(e);
@@ -380,6 +386,9 @@ public ProgettoRicercaComponent() {
 	
 				if (bulk.getProgettopadre() == null || bulk.getProgettopadre().getPg_progetto() == null)
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire il progetto padre!");	                	
+	
+				if (bulk.getProgettopadre() == null)
+				  bulk.setLivello(1);
 	
 				//se nei dettagli non è presente la UO cordinatrice viene creata
 				if( cercaUocordinatrice(bulk) ) {
@@ -583,6 +592,8 @@ public ProgettoRicercaComponent() {
 			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
 			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 
+			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getAnagraficheProgetto());
+
 			if (((ProgettoBulk)bulk).getOtherField()!=null) {
 				((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
 				if (((ProgettoBulk)bulk).getOtherField().isToBeCreated())
@@ -708,9 +719,7 @@ public ProgettoRicercaComponent() {
 
 				return sql;
 		}
-	private void inizializzaBulkPerStampa(UserContext usercontext, Stampa_progettiVBulk stampa_progettivbulk)
-		throws ComponentException
-	{
+	private void inizializzaBulkPerStampa(UserContext usercontext, Stampa_progettiVBulk stampa_progettivbulk) {
 		stampa_progettivbulk.setCd_cds(CNRUserContext.getCd_cds(usercontext));
 		stampa_progettivbulk.setEsercizio(CNRUserContext.getEsercizio(usercontext));
 	}
@@ -1039,9 +1048,9 @@ public void validaCancellazioneUoAssociata(UserContext userContext, ProgettoBulk
 		sql.addSQLJoin("CDR.CD_CENTRO_RESPONSABILITA","V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA");
 		sql.addTableToHeader("PROGETTO_UO");
 		sql.addSQLJoin("PROGETTO_UO.PG_PROGETTO","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO");
-		sql.addSQLClause("AND","PROGETTO_UO.PG_PROGETTO",SQLBuilder.EQUALS,pruo.getPg_progetto());
-		sql.addSQLClause("AND","PROGETTO_UO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,pruo.getCd_unita_organizzativa());
-		sql.addSQLClause("AND","CDR.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,pruo.getCd_unita_organizzativa());
+		sql.addSQLClause(FindClause.AND,"PROGETTO_UO.PG_PROGETTO", SQLBuilder.EQUALS,pruo.getPg_progetto());
+		sql.addSQLClause(FindClause.AND,"PROGETTO_UO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,pruo.getCd_unita_organizzativa());
+		sql.addSQLClause(FindClause.AND,"CDR.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,pruo.getCd_unita_organizzativa());
 		List ris = home.fetchAll(sql);
 		if (!ris.isEmpty())
 			throw new ApplicationException("Impossibile cancellare la UO partecipante "+pruo.getCd_unita_organizzativa()+" in quanto\n"+
@@ -1115,7 +1124,7 @@ public SQLBuilder selectCommessaForPrintByClause (UserContext userContext,Stampa
 	sql.addClause("AND", "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 	Optional.of(stampa).flatMap(stampa_elenco_progetti_laBulk ->
 			Optional.ofNullable(stampa_elenco_progetti_laBulk.getProgettoForPrint())
-			.map(ProgettoKey::getPg_progetto)).ifPresent(pgProgetto -> sql.addClause("AND", "pg_progetto_padre", SQLBuilder.EQUALS, pgProgetto));
+			.map(ProgettoKey::getPg_progetto)).ifPresent(pgProgetto -> sql.addClause(FindClause.AND, "pg_progetto_padre", SQLBuilder.EQUALS, pgProgetto));
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
 		sql.addSQLClause("AND","V_PROGETTO_PADRE.PG_PROGETTO_PADRE IN ( SELECT DISTINCT PG_PROGETTO FROM V_PROGETTO_PADRE WHERE CD_PROGETTO = ?)");
@@ -1132,10 +1141,10 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	SQLBuilder sql = progettohome.createSQLBuilder();
 	String commessa = stampa.getCdCommessaForPrint();
 	sql.addClause( clause );
-	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
-	sql.addClause("AND", "tipo_fase", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-	sql.addClause("AND", "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
-	sql.addClause("AND","pg_progetto_padre",SQLBuilder.EQUALS,stampa.getCommessaForPrint().getPg_progetto());
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+	sql.addClause(FindClause.AND, "tipo_fase", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+	sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	sql.addClause(FindClause.AND,"pg_progetto_padre", SQLBuilder.EQUALS,stampa.getCommessaForPrint().getPg_progetto());
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
 		sql.addSQLClause("AND","V_PROGETTO_PADRE.PG_PROGETTO_PADRE IN ( SELECT DISTINCT PG_PROGETTO FROM V_PROGETTO_PADRE WHERE CD_PROGETTO = ?)");
@@ -1495,6 +1504,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue(), rimodulazione);
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
 		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
+		   		validaAnagraficheProgetto(userContext, progetto);
 	   		}
 		} catch(Throwable e) {
     		throw handleException(e);
@@ -1535,41 +1545,41 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 										.filter(el->el.getEsercizio_piano().equals(entryEse.getKey()))
 										.noneMatch(el->el.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey())))
 									throw new ApplicationRuntimeException("Attenzione: non risulta presente la voce del piano economico "+
-											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" già inserita in previsione (Es: " + 
+											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" già inserita in previsione (Es: " +
 											entryEse.getKey()+" - Cdr: "+
 											entryVpe.getValue().stream().map(Pdg_modulo_speseBulk::getCd_centro_responsabilita).findFirst().orElse(null)+
 											"). Operazione non consentita!");
-		
+
 								BigDecimal imDecentrataInt = entryVpe.getValue().stream()
 										.map(pme->Optional.ofNullable(pme.getIm_spese_gest_decentrata_int()).orElse(BigDecimal.ZERO))
 										.reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-								
+
 								BigDecimal imDecentrataInt2 = progetto.getAllDetailsProgettoPianoEconomico().stream()
 										.filter(ppe->ppe.getEsercizio_piano().equals(entryEse.getKey()))
 										.filter(ppe->ppe.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey()))
 										.map(ppe->Optional.ofNullable(ppe.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO))
 										.reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-								
+
 								if (imDecentrataInt2.compareTo(imDecentrataInt)<0)
 									throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato per la voce del piano economico "+
-											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" non può essere inferiore all'importo già inserito in previsione "	+ 
+											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" non può essere inferiore all'importo già inserito in previsione "	+
 											"per le fonti decentrate interne ("+new EuroFormat().format(imDecentrataInt)+"). Operazione non consentita!");
-									
+
 								BigDecimal imDecentrataEst = entryVpe.getValue().stream()
 										.map(pme->Optional.ofNullable(pme.getIm_spese_gest_decentrata_est()).orElse(BigDecimal.ZERO))
 										.reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-								
+
 								BigDecimal imDecentrataEst2 = progetto.getAllDetailsProgettoPianoEconomico().stream()
 										.filter(ppe->ppe.getEsercizio_piano().equals(entryEse.getKey()))
 										.filter(ppe->ppe.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey()))
 										.map(ppe->Optional.ofNullable(ppe.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO))
 										.reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-								
+
 								if (imDecentrataEst2.compareTo(imDecentrataEst)<0)
 									throw new ApplicationRuntimeException("Attenzione: l'importo finanziato per la voce del piano economico "+
-											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" non può essere inferiore all'importo già inserito in previsione "	+ 
+											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" non può essere inferiore all'importo già inserito in previsione "	+
 											"per le fonti decentrate esterne ("+new EuroFormat().format(imDecentrataEst)+"). Operazione non consentita!");
-		
+
 								BulkList<Elemento_voceBulk> vociAssociatePianoEconomico = new BulkList<>();
 								progetto.getAllDetailsProgettoPianoEconomico().stream()
 										.filter(el->el.getEsercizio_piano().equals(entryEse.getKey()))
@@ -1578,32 +1588,32 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 										.forEach(el->vociAssociatePianoEconomico.addAll(el.stream()
 												.map(Ass_progetto_piaeco_voceBulk::getElemento_voce)
 												.collect(Collectors.toList())));
-	
+
 								entryVpe.getValue().forEach(pms->{
 									List<Elemento_voceBulk> vociAssociateClassificazione;
 									V_classificazione_vociBulk classVoce;
 									try {
 										classVoce = (V_classificazione_vociBulk)classVoceHome.findByPrimaryKey(pms.getClassificazione());
 										SQLBuilder sqlElementoVoce = elementoVoceHome.createSQLBuilder();
-	
+
 										sqlElementoVoce.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,entryEse.getKey());
-	
+
 										sqlElementoVoce.addTableToHeader("PARAMETRI_LIVELLI");
 										sqlElementoVoce.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
 										sqlElementoVoce.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
 										sqlElementoVoce.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
 										sqlElementoVoce.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 										sqlElementoVoce.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), SQLBuilder.EQUALS, pms.getId_classificazione());
-	
+
 										vociAssociateClassificazione = new it.cnr.jada.bulk.BulkList(elementoVoceHome.fetchAll(sqlElementoVoce));
 									} catch(Throwable e) {
 										throw new ApplicationRuntimeException(e);
 									}
-	
+
 									if (vociAssociatePianoEconomico.stream()
 										.noneMatch(voce->Optional.of(vociAssociateClassificazione).orElse(Collections.emptyList()).contains(voce)))
 										throw new ApplicationRuntimeException("Attenzione: non risulta presente per la voce del piano economico "+
-												entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" l'associazione alle voci di bilancio già inserite in previsione (Es: " + 
+												entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" l'associazione alle voci di bilancio già inserite in previsione (Es: " +
 												entryEse.getKey()+" - Cdr: "+pms.getCd_centro_responsabilita()+
 												" - Classificazione: "+(parCnrBulk.getFl_pdg_codlast()?classVoce.getCd_livello_last():classVoce.getCd_classificazione())+
 												"). Operazione non consentita!");
@@ -2451,5 +2461,40 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
+	}
+
+	private void validaAnagraficheProgetto(UserContext uc, ProgettoBulk bulk) throws ComponentException, IntrospectionException, PersistencyException, SQLException{
+		if(bulk.getAnagraficheProgetto() == null || bulk.getAnagraficheProgetto() .isEmpty()){
+			return;
+		}
+		validaRigheDettaglioAnagraficaProgetto(uc,bulk);
+
+	}
+	private void validaRigheDettaglioAnagraficaProgetto(UserContext uc, ProgettoBulk bulk) throws ComponentException {
+
+		if(isProgettoAnagraficaDuplicato(bulk)){
+			throw new ApplicationException("Ci sono anagrafiche duplicate");
+		}
+		for ( Progetto_anagraficoBulk progetto_anagraficoBulk:bulk.getAnagraficheProgetto()){
+			if(progetto_anagraficoBulk.getCdAnag() == null || progetto_anagraficoBulk.getCdAnag()== 0){
+				throw new ApplicationException("Selezionare anagrafica");
+			}
+
+			if(progetto_anagraficoBulk.getDataInizio() == null){
+				throw new ApplicationException("Impostare data inizio nel progetto");
+			}
+			if(progetto_anagraficoBulk.getDataFine() == null){
+				throw new ApplicationException("Impostare data fine nel progetto");
+			}
+		}
+
+	}
+	private boolean isProgettoAnagraficaDuplicato(ProgettoBulk bulk){
+		if (bulk.getAnagraficheProgetto().stream()
+				.collect(Collectors.groupingBy(Progetto_anagraficoBulk::getCdAnag, Collectors.counting()))
+				.values().stream().anyMatch(e -> e.compareTo(Long.decode("1")) > 0)) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 }
