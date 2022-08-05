@@ -20,6 +20,8 @@ package it.cnr.contab.config00.comp;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrKey;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -27,6 +29,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyError;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,14 +38,12 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericComponent implements IConfigurazione_cnrMgr, Cloneable, Serializable {
 
-    private transient final static Logger logger = LoggerFactory.getLogger(Configurazione_cnrComponent.class);
-
     public static final String ASTERISCO = "*";
+    private final static Logger logger = LoggerFactory.getLogger(Configurazione_cnrComponent.class);
 
     public Configurazione_cnrComponent() {
 
@@ -547,7 +548,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         return Optional.ofNullable(home.findByPrimaryKey(configurazioneCnrKey))
                 .filter(Configurazione_cnrBulk.class::isInstance)
                 .map(Configurazione_cnrBulk.class::cast)
-                .map(bulk -> Optional.ofNullable(bulk.getVal01()).filter(val->val.equals("Y")).isPresent());
+                .map(bulk -> Optional.ofNullable(bulk.getVal01()).filter(val -> val.equals("Y")).isPresent());
     }
 
     /**
@@ -562,7 +563,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     public String getUoRagioneria(UserContext userContext, Integer esercizio) throws ComponentException {
         try {
             return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getUoRagioneria(esercizio);
-        }catch (PersistencyException e){
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -579,10 +580,11 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     public String getContoCorrenteEnte(UserContext userContext, Integer esercizio) throws ComponentException {
         try {
             return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getContoCorrenteEnte(esercizio);
-        }catch (PersistencyException e){
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
+
     /**
      * Ritorna il codice cdr del personale
      * <p><b>chiave_primaria: ELEMENTO_VOCE_SPECIALE</b>
@@ -595,7 +597,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     public String getCdrPersonale(UserContext userContext, Integer esercizio) throws ComponentException {
         try {
             return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getCdrPersonale(esercizio);
-        }catch (PersistencyException e){
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -611,8 +613,8 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public String getUoDistintaTuttaSac(UserContext userContext, Integer esercizio) throws ComponentException {
         try {
-            return ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).getUoDistintaTuttaSac(esercizio);
-        }catch (PersistencyException e){
+            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getUoDistintaTuttaSac(esercizio);
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -620,15 +622,15 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     /**
      * Indica se la uo indicata è proprio quella speciale tutta sac
      *
-     * @param esercizio l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
+     * @param esercizio            l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
      * @param cdUnitaOrganizzativa l'unità organizzativa di cui si chiede se si tratta della Uo Speciale Tutta SAC
      * @return Boolean
      * @throws PersistencyException
      */
     public Boolean isUOSpecialeDistintaTuttaSAC(UserContext userContext, Integer esercizio, String cdUnitaOrganizzativa) throws ComponentException {
         try {
-            return ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).isUOSpecialeDistintaTuttaSAC(esercizio,cdUnitaOrganizzativa);
-        }catch (PersistencyException e){
+            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).isUOSpecialeDistintaTuttaSAC(esercizio, cdUnitaOrganizzativa);
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -641,8 +643,8 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
      */
     public String getCdsSAC(UserContext userContext, Integer esercizio) throws ComponentException {
         try {
-            return ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).getCdsSAC(esercizio);
-        }catch (PersistencyException e){
+            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getCdsSAC(esercizio);
+        } catch (PersistencyException e) {
             throw handleException(e);
         }
     }
@@ -651,7 +653,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         logger.info("shutdow hook");
         final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
         try {
-            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+            Configurazione_cnrBulk configurazione_cnrBulk = new Configurazione_cnrBulk(
                     Configurazione_cnrBulk.PK_EMAIL_PEC,
                     Configurazione_cnrBulk.SK_SDI,
                     ASTERISCO,
@@ -669,7 +671,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                             throw new RuntimeException(e);
                         }
                     });
-            Configurazione_cnrBulk flussoOrdinativi  = new Configurazione_cnrBulk(
+            Configurazione_cnrBulk flussoOrdinativi = new Configurazione_cnrBulk(
                     Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
                     Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS,
                     ASTERISCO,
@@ -726,7 +728,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     }
 
     /**
-     *
      * @param userContext
      * @return É attiva la gestione dell'economico patrimononale (parallela o pura)
      * @throws PersistencyException
@@ -744,7 +745,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     }
 
     /**
-     *
      * @param userContext
      * @return É attiva la gestione dell'economico patrimononale pura
      * @throws PersistencyException
@@ -762,7 +762,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     }
 
     /**
-     *
      * @param userContext
      * @return É attiva la gestione dell'economico patrimononale parallela
      * @throws PersistencyException
@@ -780,7 +779,6 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
     }
 
     /**
-     *
      * @param userContext
      * @return É attivo il blocco delle scritture di economica
      * @throws PersistencyException
@@ -796,101 +794,8 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
-    public Boolean isAccertamentoPluriennaleAttivo(UserContext userContext) throws ComponentException{
-        try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_ACCERTAMENTI,
-                    Configurazione_cnrBulk.SK_ACCERTAMENTI_PLURIENNALI,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        try {
-                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-                                    .orElse(Boolean.FALSE);
-                        } catch (PersistencyException|ComponentException e) {
-                            throw new PersistencyError(e);
-                        }
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-
-    public Boolean isImpegnoPluriennaleAttivo(UserContext userContext) throws ComponentException{
-        try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_IMPEGNI,
-                    Configurazione_cnrBulk.SK_IMPEGNI_PLURIENNALI,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        try {
-                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-                                    .orElse(Boolean.FALSE);
-                        } catch (PersistencyException|ComponentException e) {
-                            throw new PersistencyError(e);
-                        }
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
-
-
-    public Boolean isAssPrgAnagraficoAttiva(UserContext userContext) throws ComponentException{
-        try{
-            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-                    Configurazione_cnrBulk.PK_GESTIONE_PROGETTI,
-                    Configurazione_cnrBulk.SK_ASS_PROGETTI_ANGAGRAFICO,
-                    ASTERISCO,
-                    CNRUserContext.getEsercizio(userContext));
-            return val01YesNo(userContext, configurazioneCnrKey)
-                    .orElseGet(() -> {
-                        try {
-                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-                                    .orElse(Boolean.FALSE);
-                        } catch (PersistencyException|ComponentException e) {
-                            throw new PersistencyError(e);
-                        }
-                    });
-        } catch (PersistencyException e) {
-            throw handleException(e);
-        }
-    }
 
     /**
-     *
-     * @param userContext
-     * @return É attiva la gestione che, in fase di assunzione impegno, consente di creare in automatico sull'impegno di spesa
-     * una variazione di storno bilancio con cui vengono in automatico spostate le somme dalla GAE selezionata sull'impegno ad una GAE alternativa
-     * indicata direttamente dall'utente
-     * @throws PersistencyException
-     */
-    public Boolean isAttachRestContrStoredFromSigla(UserContext userContext) throws ComponentException, RemoteException {
-        try{
-        Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
-        Configurazione_cnrBulk.PK_GESTIONE_CONTRATTI,
-        Configurazione_cnrBulk.SK_ATT_REST_STORED_FROM_SIGLA,
-        ASTERISCO,
-        CNRUserContext.getEsercizio(userContext));
-        return val01YesNo(userContext, configurazioneCnrKey)
-        .orElseGet(() -> {
-        try {
-        return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
-        .orElse(Boolean.FALSE);
-        } catch (PersistencyException|ComponentException e) {
-        throw new PersistencyError(e);
-        }
-        });
-        } catch (PersistencyException e) {
-        throw handleException(e);
-        }
-        }
-
-    /**
-     *
      * @param userContext
      * @return É attiva la gestione che, in fase di assunzione impegno, consente di creare in automatico sull'impegno di spesa
      * una variazione di storno bilancio con cui vengono in automatico spostate le somme dalla GAE selezionata sull'impegno ad una GAE alternativa
@@ -920,6 +825,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
+
     public Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException {
         try {
             return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
@@ -931,4 +837,130 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
+    public Boolean isAssPrgAnagraficoAttiva(UserContext userContext) throws ComponentException{
+        try{
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_GESTIONE_PROGETTI,
+                    Configurazione_cnrBulk.SK_ASS_PROGETTI_ANGAGRAFICO,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+    /**
+     *
+     * @param userContext
+     * @return É attiva la gestione che, in fase di assunzione impegno, consente di creare in automatico sull'impegno di spesa
+     * una variazione di storno bilancio con cui vengono in automatico spostate le somme dalla GAE selezionata sull'impegno ad una GAE alternativa
+     * indicata direttamente dall'utente
+     * @throws PersistencyException
+     */
+    public Boolean isAttachRestContrStoredFromSigla(UserContext userContext) throws ComponentException, RemoteException {
+        try{
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_GESTIONE_CONTRATTI,
+                    Configurazione_cnrBulk.SK_ATT_REST_STORED_FROM_SIGLA,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+
+    public Boolean isAccertamentoPluriennaleAttivo(UserContext userContext) throws ComponentException {
+        final Configurazione_cnrBulk configurazione =
+                Optional.ofNullable(
+                        getConfigurazione(
+                                userContext,
+                                CNRUserContext.getEsercizio(userContext),
+                                ASTERISCO,
+                                Configurazione_cnrBulk.PK_ACCERTAMENTI,
+                                Configurazione_cnrBulk.SK_ACCERTAMENTI_PLURIENNALI)
+                ).orElseGet(() -> {
+                            try {
+                                return getConfigurazione(
+                                        userContext,
+                                        0,
+                                        ASTERISCO,
+                                        Configurazione_cnrBulk.PK_ACCERTAMENTI,
+                                        Configurazione_cnrBulk.SK_ACCERTAMENTI_PLURIENNALI);
+                            } catch (ComponentException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        }
+                );
+        final boolean accertamentoPluriennaleAttivo = Optional.ofNullable(configurazione)
+                .flatMap(configurazione_cnrBulk -> Optional.ofNullable(configurazione_cnrBulk.getVal01()))
+                .filter(val -> val.equals("Y"))
+                .isPresent();
+        final Optional<String> ruolo = Optional.ofNullable(configurazione.getVal02());
+        if (accertamentoPluriennaleAttivo && ruolo.isPresent()){
+            try {
+                return ((RuoloComponentSession) EJBCommonServices.createEJB("CNRUTENZE00_EJB_RuoloComponentSession"))
+                        .controlloAbilitazione(userContext, ruolo.get());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return accertamentoPluriennaleAttivo;
+    }
+
+    public Boolean isImpegnoPluriennaleAttivo(UserContext userContext) throws ComponentException {
+        final Configurazione_cnrBulk configurazione =
+                Optional.ofNullable(
+                        getConfigurazione(
+                                userContext,
+                                CNRUserContext.getEsercizio(userContext),
+                                ASTERISCO,
+                                Configurazione_cnrBulk.PK_IMPEGNI,
+                                Configurazione_cnrBulk.SK_IMPEGNI_PLURIENNALI)
+                ).orElseGet(() -> {
+                            try {
+                                return getConfigurazione(
+                                        userContext,
+                                        0,
+                                        ASTERISCO,
+                                        Configurazione_cnrBulk.PK_IMPEGNI,
+                                        Configurazione_cnrBulk.SK_IMPEGNI_PLURIENNALI);
+                            } catch (ComponentException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        }
+                );
+        final boolean impegnoPluriennaleAttivo = Optional.ofNullable(configurazione)
+                .flatMap(configurazione_cnrBulk -> Optional.ofNullable(configurazione_cnrBulk.getVal01()))
+                .filter(val -> val.equals("Y"))
+                .isPresent();
+        final Optional<String> ruolo = Optional.ofNullable(configurazione.getVal02());
+        if (impegnoPluriennaleAttivo && ruolo.isPresent()){
+            try {
+                return ((RuoloComponentSession) EJBCommonServices.createEJB("CNRUTENZE00_EJB_RuoloComponentSession"))
+                        .controlloAbilitazione(userContext, ruolo.get());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return impegnoPluriennaleAttivo;
+    }
+
 }

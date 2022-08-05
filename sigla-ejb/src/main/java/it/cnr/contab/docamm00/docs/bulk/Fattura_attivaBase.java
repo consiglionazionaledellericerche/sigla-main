@@ -31,6 +31,16 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// CD_DIVISA VARCHAR(10) NOT NULL
 	private java.lang.String cd_divisa;
 
+	public String getCodiceUnivocoUfficioOrdine() {
+		return codiceUnivocoUfficioOrdine;
+	}
+
+	public void setCodiceUnivocoUfficioOrdine(String codiceUnivocoUfficioOrdine) {
+		this.codiceUnivocoUfficioOrdine = codiceUnivocoUfficioOrdine;
+	}
+
+	private java.lang.String codiceUnivocoUfficioOrdine;
+
 	// CD_MODALITA_PAG VARCHAR(10)
 	private java.lang.String cd_modalita_pag;
 

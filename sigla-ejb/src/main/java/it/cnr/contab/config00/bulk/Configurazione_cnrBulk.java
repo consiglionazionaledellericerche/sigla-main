@@ -19,16 +19,16 @@ package it.cnr.contab.config00.bulk;
 
 public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
-	public final static String SK_SDI = "SDI";
-	public final static String PK_EMAIL_PEC = "EMAIL_PEC";
-	public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
+    public final static String SK_SDI = "SDI";
+    public final static String PK_EMAIL_PEC = "EMAIL_PEC";
+    public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
     public final static String PK_BLOCCO_DETRAZIONI = "BLOCCO_DETRAZIONI";
-	/**
-	 * VAL01 Y -> presente l'economico patrimoniale parallela, N -> presente l'economico patrimoniale parallela
-	 * VAL02 Y -> blocco scritture proposte, N -> è possibile modificare le scritture
-	 */
-	public final static String PK_ECONOMICO_PATRIMONIALE = "ECONOMICO_PATRIMONIALE";
-	public final static String SK_TIPO_ECONOMICO_PATRIMONIALE = "TIPO_ECONOMICO_PATRIMONIALE";
+    /**
+     * VAL01 Y -> presente l'economico patrimoniale parallela, N -> presente l'economico patrimoniale parallela
+     * VAL02 Y -> blocco scritture proposte, N -> è possibile modificare le scritture
+     */
+    public final static String PK_ECONOMICO_PATRIMONIALE = "ECONOMICO_PATRIMONIALE";
+    public final static String SK_TIPO_ECONOMICO_PATRIMONIALE = "TIPO_ECONOMICO_PATRIMONIALE";
     public final static String SK_ASSOCIAZIONE_CONTI = "ASSOCIAZIONE_CONTI";
 
     public final static String PK_TRATTAMENTO_SPECIALE = "TIPO_TRATTAMENTO_SPECIALE";

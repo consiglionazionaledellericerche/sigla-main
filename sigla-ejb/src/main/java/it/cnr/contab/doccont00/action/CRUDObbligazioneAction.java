@@ -27,9 +27,18 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
+import it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP;
+import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -1445,7 +1454,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 				throw new ApplicationException("L'anno impostato già esiste nella lista dei pluriennali");
 
 			if(riga.getAnno().compareTo(annoCorrente) <= 0){
-				throw new ApplicationException("L'anno deve essere successivo all'anno corrente");
+				throw new ApplicationException("L'anno di Obbligazione Pluriennale deve essere successivo all'anno corrente");
 			}
 			return actioncontext.findDefaultForward();
 		} catch (Throwable e) {
