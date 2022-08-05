@@ -839,7 +839,8 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                             }
                         }
                 );
-        final boolean accertamentoPluriennaleAttivo = Optional.ofNullable(configurazione.getVal01())
+        final boolean accertamentoPluriennaleAttivo = Optional.ofNullable(configurazione)
+                .flatMap(configurazione_cnrBulk -> Optional.ofNullable(configurazione_cnrBulk.getVal01()))
                 .filter(val -> val.equals("Y"))
                 .isPresent();
         final Optional<String> ruolo = Optional.ofNullable(configurazione.getVal02());
@@ -876,7 +877,8 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                             }
                         }
                 );
-        final boolean impegnoPluriennaleAttivo = Optional.ofNullable(configurazione.getVal01())
+        final boolean impegnoPluriennaleAttivo = Optional.ofNullable(configurazione)
+                .flatMap(configurazione_cnrBulk -> Optional.ofNullable(configurazione_cnrBulk.getVal01()))
                 .filter(val -> val.equals("Y"))
                 .isPresent();
         final Optional<String> ruolo = Optional.ofNullable(configurazione.getVal02());
