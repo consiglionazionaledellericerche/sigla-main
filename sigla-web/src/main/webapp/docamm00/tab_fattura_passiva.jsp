@@ -172,12 +172,17 @@
 					      <tr>     	
 					   		<% bp.getController().writeFormField(out,"fl_spedizioniere");%>
 					      </tr>
-					      <tr>     	
+					      <tr>
 					   		<% bp.getController().writeFormField(out,"fl_bolla_doganale");%>
 					      </tr>
+                          <% if (bp.isAttivoOrdini()) { %>
+                              <tr>
+                                <% bp.getController().writeFormField(out,"flDaOrdini");%>
+                              </tr>
+                          <% } %>
 		      		</table>
 		      	</td>
-	      </tr>
+    	      </tr>
 		<% } else { %>
 	      <tr>     	
 	     	<td>

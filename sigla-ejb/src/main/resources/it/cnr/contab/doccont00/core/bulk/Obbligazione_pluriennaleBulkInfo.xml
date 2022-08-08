@@ -47,12 +47,12 @@
 		inputSize="5"
 		enabledOnEdit="true"
 		command="doOnAnnoObbligazionePluriennaleChange"
-		label="Anno Impegno Pluriennale" />
+		label="Anno Obbligazione Pluriennale" />
 	<fieldProperty
 		name="importo"
 		property="importo"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.Importo2CifreFormat"
+		formatName="it.cnr.contab.util.Importo2CifrePositivoFormat"
 		enabledOnEdit="true"
 		label="Importo totale" />
 	<fieldProperty
@@ -71,7 +71,7 @@
 		rows="5"
 		maxLength="38"
 		enabledOnEdit="false"
-		label="Esercizio di riferimento" />
+		label="Esercizio dell'obbligazione di riferimento" />
 	<fieldProperty
 		name="esercizioOriginaleRif"
 		property="obbligazioneRif.esercizio_originale"
@@ -80,7 +80,7 @@
 		rows="5"
 		maxLength="38"
 		enabledOnEdit="false"
-		label="Esercizio Originale di riferimento" />
+		label="Esercizio Originale dell'obbligazione di riferimento" />
 	<fieldProperty
 		name="pgObbligazioneRif"
 		property="obbligazioneRif.pg_obbligazione"
@@ -89,7 +89,7 @@
 		rows="5"
 		maxLength="38"
 		enabledOnEdit="false"
-		label="Numero di riferimento" />
+		label="Numero dell'obbligazione di riferimento" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -144,11 +144,5 @@
 				name="anno" />
 		<columnFieldProperty
 				name="importo" />
-		<columnFieldProperty
-				name="esercizioRif" />
-		<columnFieldProperty
-				name="esercizioOriginaleRif" />
-		<columnFieldProperty
-				name="pgObbligazioneRif" />
 	</columnSet>
 </bulkInfo>

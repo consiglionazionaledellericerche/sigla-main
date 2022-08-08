@@ -4847,6 +4847,7 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 
 	private boolean isAnnoDuplicato(AccertamentoBulk bulk){
 		if ( bulk.getAccertamentiPluriennali().stream()
+				.filter(ap -> Optional.ofNullable(ap.getAnno()).isPresent())
 				.collect(Collectors.groupingBy(Accertamento_pluriennaleBulk::getAnno, Collectors.counting()))
 				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
 			return Boolean.TRUE;

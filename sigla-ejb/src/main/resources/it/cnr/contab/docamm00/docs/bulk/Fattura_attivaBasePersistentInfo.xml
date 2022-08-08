@@ -410,6 +410,11 @@
 				propertyName="dt_ordine"
 				sqlTypeName="TIMESTAMP"
 				columnSize="7" />
+		<columnMapping
+				columnName="CODICE_UNIVOCO_UFFICIO_ORDINE"
+				propertyName="codiceUnivocoUfficioOrdine"
+				sqlTypeName="VARCHAR"
+				columnSize="10" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -545,4 +550,6 @@
 			name="fl_ordine_elettronico" />
 	<persistentProperty
 			name="dt_ordine" />
+	<persistentProperty
+			name="codiceUnivocoUfficioOrdine" />
 </SQLPersistentInfo>
