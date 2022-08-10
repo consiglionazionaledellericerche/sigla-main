@@ -111,7 +111,10 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 	 * Restituisce il valore di: [Rappresenta le righe di dettaglio della fattura. Ogni fattura ha sempre almeno una riga di dettaglio]
 	 **/
 	public Fattura_passiva_rigaBulk getFatturaPassivaRiga() {
-		return fatturaPassivaRiga;
+		return Optional.ofNullable(fatturaPassivaRiga)
+				.orElseGet(() -> {
+					return new Fattura_passiva_rigaIBulk();
+				});
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
