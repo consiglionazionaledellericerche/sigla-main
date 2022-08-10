@@ -1952,6 +1952,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 				ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				List<ProgettoBulk> progettiAttiviByTipoFinanziamento = progettoHome.selectProgettiAttiviByTipoFinanziamento(userContext, TipoFinanziamentoBulk.CODICE_GEST);
+				getHomeCache(userContext).fetchAll(userContext);
 				progettiAttiviByTipoFinanziamento.stream().filter(el->el.getUnita_organizzativa().getCd_cds().equals(CNRUserContext.getCd_cds(userContext)))
 						.filter(el->!el.getPg_progetto().equals(progetto.getPg_progetto()))
 						.findAny().ifPresent(el->{
