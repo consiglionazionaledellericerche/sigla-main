@@ -21,6 +21,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -72,6 +74,7 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     protected ContoBulk conto = new ContoBulk();
     protected Scrittura_partita_doppiaBulk scrittura = new Scrittura_partita_doppiaBulk();
     protected TerzoBulk terzo;
+    protected IDocumentoAmministrativoBulk documentoAmministrativo;
 
     public Movimento_cogeBulk() {
         super();
@@ -367,5 +370,47 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
         public String label() {
             return label;
         }
+    }
+
+    public IDocumentoAmministrativoBulk getDocumentoAmministrativo() {
+        return Optional.ofNullable(documentoAmministrativo)
+                .orElseGet(() -> {
+                    return Optional.ofNullable(getCd_tipo_documento())
+                            .map(s -> TipoDocumentoEnum.fromValue(s))
+                            .map(tipoDocumentoEnum -> tipoDocumentoEnum.getDocumentoAmministrativoBulk())
+                            .orElse(null);
+                });
+    }
+
+    public void setDocumentoAmministrativo(IDocumentoAmministrativoBulk documentoAmministrativo) {
+        this.documentoAmministrativo = documentoAmministrativo;
+    }
+
+    @Override
+    public String getCd_cds_documento() {
+        return Optional.ofNullable(getDocumentoAmministrativo())
+                .map(IDocumentoAmministrativoBulk::getCd_cds)
+                .orElse(null);
+    }
+
+    @Override
+    public String getCd_uo_documento() {
+        return Optional.ofNullable(getDocumentoAmministrativo())
+                .map(IDocumentoAmministrativoBulk::getCd_uo)
+                .orElse(null);
+    }
+
+    @Override
+    public Integer getEsercizio_documento() {
+        return Optional.ofNullable(getDocumentoAmministrativo())
+                .map(IDocumentoAmministrativoBulk::getEsercizio)
+                .orElse(null);
+    }
+
+    @Override
+    public Long getPg_numero_documento() {
+        return Optional.ofNullable(getDocumentoAmministrativo())
+                .map(IDocumentoAmministrativoBulk::getPg_doc_amm)
+                .orElse(null);
     }
 }

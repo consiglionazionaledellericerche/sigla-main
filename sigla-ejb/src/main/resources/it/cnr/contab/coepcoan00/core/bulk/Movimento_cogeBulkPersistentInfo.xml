@@ -17,39 +17,154 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk"
-	homeClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeHome" >
-	<defaultColumnMap
-		tableName="MOVIMENTO_COGE" >
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="scrittura.esercizio"/>
-		<columnMapping
-			columnName="PG_SCRITTURA"
-			propertyName="scrittura.pg_scrittura"/>
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="scrittura.cds.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="scrittura.uo.cd_unita_organizzativa" />			
-		<columnMapping
-			columnName="CD_VOCE_EP"
-			propertyName="conto.cd_voce_ep"/>
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="conto.esercizio"
-			fetchOnly="true"/>
-		<columnMapping
-			columnName="CD_TERZO"
-			propertyName="terzo.cd_terzo" />
-	</defaultColumnMap>
-	<persistentProperty
-		name="scrittura" 
-		partOfOid="true"/>
-	<persistentProperty
-		name="conto" />
-	<persistentProperty
-		name="terzo" />
+        persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk"
+        homeClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeHome">
+    <defaultColumnMap
+            tableName="MOVIMENTO_COGE">
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="scrittura.esercizio"/>
+        <columnMapping
+                columnName="PG_SCRITTURA"
+                propertyName="scrittura.pg_scrittura"/>
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="scrittura.cds.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="scrittura.uo.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_VOCE_EP"
+                propertyName="conto.cd_voce_ep"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="conto.esercizio"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_TERZO"
+                propertyName="terzo.cd_terzo"/>
+
+        <columnMapping
+                columnName="CD_CDS_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_cds"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_uo"/>
+        <columnMapping
+                columnName="ESERCIZIO_DOCUMENTO"
+                propertyName="documentoAmministrativo.esercizio"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_doc_amm"/>
+    </defaultColumnMap>
+
+    <columnMap name="base"
+               tableName="MOVIMENTO_COGE"
+               extends="default">
+        <columnMapping
+                columnName="CD_CDS_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_cds"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="ESERCIZIO_DOCUMENTO"
+                propertyName="documentoAmministrativo.esercizio"/>
+    </columnMap>
+    <columnMap name="FATTURA_P"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_passiva"/>
+    </columnMap>
+    <columnMap name="FATTURA_A"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_attiva"/>
+    </columnMap>
+    <columnMap name="ANTICIPO"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_anticipo"/>
+    </columnMap>
+    <columnMap name="COMPENSO"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_compenso"/>
+    </columnMap>
+    <columnMap name="MISSIONE"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_missione"/>
+    </columnMap>
+    <columnMap name="DOCUMENTO_GENERICO"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO"
+                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm" />
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_documento_generico"/>
+    </columnMap>
+    <columnMap name="GEN_CORA_E"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_CORA_S"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_CORV_E"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_CORV_S"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_IVA_E"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_CH_FON"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_AP_FON"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GEN_RE_FON"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GENERICO_S"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+    <columnMap name="GENERICO_E"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_GENERICO">
+    </columnMap>
+
+    <persistentProperty
+            name="scrittura"
+            partOfOid="true"/>
+    <persistentProperty
+            name="conto"/>
+    <persistentProperty
+            name="documentoAmministrativo"/>
+    <persistentProperty
+            name="terzo"/>
 
 </SQLPersistentInfo>

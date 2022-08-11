@@ -139,17 +139,4 @@ public class Fattura_passiva_rigaKey extends OggettoBulk implements KeyedPersist
                         calculateKeyHashCode(getPg_fattura_passiva()) +
                         calculateKeyHashCode(getProgressivo_riga());
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Fattura_passiva_rigaKey that = (Fattura_passiva_rigaKey) o;
-        return Objects.equals(cd_cds, that.cd_cds) && Objects.equals(cd_unita_organizzativa, that.cd_unita_organizzativa) && Objects.equals(esercizio, that.esercizio) && Objects.equals(pg_fattura_passiva, that.pg_fattura_passiva) && Objects.equals(progressivo_riga, that.progressivo_riga);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cd_cds, cd_unita_organizzativa, esercizio, pg_fattura_passiva, progressivo_riga);
-    }
 }

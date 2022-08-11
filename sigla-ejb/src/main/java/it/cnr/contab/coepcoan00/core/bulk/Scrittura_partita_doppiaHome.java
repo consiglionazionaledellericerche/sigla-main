@@ -26,6 +26,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.rmi.RemoteException;
@@ -48,13 +49,16 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection<Movimento_cogeBulk> findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
-        SQLBuilder sql = getHomeCache().getHome(Movimento_cogeBulk.class).createSQLBuilder();
+        final PersistentHome home = Optional.ofNullable(getHomeCache().getHome(Movimento_cogeBulk.class, scrittura.getCd_tipo_documento()))
+                .filter(persistentHome -> Optional.ofNullable(persistentHome.getColumnMap()).isPresent())
+                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class));
+        SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
         sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, scrittura.getCd_unita_organizzativa());
         sql.addClause("AND", "pg_scrittura", SQLBuilder.EQUALS, scrittura.getPg_scrittura());
         sql.addClause("AND", "sezione", SQLBuilder.EQUALS, Movimento_cogeBulk.SEZIONE_AVERE);
-        List<Movimento_cogeBulk> result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
+        List<Movimento_cogeBulk> result = home.fetchAll(sql);
         if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
     }
@@ -64,13 +68,16 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection<Movimento_cogeBulk> findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
-        SQLBuilder sql = getHomeCache().getHome(Movimento_cogeBulk.class).createSQLBuilder();
+        final PersistentHome home = Optional.ofNullable(getHomeCache().getHome(Movimento_cogeBulk.class, scrittura.getCd_tipo_documento()))
+                .filter(persistentHome -> Optional.ofNullable(persistentHome.getColumnMap()).isPresent())
+                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class));
+        SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
         sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, scrittura.getCd_unita_organizzativa());
         sql.addClause("AND", "pg_scrittura", SQLBuilder.EQUALS, scrittura.getPg_scrittura());
         sql.addClause("AND", "sezione", SQLBuilder.EQUALS, Movimento_cogeBulk.SEZIONE_DARE);
-        List<Movimento_cogeBulk> result = getHomeCache().getHome(Movimento_cogeBulk.class).fetchAll(sql);
+        List<Movimento_cogeBulk> result = home.fetchAll(sql);
         if (fetchAll) getHomeCache().fetchAll(userContext);
         return result;
     }
