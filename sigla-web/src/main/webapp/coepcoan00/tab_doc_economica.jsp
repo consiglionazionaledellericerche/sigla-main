@@ -51,10 +51,12 @@
         <tr>
             <% bp.getMovimentiDare().writeFormField(out, "ti_istituz_commerc");%>
             <% bp.getMovimentiDare().writeFormField(out, "im_movimento");%>
-            <td><% bp.getMovimentiDare().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
-            <td><% bp.getMovimentiDare().writeFormInput(out, "dt_da_competenza_coge");
+            <td colspan="4">
+                <% bp.getMovimentiDare().writeFormLabel(out, "dt_da_competenza_coge"); %>
+                <% bp.getMovimentiDare().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiDare().writeFormLabel(out, "dt_a_competenza_coge");
-                   bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%></td>
+                   bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%>
+            </td>
         </tr>
         <tr>
             <% bp.getMovimentiDare().writeFormField(out, "ti_riga");%>
@@ -76,10 +78,12 @@
         <tr>
             <% bp.getMovimentiAvere().writeFormField(out, "ti_istituz_commerc");%>
             <% bp.getMovimentiAvere().writeFormField(out, "im_movimento");%>
-            <td><% bp.getMovimentiAvere().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
-            <td><% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
+            <td colspan="4">
+                <% bp.getMovimentiAvere().writeFormLabel(out, "dt_da_competenza_coge"); %>
+                <% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiAvere().writeFormLabel(out, "dt_a_competenza_coge");
-                   bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%></td>
+                   bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%>
+            </td>
         </tr>
         <tr>
             <% bp.getMovimentiAvere().writeFormField(out, "ti_riga");%>

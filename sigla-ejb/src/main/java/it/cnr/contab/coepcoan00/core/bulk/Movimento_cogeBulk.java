@@ -389,28 +389,28 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     @Override
     public String getCd_cds_documento() {
         return Optional.ofNullable(getDocumentoAmministrativo())
-                .map(IDocumentoAmministrativoBulk::getCd_cds)
-                .orElse(null);
+                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getCd_cds()))
+                .orElse(super.getCd_cds_documento());
     }
 
     @Override
     public String getCd_uo_documento() {
         return Optional.ofNullable(getDocumentoAmministrativo())
-                .map(IDocumentoAmministrativoBulk::getCd_uo)
-                .orElse(null);
+                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getCd_uo()))
+                .orElse(super.getCd_uo_documento());
     }
 
     @Override
     public Integer getEsercizio_documento() {
         return Optional.ofNullable(getDocumentoAmministrativo())
-                .map(IDocumentoAmministrativoBulk::getEsercizio)
-                .orElse(null);
+                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getEsercizio()))
+                .orElse(super.getEsercizio_documento());
     }
 
     @Override
     public Long getPg_numero_documento() {
         return Optional.ofNullable(getDocumentoAmministrativo())
-                .map(IDocumentoAmministrativoBulk::getPg_doc_amm)
-                .orElse(null);
+                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getPg_doc_amm()))
+                .orElse(super.getPg_numero_documento());
     }
 }

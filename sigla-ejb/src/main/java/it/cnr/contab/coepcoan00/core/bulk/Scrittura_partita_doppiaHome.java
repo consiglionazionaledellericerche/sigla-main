@@ -17,6 +17,7 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -51,7 +52,10 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     public Collection<Movimento_cogeBulk> findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
         final PersistentHome home = Optional.ofNullable(getHomeCache().getHome(Movimento_cogeBulk.class, scrittura.getCd_tipo_documento()))
                 .filter(persistentHome -> Optional.ofNullable(persistentHome.getColumnMap()).isPresent())
-                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class));
+                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class, "default", Optional.ofNullable(scrittura.getCd_tipo_documento())
+                        .filter(s -> s.equalsIgnoreCase(TipoDocumentoEnum.MANDATO.getValue()) || s.equalsIgnoreCase(TipoDocumentoEnum.REVERSALE.getValue()))
+                        .map(s -> "excludeDocumentoAmministrativo")
+                        .orElse(null)));
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
@@ -70,7 +74,10 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     public Collection<Movimento_cogeBulk> findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
         final PersistentHome home = Optional.ofNullable(getHomeCache().getHome(Movimento_cogeBulk.class, scrittura.getCd_tipo_documento()))
                 .filter(persistentHome -> Optional.ofNullable(persistentHome.getColumnMap()).isPresent())
-                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class));
+                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class, "default", Optional.ofNullable(scrittura.getCd_tipo_documento())
+                        .filter(s -> s.equalsIgnoreCase(TipoDocumentoEnum.MANDATO.getValue()) || s.equalsIgnoreCase(TipoDocumentoEnum.REVERSALE.getValue()))
+                        .map(s -> "excludeDocumentoAmministrativo")
+                        .orElse(null)));
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
