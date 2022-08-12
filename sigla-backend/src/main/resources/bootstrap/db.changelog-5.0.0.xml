@@ -4970,19 +4970,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </createIndex>
     </changeSet>
 
-    <changeSet id="alter-table-pk-obbligazione-pluriennale" author="valentina.tomada">
 
-        <dropPrimaryKey tableName="obbligazione_pluriennale"></dropPrimaryKey>
-        <dropColumn tableName="obbligazione_pluriennale" columnName="id_obbligazione_plur"></dropColumn>
-        <addPrimaryKey tableName="obbligazione_pluriennale" constraintName="obbligazione_pluriennale_pkey" columnNames="cd_cds_rif,esercizio_rif,esercizio_originale_rif,pg_obbligazione_rif,anno"></addPrimaryKey>
-
-    </changeSet>
-    <changeSet id="alter-table-pk-obbligazione-pluriennale02" author="valentina.tomada">
-
-        <dropPrimaryKey tableName="obbligazione_pluriennale"></dropPrimaryKey>
-        <addPrimaryKey tableName="obbligazione_pluriennale" constraintName="obbligazione_pluriennale_pkey" columnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione,anno"></addPrimaryKey>
-
-    </changeSet>
 
     <changeSet author="valentina.tomada" id="create-table-accertamento-pluriennale">
         <createTable remarks="Accertamento Pluriennale" tableName="accertamento_pluriennale">
