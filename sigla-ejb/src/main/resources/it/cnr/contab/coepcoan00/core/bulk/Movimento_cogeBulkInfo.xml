@@ -59,7 +59,7 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnSearch="true"				
-		label="Periodo competenza da"
+		label="Competenza da"
 		nullable="false"/>
 	<fieldProperty
 		name="stato"
@@ -199,7 +199,7 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnSearch="true"						
-		label=" A" 
+		label=" A"
 		nullable="false"/>
 	<fieldProperty
 		name="ti_istituz_commerc"

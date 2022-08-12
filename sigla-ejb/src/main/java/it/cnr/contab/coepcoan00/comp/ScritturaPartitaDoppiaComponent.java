@@ -875,10 +875,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				Scrittura_partita_doppiaBulk scrittura = (Scrittura_partita_doppiaBulk) bulk;
 				scrittura.setMovimentiDareColl( new BulkList( ((Scrittura_partita_doppiaHome) getHome( userContext, scrittura.getClass())).findMovimentiDareColl( userContext, scrittura )));
 				scrittura.setMovimentiAvereColl( new BulkList( ((Scrittura_partita_doppiaHome) getHome( userContext, scrittura.getClass())).findMovimentiAvereColl( userContext, scrittura )));
-				if ( scrittura.getCd_terzo().equals( TerzoBulk.TERZO_NULLO))
-					scrittura.setTerzo( getTerzoNullo());
-				else
-					scrittura.setTerzo( (TerzoBulk) getHome( userContext, TerzoBulk.class).findByPrimaryKey( scrittura.getTerzo()));
+				if (Optional.ofNullable(scrittura.getCd_terzo()).isPresent()) {
+					if ( scrittura.getCd_terzo().equals( TerzoBulk.TERZO_NULLO))
+						scrittura.setTerzo( getTerzoNullo());
+					else
+						scrittura.setTerzo( (TerzoBulk) getHome( userContext, TerzoBulk.class).findByPrimaryKey( scrittura.getTerzo()));
+				}
 			}
 			else if ( bulk instanceof Saldo_cogeBulk )
 			{

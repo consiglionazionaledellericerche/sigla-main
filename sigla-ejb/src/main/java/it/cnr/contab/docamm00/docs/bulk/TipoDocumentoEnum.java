@@ -34,43 +34,56 @@ import java.util.List;
 import java.util.Optional;
 
 public enum TipoDocumentoEnum {
-	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO),
-	MISSIONE(Numerazione_doc_ammBulk.TIPO_MISSIONE),
-	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO),
-	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA),
-	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA),
-	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA),
-	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA),
-	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA),
-	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA),
-	GEN_CORI_ACCANTONAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name()),
-	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S"),
-	GEN_CORI_VERSAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name()),
-	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S"),
-	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E),
-	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON),
-	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON),
-	GEN_REINTEGRO_FONDO("GEN_RE_FON"),
-	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S),
-	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E),
-	MANDATO(Numerazione_doc_contBulk.TIPO_MAN),
-	REVERSALE(Numerazione_doc_contBulk.TIPO_REV),
-	GEN_STIPENDI_SPESA("GEN_STIP_S"),
-	REGOLA_E("REGOLA_E");
+	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO, new AnticipoBulk()),
+	MISSIONE(Numerazione_doc_ammBulk.TIPO_MISSIONE, new MissioneBulk()),
+	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO, new CompensoBulk()),
+	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA, new Fattura_passiva_IBulk()),
+	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA, new Nota_di_creditoBulk()),
+	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA, new Nota_di_debitoBulk()),
+	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA, new Fattura_attiva_IBulk()),
+	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA, new Nota_di_credito_attivaBulk()),
+	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA, new Nota_di_debito_attivaBulk()),
+	GEN_CORI_ACCANTONAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name(), new Documento_generico_attivoBulk()),
+	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S", new Documento_generico_passivoBulk()),
+	GEN_CORI_VERSAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name(), new Documento_generico_attivoBulk()),
+	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S", new Documento_generico_passivoBulk()),
+	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E, new Documento_generico_attivoBulk()),
+	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON, new Documento_generico_attivoBulk()),
+	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON, new Documento_generico_passivoBulk()),
+	GEN_REINTEGRO_FONDO("GEN_RE_FON", new Documento_generico_passivoBulk()),
+	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S, new Documento_generico_passivoBulk()),
+	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E, new Documento_generico_attivoBulk()),
+	MANDATO(Numerazione_doc_contBulk.TIPO_MAN, new MandatoIBulk()),
+	REVERSALE(Numerazione_doc_contBulk.TIPO_REV, new ReversaleIBulk()),
+	GEN_STIPENDI_SPESA("GEN_STIP_S", new MandatoIBulk()),
+	REGOLA_E("REGOLA_E", new MandatoIBulk());
 
 	private final String value;
+	private final IDocumentoCogeBulk documentoCogeBulk;
 
 	public final static String TIPO_NOTA_CREDITO_PASSIVA = "NOTA_CREDITO_P";
 	public final static String TIPO_NOTA_DEBITO_PASSIVA = "NOTA_DEBITO_P";
 	public final static String TIPO_NOTA_CREDITO_ATTIVA = "NOTA_CREDITO_A";
 	public final static String TIPO_NOTA_DEBITO_ATTIVA = "NOTA_DEBITO_A";
 
-	TipoDocumentoEnum(String value) {
+	TipoDocumentoEnum(String value, IDocumentoCogeBulk documentoCogeBulk) {
 		this.value = value;
+		this.documentoCogeBulk = documentoCogeBulk;
 	}
 
 	public String getValue() {
 		return this.value;
+	}
+
+	public IDocumentoCogeBulk getDocumentoCogeBulk() {
+		return documentoCogeBulk;
+	}
+
+	public IDocumentoAmministrativoBulk getDocumentoAmministrativoBulk() {
+		return Optional.ofNullable(documentoCogeBulk)
+				.filter(IDocumentoAmministrativoBulk.class::isInstance)
+				.map(IDocumentoAmministrativoBulk.class::cast)
+				.orElse(null);
 	}
 
 	public boolean isAnticipo() {
