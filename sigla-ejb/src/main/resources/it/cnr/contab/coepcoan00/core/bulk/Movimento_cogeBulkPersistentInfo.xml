@@ -197,5 +197,8 @@
             name="documentoAmministrativo"/>
     <persistentProperty
             name="terzo"/>
-
+    <fetchPolicy
+            name="it.cnr.jada.comp.CRUDComponent.find">
+        <exclude pattern="documentoAmministrativo" />
+    </fetchPolicy>
 </SQLPersistentInfo>

@@ -334,8 +334,37 @@
 		<columnFieldProperty
 			name="im_movimento" />
 	</columnSet>
-	
-		
+
+	<columnSet
+			name="partitario">
+		<columnFieldProperty
+				name="pg_scrittura" />
+		<columnFieldProperty
+				name="sezione" />
+		<columnFieldProperty
+				name="cd_voce_ep" />
+		<columnFieldProperty
+				name="ds_voce_ep" />
+		<columnFieldProperty
+				name="cd_terzo"
+				property="terzo.cd_terzo"/>
+		<columnFieldProperty
+				name="ti_riga" />
+
+		<columnFieldProperty
+				headerLabel="Competenza"
+				name="dt_da_competenza_coge"
+				label="Da"/>
+		<columnFieldProperty
+				headerLabel="Competenza"
+				name="dt_a_competenza_coge"
+				label="A"/>
+
+		<columnFieldProperty
+				name="cd_contributo_ritenuta" />
+		<columnFieldProperty
+				name="im_movimento" />
+	</columnSet>
 
 	<findFieldProperty
 		name="cd_cds" />

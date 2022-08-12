@@ -48,6 +48,8 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.Config;
+import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -143,7 +145,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean ribaltato;
     private boolean isDetailDoubling = false;
     private boolean attivoOrdini = false;
-    private boolean attivaEconomicaParallela = false;
+    protected boolean attivaEconomicaParallela = false;
 
     /**
      * CRUDAnagraficaBP constructor comment.

@@ -3014,8 +3014,7 @@ public class FatturaPassivaComponent extends ScritturaPartitaDoppiaFromDocumento
             validaFatturaElettronica(userContext, fattura_passiva);
 
         try {
-            if (fattura_passiva instanceof Fattura_passiva_IBulk || fattura_passiva instanceof Nota_di_creditoBulk) {
-                if (fattura_passiva.existARowToBeInventoried()) {
+                if (!fattura_passiva.isDaOrdini() && (fattura_passiva instanceof Fattura_passiva_IBulk || fattura_passiva instanceof Nota_di_creditoBulk)) {                if (fattura_passiva.existARowToBeInventoried()) {
                     verificaEsistenzaEdAperturaInventario(userContext, fattura_passiva);
                     if (fattura_passiva.getStato_liquidazione() == null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0) {
                         if (fattura_passiva instanceof Fattura_passiva_IBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
@@ -4520,15 +4519,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             UserContext userContext,
             Fattura_passivaBulk fattura_passiva)
             throws ComponentException {
-
-        java.util.Vector coll = new java.util.Vector();
-        Iterator dettagli = fattura_passiva.getFattura_passiva_dettColl().iterator();
-        if (dettagli != null) {
-            while (dettagli.hasNext()) {
-                Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) dettagli.next();
-                if (riga.getBene_servizio() != null && riga.getBene_servizio().getFl_gestione_inventario().booleanValue() &&
-                        !riga.isInventariato())
-                    return true;
+        if (!fattura_passiva.isDaOrdini()) {
+            java.util.Vector coll = new java.util.Vector();
+            Iterator dettagli = fattura_passiva.getFattura_passiva_dettColl().iterator();
+            if (dettagli != null) {
+                while (dettagli.hasNext()) {
+                    Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) dettagli.next();
+                    if (riga.getBene_servizio() != null && riga.getBene_servizio().getFl_gestione_inventario().booleanValue() &&
+                            !riga.isInventariato())
+                        return true;
+                }
             }
         }
         return false;
@@ -5173,7 +5173,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fatturaPassiva.isElettronica())
             validaFatturaElettronica(aUC, fatturaPassiva);
         try {
-            if (fatturaPassiva instanceof Fattura_passiva_IBulk) {
+            if (fatturaPassiva instanceof Fattura_passiva_IBulk && !fatturaPassiva.isDaOrdini()) {
                 //if (fatturaPassiva.existARowToBeInventoried()) {
                 if (fatturaPassiva.existARowToBeInventoried() && (fatturaPassiva.getStato_liquidazione() == null || fatturaPassiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0)) {
                     if (hasFatturaPassivaARowNotInventoried(aUC, fatturaPassiva))
@@ -8448,7 +8448,14 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throws ComponentException, it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException {
         if (!Optional.ofNullable(fattura_passiva).isPresent())
             return Collections.emptyList();
-        final FatturaOrdineHome fatturaOrdineHome = Optional.ofNullable(getHome(userContext, FatturaOrdineBulk.class, null, "default"))
+        final FatturaOrdineHome fatturaOrdineHome = Optional.ofNullable(
+                    getHome(
+                            userContext,
+                            FatturaOrdineBulk.class,
+                            fattura_passiva.getTipoDocumentoEnum().getValue(),
+                            "default"
+                    )
+                )
                 .filter(FatturaOrdineHome.class::isInstance)
                 .map(FatturaOrdineHome.class::cast)
                 .orElseThrow(() -> new ComponentException("Home di FatturaOrdineBulk non trovata!"));
