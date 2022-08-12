@@ -157,6 +157,37 @@
                extends="DOCUMENTO_GENERICO">
     </columnMap>
 
+    <columnMap name="DOCUMENTO_CONTABILE"
+               tableName="MOVIMENTO_COGE"
+               extends="base">
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_passiva"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_missione"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_compenso"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_anticipo"/>
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO"
+                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm" />
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_documento_generico"/>
+    </columnMap>
+    <columnMap name="MAN"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_CONTABILE">
+    </columnMap>
+    <columnMap name="REV"
+               tableName="MOVIMENTO_COGE"
+               extends="DOCUMENTO_CONTABILE">
+    </columnMap>
+
     <persistentProperty
             name="scrittura"
             partOfOid="true"/>
@@ -166,9 +197,5 @@
             name="documentoAmministrativo"/>
     <persistentProperty
             name="terzo"/>
-    <fetchPolicy
-            name="excludeDocumentoAmministrativo">
-        <exclude pattern="documentoAmministrativo" />
-    </fetchPolicy>
 
 </SQLPersistentInfo>
