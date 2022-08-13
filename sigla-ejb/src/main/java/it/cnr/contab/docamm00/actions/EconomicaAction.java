@@ -34,6 +34,7 @@ import it.cnr.jada.util.action.FormBP;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -87,20 +88,23 @@ public abstract class EconomicaAction extends CRUDAction {
                 .map(IDocumentoCogeBulk.class::cast);
         if (documentoCogeBulk.isPresent()) {
             final List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = documentoCogeBulk
-                    .get()
-                    .getScrittura_partita_doppia()
-                    .getAllMovimentiColl()
+                    .flatMap(documentoCogeBulk1 -> Optional.ofNullable(documentoCogeBulk1.getScrittura_partita_doppia()))
+                    .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
+                    .orElse(Collections.emptyList())
                     .stream()
                     .map(Movimento_cogeBulk::getDocumentoAmministrativo)
                     .collect(Collectors.toList());
-            ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
-                    "ConsultazionePartitarioBP",
-                    new Object[] { iDocumentoAmministrativoBulks }
-            );
-            consBP.openIterator(actionContext);
-            actionContext.addBusinessProcess(consBP);
-            return actionContext.findDefaultForward();
+            if (!iDocumentoAmministrativoBulks.isEmpty()) {
+                ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
+                        "ConsultazionePartitarioBP",
+                        new Object[] { iDocumentoAmministrativoBulks }
+                );
+                consBP.openIterator(actionContext);
+                actionContext.addBusinessProcess(consBP);
+                return actionContext.findDefaultForward();
+            }
         }
+        bp.setMessage(FormBP.WARNING_MESSAGE, "Non ci sono elementi da visualizzare!");
         return actionContext.findDefaultForward();
     }
 }
