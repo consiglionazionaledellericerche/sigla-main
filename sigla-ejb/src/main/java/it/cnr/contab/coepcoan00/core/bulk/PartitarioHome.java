@@ -38,6 +38,7 @@ public class PartitarioHome extends Movimento_cogeHome{
 
     public SQLBuilder selectByClauseForPartitario(UserContext usercontext, PartitarioBulk partitarioBulk, CompoundFindClause compoundfindclause) throws PersistencyException {
         SQLBuilder sqlBuilder = super.createSQLBuilder();
+        sqlBuilder.addColumn("SCRITTURA_PARTITA_DOPPIA.DT_CONTABILIZZAZIONE");
         addColumnSezione(sqlBuilder, "IM_MOVIMENTO");
 
         Optional.ofNullable(compoundfindclause)

@@ -24,8 +24,15 @@
 	<columnSet
 			name="partitario_amministrativo">
 		<columnFieldProperty
-				label="Nr. Scrittura"
+				headerLabel="Scrittura"
+				label="Numero"
 				name="pg_scrittura"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Data"
+				formatName="date_short"
+				name="dt_contabilizzazione"
+				property="scrittura.dt_contabilizzazione"/>
 		<columnFieldProperty
 				label="Conto"
 				name="cd_voce_ep"/>
@@ -44,32 +51,33 @@
 				keysProperty="tipoRigaKeys"
 				name="ti_riga"/>
 		<columnFieldProperty
-				headerLabel="Competenza"
-				label="Da"
-				name="dt_da_competenza_coge"/>
-		<columnFieldProperty
-				headerLabel="Competenza"
-				label="A"
-				name="dt_a_competenza_coge"/>
-		<columnFieldProperty
 				label="Codice CO/RI"
 				name="cd_contributo_ritenuta"/>
 		<columnFieldProperty
 				headerLabel="Importo"
 				label="Dare"
+				formatName = "it.cnr.contab.util.EuroFormat"
 				name="im_movimento_dare"
 				property="im_movimento_dare"/>
 		<columnFieldProperty
 				headerLabel="Importo"
 				label="Avere"
 				name="im_movimento_avere"
+				formatName = "it.cnr.contab.util.EuroFormat"
 				property="im_movimento_avere"/>
 	</columnSet>
 	<columnSet
 			name="partitario_contabile">
 		<columnFieldProperty
-				label="Nr. Scrittura"
+				headerLabel="Scrittura"
+				label="Numero"
 				name="pg_scrittura"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Data"
+				formatName="date_short"
+				name="dt_contabilizzazione"
+				property="scrittura.dt_contabilizzazione"/>
 		<columnFieldProperty
 				label="Conto"
 				name="cd_voce_ep"/>
@@ -103,24 +111,18 @@
 				keysProperty="tipoRigaKeys"
 				name="ti_riga"/>
 		<columnFieldProperty
-				headerLabel="Competenza"
-				label="Da"
-				name="dt_da_competenza_coge"/>
-		<columnFieldProperty
-				headerLabel="Competenza"
-				label="A"
-				name="dt_a_competenza_coge"/>
-		<columnFieldProperty
 				label="Codice CO/RI"
 				name="cd_contributo_ritenuta"/>
 		<columnFieldProperty
 				headerLabel="Importo"
 				label="Dare"
+				formatName = "it.cnr.contab.util.EuroFormat"
 				name="im_movimento_dare"
 				property="im_movimento_dare"/>
 		<columnFieldProperty
 				headerLabel="Importo"
 				label="Avere"
+				formatName = "it.cnr.contab.util.EuroFormat"
 				name="im_movimento_avere"
 				property="im_movimento_avere"/>
 	</columnSet>

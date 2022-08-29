@@ -36,6 +36,12 @@
                 columnSize="15"
                 columnScale="2"
                 fetchOnly="true"/>
+        <columnMapping
+                columnName="DT_CONTABILIZZAZIONE"
+                propertyName="scrittura.dt_contabilizzazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                fetchOnly="true"/>
 
     </defaultColumnMap>
 
@@ -43,5 +49,4 @@
             name="im_movimento_dare" />
     <persistentProperty
             name="im_movimento_avere" />
-
 </SQLPersistentInfo>
