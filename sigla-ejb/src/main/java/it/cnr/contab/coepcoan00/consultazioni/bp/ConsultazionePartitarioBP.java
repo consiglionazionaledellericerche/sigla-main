@@ -17,7 +17,7 @@
 
 package it.cnr.contab.coepcoan00.consultazioni.bp;
 
-import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
+import it.cnr.contab.coepcoan00.core.bulk.PartitarioBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -34,7 +34,6 @@ import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
 import java.rmi.RemoteException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,9 +41,15 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
 
     protected List<T> documentoAmministrativo;
     protected CompoundFindClause baseClause;
+    protected String columnSet;
 
     public ConsultazionePartitarioBP(List<T> documentoAmministrativo) {
         this.documentoAmministrativo = documentoAmministrativo;
+    }
+
+    public ConsultazionePartitarioBP(List<T> documentoAmministrativo, String columnSet) {
+        this.documentoAmministrativo = documentoAmministrativo;
+        this.columnSet = columnSet;
     }
 
     public ConsultazionePartitarioBP(String s, List<T> documentoAmministrativo) {
@@ -55,14 +60,14 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
     @Override
     protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
         super.init(config, actioncontext);
-        setBulkInfo(BulkInfo.getBulkInfo(Movimento_cogeBulk.class));
-        setColumns(getBulkInfo().getColumnFieldPropertyDictionary("partitario"));
-        setModel(actioncontext, new Movimento_cogeBulk());
+        setBulkInfo(BulkInfo.getBulkInfo(PartitarioBulk.class));
+        setColumns(getBulkInfo().getColumnFieldPropertyDictionary(Optional.ofNullable(columnSet).orElse("partitario")));
+        setModel(actioncontext, new PartitarioBulk());
     }
 
     private CompoundFindClause addBaseClause(ActionContext actioncontext, CompoundFindClause compoundFindClause) {
         CompoundFindClause baseClause = new CompoundFindClause();
-        for(T documentoAmministrativoBulk : documentoAmministrativo) {
+        for (T documentoAmministrativoBulk : documentoAmministrativo) {
             if (documentoAmministrativoBulk != null) {
                 CompoundFindClause child = new CompoundFindClause();
                 child.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_tipo_doc_amm());
@@ -87,9 +92,9 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
             throws BusinessProcessException {
         try {
             return createComponentSession().cerca(actioncontext.getUserContext(),
-                    addBaseClause(actioncontext,  Optional.ofNullable(compoundfindclause)
+                    addBaseClause(actioncontext, Optional.ofNullable(compoundfindclause)
                             .orElseGet(() -> new CompoundFindClause())),
-                    (OggettoBulk) getBulkInfo().getBulkClass().newInstance());
+                    (OggettoBulk) getBulkInfo().getBulkClass().newInstance(), "selectByClauseForPartitario");
         } catch (ComponentException | RemoteException | IllegalAccessException | InstantiationException e) {
             throw handleException(e);
         }
@@ -101,10 +106,10 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
             setIterator(actioncontext, search(
                     actioncontext,
                     Optional.ofNullable(getCondizioneCorrente())
-                                    .map(CondizioneComplessaBulk::creaFindClause)
-                                    .filter(CompoundFindClause.class::isInstance)
-                                    .map(CompoundFindClause.class::cast)
-                                    .orElseGet(() -> new CompoundFindClause()),
+                            .map(CondizioneComplessaBulk::creaFindClause)
+                            .filter(CompoundFindClause.class::isInstance)
+                            .map(CompoundFindClause.class::cast)
+                            .orElseGet(() -> new CompoundFindClause()),
                     getModel())
             );
         } catch (RemoteException e) {

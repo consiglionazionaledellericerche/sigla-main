@@ -77,7 +77,7 @@ public abstract class EconomicaAction extends CRUDAction {
         if (documentoAmministrativoBulk.isPresent()) {
             ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                     "ConsultazionePartitarioBP",
-                    new Object[] { Arrays.asList(documentoAmministrativoBulk.get())}
+                    new Object[] { Arrays.asList(documentoAmministrativoBulk.get()), "partitario_amministrativo"}
             );
             consBP.openIterator(actionContext);
             actionContext.addBusinessProcess(consBP);
@@ -97,7 +97,7 @@ public abstract class EconomicaAction extends CRUDAction {
             if (!iDocumentoAmministrativoBulks.isEmpty()) {
                 ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                         "ConsultazionePartitarioBP",
-                        new Object[] { iDocumentoAmministrativoBulks }
+                        new Object[] { iDocumentoAmministrativoBulks, "partitario_contabile" }
                 );
                 consBP.openIterator(actionContext);
                 actionContext.addBusinessProcess(consBP);

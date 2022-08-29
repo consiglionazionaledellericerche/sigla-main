@@ -37,6 +37,14 @@ public class Movimento_cogeHome extends BulkHome {
 	public Movimento_cogeHome(java.sql.Connection conn,PersistentCache persistentCache) {
 		super(Movimento_cogeBulk.class,conn,persistentCache);
 	}
+
+	public Movimento_cogeHome(Class class1, Connection conn, PersistentCache persistentCache) {
+		super(class1, conn, persistentCache);
+	}
+	public Movimento_cogeHome(Class class1, Connection conn) {
+		super(class1, conn);
+	}
+
 	/**
 	 * Ritorna un SQLBuilder con la columnMap del ricevente
 	 */
