@@ -42,6 +42,10 @@
                 sqlTypeName="TIMESTAMP"
                 columnSize="7"
                 fetchOnly="true"/>
+        <columnMapping
+                columnName="DS_SCRITTURA"
+                propertyName="scrittura.ds_scrittura"
+                fetchOnly="true"/>
 
     </defaultColumnMap>
 

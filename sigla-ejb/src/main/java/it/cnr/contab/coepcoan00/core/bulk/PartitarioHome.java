@@ -23,6 +23,7 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Optional;
 
@@ -39,17 +40,14 @@ public class PartitarioHome extends Movimento_cogeHome{
     public SQLBuilder selectByClauseForPartitario(UserContext usercontext, PartitarioBulk partitarioBulk, CompoundFindClause compoundfindclause) throws PersistencyException {
         SQLBuilder sqlBuilder = super.createSQLBuilder();
         sqlBuilder.addColumn("SCRITTURA_PARTITA_DOPPIA.DT_CONTABILIZZAZIONE");
-        addColumnSezione(sqlBuilder, "IM_MOVIMENTO");
+        sqlBuilder.addColumn("SCRITTURA_PARTITA_DOPPIA.DS_SCRITTURA");
+        sqlBuilder.addColumn(sqlBuilder.addDecode("SEZIONE","'D'", "IM_MOVIMENTO",null,null, BigDecimal.ZERO),"IM_MOVIMENTO_DARE");
+        sqlBuilder.addColumn(sqlBuilder.addDecode("SEZIONE","'A'", "IM_MOVIMENTO",null,null, BigDecimal.ZERO),"IM_MOVIMENTO_AVERE");
 
         Optional.ofNullable(compoundfindclause)
                         .ifPresent(compoundFindClause -> sqlBuilder.addClause(compoundFindClause));
         sqlBuilder.addOrderBy("sezione desc");
         sqlBuilder.addOrderBy("pg_scrittura");
         return sqlBuilder;
-    }
-
-    private void addColumnSezione(SQLBuilder sqlBuilder, String columnName) {
-        sqlBuilder.addColumn("DECODE(SEZIONE,'D',MOVIMENTO_COGE." + columnName +")", columnName + "_DARE");
-        sqlBuilder.addColumn("DECODE(SEZIONE,'A',MOVIMENTO_COGE." + columnName +")", columnName + "_AVERE");
     }
 }

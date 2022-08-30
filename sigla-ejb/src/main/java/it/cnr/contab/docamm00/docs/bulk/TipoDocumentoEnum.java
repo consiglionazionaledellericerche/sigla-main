@@ -29,51 +29,69 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public enum TipoDocumentoEnum {
-	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO, AnticipoBulk.class),
-	MISSIONE(Numerazione_doc_ammBulk.TIPO_MISSIONE, MissioneBulk.class),
-	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO, CompensoBulk.class),
-	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA, Fattura_passiva_IBulk.class),
-	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA, Nota_di_creditoBulk.class),
-	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA, Nota_di_debitoBulk.class),
-	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA, Fattura_attiva_IBulk.class),
-	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA, Nota_di_credito_attivaBulk.class),
-	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA, Nota_di_debito_attivaBulk.class),
-	GEN_CORI_ACCANTONAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name(), Documento_generico_attivoBulk.class),
-	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S", Documento_generico_passivoBulk.class),
-	GEN_CORI_VERSAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name(), Documento_generico_attivoBulk.class),
-	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S", Documento_generico_passivoBulk.class),
-	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E, Documento_generico_attivoBulk.class),
-	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON, Documento_generico_attivoBulk.class),
-	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON, Documento_generico_passivoBulk.class),
-	GEN_REINTEGRO_FONDO("GEN_RE_FON", Documento_generico_passivoBulk.class),
-	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S, Documento_generico_passivoBulk.class),
-	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E, Documento_generico_attivoBulk.class),
-	MANDATO(Numerazione_doc_contBulk.TIPO_MAN, MandatoIBulk.class),
-	REVERSALE(Numerazione_doc_contBulk.TIPO_REV, ReversaleIBulk.class),
-	GEN_STIPENDI_SPESA("GEN_STIP_S", MandatoIBulk.class),
-	REGOLA_E("REGOLA_E", MandatoIBulk.class);
+	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO, AnticipoBulk.class, "Anticipo"),
+	MISSIONE(Numerazione_doc_ammBulk.TIPO_MISSIONE, MissioneBulk.class, "Missione"),
+	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO, CompensoBulk.class, "Compenso"),
+	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA, Fattura_passiva_IBulk.class, "Fattura Passiva"),
+	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA, Nota_di_creditoBulk.class,"Nota di Credito Passiva"),
+	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA, Nota_di_debitoBulk.class, "Nota di Debito Passiva"),
+	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA, Fattura_attiva_IBulk.class, "Fattura Attiva"),
+	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA, Nota_di_credito_attivaBulk.class, "Nota di Creito Attiva"),
+	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA, Nota_di_debito_attivaBulk.class, "Nota di Debito Attiva"),
+	GEN_CORI_ACCANTONAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name(), Documento_generico_attivoBulk.class, "Documento generico per accantonamento CORI entrata"),
+	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S", Documento_generico_passivoBulk.class, "Documento generico per accantonamento CORI spesa"),
+	GEN_CORI_VERSAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name(), Documento_generico_attivoBulk.class, "Documento generico per incasso CORI entrata"),
+	GEN_CORI_VERSAMENTO_SPESA("GEN_CORV_S", Documento_generico_passivoBulk.class, "Documento generico per incasso CORI spesa"),
+	GEN_IVA_E(Numerazione_doc_ammBulk.TIPO_GEN_IVA_E, Documento_generico_attivoBulk.class, "Documento generico per incasso IVA"),
+	GEN_CH_FON(Numerazione_doc_ammBulk.TIPO_GEN_CH_FON, Documento_generico_attivoBulk.class, "Documento generico di chiusura del fondo economale"),
+	GEN_AP_FON(Numerazione_doc_ammBulk.TIPO_GEN_AP_FON, Documento_generico_passivoBulk.class, "Documento generico di apertura del fondo economale"),
+	GEN_REINTEGRO_FONDO("GEN_RE_FON", Documento_generico_passivoBulk.class, "Documento generico di reintegro del fondo economale"),
+	GENERICO_S(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S, Documento_generico_passivoBulk.class, "Documento generico di spesa"),
+	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E, Documento_generico_attivoBulk.class, "Documento generico di entrata"),
+	MANDATO(Numerazione_doc_contBulk.TIPO_MAN, MandatoIBulk.class, "Mandato"),
+	REVERSALE(Numerazione_doc_contBulk.TIPO_REV, ReversaleIBulk.class, "Reversale"),
+	GEN_STIPENDI_SPESA("GEN_STIP_S", MandatoIBulk.class, "Documento generico di versamento stipendi"),
+	REGOLA_E("REGOLA_E", Documento_generico_attivoBulk.class, "Documento per mandato di regolarizzazione");
 
 	private final String value;
 	private final Class<?> documentoCogeBulk;
+	private final String label;
 
 	public final static String TIPO_NOTA_CREDITO_PASSIVA = "NOTA_CREDITO_P";
 	public final static String TIPO_NOTA_DEBITO_PASSIVA = "NOTA_DEBITO_P";
 	public final static String TIPO_NOTA_CREDITO_ATTIVA = "NOTA_CREDITO_A";
 	public final static String TIPO_NOTA_DEBITO_ATTIVA = "NOTA_DEBITO_A";
 
-	TipoDocumentoEnum(String value, Class<?> documentoCogeBulk) {
+	TipoDocumentoEnum(String value, Class<?> documentoCogeBulk, String label) {
 		this.value = value;
 		this.documentoCogeBulk = documentoCogeBulk;
+		this.label = label;
 	}
 
 	public String getValue() {
 		return this.value;
 	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public final static Dictionary TIPO_DOCAMM_KEYS = Arrays.asList(TipoDocumentoEnum.values())
+			.stream()
+			.collect(
+					Collectors.toMap(
+							s -> s.getValue(), s -> s.getLabel(),
+							(u, v) -> {
+								throw new IllegalStateException(
+										String.format("Cannot have 2 values (%s, %s) for the same key", u, v)
+								);
+							}, Hashtable::new
+					)
+			);
 
 	public IDocumentoCogeBulk getDocumentoCogeBulk() {
 		try {

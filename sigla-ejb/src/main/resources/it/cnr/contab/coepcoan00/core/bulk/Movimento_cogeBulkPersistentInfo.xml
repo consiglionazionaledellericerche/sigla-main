@@ -46,40 +46,56 @@
 
         <columnMapping
                 columnName="CD_CDS_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_cds"/>
+                propertyName="documentoAmministrativo.cd_cds"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_uo"/>
+                propertyName="documentoAmministrativo.cd_uo"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_unita_organizzativa"/>
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="ESERCIZIO_DOCUMENTO"
-                propertyName="documentoAmministrativo.esercizio"/>
+                propertyName="documentoAmministrativo.esercizio"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_doc_amm"/>
+                propertyName="documentoAmministrativo.pg_doc_amm"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_fattura_attiva"/>
+                propertyName="documentoAmministrativo.pg_fattura_attiva"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_fattura_passiva"/>
+                propertyName="documentoAmministrativo.pg_fattura_passiva"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_missione"/>
+                propertyName="documentoAmministrativo.pg_missione"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_compenso"/>
+                propertyName="documentoAmministrativo.pg_compenso"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_anticipo"/>
+                propertyName="documentoAmministrativo.pg_anticipo"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_documento_generico"/>
+                propertyName="documentoAmministrativo.pg_documento_generico"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="CD_TIPO_DOCUMENTO"
-                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm" />
+                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm"
+                fetchOnly="true"/>
 
     </defaultColumnMap>
 

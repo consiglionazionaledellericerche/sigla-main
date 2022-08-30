@@ -25,7 +25,7 @@
 			name="partitario_amministrativo">
 		<columnFieldProperty
 				headerLabel="Scrittura"
-				label="Numero"
+				label="Num."
 				name="pg_scrittura"/>
 		<columnFieldProperty
 				headerLabel="Scrittura"
@@ -33,6 +33,11 @@
 				formatName="date_short"
 				name="dt_contabilizzazione"
 				property="scrittura.dt_contabilizzazione"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Desc."
+				name="ds_scrittura"
+				property="scrittura.ds_scrittura"/>
 		<columnFieldProperty
 				label="Conto"
 				name="cd_voce_ep"/>
@@ -70,7 +75,7 @@
 			name="partitario_contabile">
 		<columnFieldProperty
 				headerLabel="Scrittura"
-				label="Numero"
+				label="Num."
 				name="pg_scrittura"/>
 		<columnFieldProperty
 				headerLabel="Scrittura"
@@ -78,6 +83,11 @@
 				formatName="date_short"
 				name="dt_contabilizzazione"
 				property="scrittura.dt_contabilizzazione"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Desc."
+				name="ds_scrittura"
+				property="scrittura.ds_scrittura"/>
 		<columnFieldProperty
 				label="Conto"
 				name="cd_voce_ep"/>
@@ -89,6 +99,8 @@
 		<columnFieldProperty
 				headerLabel="Partita"
 				label="Tipo"
+				inputType="SELECT"
+				keysProperty="tipoDocAmmKeys"
 				name="cd_tipo_documento"
 				property="cd_tipo_documento"/>
 		<columnFieldProperty

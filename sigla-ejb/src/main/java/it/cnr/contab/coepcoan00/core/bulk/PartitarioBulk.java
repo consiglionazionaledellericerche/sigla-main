@@ -17,12 +17,21 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
-import java.math.BigDecimal;
+import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 
-public class PartitarioBulk extends Movimento_cogeBulk{
+import java.math.BigDecimal;
+import java.util.Dictionary;
+
+public class PartitarioBulk extends Movimento_cogeBulk {
+
+    public final static Dictionary tipoDocAmmKeys = TipoDocumentoEnum.TIPO_DOCAMM_KEYS;
+
     private java.math.BigDecimal im_movimento_dare;
     private java.math.BigDecimal im_movimento_avere;
 
+    public static Dictionary getTipoDocAmmKeys() {
+        return tipoDocAmmKeys;
+    }
 
     public BigDecimal getIm_movimento_dare() {
         return im_movimento_dare;
