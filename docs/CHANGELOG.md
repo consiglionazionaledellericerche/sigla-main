@@ -1,3 +1,11 @@
+## Release 6.4.48  -- _September 02, 2022_ 
+**Changes**
+
+>**Gestito messaggio di errore sulla firma remota**
+>
+>[0106ea8ff37dcfa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0106ea8ff37dcfa) marco.spasiano *September 02, 2022*
+
+
 ## Release 6.4.47  -- _August 05, 2022_ 
 **Changes**
 
