@@ -1,3 +1,11 @@
+## Release 6.4.49  -- _September 02, 2022_ 
+**Changes**
+
+>**Cambiata implementazione xml provider**
+>
+>[b0198507138d404](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b0198507138d404) marco.spasiano *September 02, 2022*
+
+
 ## Release 6.4.48  -- _September 02, 2022_ 
 **Changes**
 
