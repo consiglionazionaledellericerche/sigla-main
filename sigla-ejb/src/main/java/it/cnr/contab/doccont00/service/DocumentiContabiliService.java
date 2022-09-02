@@ -82,6 +82,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.xml.sax.SAXParseException;
 
 import javax.activation.DataSource;
 import java.io.*;
@@ -239,18 +240,26 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public Map<String, String> getCertSubjectDN(String username, String password) throws Exception {
-        Map<String, String> result = new HashMap<String, String>();
-        Principal principal = arubaSignServiceClient.getUserCertSubjectDN(username, password);
-        if (principal == null)
-            return null;
-        String[] subjectArray = principal.toString().split(",");
-        for (String s : subjectArray) {
-            String[] str = s.trim().split("=");
-            String key = str[0];
-            String value = str[1];
-            result.put(key, value);
+        try {
+            Map<String, String> result = new HashMap<String, String>();
+            Principal principal = arubaSignServiceClient.getUserCertSubjectDN(username, password);
+            if (principal == null)
+                return null;
+            String[] subjectArray = principal.toString().split(",");
+            for (String s : subjectArray) {
+                String[] str = s.trim().split("=");
+                String key = str[0];
+                String value = str[1];
+                result.put(key, value);
+            }
+            return result;
+        } catch (Exception _ex) {
+            logger.error("ERROR on ARUBA Client", _ex);
+            java.io.StringWriter sw = new java.io.StringWriter();
+            _ex.printStackTrace(new java.io.PrintWriter(sw));
+            SendMail.sendErrorMail("ERROR on ARUBA Client", sw.toString());
+            throw new ApplicationException("Si è verificato un errore nel recupero delle informazioni per eseguire la Firma Remota, riprovare successivamente.");
         }
-        return result;
     }
 
     public void controllaCodiceFiscale(Map<String, String> subjectDN, UtenteBulk utente) throws Exception {
