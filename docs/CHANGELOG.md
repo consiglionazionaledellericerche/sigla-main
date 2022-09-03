@@ -1,3 +1,11 @@
+## Release 6.4.50  -- _September 03, 2022_ 
+**Changes**
+
+>**Cambiata implementazione xml provider, rimosso artefatto com.sun.xml.ws:rt per Interceptor for {http://comp.docamm00.contab.cnr.it/}FatturaAttivaComponentWSService has thrown exception, unwinding now: java.lang.ClassCastException: com.sun.org.apache.xerces.internal.dom.ElementNSImpl cannot be cast to javax.xml.soap.SOAPElement**
+>
+>[29629e48c10e2e3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/29629e48c10e2e3) marco.spasiano *September 03, 2022*
+
+
 ## Release 6.4.49  -- _September 02, 2022_ 
 **Changes**
 
