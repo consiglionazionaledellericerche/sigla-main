@@ -5338,6 +5338,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </addColumn>
     </changeSet>
 
+    <include file="bootstrap/add_index_on_pluriennali.xml"/>
 
 
 
