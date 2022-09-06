@@ -75,9 +75,18 @@ public abstract class EconomicaAction extends CRUDAction {
                 .filter(IDocumentoAmministrativoBulk.class::isInstance)
                 .map(IDocumentoAmministrativoBulk.class::cast);
         if (documentoAmministrativoBulk.isPresent()) {
+            List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = documentoAmministrativoBulk
+                    .flatMap(documentoAmministrativoBulk1 -> Optional.ofNullable(documentoAmministrativoBulk1.getScrittura_partita_doppia()))
+                    .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
+                    .orElse(Collections.emptyList())
+                    .stream()
+                    .map(Movimento_cogeBulk::getDocumentoAmministrativo)
+                    .distinct()
+                    .collect(Collectors.toList());
+            iDocumentoAmministrativoBulks.add(documentoAmministrativoBulk.get());
             ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                     "ConsultazionePartitarioBP",
-                    new Object[] { Arrays.asList(documentoAmministrativoBulk.get()), "partitario_amministrativo"}
+                    new Object[] { iDocumentoAmministrativoBulks, "partitario_amministrativo"}
             );
             consBP.openIterator(actionContext);
             actionContext.addBusinessProcess(consBP);
