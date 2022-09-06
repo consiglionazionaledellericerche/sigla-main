@@ -54,7 +54,7 @@ public enum TipoDocumentoEnum {
 	GENERICO_E(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E, Documento_generico_attivoBulk.class, "Documento generico di entrata"),
 	MANDATO(Numerazione_doc_contBulk.TIPO_MAN, MandatoIBulk.class, "Mandato"),
 	REVERSALE(Numerazione_doc_contBulk.TIPO_REV, ReversaleIBulk.class, "Reversale"),
-	GEN_STIPENDI_SPESA("GEN_STIP_S", MandatoIBulk.class, "Documento generico di versamento stipendi"),
+	GEN_STIPENDI_SPESA("GEN_STIP_S", Documento_generico_passivoBulk.class, "Documento generico di versamento stipendi"),
 	REGOLA_E("REGOLA_E", Documento_generico_attivoBulk.class, "Documento per mandato di regolarizzazione");
 
 	private final String value;
