@@ -32,7 +32,10 @@ public class ContoBulk extends Voce_epBulk {
 	private ContoBulk riapre_a_conto;
 	static private java.util.Hashtable associazioni_natura_gruppo;
 	private boolean fl_gruppoNaturaNonCongruiConfermati = false;
-/**
+
+	private ContoBulk contoContropartita;
+
+	/**
  * Costruttore della classe <code>ContoBulk</code>.
  */
 public ContoBulk() 
@@ -116,6 +119,7 @@ public CapocontoBulk getVoce_ep_padre() {
 public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 	setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
 	riapre_a_conto = new ContoBulk();
+	contoContropartita = new ContoBulk();
 	setFl_a_pareggio(new Boolean (false));
 	return this;
 }
@@ -182,4 +186,20 @@ public void setVoce_ep_padre(CapocontoBulk newVoce_ep_padre) {
 	voce_ep_padre = newVoce_ep_padre;
 }
 
+	public ContoBulk getContoContropartita() {
+		return contoContropartita;
+	}
+
+	public void setContoContropartita(ContoBulk contoContropartita) {
+		this.contoContropartita = contoContropartita;
+	}
+	public java.lang.String getCd_voce_ep_contr() {
+		return Optional.ofNullable(this.getContoContropartita())
+				.map(Voce_epBulk::getCd_voce_ep)
+				.orElse(null);
+	}
+
+	public void setCd_voce_ep_contr(java.lang.String cd_voce_ep) {
+		Optional.ofNullable(this.getContoContropartita()).ifPresent(el->el.setCd_voce_ep(cd_voce_ep));
+	}
 }

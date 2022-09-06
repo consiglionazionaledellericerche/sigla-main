@@ -225,7 +225,29 @@
 		columnSet="searchtool"
 		freeSearchSet="searchtool"
 		enabledOnSearch="true"
-		label="Classificazione Ufficiale" />			
+		label="Classificazione Ufficiale" />
+
+	<fieldProperty
+		name="find_voce_ep_contr"
+		property="contoContropartita"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"	/>
+	<fieldProperty
+		name="cd_voce_ep_contr"
+		property="contoContropartita.cd_voce_ep"
+		label="Conto di contropartita"
+		inputType="TEXT"
+		maxLength="45"
+		inputSize="20"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"	/>
+	<fieldProperty
+		name="ds_voce_ep_contr"
+		property="contoContropartita.ds_voce_ep"
+		label=""
+		inputSize="50"
+		inputType="ROTEXT"
+		enabledOnSearch="true"	/>
 
 	<columnFieldProperty
 		name="esercizio"
@@ -321,7 +343,13 @@
    	<formFieldProperty
 		name="cd_classificazione" />
    	<formFieldProperty
-		name="find_classificazione_voci_ep" />	
+		name="find_classificazione_voci_ep" />
+	<formFieldProperty
+		name="cd_voce_ep_contr"	/>
+	<formFieldProperty
+		name="ds_voce_ep_contr"	/>
+	<formFieldProperty
+		name="find_voce_ep_contr" />
 
 	<findFieldProperty
 		name="cd_proprio_voce_ep"
