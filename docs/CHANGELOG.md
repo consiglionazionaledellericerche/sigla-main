@@ -1,3 +1,15 @@
+## Release 6.4.51  -- _September 06, 2022_ 
+**Changes**
+
+>**Cambiata implementazione xml provider, rimosso artefatto com.sun.xml.messaging.saaj:saaj-impl per Interceptor for {http://comp.docamm00.contab.cnr.it/}FatturaAttivaComponentWSService has thrown exception, unwinding now: java.lang.ClassCastException: com.sun.org.apache.xerces.internal.dom.ElementNSImpl cannot be cast to javax.xml.soap.SOAPElement**
+>
+>[6842afea8105c75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6842afea8105c75) marco.spasiano *September 06, 2022*
+
+>**Add index on pluriennali**
+>
+>[f3daecca0a79fbb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3daecca0a79fbb) marco.spasiano *September 05, 2022*
+
+
 ## Release 6.4.50  -- _September 03, 2022_ 
 **Changes**
 
