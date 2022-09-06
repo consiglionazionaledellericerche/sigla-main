@@ -80,6 +80,12 @@ public SQLBuilder selectRiapre_a_contoByClause( Voce_epBulk bulk,it.cnr.jada.bul
 	return sql;
 }
 
+	public SQLBuilder selectContoContropartitaByClause( Voce_epBulk bulk,it.cnr.jada.bulk.BulkHome home,it.cnr.jada.bulk.OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
+		SQLBuilder sql = home.selectByClause(clause);
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+		return sql;
+	}
+
 	public SQLBuilder selectContiAssociatiACategoria(CompoundFindClause clause, Integer esercizio, Categoria_gruppo_inventBulk cat) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
 		SQLBuilder sql = selectByClause(clause);
 		sql.addSQLClause("AND", "VOCE_EP.ESERCIZIO", SQLBuilder.EQUALS, esercizio);

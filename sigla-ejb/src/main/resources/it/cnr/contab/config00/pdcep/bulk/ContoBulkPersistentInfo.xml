@@ -45,6 +45,14 @@
 			propertyName="v_classificazione_voci_ep.id_classificazione"
 			sqlTypeName="DECIMAL"
 			columnSize="7" />
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="contoContropartita.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_VOCE_EP_CONTR"
+			propertyName="contoContropartita.cd_voce_ep" />
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -52,6 +60,8 @@
 	<persistentProperty
 		name="riapre_a_conto" />
 	<persistentProperty
-		name="v_classificazione_voci_ep" />			
+		name="v_classificazione_voci_ep" />
+	<persistentProperty
+		name="contoContropartita"/>
 
 </SQLPersistentInfo>

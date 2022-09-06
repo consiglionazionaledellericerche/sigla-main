@@ -29,6 +29,7 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class Liquid_gruppo_coriHome extends BulkHome {
 	/**
@@ -61,6 +62,20 @@ public class Liquid_gruppo_coriHome extends BulkHome {
 		return this.fetchAll( sql);
 	}
 
+	public Collection<Liquid_gruppo_coriBulk> findLiquidazioniAccentrate(it.cnr.jada.UserContext userContext, Liquid_gruppo_coriBulk liquidGruppoCoriBulk ) throws PersistencyException
+	{
+		if (!liquidGruppoCoriBulk.getFl_accentrato() && liquidGruppoCoriBulk.getPg_gruppo_centro()!=null) {
+			SQLBuilder sql = this.createSQLBuilder();
+			sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, liquidGruppoCoriBulk.getEsercizio() );
+			sql.addClause(FindClause.AND,"pg_gruppo_centro",SQLBuilder.EQUALS, liquidGruppoCoriBulk.getPg_gruppo_centro() );
+			sql.addClause(FindClause.AND,"cd_gruppo_cr",SQLBuilder.EQUALS, liquidGruppoCoriBulk.getCd_gruppo_cr() );
+			sql.addClause(FindClause.AND,"cd_regione",SQLBuilder.EQUALS, liquidGruppoCoriBulk.getCd_regione() );
+			sql.addClause(FindClause.AND,"pg_comune",SQLBuilder.EQUALS, liquidGruppoCoriBulk.getPg_comune() );
+			sql.addClause(FindClause.AND,"fl_accentrato",SQLBuilder.EQUALS, Boolean.TRUE );
+			return this.fetchAll(sql);
+		}
+		return Collections.EMPTY_LIST;
+	}
 
 	public Collection<Liquid_gruppo_cori_detBulk> findDettagli(it.cnr.jada.UserContext userContext, Liquid_gruppo_coriBulk liquidGruppoCoriBulk) throws PersistencyException
 	{

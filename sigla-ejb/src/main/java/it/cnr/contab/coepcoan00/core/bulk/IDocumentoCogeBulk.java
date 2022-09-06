@@ -25,7 +25,7 @@ import it.cnr.jada.persistency.KeyedPersistent;
  * Creation date: (4/17/2002 5:49:25 PM)
  * @author: Roberto Peli
  */
-public interface IDocumentoCogeBulk extends KeyedPersistent {
+public interface IDocumentoCogeBulk {
     String getCd_tipo_doc();
 
     String getCd_cds();
