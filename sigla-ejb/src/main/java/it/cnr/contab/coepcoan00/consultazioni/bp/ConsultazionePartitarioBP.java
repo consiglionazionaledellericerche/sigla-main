@@ -71,7 +71,7 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
             if (documentoAmministrativoBulk != null) {
                 CompoundFindClause child = new CompoundFindClause();
                 child.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_tipo_doc_amm());
-                child.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, documentoAmministrativoBulk.getEsercizio());
+                child.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getEsercizio());
                 child.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_cds());
                 child.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_uo());
                 child.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getPg_doc_amm());
