@@ -135,7 +135,9 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 						Arrays.asList(rolesAllowed));
 				try {
 					if (!isUserAllowed(utenteBulk, rolesSet)) {
-						requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", "User doesn't have the following roles: " + rolesSet)).build());
+						final String message = "User " + utenteBulk.getCd_utente() + " doesn't have the following roles: " + rolesSet;
+						LOGGER.warn(message);
+						requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", message)).build());
 						return;
 					}
 				} catch (Exception e) {
@@ -146,10 +148,13 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 		if (accessoAllowed != null) {
 			List<String> accessi = Stream.of(accessoAllowed.value()).map(x -> x.name()).collect(Collectors.toList());
 			try {
+				final UserContext userPrincipal = (UserContext) requestContext.getSecurityContext().getUserPrincipal();
 				if (!BasicAuthentication.loginComponentSession().isUserAccessoAllowed(
-						(UserContext)requestContext.getSecurityContext().getUserPrincipal(), 
+						userPrincipal,
 						accessi.toArray(new String[accessi.size()]))) {
-					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", "User doesn't have the following access: " + accessi)).build());
+					final String message = "User " + userPrincipal.getUser() + " doesn't have the following access: " + accessi;
+					LOGGER.warn(message);
+					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", message)).build());
 				}
 			} catch (ComponentException|RemoteException|EJBException e) {
 				requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
