@@ -137,7 +137,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 					if (!isUserAllowed(utenteBulk, rolesSet)) {
 						final String message = "User " + utenteBulk.getCd_utente() + " doesn't have the following roles: " + rolesSet;
 						LOGGER.warn(message);
-						requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", message)).build());
+						requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(Collections.singletonMap("ERROR", message)).build());
 						return;
 					}
 				} catch (Exception e) {
@@ -154,7 +154,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 						accessi.toArray(new String[accessi.size()]))) {
 					final String message = "User " + userPrincipal.getUser() + " doesn't have the following access: " + accessi;
 					LOGGER.warn(message);
-					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", message)).build());
+					requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(Collections.singletonMap("ERROR", message)).build());
 				}
 			} catch (ComponentException|RemoteException|EJBException e) {
 				requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
