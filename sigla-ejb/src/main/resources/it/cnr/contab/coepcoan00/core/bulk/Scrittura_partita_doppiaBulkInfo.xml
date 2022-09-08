@@ -259,16 +259,26 @@
 		name="imTotaleAvere"
 		property="imTotaleAvere"
 		inputType="ROTEXT"
-		inputSize="10"
-		formatName = "it.cnr.contab.util.EuroFormat"				
-		label="Importo totale Avere" />
+		style="text-align: right"
+		inputSize="20"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Avere" />
 	<fieldProperty
 		name="imTotaleDare"
 		property="imTotaleDare"
 		inputType="ROTEXT"
-		inputSize="10"
-		formatName = "it.cnr.contab.util.EuroFormat"				
-		label="Importo totale Dare" />
+		style="text-align: right"
+		inputSize="20"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Dare" />
+	<fieldProperty
+		name="differenza"
+		property="differenza"
+		inputType="ROTEXT"
+		style="text-align: right"
+		inputSize="20"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Differenza" />
 	<fieldProperty
 		name="cd_cds_documento"
 		property="cd_cds_documento"
@@ -360,6 +370,8 @@
 		name="imTotaleDare" />
 	<formFieldProperty
 		name="imTotaleAvere" />
+	<formFieldProperty
+		name="differenza" />
 	<formFieldProperty
 		name="cd_cds_documento" />
 	<formFieldProperty

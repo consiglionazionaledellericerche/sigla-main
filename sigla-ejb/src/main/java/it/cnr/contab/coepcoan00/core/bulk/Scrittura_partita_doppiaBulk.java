@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
@@ -160,28 +161,18 @@ public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
     }
 
     public java.math.BigDecimal getImTotaleAvere() {
-        Movimento_cogeBulk mov;
-        java.math.BigDecimal tot = new java.math.BigDecimal(0);
-        for (java.util.Iterator i = getMovimentiAvereColl().iterator(); i.hasNext(); ) {
-            mov = (Movimento_cogeBulk) i.next();
-            if (mov.getIm_movimento() != null)
-                tot = tot.add(mov.getIm_movimento());
-        }
-        return tot;
+        return BigDecimal.valueOf(getMovimentiAvereColl().stream()
+                .collect(Collectors.summingDouble(value -> value.getIm_movimento().doubleValue())));
     }
 
     public java.math.BigDecimal getImTotaleDare() {
-        Movimento_cogeBulk mov;
-        java.math.BigDecimal tot = new java.math.BigDecimal(0);
-        for (java.util.Iterator i = getMovimentiDareColl().iterator(); i.hasNext(); ) {
-            mov = (Movimento_cogeBulk) i.next();
-            if (mov.getIm_movimento() != null)
-                tot = tot.add(mov.getIm_movimento());
-        }
-        return tot;
-
+        return BigDecimal.valueOf(getMovimentiDareColl().stream()
+                .collect(Collectors.summingDouble(value -> value.getIm_movimento().doubleValue())));
     }
 
+    public java.math.BigDecimal getDifferenza() {
+        return getImTotaleDare().subtract(getTotaleAvere()).abs();
+    }
     /**
      * @return it.cnr.jada.bulk.BulkList
      */

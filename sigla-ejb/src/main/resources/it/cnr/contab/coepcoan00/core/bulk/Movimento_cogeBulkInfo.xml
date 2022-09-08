@@ -324,9 +324,11 @@
 		<columnFieldProperty
 			name="ds_voce_ep" />
 		<columnFieldProperty
-			name="ti_riga" />
+			name="ti_riga"
+			textTruncate="true"/>
 		<columnFieldProperty
-			name="dt_da_competenza_coge" />
+			name="dt_da_competenza_coge"
+			textTruncate="true"/>
 		<columnFieldProperty
 			name="dt_a_competenza_coge" />
 		<columnFieldProperty
