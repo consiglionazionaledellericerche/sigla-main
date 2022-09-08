@@ -17,6 +17,9 @@
 
 <action-mappings>
     <action
+            path="/SelezionatoreSearchProviderAction" actionClass="it.cnr.contab.util00.action.SelezionatoreSearchProviderAction">
+    </action>
+    <action
             path="/CRUDConfigVoceEPAction" actionClass="it.cnr.jada.util.action.CRUDAction">
     </action>
     <action

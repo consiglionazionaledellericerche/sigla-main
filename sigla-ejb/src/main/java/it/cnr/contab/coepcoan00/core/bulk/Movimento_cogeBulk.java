@@ -281,13 +281,16 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
      * @return La rappresentazione a video della partita
      */
     public String getPartita() {
-        return Arrays.asList(
-                getCd_tipo_documento(),
-                Optional.ofNullable(getEsercizio_documento()).map(String::valueOf).orElse(null),
-                Optional.ofNullable(getPg_numero_documento()).map(String::valueOf).orElse(null)
-        ).stream().filter(Objects::nonNull).collect(
-                Collectors.joining("/")
-        );
+        return Optional.ofNullable(getCd_tipo_documento())
+                .map(s -> {
+                    return Arrays.asList(
+                            TipoDocumentoEnum.fromValue(s).getLabel(),
+                            Optional.ofNullable(getEsercizio_documento()).map(String::valueOf).orElse(null),
+                            Optional.ofNullable(getPg_numero_documento()).map(String::valueOf).orElse(null)
+                    ).stream().filter(Objects::nonNull).collect(
+                            Collectors.joining("/")
+                    );
+                }).orElse(null);
     }
     /**
      * Effettua una validazione formale del contenuto dello stato dell'oggetto

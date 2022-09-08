@@ -46,116 +46,58 @@
 
         <columnMapping
                 columnName="CD_CDS_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_cds"/>
+                propertyName="documentoAmministrativo.cd_cds"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_uo"/>
-        <columnMapping
-                columnName="ESERCIZIO_DOCUMENTO"
-                propertyName="documentoAmministrativo.esercizio"/>
-        <columnMapping
-                columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_doc_amm"/>
-    </defaultColumnMap>
-
-    <columnMap name="base"
-               tableName="MOVIMENTO_COGE"
-               extends="default">
-        <columnMapping
-                columnName="CD_CDS_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_cds"/>
+                propertyName="documentoAmministrativo.cd_uo"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_unita_organizzativa"/>
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="ESERCIZIO_DOCUMENTO"
-                propertyName="documentoAmministrativo.esercizio"/>
-    </columnMap>
-    <columnMap name="FATTURA_P"
-               tableName="MOVIMENTO_COGE"
-               extends="base">
+                propertyName="documentoAmministrativo.esercizio"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_fattura_passiva"/>
-    </columnMap>
-    <columnMap name="FATTURA_A"
-               tableName="MOVIMENTO_COGE"
-               extends="base">
+                propertyName="documentoAmministrativo.pg_doc_amm"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_fattura_attiva"/>
-    </columnMap>
-    <columnMap name="ANTICIPO"
-               tableName="MOVIMENTO_COGE"
-               extends="base">
+                propertyName="documentoAmministrativo.pg_fattura_attiva"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_anticipo"/>
-    </columnMap>
-    <columnMap name="COMPENSO"
-               tableName="MOVIMENTO_COGE"
-               extends="base">
+                propertyName="documentoAmministrativo.pg_fattura_passiva"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_compenso"/>
-    </columnMap>
-    <columnMap name="MISSIONE"
-               tableName="MOVIMENTO_COGE"
-               extends="base">
+                propertyName="documentoAmministrativo.pg_missione"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_missione"/>
-    </columnMap>
-    <columnMap name="DOCUMENTO_GENERICO"
-               tableName="MOVIMENTO_COGE"
-               extends="base">
+                propertyName="documentoAmministrativo.pg_compenso"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_anticipo"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_documento_generico"
+                fetchOnly="true"/>
         <columnMapping
                 columnName="CD_TIPO_DOCUMENTO"
-                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm" />
-        <columnMapping
-                columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_documento_generico"/>
-    </columnMap>
-    <columnMap name="GEN_CORA_E"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_CORA_S"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_CORV_E"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_CORV_S"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_IVA_E"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_CH_FON"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_AP_FON"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GEN_RE_FON"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GENERICO_S"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
-    <columnMap name="GENERICO_E"
-               tableName="MOVIMENTO_COGE"
-               extends="DOCUMENTO_GENERICO">
-    </columnMap>
+                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm"
+                fetchOnly="true"/>
+
+    </defaultColumnMap>
 
     <persistentProperty
             name="scrittura"
@@ -166,9 +108,4 @@
             name="documentoAmministrativo"/>
     <persistentProperty
             name="terzo"/>
-    <fetchPolicy
-            name="excludeDocumentoAmministrativo">
-        <exclude pattern="documentoAmministrativo" />
-    </fetchPolicy>
-
 </SQLPersistentInfo>

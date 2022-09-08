@@ -521,6 +521,26 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
             throw handleException(e);
         }
     }
+    public Boolean propostaFatturaDaOrdini(UserContext userContext) throws ComponentException {
+        try {
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_ORDINI,
+                    Configurazione_cnrBulk.SK_GESTIONE_ORDINI,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val02YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        try {
+                            return val02YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
 
     public Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(UserContext userContext) throws ComponentException {
         try {
@@ -548,7 +568,14 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         return Optional.ofNullable(home.findByPrimaryKey(configurazioneCnrKey))
                 .filter(Configurazione_cnrBulk.class::isInstance)
                 .map(Configurazione_cnrBulk.class::cast)
-                .map(bulk -> Optional.ofNullable(bulk.getVal01()).filter(val -> val.equals("Y")).isPresent());
+                .map(bulk -> Optional.ofNullable(bulk.getVal01()).filter(val -> val.equals("Y") || val.equals("S")).isPresent());
+    }
+    private Optional<Boolean> val02YesNo(UserContext userContext, Configurazione_cnrKey configurazioneCnrKey) throws PersistencyException, ComponentException {
+        final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
+        return Optional.ofNullable(home.findByPrimaryKey(configurazioneCnrKey))
+                .filter(Configurazione_cnrBulk.class::isInstance)
+                .map(Configurazione_cnrBulk.class::cast)
+                .map(bulk -> Optional.ofNullable(bulk.getVal02()).filter(val -> val.equals("Y") || val.equals("S")).isPresent());
     }
 
     /**

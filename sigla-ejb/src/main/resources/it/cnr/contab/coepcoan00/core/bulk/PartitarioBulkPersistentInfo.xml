@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+        persistentClassName="it.cnr.contab.coepcoan00.core.bulk.PartitarioBulk"
+        homeClassName="it.cnr.contab.coepcoan00.core.bulk.PartitarioHome">
+    <defaultColumnMap
+            tableName="MOVIMENTO_COGE">
+
+        <columnMapping
+                columnName="IM_MOVIMENTO_DARE"
+                propertyName="im_movimento_dare"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="IM_MOVIMENTO_AVERE"
+                propertyName="im_movimento_avere"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="DT_CONTABILIZZAZIONE"
+                propertyName="scrittura.dt_contabilizzazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="DS_SCRITTURA"
+                propertyName="scrittura.ds_scrittura"
+                fetchOnly="true"/>
+
+    </defaultColumnMap>
+
+    <persistentProperty
+            name="im_movimento_dare" />
+    <persistentProperty
+            name="im_movimento_avere" />
+</SQLPersistentInfo>

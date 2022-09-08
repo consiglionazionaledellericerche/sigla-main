@@ -656,18 +656,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	 *       il valore '0' ad indicare tutte le classificazioni anagrafiche
 	 * Post: Viene restituito un RemoteIterator contenente solamente l'oggetto fittizio ( con codice '0' ) che rappresenta
 	 *       tutte le classificazioni anagrafiche
-	 *
+	 * <p>
 	 * Nome: Ricerca dell'attributo relativo al terzo con codice '0'
 	 * Pre:  E' stata richiesta la ricerca di un terzo e l'utente ha specificato come codice
 	 *       un valore diverso da '0'
 	 * Post: Viene restituito un RemoteIterator contenente la lista di oggetti di tipo TerzoBulk
 	 *       risultante dall'esecuzione della query sul database
-	 *
+	 * <p>
 	 * Nome: Ricerca di un attributo diverso da terzo
 	 * Pre:  E' stata richiesta la ricerca di un attributo diverso da 'terzo'
 	 * Post: Viene restituito un RemoteIterator contenente la lista degli oggettiBulk
 	 *       risultante dall'esecuzione della query sul database
-	 *
+	 * <p>
 	 *
 	 * @param userContext <code>UserContext</code>
 	 * @param clausole <code>CompoundFindClause</code>  clausole specificate dall'utente
@@ -695,7 +695,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	 *      L'esrcizio COEP/COAN risulta chiuso per il CdS di scrivania
 	 *    PostCondition:
 	 *      Non  viene consentita il salvataggio.
-	 *
+	 * <p>
 	 *  Tutti i controlli superati.
 	 *    PreCondition:
 	 *      Nessun errore rilevato.
@@ -851,11 +851,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	 * Nome: Inizializzazione di una scrittura
 	 * Pre:  E' stata richiesta l'inizializzazione per modifica di una scrittura in partita doppia
 	 * Post: La scrittura viene restituita con inizializzata la collezione di movimenti dare e movimenti avere
-	 *
+	 * <p>
 	 * Nome: Inizializzazione di un movimento
 	 * Pre:  E' stata richiesta l'inizializzazione per visualizzazione di un movimento coge
 	 * Post: Il movimento viene restituito con l'inizializzazione di default
-	 *
+	 * <p>
 	 * Nome: Inizializzazione di un saldo
 	 * Pre:  E' stata richiesta l'inizializzazione per visualizzazione di un saldo coge
 	 * Post: Il saldo viene restituito con l'inizializzazione di default
@@ -912,11 +912,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	 * Nome: Inizializzazione di una scrittura
 	 * Pre:  E' stata richiesta l'inizializzazione per eseguire una ricerca di una scrittura in partita doppia
 	 * Post: La scrittura viene restituita con inizializzato come Cds quello di scrivania
-	 *
+	 * <p>
 	 * Nome: Inizializzazione di un movimento
 	 * Pre:  E' stata richiesta l'inizializzazione per eseguire una ricerca di un movimento coge
 	 * Post: Il movimento viene restituito con inizializzato come Cds quello di scrivania
-	 *
+	 * <p>
 	 * Nome: Inizializzazione di un saldo
 	 * Pre:  E' stata richiesta l'inizializzazione per eseguire una ricerca di un saldo coge
 	 * Post: Il saldo viene restituito con inizializzato come Cds quello di scrivania
@@ -961,11 +961,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	 * Nome: Inizializzazione di una scrittura
 	 * Pre:  E' stata richiesta l'inizializzazione per eseguire una ricerca libera di una scrittura in partita doppia
 	 * Post: La scrittura viene restituita con inizializzato come Cds quello di scrivania
-	 *
+	 * <p>
 	 * Nome: Inizializzazione di un movimento
 	 * Pre:  E' stata richiesta l'inizializzazione per eseguire una ricerca libera di un movimento coge
 	 * Post: Il movimento viene restituito con inizializzato come Cds quello di scrivania
-	 *
+	 * <p>
 	 * Nome: Inizializzazione di un saldo
 	 * Pre:  E' stata richiesta l'inizializzazione per eseguire una ricerca libera di un saldo coge
 	 * Post: Il saldo viene restituito con inizializzato come Cds quello di scrivania
@@ -1042,7 +1042,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	/**
 	 *	Controllo se l'esercizio di scrivania e' aperto
-	 *
+	 * <p>
 	 * Nome: Controllo chiusura esercizio
 	 * Pre:  E' stata richiesta la creazione o modifica di una scrittura
 	 * Post: Viene chiamata una stored procedure che restituisce
@@ -1142,12 +1142,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 	/**
 	 * esegue la seleziona un conto economico patrimoniale per un movimento coge
-	 *
+	 * <p>
 	 * Nome: Seleziona conto per movimeto avere
 	 * Pre:  E' stata richiesta la ricerca di un conto economico patrimoniale per un movimento avere
 	 * Post: Viene restituito il SQLBuilder con le clausole specificate dall'utente ed inoltre le clausole che il conto
 	 *       abbia esercizio uguale all'esercizio del movimento coge e il tipo sezione diverso da DARE
-	 *
+	 * <p>
 	 * Nome: Seleziona conto per movimeto dare
 	 * Pre:  E' stata richiesta la ricerca di un conto economico patrimoniale per un movimento dare
 	 * Post: Viene restituito il SQLBuilder con le clausole specificate dall'utente ed inoltre le clausole che il conto
@@ -1174,7 +1174,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 	/**
 	 * esegue la seleziona un conto economico patrimoniale per un saldo coge
-	 *
+	 * <p>
 	 * Nome: Seleziona conto per saldo coge
 	 * Pre:  E' stata richiesta la ricerca di un conto economico patrimoniale per un saldo coge
 	 * Post: Viene restituito il SQLBuilder con le clausole specificate dall'utente ed inoltre le clausole che il conto
@@ -1199,7 +1199,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	/**
 	 * esegue la seleziona un terzo per una scrittura
-	 *
+	 * <p>
 	 * Nome: Seleziona terzo per scrittura
 	 * Pre:  E' stata richiesta la ricerca di un terzo per una scrittura in partita doppia
 	 * Post: Viene restituito il SQLBuilder con le clausole specificate dall'utente ed inoltre le clausole che il terzo
@@ -1222,12 +1222,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 	/**
 	 * valida la correttezza dell'associazione fra anagrafico e conto
-	 *
+	 * <p>
 	 * Nome: Nessuna associzione fra anagrafico-conto
 	 * Pre:  Per la scrittura in partita doppia e' stato selezionato un terzo le cui caratteristiche anagrafiche non
 	 *       sono state messe in relazione con neanche un conto definito per la scrittura (sia in avere che in dare)
 	 * Post: Una segnalazione di errore viene restituita all'utente
-	 *
+	 * <p>
 	 * Nome: Almeno un'associzione fra anagrafico-conto
 	 * Pre:  Per la scrittura in partita doppia e' stato selezionato un terzo le cui caratteristiche anagrafiche
 	 *       sono state messe in relazione con un conto definito per la scrittura (in avere o in dare)
@@ -1258,15 +1258,15 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 	/**
 	 * valida la correttezza di un oggetto di tipo <code>Scrittura_partita_doppiaBulk</code> passato in ingresso.
-	 *
+	 * <p>
 	 * Nome: validazione superata
 	 * Pre:  La scrittura supera la validazione ( metodo validaScrittura)
 	 * Post: La scrittura può essere inserita nel database
-	 *
+	 * <p>
 	 * Nome: validazione non superata
 	 * Pre:  La scrittura non supera la validazione ( metodo validaScrittura)
 	 * Post: Una segnalazione di errore viene restituita all'utente
-	 *
+	 * <p>
 	 *
 	 * @param userContext <code>UserContext</code>
 	 * @param bulk <code>Scrittura_partita_doppiaBulk</code> da validare
@@ -1288,19 +1288,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 	/**
 	 * valida la correttezza di un oggetto di tipo <code>Scrittura_partita_doppiaBulk</code> passato in ingresso.
-	 *
+	 * <p>
 	 * Nome: Nessun movimento avere
 	 * Pre:  Per la scrittura in partita doppia non e' stato definito nessun movimento avere
 	 * Post: Una segnalazione di errore viene restituita all'utente
-	 *
+	 * <p>
 	 * Nome: Nessun movimento dare
 	 * Pre:  Per la scrittura in partita doppia non e' stato definito nessun movimento dare
 	 * Post: Una segnalazione di errore viene restituita all'utente
-	 *
+	 * <p>
 	 * Nome: Somma movimenti dare diversa da somma movimenti avere
 	 * Pre:  La somma degli importi dei movimenti dare e' diversa dalla somma degli importi dei movimenti avere
 	 * Post: Una segnalazione di errore viene restituita all'utente
-	 *
+	 * <p>
 	 * Nome: Terzo
 	 * Pre:  La scrittura e' stata definita per un terzo e la validazione terzo-conti (metodo 'validaAssociazioneAnagConto')
 	 *       non e' stata superata
@@ -1637,9 +1637,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						if (isSplitPayment) {
 							Voce_epBulk aContoIvaSplit;
 							if (rigaDettFinVoce.getDocamm().getTipoDocumentoEnum().isDocumentoAmministrativoPassivo())
-								aContoIvaSplit = this.findContoIvaDebito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
+								aContoIvaSplit = this.findContoIvaDebitoSplit(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
 							else
-								aContoIvaSplit = this.findContoIvaCredito(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
+								aContoIvaSplit = this.findContoIvaCreditoSplit(userContext, rigaDettFinVoce.getDocamm().getTipoDocumentoEnum());
 
 							//Rilevo il conto IVA Credito/Debito di tipo SPLIT (a secondo se doc attivo o passivo) e lo compenso con il debito verso il fornitore
 							testataPrimaNota.closeDettaglioIvaSplit(docamm, aContoIvaSplit.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIvaSplit);
@@ -2400,7 +2400,22 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoVersamentoCori(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {
-		Collection<Liquid_gruppo_coriBulk> liquidGruppoCoriBulk = ((Liquid_gruppo_coriHome) getHome(userContext, Liquid_gruppo_coriBulk.class)).findByMandato(userContext, mandato);
+		List<Liquid_gruppo_coriBulk> liquidGruppoCoriList = new ArrayList<>();
+
+		Collection<Liquid_gruppo_coriBulk> liquidGruppoCoriBulk =
+				((Liquid_gruppo_coriHome) getHome(userContext, Liquid_gruppo_coriBulk.class)).findByMandato(userContext, mandato)
+						.stream()
+						.flatMap(el->{
+							if (!el.getFl_accentrato() && !Optional.ofNullable(el.getPg_gruppo_centro()).isPresent())
+								return Stream.of(el);
+							else {
+								try {
+									return ((Liquid_gruppo_coriHome) getHome(userContext, Liquid_gruppo_coriBulk.class)).findLiquidazioniAccentrate(userContext, el).stream();
+								} catch(ComponentException|PersistencyException ex) {
+									throw new ApplicationRuntimeException(ex);
+								}
+							}
+						}).collect(Collectors.toList());
 
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
 
@@ -2947,6 +2962,28 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						" - Codice Contributo: " + configIva.getVal01() + " - Tipe E/P: " + Contributo_ritenutaBulk.TIPO_ENTE + " - Sezione: " + tipoDocumento.getSezioneEconomica() + ")"));
 	}
 
+	private Voce_epBulk findContoIvaDebitoSplit(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
+		Configurazione_cnrBulk configIva = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, null, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA);
+
+		Ass_tipo_cori_voce_epHome aEffCoriHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
+		Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), configIva.getVal03(), Contributo_ritenutaBulk.TIPO_ENTE, tipoDocumento.getSezionePatrimoniale());
+
+		return Optional.ofNullable(aEffCori).flatMap(el -> Optional.ofNullable(el.getVoce_ep_contr())).filter(el -> Optional.ofNullable(el.getCd_voce_ep()).isPresent())
+				.orElseThrow(() -> new ApplicationRuntimeException("Conto ep di contropartita non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
+						" - Codice Contributo: " + configIva.getVal03() + " - Tipe E/P: " + Contributo_ritenutaBulk.TIPO_ENTE + " - Sezione: " + tipoDocumento.getSezioneEconomica() + ")"));
+	}
+
+	private Voce_epBulk findContoIvaCreditoSplit(UserContext userContext, TipoDocumentoEnum tipoDocumento) throws ComponentException, RemoteException, PersistencyException {
+		Configurazione_cnrBulk configIva = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, null, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA);
+
+		Ass_tipo_cori_voce_epHome aEffCoriHome = (Ass_tipo_cori_voce_epHome) getHome(userContext, Ass_tipo_cori_voce_epBulk.class);
+		Ass_tipo_cori_voce_epBulk aEffCori = aEffCoriHome.getAssCoriEp(CNRUserContext.getEsercizio(userContext), configIva.getVal03(), Contributo_ritenutaBulk.TIPO_ENTE, tipoDocumento.getSezioneEconomica());
+
+		return Optional.ofNullable(aEffCori).flatMap(el -> Optional.ofNullable(el.getVoce_ep())).filter(el -> Optional.ofNullable(el.getCd_voce_ep()).isPresent())
+				.orElseThrow(() -> new ApplicationRuntimeException("Conto ep di contropartita non trovato (Esercizio: " + CNRUserContext.getEsercizio(userContext) +
+						" - Codice Contributo: " + configIva.getVal03() + " - Tipe E/P: " + Contributo_ritenutaBulk.TIPO_ENTE + " - Sezione: " + tipoDocumento.getSezioneEconomica() + ")"));
+	}
+
 	private Voce_epBulk findContoCostoRicavo(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
 		return this.findAssEvVoceep(userContext, voceBilancio).getVoce_ep();
 	}
@@ -3082,7 +3119,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, TerzoBulk terzo, Elemento_voceBulk elementoVoce, String tipoContoPatrimoniale) throws ComponentException, RemoteException, PersistencyException {
 		Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, elementoVoce);
-		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, terzo, elementoVoce, tipoContoPatrimoniale);
+		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, terzo, elementoVoce, aContoCosto, tipoContoPatrimoniale);
 		return Pair.of(aContoCosto, aContoContropartita);
 	}
 
@@ -3105,7 +3142,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		AccertamentoHome accertamentohome = (AccertamentoHome) getHome(userContext, AccertamentoBulk.class);
 		AccertamentoBulk accertamentoBulk = (AccertamentoBulk) accertamentohome.findByPrimaryKey(new AccertamentoBulk(cori.getCd_cds_accertamento(), cori.getEsercizio_accertamento(), cori.getEsercizio_ori_accertamento(), cori.getPg_accertamento()));
 		Voce_epBulk aContoCosto = this.findContoCostoRicavo(userContext, new Elemento_voceBulk(accertamentoBulk.getCd_elemento_voce(), accertamentoBulk.getEsercizio(), accertamentoBulk.getTi_appartenenza(), accertamentoBulk.getTi_gestione()));
-		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, cori.getCompenso().getTerzo(), new Elemento_voceBulk(accertamentoBulk.getCd_elemento_voce(), accertamentoBulk.getEsercizio(), accertamentoBulk.getTi_appartenenza(), accertamentoBulk.getTi_gestione()), Movimento_cogeBulk.TipoRiga.CREDITO.value());
+		Voce_epBulk aContoContropartita = this.findContoAnag(userContext, cori.getCompenso().getTerzo(), new Elemento_voceBulk(accertamentoBulk.getCd_elemento_voce(), accertamentoBulk.getEsercizio(), accertamentoBulk.getTi_appartenenza(), accertamentoBulk.getTi_gestione()), aContoCosto, Movimento_cogeBulk.TipoRiga.CREDITO.value());
 		return Pair.of(aContoCosto, aContoContropartita);
 	}
 
@@ -3123,16 +3160,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				.orElseThrow(()->new ApplicationException("Associazione tra voce del piano finanziario e voce economica " + voceEpBulk.getCd_voce_ep() + " non trovata."));
 	}
 
-	private Voce_epBulk findContoAnag(UserContext userContext, TerzoBulk terzo, Elemento_voceBulk voceBilancio, String tipoConto) throws ComponentException, RemoteException, PersistencyException {
+	private Voce_epBulk findContoAnag(UserContext userContext, TerzoBulk terzo, Elemento_voceBulk voceBilancio, Voce_epBulk aContoCosto, String tipoConto) throws ComponentException, RemoteException, PersistencyException {
 		Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE, Configurazione_cnrBulk.SK_ASSOCIAZIONE_CONTI);
 
 		if (Optional.ofNullable(config).filter(el->el.getVal01().equals("TERZO")).isPresent())
-			return findContoAnag(userContext, terzo, tipoConto);
+			return this.findContoAnag(userContext, terzo, tipoConto);
 		else if (Optional.ofNullable(config).filter(el->el.getVal01().equals("CONTO")).isPresent()) {
 			Configurazione_cnrBulk configTipoEP = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE, Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE);
 			if (Optional.ofNullable(configTipoEP).filter(el->el.getVal01().equals("PARALLELA")).isPresent())
-				return findContoAnag(userContext, voceBilancio);
-			return findContoAnag(userContext, voceBilancio);
+				return this.findContoAnag(userContext, voceBilancio);
+			return this.findContoAnag(userContext, aContoCosto);
 		}
 		throw new ApplicationRuntimeException("Manca la configurazione del tipo proposta conto debito/credito (Tabella CONFIGURAZIONE_CNR - Chiave Primaria: "+Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE+" - Chiave Secondaria: "+Configurazione_cnrBulk.SK_ASSOCIAZIONE_CONTI);
 	}
@@ -3143,6 +3180,20 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						voceBilancio.getEsercizio() + "/" + voceBilancio.getTi_appartenenza() + "/"  +
 						voceBilancio.getTi_gestione() + "/" +
 						voceBilancio.getCd_elemento_voce() + "."));
+	}
+
+	private Voce_epBulk findContoAnag(UserContext userContext, Voce_epBulk aContoCosto) throws ComponentException, PersistencyException {
+		return Optional.ofNullable(aContoCosto).filter(el->Optional.ofNullable(el.getCd_voce_ep_contr()).isPresent())
+				.flatMap(el->{
+					try {
+						Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
+						return Optional.ofNullable((Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(el.getCd_voce_ep_contr(), el.getEsercizio())));
+					} catch(ComponentException|PersistencyException ex) {
+						throw new DetailedRuntimeException(ex);
+					}
+				})
+				.orElseThrow(()->new ApplicationRuntimeException("Conto di contropartita mancante in associazione con il conto economico " +
+						aContoCosto.getEsercizio() + "/" + aContoCosto.getCd_voce_ep() + "."));
 	}
 
 	private Voce_epBulk findContoAnag(UserContext userContext, TerzoBulk terzo, String tipoConto) throws ComponentException, PersistencyException {

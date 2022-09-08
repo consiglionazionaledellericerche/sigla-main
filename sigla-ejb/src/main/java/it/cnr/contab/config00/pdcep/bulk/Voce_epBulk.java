@@ -20,6 +20,7 @@ package it.cnr.contab.config00.pdcep.bulk;
 import java.util.*;
 
 import it.cnr.contab.config00.pdcep.cla.bulk.V_classificazione_voci_epBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_documento_genericoBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;

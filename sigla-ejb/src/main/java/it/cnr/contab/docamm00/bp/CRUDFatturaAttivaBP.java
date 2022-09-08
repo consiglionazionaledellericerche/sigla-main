@@ -49,8 +49,10 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.Config;
 import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
@@ -105,7 +107,7 @@ public abstract class CRUDFatturaAttivaBP
     private boolean isGestoreBancaFatturaAttiva;
     private boolean contoEnte;
     private DocumentiCollegatiDocAmmService docCollService;
-    private boolean attivaEconomicaParallela = false;
+    protected boolean attivaEconomicaParallela = false;
 
     public CRUDFatturaAttivaBP() {
         this(Fattura_attiva_rigaBulk.class);
