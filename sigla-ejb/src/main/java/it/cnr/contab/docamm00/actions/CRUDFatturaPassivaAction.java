@@ -5514,9 +5514,14 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
     public Forward doOnFlDaOrdiniChange(ActionContext context) {
         try {
             fillModel(context);
-            /**
-             * TODO Nascondere la tab di contabilizzaione dell'impegno e mostare la tab ordini
-             */
+            CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                    .filter(CRUDFatturaPassivaBP.class::isInstance)
+                    .map(CRUDFatturaPassivaBP.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+            Fattura_passivaBulk fattura_passivaBulk = (Fattura_passivaBulk) bp.getModel();
+            if (!fattura_passivaBulk.isDaOrdini() && Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()).isPresent()  && fattura_passivaBulk.getFattura_passiva_dettColl().isEmpty()) {
+                bp.caricaRigheFatturaDaFatturazioneElettronica(context, fattura_passivaBulk, this, fattura_passivaBulk.getDocumentoEleTestata());
+            }
             return context.findDefaultForward();
         } catch (Throwable t) {
             return handleException(context, t);
