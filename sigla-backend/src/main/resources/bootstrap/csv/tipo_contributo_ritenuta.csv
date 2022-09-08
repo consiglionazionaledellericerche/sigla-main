@@ -1,185 +1,185 @@
-CD_CONTRIBUTO_RITENUTA,DT_INI_VALIDITA,DT_FIN_VALIDITA,DS_CONTRIBUTO_RITENUTA,TI_CASSA_COMPETENZA,CD_TRIBUTO_ERARIO,FL_ASSISTENZA_FISCALE,PRECISIONE,PG_CLASSIFICAZIONE_MONTANTI,CD_CLASSIFICAZIONE_CORI,FL_SCRIVI_MONTANTI,FL_USO_IN_LORDIZZA,FL_ALIQUOTA_RIDOTTA,FL_GLA,CD_ENTE_PREV_STI,DS_STAMPE,FL_SOSPENSIONE_IRPEF,FL_CREDITO_IRPEF,UTCR,UTUV,PG_VER_REC
-"DIFADDCOM","2008-01-01","2050-12-31","Differenza addizionale comunale da stipendi per F24ep","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24EPIMU","2012-01-01","2200-12-31","IMU DA VERSARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"RECUIVA","2010-12-01","2200-12-31","RECUPERO ACCONTO IVA","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24IRES2","2011-06-01","2200-12-31","2° ACCONTO IRES DA PAGARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IRES4","2009-05-19","2200-12-31","Ritenuta al 4% a titolo di acconto dell'imposta sul reddito delle societ?","CA","106E","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","Y","N","SYSTEM","SYSTEM","1"
-"P516","2011-01-01","2200-12-31","CPS - SISTEMAZIONI CONTRIBUTIVE","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"P216","2011-01-27","2200-12-31","CPDEL - SISTEMAZIONI CONTRIBUTIVE","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"ARROTOND","2010-12-01","2200-12-31","ARROTONDAMENTO SU VERSAMENTI CONTRIBUTIVI","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"ACCCOM730","2007-01-01","2050-12-31","Addizionale comunale Acconto MOD. 730","CA","385E","Y","NULL","NULL","C0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"ACCCOM730I","2007-01-01","2050-12-31","Interessi rate Addizionale Comunale Acconto MOD.730","CA","385E","Y","NULL","NULL","C0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24IRAP1","2011-06-01","2200-12-31","1° ACCONTO IRAP COMMERCIALE DA PAGARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24IRESSAL","2011-06-01","2200-12-31","SALDO IRES DA PAGARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA10","2007-01-01","2200-12-31","IRPEF per compensi a personale esterno non residente","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","N","N","SYSTEM","SYSTEM","1"
-"BONUS","2009-03-01","2200-12-31","BONUS STRAORDINARIO art. 1 del D.L. 29/11/2008 n. 185 ","CA","100E","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24INAIL","2011-01-01","2200-12-31","INAIL DA VERSARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24EPIVA","2011-01-01","2200-12-31","IVA COMMERCIALE DA VERSARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"1049","2011-01-01","2200-12-31","RITENUTA ACCONTO 20% SU PPT","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24IRES1","2011-06-01","2200-12-31","1° ACCONTO IRES DA PAGARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"RIVALSA4CP","2011-01-01","2050-12-31","Rivalsa Cassa Previd. 4%","CA","NULL","N","NULL","NULL","RV","N","N","N","N","NULL","Rivalsa Cassa Previd. ","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP","2006-01-01","2050-12-31","IRAP STIPENDI","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP01","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE ABRUZZO","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP02","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE BASILICATA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP03","2006-01-01","2050-12-31","IRAP STIPENDI - PROVINCIA  ATON. BOLZANO","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP04","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE CALABRIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP06","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE EMILIA ROMAGNA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP07","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE FRIULI VEN GIULIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP08","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE LAZIO","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP10","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE LOMBARDIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP11","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE MARCHE","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP12","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE MOLISE","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP14","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE PUGLIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP15","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE SARDEGNA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP16","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE SICILIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP18","2006-01-01","2050-12-31","IRAP STIPENDI - PROVINCIA AUTON. TRENTO","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP19","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE UMBRIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP20","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE VALLE D'AOSTA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDA405","2006-01-01","2050-12-31","ONERE ENTE INPS - DISOCCUPAZIONE","CA","A405","N","NULL","NULL","PR","N","N","N","N","05","ONERE ENTE INPS - DISOCCUPAZIONE","N","N","SYSTEM","SYSTEM","1"
-"STDE105","2006-01-01","2050-12-31","ONERE INPS  A CARICO ENTE ","CA","E105","N","NULL","NULL","PR","N","N","N","N","05","ONERE INPS  A CARICO ENTE ","N","N","SYSTEM","SYSTEM","1"
-"STDE206","2006-01-01","2050-12-31","ONERE CPDEL  A CARICO ENTE ","CA","E206","N","NULL","NULL","PR","N","N","N","N","06","ONERE CPDEL  A CARICO ENTE ","N","N","SYSTEM","SYSTEM","1"
-"STDE308","2006-01-01","2050-12-31","ONERE CPS  A CARICO ENTE ","CA","E308","N","NULL","NULL","PR","N","N","N","N","08","ONERE CPS  A CARICO ENTE ","N","N","SYSTEM","SYSTEM","1"
-"STDE404","2006-01-01","2050-12-31","ONERE ENPDEP A CARICO ENTE ","CA","E404","N","NULL","NULL","PR","N","N","N","N","NULL","ONERE ENPDEP A CARICO ENTE ","N","N","SYSTEM","SYSTEM","1"
-"STDE913","2006-01-01","2050-12-31","ONERE ENTE INPGI ","CA","0913","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDEFFS","2006-01-01","2050-12-31","ONERE FONDO FF.SS.  A CARICO ENTE ","CA","EFFS","N","NULL","NULL","PR","N","N","N","N","FS","ONERE FONDO FF.SS.  A CARICO ENTE ","N","N","SYSTEM","SYSTEM","1"
-"CPDELCPAP","2007-01-01","2050-12-31","CPDEL a carico dipendente anno precedente","CO","NULL","N","1","3","PR","Y","Y","N","N","06","CPDEL ","N","N","SYSTEM","SYSTEM","1"
-"RITFIT","2004-01-01","2200-12-31","Ritenuta Fittizia","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","Ritenuta Fittizia","N","N","SYSTEM","SYSTEM","1"
-"RIVALSAINP","2004-01-01","2200-12-31","Rivalsa INPGI al 2% ","CA","NULL","N","NULL","NULL","RV","N","N","N","N","NULL","Rivalsa INPGI","N","N","SYSTEM","SYSTEM","1"
-"INPSB","2006-01-01","2050-12-31","INPS","CA","CXX","N","1","2","PR","Y","Y","N","Y","05","INPS Gestione Separata","N","N","SYSTEM","SYSTEM","1"
-"INFMASSIV","2006-01-01","2200-12-31","Assicurazione - Marie Curie","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"XINPS","2005-01-01","2050-12-31","Enti accorpati - ritenuta inps","CO","XINPS","N","1","NULL","PR","N","N","N","N","NULL","Enti accorpati - ritenuta inps","N","N","SYSTEM","SYSTEM","1"
-"XCPDEL","2005-01-01","2050-12-31","Enti accorpati - ritenuta cpdel","CO","NULL","N","1","3","PR","N","N","N","N","NULL","Enti accorpati - ritenuta cpdel","N","N","SYSTEM","SYSTEM","1"
-"XFONDOCRED","2005-01-01","2050-12-31","Enti accorpati - ritenuta fondo credito","CO","NULL","N","1","NULL","PR","N","N","N","N","NULL","Enti accorpati - ritenuta fondo credito","N","N","SYSTEM","SYSTEM","1"
-"XENPDEP","2005-01-01","2050-12-31","Enti accorpati - ritenuta enpdep","CO","NULL","N","1","NULL","PR","N","N","N","N","NULL","Enti accorpati - ritenuta enpdep","N","N","SYSTEM","SYSTEM","1"
-"ADDCOMACC","2007-01-01","2050-12-31","Acconto Addizionale comunale IRPEF","CA","385E","N","NULL","NULL","C1","N","N","N","N","NULL","Acconto addizionale comunale","N","N","SYSTEM","SYSTEM","1"
-"INPSDIPCP","1998-01-01","2050-12-31","INPS Dipendenti a carico Percepiente","CO","DM10","N","1","2","PR","Y","Y","N","N","05","INPS","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP05","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE CAMPANIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP STIPENDI - REGIONE CAMPANIA","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP09","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE LIGURIA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP STIPENDI - REGIONE LIGURIA","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP13","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE PIEMONTE","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP STIPENDI - REGIONE PIEMONTE","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP17","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE TOSCANA","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP STIPENDI - REGIONE TOSCANA","N","N","SYSTEM","SYSTEM","1"
-"STDIRAP21","2006-01-01","2050-12-31","IRAP STIPENDI - REGIONE VENETO","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP STIPENDI - REGIONE VENETO","N","N","SYSTEM","SYSTEM","1"
-"CEDSE730SA","2012-07-01","2200-12-31","SALDO CEDOLARE SECCA MOD. 730","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CEDSE730AC","2012-07-01","2200-12-31","ACCONTO CEDOLARE SECCA MOD. 730","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"COSOLID730","2012-07-01","2200-12-31","CONTRIBUTO DI SOLIDARIETA' MOD. 730","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRE730SOST","2012-07-01","2200-12-31","CREDITO IMPOSTA SOSTITUTIVA MOD. 730","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRE730CEDS","2012-07-01","2200-12-31","CREDITO CEDOLARE SECCA MOD. 730","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRESOLI730","2012-07-01","2200-12-31","CREDITO CONTRIBUTO SOLIDARIETA' MOD. 730","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"assINPGI","2012-01-01","2100-12-31","assicurazione INPGI","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IVANR","2012-01-01","2050-12-31","IVA Imposta sul valore aggiunto","CA","NULL","N","NULL","NULL","IV","N","N","N","N","NULL","IVA","N","N","SYSTEM","SYSTEM","1"
-"INPGIA","2013-01-01","2050-12-31","INPGI con altra copertura previdenziale","CA","NULL","N","1","8","PR","Y","Y","Y","N","13","INPGI","N","N","SYSTEM","SYSTEM","1"
-"INPGIB1","2013-01-01","2050-12-31","INPGI - Contributi obbligatori Gestione Separata","CA","NULL","N","1","8","PR","Y","Y","N","N","13","INPGI","N","N","SYSTEM","SYSTEM","1"
-"INPGIB2","2013-01-01","2050-12-31","INPGI - Contributi prestazioni temporanee Gestione Separata","CA","NULL","N","1","8","PR","Y","Y","N","N","13","INPGI","N","N","SYSTEM","SYSTEM","1"
-"CTPS","2013-01-01","2050-12-31","CTPS - Cassa Trattamenti Pensionistici Statali","CO","NULL","N","1","NULL","PR","N","N","N","N","NULL","CTPS","N","N","SYSTEM","SYSTEM","1"
-"FONDOCTPS","2013-01-01","2050-12-31","Fondo credito CTPS","CO","NULL","N","1","NULL","PR","N","N","N","N","NULL","Fondo credito CTPS","N","N","SYSTEM","SYSTEM","1"
-"BONUSDL66","2014-01-01","2019-12-31","Bonus ex D.L. 66/2014","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","Y","SYSTEM","SYSTEM","1"
-"RECIRAP","2014-01-01","2050-12-31","Per recupero IRAP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","Recupero IRAP","N","N","SYSTEM","SYSTEM","1"
-"ENPAPIA","2016-01-01","2050-12-31","ENPAPI - Contributi obbligatori Gestione Separata","CA","NULL","N","1","9","PR","Y","Y","N","N","NULL","ENPAPI","N","N","SYSTEM","SYSTEM","1"
-"INAIL_E","2016-01-01","2050-12-31","INAIL TORNO SUBITO E PROGRAMMI SIMILARI","CA","X","N","NULL","4","IL","Y","N","N","N","NULL","INAIL","N","N","SYSTEM","SYSTEM","1"
-"ADDREGSPE","2016-01-01","2200-12-31","CORI PER GESTIONE SCAGLIONI SPECIALI","CA","NULL","N","NULL","NULL","R0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STD0206","2016-01-01","2050-12-31","RITENUTA CPDEL","CA","0206","N","NULL","NULL","PR","N","N","N","N","06","NULL","N","N","SYSTEM","SYSTEM","1"
-"STD0404","2016-01-01","2050-12-31","RITENUTA ENPDEP","CA","0404","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STD1206","2016-01-01","2050-12-31","CPDEL FONDO","CA","NULL","N","NULL","NULL","PR","N","N","N","N","06","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDDI13","2017-03-01","2200-12-31","ONERE ENTE INPGI - DISOCCUPAZIONE ","CA","NULL","N","NULL","NULL","PR","N","N","N","N","13","NULL","N","N","SYSTEM","SYSTEM","1"
-"CPDELCAAP","2007-01-01","2200-12-31","CPDEL a carico CNR anno precedente","CO","NULL","N","1","3","PR","Y","N","N","N","06","CPDEL a carico CNR anno precedente","N","N","SYSTEM","SYSTEM","1"
-"CPSCPAP","2007-01-01","2050-12-31","CPS a carico dipendente anno precedente","CO","NULL","N","1","3","PR","Y","Y","N","N","08","CPS","N","N","SYSTEM","SYSTEM","1"
-"CPSCAAP","2007-01-01","2200-12-31","CPS a carico CNR anno precedente","CO","NULL","N","1","3","PR","Y","N","N","N","08","CPS a carico CNR anno precedente","N","N","SYSTEM","SYSTEM","1"
-"F24IRAP2","2011-06-01","2200-12-31","2° ACCONTO IRAP COMMERCIALE DA PAGARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"FONDOCRCPS","1998-01-01","2050-12-31","Fondo credito CPS","CO","NULL","N","1","3","PR","Y","Y","N","N","08","Fondo credito CPS","N","N","SYSTEM","SYSTEM","1"
-"FONDOCRCPD","1998-01-01","2050-12-31","Fondo credito CPDEL","CO","NULL","N","1","3","PR","Y","Y","N","N","06","Fondo credito CPDEL","N","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA6","2002-01-01","2050-12-31","IRPEF su assegni alimentari ART. 47 L. I TUIR","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"INPGICP","2002-01-01","2050-12-31","INPGI a carico dipendente","CO","NULL","N","1","3","PR","Y","Y","N","N","13","INPGI","N","N","SYSTEM","SYSTEM","1"
-"INPGICPADD","2002-01-01","2050-12-31","Addizionale INPGI a carico dipendente 1%","CO","NULL","N","1","3","PR","Y","Y","N","N","13","ADDIZIONALE INPGI 1%","N","N","SYSTEM","SYSTEM","1"
-"INPGICA","2002-01-01","2050-12-31","INPGI a carico CNR","CO","NULL","N","1","3","PR","Y","N","N","N","13","INPGI a carico CNR","N","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA7","2002-01-01","2050-12-31","IRPEF per dipendenti a tassazione separata","CA","100E","N","NULL","1","FI","N","Y","N","N","NULL","IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"ADDCOM730I","2003-01-01","2050-12-31","Interessi rate addizionale comunale saldo MOD.730","CA","384E","Y","NULL","NULL","C0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"ADDREG730I","2003-01-01","2050-12-31","Interessi rate addizionale regionale saldo MOD. 730","CA","381E","Y","NULL","NULL","R0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"INTRATEIMP","2003-01-01","2050-12-31","Interessi rate imposte MOD. 730","CA","100E","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRE730IRPF","2003-01-01","2050-12-31","Credito IRPEF MOD.  730 ","CA","100E","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRE730AREG","2003-01-01","2050-12-31","Credito ADDIZIONALE REGIONALE MOD.  730 ","CA","381E","Y","NULL","NULL","R0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRE730ACOM","2003-01-01","2050-12-31","Credito ADDIZIONALE COMUNALE MOD.  730 ","CA","384E","Y","NULL","NULL","C0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CRE770IRPF","2003-01-01","2050-12-31","Credito d'imposta  IRPEF MOD.  770 ","CA","100E","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"RECRITE","2003-01-01","2050-12-31","Per recupero ritenute","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","Recupero ritenute","N","N","SYSTEM","SYSTEM","1"
-"ADDCOMRAT","2004-01-01","2050-12-31","Addizionale comunale IRPEF rateizzata","CA","384E","N","NULL","NULL","C9","N","N","N","N","NULL","Rateizzazione addizionale comunale esercizio precedente","N","N","SYSTEM","SYSTEM","1"
-"ADDREGRAT","2004-01-01","2050-12-31","Addizionale regionale IRPEF rateizzata","CA","381E","N","NULL","NULL","R9","N","N","N","N","NULL","Rateizzazione addizionale regionale esercizio precedente","N","N","SYSTEM","SYSTEM","1"
-"ADDPROVRAT","2004-01-01","2050-12-31","Addizionale provinciale IRPEF rateizzata","CA","3816","N","NULL","NULL","P9","N","N","N","N","NULL","Rateizzazione addizionale provinciale esercizio precedente","N","N","SYSTEM","SYSTEM","1"
-"INPSC","2004-01-01","2050-12-31","INPS  per titolari di pensione diretta","CA","CXX","N","1","2","PR","Y","Y","Y","Y","05","INPS Gestione Separata","N","N","SYSTEM","SYSTEM","1"
-"IRPEF730SA","2003-01-01","2050-12-31","Saldo IRPEF MOD. 730","CA","100E","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IRPEF730TS","2003-01-01","2050-12-31","Acconto imposte redditi tassazione separata MOD.  730","CA","100E","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA","2002-01-01","2050-12-31","IRPEF per dipendenti","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF (aliquota marginale)","Y","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA1","2002-01-01","2050-12-31","IRPEF per borse di studio","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA2","2002-01-01","2050-12-31","IRPEF da conguaglio","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA3","2002-01-01","2050-12-31","IRPEF per compensi a personale esterno","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA4","2002-01-01","2050-12-31","IRPEF su borse di studio a soggetti non residenti","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","N","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA5","2002-01-01","2050-12-31","IRPEF su collaborazioni coordinate e continuative","CA","100E","N","NULL","1","FI","Y","Y","N","N","NULL","IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"IRPEFSCA9","2002-01-01","2050-12-31","IRPEF su stranieri per collaborazioni coordinate e continuative","CA","100E","N","NULL","1","FI","N","Y","N","N","NULL","IRPEF","N","N","SYSTEM","SYSTEM","1"
-"ADDCOM","2002-01-01","2050-12-31","Addizionale comunale IRPEF","CA","384E","N","NULL","NULL","C0","N","N","N","N","NULL","Addizionale comunale","N","N","SYSTEM","SYSTEM","1"
-"ADDCOM730","2003-01-01","2050-12-31","Addizionale comunale saldo MOD. 730","CA","384E","Y","NULL","NULL","C0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"ADDPROV","2002-01-01","2050-12-31","Addizionale provinciale IRPEF","CA","3816","N","NULL","NULL","P0","N","N","N","N","NULL","Addizionale provinciale","N","N","SYSTEM","SYSTEM","1"
-"ADDREG730","2003-01-01","2050-12-31","Addizionale regionale saldo MOD. 730","CA","381E","Y","NULL","NULL","R0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"DS","1999-01-01","2050-12-31","Ritenuta DS quota disoccupazione inv.","CO","NULL","N","1","2","PR","Y","Y","N","N","NULL","Ritenuta DS quota disoccupazione inv.","N","N","SYSTEM","SYSTEM","1"
-"INAIL","2002-01-01","2050-12-31","INAIL","CA","X","N","NULL","4","IL","Y","N","N","N","NULL","INAIL","N","N","SYSTEM","SYSTEM","1"
-"INPSADD","1998-01-01","2050-12-31","Addizionale INPS Dipendenti 1%","CO","DM10","N","1","2","PR","Y","Y","N","N","05","ADDIZIONALE INPS 1%","N","N","SYSTEM","SYSTEM","1"
-"INPSDIPCA","1998-01-01","2050-12-31","INPS (FAP FPLD) Dipendenti a carico CNR","CO","DM10","N","1","2","PR","Y","N","N","N","05","NULL","N","N","SYSTEM","SYSTEM","1"
-"IRAP","2002-01-01","2050-12-31","IRAP Imposta regionale sulle attivita' produttive","CA","380E","N","1","NULL","IP","N","N","N","N","NULL","IRAP","N","N","SYSTEM","SYSTEM","1"
-"IRAPCOM","2002-01-01","2050-12-31","IRAP per redditi assimilati al lavoro dipendente in attivit? commerciale","CA","380E","N","NULL","NULL","IP","N","N","N","N","NULL","IRAP","N","N","SYSTEM","SYSTEM","1"
-"IRPEF730AC","2003-01-01","2050-12-31","Acconto IRPEF MOD.  730 ","CA","100E","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IRPEFSTRA","2002-01-01","2050-12-31","IRPEF Stranieri - Lavoro autonomo","CA","104E","N","NULL","1","FI","N","N","N","N","NULL","Ritenuta a titolo d'imposta IRPEF","N","N","SYSTEM","SYSTEM","1"
-"IVA","2002-01-01","2050-12-31","IVA Imposta sul valore aggiunto","CA","NULL","N","NULL","NULL","IV","N","N","N","N","NULL","IVA","N","N","SYSTEM","SYSTEM","1"
-"IVAACQD","2002-01-01","2050-12-31","IVA sugli acquisti detraibile","CA","NULL","N","NULL","NULL","IV","N","N","N","N","NULL","IVA","N","N","SYSTEM","SYSTEM","1"
-"IVAACQI","2002-01-01","2050-12-31","IVA sugli acquisti indetraibile","CA","NULL","N","NULL","NULL","IV","N","N","N","N","NULL","IVA","N","N","SYSTEM","SYSTEM","1"
-"IVAVEND","2002-01-01","2050-12-31","IVA VENDITE","CA","NULL","N","NULL","NULL","IV","N","N","N","N","NULL","IVA","N","N","SYSTEM","SYSTEM","1"
-"RAIRPEF","2002-01-01","2050-12-31","Ritenuta Acconto IRPEF","CA","104E","N","NULL","NULL","FI","N","N","N","N","NULL","Ritenuta a titolo d'acconto IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"RAIRPEFAUT","2002-01-01","2050-12-31","Ritenuta d'acconto per brevetti e diritti d'autore","CA","104E","N","NULL","NULL","FI","N","N","N","N","NULL","Ritenuta a titolo d'acconto IRPEF","Y","N","SYSTEM","SYSTEM","1"
-"RAIRPEFPC","2002-01-01","2050-12-31","Ritenuta alla fonte per premi e concorsi","CA","107E","N","NULL","NULL","FI","N","N","N","N","NULL","Ritenuta a titolo d'acconto IRPEF","N","N","SYSTEM","SYSTEM","1"
-"RIDUZ","2002-01-01","2050-12-31","Riduzione erariale DPCM 486 16/10/1998","CA","NULL","N","NULL","5","FI","Y","N","N","N","NULL","Riduzione ex art. 1, c. 126 L. 662/1996","N","N","SYSTEM","SYSTEM","1"
-"RIVALSA2","2002-01-01","2050-12-31","Rivalsa Cassa Previd. 2%","CA","NULL","N","NULL","NULL","RV","N","N","N","N","NULL","Rivalsa Cassa Previd. ","N","N","SYSTEM","SYSTEM","1"
-"RIVALSA4","2002-01-01","2050-12-31","Rivalsa Def. G.S. INPS 4%","CA","NULL","N","NULL","NULL","RV","N","N","N","N","NULL","Rivalsa G.S. INPS","N","N","SYSTEM","SYSTEM","1"
-"CPDELCA","1998-01-01","2050-12-31","CPDEL a carico CNR","CO","NULL","N","1","3","PR","Y","N","N","N","06","CPDEL a carico CNR ","N","N","SYSTEM","SYSTEM","1"
-"CPSCA","1998-01-01","2050-12-31","CPS a carico CNR","CO","NULL","N","1","3","PR","Y","N","N","N","08","CPS a carico CNR","N","N","SYSTEM","SYSTEM","1"
-"FONDOFSCA","1998-01-01","2050-12-31","FONDO FS a carico CNR","CO","NULL","N","1","6","PR","Y","N","N","N","FS","FONDO FS a carico CNR","N","N","SYSTEM","SYSTEM","1"
-"ENPDEPCA","1998-01-01","2050-12-31","ENPDEP a carico CNR","CO","NULL","N","1","NULL","PR","N","N","N","N","NULL","ENPDEP a carico CNR","N","N","SYSTEM","SYSTEM","1"
-"CPDELCP","1998-01-01","2050-12-31","CPDEL a carico dipendente","CO","NULL","N","1","3","PR","Y","Y","N","N","06","CPDEL","N","N","SYSTEM","SYSTEM","1"
-"CPSCP","1998-01-01","2050-12-31","CPS a carico dipendente","CO","NULL","N","1","3","PR","Y","Y","N","N","08","CPS","N","N","SYSTEM","SYSTEM","1"
-"FONDOFSCP","1998-01-01","2050-12-31","FONDO FS a carico dipendente","CO","NULL","N","1","6","PR","Y","Y","N","N","FS","RITENUTA FONDO FFSS","N","N","SYSTEM","SYSTEM","1"
-"ENPDEPCP","1998-01-01","2050-12-31","ENPDEP a carico percipiente","CO","NULL","N","1","NULL","PR","N","Y","N","N","NULL","ENPDEP","N","N","SYSTEM","SYSTEM","1"
-"CPDELCPADD","1998-01-01","2050-12-31","Addizionale CPDEL a carico dipendente 1%","CO","NULL","N","1","3","PR","Y","Y","N","N","06","ADDIZIONALE CPDEL 1%","N","N","SYSTEM","SYSTEM","1"
-"CPSCPADD","1998-01-01","2050-12-31","Addizionale CPS a carico dipendente 1%","CO","NULL","N","1","3","PR","Y","Y","N","N","08","ADDIZIONALE CPS 1%","N","N","SYSTEM","SYSTEM","1"
-"FONDOCR","1998-01-01","2050-12-31","Fondo credito ","CO","NULL","N","1","3","PR","Y","Y","N","N","NULL","FONDO CREDITO","N","N","SYSTEM","SYSTEM","1"
-"INPSA","2002-01-01","2050-12-31","INPS con altra copertura previdenziale","CA","C10","N","1","2","PR","Y","Y","Y","Y","05","INPS Gestione Separata","N","N","SYSTEM","SYSTEM","1"
-"ADDREG","2002-01-01","2050-12-31","Addizionale Regionale IRPEF","CA","381E","N","NULL","NULL","R0","N","N","N","N","NULL","Addizionale regionale","N","N","SYSTEM","SYSTEM","1"
-"P217","2011-01-01","2200-12-31","CPDEL - BENEFICI L.336/70 E BENEFICI CONTRATTUALI ","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"F24IRAPSAL","2011-06-01","2200-12-31","SALDO IRAP COMMERCIALE DA PAGARE CON F24EP","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IMPSOST730","2011-01-01","2200-12-31","IMPOSTA SOSTITUTIVA ART. 2 DL 27/5/2008 N. 93","CA","NULL","Y","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"P206","2017-04-01","2200-12-31","CPDEL - CONTRIBUTO SOLIDARIETA' 10% ","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"P506","2017-04-01","2200-12-31","CPS - CONTRIBUTO SOLIDARIETA' 10%","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"CPDELCPM","2018-01-01","2050-12-31","CPDEL a carico dipendente con massimale","CO","NULL","N","1","3","PR","Y","N","N","N","06","CPDEL","N","N","SYSTEM","SYSTEM","1"
-"CPDELCAM","2018-01-01","2050-12-31","CPDEL a carico CNR con massimale","CO","NULL","N","1","3","PR","Y","Y","N","N","06","CPDEL a carico CNR ","N","N","SYSTEM","SYSTEM","1"
-"F60R","2018-10-01","2018-10-18","RECUPERO TURNI (3)","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STDET992","2017-03-01","2200-12-31","ONERE FONDO SIRIO","CA","NULL","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"IVASP","2018-01-01","2050-12-31","IVA Imposta sul valore aggiunto","CA","NULL","N","NULL","NULL","IV","N","N","N","N","NULL","IVA","N","N","SYSTEM","SYSTEM","1"
-"INPGICPADM","2018-01-01","2050-12-31","Addizionale INPGI a carico dipendente 1% con massimale","CO","NULL","N","1","3","PR","Y","Y","N","N","13","ADDIZIONALE INPGI 1%","N","N","SYSTEM","SYSTEM","1"
-"INPSADM","2018-01-01","2050-12-31","Addizionale INPS Dipendenti 1% con massimale","CO","DM10","N","1","2","PR","Y","Y","N","N","05","ADDIZIONALE INPS 1%","N","N","SYSTEM","SYSTEM","1"
-"CPDELCPADM","2018-01-01","2050-12-31","Addizionale CPDEL a carico dipendente 1% con massimale","CO","NULL","N","1","3","PR","Y","Y","N","N","06","ADDIZIONALE CPDEL 1%","N","N","SYSTEM","SYSTEM","1"
-"CPSCPADM","2018-01-01","2050-12-31","Addizionale CPS a carico dipendente 1% con massimale","CO","NULL","N","1","3","PR","Y","Y","N","N","08","ADDIZIONALE CPS 1%","N","N","SYSTEM","SYSTEM","1"
-"INPS17F","2018-01-01","2200-12-31","INPS  prestazioni occasionali","CA","CXX","N","1","7","PR","Y","Y","N","Y","NULL","INPS Gestione Separata","N","N","SYSTEM","SYSTEM","1"
-"INPS10D","2018-01-01","2200-12-31","Inps  prestazioni occasionali","CA","C10","N","1","7","PR","Y","Y","Y","Y","NULL","INPS Gestione Separata","N","N","SYSTEM","SYSTEM","1"
-"INPS15E","2018-01-01","2200-12-31","Inps  prestazioni occasionali","CA","C10","N","1","7","PR","Y","Y","Y","Y","NULL","INPS Gestione Separata","N","N","SYSTEM","SYSTEM","1"
-"STDID13","2017-03-01","2200-12-31","ONERE ENTE INPGI - DISOCCUPAZIONE T.S.","CA","NULL","N","NULL","8","PR","N","N","N","N","13","NULL","N","N","SYSTEM","SYSTEM","1"
-"DI","2017-07-06","2200-12-31","ONERE ENTE INPGI - DISOCCUPAZIONE ","CA","NULL","N","1","8","PR","Y","Y","N","N","13","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI381E","2019-01-01","2050-12-31","ADDIZIONALE REGIONALE","CA","NULL","N","NULL","NULL","R0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI384E","2019-01-01","2050-12-31","ADDIZIONALE COMUNALE","CA","NULL","N","NULL","NULL","C0","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI1002","2019-01-01","2050-12-31","EX 1002 MINISTERO DELLE FINANZE","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI1001","2019-01-01","2050-12-31","1001-MINISTERO DELLE FINANZE","CA","100E","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0105","2019-01-01","2050-12-31","RITENUTA INPS","CA","0105","N","NULL","NULL","PR","N","N","N","N","05","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0913","2019-01-01","2050-12-31","RIT. INPGI DIPENDENTE","CA","0913","N","NULL","NULL","PR","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI7050","2019-01-01","2050-12-31","FIDITALIA S.p.A.","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI7053","2019-01-01","2050-12-31","PRESTITO ISPRA","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI7054","2019-01-01","2050-12-31","FIDES S.p.A.","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0003","2019-01-01","2050-12-31","RISCATTO CPDEL","CA","7D06","N","NULL","NULL","PR","N","N","N","N","06","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0010","2019-01-01","2050-12-31","RITENUTA SINDACALE GILDA","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0011","2019-01-01","2050-12-31","RITENUTA SINDACALE USPPI","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0007","2019-01-01","2050-12-31","RITENUTA SINDACALE USB","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0002","2019-01-01","2050-12-31","RITENUTA SINDACALE CISL","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0008","2019-01-01","2050-12-31","RITENUTA SINDACALE CISL FSUR","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0009","2019-01-01","2050-12-31","RITENUTA SINDACALE UIL SCUOLA","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
-"STI0001","2019-01-01","2050-12-31","RITENUTA SINDACALE CGIL","CA","NULL","N","NULL","NULL","FI","N","N","N","N","NULL","NULL","N","N","SYSTEM","SYSTEM","1"
+CD_CONTRIBUTO_RITENUTA,DT_FIN_VALIDITA,DS_CONTRIBUTO_RITENUTA,TI_CASSA_COMPETENZA,CD_TRIBUTO_ERARIO,FL_ASSISTENZA_FISCALE,PRECISIONE,PG_CLASSIFICAZIONE_MONTANTI,CD_CLASSIFICAZIONE_CORI,FL_SCRIVI_MONTANTI,FL_USO_IN_LORDIZZA,FL_ALIQUOTA_RIDOTTA,FL_GLA,CD_ENTE_PREV_STI,DS_STAMPE,FL_SOSPENSIONE_IRPEF,FL_CREDITO_IRPEF,UTCR,UTUV,PG_VER_REC
+"IRPEFSCA","2050-12-31","IRPEF per dipendenti","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF (aliquota marginale)","Y","N","SYSTEM","SYSTEM",1
+"IRPEFSCA1","2050-12-31","IRPEF per borse di studio","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","Y","N","SYSTEM","SYSTEM",1
+"IRPEFSCA2","2050-12-31","IRPEF da conguaglio","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","Y","N","SYSTEM","SYSTEM",1
+"IRPEFSCA3","2050-12-31","IRPEF per compensi a personale esterno","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","Y","N","SYSTEM","SYSTEM",1
+"IRPEFSCA4","2050-12-31","IRPEF su borse di studio a soggetti non residenti","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","N","N","SYSTEM","SYSTEM",1
+"IRPEFSCA5","2050-12-31","IRPEF su collaborazioni coordinate e continuative","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","Y","N","SYSTEM","SYSTEM",1
+"IRPEFSCA9","2050-12-31","IRPEF su stranieri per collaborazioni coordinate e continuative","CA","100E","N",,1,"FI","N","Y","N","N","","IRPEF","N","N","SYSTEM","SYSTEM",1
+"ADDCOM","2050-12-31","Addizionale comunale IRPEF","CA","384E","N",,,"C0","N","N","N","N","","Addizionale comunale","N","N","SYSTEM","SYSTEM",1
+"ADDCOM730","2050-12-31","Addizionale comunale saldo MOD. 730","CA","384E","Y",,,"C0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"ADDPROV","2050-12-31","Addizionale provinciale IRPEF","CA","3816","N",,,"P0","N","N","N","N","","Addizionale provinciale","N","N","SYSTEM","SYSTEM",1
+"ADDREG730","2050-12-31","Addizionale regionale saldo MOD. 730","CA","381E","Y",,,"R0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"DS","2050-12-31","Ritenuta DS quota disoccupazione inv.","CO","","N",1,2,"PR","Y","Y","N","N","","Ritenuta DS quota disoccupazione inv.","N","N","SYSTEM","SYSTEM",1
+"INAIL","2050-12-31","INAIL","CA","X","N",,4,"IL","Y","N","N","N","","INAIL","N","N","SYSTEM","SYSTEM",1
+"INPSADD","2050-12-31","Addizionale INPS Dipendenti 1%","CO","DM10","N",1,2,"PR","Y","Y","N","N","05","ADDIZIONALE INPS 1%","N","N","SYSTEM","SYSTEM",1
+"INPSDIPCA","2050-12-31","INPS (FAP FPLD) Dipendenti a carico CNR","CO","DM10","N",1,2,"PR","Y","N","N","N","05","","N","N","SYSTEM","SYSTEM",1
+"IRAP","2050-12-31","IRAP Imposta regionale sulle attivita' produttive","CA","380E","N",1,,"IP","N","N","N","N","","IRAP","N","N","SYSTEM","SYSTEM",1
+"IRAPCOM","2050-12-31","IRAP per redditi assimilati al lavoro dipendente in attivit? commerciale","CA","380E","N",,,"IP","N","N","N","N","","IRAP","N","N","SYSTEM","SYSTEM",1
+"IRPEF730AC","2050-12-31","Acconto IRPEF MOD.  730 ","CA","100E","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IRPEFSTRA","2050-12-31","IRPEF Stranieri - Lavoro autonomo","CA","104E","N",,1,"FI","N","N","N","N","","Ritenuta a titolo d'imposta IRPEF","N","N","SYSTEM","SYSTEM",1
+"IVA","2050-12-31","IVA Imposta sul valore aggiunto","CA","","N",,,"IV","N","N","N","N","","IVA","N","N","SYSTEM","SYSTEM",1
+"IVAACQD","2050-12-31","IVA sugli acquisti detraibile","CA","","N",,,"IV","N","N","N","N","","IVA","N","N","SYSTEM","SYSTEM",1
+"IVAACQI","2050-12-31","IVA sugli acquisti indetraibile","CA","","N",,,"IV","N","N","N","N","","IVA","N","N","SYSTEM","SYSTEM",1
+"IVAVEND","2050-12-31","IVA VENDITE","CA","","N",,,"IV","N","N","N","N","","IVA","N","N","SYSTEM","SYSTEM",1
+"RAIRPEF","2050-12-31","Ritenuta Acconto IRPEF","CA","104E","N",,,"FI","N","N","N","N","","Ritenuta a titolo d'acconto IRPEF","Y","N","SYSTEM","SYSTEM",1
+"RAIRPEFAUT","2050-12-31","Ritenuta d'acconto per brevetti e diritti d'autore","CA","104E","N",,,"FI","N","N","N","N","","Ritenuta a titolo d'acconto IRPEF","Y","N","SYSTEM","SYSTEM",1
+"RAIRPEFPC","2050-12-31","Ritenuta alla fonte per premi e concorsi","CA","107E","N",,,"FI","N","N","N","N","","Ritenuta a titolo d'acconto IRPEF","N","N","SYSTEM","SYSTEM",1
+"RIDUZ","2050-12-31","Riduzione erariale DPCM 486 16/10/1998","CA","","N",,5,"FI","Y","N","N","N","","Riduzione ex art. 1, c. 126 L. 662/1996","N","N","SYSTEM","SYSTEM",1
+"RIVALSA2","2050-12-31","Rivalsa Cassa Previd. 2%","CA","","N",,,"RV","N","N","N","N","","Rivalsa Cassa Previd. ","N","N","SYSTEM","SYSTEM",1
+"RIVALSA4","2050-12-31","Rivalsa Def. G.S. INPS 4%","CA","","N",,,"RV","N","N","N","N","","Rivalsa G.S. INPS","N","N","SYSTEM","SYSTEM",1
+"CPDELCA","2050-12-31","CPDEL a carico CNR","CO","","N",1,3,"PR","Y","N","N","N","06","CPDEL a carico CNR ","N","N","SYSTEM","SYSTEM",1
+"CPSCA","2050-12-31","CPS a carico CNR","CO","","N",1,3,"PR","Y","N","N","N","08","CPS a carico CNR","N","N","SYSTEM","SYSTEM",1
+"FONDOFSCA","2050-12-31","FONDO FS a carico CNR","CO","","N",1,6,"PR","Y","N","N","N","FS","FONDO FS a carico CNR","N","N","SYSTEM","SYSTEM",1
+"ENPDEPCA","2050-12-31","ENPDEP a carico CNR","CO","","N",1,,"PR","N","N","N","N","","ENPDEP a carico CNR","N","N","SYSTEM","SYSTEM",1
+"CPDELCP","2050-12-31","CPDEL a carico dipendente","CO","","N",1,3,"PR","Y","Y","N","N","06","CPDEL","N","N","SYSTEM","SYSTEM",1
+"CPSCP","2050-12-31","CPS a carico dipendente","CO","","N",1,3,"PR","Y","Y","N","N","08","CPS","N","N","SYSTEM","SYSTEM",1
+"FONDOFSCP","2050-12-31","FONDO FS a carico dipendente","CO","","N",1,6,"PR","Y","Y","N","N","FS","RITENUTA FONDO FFSS","N","N","SYSTEM","SYSTEM",1
+"ENPDEPCP","2050-12-31","ENPDEP a carico percipiente","CO","","N",1,,"PR","N","Y","N","N","","ENPDEP","N","N","SYSTEM","SYSTEM",1
+"CPDELCPADD","2050-12-31","Addizionale CPDEL a carico dipendente 1%","CO","","N",1,3,"PR","Y","Y","N","N","06","ADDIZIONALE CPDEL 1%","N","N","SYSTEM","SYSTEM",1
+"CPSCPADD","2050-12-31","Addizionale CPS a carico dipendente 1%","CO","","N",1,3,"PR","Y","Y","N","N","08","ADDIZIONALE CPS 1%","N","N","SYSTEM","SYSTEM",1
+"FONDOCR","2050-12-31","Fondo credito ","CO","","N",1,3,"PR","Y","Y","N","N","","FONDO CREDITO","N","N","SYSTEM","SYSTEM",1
+"INPSA","2050-12-31","INPS con altra copertura previdenziale","CA","C10","N",1,2,"PR","Y","Y","Y","Y","05","INPS Gestione Separata","N","N","SYSTEM","SYSTEM",1
+"ADDREG","2050-12-31","Addizionale Regionale IRPEF","CA","381E","N",,,"R0","N","N","N","N","","Addizionale regionale","N","N","SYSTEM","SYSTEM",1
+"P217","2200-12-31","CPDEL - BENEFICI L.336/70 E BENEFICI CONTRATTUALI ","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24IRAPSAL","2200-12-31","SALDO IRAP COMMERCIALE DA PAGARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IMPSOST730","2200-12-31","IMPOSTA SOSTITUTIVA ART. 2 DL 27/5/2008 N. 93","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"P206","2200-12-31","CPDEL - CONTRIBUTO SOLIDARIETA' 10% ","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"P506","2200-12-31","CPS - CONTRIBUTO SOLIDARIETA' 10%","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CPDELCPM","2050-12-31","CPDEL a carico dipendente con massimale","CO","","N",1,3,"PR","Y","N","N","N","06","CPDEL","N","N","SYSTEM","SYSTEM",1
+"CPDELCAM","2050-12-31","CPDEL a carico CNR con massimale","CO","","N",1,3,"PR","Y","Y","N","N","06","CPDEL a carico CNR ","N","N","SYSTEM","SYSTEM",1
+"F60R","2018-10-18","RECUPERO TURNI (3)","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDET992","2200-12-31","ONERE FONDO SIRIO","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IVASP","2050-12-31","IVA Imposta sul valore aggiunto","CA","","N",,,"IV","N","N","N","N","","IVA","N","N","SYSTEM","SYSTEM",1
+"INPGICPADM","2050-12-31","Addizionale INPGI a carico dipendente 1% con massimale","CO","","N",1,3,"PR","Y","Y","N","N","13","ADDIZIONALE INPGI 1%","N","N","SYSTEM","SYSTEM",1
+"INPSADM","2050-12-31","Addizionale INPS Dipendenti 1% con massimale","CO","DM10","N",1,2,"PR","Y","Y","N","N","05","ADDIZIONALE INPS 1%","N","N","SYSTEM","SYSTEM",1
+"CPDELCPADM","2050-12-31","Addizionale CPDEL a carico dipendente 1% con massimale","CO","","N",1,3,"PR","Y","Y","N","N","06","ADDIZIONALE CPDEL 1%","N","N","SYSTEM","SYSTEM",1
+"CPSCPADM","2050-12-31","Addizionale CPS a carico dipendente 1% con massimale","CO","","N",1,3,"PR","Y","Y","N","N","08","ADDIZIONALE CPS 1%","N","N","SYSTEM","SYSTEM",1
+"INPS17F","2200-12-31","INPS  prestazioni occasionali","CA","CXX","N",1,7,"PR","Y","Y","N","Y","","INPS Gestione Separata","N","N","SYSTEM","SYSTEM",1
+"INPS10D","2200-12-31","Inps  prestazioni occasionali","CA","C10","N",1,7,"PR","Y","Y","Y","Y","","INPS Gestione Separata","N","N","SYSTEM","SYSTEM",1
+"INPS15E","2200-12-31","Inps  prestazioni occasionali","CA","C10","N",1,7,"PR","Y","Y","Y","Y","","INPS Gestione Separata","N","N","SYSTEM","SYSTEM",1
+"STDID13","2200-12-31","ONERE ENTE INPGI - DISOCCUPAZIONE T.S.","CA","","N",,8,"PR","N","N","N","N","13","","N","N","SYSTEM","SYSTEM",1
+"DI","2200-12-31","ONERE ENTE INPGI - DISOCCUPAZIONE ","CA","","N",1,8,"PR","Y","Y","N","N","13","","N","N","SYSTEM","SYSTEM",1
+"STI381E","2050-12-31","ADDIZIONALE REGIONALE","CA","","N",,,"R0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI384E","2050-12-31","ADDIZIONALE COMUNALE","CA","","N",,,"C0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI1002","2050-12-31","EX 1002 MINISTERO DELLE FINANZE","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI1001","2050-12-31","1001-MINISTERO DELLE FINANZE","CA","100E","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0105","2050-12-31","RITENUTA INPS","CA","0105","N",,,"PR","N","N","N","N","05","","N","N","SYSTEM","SYSTEM",1
+"STI0913","2050-12-31","RIT. INPGI DIPENDENTE","CA","0913","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI7050","2050-12-31","FIDITALIA S.p.A.","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI7053","2050-12-31","PRESTITO ISPRA","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI7054","2050-12-31","FIDES S.p.A.","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0003","2050-12-31","RISCATTO CPDEL","CA","7D06","N",,,"PR","N","N","N","N","06","","N","N","SYSTEM","SYSTEM",1
+"STI0010","2050-12-31","RITENUTA SINDACALE GILDA","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0011","2050-12-31","RITENUTA SINDACALE USPPI","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0007","2050-12-31","RITENUTA SINDACALE USB","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0002","2050-12-31","RITENUTA SINDACALE CISL","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0008","2050-12-31","RITENUTA SINDACALE CISL FSUR","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0009","2050-12-31","RITENUTA SINDACALE UIL SCUOLA","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STI0001","2050-12-31","RITENUTA SINDACALE CGIL","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"DIFADDCOM","2050-12-31","Differenza addizionale comunale da stipendi per F24ep","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24EPIMU","2200-12-31","IMU DA VERSARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"RECUIVA","2200-12-31","RECUPERO ACCONTO IVA","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24IRES2","2200-12-31","2° ACCONTO IRES DA PAGARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IRES4","2200-12-31","Ritenuta al 4% a titolo di acconto dell'imposta sul reddito delle societ?","CA","106E","N",,,"FI","N","N","N","N","","","Y","N","SYSTEM","SYSTEM",1
+"P516","2200-12-31","CPS - SISTEMAZIONI CONTRIBUTIVE","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"P216","2200-12-31","CPDEL - SISTEMAZIONI CONTRIBUTIVE","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"ARROTOND","2200-12-31","ARROTONDAMENTO SU VERSAMENTI CONTRIBUTIVI","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"ACCCOM730","2050-12-31","Addizionale comunale Acconto MOD. 730","CA","385E","Y",,,"C0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"ACCCOM730I","2050-12-31","Interessi rate Addizionale Comunale Acconto MOD.730","CA","385E","Y",,,"C0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24IRAP1","2200-12-31","1° ACCONTO IRAP COMMERCIALE DA PAGARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24IRESSAL","2200-12-31","SALDO IRES DA PAGARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IRPEFSCA10","2200-12-31","IRPEF per compensi a personale esterno non residente","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","N","N","SYSTEM","SYSTEM",1
+"BONUS","2200-12-31","BONUS STRAORDINARIO art. 1 del D.L. 29/11/2008 n. 185 ","CA","100E","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24INAIL","2200-12-31","INAIL DA VERSARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24EPIVA","2200-12-31","IVA COMMERCIALE DA VERSARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"1049","2200-12-31","RITENUTA ACCONTO 20% SU PPT","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"F24IRES1","2200-12-31","1° ACCONTO IRES DA PAGARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"RIVALSA4CP","2050-12-31","Rivalsa Cassa Previd. 4%","CA","","N",,,"RV","N","N","N","N","","Rivalsa Cassa Previd. ","N","N","SYSTEM","SYSTEM",1
+"STDIRAP","2050-12-31","IRAP STIPENDI","CA","380E","N",,,"IP","N","N","N","N","","IRAP","N","N","SYSTEM","SYSTEM",1
+"STDIRAP01","2050-12-31","IRAP STIPENDI - REGIONE ABRUZZO","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP02","2050-12-31","IRAP STIPENDI - REGIONE BASILICATA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP03","2050-12-31","IRAP STIPENDI - PROVINCIA  ATON. BOLZANO","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP04","2050-12-31","IRAP STIPENDI - REGIONE CALABRIA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP06","2050-12-31","IRAP STIPENDI - REGIONE EMILIA ROMAGNA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP07","2050-12-31","IRAP STIPENDI - REGIONE FRIULI VEN GIULIA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP08","2050-12-31","IRAP STIPENDI - REGIONE LAZIO","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP10","2050-12-31","IRAP STIPENDI - REGIONE LOMBARDIA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP11","2050-12-31","IRAP STIPENDI - REGIONE MARCHE","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP12","2050-12-31","IRAP STIPENDI - REGIONE MOLISE","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP14","2050-12-31","IRAP STIPENDI - REGIONE PUGLIA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP15","2050-12-31","IRAP STIPENDI - REGIONE SARDEGNA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP16","2050-12-31","IRAP STIPENDI - REGIONE SICILIA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP18","2050-12-31","IRAP STIPENDI - PROVINCIA AUTON. TRENTO","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP19","2050-12-31","IRAP STIPENDI - REGIONE UMBRIA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDIRAP20","2050-12-31","IRAP STIPENDI - REGIONE VALLE D'AOSTA","CA","380E","N",,,"IP","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDA405","2050-12-31","ONERE ENTE INPS - DISOCCUPAZIONE","CA","A405","N",,,"PR","N","N","N","N","05","ONERE ENTE INPS - DISOCCUPAZIONE","N","N","SYSTEM","SYSTEM",1
+"STDE105","2050-12-31","ONERE INPS  A CARICO ENTE ","CA","E105","N",,,"PR","N","N","N","N","05","ONERE INPS  A CARICO ENTE ","N","N","SYSTEM","SYSTEM",1
+"STDE206","2050-12-31","ONERE CPDEL  A CARICO ENTE ","CA","E206","N",,,"PR","N","N","N","N","06","ONERE CPDEL  A CARICO ENTE ","N","N","SYSTEM","SYSTEM",1
+"STDE308","2050-12-31","ONERE CPS  A CARICO ENTE ","CA","E308","N",,,"PR","N","N","N","N","08","ONERE CPS  A CARICO ENTE ","N","N","SYSTEM","SYSTEM",1
+"STDE404","2050-12-31","ONERE ENPDEP A CARICO ENTE ","CA","E404","N",,,"PR","N","N","N","N","","ONERE ENPDEP A CARICO ENTE ","N","N","SYSTEM","SYSTEM",1
+"STDE913","2050-12-31","ONERE ENTE INPGI ","CA","0913","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STDEFFS","2050-12-31","ONERE FONDO FF.SS.  A CARICO ENTE ","CA","EFFS","N",,,"PR","N","N","N","N","FS","ONERE FONDO FF.SS.  A CARICO ENTE ","N","N","SYSTEM","SYSTEM",1
+"CPDELCPAP","2050-12-31","CPDEL a carico dipendente anno precedente","CO","","N",1,3,"PR","Y","Y","N","N","06","CPDEL ","N","N","SYSTEM","SYSTEM",1
+"RITFIT","2200-12-31","Ritenuta Fittizia","CA","","N",,,"PR","N","N","N","N","","Ritenuta Fittizia","N","N","SYSTEM","SYSTEM",1
+"RIVALSAINP","2200-12-31","Rivalsa INPGI al 2% ","CA","","N",,,"RV","N","N","N","N","","Rivalsa INPGI","N","N","SYSTEM","SYSTEM",1
+"INPSB","2050-12-31","INPS","CA","CXX","N",1,2,"PR","Y","Y","N","Y","05","INPS Gestione Separata","N","N","SYSTEM","SYSTEM",1
+"INFMASSIV","2200-12-31","Assicurazione - Marie Curie","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"XINPS","2050-12-31","Enti accorpati - ritenuta inps","CO","XINPS","N",1,,"PR","N","N","N","N","","Enti accorpati - ritenuta inps","N","N","SYSTEM","SYSTEM",1
+"XCPDEL","2050-12-31","Enti accorpati - ritenuta cpdel","CO","","N",1,3,"PR","N","N","N","N","","Enti accorpati - ritenuta cpdel","N","N","SYSTEM","SYSTEM",1
+"XFONDOCRED","2050-12-31","Enti accorpati - ritenuta fondo credito","CO","","N",1,,"PR","N","N","N","N","","Enti accorpati - ritenuta fondo credito","N","N","SYSTEM","SYSTEM",1
+"XENPDEP","2050-12-31","Enti accorpati - ritenuta enpdep","CO","","N",1,,"PR","N","N","N","N","","Enti accorpati - ritenuta enpdep","N","N","SYSTEM","SYSTEM",1
+"ADDCOMACC","2050-12-31","Acconto Addizionale comunale IRPEF","CA","385E","N",,,"C1","N","N","N","N","","Acconto addizionale comunale","N","N","SYSTEM","SYSTEM",1
+"INPSDIPCP","2050-12-31","INPS Dipendenti a carico Percepiente","CO","DM10","N",1,2,"PR","Y","Y","N","N","05","INPS","N","N","SYSTEM","SYSTEM",1
+"STDIRAP05","2050-12-31","IRAP STIPENDI - REGIONE CAMPANIA","CA","380E","N",,,"IP","N","N","N","N","","IRAP STIPENDI - REGIONE CAMPANIA","N","N","SYSTEM","SYSTEM",1
+"STDIRAP09","2050-12-31","IRAP STIPENDI - REGIONE LIGURIA","CA","380E","N",,,"IP","N","N","N","N","","IRAP STIPENDI - REGIONE LIGURIA","N","N","SYSTEM","SYSTEM",1
+"STDIRAP13","2050-12-31","IRAP STIPENDI - REGIONE PIEMONTE","CA","380E","N",,,"IP","N","N","N","N","","IRAP STIPENDI - REGIONE PIEMONTE","N","N","SYSTEM","SYSTEM",1
+"STDIRAP17","2050-12-31","IRAP STIPENDI - REGIONE TOSCANA","CA","380E","N",,,"IP","N","N","N","N","","IRAP STIPENDI - REGIONE TOSCANA","N","N","SYSTEM","SYSTEM",1
+"STDIRAP21","2050-12-31","IRAP STIPENDI - REGIONE VENETO","CA","380E","N",,,"IP","N","N","N","N","","IRAP STIPENDI - REGIONE VENETO","N","N","SYSTEM","SYSTEM",1
+"CEDSE730SA","2200-12-31","SALDO CEDOLARE SECCA MOD. 730","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CEDSE730AC","2200-12-31","ACCONTO CEDOLARE SECCA MOD. 730","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"COSOLID730","2200-12-31","CONTRIBUTO DI SOLIDARIETA' MOD. 730","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRE730SOST","2200-12-31","CREDITO IMPOSTA SOSTITUTIVA MOD. 730","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRE730CEDS","2200-12-31","CREDITO CEDOLARE SECCA MOD. 730","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRESOLI730","2200-12-31","CREDITO CONTRIBUTO SOLIDARIETA' MOD. 730","CA","","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"assINPGI","2100-12-31","assicurazione INPGI","CA","","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IVANR","2050-12-31","IVA Imposta sul valore aggiunto","CA","","N",,,"IV","N","N","N","N","","IVA","N","N","SYSTEM","SYSTEM",1
+"INPGIA","2050-12-31","INPGI con altra copertura previdenziale","CA","","N",1,8,"PR","Y","Y","Y","N","13","INPGI","N","N","SYSTEM","SYSTEM",1
+"INPGIB1","2050-12-31","INPGI - Contributi obbligatori Gestione Separata","CA","","N",1,8,"PR","Y","Y","N","N","13","INPGI","N","N","SYSTEM","SYSTEM",1
+"INPGIB2","2050-12-31","INPGI - Contributi prestazioni temporanee Gestione Separata","CA","","N",1,8,"PR","Y","Y","N","N","13","INPGI","N","N","SYSTEM","SYSTEM",1
+"CTPS","2050-12-31","CTPS - Cassa Trattamenti Pensionistici Statali","CO","","N",1,,"PR","N","N","N","N","","CTPS","N","N","SYSTEM","SYSTEM",1
+"FONDOCTPS","2050-12-31","Fondo credito CTPS","CO","","N",1,,"PR","N","N","N","N","","Fondo credito CTPS","N","N","SYSTEM","SYSTEM",1
+"BONUSDL66","2019-12-31","Bonus ex D.L. 66/2014","CA","","N",,,"FI","N","N","N","N","","","N","Y","SYSTEM","SYSTEM",1
+"RECIRAP","2050-12-31","Per recupero IRAP","CA","","N",,,"FI","N","N","N","N","","Recupero IRAP","N","N","SYSTEM","SYSTEM",1
+"ENPAPIA","2050-12-31","ENPAPI - Contributi obbligatori Gestione Separata","CA","","N",1,9,"PR","Y","Y","N","N","","ENPAPI","N","N","SYSTEM","SYSTEM",1
+"INAIL_E","2050-12-31","INAIL TORNO SUBITO E PROGRAMMI SIMILARI","CA","X","N",,4,"IL","Y","N","N","N","","INAIL","N","N","SYSTEM","SYSTEM",1
+"ADDREGSPE","2200-12-31","CORI PER GESTIONE SCAGLIONI SPECIALI","CA","","N",,,"R0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STD0206","2050-12-31","RITENUTA CPDEL","CA","0206","N",,,"PR","N","N","N","N","06","","N","N","SYSTEM","SYSTEM",1
+"STD0404","2050-12-31","RITENUTA ENPDEP","CA","0404","N",,,"PR","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"STD1206","2050-12-31","CPDEL FONDO","CA","","N",,,"PR","N","N","N","N","06","","N","N","SYSTEM","SYSTEM",1
+"STDDI13","2200-12-31","ONERE ENTE INPGI - DISOCCUPAZIONE ","CA","","N",,,"PR","N","N","N","N","13","","N","N","SYSTEM","SYSTEM",1
+"CPDELCAAP","2200-12-31","CPDEL a carico CNR anno precedente","CO","","N",1,3,"PR","Y","N","N","N","06","CPDEL a carico CNR anno precedente","N","N","SYSTEM","SYSTEM",1
+"CPSCPAP","2050-12-31","CPS a carico dipendente anno precedente","CO","","N",1,3,"PR","Y","Y","N","N","08","CPS","N","N","SYSTEM","SYSTEM",1
+"CPSCAAP","2200-12-31","CPS a carico CNR anno precedente","CO","","N",1,3,"PR","Y","N","N","N","08","CPS a carico CNR anno precedente","N","N","SYSTEM","SYSTEM",1
+"F24IRAP2","2200-12-31","2° ACCONTO IRAP COMMERCIALE DA PAGARE CON F24EP","CA","","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"FONDOCRCPS","2050-12-31","Fondo credito CPS","CO","","N",1,3,"PR","Y","Y","N","N","08","Fondo credito CPS","N","N","SYSTEM","SYSTEM",1
+"FONDOCRCPD","2050-12-31","Fondo credito CPDEL","CO","","N",1,3,"PR","Y","Y","N","N","06","Fondo credito CPDEL","N","N","SYSTEM","SYSTEM",1
+"IRPEFSCA6","2050-12-31","IRPEF su assegni alimentari ART. 47 L. I TUIR","CA","100E","N",,1,"FI","Y","Y","N","N","","IRPEF","Y","N","SYSTEM","SYSTEM",1
+"INPGICP","2050-12-31","INPGI a carico dipendente","CO","","N",1,3,"PR","Y","Y","N","N","13","INPGI","N","N","SYSTEM","SYSTEM",1
+"INPGICPADD","2050-12-31","Addizionale INPGI a carico dipendente 1%","CO","","N",1,3,"PR","Y","Y","N","N","13","ADDIZIONALE INPGI 1%","N","N","SYSTEM","SYSTEM",1
+"INPGICA","2050-12-31","INPGI a carico CNR","CO","","N",1,3,"PR","Y","N","N","N","13","INPGI a carico CNR","N","N","SYSTEM","SYSTEM",1
+"IRPEFSCA7","2050-12-31","IRPEF per dipendenti a tassazione separata","CA","100E","N",,1,"FI","N","Y","N","N","","IRPEF","Y","N","SYSTEM","SYSTEM",1
+"ADDCOM730I","2050-12-31","Interessi rate addizionale comunale saldo MOD.730","CA","384E","Y",,,"C0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"ADDREG730I","2050-12-31","Interessi rate addizionale regionale saldo MOD. 730","CA","381E","Y",,,"R0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"INTRATEIMP","2050-12-31","Interessi rate imposte MOD. 730","CA","100E","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRE730IRPF","2050-12-31","Credito IRPEF MOD.  730 ","CA","100E","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRE730AREG","2050-12-31","Credito ADDIZIONALE REGIONALE MOD.  730 ","CA","381E","Y",,,"R0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRE730ACOM","2050-12-31","Credito ADDIZIONALE COMUNALE MOD.  730 ","CA","384E","Y",,,"C0","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"CRE770IRPF","2050-12-31","Credito d'imposta  IRPEF MOD.  770 ","CA","100E","N",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"RECRITE","2050-12-31","Per recupero ritenute","CA","","N",,,"FI","N","N","N","N","","Recupero ritenute","N","N","SYSTEM","SYSTEM",1
+"ADDCOMRAT","2050-12-31","Addizionale comunale IRPEF rateizzata","CA","384E","N",,,"C9","N","N","N","N","","Rateizzazione addizionale comunale esercizio precedente","N","N","SYSTEM","SYSTEM",1
+"ADDREGRAT","2050-12-31","Addizionale regionale IRPEF rateizzata","CA","381E","N",,,"R9","N","N","N","N","","Rateizzazione addizionale regionale esercizio precedente","N","N","SYSTEM","SYSTEM",1
+"ADDPROVRAT","2050-12-31","Addizionale provinciale IRPEF rateizzata","CA","3816","N",,,"P9","N","N","N","N","","Rateizzazione addizionale provinciale esercizio precedente","N","N","SYSTEM","SYSTEM",1
+"INPSC","2050-12-31","INPS  per titolari di pensione diretta","CA","CXX","N",1,2,"PR","Y","Y","Y","Y","05","INPS Gestione Separata","N","N","SYSTEM","SYSTEM",1
+"IRPEF730SA","2050-12-31","Saldo IRPEF MOD. 730","CA","100E","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1
+"IRPEF730TS","2050-12-31","Acconto imposte redditi tassazione separata MOD.  730","CA","100E","Y",,,"FI","N","N","N","N","","","N","N","SYSTEM","SYSTEM",1

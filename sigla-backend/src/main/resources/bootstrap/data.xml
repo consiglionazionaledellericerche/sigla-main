@@ -1339,6 +1339,7 @@
     <changeSet author="sigla" id="1516802834820-117">
         <addDefaultValue tableName="tipo_contributo_ritenuta" columnName="dacr" defaultValueDate="${now}"/>
         <addDefaultValue tableName="tipo_contributo_ritenuta" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_contributo_ritenuta" columnName="dt_ini_validita" defaultValueDate="${firstday}"/>
 
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_contributo_ritenuta.csv" quotchar="&quot;" separator="," tableName="tipo_contributo_ritenuta">
             <column name="dt_ini_validita" type="${date.type}"/>
@@ -1347,6 +1348,7 @@
 
         <dropDefaultValue tableName="tipo_contributo_ritenuta" columnName="dacr"/>
         <dropDefaultValue tableName="tipo_contributo_ritenuta" columnName="duva"/>
+        <dropDefaultValue tableName="tipo_contributo_ritenuta" columnName="dt_ini_validita"/>
     </changeSet>
 
     <changeSet author="sigla" id="1516802834820-118">

@@ -176,7 +176,7 @@
 		enabledOnSearch="true"
 		maxLength="200"
 		formatName="it.cnr.jada.util.LowercaseStringFormat"
-		label="Codice Utente Ufficiale CNR" />
+		label="Codice Utente Ufficiale Ente" />
 	<fieldProperty
 		name="fl_supervisore"
 		property="fl_supervisore"
@@ -252,7 +252,7 @@
 		name="fl_autenticazione_ldap" />
 	<formFieldProperty
 		name="cd_utente_uid"
-		label="Codice Utente Ufficiale CNR (nome.cognome)" />
+		label="Codice Utente Ufficiale Ente (nome.cognome)" />
 	<formFieldProperty
 		name="fl_supervisore" />
 	<formFieldProperty
@@ -313,6 +313,6 @@
 		name="cd_utente" />
 	<findFieldProperty
 		name="cd_utente_uid"
-		label="Codice Utente Ufficiale CNR (nome.cognome)" />
+		label="Codice Utente Ufficiale Ente (nome.cognome)" />
 	
 </bulkInfo>
