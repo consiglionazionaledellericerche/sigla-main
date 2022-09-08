@@ -72,4 +72,10 @@
             <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='VARIAZIONE_AUTOMATICA' AND CD_CHIAVE_SECONDARIA='SPESA'</where>
         </update>
     </changeSet>
+    <changeSet author="marco.spasiano" id="attivazione-proposta-ordini-da-fattura">
+        <update tableName="configurazione_cnr">
+            <column name="val02" type="STRING" value="Y"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='ORDINI' AND CD_CHIAVE_SECONDARIA='GESTIONE'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>
