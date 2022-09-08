@@ -152,7 +152,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				if (!BasicAuthentication.loginComponentSession().isUserAccessoAllowed(
 						userPrincipal,
 						accessi.toArray(new String[accessi.size()]))) {
-					final String message = "User " + userPrincipal.getUser() + " doesn't have the following access: " + accessi;
+					final String message = "User " + userPrincipal + " doesn't have the following access: " + accessi;
 					LOGGER.warn(message);
 					requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(Collections.singletonMap("ERROR", message)).build());
 				}
