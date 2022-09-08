@@ -207,7 +207,8 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                 testata.setCliente((TerzoBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, testata.getCliente()));
                 Optional.ofNullable(testata.getCliente()).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_105));
                 Optional.of(testata.getCliente().getAnagrafico().getTi_italiano_estero().equals(testata.getSupplierNationType())).
-                        filter(x -> x.equals(Boolean.FALSE)).orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_140));
+                        filter(x -> x.equals(Boolean.TRUE))
+                        .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_140));
                 testata.setCd_terzo(fattura.getCd_terzo());
                 testata = fatturaAttivaSingolaComponentSession.completaTerzo(userContext, testata, testata.getCliente());
                 Optional.of(Stream.of(
