@@ -46,11 +46,218 @@
                 columnName="DS_SCRITTURA"
                 propertyName="scrittura.ds_scrittura"
                 fetchOnly="true"/>
-
     </defaultColumnMap>
+    <columnMap
+            name="PARTITARIO"
+            tableName="MOVIMENTO_COGE">
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="esercizio"
+                sqlTypeName="DECIMAL"
+                columnSize="4"
+                nullable="false"
+                primary="true" />
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="scrittura.esercizio"/>
+        <columnMapping
+                columnName="PG_MOVIMENTO"
+                propertyName="pg_movimento"
+                sqlTypeName="DECIMAL"
+                columnSize="10"
+                nullable="false"
+                primary="true" />
+        <columnMapping
+                columnName="PG_SCRITTURA"
+                propertyName="pg_scrittura"
+                sqlTypeName="DECIMAL"
+                columnSize="10"
+                nullable="false"
+                primary="true" />
+        <columnMapping
+                columnName="PG_SCRITTURA"
+                propertyName="scrittura.pg_scrittura"/>
 
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="cd_unita_organizzativa"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"
+                primary="true" />
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="scrittura.uo.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="cd_cds"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"
+                primary="true" />
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="scrittura.cds.cd_unita_organizzativa"/>
+
+        <columnMapping
+                columnName="CD_RIGA"
+                propertyName="cd_riga"
+                sqlTypeName="VARCHAR"
+                columnSize="1"
+                nullable="false"
+                primary="true" />
+
+        <columnMapping
+                columnName="CD_TERZO"
+                propertyName="cd_terzo"
+                sqlTypeName="DECIMAL"
+                columnSize="8" />
+        <columnMapping
+                columnName="CD_TERZO"
+                propertyName="terzo.cd_terzo"/>
+
+
+        <columnMapping
+                columnName="DT_CONTABILIZZAZIONE"
+                propertyName="scrittura.dt_contabilizzazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="DS_SCRITTURA"
+                propertyName="scrittura.ds_scrittura"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="conto.esercizio"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_VOCE_EP"
+                propertyName="conto.cd_voce_ep"/>
+
+        <columnMapping
+                columnName="ESERCIZIO_DOCUMENTO"
+                propertyName="esercizio_documento"
+                sqlTypeName="DECIMAL"
+                columnSize="4" />
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO"
+                propertyName="cd_tipo_documento"
+                sqlTypeName="VARCHAR"
+                columnSize="10" />
+        <columnMapping
+                columnName="CD_CDS_DOCUMENTO"
+                propertyName="cd_cds_documento"
+                sqlTypeName="VARCHAR"
+                columnSize="30" />
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="cd_uo_documento"
+                sqlTypeName="VARCHAR"
+                columnSize="30" />
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="pg_numero_documento"
+                sqlTypeName="DECIMAL"
+                columnSize="10" />
+        <columnMapping
+                columnName="TI_RIGA"
+                propertyName="ti_riga"
+                sqlTypeName="VARCHAR"
+                columnSize="4" />
+        <columnMapping
+                columnName="CD_CONTRIBUTO_RITENUTA"
+                propertyName="cd_contributo_ritenuta"
+                sqlTypeName="VARCHAR"
+                columnSize="10" />
+
+
+
+        <columnMapping
+                columnName="IM_MOVIMENTO_DARE"
+                propertyName="im_movimento_dare"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="IM_MOVIMENTO_AVERE"
+                propertyName="im_movimento_avere"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                fetchOnly="true"/>
+
+        <columnMapping
+                columnName="DIFFERENZA"
+                propertyName="differenza"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                fetchOnly="true"/>
+
+        <!-- FETCH Documento Amministrativo -->
+        <columnMapping
+                columnName="CD_CDS_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_cds"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_uo"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="ESERCIZIO_DOCUMENTO"
+                propertyName="documentoAmministrativo.esercizio"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_doc_amm"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_attiva"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_passiva"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_missione"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_compenso"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_anticipo"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_documento_generico"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO"
+                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm"
+                fetchOnly="true"/>
+    </columnMap>
+
+    <persistentProperty
+            name="cd_riga"
+            partOfOid="true"/>
     <persistentProperty
             name="im_movimento_dare" />
     <persistentProperty
             name="im_movimento_avere" />
+    <persistentProperty
+            name="differenza" />
 </SQLPersistentInfo>

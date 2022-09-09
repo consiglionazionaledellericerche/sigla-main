@@ -5847,4 +5847,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+
+    <include file="bootstrap/add_index_on_movimento_coge.xml"/>
+
 </databaseChangeLog>

@@ -33,6 +33,9 @@ import it.cnr.jada.util.action.CondizioneComplessaBulk;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +66,8 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
         setBulkInfo(BulkInfo.getBulkInfo(PartitarioBulk.class));
         setColumns(getBulkInfo().getColumnFieldPropertyDictionary(Optional.ofNullable(columnSet).orElse("partitario")));
         setModel(actioncontext, new PartitarioBulk());
+        setMultiSelection(false);
+        disableSelection();
     }
 
     private CompoundFindClause addBaseClause(ActionContext actioncontext, CompoundFindClause compoundFindClause) {
@@ -115,6 +120,16 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
         } catch (RemoteException e) {
             throw new BusinessProcessException(e);
         }
+    }
+
+    @Override
+    public void writeHTMLTable(PageContext pagecontext, String s, String s1) throws IOException, ServletException {
+        super.writeHTMLTable(pagecontext, s, s1);
+    }
+
+    @Override
+    public boolean isOrderableBy(String s) {
+        return Boolean.FALSE;
     }
 
 }

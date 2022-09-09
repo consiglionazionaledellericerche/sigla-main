@@ -33,11 +33,12 @@ import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.FormBP;
 
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class EconomicaAction extends CRUDAction {
     public Forward doGeneraScritturaEconomica(ActionContext actionContext) throws BusinessProcessException {
@@ -75,18 +76,20 @@ public abstract class EconomicaAction extends CRUDAction {
                 .filter(IDocumentoAmministrativoBulk.class::isInstance)
                 .map(IDocumentoAmministrativoBulk.class::cast);
         if (documentoAmministrativoBulk.isPresent()) {
-            List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = documentoAmministrativoBulk
+            final Stream<Movimento_cogeBulk> movimentoCogeBulks = documentoAmministrativoBulk
                     .flatMap(documentoAmministrativoBulk1 -> Optional.ofNullable(documentoAmministrativoBulk1.getScrittura_partita_doppia()))
                     .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
                     .orElse(Collections.emptyList())
-                    .stream()
-                    .map(Movimento_cogeBulk::getDocumentoAmministrativo)
+                    .stream();
+            List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = Stream.concat(
+                    movimentoCogeBulks.filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoAmministrativo()).isPresent()).map(Movimento_cogeBulk::getDocumentoAmministrativo),
+                    Stream.of(documentoAmministrativoBulk.get()))
                     .distinct()
                     .collect(Collectors.toList());
-            iDocumentoAmministrativoBulks.add(documentoAmministrativoBulk.get());
+
             ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                     "ConsultazionePartitarioBP",
-                    new Object[] { iDocumentoAmministrativoBulks, "partitario_amministrativo"}
+                    new Object[] { iDocumentoAmministrativoBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario_amministrativo"}
             );
             consBP.openIterator(actionContext);
             actionContext.addBusinessProcess(consBP);
@@ -101,7 +104,9 @@ public abstract class EconomicaAction extends CRUDAction {
                     .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
                     .orElse(Collections.emptyList())
                     .stream()
+                    .filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoAmministrativo()).isPresent())
                     .map(Movimento_cogeBulk::getDocumentoAmministrativo)
+                    .distinct()
                     .collect(Collectors.toList());
             if (!iDocumentoAmministrativoBulks.isEmpty()) {
                 ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
