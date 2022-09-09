@@ -53,6 +53,7 @@ import it.cnr.contab.web.rest.local.docamm.FatturaAttivaLocal;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonProtocollataException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
@@ -782,6 +783,9 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
 
             } catch (RemoteException | ComponentException | PersistencyException | ValidationException | IntrospectionException ex) {
                 LOGGER.error("ERROR while importing ", ex);
+                if (ex instanceof ApplicationException) {
+                    throw new FatturaAttivaException(Status.BAD_REQUEST, ex.getMessage(), FatturaAttivaCodiciEnum.ERRORE_FA_999);
+                }
                 throw FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_999);
             }
 
