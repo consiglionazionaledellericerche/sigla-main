@@ -283,11 +283,13 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                             .orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_139));
                     riga.setBene_servizio(Optional.ofNullable((Bene_servizioBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, new Bene_servizioBulk(fatr.getCd_bene_servizio()))).
                             orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_139)));
+
                     Optional.of(Stream.of(
                                     fattura.getTi_bene_servizio().equals("*"),
                                     riga.getBene_servizio().getTi_bene_servizio().equals(fattura.getTi_bene_servizio())
-                            ).filter(x -> x.equals(Boolean.TRUE)).count()).filter(x -> x == 0).
+                            ).filter(x -> x.equals(Boolean.FALSE)).count()).filter(x -> x < 2).
                             orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_141));
+
                     if (testata.getTi_causale_emissione().equals(Fattura_attivaBulk.TARIFFARIO)) {
                         Optional.ofNullable(fatr.getCd_tariffario()).
                                 orElseThrow(() -> FatturaAttivaException.newInstance(Status.BAD_REQUEST, FatturaAttivaCodiciEnum.ERRORE_FA_103));
