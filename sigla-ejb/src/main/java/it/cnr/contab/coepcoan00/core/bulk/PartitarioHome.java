@@ -52,6 +52,7 @@ public class PartitarioHome extends Movimento_cogeHome{
         sqlBuilder.addColumn("MOVIMENTO_COGE.CD_CDS");
         sqlBuilder.addColumn("'D'", "CD_RIGA");
 
+        sqlBuilder.addColumn("MOVIMENTO_COGE.SEZIONE");
         sqlBuilder.addColumn("MOVIMENTO_COGE.CD_VOCE_EP");
         sqlBuilder.addColumn("MOVIMENTO_COGE.CD_TERZO");
         sqlBuilder.addColumn("MOVIMENTO_COGE.TI_RIGA");
@@ -81,10 +82,11 @@ public class PartitarioHome extends Movimento_cogeHome{
         sqlBuilderGroupBy.addColumn("MAX(MOVIMENTO_COGE.CD_CDS)");
         sqlBuilderGroupBy.addColumn("'T'", "CD_RIGA");
 
-        sqlBuilderGroupBy.addColumn("MAX(MOVIMENTO_COGE.CD_VOCE_EP)");
-        sqlBuilderGroupBy.addColumn("MAX(MOVIMENTO_COGE.CD_TERZO)");
+        sqlBuilderGroupBy.addColumn("NULL", "SEZIONE");
+        sqlBuilderGroupBy.addColumn("NULL", "CD_VOCE_EP");
+        sqlBuilderGroupBy.addColumn("NULL", "CD_TERZO");
         sqlBuilderGroupBy.addColumn("MAX('SALDO')", "TI_RIGA");
-        sqlBuilderGroupBy.addColumn("MAX(MOVIMENTO_COGE.CD_CONTRIBUTO_RITENUTA)");
+        sqlBuilderGroupBy.addColumn("NULL", "CD_CONTRIBUTO_RITENUTA");
 
         sqlBuilderGroupBy.addColumn("MOVIMENTO_COGE.ESERCIZIO_DOCUMENTO");
         sqlBuilderGroupBy.addColumn("MOVIMENTO_COGE.CD_TIPO_DOCUMENTO");

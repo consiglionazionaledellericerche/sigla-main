@@ -1,5 +1,7 @@
 sigla:
   image: docker.si.cnr.it/##{CONTAINER_ID}##
+  environment:
+  - LANG=it_IT.UTF-8
   volumes:
     - ./storage-cloud-filesystem/:/tmp/storage-cloud-filesystem/
     - ./cert.p12:/opt/cert.p12

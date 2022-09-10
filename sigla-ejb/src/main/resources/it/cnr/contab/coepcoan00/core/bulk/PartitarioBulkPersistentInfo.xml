@@ -170,8 +170,11 @@
                 propertyName="cd_contributo_ritenuta"
                 sqlTypeName="VARCHAR"
                 columnSize="10" />
-
-
+        <columnMapping
+                columnName="SEZIONE"
+                propertyName="sezione"
+                sqlTypeName="VARCHAR"
+                columnSize="1" />
 
         <columnMapping
                 columnName="IM_MOVIMENTO_DARE"

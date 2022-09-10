@@ -65,8 +65,12 @@ public abstract class EconomicaDetailCRUDController extends CollapsableDetailCRU
 
     @Override
     public String getTableClass() {
-        return " table-fixed-header";
+        return null;
     }
+    @Override
+    public String getRowCSSClass(Object obj, boolean even) {
+        return null;
+    };
 
     public void writeTfoot(JspWriter jspWriter) throws IOException {
         final EuroFormat euroFormat = new EuroFormat();
