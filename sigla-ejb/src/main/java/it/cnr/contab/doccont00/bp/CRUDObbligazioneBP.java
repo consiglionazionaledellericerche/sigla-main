@@ -68,7 +68,13 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     private final SimpleDetailCRUDController aggregatoPerCdr = new SimpleDetailCRUDController("AggregatoPerCdr", Obbligazione_scad_voce_aggregatoBulk.class, "cdrAggregatoColl", this);
     private final SimpleDetailCRUDController aggregatoPerCapitolo = new SimpleDetailCRUDController("AggregatoPerCapitolo", Obbligazione_scad_voce_aggregatoBulk.class, "capitoliAggregatoColl", this);
 
-    private final SimpleDetailCRUDController crudObbligazione_pluriennale = new SimpleDetailCRUDController("ObbligazioniPluriennali", Obbligazione_pluriennaleBulk.class, "obbligazioniPluriennali", this);
+    private final SimpleDetailCRUDController crudObbligazione_pluriennale = new SimpleDetailCRUDController("ObbligazioniPluriennali", Obbligazione_pluriennaleBulk.class, "obbligazioniPluriennali", this){
+        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+            Obbligazione_pluriennaleBulk riga = (Obbligazione_pluriennaleBulk) getCrudObbligazione_pluriennale().getModel();
+            super.validateForDelete(context,riga);
+
+        }
+    };
 
     public SimpleDetailCRUDController getCrudObbligazione_pluriennale() {
         return crudObbligazione_pluriennale;
@@ -1024,6 +1030,11 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         return;
     }
 
+    /**
+     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     *
+     * @param context Il contesto dell'azione
+     */
     public void verificaTestataObbligazione(ActionContext context) throws BusinessProcessException, it.cnr.jada.bulk.ValidationException {
         getModel().validate();
         try {

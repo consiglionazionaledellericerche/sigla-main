@@ -23,6 +23,7 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.IDocumentoAmministrativoSpesaComponentSession;
@@ -260,13 +261,15 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
 
     protected it.cnr.jada.util.jsp.Button[] createToolbar() {
         final Properties properties = Config.getHandler().getProperties(getClass());
-        return Stream.concat(Arrays.asList(super.createToolbar()).stream(),
+        Button[] buttons = Stream.concat(Arrays.asList(super.createToolbar()).stream(),
                 Arrays.asList(
                         new Button(properties, "CRUDToolbar.printpdf"),
                         new Button(properties, "CRUDToolbar.contabile"),
                         new Button(properties, "CRUDToolbar.davariare"),
                         new Button(properties, "CRUDToolbar.save.variazione.sostituzione")
                 ).stream()).toArray(Button[]::new);
+        buttons = IDocAmmEconomicaBP.addPartitario(buttons, attivaEconomicaParallela, isEditing(), getModel());
+        return  buttons;
     }
 
     public boolean isDaVariareButtonHidden() {

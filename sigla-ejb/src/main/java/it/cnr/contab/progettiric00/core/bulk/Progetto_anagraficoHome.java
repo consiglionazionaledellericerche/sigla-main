@@ -5,9 +5,6 @@
 package it.cnr.contab.progettiric00.core.bulk;
 import java.sql.Connection;
 
-import it.cnr.contab.config00.contratto.bulk.Dettaglio_contrattoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.PersistencyException;

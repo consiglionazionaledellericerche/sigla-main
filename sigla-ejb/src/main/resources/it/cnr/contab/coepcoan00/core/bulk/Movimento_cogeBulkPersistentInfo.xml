@@ -17,39 +17,95 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk"
-	homeClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeHome" >
-	<defaultColumnMap
-		tableName="MOVIMENTO_COGE" >
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="scrittura.esercizio"/>
-		<columnMapping
-			columnName="PG_SCRITTURA"
-			propertyName="scrittura.pg_scrittura"/>
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="scrittura.cds.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="scrittura.uo.cd_unita_organizzativa" />			
-		<columnMapping
-			columnName="CD_VOCE_EP"
-			propertyName="conto.cd_voce_ep"/>
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="conto.esercizio"
-			fetchOnly="true"/>
-		<columnMapping
-			columnName="CD_TERZO"
-			propertyName="terzo.cd_terzo" />
-	</defaultColumnMap>
-	<persistentProperty
-		name="scrittura" 
-		partOfOid="true"/>
-	<persistentProperty
-		name="conto" />
-	<persistentProperty
-		name="terzo" />
+        persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk"
+        homeClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeHome">
+    <defaultColumnMap
+            tableName="MOVIMENTO_COGE">
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="scrittura.esercizio"/>
+        <columnMapping
+                columnName="PG_SCRITTURA"
+                propertyName="scrittura.pg_scrittura"/>
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="scrittura.cds.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="scrittura.uo.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_VOCE_EP"
+                propertyName="conto.cd_voce_ep"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="conto.esercizio"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_TERZO"
+                propertyName="terzo.cd_terzo"/>
 
+        <columnMapping
+                columnName="CD_CDS_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_cds"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_uo"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_UO_DOCUMENTO"
+                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="ESERCIZIO_DOCUMENTO"
+                propertyName="documentoAmministrativo.esercizio"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_doc_amm"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_attiva"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_fattura_passiva"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_missione"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_compenso"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_anticipo"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoAmministrativo.pg_documento_generico"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO"
+                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm"
+                fetchOnly="true"/>
+
+    </defaultColumnMap>
+
+    <persistentProperty
+            name="scrittura"
+            partOfOid="true"/>
+    <persistentProperty
+            name="conto"/>
+    <persistentProperty
+            name="documentoAmministrativo"/>
+    <persistentProperty
+            name="terzo"/>
 </SQLPersistentInfo>

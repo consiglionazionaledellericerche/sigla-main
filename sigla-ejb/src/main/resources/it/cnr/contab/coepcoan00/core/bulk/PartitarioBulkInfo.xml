@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<columnSet
+			name="partitario_amministrativo">
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Num."
+				name="pg_scrittura"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Data"
+				formatName="date_short"
+				name="dt_contabilizzazione"
+				property="scrittura.dt_contabilizzazione"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Desc."
+				name="ds_scrittura"
+				property="scrittura.ds_scrittura"/>
+		<columnFieldProperty
+				label="Conto"
+				name="cd_voce_ep"/>
+		<columnFieldProperty
+				label="Conto"
+				name="cd_voce_ep"/>
+		<columnFieldProperty
+				name="ds_voce_ep" />
+		<columnFieldProperty
+				label="Terzo"
+				name="cd_terzo"
+				property="terzo.cd_terzo"/>
+		<columnFieldProperty
+				label="Tipologia"
+				inputType="SELECT"
+				keysProperty="tipoRigaKeys"
+				name="ti_riga"/>
+		<columnFieldProperty
+				label="Codice CO/RI"
+				name="cd_contributo_ritenuta"/>
+		<columnFieldProperty
+				headerLabel="Importo"
+				label="Dare"
+				formatName = "it.cnr.contab.util.EuroFormat"
+				name="im_movimento_dare"
+				property="im_movimento_dare"/>
+		<columnFieldProperty
+				headerLabel="Importo"
+				label="Avere"
+				name="im_movimento_avere"
+				formatName = "it.cnr.contab.util.EuroFormat"
+				property="im_movimento_avere"/>
+	</columnSet>
+	<columnSet
+			name="partitario_contabile">
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Num."
+				name="pg_scrittura"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Data"
+				formatName="date_short"
+				name="dt_contabilizzazione"
+				property="scrittura.dt_contabilizzazione"/>
+		<columnFieldProperty
+				headerLabel="Scrittura"
+				label="Desc."
+				name="ds_scrittura"
+				property="scrittura.ds_scrittura"/>
+		<columnFieldProperty
+				label="Conto"
+				name="cd_voce_ep"/>
+		<columnFieldProperty
+				label="Conto"
+				name="cd_voce_ep"/>
+		<columnFieldProperty
+				name="ds_voce_ep" />
+		<columnFieldProperty
+				headerLabel="Partita"
+				label="Tipo"
+				inputType="SELECT"
+				keysProperty="tipoDocAmmKeys"
+				name="cd_tipo_documento"
+				property="cd_tipo_documento"/>
+		<columnFieldProperty
+				headerLabel="Partita"
+				label="Anno"
+				name="esercizio_documento"
+				property="esercizio_documento"/>
+		<columnFieldProperty
+				headerLabel="Partita"
+				label="Numero"
+				name="pg_numero_documento"
+				property="pg_numero_documento"/>
+		<columnFieldProperty
+				label="Terzo"
+				name="cd_terzo"
+				property="terzo.cd_terzo"/>
+		<columnFieldProperty
+				label="Tipologia"
+				inputType="SELECT"
+				keysProperty="tipoRigaKeys"
+				name="ti_riga"/>
+		<columnFieldProperty
+				label="Codice CO/RI"
+				name="cd_contributo_ritenuta"/>
+		<columnFieldProperty
+				headerLabel="Importo"
+				label="Dare"
+				formatName = "it.cnr.contab.util.EuroFormat"
+				name="im_movimento_dare"
+				property="im_movimento_dare"/>
+		<columnFieldProperty
+				headerLabel="Importo"
+				label="Avere"
+				formatName = "it.cnr.contab.util.EuroFormat"
+				name="im_movimento_avere"
+				property="im_movimento_avere"/>
+	</columnSet>
+
+</bulkInfo>

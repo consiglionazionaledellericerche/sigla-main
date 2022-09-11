@@ -1588,6 +1588,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
 		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
 
+		   		validaAnagraficheProgetto(userContext, progetto);
 	   		};
     	} catch(Throwable e) {
     		throw handleException(e);

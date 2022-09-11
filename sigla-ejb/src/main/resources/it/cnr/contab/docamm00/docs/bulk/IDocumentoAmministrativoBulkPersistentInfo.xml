@@ -1,0 +1,65 @@
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk">
+	<defaultColumnMap
+			tableName="DOCUMENTO_AMMINISTRATIVO" >
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cd_cds"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+				columnName="CD_UO"
+				propertyName="cd_uo"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="false"
+				primary="true" />
+
+		<columnMapping
+				columnName="PG_DOC_AMM"
+				propertyName="pg_doc_amm"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="false"
+				primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+			name="cd_cds"
+			partOfOid="true"/>
+	<persistentProperty
+			name="cd_uo"
+			partOfOid="true"/>
+	<persistentProperty
+			name="esercizio"
+			partOfOid="true"/>
+	<persistentProperty
+			name="pg_doc_amm"
+			partOfOid="true"/>
+
+</SQLPersistentInfo>

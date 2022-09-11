@@ -18,8 +18,12 @@
 package it.cnr.contab.docamm00.actions;
 
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotRequiredException;
+import it.cnr.contab.coepcoan00.consultazioni.bp.ConsultazionePartitarioBP;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
+import it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagBP;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -29,7 +33,11 @@ import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.FormBP;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class EconomicaAction extends CRUDAction {
     public Forward doGeneraScritturaEconomica(ActionContext actionContext) throws BusinessProcessException {
@@ -55,6 +63,57 @@ public abstract class EconomicaAction extends CRUDAction {
         } catch (ComponentException | RemoteException e) {
             return handleException(actionContext, e);
         }
+        return actionContext.findDefaultForward();
+    }
+
+    public Forward doPartitario(ActionContext actionContext) throws BusinessProcessException {
+        IDocAmmEconomicaBP bp = Optional.ofNullable(actionContext.getBusinessProcess())
+                .filter(IDocAmmEconomicaBP.class::isInstance)
+                .map(IDocAmmEconomicaBP.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Business process non compatibile!"));
+        final Optional<IDocumentoAmministrativoBulk> documentoAmministrativoBulk = Optional.ofNullable(bp.getModel())
+                .filter(IDocumentoAmministrativoBulk.class::isInstance)
+                .map(IDocumentoAmministrativoBulk.class::cast);
+        if (documentoAmministrativoBulk.isPresent()) {
+            List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = documentoAmministrativoBulk
+                    .flatMap(documentoAmministrativoBulk1 -> Optional.ofNullable(documentoAmministrativoBulk1.getScrittura_partita_doppia()))
+                    .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
+                    .orElse(Collections.emptyList())
+                    .stream()
+                    .map(Movimento_cogeBulk::getDocumentoAmministrativo)
+                    .distinct()
+                    .collect(Collectors.toList());
+            iDocumentoAmministrativoBulks.add(documentoAmministrativoBulk.get());
+            ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
+                    "ConsultazionePartitarioBP",
+                    new Object[] { iDocumentoAmministrativoBulks, "partitario_amministrativo"}
+            );
+            consBP.openIterator(actionContext);
+            actionContext.addBusinessProcess(consBP);
+            return actionContext.findDefaultForward();
+        }
+        final Optional<IDocumentoCogeBulk> documentoCogeBulk = Optional.ofNullable(bp.getModel())
+                .filter(IDocumentoCogeBulk.class::isInstance)
+                .map(IDocumentoCogeBulk.class::cast);
+        if (documentoCogeBulk.isPresent()) {
+            final List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = documentoCogeBulk
+                    .flatMap(documentoCogeBulk1 -> Optional.ofNullable(documentoCogeBulk1.getScrittura_partita_doppia()))
+                    .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
+                    .orElse(Collections.emptyList())
+                    .stream()
+                    .map(Movimento_cogeBulk::getDocumentoAmministrativo)
+                    .collect(Collectors.toList());
+            if (!iDocumentoAmministrativoBulks.isEmpty()) {
+                ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
+                        "ConsultazionePartitarioBP",
+                        new Object[] { iDocumentoAmministrativoBulks, "partitario_contabile" }
+                );
+                consBP.openIterator(actionContext);
+                actionContext.addBusinessProcess(consBP);
+                return actionContext.findDefaultForward();
+            }
+        }
+        bp.setMessage(FormBP.WARNING_MESSAGE, "Non ci sono elementi da visualizzare!");
         return actionContext.findDefaultForward();
     }
 }

@@ -19,11 +19,6 @@
 <SQLPersistentInfo
         persistentClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk"
         homeClassName="it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineHome">
-    <fetchPolicy
-            name="default">
-        <exclude
-                pattern="fatturaPassivaRiga"/>
-    </fetchPolicy>
     <defaultColumnMap
             tableName="FATTURA_ORDINE">
         <columnMapping
@@ -81,6 +76,67 @@
                 columnName="PG_OBBLIGAZIONE_SCAD_NC"
                 propertyName="obbligazioneScadenzarioNc.pg_obbligazione_scadenzario" />
     </defaultColumnMap>
+    <columnMap
+            name="FATTURA_P"
+            tableName="FATTURA_ORDINE"
+            extends="default">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="fatturaPassivaRiga.fattura_passivaI.cd_cds"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="fatturaPassivaRiga.fattura_passivaI.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="fatturaPassivaRiga.fattura_passivaI.esercizio"/>
+        <columnMapping
+                columnName="PG_FATTURA_PASSIVA"
+                propertyName="fatturaPassivaRiga.fattura_passivaI.pg_fattura_passiva"/>
+        <columnMapping
+                columnName="PROGRESSIVO_RIGA"
+                propertyName="fatturaPassivaRiga.fattura_passivaI.progressivo_riga"/>
+    </columnMap>
+    <columnMap
+            name="NOTA_CREDITO_P"
+            tableName="FATTURA_ORDINE"
+            extends="default">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="fatturaPassivaRiga.notaDiCredito.cd_cds"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="fatturaPassivaRiga.notaDiCredito.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="fatturaPassivaRiga.notaDiCredito.esercizio"/>
+        <columnMapping
+                columnName="PG_FATTURA_PASSIVA"
+                propertyName="fatturaPassivaRiga.notaDiCredito.pg_fattura_passiva"/>
+        <columnMapping
+                columnName="PROGRESSIVO_RIGA"
+                propertyName="fatturaPassivaRiga.notaDiCredito.progressivo_riga"/>
+    </columnMap>
+    <columnMap
+            name="NOTA_DEBITO_P"
+            tableName="FATTURA_ORDINE"
+            extends="default">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="fatturaPassivaRiga.notaDiDebito.cd_cds"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="fatturaPassivaRiga.notaDiDebito.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="fatturaPassivaRiga.notaDiDebito.esercizio"/>
+        <columnMapping
+                columnName="PG_FATTURA_PASSIVA"
+                propertyName="fatturaPassivaRiga.notaDiDebito.pg_fattura_passiva"/>
+        <columnMapping
+                columnName="PROGRESSIVO_RIGA"
+                propertyName="fatturaPassivaRiga.notaDiDebito.progressivo_riga"/>
+    </columnMap>
+
     <persistentProperty
             name="fatturaPassivaRiga"
             partOfOid="true"/>
@@ -89,6 +145,4 @@
             partOfOid="true"/>
     <persistentProperty
             name="voceIva"/>
-    <persistentProperty
-            name="obbligazioneScadenzarioNc"/>
 </SQLPersistentInfo>

@@ -1820,6 +1820,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 
 	obbligazione = (ObbligazioneBulk) super.creaConBulk( uc, bulk );
 
+
 	//esegue il check di disponibilita di cassa
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
 	verificaCoperturaContratto( uc, obbligazione);
@@ -4028,7 +4029,9 @@ public ObbligazioneBulk stornaObbligazioneDefinitiva(
 
         obbligazione.setUser(aUC.getUser());
         updateBulk(aUC, obbligazione);
- */       
+
+
+ */
       makeBulkPersistent( aUC, obbligazione);
       /*
 	  if ( !aUC.isTransactional() )	
@@ -5383,7 +5386,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			BigDecimal newImportoOsv = Utility.ZERO, totImporto = Utility.ZERO;
 			ObbligazioneHome obbligazioneHome = (ObbligazioneHome) getHome( userContext, ObbligazioneBulk.class );
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk)obbligazioneHome.findByPrimaryKey(scadenzaVecchia.getObbligazione());
-			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, obbligazione);
+			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, (OggettoBulk)obbligazione);
 
 			//cerco nell'obbligazione riletto la scadenza indicata
 			for (Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); ) {
@@ -5403,7 +5406,6 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
 			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
 			scadenzaNuova.setDs_scadenza(nuovaDescrizione!=null ? nuovaDescrizione : scadenzaVecchia.getDs_scadenza());
-			scadenzaNuova.setPg_obbligazione(dati.getNuovoPgObbligazioneScadenzario());
 			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 		
 			// Rigenero i relativi dettagli	
@@ -5436,14 +5438,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				//recupero il primo dettaglio e lo aggiorno per quadrare
 				for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 					Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk)s.next();
-					BigDecimal arrotondamento = nuovoImportoScadenzaVecchia.subtract(totImporto);
-					if (osv.getIm_voce().add(arrotondamento).compareTo(Utility.ZERO)!=-1) {
-						osv.setIm_voce(osv.getIm_voce().add(arrotondamento));
-						scadenzaNuova.getObbligazione_scad_voceColl().stream()
-								.filter(el->el.getCd_centro_responsabilita().equals(osv.getCd_centro_responsabilita()))
-								.filter(el->el.getCd_linea_attivita().equals(osv.getCd_linea_attivita()))
-								.findFirst()
-								.ifPresent(osvNew->osvNew.setIm_voce(osvNew.getIm_voce().subtract(arrotondamento)));
+					if (osv.getIm_voce().add(nuovoImportoScadenzaVecchia.subtract(totImporto)).compareTo(Utility.ZERO)!=-1) {
+						osv.setIm_voce(osv.getIm_voce().add(nuovoImportoScadenzaVecchia.subtract(totImporto)));
 						break;
 					}
 				}
@@ -6051,6 +6047,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 
 	private boolean isAnnoDuplicato(ObbligazioneBulk bulk){
 		if ( bulk.getObbligazioniPluriennali().stream()
+				.filter(op -> Optional.ofNullable(op.getAnno()).isPresent())
 				.collect(Collectors.groupingBy(Obbligazione_pluriennaleBulk::getAnno, Collectors.counting()))
 				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
 			return Boolean.TRUE;

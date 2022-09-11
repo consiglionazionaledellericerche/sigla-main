@@ -18,13 +18,14 @@
 package it.cnr.contab.coepcoan00.core.bulk;
 
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
+import it.cnr.jada.persistency.KeyedPersistent;
 
 /**
  * Insert the type's description here.
  * Creation date: (4/17/2002 5:49:25 PM)
  * @author: Roberto Peli
  */
-public interface IDocumentoCogeBulk {
+public interface IDocumentoCogeBulk extends KeyedPersistent{
     String getCd_tipo_doc();
 
     String getCd_cds();

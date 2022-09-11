@@ -373,6 +373,22 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             }
         }
     }
+    public java.lang.Boolean propostaFatturaDaOrdini(it.cnr.jada.UserContext param0) throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (java.lang.Boolean) invoke("propostaFatturaDaOrdini", new Object[]{
+                    param0});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
 
     public java.lang.String getCdrPersonale(it.cnr.jada.UserContext param0, java.lang.Integer param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
@@ -726,4 +742,5 @@ public class TransactionalConfigurazione_cnrComponentSession extends it.cnr.jada
             }
         }
     }
+
 }

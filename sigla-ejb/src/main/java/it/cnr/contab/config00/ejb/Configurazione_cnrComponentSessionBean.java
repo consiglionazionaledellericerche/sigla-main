@@ -423,6 +423,24 @@ public class Configurazione_cnrComponentSessionBean extends it.cnr.jada.ejb.Gene
             throw uncaughtError(param0, componentObj, e);
         }
     }
+    public Boolean propostaFatturaDaOrdini(UserContext param0) throws ComponentException, EJBException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            Boolean result = componentObj.propostaFatturaDaOrdini(param0);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
 
     public String getCdrPersonale(UserContext param0, Integer param1) throws ComponentException, EJBException {
         pre_component_invocation(param0, componentObj);

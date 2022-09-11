@@ -730,6 +730,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
         newToolbar[i] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaAvanti");
         newToolbar[i + 1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaIndietro");
         newToolbar[i + 2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.salvaProvvisorio");
+        newToolbar = IDocAmmEconomicaBP.addPartitario(newToolbar, attivaEconomicaParallela, isEditing(), getModel());
         return newToolbar;
     }
 
@@ -2939,4 +2940,5 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     public CollapsableDetailCRUDController getMovimentiAvere() {
         return movimentiAvere;
     }
+
 }

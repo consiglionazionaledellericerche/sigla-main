@@ -37,12 +37,11 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
-import java.util.Iterator;
-import java.util.TreeMap;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Insert the type's description here.
@@ -215,6 +214,7 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         newToolbar[i] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.creaRimborso");
         newToolbar[i + 1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaAvanti");
         newToolbar[i + 2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaIndietro");
+        newToolbar = IDocAmmEconomicaBP.addPartitario(newToolbar, attivaEconomicaParallela, isEditing(), getModel());
         return newToolbar;
     }
 

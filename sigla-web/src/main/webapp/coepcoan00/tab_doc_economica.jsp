@@ -31,16 +31,25 @@
 				bp.getParentRoot().isBootstrap()); %>
     </div>
 </div>
-<table class="Panel card p-2 mb-2 card-shadow" cellpadding="2">
-    <tr>
-        <% scrittura.writeFormField(out, "dt_contabilizzazione", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
-        <% scrittura.writeFormField(out, "ti_istituz_commerc", FormController.VIEW, bp.getFieldValidationMap(), true); %>
-        <% scrittura.writeFormField(out, "ds_scrittura", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
-    </tr>
-    <% if (Optional.ofNullable(scrittura.getPg_scrittura_annullata()).isPresent()) { %>
-        <tr><% scrittura.writeFormField(out, "pg_scrittura_annullata", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
-    <% } %>
-</table>
+<div class="Panel card p-2 mb-2 card-shadow">
+    <table cellpadding="2">
+        <tr>
+            <% scrittura.writeFormField(out, "dt_contabilizzazione", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+            <% scrittura.writeFormField(out, "ti_istituz_commerc", FormController.VIEW, bp.getFieldValidationMap(), true); %>
+            <% scrittura.writeFormField(out, "ds_scrittura", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+        </tr>
+        <% if (Optional.ofNullable(scrittura.getPg_scrittura_annullata()).isPresent()) { %>
+            <tr><% scrittura.writeFormField(out, "pg_scrittura_annullata", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %></tr>
+        <% } %>
+    </table>
+    <table cellpadding="2">
+        <tr>
+            <% scrittura.writeFormField(out, "imTotaleDare", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+            <% scrittura.writeFormField(out, "imTotaleAvere", FormController.VIEW, bp.getFieldValidationMap(), true); %>
+            <% scrittura.writeFormField(out, "differenza", FormController.VIEW, bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap()); %>
+        </tr>
+    </table>
+</div>
 <% bp.getMovimentiDare().writeHTMLTable(pageContext, "scrittura", false, false, false,"100%","100px", true); %>
 <% if (!bp.getMovimentiDare().isCollapsed() && Optional.ofNullable(bp.getMovimentiDare().getModel()).isPresent()) { %>
     <table class="Panel mt-1 p-2 card card-shadow" cellpadding="2">
@@ -51,10 +60,12 @@
         <tr>
             <% bp.getMovimentiDare().writeFormField(out, "ti_istituz_commerc");%>
             <% bp.getMovimentiDare().writeFormField(out, "im_movimento");%>
-            <td><% bp.getMovimentiDare().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
-            <td><% bp.getMovimentiDare().writeFormInput(out, "dt_da_competenza_coge");
+            <td colspan="4">
+                <% bp.getMovimentiDare().writeFormLabel(out, "dt_da_competenza_coge"); %>
+                <% bp.getMovimentiDare().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiDare().writeFormLabel(out, "dt_a_competenza_coge");
-                   bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%></td>
+                   bp.getMovimentiDare().writeFormInput(out, "dt_a_competenza_coge");%>
+            </td>
         </tr>
         <tr>
             <% bp.getMovimentiDare().writeFormField(out, "ti_riga");%>
@@ -76,10 +87,12 @@
         <tr>
             <% bp.getMovimentiAvere().writeFormField(out, "ti_istituz_commerc");%>
             <% bp.getMovimentiAvere().writeFormField(out, "im_movimento");%>
-            <td><% bp.getMovimentiAvere().writeFormLabel(out, "dt_da_competenza_coge"); %></td>
-            <td><% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
+            <td colspan="4">
+                <% bp.getMovimentiAvere().writeFormLabel(out, "dt_da_competenza_coge"); %>
+                <% bp.getMovimentiAvere().writeFormInput(out, "dt_da_competenza_coge");
                    bp.getMovimentiAvere().writeFormLabel(out, "dt_a_competenza_coge");
-                   bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%></td>
+                   bp.getMovimentiAvere().writeFormInput(out, "dt_a_competenza_coge");%>
+            </td>
         </tr>
         <tr>
             <% bp.getMovimentiAvere().writeFormField(out, "ti_riga");%>
