@@ -328,7 +328,8 @@ End;
 	   and esercizio_obbligazione = aScad.esercizio
 	   and esercizio_ori_obbligazione = aScad.esercizio_originale
 	   and pg_obbligazione = aScad.pg_obbligazione
-       and pg_obbligazione_scadenzario = aScad.pg_obbligazione_scadenzario) loop
+       and pg_obbligazione_scadenzario = aScad.pg_obbligazione_scadenzario
+       and cd_tipo_documento_amm != 'ORDINE') loop
       -- Se è cambiato l'elemento voce da riproc. sia in analitica che in economica
 	  if isEVCambiato then
 	   aggiornaStatoCOGECOAN(aDocPassivo,true,true,aObb.utuv,aObb.duva,aPgStorico);

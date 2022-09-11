@@ -24,4 +24,5 @@
       AND osv.esercizio_originale = doc.esercizio_ori_obbligazione(+)
       AND osv.pg_obbligazione = doc.pg_obbligazione(+)
       AND osv.pg_obbligazione_scadenzario = doc.pg_obbligazione_scadenzario(+)
-      AND obb.cd_terzo = trz.cd_terzo ;
+      AND obb.cd_terzo = trz.cd_terzo
+      and doc.cd_tipo_documento_amm != 'ORDINE';

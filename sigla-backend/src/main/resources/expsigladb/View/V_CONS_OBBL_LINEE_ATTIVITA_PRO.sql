@@ -124,6 +124,7 @@
         AND linea_attivita.cd_centro_responsabilita =
                                                   cdr.cd_centro_responsabilita
         AND fattura_passiva_riga.dt_cancellazione IS NULL
+        and v_doc_passivo.cd_tipo_documento_amm != 'ORDINE'
    UNION
 -- Seconda Union Sono le Obbligazioni Collegate a Documenti Amministrativi pagati
    SELECT   /*+ optimizer_features_enable('10.1.0') */
@@ -265,4 +266,5 @@
         AND mandato_riga.pg_doc_amm = fattura_passiva_riga.pg_fattura_passiva(+)
         AND obbligazione.cd_terzo = terzo.cd_terzo
         AND fattura_passiva_riga.dt_cancellazione IS NULL
+        and v_doc_passivo.cd_tipo_documento_amm != 'ORDINE'
    ORDER BY 4, 8;

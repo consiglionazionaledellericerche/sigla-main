@@ -133,7 +133,8 @@ WHERE  B.dt_pagamento_fondo_eco IS NOT NULL AND
        B.esercizio = A.esercizio_doc_amm AND
        B.cd_unita_organizzativa = A.cd_uo_doc_amm AND
        B.cd_tipo_documento_amm = A.cd_tipo_documento_amm AND
-       B.pg_documento_amm = A.pg_documento_amm;
+       B.pg_documento_amm = A.pg_documento_amm
+       and b.cd_tipo_documento_amm != 'ORDINE';
 
    COMMENT ON TABLE "V_ASS_OBBSCAD_FONDO_SPESA"  IS 'Vista di estrazione delle spese di un fondo a partire dal riferimento alla
 scadenza di obbligazione';

@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.actions;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -908,10 +909,12 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
     private Forward basicDoRicercaObbligazione(
             ActionContext context,
             Fattura_passivaBulk fatturaPassiva,
-            java.util.List models) {
+            java.util.List models, boolean notaCreditoPerOrdini) {
 
         try {
-            controllaQuadraturaConti(context, fatturaPassiva);
+            if (!fatturaPassiva.isDaOrdini()){
+                controllaQuadraturaConti(context, fatturaPassiva);
+            }
 
             Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
             filtro.setData_scadenziario(fatturaPassiva.getDt_scadenza());
@@ -939,7 +942,11 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
 
             BulkBP robp = (BulkBP) context.getUserInfo().createBusinessProcess(context, "RicercaObbligazioniBP", new Object[]{"MRSWTh"});
             robp.setModel(context, filtro);
-            context.addHookForward("bringback", this, "doContabilizza");
+            if (notaCreditoPerOrdini){
+                context.addHookForward("bringback", this, "doContabilizzaOrdiniNotaCredito");
+            } else {
+                context.addHookForward("bringback", this, "doContabilizza");
+            }
             HookForward hook = (HookForward) context.findForward("bringback");
             return context.addBusinessProcess(robp);
         } catch (Throwable e) {
@@ -1301,7 +1308,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
 
             if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
                 throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario selezionare un fornitore!");
-            return basicDoRicercaObbligazione(context, fatturaPassiva, null);
+            return basicDoRicercaObbligazione(context, fatturaPassiva, null, false);
         } catch (Throwable e) {
             return handleException(context, e);
         }
@@ -2443,8 +2450,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                     java.util.Vector clone = (java.util.Vector) models.clone();
                     if (!clone.isEmpty()) {
                         scollegaDettagliDaObbligazione(context, clone);
-                        clone.addAll(selectedModels);
-                        basicDoContabilizza(context, obblig, clone);
+                        clone.addAll(selectedModels);basicDoContabilizza(context, obblig, clone);
                     } else {
                         obbHash.remove(obbligazione);
                         basicDoContabilizza(context, obblig, selectedModels);
@@ -4230,7 +4236,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             if (isDaOrdini)
                 return basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models.get(), manually);
             else
-                return basicDoRicercaObbligazione(context, fatturaPassiva, models.get());
+                return basicDoRicercaObbligazione(context, fatturaPassiva, models.get(), false);
         } catch (Throwable e) {
             return handleException(context, e);
         }
@@ -5612,4 +5618,144 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
 		return context.findDefaultForward();
 
 	}
+    public Forward doContabilizzaOrdiniNotaCredito(ActionContext context) {
+
+        HookForward caller = (HookForward) context.getCaller();
+        Obbligazione_scadenzarioBulk obblig = (Obbligazione_scadenzarioBulk) caller.getParameter("obbligazioneSelezionata");
+        CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
+        Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+        java.util.List selectedModels = null;
+        try {
+            selectedModels = getListaRigheFatturaOrdiniNotaCredito(context, bp, fattura, true);
+            bp.getFatturaOrdiniController().getSelection().clearSelection();
+        } catch (Throwable e) {
+        }
+
+        if (obblig != null) {
+            try {
+                TerzoBulk creditore = obblig.getObbligazione().getCreditore();
+                if (!fattura.getFornitore().equalsByPrimaryKey(creditore) &&
+                        !AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita())) {
+                    ((IDocumentoAmministrativoBulk) fattura).addToDocumentiContabiliCancellati(obblig);
+                    throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore della fattura!");
+                }
+                Filtro_ricerca_obbligazioniVBulk filtro = (Filtro_ricerca_obbligazioniVBulk) caller.getParameter("filtroRicercaUtilizzato");
+                if (filtro != null) {
+                    Elemento_voceBulk ev = filtro.getElemento_voce();
+                    if (ev != null) {
+                        if (!obblig.getObbligazione().getElemento_voce().getCd_elemento_voce().startsWith(ev.getCd_elemento_voce())) {
+                            if (!ev.getCd_elemento_voce().startsWith(obblig.getObbligazione().getElemento_voce().getCd_elemento_voce())) {
+                                ((IDocumentoAmministrativoBulk) fattura).addToDocumentiContabiliCancellati(obblig);
+                                throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno deve essere uguale o appartenere al titolo capitolo della categoria inventario dei beni selezionati (\"" + ev.getCd_elemento_voce() + "\")!");
+                            }
+                        }
+                    }
+                }
+                Obbligazione_scadenzarioBulk obbligazione = null;
+                ObbligazioniTable obbHash = fattura.getObbligazioniHash();
+                if (obbHash != null && !obbHash.isEmpty())
+                    obbligazione = obbHash.getKey(obblig);
+                if (obbligazione != null && obbligazione.getObbligazione().isTemporaneo()) {
+                    java.util.Vector models = ((java.util.Vector) obbHash.get(obbligazione));
+                    java.util.Vector clone = (java.util.Vector) models.clone();
+                    if (!clone.isEmpty()) {
+                        scollegaDettagliDaObbligazione(context, clone);
+                        clone.addAll(selectedModels);basicDoContabilizza(context, obblig, clone);
+                    } else {
+                        obbHash.remove(obbligazione);
+                        basicDoContabilizza(context, obblig, selectedModels);
+                    }
+                } else {
+                    basicDoContabilizza(context, obblig, selectedModels);
+                }
+            } catch (it.cnr.jada.comp.ComponentException e) {
+                return handleException(context, e);
+            }
+            bp.getObbligazioniController().getSelection().clear();
+            bp.getObbligazioniController().setModelIndex(context, -1);
+            bp.getObbligazioniController().setModelIndex(context, it.cnr.jada.bulk.BulkCollections.indexOfByPrimaryKey(bp.getObbligazioniController().getDetails(), obblig));
+
+            bp.setDirty(true);
+        }
+        return context.findDefaultForward();
+    }
+
+    public Forward doRicercaObbligazioneOrdiniNoteCredito(ActionContext context) {
+
+        try {
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            fillModel(context);
+            Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk) bp.getModel();
+            List listaRigheFattura = getListaRigheFatturaOrdiniNotaCredito(context, bp, fatturaPassiva, false);
+            if (listaRigheFattura.isEmpty()) {
+                bp.setErrorMessage("Per procedere, selezionare gli ordini in attesa di nota credito da contabilizzare!");
+                return context.findDefaultForward();
+            }
+            if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
+                throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
+
+            controllaSelezionePerContabilizzazione(context, listaRigheFattura.iterator());
+            try {
+                controllaSelezionePerTitoloCapitoloLista(context, listaRigheFattura.iterator());
+            } catch (ApplicationException e) {
+                throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+            }
+            return basicDoRicercaObbligazione(context, fatturaPassiva, listaRigheFattura, true);
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
+    private List getListaRigheFatturaOrdiniNotaCredito(ActionContext context, CRUDFatturaPassivaBP bp, Fattura_passivaBulk fatturaPassiva, Boolean righeToAddToFatturaPassivaRigaList) throws ValidationException, BusinessProcessException {
+        List listaRigheFattura = new ArrayList();
+        Optional<List> models = Optional.ofNullable(bp.getFatturaOrdiniController().getSelectedModels(context))
+                .map(list -> {
+                    final int focus = bp.getFatturaOrdiniController().getSelection().getFocus();
+                    FatturaOrdineBulk fatturaOrdineBulk = (FatturaOrdineBulk) bp.getFatturaOrdiniController().getDetails().get(focus);
+                    if (fatturaOrdineBulk.isRigaAttesaNotaCredito()) {
+                        Fattura_passiva_rigaBulk rigaPerNotaCredito = new Fattura_passiva_rigaIBulk();
+                        if (righeToAddToFatturaPassivaRigaList){
+                            fatturaPassiva.addToFattura_passiva_dettColl(rigaPerNotaCredito);
+                        } else {
+                            rigaPerNotaCredito.setStato_cofi(Fattura_passivaBulk.STATO_INIZIALE);
+                            rigaPerNotaCredito.setFattura_passiva(fatturaPassiva);
+                            rigaPerNotaCredito.setTi_associato_manrev(Fattura_passivaBulk.NON_ASSOCIATO_A_MANDATO);
+
+                            try {
+                                java.sql.Timestamp ts = it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();
+                                rigaPerNotaCredito.setDt_da_competenza_coge((fatturaPassiva.getDt_da_competenza_coge() == null) ? ts : fatturaPassiva.getDt_da_competenza_coge());
+                                rigaPerNotaCredito.setDt_a_competenza_coge((fatturaPassiva.getDt_a_competenza_coge() == null) ? ts : fatturaPassiva.getDt_a_competenza_coge());
+                            } catch (javax.ejb.EJBException e) {
+                                throw new it.cnr.jada.DetailedRuntimeException(e);
+                            }
+                            rigaPerNotaCredito.setProgressivo_riga(new Long(listaRigheFattura.size() + 1));
+                        }
+                        rigaPerNotaCredito.setBene_servizio(fatturaOrdineBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio());
+                        rigaPerNotaCredito.setVoce_iva(getVoceIvaOrdini(fatturaOrdineBulk));
+                        rigaPerNotaCredito.setQuantita(BigDecimal.ONE);
+                        rigaPerNotaCredito.setPrezzo_unitario(fatturaOrdineBulk.getImponibilePerNotaCredito().subtract(fatturaOrdineBulk.getImImponibile()));
+                        rigaPerNotaCredito.setIm_iva(fatturaOrdineBulk.getImportoIvaPerNotaCredito().subtract(fatturaOrdineBulk.getImIva()));
+                        rigaPerNotaCredito.setIm_imponibile(rigaPerNotaCredito.getPrezzo_unitario());
+                        rigaPerNotaCredito.setIm_totale_divisa(rigaPerNotaCredito.getIm_imponibile());
+                        rigaPerNotaCredito.setIm_diponibile_nc(rigaPerNotaCredito.getIm_imponibile().add(rigaPerNotaCredito.getIm_iva()));
+
+
+                        rigaPerNotaCredito.setDs_riga_fattura("ppp");
+
+                        listaRigheFattura.add(rigaPerNotaCredito);
+                    }
+                    return list;
+                })
+                .filter(list -> !list.isEmpty());
+        return listaRigheFattura;
+    }
+
+    private Voce_ivaBulk getVoceIvaOrdini(FatturaOrdineBulk fatturaOrdineBulk) {
+        Voce_ivaBulk iva = fatturaOrdineBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getVoceIva();
+        if (fatturaOrdineBulk.getVoceIva() != null && fatturaOrdineBulk.getCdVoceIvaRett() != null){
+            iva = fatturaOrdineBulk.getVoceIva();
+        }
+        return iva;
+    }
+
 }

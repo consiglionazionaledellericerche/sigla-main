@@ -65,6 +65,21 @@
         <columnMapping
                 columnName="CD_VOCE_IVA_RETT"
                 propertyName="voceIva.cd_voce_iva"/>
+        <columnMapping
+                columnName="CD_CDS_OBBL_NC"
+                propertyName="obbligazioneScadenzarioNc.obbligazione.cds.cd_unita_organizzativa" />
+        <columnMapping
+                columnName="ESERCIZIO_OBBL_NC"
+                propertyName="obbligazioneScadenzarioNc.obbligazione.esercizio"  />
+        <columnMapping
+                columnName="ESERCIZIO_ORIG_OBBL_NC"
+                propertyName="obbligazioneScadenzarioNc.obbligazione.esercizio_originale" />
+        <columnMapping
+                columnName="PG_OBBLIGAZIONE_NC"
+                propertyName="obbligazioneScadenzarioNc.obbligazione.pg_obbligazione" />
+        <columnMapping
+                columnName="PG_OBBLIGAZIONE_SCAD_NC"
+                propertyName="obbligazioneScadenzarioNc.pg_obbligazione_scadenzario" />
     </defaultColumnMap>
     <persistentProperty
             name="fatturaPassivaRiga"
@@ -74,4 +89,6 @@
             partOfOid="true"/>
     <persistentProperty
             name="voceIva"/>
+    <persistentProperty
+            name="obbligazioneScadenzarioNc"/>
 </SQLPersistentInfo>

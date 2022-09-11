@@ -272,6 +272,17 @@
             enabledOnEdit="false"
             nullable="false"
             label="statoAss"/>
+    <fieldProperty
+            name="operazioneImpegnoNotaCredito"
+            property="operazioneImpegnoNotaCredito"
+            inputType="SELECT"
+            keysProperty="operazioneImpegnoNotaCreditoKeys"
+            inputSize="20"
+            maxLength="10"
+            enabledOnInsert="true"
+            enabledOnEdit="true"
+            nullable="true"
+            label="Usa Impegno Per Attesa Nota Credito" />
     <form
             name="searchtool">
         <formFieldProperty
@@ -317,7 +328,8 @@
     <formFieldProperty
             name="sconto3Rett"
             command="doRettificaConsegna"/>
-
+    <formFieldProperty
+            name="operazioneImpegnoNotaCredito"/>
     <findFieldProperty
             name="cdCds"/>
     <findFieldProperty
@@ -372,36 +384,25 @@
             name="imponibileErrato"/>
 
     <columnFieldProperty
-            name="dtPrevConsegna"
-            property="ordineAcqConsegna.dtPrevConsegna"
-            formatName="date_short"
-            headerLabel="Consegna"
-            label="Data"/>
+            name="ordineConsegna"
+            property="consegnaDisplay"
+            headerLabel="Ordine"
+            label="Consegna"/>
     <columnFieldProperty
-            name="cdNumeratore"
-            property="ordineAcqConsegna.ordineAcqRiga.cdNumeratore"
-            headerLabel="Consegna"
-            label="Numeratore"/>
-    <columnFieldProperty
-            name="numero"
-            property="ordineAcqConsegna.ordineAcqRiga.numero"
-            headerLabel="Consegna"
-            label="Numero"/>
-    <columnFieldProperty
-            name="riga"
-            property="ordineAcqConsegna.ordineAcqRiga.riga"
-            headerLabel="Consegna"
-            label="Riga"/>
-    <columnFieldProperty
-            name="quantita"
-            property="ordineAcqConsegna.quantita"
-            headerLabel="Consegna"
-            label="Quantità"/>
+            name="dsBeneServizio"
+            property="ordineAcqConsegna.ordineAcqRiga.dsBeneServizio"
+            headerLabel="Ordine"
+            label="Bene/Servizio"/>
     <columnFieldProperty
             name="notaRiga"
             property="ordineAcqConsegna.ordineAcqRiga.notaRiga"
             headerLabel="Ordine"
             label="Note"/>
+    <columnFieldProperty
+            name="quantita"
+            property="ordineAcqConsegna.quantita"
+            headerLabel="Ordine"
+            label="Quantità"/>
     <columnFieldProperty
             name="impegno"
             property="impegnoDisplay"
