@@ -3052,4 +3052,7 @@
     <changeSet author="gianfranco.gasparro" runOnChange="true" id="create-view-V_PARTITE_GIRO">
         <sqlFile dbms="oracle" path="../expsigladb/View/v_partite_giro.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_PARTITARIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PARTITARIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
 </databaseChangeLog>

@@ -49,7 +49,7 @@
     </defaultColumnMap>
     <columnMap
             name="PARTITARIO"
-            tableName="MOVIMENTO_COGE">
+            tableName="V_PARTITARIO">
         <columnMapping
                 columnName="ESERCIZIO"
                 propertyName="esercizio"
@@ -181,23 +181,20 @@
                 propertyName="im_movimento_dare"
                 sqlTypeName="DECIMAL"
                 columnSize="15"
-                columnScale="2"
-                fetchOnly="true"/>
+                columnScale="2"/>
         <columnMapping
                 columnName="IM_MOVIMENTO_AVERE"
                 propertyName="im_movimento_avere"
                 sqlTypeName="DECIMAL"
                 columnSize="15"
-                columnScale="2"
-                fetchOnly="true"/>
+                columnScale="2"/>
 
         <columnMapping
                 columnName="DIFFERENZA"
                 propertyName="differenza"
                 sqlTypeName="DECIMAL"
                 columnSize="15"
-                columnScale="2"
-                fetchOnly="true"/>
+                columnScale="2"/>
 
         <!-- FETCH Documento Amministrativo -->
         <columnMapping
