@@ -38,6 +38,7 @@ import javax.servlet.ServletException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Optional;
@@ -140,14 +141,9 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
                 .map(PartitarioBulk.class::cast)
                 .map(partitarioBulk -> {
                     switch (partitarioBulk.getCd_riga()) {
-                        case "D" : {
-                            if (partitarioBulk.getSezione().equalsIgnoreCase(PartitarioBulk.SEZIONE_DARE))
-                                return "text-dark";
-                            else
-                                return "text-dark";
-                        }
                         case "T" : {
-                            return "shadow text-primary font-weight-bold font-italic";
+                            return "shadow font-weight-bold font-italic " +
+                                    (partitarioBulk.getDifferenza().equals(BigDecimal.ZERO) ? "text-primary" : "text-danger");
                         }
                         default:
                             return null;
