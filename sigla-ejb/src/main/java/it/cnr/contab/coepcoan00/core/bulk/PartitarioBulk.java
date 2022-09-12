@@ -143,11 +143,4 @@ public class PartitarioBulk extends Movimento_cogeBulk {
                 .map(s -> super.getConto().getDs_voce_ep())
                 .orElse(null);
     }
-
-    public String getCdContributoRitenutaColumnValue() {
-        return Optional.ofNullable(getCd_riga())
-                .filter(s -> TipologiaRiga.isDettaglio(s))
-                .map(s -> super.getCd_contributo_ritenuta())
-                .orElse(null);
-    }
 }

@@ -71,7 +71,7 @@
 		<columnFieldProperty
 				label="Codice CO/RI"
 				name="cd_contributo_ritenuta"
-				property="cdContributoRitenutaColumnValue"/>
+				property="cd_contributo_ritenuta"/>
 		<columnFieldProperty
 				label="Tipologia"
 				inputType="SELECT"
