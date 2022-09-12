@@ -214,7 +214,7 @@
 				<text><![CDATA[Principal Investigator]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="65" width="94" height="15" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<reportElement x="26" y="80" width="94" height="15" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -228,7 +228,7 @@
 				<textFieldExpression><![CDATA["Key-words:  "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="80" width="394" height="15" uuid="215468de-6a73-4ad1-9bfc-c906e4bab23c"/>
+				<reportElement x="26" y="95" width="394" height="15" uuid="215468de-6a73-4ad1-9bfc-c906e4bab23c"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -242,7 +242,7 @@
 				<textFieldExpression><![CDATA["Annual funding requested to CNR for the present Project (A):  "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="50" width="104" height="15" uuid="74117d72-654e-4e44-89ee-1894aa15483a"/>
+				<reportElement x="26" y="65" width="104" height="15" uuid="74117d72-654e-4e44-89ee-1894aa15483a"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -270,7 +270,7 @@
 				<textFieldExpression><![CDATA["Title:  "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="95" width="334" height="15" uuid="eb5f0f53-c0db-4743-bf2e-045d6ea15db8"/>
+				<reportElement x="26" y="110" width="334" height="15" uuid="eb5f0f53-c0db-4743-bf2e-045d6ea15db8"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -284,7 +284,7 @@
 				<textFieldExpression><![CDATA["Partner Country funding for the present project (B):  "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="110" width="424" height="15" uuid="f74588aa-9b90-4ea4-9b57-a94d6c8d8a95"/>
+				<reportElement x="26" y="125" width="424" height="15" uuid="f74588aa-9b90-4ea4-9b57-a94d6c8d8a95"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -298,7 +298,9 @@
 				<textFieldExpression><![CDATA["Other Public or Private Funding, related to the present project (C):  "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="26" y="125" width="334" height="15" uuid="f94c51fd-d30e-40d6-942e-3cf8a3d4c14f"/>
+				<reportElement x="26" y="140" width="334" height="15" uuid="f94c51fd-d30e-40d6-942e-3cf8a3d4c14f">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -325,7 +327,9 @@
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="21" y="147" width="523" height="1" uuid="1d4f0774-e890-4f30-8b2f-df94fcc11cb4"/>
+				<reportElement x="21" y="162" width="523" height="1" uuid="1d4f0774-e890-4f30-8b2f-df94fcc11cb4">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 			</line>
 			<staticText>
 				<reportElement x="229" y="6" width="141" height="20" uuid="136b5cb0-2c5a-48a0-9d2a-c276fe645464"/>
@@ -704,7 +708,7 @@
 				<text><![CDATA[Partner Institution]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement x="55" y="35" width="470" height="15" uuid="71e83914-7d89-4f9c-ad47-c2c7abcbaa54">
+				<reportElement x="55" y="35" width="470" height="30" uuid="71e83914-7d89-4f9c-ad47-c2c7abcbaa54">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -714,13 +718,13 @@
 					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
 					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="102" y="50" width="410" height="15" uuid="0867bafc-67c9-4bdd-904c-679d26903157">
+				<reportElement x="102" y="65" width="410" height="15" uuid="0867bafc-67c9-4bdd-904c-679d26903157">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -736,7 +740,7 @@
 				<textFieldExpression><![CDATA[$F{researchArea}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="88" y="65" width="420" height="15" uuid="d01a074a-b637-476c-aae6-cd481c42536a">
+				<reportElement x="88" y="80" width="420" height="15" uuid="d01a074a-b637-476c-aae6-cd481c42536a">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -752,7 +756,7 @@
 				<textFieldExpression><![CDATA[$F{keywords}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="350" y="80" width="78" height="15" uuid="f47901f8-2409-49ee-b60b-ad64b970eb13">
+				<reportElement x="350" y="95" width="78" height="15" uuid="f47901f8-2409-49ee-b60b-ad64b970eb13">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -768,7 +772,7 @@
 				<textFieldExpression><![CDATA[$F{annualFundingA} +"€"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="350" y="95" width="139" height="15" uuid="2e327671-1a1e-41d2-bfcd-6a9c61ffa6b1">
+				<reportElement x="350" y="110" width="139" height="15" uuid="2e327671-1a1e-41d2-bfcd-6a9c61ffa6b1">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -784,7 +788,7 @@
 				<textFieldExpression><![CDATA[$F{partnerFundingB} + "€"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="350" y="110" width="49" height="15" uuid="8b2f20bb-852d-4cd5-b23c-a29013fe0493">
+				<reportElement x="350" y="125" width="49" height="15" uuid="8b2f20bb-852d-4cd5-b23c-a29013fe0493">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -800,8 +804,9 @@
 				<textFieldExpression><![CDATA[$F{otherFundingC} + "€"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="350" y="125" width="139" height="15" uuid="4e508ed4-1656-4555-8bd6-dcd1cbbb5159">
+				<reportElement x="350" y="140" width="139" height="15" uuid="4e508ed4-1656-4555-8bd6-dcd1cbbb5159">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
