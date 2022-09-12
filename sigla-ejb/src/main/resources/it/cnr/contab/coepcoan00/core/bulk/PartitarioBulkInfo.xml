@@ -22,64 +22,7 @@
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<columnSet
-			name="partitario_amministrativo">
-		<columnFieldProperty
-				headerLabel="Scrittura"
-				label="Num."
-				name="pg_scrittura"
-				property="pgScritturaColumnValue"/>
-		<columnFieldProperty
-				headerLabel="Scrittura"
-				label="Data"
-				formatName="date_short"
-				name="dt_contabilizzazione"
-				property="dtContabilizzazioneColumnValue"/>
-		<columnFieldProperty
-				headerLabel="Scrittura"
-				label="Desc."
-				name="ds_scrittura"
-				property="dsScritturaColumnValue"/>
-		<columnFieldProperty
-				label="Conto"
-				name="cd_voce_ep"
-				property="cdVoceEpColumnValue"/>
-		<columnFieldProperty
-				name="ds_voce_ep"
-				property="dsVoceEpColumnValue"/>
-		<columnFieldProperty
-				label="Terzo"
-				name="cd_terzo"
-				property="terzo.cd_terzo"/>
-		<columnFieldProperty
-				label="Codice CO/RI"
-				name="cd_contributo_ritenuta"
-				property="cdContributoRitenutaColumnValue"/>
-		<columnFieldProperty
-				label="Tipologia"
-				inputType="SELECT"
-				keysProperty="tipoRigaKeys"
-				name="ti_riga"/>
-		<columnFieldProperty
-				headerLabel="Importo"
-				label="Dare"
-				formatName="it.cnr.contab.util.EuroFormat"
-				name="im_movimento_dare"
-				property="im_movimento_dare"/>
-		<columnFieldProperty
-				headerLabel="Importo"
-				label="Avere"
-				name="im_movimento_avere"
-				formatName="it.cnr.contab.util.EuroFormat"
-				property="im_movimento_avere"/>
-		<columnFieldProperty
-				headerLabel="Importo"
-				label="Differenza"
-				name="differenza"
-				formatName="it.cnr.contab.util.EuroFormat"
-				property="differenza"/>
-	</columnSet>
-	<columnSet
-			name="partitario_contabile">
+			name="partitario">
 		<columnFieldProperty
 				headerLabel="Scrittura"
 				label="Num."

@@ -48,6 +48,7 @@ public class PartitarioHome extends Movimento_cogeHome{
         sqlBuilder.addOrderBy("cd_cds_documento");
         sqlBuilder.addOrderBy("cd_uo_documento");
         sqlBuilder.addOrderBy("pg_numero_documento");
+        sqlBuilder.addOrderBy("cd_contributo_ritenuta");
         sqlBuilder.addOrderBy("cd_riga");
         sqlBuilder.addOrderBy("pg_scrittura");
         return sqlBuilder;

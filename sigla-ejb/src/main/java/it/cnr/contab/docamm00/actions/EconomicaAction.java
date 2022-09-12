@@ -89,7 +89,7 @@ public abstract class EconomicaAction extends CRUDAction {
 
             ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                     "ConsultazionePartitarioBP",
-                    new Object[] { iDocumentoAmministrativoBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario_amministrativo"}
+                    new Object[] { iDocumentoAmministrativoBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario"}
             );
             consBP.openIterator(actionContext);
             actionContext.addBusinessProcess(consBP);
@@ -111,7 +111,7 @@ public abstract class EconomicaAction extends CRUDAction {
             if (!iDocumentoAmministrativoBulks.isEmpty()) {
                 ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                         "ConsultazionePartitarioBP",
-                        new Object[] { iDocumentoAmministrativoBulks, "partitario_contabile" }
+                        new Object[] { iDocumentoAmministrativoBulks, "partitario" }
                 );
                 consBP.openIterator(actionContext);
                 actionContext.addBusinessProcess(consBP);

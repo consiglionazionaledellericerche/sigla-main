@@ -169,7 +169,8 @@
                 columnName="CD_CONTRIBUTO_RITENUTA"
                 propertyName="cd_contributo_ritenuta"
                 sqlTypeName="VARCHAR"
-                columnSize="10" />
+                columnSize="10"
+                primary="true"/>
         <columnMapping
                 columnName="SEZIONE"
                 propertyName="sezione"
@@ -251,6 +252,9 @@
                 fetchOnly="true"/>
     </columnMap>
 
+    <persistentProperty
+            name="cd_contributo_ritenuta"
+            partOfOid="true"/>
     <persistentProperty
             name="cd_riga"
             partOfOid="true"/>

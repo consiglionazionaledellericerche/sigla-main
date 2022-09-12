@@ -142,12 +142,12 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
                     switch (partitarioBulk.getCd_riga()) {
                         case "D" : {
                             if (partitarioBulk.getSezione().equalsIgnoreCase(PartitarioBulk.SEZIONE_DARE))
-                                return "text-danger";
+                                return "text-dark";
                             else
-                                return "text-primary";
+                                return "text-dark";
                         }
                         case "T" : {
-                            return "shadow font-weight-bold font-italic";
+                            return "shadow text-primary font-weight-bold font-italic";
                         }
                         default:
                             return null;
