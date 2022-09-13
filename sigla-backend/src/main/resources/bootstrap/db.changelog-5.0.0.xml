@@ -5854,4 +5854,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="PG_OBBLIGAZIONE_SCAD_NC" remarks="Scadenza dell'obbligazione per nota di credito" type="BIGINT"/>
         </addColumn>
     </changeSet>
+
+    <include file="bootstrap/add_index_on_movimento_coge.xml"/>
+
 </databaseChangeLog>

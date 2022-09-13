@@ -55,10 +55,12 @@ public class RigheInvDaFatturaCRUDController
      * getRowStyle method comment.
      */
     public java.lang.String getRowStyle(java.lang.Object row) {
-
         return null;
     }
-
+    @Override
+    public String getRowCSSClass(Object obj, boolean even) {
+        return null;
+    };
     public OggettoBulk initializeForEdit(OggettoBulk bulk) {
 
         Inventario_beniBulk bene = (Inventario_beniBulk) bulk;

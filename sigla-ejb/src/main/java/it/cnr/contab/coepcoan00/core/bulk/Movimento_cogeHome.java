@@ -59,6 +59,10 @@ public class Movimento_cogeHome extends BulkHome {
 
 		return sql;
 	}
+	public SQLBuilder createSQLBuilderWithoutJoin()
+	{
+		return super.createSQLBuilder();
+	}
 	/**
 	 * Imposta il pg_movimento di un oggetto <code>Movimento_cogeBulk</code>.
 	 * @param userContext userContext

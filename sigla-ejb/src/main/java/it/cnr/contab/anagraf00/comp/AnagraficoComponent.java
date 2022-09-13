@@ -2661,7 +2661,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                     if (ultimoRapportoValido.getCd_tipo_rapporto().equals("ASS") && !isExDipendente) {
                                         tipoContratto = TipoContratto.ASSEGNISTA;
                                     }
-                                    if (tipoContratto != null && (personaWebDto.getTipoContratto() == null || tipoContratto.compareTo(personaWebDto.getTipoContratto()) != 0)) {
+                                    if (!personaWebDto.getDipendente() && tipoContratto != null && (personaWebDto.getTipoContratto() == null || tipoContratto.compareTo(personaWebDto.getTipoContratto()) != 0)) {
                                         personaWebDto.setTipoContratto(tipoContratto);
                                         personaWebDto.setDataCessazione(null);
                                         personaWebDto.setDataPrevistaCessazione(null);

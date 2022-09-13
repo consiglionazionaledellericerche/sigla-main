@@ -161,13 +161,15 @@ public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
     }
 
     public java.math.BigDecimal getImTotaleAvere() {
-        return BigDecimal.valueOf(getMovimentiAvereColl().stream()
-                .collect(Collectors.summingDouble(value -> value.getIm_movimento().doubleValue())));
+        return getMovimentiAvereColl().stream()
+                        .map(Movimento_cogeBulk::getIm_movimento)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public java.math.BigDecimal getImTotaleDare() {
-        return BigDecimal.valueOf(getMovimentiDareColl().stream()
-                .collect(Collectors.summingDouble(value -> value.getIm_movimento().doubleValue())));
+        return getMovimentiDareColl().stream()
+                .map(Movimento_cogeBulk::getIm_movimento)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public java.math.BigDecimal getDifferenza() {

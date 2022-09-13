@@ -22,6 +22,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLUnion;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -38,15 +39,17 @@ public class PartitarioHome extends Movimento_cogeHome{
     }
 
     public SQLBuilder selectByClauseForPartitario(UserContext usercontext, PartitarioBulk partitarioBulk, CompoundFindClause compoundfindclause) throws PersistencyException {
-        SQLBuilder sqlBuilder = super.createSQLBuilder();
-        sqlBuilder.addColumn("SCRITTURA_PARTITA_DOPPIA.DT_CONTABILIZZAZIONE");
-        sqlBuilder.addColumn("SCRITTURA_PARTITA_DOPPIA.DS_SCRITTURA");
-        sqlBuilder.addColumn(sqlBuilder.addDecode("SEZIONE","'D'", "IM_MOVIMENTO",null,null, BigDecimal.ZERO),"IM_MOVIMENTO_DARE");
-        sqlBuilder.addColumn(sqlBuilder.addDecode("SEZIONE","'A'", "IM_MOVIMENTO",null,null, BigDecimal.ZERO),"IM_MOVIMENTO_AVERE");
-
+        setColumnMap("PARTITARIO");
+        SQLBuilder sqlBuilder = super.createSQLBuilderWithoutJoin();
         Optional.ofNullable(compoundfindclause)
                         .ifPresent(compoundFindClause -> sqlBuilder.addClause(compoundFindClause));
-        sqlBuilder.addOrderBy("sezione desc");
+        sqlBuilder.addOrderBy("cd_tipo_documento");
+        sqlBuilder.addOrderBy("esercizio_documento");
+        sqlBuilder.addOrderBy("cd_cds_documento");
+        sqlBuilder.addOrderBy("cd_uo_documento");
+        sqlBuilder.addOrderBy("pg_numero_documento");
+        sqlBuilder.addOrderBy("cd_contributo_ritenuta");
+        sqlBuilder.addOrderBy("cd_riga");
         sqlBuilder.addOrderBy("pg_scrittura");
         return sqlBuilder;
     }

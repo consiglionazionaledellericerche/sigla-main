@@ -32,12 +32,18 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CondizioneComplessaBulk;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
+import it.cnr.jada.util.jsp.TableCustomizer;
 
+import javax.servlet.ServletException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Optional;
 
-public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> extends SelezionatoreListaBP implements SearchProvider {
+public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> extends SelezionatoreListaBP implements SearchProvider, TableCustomizer {
 
     protected List<T> documentoAmministrativo;
     protected CompoundFindClause baseClause;
@@ -63,6 +69,8 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
         setBulkInfo(BulkInfo.getBulkInfo(PartitarioBulk.class));
         setColumns(getBulkInfo().getColumnFieldPropertyDictionary(Optional.ofNullable(columnSet).orElse("partitario")));
         setModel(actioncontext, new PartitarioBulk());
+        setMultiSelection(false);
+        disableSelection();
     }
 
     private CompoundFindClause addBaseClause(ActionContext actioncontext, CompoundFindClause compoundFindClause) {
@@ -117,4 +125,53 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
         }
     }
 
+    @Override
+    public void writeHTMLTable(PageContext pagecontext, String s, String s1) throws IOException, ServletException {
+        super.writeHTMLTable(pagecontext, s, s1);
+    }
+
+    @Override
+    public boolean isOrderableBy(String s) {
+        return Boolean.FALSE;
+    }
+    @Override
+    public String getRowCSSClass(Object obj, boolean even) {
+        return Optional.ofNullable(obj)
+                .filter(PartitarioBulk.class::isInstance)
+                .map(PartitarioBulk.class::cast)
+                .map(partitarioBulk -> {
+                    switch (partitarioBulk.getCd_riga()) {
+                        case "T" : {
+                            return "shadow font-weight-bold font-italic " +
+                                    (partitarioBulk.getDifferenza().equals(BigDecimal.ZERO) ? "text-primary" : "text-danger");
+                        }
+                        default:
+                            return null;
+                    }
+                }).orElse(null);
+
+    };
+    @Override
+    public String getRowStyle(Object obj) {
+        return null;
+    }
+
+    @Override
+    public boolean isRowEnabled(Object obj) {
+        return false;
+    }
+
+    @Override
+    public boolean isRowReadonly(Object obj) {
+        return false;
+    }
+
+    @Override
+    public String getTableClass() {
+        return null;
+    }
+
+    @Override
+    public void writeTfoot(JspWriter jspwriter) throws IOException {
+    }
 }
