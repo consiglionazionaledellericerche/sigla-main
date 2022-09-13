@@ -53,7 +53,7 @@
 		</property>
 	</bean>
 
-	<context:component-scan base-package="it.cnr.contab.spring, it.cnr.contab.service, it.cnr.si" />
+	<context:component-scan base-package="it.cnr.contab.config, it.cnr.contab.spring, it.cnr.contab.service, it.cnr.si" />
 
 	<import resource="classpath*:it/cnr/contab/storage/service/storage-service-context.xml"/>
 	<import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>

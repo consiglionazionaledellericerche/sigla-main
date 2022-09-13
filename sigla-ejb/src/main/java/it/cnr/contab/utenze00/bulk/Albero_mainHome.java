@@ -22,6 +22,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.List;
@@ -54,5 +55,20 @@ public class Albero_mainHome extends BulkHome {
         sqlBuilder.addClause(FindClause.AND, "cd_accesso", SQLBuilder.EQUALS, cdAccesso);
         sqlBuilder.addClause(FindClause.AND, "fl_terminale", SQLBuilder.EQUALS, Boolean.TRUE);
         return this.fetchAll(sqlBuilder);
+    }
+
+    public List<Albero_mainBulk> findAlberoMainByAccessi(UserContext userContext, List<String> accessi) throws PersistencyException {
+        final PersistentHome home = getHomeCache().getHome(Albero_mainBulk.class, "ACCESSO", "tree");
+        SQLBuilder sqlBuilder = home.createSQLBuilder();
+        sqlBuilder.addTableToHeader("ACCESSO");
+        sqlBuilder.addSQLJoin("ALBERO_MAIN.CD_ACCESSO","ACCESSO.CD_ACCESSO");
+        sqlBuilder.openParenthesis(FindClause.AND);
+        accessi.stream().forEach(accesso -> {
+            sqlBuilder.addClause(FindClause.OR, "cd_accesso", SQLBuilder.EQUALS, accesso);
+        });
+        sqlBuilder.closeParenthesis();
+        final List result = home.fetchAll(sqlBuilder);
+        getHomeCache().fetchAll(userContext);
+        return result;
     }
 }
