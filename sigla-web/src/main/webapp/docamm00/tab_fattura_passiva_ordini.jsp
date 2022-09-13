@@ -6,11 +6,13 @@
 		it.cnr.contab.docamm00.tabrif.bulk.*,
 		it.cnr.contab.docamm00.docs.bulk.*,
 		it.cnr.contab.doccont00.core.bulk.*,
+		it.cnr.contab.ordmag.ordini.bulk.*,
 		it.cnr.contab.docamm00.bp.*"
 %>
 
 <%	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)BusinessProcess.getBusinessProcess(request);
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
+ 	FatturaOrdineBulk fatturaOrdine = (FatturaOrdineBulk)bp.getFatturaOrdiniController().getModel();
 	String collapseIconClass = bp.getFatturaOrdiniController().isRettificheCollapse() ? "fa-chevron-circle-down" : "fa-chevron-circle-up";
 %>
 
@@ -52,6 +54,10 @@
             <table cellpadding="5px">
                 <tr>
                     <% bp.getFatturaOrdiniController().writeFormField(out, "imponibileErrato"); %>
+                    <% if (fatturaOrdine.isRigaAttesaNotaCredito()) {
+                         bp.getFatturaOrdiniController().writeFormField(out, "operazioneImpegnoNotaCredito");
+                       }
+                    %>
                 </tr>
             </table>
         <% } %>

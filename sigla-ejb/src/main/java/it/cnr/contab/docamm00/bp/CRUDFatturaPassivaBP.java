@@ -907,7 +907,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     public void reset(ActionContext context) throws BusinessProcessException {
 
         if (it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(
-                context.getUserContext()).intValue() != Fattura_passivaBulk
+                context.getUserContext()).intValue() == Fattura_passivaBulk
                 .getDateCalendar(null).get(java.util.Calendar.YEAR))
             resetForSearch(context);
         else {
@@ -1799,57 +1799,6 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             throw handleException(e);
         }
     }
-/*
-    public boolean associaOrdineRigaFattura(ActionContext context, Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) throws BusinessProcessException {
-        return Optional.ofNullable(createComponentSession())
-                .filter(FatturaPassivaComponentSession.class::isInstance)
-                .map(FatturaPassivaComponentSession.class::cast)
-                .map(fatturaPassivaComponentSession -> {
-                    try {
-                        List<EvasioneOrdineRigaBulk> evasioneOrdineRigas = fatturaPassivaComponentSession.findRicercaOrdiniByClause(
-                                context.getUserContext(),
-                                fattura_passiva_rigaBulk,
-                                CompoundFindClause.identity(
-                                        new SimpleFindClause("ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getIm_imponibile())
-                                )
-                        );
-                        return Optional.ofNullable(evasioneOrdineRigas)
-                                .filter(evasioneOrdineRigaBulks -> !evasioneOrdineRigaBulks.isEmpty())
-                                .filter(evasioneOrdineRigaBulks -> evasioneOrdineRigaBulks.size() == 1)
-                                .map(evasioneOrdineRigaBulks -> {
-                                    final EvasioneOrdineRigaBulk evasioneOrdineRigaBulk = evasioneOrdineRigaBulks.get(0);
-                                    try {
-                                        fattura_passiva_rigaBulk.setBene_servizio(Optional.ofNullable(fattura_passiva_rigaBulk.getBene_servizio())
-                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio())
-                                        );
-                                        fattura_passiva_rigaBulk.setVoce_iva(Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva())
-                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva())
-                                        );
-                                        fattura_passiva_rigaBulk.setDs_riga_fattura(Optional.ofNullable(fattura_passiva_rigaBulk.getDs_riga_fattura())
-                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio().getDs_bene_servizio())
-                                        );
-                                        fattura_passiva_rigaBulk.setPrezzo_unitario(Optional.ofNullable(fattura_passiva_rigaBulk.getPrezzo_unitario())
-                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario())
-                                        );
-                                        fattura_passiva_rigaBulk.setQuantita(Optional.ofNullable(fattura_passiva_rigaBulk.getQuantita())
-                                                .orElseGet(() -> evasioneOrdineRigaBulk.getQuantitaEvasa())
-                                        );
-                                        associaOrdineRigaFattura(
-                                                context,
-                                                evasioneOrdineRigaBulk,
-                                                fattura_passiva_rigaBulk
-                                        );
-                                    } catch (BusinessProcessException e) {
-                                        throw new DetailedRuntimeException(e);
-                                    }
-                                    return true;
-                                }).orElse(false);
-                    } catch (ComponentException|RemoteException e) {
-                        throw new DetailedRuntimeException(e);
-                    }
-                }).orElse(false);
-    }
-*/
     public CollapsableDetailCRUDController getCrudDocEleAcquistoColl() {
         return crudDocEleAcquistoColl;
     }

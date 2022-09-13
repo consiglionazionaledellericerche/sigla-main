@@ -4970,8 +4970,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
         </createIndex>
     </changeSet>
 
-
-
     <changeSet author="valentina.tomada" id="create-table-accertamento-pluriennale">
         <createTable remarks="Accertamento Pluriennale" tableName="accertamento_pluriennale">
 
@@ -5846,6 +5844,15 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter-fattura_ordine-add_impegno_per_nc">
+        <addColumn tableName="FATTURA_ORDINE">
+            <column name="CD_CDS_OBBL_NC" remarks="Cds dell'obbligazione per nota di credito" type="VARCHAR(30)"/>
+            <column name="ESERCIZIO_OBBL_NC" remarks="Esercizio dell'obbligazione per nota di credito" type="INT"/>
+            <column name="ESERCIZIO_ORIG_OBBL_NC" remarks="Esercizio Originale dell'obbligazione per nota di credito" type="INT"/>
+            <column name="PG_OBBLIGAZIONE_NC" remarks="Numero dell'obbligazione per nota di credito" type="BIGINT"/>
+            <column name="PG_OBBLIGAZIONE_SCAD_NC" remarks="Scadenza dell'obbligazione per nota di credito" type="BIGINT"/>
+        </addColumn>
     </changeSet>
 
     <include file="bootstrap/add_index_on_movimento_coge.xml"/>

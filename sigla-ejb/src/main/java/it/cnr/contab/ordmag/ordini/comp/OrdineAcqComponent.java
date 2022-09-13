@@ -342,8 +342,6 @@ public class OrdineAcqComponent
 		ordine.setToBeUpdated();
 	}
 
-
-
 	private void validaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
 		controlloEsistenzaRigheOrdine(ordine);
 		for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {

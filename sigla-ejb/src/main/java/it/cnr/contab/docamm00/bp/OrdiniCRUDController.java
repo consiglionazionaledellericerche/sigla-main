@@ -229,6 +229,23 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
                 "Seleziona Ordini",
                 "btn-sm btn-outline-primary btn-title",
                 isFromBootstrap);
+
+        command = null;
+        if (getParentController() != null)
+            command = "javascript:submitForm('doRicercaObbligazioneOrdiniNoteCredito')";
+        it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+                context,
+                isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
+                !(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaPassivaBP) getParentController()).isSearching()) ? command : null,
+                true,
+                "Contabilizza righe per Note Credito",
+                "btn-sm btn-outline-primary btn-title",
+                isFromBootstrap);
+
+
+
+
+
         super.closeButtonGROUPToolbar(context);
     }
 }
