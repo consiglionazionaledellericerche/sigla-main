@@ -20,22 +20,44 @@
  * Date 21/09/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Dictionary;
 import java.util.Optional;
 
 public class FatturaOrdineBulk extends FatturaOrdineBase {
+	public String getOperazioneImpegnoNotaCredito() {
+		return operazioneImpegnoNotaCredito;
+	}
+
+	public void setOperazioneImpegnoNotaCredito(String operazioneImpegnoNotaCredito) {
+		this.operazioneImpegnoNotaCredito = operazioneImpegnoNotaCredito;
+	}
+
+	public final static Dictionary OPERAZIONE_IMPEGNO_NOTA_CREDITO;
+	public final static String OPERAZIONE_IMPEGNO_NC_USA_ORDINE = "O";
+	public final static String OPERAZIONE_IMPEGNO_NC_USA_DIVERSO = "D";
+	private String operazioneImpegnoNotaCredito;
+	static{
+		OPERAZIONE_IMPEGNO_NOTA_CREDITO = new it.cnr.jada.util.OrderedHashtable();
+		OPERAZIONE_IMPEGNO_NOTA_CREDITO.put(OPERAZIONE_IMPEGNO_NC_USA_DIVERSO,"Diverso da Ordine");
+		OPERAZIONE_IMPEGNO_NOTA_CREDITO.put(OPERAZIONE_IMPEGNO_NC_USA_ORDINE,"Ordine");
+	}
+
 	/**
 	 * [FATTURA_PASSIVA_RIGA Rappresenta le righe di dettaglio della fattura. Ogni fattura ha sempre almeno una riga di dettaglio]
 	 **/
-	private Fattura_passiva_rigaBulk fatturaPassivaRiga;
+	private Fattura_passiva_rigaBulk fatturaPassivaRiga = new Fattura_passiva_rigaIBulk();
 	/**
 	 * [ORDINE_ACQ_CONSEGNA Consegna Ordine d'Acquisto]
 	 **/
@@ -54,6 +76,16 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 	BigDecimal imponibilePerNotaCredito;
 	BigDecimal importoIvaPerNotaCredito;
 	BigDecimal totaleConsegnaPerNotaCredito;
+
+	private Obbligazione_scadenzarioBulk obbligazioneScadenzarioNc =  new Obbligazione_scadenzarioBulk();
+
+	public Obbligazione_scadenzarioBulk getObbligazioneScadenzarioNc() {
+		return obbligazioneScadenzarioNc;
+	}
+
+	public void setObbligazioneScadenzarioNc(Obbligazione_scadenzarioBulk obbligazioneScadenzarioNc) {
+		this.obbligazioneScadenzarioNc = obbligazioneScadenzarioNc;
+	}
 
 	public BigDecimal getTotaleConsegnaPerNotaCredito() {
 		return totaleConsegnaPerNotaCredito;
@@ -366,8 +398,6 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 				.map(obbligazione_scadenzarioBulk -> {
 					return String.valueOf(obbligazione_scadenzarioBulk.getEsercizio())
 							.concat("/")
-							.concat(obbligazione_scadenzarioBulk.getCd_cds())
-							.concat("/")
 							.concat(String.valueOf(obbligazione_scadenzarioBulk.getPg_obbligazione()));
 				})
 				.orElse(null);
@@ -404,4 +434,81 @@ public class FatturaOrdineBulk extends FatturaOrdineBase {
 		}
 		return getImIva();
 	}
+	public String getConsegnaDisplay() {
+					return String.valueOf(getEsercizioOrdine())
+							.concat("-")
+							.concat(getCdNumeratore())
+							.concat("-")
+							.concat(String.valueOf(getNumero()))
+							.concat("-")
+							.concat(String.valueOf(getRiga()))
+							.concat("-")
+							.concat(String.valueOf(getConsegna()));
+	}
+	public Boolean isRigaAttesaNotaCredito() {
+		if (getImponibileErrato() != null && getImponibilePerNotaCredito() != null &&
+				getImponibilePerNotaCredito().compareTo(getImImponibile()) != 0){
+			return true;
+		}
+		return false;
+	}
+	public Dictionary getOperazioneImpegnoNotaCreditoKeys() {
+		return OPERAZIONE_IMPEGNO_NOTA_CREDITO;
+	}
+
+	public java.lang.String getCdCdsObblNc() {
+		Obbligazione_scadenzarioBulk obbligazioneScadenzario = this.getObbligazioneScadenzarioNc();
+		if (obbligazioneScadenzario == null)
+			return null;
+		return getObbligazioneScadenzarioNc().getCd_cds();
+	}
+
+	public void setCdCdsObblNc(java.lang.String cdCdsObbl)  {
+		this.getObbligazioneScadenzarioNc().setCd_cds(cdCdsObbl);
+	}
+
+	public java.lang.Integer getEsercizioObblNc() {
+		Obbligazione_scadenzarioBulk obbligazioneScadenzario = this.getObbligazioneScadenzarioNc();
+		if (obbligazioneScadenzario == null)
+			return null;
+		return getObbligazioneScadenzarioNc().getEsercizio();
+	}
+
+	public void setEsercizioObblNc(java.lang.Integer esercizioObbl)  {
+		this.getObbligazioneScadenzarioNc().setEsercizio(esercizioObbl);
+	}
+
+	public java.lang.Integer getEsercizioOrigObblNc() {
+		Obbligazione_scadenzarioBulk obbligazioneScadenzario = this.getObbligazioneScadenzarioNc();
+		if (obbligazioneScadenzario == null)
+			return null;
+		return getObbligazioneScadenzarioNc().getEsercizio_originale();
+	}
+
+	public void setEsercizioOrigObblNc(java.lang.Integer esercizioOrigObbl)  {
+		this.getObbligazioneScadenzarioNc().setEsercizio_originale(esercizioOrigObbl);
+	}
+
+	public java.lang.Long getPgObbligazioneNc() {
+		Obbligazione_scadenzarioBulk obbligazioneScadenzario = this.getObbligazioneScadenzarioNc();
+		if (obbligazioneScadenzario == null)
+			return null;
+		return getObbligazioneScadenzarioNc().getPg_obbligazione();
+	}
+
+	public void setPgObbligazioneNc(java.lang.Long pgObbligazione)  {
+		this.getObbligazioneScadenzarioNc().setPg_obbligazione(pgObbligazione);
+	}
+
+	public java.lang.Long getPgObbligazioneScadNc() {
+		Obbligazione_scadenzarioBulk obbligazioneScadenzario = this.getObbligazioneScadenzarioNc();
+		if (obbligazioneScadenzario == null)
+			return null;
+		return getObbligazioneScadenzarioNc().getPg_obbligazione_scadenzario();
+	}
+
+	public void setPgObbligazioneScadNc(java.lang.Long pgObbligazioneScad)  {
+		this.getObbligazioneScadenzarioNc().setPg_obbligazione_scadenzario(pgObbligazioneScad);
+	}
+
 }

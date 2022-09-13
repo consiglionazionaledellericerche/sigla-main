@@ -892,11 +892,14 @@ public class GestioneLoginComponent
     public void cambiaAbilitazioneUtente(UserContext userContext, String uid, boolean abilita) throws it.cnr.jada.comp.ComponentException {
         try {
             LDAPService ldapService = SpringUtil.getBean(LDAPService.class);
-            final Optional<Person> personById = ldapService.findPersonById(uid);
-            if (personById.isPresent()) {
-                personById.get().setCnrapp1(abilita ? "si" : "no");
-                ldapService.save(personById.get());
+            if (ldapService != null) {
+                final Optional<Person> personById = ldapService.findPersonById(uid);
+                if (personById.isPresent()) {
+                    personById.get().setCnrapp1(abilita ? "si" : "no");
+                    ldapService.save(personById.get());
+                }
             }
+        } catch (NoSuchBeanDefinitionException e){
         } catch (Throwable e) {
             throw handleException(e);
         }

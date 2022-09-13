@@ -55,9 +55,60 @@ public class FatturaOrdineBase extends FatturaOrdineKey implements Keyed {
  
 //    IM_IVA_D DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIvaD;
- 
-//    IM_IVA_ND DECIMAL(15,2) NOT NULL
+
+	public String getCdCdsObblNc() {
+		return cdCdsObblNc;
+	}
+
+	public void setCdCdsObblNc(String cdCdsObblNc) {
+		this.cdCdsObblNc = cdCdsObblNc;
+	}
+
+	public Integer getEsercizioObblNc() {
+		return esercizioObblNc;
+	}
+
+	public void setEsercizioObblNc(Integer esercizioObblNc) {
+		this.esercizioObblNc = esercizioObblNc;
+	}
+
+	public Integer getEsercizioOrigObblNc() {
+		return esercizioOrigObblNc;
+	}
+
+	public void setEsercizioOrigObblNc(Integer esercizioOrigObblNc) {
+		this.esercizioOrigObblNc = esercizioOrigObblNc;
+	}
+
+	public Long getPgObbligazioneNc() {
+		return pgObbligazioneNc;
+	}
+
+	public void setPgObbligazioneNc(Long pgObbligazioneNc) {
+		this.pgObbligazioneNc = pgObbligazioneNc;
+	}
+
+	public Long getPgObbligazioneScadNc() {
+		return pgObbligazioneScadNc;
+	}
+
+	public void setPgObbligazioneScadNc(Long pgObbligazioneScadNc) {
+		this.pgObbligazioneScadNc = pgObbligazioneScadNc;
+	}
+
+	//    IM_IVA_ND DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal imIvaNd;
+
+	private java.lang.String cdCdsObblNc;
+
+	private java.lang.Integer esercizioObblNc;
+
+	private java.lang.Integer esercizioOrigObblNc;
+
+	private java.lang.Long pgObbligazioneNc;
+
+	//    PG_OBBLIGAZIONE_SCAD DECIMAL(10,0)
+	private java.lang.Long pgObbligazioneScadNc;
 
 	public BigDecimal getImponibileErrato() {
 		return imponibileErrato;

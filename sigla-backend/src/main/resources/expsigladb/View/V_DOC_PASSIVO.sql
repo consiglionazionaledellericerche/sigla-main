@@ -202,95 +202,6 @@
       AND d.cd_terzo = b.cd_terzo
       AND d.pg_banca = b.pg_banca
    UNION ALL
-   SELECT a.cd_cds, a.cd_unita_organizzativa, a.esercizio, 'FATTURA_P',
-          a.pg_fattura_passiva, 'GEN' cd_numeratore, a.pg_ver_rec, a.cd_cds_origine,
-          a.cd_uo_origine, a.ti_fattura, b.stato_cofi,
-          a.stato_pagamento_fondo_eco, a.dt_pagamento_fondo_eco,
-          os.cd_cds, os.esercizio,
-          os.ESERCIZIO_ORIGINALE , os.pg_obbligazione,
-          os.PG_OBBLIGAZIONE_SCADENZARIO, a.dt_fattura_fornitore,
-          a.nr_fattura_fornitore, a.cd_terzo, b.cd_terzo_cessionario,
-          a.cognome, a.nome, a.ragione_sociale,
-          DECODE (b.cd_terzo_cessionario,
-                  NULL, b.pg_banca,
-                  d.pg_banca_delegato
-                 ),
-          DECODE (b.cd_terzo_cessionario,
-                  NULL, b.cd_modalita_pag,
-                  SUBSTR (getmodpagcessionario (b.cd_terzo_cessionario,
-                                                d.ti_pagamento
-                                               ),
-                          1,
-                          10
-                         )
-                 ),
-          DECODE (a.ti_fattura, 'C', (b.im_imponibile * -1), b.im_imponibile),
-          DECODE (a.ti_fattura, 'C', (b.im_iva * -1), b.im_iva),
-          DECODE (a.ti_fattura,
-                  'C', ((b.im_imponibile + b.im_iva) * -1),
-                  (b.im_imponibile + b.im_iva
-                  )
-                 ),
-          a.pg_lettera, c.ti_entrata_spesa, c.ti_sospeso_riscontro,
-          c.cd_sospeso, nvl(a.fl_da_ordini,'N'),
-          SUBSTR (getflselezione ('FATTURA_P',
-                                  a.stato_pagamento_fondo_eco,
-                                  a.ti_fattura,
-                                  a.pg_lettera,
-                                  c.cd_sospeso,
-                                  NULL,
-                                  0,
-                                  0,
-                                  0,
-                                  a.fl_congelata,
-                                  a.stato_liquidazione
-                                 ),
-                  1,
-                  1
-                 ),
-          SUBSTR (getflfaireversale (a.ti_fattura,
-                                     a.ti_istituz_commerc,
-                                     a.ti_bene_servizio,
-                                     a.fl_san_marino_senza_iva,
-                                     DECODE (a.fl_merce_intra_ue,
-                                             'Y', 'Y',
-                                             a.fl_intra_ue
-                                            ),
-                                     a.fl_split_payment,
-                                     DECODE (a.ti_bene_servizio,
-                                             'B', t.ti_bene_servizio,
-                                             t.fl_servizi_non_residenti
-                                            )
-                                    ),
-                  1,
-                  1
-                 )
-     FROM fattura_passiva a,
-          fattura_passiva_riga b,
-          lettera_pagam_estero c,
-          banca d,
-          OBBLIGAZIONE_SCADENZARIO os,
-          tipo_sezionale t
-    WHERE a.cd_tipo_sezionale = t.cd_tipo_sezionale
-      AND b.cd_cds = a.cd_cds
-      AND b.cd_unita_organizzativa = a.cd_unita_organizzativa
-      AND b.esercizio = a.esercizio
-      AND b.pg_fattura_passiva = a.pg_fattura_passiva
-      AND b.dt_cancellazione IS NULL
-      AND nvl(a.fl_da_ordini,'N') = 'Y'
-      AND c.cd_cds(+) = a.cd_cds
-      AND c.cd_unita_organizzativa(+) = a.cd_unita_organizzativa
-      AND c.esercizio(+) = a.esercizio_lettera
-      AND c.pg_lettera(+) = a.pg_lettera
-      AND d.cd_terzo = b.cd_terzo
-      AND d.pg_banca = b.pg_banca
-      AND os.cd_cds = b.cd_cds
-      AND os.esercizio = b.ESERCIZIO_OBBLIGAZIONE
-      AND os.PG_OBBLIGAZIONE = b.PG_OBBLIGAZIONE
-      AND os.PG_OBBLIGAZIONE_SCADENZARIO = b.PG_OBBLIGAZIONE_SCADENZARIO
-      AND os.ESERCIZIO_ORIGINALE = b.ESERCIZIO_ORI_OBBLIGAZIONE
-      AND os.FL_ASSOCIATA_ORDINE = 'N'
-   UNION ALL
    SELECT a.cd_cds, a.cd_unita_organizzativa, a.esercizio, 'FATTURA_A',
           a.pg_fattura_attiva, 'GEN' cd_numeratore, a.pg_ver_rec, a.cd_cds_origine,
           a.cd_uo_origine, a.ti_fattura, b.stato_cofi, 'N', TO_DATE (NULL),
@@ -502,4 +413,6 @@ alla selezione nella costruzione di un mandato. La vista è stata scorporata da
 V_DOC_PASSIVO_OBBLIGAZIONE.
 I record con FL_SELEZIONE = ''Y'' sono quelli, se non pagati, che possono essere oggetto di
 associazione ad un nuovo mandato';
+
+
 
