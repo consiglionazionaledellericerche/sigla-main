@@ -21,7 +21,7 @@
     Stampa_vpg_mandatoBulk bulk = (Stampa_vpg_mandatoBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-<table> 
+<table class="card p-2">
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
 	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
