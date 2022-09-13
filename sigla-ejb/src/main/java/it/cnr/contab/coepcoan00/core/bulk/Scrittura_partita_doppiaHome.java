@@ -24,6 +24,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
@@ -158,4 +159,9 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
             throw new ComponentException(e);
         }
     }
+
+    @Override
+    public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
+    }
+
 }

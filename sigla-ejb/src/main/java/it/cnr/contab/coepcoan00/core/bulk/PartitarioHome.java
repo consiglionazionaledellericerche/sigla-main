@@ -22,13 +22,11 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SQLUnion;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Optional;
 
-public class PartitarioHome extends Movimento_cogeHome{
+public class PartitarioHome extends Movimento_cogeHome {
 
     public PartitarioHome(Connection conn) {
         super(PartitarioBulk.class, conn);
@@ -42,7 +40,7 @@ public class PartitarioHome extends Movimento_cogeHome{
         setColumnMap("PARTITARIO");
         SQLBuilder sqlBuilder = super.createSQLBuilderWithoutJoin();
         Optional.ofNullable(compoundfindclause)
-                        .ifPresent(compoundFindClause -> sqlBuilder.addClause(compoundFindClause));
+                .ifPresent(compoundFindClause -> sqlBuilder.addClause(compoundFindClause));
         sqlBuilder.addOrderBy("cd_tipo_documento");
         sqlBuilder.addOrderBy("esercizio_documento");
         sqlBuilder.addOrderBy("cd_cds_documento");
