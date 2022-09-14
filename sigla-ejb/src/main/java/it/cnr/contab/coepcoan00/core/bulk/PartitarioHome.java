@@ -17,13 +17,16 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Optional;
 
 public class PartitarioHome extends Movimento_cogeHome {
@@ -36,9 +39,31 @@ public class PartitarioHome extends Movimento_cogeHome {
         super(PartitarioBulk.class, conn, persistentCache);
     }
 
-    public SQLBuilder selectByClauseForPartitario(UserContext usercontext, PartitarioBulk partitarioBulk, CompoundFindClause compoundfindclause) throws PersistencyException {
+    public SQLBuilder selectByClauseForPartitario(
+            UserContext usercontext,
+            PartitarioBulk partitarioBulk,
+            CompoundFindClause compoundfindclause,
+            Object... documentoAmministrativo
+    ) throws PersistencyException {
         setColumnMap("PARTITARIO");
         SQLBuilder sqlBuilder = super.createSQLBuilderWithoutJoin();
+        CompoundFindClause baseClause = new CompoundFindClause();
+        for (Object obj : documentoAmministrativo) {
+            IDocumentoAmministrativoBulk documentoAmministrativoBulk = Optional.ofNullable(obj)
+                    .filter(IDocumentoAmministrativoBulk.class::isInstance)
+                    .map(IDocumentoAmministrativoBulk.class::cast)
+                    .orElseThrow(() -> new PersistencyException("Object is not instance of IDocumentoAmministrativoBulk.class"));
+            if (documentoAmministrativoBulk != null) {
+                CompoundFindClause child = new CompoundFindClause();
+                child.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_tipo_doc_amm());
+                child.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getEsercizio());
+                child.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_cds());
+                child.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_uo());
+                child.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getPg_doc_amm());
+                baseClause = CompoundFindClause.or(baseClause, child);
+            }
+        }
+        sqlBuilder.addClause(baseClause);
         Optional.ofNullable(compoundfindclause)
                 .ifPresent(compoundFindClause -> sqlBuilder.addClause(compoundFindClause));
         sqlBuilder.addOrderBy("cd_tipo_documento");

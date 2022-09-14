@@ -44,7 +44,7 @@
 		<sdi.fatturapa.version>0.0.1</sdi.fatturapa.version>
 		<ws.client.version>0.0.5</ws.client.version>
 		<spring.version>5.2.5.RELEASE</spring.version>
-		<jada.version>7.0.33</jada.version>
+		<jada.version>7.0.34</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.directory>target</project.build.directory>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>

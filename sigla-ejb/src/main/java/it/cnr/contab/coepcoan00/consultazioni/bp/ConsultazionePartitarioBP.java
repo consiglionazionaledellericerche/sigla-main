@@ -73,22 +73,6 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
         disableSelection();
     }
 
-    private CompoundFindClause addBaseClause(ActionContext actioncontext, CompoundFindClause compoundFindClause) {
-        CompoundFindClause baseClause = new CompoundFindClause();
-        for (T documentoAmministrativoBulk : documentoAmministrativo) {
-            if (documentoAmministrativoBulk != null) {
-                CompoundFindClause child = new CompoundFindClause();
-                child.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_tipo_doc_amm());
-                child.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getEsercizio());
-                child.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_cds());
-                child.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_uo());
-                child.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getPg_doc_amm());
-                baseClause = CompoundFindClause.or(baseClause, child);
-            }
-        }
-        return CompoundFindClause.and(baseClause, compoundFindClause);
-    }
-
     public it.cnr.jada.ejb.CRUDComponentSession createComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException, BusinessProcessException {
         return (it.cnr.jada.ejb.CRUDComponentSession) createComponentSession("JADAEJB_CRUDComponentSession", it.cnr.jada.ejb.CRUDComponentSession.class);
     }
@@ -99,10 +83,13 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
             OggettoBulk oggettobulk)
             throws BusinessProcessException {
         try {
-            return createComponentSession().cerca(actioncontext.getUserContext(),
-                    addBaseClause(actioncontext, Optional.ofNullable(compoundfindclause)
-                            .orElseGet(() -> new CompoundFindClause())),
-                    (OggettoBulk) getBulkInfo().getBulkClass().newInstance(), "selectByClauseForPartitario");
+            return createComponentSession().cerca(
+                    actioncontext.getUserContext(),
+                    compoundfindclause,
+                    (OggettoBulk) getBulkInfo().getBulkClass().newInstance(),
+                    "selectByClauseForPartitario",
+                    documentoAmministrativo.toArray()
+            );
         } catch (ComponentException | RemoteException | IllegalAccessException | InstantiationException e) {
             throw handleException(e);
         }

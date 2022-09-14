@@ -108,4 +108,13 @@
             name="documentoAmministrativo"/>
     <persistentProperty
             name="terzo"/>
+
+    <fetchPolicy
+            name="documentoAmministrativo">
+        <exclude pattern="*" />
+        <include pattern="documentoAmministrativo" />
+        <exclude pattern="documentoAmministrativo.*" />
+    </fetchPolicy>
+
+
 </SQLPersistentInfo>

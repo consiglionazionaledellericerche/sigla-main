@@ -61,6 +61,16 @@
 				property="esercizio_documento"/>
 		<columnFieldProperty
 				headerLabel="Partita"
+				label="CdS"
+				name="cd_cds_documento"
+				property="cd_cds_documento"/>
+		<columnFieldProperty
+				headerLabel="Partita"
+				label="UO"
+				name="cd_uo_documento"
+				property="cd_uo_documento"/>
+		<columnFieldProperty
+				headerLabel="Partita"
 				label="Numero"
 				name="pg_numero_documento"
 				property="pg_numero_documento"/>
