@@ -67,6 +67,20 @@ public class SelezionatoreSearchProviderAction extends SelezionatoreListaAction 
                 ricercaLiberaBP.setShowSearchResult(false);
                 ricercaLiberaBP.setCanPerformSearchWithoutClauses(false);
                 ricercaLiberaBP.setPrototype(selezionatoreListaBP.getModel());
+                Optional.ofNullable(selezionatoreListaBP.getCondizioneCorrente())
+                    .filter(condizioneComplessaBulk -> !condizioneComplessaBulk.children.isEmpty())
+                    .ifPresent(condizioneRicercaBulk -> {
+                        ricercaLiberaBP.setCondizioneRadice(condizioneRicercaBulk);
+                        ricercaLiberaBP.setCondizioneCorrente(
+                                (CondizioneRicercaBulk) condizioneRicercaBulk.children.stream()
+                                        .filter(CondizioneSempliceBulk.class::isInstance)
+                                        .map(CondizioneSempliceBulk.class::cast)
+                                        .reduce((first, second) -> second)
+                                        .orElse(null)
+                        );
+                        ricercaLiberaBP.setRadice(condizioneRicercaBulk);
+                    });
+
                 context.addHookForward("searchResult", this, "doRigheSelezionate");
                 context.addHookForward("close", this, "doCloseRicercaLibera");
                 return context.addBusinessProcess(ricercaLiberaBP);

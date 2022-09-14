@@ -78,9 +78,8 @@ public abstract class EconomicaDetailCRUDController extends CollapsableDetailCRU
                 .getColumnFieldProperties("scrittura")).stream().count();
         final List<Movimento_cogeBulk> movimento_cogeBulks = getDetails();
         if (Optional.ofNullable(movimento_cogeBulks).map(movimento_cogeBulks1 -> !movimento_cogeBulks.isEmpty()).orElse(Boolean.FALSE) ) {
-            final BigDecimal totalMovimento = BigDecimal.valueOf(movimento_cogeBulks.stream()
-                    .mapToDouble(value -> value.getIm_movimento().doubleValue())
-                    .sum());
+            final BigDecimal totalMovimento = movimento_cogeBulks.stream().map(Movimento_cogeBulk::getIm_movimento)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             jspWriter.println("<tfoot class=\"bg-info\">");
             jspWriter.println("<tr>");

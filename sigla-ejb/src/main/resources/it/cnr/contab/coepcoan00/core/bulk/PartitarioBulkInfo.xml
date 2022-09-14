@@ -110,6 +110,8 @@
 	<freeSearchSet name="default">
 		<findFieldProperty name="esercizio_documento" label="Anno Partita" inputType="TEXT"/>
 		<findFieldProperty name="cd_tipo_documento" label="Tipo Partita"/>
+		<findFieldProperty name="cd_cds_documento" label="CdS" inputType="TEXT"/>
+		<findFieldProperty name="cd_uo_documento" label="Unità Organizzativa" inputType="TEXT"/>
 		<findFieldProperty name="pg_numero_documento" label="Numero Partita" inputType="TEXT"/>
 		<findFieldProperty name="cd_contributo_ritenuta" inputType="TEXT"/>
 	</freeSearchSet>
