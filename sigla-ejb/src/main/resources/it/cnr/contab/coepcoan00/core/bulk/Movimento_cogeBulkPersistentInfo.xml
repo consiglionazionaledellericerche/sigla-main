@@ -112,6 +112,7 @@
     <fetchPolicy
             name="documentoAmministrativo">
         <exclude pattern="*" />
+        <include pattern="conto" />
         <include pattern="documentoAmministrativo" />
         <exclude pattern="documentoAmministrativo.*" />
     </fetchPolicy>
