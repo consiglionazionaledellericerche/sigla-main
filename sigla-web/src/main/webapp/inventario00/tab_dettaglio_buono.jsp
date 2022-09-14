@@ -49,9 +49,20 @@
 				<% bp.getDettaglio().writeFormLabel(out,"cd_barre"); %>
 			</td>
 			<td>
-				<% bp.getDettaglio().writeFormInput(out,"cd_barre"); %>				
-			</td>			
-			
+				<% bp.getDettaglio().writeFormInput(out,"cd_barre"); %>
+			</td>
+			<%
+            	if (bp.isAttivaEtichettaInventarioBene()){
+            %>
+			<td>
+                <% bp.getDettaglio().writeFormLabel(out,"etichetta"); %>
+            </td>
+            <td>
+                <% bp.getDettaglio().writeFormInput(out,"etichetta"); %>
+            </td>
+			<%
+                }
+             %>
 		</tr>
 		<%
 			}
@@ -69,7 +80,19 @@
 			</td>
 			<td>
 				<% bp.getDettaglio().writeFormInput(out,null,"cd_barre",bp.isEditing(),null,null); %>				
-			</td>	
+			</td>
+			<%
+               if (bp.isAttivaEtichettaInventarioBene()){
+            %>
+                <td>
+                    <% bp.getDettaglio().writeFormLabel(out,"etichetta"); %>
+                </td>
+                <td>
+                    <% bp.getDettaglio().writeFormInput(out,null,"etichetta",bp.isEditing(),null,null); %>
+                </td>
+            <%
+               }
+            %>
 		</tr>
 		<% }  %>
 		<tr>
@@ -165,7 +188,7 @@
 				<% bp.getDettaglio().writeFormLabel(out,"quantita"); %>
 			</td>	
 			<td>				
-				<% bp.getDettaglio().writeFormInput(out,null,"quantita",(bp.isEditing() || bp.isBy_fattura()||bp.isBy_documento()),null,"");%>
+				<% bp.getDettaglio().writeFormInput(out,null,"quantita",(bp.isEditing() || bp.isBy_fattura()||bp.isBy_documento() || bp.isAttivaEtichettaInventarioBene() ),null,"");%>
 			</td>		
 			<td>
 				<% bp.getDettaglio().writeFormLabel(out,"valore_unitario"); %>

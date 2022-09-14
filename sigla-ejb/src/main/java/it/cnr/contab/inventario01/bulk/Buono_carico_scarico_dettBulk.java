@@ -21,16 +21,22 @@
 */
 package it.cnr.contab.inventario01.bulk;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
+
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
+import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 
 public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase {
 	public final static  String STATO_COGE_X = "X";
@@ -128,6 +134,19 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 			bene = new Inventario_beniBulk();
 			bene.setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
+
+			try {
+				if (Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(context.getUserContext()))
+				{
+						setQuantita(1L);
+				}
+
+			} catch (RemoteException | ComponentException e) {
+
+			}
+
+
+
 			return this;
 		}
 	/**
@@ -150,6 +169,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 			return false;
 		return (buono_carico.getAccessoriContestualiHash().containsKey(getChiaveHash()));
 	}
+
 	public boolean isROValore_unitario()
 	{
 		if (this.getStato_coge()==null)
@@ -318,4 +338,5 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 	public void setCat_voce(Categoria_gruppo_voceBulk cat_voce) {
 		this.cat_voce = cat_voce;
 	}
+
 }

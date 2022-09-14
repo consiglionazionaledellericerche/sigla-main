@@ -26,9 +26,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_pluriennaleBulk;
 import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.inventario01.bp.CRUDScaricoInventarioBP;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
@@ -137,6 +140,45 @@ public Forward doConfirmTipoMovimento(ActionContext context, OptionBP optionBP) 
 	} catch(Throwable e) {
 		return handleException(context,e);
 	}
+}
+	/**
+	 * Verifica l'univocità dell'etichetta bene inserita
+	 *
+	 *	L'utente ha inserito l'etichetta del bene: questo invoca il metodo per verificare
+	 *	l'univocità del valore confrontandolo con gli eventuali altri beni inseriti in lista.
+	 *
+	 * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
+	 *
+	 * @return forward <code>Forward</code>
+	 **/
+	public Forward doVerificaEtichettaBene(ActionContext context)  {
+		try {
+			CRUDCaricoInventarioBP bp = (CRUDCaricoInventarioBP) getBusinessProcess(context);
+			Buono_carico_scarico_dettBulk riga = (Buono_carico_scarico_dettBulk)bp.getDettaglio().getModel();
+
+
+			Buono_carico_scarico_dettBulk dett = new Buono_carico_scarico_dettBulk();
+			Inventario_beniBulk bene = new Inventario_beniBulk();
+
+			bene = dett.getBene();
+			fillModel(context);
+
+
+			if( riga.getEtichetta()==null) {
+				throw new ApplicationException("Prego impostare l'etichetta del bene");
+			}
+			if (((it.cnr.jada.bulk.SimpleBulkList<Buono_carico_scarico_dettBulk>)(( Buono_carico_scaricoBulk)bp.getModel()).getBuono_carico_scarico_dettColl()).stream().filter(p->p.getEtichetta().equals(riga.getEtichetta())).count()>1)
+			{
+				throw new ApplicationException("Attenzione: l'etichetta indicata è già stata inserita");
+			}
+
+		}catch (Throwable e){
+
+			return handleException(context,e);
+		}
+
+	return context.findDefaultForward();
+
 }
 /**
   * Calcola il valore totale del bene.

@@ -78,4 +78,6 @@
             <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='ORDINI' AND CD_CHIAVE_SECONDARIA='GESTIONE'</where>
         </update>
     </changeSet>
+    <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->
+    <include file="iss/update_conf_gestione_etichetta_inventario.xml"/>
 </databaseChangeLog>

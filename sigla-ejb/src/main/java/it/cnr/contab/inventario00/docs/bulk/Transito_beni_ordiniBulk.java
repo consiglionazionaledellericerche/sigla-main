@@ -22,12 +22,19 @@ import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
+import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
+import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.CRUDBP;
+import org.apache.commons.lang.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Iterator;
@@ -62,6 +69,47 @@ public class Transito_beni_ordiniBulk extends Transito_beni_ordiniBase {
 	public final static Dictionary ISTITUZIONALE_COMMERCIALE;
 	public final static String ISTITUZIONALE      = "I";
 	public final static String COMMERCIALE      = "C";
+
+
+
+	public Integer getNumeroOrdine() {
+		if(getMovimentiMag() != null){
+			MovimentiMagBulk movimento = getMovimentiMag();
+			if(movimento.getLottoMag()!=null){
+				LottoMagBulk lotto = movimento.getLottoMag();
+				if(lotto.getOrdineAcqConsegna()!=null){
+					OrdineAcqConsegnaBulk ordineAcq = lotto.getOrdineAcqConsegna();
+					if(ordineAcq!=null)
+						return ordineAcq.getNumero();
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public Timestamp getDtRiferimento() {
+		if(getMovimentiMag() != null){
+
+			return getMovimentiMag().getDtRiferimento();
+		}
+		return null;
+	}
+
+	public String getNumeroBolla() {
+		if(getMovimentiMag() != null){
+
+			return getMovimentiMag().getNumeroBolla();
+		}
+		return null;
+	}
+	public Timestamp getDataBolla(){
+		if(getMovimentiMag() != null){
+			return getMovimentiMag().getDataBolla();
+		}
+		return null;
+	}
+
 
 
 	static {

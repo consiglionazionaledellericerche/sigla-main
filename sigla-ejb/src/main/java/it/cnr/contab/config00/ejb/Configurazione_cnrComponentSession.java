@@ -116,4 +116,6 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     Timestamp getDataFineValiditaCaricoFamiliare(UserContext userContext, String tiPersona) throws ComponentException, RemoteException;
 
+    Boolean isGestioneEtichettaInventarioBeneAttivo(UserContext param0) throws ComponentException, RemoteException;
+
 }

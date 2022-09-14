@@ -395,7 +395,8 @@
 		property="bene.etichetta"
 		inputType="TEXT"
 		inputSize="20"
-		label="Etichetta" />
+		label="Etichetta"
+		nullable="false"/>
 	<fieldProperty
 		name="ds_assegnatario"
 		property="bene.assegnatario.denominazione_sede"
@@ -522,7 +523,8 @@
 	<formFieldProperty
 		name="ds_buono" />	
 	<formFieldProperty
-		name="etichetta" />	
+		name="etichetta"
+		command="doVerificaEtichettaBene"/>
 	<formFieldProperty
 		name="ds_assegnatario" />	
 	<findFieldProperty
@@ -579,6 +581,9 @@
 			name="numeroBeneCompleto"
 			style="width:80px" />
 		<columnFieldProperty
+				name="etichetta"
+				style="width:80px" />
+		<columnFieldProperty
 			name="ds_bene" 
 			style="width:300px"/>
 		<columnFieldProperty
@@ -606,7 +611,10 @@
 		name="righeDaScarico">	
 		<columnFieldProperty
 			name="nr_inventario"
-			style="width:80px" />	
+			style="width:80px" />
+		<columnFieldProperty
+				name="etichetta"
+				style="width:80px" />
 		<columnFieldProperty
 			name="progressivo" />		
 		<columnFieldProperty

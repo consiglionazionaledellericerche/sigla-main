@@ -5857,4 +5857,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
 
     <include file="bootstrap/add_index_on_movimento_coge.xml"/>
 
+
+    <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->
+    <include file="bootstrap/add_conf_gestione_etichetta_inventario.xml"/>
 </databaseChangeLog>

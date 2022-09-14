@@ -84,9 +84,16 @@
 			inputType="TEXT"
 			label="Ordine"
 			caseSensitiveSearch="false"
-			enabledOnInsert = "false"
-			enabledOnEdit = "false"
-			enabledOnSearch="false"/>
+			enabledOnInsert = "true"
+			enabledOnEdit = "true"
+			enabledOnSearch="true" />
+
+	<fieldProperty
+			name="ordineForFreeSearch"
+			property="numeroOrdine"
+			inputType="TEXT"
+			label="Numero Ordine"
+	/>
 	<fieldProperty
 		name="dtRiferimento"
 		property="movimentiMag.dtRiferimento"
@@ -99,6 +106,14 @@
 		enabledOnInsert = "false"
 		enabledOnEdit = "false"
 		enabledOnSearch="false"/>
+
+	<fieldProperty
+			name="dtRiferimentoForFreeSearch"
+			property="dtRiferimento"
+			formatName="date_short"
+			inputType="TEXT"
+			label="Data Consegna"
+	/>
 	<fieldProperty
 			name="dataBolla"
 			property="movimentiMag.dataBolla"
@@ -110,7 +125,14 @@
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
 			enabledOnEdit = "false"
-			enabledOnSearch="false"/>
+			enabledOnSearch="true"/>
+	<fieldProperty
+			name="dataBollaForFreeSearch"
+			property="dataBolla"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Bolla"
+	/>
 	<fieldProperty
 			name="numeroBolla"
 			property="movimentiMag.numeroBolla"
@@ -121,7 +143,13 @@
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
 			enabledOnEdit = "false"
-			enabledOnSearch="false"/>
+			enabledOnSearch="true"/>
+	<fieldProperty
+			name="numeroBollaForFreeSearch"
+			property="numeroBolla"
+			inputType="TEXT"
+			label="Numero Bolla"
+	/>
 	<fieldProperty
 		name="ds_bene"
 		property="ds_bene"
@@ -277,6 +305,8 @@
 		name="cd_categoria_beneForFreeSearch"
 		property="cd_categoria_gruppo"
 		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Categoria"
 	/>
 	<fieldProperty
@@ -542,6 +572,9 @@
 			style="width:30px"/>
 	<columnFieldProperty
 			name="dsUnitaOperativa"/>
+	<columnFieldProperty
+			name="cd_categoria_beneForFreeSearch"/>
+
 	<findFieldProperty
 		name="etichetta" />
 	<findFieldProperty
@@ -566,4 +599,16 @@
 		name="seriale" />	
 	<findFieldProperty
 			name="stato" />
+	<findFieldProperty
+			name="numeroBollaForFreeSearch" />
+	<findFieldProperty
+			name="dataBollaForFreeSearch" />
+	<findFieldProperty
+			name="ordineForFreeSearch" />
+	<findFieldProperty
+			name="dtRiferimentoForFreeSearch" />
+
+
+
+
 </bulkInfo>

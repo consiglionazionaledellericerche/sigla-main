@@ -41,6 +41,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
@@ -168,4 +169,5 @@ public class TransitoBeniOrdiniComponent extends CRUDComponent implements ICRUDM
 		}
 		return null;
 	}
+
 }

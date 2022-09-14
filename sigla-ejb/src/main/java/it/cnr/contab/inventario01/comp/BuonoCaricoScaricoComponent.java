@@ -6067,7 +6067,17 @@ private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, Simple
 		if (bene.getAssegnatario() != null){
 			bene.setCd_assegnatario(bene.getAssegnatario().getCd_terzo());
 		}
-		bene.setEtichetta(assegnaEtichetta(buonoC,bene));
+		try {
+			if (!Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(aUC))
+			{
+				bene.setEtichetta(assegnaEtichetta(buonoC,bene));
+			}
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
+
+
+
 		// 04.12.2003 - Gestione del Esercizio di Creazione del Bene
 		//	Assegna al campo ESERCIZIO_CARICO_BENE, l'esercizio di scrivania
 		bene.setEsercizio_carico_bene(CNRUserContext.getEsercizio(aUC));
@@ -6524,6 +6534,8 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 
 		/****** INIZIO CONTROLLO SU TUTTE LE RIGHE DI DETTAGLIO ******/
 		while (i.hasNext()){
+
+
 			dett = (Buono_carico_scarico_dettBulk) i.next();
 			bene = dett.getBene();
 			
@@ -6600,6 +6612,21 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 					throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
 							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
 				}
+			}
+			// CONTROLLA, NEL CASO DI GESTIONE ATTIVA, CHE SIA STATA IMPOSTATA L'ETICHETTA DEL BENE
+			try {
+				if (Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(aUC))
+				{
+					if(bene.getEtichetta() == null) {
+						throw new ApplicationException("E' necessario indicare l'etichetta del bene");
+					}else{
+						if(checkEtichettaBeneAlreadyExist(aUC,dett)){
+							throw new ApplicationException("Attenzione, l'etichetta: "+ dett.getEtichetta()+" è già associata ad un altro bene");
+						}
+					}
+				}
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
 			}
 	}catch(Throwable t){
 		throw handleException(dett, t);		
@@ -7588,7 +7615,14 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			sql.addSQLClause("AND","LIVELLO",sql.GREATER, "0");
 			return sql;		
 	}
-
+	public boolean checkEtichettaBeneAlreadyExist(UserContext userContext, Buono_carico_scarico_dettBulk dett)  throws ComponentException, RemoteException{
+		try{
+			Inventario_beniHome invBeniHome = (Inventario_beniHome)getHome(userContext, Inventario_beniBulk.class);
+			return invBeniHome.IsEtichettaBeneAlreadyExist(dett);
+		}catch (SQLException ex) {
+			throw handleException(ex);
+		}
+	}
 }
 
 
