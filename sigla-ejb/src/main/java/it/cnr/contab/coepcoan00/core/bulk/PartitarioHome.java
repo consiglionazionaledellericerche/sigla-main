@@ -47,6 +47,7 @@ public class PartitarioHome extends Movimento_cogeHome {
     ) throws PersistencyException {
         setColumnMap("PARTITARIO");
         SQLBuilder sqlBuilder = super.createSQLBuilderWithoutJoin();
+        sqlBuilder.openParenthesis(FindClause.AND);
         for (Object obj : documentoAmministrativo) {
             IDocumentoAmministrativoBulk documentoAmministrativoBulk = Optional.ofNullable(obj)
                     .filter(IDocumentoAmministrativoBulk.class::isInstance)
@@ -62,6 +63,7 @@ public class PartitarioHome extends Movimento_cogeHome {
                 sqlBuilder.closeParenthesis();
             }
         }
+        sqlBuilder.closeParenthesis();
         Optional.ofNullable(compoundfindclause)
                 .ifPresent(compoundFindClause -> sqlBuilder.addClause(compoundFindClause));
         sqlBuilder.addOrderBy("cd_tipo_documento");
