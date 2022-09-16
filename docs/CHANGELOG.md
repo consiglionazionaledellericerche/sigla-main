@@ -1,3 +1,11 @@
+## Release 6.4.55  -- _September 16, 2022_ 
+**Changes**
+
+>**FIX: controllo sulla data di registrazione delle fatture attive**
+>
+>[4614b9328de94fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4614b9328de94fb) marco.spasiano *September 16, 2022*
+
+
 ## Release 6.4.54  -- _September 16, 2022_ 
 **Changes**
 
