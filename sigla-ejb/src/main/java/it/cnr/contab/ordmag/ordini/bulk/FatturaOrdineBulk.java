@@ -20,17 +20,13 @@
  * Date 21/09/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
+
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Dictionary;
 import java.util.Optional;

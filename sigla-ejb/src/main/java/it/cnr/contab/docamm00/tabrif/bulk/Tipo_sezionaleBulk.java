@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBulk;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -33,6 +34,8 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	protected Tipo_sezionaleBulk tipo_sezionale_vendita;
 	protected final static java.lang.Boolean TRUE=new java.lang.Boolean (true) ;
 	protected final static java.lang.Boolean FALSE=new java.lang.Boolean (false) ;
+
+	private Tipo_contributo_ritenutaBulk contributo_ritenuta_iva = new Tipo_contributo_ritenutaBulk();
 
 	public final static java.util.Dictionary ACQUISTI_VENDITE;
 	public final static java.util.Dictionary ISTITUZIONALE_COMMERCIALE;
@@ -280,5 +283,24 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 			if (getSezionale_ven_liquidazione()==null && getTi_acquisti_vendite().equals(ACQUISTI))
 				throw new ValidationException("Inserire un sezionale vendite");
 		}
+	}
+
+	public Tipo_contributo_ritenutaBulk getContributo_ritenuta_iva() {
+		return contributo_ritenuta_iva;
+	}
+
+	public void setContributo_ritenuta_iva(Tipo_contributo_ritenutaBulk contributo_ritenuta_iva) {
+		this.contributo_ritenuta_iva = contributo_ritenuta_iva;
+	}
+
+	public void setCd_contributo_ritenuta_iva(java.lang.String cd_contributo_ritenuta) {
+		this.getContributo_ritenuta_iva().setCd_contributo_ritenuta(cd_contributo_ritenuta);
+	}
+
+	public java.lang.String getCd_contributo_ritenuta_iva() {
+		Tipo_contributo_ritenutaBulk contributo_ritenuta = this.getContributo_ritenuta_iva();
+		if (contributo_ritenuta_iva == null)
+			return null;
+		return contributo_ritenuta_iva.getCd_contributo_ritenuta();
 	}
 }
