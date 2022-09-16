@@ -2542,6 +2542,7 @@ public class FatturaAttivaSingolaComponent
                         LocalDateTime.ofInstant(Instant.ofEpochMilli(fattura.getDt_registrazione().getTime()), TimeZone.getDefault().toZoneId())
                                 .minusSeconds(1);
                 if (dtRegistrazione.isAfter(now)) {
+                    logger.error("ERROR: Data di registrazione sulla fattura attiva now: {} DataRegistrazione: {}", now, dtRegistrazione);
                     throw new it.cnr.jada.comp.ApplicationException(
                             "Attenzione: la data di registrazione non puo' essere successiva alla data attuale");
                 }
