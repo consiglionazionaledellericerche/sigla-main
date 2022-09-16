@@ -1,3 +1,51 @@
+## Release 6.4.54  -- _September 16, 2022_ 
+**Changes**
+
+>**FIX: controllo sulla data di registrazione delle fatture attive**
+>
+>[22c44dd07ca03e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22c44dd07ca03e1) marco.spasiano *September 16, 2022*
+
+>**FIX: Se una persona risulta come dipendente in ACE non viene aggiornato il Tipo Rapporto**
+>
+>[811f1f213e02567](https://github.com/consiglionazionaledellericerche/sigla-main/commit/811f1f213e02567) marco.spasiano *September 13, 2022*
+
+
+## Release 6.4.53  -- _September 12, 2022_ 
+**Changes**
+
+>**FIX loop on righe di fattura on REST service**
+>
+>[149ce2b4d8d7ac9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/149ce2b4d8d7ac9) marco.spasiano *September 09, 2022*
+
+>**Aggiunto il messaggio corretto per il codice di errore ERRORE_FA_999 on FatturaAttiva REST service**
+>
+>[0f9cb5fe9660707](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f9cb5fe9660707) marco.spasiano *September 09, 2022*
+
+>**FIX "Tipologia bene/servizio non coerente con il bene/servizio” on REST service**
+>
+>[396fc617b3bda99](https://github.com/consiglionazionaledellericerche/sigla-main/commit/396fc617b3bda99) marco.spasiano *September 09, 2022*
+
+>**FIX "Cliente selezionato NON coerente con i campi intra_ue e/o extra_ue e/o san_marino” on REST service**
+>
+>[2fc0be487a83daa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fc0be487a83daa) marco.spasiano *September 08, 2022*
+
+>**Change UNAUTHORIZED to FORBIDDEN when user doesn't have a access to REST service**
+>
+>[8bb380e1be24a2b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8bb380e1be24a2b) marco.spasiano *September 08, 2022*
+
+
+## Release 6.4.52  -- _September 07, 2022_ 
+**Changes**
+
+>**Add log message for user doesn't have the roles and access**
+>
+>[05adbfb8fe954a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05adbfb8fe954a0) marco.spasiano *September 07, 2022*
+
+>**Add UnauthorizedException for REST service**
+>
+>[0650b1cce37fc4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0650b1cce37fc4f) marco.spasiano *September 07, 2022*
+
+
 ## Release 6.4.51  -- _September 06, 2022_ 
 **Changes**
 
