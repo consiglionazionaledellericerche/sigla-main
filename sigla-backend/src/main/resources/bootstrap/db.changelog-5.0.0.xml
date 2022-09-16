@@ -5856,5 +5856,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     </changeSet>
 
     <include file="bootstrap/add_index_on_movimento_coge.xml"/>
+    <include file="bootstrap/add_accessi_partitario_terzo.xml"/>
 
 </databaseChangeLog>

@@ -60,6 +60,18 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="true" />
+		<columnMapping
+			columnName="COGNOME_ANAGRAFICO"
+			propertyName="anagrafico.cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME_ANAGRAFICO"
+			propertyName="anagrafico.nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
 	</columnMap>
 	
 	<persistentProperty

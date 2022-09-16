@@ -17,6 +17,7 @@
 
 package it.cnr.contab.coepcoan00.consultazioni.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.PartitarioBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.action.ActionContext;
@@ -40,13 +41,15 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> extends SelezionatoreListaBP implements SearchProvider, TableCustomizer {
 
     protected List<T> documentoAmministrativo;
-    protected CompoundFindClause baseClause;
+    protected TerzoBulk terzoBulk;
+    protected Boolean dettaglioTributi;
     protected String columnSet;
 
     public ConsultazionePartitarioBP(List<T> documentoAmministrativo) {
@@ -55,6 +58,12 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
 
     public ConsultazionePartitarioBP(List<T> documentoAmministrativo, String columnSet) {
         this.documentoAmministrativo = documentoAmministrativo;
+        this.columnSet = columnSet;
+    }
+
+    public ConsultazionePartitarioBP(TerzoBulk terzoBulk, Boolean dettaglioTributi, String columnSet) {
+        this.terzoBulk = terzoBulk;
+        this.dettaglioTributi = dettaglioTributi;
         this.columnSet = columnSet;
     }
 
@@ -83,13 +92,23 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
             OggettoBulk oggettobulk)
             throws BusinessProcessException {
         try {
-            return createComponentSession().cerca(
-                    actioncontext.getUserContext(),
-                    compoundfindclause,
-                    (OggettoBulk) getBulkInfo().getBulkClass().newInstance(),
-                    "selectByClauseForPartitario",
-                    documentoAmministrativo.toArray()
-            );
+            if (Optional.ofNullable(terzoBulk).isPresent()) {
+                return createComponentSession().cerca(
+                        actioncontext.getUserContext(),
+                        compoundfindclause,
+                        (OggettoBulk) getBulkInfo().getBulkClass().newInstance(),
+                        "selectByClauseForPartitario",
+                        Arrays.asList(terzoBulk, dettaglioTributi).toArray()
+                );
+            } else {
+                return createComponentSession().cerca(
+                        actioncontext.getUserContext(),
+                        compoundfindclause,
+                        (OggettoBulk) getBulkInfo().getBulkClass().newInstance(),
+                        "selectByClauseForPartitario",
+                        documentoAmministrativo.toArray()
+                );
+            }
         } catch (ComponentException | RemoteException | IllegalAccessException | InstantiationException e) {
             throw handleException(e);
         }

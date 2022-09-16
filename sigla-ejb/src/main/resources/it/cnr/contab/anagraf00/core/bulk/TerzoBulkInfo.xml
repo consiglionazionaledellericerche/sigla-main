@@ -289,6 +289,27 @@
 		enabledOnFreeSearch="true"
 		/>
 	<fieldProperty
+		name="cognome_anagrafico"
+		property="anagrafico.cognome"
+		label="Cognome"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="nome_anagrafico"
+		property="anagrafico.nome"
+		label="Nome"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+
+
+
+	<fieldProperty
 		name="italianoEstero"
 		property="anagrafico.ti_italiano_estero_anag"
 		label="Italiano/Estero"
@@ -467,6 +488,12 @@
 	<findFieldProperty
 		name="partita_iva_anagrafico"
 		enabledOnFreeSearch="true" />
+	<findFieldProperty
+			name="cognome_anagrafico"
+			enabledOnFreeSearch="true" />
+	<findFieldProperty
+			name="nome_anagrafico"
+			enabledOnFreeSearch="true" />
 	<freeSearchSet
 		name="default">
 		<findFieldProperty
@@ -478,6 +505,10 @@
 			name="codice_fiscale_anagrafico"/>
 		<findFieldProperty
 			name="partita_iva_anagrafico"/>
+		<findFieldProperty
+			name="cognome_anagrafico"/>
+		<findFieldProperty
+			name="nome_anagrafico"/>
 		<findFieldProperty
 			name="denominazione_sede" />
 		<findFieldProperty

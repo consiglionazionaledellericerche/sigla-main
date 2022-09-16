@@ -17,8 +17,14 @@
 
 package it.cnr.contab.coepcoan00.core.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -26,7 +32,6 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.sql.Connection;
-import java.util.List;
 import java.util.Optional;
 
 public class PartitarioHome extends Movimento_cogeHome {
@@ -43,24 +48,61 @@ public class PartitarioHome extends Movimento_cogeHome {
             UserContext usercontext,
             PartitarioBulk partitarioBulk,
             CompoundFindClause compoundfindclause,
-            Object... documentoAmministrativo
+            Object... objects
     ) throws PersistencyException {
         setColumnMap("PARTITARIO");
         SQLBuilder sqlBuilder = super.createSQLBuilderWithoutJoin();
         sqlBuilder.openParenthesis(FindClause.AND);
-        for (Object obj : documentoAmministrativo) {
-            IDocumentoAmministrativoBulk documentoAmministrativoBulk = Optional.ofNullable(obj)
+        for (Object obj : objects) {
+            Optional<IDocumentoAmministrativoBulk> documentoAmministrativoBulk = Optional.ofNullable(obj)
                     .filter(IDocumentoAmministrativoBulk.class::isInstance)
-                    .map(IDocumentoAmministrativoBulk.class::cast)
-                    .orElseThrow(() -> new PersistencyException("Object is not instance of IDocumentoAmministrativoBulk.class"));
-            if (documentoAmministrativoBulk != null) {
+                    .map(IDocumentoAmministrativoBulk.class::cast);
+            if (documentoAmministrativoBulk.isPresent()) {
                 sqlBuilder.openParenthesis(FindClause.OR);
-                sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_tipo_doc_amm());
-                sqlBuilder.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getEsercizio());
-                sqlBuilder.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_cds());
-                sqlBuilder.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getCd_uo());
-                sqlBuilder.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.getPg_doc_amm());
+                sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getCd_tipo_doc_amm());
+                sqlBuilder.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getEsercizio());
+                sqlBuilder.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getCd_cds());
+                sqlBuilder.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getCd_uo());
+                sqlBuilder.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getPg_doc_amm());
                 sqlBuilder.closeParenthesis();
+            }
+            Optional<TerzoBulk> terzoBulk = Optional.ofNullable(obj)
+                    .filter(TerzoBulk.class::isInstance)
+                    .map(TerzoBulk.class::cast);
+            if (terzoBulk.isPresent()) {
+                sqlBuilder.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, terzoBulk.get().getCd_terzo());
+                sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.ISNOTNULL, null);
+                sqlBuilder.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.ISNOTNULL, null);
+                final Boolean isUOEnte = Optional.ofNullable(getHomeCache().getHome(Unita_organizzativa_enteBulk.class))
+                        .filter(Unita_organizzativa_enteHome.class::isInstance)
+                        .map(Unita_organizzativa_enteHome.class::cast)
+                        .map(unita_organizzativa_enteHome -> {
+                            try {
+                                return unita_organizzativa_enteHome.isUoEnte(usercontext);
+                            } catch (ComponentException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).orElse(Boolean.FALSE);
+                if (isUOEnte) {
+                    sqlBuilder.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.ISNOTNULL, null);
+                    sqlBuilder.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.ISNOTNULL, null);
+                } else {
+                    sqlBuilder.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
+                    Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk) getHomeCache().getHome(Unita_organizzativaBulk.class).
+                            findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
+                    if (!uoScrivania.isUoCds()) {
+                        sqlBuilder.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(usercontext));
+                    }
+                }
+                sqlBuilder.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.ISNOTNULL, null);
+            }
+            Optional<Boolean> dettaglioTributi = Optional.ofNullable(obj)
+                    .filter(Boolean.class::isInstance)
+                    .map(Boolean.class::cast);
+            if (dettaglioTributi.isPresent()) {
+                if (!dettaglioTributi.get()) {
+                    sqlBuilder.addClause(FindClause.AND, "cd_contributo_ritenuta", SQLBuilder.EQUALS, " ");
+                }
             }
         }
         sqlBuilder.closeParenthesis();
