@@ -39,6 +39,7 @@ import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.cori00.docs.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleHome;
@@ -1562,11 +1563,27 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		final boolean registraIva;
 		if (docamm instanceof Fattura_passivaBulk) {
 			isSplitPayment = ((Fattura_passivaBulk) docamm).getFl_split_payment();
-			tipoSezionale = ((Fattura_passivaBulk) docamm).getTipo_sezionale();
+			tipoSezionale = Optional.ofNullable(((Fattura_passivaBulk) docamm).getTipo_sezionale())
+					.filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+				try {
+					Tipo_sezionaleHome home = (Tipo_sezionaleHome) getHome(userContext, Tipo_sezionaleBulk.class);
+					return (Tipo_sezionaleBulk)home.findByPrimaryKey(((Fattura_passivaBulk) docamm).getTipo_sezionale());
+				} catch (ComponentException | PersistencyException e) {
+					throw new DetailedRuntimeException(e);
+				}
+			});
 			registraIva = Boolean.TRUE;
 		} else if (docamm instanceof Fattura_attivaBulk) {
 			isSplitPayment = ((Fattura_attivaBulk)docamm).getFl_liquidazione_differita();
-			tipoSezionale = ((Fattura_attivaBulk) docamm).getTipo_sezionale();
+			tipoSezionale = Optional.ofNullable(((Fattura_attivaBulk) docamm).getTipo_sezionale())
+					.filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+						try {
+							Tipo_sezionaleHome home = (Tipo_sezionaleHome) getHome(userContext, Tipo_sezionaleBulk.class);
+							return (Tipo_sezionaleBulk)home.findByPrimaryKey(((Fattura_attivaBulk) docamm).getTipo_sezionale());
+						} catch (ComponentException | PersistencyException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					});
 			registraIva = !isSplitPayment;
 		} else {
 			isSplitPayment = Boolean.FALSE;
