@@ -3856,22 +3856,27 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (doccoge instanceof MandatoBulk) {
 				//devo considerare il netto di eventuali mandati collegati che vengono registrati automaticamente
 				BigDecimal totMandatiColl = BigDecimal.ZERO;
-				if (((MandatoBulk) doccoge).getDoc_contabili_collColl()!=null)
-					totMandatiColl = ((MandatoBulk) doccoge).getDoc_contabili_collColl()
-						.stream()
-						.filter(el -> el.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_MAN))
-						.map(el -> {
-							/** il mandato ha un mandato associato **/
-							try {
-								MandatoBulk mandatoCollBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
-										.findByPrimaryKey(new MandatoBulk(el.getCd_cds_coll(), el.getEsercizio_coll(), el.getPg_documento_cont_coll()));
+				Collection<V_ass_doc_contabiliBulk> docColl = Optional.ofNullable(((MandatoBulk) doccoge).getDoc_contabili_collColl()).orElseGet(()->{
+					try {
+						return ((V_ass_doc_contabiliHome) getHome(userContext, V_ass_doc_contabiliBulk.class)).findDoc_contabili_coll(userContext, (MandatoBulk) doccoge);
+					} catch (ComponentException | PersistencyException | IntrospectionException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				});
 
-								return mandatoCollBulk.getIm_netto();
-							} catch (ComponentException | PersistencyException ex) {
-								throw new ApplicationRuntimeException(ex);
-							}
-						})
-						.reduce(BigDecimal.ZERO, BigDecimal::add);
+				totMandatiColl = docColl.stream()
+					.filter(el -> el.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_MAN))
+					.map(el -> {
+						/** il mandato ha un mandato associato **/
+						try {
+							MandatoBulk mandatoCollBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
+									.findByPrimaryKey(new MandatoBulk(el.getCd_cds_coll(), el.getEsercizio_coll(), el.getPg_documento_cont_coll()));
+							return mandatoCollBulk.getIm_netto();
+						} catch (ComponentException | PersistencyException ex) {
+							throw new ApplicationRuntimeException(ex);
+						}
+					})
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 				if  (saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto().add(totMandatiColl)) != 0)
 					throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota. Il saldo del conto tesoreria non risulterebbe essere uguale all'importo netto del mandato.");
