@@ -3855,7 +3855,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
 			if (doccoge instanceof MandatoBulk) {
 				//devo considerare il netto di eventuali mandati collegati che vengono registrati automaticamente
-				BigDecimal totMandatiColl = ((MandatoBulk) doccoge).getDoc_contabili_collColl().stream()
+				BigDecimal totMandatiColl = BigDecimal.ZERO;
+				if (((MandatoBulk) doccoge).getDoc_contabili_collColl()!=null)
+					totMandatiColl = ((MandatoBulk) doccoge).getDoc_contabili_collColl()
+						.stream()
 						.filter(el -> el.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_MAN))
 						.map(el -> {
 							/** il mandato ha un mandato associato **/
