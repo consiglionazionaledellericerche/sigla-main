@@ -3853,8 +3853,26 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
 					.map(el -> el.isSezioneDare() ? el.getIm_movimento() : el.getIm_movimento().negate())
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
-			if (doccoge instanceof MandatoBulk && saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto()) != 0)
-				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota. Il saldo del conto tesoreria non risulterebbe essere uguale all'importo netto del mandato.");
+			if (doccoge instanceof MandatoBulk) {
+				//devo considerare il netto di eventuali mandati collegati che vengono registrati automaticamente
+				BigDecimal totMandatiColl = ((MandatoBulk) doccoge).getDoc_contabili_collColl().stream()
+						.filter(el -> el.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_MAN))
+						.map(el -> {
+							/** il mandato ha un mandato associato **/
+							try {
+								MandatoBulk mandatoCollBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
+										.findByPrimaryKey(new MandatoBulk(el.getCd_cds_coll(), el.getEsercizio_coll(), el.getPg_documento_cont_coll()));
+
+								return mandatoCollBulk.getIm_netto();
+							} catch (ComponentException | PersistencyException ex) {
+								throw new ApplicationRuntimeException(ex);
+							}
+						})
+						.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+				if  (saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto().add(totMandatiColl)) != 0)
+					throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota. Il saldo del conto tesoreria non risulterebbe essere uguale all'importo netto del mandato.");
+			}
 			if (doccoge instanceof ReversaleBulk && saldoTesoreria.compareTo(((ReversaleBulk) doccoge).getIm_reversale()) != 0)
 				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota. Il saldo del conto tesoreria non risulterebbe essere uguale all'importo della reversale.");
 		}
