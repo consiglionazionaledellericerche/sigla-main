@@ -907,7 +907,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     public void reset(ActionContext context) throws BusinessProcessException {
 
         if (it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(
-                context.getUserContext()).intValue() == Fattura_passivaBulk
+                context.getUserContext()).intValue() != Fattura_passivaBulk
                 .getDateCalendar(null).get(java.util.Calendar.YEAR))
             resetForSearch(context);
         else {
