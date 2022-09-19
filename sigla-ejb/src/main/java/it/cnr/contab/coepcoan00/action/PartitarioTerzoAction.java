@@ -25,10 +25,12 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkAction;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.FormBP;
 
+import java.rmi.RemoteException;
 import java.util.Optional;
 
 public class PartitarioTerzoAction extends BulkAction {
@@ -57,7 +59,22 @@ public class PartitarioTerzoAction extends BulkAction {
                     "ConsultazionePartitarioBP",
                     new Object[]{terzoBulk.get(), isDettaglioTributi, "partitario"}
             );
-            consBP.openIterator(context);
+            RemoteIterator ri = consBP.openIterator(context);
+            try {
+                if (!Optional.ofNullable(ri).filter(remoteIterator -> {
+                    try {
+                        return remoteIterator.countElements() > 0;
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).isPresent()) {
+                    it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
+                    bulkBP.setMessage("La ricerca non ha fornito alcun risultato.");
+                    return context.findDefaultForward();
+                }
+            } catch (Exception _ex) {
+                handleException(context, _ex);
+            }
             context.addBusinessProcess(consBP);
             return context.findDefaultForward();
         }

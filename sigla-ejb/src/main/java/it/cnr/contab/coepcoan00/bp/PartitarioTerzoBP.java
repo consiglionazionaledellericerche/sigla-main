@@ -56,6 +56,11 @@ public class PartitarioTerzoBP extends BulkBP {
         setModel(actioncontext, filtroRicercaTerzoBulk);
     }
 
+    @Override
+    public boolean isDirty() {
+        return Boolean.FALSE;
+    }
+
     public boolean isStartSearchButtonEnabled() {
         return Optional.ofNullable(getModel())
                 .filter(FiltroRicercaTerzoBulk.class::isInstance)

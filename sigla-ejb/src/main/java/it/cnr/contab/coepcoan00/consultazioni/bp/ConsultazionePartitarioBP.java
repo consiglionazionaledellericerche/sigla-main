@@ -114,18 +114,19 @@ public class ConsultazionePartitarioBP<T extends IDocumentoAmministrativoBulk> e
         }
     }
 
-    public void openIterator(ActionContext actioncontext)
+    public RemoteIterator openIterator(ActionContext actioncontext)
             throws BusinessProcessException {
         try {
-            setIterator(actioncontext, search(
+            final RemoteIterator remoteIterator = search(
                     actioncontext,
                     Optional.ofNullable(getCondizioneCorrente())
                             .map(CondizioneComplessaBulk::creaFindClause)
                             .filter(CompoundFindClause.class::isInstance)
                             .map(CompoundFindClause.class::cast)
                             .orElseGet(() -> new CompoundFindClause()),
-                    getModel())
-            );
+                    getModel());
+            setIterator(actioncontext, remoteIterator);
+            return remoteIterator;
         } catch (RemoteException e) {
             throw new BusinessProcessException(e);
         }
