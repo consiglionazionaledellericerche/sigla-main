@@ -32,6 +32,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.util.RecordFormatException;
 
 import java.io.File;
@@ -140,16 +141,16 @@ public class CRUDEsenzioni_addizionaliBP extends SimpleCRUDBP {
                     throw new ApplicationException("Formato file non valido!");
                 c = r.getCell((short) 0);
                 if (c != null) {
-                    if (c.getCellType() == 1)
+                    if (c.getCellType().equals(CellType.STRING))
                         codcat = c.getStringCellValue();
                     c = r.getCell((short) 1);
-                    if (c.getCellType() == 1)
+                    if (c.getCellType().equals(CellType.STRING))
                         comune = c.getStringCellValue();
                     c = r.getCell((short) 2);
-                    if (c.getCellType() == 1)
+                    if (c.getCellType().equals(CellType.STRING))
                         prov = c.getStringCellValue();
                     c = r.getCell((short) 3);
-                    if (c.getCellType() == 0)
+                    if (c.getCellType().equals(CellType.NUMERIC))
                         imp = new BigDecimal(c.getNumericCellValue());
                 }
                 if (!((codcat != null && comune != null && prov != null && imp.compareTo(new BigDecimal(-1)) != 0) ||
@@ -168,16 +169,16 @@ public class CRUDEsenzioni_addizionaliBP extends SimpleCRUDBP {
                 imp = new BigDecimal(-1);
                 c = r.getCell((short) 0);
                 if (c != null) {
-                    if (c.getCellType() == 1)
+                    if (c.getCellType().equals(CellType.STRING))
                         codcat = c.getStringCellValue();
                     c = r.getCell((short) 1);
-                    if (c.getCellType() == 1)
+                    if (c.getCellType().equals(CellType.STRING))
                         comune = c.getStringCellValue();
                     c = r.getCell((short) 2);
-                    if (c.getCellType() == 1)
+                    if (c.getCellType().equals(CellType.STRING))
                         prov = c.getStringCellValue();
                     c = r.getCell((short) 3);
-                    if (c.getCellType() == 0)
+                    if (c.getCellType().equals(CellType.NUMERIC))
                         imp = new BigDecimal(c.getNumericCellValue());
                 }
                 if (imp.compareTo(new BigDecimal(0)) != -1) {

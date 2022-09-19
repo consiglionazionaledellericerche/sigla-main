@@ -36,6 +36,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.util.RecordFormatException;
 
 public class CRUDAddizionaliBP extends SimpleCRUDBP{
@@ -112,18 +113,18 @@ public class CRUDAddizionaliBP extends SimpleCRUDBP{
 			  if(r.getLastCellNum()<4)
 				  throw new ApplicationException("Formato file non valido!");
 				  c = r.getCell((short)0);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  codcat=c.getStringCellValue();
 				  c = r.getCell((short)1);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  comune=c.getStringCellValue();
 				  c = r.getCell((short)2);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  prov=c.getStringCellValue(); 
 				  c = r.getCell((short)3);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  ali=c.getStringCellValue();	
-				  else if (c.getCellType()==0)
+				  else if (c.getCellType().equals(CellType.NUMERIC))
 					  ali_num=new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_UP);
 				  if (!((codcat!=null && comune!=null && prov!=null &&(ali!=null || ali_num!=null))||
 						  (codcat==null && comune==null && prov==null &&(ali==null || ali_num==null)))) 	  
@@ -138,18 +139,18 @@ public class CRUDAddizionaliBP extends SimpleCRUDBP{
 			  ali=null;			  		  
 			  ali_num=null;
 				  c = r.getCell((short)0);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  codcat=c.getStringCellValue();
 				  c = r.getCell((short)1);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  comune=c.getStringCellValue();
 				  c = r.getCell((short)2);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  prov=c.getStringCellValue(); 
 				  c = r.getCell((short)3);
-				  if (c.getCellType()==1)
+				  if (c.getCellType().equals(CellType.STRING))
 					  ali=c.getStringCellValue();
-				  else if (c.getCellType()==0)
+				  else if (c.getCellType().equals(CellType.NUMERIC))
 					  ali_num=new BigDecimal(c.getNumericCellValue()).setScale(2,java.math.BigDecimal.ROUND_HALF_UP);
 				  
 			  if(ali!= null && ali.compareTo("0*")==0)
