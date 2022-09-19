@@ -22,21 +22,20 @@ import it.cnr.contab.coepcoan00.consultazioni.bp.ConsultazionePartitarioBP;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Movimento_cogeBulk;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
-import it.cnr.contab.docamm00.consultazioni.bp.ConsDocammAnagBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.FormBP;
 
 import java.rmi.RemoteException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -82,16 +81,31 @@ public abstract class EconomicaAction extends CRUDAction {
                     .orElse(Collections.emptyList())
                     .stream();
             List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = Stream.concat(
-                    movimentoCogeBulks.filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoAmministrativo()).isPresent()).map(Movimento_cogeBulk::getDocumentoAmministrativo),
-                    Stream.of(documentoAmministrativoBulk.get()))
+                            movimentoCogeBulks.filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoAmministrativo()).isPresent()).map(Movimento_cogeBulk::getDocumentoAmministrativo),
+                            Stream.of(documentoAmministrativoBulk.get()))
                     .distinct()
                     .collect(Collectors.toList());
 
             ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                     "ConsultazionePartitarioBP",
-                    new Object[] { iDocumentoAmministrativoBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario"}
+                    new Object[]{iDocumentoAmministrativoBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario"}
             );
-            consBP.openIterator(actionContext);
+            RemoteIterator ri = consBP.openIterator(actionContext);
+            try {
+                if (!Optional.ofNullable(ri).filter(remoteIterator -> {
+                    try {
+                        return remoteIterator.countElements() > 0;
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).isPresent()) {
+                    it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actionContext, ri);
+                    bp.setMessage(FormBP.WARNING_MESSAGE, "La ricerca non ha fornito alcun risultato.");
+                    return actionContext.findDefaultForward();
+                }
+            } catch (Exception _ex) {
+                handleException(actionContext, _ex);
+            }
             actionContext.addBusinessProcess(consBP);
             return actionContext.findDefaultForward();
         }
@@ -111,9 +125,24 @@ public abstract class EconomicaAction extends CRUDAction {
             if (!iDocumentoAmministrativoBulks.isEmpty()) {
                 ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                         "ConsultazionePartitarioBP",
-                        new Object[] { iDocumentoAmministrativoBulks, "partitario" }
+                        new Object[]{iDocumentoAmministrativoBulks, "partitario"}
                 );
-                consBP.openIterator(actionContext);
+                RemoteIterator ri = consBP.openIterator(actionContext);
+                try {
+                    if (!Optional.ofNullable(ri).filter(remoteIterator -> {
+                        try {
+                            return remoteIterator.countElements() > 0;
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).isPresent()) {
+                        it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actionContext, ri);
+                        bp.setMessage(FormBP.WARNING_MESSAGE, "La ricerca non ha fornito alcun risultato.");
+                        return actionContext.findDefaultForward();
+                    }
+                } catch (Exception _ex) {
+                    handleException(actionContext, _ex);
+                }
                 actionContext.addBusinessProcess(consBP);
                 return actionContext.findDefaultForward();
             }

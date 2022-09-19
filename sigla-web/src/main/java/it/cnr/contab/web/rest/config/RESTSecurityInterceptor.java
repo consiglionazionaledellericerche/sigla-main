@@ -17,10 +17,12 @@
 
 package it.cnr.contab.web.rest.config;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.RESTUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.exception.UnauthorizedException;
+import it.cnr.contab.web.rest.resource.util.AbstractResource;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -42,6 +44,7 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.container.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -79,6 +82,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 		String[] rolesAllowed = null;
 		boolean denyAll;
 		boolean permitAll;
+		boolean allUserAllowedWithoutAbort = declaring.isAnnotationPresent(AllUserAllowedWithoutAbort.class);
 		RolesAllowed allowed = declaring.getAnnotation(RolesAllowed.class),
 			methodAllowed = method.getAnnotation(RolesAllowed.class);
 		if (methodAllowed != null) allowed = methodAllowed;
@@ -100,9 +104,18 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				&& method.isAnnotationPresent(DenyAll.class) == false) || method.isAnnotationPresent(PermitAll.class);
 		
 		UtenteBulk utenteBulk = null;		
-		if (rolesAllowed != null || accessoAllowed != null) {
+		if (rolesAllowed != null || accessoAllowed != null || allUserAllowedWithoutAbort) {
 			final MultivaluedMap<String, String> headers = requestContext.getHeaders();
 			final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+			if (!Optional.ofNullable(authorization).filter(s -> !s.isEmpty()).isPresent() && allUserAllowedWithoutAbort) {
+				try {
+					AbstractResource.getUserContext(requestContext.getSecurityContext(), httpServletRequest);
+					return;
+				} catch (BadRequestException e) {
+					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).build());
+					return;
+				}
+			}
 			try {
 				utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
 				if (utenteBulk == null){

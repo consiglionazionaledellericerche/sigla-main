@@ -24,6 +24,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
@@ -50,9 +51,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection<Movimento_cogeBulk> findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
-        final PersistentHome home = Optional.ofNullable(getHomeCache().getHome(Movimento_cogeBulk.class, scrittura.getCd_tipo_documento()))
-                .filter(persistentHome -> Optional.ofNullable(persistentHome.getColumnMap()).isPresent())
-                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class));
+        final PersistentHome home = getHomeCache().getHome(Movimento_cogeBulk.class, "default", "documentoAmministrativo");
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
@@ -69,9 +68,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection<Movimento_cogeBulk> findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
-        final PersistentHome home = Optional.ofNullable(getHomeCache().getHome(Movimento_cogeBulk.class, scrittura.getCd_tipo_documento()))
-                .filter(persistentHome -> Optional.ofNullable(persistentHome.getColumnMap()).isPresent())
-                .orElse(getHomeCache().getHome(Movimento_cogeBulk.class));
+        final PersistentHome home = getHomeCache().getHome(Movimento_cogeBulk.class, "default", "documentoAmministrativo");
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
@@ -158,4 +155,9 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
             throw new ComponentException(e);
         }
     }
+
+    @Override
+    public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
+    }
+
 }

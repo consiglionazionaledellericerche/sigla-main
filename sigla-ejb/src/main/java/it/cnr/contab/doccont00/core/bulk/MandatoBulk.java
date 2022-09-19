@@ -324,7 +324,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
      *
      * @return Il valore della proprietà 'doc_contabili_collColl'
      */
-    public java.util.Collection getDoc_contabili_collColl() {
+    public java.util.Collection<V_ass_doc_contabiliBulk> getDoc_contabili_collColl() {
         return doc_contabili_collColl;
     }
 
@@ -334,7 +334,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
      *
      * @param newDoc_contabili_collColl Il valore da assegnare a 'doc_contabili_collColl'
      */
-    public void setDoc_contabili_collColl(java.util.Collection newDoc_contabili_collColl) {
+    public void setDoc_contabili_collColl(java.util.Collection<V_ass_doc_contabiliBulk> newDoc_contabili_collColl) {
         doc_contabili_collColl = newDoc_contabili_collColl;
     }
 

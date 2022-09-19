@@ -57,6 +57,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.util.RecordFormatException;
 
 import javax.ejb.EJBException;
@@ -904,29 +905,29 @@ public SimpleDetailCRUDController getCrudAssDitte() {
 			  if(r.getLastCellNum()<2 )
 				  throw new ApplicationException("Formato file non valido!");
 				  c = r.getCell((short)0);
-				  if (c!=null && c.getCellType()==1)
+				  if (c!=null && c.getCellType().equals(CellType.STRING))
 					  denominazione=c.getStringCellValue();
-				  else if(c!=null && c.getCellType()!=1)
+				  else if(c!=null && !c.getCellType().equals(CellType.STRING))
 					  throw new ApplicationException("Formato denominazione non valido riga:"+(i+1));	
 				  c = r.getCell((short)1);
-				  if (c!=null && c.getCellType()==1)
+				  if (c!=null && c.getCellType().equals(CellType.STRING))
 					  codice_fiscale=c.getStringCellValue();
-				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+				  else if(c!=null && (!c.getCellType().equals(CellType.STRING) && !c.getCellType().equals(CellType.BLANK)))
 					  throw new ApplicationException("Formato codice fiscale non valido riga:"+(i+1));	
 				  c = r.getCell((short)2);
-				  if (c!=null && c.getCellType()==1)
+				  if (c!=null && c.getCellType().equals(CellType.STRING))
 					  id_fiscale=c.getStringCellValue();
-				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+				  else if(c!=null && (!c.getCellType().equals(CellType.STRING) && !c.getCellType().equals(CellType.BLANK)))
 					  throw new ApplicationException("Formato id fiscale non valido riga:"+(i+1));	
 				  c = r.getCell((short)3);
-				  if (c!=null && c.getCellType()==1)
+				  if (c!=null && c.getCellType().equals(CellType.STRING))
 					  ruolo=c.getStringCellValue();
-				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+				  else if(c!=null && (!c.getCellType().equals(CellType.STRING) && !c.getCellType().equals(CellType.BLANK)))
 					  throw new ApplicationException("Formato ruolo non valido riga:"+(i+1));	
 				  c = r.getCell((short)4);
-				  if (c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+				  if (c!=null && (!c.getCellType().equals(CellType.STRING) && !c.getCellType().equals(CellType.BLANK)))
 					  denominazione_rti=c.getStringCellValue();
-				  else if(c!=null && c.getCellType()!=1)
+				  else if(c!=null && !c.getCellType().equals(CellType.STRING))
 					  throw new ApplicationException("Formato denominazione rti non valido riga:"+(i+1));	
 				  c = r.getCell((short)5);
 				  if ((denominazione!=null || codice_fiscale!=null || id_fiscale!=null ||ruolo!=null  ||denominazione_rti !=null)
@@ -943,19 +944,19 @@ public SimpleDetailCRUDController getCrudAssDitte() {
 			  id_fiscale=null;
 			  ruolo=null;
 				  c = r.getCell((short)0);
-				  if (c !=null && c.getCellType()==1)
+				  if (c !=null && c.getCellType().equals(CellType.STRING))
 					  denominazione=c.getStringCellValue();
 				  c = r.getCell((short)1);
-				  if (c !=null && c.getCellType()==1)
+				  if (c !=null && c.getCellType().equals(CellType.STRING))
 					  codice_fiscale=c.getStringCellValue();
 				  c = r.getCell((short)2);
-				  if (c !=null && c.getCellType()==1)
+				  if (c !=null && c.getCellType().equals(CellType.STRING))
 					  id_fiscale=c.getStringCellValue(); 
 				  c = r.getCell((short)3);
-				  if (c !=null && c.getCellType()==1)
+				  if (c !=null && c.getCellType().equals(CellType.STRING))
 					  ruolo=c.getStringCellValue();
 				  c = r.getCell((short)4);
-				  if (c !=null && c.getCellType()==1)
+				  if (c !=null && c.getCellType().equals(CellType.STRING))
 					  denominazione_rti=c.getStringCellValue();
 				  c = r.getCell((short)5);
 				  if(denominazione==null )

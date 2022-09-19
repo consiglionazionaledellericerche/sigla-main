@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************** TERZO **************************** -->
+	<fieldProperty
+		name="terzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		label="Terzo"
+		formName="searchtool_lungo"
+		enabledOnSearch="true" />	
+
+	<fieldProperty
+		name="cognome"
+		property="terzo.anagrafico.cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Cognome"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="terzo.anagrafico.nome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="true"
+		label="Nome"/>
+	<fieldProperty
+		name="ragione_sociale"
+		property="terzo.anagrafico.ragione_sociale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="true"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="terzo.anagrafico.codice_fiscale"
+		maxLength="16"
+		inputSize="16"
+		inputType="TEXT"
+		label="Cod. Fiscale"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="partita_iva"
+		property="terzo.anagrafico.partita_iva"
+		maxLength="11"
+		inputSize="11"
+		inputType="TEXT"
+		label="Partita IVA"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="dettaglioTributi"
+		property="dettaglioTributi"
+		inputType="CHECKBOX"
+		label="Visualizza dettaglio Tributi"
+		enabledOnSearch="true" />
+
+	<formFieldProperty
+			name="terzo"/>
+	<formFieldProperty
+			name="cognome"/>
+	<formFieldProperty
+			name="nome"/>
+	<formFieldProperty
+			name="ragione_sociale"/>
+	<formFieldProperty
+			name="codice_fiscale"/>
+	<formFieldProperty
+			name="partita_iva" />
+	<formFieldProperty
+			name="dettaglioTributi" />
+
+</bulkInfo>

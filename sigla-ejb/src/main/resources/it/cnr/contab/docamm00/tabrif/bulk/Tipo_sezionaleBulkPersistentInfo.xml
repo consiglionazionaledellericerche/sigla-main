@@ -27,13 +27,16 @@
 		<columnMapping
 			columnName="SEZIONALE_VEN_LIQUIDAZIONE"
 			propertyName="tipo_sezionale_vendita.cd_tipo_sezionale" />
-			sqlTypeName="VARCHAR"
-			columnSize="10" />	
-
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA_IVA"
+			propertyName="contributo_ritenuta_iva.cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"/>
 	</defaultColumnMap>
-		<persistentProperty
+
+	<persistentProperty
 		name="attivita_commerciale" />
-		<persistentProperty
+	<persistentProperty
 		name="tipo_sezionale_vendita" />
-			
+	<persistentProperty
+		name="contributo_ritenuta_iva.cd_contributo_ritenuta" />
 </SQLPersistentInfo>

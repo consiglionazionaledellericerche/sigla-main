@@ -28,10 +28,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -59,6 +56,7 @@ import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 
+import it.cnr.jada.ejb.CRUDComponentSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -382,6 +380,12 @@ public final class Utility {
 		Map<Object, Boolean> map = new ConcurrentHashMap<>();
 		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
+	public static CRUDComponentSession createCRUDComponentSession() throws EJBException, RemoteException {
+		return Optional.ofNullable(EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession"))
+				.filter(CRUDComponentSession.class::isInstance)
+				.map(CRUDComponentSession.class::cast)
+				.orElseThrow(() -> new RemoteException("Cannot find EJB with jndiName: JADAEJB_CRUDComponentSession"));
+	}
 
 	public static Parametri_cnrComponentSession createParametriCnrComponentSession()throws EJBException, RemoteException {
 		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);
@@ -398,7 +402,8 @@ public final class Utility {
 		return (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession",Configurazione_cnrComponentSession.class);
 	}
 	/**
-	 * Crea la CRUDComponentSession da usare per effettuare le operazioni di CRUD
+	 * Crea la
+	 * da usare per effettuare le operazioni di CRUD
 	 */
 	public static SaldoComponentSession createSaldoComponentSession() throws EJBException{
 		return (SaldoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_SaldoComponentSession",SaldoComponentSession.class);

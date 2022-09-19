@@ -570,7 +570,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    		action.doOnModalitaPagamentoChange(context);	    		
 	    	}
 			fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
-			if (fatturaPassivaDiRiferimento == null && !fatturaPassivaBulk.getFlDaOrdini()) {
+			if (fatturaPassivaDiRiferimento == null && !Optional.ofNullable(fatturaPassivaBulk.getFlDaOrdini()).orElse(Boolean.FALSE)) {
 				caricaRigheFatturaDaFatturazioneElettronica(context, fatturaPassivaBulk, nbp, action, documentoEleTestata);
 			}
 			nbp.initializeModelForEditAllegati(context, fatturaPassivaBulk);

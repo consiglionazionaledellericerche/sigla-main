@@ -40,7 +40,7 @@ public enum TipoDocumentoEnum {
 	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA, Nota_di_creditoBulk.class,"Nota di Credito Passiva"),
 	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA, Nota_di_debitoBulk.class, "Nota di Debito Passiva"),
 	FATTURA_ATTIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA, Fattura_attiva_IBulk.class, "Fattura Attiva"),
-	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA, Nota_di_credito_attivaBulk.class, "Nota di Creito Attiva"),
+	NOTA_CREDITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_ATTIVA, Nota_di_credito_attivaBulk.class, "Nota di Credito Attiva"),
 	NOTA_DEBITO_ATTIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_ATTIVA, Nota_di_debito_attivaBulk.class, "Nota di Debito Attiva"),
 	GEN_CORI_ACCANTONAMENTO_ENTRATA(IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name(), Documento_generico_attivoBulk.class, "Documento generico per accantonamento CORI entrata"),
 	GEN_CORI_ACCANTONAMENTO_SPESA("GEN_CORA_S", Documento_generico_passivoBulk.class, "Documento generico per accantonamento CORI spesa"),

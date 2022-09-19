@@ -63,9 +63,11 @@ public class Tipo_sezionaleBase extends Tipo_sezionaleKey implements Keyed {
 	// FL_SPLIT_PAYMENT CHAR(1) NOT NULL
 	private java.lang.Boolean fl_split_payment;
 	
-	
 	private java.lang.Boolean fl_reg_tardiva;
-public Tipo_sezionaleBase() {
+
+	private java.lang.String cd_contributo_ritenuta_iva;
+
+	public Tipo_sezionaleBase() {
 	super();
 }
 public Tipo_sezionaleBase(java.lang.String cd_tipo_sezionale) {
@@ -240,4 +242,12 @@ public java.lang.Boolean getFl_split_payment() {
 public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
 	this.fl_split_payment = fl_split_payment;
 }
+
+	public String getCd_contributo_ritenuta_iva() {
+		return cd_contributo_ritenuta_iva;
+	}
+
+	public void setCd_contributo_ritenuta_iva(String cd_contributo_ritenuta_iva) {
+		this.cd_contributo_ritenuta_iva = cd_contributo_ritenuta_iva;
+	}
 }
