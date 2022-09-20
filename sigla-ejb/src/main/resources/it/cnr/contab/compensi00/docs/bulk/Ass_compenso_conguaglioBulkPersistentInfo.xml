@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Ass_compenso_conguaglioBulk"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Ass_compenso_conguaglioHome" >
+	<defaultColumnMap
+		tableName="ASS_COMPENSO_CONGUAGLIO" >
+		<columnMapping
+			columnName="PG_CONGUAGLIO"
+			propertyName="conguaglio.pg_conguaglio" />
+		<columnMapping
+			columnName="ESERCIZIO_CONGUAGLIO"
+			propertyName="conguaglio.esercizio" />
+		<columnMapping
+			columnName="CD_UO_CONGUAGLIO"
+			propertyName="conguaglio.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS_CONGUAGLIO"
+			propertyName="conguaglio.cd_cds" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="compenso.pg_compenso" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="compenso.esercizio" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="compenso.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="compenso.cd_cds" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="conguaglio"
+		partOfOid = "true" />
+	<persistentProperty
+		name="compenso"
+		partOfOid = "true" />
+</SQLPersistentInfo>

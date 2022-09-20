@@ -22,6 +22,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
 import it.cnr.contab.pagopa.model.Documento;
 import it.cnr.jada.bulk.BulkHome;
@@ -55,6 +56,16 @@ public class Ass_comp_doc_cont_nmpHome extends BulkHome {
 			sql.addClause(FindClause.AND,"cd_tipo_doc",SQLBuilder.EQUALS, "R" );
 		else
 			sql.addClause(FindClause.AND,"cd_tipo_doc",SQLBuilder.EQUALS, doccoge.getCd_tipo_doc() );
+		return this.fetchAll( sql);
+	}
+
+	public Collection<Ass_comp_doc_cont_nmpBulk> findByCompenso(CompensoBulk compenso ) throws PersistencyException
+	{
+		SQLBuilder sql = this.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio_compenso",SQLBuilder.EQUALS, compenso.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds_compenso",SQLBuilder.EQUALS, compenso.getCd_cds() );
+		sql.addClause(FindClause.AND,"cd_uo_compenso",SQLBuilder.EQUALS, compenso.getCd_unita_organizzativa() );
+		sql.addClause(FindClause.AND,"pg_compenso",SQLBuilder.EQUALS, compenso.getPg_compenso() );
 		return this.fetchAll( sql);
 	}
 }

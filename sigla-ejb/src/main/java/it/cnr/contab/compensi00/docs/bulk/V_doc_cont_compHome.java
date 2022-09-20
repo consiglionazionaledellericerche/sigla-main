@@ -23,6 +23,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.util.Collection;
+
 public class V_doc_cont_compHome extends BulkHome {
 public V_doc_cont_compHome(java.sql.Connection conn) {
 	super(V_doc_cont_compBulk.class,conn);
@@ -122,4 +124,24 @@ private IManRevBulk loadReversale(V_doc_cont_compBulk docContComp) throws Persis
 
 	return manRev;
 }
+
+	public Collection<V_doc_cont_compBulk> findByCompenso(CompensoBulk compenso ) throws PersistencyException
+	{
+		SQLBuilder sql = this.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio_compenso",SQLBuilder.EQUALS, compenso.getEsercizio() );
+		sql.addClause(FindClause.AND,"cd_cds_compenso",SQLBuilder.EQUALS, compenso.getCd_cds() );
+		sql.addClause(FindClause.AND,"cd_uo_compenso",SQLBuilder.EQUALS, compenso.getCd_unita_organizzativa() );
+		sql.addClause(FindClause.AND,"pg_compenso",SQLBuilder.EQUALS, compenso.getPg_compenso() );
+		return this.fetchAll( sql);
+	}
+
+	public Collection<V_doc_cont_compBulk> findByDocumento(Integer esercizioDoc, String cdCdsDoc, Long pgDoc, String tipoDoc ) throws PersistencyException
+	{
+		SQLBuilder sql = this.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio_doc_cont",SQLBuilder.EQUALS, esercizioDoc );
+		sql.addClause(FindClause.AND,"cd_cds_doc_cont",SQLBuilder.EQUALS, cdCdsDoc );
+		sql.addClause(FindClause.AND,"pg_doc_cont",SQLBuilder.EQUALS, pgDoc );
+		sql.addClause(FindClause.AND,"tipo_doc_cont",SQLBuilder.EQUALS, tipoDoc );
+		return this.fetchAll( sql);
+	}
 }

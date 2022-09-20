@@ -86,4 +86,11 @@ public void setCompenso(CompensoBulk newCompenso) {
 public void setManRev(it.cnr.contab.doccont00.core.bulk.IManRevBulk newManRev) {
 	manRev = newManRev;
 }
+
+	public boolean isTipoDocMandato() {
+		return TIPO_DOC_CONT_MANDATO.equals(this.getTipo_doc_cont());
+	}
+	public boolean isTipoDocReversale() {
+		return TIPO_DOC_CONT_REVERSALE.equals(this.getTipo_doc_cont());
+	}
 }
