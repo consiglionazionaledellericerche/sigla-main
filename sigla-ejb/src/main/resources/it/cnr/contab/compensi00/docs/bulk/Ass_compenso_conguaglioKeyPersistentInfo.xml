@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Ass_compenso_conguaglioKey" >
+	<defaultColumnMap
+		tableName="ASS_COMPENSO_CONGUAGLIO" >
+		<columnMapping
+			columnName="PG_CONGUAGLIO"
+			propertyName="pg_conguaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONGUAGLIO"
+			propertyName="esercizio_conguaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_CONGUAGLIO"
+			propertyName="cd_uo_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_CONGUAGLIO"
+			propertyName="cd_cds_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="cd_uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="cd_cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_conguaglio"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_conguaglio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_uo_conguaglio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_conguaglio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_uo_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_compenso"
+		partOfOid="true" />
+</SQLPersistentInfo>
