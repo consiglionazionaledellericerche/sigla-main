@@ -2445,7 +2445,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		//Aggiungo eventuali quote da trattenere indicate sul compenso e sul compenso conguaglio
 		imRitenutePositive = imRitenutePositive.add(Optional.ofNullable(compenso.getIm_netto_da_trattenere()).orElse(BigDecimal.ZERO));
-		imRitenutePositive = imRitenutePositive.add(Optional.ofNullable(compensoConguaglio.getIm_netto_da_trattenere()).orElse(BigDecimal.ZERO));
+		imRitenutePositive = imRitenutePositive.add(Optional.ofNullable(compensoConguaglio).flatMap(el->Optional.ofNullable(el.getIm_netto_da_trattenere())).orElse(BigDecimal.ZERO));
 
 		BigDecimal imRitenuteNegative = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
 				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
