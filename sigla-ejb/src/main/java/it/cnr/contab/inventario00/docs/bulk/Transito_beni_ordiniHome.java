@@ -33,7 +33,9 @@ import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -84,23 +86,27 @@ public Transito_beni_ordiniHome(java.sql.Connection conn, PersistentCache persis
 						clause.getPropertyName() != null && clause.getPropertyName().equals("numeroOrdine") ||
 						clause.getPropertyName() != null && clause.getPropertyName().equals("numeroBolla") ||
 						clause.getPropertyName() != null && clause.getPropertyName().equals("dataBolla") ||
-						clause.getPropertyName() != null && clause.getPropertyName().equals("dtRiferimento")) {
+						clause.getPropertyName() != null && clause.getPropertyName().equals("dtOrdine")) {
 
 						sql.generateJoin(Transito_beni_ordiniBulk.class, MovimentiMagBulk.class, "movimentiMag", "MOVIMENTI_MAG");
 
 						if (clause.getPropertyName() != null && clause.getPropertyName().equals("numeroBolla")) {
 							sql.addSQLClause("AND", "MOVIMENTI_MAG.NUMERO_BOLLA", clause.getOperator(), clause.getValue());
 						}
-						else if (clause.getPropertyName() != null && clause.getPropertyName().equals("dtRiferimento")) {
-							sql.addSQLClause("AND", "MOVIMENTI_MAG.DT_RIFERIMENTO", clause.getOperator(), clause.getValue());
-						}
+
 						else if (clause.getPropertyName() != null && clause.getPropertyName().equals("dataBolla")) {
 							sql.addSQLClause("AND", "MOVIMENTI_MAG.DATA_BOLLA", clause.getOperator(), clause.getValue());
 						}
 						else {
 							sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
 
-							if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_categoria_gruppo")) {
+							if (clause.getPropertyName() != null && clause.getPropertyName().equals("dtOrdine")) {
+								sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
+								sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+								sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+								sql.addSQLClause("AND", "ORDINE_ACQ.DATA_ORDINE", clause.getOperator(), clause.getValue());
+							}
+							else if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_categoria_gruppo")) {
 								sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
 								sql.generateJoin(Bene_servizioBulk.class, Categoria_gruppo_inventBulk.class, "categoria_gruppo", "CATEGORIA_GRUPPO");
 								sql.addSQLClause("AND", "CATEGORIA_GRUPPO.CD_CATEGORIA_GRUPPO", clause.getOperator(), clause.getValue());

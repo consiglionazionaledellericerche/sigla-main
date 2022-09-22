@@ -131,7 +131,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		 * <code>it.cnr.jada.util.action.CRUDBP</code> quando viene inizializzato
 		 * per l'inserimento di un OggettoBulk.
 		 */
-		public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		public OggettoBulk initializeForInsertc(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 			bene = new Inventario_beniBulk();
 			bene.setTi_commerciale_istituzionale(TipoIVA.ISTITUZIONALE.value());
 
@@ -139,6 +139,8 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 				if (Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(context.getUserContext()))
 				{
 						setQuantita(1L);
+
+
 				}
 
 			} catch (RemoteException | ComponentException e) {
@@ -214,6 +216,9 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		nuovoVUtilizzatore.setDettaglio(this);
 		nuovoVUtilizzatore.setBene(getBene());
 		nuovoVUtilizzatore.setCdr(new it.cnr.contab.config00.sto.bulk.CdrBulk());
+		nuovoVUtilizzatore.setPercentuale_utilizzo_cdr(new BigDecimal(100));
+
+
 		return v_utilizzatoriColl.size()-1;
 	}
 	public boolean hasUtilizzatori() {

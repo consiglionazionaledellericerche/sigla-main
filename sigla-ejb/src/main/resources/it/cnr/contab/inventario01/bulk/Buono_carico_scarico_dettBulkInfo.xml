@@ -150,7 +150,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="SELECT"
-		nullable="false"  
+		nullable="false"
 		enabledOnFreeSearch="true" 
 		enabledOnSearch="true"		
 		enabledOnEdit="true"
@@ -523,8 +523,7 @@
 	<formFieldProperty
 		name="ds_buono" />	
 	<formFieldProperty
-		name="etichetta"
-		command="doVerificaEtichettaBene"/>
+		name="etichetta"/>
 	<formFieldProperty
 		name="ds_assegnatario" />	
 	<findFieldProperty

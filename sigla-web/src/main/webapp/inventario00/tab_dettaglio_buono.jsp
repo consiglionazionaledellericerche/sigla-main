@@ -43,7 +43,7 @@
 				<% bp.getDettaglio().writeFormLabel(out,"condizione"); %>
 			</td>
 			<td>
-				<% bp.getDettaglio().writeFormInput(out,"condizione"); %>				
+				<% bp.getDettaglio().writeFormInput(out,"condizione"); %>
 			</td>			
 			<td>
 				<% bp.getDettaglio().writeFormLabel(out,"cd_barre"); %>

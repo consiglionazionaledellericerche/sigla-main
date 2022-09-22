@@ -6532,6 +6532,7 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 		if (buonoCarico.getBuono_carico_scarico_dettColl().size()==0)
 			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il Buono di Carico deve contenere almeno una riga di dettaglio.");
 
+		ArrayList<String> etichettaList=new ArrayList<>();
 		/****** INIZIO CONTROLLO SU TUTTE LE RIGHE DI DETTAGLIO ******/
 		while (i.hasNext()){
 
@@ -6540,10 +6541,11 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			bene = dett.getBene();
 			
 			// CONTROLLA CHE SIA STATA SPECIFICATA UNA CATEGORIA PER IL BENE
-			if (bene.getCategoria_Bene()==null || bene.getCategoria_Bene().getCd_categoria_gruppo()==null)
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare la Categoria di appartenenza del Bene '" + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
-			else
-				
+			if (bene.getCategoria_Bene()==null || bene.getCategoria_Bene().getCd_categoria_gruppo()==null) {
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare la Categoria di appartenenza del Bene '" + (bene.getDs_bene() != null ? "'" + bene.getDs_bene() + "'" : ""));
+
+			}else
+
 			{
 				java.util.Collection ti_ammortamenti = ((it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class)).findTipiAmmortamento(aUC,bene.getCategoria_Bene());
 				dett.getBene().setTi_ammortamenti(ti_ammortamenti);
@@ -6592,42 +6594,60 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			if (dett.getValore_unitario()==null || dett.getValore_unitario().compareTo(new java.math.BigDecimal(0))<=0)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare il Prezzo Unitario del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
 
-			}
-			if (buonoCarico.isPerAumentoValore() && (dett.getValore_unitario() == null || (dett.getValore_unitario().compareTo(new java.math.BigDecimal(0))==0))){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare il Valore Caricato per il bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
-			}
-
-			if ( ((Buono_carico_scaricoBulk)dett.getBuono_cs()).isPerAumentoValore() ){
-				// Buono di Carico per aumento di valore
-				// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE DEL BENE
-				java.math.BigDecimal valore_bene = dett.getBene().getValoreBene().add(dett.getValore_unitario());
-				if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(valore_bene)>0){
-					throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
-							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
-				}
-			} else {
-				// Buono di Carico normale
-				// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE UNITARIO
-				if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(dett.getValore_unitario())>0){
-					throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
-							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
-				}
-			}
 			// CONTROLLA, NEL CASO DI GESTIONE ATTIVA, CHE SIA STATA IMPOSTATA L'ETICHETTA DEL BENE
 			try {
 				if (Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(aUC))
 				{
-					if(bene.getEtichetta() == null) {
-						throw new ApplicationException("E' necessario indicare l'etichetta del bene");
-					}else{
-						if(checkEtichettaBeneAlreadyExist(aUC,dett)){
-							throw new ApplicationException("Attenzione, l'etichetta: "+ dett.getEtichetta()+" è già associata ad un altro bene");
+					// il controllo avviene solo per beni "nuovi"
+					if(bene.getKey()==null) {
+						if (bene.getEtichetta() == null) {
+							throw new ApplicationException("E' necessario indicare l'etichetta del bene");
+						} else {
+							// VERIFICA PRESENZA ETICHETTA SU DB
+							if (checkEtichettaBeneAlreadyExist(aUC, dett)) {
+								throw new ApplicationException("Attenzione, l'etichetta: " + dett.getEtichetta() + " è già associata ad un altro bene");
+							}
+							//VERIIFICA ETICHETTA IN LISTA
+							else {
+								if (etichettaList.size() > 0) {
+									if (etichettaList.contains(dett.getEtichetta())) {
+										throw new ApplicationException("Attenzione, l'etichetta: " + dett.getEtichetta() + " è già inserita in lista");
+									}
+								}
+								etichettaList.add(bene.getEtichetta());
+
+							}
+
 						}
 					}
 				}
 			} catch (RemoteException e) {
 				throw new ComponentException(e);
 			}
+
+
+		}
+		if (buonoCarico.isPerAumentoValore() && (dett.getValore_unitario() == null || (dett.getValore_unitario().compareTo(new java.math.BigDecimal(0))==0))){
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare il Valore Caricato per il bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
+		}
+
+		if ( ((Buono_carico_scaricoBulk)dett.getBuono_cs()).isPerAumentoValore() ){
+			// Buono di Carico per aumento di valore
+			// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE DEL BENE
+			java.math.BigDecimal valore_bene = dett.getBene().getValoreBene().add(dett.getValore_unitario());
+			if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(valore_bene)>0){
+				throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" +
+						"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
+			}
+		} else {
+			// Buono di Carico normale
+			// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE UNITARIO
+			if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(dett.getValore_unitario())>0){
+				throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" +
+						"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
+			}
+		}
+
 	}catch(Throwable t){
 		throw handleException(dett, t);		
 	}

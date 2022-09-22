@@ -25,7 +25,9 @@ import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
 import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -88,10 +90,21 @@ public class Transito_beni_ordiniBulk extends Transito_beni_ordiniBase {
 	}
 
 
-	public Timestamp getDtRiferimento() {
+	public Timestamp getDtOrdine() {
 		if(getMovimentiMag() != null){
-
-			return getMovimentiMag().getDtRiferimento();
+			if(getMovimentiMag().getLottoMag() !=null){
+				LottoMagBulk lotto = getMovimentiMag().getLottoMag();
+				if(lotto.getOrdineAcqConsegna() != null){
+					OrdineAcqConsegnaBulk ordineAcqCons = lotto.getOrdineAcqConsegna();
+					if(ordineAcqCons != null){
+						OrdineAcqRigaBulk riga = ordineAcqCons.getOrdineAcqRiga();
+						if(riga!=null){
+							OrdineAcqBulk ordine = riga.getOrdineAcq();
+							return ordine.getDataOrdine();
+						}
+					}
+				}
+			}
 		}
 		return null;
 	}
@@ -420,6 +433,9 @@ public void setValore_unitario(java.math.BigDecimal newValore_unitario) {
 		}
 		if (getFl_ammortamento() != null && getFl_ammortamento() && getTi_ammortamento() == null){
 			throw new ValidationException("Valorizzare il tipo ammortamento.");
+		}
+		if(getCondizioneBene() == null){
+			throw new ValidationException("Valorizzare la condizione del bene.");
 		}
 	}
 
