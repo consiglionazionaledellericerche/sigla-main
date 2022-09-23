@@ -57,7 +57,6 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -2164,12 +2163,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				CompensoBulk compenso = (CompensoBulk)getHome(userContext, CompensoBulk.class).findByPrimaryKey(new CompensoBulk(docContCompBulk.getCd_cds_compenso(), docContCompBulk.getCd_uo_compenso(),
 						docContCompBulk.getEsercizio_compenso(), docContCompBulk.getPg_compenso()));
 
-				if (compenso.getFl_compenso_conguaglio().equals(Boolean.TRUE)) {
-					//verifico se esiste conguaglio collegato al compenso principale pagato con il mandato
-					CompensoBulk compensoPrincipale = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoPrincipaleAssociato(userContext, compenso);
-					if (compensoPrincipale != null && !compensoPrincipale.equalsByPrimaryKey(compenso))
-						throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto il mandato risulta associato a compenso da conguaglio.");
-				}
+				//verifico se esiste conguaglio collegato al compenso principale pagato con il mandato
+				CompensoBulk compensoPrincipale = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoPrincipaleAssociato(userContext, compenso);
+				if (!compensoPrincipale.equalsByPrimaryKey(compenso))
+					throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto il mandato risulta associato a compenso da conguaglio.");
 			}
 
 			//Se le righe del mandato non sono valorizzate le riempio io
@@ -2377,7 +2374,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		});
 
 		//verifico se esiste conguaglio collegato al compenso principale pagato con il mandato
-		CompensoBulk compensoConguaglio = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoConguaglioAssociato(compenso);
+		CompensoBulk compensoConguaglio = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoConguaglioAssociato(userContext, compenso);
 
 		//se esiste aggiungo le righe di contributo/ritenuta in quanto anche loro contribuiscono a determinare il netto mandato
 		if (compensoConguaglio != null) {
@@ -2446,6 +2443,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		//Aggiungo eventuali quote da trattenere indicate sul compenso e sul compenso conguaglio
 		imRitenutePositive = imRitenutePositive.add(Optional.ofNullable(compenso.getIm_netto_da_trattenere()).orElse(BigDecimal.ZERO));
 		imRitenutePositive = imRitenutePositive.add(Optional.ofNullable(compensoConguaglio).flatMap(el->Optional.ofNullable(el.getIm_netto_da_trattenere())).orElse(BigDecimal.ZERO));
+
+		//sottraggo le ritenute fittizie
+		imRitenutePositive = imRitenutePositive.subtract(imRitenuteFittizie);
 
 		BigDecimal imRitenuteNegative = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
 				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
@@ -2652,6 +2652,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								Stipendi_cofiBulk stipendiCofiBulk = ((Stipendi_cofiHome)getHome(userContext, Stipendi_cofiBulk.class)).findStipendiCofi(compenso);
 
 								Integer cdTerzoMandato = compenso.getCd_terzo();
+								CompensoBulk compensoPrincipale = compenso;
+								IManRevBulk mandatoCompensoPrincipale = null;
+
 								if (stipendiCofiBulk!=null) {
 									MandatoBulk mandatoStipendiBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
 											.findByPrimaryKey(new MandatoBulk(stipendiCofiBulk.getCd_cds_mandato(), stipendiCofiBulk.getEsercizio_mandato(), stipendiCofiBulk.getPg_mandato()));
@@ -2659,11 +2662,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 									mandatoStipendiBulk.setMandato_terzo(((MandatoHome) getHome(userContext, mandato.getClass())).findMandato_terzo(userContext, mandatoStipendiBulk, false));
 
 									cdTerzoMandato = mandatoStipendiBulk.getMandato_terzo().getCd_terzo();
+									mandatoCompensoPrincipale = mandatoStipendiBulk;
+								} else {
+									compensoPrincipale = ((CompensoHome)getHome( userContext, CompensoBulk.class)).findCompensoPrincipaleAssociato(userContext, compenso);
+									mandatoCompensoPrincipale = ((CompensoHome)getHome( userContext, CompensoBulk.class)).findMandatoPrincipaleAssociato(userContext, compensoPrincipale);
 								}
 
 								//recupero tutti i movimenti della partita per ottenere il saldo al netto della scrittura del mandato se già esiste
-								Map<String, Pair<String, BigDecimal>> saldiCori = this.getSaldiMovimentiCori(userContext, compenso, cdTerzoMandato, aCdCori, scritturaMandato);
-									//dovrei trovare tra i saldi proprio l'import liquidato
+								Map<String, Pair<String, BigDecimal>> saldiCori = this.getSaldiMovimentiCori(userContext, compenso, cdTerzoMandato, aCdCori, scritturaMandato, compensoPrincipale, mandatoCompensoPrincipale);
+
+								//dovrei trovare tra i saldi proprio l'import liquidato
 								//Il conto aperto deve essere solo uno
 								if (saldiCori.values().stream().filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() >1)
 									throw new ApplicationRuntimeException("Per il compenso "+compenso.getEsercizio()+"/"+compenso.getCd_cds()+"/"+compenso.getPg_compenso()+
@@ -3540,20 +3548,24 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return null;
 	}
 
-	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocAmm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
+	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocamm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
+		return getSaldiMovimentiCori(userContext, docamm, cdTerzoDocamm, cdCori, scritturaToExclude, docamm, null);
+	}
+
+	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocamm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude, IDocumentoAmministrativoBulk docammPrincipale, IManRevBulk mandatoCompenso) throws ComponentException, PersistencyException {
 		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
-		boolean isAttivaEconomica = ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(docamm.getEsercizio());
+		boolean isAttivaEconomica = ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(Optional.ofNullable(mandatoCompenso).map(IManRevBulk::getEsercizio).orElse(docamm.getEsercizio()));
 		if (isAttivaEconomica)
-			return ((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, cdTerzoDocAmm, cdCori, scritturaToExclude);
+			return ((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, cdTerzoDocamm, cdCori, scritturaToExclude);
 		else {
 			try {
-				Collection<Movimento_cogeBulk> allMovimentiCoge = proposeScritturaPartitaDoppia(userContext, docamm).getAllMovimentiColl()
-						.stream().filter(el->docamm.getEsercizio().equals(el.getEsercizio_documento()))
-						.filter(el->docamm.getCd_cds().equals(el.getCd_cds_documento()))
-						.filter(el->docamm.getCd_uo().equals(el.getCd_uo_documento()))
-						.filter(el->docamm.getPg_doc().equals(el.getPg_numero_documento()))
-						.filter(el->docamm.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
-						.filter(el->cdTerzoDocAmm.equals(el.getCd_terzo()))
+				Collection<Movimento_cogeBulk> allMovimentiCoge = proposeScritturaPartitaDoppia(userContext, mandatoCompenso!=null?mandatoCompenso:docamm).getAllMovimentiColl()
+						.stream().filter(el->docammPrincipale.getEsercizio().equals(el.getEsercizio_documento()))
+						.filter(el->docammPrincipale.getCd_cds().equals(el.getCd_cds_documento()))
+						.filter(el->docammPrincipale.getCd_uo().equals(el.getCd_uo_documento()))
+						.filter(el->docammPrincipale.getPg_doc().equals(el.getPg_numero_documento()))
+						.filter(el->docammPrincipale.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
+						.filter(el->cdTerzoDocamm.equals(el.getCd_terzo()))
 						.filter(el->cdCori.equals(el.getCd_contributo_ritenuta()))
 						.collect(Collectors.toList());
 
