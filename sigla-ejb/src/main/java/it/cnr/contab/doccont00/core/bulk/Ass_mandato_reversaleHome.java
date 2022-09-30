@@ -51,7 +51,7 @@ public class Ass_mandato_reversaleHome extends BulkHome {
 	 *
 	 * @return result i mandati associati alla reversale
 	 */
-	public List findMandati( it.cnr.jada.UserContext userContext,ReversaleBulk reversale ) throws PersistencyException, IntrospectionException
+	public List findMandati( it.cnr.jada.UserContext userContext,ReversaleBulk reversale ) throws PersistencyException
 	{
 		return this.findMandati(userContext, reversale, true);
 	}
@@ -68,6 +68,12 @@ public class Ass_mandato_reversaleHome extends BulkHome {
 		return result;
 	}
 
+	public List findReversali( it.cnr.jada.UserContext userContext,MandatoBulk mandato ) throws PersistencyException
+	{
+		return this.findReversali(userContext, mandato, true);
+	}
+
+
 	/**
 	 * Metodo per cercare le reversali associate al mandato.
 	 *
@@ -75,15 +81,15 @@ public class Ass_mandato_reversaleHome extends BulkHome {
 	 *
 	 * @return result le reversali associate al mandato
 	 */
-	public Collection findReversali( it.cnr.jada.UserContext userContext,MandatoBulk mandato ) throws PersistencyException, IntrospectionException
+	public List findReversali( it.cnr.jada.UserContext userContext,MandatoBulk mandato, boolean fetchAll ) throws PersistencyException
 	{
 		PersistentHome home = getHomeCache().getHome( Ass_mandato_reversaleBulk.class );
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause("AND","esercizio_mandato",sql.EQUALS, mandato.getEsercizio() );
 		sql.addClause("AND","cd_cds_mandato",sql.EQUALS, mandato.getCds().getCd_unita_organizzativa() );
 		sql.addClause("AND","pg_mandato",sql.EQUALS, mandato.getPg_mandato() );
-		Collection result = home.fetchAll( sql);
-		getHomeCache().fetchAll(userContext);
+		List result = home.fetchAll( sql);
+		if (fetchAll) getHomeCache().fetchAll(userContext);
 		return result;
 	}
 }
