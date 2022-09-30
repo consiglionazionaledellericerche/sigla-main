@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
@@ -785,7 +786,9 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 				sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
 				sql.addClause("AND", "ti_entita_giuridica", SQLBuilder.NOT_EQUALS, AnagraficoBulk.GIURIDICA);
 			}
-		return fetchAll(sql);
+		final List<AnagraficoBulk> result = fetchAll(sql);
+		getHomeCache().fetchAll(null);
+		return result;
 	}
 
 	public java.util.List<AnagraficoBulk> findByCodiceFiscale(String codiceFiscale, String partitaIVA) throws IntrospectionException, PersistencyException {
