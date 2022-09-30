@@ -1,3 +1,47 @@
+## Release 6.4.56  -- _September 30, 2022_ 
+**Changes**
+
+>**new feature: Add Rest for info anagrafica by tax code.**
+>
+>[a60b585db725d74](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a60b585db725d74) marco.spasiano *September 30, 2022*
+
+>**new feature: Add Rest for info anagrafica by tax code.**
+>
+>[9ee272f8720e9da](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ee272f8720e9da) marco.spasiano *September 30, 2022*
+
+>**Bump poi from 3.17 to 4.1.1 in /sigla-ejb**
+>
+>[db2e276e12b1f83](https://github.com/consiglionazionaledellericerche/sigla-main/commit/db2e276e12b1f83) marco.spasiano *September 19, 2022*
+
+>**Bump gson from 2.8.5 to 2.8.9 in /sigla-web #93**
+>
+>[db6dfc4cdcf8c29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/db6dfc4cdcf8c29) marco.spasiano *September 19, 2022*
+
+>**Bump gson from 2.8.5 to 2.8.9 in /sigla-ejb #94**
+>
+>[7056dc5c3eec802](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7056dc5c3eec802) marco.spasiano *September 19, 2022*
+
+>**Bump poi from 3.17 to 4.1.1 in /sigla-ejb #96**
+>
+>[279a961e5f34465](https://github.com/consiglionazionaledellericerche/sigla-main/commit/279a961e5f34465) marco.spasiano *September 19, 2022*
+
+>**Bump poi from 3.17 to 4.1.1 in /sigla-web #97**
+>
+>[21c6a6a52408cb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/21c6a6a52408cb5) marco.spasiano *September 19, 2022*
+
+>**Bump commons-email from 1.3.3 to 1.5 in /sigla-web #98**
+>
+>[706b174c625b65c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/706b174c625b65c) marco.spasiano *September 19, 2022*
+
+>**Bump commons-email from 1.4 to 1.5 in /sigla-ejb #99**
+>
+>[3b4cbffb35112d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b4cbffb35112d3) marco.spasiano *September 19, 2022*
+
+>**Bump postgresql from 42.3.3 to 42.4.1 in /sigla-backend #101**
+>
+>[70e09af06e5c5bf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70e09af06e5c5bf) marco.spasiano *September 19, 2022*
+
+
 ## Release 6.4.55  -- _September 16, 2022_ 
 **Changes**
 
