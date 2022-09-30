@@ -18,7 +18,9 @@
 package it.cnr.contab.web.rest.exception;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import it.cnr.contab.web.rest.config.FatturaAttivaCodiciEnum;
 
@@ -40,6 +42,12 @@ public class FatturaAttivaException extends RestException {
 	
 	@Override
 	public Map<String, Serializable> getErrorMap() {
+		if (Optional.ofNullable(getMessage()).isPresent()) {
+			Map<String, Serializable> result = new HashMap<String, Serializable>();
+			result.put("codice", fatturaAttivaCodiciEnum.getCodice());
+			result.put("message", getMessage());
+			return result;
+		}
 		return fatturaAttivaCodiciEnum.getErrorMap();
 	}
 }

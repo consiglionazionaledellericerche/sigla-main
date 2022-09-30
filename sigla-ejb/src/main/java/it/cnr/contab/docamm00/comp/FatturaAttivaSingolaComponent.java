@@ -64,6 +64,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
@@ -2548,8 +2549,9 @@ public class FatturaAttivaSingolaComponent
                                 fattura);
                 if (ultimaRegistrazione != null
                         && fattura.getDt_registrazione().before(ultimaRegistrazione))
-                    throw new it.cnr.jada.comp.ApplicationException(
-                            "La data di registrazione non e' valida: deve essere successiva all'ultima data di registrazione inserita (relativa al tipo sezionale)!");
+                    throw new ApplicationMessageFormatException(
+                            "La data di registrazione non e' valida: deve essere successiva all'ultima data di registrazione inserita (relativa al tipo sezionale {0})!",
+                            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(ultimaRegistrazione));
             }
         } catch (PersistencyException ex) {
             throw handleException(fattura, ex);
