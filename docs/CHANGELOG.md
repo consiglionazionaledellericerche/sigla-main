@@ -1,3 +1,11 @@
+## Release 6.4.57  -- _October 01, 2022_ 
+**Changes**
+
+>**new feature: Add Rest for info anagrafica by tax code.**
+>
+>[c80bfd69fbb187b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c80bfd69fbb187b) marco.spasiano *October 01, 2022*
+
+
 ## Release 6.4.56  -- _September 30, 2022_ 
 **Changes**
 
