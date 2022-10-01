@@ -80,7 +80,11 @@ public class AnagraficaInfoDTO {
 
     public String getIndirizzo_residenza() {
         return Optional.ofNullable(anagraficoBulk)
-                .map(AnagraficoBulk::getVia_fiscale)
+                .map(anagraficoBulk1 ->
+                        Optional.ofNullable(anagraficoBulk1.getVia_fiscale()).orElse("").concat(" ").concat(
+                                Optional.ofNullable(anagraficoBulk1.getNum_civico_fiscale()).orElse("")
+                        )
+                )
                 .orElse(null);
     }
 
