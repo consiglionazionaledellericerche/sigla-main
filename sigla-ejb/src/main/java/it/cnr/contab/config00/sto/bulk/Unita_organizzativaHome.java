@@ -547,4 +547,60 @@ public class Unita_organizzativaHome extends BulkHome {
 		sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
 		return fetchAll(sqlBuilder);
 	}
+
+    public List<Unita_organizzativaBulk> findUnitaOrganizzativeValide(UserContext userContext, Integer esercizio, String codice, Boolean cds) throws PersistencyException {
+        setFetchPolicy("fetchUnitaPadre");
+        SQLBuilder sqlBuilder = super.createSQLBuilder();
+        sqlBuilder.addSQLClause(FindClause.AND, cds ? "CD_UNITA_ORGANIZZATIVA" : "CD_UNITA_PADRE", SQLBuilder.EQUALS, codice);
+        sqlBuilder.addClause(FindClause.AND, "fl_cds", SQLBuilder.EQUALS, Boolean.FALSE);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
+        final List result = fetchAll(sqlBuilder);
+        getHomeCache().fetchAll(userContext);
+        return result;
+    }
+
+    public List<Unita_organizzativaBulk> findUnitaOrganizzativeAbilitateByAccesso(UserContext userContext, String username, Integer esercizio, String codice, Boolean cds) throws PersistencyException {
+        setFetchPolicy("fetchUnitaPadre");
+        SQLBuilder sqlBuilder = super.createSQLBuilder();
+        sqlBuilder.setDistinctClause(true);
+        sqlBuilder.addTableToHeader("UTENTE_UNITA_ACCESSO");
+        sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA", "UO_CDR");
+        sqlBuilder.addTableToHeader("CDR");
+        sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_ACCESSO.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLJoin("UO_CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_ACCESSO.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLClause(FindClause.AND, "UTENTE_UNITA_ACCESSO.CD_UTENTE", SQLBuilder.EQUALS, username);
+
+        sqlBuilder.addSQLClause(FindClause.AND, cds ? "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA": "UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", SQLBuilder.EQUALS, codice);
+        sqlBuilder.addClause(FindClause.AND, "fl_cds", SQLBuilder.EQUALS, Boolean.FALSE);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
+        final List result = fetchAll(sqlBuilder);
+        getHomeCache().fetchAll(userContext);
+        return result;
+    }
+
+    public List<Unita_organizzativaBulk> findUnitaOrganizzativeAbilitateByRuolo(UserContext userContext, String username, Integer esercizio, String codice, Boolean cds) throws PersistencyException {
+        setFetchPolicy("fetchUnitaPadre");
+        SQLBuilder sqlBuilder = super.createSQLBuilder();
+        sqlBuilder.setDistinctClause(true);
+        sqlBuilder.addTableToHeader("UTENTE_UNITA_RUOLO");
+        sqlBuilder.addTableToHeader("RUOLO_ACCESSO");
+        sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA", "UO_CDR");
+        sqlBuilder.addTableToHeader("CDR");
+        sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLJoin("UO_CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLClause(FindClause.AND, "UTENTE_UNITA_RUOLO.CD_UTENTE", SQLBuilder.EQUALS, username);
+        sqlBuilder.addSQLJoin("UTENTE_UNITA_RUOLO.CD_RUOLO", "RUOLO_ACCESSO.CD_RUOLO");
+        sqlBuilder.addSQLJoin("UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLClause(FindClause.AND, cds ? "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA": "UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", SQLBuilder.EQUALS, codice);
+        sqlBuilder.addClause(FindClause.AND, "fl_cds", SQLBuilder.EQUALS, Boolean.FALSE);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
+        final List result = fetchAll(sqlBuilder);
+        getHomeCache().fetchAll(userContext);
+        return result;
+    }
+
 }
