@@ -50,7 +50,8 @@
     </TD>
   </TR>
 <% if (bp.isAttivaGestioneVariazioniTrasferimento() && (bp.isSearching() ||  
-		var_stanz_res!=null && Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia()))) { %>
+		var_stanz_res!=null && (Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia()) ||
+		Var_stanz_resBulk.TIPOLOGIA_STO_INT.equals(var_stanz_res.getTipologia())))) { %>
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
 	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!var_stanz_res.isPropostaProvvisoria()),null,null);%></TD>

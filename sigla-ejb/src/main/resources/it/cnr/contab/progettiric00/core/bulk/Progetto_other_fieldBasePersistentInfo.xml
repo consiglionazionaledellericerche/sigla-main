@@ -129,6 +129,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_CONTROLLI_DATE_DISABLED"
+			propertyName="flControlliDateDisabled"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
@@ -193,6 +200,8 @@
 		name="idEsternoFideiussione" />
 	<persistentProperty
 		name="flControlliDisabled" />
+	<persistentProperty
+		name="flControlliDateDisabled" />
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty

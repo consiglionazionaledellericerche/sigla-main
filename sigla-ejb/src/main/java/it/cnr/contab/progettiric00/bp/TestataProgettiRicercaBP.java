@@ -34,6 +34,7 @@ import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
@@ -198,7 +199,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         super(function);
     }
 
-
     private boolean attivaAnagraficaProgetto = false;
 
     public boolean isAttivaAnagraficaProgetto() {
@@ -221,7 +221,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
             if (Optional.ofNullable(annoFrom).isPresent())
                 setAnnoFromPianoEconomico(annoFrom.intValue());
-
         } catch (Throwable e) {
             throw new BusinessProcessException(e);
         }
@@ -590,6 +589,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             Progetto_other_fieldBulk otherField = new Progetto_other_fieldBulk();
             otherField.setStato(StatoProgetto.STATO_INIZIALE.value());
             otherField.setFlControlliDisabled(Boolean.FALSE);
+            otherField.setFlControlliDateDisabled(Boolean.FALSE);
             otherField.setToBeCreated();
             progetto.setOtherField(otherField);
         }
@@ -712,8 +712,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
                 .map(ProgettoBulk.class::cast).flatMap(el -> Optional.ofNullable(el.getOtherField()))
                 .filter(Progetto_other_fieldBulk::isStatoIniziale)
                 .flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
-                .flatMap(el -> Optional.ofNullable(el.getCodice()))
-                .filter(el -> el.equals(TipoFinanziamentoBulk.CODICE_FIN) || el.equals(TipoFinanziamentoBulk.CODICE_COF))
+                .filter(tipoFin -> tipoFin.isFinanziamento() || tipoFin.isCofinanziamento())
                 .isPresent();
     }
 
@@ -904,6 +903,15 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             if (!optOtherField.flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
                     .flatMap(el -> Optional.ofNullable(el.getCodice())).isPresent())
                 throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
+
+            if (optOtherField.map(Progetto_other_fieldBulk::getTipoFinanziamento).map(TipoFinanziamentoBulk::isAutofinanziamento).orElse(Boolean.FALSE)) {
+                optProgetto.get().getArchivioAllegati().stream()
+                        .filter(AllegatoProgettoBulk.class::isInstance)
+                        .map(AllegatoProgettoBulk.class::cast)
+                        .filter(AllegatoProgettoBulk::isProvvedimentoCostituzione)
+                        .findFirst()
+                        .orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo Provvedimento di costituzione!"));
+            }
 
             if (optProgetto.get().isDatePianoEconomicoRequired()) {
                 if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
@@ -1127,8 +1135,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             throw handleException(e);
         }
     }
-
-
 
     public SimpleDetailCRUDController getCrudProgetto_anagrafico() {
         return crudProgetto_anagrafico;
