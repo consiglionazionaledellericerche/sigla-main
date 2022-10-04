@@ -51,6 +51,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.DetailedRuntimeException;
@@ -1806,7 +1807,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			BigDecimal imContributiCaricoEnte = righeCori.stream().filter(Contributo_ritenutaBulk::isContributoEnte)
 					.map(Contributo_ritenutaBulk::getAmmontare)
-					.filter(el->el.compareTo(BigDecimal.ZERO)>0)
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 			if (compenso.getIm_lordo_percipiente().compareTo(BigDecimal.ZERO)==0 && imContributiCaricoEnte.compareTo(BigDecimal.ZERO)==0)
@@ -2149,26 +2149,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandato(UserContext userContext, MandatoBulk mandato) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
-			//Il mandato vincolato ad altri mandati non deve generare scritture patrimoniali in quanto rilevate in fase di pagamento mandato
-			if (((Ass_mandato_mandatoHome)getHome(userContext, Ass_mandato_mandatoBulk.class)).findByMandatoCollegato(userContext, mandato, false).stream().findFirst().isPresent())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto il mandato risulta vincolato ad un altro mandato di pagamento.");
-
-			// I mandati di compensi di conguaglio, se sono legati a compensi principali, non generano scrittura
-			Collection<V_doc_cont_compBulk> coll = ((V_doc_cont_compHome)getHome(userContext, V_doc_cont_compBulk.class)).findByDocumento(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), V_doc_cont_compBulk.TIPO_DOC_CONT_MANDATO);
-			if (!coll.isEmpty()) {
-				if (coll.size() > 1)
-					throw new ApplicationRuntimeException("Errore nell'individuazione del compenso a cui è collegato il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato()
-							+ ": il mandato risulta associato a troppi compensi.");
-				V_doc_cont_compBulk docContCompBulk = coll.stream().findAny().get();
-				CompensoBulk compenso = (CompensoBulk)getHome(userContext, CompensoBulk.class).findByPrimaryKey(new CompensoBulk(docContCompBulk.getCd_cds_compenso(), docContCompBulk.getCd_uo_compenso(),
-						docContCompBulk.getEsercizio_compenso(), docContCompBulk.getPg_compenso()));
-
-				//verifico se esiste conguaglio collegato al compenso principale pagato con il mandato
-				CompensoBulk compensoPrincipale = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoPrincipaleAssociato(userContext, compenso);
-				if (!compensoPrincipale.equalsByPrimaryKey(compenso))
-					throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista in quanto il mandato risulta associato a compenso da conguaglio.");
-			}
-
 			//Completo l'oggetto mandato con i sottooggetti che serviranno durante l'elaborazione
 			completeMandato(userContext, mandato);
 
@@ -2185,13 +2165,29 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				else if (mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
 						.anyMatch(el->TipoDocumentoEnum.fromValue(el).isGenericoCoriVersamentoSpesa()))
 					return this.proposeScritturaPartitaDoppiaMandatoVersamentoCori(userContext, mandato);
-				else if (mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
-						.anyMatch(el->TipoDocumentoEnum.fromValue(el).isGenericoCoriAccantonamentoSpesa()))
-					return this.proposeScritturaPartitaDoppiaMandatoAccantonamentoCori(userContext, mandato);
-				else if (mandato.getMandato_rigaColl().size()==1 && mandato.getIm_ritenute().compareTo(BigDecimal.ZERO)>0 &&
-								mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
-										.anyMatch(el->TipoDocumentoEnum.fromValue(el).isGenericoSpesa()))
-					return this.proposeScritturaPartitaDoppiaMandatoAccantonamentoCoriDocgen(userContext, mandato);
+				else {
+					//devo verificare se trattasi di un mandato generato da righe negative associate a qualche compenso
+					Collection<V_doc_cont_compBulk> coll = ((V_doc_cont_compHome) getHome(userContext, V_doc_cont_compBulk.class)).findByDocumento(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), V_doc_cont_compBulk.TIPO_DOC_CONT_MANDATO);
+					CompensoBulk compenso = null;
+					if (!coll.isEmpty()) {
+						if (coll.size() > 1)
+							throw new ApplicationRuntimeException("Errore nell'individuazione del compenso a cui è collegato il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato()
+									+ ": il mandato risulta associato a troppi compensi.");
+						V_doc_cont_compBulk docContCompBulk = coll.stream().findAny().get();
+						compenso = (CompensoBulk) getHome(userContext, CompensoBulk.class).findByPrimaryKey(new CompensoBulk(docContCompBulk.getCd_cds_compenso(), docContCompBulk.getCd_uo_compenso(),
+								docContCompBulk.getEsercizio_compenso(), docContCompBulk.getPg_compenso()));
+					}
+
+					if (compenso != null)
+						return this.proposeScritturaPartitaDoppiaMandatoCompenso(userContext, mandato, compenso);
+					else if (mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
+							.anyMatch(el -> TipoDocumentoEnum.fromValue(el).isGenericoCoriAccantonamentoSpesa()))
+						return this.proposeScritturaPartitaDoppiaMandatoAccantonamentoCori(userContext, mandato);
+					else if (mandato.getMandato_rigaColl().size() == 1 && mandato.getIm_ritenute().compareTo(BigDecimal.ZERO) > 0 &&
+							mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
+									.anyMatch(el -> TipoDocumentoEnum.fromValue(el).isGenericoSpesa()))
+						return this.proposeScritturaPartitaDoppiaMandatoAccantonamentoCoriDocgen(userContext, mandato);
+				}
 
 				TestataPrimaNota testataPrimaNota = new TestataPrimaNota(mandato.getMandato_terzo().getCd_terzo(), null, null);
 				if (mandato.isMandatoRegolarizzazione() && mandato.getCd_cds().equals(mandato.getCd_cds_origine()) &&
@@ -2444,14 +2440,15 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		//Per il calcolo del netto mandato effettuo la sottrazione tra:
-		//1. il lordo mandato calcolato aggiungendo anche le righe ritenute negative che hanno sicuramente generato un mandato vincolato
+		//1. il lordo mandato
 		//2. le ritenute positive
-		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().add(imRitenuteNegative).subtract(imRitenutePositive);
+		BigDecimal imNettoMandato = rigaMandato.getIm_mandato_riga().subtract(imRitenutePositive);
 
 		//Chiudo il patrimoniale principale del compenso.... quello con la partita
 		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
 
 		final String contoPatrimonialePartita;
+
 		//Se l'importo del mandato coincide con i contributi carico ente, vuol dire che ho solo costi di contributi e non di partita.....
 		//quindi il contoPatrimonialePartita non c'è sul compenso
 		if (rigaMandato.getIm_mandato_riga().compareTo(imContributiCaricoEnte)==0)
@@ -2462,8 +2459,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			testataPrimaNota.closeDettaglioPatrimonialePartita(compenso, contoPatrimonialePartita, imNettoMandato, compenso.getCd_terzo());
 			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), voceEpBanca.getCd_voce_ep(), imNettoMandato);
 		}
+
 		//Registrazione conto CONTRIBUTI-RITENUTE
-		righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)!=0).forEach(cori->{
+		righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)>0).forEach(cori->{
 			try {
 				BigDecimal imCori = cori.getAmmontare();
 
@@ -2493,22 +2491,111 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 
-		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, false);
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, true);
+	}
 
-		//Verifico che il saldo tesoreria coincida con il netto mandato
-		BigDecimal saldoTesoreria = scritturaPartitaDoppia.getAllMovimentiColl().stream()
-				.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
-				.map(el -> el.isSezioneDare() ? el.getIm_movimento() : el.getIm_movimento().negate())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+	/*
+		Questa procedura gestisce la proposta di prima nota di un mandato generato dalle righe negative del compenso
+	 */
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoCompenso(UserContext userContext, MandatoBulk mandato, CompensoBulk compenso) throws ComponentException, PersistencyException, RemoteException {
+		String descMandato = mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato();
+		String descEstesaMandato = "mandato " + descMandato + " generato da righe negative del compenso "+compenso.getEsercizio()+"/"+compenso.getCd_unita_organizzativa()+"/"+compenso.getPg_compenso();
 
-		if  (saldoTesoreria.negate().compareTo(imNettoMandato) != 0)
-			throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato "+
-					mandato.getEsercizio()+"/"+mandato.getCd_cds()+"/"+mandato.getPg_mandato()+". Il saldo del conto tesoreria (" +
-					new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
-					") non risulterebbe essere uguale all'importo netto del mandato (" +
-					new it.cnr.contab.util.EuroFormat().format(imNettoMandato)+").");
+		if (mandato.getMandato_rigaColl().isEmpty() || mandato.getMandato_rigaColl().size() > 1)
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCds() + "/" + mandato.getPg_mandato() +
+					" ha un numero di righe non coerente con l'unica prevista per un mandato generato da compenso. Proposta di prima nota non possibile.");
 
-		return scritturaPartitaDoppia;
+		Mandato_rigaBulk rigaMandato = mandato.getMandato_rigaColl().get(0);
+		TestataPrimaNota testataPrimaNota = new TestataPrimaNota(mandato.getMandato_terzo().getCd_terzo(), null, null);
+
+		List<Contributo_ritenutaBulk> righeCori = Optional.ofNullable(compenso.getChildren()).orElseGet(() -> {
+			try {
+				Contributo_ritenutaHome home = (Contributo_ritenutaHome) getHome(userContext, Contributo_ritenutaBulk.class);
+				return (java.util.List<Contributo_ritenutaBulk>) home.loadContributiRitenute(compenso);
+			} catch (ComponentException | PersistencyException e) {
+				throw new DetailedRuntimeException(e);
+			}
+		});
+
+		//Cerco tra le righeCori quella del mandato.... cerco per importo... e se ne esistono di più per descrizione..... se non si individua lancio eccezione
+		List<Contributo_ritenutaBulk> righeCoriMandatoByImporto = righeCori.stream()
+				.filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)<0)
+				.filter(el->el.getAmmontare().abs().compareTo(rigaMandato.getIm_mandato_riga().subtract(rigaMandato.getIm_ritenute_riga()))==0)
+				.collect(Collectors.toList());
+
+		Contributo_ritenutaBulk cori = null;
+
+		if (righeCoriMandatoByImporto.isEmpty())
+			throw new ApplicationException("Il " + descEstesaMandato + " ha un importo che non corrisponde a nessuna riga negativa del compenso stesso. Proposta di prima nota non possibile.");
+		if (righeCoriMandatoByImporto.size()>1) {
+			List<Contributo_ritenutaBulk> righeCoriMandatoByDesc = righeCoriMandatoByImporto.stream()
+					.filter(el->rigaMandato.getDs_mandato_riga().contains(el.getCd_contributo_ritenuta()))
+					.collect(Collectors.toList());
+
+			if (righeCoriMandatoByDesc.isEmpty() || righeCoriMandatoByDesc.size()>1)
+				throw new ApplicationException("Il " + descEstesaMandato + " ha un importo che corrisponde a più righe negative del compenso stesso. Proposta di prima nota non possibile.");
+
+			cori = righeCoriMandatoByDesc.get(0);
+		}  else
+			cori = righeCoriMandatoByImporto.get(0);
+
+
+		BigDecimal imCori = cori.getAmmontare();
+
+		// Se la tipologia di contributo ritenuta è IVA o RIVALSA non registro la ritenuta in quanto già registrata in fase di chiusura debito mandato (imNettoMandato contiene imCori)
+		// L'Iva, sia per compensa istituzionale che commerciale, va sempre a costo,
+		if (!cori.isTipoContributoRivalsa() && !(cori.isTipoContributoIva() && cori.isContributoEnte())) {
+			//Chiudo il patrimoniale principale del compenso.... quello con la partita
+			Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
+
+			if (cori.isTipoContributoIva() && cori.isContributoPercipiente()) {
+				//recupero la scrittura del compenso
+				List<Movimento_cogeBulk> allMovimentiPrimaNotaCompenso = this.findMovimentiPrimaNota(userContext, compenso);
+				Movimento_cogeBulk movimentoToClose = this.findMovimentoAperturaCoriIVACompenso(allMovimentiPrimaNotaCompenso, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+				testataPrimaNota.addDettaglio(movimentoToClose.getTi_riga(), Movimento_cogeBulk.getControSezione(movimentoToClose.getSezione()), movimentoToClose.getCd_voce_ep(), imCori, compenso, movimentoToClose.getCd_terzo(), cori.getCd_contributo_ritenuta());
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), movimentoToClose.getSezione(), voceEpBanca.getCd_voce_ep(), imCori);
+			} else {
+				Pair<Voce_epBulk, Voce_epBulk> pairContoCori = this.findPairContiMandato(userContext, cori);
+				Voce_epBulk contoVersamentoCori = pairContoCori.getSecond();
+				//se rigaMandato.getIm_mandato_riga() è uguale a imContributiCaricoEnte il contoPatrimonialePartita non è impostato.
+				//Ma in questo caso non dovrebbe mai verificarsi che ci siano contributi a carico percipiente altrimenti il mandato sarebbe negativo
+				if (cori.isContributoPercipiente()) {
+					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.getControSezione(compenso.getTipoDocumentoEnum().getSezionePatrimoniale()), voceEpBanca.getCd_voce_ep(), imCori);
+					testataPrimaNota.openDettaglioPatrimonialeCori(compenso, contoVersamentoCori.getCd_voce_ep(), imCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+				} else {
+					//recupero la scrittura del compenso
+					List<Movimento_cogeBulk> allMovimentiPrimaNotaCompenso = this.findMovimentiPrimaNota(userContext, compenso);
+					Movimento_cogeBulk movimentoCoriToClose = this.findMovimentoAperturaCori(allMovimentiPrimaNotaCompenso, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+					if (!movimentoCoriToClose.getIm_movimento().equals(imCori.abs()) || !movimentoCoriToClose.getSezione().equals(Movimento_cogeBulk.SEZIONE_DARE))
+						throw new ApplicationException("Il " + descEstesaMandato + " ha un importo che non corrisponde al saldo ("+
+								new it.cnr.contab.util.EuroFormat().format(movimentoCoriToClose.getIm_movimento()) +
+								") del compenso stesso registrato per il contributo "+cori.getCd_contributo_ritenuta()+". Proposta di prima nota non possibile.");
+					testataPrimaNota.addDettaglio(movimentoCoriToClose.getTi_riga(), Movimento_cogeBulk.getControSezione(movimentoCoriToClose.getSezione()), movimentoCoriToClose.getCd_voce_ep(), imCori.abs(), compenso, movimentoCoriToClose.getCd_terzo(), movimentoCoriToClose.getCd_contributo_ritenuta());
+					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), movimentoCoriToClose.getSezione(), voceEpBanca.getCd_voce_ep(), imCori.abs());
+				}
+			}
+		}
+
+		if (mandato.getIm_ritenute().compareTo(BigDecimal.ZERO)!=0) {
+			List<Ass_mandato_reversaleBulk> result = ((Ass_mandato_reversaleHome) getHome(userContext, Ass_mandato_reversaleBulk.class)).findReversali(userContext, mandato, false);
+
+			List<ReversaleBulk> reversali = new ArrayList<>();
+
+			for (java.util.Iterator<Ass_mandato_reversaleBulk> y = result.iterator(); y.hasNext(); ) {
+				Ass_mandato_reversaleBulk assManRev = y.next();
+				ReversaleIHome revHome = (ReversaleIHome) getHome(userContext, ReversaleIBulk.class);
+				reversali.add((ReversaleIBulk)revHome.findByPrimaryKey(new ReversaleIBulk(assManRev.getCd_cds_reversale(), assManRev.getEsercizio_reversale(), assManRev.getPg_reversale())));
+			}
+
+			BigDecimal totReversali = reversali.stream().map(ReversaleBulk::getIm_reversale)
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			if (totReversali.compareTo(mandato.getIm_ritenute())!=0)
+				throw new ApplicationException("Il " + descEstesaMandato + " risulta avere un importo ritenute che non corrisponde alla somma delle reversali" +
+						" effettivamente vincolate. Proposta di prima nota non possibile.");
+		}
+
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, true);
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoStipendi(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {
@@ -4019,7 +4106,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Movimento_cogeBulk findMovimentoAperturaCori(List<Movimento_cogeBulk> movimentiCoge, IDocumentoCogeBulk docamm, Integer cdTerzo, String cdCori) throws ComponentException {
 		List<Movimento_cogeBulk> result = movimentiCoge.stream()
-				.filter(el->docamm.getTipoDocumentoEnum().getSezionePatrimoniale().equals(el.getSezione()))
 				.filter(el->docamm.getTipoDocumentoEnum().getTipoPatrimoniale().equals(el.getTi_riga()))
 				.filter(el->docamm.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
 				.filter(el->docamm.getEsercizio().equals(el.getEsercizio_documento()))
@@ -4429,51 +4515,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					") non risulterebbe essere uguale al totale Avere (" +
 					new it.cnr.contab.util.EuroFormat().format(scritturaPartitaDoppia.getImTotaleAvere())+").");
 
-		if (controllaTesoreria)
-			controllaContoTesoreriaConNettoMandato(userContext, doccoge, scritturaPartitaDoppia);
-
-		return scritturaPartitaDoppia;
-	}
-
-	private void controllaContoTesoreriaConNettoMandato(UserContext userContext, IDocumentoCogeBulk doccoge, Scrittura_partita_doppiaBulk scritturaPartitaDoppia) {
-		//Metto il controllo che il conto tesoreria sia sempre pari al netto mandato/reversale se richiesto di fare controllo
-		if (doccoge instanceof MandatoBulk || doccoge instanceof ReversaleBulk) {
+		if (controllaTesoreria && (doccoge instanceof MandatoBulk || doccoge instanceof ReversaleBulk)) {
+			//Metto il controllo che il conto tesoreria sia sempre pari al netto mandato/reversale se richiesto di fare controllo
 			BigDecimal saldoTesoreria = scritturaPartitaDoppia.getAllMovimentiColl().stream()
 					.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
 					.map(el -> el.isSezioneDare() ? el.getIm_movimento() : el.getIm_movimento().negate())
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
-			if (doccoge instanceof MandatoBulk) {
-				//devo considerare il netto di eventuali mandati collegati che vengono registrati automaticamente
-				BigDecimal totMandatiColl = BigDecimal.ZERO;
-				Collection<V_ass_doc_contabiliBulk> docColl = Optional.ofNullable(((MandatoBulk) doccoge).getDoc_contabili_collColl()).orElseGet(()->{
-					try {
-						return ((V_ass_doc_contabiliHome) getHome(userContext, V_ass_doc_contabiliBulk.class)).findDoc_contabili_coll(userContext, (MandatoBulk) doccoge);
-					} catch (ComponentException | PersistencyException | IntrospectionException e) {
-						throw new DetailedRuntimeException(e);
-					}
-				});
-
-				totMandatiColl = docColl.stream()
-						.filter(el->el.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_MAN))
-						.map(el -> {
-							try {
-								/** il mandato ha un mandato associato **/
-								MandatoBulk mandatoCollBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
-										.findByPrimaryKey(new MandatoBulk(el.getCd_cds_coll(), el.getEsercizio_coll(), el.getPg_documento_cont_coll()));
-								return mandatoCollBulk.getIm_netto();
-							} catch (ComponentException | PersistencyException ex) {
-								throw new ApplicationRuntimeException(ex);
-							}
-						})
-						.reduce(BigDecimal.ZERO, BigDecimal::add);
-
-				if  (saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto().add(totMandatiColl)) != 0)
-					throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato "+doccoge.getEsercizio()+"/"+
-							doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria (" +
-							new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
-							") non risulterebbe essere uguale all'importo netto del mandato (" +
-							new it.cnr.contab.util.EuroFormat().format(((MandatoBulk) doccoge).getIm_netto().add(totMandatiColl))+").");
-			}
+			if (doccoge instanceof MandatoBulk && saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto()) != 0)
+				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato "+doccoge.getEsercizio()+"/"+
+						doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria (" +
+						new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
+						") non risulterebbe essere uguale all'importo netto del mandato (" +
+						new it.cnr.contab.util.EuroFormat().format(((MandatoBulk) doccoge).getIm_netto())+").");
 			if (doccoge instanceof ReversaleBulk && saldoTesoreria.compareTo(((ReversaleBulk) doccoge).getIm_reversale()) != 0)
 				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota della reversale "+doccoge.getEsercizio()+"/"+
 						doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria  (" +
@@ -4481,6 +4534,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						") non risulterebbe essere uguale all'importo della reversale (" +
 						new it.cnr.contab.util.EuroFormat().format(((ReversaleBulk) doccoge).getIm_reversale())+").");
 		}
+
+		return scritturaPartitaDoppia;
 	}
 
 	private Movimento_cogeBulk addMovimentoCoge(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppia, IDocumentoCogeBulk doccoge, TestataPrimaNota testata, String aTipoDett, String aSezione, String aCdConto, BigDecimal aImporto) throws ComponentException {
