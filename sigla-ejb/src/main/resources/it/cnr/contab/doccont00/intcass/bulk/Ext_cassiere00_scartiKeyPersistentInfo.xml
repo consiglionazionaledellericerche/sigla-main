@@ -31,7 +31,7 @@
 			columnName="NOME_FILE"
 			propertyName="nome_file"
 			sqlTypeName="VARCHAR"
-			columnSize="20"
+			columnSize="250"
 			nullable="false"
 			primary="true" />
 		<columnMapping

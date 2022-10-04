@@ -5862,4 +5862,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
 
     <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->
     <include file="bootstrap/add_conf_gestione_etichetta_inventario.xml"/>
+    <!--Modifica lungheza nome file per la giornaliera di cassa-->
+    <include file="bootstrap/modify_length_file_name_siopeplus.xml"/>
 </databaseChangeLog>
