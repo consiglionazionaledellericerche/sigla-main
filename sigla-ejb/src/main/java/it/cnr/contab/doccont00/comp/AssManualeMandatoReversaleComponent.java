@@ -199,8 +199,6 @@ public class AssManualeMandatoReversaleComponent extends it.cnr.jada.comp.CRUDCo
 
         } catch (PersistencyException ex) {
             throw handleException(ex);
-        } catch (IntrospectionException ex) {
-            throw handleException(ex);
         }
     }
 
