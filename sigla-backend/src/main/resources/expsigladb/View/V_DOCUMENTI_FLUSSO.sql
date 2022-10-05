@@ -117,6 +117,7 @@
         AND v.pg_reversale = r.pg_reversale
         AND terzo_uo.cd_terzo = b.cd_terzo
         AND r.pg_banca = b.pg_banca
+        AND b.fl_cancellato != 'N'
         AND
             --
             r.cd_cds = cge.cd_cds
