@@ -26,7 +26,6 @@ import it.cnr.jada.util.action.CRUDBP;
 public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 	public final static java.util.Dictionary TIPI_VARIAZIONE;
 	public final static java.util.Dictionary TIPI_APPROVAZIONE;
-
 	final public static String STORNO_SPESA_STESSO_ISTITUTO = "STO_S_CDS";
 	final public static String STORNO_ENTRATA_STESSO_ISTITUTO = "STO_E_CDS";
 	final public static String STORNO_SPESA_ISTITUTI_DIVERSI = "STO_S_TOT";

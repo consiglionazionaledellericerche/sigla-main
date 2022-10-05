@@ -54,6 +54,8 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 
 	private Boolean flControlliDisabled;
 
+	private Boolean flControlliDateDisabled;
+
 	public Progetto_other_fieldBase() {
 		super();
 	}
@@ -196,5 +198,13 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 
 	public void setFlControlliDisabled(Boolean flControlliDisabled) {
 		this.flControlliDisabled = flControlliDisabled;
+	}
+
+	public Boolean getFlControlliDateDisabled() {
+		return flControlliDateDisabled;
+	}
+
+	public void setFlControlliDateDisabled(Boolean flControlliDateDisabled) {
+		this.flControlliDateDisabled = flControlliDateDisabled;
 	}
 }

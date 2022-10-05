@@ -40,6 +40,7 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
     public static final String CODICE_ATT_COMM_TAR = "ATT_COMM_TAR";
     public static final String CODICE_DON = "DON";
     public static final String CODICE_ATT_COMM_SUB = "ATT_COMM_SUB";
+    public static final String CODICE_GEST = "GEST";
 
     public final static Dictionary codiceKeys;
 
@@ -55,8 +56,9 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
         codiceKeys.put(CODICE_ATT_COM, "Attività Commerciale pura");
         codiceKeys.put(CODICE_ATT_COMM_TAR, "Attività commerciale a tariffario");
         codiceKeys.put(CODICE_ATT_COMM_SUB, "Attività commerciale (CNR sub contraente)");
+        codiceKeys.put(CODICE_GEST, "Gestionale");
         codiceKeys.put(CODICE_DON, "Donazioni");
-    };
+    }
 
     /**
      * Created by BulkGenerator 2.0 [07/12/2009]
@@ -91,15 +93,60 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
         setFlQuadraContratto(Boolean.FALSE);
         setFlAssociaContratto(Boolean.FALSE);
         setFlValidazioneAutomatica(Boolean.FALSE);
+        setFlTrasfQuoteProgettiAttivi(Boolean.FALSE);
+        setFlRiceviQuoteProgettiAttivi(Boolean.FALSE);
+        setFlAttivo(Boolean.TRUE);
         return super.initializeForInsert(crudbp, actioncontext);
-    }
-
-    @Override
-    public OggettoBulk initializeForSearch(CRUDBP crudbp, ActionContext actioncontext) {
-        return super.initializeForSearch(crudbp, actioncontext);
     }
 
     public Dictionary getCodiceKeys() {
         return codiceKeys;
+    }
+
+    public boolean isFoe() {
+        return TipoFinanziamentoBulk.CODICE_FOE.equals(this.getCodice());
+    }
+
+    public boolean isFoeProgetti() {
+        return TipoFinanziamentoBulk.CODICE_FOE_PRO.equals(this.getCodice());
+    }
+
+    public boolean isAutofinanziamento() {
+        return TipoFinanziamentoBulk.CODICE_AUT.equals(this.getCodice());
+    }
+
+    public boolean isAutofinanziamentoAree() {
+        return TipoFinanziamentoBulk.CODICE_AUT_AREE.equals(this.getCodice());
+    }
+
+    public boolean isRimborsiSoggettiTerzi() {
+        return TipoFinanziamentoBulk.CODICE_RIM.equals(this.getCodice());
+    }
+
+    public boolean isCofinanziamento() {
+        return TipoFinanziamentoBulk.CODICE_COF.equals(this.getCodice());
+    }
+
+    public boolean isFinanziamento() {
+        return TipoFinanziamentoBulk.CODICE_FIN.equals(this.getCodice());
+    }
+
+    public boolean isAttivitaCommercialePura() {
+        return TipoFinanziamentoBulk.CODICE_ATT_COM.equals(this.getCodice());
+    }
+
+    public boolean isAttivitaCommercialeTariffario() {
+        return TipoFinanziamentoBulk.CODICE_ATT_COMM_TAR.equals(this.getCodice());
+    }
+
+    public boolean isAttivitaCommercialeSub() {
+        return TipoFinanziamentoBulk.CODICE_ATT_COMM_SUB.equals(this.getCodice());
+    }
+    public boolean isGestionale() {
+        return TipoFinanziamentoBulk.CODICE_GEST.equals(this.getCodice());
+    }
+
+    public boolean isDonazioni() {
+        return TipoFinanziamentoBulk.CODICE_DON.equals(this.getCodice());
     }
 }

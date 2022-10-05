@@ -34,6 +34,7 @@ import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
@@ -197,7 +198,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     public TestataProgettiRicercaBP(String function) {
         super(function);
     }
-
 
     private boolean attivaAnagraficaProgetto = false;
 
@@ -1129,8 +1129,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             throw handleException(e);
         }
     }
-
-
 
     public SimpleDetailCRUDController getCrudProgetto_anagrafico() {
         return crudProgetto_anagrafico;

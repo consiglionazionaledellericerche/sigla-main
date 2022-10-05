@@ -81,7 +81,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
-	private class CtrlDispPianoEco {
+	private static class CtrlDispPianoEco {
 		public CtrlDispPianoEco(ProgettoBulk progetto, Progetto_piano_economicoBulk progettoPianoEconomico) {
 			super();
 			this.progetto = progetto;
@@ -118,7 +118,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			this.impCofinanziato = impCofinanziato;
 		}
 	}
-	private class CtrlPianoEcoDett {
+	private static class CtrlPianoEcoDett {
 		private String tipoNatura;
 		private boolean isUoArea;
 		private boolean isCdrPersonale;
@@ -192,7 +192,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			return Elemento_voceHome.GESTIONE_SPESE.equals(getTipoDett());
 		}
 	}
-	private class CtrlPianoEco {
+	private static class CtrlPianoEco {
 		public CtrlPianoEco(ProgettoBulk progetto) {
 			super();
 			this.progetto = progetto;
@@ -200,7 +200,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		private ProgettoBulk progetto;
 		private Progetto_rimodulazioneBulk rimodulazione;
 
-		private List<CtrlPianoEcoDett> dett = new ArrayList<CtrlPianoEcoDett>();
+		private List<CtrlPianoEcoDett> dett = new ArrayList<>();
 		
 		public ProgettoBulk getProgetto() {
 			return progetto;
@@ -263,17 +263,15 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isVoceSpeciale));
 		}
 		public BigDecimal getImpEntrataPositivi(){
-			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)>0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 		}
 		public BigDecimal getImpEntrataNegativi(){
-			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)<0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO).abs();
+			return dett.stream().filter(CtrlPianoEcoDett::isTipoEntrata).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)<0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO).abs();
 		}
 		public Timestamp getDtScadenza() {
-			return Optional.ofNullable(
-					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-					.orElse(null);
+			return Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine());
 		}
 		public Timestamp getDtScadenzaRimodulata() {
 			return Optional.ofNullable(this.getRimodulazione())
@@ -285,12 +283,12 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 					.map(dt->dt.before(dataRiferimento)).orElse(Boolean.FALSE);
 		}
 		private BigDecimal getImpSpesaPositivi(Stream<CtrlPianoEcoDett> stream){
-			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)>0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 		}
 		private BigDecimal getImpSpesaNegativi(Stream<CtrlPianoEcoDett> stream){
-			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)<0)
-					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO).abs();
+			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).map(CtrlPianoEcoDett::getImporto)
+					.filter(importo -> importo.compareTo(BigDecimal.ZERO)<0).reduce(BigDecimal::add).orElse(BigDecimal.ZERO).abs();
 		}
 		/**
 		 * Ritorna l'importo positivo della spesa al netto degli importi di Natura Reimpiego, Area e Cdr Personale
@@ -397,7 +395,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
 			saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
         if (saldo != null){
 			saldo.setIm_mandati_reversali( saldo.getIm_mandati_reversali().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
-			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
+			saldo.setUser( userContext.getUser());
 			updateBulk( userContext, saldo );
 		}		
 		return saldo;
@@ -480,7 +478,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 		if (saldo != null){			
 			importo = importo.setScale(2, importo.ROUND_HALF_UP);
 			saldo.setIm_obblig_imp_acr( saldo.getIm_obblig_imp_acr().add( importo) );
-			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
+			saldo.setUser( userContext.getUser());
 	
 			//se si tratta di un residuo devo aggiornare anche le variazioni più o meno
 			if ( ti_competenza_residuo.equals( saldo.TIPO_RESIDUO ))
@@ -540,7 +538,7 @@ public Voce_f_saldi_cmpBulk aggiornaPagamentiIncassi(UserContext userContext, Vo
 		Voce_f_saldi_cmpBulk saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
 		if (saldo != null){
 			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_UP) ));
-			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
+			saldo.setUser( userContext.getUser());
 			updateBulk( userContext, saldo );
 		}			
 		return saldo;
@@ -1661,16 +1659,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			throw new ApplicationException("Errore nella call del metodo getMessaggioSfondamentoPianoEconomico. Contattare il CED.");
 
         try {
-        	Configurazione_cnrComponentSession configSession = (Configurazione_cnrComponentSession)Utility.createConfigurazioneCnrComponentSession();
-			String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
-			BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+        	Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+			String cdNaturaReimpiego = configSession.getVal01(userContext, 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+			BigDecimal annoFrom = configSession.getIm01(userContext, 0, null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 
 			Integer esercizioVariazione = Optional.ofNullable(isVariazioneCompetenza?Optional.of(variazione).map(Pdg_variazioneBulk.class::cast).map(Pdg_variazioneBulk::getEsercizio).orElse(null)
 																				    :Optional.of(variazione).map(Var_stanz_resBulk.class::cast).map(Var_stanz_resBulk::getEsercizio_residuo).orElse(null))
 					                              .orElseThrow(()->new ApplicationException("Esercizio Variazione non individuata."));
 
 			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).filter(el->el.compareTo(esercizioVariazione)<=0).isPresent()) {
-				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<CtrlDispPianoEco>();
+				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<>();
 
 				Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
 				Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
@@ -2527,6 +2525,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoRagioneria)
 					.orElse(Boolean.FALSE);
 
+			boolean isVariazioneTrasferimentoEsigenzeFinanziarie = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::isMotivazioneTrasferimentoEsigenzeFinanziarie)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoEsigenzeFinanziarie)
+					.orElse(Boolean.FALSE);
+
 			boolean isCDRAreaVariazione = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
@@ -2760,7 +2769,33 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
 				});
 			}
-			
+
+			if (isVariazioneTrasferimentoEsigenzeFinanziarie) {
+				listCtrlPianoEco.stream()
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlTrasfQuoteProgettiAttivi())
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlRiceviQuoteProgettiAttivi())
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per Esigenze Finanziarie' non è possibile "
+									+ "movimentare progetti la cui tipologia di finanziamento non prevede trasferimento/acquisizione di fondi da progetti attivi (Progetto non valido: "+el.getProgetto().getCd_progetto()+").");
+						});
+
+				listCtrlPianoEco.stream()
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlRiceviQuoteProgettiAttivi())
+						.filter(el->el.getImpSpesaPositivi().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile assegnare fondi a progetti la cui tipologia di finanziamento non prevede " +
+									"acquisizione di fondi da progetti attivi (Progetto non valido: "+el.getProgetto().getCd_progetto()+").");
+						});
+
+				listCtrlPianoEco.stream()
+						.filter(el->!el.getProgetto().getOtherField().getTipoFinanziamento().getFlTrasfQuoteProgettiAttivi())
+						.filter(el->el.getImpSpesaNegativi().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile sottrarre fondi a progetti la cui tipologia di finanziamento non prevede " +
+									"trasferimento di fondi da progetti attivi (Progetto non valido: "+el.getProgetto().getCd_progetto()+").");
+						});
+			}
+
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
 					.map(CtrlPianoEco::getImpSpesaPositiviVoceSpeciale)
@@ -2855,12 +2890,24 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										.map(Var_stanz_resBulk::getDt_chiusura)
 										.orElseThrow(()->new DetailedRuntimeException("Attenzione! Operazione non possibile in "
 												+ "quanto non risulta ancora impostata la data chiusura della variazione.")));
-		
-				//CONTROLLI SU SINGOLO PROGETTO
+
+
+				if (isVariazioneTrasferimentoEsigenzeFinanziarie) {
+					listCtrlPianoEco.stream()
+							.filter(el->el.isScaduto(dataChiusura))
+							.filter(el->el.getProgetto().getOtherField().getTipoFinanziamento().getFlTrasfQuoteProgettiAttivi())
+							.filter(el->el.getImpSpesaNegativi().compareTo(BigDecimal.ZERO) != 0)
+							.findFirst().ifPresent(el -> {
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per Esigenze Finanziarie' non è possibile " +
+										"trasferire fondi da progetti scaduti (Progetto non valido: " + el.getProgetto().getCd_progetto() + ").");
+							});
+				}
+
+					//CONTROLLI SU SINGOLO PROGETTO
 				//Controlli non attivi per variazioni maggiori entrate/spese che non possono avere importi negativi essendo già stato fatto
 				//questo controllo prima
-				/**
-				 * 10. se un progetto è scaduto non è possibile attribuire fondi 
+				/*
+				  10. se un progetto è scaduto non è possibile attribuire fondi
 				 */
 				listCtrlPianoEco.stream()
 					.filter(el->el.isScaduto(dataChiusura))
@@ -2871,11 +2918,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								" in quanto scaduto ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDtScadenza()) +
 								") rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dataChiusura)+").");});
 
-				/**
-				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
-				 *    dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria)
+				/*
+				  20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
+				     dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria o per esigenze finanziarie)
+			  	  10/06/2022 - regola non valida per variazioni di tipo Trasferimento Finanziario - documento analisi cda
 				 */
-				if (!isVariazioneArea && !isVariazioneRagioneria)
+				if (!isVariazioneArea && !isVariazioneRagioneria && !isVariazioneTrasferimentoEsigenzeFinanziarie)
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
@@ -2888,12 +2936,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
 		
-				/**
-				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
-				 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
-				 * 	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
+				/*
+				  30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto
+				  	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+				  	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
+  				  	  10/06/2022 - regola non valida per variazioni di tipo Trasferimento Finanziario - documento analisi cda
 				 */
-				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
+				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk) && !isVariazioneTrasferimentoEsigenzeFinanziarie) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
@@ -2920,12 +2969,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										  .add(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
 		
-					/**
-					 * 31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
-					 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
-					 *     
-					 *     N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
-					 *     controllo effettuato al punto 90
+					/*
+					  31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto
+					  	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+
+					      N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
+					      controllo effettuato al punto 90
 					 */
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
@@ -3142,35 +3191,37 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					 * 	(regola non valida per trasferimenti ad Aree)
 					 */
 					if (!isVariazioneArea && !isVariazioneRagioneria) {
-						listCtrlPianoEco.stream()
-								.filter(el -> !el.isScaduto(dataChiusura))
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
-								.findFirst().ifPresent(el -> {
-							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
-									el.getProgetto().getCd_progetto() + " (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
-									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
-						});
-
-						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
-								.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO) > 0)
-								.map(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()))
-								.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
-
-						if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO) > 0) {
-							BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
+						if (!isVariazioneTrasferimentoEsigenzeFinanziarie) {
+							listCtrlPianoEco.stream()
 									.filter(el -> !el.isScaduto(dataChiusura))
-									.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
-									.map(CtrlPianoEco::getImpSpesaNegativiVoceSpeciale)
+									.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
+									.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
+									.findFirst().ifPresent(el -> {
+								throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
+										el.getProgetto().getCd_progetto() + " (" +
+										new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
+										") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
+										"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
+										new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
+							});
+
+							BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
+									.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO) > 0)
+									.map(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()))
 									.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
-							if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso)) != 0)
-								throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
-										+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
-										+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce " + cdVoceSpeciale
-										+ " (" + new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti) + ").");
+
+							if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO) > 0) {
+								BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
+										.filter(el -> !el.isScaduto(dataChiusura))
+										.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
+										.map(CtrlPianoEco::getImpSpesaNegativiVoceSpeciale)
+										.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
+								if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso)) != 0)
+									throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
+											+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
+											+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce " + cdVoceSpeciale
+											+ " (" + new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti) + ").");
+							}
 						}
 					} else {
 						/**

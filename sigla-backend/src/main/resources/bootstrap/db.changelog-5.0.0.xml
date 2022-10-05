@@ -5818,6 +5818,48 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_limite_giorni_durata_progetto">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="limite_giorni_durata_progetto" remarks="Limite in giorni della durata di un progetto (anno=365 giorni)" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_limite_giorni_proroga_progetto">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="limite_giorni_proroga_progetto" remarks="Limite in giorni della proroga di un progetto (anno=365 giorni)" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_fl_trasf_quote_progetti_attivi">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_trasf_quote_progetti_attivi" type="CHAR(1)" defaultValue="N" remarks="Indica che è possibile trasferire quote di progetti ancora attivi (non scaduti) - Dominio: Y = Sì; N = No;">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_fl_attivo">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_attivo" type="CHAR(1)" defaultValue="Y" remarks="Indica se è attivo il tipo di finanziamento e può essere associati a progetti di nuova creazione. Se disattivato Non ha alcun impatto sui progetti già creati. - Dominio: Y = Sì; N = No;">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_progetto_other_field_add_column_fl_controlli_date_disabled">
+        <addColumn tableName="progetto_other_field">
+            <column name="fl_controlli_date_disabled" type="CHAR(1)" defaultValue="N" remarks="Indica se deve essere effettuato il controllo sulla durata/proroga del progetto se previsto dal tipo di finanziamento associato. - Dominio: Y = Sì; N = No;"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="progetto_other_field_disabilita_controlli_date_progetti">
+        <update tableName="progetto_other_field">
+            <column name="fl_controlli_disabled" type="CHAR(1)" value="Y"/>
+            <where>STATO!='INI' OR DT_INIZIO IS NOT NULL</where>
+        </update>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column_fl_ricev_quote_progetti_attivi">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_ricev_quote_progetti_attivi" type="CHAR(1)" defaultValue="N" remarks="Indica che è possibile ricevere quote da progetti ancora attivi (non scaduti) - Dominio: Y = Sì; N = No;">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
     <include file="bootstrap/add_index_on_pluriennali.xml"/>
 
