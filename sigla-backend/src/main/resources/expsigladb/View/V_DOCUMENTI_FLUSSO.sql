@@ -115,9 +115,9 @@
         AND v.cd_cds = r.cd_cds
         AND v.esercizio = r.esercizio
         AND v.pg_reversale = r.pg_reversale
-        AND terzo_uo.cd_terzo = b.cd_terzo
+        AND terzo_uo.cd_unita_organizzativa = v.cd_uo_origine
+        AND nvl(r.cd_terzo_uo,terzo_uo.cd_terzo) = b.cd_terzo
         AND r.pg_banca = b.pg_banca
-        AND b.fl_cancellato != 'N'
         AND
             --
             r.cd_cds = cge.cd_cds
@@ -150,9 +150,6 @@
         AND c.esercizio_siope(+) = cge.esercizio_siope
         AND c.ti_gestione(+) = cge.ti_gestione
         AND c.cd_siope(+) = cge.cd_siope
-        AND
-            /*eliminato commento per inserire nella causale i cup cmq indicati*/
-            terzo_uo.cd_unita_organizzativa = v.cd_uo_origine
         AND
             --
             v.cd_cds = sosp.cd_cds_reversale(+)
