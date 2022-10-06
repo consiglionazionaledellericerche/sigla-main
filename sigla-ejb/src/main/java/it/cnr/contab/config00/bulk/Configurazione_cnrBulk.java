@@ -197,6 +197,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_GESTIONE_CONTRATTI = "CONTRATTI";
     public final static String SK_ATT_REST_STORED_FROM_SIGLA = "ATT_REST_CONTR_STORED_FROM_SIGLA";
 
+    public final static String PK_ESERCIZIO_SPECIALE = "ESERCIZIO_SPECIALE";
+    public final static String SK_ESERCIZIO_PARTENZA = "ESERCIZIO_PARTENZA";
     public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria, java.lang.String cd_chiave_secondaria, java.lang.String cd_unita_funzionale, java.lang.Integer esercizio) {
         super(cd_chiave_primaria, cd_chiave_secondaria, cd_unita_funzionale, esercizio);
     }

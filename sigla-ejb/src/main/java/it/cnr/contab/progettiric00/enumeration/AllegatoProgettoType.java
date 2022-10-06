@@ -24,6 +24,7 @@ public enum AllegatoProgettoType {
 	STRALCIO("Stralcio", "D:sigla_progetti_attachment:stralcio"),
 	CONTRODEDUZIONE("Controdeduzione", "D:sigla_progetti_attachment:controdeduzioni"),
 	FINAL_STATEMENT_PAYMENT("Final Statement Payment", "D:sigla_progetti_attachment:final_statement_payment"),
+    VALUTAZIONE_UTILIZZO_RISORSE("Valutazione Utilizzo Risorse", "D:sigla_progetti_attachment:valutazione_utilizzo_risorse"),
 	GENERICO("Allegato Generico", "D:sigla_progetti_attachment:allegato_generico");
 		
     private final String label, value;

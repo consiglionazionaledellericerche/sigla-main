@@ -32,6 +32,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
+import it.cnr.contab.web.rest.model.AnagraficaInfoDTO;
 import it.cnr.jada.bulk.OggettoBulk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +110,15 @@ public class TerzoResource implements TerzoLocal {
 					"findRapporti",
 					anagraficoBulks.stream().findAny().orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, nessun anagrafico trovato per il codice fiscale indicato."))
 			)
+		).build();
+	}
+	public Response anagraficaInfo(String codicefiscale) throws Exception {
+		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+		Optional.ofNullable(codicefiscale).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il codice fiscale."));
+		final List<AnagraficoBulk> anagraficoBulks = crudComponentSession.find(userContext, AnagraficoBulk.class, "findByCodiceFiscaleOrPartitaIVA", codicefiscale, null);
+		final AnagraficoBulk anagraficoBulk = anagraficoBulks.stream().findAny().orElseThrow(() -> new RestException(Status.NOT_FOUND, "Errore, nessun anagrafico trovato per il codice fiscale indicato."));
+		return Response.status(Status.OK).entity(
+				new AnagraficaInfoDTO(anagraficoBulk)
 		).build();
 	}
 

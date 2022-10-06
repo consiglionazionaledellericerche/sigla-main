@@ -55,7 +55,8 @@ public enum TipoDocumentoEnum {
 	MANDATO(Numerazione_doc_contBulk.TIPO_MAN, MandatoIBulk.class, "Mandato"),
 	REVERSALE(Numerazione_doc_contBulk.TIPO_REV, ReversaleIBulk.class, "Reversale"),
 	GEN_STIPENDI_SPESA("GEN_STIP_S", Documento_generico_passivoBulk.class, "Documento generico di versamento stipendi"),
-	REGOLA_E("REGOLA_E", Documento_generico_attivoBulk.class, "Documento per mandato di regolarizzazione");
+	REGOLA_E("REGOLA_E", Documento_generico_attivoBulk.class, "Documento per mandato di regolarizzazione"),
+	GEN_RECUPERO_CREDITI("GEN_RC_DAT", Documento_generico_attivoBulk.class, "Documento generico per recupero crediti");
 
 	private final String value;
 	private final Class<?> documentoCogeBulk;
@@ -231,6 +232,10 @@ public enum TipoDocumentoEnum {
 
 	public boolean isGenericoCoriAccantonamentoSpesa() {
 		return TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_SPESA.equals(this);
+	}
+
+	public boolean isGenericoRecuperoCrediti() {
+		return TipoDocumentoEnum.GEN_RECUPERO_CREDITI.equals(this);
 	}
 
 	public boolean isGenericoEntrataIncassoIva() {

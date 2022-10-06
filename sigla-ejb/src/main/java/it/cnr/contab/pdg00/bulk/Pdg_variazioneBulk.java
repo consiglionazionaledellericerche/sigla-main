@@ -61,6 +61,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
     final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
     final public static String MOTIVAZIONE_VARIAZIONE_AUTOMATICA = "SAU";
+    final public static String MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE = "ESF";
     final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
     final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
     final public static String OVERHEAD = "Overhead/Spese Generali";
@@ -90,6 +91,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento a Ragioneria");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA, "Trasferimento ad Aree di Ricerca");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO, "Trasferimento In Deroga");
+        tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE, "Trasferimento per Esigenze Finanziarie");
 
         ds_causaleKeys.put(FONDO, "Fondo Perequativo Stabilizzazioni");
         ds_causaleKeys.put(OVERHEAD, "Overhead/Spese Generali");
@@ -183,8 +185,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
     // metodo per inizializzare l'oggetto bulk
     private void initialize() {
-        setFl_cda(new Boolean(false));
-        setFl_visto_dip_variazioni(new Boolean(false));
+        setFl_cda(Boolean.FALSE);
+        setFl_visto_dip_variazioni(Boolean.FALSE);
     }
 
     /**
@@ -227,13 +229,14 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
         tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_COMPENSI_INCENTIVANTI, "Personale - Compensi Incentivanti");
         tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE, "Personale - Altri Trasferimenti");
 
-        tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
+        tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
+        tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE, "Trasferimento Esigenze Finanziarie");
 
         if (Optional.ofNullable(this.getCentro_responsabilita())
                 .flatMap(el -> Optional.ofNullable(el.getUnita_padre()))
                 .filter(el -> !el.isUoArea() && !el.isUoEnte())
                 .isPresent()) {
-            if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea()) {
+            if (!Optional.of(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea()) {
                 if (Optional.ofNullable(this.getCentro_responsabilita())
                         .flatMap(el -> Optional.ofNullable(el.getUnita_padre()))
                         .map(Unita_organizzativaBulk::isUoArea)
@@ -257,14 +260,14 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     }
 
     /**
-     * @return
+     * @return BulkList
      */
     public BulkList<Ass_pdg_variazione_cdrBulk> getAssociazioneCDR() {
         return associazioneCDR;
     }
 
     /**
-     * @param list
+     * @param list list
      */
     public void setAssociazioneCDR(BulkList list) {
         associazioneCDR = list;
@@ -301,13 +304,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     }
 
     public Ass_pdg_variazione_cdrBulk removeFromAssociazioneCDR(int index) {
-        Ass_pdg_variazione_cdrBulk dett = (Ass_pdg_variazione_cdrBulk) getAssociazioneCDR().remove(index);
-        return dett;
+        return getAssociazioneCDR().remove(index);
     }
 
     public Pdg_variazione_archivioBulk removeFromArchivioConsultazioni(int index) {
-        Pdg_variazione_archivioBulk dett = (Pdg_variazione_archivioBulk) getArchivioConsultazioni().remove(index);
-        return dett;
+        return (Pdg_variazione_archivioBulk) getArchivioConsultazioni().remove(index);
     }
 
     /**
@@ -322,32 +323,18 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
         return super.initializeForInsert(bp, context);
     }
 
-    /**
-     * @return
-     */
     public CdrBulk getCentro_responsabilita() {
         return centro_responsabilita;
     }
 
-    /**
-     * @param bulk
-     */
     public void setCentro_responsabilita(CdrBulk bulk) {
         centro_responsabilita = bulk;
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see it.cnr.contab.pdg00.bulk.Pdg_variazioneBase#getCd_centro_responsabilita()
-     */
     public java.lang.String getCd_centro_responsabilita() {
         return getCentro_responsabilita().getCd_centro_responsabilita();
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see it.cnr.contab.pdg00.bulk.Pdg_variazioneBase#setCd_centro_responsabilita(java.lang.String)
-     */
     public void setCd_centro_responsabilita(java.lang.String cd_centro_responsabilita) {
         getCentro_responsabilita().setCd_centro_responsabilita(cd_centro_responsabilita);
     }
@@ -563,8 +550,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
     /**
      * Setta la descrizione della variazione
-     *
-     * @return String
      */
     public void setDesTipoVariazione(String string) {
         desTipoVariazione = string;
@@ -807,8 +792,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     }
 
     public V_pdg_variazione_riepilogoBulk removeFromSpeseRipartite(int index) {
-        V_pdg_variazione_riepilogoBulk dett = (V_pdg_variazione_riepilogoBulk) riepilogoSpese.remove(index);
-        return dett;
+        return (V_pdg_variazione_riepilogoBulk) riepilogoSpese.remove(index);
     }
 
     public it.cnr.jada.bulk.BulkList getRiepilogoEntrate() {
@@ -864,6 +848,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
         return MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO.equals(this.getTiMotivazioneVariazione());
     }
 
+    public boolean isMotivazioneTrasferimentoEsigenzeFinanziarie() {
+        return MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE.equals(this.getTiMotivazioneVariazione());
+    }
+
     public boolean isMotivazioneGenerico() {
         return this.getTiMotivazioneVariazione() == null;
     }
@@ -909,9 +897,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
     @Override
     public void setPg_progetto_rimodulazione(Integer pg_progetto_rimodulazione) {
-        Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el -> {
-            el.setPg_progetto(pg_progetto_rimodulazione);
-        });
+        Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el -> el.setPg_progetto(pg_progetto_rimodulazione));
     }
 
     @Override
@@ -921,9 +907,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
     @Override
     public void setPg_rimodulazione(Integer pg_rimodulazione) {
-        Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el -> {
-            el.setPg_rimodulazione(pg_rimodulazione);
-        });
+        Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el -> el.setPg_rimodulazione(pg_rimodulazione));
     }
 
     public boolean isVariazioneRimodulazioneProgetto() {

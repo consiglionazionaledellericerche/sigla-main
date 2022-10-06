@@ -76,5 +76,11 @@
 			name="it.cnr.contab.consultazioni.comp.ConsultazioniRestComponent.find">
 		<exclude pattern="*" />
 	</fetchPolicy>
+	<fetchPolicy
+			name="fetchUnitaPadre">
+		<exclude pattern="*" />
+		<include pattern="unita_padre" />
+		<include pattern="unita_padre.ds_unita_organizzativa" />
+	</fetchPolicy>
 
 </SQLPersistentInfo>

@@ -169,7 +169,7 @@ public class ReversaleIHome extends ReversaleHome {
      * @return
      * @throws PersistencyException
      */
-    public ReversaleBulk loadReversale(it.cnr.jada.UserContext userContext, java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgReversale) throws PersistencyException, IntrospectionException {
+    public ReversaleBulk loadReversale(it.cnr.jada.UserContext userContext, java.lang.String cdCds, java.lang.Integer esercizio, java.lang.Long pgReversale) throws PersistencyException {
 
         SQLBuilder sql = createSQLBuilder();
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, cdCds);

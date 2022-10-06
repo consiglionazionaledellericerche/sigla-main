@@ -17,18 +17,27 @@
 
 package it.cnr.contab.config00.esercizio.bulk;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 import it.cnr.jada.util.PropertyNames;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Home che gestisce l'esercizio contabile.
@@ -318,5 +327,23 @@ public class EsercizioHome extends BulkHome {
         } catch (java.sql.SQLException e) {
             throw SQLExceptionHandler.getInstance().handleSQLException(e);
         }
+    }
+
+    public List<EsercizioBulk> findEsercizi(UserContext userContext, String cds) throws PersistencyException {
+        final SQLBuilder sqlBuilder = createSQLBuilder();
+        Integer esercizioPartenza = Optional.ofNullable(
+                    ((Configurazione_cnrHome) getHomeCache().getHome(Configurazione_cnrBulk.class))
+                            .getConfigurazione(
+                                    null,
+                                    Configurazione_cnrBulk.PK_ESERCIZIO_SPECIALE,
+                                    Configurazione_cnrBulk.SK_ESERCIZIO_PARTENZA
+                            )
+                )
+                .flatMap(configurazione_cnrBulk -> Optional.ofNullable(configurazione_cnrBulk.getIm01()))
+                .map(BigDecimal::intValue)
+                .orElse(Integer.MIN_VALUE);
+        sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, esercizioPartenza);
+        sqlBuilder.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, cds);
+        return fetchAll(sqlBuilder);
     }
 }

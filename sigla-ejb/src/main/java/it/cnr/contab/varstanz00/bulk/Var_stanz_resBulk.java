@@ -535,7 +535,11 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public boolean isMotivazioneTrasferimentoAutorizzato() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO.equals(this.getTiMotivazioneVariazione());
 	}
-	
+
+	public boolean isMotivazioneTrasferimentoEsigenzeFinanziarie() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE.equals(this.getTiMotivazioneVariazione());
+	}
+
 	public boolean isMotivazioneGenerico() {
 		return this.getTiMotivazioneVariazione()==null;
 	}
@@ -559,6 +563,7 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE, "Trasferimento Esigenze Finanziarie");
 
 		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())
 			tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");

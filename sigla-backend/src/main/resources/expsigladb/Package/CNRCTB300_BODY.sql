@@ -1248,7 +1248,7 @@ begin
    AND CD_TIPO_DOCUMENTO_AMM = aTiDocAmm
    AND PG_DOCUMENTO_AMM = aPgDocAmm;
    exception when NO_DATA_FOUND then
-    IBMERR001.RAISE_ERR_GENERICO('Documento amministrativo non trovato');
+    IBMERR001.RAISE_ERR_GENERICO('Documento amministrativo non trovato ('||aEs||'/'||aCdCds||'/'||aCdUo||'/'||aTiDocAmm||'/'||aPgDocAmm||')');
    end;
   end;
   if
@@ -1256,7 +1256,7 @@ begin
    or aPgVerRec is null
    or aNewPgVerRec <> aPgVerRec
   then
-   IBMERR001.RAISE_ERR_GENERICO('Risorsa non pi? valida');
+   IBMERR001.RAISE_ERR_GENERICO('Risorsa non piu'' valida');
   end if;
  end;
 

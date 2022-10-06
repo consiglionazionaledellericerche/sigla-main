@@ -23,6 +23,7 @@ import io.swagger.annotations.Authorization;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.web.rest.config.SIGLARoles;
+import it.cnr.contab.web.rest.model.AnagraficaInfoDTO;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
@@ -57,5 +58,14 @@ public interface TerzoLocal {
             authorizations = @Authorization(value = "BASIC")
     )
     Response tipoRapporto(@PathParam("codicefiscale") String codicefiscale) throws Exception;
+
+    @GET
+    @Path("/info/{codicefiscale}")
+    @ApiOperation(value = "Ritorna le informazioni anagrafiche associate al terzo",
+            notes = "Accesso consentito solo alle utenze abilitate e con ruolo '" + SIGLARoles.TERZO +"'",
+            response = AnagraficaInfoDTO.class,
+            authorizations = @Authorization(value = "BASIC")
+    )
+    Response anagraficaInfo(@PathParam("codicefiscale") String codicefiscale) throws Exception;
 
 }
