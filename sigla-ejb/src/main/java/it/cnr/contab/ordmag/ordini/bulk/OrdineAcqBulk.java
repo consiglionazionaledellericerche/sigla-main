@@ -965,8 +965,7 @@ public class OrdineAcqBulk extends OrdineAcqBase
     }
 
     public boolean isOrdineMepa(){
-
-        return this.getContratto()!=null && this.getContratto().getFl_mepa();
+        return this.getContratto()!=null && this.getContratto().getFl_mepa()!=null && this.getContratto().getFl_mepa();
     }
     public Dictionary getStatoKeysForUpdate() {
 
