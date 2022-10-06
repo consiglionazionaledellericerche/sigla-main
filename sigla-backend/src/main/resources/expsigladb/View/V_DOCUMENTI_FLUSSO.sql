@@ -115,12 +115,12 @@
         AND v.cd_cds = r.cd_cds
         AND v.esercizio = r.esercizio
         AND v.pg_reversale = r.pg_reversale
-        AND terzo_uo.cd_unita_organizzativa = v.cd_uo_origine
-        AND nvl(r.cd_terzo_uo,terzo_uo.cd_terzo) = b.cd_terzo
+
+        AND terzo_uo.cd_terzo = r.cd_terzo_uo
+        AND b.cd_terzo = terzo_uo.cd_terzo
         AND r.pg_banca = b.pg_banca
-        AND
-            --
-            r.cd_cds = cge.cd_cds
+
+        AND r.cd_cds = cge.cd_cds
         AND r.esercizio = cge.esercizio
         AND r.pg_reversale = cge.pg_reversale
         AND r.esercizio_accertamento = cge.esercizio_accertamento
