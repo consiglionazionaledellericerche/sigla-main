@@ -3343,7 +3343,6 @@ public OggettoBulk modificaDettagliScaricoConBulk(UserContext userContext, Buono
 	return bene;
 }
 public OggettoBulk modificaEditDettagliScaricoConBulk (UserContext userContext, Buono_carico_scaricoBulk buonoS, Buono_carico_scarico_dettBulk buono) throws ComponentException{
-
 	buono.getBene().setImponibile_ammortamento(buono.getBene().getImponibile_ammortamento().add(buono.getBene().getVariazione_meno().add(buono.getValore_unitario().negate())));
 	if (buono.getValore_unitario().compareTo(buono.getBene().getVariazione_meno())<0)
 		buono.getBene().setVariazione_meno(buono.getBene().getVariazione_meno().add(buono.getBene().getVariazione_meno().negate().add(buono.getValore_unitario())));
@@ -6645,6 +6644,10 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(dett.getValore_unitario())>0){
 				throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" +
 						"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
+			}
+			// V.T. Imposta valore imponibile ammortamento
+			if(dett.getBene().getImponibile_ammortamento() == null){
+				dett.getBene().setImponibile_ammortamento(dett.getBene().getValoreBene());
 			}
 		}
 

@@ -95,6 +95,16 @@
 			label="Numero Ordine"
 	/>
 	<fieldProperty
+			name="numeratoreOrdineForFreeSearch"
+			property="numeratoreOrdine"
+			inputType="TEXT"
+			inputSize="3"
+			maxLength="3"
+			label="Numeratore Ordine"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+	/>
+	<fieldProperty
 		name="dtRiferimento"
 		property="movimentiMag.dtRiferimento"
 		inputType="ROTEXT"
@@ -608,7 +618,8 @@
 			name="ordineForFreeSearch" />
 	<findFieldProperty
 			name="dtOrdineForFreeSearch" />
-
+	<findFieldProperty
+			name="numeratoreOrdineForFreeSearch" />
 
 
 

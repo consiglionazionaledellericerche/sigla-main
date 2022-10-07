@@ -86,7 +86,8 @@ public Transito_beni_ordiniHome(java.sql.Connection conn, PersistentCache persis
 						clause.getPropertyName() != null && clause.getPropertyName().equals("numeroOrdine") ||
 						clause.getPropertyName() != null && clause.getPropertyName().equals("numeroBolla") ||
 						clause.getPropertyName() != null && clause.getPropertyName().equals("dataBolla") ||
-						clause.getPropertyName() != null && clause.getPropertyName().equals("dtOrdine")) {
+						clause.getPropertyName() != null && clause.getPropertyName().equals("dtOrdine") ||
+						clause.getPropertyName() != null && clause.getPropertyName().equals("numeratoreOrdine")) {
 
 						sql.generateJoin(Transito_beni_ordiniBulk.class, MovimentiMagBulk.class, "movimentiMag", "MOVIMENTI_MAG");
 
@@ -100,19 +101,26 @@ public Transito_beni_ordiniHome(java.sql.Connection conn, PersistentCache persis
 						else {
 							sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
 
-							if (clause.getPropertyName() != null && clause.getPropertyName().equals("dtOrdine")) {
-								sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
-								sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
-								sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
-								sql.addSQLClause("AND", "ORDINE_ACQ.DATA_ORDINE", clause.getOperator(), clause.getValue());
-							}
-							else if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_categoria_gruppo")) {
+							if(clause.getPropertyName() != null && clause.getPropertyName().equals("cd_categoria_gruppo")){
 								sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
 								sql.generateJoin(Bene_servizioBulk.class, Categoria_gruppo_inventBulk.class, "categoria_gruppo", "CATEGORIA_GRUPPO");
 								sql.addSQLClause("AND", "CATEGORIA_GRUPPO.CD_CATEGORIA_GRUPPO", clause.getOperator(), clause.getValue());
-							} else  {
+							}else {
+
 								sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
-								sql.addSQLClause("AND", "ORDINE_ACQ_CONSEGNA.NUMERO", clause.getOperator(), clause.getValue());
+
+								if (clause.getPropertyName() != null && clause.getPropertyName().equals("dtOrdine")) {
+									sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+									sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+									sql.addSQLClause("AND", "ORDINE_ACQ.DATA_ORDINE", clause.getOperator(), clause.getValue());
+
+								} else if (clause.getPropertyName() != null && clause.getPropertyName().equals("numeroOrdine")) {
+									sql.addSQLClause("AND", "ORDINE_ACQ_CONSEGNA.NUMERO", clause.getOperator(), clause.getValue());
+								}
+								//NUMERATORE ORDINE
+								else {
+									sql.addSQLClause("AND", "ORDINE_ACQ_CONSEGNA.CD_NUMERATORE", clause.getOperator(), clause.getValue());
+								}
 							}
 						}
 					}
@@ -133,33 +141,6 @@ public Transito_beni_ordiniHome(java.sql.Connection conn, PersistentCache persis
 		sql.addOrderBy("id");
 		return sql;
 
-
-	/*
-
-
-		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
-		CompoundFindClause clauses = new CompoundFindClause();
-		sql.openParenthesis("AND");
-		sql.addClause("AND", "stato", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_COMPLETO);
-		sql.addClause("OR", "stato", SQLBuilder.EQUALS, Transito_beni_ordiniBulk.STATO_INSERITO);
-		sql.closeParenthesis();
-
-		sql.generateJoin(Transito_beni_ordiniBulk.class, MovimentiMagBulk.class, "movimentiMag", "MOVIMENTI_MAG");
-		sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
-		sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
-		sql.generateJoin(Bene_servizioBulk.class, Categoria_gruppo_inventBulk.class, "categoria_gruppo", "CATEGORIA_GRUPPO");
-
-
-
-		Id_inventarioHome inventarioHome = (Id_inventarioHome) getHomeCache().getHome(Id_inventarioBulk.class);
-		try {
-			Id_inventarioBulk inventario = inventarioHome.findInventarioFor(usercontext,false);
-			clauses.addClause("AND", "pg_inventario", SQLBuilder.EQUALS, inventario.getPg_inventario());
-		} catch (IntrospectionException e) {
-			throw new PersistencyException(e);
-		}
-		sql.addOrderBy("id");
-		return sql;*/
 	}
 
 	public SQLBuilder selectBeniInTransitoDaInventariare(UserContext usercontext, Transito_beni_ordiniBulk transito, CompoundFindClause compoundfindclause) throws PersistencyException {

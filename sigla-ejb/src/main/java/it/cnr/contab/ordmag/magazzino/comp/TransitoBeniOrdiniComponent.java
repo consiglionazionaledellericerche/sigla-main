@@ -87,6 +87,22 @@ public class TransitoBeniOrdiniComponent extends CRUDComponent implements ICRUDM
 					}
 				}
 			}
+			try {
+				if (Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(usercontext))
+				{
+					if(bene.getCd_condizione_bene() == null){
+						if(bene.getCondizioneBene()==null) {
+							bene.setCondizioneBene(new Condizione_beneBulk());
+						}
+						bene.setCd_condizione_bene("4");
+					}
+
+
+				}
+			} catch (RemoteException | ComponentException e) {
+
+			}
+
 		} catch (PersistencyException | IntrospectionException pe){
 			throw new it.cnr.jada.comp.ComponentException(pe);
 		}

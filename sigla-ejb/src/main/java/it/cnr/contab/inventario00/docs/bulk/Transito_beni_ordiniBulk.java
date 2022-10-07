@@ -109,6 +109,23 @@ public class Transito_beni_ordiniBulk extends Transito_beni_ordiniBase {
 		return null;
 	}
 
+
+	public String getNumeratoreOrdine() {
+		if(getMovimentiMag() != null){
+			if(getMovimentiMag().getLottoMag() !=null){
+				LottoMagBulk lotto = getMovimentiMag().getLottoMag();
+				if(lotto.getOrdineAcqConsegna() != null){
+					if(lotto.getOrdineAcqConsegna()!=null){
+						OrdineAcqConsegnaBulk ordineAcq = lotto.getOrdineAcqConsegna();
+						if(ordineAcq!=null)
+							return ordineAcq.getCdNumeratore();
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	public String getNumeroBolla() {
 		if(getMovimentiMag() != null){
 
