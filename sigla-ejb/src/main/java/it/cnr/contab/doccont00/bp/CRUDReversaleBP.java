@@ -814,9 +814,9 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 		pages.put(i++, TAB_DETTAGLIO);
 		pages.put(i++, TAB_SOSPESI);
 		pages.put(i++, TAB_MANDATI);
-		if (attivaEconomicaParallela) {
+//		if (attivaEconomicaParallela) {
 			pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
-		}
+// 		}
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++)
 			tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};

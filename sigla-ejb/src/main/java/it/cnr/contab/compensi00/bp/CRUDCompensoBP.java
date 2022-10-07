@@ -1810,9 +1810,9 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         pages.put(i++, TAB_CONTRIBUTI_RITENUTE);
         pages.put(i++, TAB_OBBLIGAZIONI);
         pages.put(i++, TAB_DOCUMENTI_ASSOCIATI);
-        if (attivaEconomicaParallela) {
+//        if (attivaEconomicaParallela) {
             pages.put(i++, CRUDScritturaPDoppiaBP.TAB_ECONOMICA);
-        }
+//        }
         String[][] tabs = new String[i][3];
         for (int j = 0; j < i; j++)
             tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
