@@ -3885,9 +3885,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			Configurazione_cnrBulk configTipoEP = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE, Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE);
 			if (Optional.ofNullable(configTipoEP).filter(el->el.getVal01().equals("PARALLELA")).isPresent())
 				return this.findContoAnag(userContext, voceBilancio);
-			return this.findContoAnag(userContext, voceBilancio);
-			//TODO da ripristinare
-			//return this.findContoAnag(userContext, aContoCosto);
+			return this.findContoAnag(userContext, aContoCosto);
 		}
 		throw new ApplicationRuntimeException("Manca la configurazione del tipo proposta conto debito/credito (Tabella CONFIGURAZIONE_CNR - Chiave Primaria: "+Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE+" - Chiave Secondaria: "+Configurazione_cnrBulk.SK_ASSOCIAZIONE_CONTI);
 	}
