@@ -2730,15 +2730,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				.filter(el->el.compareTo(BigDecimal.ZERO)>0)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		BigDecimal imRitenuteNegative = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
-				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
-				.reduce(BigDecimal.ZERO, BigDecimal::add).abs();
-
 		if (imRitenutePositive.compareTo(mandato.getIm_ritenute())!=0)
 			throw new ApplicationException("L'importo delle righe ritenute del compenso associato al mandato non corrisponde con l'importo ritenute associato al mandato.");
 
 		//Registrazione conto CONTRIBUTI-RITENUTE
-		righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)!=0).forEach(cori->{
+		//Solo ritenute con importo positivo perchè quelle negative generano mandato a parte
+		righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)>0).forEach(cori->{
 			try {
 				BigDecimal imCori = cori.getAmmontare();
 
@@ -2847,7 +2844,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 										Map<String, Pair<String, BigDecimal>> saldiCori = this.getSaldiMovimentiCori(userContext, compenso, cdTerzoMandato, aCdCori, scritturaMandato, pMandatiCompenso);
 
 										//dovrei trovare tra i saldi proprio l'import liquidato
-										//Il conto aperto deve essere solo uno
+										//Il conto aperto deve essere solo uno e deve essere in segno AVERE
 										if (saldiCori.values().stream().filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
 											throw new ApplicationRuntimeException("Per il compenso " + compenso.getEsercizio() + "/" + compenso.getCd_cds() + "/" + compenso.getPg_compenso() +
 													" e per il contributo " + aCdCori + " esiste più di un conto che presenta un saldo positivo.");
@@ -3005,7 +3002,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		if (imRitenutePositive.compareTo(mandato.getIm_ritenute())!=0)
 			throw new ApplicationException(descEstesaMandato+" con ritenute ("+ new it.cnr.contab.util.EuroFormat().format(mandato.getIm_ritenute()) +
 					") diverse da quelle indicate sul conguaglio (" + new it.cnr.contab.util.EuroFormat().format(imRitenutePositive) +
-					" Proposta di prima nota non possibile.");
+					"). Proposta di prima nota non possibile.");
 
 		//Le ritenute negative (tipo CUNEODL320) generano mandati che sono vincolati al mandato in oggetto e quindi ne aumentano il saldo
 		BigDecimal imRitenuteNegative = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
@@ -3995,53 +3992,53 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocamm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude, List<MandatoBulk> pMandatiCompenso) throws ComponentException, PersistencyException {
 		Map<String, Pair<String, BigDecimal>> result = new HashMap<>();
 		List<IDocumentoCogeBulk> docMovimentiCori = new ArrayList<>();
-		if (pMandatiCompenso==null || pMandatiCompenso.isEmpty())
+
+		boolean isAttivaEconomicaDocamm = ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(docamm.getEsercizio());
+		if (isAttivaEconomicaDocamm)
+			result.putAll(((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, cdTerzoDocamm, cdCori, scritturaToExclude));
+		else {
 			docMovimentiCori.add(docamm);
-		else
-			docMovimentiCori.addAll(pMandatiCompenso);
+			if (pMandatiCompenso!=null && !pMandatiCompenso.isEmpty())
+				docMovimentiCori.addAll(pMandatiCompenso);
 
-		docMovimentiCori.stream().forEach(docMov-> {
-			try {
-				boolean isAttivaEconomica = ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(docMov.getEsercizio());
-				if (isAttivaEconomica)
-					result.putAll(((Movimento_cogeHome) getHome(userContext, Movimento_cogeBulk.class)).getSaldiMovimentiCori(docamm, cdTerzoDocamm, cdCori, scritturaToExclude));
-				else {
-					try {
-						Collection<Movimento_cogeBulk> allMovimentiCoge = proposeScritturaPartitaDoppia(userContext, docMov).getAllMovimentiColl()
-								.stream().filter(el -> docamm.getEsercizio().equals(el.getEsercizio_documento()))
-								.filter(el -> docamm.getCd_cds().equals(el.getCd_cds_documento()))
-								.filter(el -> docamm.getCd_uo().equals(el.getCd_uo_documento()))
-								.filter(el -> docamm.getPg_doc().equals(el.getPg_numero_documento()))
-								.filter(el -> docamm.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
-								.filter(el -> cdTerzoDocamm.equals(el.getCd_terzo()))
-								.filter(el -> cdCori.equals(el.getCd_contributo_ritenuta()))
-								.collect(Collectors.toList());
+			Collection<Movimento_cogeBulk> allMovimentiCoge = new ArrayList<>();
 
-						Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream().collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
-
-						mapVoceEp.keySet().forEach(cdVoceEp -> {
-							List<Movimento_cogeBulk> movimentiList = mapVoceEp.get(cdVoceEp);
-							BigDecimal totaleDare = movimentiList.stream()
-									.filter(Movimento_cogeBulk::isSezioneDare)
-									.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-							BigDecimal totaleAvere = movimentiList.stream()
-									.filter(Movimento_cogeBulk::isSezioneAvere)
-									.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-							BigDecimal saldo = totaleDare.subtract(totaleAvere);
-							if (saldo.compareTo(BigDecimal.ZERO) >= 0)
-								result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_DARE, saldo));
-							else
-								result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_AVERE, saldo.abs()));
-						});
-					} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
-					}
+			docMovimentiCori.stream().forEach(docMov-> {
+				try {
+					allMovimentiCoge.addAll(proposeScritturaPartitaDoppia(userContext, docMov).getAllMovimentiColl()
+									.stream().filter(el -> docamm.getEsercizio().equals(el.getEsercizio_documento()))
+									.filter(el -> docamm.getCd_cds().equals(el.getCd_cds_documento()))
+									.filter(el -> docamm.getCd_uo().equals(el.getCd_uo_documento()))
+									.filter(el -> docamm.getPg_doc().equals(el.getPg_numero_documento()))
+									.filter(el -> docamm.getCd_tipo_doc().equals(el.getCd_tipo_documento()))
+									.filter(el -> cdTerzoDocamm.equals(el.getCd_terzo()))
+									.filter(el -> cdCori.equals(el.getCd_contributo_ritenuta()))
+									.collect(Collectors.toList()));
+				} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
+				} catch (ComponentException e) {
+					throw new ApplicationRuntimeException(e);
 				}
-			} catch (ComponentException|PersistencyException e) {
-				throw new ApplicationRuntimeException(e);
-			}
-		});
+			});
+
+			Map<String, List<Movimento_cogeBulk>> mapVoceEp = allMovimentiCoge.stream().collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep));
+
+			mapVoceEp.keySet().forEach(cdVoceEp -> {
+				List<Movimento_cogeBulk> movimentiList = mapVoceEp.get(cdVoceEp);
+				BigDecimal totaleDare = movimentiList.stream()
+						.filter(Movimento_cogeBulk::isSezioneDare)
+						.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+				BigDecimal totaleAvere = movimentiList.stream()
+						.filter(Movimento_cogeBulk::isSezioneAvere)
+						.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+				BigDecimal saldo = totaleDare.subtract(totaleAvere);
+				if (saldo.compareTo(BigDecimal.ZERO) >= 0)
+					result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_DARE, saldo));
+				else
+					result.put(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_AVERE, saldo.abs()));
+			});
+		}
 		return result;
 	}
 
@@ -4229,47 +4226,20 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (accorpaConti) {
 				//Prima analizzo i conti patrimoniali con partita senza cori
 				//I conti patrimoniali devono essere accorpati per partita e distinti tra modificabili e non
-				Map<IDocumentoCogeBulk, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapPartitePatrimonialiNoCori =
+				Map<IDocumentoCogeBulk, Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapPartitePatrimonialiNoCori =
 						testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
 						.filter(el->Optional.ofNullable(el.getPartita()).isPresent())
 						.filter(el->!Optional.ofNullable(el.getCdCori()).isPresent())
 						.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
-								Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-										Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))));
+								Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
+									Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+										Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
 
 				mapPartitePatrimonialiNoCori.keySet().forEach(aPartita -> {
-					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettPatrimoniali = mapPartitePatrimonialiNoCori.get(aPartita);
-					mapTipoDettPatrimoniali.keySet().forEach(aTipoDett -> {
-						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettPatrimoniali.get(aTipoDett);
-						mapModificabile.keySet().forEach(aTipoModific -> {
-							Map<String, List<DettaglioPrimaNota>> mapContiPatrimoniali = mapModificabile.get(aTipoModific);
-							mapContiPatrimoniali.keySet().forEach(aContoPatrimoniale -> {
-								try {
-									Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
-									Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita, null);
-									Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
-								} catch (ComponentException e) {
-									throw new ApplicationRuntimeException(e);
-								}
-							});
-						});
-					});
-				});
-
-				//Poi i conti patrimoniali con partita e cori distinti sempre tra modificabili e non
-				Map<IDocumentoCogeBulk, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapPartitePatrimonialiCori =
-						testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
-								.filter(el->Optional.ofNullable(el.getPartita()).isPresent())
-								.filter(el->Optional.ofNullable(el.getCdCori()).isPresent())
-								.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
-										Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
-											Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-												Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
-
-				mapPartitePatrimonialiCori.keySet().forEach(aPartita -> {
-					Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapCoriPatrimoniali = mapPartitePatrimonialiCori.get(aPartita);
-					mapCoriPatrimoniali.keySet().forEach(aCdCori -> {
-						Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettPatrimoniali = mapCoriPatrimoniali.get(aCdCori);
+					Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapCdTerzo = mapPartitePatrimonialiNoCori.get(aPartita);
+					mapCdTerzo.keySet().forEach(aCdTerzo -> {
+						Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettPatrimoniali = mapCdTerzo.get(aCdTerzo);
 						mapTipoDettPatrimoniali.keySet().forEach(aTipoDett -> {
 							Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettPatrimoniali.get(aTipoDett);
 							mapModificabile.keySet().forEach(aTipoModific -> {
@@ -4277,11 +4247,48 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								mapContiPatrimoniali.keySet().forEach(aContoPatrimoniale -> {
 									try {
 										Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
-										Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita, aCdCori);
+										Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita, aCdTerzo, null);
 										Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
 									} catch (ComponentException e) {
 										throw new ApplicationRuntimeException(e);
 									}
+								});
+							});
+						});
+					});
+				});
+
+				//Poi i conti patrimoniali con partita e cori distinti sempre tra modificabili e non
+				Map<IDocumentoCogeBulk, Map<Integer, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>>> mapPartitePatrimonialiCori =
+						testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
+								.filter(el->Optional.ofNullable(el.getPartita()).isPresent())
+								.filter(el->Optional.ofNullable(el.getCdCori()).isPresent())
+								.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
+										Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
+												Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
+														Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+																Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+																		Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))))));
+
+				mapPartitePatrimonialiCori.keySet().forEach(aPartita -> {
+					Map<Integer, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapCdTerzo = mapPartitePatrimonialiCori.get(aPartita);
+					mapCdTerzo.keySet().forEach(aCdTerzo -> {
+						Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapCoriPatrimoniali = mapCdTerzo.get(aCdTerzo);
+						mapCoriPatrimoniali.keySet().forEach(aCdCori -> {
+							Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettPatrimoniali = mapCoriPatrimoniali.get(aCdCori);
+							mapTipoDettPatrimoniali.keySet().forEach(aTipoDett -> {
+								Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettPatrimoniali.get(aTipoDett);
+								mapModificabile.keySet().forEach(aTipoModific -> {
+									Map<String, List<DettaglioPrimaNota>> mapContiPatrimoniali = mapModificabile.get(aTipoModific);
+									mapContiPatrimoniali.keySet().forEach(aContoPatrimoniale -> {
+										try {
+											Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
+											Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita, aCdTerzo, aCdCori);
+											Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+										} catch (ComponentException e) {
+											throw new ApplicationRuntimeException(e);
+										}
+									});
 								});
 							});
 						});
@@ -4293,7 +4300,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettPatrimonialiSenzaPartita = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
 							.filter(el -> !Optional.ofNullable(el.getPartita()).isPresent())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-									Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
+									Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
 
 					mapTipoDettPatrimonialiSenzaPartita.keySet().forEach(aTipoDett -> {
 						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettPatrimonialiSenzaPartita.get(aTipoDett);
@@ -4317,7 +4325,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettIva = testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioIva)
 							.filter(el -> !Optional.ofNullable(el.getPartita()).isPresent())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-									Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
+									Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
 
 					mapTipoDettIva.keySet().forEach(aTipoDett -> {
 						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettIva.get(aTipoDett);
@@ -4341,7 +4350,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettCostoRicavo = testata.getDett().stream()
 							.filter(DettaglioPrimaNota::isDettaglioCostoRicavo)
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-									Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
+									Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
 
 					mapTipoDettCostoRicavo.keySet().forEach(aTipoDett -> {
 						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettCostoRicavo.get(aTipoDett);
@@ -4367,7 +4377,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							.filter(el->!el.isDettaglioIva())
 							.filter(el->!el.isDettaglioCostoRicavo())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-									Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
+									Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
 
 					mapTipoDettAltro.keySet().forEach(aTipoDett -> {
 						Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDettAltro.get(aTipoDett);
@@ -4389,56 +4400,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				//Prima analizzo i conti con partita senza cori
 				//I conti devono essere accorpati per partita
 				{
-					Map<IDocumentoCogeBulk, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapPartite = testata.getDett().stream()
+					Map<IDocumentoCogeBulk, Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapPartite = testata.getDett().stream()
 							.filter(el -> Optional.ofNullable(el.getPartita()).isPresent())
 							.filter(el -> !Optional.ofNullable(el.getCdCori()).isPresent())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
-									Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-											Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))));
-
-					mapPartite.keySet().forEach(aPartita -> {
-						Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDett = mapPartite.get(aPartita);
-						mapTipoDett.keySet().forEach(aTipoDett -> {
-							Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDett.get(aTipoDett);
-							mapModificabile.keySet().forEach(aTipoModific -> {
-								Map<String, List<DettaglioPrimaNota>> mapConti = mapModificabile.get(aTipoModific);
-								mapConti.keySet().forEach(aConto -> {
-									try {
-										BigDecimal imDare = mapConti.get(aConto).stream()
-												.filter(DettaglioPrimaNota::isSezioneDare)
-												.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-										Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita, null))
-												.ifPresent(el->el.setFl_modificabile(aTipoModific));
-
-										BigDecimal imAvere = mapConti.get(aConto).stream()
-												.filter(DettaglioPrimaNota::isSezioneAvere)
-												.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-										Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita, null))
-												.ifPresent(el->el.setFl_modificabile(aTipoModific));
-									} catch (ComponentException e) {
-										throw new ApplicationRuntimeException(e);
-									}
-								});
-							});
-						});
-					});
-				}
-
-				//Poi analizzo i conti con partita e cori
-				//I conti devono essere accorpati per partita
-				{
-					Map<IDocumentoCogeBulk, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapPartite = testata.getDett().stream()
-							.filter(el -> Optional.ofNullable(el.getPartita()).isPresent())
-							.filter(el -> Optional.ofNullable(el.getCdCori()).isPresent())
-							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
-									Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
+									Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
 										Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-											Collectors.groupingBy(DettaglioPrimaNota::isModificabile, Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
+											Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+												Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
 
 					mapPartite.keySet().forEach(aPartita -> {
-						Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapPartitePatrimonialiCori = mapPartite.get(aPartita);
-						mapPartitePatrimonialiCori.keySet().forEach(aCdCori -> {
-							Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDett = mapPartitePatrimonialiCori.get(aCdCori);
+						Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapCdTerzo = mapPartite.get(aPartita);
+						mapCdTerzo.keySet().forEach(aCdTerzo -> {
+							Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDett = mapCdTerzo.get(aCdTerzo);
 							mapTipoDett.keySet().forEach(aTipoDett -> {
 								Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDett.get(aTipoDett);
 								mapModificabile.keySet().forEach(aTipoModific -> {
@@ -4448,17 +4422,64 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 											BigDecimal imDare = mapConti.get(aConto).stream()
 													.filter(DettaglioPrimaNota::isSezioneDare)
 													.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-											Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita, aCdCori))
+											Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita, aCdTerzo, null))
 													.ifPresent(el->el.setFl_modificabile(aTipoModific));
 
 											BigDecimal imAvere = mapConti.get(aConto).stream()
 													.filter(DettaglioPrimaNota::isSezioneAvere)
 													.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
-											Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita, aCdCori))
+											Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita, aCdTerzo, null))
 													.ifPresent(el->el.setFl_modificabile(aTipoModific));
 										} catch (ComponentException e) {
 											throw new ApplicationRuntimeException(e);
 										}
+									});
+								});
+							});
+						});
+					});
+				}
+
+				//Poi analizzo i conti con partita e cori
+				//I conti devono essere accorpati per partita
+				{
+					Map<IDocumentoCogeBulk, Map<Integer, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>>> mapPartite = testata.getDett().stream()
+							.filter(el -> Optional.ofNullable(el.getPartita()).isPresent())
+							.filter(el -> Optional.ofNullable(el.getCdCori()).isPresent())
+							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
+									Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
+										Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
+											Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+												Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+													Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))))));
+
+					mapPartite.keySet().forEach(aPartita -> {
+						Map<Integer, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapCdTerzo = mapPartite.get(aPartita);
+						mapCdTerzo.keySet().forEach(aCdTerzo -> {
+							Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapPartitePatrimonialiCori = mapCdTerzo.get(aCdTerzo);
+							mapPartitePatrimonialiCori.keySet().forEach(aCdCori -> {
+								Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDett = mapPartitePatrimonialiCori.get(aCdCori);
+								mapTipoDett.keySet().forEach(aTipoDett -> {
+									Map<Boolean, Map<String, List<DettaglioPrimaNota>>> mapModificabile = mapTipoDett.get(aTipoDett);
+									mapModificabile.keySet().forEach(aTipoModific -> {
+										Map<String, List<DettaglioPrimaNota>> mapConti = mapModificabile.get(aTipoModific);
+										mapConti.keySet().forEach(aConto -> {
+											try {
+												BigDecimal imDare = mapConti.get(aConto).stream()
+														.filter(DettaglioPrimaNota::isSezioneDare)
+														.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
+												Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita, aCdTerzo, aCdCori))
+														.ifPresent(el->el.setFl_modificabile(aTipoModific));
+
+												BigDecimal imAvere = mapConti.get(aConto).stream()
+														.filter(DettaglioPrimaNota::isSezioneAvere)
+														.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
+												Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita, aCdTerzo, aCdCori))
+														.ifPresent(el->el.setFl_modificabile(aTipoModific));
+											} catch (ComponentException e) {
+												throw new ApplicationRuntimeException(e);
+											}
+										});
 									});
 								});
 							});
@@ -4534,10 +4555,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Movimento_cogeBulk addMovimentoCoge(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppia, IDocumentoCogeBulk doccoge, TestataPrimaNota testata, String aTipoDett, String aSezione, String aCdConto, BigDecimal aImporto) throws ComponentException {
-		return this.addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, aSezione, aCdConto, aImporto, null, null);
+		return this.addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, aSezione, aCdConto, aImporto, null, null, null);
 	}
 
-	private Movimento_cogeBulk addMovimentoCoge(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppia, IDocumentoCogeBulk doccoge, TestataPrimaNota testata, String aTipoDett, String aSezione, String aCdConto, BigDecimal aImporto, IDocumentoCogeBulk aPartita, String aCdCori) throws ComponentException{
+	private Movimento_cogeBulk addMovimentoCoge(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppia, IDocumentoCogeBulk doccoge, TestataPrimaNota testata, String aTipoDett, String aSezione, String aCdConto, BigDecimal aImporto, IDocumentoCogeBulk aPartita, Integer aCdTerzo, String aCdCori) throws ComponentException{
 		try {
 			if (aImporto.compareTo(BigDecimal.ZERO)==0)
 				return null;
@@ -4552,7 +4573,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			movimentoCoge.setConto(contoBulk);
 			movimentoCoge.setIm_movimento(aImporto);
 			movimentoCoge.setTerzo(
-					Optional.ofNullable(testata.getCdTerzo())
+					Optional.ofNullable(aCdTerzo)
 							.map(cdTerzo -> {
 								try {
 									return findByPrimaryKey(userContext, new TerzoBulk(cdTerzo));

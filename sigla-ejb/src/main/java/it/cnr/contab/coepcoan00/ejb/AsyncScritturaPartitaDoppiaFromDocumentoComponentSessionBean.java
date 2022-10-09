@@ -110,10 +110,14 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 
 					allDocuments.stream().filter(el-> Optional.ofNullable(el.getDt_contabilizzazione()).isPresent())
 							.filter(el-> MandatoBulk.STATO_COGE_N.equals(el.getStato_coge()) || MandatoBulk.STATO_COGE_R.equals(el.getStato_coge()))
-							.sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione))
-							.sorted(Comparator.comparing(el->el.getTipoDocumentoEnum().getOrdineCostruzione()))
+							.sorted(Comparator.comparing(IDocumentoCogeBulk::getDt_contabilizzazione)
+									.thenComparing(el->el.getTipoDocumentoEnum().getOrdineCostruzione())
+									.thenComparing(el->el.getPg_doc()))
 							.forEach(documentoCoge -> {
 						try {
+							System.out.println("Data: "+documentoCoge.getDt_contabilizzazione()+" - Tipo: "+
+									documentoCoge.getTipoDocumentoEnum().getValue() +" - Numero: "+
+									documentoCoge.getPg_doc());
 							listRigheAll.add("X");
 							logger.info("Documento in elaborazione: "+documentoCoge.getEsercizio()+"/"+documentoCoge.getCd_uo()+"/"+documentoCoge.getCd_tipo_doc()+"/"+documentoCoge.getPg_doc());
 							session.loadScritturaPatrimoniale(param0, documentoCoge);
