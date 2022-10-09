@@ -2812,16 +2812,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							//verifico se è un compenso da stipendi recuperando il documento generico passivo leggendolo dalla tabelle stipendiCofiBulk
 							Stipendi_cofiBulk stipendiCofiBulk = ((Stipendi_cofiHome)getHome(userContext, Stipendi_cofiBulk.class)).findStipendiCofi(compenso);
 
-							Integer pCdTerzoMandato = compenso.getCd_terzo();
 							List<MandatoBulk> pMandatiCompenso;
 
 							if (stipendiCofiBulk!=null) {
 								MandatoBulk mandatoStipendiBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
 										.findByPrimaryKey(new MandatoBulk(stipendiCofiBulk.getCd_cds_mandato(), stipendiCofiBulk.getEsercizio_mandato(), stipendiCofiBulk.getPg_mandato()));
-
-								mandatoStipendiBulk.setMandato_terzo(((MandatoHome) getHome(userContext, mandato.getClass())).findMandato_terzo(userContext, mandatoStipendiBulk, false));
-
-								pCdTerzoMandato = mandatoStipendiBulk.getMandato_terzo().getCd_terzo();
 								pMandatiCompenso = Collections.singletonList(mandatoStipendiBulk);
 							} else {
 								pMandatiCompenso = ((CompensoHome)getHome( userContext, CompensoBulk.class)).findMandatiAssociati(userContext, compenso);
@@ -2835,13 +2830,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 									});
 							}
 
-							final Integer cdTerzoMandato = pCdTerzoMandato;
-
 							mapCdCori.keySet()
 								.forEach(aCdCori -> {
 									try {
 										//recupero tutti i movimenti della partita per ottenere il saldo al netto della scrittura del mandato se già esiste
-										Map<String, Pair<String, BigDecimal>> saldiCori = this.getSaldiMovimentiCori(userContext, compenso, cdTerzoMandato, aCdCori, scritturaMandato, pMandatiCompenso);
+										Map<String, Pair<String, BigDecimal>> saldiCori = this.getSaldiMovimentiCori(userContext, compenso, compenso.getCd_terzo(), aCdCori, scritturaMandato, pMandatiCompenso);
 
 										//dovrei trovare tra i saldi proprio l'import liquidato
 										//Il conto aperto deve essere solo uno e deve essere in segno AVERE
