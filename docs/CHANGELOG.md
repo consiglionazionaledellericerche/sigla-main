@@ -1,3 +1,11 @@
+## Release 6.4.59  -- _October 10, 2022_ 
+**Changes**
+
+>**FIX: User alredy logged in**
+>
+>[7582bf297bd047d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7582bf297bd047d) marco.spasiano *October 10, 2022*
+
+
 ## Release 6.4.58  -- _October 04, 2022_ 
 **Changes**
 
