@@ -2812,23 +2812,27 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							//verifico se è un compenso da stipendi recuperando il documento generico passivo leggendolo dalla tabelle stipendiCofiBulk
 							Stipendi_cofiBulk stipendiCofiBulk = ((Stipendi_cofiHome)getHome(userContext, Stipendi_cofiBulk.class)).findStipendiCofi(compenso);
 
-							List<MandatoBulk> pMandatiCompenso;
+							//Individuo i mandati associati al compenso per eventuale generazione di scrittura
+							List<MandatoBulk> pMandatiCompenso = new ArrayList<>();
 
 							if (stipendiCofiBulk!=null) {
 								MandatoBulk mandatoStipendiBulk = (MandatoBulk) getHome(userContext, MandatoIBulk.class)
 										.findByPrimaryKey(new MandatoBulk(stipendiCofiBulk.getCd_cds_mandato(), stipendiCofiBulk.getEsercizio_mandato(), stipendiCofiBulk.getPg_mandato()));
-								pMandatiCompenso = Collections.singletonList(mandatoStipendiBulk);
-							} else {
-								pMandatiCompenso = ((CompensoHome)getHome( userContext, CompensoBulk.class)).findMandatiAssociati(userContext, compenso);
-								if (pMandatiCompenso != null)
-									pMandatiCompenso.forEach(el-> {
-										try {
-											completeMandato(userContext, el);
-										} catch (ComponentException|PersistencyException e) {
-											throw new DetailedRuntimeException(e);
-										}
-									});
+								pMandatiCompenso.add(mandatoStipendiBulk);
 							}
+
+							List<MandatoBulk> pMandatiAssociati = ((CompensoHome)getHome( userContext, CompensoBulk.class)).findMandatiAssociati(userContext, compenso);
+
+							pMandatiAssociati.stream().filter(el->pMandatiCompenso.stream().noneMatch(el2->el2.equalsByPrimaryKey(el)))
+									.forEach(el->pMandatiCompenso.add(el));
+
+							pMandatiCompenso.forEach(el-> {
+								try {
+									completeMandato(userContext, el);
+								} catch (ComponentException|PersistencyException e) {
+									throw new DetailedRuntimeException(e);
+								}
+							});
 
 							mapCdCori.keySet()
 								.forEach(aCdCori -> {
