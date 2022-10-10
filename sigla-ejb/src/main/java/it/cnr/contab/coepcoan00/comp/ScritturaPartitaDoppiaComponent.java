@@ -2997,11 +2997,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					") diverse da quelle indicate sul conguaglio (" + new it.cnr.contab.util.EuroFormat().format(imRitenutePositive) +
 					"). Proposta di prima nota non possibile.");
 
-		//Le ritenute negative (tipo CUNEODL320) generano mandati che sono vincolati al mandato in oggetto e quindi ne aumentano il saldo
-		BigDecimal imRitenuteNegative = righeCori.stream().map(Contributo_ritenutaBulk::getAmmontare)
-				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
-				.reduce(BigDecimal.ZERO, BigDecimal::add).abs();
-
 		//recupero la scrittura del compenso
 		List<Movimento_cogeBulk> allMovimentiPrimaNotaCompenso = this.findMovimentiPrimaNota(userContext,compenso);
 
@@ -3012,11 +3007,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVocePatrimoniale, rigaMandato.getMandatoRiga().getIm_mandato_riga(), rigaMandato.getDocamm(), rigaMandato.getCdTerzo(), null);
 
 		//Poi movimento il conto banca per l'importo netto del mandato
-		BigDecimal imNettoMandato = mandato.getIm_mandato().subtract(mandato.getIm_ritenute()).add(imRitenuteNegative);
+		BigDecimal imNettoMandato = mandato.getIm_mandato().subtract(mandato.getIm_ritenute());
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), imNettoMandato);
 
 		//Registrazione conto CONTRIBUTI-RITENUTE
-		righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)!=0).forEach(cori->{
+		righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)>0).forEach(cori->{
 			try {
 				BigDecimal imCori = cori.getAmmontare();
 
@@ -3036,22 +3031,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 
-		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, false);
-
-		//Verifico che il saldo tesoreria coincida con il netto mandato
-		BigDecimal saldoTesoreria = scritturaPartitaDoppia.getAllMovimentiColl().stream()
-				.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
-				.map(el -> el.isSezioneDare() ? el.getIm_movimento() : el.getIm_movimento().negate())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-
-		if  (saldoTesoreria.negate().compareTo(imNettoMandato) != 0)
-			throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato "+
-					mandato.getEsercizio()+"/"+mandato.getCd_cds()+"/"+mandato.getPg_mandato()+". Il saldo del conto tesoreria (" +
-					new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
-					") non risulterebbe essere uguale all'importo netto del mandato (" +
-					new it.cnr.contab.util.EuroFormat().format(imNettoMandato)+").");
-
-		return scritturaPartitaDoppia;
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, true);
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversale(UserContext userContext, ReversaleBulk reversale) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
@@ -3875,7 +3855,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			Configurazione_cnrBulk configTipoEP = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE, Configurazione_cnrBulk.SK_TIPO_ECONOMICO_PATRIMONIALE);
 			if (Optional.ofNullable(configTipoEP).filter(el->el.getVal01().equals("PARALLELA")).isPresent())
 				return this.findContoAnag(userContext, voceBilancio);
-			return this.findContoAnag(userContext, aContoCosto);
+			return this.findContoAnag(userContext, voceBilancio);
+			//TODO da ripristinare
+			//return this.findContoAnag(userContext, aContoCosto);
 		}
 		throw new ApplicationRuntimeException("Manca la configurazione del tipo proposta conto debito/credito (Tabella CONFIGURAZIONE_CNR - Chiave Primaria: "+Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE+" - Chiave Secondaria: "+Configurazione_cnrBulk.SK_ASSOCIAZIONE_CONTI);
 	}

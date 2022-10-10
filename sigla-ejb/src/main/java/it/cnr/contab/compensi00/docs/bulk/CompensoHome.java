@@ -542,13 +542,14 @@ public class CompensoHome extends BulkHome implements
                                     ": le reversali cui risulta essere collegato il compenso di conguaglio risultano collegate a diversi mandati.");
                     }
                 }
-                if (mandato!=null)
-                    resultMandati.add((MandatoBulk)getHomeCache().getHome(MandatoIBulk.class).findByPrimaryKey(mandato));
+                final MandatoBulk mandatoBulk = mandato;
+                if (mandato!=null && resultMandati.stream().noneMatch(el->el.equalsByPrimaryKey(mandatoBulk)))
+                    resultMandati.add((MandatoBulk)getHomeCache().getHome(MandatoIBulk.class).findByPrimaryKey(mandatoBulk));
             }
         }
 
         if (!listMandati.isEmpty())
-            listMandati.stream().filter(el->resultMandati.stream().noneMatch(el2->el2.equalsByPrimaryKey(el))).forEach(el->resultMandati.add((MandatoBulk)el.getManRev()));
+            listMandati.stream().filter(el->resultMandati.stream().noneMatch(el2->el2.equalsByPrimaryKey(el.getManRev()))).forEach(el->resultMandati.add((MandatoBulk)el.getManRev()));
 
         return resultMandati;
     }
