@@ -62,7 +62,13 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
         uo.setResponsabile(new V_terzo_persona_fisicaBulk());
         return context.findDefaultForward();
     }
+    public it.cnr.jada.action.Forward doBringBackSearchFind_responsabile(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo,TerzoBulk terzo) {
+        if (!terzo.getAnagrafico().isPersonaFisica())
+            throw new MessageToUser("Il responsabile deve essere una persona fisica");
+        uo.setResponsabile(terzo);
+        return context.findDefaultForward();
 
+    }
     /**
      * Metodo utilizzato per gestire l'annullamento del Cds area di ricerca all'annullamento del Cds padre
      * dell'unita' organizzativa
@@ -75,6 +81,14 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
     public it.cnr.jada.action.Forward doBlankSearchFind_responsabile_amm(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo) {
         uo.setResponsabile_amm(new V_terzo_persona_fisicaBulk());
         return context.findDefaultForward();
+    }
+
+    public it.cnr.jada.action.Forward doBringBackSearchFind_responsabile_amm(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo,TerzoBulk terzo) {
+        if (!terzo.getAnagrafico().isPersonaFisica())
+            throw new MessageToUser("Il responsabile Amministrativo deve essere una persona fisica");
+        uo.setResponsabile(terzo);
+        return context.findDefaultForward();
+
     }
 
     /**

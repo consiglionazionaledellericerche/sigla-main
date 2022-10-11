@@ -56,4 +56,10 @@ public it.cnr.jada.action.Forward doBringBackCRUDCrea_responsabile(it.cnr.jada.a
 	cdr.setResponsabile(terzo);
 	return context.findDefaultForward();
 }
+	public it.cnr.jada.action.Forward doBringBackSearchFind_responsabile(it.cnr.jada.action.ActionContext context,CdrBulk cdr,TerzoBulk terzo) {
+		if (!terzo.getAnagrafico().isPersonaFisica())
+			throw new MessageToUser("Il responsabile deve essere una persona fisica");
+		cdr.setResponsabile(terzo);
+		return context.findDefaultForward();
+	}
 }
