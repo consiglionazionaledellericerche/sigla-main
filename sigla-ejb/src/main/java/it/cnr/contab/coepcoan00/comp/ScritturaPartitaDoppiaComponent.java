@@ -1832,7 +1832,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//Vengono registrati tutti i CORI a carico Ente
 			//Se anticipo risulta maggiore/uguale al compenso allora vengono registrati anche i CORI carico percipiente perchè il mandato non verrà emesso
 			boolean isCompensoMaggioreAnticipo = optAnticipo.map(AnticipoBulk::getIm_anticipo).map(imAnticipo->
-					compenso.getIm_netto_percipiente().compareTo(imAnticipo)>0).orElse(Boolean.TRUE);
+					compenso.getIm_totale_compenso().compareTo(imAnticipo)>0).orElse(Boolean.TRUE);
 
 			righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)!=0)
 					.filter(el->!isCompensoMaggioreAnticipo || el.isContributoEnte() || el.isTipoContributoIva())
@@ -2081,10 +2081,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException {
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
 			//Le missioni pagate con compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
-			if (missione.getFl_associato_compenso() || missione.isMissioneProvvisoria() || missione.isAnnullato())
+			if (missione.getFl_associato_compenso())
+				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + missione.getEsercizio() + "/" + missione.getCd_cds() + "/" + missione.getPg_missione() +
+						" associata a compenso. Registrazione economica non prevista.");
+
+			if (missione.isAnnullato())
+				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + missione.getEsercizio() + "/" + missione.getCd_cds() + "/" + missione.getPg_missione() +
+						" annullata. Registrazione economica non prevista.");
+
+			if (missione.isMissioneProvvisoria())
 				return null;
 
 			Optional<AnticipoBulk> optAnticipo = Optional.ofNullable(missione.getAnticipo()).map(anticipo->
@@ -2125,6 +2133,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			optAnticipo.ifPresent(anticipo->{
 				try {
 					BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
+					if (missione.getIm_totale_missione().compareTo(imCostoAnticipo)<0)
+						imCostoAnticipo = missione.getIm_totale_missione();
 
 					// 1. scaricare i costi dell'anticipo compensandoli con il conto patrimoniale della missione
 					testataPrimaNota.openDettaglioCostoRicavo(missione, pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
@@ -2340,10 +2350,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoCompenso(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {
 		if (mandato.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_tipo_documento_amm)
 				.noneMatch(el -> TipoDocumentoEnum.fromValue(el).isCompenso()))
-			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCds() + "/" + mandato.getPg_mandato() +
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
 					" non risulta pagare un compenso. Proposta di prima nota non possibile.");
 		if (mandato.getMandato_rigaColl().isEmpty() || mandato.getMandato_rigaColl().size() > 1)
-			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCds() + "/" + mandato.getPg_mandato() +
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
 					" ha un numero di righe non coerente con l'unica prevista per un mandato di compenso. Proposta di prima nota non possibile.");
 
 		Mandato_rigaBulk rigaMandato = mandato.getMandato_rigaColl().get(0);
@@ -2365,7 +2375,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		CompensoBulk compensoConguaglio = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoConguaglioAssociato(userContext, compenso);
 
 		//se esiste aggiungo le righe di contributo/ritenuta in quanto anche loro contribuiscono a determinare il netto mandato
-		if (compensoConguaglio != null) {
+		if (compensoConguaglio != null && !compensoConguaglio.equalsByPrimaryKey(compenso)) {
 			righeCori.addAll(Optional.ofNullable(compensoConguaglio.getChildren()).orElseGet(() -> {
 				try {
 					Contributo_ritenutaHome home = (Contributo_ritenutaHome) getHome(userContext, Contributo_ritenutaBulk.class);
@@ -2390,8 +2400,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 			if (imSaldoPatrimoniale.compareTo(rigaMandato.getIm_mandato_riga()) != 0)
-				throw new ApplicationException("La scrittura Prima Nota associata del compenso " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + " associato del mandato presenta in Avere movimenti di conti patrimoniali " +
-						"per un importo non coincidente con quello del mandato stesso.");
+				throw new ApplicationException("La scrittura Prima Nota del compenso " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + ", associato al mandato "+
+						mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +", presenta in Avere movimenti di conti patrimoniali " +
+						"per un importo ("+new it.cnr.contab.util.EuroFormat().format(imSaldoPatrimoniale) +
+						") non coincidente con quello del mandato stesso ("+new it.cnr.contab.util.EuroFormat().format(rigaMandato.getIm_mandato_riga()) +").");
 		}
 
 		// Effettuo il controllo che le ritenute associate al compenso originario coincida con le ritenute della riga associata al mandato
