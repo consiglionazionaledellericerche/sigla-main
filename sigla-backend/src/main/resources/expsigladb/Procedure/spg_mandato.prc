@@ -220,7 +220,7 @@ begin
 							UTCR,
 							DACR,
 							STATO)
-   select aId,
+   select distinct aId,
    		  'Testata,beneficiario',
 		  'Stampa RPT',
 		  i,
