@@ -1080,6 +1080,10 @@ BEGIN
         if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
            IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
                 glbImportoCredIrpParDetDovuto := glbImportoCredIrpParDetDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+                IF tabCreditoIrpef(i_credito).tImCreditoMaxDovuto IS NOT NULL AND
+                   glbImportoCredIrpParDetDovuto > tabCreditoIrpef(i_credito).tImCreditoMaxDovuto THEN
+                   glbImportoCredIrpParDetDovuto := tabCreditoIrpef(i_credito).tImCreditoMaxDovuto;
+                END IF;
            else
                 glbImportoCreditoIrpefDovuto := glbImportoCreditoIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
            end if;
@@ -1132,6 +1136,12 @@ BEGIN
          aImCompCongIrpefNetto := 0;        -- viene poi aggiornato su CONTRIBUTO_RITENUTA
          aImNettoIrpefDovuto := aImNettoIrpefGoduto + Nvl(aRecConguaglio.im_irpef_esterno,0);
       End If;
+
+      IF aImNettoIrpefDovuto >= 0 THEN
+       	 glbImportoCredIrpParDetDovuto := 0;
+      ELSIF glbImportoCredIrpParDetDovuto>0 AND glbImportoCredIrpParDetDovuto >= (aImNettoIrpefDovuto * -1) THEN
+   	 	 glbImportoCredIrpParDetDovuto := aImNettoIrpefDovuto * -1;
+      END IF;
 
       aImCompCongFamilyNetto:=glbImportoFamilyDovuto - glbImportoFamilyGoduto;
 
@@ -1382,7 +1392,11 @@ BEGIN
               FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
                 if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_Validita then
                     if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
-                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
+			           IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
+	                      aAmmontareCompCong:=-(glbImportoCredIrpParDetDovuto - glbImportoCreditoIrpefGoduto);
+	                   ELSE
+	                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
+					   END IF;
                     else
                       aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoBonusIrpefGoduto);
                     end if;
