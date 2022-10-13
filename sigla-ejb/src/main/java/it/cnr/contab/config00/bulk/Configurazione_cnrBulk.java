@@ -69,6 +69,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_CDS_SAC = "CDS_SAC";
     public final static String PK_ELEMENTO_VOCE_SPECIALE = "ELEMENTO_VOCE_SPECIALE";
     public final static String SK_VOCE_IVA_FATTURA_ESTERA = "VOCE_IVA_FATTURA_ESTERA";
+    public final static String SK_NETTO_DA_TRATTENERE = "NETTO_DA_TRATTENERE";
     public final static String SK_TEMPO_IND_SU_PROGETTI_FINANZIATI = "TEMPO_IND_SU_PROGETTI_FINANZIATI";
 
     public final static String PK_BENE_SERVIZIO_SPECIALE = "BENE_SERVIZIO_SPECIALE";
