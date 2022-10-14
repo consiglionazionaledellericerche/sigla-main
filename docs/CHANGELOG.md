@@ -1,3 +1,15 @@
+## Release 6.4.60  -- _October 14, 2022_ 
+**Changes**
+
+>**Rimosso controllo sul doppio terzo associato alla UO**
+>
+>[6fc64df47e40426](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fc64df47e40426) marco.spasiano *October 14, 2022*
+
+>**Fix conguagli su CUNEODL320. Non gestiva il caso previsto dalla norametiva per i redditi superiori a 15000 euro.**
+>
+>[d95c03551a091b0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d95c03551a091b0) PAGANO RAFFAELE *October 13, 2022*
+
+
 ## Release 6.4.59  -- _October 10, 2022_ 
 **Changes**
 
