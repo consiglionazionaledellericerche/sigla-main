@@ -146,10 +146,13 @@ public class Progetto_sipHome extends BulkHome {
 	}
 	public SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC,String campo,Integer livelloProgetto) throws PersistencyException{
 		SQLBuilder sql = abilitazioni(aUC);    	
-		if (ProgettoBulk.LIVELLO_PROGETTO_SECONDO.equals(livelloProgetto))
-			sql.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA",campo);
-		else
-			sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO",campo);
+		if (ProgettoBulk.LIVELLO_PROGETTO_SECONDO.equals(livelloProgetto)) {
+			sql.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA", campo);
+			sql.addSQLClause(FindClause.AND, "V_ABIL_PROGETTI.ESERCIZIO_COMMESSA", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(aUC));
+		} else {
+			sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO", campo);
+			sql.addSQLClause(FindClause.AND, "V_ABIL_PROGETTI.ESERCIZIO_MODULO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(aUC));
+		}
 		return sql;    	
 	}	    
 	private SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC) throws PersistencyException{
