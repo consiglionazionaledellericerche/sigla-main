@@ -4,6 +4,7 @@
 
   CREATE OR REPLACE PACKAGE BODY "CNRCTB650" AS
 
+
 -- =================================================================================================
 -- Verifica ammissibibilita del conguaglio per un dato soggetto anagrafico. Se il conguaglio è
 -- ammesso si recuperano i dati esterni dell'ultimo conguaglio registrato e si riportano sul corrente.
@@ -932,7 +933,6 @@ BEGIN
       glbDeduzioneFamilyDovuto:=0;
       glbImportoCreditoIrpefDovuto:=0;
       glbImportoCredIrpParDetDovuto:=0;
-      glbImportoCredIrpParDetGoduto:=0;
       glbImportoBonusIrpefDovuto:=0;
 
       glbImpAddRegRateEseprec:=0;
@@ -1393,7 +1393,7 @@ BEGIN
                 if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_Validita then
                     if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
 			           IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
-	                      aAmmontareCompCong:=-(glbImportoCredIrpParDetDovuto - glbImportoCreditoIrpefGoduto);
+	                      aAmmontareCompCong:=-(glbImportoCredIrpParDetDovuto - glbImportoCredIrpParDetGoduto);
 	                   ELSE
 	                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
 					   END IF;
@@ -1752,7 +1752,6 @@ BEGIN
                                                        aRecCompensoConguaglioBase.esercizio_conguaglio,
                                                        aRecCompensoConguaglioBase.pg_conguaglio,
                                                        eseguiLock);
-
          glbImportoIrpefGoduto:=aRecConguaglioUltimo.im_irpef_dovuto;
          glbImportoFamilyGoduto:=aRecConguaglioUltimo.im_family_dovuto;
          glbImportoAddRegGoduto:=aRecConguaglioUltimo.im_addreg_dovuto;
@@ -1767,6 +1766,7 @@ BEGIN
          glbDeduzioneIrpefGoduto:=aRecConguaglioUltimo.im_deduzione_dovuto;
          glbDeduzioneFamilyGoduto:=aRecConguaglioUltimo.im_deduzione_family_dovuto;
          glbImportoCreditoIrpefGoduto := aRecConguaglioUltimo.im_credito_irpef_dovuto;
+         glbImportoCredIrpParDetGoduto := aRecConguaglioUltimo.im_cred_irpef_par_det_dovuto;
          glbImportoBonusIrpefGoduto := aRecConguaglioUltimo.im_bonus_irpef_dovuto;
          glbDataMinCompetenza:=aRecConguaglioUltimo.dt_da_competenza_coge;
          glbDataMaxCompetenza:=aRecConguaglioUltimo.dt_a_competenza_coge;
@@ -1813,7 +1813,8 @@ BEGIN
            glbDeduzioneFamilyGoduto:=0;
            glbImportoIrpefSospesoGoduto:=0;
            glbImportoCreditoIrpefGoduto:=0;
-           glbImportoBonusIrpefGoduto:=0;
+		   glbImportoCredIrpParDetGoduto:=0;
+		   glbImportoBonusIrpefGoduto:=0;
            glbDataMinCompetenza:=NULL;
            glbDataMaxCompetenza:=NULL;
 
