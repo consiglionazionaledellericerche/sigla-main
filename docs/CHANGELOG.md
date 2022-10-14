@@ -1,3 +1,15 @@
+## Release 6.4.61  -- _October 14, 2022_ 
+**Changes**
+
+>**Update CNRCTB650_BODY.sql**
+>
+>[69b815f1859a42c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69b815f1859a42c) PAGANO RAFFAELE *October 14, 2022*
+
+>**Aggiunta condizione sull'esercizio**
+>
+>[1855ced05260ddc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1855ced05260ddc) marco.spasiano *October 14, 2022*
+
+
 ## Release 6.4.60  -- _October 14, 2022_ 
 **Changes**
 
