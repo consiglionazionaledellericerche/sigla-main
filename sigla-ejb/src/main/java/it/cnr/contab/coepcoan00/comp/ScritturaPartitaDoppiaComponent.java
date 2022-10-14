@@ -1125,9 +1125,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	protected void ridefinisciClausoleConTimestamp(UserContext userContext,CompoundFindClause clauses)
 	{
 		SimpleFindClause clause;
-		for ( Iterator i = clauses.iterator(); i.hasNext(); )
+		for ( Iterator<SimpleFindClause> i = clauses.iterator(); i.hasNext(); )
 		{
-			clause = (SimpleFindClause) i.next();
+			clause = i.next();
 			if ( clause.getPropertyName().equalsIgnoreCase( "dt_contabilizzazione" ) )
 				if ( clause.getOperator() == SQLBuilder.ISNOTNULL || clause.getOperator() == SQLBuilder.ISNULL )
 					clause.setSqlClause( "TRUNC( " + clause.getPropertyName() + ") " + SQLBuilder.getSQLOperator(clause.getOperator()) );
@@ -1276,10 +1276,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private void validaAssociazioneAnagConto (UserContext userContext, Scrittura_partita_doppiaBulk scrittura ) throws ComponentException, PersistencyException
 	{
-		List result = ((Ass_anag_voce_epHome) getHome(userContext, Ass_anag_voce_epBulk.class)).findAssociazioniPerScrittura( scrittura );
+		List<Ass_anag_voce_epBulk> result = ((Ass_anag_voce_epHome) getHome(userContext, Ass_anag_voce_epBulk.class)).findAssociazioniPerScrittura( scrittura );
 		if ( result == null || result.size() == 0 )
 			throw new ApplicationException( "Non esiste nessuna associazione fra l'anagrafica selezionata e i conti economico-patrimoniali" );
-		Ass_anag_voce_epBulk ass = (Ass_anag_voce_epBulk) result.get(0);
+		Ass_anag_voce_epBulk ass = result.get(0);
 		Movimento_cogeBulk movimento;
 		for (Movimento_cogeBulk movimento_cogeBulk : scrittura.getMovimentiAvereColl()) {
 			if (movimento_cogeBulk.getConto().equalsByPrimaryKey(ass.getConto()))
@@ -1786,24 +1786,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					}
 				}));
 
-			Optional<AnticipoBulk> optAnticipo = optMissione.flatMap(missione->Optional.ofNullable(missione.getAnticipo()).map(anticipo->
-				Optional.of(anticipo).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
-					try {
-						AnticipoHome home = (AnticipoHome) getHome(userContext, AnticipoBulk.class);
-						return (AnticipoBulk)home.findByPrimaryKey(anticipo);
-					} catch (ComponentException | PersistencyException e) {
-						throw new DetailedRuntimeException(e);
-					}
-				}))).filter(anticipo->anticipo.getIm_anticipo().compareTo(BigDecimal.ZERO)!=0);
-
-			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = optAnticipo.map(anticipo->{
-				try {
-					return this.findPairCosto(userContext, optAnticipo.get());
-				} catch (ComponentException | PersistencyException | RemoteException e) {
-					throw new DetailedRuntimeException(e);
-				}
-			}).orElse(null);
-
 			BigDecimal imContributiCaricoEnte = righeCori.stream().filter(Contributo_ritenutaBulk::isContributoEnte)
 					.map(Contributo_ritenutaBulk::getAmmontare)
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -1815,27 +1797,15 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			//Nel caso dei compensi rilevo subito il costo prelevando le informazioni dalla riga del compenso stesso
 			//Registrazione conto COSTO COMPENSO
-			BigDecimal imCostoCompensoNettoAnticipo = compenso.getIm_lordo_percipiente().subtract(optAnticipo.map(AnticipoBulk::getIm_anticipo).orElse(BigDecimal.ZERO));
+			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
 
-			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso;
-			if (imCostoCompensoNettoAnticipo.compareTo(BigDecimal.ZERO)>0)
-				pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
-			else
-				pairContoCostoCompenso = pairContoCostoAnticipo;
-
-			if (imCostoCompensoNettoAnticipo.compareTo(BigDecimal.ZERO)>0){
-				testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCompensoNettoAnticipo);
-				testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCompensoNettoAnticipo, compenso.getCd_terzo());
-			}
+			testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), compenso.getIm_lordo_percipiente());
+			testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), compenso.getIm_lordo_percipiente(), compenso.getCd_terzo());
 
 			//Registrazione conto CONTRIBUTI-RITENUTE
 			//Vengono registrati tutti i CORI a carico Ente
-			//Se anticipo risulta maggiore/uguale al compenso allora vengono registrati anche i CORI carico percipiente perchè il mandato non verrà emesso
-			boolean isCompensoMaggioreAnticipo = optAnticipo.map(AnticipoBulk::getIm_anticipo).map(imAnticipo->
-					compenso.getIm_totale_compenso().compareTo(imAnticipo)>0).orElse(Boolean.TRUE);
-
 			righeCori.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)!=0)
-					.filter(el->!isCompensoMaggioreAnticipo || el.isContributoEnte() || el.isTipoContributoIva())
+					.filter(el->el.isContributoEnte() || el.isTipoContributoIva())
 					.forEach(cori->{
 						try {
 							BigDecimal imCostoCori = cori.getAmmontare();
@@ -1884,26 +1854,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							throw new ApplicationRuntimeException(e);
 						}
 					});
-
-			//se esiste anticipo devo fare registrazioni una serie di registrazioni
-			optAnticipo.ifPresent(anticipo->{
-				try {
-					BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
-
-					// 1. scaricare i costi dell'anticipo leggendo la voce bilancio associata allo stesso
-					testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
-					testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoAnticipo, compenso.getCd_terzo());
-
-					//2. chiudere il conto credito per anticipo
-					List<Movimento_cogeBulk> allMovimentiPrimaNota = this.findMovimentiPrimaNota(userContext,anticipo);
-					String contoPatrimonialeAperturaCreditoAnticipo = this.findMovimentoAperturaCreditoAnticipo(allMovimentiPrimaNota, anticipo, anticipo.getCd_terzo()).getCd_voce_ep();
-
-					testataPrimaNota.closeDettaglioCostoRicavoPartita(anticipo, contoPatrimonialeAperturaCreditoAnticipo, imCostoAnticipo, anticipo.getCd_terzo());
-					testataPrimaNota.closeDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoAnticipo, compenso.getCd_terzo(), true);
-				} catch (ComponentException|PersistencyException e) {
-					throw new ApplicationRuntimeException(e);
-				}
-			});
 
 			return this.generaScrittura(userContext, compenso, Collections.singletonList(testataPrimaNota), true);
 		} catch (PersistencyException|RemoteException e) {
@@ -2386,25 +2336,33 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}));
 		}
 
+		//recupero la missione se il compenso è da missione
+		Optional<MissioneBulk> optMissione = Optional.ofNullable(compenso.getMissione()).map(missione->
+				Optional.of(missione).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+					try {
+						MissioneHome home = (MissioneHome) getHome(userContext, MissioneBulk.class);
+						return (MissioneBulk)home.findByPrimaryKey(compenso.getMissione());
+					} catch (ComponentException | PersistencyException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				}));
+
+		//quindi l'anticipo se la missione è stata associata ad esso
+		Optional<AnticipoBulk> optAnticipo = optMissione.flatMap(missione->Optional.ofNullable(missione.getAnticipo()).map(anticipo->
+				Optional.of(anticipo).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+					try {
+						AnticipoHome home = (AnticipoHome) getHome(userContext, AnticipoBulk.class);
+						return (AnticipoBulk)home.findByPrimaryKey(anticipo);
+					} catch (ComponentException | PersistencyException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				}))).filter(anticipo->anticipo.getIm_anticipo().compareTo(BigDecimal.ZERO)!=0);
+
 		//recupero la scrittura del compenso
 		List<Movimento_cogeBulk> allMovimentiPrimaNotaCompenso = this.findMovimentiPrimaNota(userContext, compenso);
 
 		if (allMovimentiPrimaNotaCompenso.isEmpty())
 			throw new ApplicationException("Non risulta generata la scrittura Prima Nota del compenso " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + " associato del mandato.");
-
-		// Effettuo il controllo che il saldo patrimoniale aperto del compenso coincida con la riga del mandato
-		{
-			BigDecimal imSaldoPatrimoniale = allMovimentiPrimaNotaCompenso.stream()
-					.filter(el -> Movimento_cogeBulk.TipoRiga.DEBITO.value().equals(el.getTi_riga()))
-					.map(el -> el.isSezioneAvere() ? el.getIm_movimento() : el.getIm_movimento().negate())
-					.reduce(BigDecimal.ZERO, BigDecimal::add);
-
-			if (imSaldoPatrimoniale.compareTo(rigaMandato.getIm_mandato_riga()) != 0)
-				throw new ApplicationException("La scrittura Prima Nota del compenso " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + ", associato al mandato "+
-						mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +", presenta in Avere movimenti di conti patrimoniali " +
-						"per un importo ("+new it.cnr.contab.util.EuroFormat().format(imSaldoPatrimoniale) +
-						") non coincidente con quello del mandato stesso ("+new it.cnr.contab.util.EuroFormat().format(rigaMandato.getIm_mandato_riga()) +").");
-		}
 
 		// Effettuo il controllo che le ritenute associate al compenso originario coincida con le ritenute della riga associata al mandato
 		// Se la tipologia di contributo ritenuta è IVA o RIVALSA non calcolo le ritenute perchè vanno direttamente al fornitore
@@ -2427,6 +2385,35 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			if (imRitenutePositiveSoloCompenso.subtract(imRitenuteFittizieSoloCompenso).compareTo(rigaMandato.getIm_ritenute_riga()) != 0)
 				throw new ApplicationException("L'importo delle righe ritenute del compenso associato al mandato non corrisponde con l'importo ritenute associato al mandato.");
+
+			// Effettuo il controllo che il saldo patrimoniale aperto del compenso coincida con la riga del mandato
+			BigDecimal imSaldoPatrimoniale = allMovimentiPrimaNotaCompenso.stream()
+					.filter(el -> Movimento_cogeBulk.TipoRiga.DEBITO.value().equals(el.getTi_riga()))
+					.map(el -> el.isSezioneAvere() ? el.getIm_movimento() : el.getIm_movimento().negate())
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			//se il compenso paga una missione con anticipo, il mandato è al netto dell'anticipo stesso.....
+			if (optAnticipo.isPresent()) {
+				imSaldoPatrimoniale = imSaldoPatrimoniale.subtract(optAnticipo.map(AnticipoBulk::getIm_anticipo).orElse(BigDecimal.ZERO));
+
+				//se imSaldoPatrimoniale è minore delle ritenute il mandato deve essere stato emesso solo per l'importo delle ritenute
+				if (imSaldoPatrimoniale.compareTo(rigaMandato.getIm_ritenute_riga())<0) {
+					if (rigaMandato.getIm_ritenute_riga().compareTo(rigaMandato.getIm_mandato_riga()) != 0)
+						throw new ApplicationException("Il compenso da missione " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + ", associato al mandato " +
+								mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() + ", al netto dell'anticipo associato ha un importo " +
+								"da pagare (" + new it.cnr.contab.util.EuroFormat().format(imSaldoPatrimoniale) + " inferiore alle ritenute da operare (" +
+								new it.cnr.contab.util.EuroFormat().format(rigaMandato.getIm_ritenute_riga()) + "). Il mandato dovrebbe avere un importo pari alle sole ritenute da trattenere.");
+				} else if (imSaldoPatrimoniale.compareTo(rigaMandato.getIm_mandato_riga()) != 0)
+					throw new ApplicationException("La scrittura Prima Nota del compenso da missione " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + ", associato al mandato "+
+							mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +", presenta in Avere movimenti di conti patrimoniali " +
+							"per un importo ("+new it.cnr.contab.util.EuroFormat().format(imSaldoPatrimoniale) +
+							") che, al netto dell'anticipo associato ("+new it.cnr.contab.util.EuroFormat().format(optAnticipo.map(AnticipoBulk::getIm_anticipo).orElse(BigDecimal.ZERO))+
+							"), non coincide con quello del mandato stesso ("+new it.cnr.contab.util.EuroFormat().format(rigaMandato.getIm_mandato_riga()) +").");
+			} else if (imSaldoPatrimoniale.compareTo(rigaMandato.getIm_mandato_riga()) != 0)
+				throw new ApplicationException("La scrittura Prima Nota del compenso " + compenso.getEsercizio() + "/" + compenso.getPg_compenso() + ", associato al mandato "+
+						mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +", presenta in Avere movimenti di conti patrimoniali " +
+						"per un importo ("+new it.cnr.contab.util.EuroFormat().format(imSaldoPatrimoniale) +
+						") non coincidente con quello del mandato stesso ("+new it.cnr.contab.util.EuroFormat().format(rigaMandato.getIm_mandato_riga()) +").");
 		}
 
 		BigDecimal imRitenuteFittizie = righeCori.stream()
@@ -2508,7 +2495,36 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 
-		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, true);
+		//se il compenso è da missione con anticipo bilancio il onto tesoreria con l'anticipo stesso
+		//se esiste anticipo devo fare registrazioni una serie di registrazioni
+		optAnticipo.ifPresent(anticipo->{
+			try {
+				final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = this.findPairCosto(userContext, optAnticipo.get());
+
+				BigDecimal imCompensoNettoRitenute = compenso.getIm_totale_compenso().subtract(compenso.getIm_cr_ente()).subtract(compenso.getIm_cr_percipiente());
+				BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
+
+				BigDecimal imMovimento = imCostoAnticipo.compareTo(imCompensoNettoRitenute)<0?imCostoAnticipo:imCompensoNettoRitenute;
+
+				List<Movimento_cogeBulk> allMovimentiPrimaNota = this.findMovimentiPrimaNota(userContext,anticipo);
+				String contoPatrimonialeAperturaCreditoAnticipo = this.findMovimentoAperturaCreditoAnticipo(allMovimentiPrimaNota, anticipo, anticipo.getCd_terzo()).getCd_voce_ep();
+
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, contoPatrimonialeAperturaCreditoAnticipo, imMovimento, anticipo, anticipo.getCd_terzo(), null);
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, contoPatrimonialePartita, imMovimento, compenso, compenso.getCd_terzo(), null);
+			} catch (ComponentException|PersistencyException|RemoteException e) {
+				throw new ApplicationRuntimeException(e);
+			}
+		});
+
+		if (Optional.ofNullable(compenso.getIm_netto_da_trattenere()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)>0) {
+			//Devo chiudere la tesoreria con la quota da trattenere
+			Voce_epBulk contoQuotaDaTrattenere = this.findContoQuotaDaTrattenere(userContext, CNRUserContext.getEsercizio(userContext));
+
+			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, contoQuotaDaTrattenere.getCd_voce_ep(), compenso.getIm_netto_da_trattenere(), compenso, compenso.getCd_terzo(), null);
+			testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), compenso.getIm_netto_da_trattenere());
+		}
+
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
 
 	/*
@@ -2697,7 +2713,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			});
 		}
 
-		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), false, true);
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), false);
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoStipendi(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {
@@ -3047,7 +3063,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 
-		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true, true);
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversale(UserContext userContext, ReversaleBulk reversale) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
@@ -3698,6 +3714,20 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						" - Codice Contributo: " + codiceTributoIvaSplitCommerciale + " - Tipe E/P: " + Contributo_ritenutaBulk.TIPO_ENTE + " - Sezione: " + tipoDocumento.getSezioneEconomica() + ")"));
 	}
 
+	private Voce_epBulk findContoQuotaDaTrattenere(UserContext userContext, int esercizio) throws ComponentException, RemoteException, PersistencyException {
+		Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_NETTO_DA_TRATTENERE);
+
+		return Optional.ofNullable(config).flatMap(el->Optional.ofNullable(el.getVal02())).map(el->{
+			try {
+				Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
+				return (Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(el, esercizio));
+			} catch(ComponentException|PersistencyException ex) {
+				throw new DetailedRuntimeException(ex);
+			}
+		}).orElseThrow(()->new ApplicationException("Manca la configurazione del conto NETTO_DA_TRATTENERE nella tabella CONFIGURAZIONE_CNR per l'esercizio "+esercizio
+				+" ("+Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE+"-"+Configurazione_cnrBulk.SK_NETTO_DA_TRATTENERE+"-VAL02)"));
+	}
+
 	private Voce_epBulk findContoCostoRicavo(UserContext userContext, Elemento_voceBulk voceBilancio) throws ComponentException, PersistencyException {
 		return this.findAssEvVoceep(userContext, voceBilancio).getVoce_ep();
 	}
@@ -3973,7 +4003,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
 			}
 		}
-		return null;
+		return new HashMap<>();
 	}
 
 	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiCori(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocamm, String cdCori, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {
@@ -4181,10 +4211,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) {
-		return this.generaScrittura(userContext, doccoge, testataPrimaNota, accorpaConti, true);
-	}
-
-	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti, boolean controllaTesoreria) {
 		if (!testataPrimaNota.stream().flatMap(el->el.getDett().stream()).findAny().isPresent())
 			return null;
 
@@ -4522,7 +4548,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					") non risulterebbe essere uguale al totale Avere (" +
 					new it.cnr.contab.util.EuroFormat().format(scritturaPartitaDoppia.getImTotaleAvere())+").");
 
-		if (controllaTesoreria && (doccoge instanceof MandatoBulk || doccoge instanceof ReversaleBulk)) {
+		if (doccoge instanceof MandatoBulk || doccoge instanceof ReversaleBulk) {
 			//Metto il controllo che il conto tesoreria sia sempre pari al netto mandato/reversale se richiesto di fare controllo
 			BigDecimal saldoTesoreria = scritturaPartitaDoppia.getAllMovimentiColl().stream()
 					.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
