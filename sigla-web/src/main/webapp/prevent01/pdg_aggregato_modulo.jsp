@@ -81,7 +81,7 @@
                                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo fa-flip-horizontal" : "img/import24.gif",
                                         "Cambia Stato",
                                         "if (disableDblClick()) javascript:submitForm('doCambiaStato')",
-                                        "btn-secondary btn-outline-info btn-title btn-block",
+                                        "btn-outline-info btn-title btn-block",
                                         !bp.isROStato(),
                                         bp.getParentRoot().isBootstrap());%>
                                     </center>
