@@ -171,7 +171,7 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
             fillModel(context);
             Unita_organizzativaBulk uo = (Unita_organizzativaBulk) bp.getModel();
 
-            TerzoComponentSession terzoComponent = Utility.createTerzoComponentSession();
+            TerzoComponentSession terzoComponent =  Utility.createTerzoComponentSession();
 
             RemoteIterator remoteiterator = terzoComponent.cercaTerziPerUnitaOrganizzativa(context.getUserContext(), uo);
             if ( remoteiterator.countElements()>1) {
@@ -184,6 +184,8 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
                 return context.addBusinessProcess(selezionatorelistabp);
 
             }
+
+
 
             Optional<TerzoBulk> terzo=Optional.ofNullable(remoteiterator.nextElement()).
                         filter(TerzoBulk.class:: isInstance).

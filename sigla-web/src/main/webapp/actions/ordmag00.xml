@@ -106,11 +106,6 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
-  <businessProcess name="CRUDAbilUtUopOperBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/ordmag/abiluteuopoper.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk"/>
-    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
-  </businessProcess>
   <businessProcess name="CRUDTipoMovimentoMagBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <!--<forward name="default" path="/ordmag/tipomovimento.jsp"/>-->
     <forward name="default" path="/util/form.jsp"/>
