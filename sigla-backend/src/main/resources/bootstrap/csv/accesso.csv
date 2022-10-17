@@ -420,8 +420,6 @@ CD_ACCESSO,TI_ACCESSO,DS_ACCESSO,UTCR,UTUV,PG_VER_REC
 "MAGTABRRAGGRV","D","Visualizzazione Raggruppamento Magazzino","SYSTEM","SYSTEM","1"
 "ORDTABRTIPOPM","C","Gestione Tipo Operazione","SYSTEM","SYSTEM","1"
 "ORDTABRTIPOPV","C","Visualizzazione Tipo Operazione","SYSTEM","SYSTEM","1"
-"ORDTABRTIPOPABILUTEM","D","Gestione Abilitazione Utente/Tipo Operazione","SYSTEM","SYSTEM","1"
-"ORDTABRTIPOPABILUTEV","D","Visualizzazione Abilitazione Utente/Tipo Operazione","SYSTEM","SYSTEM","1"
 "MAGTABRTIPOMOVM","D","Gestione Tipi Movimento Magazzino","SYSTEM","SYSTEM","1"
 "MAGTABRTIPOMOVV","D","Visualizzazione Tipi Movimento Magazzino","SYSTEM","SYSTEM","1"
 "MAGTABRTIPOMOVAZIONM","D","Gestione Azioni Tipi Movimento Magazzino","SYSTEM","SYSTEM","1"

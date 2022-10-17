@@ -167,6 +167,7 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
      */
     public it.cnr.jada.action.Forward doRichiamaTerzo(it.cnr.jada.action.ActionContext context) {
         try {
+
             CRUDBP bp = (CRUDBP) getBusinessProcess(context);
             fillModel(context);
             Unita_organizzativaBulk uo = (Unita_organizzativaBulk) bp.getModel();
@@ -184,16 +185,18 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
                 return context.addBusinessProcess(selezionatorelistabp);
 
             }
-
-
-
-            Optional<TerzoBulk> terzo=Optional.ofNullable(remoteiterator.nextElement()).
-                        filter(TerzoBulk.class:: isInstance).
-                        map( TerzoBulk.class::cast);
-            CRUDTerzoBP terzoBP = (CRUDTerzoBP) context.createBusinessProcess("CRUDTerzoBP", new Object[]{bp.isEditable() ? "M" : "V",
-                                                    terzo.get().getUnita_organizzativa(),
-                                                    terzo.get() });
-            //terzoBP.edit(context,terzo.get());
+            CRUDTerzoBP terzoBP = null;
+            if ( remoteiterator.countElements()==1) {
+                Optional<TerzoBulk> terzo = Optional.ofNullable(remoteiterator.nextElement()).
+                        filter(TerzoBulk.class::isInstance).
+                        map(TerzoBulk.class::cast);
+                terzoBP = (CRUDTerzoBP) context.createBusinessProcess("CRUDTerzoBP", new Object[]{bp.isEditable() ? "M" : "V",
+                        terzo.get().getUnita_organizzativa(),
+                        terzo.get()});
+                //terzoBP.edit(context,terzo.get());
+            }else {
+                terzoBP = (CRUDTerzoBP) context.createBusinessProcess("CRUDTerzoBP", new Object[]{bp.isEditable() ? "M" : "V", uo});
+            }
             return context.addBusinessProcess(terzoBP);
         } catch (Throwable e) {
             return handleException(context, e);
