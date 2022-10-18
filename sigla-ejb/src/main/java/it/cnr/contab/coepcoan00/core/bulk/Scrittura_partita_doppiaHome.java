@@ -139,21 +139,25 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
         }
     }
 
-    public Optional<Scrittura_partita_doppiaBulk> getScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
+    public Optional<Scrittura_partita_doppiaBulk> getScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk, boolean fetchAll) throws ComponentException {
         try {
             Optional<Scrittura_partita_doppiaBulk> scritturaOpt = Optional.empty();
             if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(userContext)) {
                 scritturaOpt = this.findByDocumentoAmministrativo(documentoCogeBulk);
                 if (scritturaOpt.isPresent()) {
                     Scrittura_partita_doppiaBulk scrittura = scritturaOpt.get();
-                    scrittura.setMovimentiDareColl(new BulkList(this.findMovimentiDareColl(userContext, scrittura)));
-                    scrittura.setMovimentiAvereColl(new BulkList(this.findMovimentiAvereColl(userContext, scrittura)));
+                    scrittura.setMovimentiDareColl(new BulkList(this.findMovimentiDareColl(userContext, scrittura, fetchAll)));
+                    scrittura.setMovimentiAvereColl(new BulkList(this.findMovimentiAvereColl(userContext, scrittura, fetchAll)));
                 }
             }
             return scritturaOpt;
         } catch (PersistencyException | RemoteException e) {
             throw new ComponentException(e);
         }
+    }
+
+    public Optional<Scrittura_partita_doppiaBulk> getScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
+        return this.getScrittura(userContext, documentoCogeBulk, Boolean.TRUE);
     }
 
     @Override
