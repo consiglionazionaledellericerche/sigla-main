@@ -18,6 +18,7 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
 
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -302,5 +303,46 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		if (contributo_ritenuta_iva == null)
 			return null;
 		return contributo_ritenuta_iva.getCd_contributo_ritenuta();
+	}
+
+	public boolean isTipoSezionaleCommerciale() {
+		return TipoIVA.COMMERCIALE.value().equals(this.getTi_istituz_commerc());
+	}
+
+	public boolean isTipoSezionaleSanMarinoSenzaIva() {
+		return this.getFl_san_marino_senza_iva() &&
+				TipoIVA.ISTITUZIONALE.value().equals(this.getTi_istituz_commerc()) &&
+				!Bene_servizioBulk.SERVIZIO.equals(this.getTi_bene_servizio());
+	}
+
+	public boolean isTipoSezionaleBeniIntraUe() {
+		return this.getFl_intra_ue() &&
+				TipoIVA.ISTITUZIONALE.value().equals(this.getTi_istituz_commerc()) &&
+				Bene_servizioBulk.BENE.equals(this.getTi_bene_servizio());
+	}
+
+	public boolean isTipoSezionaleServiziNonResidenti() {
+		return (this.getFl_intra_ue() || this.getFl_extra_ue() ||this.getFl_san_marino_senza_iva()) &&
+				TipoIVA.ISTITUZIONALE.value().equals(this.getTi_istituz_commerc()) &&
+				Bene_servizioBulk.SERVIZIO.equals(this.getTi_bene_servizio());
+	}
+
+	public boolean isTipoSezionaleSplitPayment() {
+		return this.getFl_split_payment() &&
+				TipoIVA.ISTITUZIONALE.value().equals(this.getTi_istituz_commerc());
+	}
+
+	public boolean isTipoSezionale(String tipoSezionale) {
+		if (Stampa_registri_ivaVBulk.SEZIONALI_COMMERCIALI.equals(tipoSezionale))
+			return this.isTipoSezionaleCommerciale();
+		else if (Stampa_registri_ivaVBulk.SEZIONALI_SAN_MARINO_SENZA_IVA.equals(tipoSezionale))
+			return this.isTipoSezionaleSanMarinoSenzaIva();
+		else if (Stampa_registri_ivaVBulk.SEZIONALI_BENI_INTRA_UE.equals(tipoSezionale))
+			return this.isTipoSezionaleBeniIntraUe();
+		else if (Stampa_registri_ivaVBulk.SEZIONALI_SERVIZI_NON_RESIDENTI.equals(tipoSezionale))
+			return this.isTipoSezionaleServiziNonResidenti();
+		else if (Stampa_registri_ivaVBulk.SEZIONALI_SPLIT_PAYMENT.equals(tipoSezionale))
+			return this.isTipoSezionaleSplitPayment();
+		return false;
 	}
 }

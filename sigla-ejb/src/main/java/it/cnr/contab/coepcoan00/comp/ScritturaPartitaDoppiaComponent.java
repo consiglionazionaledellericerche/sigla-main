@@ -1863,41 +1863,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompensoConguagli(UserContext userContext, CompensoBulk compenso) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		return this.proposeScritturaPartitaDoppiaCompenso(userContext, compenso);
-			/*
-		try {
-			//verifico se è stato associato ad altro compenso
-			CompensoBulk compensoPrincipale = ((CompensoHome) getHome(userContext, CompensoBulk.class)).findCompensoPrincipaleAssociato(userContext, compenso);
-
-			//se esiste aggiungo le righe di contributo/ritenuta in quanto anche loro contribuiscono a determinare il netto mandato
-			if (compensoPrincipale != null && !compensoPrincipale.equalsByPrimaryKey(compenso))
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non necessaria in quanto il compenso è a fronte di un conguaglio collegato al compenso principale "+
-						compensoPrincipale.getCd_cds()+"/"+compensoPrincipale.getCd_unita_organizzativa()+"/"+compensoPrincipale.getEsercizio()+"/"+compensoPrincipale.getPg_compenso()+
-						". La scrittura di prima nota è gestita tramite il compenso principale.");
-
-			//se arrivo qui allora si tratta di conguaglio non legato a compenso.... verifico solo che non preveda costi a carico ente o percipiente dato che si tratta di conguaglio
-			List<Contributo_ritenutaBulk> righeCori = Optional.ofNullable(compenso.getChildren()).orElseGet(()->{
-				try {
-					Contributo_ritenutaHome home = (Contributo_ritenutaHome) getHome(userContext, Contributo_ritenutaBulk.class);
-					return (java.util.List<Contributo_ritenutaBulk>)home.loadContributiRitenute(compenso);
-				} catch (ComponentException | PersistencyException e) {
-					throw new DetailedRuntimeException(e);
-				}
-			});
-
-			BigDecimal imContributiCaricoEnte = righeCori.stream().filter(Contributo_ritenutaBulk::isContributoEnte)
-					.map(Contributo_ritenutaBulk::getAmmontare)
-					.filter(el->el.compareTo(BigDecimal.ZERO)>0)
-					.reduce(BigDecimal.ZERO, BigDecimal::add);
-
-			if (compenso.getIm_lordo_percipiente().compareTo(BigDecimal.ZERO)!=0 || imContributiCaricoEnte.compareTo(BigDecimal.ZERO)!=0)
-				throw new ApplicationRuntimeException("Anomalia: il compenso da conguaglio presenta costi a carico ente e/o percipiente.");
-
-			throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non necessaria in quanto il compenso è a fronte di un conguaglio. " +
-					"La scrittura di prima nota è creata direttamente sul mandato.");
-		} catch (PersistencyException e) {
-			throw handleException(e);
-		}
-			 */
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompensoStipendi(UserContext userContext, CompensoBulk compenso) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
@@ -2535,7 +2500,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		String descEstesaMandato = "mandato " + descMandato + " generato da righe negative del compenso "+compenso.getEsercizio()+"/"+compenso.getCd_unita_organizzativa()+"/"+compenso.getPg_compenso();
 
 		if (mandato.getMandato_rigaColl().isEmpty() || mandato.getMandato_rigaColl().size() > 1)
-			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCds() + "/" + mandato.getPg_mandato() +
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
 					" ha un numero di righe non coerente con l'unica prevista per un mandato generato da compenso. Proposta di prima nota non possibile.");
 
 		Mandato_rigaBulk rigaMandato = mandato.getMandato_rigaColl().get(0);
@@ -2721,7 +2686,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		Stipendi_cofiBulk stipendiCofiBulk = ((Stipendi_cofiHome)getHome(userContext, Stipendi_cofiBulk.class)).findStipendiCofi(mandato);
 
 		if (!Optional.ofNullable(stipendiCofiBulk).isPresent())
-			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCds() + "/" + mandato.getPg_mandato() +
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
 					" non risulta pagare uno stipendio. Proposta di prima nota non possibile.");
 
 		CompensoBulk compenso = (CompensoBulk)getHome(userContext, CompensoBulk.class).findByPrimaryKey(new CompensoBulk(stipendiCofiBulk.getCd_cds_comp(), stipendiCofiBulk.getCd_uo_comp(), stipendiCofiBulk.getEsercizio_comp(),
@@ -2783,8 +2748,211 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
 
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoLiquidazione(UserContext userContext, MandatoBulk mandato, List<Liquidazione_ivaBulk> liquidazioneIvaList) throws ComponentException, PersistencyException, RemoteException {
+		if (liquidazioneIvaList.isEmpty())
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
+					" non risulta pagare una liquidazione iva. Proposta di prima nota non possibile.");
+		if (liquidazioneIvaList.size()>1)
+			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
+					" risulta pagare più di una liquidazione iva. Proposta di prima nota non possibile.");
+
+		List<Tipo_sezionaleBulk> allTipiSezionale = getHome(userContext, Tipo_sezionaleBulk.class).findAll();
+		List<IDocumentoAmministrativoBulk> allDocumentiLiquidati = new ArrayList<>();
+
+		Fattura_passiva_IHome fatturaPassivaIHome = (Fattura_passiva_IHome)getHome(userContext, Fattura_passiva_IBulk.class);
+		Nota_di_creditoHome notaCreditoPassivaHome = (Nota_di_creditoHome)getHome(userContext, Nota_di_creditoBulk.class);
+		Nota_di_debitoHome notaDebitoPassivaHome = (Nota_di_debitoHome)getHome(userContext, Nota_di_debitoBulk.class);
+		Fattura_attiva_IHome fatturaAttivaIHome = (Fattura_attiva_IHome)getHome(userContext, Fattura_attiva_IBulk.class);
+		Nota_di_credito_attivaHome notaCreditoAttivaHome = (Nota_di_credito_attivaHome)getHome(userContext, Nota_di_credito_attivaBulk.class);
+		Nota_di_debito_attivaHome notaDebitoAttivaHome = (Nota_di_debito_attivaHome)getHome(userContext, Nota_di_debito_attivaBulk.class);
+		Liquidazione_ivaHome liquidazioneIvaHome = (Liquidazione_ivaHome) getHome(userContext, Liquidazione_ivaBulk.class);
+
+		List<String> listCdCoriIvaSplit = new ArrayList<>();
+		listCdCoriIvaSplit.add(this.findCodiceTributoIvaSplitCommerciale(userContext));
+		listCdCoriIvaSplit.add(this.findCodiceTributoIvaSplitIstituzionale(userContext));
+
+		Voce_epBulk voceEpBanca = this.findContoBanca(userContext, CNRUserContext.getEsercizio(userContext));
+
+		Optional<Scrittura_partita_doppiaBulk> scritturaMandato = Optional.ofNullable(mandato.getScrittura_partita_doppia())
+				.map(spd->Optional.of(spd).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+					try {
+						Scrittura_partita_doppiaHome home = (Scrittura_partita_doppiaHome) getHome(userContext, Scrittura_partita_doppiaBulk.class);
+						return home.getScrittura(userContext, mandato, Boolean.FALSE).orElse(null);
+					} catch (ComponentException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				}));
+
+		TestataPrimaNota testataPrimaNota = new TestataPrimaNota(mandato.getMandato_terzo().getCd_terzo(), null, null);
+
+		//Recupero tutti i registri in base al tipo sezionale oggetto di liquidazione
+		liquidazioneIvaList.stream().forEach(liqIva->{
+			try {
+				List<Liquidazione_ivaBulk> liquidazioniDefinitive = liquidazioneIvaHome.findLiquidazioniMassiveDefinitiveList(liqIva);
+				List<Tipo_sezionaleBulk> tipiSezionale = allTipiSezionale.stream().filter(el->el.isTipoSezionale(liqIva.getTipo_liquidazione())).collect(Collectors.toList());
+
+				tipiSezionale.stream().forEach(tipoSezionale->{
+					try {
+						if (tipoSezionale.isAcquisti()) {
+							{
+								SQLBuilder sqlFatturaPassiva = fatturaPassivaIHome.createSQLBuilder();
+								sqlFatturaPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+								sqlFatturaPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIva.getDt_inizio());
+								sqlFatturaPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIva.getDt_fine());
+								allDocumentiLiquidati.addAll(fatturaPassivaIHome.fetchAll(sqlFatturaPassiva));
+							}
+							{
+								SQLBuilder sqlNotaCreditoPassiva = notaCreditoPassivaHome.createSQLBuilder();
+								sqlNotaCreditoPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+								sqlNotaCreditoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIva.getDt_inizio());
+								sqlNotaCreditoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIva.getDt_fine());
+								allDocumentiLiquidati.addAll(notaCreditoPassivaHome.fetchAll(sqlNotaCreditoPassiva));
+							}
+							{
+								SQLBuilder sqlNotaDebitoPassiva = notaDebitoPassivaHome.createSQLBuilder();
+								sqlNotaDebitoPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+								sqlNotaDebitoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIva.getDt_inizio());
+								sqlNotaDebitoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIva.getDt_fine());
+								allDocumentiLiquidati.addAll(notaDebitoPassivaHome.fetchAll(sqlNotaDebitoPassiva));
+							}
+						} else {
+							{
+								SQLBuilder sqlFatturaAttiva = fatturaAttivaIHome.createSQLBuilder();
+								sqlFatturaAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+								sqlFatturaAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIva.getDt_inizio());
+								sqlFatturaAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIva.getDt_fine());
+								allDocumentiLiquidati.addAll(fatturaAttivaIHome.fetchAll(sqlFatturaAttiva));
+							}
+							{
+								SQLBuilder sqlNotaCreditoAttiva = notaCreditoAttivaHome.createSQLBuilder();
+								sqlNotaCreditoAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+								sqlNotaCreditoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIva.getDt_inizio());
+								sqlNotaCreditoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIva.getDt_fine());
+								allDocumentiLiquidati.addAll(notaCreditoAttivaHome.fetchAll(sqlNotaCreditoAttiva));
+							}
+							{
+								SQLBuilder sqlNotaDebitoAttiva = notaDebitoAttivaHome.createSQLBuilder();
+								sqlNotaDebitoAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+								sqlNotaDebitoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIva.getDt_inizio());
+								sqlNotaDebitoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIva.getDt_fine());
+								allDocumentiLiquidati.addAll(notaDebitoAttivaHome.fetchAll(sqlNotaDebitoAttiva));
+							}
+						}
+
+						//a questo punto ho la lista dei compensi e dei codici contributi versati
+						//Raggruppo per compenso e codice tributo (per evitare che mi escano 2 righe P e C)
+						Map<String, List<IDocumentoAmministrativoBulk>> mapCdUo =
+								allDocumentiLiquidati.stream().collect(Collectors.groupingBy(IDocumentoAmministrativoBulk::getCd_uo));
+
+						mapCdUo.keySet().forEach(aCdUo -> {
+							List<IDocumentoAmministrativoBulk> allDocumentiUoLiquidati = mapCdUo.get(aCdUo);
+
+							TestataPrimaNota testataPrimaNotaLiquid = new TestataPrimaNota(mandato.getMandato_terzo().getCd_terzo(), null, null);
+
+							//Con la lista dei documenti che sono andati in liquidazione, vado a recuperare le scritture generate
+							allDocumentiUoLiquidati.forEach(docamm->{
+								try {
+									Integer cdTerzoDocamm = ((Fattura_passivaBulk)docamm).getCd_terzo();
+									Map<String, Map<String, Pair<String, BigDecimal>>> saldiCoriVoceEp;
+
+									//recupero tutti i movimenti della partita per ottenere il saldo al netto della scrittura del mandato se già esiste
+									if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isGenerataDaCompenso).orElse(Boolean.FALSE))
+										// Le fatture generate da compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
+										saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, ((Fattura_passivaBulk)docamm).getCompenso());
+									else
+										saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, docamm);
+
+									//dovrei trovare tra i saldi proprio l'import liquidato
+									//Il conto aperto deve essere solo uno e deve essere in segno AVERE
+									if (saldiCoriVoceEp.values().stream().flatMap(el->el.values().stream()).filter(el->el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
+										throw new ApplicationRuntimeException("Per il documento " + docamm.getCd_tipo_doc_amm()+"/"+docamm.getEsercizio() + "/" + docamm.getCd_cds() + "/" +
+												docamm.getPg_doc() + " e per le righe IVA esiste più di un conto che presenta un saldo positivo.");
+
+									saldiCoriVoceEp.keySet().forEach(aCdCori -> {
+										Map<String, Pair<String, BigDecimal>> saldiCori = saldiCoriVoceEp.get(aCdCori);
+										saldiCori.keySet().forEach(cdVoceEp -> {
+											Pair<String, BigDecimal> saldoVoce = saldiCori.get(cdVoceEp);
+											if (saldoVoce.getSecond().compareTo(BigDecimal.ZERO) != 0)
+												if (saldoVoce.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE)) {
+													testataPrimaNotaLiquid.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.SEZIONE_DARE, cdVoceEp, saldoVoce.getSecond(), docamm, cdTerzoDocamm, aCdCori);
+													testataPrimaNotaLiquid.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), saldoVoce.getSecond());
+												} else {
+													testataPrimaNotaLiquid.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.SEZIONE_AVERE, cdVoceEp, saldoVoce.getSecond(), docamm, cdTerzoDocamm, aCdCori);
+													testataPrimaNotaLiquid.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_DARE, voceEpBanca.getCd_voce_ep(), saldoVoce.getSecond());
+												}
+										});
+									});
+								} catch(ComponentException|PersistencyException ex) {
+									throw new ApplicationRuntimeException(ex);
+								}
+							});
+
+							//Recupero la liquidazione della UO
+							List<Liquidazione_ivaBulk> liquidazioniIvaUo = liquidazioniDefinitive.stream().filter(el->el.getCd_unita_organizzativa().equals(aCdUo)).collect(Collectors.toList());
+
+							if (liquidazioniIvaUo.size()>1)
+								throw new ApplicationRuntimeException("Sono presenti per il tipo sezionale "+tipoSezionale.getCd_tipo_sezionale()+" piu' liquidazioni IVA della UO "+aCdUo+" per il periodo "+liqIva.getDt_inizio()+" - "+liqIva.getDt_fine()+
+										". Proposta di prima nota non possibile.");
+
+							Optional<Liquidazione_ivaBulk> liquidazioneIvaBulk = liquidazioniIvaUo.stream().findAny();
+							BigDecimal ivaDebCredPrec = liquidazioneIvaBulk.map(Liquidazione_ivaBulk::getIva_deb_cred_per_prec).orElse(BigDecimal.ZERO);
+
+							BigDecimal saldoTesoreria = testataPrimaNotaLiquid.getDett().stream()
+									.filter(el->el.getTipoDett().equals(Movimento_cogeBulk.TipoRiga.TESORERIA.value()))
+									.map(el -> el.isSezioneDare() ? el.getImporto() : el.getImporto().negate())
+									.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+							if (ivaDebCredPrec.compareTo(BigDecimal.ZERO)>0)
+								saldoTesoreria = saldoTesoreria.subtract(ivaDebCredPrec);
+
+							if (!liquidazioneIvaBulk.isPresent() && saldoTesoreria.compareTo(BigDecimal.ZERO)!=0)
+								throw new ApplicationRuntimeException("Non è presente per il tipo sezionale "+tipoSezionale.getCd_tipo_sezionale()+" la liquidazione IVA della UO "+aCdUo+" per il periodo "+liqIva.getDt_inizio()+" - "+liqIva.getDt_fine()+
+										" anche se in presenza di fatture. Proposta di prima nota non possibile.");
+
+							if  (saldoTesoreria.compareTo(liquidazioneIvaBulk.map(Liquidazione_ivaBulk::getIva_da_versare).orElse(BigDecimal.ZERO)) != 0) {
+								testataPrimaNotaLiquid.getDett().stream().filter(el->el.getPartita()!=null).forEach(el-> System.out.println("Compenso: "+Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null)+" - Trib: "+el.getCdCori()+" - Conto: "+el.getCdConto()+
+								" - Sezione: "+el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
+
+								throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato " +
+										mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() + ". Il saldo del conto tesoreria (" +
+										new it.cnr.contab.util.EuroFormat().format(saldoTesoreria) +
+										"), per il tipo sezionale "+tipoSezionale.getCd_tipo_sezionale()+", non risulterebbe essere uguale all'importo della liquidazione IVA della UO " + aCdUo +
+										" per il periodo "+liqIva.getDt_inizio()+" - "+liqIva.getDt_fine()+" (" +
+										new it.cnr.contab.util.EuroFormat().format(liquidazioneIvaBulk.map(Liquidazione_ivaBulk::getIva_da_versare).orElse(BigDecimal.ZERO)) + ").");
+							}
+							testataPrimaNota.getDett().addAll(testataPrimaNotaLiquid.getDett());
+						});
+					} catch(PersistencyException ex) {
+						throw new ApplicationRuntimeException(ex);
+					}
+				});
+			} catch(PersistencyException ex) {
+				throw new ApplicationRuntimeException(ex);
+			}
+		});
+
+		testataPrimaNota.getDett().stream().filter(el->el.getPartita()!=null).forEach(el-> System.out.println(el.getPartita().getCd_tipo_doc()+";"+el.getPartita().getEsercizio()+";"+
+				el.getPartita().getCd_cds()+";"+el.getPartita().getCd_uo()+";"+el.getPartita().getPg_doc()+";"+el.getCdCori()+";"+el.getCdConto()+
+				";"+el.getSezione() + ";" + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
+
+
+		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
+	}
+
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoVersamentoCori(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {
-		List<Liquid_gruppo_coriBulk> liquidGruppoCoriList = new ArrayList<>();
+		//verifico se trattasi di liquidazione IVA..... per essere tale deve avere un'unica riga ed un documento generico registrato sulla tabella LIQUIDAZIONE
+		List<Liquidazione_ivaBulk> liquidazioneIvaList = new ArrayList<>();
+
+		mandato.getMandato_rigaColl().stream().forEach(mr->{
+			try {
+				liquidazioneIvaList.addAll(((Liquidazione_ivaHome) getHome(userContext, Liquidazione_ivaBulk.class)).findByMandatoRiga(mr));
+			} catch(ComponentException|PersistencyException ex) {
+				throw new ApplicationRuntimeException(ex);
+			}
+		});
+
+		if (!liquidazioneIvaList.isEmpty())
+			return proposeScritturaPartitaDoppiaMandatoLiquidazione(userContext, mandato, liquidazioneIvaList);
 
 		Collection<Liquid_gruppo_coriBulk> liquidGruppoCoriBulk =
 				((Liquid_gruppo_coriHome) getHome(userContext, Liquid_gruppo_coriBulk.class)).findByMandato(userContext, mandato)
@@ -2901,9 +3069,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 				if  (saldoTesoreria.negate().compareTo(liquid.getIm_liquidato()) != 0) {
-					testataPrimaNotaLiquid.getDett().stream().filter(el->el.getPartita()!=null).forEach(el-> System.out.println("Compenso: "+Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null)+" - Trib: "+el.getCdCori()+" - Conto: "+el.getCdConto()+
-							" - Sezione: "+el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
-
+//					testataPrimaNotaLiquid.getDett().stream().filter(el->el.getPartita()!=null).forEach(el-> System.out.println("Compenso: "+Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null)+" - Trib: "+el.getCdCori()+" - Conto: "+el.getCdConto()+
+//							" - Sezione: "+el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
 					throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato " +
 							mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() + ". Il saldo del conto tesoreria (" +
 							new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
@@ -2911,7 +3078,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							new it.cnr.contab.util.EuroFormat().format(liquid.getIm_liquidato()) + ").");
 				}
 
-				System.out.println("Liquidazione completata della UO: " + liquid.getCd_uo_origine());
+//				System.out.println("Liquidazione completata della UO: " + liquid.getCd_uo_origine());
 
 				testataPrimaNota.getDett().addAll(testataPrimaNotaLiquid.getDett());
 			} catch(ComponentException|PersistencyException ex) {
@@ -4211,6 +4378,41 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Scrittura_partita_doppiaBulk generaScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) {
+		Scrittura_partita_doppiaBulk scritturaPartitaDoppia = this.makeScrittura(userContext, doccoge, testataPrimaNota, accorpaConti);
+
+		//Metto il controllo che Dare=Avere
+		if (scritturaPartitaDoppia!=null && scritturaPartitaDoppia.getImTotaleDare().compareTo(scritturaPartitaDoppia.getImTotaleAvere())!=0)
+			throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del documento "+
+					doccoge.getTipoDocumentoEnum()+"/"+doccoge.getEsercizio()+"/"+doccoge.getCd_cds()+"/"+doccoge.getCd_uo()+
+					"/"+doccoge.getPg_doc()+". Il totale Dare (" +
+					new it.cnr.contab.util.EuroFormat().format(scritturaPartitaDoppia.getImTotaleDare()) +
+					") non risulterebbe essere uguale al totale Avere (" +
+					new it.cnr.contab.util.EuroFormat().format(scritturaPartitaDoppia.getImTotaleAvere())+").");
+
+		if (doccoge instanceof MandatoBulk || doccoge instanceof ReversaleBulk) {
+			//Metto il controllo che il conto tesoreria sia sempre pari al netto mandato/reversale se richiesto di fare controllo
+			BigDecimal saldoTesoreria = Optional.ofNullable(scritturaPartitaDoppia).map(spd->spd.getAllMovimentiColl().stream()
+					.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
+					.map(el -> el.isSezioneDare() ? el.getIm_movimento() : el.getIm_movimento().negate())
+					.reduce(BigDecimal.ZERO, BigDecimal::add)).orElse(BigDecimal.ZERO);
+			if (doccoge instanceof MandatoBulk && saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto()) != 0)
+				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato "+doccoge.getEsercizio()+"/"+
+						doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria (" +
+						new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
+						") non risulterebbe essere uguale all'importo netto del mandato (" +
+						new it.cnr.contab.util.EuroFormat().format(((MandatoBulk) doccoge).getIm_netto())+").");
+			if (doccoge instanceof ReversaleBulk && saldoTesoreria.compareTo(((ReversaleBulk) doccoge).getIm_reversale()) != 0)
+				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota della reversale "+doccoge.getEsercizio()+"/"+
+						doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria  (" +
+						new it.cnr.contab.util.EuroFormat().format(saldoTesoreria) +
+						") non risulterebbe essere uguale all'importo della reversale (" +
+						new it.cnr.contab.util.EuroFormat().format(((ReversaleBulk) doccoge).getIm_reversale())+").");
+		}
+
+		return scritturaPartitaDoppia;
+	}
+
+	private Scrittura_partita_doppiaBulk makeScrittura(UserContext userContext, IDocumentoCogeBulk doccoge, List<TestataPrimaNota> testataPrimaNota, boolean accorpaConti) {
 		if (!testataPrimaNota.stream().flatMap(el->el.getDett().stream()).findAny().isPresent())
 			return null;
 
@@ -4239,19 +4441,19 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		scritturaPartitaDoppia.setCd_tipo_documento(doccoge.getCd_tipo_doc());
 		scritturaPartitaDoppia.setPg_numero_documento(doccoge.getPg_doc());
 
-		testataPrimaNota.forEach(testata->{
+		testataPrimaNota.forEach(testata -> {
 			if (accorpaConti) {
 				//Prima analizzo i conti patrimoniali con partita senza cori
 				//I conti patrimoniali devono essere accorpati per partita e distinti tra modificabili e non
 				Map<IDocumentoCogeBulk, Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapPartitePatrimonialiNoCori =
 						testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
-						.filter(el->Optional.ofNullable(el.getPartita()).isPresent())
-						.filter(el->!Optional.ofNullable(el.getCdCori()).isPresent())
-						.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
-								Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
-									Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-										Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
-											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
+								.filter(el -> Optional.ofNullable(el.getPartita()).isPresent())
+								.filter(el -> !Optional.ofNullable(el.getCdCori()).isPresent())
+								.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
+										Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
+												Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+														Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+																Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
 
 				mapPartitePatrimonialiNoCori.keySet().forEach(aPartita -> {
 					Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapCdTerzo = mapPartitePatrimonialiNoCori.get(aPartita);
@@ -4265,7 +4467,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 									try {
 										Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
 										Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita, aCdTerzo, null);
-										Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+										Optional.ofNullable(movcoge).ifPresent(el -> el.setFl_modificabile(aTipoModific));
 									} catch (ComponentException e) {
 										throw new ApplicationRuntimeException(e);
 									}
@@ -4278,8 +4480,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				//Poi i conti patrimoniali con partita e cori distinti sempre tra modificabili e non
 				Map<IDocumentoCogeBulk, Map<Integer, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>>> mapPartitePatrimonialiCori =
 						testata.getDett().stream().filter(DettaglioPrimaNota::isDettaglioPatrimoniale)
-								.filter(el->Optional.ofNullable(el.getPartita()).isPresent())
-								.filter(el->Optional.ofNullable(el.getCdCori()).isPresent())
+								.filter(el -> Optional.ofNullable(el.getPartita()).isPresent())
+								.filter(el -> Optional.ofNullable(el.getCdCori()).isPresent())
 								.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
 										Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
 												Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
@@ -4301,7 +4503,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 										try {
 											Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimoniali.get(aContoPatrimoniale));
 											Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond(), aPartita, aCdTerzo, aCdCori);
-											Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+											Optional.ofNullable(movcoge).ifPresent(el -> el.setFl_modificabile(aTipoModific));
 										} catch (ComponentException e) {
 											throw new ApplicationRuntimeException(e);
 										}
@@ -4328,7 +4530,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								try {
 									Pair<String, BigDecimal> saldoPatrimoniale = this.getSaldo(mapContiPatrimonialiSenzaPartita.get(aContoPatrimoniale));
 									Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoPatrimoniale.getFirst(), aContoPatrimoniale, saldoPatrimoniale.getSecond());
-									Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+									Optional.ofNullable(movcoge).ifPresent(el -> el.setFl_modificabile(aTipoModific));
 								} catch (ComponentException e) {
 									throw new ApplicationRuntimeException(e);
 								}
@@ -4353,7 +4555,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								try {
 									Pair<String, BigDecimal> saldoIva = this.getSaldo(mapContiIva.get(aContoIva));
 									Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoIva.getFirst(), aContoIva, saldoIva.getSecond());
-									Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+									Optional.ofNullable(movcoge).ifPresent(el -> el.setFl_modificabile(aTipoModific));
 								} catch (ComponentException e) {
 									throw new ApplicationRuntimeException(e);
 								}
@@ -4378,7 +4580,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								try {
 									Pair<String, BigDecimal> saldoCostoRicavo = this.getSaldo(mapContiCostoRicavo.get(aContoCostoRicavo));
 									Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoCostoRicavo.getFirst(), aContoCostoRicavo, saldoCostoRicavo.getSecond());
-									Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+									Optional.ofNullable(movcoge).ifPresent(el -> el.setFl_modificabile(aTipoModific));
 								} catch (ComponentException e) {
 									throw new ApplicationRuntimeException(e);
 								}
@@ -4390,9 +4592,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				//Poi analizzo tutti gli altri tipi di conti
 				{
 					Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>> mapTipoDettAltro = testata.getDett().stream()
-							.filter(el->!el.isDettaglioPatrimoniale())
-							.filter(el->!el.isDettaglioIva())
-							.filter(el->!el.isDettaglioCostoRicavo())
+							.filter(el -> !el.isDettaglioPatrimoniale())
+							.filter(el -> !el.isDettaglioIva())
+							.filter(el -> !el.isDettaglioCostoRicavo())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
 									Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
 											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))));
@@ -4405,7 +4607,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								try {
 									Pair<String, BigDecimal> saldoCostoRicavo = this.getSaldo(mapContiAltro.get(aContoAltro));
 									Movimento_cogeBulk movcoge = addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, saldoCostoRicavo.getFirst(), aContoAltro, saldoCostoRicavo.getSecond());
-									Optional.ofNullable(movcoge).ifPresent(el->el.setFl_modificabile(aTipoModific));
+									Optional.ofNullable(movcoge).ifPresent(el -> el.setFl_modificabile(aTipoModific));
 								} catch (ComponentException e) {
 									throw new ApplicationRuntimeException(e);
 								}
@@ -4422,9 +4624,9 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							.filter(el -> !Optional.ofNullable(el.getCdCori()).isPresent())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
 									Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
-										Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-											Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
-												Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
+											Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+													Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+															Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
 
 					mapPartite.keySet().forEach(aPartita -> {
 						Map<Integer, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>> mapCdTerzo = mapPartite.get(aPartita);
@@ -4440,13 +4642,13 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 													.filter(DettaglioPrimaNota::isSezioneDare)
 													.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
 											Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita, aCdTerzo, null))
-													.ifPresent(el->el.setFl_modificabile(aTipoModific));
+													.ifPresent(el -> el.setFl_modificabile(aTipoModific));
 
 											BigDecimal imAvere = mapConti.get(aConto).stream()
 													.filter(DettaglioPrimaNota::isSezioneAvere)
 													.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
 											Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita, aCdTerzo, null))
-													.ifPresent(el->el.setFl_modificabile(aTipoModific));
+													.ifPresent(el -> el.setFl_modificabile(aTipoModific));
 										} catch (ComponentException e) {
 											throw new ApplicationRuntimeException(e);
 										}
@@ -4465,10 +4667,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							.filter(el -> Optional.ofNullable(el.getCdCori()).isPresent())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getPartita,
 									Collectors.groupingBy(DettaglioPrimaNota::getCdTerzo,
-										Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
-											Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
-												Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
-													Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))))));
+											Collectors.groupingBy(DettaglioPrimaNota::getCdCori,
+													Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
+															Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
+																	Collectors.groupingBy(DettaglioPrimaNota::getCdConto)))))));
 
 					mapPartite.keySet().forEach(aPartita -> {
 						Map<Integer, Map<String, Map<String, Map<Boolean, Map<String, List<DettaglioPrimaNota>>>>>> mapCdTerzo = mapPartite.get(aPartita);
@@ -4486,13 +4688,13 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 														.filter(DettaglioPrimaNota::isSezioneDare)
 														.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
 												Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare, aPartita, aCdTerzo, aCdCori))
-														.ifPresent(el->el.setFl_modificabile(aTipoModific));
+														.ifPresent(el -> el.setFl_modificabile(aTipoModific));
 
 												BigDecimal imAvere = mapConti.get(aConto).stream()
 														.filter(DettaglioPrimaNota::isSezioneAvere)
 														.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
 												Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere, aPartita, aCdTerzo, aCdCori))
-														.ifPresent(el->el.setFl_modificabile(aTipoModific));
+														.ifPresent(el -> el.setFl_modificabile(aTipoModific));
 											} catch (ComponentException e) {
 												throw new ApplicationRuntimeException(e);
 											}
@@ -4521,13 +4723,13 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 											.filter(DettaglioPrimaNota::isSezioneDare)
 											.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
 									Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_DARE, aConto, imDare))
-											.ifPresent(el->el.setFl_modificabile(aTipoModific));
+											.ifPresent(el -> el.setFl_modificabile(aTipoModific));
 
 									BigDecimal imAvere = mapConti.get(aConto).stream()
 											.filter(DettaglioPrimaNota::isSezioneAvere)
 											.map(DettaglioPrimaNota::getImporto).reduce(BigDecimal.ZERO, BigDecimal::add);
 									Optional.ofNullable(addMovimentoCoge(userContext, scritturaPartitaDoppia, doccoge, testata, aTipoDett, Movimento_cogeBulk.SEZIONE_AVERE, aConto, imAvere))
-											.ifPresent(el->el.setFl_modificabile(aTipoModific));
+											.ifPresent(el -> el.setFl_modificabile(aTipoModific));
 								} catch (ComponentException e) {
 									throw new ApplicationRuntimeException(e);
 								}
@@ -4538,36 +4740,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 		scritturaPartitaDoppia.setIm_scrittura(scritturaPartitaDoppia.getImTotaleAvere());
-
-		//Metto il controllo che Dare=Avere
-		if (scritturaPartitaDoppia.getImTotaleDare().compareTo(scritturaPartitaDoppia.getImTotaleAvere())!=0)
-			throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del documento "+
-					doccoge.getTipoDocumentoEnum()+"/"+doccoge.getEsercizio()+"/"+doccoge.getCd_cds()+"/"+doccoge.getCd_uo()+
-					"/"+doccoge.getPg_doc()+". Il totale Dare (" +
-					new it.cnr.contab.util.EuroFormat().format(scritturaPartitaDoppia.getImTotaleDare()) +
-					") non risulterebbe essere uguale al totale Avere (" +
-					new it.cnr.contab.util.EuroFormat().format(scritturaPartitaDoppia.getImTotaleAvere())+").");
-
-		if (doccoge instanceof MandatoBulk || doccoge instanceof ReversaleBulk) {
-			//Metto il controllo che il conto tesoreria sia sempre pari al netto mandato/reversale se richiesto di fare controllo
-			BigDecimal saldoTesoreria = scritturaPartitaDoppia.getAllMovimentiColl().stream()
-					.filter(Movimento_cogeBulk::isRigaTipoTesoreria)
-					.map(el -> el.isSezioneDare() ? el.getIm_movimento() : el.getIm_movimento().negate())
-					.reduce(BigDecimal.ZERO, BigDecimal::add);
-			if (doccoge instanceof MandatoBulk && saldoTesoreria.negate().compareTo(((MandatoBulk) doccoge).getIm_netto()) != 0)
-				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato "+doccoge.getEsercizio()+"/"+
-						doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria (" +
-						new it.cnr.contab.util.EuroFormat().format(saldoTesoreria.negate()) +
-						") non risulterebbe essere uguale all'importo netto del mandato (" +
-						new it.cnr.contab.util.EuroFormat().format(((MandatoBulk) doccoge).getIm_netto())+").");
-			if (doccoge instanceof ReversaleBulk && saldoTesoreria.compareTo(((ReversaleBulk) doccoge).getIm_reversale()) != 0)
-				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota della reversale "+doccoge.getEsercizio()+"/"+
-						doccoge.getCd_cds()+"/"+doccoge.getPg_doc()+". Il saldo del conto tesoreria  (" +
-						new it.cnr.contab.util.EuroFormat().format(saldoTesoreria) +
-						") non risulterebbe essere uguale all'importo della reversale (" +
-						new it.cnr.contab.util.EuroFormat().format(((ReversaleBulk) doccoge).getIm_reversale())+").");
-		}
-
 		return scritturaPartitaDoppia;
 	}
 
@@ -4887,5 +5059,53 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_DARE, voceEpBanca.getCd_voce_ep(), imReversale);
 
 		return testataPrimaNota;
+	}
+
+	private Map<String, Map<String, Pair<String, BigDecimal>>> getSaldiMovimentiCoriIva(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException, PersistencyException {
+		Optional<Scrittura_partita_doppiaBulk> scritturaOpt = Optional.empty();
+		Collection<Movimento_cogeBulk> allMovimentiCoge = new ArrayList<>();
+		Map<String, Map<String, Pair<String, BigDecimal>>> result = new HashMap<>();
+
+		boolean isAttivaEconomicaDocamm = ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).isAttivaEconomica(docamm.getEsercizio());
+		if (isAttivaEconomicaDocamm)
+			scritturaOpt = ((Scrittura_partita_doppiaHome)getHome(userContext, Scrittura_partita_doppiaBulk.class)).getScrittura(userContext, docamm, Boolean.FALSE);
+		else {
+			try {
+				scritturaOpt = Optional.ofNullable(proposeScritturaPartitaDoppia(userContext, docamm));
+			} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
+			} catch (ComponentException e) {
+				throw new ApplicationRuntimeException(e);
+			}
+		}
+
+		allMovimentiCoge.addAll(scritturaOpt.map(spd->spd.getAllMovimentiColl()
+					.stream()
+					.filter(Movimento_cogeBulk::isRigaTipoIva)
+					.collect(Collectors.toList())).orElse(Collections.EMPTY_LIST));
+
+		Map<String, Map<String, List<Movimento_cogeBulk>>> mapCdCoriVoceEp = allMovimentiCoge.stream()
+				.collect(Collectors.groupingBy(Movimento_cogeBulk::getCd_contributo_ritenuta,
+							Collectors.groupingBy(Movimento_cogeBulk::getCd_voce_ep)));
+
+		mapCdCoriVoceEp.keySet().forEach(cdCori -> {
+			Map<String, List<Movimento_cogeBulk>> mapVoceEp = mapCdCoriVoceEp.get(cdCori);
+			mapVoceEp.keySet().forEach(cdVoceEp -> {
+				List<Movimento_cogeBulk> movimentiList = mapVoceEp.get(cdVoceEp);
+				BigDecimal totaleDare = movimentiList.stream()
+						.filter(Movimento_cogeBulk::isSezioneDare)
+						.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+				BigDecimal totaleAvere = movimentiList.stream()
+						.filter(Movimento_cogeBulk::isSezioneAvere)
+						.map(Movimento_cogeBulk::getIm_movimento).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+				BigDecimal saldo = totaleDare.subtract(totaleAvere);
+				if (saldo.compareTo(BigDecimal.ZERO) >= 0)
+					result.put(cdCori, Collections.singletonMap(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_DARE, saldo)));
+				else
+					result.put(cdCori, Collections.singletonMap(cdVoceEp, Pair.of(Movimento_cogeBulk.SEZIONE_AVERE, saldo.abs())));
+			});
+		});
+		return result;
 	}
 }

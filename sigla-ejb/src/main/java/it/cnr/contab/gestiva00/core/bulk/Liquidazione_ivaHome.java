@@ -18,6 +18,8 @@
 package it.cnr.contab.gestiva00.core.bulk;
 import java.math.BigDecimal;
 
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -34,7 +36,7 @@ public Liquidazione_ivaHome(java.sql.Connection conn) {
 public Liquidazione_ivaHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Liquidazione_ivaBulk.class,conn,persistentCache);
 }
-public java.util.List findRipartizioneFinanziariaList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+public java.util.List findRipartizioneFinanziariaList( Liquidazione_ivaVBulk bulk ) throws PersistencyException
 {
 
 	PersistentHome home= getHomeCache().getHome(Liquidazione_iva_ripart_finBulk.class);
@@ -51,7 +53,7 @@ public java.util.List findRipartizioneFinanziariaList( Liquidazione_ivaVBulk bul
 
 	return home.fetchAll(sql);
 }
-public java.util.List<Liquidazione_ivaBulk> findLiquidazioniProvvisorieList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+public java.util.List<Liquidazione_ivaBulk> findLiquidazioniProvvisorieList( Liquidazione_ivaVBulk bulk ) throws PersistencyException
 {
 	PersistentHome home= getHomeCache().getHome(Liquidazione_ivaBulk.class);
 
@@ -69,7 +71,7 @@ public java.util.List<Liquidazione_ivaBulk> findLiquidazioniProvvisorieList( Liq
 	return home.fetchAll(sql);
 }
 
-public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveProvvisorieList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveProvvisorieList( Liquidazione_ivaVBulk bulk ) throws PersistencyException
 {
 	PersistentHome home= getHomeCache().getHome(Liquidazione_ivaBulk.class);
     SQLBuilder sql= home.createSQLBuilder();
@@ -103,7 +105,7 @@ public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveProvvisorieLi
 	return home.fetchAll(sql);
 }
 
-public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveDefinitiveList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveDefinitiveList( Liquidazione_ivaVBulk bulk ) throws PersistencyException
 {
 	PersistentHome home= getHomeCache().getHome(Liquidazione_ivaBulk.class);
 
@@ -121,7 +123,7 @@ public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveDefinitiveLis
 	return home.fetchAll(sql);
 }
 
-public java.util.List<Liquidazione_ivaBulk> findVariazioniAssociateList( Liquidazione_ivaVBulk bulk ) throws IntrospectionException,PersistencyException 
+public java.util.List<Liquidazione_ivaBulk> findVariazioniAssociateList( Liquidazione_ivaVBulk bulk ) throws PersistencyException
 {
 	PersistentHome home= getHomeCache().getHome(Liquidazione_iva_variazioniBulk.class);
 
@@ -137,7 +139,7 @@ public java.util.List<Liquidazione_ivaBulk> findVariazioniAssociateList( Liquida
 
 	return home.fetchAll(sql);
 }
-public java.util.List findMandatoRigheAssociateList( Liquidazione_ivaBulk bulk ) throws IntrospectionException,PersistencyException 
+public java.util.List findMandatoRigheAssociateList( Liquidazione_ivaBulk bulk ) throws PersistencyException
 {
 
 	PersistentHome home= getHomeCache().getHome(Mandato_rigaIBulk.class);
@@ -153,4 +155,33 @@ public java.util.List findMandatoRigheAssociateList( Liquidazione_ivaBulk bulk )
 
 	return home.fetchAll(sql);
 }
+	public java.util.List<Liquidazione_ivaBulk> findByMandatoRiga(Mandato_rigaBulk bulk ) throws PersistencyException
+	{
+		SQLBuilder sql= this.createSQLBuilder();
+
+		sql.addClause(FindClause.AND,"cd_tipo_documento_amm",SQLBuilder.EQUALS, bulk.getCd_tipo_documento_amm());
+		sql.addClause(FindClause.AND,"cd_cds_doc_amm",SQLBuilder.EQUALS, bulk.getCd_cds_doc_amm());
+		sql.addClause(FindClause.AND,"cd_uo_doc_amm",SQLBuilder.EQUALS, bulk.getCd_uo_doc_amm());
+		sql.addClause(FindClause.AND,"esercizio_doc_amm",SQLBuilder.EQUALS, bulk.getEsercizio_doc_amm());
+		sql.addClause(FindClause.AND,"pg_doc_amm",SQLBuilder.EQUALS, bulk.getPg_doc_amm());
+		return this.fetchAll(sql);
+	}
+
+	public java.util.List<Liquidazione_ivaBulk> findLiquidazioniMassiveDefinitiveList( Liquidazione_ivaBulk bulk ) throws PersistencyException
+	{
+		PersistentHome home= getHomeCache().getHome(Liquidazione_ivaBulk.class);
+
+		SQLBuilder sql= home.createSQLBuilder();
+
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, bulk.getEsercizio());
+		sql.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS, Liquidazione_ivaVBulk.DEFINITIVO);
+		sql.addClause(FindClause.AND,"tipo_liquidazione",SQLBuilder.EQUALS, bulk.getTipo_liquidazione());
+		sql.addClause(FindClause.AND,"dt_inizio",SQLBuilder.EQUALS, bulk.getDt_inizio());
+		sql.addClause(FindClause.AND,"dt_fine",SQLBuilder.EQUALS, bulk.getDt_fine());
+		sql.addClause(FindClause.AND,"report_id",SQLBuilder.EQUALS, BigDecimal.ZERO);
+
+		sql.addOrderBy("cd_unita_organizzativa");
+
+		return home.fetchAll(sql);
+	}
 }

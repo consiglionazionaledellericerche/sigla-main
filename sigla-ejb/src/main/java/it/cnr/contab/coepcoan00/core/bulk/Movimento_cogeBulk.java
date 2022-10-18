@@ -333,6 +333,29 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
         return TipoRiga.TESORERIA.value().equals(this.getTi_riga());
     }
 
+    public boolean isRigaTipoIvaAcquisto() {
+        return TipoRiga.IVA_ACQUISTO.value().equals(this.getTi_riga());
+    }
+
+    public boolean isRigaTipoIvaAcquistoSplit() {
+        return TipoRiga.IVA_ACQUISTO_SPLIT.value().equals(this.getTi_riga());
+    }
+
+    public boolean isRigaTipoIvaVendite() {
+        return TipoRiga.IVA_VENDITE.value().equals(this.getTi_riga());
+    }
+
+    public boolean isRigaTipoIvaVenditeSplit() {
+        return TipoRiga.IVA_VENDITE_SPLIT.value().equals(this.getTi_riga());
+    }
+
+    public boolean isRigaTipoIva() {
+        return this.isRigaTipoIvaAcquistoSplit() ||
+                this.isRigaTipoIvaAcquistoSplit() ||
+                this.isRigaTipoIvaVendite() ||
+                this.isRigaTipoIvaVenditeSplit();
+    }
+
     public TerzoBulk getTerzo() {
         return terzo;
     }
