@@ -48,7 +48,7 @@
 					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo fa-flip-horizontal" : bp.encodePath("img/refresh24.gif"),
 					"Cambia stato",
 					"javascript:submitForm('doCambiaStato')",
-	                "btn-secondary btn-outline-info btn-title btn-block",
+	                "btn-outline-info btn-title btn-block",
 					bp.isCambiaStatoButtonEnabled(),
 					bp.getParentRoot().isBootstrap()); %>
 		</td>	
@@ -59,7 +59,7 @@
 					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo" : bp.encodePath("img/undo24.gif"),
 					"Riporta a stato precedente",
 					"javascript:submitForm('doRiportaStatoPrecedente')",
-					"btn-secondary btn-outline-info btn-title btn-block",
+					"btn-outline-info btn-title btn-block",
 					bp.isRiportaStatoPrecedenteButtonEnabled(),
 					bp.getParentRoot().isBootstrap()); %>
 		</td>	

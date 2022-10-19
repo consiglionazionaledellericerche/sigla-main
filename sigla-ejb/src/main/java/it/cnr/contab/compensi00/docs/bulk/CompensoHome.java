@@ -34,10 +34,12 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.service.LDAPService;
 import it.cnr.contab.util.SIGLAGroups;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -48,9 +50,7 @@ import it.cnr.si.spring.storage.StoreService;
 
 import java.sql.Types;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CompensoHome extends BulkHome implements
@@ -355,76 +355,81 @@ public class CompensoHome extends BulkHome implements
      * Ritorna il compenso associato al conguaglio (presente sulla tabella CONGUAGLIO) emesso contemporaneamente al compenso principale
      */
     public CompensoBulk findCompensoConguaglioAssociato(UserContext userContext, CompensoBulk compenso) throws PersistencyException {
-        if (compenso.getFl_compenso_conguaglio())
-            return compenso;
-
         //Trattasi di COMPENSO NORMALE
         //Devo recuperare il compenso legato ai mandati di versamento/accantonamento cori
-        Collection<V_doc_cont_compBulk> listCompensi = ((V_doc_cont_compHome) getHomeCache().getHome(V_doc_cont_compBulk.class)).loadAllDocCont(compenso);
+        Collection<V_doc_cont_compBulk> listDocContComp = ((V_doc_cont_compHome) getHomeCache().getHome(V_doc_cont_compBulk.class)).loadAllDocCont(compenso);
 
-        Collection<V_doc_cont_compBulk> listMandati = listCompensi.stream().filter(V_doc_cont_compBulk::isTipoDocMandato).filter(V_doc_cont_compBulk::isDocumentoPrincipale).collect(Collectors.toList());
-        Collection<V_doc_cont_compBulk> listReversali = listCompensi.stream().filter(V_doc_cont_compBulk::isTipoDocReversale).collect(Collectors.toList());
+        Collection<V_doc_cont_compBulk> listMandati = listDocContComp.stream().filter(V_doc_cont_compBulk::isTipoDocMandato).collect(Collectors.toList());
+        Collection<V_doc_cont_compBulk> listReversali = listDocContComp.stream().filter(V_doc_cont_compBulk::isTipoDocReversale).collect(Collectors.toList());
 
-        if (!listMandati.isEmpty()) {
-            if (listMandati.size() > 1)
-                throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio a cui è collegato il compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
-                        "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": il compenso principale risulta collegato a più di un mandato principale.");
+        Collection<V_doc_cont_compBulk> listDocPrincipale = listDocContComp.stream().filter(V_doc_cont_compBulk::isDocumentoPrincipale).collect(Collectors.toList());
+        if (listDocPrincipale.size()>1)
+            throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio collegato al compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
+                    "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": il compenso principale risulta collegato a più di un documento definito come principale.");
 
-            CompensoBulk compensoConguaglio = null;
-            IManRevBulk mandatoPrincipale = listMandati.stream().findAny().get().getManRev();
-            List<Ass_mandato_reversaleBulk> result = ((Ass_mandato_reversaleHome) getHomeCache().getHome(Ass_mandato_reversaleBulk.class)).findReversali(userContext, (MandatoBulk) mandatoPrincipale, false);
+        Optional<V_doc_cont_compBulk> docPrincipale = listDocPrincipale.stream().findFirst();
 
-            for (java.util.Iterator<Ass_mandato_reversaleBulk> y = result.iterator(); y.hasNext(); ) {
-                Ass_mandato_reversaleBulk assMandatoReversaleBulk = y.next();
+        if (!listMandati.isEmpty() && docPrincipale.map(V_doc_cont_compBulk::isTipoDocMandato).orElse(Boolean.TRUE)) {
+            //Sul compenso deve esserci un solo mandato..... se ce ne sono di più deve esistere un solo mandato principale
+            if (listMandati.size() > 1) {
+                if (listMandati.stream().filter(V_doc_cont_compBulk::isDocumentoPrincipale).collect(Collectors.toList()).size()>1)
+                    throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio collegato al compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
+                            "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": il compenso principale risulta collegato a più di un mandato principale.");
+            }
 
-                if (!listReversali.stream()
-                        .filter(el->el.getManRev().getEsercizio().equals(assMandatoReversaleBulk.getEsercizio_reversale()))
-                        .filter(el->el.getManRev().getCd_cds().equals(assMandatoReversaleBulk.getCd_cds_reversale()))
-                        .filter(el->el.getManRev().getPg_doc().equals(assMandatoReversaleBulk.getPg_reversale()))
-                        .findAny().isPresent()) {
-                    Collection<V_doc_cont_compBulk> result2 = ((V_doc_cont_compHome) getHomeCache().getHome(V_doc_cont_compBulk.class)).findByDocumento(assMandatoReversaleBulk.getEsercizio_reversale(), assMandatoReversaleBulk.getCd_cds_reversale(), assMandatoReversaleBulk.getPg_reversale(), V_doc_cont_compBulk.TIPO_DOC_CONT_REVERSALE);
-                    if (result2.isEmpty())
-                        throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio a cui è collegato il compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
-                                "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": la reversale "+assMandatoReversaleBulk.getEsercizio_reversale()+"/"+assMandatoReversaleBulk.getCd_cds_reversale()+"/"+assMandatoReversaleBulk.getPg_reversale()+
-                                ", collegata al mandato del compenso principale, non risulta collegata a nessun compenso.");
-                    if (result2.size()>1)
-                        throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio a cui è collegato il compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
-                                "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": la reversale "+assMandatoReversaleBulk.getEsercizio_reversale()+"/"+assMandatoReversaleBulk.getCd_cds_reversale()+"/"+assMandatoReversaleBulk.getPg_reversale()+
-                                ", collegata al mandato del compenso principale, risulta collegata a troppi compensi.");
+            List<CompensoBulk> compensiSelected = new ArrayList<>();
+            boolean existReversaleCompensoPrincipale = Boolean.FALSE;
 
-                    V_doc_cont_compBulk docContCompBulk = result2.stream().findAny().get();
-                    if (compensoConguaglio==null)
-                        compensoConguaglio = new CompensoBulk(docContCompBulk.getCd_cds_compenso(), docContCompBulk.getCd_uo_compenso(), docContCompBulk.getEsercizio_compenso(), docContCompBulk.getPg_compenso());
-                    else if (compensoConguaglio.equalsByPrimaryKey(docContCompBulk.getCompenso()))
-                        throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio a cui è collegato il compenso principale "+compenso.getEsercizio()+"/"+compenso.getCd_cds()+
-                                "/"+compenso.getCd_unita_organizzativa()+"/"+compenso.getPg_compenso()+
-                                ": le reversali, collegate al mandato del compenso principale, risultano collegate a compensi diversi.");
+            for (java.util.Iterator<V_doc_cont_compBulk> x = listMandati.iterator(); x.hasNext(); ) {
+                V_doc_cont_compBulk vDocContComp = x.next();
+                IManRevBulk mandatoPrincipale = vDocContComp.getManRev();
+                List<Ass_mandato_reversaleBulk> result = ((Ass_mandato_reversaleHome) getHomeCache().getHome(Ass_mandato_reversaleBulk.class)).findReversali(userContext, (MandatoBulk) mandatoPrincipale, false);
+
+                for (java.util.Iterator<Ass_mandato_reversaleBulk> y = result.iterator(); y.hasNext(); ) {
+                    Ass_mandato_reversaleBulk assMandatoReversaleBulk = y.next();
+
+                    if (!listReversali.stream()
+                            .filter(el->el.getManRev().getEsercizio().equals(assMandatoReversaleBulk.getEsercizio_reversale()))
+                            .filter(el->el.getManRev().getCd_cds().equals(assMandatoReversaleBulk.getCd_cds_reversale()))
+                            .filter(el->el.getManRev().getPg_doc().equals(assMandatoReversaleBulk.getPg_reversale()))
+                            .findAny().isPresent()) {
+                        Collection<V_doc_cont_compBulk> result2 = ((V_doc_cont_compHome) getHomeCache().getHome(V_doc_cont_compBulk.class)).findByDocumento(assMandatoReversaleBulk.getEsercizio_reversale(), assMandatoReversaleBulk.getCd_cds_reversale(), assMandatoReversaleBulk.getPg_reversale(), V_doc_cont_compBulk.TIPO_DOC_CONT_REVERSALE);
+                        if (result2.isEmpty())
+                            throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio collegato al compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
+                                    "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": la reversale "+assMandatoReversaleBulk.getEsercizio_reversale()+"/"+assMandatoReversaleBulk.getCd_cds_reversale()+"/"+assMandatoReversaleBulk.getPg_reversale()+
+                                    ", collegata al mandato del compenso principale, non risulta collegata a nessun compenso.");
+                        if (result2.size()>1)
+                            throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio collegato al compenso principale " + compenso.getEsercizio() + "/" + compenso.getCd_cds() +
+                                    "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso() + ": la reversale "+assMandatoReversaleBulk.getEsercizio_reversale()+"/"+assMandatoReversaleBulk.getCd_cds_reversale()+"/"+assMandatoReversaleBulk.getPg_reversale()+
+                                    ", collegata al mandato del compenso principale, risulta collegata a troppi compensi.");
+
+                        V_doc_cont_compBulk docContCompBulk = result2.stream().findAny().get();
+                        final CompensoBulk compensoConguaglio = new CompensoBulk(docContCompBulk.getCd_cds_compenso(), docContCompBulk.getCd_uo_compenso(), docContCompBulk.getEsercizio_compenso(), docContCompBulk.getPg_compenso());
+                        if (compensiSelected.stream().noneMatch(el->el.equalsByPrimaryKey(compensoConguaglio)))
+                            compensiSelected.add(compensoConguaglio);
+                    } else
+                        existReversaleCompensoPrincipale = Boolean.TRUE;
                 }
             }
 
-            if (compensoConguaglio!=null)
+            CompensoBulk compensoConguaglio = null;
+
+            //Dalla lista deve essere presente un solo compenso... se non ne esistono ma ci sono reversali collegate appartenenti al compenso principale, allora restituisco quello
+            if (compensiSelected.size()>1)
+                throw new ApplicationRuntimeException("Errore nell'individuazione del compenso di conguaglio collegato al compenso principale "+compenso.getEsercizio()+"/"+compenso.getCd_cds()+
+                        "/"+compenso.getCd_unita_organizzativa()+"/"+compenso.getPg_compenso()+
+                        ": le reversali, collegate al mandato del compenso principale, risultano collegate a compensi diversi.");
+
+            if (compensiSelected.size()==1)
+                compensoConguaglio = compensiSelected.get(0);
+            else if (existReversaleCompensoPrincipale)
+                compensoConguaglio = compenso;
+
+            if (compensoConguaglio != null)
                 return (CompensoBulk) this.findByPrimaryKey(compensoConguaglio);
         }
         return null;
     }
-/**
-        Ass_compenso_conguaglioHome homeAssCompCong = (Ass_compenso_conguaglioHome)getHomeCache().getHome(Ass_compenso_conguaglioBulk.class);
-        Ass_compenso_conguaglioBulk assCompCong = homeAssCompCong.findAssCompensoConguaglio(compenso);
-
-        if (assCompCong!=null) {
-            //Cerco il conguaglio
-            ConguaglioBulk conguaglio = (ConguaglioBulk)getHomeCache().getHome(ConguaglioBulk.class).findByPrimaryKey(assCompCong.getConguaglio());
-
-            //Sul conguaglio c'è il compenso associato... quindi lo recupero
-            CompensoBulk compensoConguaglio = (CompensoBulk)this.findByPrimaryKey(conguaglio.getCompenso());
-
-            //Verifico se il compenso principale cui è associato il conguaglio è proprio il mio
-            CompensoBulk compensoPrincipale = this.findCompensoPrincipaleAssociato(userContext, compensoConguaglio);
-            if (compensoPrincipale!=null && compensoPrincipale.equalsByPrimaryKey(compenso))
-                return compensoConguaglio;
-        }
-        return null;
- */
 
     /**
      * Ritorna il compenso principale del compenso indicato.
@@ -496,23 +501,16 @@ public class CompensoHome extends BulkHome implements
         return compenso;
     }
 
-    public IManRevBulk findMandatoPrincipaleAssociato(UserContext userContext, CompensoBulk compenso) throws PersistencyException {
+    public List<MandatoBulk> findMandatiAssociati(UserContext userContext, CompensoBulk compenso) throws PersistencyException {
+        List<MandatoBulk> resultMandati = new ArrayList<>();
+
         //Devo recuperare il compenso legato ai mandati di versamento/accantonamento cori
         Collection<V_doc_cont_compBulk> listCompensi = ((V_doc_cont_compHome)getHomeCache().getHome(V_doc_cont_compBulk.class)).loadAllDocCont(compenso);
 
         List<V_doc_cont_compBulk> listMandati = listCompensi.stream().filter(V_doc_cont_compBulk::isTipoDocMandato).collect(Collectors.toList());
-        List<V_doc_cont_compBulk> listMandatiPrincipali = listMandati.stream().filter(V_doc_cont_compBulk::isDocumentoPrincipale).collect(Collectors.toList());
         List<V_doc_cont_compBulk> listReversali = listCompensi.stream().filter(V_doc_cont_compBulk::isTipoDocReversale).collect(Collectors.toList());
 
-        if (!compenso.getFl_compenso_conguaglio()) {
-            if (!listMandatiPrincipali.isEmpty()) {
-                if (listMandatiPrincipali.size() > 1)
-                    throw new ApplicationRuntimeException("Errore nell'individuazione del mandato principale a cui è collegato il compenso  " + compenso.getEsercizio() + "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso()
-                            + ": il compenso risulta associato a troppi mandati principali.");
-                V_doc_cont_compBulk docContCompBulk = listMandatiPrincipali.get(0);
-                return docContCompBulk.getManRev();
-            }
-        } else {
+        if (compenso.getFl_compenso_conguaglio()) {
             if (!listReversali.isEmpty()) {
                 MandatoBulk mandato = null;
                 //Tutte le reversali devono essere vicolate ad un unico mandato.... ed il mandato ad un unico compenso... cosi lo individuo
@@ -529,22 +527,15 @@ public class CompensoHome extends BulkHome implements
                                     ": le reversali cui risulta essere collegato il compenso di conguaglio risultano collegate a diversi mandati.");
                     }
                 }
-                if (mandato!=null)
-                    return (IManRevBulk) getHomeCache().getHome(MandatoIBulk.class).findByPrimaryKey(mandato);
-                return null;
-            }
-            if (!listMandatiPrincipali.isEmpty()) {
-                if (listMandatiPrincipali.size() > 1)
-                    throw new ApplicationRuntimeException("Errore nell'individuazione del mandato principale a cui è collegato il compenso  " + compenso.getEsercizio() + "/" + compenso.getCd_unita_organizzativa() + "/" + compenso.getPg_compenso()
-                            + ": il compenso risulta associato a troppi mandati principali.");
-                V_doc_cont_compBulk docContCompBulk = listMandatiPrincipali.get(0);
-                return docContCompBulk.getManRev();
-            }
-            if (!listMandati.isEmpty() && listMandati.size()==1) {
-                V_doc_cont_compBulk docContCompBulk = listMandati.get(0);
-                return docContCompBulk.getManRev();
+                final MandatoBulk mandatoBulk = mandato;
+                if (mandato!=null && resultMandati.stream().noneMatch(el->el.equalsByPrimaryKey(mandatoBulk)))
+                    resultMandati.add((MandatoBulk)getHomeCache().getHome(MandatoIBulk.class).findByPrimaryKey(mandatoBulk));
             }
         }
-        return null;
+
+        if (!listMandati.isEmpty())
+            listMandati.stream().filter(el->resultMandati.stream().noneMatch(el2->el2.equalsByPrimaryKey(el.getManRev()))).forEach(el->resultMandati.add((MandatoBulk)el.getManRev()));
+
+        return resultMandati;
     }
 }

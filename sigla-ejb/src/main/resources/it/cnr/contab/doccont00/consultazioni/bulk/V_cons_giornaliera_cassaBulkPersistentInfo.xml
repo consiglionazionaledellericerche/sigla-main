@@ -31,7 +31,7 @@
 			columnName="NOME_FILE"
 			propertyName="nome_file"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
+			columnSize="250"
 			nullable="true" />
 		<columnMapping
 			columnName="PG_REC"
@@ -213,7 +213,7 @@
 			columnName="NOME_FILE"
 			propertyName="nome_file"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
+			columnSize="250"
 			nullable="true" />
 		<columnMapping
 			columnName="DATA_INIZIO_RIF"

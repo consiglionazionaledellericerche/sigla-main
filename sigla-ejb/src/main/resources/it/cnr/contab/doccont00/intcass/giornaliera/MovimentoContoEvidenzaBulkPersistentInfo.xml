@@ -23,10 +23,10 @@
 		tableName="MOVIMENTO_CONTO_EVIDENZA">
 		<columnMapping
 			columnName="ESERCIZIO"
-			propertyName="informazioniContoEvidenza.esercizio" />
+			propertyName="informazioniContoEvidenza.flussoGiornaleDiCassa.esercizio" />
 		<columnMapping
 			columnName="IDENTIFICATIVO_FLUSSO"
-			propertyName="informazioniContoEvidenza.identificativoFlusso" />
+			propertyName="informazioniContoEvidenza.flussoGiornaleDiCassa.identificativoFlusso" />
 		<columnMapping
 			columnName="CONTO_EVIDENZA"
 			propertyName="informazioniContoEvidenza.contoEvidenza" />

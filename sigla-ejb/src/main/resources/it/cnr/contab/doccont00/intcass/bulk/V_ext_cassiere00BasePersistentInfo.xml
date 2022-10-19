@@ -31,7 +31,7 @@
 			columnName="NOME_FILE"
 			propertyName="nome_file"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
+			columnSize="250"
 			nullable="false" />
 		<columnMapping
 			columnName="DATA_INIZIO_RIF"

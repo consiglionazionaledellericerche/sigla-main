@@ -4166,8 +4166,6 @@ public class DistintaCassiereComponent extends
         sql.addSQLClause("AND", "CODICE_IBAN", SQLBuilder.ISNOTNULL, null);
         if (getHome(userContext, BancaBulk.class).fetchAll(sql).size() == 0)
             throw new ApplicationException("Configurazione iban uo mancante");
-        else if (getHome(userContext, BancaBulk.class).fetchAll(sql).size() > 1)
-            throw new ApplicationException("Configurazione iban uo errata");
         else
             return
                     (BancaBulk) getHome(userContext, BancaBulk.class).fetchAll(sql).get(0);
