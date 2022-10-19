@@ -3777,6 +3777,38 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return this.getPg_doc_amm();
 	}
 
+	/**
+	 * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+	 */
+	@Override
+	public Timestamp getDtInizioLiquid() {
+		return null;
+	}
+
+	/**
+	 * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+	 */
+	@Override
+	public Timestamp getDtFineLiquid() {
+		return null;
+	}
+
+	/**
+	 * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+	 */
+	@Override
+	public String getTipoLiquid() {
+		return null;
+	}
+
+	/**
+	 * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+	 */
+	@Override
+	public Long getReportIdLiquid() {
+		return null;
+	}
+
 	@Override
 	public Timestamp getDt_contabilizzazione() {
 		return this.getDt_registrazione();

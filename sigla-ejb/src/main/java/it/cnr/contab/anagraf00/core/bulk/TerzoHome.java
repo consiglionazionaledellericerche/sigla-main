@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -66,39 +67,10 @@ public class TerzoHome extends BulkHome {
      */
 
     public AnagraficoBulk findAnagraficoEnte() throws PersistencyException {
-        try {
-            LoggableStatement ps = new LoggableStatement(getConnection(),
-                    "SELECT ANAG.CD_ANAG FROM " +
-                            it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-                            "CONFIGURAZIONE_CNR CONF, " +
-                            it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-                            "ANAGRAFICO ANAG " +
-                            "WHERE " +
-                            "CONF.CD_CHIAVE_PRIMARIA = ? AND " +
-                            "CONF.CD_CHIAVE_SECONDARIA = ? AND " +
-                            "CONF.ESERCIZIO = ? AND " +
-                            "CONF.IM01 = ANAG.CD_ANAG", true, this.getClass());
-            ps.setString(1, "COSTANTI");
-            ps.setObject(2, "CODICE_ANAG_ENTE");
-            ps.setObject(3, new Integer(0));
-
-            java.sql.ResultSet rs = ps.executeQuery();
-            if (rs.next())
-                return (it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk) getHomeCache(
-                ).getHome(
-                        it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk.class
-                ).findByPrimaryKey(
-                        new it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk(
-                                new Integer(
-                                        rs.getInt(1)
-                                )
-                        )
-                );
-            else
-                return null;
-        } catch (java.sql.SQLException e) {
-            throw new PersistencyException(e);
-        }
+        Integer cdAnagEnte = ((Configurazione_cnrHome) getHomeCache().getHome(Configurazione_cnrBulk.class)).getCodiceAnagraficoEnte();
+        if (cdAnagEnte!=null)
+            return (AnagraficoBulk) getHomeCache().getHome(AnagraficoBulk.class).findByPrimaryKey(new AnagraficoBulk(cdAnagEnte));
+        return null;
     }
 
     /**

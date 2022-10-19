@@ -112,6 +112,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_COSTANTI = "COSTANTI";
     public final static String SK_TOTALE_GIORNI_LAVORATIVI_COSTI_PERSONALE = "TOTALE_GIORNI_LAVORATIVI_COSTI_PERSONALE";
 
+    public final static String SK_CODICE_ANAG_ENTE = "CODICE_ANAG_ENTE";
+
     public final static String PK_ANNI_RESIDUI_VAR_ST_RES = "ANNI_RESIDUI_VAR_ST_RES";
     public final static String PK_ANNI_RESIDUI_IM_RES_IMP = "ANNI_RESIDUI_IM_RES_IMP";
     public final static String PK_ANNI_RESIDUI_IM_RES_PRO = "ANNI_RESIDUI_IM_RES_PRO";

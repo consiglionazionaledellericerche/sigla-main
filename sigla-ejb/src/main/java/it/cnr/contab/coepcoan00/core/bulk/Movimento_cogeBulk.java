@@ -350,7 +350,7 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     }
 
     public boolean isRigaTipoIva() {
-        return this.isRigaTipoIvaAcquistoSplit() ||
+        return this.isRigaTipoIvaAcquisto() ||
                 this.isRigaTipoIvaAcquistoSplit() ||
                 this.isRigaTipoIvaVendite() ||
                 this.isRigaTipoIvaVenditeSplit();

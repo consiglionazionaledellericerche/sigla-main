@@ -85,4 +85,5 @@ void setEsercizio(Integer newEsercizio);
  * @return java.lang.Integer
  */
 void setPg_doc_amm(Long newPg);
+
 }
