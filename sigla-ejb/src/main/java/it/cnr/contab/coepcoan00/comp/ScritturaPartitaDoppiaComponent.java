@@ -44,6 +44,7 @@ import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
 import it.cnr.contab.missioni00.docs.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -1741,7 +1742,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							else
 								aContoIva = this.findContoIvaDebito(userContext, tipoSezionale, rigaDettFinVocePartita.getDocamm().getTipoDocumentoEnum());
 
-							if (isCommercialeWithAutofattura)
+							if (isCommercialeWithAutofattura || docamm instanceof Fattura_attivaBulk)
 								testataPrimaNota.openDettaglioIva(docamm, partita, aContoIva.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIva);
 							else { //è una fattura istituzionale e quindi l'IVA va a costo
 								if (!isFatturaPassivaDaOrdini)
@@ -2789,8 +2790,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
 
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoLiquidazione(UserContext userContext, MandatoBulk mandato, Liquidazione_ivaBulk liqIva) throws ComponentException, PersistencyException, RemoteException {
-		if (liqIva == null)
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoLiquidazione(UserContext userContext, MandatoBulk mandato, List<Liquidazione_ivaBulk> liquidIvaList) throws ComponentException, PersistencyException, RemoteException {
+		if (liquidIvaList == null || liquidIvaList.isEmpty())
 			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
 					" non risulta pagare una liquidazione iva. Proposta di prima nota non possibile.");
 
@@ -2824,56 +2825,58 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		TestataPrimaNota testataPrimaNota = new TestataPrimaNota();
 
 		//recupero tutte le scritture di liquidazione
-		List<Liquidazione_ivaBulk> liquidazioniDefinitive = liquidazioneIvaHome.findLiquidazioniMassiveDefinitiveList(liqIva);
+		for (Liquidazione_ivaBulk liquidIva : liquidIvaList) {
+			List<Liquidazione_ivaBulk> liquidazioniDefinitive = liquidazioneIvaHome.findLiquidazioniMassiveDefinitiveList(liquidIva);
 
-		liquidazioniDefinitive.stream().filter(el->!el.getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa())).forEach(liqIvaUo->{
-			try {
-				Map<String, Pair<String, BigDecimal>> saldiVoceEp = this.getSaldiMovimentiCoriIvaDebitoEnte(userContext, liqIvaUo);
+			liquidazioniDefinitive.stream().filter(el->!el.getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa())).forEach(liqIvaUo->{
+				try {
+					Map<String, Pair<String, BigDecimal>> saldiVoceEp = this.getSaldiMovimentiCoriIvaDebitoEnte(userContext, liqIvaUo);
 
-				if (saldiVoceEp.size()>1)
-					throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato()+
-							". La scrittura prima nota della liquidazione IVA, di tipo "+liqIvaUo.getTipo_liquidazione()+
-							", della UO " + liqIvaUo.getCd_unita_organizzativa() + " per il periodo "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_inizio())+
-							" - "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_fine())+" movimenta più conti patrimoniali verso l'ente. Proposta prima nota non possibile.");
+					if (saldiVoceEp.size()>1)
+						throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato()+
+								". La scrittura prima nota della liquidazione IVA, di tipo "+liqIvaUo.getTipo_liquidazione()+
+								", della UO " + liqIvaUo.getCd_unita_organizzativa() + " per il periodo "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_inizio())+
+								" - "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_fine())+" movimenta più conti patrimoniali verso l'ente. Proposta prima nota non possibile.");
 
-				//Trovo il saldo
-				BigDecimal saldoDebitoEnte = saldiVoceEp.values().stream()
-						.map(el->el.getFirst().equals(Movimento_cogeBulk.SEZIONE_DARE)?el.getSecond():el.getSecond().negate())
-						.reduce(BigDecimal.ZERO,BigDecimal::add);
+					//Trovo il saldo
+					BigDecimal saldoDebitoEnte = saldiVoceEp.values().stream()
+							.map(el->el.getFirst().equals(Movimento_cogeBulk.SEZIONE_DARE)?el.getSecond():el.getSecond().negate())
+							.reduce(BigDecimal.ZERO,BigDecimal::add);
 
-				BigDecimal ivaDebCredPrec = liqIvaUo.getIva_deb_cred_per_prec();
+					BigDecimal ivaDebCredPrec = liqIvaUo.getIva_deb_cred_per_prec();
 
-				saldoDebitoEnte = saldoDebitoEnte.add(ivaDebCredPrec);
+					saldoDebitoEnte = saldoDebitoEnte.add(ivaDebCredPrec);
 
-				if  (saldoDebitoEnte.compareTo(liqIvaUo.getIva_da_versare()) != 0) {
-					testataPrimaNota.getDett().stream().filter(el->el.getPartita()!=null).forEach(el-> System.out.println("Compenso: "+Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null)+" - Trib: "+el.getCdCori()+" - Conto: "+el.getCdConto()+
-							" - Sezione: "+el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
+					if  (saldoDebitoEnte.compareTo(liqIvaUo.getIva_da_versare()) != 0) {
+						testataPrimaNota.getDett().stream().filter(el->el.getPartita()!=null).forEach(el-> System.out.println("Compenso: "+Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null)+" - Trib: "+el.getCdCori()+" - Conto: "+el.getCdConto()+
+								" - Sezione: "+el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
 
-					throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato " +
-							mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() + ". Il saldo del conto debito generato dalla scrittura prima nota della liquidazione IVA, " +
-							"di tipo "+liqIvaUo.getTipo_liquidazione()+", della UO " + liqIvaUo.getCd_unita_organizzativa() +
-							" per il periodo "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_inizio())+
-							" - "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_fine())+" ("+new it.cnr.contab.util.EuroFormat().format(saldoDebitoEnte)+
-							") non risulterebbe essere uguale all'importo della liquidazione IVA ("+
-							new it.cnr.contab.util.EuroFormat().format(liqIvaUo.getIva_da_versare()) + ").");
+						throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del mandato " +
+								mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() + ". Il saldo del conto debito generato dalla scrittura prima nota della liquidazione IVA, " +
+								"di tipo "+liqIvaUo.getTipo_liquidazione()+", della UO " + liqIvaUo.getCd_unita_organizzativa() +
+								" per il periodo "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_inizio())+
+								" - "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_fine())+" ("+new it.cnr.contab.util.EuroFormat().format(saldoDebitoEnte)+
+								") non risulterebbe essere uguale all'importo della liquidazione IVA ("+
+								new it.cnr.contab.util.EuroFormat().format(liqIvaUo.getIva_da_versare()) + ").");
+					}
+
+					saldiVoceEp.keySet().forEach(cdVoceEp -> {
+						Pair<String, BigDecimal> saldoVoce = saldiVoceEp.get(cdVoceEp);
+						if (saldoVoce.getSecond().compareTo(BigDecimal.ZERO) != 0)
+							if (saldoVoce.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE)) {
+								//Chiudo il debito IVA fattura e lo giro all'ente
+								testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVoceEp, saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
+								testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), saldoVoce.getSecond());
+							} else {
+								testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, cdVoceEp, saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
+								testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_DARE, voceEpBanca.getCd_voce_ep(), saldoVoce.getSecond());
+							}
+					});
+				} catch(ComponentException|PersistencyException ex) {
+					throw new ApplicationRuntimeException(ex);
 				}
-
-				saldiVoceEp.keySet().forEach(cdVoceEp -> {
-					Pair<String, BigDecimal> saldoVoce = saldiVoceEp.get(cdVoceEp);
-					if (saldoVoce.getSecond().compareTo(BigDecimal.ZERO) != 0)
-						if (saldoVoce.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE)) {
-							//Chiudo il debito IVA fattura e lo giro all'ente
-							testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, cdVoceEp, saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
-							testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_AVERE, voceEpBanca.getCd_voce_ep(), saldoVoce.getSecond());
-						} else {
-							testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, cdVoceEp, saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
-							testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.SEZIONE_DARE, voceEpBanca.getCd_voce_ep(), saldoVoce.getSecond());
-						}
-				});
-			} catch(ComponentException|PersistencyException ex) {
-				throw new ApplicationRuntimeException(ex);
-			}
-		});
+			});
+		}
 
 		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
@@ -2908,136 +2911,132 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//Recupero tutti i registri in base al tipo sezionale oggetto di liquidazione
 			List<Tipo_sezionaleBulk> tipiSezionale = allTipiSezionale.stream().filter(el -> el.isTipoSezionale(liqIvaUo.getTipo_liquidazione())).collect(Collectors.toList());
 
-			List<IDocumentoAmministrativoBulk> allDocumentiUoLiquidati = new ArrayList<>();
-
 			//recupero il terzo associato alla UO necessario per chiudere i conti IVA
 			TerzoBulk terzoEnte = ((TerzoHome) getHome(userContext, TerzoBulk.class)).findTerzoEnte();
 
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota();
 
-			tipiSezionale.stream().forEach(tipoSezionale -> {
-				try {
-					if (tipoSezionale.isAcquisti()) {
-						{
-							SQLBuilder sqlFatturaPassiva = fatturaPassivaIHome.createSQLBuilder();
-							sqlFatturaPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
-							sqlFatturaPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
-							sqlFatturaPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
-							sqlFatturaPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
-							allDocumentiUoLiquidati.addAll(fatturaPassivaIHome.fetchAll(sqlFatturaPassiva));
-						}
-						{
-							SQLBuilder sqlNotaCreditoPassiva = notaCreditoPassivaHome.createSQLBuilder();
-							sqlNotaCreditoPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
-							sqlNotaCreditoPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
-							sqlNotaCreditoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
-							sqlNotaCreditoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
-							allDocumentiUoLiquidati.addAll(notaCreditoPassivaHome.fetchAll(sqlNotaCreditoPassiva));
-						}
-						{
-							SQLBuilder sqlNotaDebitoPassiva = notaDebitoPassivaHome.createSQLBuilder();
-							sqlNotaDebitoPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
-							sqlNotaDebitoPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
-							sqlNotaDebitoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
-							sqlNotaDebitoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
-							allDocumentiUoLiquidati.addAll(notaDebitoPassivaHome.fetchAll(sqlNotaDebitoPassiva));
-						}
-					} else {
-						{
-							SQLBuilder sqlFatturaAttiva = fatturaAttivaIHome.createSQLBuilder();
-							sqlFatturaAttiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
-							sqlFatturaAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
-							sqlFatturaAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
-							sqlFatturaAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
-							allDocumentiUoLiquidati.addAll(fatturaAttivaIHome.fetchAll(sqlFatturaAttiva));
-						}
-						{
-							SQLBuilder sqlNotaCreditoAttiva = notaCreditoAttivaHome.createSQLBuilder();
-							sqlNotaCreditoAttiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
-							sqlNotaCreditoAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
-							sqlNotaCreditoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
-							sqlNotaCreditoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
-							allDocumentiUoLiquidati.addAll(notaCreditoAttivaHome.fetchAll(sqlNotaCreditoAttiva));
-						}
-						{
-							SQLBuilder sqlNotaDebitoAttiva = notaDebitoAttivaHome.createSQLBuilder();
-							sqlNotaDebitoAttiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
-							sqlNotaDebitoAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
-							sqlNotaDebitoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
-							sqlNotaDebitoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
-							allDocumentiUoLiquidati.addAll(notaDebitoAttivaHome.fetchAll(sqlNotaDebitoAttiva));
-						}
+			for (Tipo_sezionaleBulk tipoSezionale : tipiSezionale) {
+				List<IDocumentoAmministrativoBulk> allDocumentiUoLiquidati = new ArrayList<>();
+				if (tipoSezionale.isAcquisti()) {
+					{
+						SQLBuilder sqlFatturaPassiva = fatturaPassivaIHome.createSQLBuilder();
+						sqlFatturaPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
+						sqlFatturaPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
+						sqlFatturaPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
+						sqlFatturaPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+						allDocumentiUoLiquidati.addAll(fatturaPassivaIHome.fetchAll(sqlFatturaPassiva));
 					}
-
-					Voce_epBulk aVoceIva = this.findContoIvaDebito(userContext, tipoSezionale, TipoDocumentoEnum.FATTURA_PASSIVA);
-
-					//Con la lista dei documenti che sono andati in liquidazione, vado a recuperare le scritture generate
-					allDocumentiUoLiquidati.forEach(docamm -> {
-						try {
-							Integer cdTerzoDocamm = ((Fattura_passivaBulk) docamm).getCd_terzo();
-							Map<String, Map<String, Pair<String, BigDecimal>>> saldiCoriVoceEp;
-
-							//recupero tutti i movimenti della partita per ottenere il saldo al netto della scrittura del mandato se già esiste
-							if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isGenerataDaCompenso).orElse(Boolean.FALSE))
-								// Le fatture generate da compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
-								saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, ((Fattura_passivaBulk) docamm).getCompenso());
-							else
-								saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, docamm);
-
-							//dovrei trovare tra i saldi proprio l'import liquidato
-							//Il conto aperto deve essere solo uno e deve essere in segno AVERE
-							if (saldiCoriVoceEp.values().stream().flatMap(el -> el.values().stream()).filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
-								throw new ApplicationRuntimeException("Per il documento " + docamm.getCd_tipo_doc_amm() + "/" + docamm.getEsercizio() + "/" + docamm.getCd_cds() + "/" +
-										docamm.getPg_doc() + " e per le righe IVA esiste più di un conto che presenta un saldo positivo.");
-
-							saldiCoriVoceEp.keySet().forEach(aCdCori -> {
-								Map<String, Pair<String, BigDecimal>> saldiCori = saldiCoriVoceEp.get(aCdCori);
-								saldiCori.keySet().forEach(cdVoceEp -> {
-									Pair<String, BigDecimal> saldoVoce = saldiCori.get(cdVoceEp);
-									if (saldoVoce.getSecond().compareTo(BigDecimal.ZERO) != 0)
-										if (saldoVoce.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE)) {
-											//Chiudo il debito IVA fattura e lo giro all'ente
-											testataPrimaNota.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.SEZIONE_DARE, cdVoceEp, saldoVoce.getSecond(), docamm, cdTerzoDocamm, aCdCori);
-											testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aVoceIva.getCd_voce_ep(), saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
-										} else {
-											testataPrimaNota.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.SEZIONE_AVERE, cdVoceEp, saldoVoce.getSecond(), docamm, cdTerzoDocamm, aCdCori);
-											testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, aVoceIva.getCd_voce_ep(), saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
-										}
-								});
-							});
-						} catch (ComponentException | PersistencyException ex) {
-							throw new ApplicationRuntimeException(ex);
-						}
-					});
-
-					BigDecimal ivaDebCredPrec = liqIvaUo.getIva_deb_cred_per_prec();
-
-					BigDecimal saldoDebitoUo = testataPrimaNota.getDett().stream()
-							.filter(el -> el.getTipoDett().equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()))
-							.filter(el -> !Optional.ofNullable(el.getPartita()).isPresent())
-							.map(el -> el.isSezioneDare() ? el.getImporto() : el.getImporto().negate())
-							.reduce(BigDecimal.ZERO, BigDecimal::add);
-
-					saldoDebitoUo = saldoDebitoUo.add(ivaDebCredPrec);
-
-					if (saldoDebitoUo.compareTo(liqIvaUo.getIva_da_versare()) != 0) {
-						testataPrimaNota.getDett().stream().filter(el -> el.getPartita() != null).forEach(el -> System.out.println("Compenso: " + Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null) + " - Trib: " + el.getCdCori() + " - Conto: " + el.getCdConto() +
-								" - Sezione: " + el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
-
-						throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del tipo liquidazione IVA " + liqIvaUo.getTipo_liquidazione() +
-								" della UO " + liqIvaUo.getCd_unita_organizzativa() + " per il periodo " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_inizio()) +
-								" - " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_fine()) + ". Il saldo del conto debito (" +
-								new it.cnr.contab.util.EuroFormat().format(saldoDebitoUo) +
-								"), per il tipo sezionale " + tipoSezionale.getCd_tipo_sezionale() + ", non risulterebbe essere uguale all'importo della liquidazione IVA (" +
-								new it.cnr.contab.util.EuroFormat().format(liqIvaUo.getIva_da_versare()) + ").");
+					{
+						SQLBuilder sqlNotaCreditoPassiva = notaCreditoPassivaHome.createSQLBuilder();
+						sqlNotaCreditoPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
+						sqlNotaCreditoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
+						sqlNotaCreditoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
+						sqlNotaCreditoPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+						allDocumentiUoLiquidati.addAll(notaCreditoPassivaHome.fetchAll(sqlNotaCreditoPassiva));
 					}
-				} catch (ComponentException | PersistencyException | RemoteException ex) {
-					throw new ApplicationRuntimeException(ex);
+					{
+						SQLBuilder sqlNotaDebitoPassiva = notaDebitoPassivaHome.createSQLBuilder();
+						sqlNotaDebitoPassiva.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
+						sqlNotaDebitoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
+						sqlNotaDebitoPassiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
+						sqlNotaDebitoPassiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+						allDocumentiUoLiquidati.addAll(notaDebitoPassivaHome.fetchAll(sqlNotaDebitoPassiva));
+					}
+				} else {
+					{
+						SQLBuilder sqlFatturaAttiva = fatturaAttivaIHome.createSQLBuilder();
+						sqlFatturaAttiva.addClause(FindClause.AND, "cd_uo_origine", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
+						sqlFatturaAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
+						sqlFatturaAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
+						sqlFatturaAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+						allDocumentiUoLiquidati.addAll(fatturaAttivaIHome.fetchAll(sqlFatturaAttiva));
+					}
+					{
+						SQLBuilder sqlNotaCreditoAttiva = notaCreditoAttivaHome.createSQLBuilder();
+						sqlNotaCreditoAttiva.addClause(FindClause.AND, "cd_uo_origine", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
+						sqlNotaCreditoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
+						sqlNotaCreditoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
+						sqlNotaCreditoAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+						allDocumentiUoLiquidati.addAll(notaCreditoAttivaHome.fetchAll(sqlNotaCreditoAttiva));
+					}
+					{
+						SQLBuilder sqlNotaDebitoAttiva = notaDebitoAttivaHome.createSQLBuilder();
+						sqlNotaDebitoAttiva.addClause(FindClause.AND, "cd_uo_origine", SQLBuilder.EQUALS, liqIvaUo.getCd_unita_organizzativa());
+						sqlNotaDebitoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, liqIvaUo.getDt_inizio());
+						sqlNotaDebitoAttiva.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, liqIvaUo.getDt_fine());
+						sqlNotaDebitoAttiva.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, tipoSezionale.getCd_tipo_sezionale());
+						allDocumentiUoLiquidati.addAll(notaDebitoAttivaHome.fetchAll(sqlNotaDebitoAttiva));
+					}
 				}
-			});
 
+				Voce_epBulk aVoceIva = this.findContoIvaDebito(userContext, tipoSezionale, TipoDocumentoEnum.FATTURA_PASSIVA);
+
+				//Con la lista dei documenti che sono andati in liquidazione, vado a recuperare le scritture generate
+				for (IDocumentoAmministrativoBulk docamm : allDocumentiUoLiquidati) {
+					Integer cdTerzoDocamm;
+					if (docamm instanceof Fattura_passivaBulk)
+						cdTerzoDocamm = ((Fattura_passivaBulk)docamm).getCd_terzo();
+					else
+						cdTerzoDocamm = ((Fattura_attivaBulk)docamm).getCd_terzo();
+
+					Map<String, Map<String, Pair<String, BigDecimal>>> saldiCoriVoceEp;
+
+					//recupero tutti i movimenti della partita per ottenere il saldo al netto della scrittura del mandato se già esiste
+					if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isGenerataDaCompenso).orElse(Boolean.FALSE))
+						// Le fatture generate da compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
+						saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, ((Fattura_passivaBulk) docamm).getCompenso());
+					else
+						saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, docamm);
+
+					//dovrei trovare tra i saldi proprio l'import liquidato
+					//Il conto aperto deve essere solo uno e deve essere in segno AVERE
+					if (saldiCoriVoceEp.values().stream().flatMap(el -> el.values().stream()).filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
+						throw new ApplicationRuntimeException("Per il documento " + docamm.getCd_tipo_doc_amm() + "/" + docamm.getEsercizio() + "/" + docamm.getCd_cds() + "/" +
+								docamm.getPg_doc() + " e per le righe IVA esiste più di un conto che presenta un saldo positivo.");
+
+					saldiCoriVoceEp.keySet().forEach(aCdCori -> {
+						Map<String, Pair<String, BigDecimal>> saldiCori = saldiCoriVoceEp.get(aCdCori);
+						saldiCori.keySet().forEach(cdVoceEp -> {
+							Pair<String, BigDecimal> saldoVoce = saldiCori.get(cdVoceEp);
+							if (saldoVoce.getSecond().compareTo(BigDecimal.ZERO) != 0)
+								if (saldoVoce.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE)) {
+									//Chiudo il debito IVA fattura e lo giro all'ente
+									testataPrimaNota.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.SEZIONE_DARE, cdVoceEp, saldoVoce.getSecond(), docamm, cdTerzoDocamm, aCdCori);
+									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aVoceIva.getCd_voce_ep(), saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
+								} else {
+									testataPrimaNota.addDettaglio(docamm.getTipoDocumentoEnum().getTipoPatrimoniale(), Movimento_cogeBulk.SEZIONE_AVERE, cdVoceEp, saldoVoce.getSecond(), docamm, cdTerzoDocamm, aCdCori);
+									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, aVoceIva.getCd_voce_ep(), saldoVoce.getSecond(), null, terzoEnte.getCd_terzo(), null);
+								}
+						});
+					});
+				}
+			}
+
+			BigDecimal ivaDebCredPrec = liqIvaUo.getIva_deb_cred_per_prec();
+
+			BigDecimal saldoDebitoUo = testataPrimaNota.getDett().stream()
+					.filter(el -> el.getTipoDett().equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()))
+					.filter(el -> !Optional.ofNullable(el.getPartita()).isPresent())
+					.map(el -> el.isSezioneDare() ? el.getImporto() : el.getImporto().negate())
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			saldoDebitoUo = saldoDebitoUo.add(ivaDebCredPrec);
+
+			if (saldoDebitoUo.compareTo(liqIvaUo.getIva_da_versare()) != 0) {
+				testataPrimaNota.getDett().stream().filter(el -> el.getPartita() != null).forEach(el -> System.out.println("Compenso: " + Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null) + " - Trib: " + el.getCdCori() + " - Conto: " + el.getCdConto() +
+						" - Sezione: " + el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
+
+				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del tipo liquidazione IVA '" +
+						Stampa_registri_ivaVBulk.TIPI_SEZIONALE_KEYS.get(liqIvaUo.getTipo_liquidazione()) +
+						"' della UO " + liqIvaUo.getCd_unita_organizzativa() + " per il periodo " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_inizio()) +
+						" - " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(liqIvaUo.getDt_fine()) + ". Il saldo del conto debito (" +
+						new it.cnr.contab.util.EuroFormat().format(saldoDebitoUo) +
+						") non risulterebbe essere uguale all'importo della liquidazione IVA (" +
+						new it.cnr.contab.util.EuroFormat().format(liqIvaUo.getIva_da_versare()) + ").");
+			}
 			return this.generaScrittura(userContext, liqIvaUo, Collections.singletonList(testataPrimaNota), true);
-		} catch (PersistencyException ex) {
+		} catch (PersistencyException|RemoteException ex) {
 			throw new ApplicationRuntimeException(ex);
 		}
 	}
@@ -3054,11 +3053,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			}
 		});
 
-		if (liquidazioneIvaList.size()>1)
-			throw new ApplicationException("Il mandato " + mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato() +
-					" risulta pagare più di una liquidazione iva. Proposta di prima nota non possibile.");
 		if (!liquidazioneIvaList.isEmpty())
-			return proposeScritturaPartitaDoppiaMandatoLiquidazione(userContext, mandato, liquidazioneIvaList.get(0));
+			return proposeScritturaPartitaDoppiaMandatoLiquidazione(userContext, mandato, liquidazioneIvaList);
 
 		Collection<Liquid_gruppo_coriBulk> liquidGruppoCoriBulk =
 				((Liquid_gruppo_coriHome) getHome(userContext, Liquid_gruppo_coriBulk.class)).findByMandato(userContext, mandato)
