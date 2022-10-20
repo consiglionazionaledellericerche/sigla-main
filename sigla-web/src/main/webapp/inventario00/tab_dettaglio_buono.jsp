@@ -5,11 +5,19 @@
 		it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk,
 		it.cnr.contab.inventario01.bp.*"
 %>
-<% CRUDCaricoInventarioBP bp = (CRUDCaricoInventarioBP)BusinessProcess.getBusinessProcess(request); 
-   Buono_carico_scarico_dettBulk riga = (Buono_carico_scarico_dettBulk)bp.getDettaglio().getModel();    
-   Inventario_beniBulk bene = null; 
-   if (riga != null) bene = riga.getBene(); %>   
-   	<%bp.getDettaglio().writeHTMLTable(pageContext,"righeSetConCodice",bp.isCRUDAddButtonEnabled(),false,bp.isCRUDDeleteButtonEnabled(),"100%","200px"); %>
+<% CRUDCaricoInventarioBP bp = (CRUDCaricoInventarioBP)BusinessProcess.getBusinessProcess(request);
+    Buono_carico_scarico_dettBulk riga =null;
+    if(bp.getDettaglio() != null){
+        riga = (Buono_carico_scarico_dettBulk)bp.getDettaglio().getModel();
+    }
+   Inventario_beniBulk bene = null;
+
+   if (riga != null){
+        bene = riga.getBene();
+   }
+   bp.getDettaglio().writeHTMLTable(pageContext,"righeSetConCodice",bp.isCRUDAddButtonEnabled(),false,bp.isCRUDDeleteButtonEnabled(),"100%","200px");
+%>
+
 	<table>			
 		<tr>
 			<td>
@@ -43,15 +51,26 @@
 				<% bp.getDettaglio().writeFormLabel(out,"condizione"); %>
 			</td>
 			<td>
-				<% bp.getDettaglio().writeFormInput(out,"condizione"); %>				
+				<% bp.getDettaglio().writeFormInput(out,"condizione"); %>
 			</td>			
 			<td>
 				<% bp.getDettaglio().writeFormLabel(out,"cd_barre"); %>
 			</td>
 			<td>
-				<% bp.getDettaglio().writeFormInput(out,"cd_barre"); %>				
-			</td>			
-			
+				<% bp.getDettaglio().writeFormInput(out,"cd_barre"); %>
+			</td>
+			<%
+            	if (bp.isAttivaEtichettaInventarioBene()){
+            %>
+			<td>
+                <% bp.getDettaglio().writeFormLabel(out,"etichetta"); %>
+            </td>
+            <td>
+                <% bp.getDettaglio().writeFormInput(out,"etichetta"); %>
+            </td>
+			<%
+                }
+             %>
 		</tr>
 		<%
 			}
@@ -69,7 +88,19 @@
 			</td>
 			<td>
 				<% bp.getDettaglio().writeFormInput(out,null,"cd_barre",bp.isEditing(),null,null); %>				
-			</td>	
+			</td>
+			<%
+               if (bp.isAttivaEtichettaInventarioBene()){
+            %>
+                <td>
+                    <% bp.getDettaglio().writeFormLabel(out,"etichetta"); %>
+                </td>
+                <td>
+                    <% bp.getDettaglio().writeFormInput(out,null,"etichetta",bp.isEditing(),null,null); %>
+                </td>
+            <%
+               }
+            %>
 		</tr>
 		<% }  %>
 		<tr>
@@ -82,7 +113,7 @@
 					
 		</tr>
 		<%
-			if (!riga.getBuono_cs().isByOrdini()){
+			if (riga!= null && !riga.getBuono_cs().isByOrdini()){
 		%>
 		<tr>
 			<td>
@@ -165,7 +196,7 @@
 				<% bp.getDettaglio().writeFormLabel(out,"quantita"); %>
 			</td>	
 			<td>				
-				<% bp.getDettaglio().writeFormInput(out,null,"quantita",(bp.isEditing() || bp.isBy_fattura()||bp.isBy_documento()),null,"");%>
+				<% bp.getDettaglio().writeFormInput(out,null,"quantita",(bp.isEditing() || bp.isBy_fattura()||bp.isBy_documento() || bp.isAttivaEtichettaInventarioBene() ),null,"");%>
 			</td>		
 			<td>
 				<% bp.getDettaglio().writeFormLabel(out,"valore_unitario"); %>
@@ -184,7 +215,7 @@
 			</td>	
 		</tr>
 		<%
-			if (!riga.getBuono_cs().isByOrdini()){
+			if (riga!= null && !riga.getBuono_cs().isByOrdini()){
 		%>
 		<tr>
 			<td>

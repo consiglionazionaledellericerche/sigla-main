@@ -1432,4 +1432,23 @@ public Ass_inv_bene_fatturaBulk sdoppiaAssociazioneFor(UserContext param0,Fattur
 		}
 }
 
+	@Override
+	public boolean checkEtichettaBeneAlreadyExist(UserContext userContext, Buono_carico_scarico_dettBulk dett)  throws ComponentException, RemoteException{
+		try {
+
+			return ((Boolean)invoke("checkEtichettaBeneAlreadyExist",new Object[] {
+					userContext,dett})).booleanValue();
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
 }

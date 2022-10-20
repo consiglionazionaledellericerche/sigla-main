@@ -2,7 +2,7 @@
 --  DDL for View PRT_STAMPA_BENI_SENZA_UTILIZZ
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "PRT_STAMPA_BENI_SENZA_UTILIZZ" ("CD_UNITA_ORGANIZZATIVA", "DATA_REGISTRAZIONE", "PG_INVENTARIO", "NR_INVENTARIO", "PROGRESSIVO") AS 
+  CREATE OR REPLACE FORCE VIEW "PRT_STAMPA_BENI_SENZA_UTILIZZ" ("CD_UNITA_ORGANIZZATIVA", "DATA_REGISTRAZIONE", "PG_INVENTARIO", "NR_INVENTARIO", "PROGRESSIVO","ETICHETTA") AS
   SELECT
 --
 -- Date: 14/4/2004
@@ -26,11 +26,16 @@
 -- Corretta join tra buono_carico_scarico_dett e buono_carico_scarico,
 -- Aggiunto filtro cespiti totalmente scaricati e filtro progressivo = '0'
 --
+-- Date: 01/09/2022
+-- Version: 1.3
+-- Inserita Etichetta bene
+--
 -- Body:
 --
 d.CD_UNITA_ORGANIZZATIVA,
 c.DATA_REGISTRAZIONE,
-a.PG_INVENTARIO, a.NR_INVENTARIO, a.PROGRESSIVO
+a.PG_INVENTARIO, a.NR_INVENTARIO, a.PROGRESSIVO,
+d.ETICHETTA
 from buono_carico_scarico_dett a,
 buono_carico_scarico c, inventario_beni d
 where

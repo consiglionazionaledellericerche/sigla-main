@@ -28,6 +28,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Transito_beni_ordiniBulk;
+import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
@@ -309,6 +310,10 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 			nuovo.getBene().setCategoria_Bene(new it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk());
 			nuovo.getBene().setUbicazione(new Ubicazione_beneBulk());
 			nuovo.getBene().setAssegnatario(new TerzoBulk());
+			if(nuovo.getBene().getCondizioneBene() == null) {
+				nuovo.getBene().setCondizioneBene(new Condizione_beneBulk());
+				nuovo.getBene().setCd_condizione_bene("4");
+			}
 		}
 		return getBuono_carico_scarico_dettColl().size()-1;
 	}

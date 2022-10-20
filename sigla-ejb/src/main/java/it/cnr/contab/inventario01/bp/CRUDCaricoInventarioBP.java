@@ -38,6 +38,7 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -52,6 +53,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractDetailCRUDController;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.contab.util.Utility;
 
 /**
  * @author rpucciarelli
@@ -70,6 +72,12 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	private boolean by_ordini = false;
 
 
+	private boolean attivaEtichettaInventarioBene = false;
+
+	public boolean isAttivaEtichettaInventarioBene() {
+		return attivaEtichettaInventarioBene;
+	}
+
 	public CRUDCaricoInventarioBP() {
 	super();
 	setTab("tab","tabCaricoInventarioTestata");
@@ -84,6 +92,13 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 		super.init(config,context);
 		resetTabs();
 		utilizzatori.setReadonly(false);
+		try {
+			attivaEtichettaInventarioBene = Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(context.getUserContext());
+		} catch (ComponentException e) {
+			throw new BusinessProcessException(e);
+		} catch (RemoteException e) {
+			throw new BusinessProcessException(e);
+		}
 	}
 	@Override
 	public boolean isPrintButtonHidden() {

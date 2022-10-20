@@ -22,12 +22,21 @@ import it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
+import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
+import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.SimpleBulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.CRUDBP;
+import org.apache.commons.lang.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Iterator;
@@ -62,6 +71,75 @@ public class Transito_beni_ordiniBulk extends Transito_beni_ordiniBase {
 	public final static Dictionary ISTITUZIONALE_COMMERCIALE;
 	public final static String ISTITUZIONALE      = "I";
 	public final static String COMMERCIALE      = "C";
+
+
+
+	public Integer getNumeroOrdine() {
+		if(getMovimentiMag() != null){
+			MovimentiMagBulk movimento = getMovimentiMag();
+			if(movimento.getLottoMag()!=null){
+				LottoMagBulk lotto = movimento.getLottoMag();
+				if(lotto.getOrdineAcqConsegna()!=null){
+					OrdineAcqConsegnaBulk ordineAcq = lotto.getOrdineAcqConsegna();
+					if(ordineAcq!=null)
+						return ordineAcq.getNumero();
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public Timestamp getDtOrdine() {
+		if(getMovimentiMag() != null){
+			if(getMovimentiMag().getLottoMag() !=null){
+				LottoMagBulk lotto = getMovimentiMag().getLottoMag();
+				if(lotto.getOrdineAcqConsegna() != null){
+					OrdineAcqConsegnaBulk ordineAcqCons = lotto.getOrdineAcqConsegna();
+					if(ordineAcqCons != null){
+						OrdineAcqRigaBulk riga = ordineAcqCons.getOrdineAcqRiga();
+						if(riga!=null){
+							OrdineAcqBulk ordine = riga.getOrdineAcq();
+							return ordine.getDataOrdine();
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public String getNumeratoreOrdine() {
+		if(getMovimentiMag() != null){
+			if(getMovimentiMag().getLottoMag() !=null){
+				LottoMagBulk lotto = getMovimentiMag().getLottoMag();
+				if(lotto.getOrdineAcqConsegna() != null){
+					if(lotto.getOrdineAcqConsegna()!=null){
+						OrdineAcqConsegnaBulk ordineAcq = lotto.getOrdineAcqConsegna();
+						if(ordineAcq!=null)
+							return ordineAcq.getCdNumeratore();
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public String getNumeroBolla() {
+		if(getMovimentiMag() != null){
+
+			return getMovimentiMag().getNumeroBolla();
+		}
+		return null;
+	}
+	public Timestamp getDataBolla(){
+		if(getMovimentiMag() != null){
+			return getMovimentiMag().getDataBolla();
+		}
+		return null;
+	}
+
 
 
 	static {
@@ -372,6 +450,9 @@ public void setValore_unitario(java.math.BigDecimal newValore_unitario) {
 		}
 		if (getFl_ammortamento() != null && getFl_ammortamento() && getTi_ammortamento() == null){
 			throw new ValidationException("Valorizzare il tipo ammortamento.");
+		}
+		if(getCondizioneBene() == null){
+			throw new ValidationException("Valorizzare la condizione del bene.");
 		}
 	}
 

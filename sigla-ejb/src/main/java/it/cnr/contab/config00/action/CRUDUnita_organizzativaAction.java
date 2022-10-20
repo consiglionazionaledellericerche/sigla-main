@@ -62,7 +62,13 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
         uo.setResponsabile(new V_terzo_persona_fisicaBulk());
         return context.findDefaultForward();
     }
+    public it.cnr.jada.action.Forward doBringBackSearchFind_responsabile(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo,TerzoBulk terzo) {
+        if (!terzo.getAnagrafico().isPersonaFisica())
+            throw new MessageToUser("Il responsabile deve essere una persona fisica");
+        uo.setResponsabile(terzo);
+        return context.findDefaultForward();
 
+    }
     /**
      * Metodo utilizzato per gestire l'annullamento del Cds area di ricerca all'annullamento del Cds padre
      * dell'unita' organizzativa
@@ -75,6 +81,14 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
     public it.cnr.jada.action.Forward doBlankSearchFind_responsabile_amm(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo) {
         uo.setResponsabile_amm(new V_terzo_persona_fisicaBulk());
         return context.findDefaultForward();
+    }
+
+    public it.cnr.jada.action.Forward doBringBackSearchFind_responsabile_amm(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo,TerzoBulk terzo) {
+        if (!terzo.getAnagrafico().isPersonaFisica())
+            throw new MessageToUser("Il responsabile Amministrativo deve essere una persona fisica");
+        uo.setResponsabile(terzo);
+        return context.findDefaultForward();
+
     }
 
     /**
@@ -153,11 +167,12 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
      */
     public it.cnr.jada.action.Forward doRichiamaTerzo(it.cnr.jada.action.ActionContext context) {
         try {
+
             CRUDBP bp = (CRUDBP) getBusinessProcess(context);
             fillModel(context);
             Unita_organizzativaBulk uo = (Unita_organizzativaBulk) bp.getModel();
 
-            TerzoComponentSession terzoComponent = Utility.createTerzoComponentSession();
+            TerzoComponentSession terzoComponent =  Utility.createTerzoComponentSession();
 
             RemoteIterator remoteiterator = terzoComponent.cercaTerziPerUnitaOrganizzativa(context.getUserContext(), uo);
             if ( remoteiterator.countElements()>1) {
@@ -170,14 +185,18 @@ public class CRUDUnita_organizzativaAction extends it.cnr.jada.util.action.CRUDA
                 return context.addBusinessProcess(selezionatorelistabp);
 
             }
-
-            Optional<TerzoBulk> terzo=Optional.ofNullable(remoteiterator.nextElement()).
-                        filter(TerzoBulk.class:: isInstance).
-                        map( TerzoBulk.class::cast);
-            CRUDTerzoBP terzoBP = (CRUDTerzoBP) context.createBusinessProcess("CRUDTerzoBP", new Object[]{bp.isEditable() ? "M" : "V",
-                                                    terzo.get().getUnita_organizzativa(),
-                                                    terzo.get() });
-            //terzoBP.edit(context,terzo.get());
+            CRUDTerzoBP terzoBP = null;
+            if ( remoteiterator.countElements()==1) {
+                Optional<TerzoBulk> terzo = Optional.ofNullable(remoteiterator.nextElement()).
+                        filter(TerzoBulk.class::isInstance).
+                        map(TerzoBulk.class::cast);
+                terzoBP = (CRUDTerzoBP) context.createBusinessProcess("CRUDTerzoBP", new Object[]{bp.isEditable() ? "M" : "V",
+                        terzo.get().getUnita_organizzativa(),
+                        terzo.get()});
+                //terzoBP.edit(context,terzo.get());
+            }else {
+                terzoBP = (CRUDTerzoBP) context.createBusinessProcess("CRUDTerzoBP", new Object[]{bp.isEditable() ? "M" : "V", uo});
+            }
             return context.addBusinessProcess(terzoBP);
         } catch (Throwable e) {
             return handleException(context, e);

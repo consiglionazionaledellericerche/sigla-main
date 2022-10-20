@@ -5900,4 +5900,12 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <include file="bootstrap/add_index_on_movimento_coge.xml"/>
     <include file="bootstrap/add_accessi_partitario_terzo.xml"/>
     <include file="bootstrap/add_column_cd_contributo_ritenuta_iva_on_tipo_sezionale.xml"/>
+
+
+    <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->
+    <include file="bootstrap/add_conf_gestione_etichetta_inventario.xml"/>
+    <!--Modifica lungheza nome file per la giornaliera di cassa-->
+    <include file="bootstrap/modify_length_file_name_siopeplus.xml"/>
+    <!--Aggiunta funzioni magazzino-->
+    <include file="bootstrap/add_menu_accessi_magazzino.xml"/>
 </databaseChangeLog>
