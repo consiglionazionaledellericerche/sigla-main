@@ -246,7 +246,7 @@
 			columnName="DS_RIGA_FATTURA"
 			propertyName="ds_riga_fattura"
 			sqlTypeName="VARCHAR"
-			columnSize="200" />
+			columnSize="255" />
 		<columnMapping
 			columnName="ESERCIZIO_OBBLIGAZIONE"
 			propertyName="esercizio_obbligazione"

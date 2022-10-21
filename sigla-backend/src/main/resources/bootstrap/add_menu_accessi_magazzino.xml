@@ -22,6 +22,50 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
+    <changeSet id="albero_main_nodi_padre" author="ciro.salvio">
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.MAG.CARICHI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="carichi di magazzino"/>
+            <column name="pg_ordinamento" type="BIGINT" value="5"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="2"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CARICHI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.MAG"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="1"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.MAG.ANNULLAMENTO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="annullamento movimenti"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="2"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="ANNULLAMENTO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.MAG"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="1"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.MAG.CONSULTAZIONI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazioni"/>
+            <column name="pg_ordinamento" type="BIGINT" value="30"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="2"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CONSULTAZIONI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.MAG"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="1"/>
+        </insert>
+    </changeSet>
     <changeSet id="voce_menu_carichi_manuali" author="ciro.salvio">
         <insert tableName="accesso">
             <column name="cd_accesso" type="VARCHAR(20)" value="MAGCARCARICMANUALG"/>

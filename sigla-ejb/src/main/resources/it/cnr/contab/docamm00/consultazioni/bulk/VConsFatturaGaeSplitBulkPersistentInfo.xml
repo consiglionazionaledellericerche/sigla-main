@@ -91,7 +91,7 @@
 			columnName="DS_RIGA_FATTURA"
 			propertyName="dsRigaFattura"
 			sqlTypeName="VARCHAR"
-			columnSize="200"
+			columnSize="255"
 			nullable="true" />
 		<columnMapping
 			columnName="CD_BENE_SERVIZIO"
