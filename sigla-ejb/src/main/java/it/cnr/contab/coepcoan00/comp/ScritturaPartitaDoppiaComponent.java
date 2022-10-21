@@ -1658,22 +1658,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		final Voce_epBulk aContoIva, aContoIvaSplit;
 		try {
 			cdCoriIva = this.findCodiceTributoIva(userContext);
-			cdCoriIvaSplit = isSplitPayment
-					?(isCommercialeWithAutofattura
-							?this.findCodiceTributoIvaSplitCommerciale(userContext)
-							:this.findCodiceTributoIvaSplitIstituzionale(userContext))
-					:null;
+			cdCoriIvaSplit = isSplitPayment?this.findCodiceTributoIvaSplit(userContext):null;
 
-			if (registraIva) {
-				aContoIva = this.findContoIva(userContext, docamm);
-				if (isSplitPayment)
-					aContoIvaSplit = this.findContoIvaSplit(userContext, docamm);
-				else
-					aContoIvaSplit = null;
-			} else {
-				aContoIva = null;
-				aContoIvaSplit = null;
-			}
+			aContoIva = registraIva?this.findContoIva(userContext, docamm):null;
+			aContoIvaSplit = registraIva && isSplitPayment?this.findContoIvaSplit(userContext, docamm):null;
 		} catch (ComponentException|RemoteException|PersistencyException e) {
 			throw new ApplicationRuntimeException(e);
 		}
@@ -3623,7 +3611,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 
 		final boolean isIstituzionale = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isIstituzionale).orElse(Boolean.FALSE);
-		final String cdCoriIvaSplit = isIstituzionale?this.findCodiceTributoIvaSplitIstituzionale(userContext):this.findCodiceTributoIvaSplitCommerciale(userContext);
+		final String cdCoriIvaSplit = this.findCodiceTributoIvaSplit(userContext);
 
 		Optional<Scrittura_partita_doppiaBulk> scritturaMandato = Optional.ofNullable(mandato.getScrittura_partita_doppia())
 				.map(spd->Optional.of(spd).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
@@ -3945,12 +3933,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.findValueByConfigurazioneCNR(userContext, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA, 1);
 	}
 
-	private String findCodiceTributoIvaSplitIstituzionale(UserContext userContext) throws ComponentException, RemoteException {
+	private String findCodiceTributoIvaSplit(UserContext userContext) throws ComponentException, RemoteException {
 		return this.findValueByConfigurazioneCNR(userContext, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA, 3);
-	}
-
-	private String findCodiceTributoIvaSplitCommerciale(UserContext userContext) throws ComponentException, RemoteException {
-		return this.findValueByConfigurazioneCNR(userContext, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA, 4);
 	}
 
 	private Voce_epBulk findContoByConfigurazioneCNR(UserContext userContext, int esercizio, String chiavePrimaria, String chiaveSecondaria, int fieldNumber) throws ComponentException, RemoteException {

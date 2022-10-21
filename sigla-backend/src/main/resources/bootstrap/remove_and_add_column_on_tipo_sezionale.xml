@@ -255,5 +255,14 @@
             AND A.VAL02 IS NULL
             AND EXISTS(SELECT '1' FROM VOCE_EP B WHERE B.ESERCIZIO = A.ESERCIZIO AND B.CD_VOCE_EP = 'P71012');
         </sql>
+        <sql>
+            UPDATE CONFIGURAZIONE_CNR A
+            SET A.VAL03 = 'IVASP'
+            WHERE A.ESERCIZIO = 0
+            AND A.CD_UNITA_FUNZIONALE = '*'
+            AND A.CD_CHIAVE_PRIMARIA = 'CORI_SPECIALE'
+            AND A.CD_CHIAVE_SECONDARIA = 'IVA'
+            AND A.VAL03 IS NULL
+        </sql>
     </changeSet>
 </databaseChangeLog>
