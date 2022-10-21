@@ -423,5 +423,4 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(BigDecimal::intValue)
                 .orElse(null);
     }
-
 }

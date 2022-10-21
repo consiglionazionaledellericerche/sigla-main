@@ -118,7 +118,21 @@
 		nullable="false"
 		label="Ultimo"
 		caseSensitiveSearch="false" />
-		
+	<fieldProperty
+		name="find_voce_ep_iva"
+		property="contoIva"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Conto Iva" />
+	<fieldProperty
+		name="find_voce_ep_iva_split"
+		property="contoIvaSplit"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Conto Iva Split" />
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -136,8 +150,11 @@
 	<formFieldProperty
 		name="ultimo" />
 	<formFieldProperty
-		name="ti_fattura"
-		/>
+		name="ti_fattura" />
+	<formFieldProperty
+		name="find_voce_ep_iva" />
+	<formFieldProperty
+		name="find_voce_ep_iva_split" />
 
 	<columnFieldProperty
 		name="esercizio" />

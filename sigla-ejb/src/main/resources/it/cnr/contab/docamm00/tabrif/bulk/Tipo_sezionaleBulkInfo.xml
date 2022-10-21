@@ -219,14 +219,6 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="reg. Tardiva" />
-	<fieldProperty
-		name="cd_contributo_ritenuta_iva"
-		property="contributo_ritenuta_iva.cd_contributo_ritenuta"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnSearch="true"
-		label="Codice CO/RI IVA" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -283,8 +275,6 @@
 		name="fl_split_payment" />
 	<formFieldProperty
 		name="fl_reg_tardiva" />
-	<formFieldProperty
-		name="cd_contributo_ritenuta_iva" />
 
 	<columnFieldProperty
 		name="cd_tipo_sezionale" />

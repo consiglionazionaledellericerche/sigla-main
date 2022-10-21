@@ -24,12 +24,27 @@
 		<columnMapping
 			columnName="CD_TIPO_SEZIONALE"
 			propertyName="tipo_sezionale.cd_tipo_sezionale" />
-			sqlTypeName="VARCHAR"
-			columnSize="10" />			
-			
+		<columnMapping
+			columnName="CD_VOCE_EP_IVA"
+			propertyName="contoIva.cd_voce_ep"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="contoIva.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_VOCE_EP_IVA_SPLIT"
+			propertyName="contoIvaSplit.cd_voce_ep"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="contoIvaSplit.esercizio"
+			fetchOnly="true"/>
 	</defaultColumnMap>
 
 	<persistentProperty
 		name="tipo_sezionale"
-		partOfOid="true" />	
+		partOfOid="true" />
+	<persistentProperty
+		name="contoIva" />
+	<persistentProperty
+		name="contoIvaSplit" />
 </SQLPersistentInfo>
