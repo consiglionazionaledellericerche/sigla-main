@@ -1530,8 +1530,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			else if (doccoge.getTipoDocumentoEnum().isCompenso()) {
 				if (((CompensoBulk) doccoge).getFl_compenso_stipendi())
 					return this.proposeScritturaPartitaDoppiaCompensoStipendi(userContext, (CompensoBulk) doccoge);
-				else if (((CompensoBulk) doccoge).getFl_compenso_conguaglio())
-					return this.proposeScritturaPartitaDoppiaCompensoConguagli(userContext, (CompensoBulk) doccoge);
 				else
 					return this.proposeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk) doccoge);
 			} else if (doccoge.getTipoDocumentoEnum().isAperturaFondo())
@@ -1634,10 +1632,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					return null;
 				}).collect(Collectors.toList());
 
-		/**
-		 * Le fatture Commerciali con autofattura sono praticamente tutte le fatture Commerciali con Iva positiva
-		 * Quindi se isCommercialeWithAutofattura=true allora devo procedere a registrare IVA
-		 * Il flag registraIva viene quindi impostatao a true
+		/*
+		  Le fatture Commerciali con autofattura sono praticamente tutte le fatture Commerciali con Iva positiva
+		  Quindi se isCommercialeWithAutofattura=true allora devo procedere a registrare IVA
+		  Il flag registraIva viene quindi impostatao a true
 		 */
 		final boolean isCommercialeWithAutofattura = this.hasAutofattura(userContext, docamm);
 
@@ -1773,6 +1771,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompenso(UserContext userContext, CompensoBulk compenso) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
+			String descCompenso = compenso.getEsercizio() + "/" + compenso.getCd_cds() + "/" + compenso.getPg_compenso();
+
 			List<Contributo_ritenutaBulk> righeCori = Optional.ofNullable(compenso.getChildren()).orElseGet(()->{
 				try {
 					Contributo_ritenutaHome home = (Contributo_ritenutaHome) getHome(userContext, Contributo_ritenutaBulk.class);
@@ -1799,14 +1799,26 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (compenso.getIm_lordo_percipiente().compareTo(BigDecimal.ZERO)==0 && imContributiCaricoEnte.compareTo(BigDecimal.ZERO)==0)
 				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non necessaria in quanto sia il lordo percipiente che i contributi a carico ente sono nulli.");
 
+			final Optional<Pair<Voce_epBulk, Voce_epBulk>> pairContoCostoCompenso;
+
+			if (compenso.getObbligazioneScadenzario()==null) {
+				if (compenso.getIm_lordo_percipiente().compareTo(BigDecimal.ZERO) > 0 || imContributiCaricoEnte.compareTo(BigDecimal.ZERO) > 0)
+					throw new ApplicationException("Compenso " + descCompenso + " con lordo percipiente e/o contributi a carico ente senza indicazione dell'obbligazione. " +
+							"Scrittura prima nota non possibile per impossibilità ad individuare il conto di costo!");
+				pairContoCostoCompenso = Optional.empty();
+			} else
+				pairContoCostoCompenso = Optional.ofNullable(this.findPairCosto(userContext, compenso));
+
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(compenso.getDt_da_competenza_coge(), compenso.getDt_a_competenza_coge());
 
 			//Nel caso dei compensi rilevo subito il costo prelevando le informazioni dalla riga del compenso stesso
 			//Registrazione conto COSTO COMPENSO
-			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCompenso = this.findPairCosto(userContext, compenso);
-
-			testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), compenso.getIm_lordo_percipiente());
-			testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), compenso.getIm_lordo_percipiente(), compenso.getCd_terzo());
+			if (compenso.getIm_lordo_percipiente().compareTo(BigDecimal.ZERO)!=0) {
+				if (!pairContoCostoCompenso.isPresent())
+					throw new ApplicationException("Compenso " + descCompenso + " con lordo percipiente non nullo. Scrittura prima nota non possibile per impossibilità ad individuare il conto di costo!");
+				testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.get().getFirst().getCd_voce_ep(), compenso.getIm_lordo_percipiente());
+				testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.get().getSecond().getCd_voce_ep(), compenso.getIm_lordo_percipiente(), compenso.getCd_terzo());
+			}
 
 			//Registrazione conto CONTRIBUTI-RITENUTE
 			//Vengono registrati tutti i CORI a carico Ente
@@ -1817,44 +1829,50 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							BigDecimal imCostoCori = cori.getAmmontare();
 							Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCori;
 
-							if (cori.isTipoContributoRivalsa()) {
-								// Se la tipologia di contributo ritenuta è RIVALSA va tutto sul costo principale del compenso
-								testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCori);
-								testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
-							} else if (cori.isTipoContributoIva()) {
-								//Il primo giro viene fatto solo per il contributo a carico ente.... nel caso di split esiste anche la riga carico
-								//percipiente che, in questa fase, deve solo rilevare il credito verso il fornitore che sarà chiuso all'atto del pagamento
-								if (cori.isContributoEnte()) {
-									if (compenso.isIstituzionale())
-										// Se la tipologia di contributo ritenuta è IVA ed è istituzionale va tutto sul costo principale del compenso
-										testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.getFirst().getCd_voce_ep(), imCostoCori);
-									else if (compenso.isCommerciale()) {
-										// Se la tipologia di contributo ritenuta è IVA Commerciale il conto è del tributo
-										Voce_epBulk voceCosto = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), cori.getSezioneCostoRicavo(), cori.getTi_ente_percipiente());
-										if (compenso.getFl_split_payment().equals(Boolean.TRUE))
-											testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), voceCosto.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-										else
-											testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), voceCosto.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-									}
-									testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
+							if (imCostoCori.compareTo(BigDecimal.ZERO)!=0) {
+								if (cori.isTipoContributoRivalsa() || cori.isTipoContributoIva()) {
+									if (!pairContoCostoCompenso.isPresent())
+										throw new ApplicationException("Compenso " + descCompenso + " con contributo non nullo. Scrittura prima nota non possibile per impossibilità ad individuare il conto di costo!");
+									if (cori.isTipoContributoRivalsa()) {
+										// Se la tipologia di contributo ritenuta è RIVALSA va tutto sul costo principale del compenso
+										testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.get().getFirst().getCd_voce_ep(), imCostoCori);
+										testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.get().getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
+									} else if (cori.isTipoContributoIva()) {
+										//Il primo giro viene fatto solo per il contributo a carico ente.... nel caso di split esiste anche la riga carico
+										//percipiente che, in questa fase, deve solo rilevare il credito verso il fornitore che sarà chiuso all'atto del pagamento
+										if (cori.isContributoEnte()) {
+											if (compenso.isIstituzionale())
+												// Se la tipologia di contributo ritenuta è IVA ed è istituzionale va tutto sul costo principale del compenso
+												testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCompenso.get().getFirst().getCd_voce_ep(), imCostoCori);
+											else if (compenso.isCommerciale()) {
+												// Se la tipologia di contributo ritenuta è IVA Commerciale il conto è del tributo
+												Voce_epBulk voceCosto = this.findContoCosto(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), cori.getSezioneCostoRicavo(), cori.getTi_ente_percipiente());
+												if (compenso.getFl_split_payment().equals(Boolean.TRUE))
+													testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), voceCosto.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+												else
+													testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), voceCosto.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+											}
+											testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.get().getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
 
-									if (compenso.getFl_split_payment().equals(Boolean.TRUE)) {
-										Ass_tipo_cori_voce_epBulk assTipoCori = this.findAssociazioneCoriVoceEp(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), cori.getTi_ente_percipiente());
-										testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), assTipoCori.getCd_voce_ep_contr(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-										testataPrimaNota.closeDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), true);
+											if (compenso.getFl_split_payment().equals(Boolean.TRUE)) {
+												Ass_tipo_cori_voce_epBulk assTipoCori = this.findAssociazioneCoriVoceEp(userContext, cori.getTipoContributoRitenuta(), cori.getEsercizio(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), cori.getTi_ente_percipiente());
+												testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO_SPLIT.value(), compenso.getTipoDocumentoEnum().getSezionePatrimoniale(), assTipoCori.getCd_voce_ep_contr(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+												testataPrimaNota.closeDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.get().getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), true);
+											}
+										} else { //Contributo Percipiente
+											if (compenso.getFl_split_payment().equals(Boolean.TRUE)) {
+												//Rilevo il conto IVA Credito/Debito di tipo SPLIT e apro il conto ritenute split
+												Voce_epBulk aContoCreditoRitenuteSplit = this.findContoCreditoRitenuteSplitPayment(userContext, compenso.getEsercizio());
+												testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), aContoCreditoRitenuteSplit.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+												testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.get().getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
+											}
+										}
 									}
-								} else { //Contributo Percipiente
-									if (compenso.getFl_split_payment().equals(Boolean.TRUE)) {
-										//Rilevo il conto IVA Credito/Debito di tipo SPLIT e apro il conto ritenute split
-										Voce_epBulk aContoCreditoRitenuteSplit = this.findContoCreditoRitenuteSplitPayment(userContext, compenso.getEsercizio());
-										testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), compenso.getTipoDocumentoEnum().getSezioneEconomica(), aContoCreditoRitenuteSplit.getCd_voce_ep(), imCostoCori, compenso, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-										testataPrimaNota.openDettaglioPatrimonialePartita(compenso, pairContoCostoCompenso.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo());
-									}
+								} else {
+									pairContoCostoCori = this.findPairCostoCompenso(userContext, cori);
+									testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
+									testataPrimaNota.openDettaglioPatrimonialeCori(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
 								}
-							} else {
-								pairContoCostoCori = this.findPairCostoCompenso(userContext, cori);
-								testataPrimaNota.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
-								testataPrimaNota.openDettaglioPatrimonialeCori(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
 							}
 						} catch (ComponentException|PersistencyException|RemoteException e) {
 							throw new ApplicationRuntimeException(e);
@@ -1865,10 +1883,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
-	}
-
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompensoConguagli(UserContext userContext, CompensoBulk compenso) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
-		return this.proposeScritturaPartitaDoppiaCompenso(userContext, compenso);
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaCompensoStipendi(UserContext userContext, CompensoBulk compenso) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
@@ -1892,44 +1906,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			//E la copio identica sul compenso
 			TestataPrimaNota testataPrimaNotaCompenso = new TestataPrimaNota(compenso.getDt_da_competenza_coge(), compenso.getDt_a_competenza_coge());
 			testataPrimaNotaDocumentoPassivo.getDett().forEach(el-> testataPrimaNotaCompenso.addDettaglio(el.getTipoDett(), el.getSezione(), el.getCdConto(), el.getImporto(), el.getPartita(), el.getCdTerzo(), el.getCdCori()));
-
-			//quindi aggiungo le ritenute
-
-			//Per gli stipendi, essendo già stato regsistrato il conto di costo tramite il documento generico, e non essendo stato da nessuna parte registrato il legame
-			//tra i codici contributi e le righe del documento generico, la gestione dei contributi a carico ente viene fatta senza registrare il codice CORI
-			//Pertanto il giro su CIRI Ente non viene fatto
-			/**
-			List<Contributo_ritenutaBulk> righeCori = Optional.ofNullable(compenso.getChildren()).orElseGet(()->{
-				try {
-					Contributo_ritenutaHome home = (Contributo_ritenutaHome) getHome(userContext, Contributo_ritenutaBulk.class);
-					return (java.util.List<Contributo_ritenutaBulk>)home.loadContributiRitenute(compenso);
-				} catch (ComponentException | PersistencyException e) {
-					throw new DetailedRuntimeException(e);
-				}
-			});
-
-			righeCori.stream().filter(el->el.isContributoEnte())
-				.forEach(cori->{
-					try {
-						BigDecimal imCostoCori = cori.getAmmontare();
-						if (imCostoCori.compareTo(BigDecimal.ZERO)!=0) {
-							Pair<Voce_epBulk, Voce_epBulk> pairContoCostoCori;
-							if (Optional.of(cori).map(Contributo_ritenutaBulk::getTipoContributoRitenuta)
-								.map(Tipo_contributo_ritenutaBulk::getClassificazioneCori)
-								.filter(el -> (el.isTipoIva() && compenso.isIstituzionale()) || el.isTipoRivalsa()).isPresent()) {
-								// Se la tipologia di contributo ritenuta è IVA o RIVALSA il conto ritornato è quello di costo principale del compenso
-								throw new ApplicationRuntimeException("E' stato individuato sul compenso stipendi un contributO di tipo IVA e/o Rivalsa non previsto.");
-							} else {
-								pairContoCostoCori = this.findPairCostoCompenso(userContext, cori);
-								testataPrimaNotaCompenso.openDettaglioCostoRicavo(compenso, pairContoCostoCori.getFirst().getCd_voce_ep(), imCostoCori);
-								testataPrimaNotaCompenso.openDettaglioPatrimonialeCori(compenso, pairContoCostoCori.getSecond().getCd_voce_ep(), imCostoCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
-							}
-						}
-					} catch (ComponentException|PersistencyException e) {
-						throw new ApplicationRuntimeException(e);
-					}
-				});
-			*/
 
 			return this.generaScrittura(userContext, compenso, Collections.singletonList(testataPrimaNotaCompenso), true);
 		} catch (PersistencyException e) {
@@ -2007,14 +1983,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		try {
+			String descMissione = missione.getEsercizio() + "/" + missione.getCd_unita_organizzativa() + "/" + missione.getPg_missione();
+
 			//Le missioni pagate con compenso non creano scritture di prima nota in quanto create direttamente dal compenso stesso
 			if (missione.getFl_associato_compenso())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + missione.getEsercizio() + "/" + missione.getCd_cds() + "/" + missione.getPg_missione() +
-						" associata a compenso. Registrazione economica non prevista.");
+				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + descMissione + " associata a compenso. Registrazione economica non prevista.");
 
 			if (missione.isAnnullato())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + missione.getEsercizio() + "/" + missione.getCd_cds() + "/" + missione.getPg_missione() +
-						" annullata. Registrazione economica non prevista.");
+				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + descMissione + " annullata. Registrazione economica non prevista.");
 
 			if (missione.isMissioneProvvisoria())
 				return null;
@@ -2029,51 +2005,57 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						}
 					})).filter(anticipo->anticipo.getIm_anticipo().compareTo(BigDecimal.ZERO)!=0);
 
-			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoAnticipo = optAnticipo.map(anticipo->{
+			final Optional<Pair<Voce_epBulk, Voce_epBulk>> pairContoCostoAnticipo = optAnticipo.map(anticipo->{
 				try {
 					return this.findPairCosto(userContext, optAnticipo.get());
 				} catch (ComponentException | PersistencyException | RemoteException e) {
 					throw new DetailedRuntimeException(e);
 				}
-			}).orElse(null);
+			});
 
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota(missione.getDt_inizio_missione(), missione.getDt_fine_missione());
 
 			//Registrazione conto COSTO MISSIONE
 			BigDecimal imCostoMissioneNettoAnticipo = missione.getIm_totale_missione().subtract(optAnticipo.map(AnticipoBulk::getIm_anticipo).orElse(BigDecimal.ZERO));
 
-			final Pair<Voce_epBulk, Voce_epBulk> pairContoCostoMissione;
+			final Optional<Pair<Voce_epBulk, Voce_epBulk>> pairContoCostoMissione;
 			if (imCostoMissioneNettoAnticipo.compareTo(BigDecimal.ZERO)>0)
-				pairContoCostoMissione = this.findPairCosto(userContext, missione);
+				pairContoCostoMissione = Optional.ofNullable(this.findPairCosto(userContext, missione));
 			else
 				pairContoCostoMissione = pairContoCostoAnticipo;
 
 			if (imCostoMissioneNettoAnticipo.compareTo(BigDecimal.ZERO)>0) {
-				testataPrimaNota.openDettaglioCostoRicavo(missione, pairContoCostoMissione.getFirst().getCd_voce_ep(), imCostoMissioneNettoAnticipo);
-				testataPrimaNota.openDettaglioPatrimonialePartita(missione, pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoMissioneNettoAnticipo, missione.getCd_terzo());
+				if (!pairContoCostoMissione.isPresent())
+					throw new ApplicationException("Missione " + descMissione + " di importo positivo. Scrittura prima nota non possibile per impossibilità ad individuare il conto di costo!");
+				testataPrimaNota.openDettaglioCostoRicavo(missione, pairContoCostoMissione.get().getFirst().getCd_voce_ep(), imCostoMissioneNettoAnticipo);
+				testataPrimaNota.openDettaglioPatrimonialePartita(missione, pairContoCostoMissione.get().getSecond().getCd_voce_ep(), imCostoMissioneNettoAnticipo, missione.getCd_terzo());
 			}
 
 			//se esiste anticipo devo fare una serie di registrazioni
-			optAnticipo.ifPresent(anticipo->{
-				try {
-					BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
-					if (missione.getIm_totale_missione().compareTo(imCostoAnticipo)<0)
-						imCostoAnticipo = missione.getIm_totale_missione();
+			if (optAnticipo.isPresent()) {
+				AnticipoBulk anticipo = optAnticipo.get();
+				BigDecimal imCostoAnticipo = anticipo.getIm_anticipo();
+				if (missione.getIm_totale_missione().compareTo(imCostoAnticipo) < 0)
+					imCostoAnticipo = missione.getIm_totale_missione();
+
+				if (imCostoAnticipo.compareTo(BigDecimal.ZERO) != 0) {
+					if (!pairContoCostoMissione.isPresent())
+						throw new ApplicationException("Missione " + descMissione + " con anticipo di importo non nullo. Scrittura prima nota non possibile per impossibilità ad individuare il conto di costo della missione!");
+					if (!pairContoCostoAnticipo.isPresent())
+						throw new ApplicationException("Missione " + descMissione + " con anticipo di importo non nullo. Scrittura prima nota non possibile per impossibilità ad individuare il conto di costo dell'anticipo!");
 
 					// 1. scaricare i costi dell'anticipo compensandoli con il conto patrimoniale della missione
-					testataPrimaNota.openDettaglioCostoRicavo(missione, pairContoCostoAnticipo.getFirst().getCd_voce_ep(), imCostoAnticipo);
-					testataPrimaNota.openDettaglioPatrimonialePartita(missione, pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoAnticipo, missione.getCd_terzo());
+					testataPrimaNota.openDettaglioCostoRicavo(missione, pairContoCostoAnticipo.get().getFirst().getCd_voce_ep(), imCostoAnticipo);
+					testataPrimaNota.openDettaglioPatrimonialePartita(missione, pairContoCostoMissione.get().getSecond().getCd_voce_ep(), imCostoAnticipo, missione.getCd_terzo());
 
 					//2. chiudere il conto credito per anticipo
 					List<Movimento_cogeBulk> allMovimentiPrimaNota = this.findMovimentiPrimaNota(userContext, anticipo);
 					String contoPatrimonialeAperturaCreditoAnticipo = this.findMovimentoAperturaCreditoAnticipo(allMovimentiPrimaNota, anticipo, anticipo.getCd_terzo()).getCd_voce_ep();
 
 					testataPrimaNota.closeDettaglioCostoRicavoPartita(anticipo, contoPatrimonialeAperturaCreditoAnticipo, imCostoAnticipo, anticipo.getCd_terzo());
-					testataPrimaNota.closeDettaglioPatrimonialePartita(missione, pairContoCostoMissione.getSecond().getCd_voce_ep(), imCostoAnticipo, missione.getCd_terzo(), true);
-				} catch (ComponentException|PersistencyException e) {
-					throw new ApplicationRuntimeException(e);
+					testataPrimaNota.closeDettaglioPatrimonialePartita(missione, pairContoCostoMissione.get().getSecond().getCd_voce_ep(), imCostoAnticipo, missione.getCd_terzo(), true);
 				}
-			});
+			}
 			return this.generaScrittura(userContext, missione, Collections.singletonList(testataPrimaNota), true);
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
@@ -3005,7 +2987,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			saldoDebitoUo = saldoDebitoUo.add(ivaDebCredPrec);
 
 			if (saldoDebitoUo.compareTo(liqIvaUo.getIva_da_versare()) != 0) {
-				testataPrimaNota.getDett().stream().filter(el -> el.getPartita() != null).forEach(el -> System.out.println("Compenso: " + Optional.ofNullable(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null) + " - Trib: " + el.getCdCori() + " - Conto: " + el.getCdConto() +
+				testataPrimaNota.getDett().stream().filter(el -> el.getPartita() != null).forEach(el -> System.out.println("Compenso: " + Optional.of(el.getPartita()).map(IDocumentoCogeBulk::getPg_doc).orElse(null) + " - Trib: " + el.getCdCori() + " - Conto: " + el.getCdConto() +
 						" - Sezione: " + el.getSezione() + " - Importo: " + new it.cnr.contab.util.EuroFormat().format(el.getImporto())));
 
 				throw new ApplicationRuntimeException("Errore nella generazione scrittura prima nota del tipo liquidazione IVA '" +
@@ -3103,7 +3085,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							List<MandatoBulk> pMandatiAssociati = ((CompensoHome)getHome( userContext, CompensoBulk.class)).findMandatiAssociati(userContext, compenso);
 
 							pMandatiAssociati.stream().filter(el->pMandatiCompenso.stream().noneMatch(el2->el2.equalsByPrimaryKey(el)))
-									.forEach(el->pMandatiCompenso.add(el));
+									.forEach(pMandatiCompenso::add);
 
 							pMandatiCompenso.forEach(el-> {
 								try {
@@ -4004,15 +3986,21 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, AnticipoBulk anticipo) throws ComponentException, RemoteException, PersistencyException {
-		return this.findPairCosto(userContext, Optional.ofNullable(anticipo.getTerzo()).orElse(new TerzoBulk(anticipo.getCd_terzo())), anticipo.getScadenza_obbligazione().getObbligazione(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		if (Optional.ofNullable(anticipo.getScadenza_obbligazione()).isPresent())
+			return this.findPairCosto(userContext, Optional.ofNullable(anticipo.getTerzo()).orElse(new TerzoBulk(anticipo.getCd_terzo())), anticipo.getScadenza_obbligazione().getObbligazione(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		return null;
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, MissioneBulk missione) throws ComponentException, RemoteException, PersistencyException {
-		return this.findPairCosto(userContext, Optional.ofNullable(missione.getTerzo()).orElse(new TerzoBulk(missione.getCd_terzo())), missione.getObbligazione_scadenzario().getObbligazione(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		if (Optional.ofNullable(missione.getObbligazione_scadenzario()).isPresent())
+			return this.findPairCosto(userContext, Optional.ofNullable(missione.getTerzo()).orElse(new TerzoBulk(missione.getCd_terzo())), missione.getObbligazione_scadenzario().getObbligazione(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		return null;
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, CompensoBulk compenso) throws ComponentException, RemoteException, PersistencyException {
-		return this.findPairCosto(userContext, Optional.ofNullable(compenso.getTerzo()).orElse(new TerzoBulk(compenso.getCd_terzo())), compenso.getObbligazioneScadenzario().getObbligazione(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		if (Optional.ofNullable(compenso.getObbligazioneScadenzario()).isPresent())
+			return this.findPairCosto(userContext, Optional.ofNullable(compenso.getTerzo()).orElse(new TerzoBulk(compenso.getCd_terzo())), compenso.getObbligazioneScadenzario().getObbligazione(), Movimento_cogeBulk.TipoRiga.DEBITO.value());
+		return null;
 	}
 
 	private Pair<Voce_epBulk, Voce_epBulk> findPairCosto(UserContext userContext, TerzoBulk terzo, ObbligazioneBulk obbligazione, String tipoContoPatrimoniale) throws ComponentException, RemoteException, PersistencyException {
@@ -4093,7 +4081,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	private Voce_epBulk findContoAnag(UserContext userContext, Voce_epBulk aContoCosto) {
-		return Optional.ofNullable(aContoCosto).filter(el->Optional.ofNullable(el.getCd_voce_ep_contr()).isPresent())
+		return Optional.of(aContoCosto).filter(el->Optional.ofNullable(el.getCd_voce_ep_contr()).isPresent())
 				.flatMap(el->{
 					try {
 						Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
@@ -4109,10 +4097,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	private Voce_epBulk findContoAnag(UserContext userContext, TerzoBulk terzo, String tipoConto) throws ComponentException, PersistencyException {
 		Voce_epBulk voceEpBulk = null;
 
-		TerzoHome terzohome = (TerzoHome) getHome(userContext, TerzoBulk.class);
-		TerzoBulk terzoDB = (TerzoBulk) terzohome.findByPrimaryKey(terzo);
-
 		if (Optional.ofNullable(terzo).isPresent()) {
+			TerzoHome terzohome = (TerzoHome) getHome(userContext, TerzoBulk.class);
+			TerzoBulk terzoDB = (TerzoBulk) terzohome.findByPrimaryKey(terzo);
+
 			Anagrafico_esercizioHome anagesehome = (Anagrafico_esercizioHome) getHome(userContext, Anagrafico_esercizioBulk.class);
 			Anagrafico_esercizioBulk anagEse = (Anagrafico_esercizioBulk) anagesehome.findByPrimaryKey(new Anagrafico_esercizioBulk(terzoDB.getCd_anag(), CNRUserContext.getEsercizio(userContext)));
 
@@ -4127,11 +4115,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					voceEpBulk = (Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(anagEse.getCd_voce_credito_ep(), anagEse.getEsercizio_voce_credito_ep()));
 				}
 			}
+			return Optional.ofNullable(voceEpBulk)
+					.orElseThrow(()->new ApplicationRuntimeException("Conto " +
+							(tipoConto.equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()) ? "debito" : "credito") +
+							" associato al codice terzo " + terzo.getCd_terzo() + " non individuato."));
 		}
-		return Optional.ofNullable(voceEpBulk)
-				.orElseThrow(()->new ApplicationRuntimeException("Conto " +
-						(tipoConto.equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()) ? "debito" : "credito") +
-						" associato al codice terzo " + terzo.getCd_terzo() + " non individuato."));
+		throw new ApplicationRuntimeException("Conto " +
+				(tipoConto.equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()) ? "debito" : "credito") +
+				" non individuato! Non risulta essere stato specificato il codice terzo di cui individuare l'associazione!");
 	}
 
 	private Map<String, Pair<String, BigDecimal>> getSaldiMovimentiPartita(UserContext userContext, IDocumentoAmministrativoBulk docamm, Integer cdTerzoDocAmm, Optional<Scrittura_partita_doppiaBulk> scritturaToExclude) throws ComponentException, PersistencyException {

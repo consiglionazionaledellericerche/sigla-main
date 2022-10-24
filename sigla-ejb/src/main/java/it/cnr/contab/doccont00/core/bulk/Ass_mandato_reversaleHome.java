@@ -81,7 +81,7 @@ public class Ass_mandato_reversaleHome extends BulkHome {
 	 *
 	 * @return result le reversali associate al mandato
 	 */
-	public List findReversali( it.cnr.jada.UserContext userContext,MandatoBulk mandato, boolean fetchAll ) throws PersistencyException
+	public List<Ass_mandato_reversaleBulk> findReversali( it.cnr.jada.UserContext userContext,MandatoBulk mandato, boolean fetchAll ) throws PersistencyException
 	{
 		PersistentHome home = getHomeCache().getHome( Ass_mandato_reversaleBulk.class );
 		SQLBuilder sql = home.createSQLBuilder();
