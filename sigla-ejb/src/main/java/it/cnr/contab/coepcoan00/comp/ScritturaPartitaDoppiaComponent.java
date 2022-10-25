@@ -2862,6 +2862,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 			//recupero il terzo associato alla UO necessario per chiudere i conti IVA
 			TerzoBulk terzoEnte = ((TerzoHome) getHome(userContext, TerzoBulk.class)).findTerzoEnte();
+			Voce_epBulk aVoceErarioContoIva = this.findContoErarioContoIva(userContext, liqIvaUo.getEsercizio());
 
 			TestataPrimaNota testataPrimaNota = new TestataPrimaNota();
 
@@ -2918,8 +2919,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						allDocumentiUoLiquidati.addAll(notaDebitoAttivaHome.fetchAll(sqlNotaDebitoAttiva));
 					}
 				}
-
-				Voce_epBulk aVoceErarioContoIva = this.findContoErarioContoIva(userContext, liqIvaUo.getEsercizio());
 
 				//Con la lista dei documenti che sono andati in liquidazione, vado a recuperare le scritture generate
 				for (IDocumentoAmministrativoBulk docamm : allDocumentiUoLiquidati) {
@@ -2982,7 +2981,14 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, contoDebitoEnteLiquidazioneIvaEsterna.getCd_voce_ep(), importoIvaEsterna, null, terzoEnte.getCd_terzo(), null);
 			}
 
-			BigDecimal ivaDebCredPrec = liqIvaUo.getIva_deb_cred_per_prec();
+			BigDecimal importoProRata = Optional.ofNullable(liqIvaUo.getIva_credito_no_prorata()).orElse(BigDecimal.ZERO).subtract(Optional.ofNullable(liqIvaUo.getIva_credito()).orElse(BigDecimal.ZERO));
+			if (importoProRata.compareTo(BigDecimal.ZERO)!=0) {
+				Voce_epBulk contoCostoIvaNonDetraibile = this.findContoCostoIvaNonDetraibile(userContext, CNRUserContext.getEsercizio(userContext));
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.COSTO.value(), Movimento_cogeBulk.SEZIONE_DARE, contoCostoIvaNonDetraibile.getCd_voce_ep(), importoProRata);
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aVoceErarioContoIva.getCd_voce_ep(), importoProRata, null, terzoEnte.getCd_terzo(), null);
+			}
+
+			BigDecimal ivaDebCredPrec = Optional.ofNullable(liqIvaUo.getIva_deb_cred_per_prec()).orElse(BigDecimal.ZERO);
 
 			BigDecimal saldoDebitoUo = testataPrimaNota.getDett().stream()
 					.filter(el -> el.getTipoDett().equals(Movimento_cogeBulk.TipoRiga.DEBITO.value()))
@@ -3936,6 +3942,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Voce_epBulk findContoCreditoRitenuteSplitPayment(UserContext userContext, int esercizio) throws ComponentException, RemoteException {
 		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_CREDITO_RITENUTE_SPLIT_PAYMENT, 1);
+	}
+
+	private Voce_epBulk findContoCostoIvaNonDetraibile(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
+		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_COSTO_IVA_NON_DETRAIBILE, 1);
 	}
 
 	private String findCodiceTributoIva(UserContext userContext) throws ComponentException, RemoteException {
