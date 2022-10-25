@@ -2939,10 +2939,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						saldiCoriVoceEp = this.getSaldiMovimentiCoriIva(userContext, docamm);
 
 					//dovrei trovare tra i saldi proprio l'import liquidato
-					//Il conto aperto deve essere solo uno e deve essere in segno AVERE
-					if (saldiCoriVoceEp.values().stream().flatMap(el -> el.values().stream()).filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
+					//Il conto aperto deve essere solo uno per segno...... la presenza di 2 segni capita per le fatture Commerciali con Split
+					if (saldiCoriVoceEp.values().stream().flatMap(el -> el.values().stream()).filter(el->el.getFirst().equals(Movimento_cogeBulk.SEZIONE_DARE))
+							.filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
 						throw new ApplicationRuntimeException("Per il documento " + docamm.getCd_tipo_doc_amm() + "/" + docamm.getEsercizio() + "/" + docamm.getCd_cds() + "/" +
-								docamm.getPg_doc() + " e per le righe IVA esiste più di un conto che presenta un saldo positivo.");
+								docamm.getPg_doc() + " e per le righe IVA esiste più di un conto che presenta un saldo positivo in segno Dare.");
+
+					if (saldiCoriVoceEp.values().stream().flatMap(el -> el.values().stream()).filter(el->el.getFirst().equals(Movimento_cogeBulk.SEZIONE_AVERE))
+							.filter(el -> el.getSecond().compareTo(BigDecimal.ZERO) != 0).count() > 1)
+						throw new ApplicationRuntimeException("Per il documento " + docamm.getCd_tipo_doc_amm() + "/" + docamm.getEsercizio() + "/" + docamm.getCd_cds() + "/" +
+								docamm.getPg_doc() + " e per le righe IVA esiste più di un conto che presenta un saldo positivo in segno Avere.");
 
 					saldiCoriVoceEp.keySet().forEach(aCdCori -> {
 						Map<String, Pair<String, BigDecimal>> saldiCori = saldiCoriVoceEp.get(aCdCori);
@@ -3150,6 +3156,27 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				throw new ApplicationRuntimeException(ex);
 			}
 		});
+
+		if (mandato.getIm_ritenute().compareTo(BigDecimal.ZERO)>0) {
+			List<Contributo_ritenutaBulk> righeCoriReversaliAssociate = findCoriReversaliAssociate(userContext, mandato);
+			righeCoriReversaliAssociate.stream().filter(el->el.getAmmontare().compareTo(BigDecimal.ZERO)>0).forEach(cori->{
+				try {
+					BigDecimal imCori = cori.getAmmontare();
+					CompensoBulk compenso = (CompensoBulk)getHome(userContext, CompensoBulk.class).findByPrimaryKey(cori.getCompenso());
+
+					// Se la tipologia di contributo ritenuta è IVA o RIVALSA non registro la ritenuta in quanto già registrata in fase di chiusura debito mandato (imNettoMandato contiene imCori)
+					if (!cori.isTipoContributoRivalsa() && !(cori.isTipoContributoIva() && cori.isContributoEnte())) {
+						Pair<Voce_epBulk, Voce_epBulk> pairContoCori = this.findPairContiMandato(userContext, cori);
+						Voce_epBulk contoVersamentoCori = pairContoCori.getSecond();
+						//Riduco la tesoreria e rilevo il debito verso l'erario per le ritenute carico ente/percipiente
+						testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.TESORERIA.value(), Movimento_cogeBulk.getControSezione(compenso.getTipoDocumentoEnum().getSezionePatrimoniale()), voceEpBanca.getCd_voce_ep(), imCori);
+						testataPrimaNota.openDettaglioPatrimonialeCori(compenso, contoVersamentoCori.getCd_voce_ep(), imCori, compenso.getCd_terzo(), cori.getCd_contributo_ritenuta());
+					}
+				} catch (ComponentException|PersistencyException e) {
+					throw new ApplicationRuntimeException(e);
+				}
+			});
+		}
 
 		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
@@ -5194,4 +5221,63 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 		return result;
 	}
+
+	public List<Contributo_ritenutaBulk> findCoriReversaliAssociate(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException {
+		//cerco di recuperare puntualmente la ritenuta
+		List<Contributo_ritenutaBulk> righeCoriReversale = new ArrayList<>();
+		List<Ass_mandato_reversaleBulk> result = ((Ass_mandato_reversaleHome) getHome(userContext, Ass_mandato_reversaleBulk.class)).findReversali(userContext, mandato, false);
+		for (Ass_mandato_reversaleBulk assManRev : result) {
+			ReversaleIHome revHome = (ReversaleIHome) getHome(userContext, ReversaleIBulk.class);
+			ReversaleBulk reversale = (ReversaleIBulk) revHome.findByPrimaryKey(new ReversaleIBulk(assManRev.getCd_cds_reversale(), assManRev.getEsercizio_reversale(), assManRev.getPg_reversale()));
+
+			Collection<V_doc_cont_compBulk> result2 = ((V_doc_cont_compHome) getHomeCache(userContext).getHome(V_doc_cont_compBulk.class)).findByDocumento(assManRev.getEsercizio_reversale(), assManRev.getCd_cds_reversale(), assManRev.getPg_reversale(), V_doc_cont_compBulk.TIPO_DOC_CONT_REVERSALE);
+
+			if (!result2.isEmpty()) {
+				V_doc_cont_compBulk docContCompBulk = result2.stream().findAny().get();
+				final CompensoBulk compensoReversale = new CompensoBulk(docContCompBulk.getCd_cds_compenso(), docContCompBulk.getCd_uo_compenso(), docContCompBulk.getEsercizio_compenso(), docContCompBulk.getPg_compenso());
+
+				String descCompensoReversale = compensoReversale.getEsercizio() + "/" + compensoReversale.getCd_cds() + "/" + compensoReversale.getPg_compenso();
+
+				List<Contributo_ritenutaBulk> righeCoriCompensoReversale = Optional.ofNullable(compensoReversale.getChildren()).orElseGet(() -> {
+					try {
+						Contributo_ritenutaHome home = (Contributo_ritenutaHome) getHome(userContext, Contributo_ritenutaBulk.class);
+						return (java.util.List<Contributo_ritenutaBulk>) home.loadContributiRitenute(compensoReversale);
+					} catch (ComponentException | PersistencyException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				});
+
+				//Cerco tra le righeCori quella della reversale.... cerco per importo... e se ne esistono di più per descrizione..... se non si individua lancio eccezione
+				List<Contributo_ritenutaBulk> righeCoriReversaleByImporto = righeCoriCompensoReversale.stream()
+						.filter(el -> el.getAmmontare().compareTo(BigDecimal.ZERO) > 0)
+						.filter(el -> el.getAmmontare().abs().compareTo(reversale.getIm_reversale()) == 0)
+						.collect(Collectors.toList());
+
+				if (righeCoriReversaleByImporto.isEmpty())
+					throw new ApplicationException("Il " + this.getDescrizione(mandato) + " risulta avere una ritenuta di importo che non corrisponde a nessuna delle ritenute " +
+							" generate dal compenso associato alla reversale " + this.getDescrizione(compensoReversale) + ". Proposta di prima nota non possibile.");
+				if (righeCoriReversaleByImporto.size() > 1) {
+					List<Contributo_ritenutaBulk> righeCoriReversaleByDesc = righeCoriReversaleByImporto.stream()
+							.filter(el -> reversale.getDs_reversale().contains(el.getCd_contributo_ritenuta()))
+							.collect(Collectors.toList());
+
+					if (righeCoriReversaleByDesc.size() != 1)
+						throw new ApplicationException("Il " + this.getDescrizione(mandato) + " risulta avere una ritenuta di importo che corrisponde a più ritenute " +
+								" generate dal conguaglio associato " + this.getDescrizione(compensoReversale) + ". Proposta di prima nota non possibile.");
+					righeCoriReversale.add(righeCoriReversaleByDesc.get(0));
+				} else
+					righeCoriReversale.add(righeCoriReversaleByImporto.get(0));
+			}
+		}
+		return righeCoriReversale;
+	}
+
+	private String getDescrizione(MandatoBulk mandato) {
+		return mandato.getEsercizio() + "/" + mandato.getCd_cds() + "/" + mandato.getPg_mandato();
+	}
+
+	private String getDescrizione(CompensoBulk compenso){
+		return compenso.getEsercizio() + "/" + compenso.getCd_cds() + "/" + compenso.getPg_compenso();
+	}
+
 }
