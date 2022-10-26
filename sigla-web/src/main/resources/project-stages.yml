@@ -193,6 +193,8 @@ thorntail:
             file-store:
               passivation: false
               purge: false
+cors:
+  allow-origin: http://localhost:9000;http://localhost:4200
 repository:
   base:
     url: http://as1dock.si.cnr.it:8080/alfresco/
@@ -259,43 +261,6 @@ project:
   stage: demo-h2
 thorntail:
   undertow:
-    filter-configuration:
-      response-headers:
-        access-control-max-age:
-          header-name: Access-Control-Max-Age
-          header-value: 3600
-        access-control-allow-origin:
-          header-name: Access-Control-Allow-Origin
-          header-value: 'http://localhost:8080'
-        access-control-allow-headers:
-          header-name: Access-Control-Allow-Headers
-          header-value: '*'
-        access-control-allow-methods:
-          header-name: Access-Control-Allow-Methods
-          header-value: 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-        access-control-allow-credentials:
-          header-name: Access-Control-Allow-Credentials
-          header-value: true
-        # other headers configuration
-    servers:
-      default-server:
-        http-listeners:
-          default:
-            rfc6265-cookie-validation: true
-        hosts:
-          default-host:
-            filter-refs:
-              access-control-max-age:
-                priority: 1
-              access-control-allow-origin:
-                priority: 1
-              access-control-allow-headers:
-                priority: 1
-              access-control-allow-methods:
-                priority: 1
-              access-control-allow-credentials:
-                priority: 1
-              # other filter refs
     servlet-containers:
       default:
         session-cookie-setting:
@@ -350,43 +315,6 @@ project:
   stage: demo-postgres
 thorntail:
   undertow:
-    filter-configuration:
-      response-headers:
-        access-control-max-age:
-          header-name: Access-Control-Max-Age
-          header-value: 3600
-        access-control-allow-origin:
-          header-name: Access-Control-Allow-Origin
-          header-value: 'http://localhost:8080'
-        access-control-allow-headers:
-          header-name: Access-Control-Allow-Headers
-          header-value: '*'
-        access-control-allow-methods:
-          header-name: Access-Control-Allow-Methods
-          header-value: 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-        access-control-allow-credentials:
-          header-name: Access-Control-Allow-Credentials
-          header-value: true
-        # other headers configuration
-    servers:
-      default-server:
-        http-listeners:
-          default:
-            rfc6265-cookie-validation: true
-        hosts:
-          default-host:
-            filter-refs:
-              access-control-max-age:
-                priority: 1
-              access-control-allow-origin:
-                priority: 1
-              access-control-allow-headers:
-                priority: 1
-              access-control-allow-methods:
-                priority: 1
-              access-control-allow-credentials:
-                priority: 1
-              # other filter refs
     servlet-containers:
       default:
         session-cookie-setting:
@@ -438,43 +366,6 @@ project:
   stage: demo-oracle
 thorntail:
   undertow:
-    filter-configuration:
-      response-headers:
-        access-control-max-age:
-          header-name: Access-Control-Max-Age
-          header-value: 3600
-        access-control-allow-origin:
-          header-name: Access-Control-Allow-Origin
-          header-value: 'http://localhost:8080'
-        access-control-allow-headers:
-          header-name: Access-Control-Allow-Headers
-          header-value: '*'
-        access-control-allow-methods:
-          header-name: Access-Control-Allow-Methods
-          header-value: 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-        access-control-allow-credentials:
-          header-name: Access-Control-Allow-Credentials
-          header-value: true
-        # other headers configuration
-    servers:
-      default-server:
-        http-listeners:
-          default:
-            rfc6265-cookie-validation: true
-        hosts:
-          default-host:
-            filter-refs:
-              access-control-max-age:
-                priority: 1
-              access-control-allow-origin:
-                priority: 1
-              access-control-allow-headers:
-                priority: 1
-              access-control-allow-methods:
-                priority: 1
-              access-control-allow-credentials:
-                priority: 1
-              # other filter refs
     servlet-containers:
       default:
         session-cookie-setting:
