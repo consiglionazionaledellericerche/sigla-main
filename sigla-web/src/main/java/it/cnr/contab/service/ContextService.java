@@ -21,6 +21,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.utenze00.bulk.Albero_mainBulk;
 import it.cnr.contab.utenze00.bulk.PreferitiAccessoBulk;
 import it.cnr.contab.utenze00.bulk.PreferitiBulk;
@@ -185,5 +186,22 @@ public class ContextService {
                 .collect(Collectors.toList());
     }
 
+    public List<MessaggioBulk> listaMessaggi(UserContext userContext) throws ComponentException, RemoteException {
+        return crudComponentSession.find(userContext, MessaggioBulk.class, "findMessaggiByUser", userContext);
+    }
+
+    public List<MessaggioBulk> deleteMessaggi(UserContext userContext, List<MessaggioBulk> messaggi) throws ComponentException, RemoteException {
+        messaggi.stream()
+                .filter(messaggio -> Optional.ofNullable(messaggio.getCd_utente()).filter(s -> s.equals(userContext.getUser())).isPresent())
+                .forEach(messaggio -> {
+                    try {
+                        messaggio.setCrudStatus(MessaggioBulk.TO_BE_DELETED);
+                        crudComponentSession.eliminaConBulk(userContext, messaggio);
+                    } catch (ComponentException|RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        return crudComponentSession.find(userContext, MessaggioBulk.class, "findMessaggiByUser", userContext);
+    }
 
 }

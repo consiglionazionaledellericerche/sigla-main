@@ -284,6 +284,12 @@ public class UtenteHome extends BulkHome implements ConsultazioniRestHome {
 		return bulkList;
 	}
 
+	public List<UtenteBulk> findUtenteByUID(UserContext userContext, String cd_utente_uid) throws PersistencyException {
+		final SQLBuilder sqlBuilder = createSQLBuilder();
+		sqlBuilder.addClause(FindClause.AND, "cd_utente_uid", SQLBuilder.EQUALS, cd_utente_uid);
+		sqlBuilder.addOrderBy("dt_ultimo_accesso desc");
+		return fetchAll(sqlBuilder);
+	}
 
 	@Override
 	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
