@@ -26,9 +26,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_pluriennaleBulk;
 import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
 import it.cnr.contab.inventario01.bp.CRUDScaricoInventarioBP;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
@@ -138,6 +141,7 @@ public Forward doConfirmTipoMovimento(ActionContext context, OptionBP optionBP) 
 		return handleException(context,e);
 	}
 }
+
 /**
   * Calcola il valore totale del bene.
   *

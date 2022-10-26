@@ -115,7 +115,7 @@
 	<fieldProperty
 		name="ds_riga_fattura"
 		property="ds_riga_fattura"
-		maxLength="200"
+		maxLength="255"
 		inputSize="70"
 		inputType="TEXT"
 		label="Descrizione"

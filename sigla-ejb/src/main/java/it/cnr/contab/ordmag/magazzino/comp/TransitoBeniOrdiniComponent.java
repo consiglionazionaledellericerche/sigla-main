@@ -41,6 +41,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
@@ -86,6 +87,22 @@ public class TransitoBeniOrdiniComponent extends CRUDComponent implements ICRUDM
 					}
 				}
 			}
+			try {
+				if (Utility.createConfigurazioneCnrComponentSession().isGestioneEtichettaInventarioBeneAttivo(usercontext))
+				{
+					if(bene.getCd_condizione_bene() == null){
+						if(bene.getCondizioneBene()==null) {
+							bene.setCondizioneBene(new Condizione_beneBulk());
+						}
+						bene.setCd_condizione_bene("4");
+					}
+
+
+				}
+			} catch (RemoteException | ComponentException e) {
+
+			}
+
 		} catch (PersistencyException | IntrospectionException pe){
 			throw new it.cnr.jada.comp.ComponentException(pe);
 		}
@@ -168,4 +185,5 @@ public class TransitoBeniOrdiniComponent extends CRUDComponent implements ICRUDM
 		}
 		return null;
 	}
+
 }

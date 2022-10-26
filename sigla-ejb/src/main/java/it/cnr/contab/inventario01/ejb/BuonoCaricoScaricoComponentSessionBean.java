@@ -1019,5 +1019,25 @@ public class BuonoCaricoScaricoComponentSessionBean extends it.cnr.jada.ejb.CRUD
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	
+
+
+	public boolean checkEtichettaBeneAlreadyExist(UserContext param0, Buono_carico_scarico_dettBulk param1) throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			boolean result = ((BuonoCaricoScaricoComponent)componentObj).checkEtichettaBeneAlreadyExist(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+
 }

@@ -786,7 +786,10 @@
 		name="righeDaScarico">	
 		<columnFieldProperty
 			name="codiceCompleto"
-			style="width:80px" />	
+			style="width:80px" />
+		<columnFieldProperty
+			name="etichetta"
+			style="width:80px" />
 		<columnFieldProperty
 			name="ds_bene"
 			style="width:300px" />

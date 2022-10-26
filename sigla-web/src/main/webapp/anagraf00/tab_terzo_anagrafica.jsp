@@ -57,7 +57,7 @@
     <tr>
       <% if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
         <td><%bp.writeFormLabel(out,"default","codiceUnivocoUfficioIpa"); %></td>
-        <td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",bp.isEnableChangeCodIpa(uc,terzo),null,null);%></td>
+        <td><%bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",!bp.isEnableChangeCodIpa(uc,terzo),null,null);%></td>
       <%} else {%>
         <%if(terzo != null && terzo.getAnagrafico() != null
             && terzo.getAnagrafico().getDataAvvioFattElettr() != null){ %>
@@ -69,9 +69,9 @@
       <%} %>
       <%if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>
              <td><%bp.writeFormLabel(out,"default","codiceUnivocoPcc"); %></td>
-            <td><% bp.writeFormInput(out,"default","codiceUnivocoPcc",bp.isEnableChangePCC(uc,terzo),null,null);%></td>
+            <td><% bp.writeFormInput(out,"default","codiceUnivocoPcc",!bp.isEnableChangePCC(uc,terzo),null,null);%></td>
             <td><%bp.writeFormLabel(out,"default","denominazionePcc"); %></td>
-            <td><% bp.writeFormInput(out,"default","denominazionePcc",bp.isEnableChangePCC(uc,terzo),null,null);%></td>
+            <td><% bp.writeFormInput(out,"default","denominazionePcc",!bp.isEnableChangePCC(uc,terzo),null,null);%></td>
       <%} %>
     </tr>
     <tr>

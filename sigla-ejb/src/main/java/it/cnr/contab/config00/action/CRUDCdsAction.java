@@ -51,10 +51,16 @@ public it.cnr.jada.action.Forward doBlankSearchFind_responsabile(it.cnr.jada.act
  * @param terzo	Terzo
  * @return Il Forward alla pagina di risposta
  */
-public it.cnr.jada.action.Forward doBringBackCRUDCrea_responsabile(it.cnr.jada.action.ActionContext context,CdsBulk cds,TerzoBulk terzo) {
-	if (!terzo.getAnagrafico().isPersonaFisica())
-		throw new MessageToUser("Il responsabile deve essere una persona fisica");
-	cds.setResponsabile(terzo);
-	return context.findDefaultForward();
-}
+	public it.cnr.jada.action.Forward doBringBackCRUDCrea_responsabile(it.cnr.jada.action.ActionContext context,CdsBulk cds,TerzoBulk terzo) {
+		if (!terzo.getAnagrafico().isPersonaFisica())
+			throw new MessageToUser("Il responsabile deve essere una persona fisica");
+		cds.setResponsabile(terzo);
+		return context.findDefaultForward();
+	}
+	public it.cnr.jada.action.Forward doBringBackSearchFind_responsabile(it.cnr.jada.action.ActionContext context,CdsBulk cds,V_terzo_persona_fisicaBulk terzo) {
+		if (!terzo.getAnagrafico().isPersonaFisica())
+			throw new MessageToUser("Il responsabile deve essere una persona fisica");
+		cds.setResponsabile(terzo);
+		return context.findDefaultForward();
+	}
 }

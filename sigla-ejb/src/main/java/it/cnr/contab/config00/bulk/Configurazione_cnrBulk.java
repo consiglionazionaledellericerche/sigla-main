@@ -194,6 +194,9 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_ACCERTAMENTI = "ACCERTAMENTI";
 	public final static String SK_ACCERTAMENTI_PLURIENNALI = "ACCERTAMENTI_PLURIENNALI";
 
+    public final static String PK_INVENTARIO = "INVENTARIO";
+    public final static String SK_GESTIONE_ETICHETTA_BENE = "GESTIONE_ETICHETTA_BENE";
+
     public Configurazione_cnrBulk() {
         super();
     }

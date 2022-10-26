@@ -282,5 +282,11 @@ public java.util.Collection findDettagliBuono(Buono_carico_scaricoBulk buono)thr
 		sqlBuilder.addSQLClause(FindClause.AND, "ID_TRANSITO_BENI_ORDINI", SQLBuilder.EQUALS, transito_beni_ordiniBulk.getId());
 		return fetchAll(sqlBuilder);
 	}
+	public boolean IsEtichettaBeneAlreadyExist(Buono_carico_scarico_dettBulk dett) throws java.sql.SQLException{
 
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND","INVENTARIO_BENI.ETICHETTA",sql.EQUALS,dett.getEtichetta());
+
+		return sql.executeExistsQuery(getConnection());
+	}
 }

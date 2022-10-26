@@ -188,4 +188,5 @@ public boolean IsContabilizzato(Buono_carico_scaricoBulk buono) throws java.sql.
 	sql.closeParenthesis(); 	
 	return sql.executeExistsQuery(getConnection());
 }
+
 }

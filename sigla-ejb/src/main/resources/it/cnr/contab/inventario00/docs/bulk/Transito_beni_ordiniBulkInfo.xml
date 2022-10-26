@@ -84,9 +84,26 @@
 			inputType="TEXT"
 			label="Ordine"
 			caseSensitiveSearch="false"
-			enabledOnInsert = "false"
-			enabledOnEdit = "false"
-			enabledOnSearch="false"/>
+			enabledOnInsert = "true"
+			enabledOnEdit = "true"
+			enabledOnSearch="true" />
+
+	<fieldProperty
+			name="ordineForFreeSearch"
+			property="numeroOrdine"
+			inputType="TEXT"
+			label="Numero Ordine"
+	/>
+	<fieldProperty
+			name="numeratoreOrdineForFreeSearch"
+			property="numeratoreOrdine"
+			inputType="TEXT"
+			inputSize="3"
+			maxLength="3"
+			label="Numeratore Ordine"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+	/>
 	<fieldProperty
 		name="dtRiferimento"
 		property="movimentiMag.dtRiferimento"
@@ -99,6 +116,16 @@
 		enabledOnInsert = "false"
 		enabledOnEdit = "false"
 		enabledOnSearch="false"/>
+
+	<fieldProperty
+			name="dtOrdineForFreeSearch"
+			property="dtOrdine"
+			formatName="date_short"
+			inputType="TEXT"
+			label="Data Ordine"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+	/>
 	<fieldProperty
 			name="dataBolla"
 			property="movimentiMag.dataBolla"
@@ -110,7 +137,14 @@
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
 			enabledOnEdit = "false"
-			enabledOnSearch="false"/>
+			enabledOnSearch="true"/>
+	<fieldProperty
+			name="dataBollaForFreeSearch"
+			property="dataBolla"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Bolla"
+	/>
 	<fieldProperty
 			name="numeroBolla"
 			property="movimentiMag.numeroBolla"
@@ -121,7 +155,13 @@
 			caseSensitiveSearch="false"
 			enabledOnInsert = "false"
 			enabledOnEdit = "false"
-			enabledOnSearch="false"/>
+			enabledOnSearch="true"/>
+	<fieldProperty
+			name="numeroBollaForFreeSearch"
+			property="numeroBolla"
+			inputType="TEXT"
+			label="Numero Bolla"
+	/>
 	<fieldProperty
 		name="ds_bene"
 		property="ds_bene"
@@ -270,13 +310,15 @@
 		inputType="ROTEXT"
 		nullable="false"
 		label="Categoria"		
-		enabledOnSearch="true"  		
-		enabledOnFreeSearch="true"  		
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>		
 	<fieldProperty
 		name="cd_categoria_beneForFreeSearch"
 		property="cd_categoria_gruppo"
 		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Categoria"
 	/>
 	<fieldProperty
@@ -335,8 +377,8 @@
 		inputSize="20"
 		enabledOnInsert = "false"
 		enabledOnEdit = "false"  
-		enabledOnFreeSearch="true"			
-		enabledOnSearch="true" 
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"
 		label="Etichetta" />
 	<fieldProperty
 		name="cd_barre"
@@ -542,8 +584,10 @@
 			style="width:30px"/>
 	<columnFieldProperty
 			name="dsUnitaOperativa"/>
-	<findFieldProperty
-		name="etichetta" />
+	<columnFieldProperty
+			name="cd_categoria_beneForFreeSearch"/>
+
+
 	<findFieldProperty
 		name="ds_bene" />
 	<findFieldProperty
@@ -566,4 +610,17 @@
 		name="seriale" />	
 	<findFieldProperty
 			name="stato" />
+	<findFieldProperty
+			name="numeroBollaForFreeSearch" />
+	<findFieldProperty
+			name="dataBollaForFreeSearch" />
+	<findFieldProperty
+			name="ordineForFreeSearch" />
+	<findFieldProperty
+			name="dtOrdineForFreeSearch" />
+	<findFieldProperty
+			name="numeratoreOrdineForFreeSearch" />
+
+
+
 </bulkInfo>

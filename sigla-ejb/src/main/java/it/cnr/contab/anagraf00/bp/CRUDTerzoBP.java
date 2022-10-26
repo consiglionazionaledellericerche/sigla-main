@@ -192,26 +192,19 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 	}
 
 
-	private boolean isUserLoggedOnEnte(UserContext usercontext) throws ComponentException, RemoteException {
-		CNRUserContext.getCd_unita_organizzativa(usercontext);
 
-		Unita_organizzativaBulk unita_organizzativaBulk = ( Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findByPrimaryKey(usercontext,
-				new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
-		if ( unita_organizzativaBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
-			return Boolean.TRUE;
-		return false;
-	}
 	private boolean isEnbaleIpaPcc(UserContext usercontext, TerzoBulk terzoBulk, boolean isIpa) throws ComponentException, RemoteException {
-		if (isUserLoggedOnEnte(usercontext))
-			return Boolean.FALSE;
-
-		if (!terzoBulk.isNotGestoreIstat())
-			return Boolean.FALSE;
-		if (isIpa){
+		if (isIpa) {
+			if (isGestoreIstat(usercontext, terzoBulk))
+				return Boolean.FALSE;
 			if (!terzoBulk.getAnagrafico().isStrutturaCNR())
 				return Boolean.FALSE;
 		}
-		return Boolean.TRUE;
+		if (!isIpa) {
+			if (!isGestoreIstat(usercontext, terzoBulk))
+				return Boolean.FALSE;
+		}
+			return Boolean.TRUE;
 	}
 	public boolean isEnableChangeCodIpa(UserContext usercontext, TerzoBulk terzoBulk)
 			throws ComponentException, RemoteException {
@@ -230,13 +223,14 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 	public boolean isGestoreIstat(UserContext usercontext, TerzoBulk terzoBulk)
 			throws ComponentException, RemoteException {
 
+/*
 		CNRUserContext.getCd_unita_organizzativa(usercontext);
 
 		Unita_organizzativaBulk unita_organizzativaBulk = ( Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findByPrimaryKey(usercontext,
 				new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
 		if ( unita_organizzativaBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
 			return Boolean.FALSE;
-
+*/
 		return !terzoBulk.isNotGestoreIstat();
 	}
 
