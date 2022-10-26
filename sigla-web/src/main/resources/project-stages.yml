@@ -2,7 +2,7 @@ logger:
   level: DEBUG
 
 thorntail:
-   undertow:
+  undertow:
     filter-configuration:
       response-headers:
         access-control-max-age:
@@ -39,6 +39,7 @@ thorntail:
                 priority: 1
               access-control-allow-credentials:
                 priority: 1
+              # other filter refs
   security:
     security-domains:
       sigla-auth:
