@@ -26,16 +26,16 @@
 <title>FATTURA ELETTRONICA</title>
 <script language="JavaScript">
 function doScaricaFatturaHtml() {
-	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
-			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
 }
 function doScaricaFatturaFirmata() {
-	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
-			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
 }
 function doScaricaEsito() {
-	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFile%>?methodName=scaricaEsito&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
-			'Notifica', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus();
+	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFile%>?methodName=scaricaEsito&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Notifica', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
 }
 </script>
 </head>

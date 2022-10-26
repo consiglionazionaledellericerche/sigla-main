@@ -21,9 +21,7 @@ function doScaricaFile(path) {
    altezFinestra=500;
    sinistra=300;
    alto=150;
-//   window.open("/SIGLA/RicercaIncarichiRichiesta.do?tipofile=1","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
-//   window.open("tmp/EstrazioneFp20091_1.xml","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
-   window.open(path,"DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+   doOpenWindow(path,"DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no");
 }
 </script>
 <table class="Panel">
