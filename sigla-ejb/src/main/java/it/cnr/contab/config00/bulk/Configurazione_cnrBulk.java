@@ -112,6 +112,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_COSTANTI = "COSTANTI";
     public final static String SK_TOTALE_GIORNI_LAVORATIVI_COSTI_PERSONALE = "TOTALE_GIORNI_LAVORATIVI_COSTI_PERSONALE";
 
+    public final static String SK_CODICE_ANAG_ENTE = "CODICE_ANAG_ENTE";
+
     public final static String PK_ANNI_RESIDUI_VAR_ST_RES = "ANNI_RESIDUI_VAR_ST_RES";
     public final static String PK_ANNI_RESIDUI_IM_RES_IMP = "ANNI_RESIDUI_IM_RES_IMP";
     public final static String PK_ANNI_RESIDUI_IM_RES_PRO = "ANNI_RESIDUI_IM_RES_PRO";
@@ -170,10 +172,13 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_VOCEEP_SPECIALE = "VOCEEP_SPECIALE";
     public final static String SK_IVA_CREDITO = "IVA_CREDITO";
     public final static String SK_IVA_DEBITO = "IVA_DEBITO";
+    public final static String SK_ERARIO_C_IVA = "ERARIO_C_IVA";
     public final static String SK_CREDITO_DEBITO_ANTICIPO = "CREDITO_DEBITO_ANTICIPO";
     public final static String SK_CREDITO_DEBITO_ECONOMO = "CREDITO_DEBITO_ECONOMO";
     public final static String SK_CREDITO_DEBITO_DEFAULT = "CREDITO_DEBITO_DEFAULT";
+    public final static String SK_COSTO_IVA_NON_DETRAIBILE = "COSTO_IVA_NON_DETRAIBILE";
 
+    public final static String SK_CONTI_LIQUIDAZIONE_ESTERNA_IVA = "CONTI_LIQUIDAZIONE_ESTERNA_IVA";
     public final static String SK_CREDITO_RITENUTE_SPLIT_PAYMENT = "CREDITO_RITENUTE_SPLIT_PAYMENT";
     public final static String SK_BANCA = "BANCA";
 
@@ -202,5 +207,17 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_ESERCIZIO_PARTENZA = "ESERCIZIO_PARTENZA";
     public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria, java.lang.String cd_chiave_secondaria, java.lang.String cd_unita_funzionale, java.lang.Integer esercizio) {
         super(cd_chiave_primaria, cd_chiave_secondaria, cd_unita_funzionale, esercizio);
+    }
+
+    public String getVal(int fieldNumber) {
+        if (fieldNumber==1)
+            return this.getVal01();
+        else if (fieldNumber==2)
+            return this.getVal02();
+        else if (fieldNumber==3)
+            return this.getVal03();
+        else if (fieldNumber==4)
+            return this.getVal04();
+        return null;
     }
 }

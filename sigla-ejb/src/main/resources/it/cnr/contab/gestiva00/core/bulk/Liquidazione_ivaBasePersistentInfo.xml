@@ -308,6 +308,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2" />
+		<columnMapping
+			columnName="STATO_COGE"
+			propertyName="stato_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="iva_credito" />
@@ -409,4 +415,6 @@
 		name="iva_ven_split_payment" />
 	<persistentProperty
 		name="iva_acq_split_payment" />
+	<persistentProperty
+		name="stato_coge" />
 </SQLPersistentInfo>

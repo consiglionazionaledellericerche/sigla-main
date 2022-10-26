@@ -133,4 +133,5 @@
             <where>CD_CHIAVE_PRIMARIA='ECONOMICO_PATRIMONIALE' AND CD_CHIAVE_SECONDARIA='ASSOCIAZIONE_CONTI'</where>
         </update>
     </changeSet>
+
 </databaseChangeLog>

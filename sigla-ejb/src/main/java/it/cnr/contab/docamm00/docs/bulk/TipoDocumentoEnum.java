@@ -23,6 +23,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -56,7 +57,8 @@ public enum TipoDocumentoEnum {
 	REVERSALE(Numerazione_doc_contBulk.TIPO_REV, ReversaleIBulk.class, "Reversale"),
 	GEN_STIPENDI_SPESA("GEN_STIP_S", Documento_generico_passivoBulk.class, "Documento generico di versamento stipendi"),
 	REGOLA_E("REGOLA_E", Documento_generico_attivoBulk.class, "Documento per mandato di regolarizzazione"),
-	GEN_RECUPERO_CREDITI("GEN_RC_DAT", Documento_generico_attivoBulk.class, "Documento generico per recupero crediti");
+	GEN_RECUPERO_CREDITI("GEN_RC_DAT", Documento_generico_attivoBulk.class, "Documento generico per recupero crediti"),
+	LIQUIDAZIONE_IVA("LIQUID_IVA", Liquidazione_ivaBulk.class, "Liquidazione Iva");
 
 	private final String value;
 	private final Class<?> documentoCogeBulk;
@@ -256,6 +258,10 @@ public enum TipoDocumentoEnum {
 
 	public boolean isGenericoCoriAccantonamentoEntrata() {
 		return TipoDocumentoEnum.GEN_CORI_ACCANTONAMENTO_ENTRATA.equals(this);
+	}
+
+	public boolean isLiquidazioneIva() {
+		return TipoDocumentoEnum.LIQUIDAZIONE_IVA.equals(this);
 	}
 
 	public boolean isGenericoMandatoRegolarizzazione() {

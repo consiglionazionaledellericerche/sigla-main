@@ -241,4 +241,9 @@ public class MockActionContext implements ActionContext {
     public ActionMapping getActionMapping() {
         return null;
     }
+
+    @Override
+    public BusinessProcess getCurrentBusinessProcess() {
+        return null;
+    }
 }

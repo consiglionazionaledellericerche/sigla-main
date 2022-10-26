@@ -905,4 +905,36 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     public String getIdReversaleAsString(){
         return getCd_cds()+"-"+getEsercizio()+"-"+getPg_reversale();
     }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public Timestamp getDtInizioLiquid() {
+        return null;
+    }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public Timestamp getDtFineLiquid() {
+        return null;
+    }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public String getTipoLiquid() {
+        return null;
+    }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public Long getReportIdLiquid() {
+        return null;
+    }
 }

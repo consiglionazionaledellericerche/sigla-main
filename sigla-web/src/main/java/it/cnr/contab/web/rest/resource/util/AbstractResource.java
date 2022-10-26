@@ -33,10 +33,10 @@ public final class AbstractResource {
                 .filter(CNRUserContext.class::isInstance)
                 .map(CNRUserContext.class::cast)
                 .orElseGet(() -> {
-                    return Optional.ofNullable(request.getSession().getAttribute(USER_CONTEXT))
+                    return Optional.ofNullable(request.getSession(false).getAttribute(USER_CONTEXT))
                             .filter(CNRUserContext.class::isInstance)
                             .map(CNRUserContext.class::cast)
-                            .orElseThrow(() -> new BadRequestException());
+                            .orElse(new CNRUserContext());
                 });
     }
 }

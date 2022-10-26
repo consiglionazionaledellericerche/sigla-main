@@ -104,6 +104,16 @@
 			columnSize="30"
 			nullable="false"
 			primary="true" />
+		<columnMapping
+			columnName="CD_VOCE_EP_IVA"
+			propertyName="cd_voce_ep_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="CD_VOCE_EP_IVA_SPLIT"
+			propertyName="cd_voce_ep_iva_split"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio"
@@ -136,4 +146,8 @@
 		name="utuv" />
 	<persistentProperty
 		name="ultimo" />
+	<persistentProperty
+		name="cd_voce_ep_iva" />
+	<persistentProperty
+		name="cd_voce_ep_iva_split" />
 </SQLPersistentInfo>

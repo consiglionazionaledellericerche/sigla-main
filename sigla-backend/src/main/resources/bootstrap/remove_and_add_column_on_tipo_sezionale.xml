@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="raffaele.pagano" id="configurazione_cnr_add_voce_ep_speciale_liquidazione-iva">
+        <addDefaultValue tableName="configurazione_cnr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="configurazione_cnr" columnName="duva" defaultValueDate="${now}"/>
+        <sql>
+            INSERT INTO CONFIGURAZIONE_CNR
+            (ESERCIZIO, CD_UNITA_FUNZIONALE, CD_CHIAVE_PRIMARIA, CD_CHIAVE_SECONDARIA, VAL01, VAL02, UTCR, UTUV, PG_VER_REC)
+            SELECT ESERCIZIO, '*', 'VOCEEP_SPECIALE', 'CONTI_LIQUIDAZIONE_ESTERNA_IVA', 'C00001', 'P00044', 'SYSTEM', 'SYSTEM', 1
+            FROM ESERCIZIO_BASE
+            WHERE ESERCIZIO >= 2016
+        </sql>
+        <dropDefaultValue tableName="configurazione_cnr" columnName="dacr"/>
+        <dropDefaultValue tableName="configurazione_cnr" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano"  id="insert_voci_economiche_iva">
+        <addDefaultValue tableName="voce_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="voce_ep" columnName="duva" defaultValueDate="${now}"/>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'P71012C', A.NATURA_VOCE, A.TI_VOCE_EP, 'Debito per versamento delle ritenute per scissione contabile IVA COMMERCIALE (Split Payment)',
+            A.LIVELLO, 'P71012C', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'P71012C', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'P71012';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'P71012I', A.NATURA_VOCE, A.TI_VOCE_EP, 'Debito per versamento delle ritenute per scissione contabile IVA ISTITUZIONALE (Split Payment)',
+            A.LIVELLO, 'P71012I', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'P71012I', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'P71012';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'A91012C', A.NATURA_VOCE, A.TI_VOCE_EP, 'Crediti diversi derivanti da Ritenute per scissione contabile IVA COMMERCIALE (Split Payment)',
+            A.LIVELLO, 'A91012C', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'A91012C', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'A91012';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'A91012I', A.NATURA_VOCE, A.TI_VOCE_EP, 'Crediti diversi derivanti da Ritenute per scissione contabile IVA ISTITUZIONALE (Split Payment)',
+            A.LIVELLO, 'A91012I', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'A91012I', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'A91012';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'P00044C', A.NATURA_VOCE, A.TI_VOCE_EP, 'IVA a debito commerciale',
+            A.LIVELLO, 'P00044C', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'P00044C', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'P00044';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'P00044I', A.NATURA_VOCE, A.TI_VOCE_EP, 'IVA a debito istituzionale',
+            A.LIVELLO, 'P00044I', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'P00044I', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'P00044';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'A00068C', A.NATURA_VOCE, A.TI_VOCE_EP, 'IVA a credito commerciale',
+            A.LIVELLO, 'A00068C', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'A00068C', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'A00068';
+        </sql>
+        <sql>
+            INSERT INTO VOCE_EP
+            (ESERCIZIO, CD_VOCE_EP, NATURA_VOCE, TI_VOCE_EP, DS_VOCE_EP,
+            LIVELLO, CD_PROPRIO_VOCE_EP, FL_MASTRINO, TI_SEZIONE, RIEPILOGA_A,
+            RIAPRE_A_CONTO_ECONOMICO, FL_A_PAREGGIO, CONTO_SPECIALE, UTUV, UTCR, PG_VER_REC,
+            CD_VOCE_EP_PADRE, ID_CLASSIFICAZIONE, FL_CONTO_VERSAMENTO, CD_VOCE_EP_CONTR)
+            SELECT
+            A.ESERCIZIO, 'A00068I', A.NATURA_VOCE, A.TI_VOCE_EP, 'IVA a credito istituzionale',
+            A.LIVELLO, 'A00068I', A.FL_MASTRINO, A.TI_SEZIONE, A.RIEPILOGA_A,
+            'A00068I', A.FL_A_PAREGGIO, A.CONTO_SPECIALE, 'SYSTEM', 'SYSTEM', 1,
+            A.CD_VOCE_EP_PADRE, A.ID_CLASSIFICAZIONE, A.FL_CONTO_VERSAMENTO, A.CD_VOCE_EP_CONTR
+            FROM VOCE_EP A
+            WHERE A.CD_VOCE_EP = 'A00068';
+        </sql>
+        <dropDefaultValue tableName="voce_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="voce_ep" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="remove_column_cd_contributo_ritenuta_iva_on_tipo_sezionale">
+        <dropColumn columnName="CD_CONTRIBUTO_RITENUTA_IVA" tableName="TIPO_SEZIONALE"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="add_column_voce_ep_iva_and_iva_split_on_sezionale">
+        <addColumn tableName="sezionale">
+            <column name="CD_VOCE_EP_IVA" remarks="Codice Conto EP Iva" type="VARCHAR(45)"/>
+            <column name="CD_VOCE_EP_IVA_SPLIT" remarks="Codice Conto EP Iva Split" type="VARCHAR(45)"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="esercizio, cd_voce_ep_iva" baseTableName="sezionale" constraintName="fk_sezionale03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,cd_voce_ep" referencedTableName="voce_ep"/>
+        <addForeignKeyConstraint baseColumnNames="esercizio, cd_voce_ep_iva_split" baseTableName="sezionale" constraintName="fk_sezionale04" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,cd_voce_ep" referencedTableName="voce_ep"/>
+
+        <createIndex indexName="fx_sezionale03" tableName="sezionale">
+            <column name="ESERCIZIO"/>
+            <column name="CD_VOCE_EP_IVA"/>
+        </createIndex>
+
+        <createIndex indexName="fx_sezionale04" tableName="sezionale">
+            <column name="ESERCIZIO"/>
+            <column name="CD_VOCE_EP_IVA_SPLIT"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="update_voci_economiche_iva_and_iva_split_on_sezionale">
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA = 'A00068C'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'A' AND B.TI_ISTITUZ_COMMERC = 'C')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'A00068C');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA = 'A00068I'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'A' AND B.TI_ISTITUZ_COMMERC = 'I')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'A00068I');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA = 'P00044C'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'V' AND B.TI_ISTITUZ_COMMERC = 'C')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'P00044C');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA = 'P00044I'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'V' AND B.TI_ISTITUZ_COMMERC = 'I')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'P00044I');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA_SPLIT = 'P71012C'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'A' AND B.TI_ISTITUZ_COMMERC = 'C')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'P71012C');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA_SPLIT = 'P71012I'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'A' AND B.TI_ISTITUZ_COMMERC = 'I')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'P71012I');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA_SPLIT = 'A91012C'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'V' AND B.TI_ISTITUZ_COMMERC = 'C')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'A91012C');
+        </sql>
+        <sql>
+            UPDATE SEZIONALE A
+            SET A.CD_VOCE_EP_IVA = 'A91012I'
+            WHERE A.CD_TIPO_SEZIONALE IN (SELECT B.CD_TIPO_SEZIONALE FROM TIPO_SEZIONALE B
+                                          WHERE B.TI_ACQUISTI_VENDITE = 'V' AND B.TI_ISTITUZ_COMMERC = 'I')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'A91012I');
+        </sql>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano"  id="update_configurazione_cnr_iva_split">
+        <sql>
+            UPDATE CONFIGURAZIONE_CNR A
+            SET A.VAL02 = 'A91012'
+            WHERE A.CD_CHIAVE_PRIMARIA = 'VOCEEP_SPECIALE'
+            AND A.CD_CHIAVE_SECONDARIA = 'IVA_CREDITO'
+            AND A.VAL02 IS NULL
+            AND EXISTS(SELECT '1' FROM VOCE_EP B WHERE B.ESERCIZIO = A.ESERCIZIO AND B.CD_VOCE_EP = 'A91012');
+        </sql>
+        <sql>
+            UPDATE CONFIGURAZIONE_CNR A
+            SET A.VAL02 = 'P71012'
+            WHERE A.CD_CHIAVE_PRIMARIA = 'VOCEEP_SPECIALE'
+            AND A.CD_CHIAVE_SECONDARIA = 'IVA_DEBITO'
+            AND A.VAL02 IS NULL
+            AND EXISTS(SELECT '1' FROM VOCE_EP B WHERE B.ESERCIZIO = A.ESERCIZIO AND B.CD_VOCE_EP = 'P71012');
+        </sql>
+        <sql>
+            UPDATE CONFIGURAZIONE_CNR A
+            SET A.VAL03 = 'IVASP'
+            WHERE A.ESERCIZIO = 0
+            AND A.CD_UNITA_FUNZIONALE = '*'
+            AND A.CD_CHIAVE_PRIMARIA = 'CORI_SPECIALE'
+            AND A.CD_CHIAVE_SECONDARIA = 'IVA'
+            AND A.VAL03 IS NULL
+        </sql>
+    </changeSet>
+</databaseChangeLog>

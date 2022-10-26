@@ -5900,6 +5900,8 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <include file="bootstrap/add_index_on_movimento_coge.xml"/>
     <include file="bootstrap/add_accessi_partitario_terzo.xml"/>
     <include file="bootstrap/add_column_cd_contributo_ritenuta_iva_on_tipo_sezionale.xml"/>
+    <include file="bootstrap/add_column_liquidazione_iva_scrittura_partita_doppia.xml"/>
+    <include file="bootstrap/remove_and_add_column_on_tipo_sezionale.xml"/>
 
 
     <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->

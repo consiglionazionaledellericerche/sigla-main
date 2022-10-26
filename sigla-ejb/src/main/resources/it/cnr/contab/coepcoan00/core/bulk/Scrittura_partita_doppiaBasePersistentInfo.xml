@@ -158,6 +158,26 @@
 			propertyName="cd_tipo_documento"
 			sqlTypeName="VARCHAR"
 			columnSize="10" />
+		<columnMapping
+			columnName="REPORT_ID_LIQUID"
+			propertyName="report_id_liquid"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_FINE_LIQUID"
+			propertyName="dt_fine_liquid"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_INIZIO_LIQUID"
+			propertyName="dt_inizio_liquid"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="TIPO_LIQUIDAZIONE"
+			propertyName="tipo_liquidazione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -211,4 +231,12 @@
 		name="cd_causale_coge" />
 	<persistentProperty
 		name="cd_tipo_documento" />
+	<persistentProperty
+		name="report_id_liquid" />
+	<persistentProperty
+		name="dt_fine_liquid" />
+	<persistentProperty
+		name="dt_inizio_liquid" />
+	<persistentProperty
+		name="tipo_liquidazione" />
 </SQLPersistentInfo>

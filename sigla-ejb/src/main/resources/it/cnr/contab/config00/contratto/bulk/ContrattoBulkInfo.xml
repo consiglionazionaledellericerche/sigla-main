@@ -1007,6 +1007,7 @@
         <columnFieldProperty
                 name="cdCig" />                
         <columnFieldProperty
+                textTruncate="true"
                 name="cdCigFatturaAttiva"/>
         <columnFieldProperty
                 name="dt_inizio_validita"/>

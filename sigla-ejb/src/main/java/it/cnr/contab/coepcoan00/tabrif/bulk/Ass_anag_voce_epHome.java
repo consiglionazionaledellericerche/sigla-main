@@ -35,7 +35,7 @@ public Ass_anag_voce_epHome(java.sql.Connection conn) {
 public Ass_anag_voce_epHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Ass_anag_voce_epBulk.class,conn,persistentCache);
 }
-public List findAssociazioniPerScrittura( Scrittura_partita_doppiaBulk scrittura ) throws PersistencyException
+public List<Ass_anag_voce_epBulk> findAssociazioniPerScrittura( Scrittura_partita_doppiaBulk scrittura ) throws PersistencyException
 {
 //	AnagraficoBulk anag = (AnagraficoBulk) getHome( AnagraficoBulk.class).findByPrimaryKey( scrittura.getTerzo().getAnagrafico());
 	SQLBuilder sql = createSQLBuilder();

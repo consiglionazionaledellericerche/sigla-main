@@ -52,7 +52,7 @@ function doScaricaFile() {
    altezFinestra=5;
    sinistra=(screen.width)/2;
    alto=(screen.height)/2;
-   window.open("download_consArchivioPDG/"+<%=esercizioPDG%>+"/"+<%=nrVariazionePDG%>+"/"+<%=progPDG%>+"/"+"<%=nomeArchivio%>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+   doOpenWindow("download_consArchivioPDG/"+<%=esercizioPDG%>+"/"+<%=nrVariazionePDG%>+"/"+<%=progPDG%>+"/"+"<%=nomeArchivio%>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no");
 }
 </script>
 

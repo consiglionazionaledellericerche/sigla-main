@@ -395,7 +395,6 @@ public class Configurazione_cnrHome extends BulkHome {
                 .orElse(null);
     }
 
-
     /**
      * Ritorna il codice bollo da utilizzare per la genersazione dei madati stipendi
      * <p><b>chiave_primaria: STIPENDI</b>
@@ -417,4 +416,11 @@ public class Configurazione_cnrHome extends BulkHome {
                 .orElse(null);
     }
 
+    public Integer getCodiceAnagraficoEnte() throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(null,Configurazione_cnrBulk.PK_COSTANTI, Configurazione_cnrBulk.SK_CODICE_ANAG_ENTE))
+                .map(Configurazione_cnrBulk::getIm01)
+                .map(BigDecimal::intValue)
+                .orElse(null);
+    }
 }

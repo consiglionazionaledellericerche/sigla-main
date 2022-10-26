@@ -154,12 +154,6 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="CD_CONTRIBUTO_RITENUTA_IVA"
-			propertyName="cd_contributo_ritenuta_iva"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_sezionale" />
@@ -203,6 +197,4 @@
 		name="fl_split_payment" />
 	<persistentProperty
 		name="fl_reg_tardiva" />
-	<persistentProperty
-		name="cd_contributo_ritenuta_iva" />
 </SQLPersistentInfo>

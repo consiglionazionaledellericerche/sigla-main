@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="raffaele.pagano" id="add_column_liquidazione_on_scrittura_partita_doppia">
+        <addColumn tableName="SCRITTURA_PARTITA_DOPPIA">
+            <column name="tipo_liquidazione" remarks="Tipo liquidazione" type="CHAR(1)"/>
+            <column name="dt_inizio_liquid" remarks="Data inizio liquidazione" type="${date.type}"/>
+            <column name="dt_fine_liquid" remarks="Data fine liquidazione" type="${date.type}"/>
+            <column name="report_id_liquid" remarks="CODICE IDENTIFICATIVO DEL REPORT CHE VERRA STAMPATO: PER LE LIQ DI TIPO&#10;&#10;DEFINITIVO (SIA PROVV CHE DEF) VALE SEMPRE 0" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="add_column_stato_coge_on_liquidazione">
+        <addColumn tableName="LIQUIDAZIONE_IVA">
+            <column name="stato_coge" remarks="Stato fattura per contabilità economico/ patrimoniale.&#10;&#10;Dominio&#10;N = Non è stata generata alcuna scrittura in COGE&#10;R = Documento registrato in COGE" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

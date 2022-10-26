@@ -27,6 +27,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -93,11 +94,18 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
 
 	public List<Scrittura_partita_doppiaBulk> findByDocumentoCoge(IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException {
         SQLBuilder sql = this.createSQLBuilder();
-        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, documentoCogeBulk.getEsercizio());
-        sql.addClause("AND", "cd_cds_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_cds());
-        sql.addClause("AND", "cd_uo_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_uo());
-        sql.addClause("AND", "pg_numero_documento", SQLBuilder.EQUALS, documentoCogeBulk.getPg_doc());
-        sql.addClause("AND", "cd_tipo_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_tipo_doc());
+        sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, documentoCogeBulk.getEsercizio());
+        sql.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_cds());
+        sql.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_uo());
+        sql.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoCogeBulk.getCd_tipo_doc());
+
+        if (documentoCogeBulk.getCd_tipo_doc().equals(TipoDocumentoEnum.LIQUIDAZIONE_IVA.getValue())) {
+            sql.addClause(FindClause.AND, "dt_inizio_liquid", SQLBuilder.EQUALS, documentoCogeBulk.getDtInizioLiquid());
+            sql.addClause(FindClause.AND, "dt_fine_liquid", SQLBuilder.EQUALS, documentoCogeBulk.getDtFineLiquid());
+            sql.addClause(FindClause.AND, "tipo_liquidazione", SQLBuilder.EQUALS, documentoCogeBulk.getTipoLiquid());
+            sql.addClause(FindClause.AND, "report_id_liquid", SQLBuilder.EQUALS, documentoCogeBulk.getReportIdLiquid());
+        } else
+            sql.addClause("AND", "pg_numero_documento", SQLBuilder.EQUALS, documentoCogeBulk.getPg_doc());
         return fetchAll(sql);
     }
 

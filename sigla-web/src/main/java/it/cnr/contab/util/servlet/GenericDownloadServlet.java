@@ -24,6 +24,7 @@ import it.cnr.jada.util.Introspector;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.http.HttpStatus;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,6 @@ import java.util.Optional;
  * Servlet implementation class GenericDownload
  */
 public class GenericDownloadServlet extends HttpServlet {
-    public static final String NUMERO_ANNI_SCADENZA_INCARICO = "3";
     private static final long serialVersionUID = 1L;
     private transient final static Logger LOGGER = LoggerFactory.getLogger(GenericDownloadServlet.class);
     private static final String AUTHORIZATION = "Authorization";
@@ -86,8 +86,12 @@ public class GenericDownloadServlet extends HttpServlet {
         } else {
             HttpActionContext actionContext = new HttpActionContext(this, request, response);
             try {
+                final BusinessProcess businessProcess = Optional.ofNullable(BusinessProcess.getBusinessProcess(request)).orElseThrow(() -> {
+                    response.setStatus(HttpStatus.SC_UNAUTHORIZED);
+                    return new ServletException("AUTHORIZATION not found!");
+                });
                 if (request.getParameter("methodName") != null)
-                    Introspector.invoke(BusinessProcess.getBusinessProcess(request), request.getParameter("methodName"), actionContext);
+                    Introspector.invoke(businessProcess, request.getParameter("methodName"), actionContext);
             } catch (NoSuchMethodException e) {
                 throw new ServletException(e);
             } catch (IllegalAccessException e) {

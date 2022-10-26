@@ -17,24 +17,66 @@
 
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
-public class SezionaleHome extends BulkHome {
-public SezionaleHome(java.sql.Connection conn) {
-	super(SezionaleBulk.class,conn);
-}
-public SezionaleHome(java.sql.Connection conn,PersistentCache persistentCache) {
-	super(SezionaleBulk.class,conn,persistentCache);
-}
-public boolean verificaStatoEsercizio(SezionaleBulk sezionale) throws PersistencyException, IntrospectionException {
+import java.util.List;
 
-	it.cnr.contab.config00.esercizio.bulk.EsercizioBulk esercizio = (it.cnr.contab.config00.esercizio.bulk.EsercizioBulk) getHomeCache().getHome(it.cnr.contab.config00.esercizio.bulk.EsercizioBulk.class).findByPrimaryKey( 
-		new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk( sezionale.getCd_cds(), sezionale.getEsercizio()));
-	if (esercizio == null || esercizio.STATO_CHIUSO_DEF.equals(esercizio.getSt_apertura_chiusura()))
-		return false;
-	return true;
-}
+public class SezionaleHome extends BulkHome {
+	public SezionaleHome(java.sql.Connection conn) {
+		super(SezionaleBulk.class,conn);
+	}
+	public SezionaleHome(java.sql.Connection conn,PersistentCache persistentCache) {
+		super(SezionaleBulk.class,conn,persistentCache);
+	}
+	public boolean verificaStatoEsercizio(SezionaleBulk sezionale) throws PersistencyException, IntrospectionException {
+
+		it.cnr.contab.config00.esercizio.bulk.EsercizioBulk esercizio = (it.cnr.contab.config00.esercizio.bulk.EsercizioBulk) getHomeCache().getHome(it.cnr.contab.config00.esercizio.bulk.EsercizioBulk.class).findByPrimaryKey(
+			new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk( sezionale.getCd_cds(), sezionale.getEsercizio()));
+		if (esercizio == null || esercizio.STATO_CHIUSO_DEF.equals(esercizio.getSt_apertura_chiusura()))
+			return false;
+		return true;
+	}
+
+	public SezionaleBulk getSezionaleByTipoDocumento(IDocumentoAmministrativoBulk docamm) throws PersistencyException, ComponentException {
+		if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoAttivo() || docamm.getTipoDocumentoEnum().isDocumentoAmministrativoPassivo()) {
+			SQLBuilder sql = this.createSQLBuilder();
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, docamm.getEsercizio());
+			sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, docamm.getCd_cds());
+			sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, docamm.getCd_uo());
+
+			String cdTipoSezionale;
+			if (docamm.getTipoDocumentoEnum().isDocumentoAmministrativoAttivo())
+				cdTipoSezionale = ((Fattura_attivaBulk) docamm).getCd_tipo_sezionale();
+			else
+				cdTipoSezionale = ((Fattura_passivaBulk) docamm).getCd_tipo_sezionale();
+
+
+			String tiFattura = null;
+			if (docamm.getTipoDocumentoEnum().isFatturaAttiva() || docamm.getTipoDocumentoEnum().isFatturaPassiva())
+				tiFattura = SezionaleBulk.FATTURA;
+			else if (docamm.getTipoDocumentoEnum().isNotaCreditoAttiva() || docamm.getTipoDocumentoEnum().isNotaCreditoPassiva())
+				tiFattura = SezionaleBulk.NOTACREDITO;
+			else if (docamm.getTipoDocumentoEnum().isNotaDebitoAttiva() || docamm.getTipoDocumentoEnum().isNotaDebitoPassiva())
+				tiFattura = SezionaleBulk.NOTADEBITO;
+
+			sql.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, cdTipoSezionale);
+			sql.addClause(FindClause.AND, "ti_fattura", SQLBuilder.EQUALS, tiFattura);
+
+			List<SezionaleBulk> result = this.fetchAll(sql);
+			if (result.size()>1)
+				throw new ApplicationException("Errore nei dati: nella tabella SEZIONALE esistono per l'esercizio "+docamm.getEsercizio()+", per il cds "+ docamm.getCd_cds() +
+						". per la UO "+docamm.getCd_uo()+", per il tipo sezionale "+cdTipoSezionale+" e per la tipologia "+tiFattura+" più righe valide!");
+
+			return result.stream().findFirst().orElse(null);
+		}
+		return null;
+	}
 }
