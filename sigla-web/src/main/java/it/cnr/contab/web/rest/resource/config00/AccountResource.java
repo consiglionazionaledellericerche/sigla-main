@@ -71,7 +71,11 @@ public class AccountResource implements AccountLocal {
         } else {
             final UtenteBulk utenteBulk = (UtenteBulk) crudComponentSession.findByPrimaryKey(
                     userContext,
-                    new UtenteBulk(securityContext.getUserPrincipal().getName())
+                    new UtenteBulk(securityContext
+                            .getUserPrincipal()
+                            .getName()
+                            .toUpperCase()
+                    )
             );
             accountDTO = new AccountDTO(utenteBulk);
             accountDTO.setLogin(securityContext.getUserPrincipal().getName());
