@@ -34,6 +34,7 @@ public class Utente_indirizzi_mailBulk extends Utente_indirizzi_mailBase {
 	}
 	public Utente_indirizzi_mailBulk(java.lang.String cd_utente, java.lang.String indirizzo_mail) {
 		super(cd_utente, indirizzo_mail);
+		setUtente(new UtenteBulk(cd_utente));
 	}
 	public UtenteBulk getUtente() {
 		return utente;
