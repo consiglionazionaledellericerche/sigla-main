@@ -71,7 +71,6 @@ thorntail:
                 dsJndiName: java:/jdbc/CIR
                 principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?)
                 rolesQuery: SELECT DISTINCT CD_RUOLO, 'Roles' FROM UTENTE_UNITA_RUOLO WHERE UPPER(cd_utente)=UPPER(?)
-                principalClass: 'it.cnr.contab.security.auth.SIGLAPrincipal'
                 hashAlgorithm: MD5
                 hashEncoding: BASE64
                 ignorePasswordCase: true
