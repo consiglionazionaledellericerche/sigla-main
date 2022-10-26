@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,6 +80,9 @@ public class AccountResource implements AccountLocal {
             );
             accountDTO = new AccountDTO(utenteBulk);
             accountDTO.setLogin(securityContext.getUserPrincipal().getName());
+            accountDTO.setUsers(Arrays.asList(utenteBulk).stream().map(utente -> new AccountDTO(utente)).collect(Collectors.toList()));
+            accountDTO.setLdap(Boolean.FALSE);
+            accountDTO.setUtenteMultiplo(Boolean.FALSE);
         }
         accountDTO.setEsercizio(userContext.getEsercizio());
         accountDTO.setCds(userContext.getCd_cds());
