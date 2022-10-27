@@ -292,6 +292,7 @@ public class UtenteHome extends BulkHome implements ConsultazioniRestHome {
 		sqlBuilder.addSQLClause(FindClause.AND, "DT_FINE_VALIDITA", SQLBuilder.GREATER_EQUALS, EJBCommonServices.getServerTimestamp());
 		sqlBuilder.addSQLClause(FindClause.OR, "DT_FINE_VALIDITA", SQLBuilder.ISNULL, null);
 		sqlBuilder.closeParenthesis();
+		sqlBuilder.addClause("AND", "fl_autenticazione_ldap", SQLBuilder.EQUALS, Boolean.TRUE);
 		sqlBuilder.addOrderBy("dt_ultimo_accesso desc");
 		return fetchAll(sqlBuilder);
 	}
