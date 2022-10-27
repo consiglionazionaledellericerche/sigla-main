@@ -17,47 +17,24 @@
 
 package it.cnr.contab.web.rest.config;
 
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.ext.Provider;
-
-@Provider
 @WebFilter(filterName = "CORSFilter", servletNames = "ActionServlet", asyncSupported = true)
-public class CORSFilter implements ContainerResponseFilter, Filter {
+public class CORSFilter implements Filter {
     public static final String CORS_ALLOW_ORIGIN = "cors.allow-origin";
     public static final String ORIGIN = "Origin";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
     public static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
     public static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
     public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
-
-    @Override
-    public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext cres) throws IOException {
-        final List<String> allowOrigins = Optional.ofNullable(System.getProperty(CORS_ALLOW_ORIGIN))
-                .filter(s -> !s.isEmpty())
-                .map(s -> Arrays.asList(s.split(";")))
-                .orElse(Collections.emptyList());
-        Optional.ofNullable(requestContext.getHeaders())
-                .flatMap(s -> Optional.ofNullable(s.getFirst(ORIGIN)))
-                .filter(s -> allowOrigins.contains(s))
-                .ifPresent(s -> {
-                    cres.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, s);
-                    cres.getHeaders().add(ACCESS_CONTROL_ALLOW_HEADERS, "*");
-                    cres.getHeaders().add(ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
-                    cres.getHeaders().add(ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
-                });
-    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -82,12 +59,12 @@ public class CORSFilter implements ContainerResponseFilter, Filter {
                 .filter(s -> allowOrigins.contains(s))
                 .ifPresent(s -> {
                     httpServletResponse
-                        .ifPresent(httpServletResponse1 -> {
-                            httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_ORIGIN, s);
-                            httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, "*");
-                            httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
-                            httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE.toString());
-                        });
+                            .ifPresent(httpServletResponse1 -> {
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_ORIGIN, s);
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, "*");
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE.toString());
+                            });
                 });
         chain.doFilter(request, response);
     }

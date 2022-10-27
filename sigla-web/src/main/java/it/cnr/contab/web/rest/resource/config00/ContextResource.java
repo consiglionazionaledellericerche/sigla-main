@@ -166,6 +166,11 @@ public class ContextResource implements ContextLocal {
     }
 
     @Override
+    public Response deleteMessaggi(HttpServletRequest request) throws Exception {
+        return Response.ok().build();
+    }
+
+    @Override
     public Response indirizziMail(HttpServletRequest request) throws Exception {
         try {
             CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
@@ -206,6 +211,12 @@ public class ContextResource implements ContextLocal {
     }
 
     @Override
+    public Response inserisciIndirizziMail(HttpServletRequest request) throws Exception {
+        return Response.ok()
+                .build();
+    }
+
+    @Override
     public Response eliminaIndirizziMail(HttpServletRequest request, String indirizzi) throws Exception {
         CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
         final List<String> indirizziMails = Arrays.asList(indirizzi.split("/"));
@@ -217,7 +228,9 @@ public class ContextResource implements ContextLocal {
                     } catch (ComponentException|RemoteException e) {
                         throw new RuntimeException(e);
                     }
-                }).forEach(utente_indirizzi_mailBulk -> {
+                })
+                .filter(utente_indirizzi_mailBulk -> Optional.ofNullable(utente_indirizzi_mailBulk).isPresent())
+                .forEach(utente_indirizzi_mailBulk -> {
                     try {
                         utente_indirizzi_mailBulk.setToBeDeleted();
                         crudComponentSession.eliminaConBulk(userContext, utente_indirizzi_mailBulk);
