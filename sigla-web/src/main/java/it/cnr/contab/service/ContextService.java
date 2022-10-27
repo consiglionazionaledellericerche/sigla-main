@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.ws.rs.BadRequestException;
 import java.rmi.RemoteException;
 import java.util.Comparator;
 import java.util.List;
@@ -82,7 +83,7 @@ public class ContextService {
                 Optional.ofNullable(crudComponentSession.findByPrimaryKey(userContext, new UtenteBulk(userId)))
                         .filter(UtenteBulk.class::isInstance)
                         .map(UtenteBulk.class::cast)
-                        .orElseThrow(() -> new ComponentException("User not found " + userId));
+                        .orElseThrow(() -> new BadRequestException("User not found " + userId));
         Stream<Unita_organizzativaBulk> uos = Stream.empty();
         if (utenteBulk.isSupervisore()) {
             uos = crudComponentSession.find(userContext, Unita_organizzativaBulk.class, FIND_UNITA_ORGANIZZATIVE_VALIDE, userContext, esercizio, cds, Boolean.FALSE)
@@ -117,7 +118,7 @@ public class ContextService {
                 Optional.ofNullable(crudComponentSession.findByPrimaryKey(userContext, new UtenteBulk(userId)))
                         .filter(UtenteBulk.class::isInstance)
                         .map(UtenteBulk.class::cast)
-                        .orElseThrow(() -> new ComponentException("User not found" + userId));
+                        .orElseThrow(() -> new BadRequestException("User not found" + userId));
         Stream<CdsBulk> cdss = Stream.empty();
         if (utenteBulk.isSupervisore()) {
             cdss = crudComponentSession.find(userContext, Unita_organizzativaBulk.class, FIND_UNITA_ORGANIZZATIVE_VALIDE, userContext, esercizio, uo, Boolean.TRUE)
