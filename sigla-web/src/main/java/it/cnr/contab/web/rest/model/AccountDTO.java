@@ -62,7 +62,7 @@ public class AccountDTO {
         this.roles.put("S", Arrays.asList(ROLE_USER, ROLE_ADMIN));
 
         this.currentUser = currentUser;
-        this.username = currentUser.getCd_utente();
+        this.username = Optional.ofNullable(currentUser).map(UtenteBulk::getCd_utente).orElse(null);
         this.utenteMultiplo = Boolean.FALSE;
         this.authorities = Optional.ofNullable(currentUser)
                 .map(UtenteBulk::getTi_utente)
