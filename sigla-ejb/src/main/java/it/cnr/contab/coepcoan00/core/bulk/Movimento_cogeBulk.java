@@ -381,6 +381,8 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
         RICAVO("RIC", "RICAVO"),
         DEBITO("DEB", "DEBITO"),
         CREDITO("CRE", "CREDITO"),
+        ATTIVITA("ATT", "ATTIVITA'"),
+        PASSIVITA("PAS", "PASSIVITA'"),
         CESPITE("CSP", "CESPITE"),
         TESORERIA("BAN", "TESORERIA"),
         GENERICO("GEN", "GENERICO");

@@ -343,4 +343,35 @@
         <dropDefaultValue tableName="configurazione_cnr" columnName="dacr"/>
         <dropDefaultValue tableName="configurazione_cnr" columnName="duva"/>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="aggiornamento_natura_voce_ep">
+        <sql>
+            UPDATE VOCE_EP
+            SET NATURA_VOCE = 'NUA'
+            WHERE SUBSTR(CD_VOCE_EP, 1, 1) = 'A'
+            AND ESERCIZIO >= 2022
+            AND NATURA_VOCE IS NULL;
+        </sql>
+        <sql>
+            UPDATE VOCE_EP
+            SET NATURA_VOCE = 'NUP'
+            WHERE SUBSTR(CD_VOCE_EP, 1, 1) = 'P'
+            AND ESERCIZIO >= 2022
+            AND NATURA_VOCE IS NULL;
+        </sql>
+        <sql>
+            UPDATE VOCE_EP
+            SET NATURA_VOCE = 'EEC'
+            WHERE SUBSTR(CD_VOCE_EP, 1, 1) = 'C'
+            AND ESERCIZIO >= 2022
+            AND NATURA_VOCE IS NULL;
+        </sql>
+        <sql>
+            UPDATE VOCE_EP
+            SET NATURA_VOCE = 'EER'
+            WHERE SUBSTR(CD_VOCE_EP, 1, 1) = 'R'
+            AND ESERCIZIO >= 2022
+            AND NATURA_VOCE IS NULL;
+        </sql>
+    </changeSet>
 </databaseChangeLog>
