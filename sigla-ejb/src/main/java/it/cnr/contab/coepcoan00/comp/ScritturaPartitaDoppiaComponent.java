@@ -1740,7 +1740,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (((Fattura_passivaBulk) docamm).isCommerciale()) {
 				try {
 					AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
-					optAutofattura = Optional.of(autofatturaHome.findFor((Fattura_passivaBulk) docamm));
+					optAutofattura = Optional.ofNullable(autofatturaHome.findFor((Fattura_passivaBulk) docamm));
 				} catch (ComponentException | PersistencyException e) {
 					throw new ApplicationException(e);
 				}
