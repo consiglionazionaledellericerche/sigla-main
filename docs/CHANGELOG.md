@@ -1,3 +1,11 @@
+## Release 6.4.63  -- _October 28, 2022_ 
+**Changes**
+
+>**Aumentata la dimensione verticale della table nell'inserimento delle spese**
+>
+>[79cf9e43a52005c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/79cf9e43a52005c) marco.spasiano *October 28, 2022*
+
+
 ## Release 6.4.62  -- _October 28, 2022_ 
 **Changes**
 
