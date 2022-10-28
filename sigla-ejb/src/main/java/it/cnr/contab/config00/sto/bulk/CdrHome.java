@@ -34,6 +34,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.List;
 import java.util.Optional;
 
 public class CdrHome extends BulkHome {
@@ -533,4 +534,13 @@ public class CdrHome extends BulkHome {
         throw new FetchException("CdR non trovato per il cds " + cdCds);
 	}
 
+    public List<CdrBulk> findCdRByUO(UserContext userContext, Integer esercizio, String uo) throws PersistencyException {
+        final SQLBuilder sqlBuilder = super.createSQLBuilder();
+        sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLClause(FindClause.AND, "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
+        return fetchAll(sqlBuilder);
+    }
 }
