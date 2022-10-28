@@ -92,6 +92,7 @@ public abstract class Deployments {
                 .addPackages(true, "com.google")
                 .addPackages(true, "feign")
                 .addPackages(true, "net.dongliu.gson")
+                .addPackages(true, "org.infinispan")
                 .addAsResource("org/springframework/web/context/ContextLoader.properties")
                 .addAsResource("org/springframework/ws/client/core/WebServiceTemplate.properties")
                 .addAsResource("META-INF/spring/filesystem.properties")
