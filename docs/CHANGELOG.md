@@ -1,3 +1,11 @@
+## Release 6.4.62  -- _October 28, 2022_ 
+**Changes**
+
+>**Aggiornamento stato su accertamenti residui**
+>
+>[e4e0a5d05df2286](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4e0a5d05df2286) raffaelepagano *October 18, 2022*
+
+
 ## Release 6.4.61  -- _October 14, 2022_ 
 **Changes**
 
