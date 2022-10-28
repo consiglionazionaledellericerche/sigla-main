@@ -1733,22 +1733,34 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		  Quindi se isCommercialeWithAutofattura=true allora devo procedere a registrare IVA
 		  Il flag registraIva viene quindi impostatao a true
 		 */
-		final boolean isCommercialeWithAutofattura = this.hasAutofattura(userContext, docamm);
-
+		final Optional<AutofatturaBulk> optAutofattura;
 		final boolean isSplitPayment;
 		final boolean registraIva;
 		if (docamm instanceof Fattura_passivaBulk) {
+			if (((Fattura_passivaBulk) docamm).isCommerciale()) {
+				try {
+					AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
+					optAutofattura = Optional.of(autofatturaHome.findFor((Fattura_passivaBulk) docamm));
+				} catch (ComponentException | PersistencyException e) {
+					throw new ApplicationException(e);
+				}
+			} else
+				optAutofattura = Optional.empty();
 			isSplitPayment = ((Fattura_passivaBulk) docamm).getFl_split_payment();
 			registraIva = Boolean.TRUE;
 		} else if (docamm instanceof Fattura_attivaBulk) {
+			optAutofattura = Optional.empty();
 			isSplitPayment = ((Fattura_attivaBulk)docamm).getFl_liquidazione_differita();
 			registraIva = !isSplitPayment;
 		} else {
+			optAutofattura = Optional.empty();
 			isSplitPayment = Boolean.FALSE;
 			registraIva = Boolean.TRUE;
 		}
 
-		final boolean registraIvaACosto = registraIva && !isCommercialeWithAutofattura && !(docamm instanceof Fattura_attivaBulk);
+		//L'iva viene registrata a costo se prevista le registrazione e se trattasi di fattura istituzionale passiva
+		final boolean registraIvaACosto = registraIva &&
+				Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isIstituzionale).orElse(Boolean.FALSE);
 
 		final String cdCoriIva, cdCoriIvaSplit;
 		final Voce_epBulk aContoIva, aContoIvaSplit;
@@ -1762,10 +1774,13 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			throw new ApplicationRuntimeException(e);
 		}
 
+		final boolean isIntraUE = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(el->el.getFl_intra_ue()).orElse(Boolean.FALSE);
+		final boolean isExtraUE = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(el->el.getFl_extra_ue()).orElse(Boolean.FALSE);
+
 		Map<Integer, Map<Timestamp, Map<Timestamp, List<DettaglioFinanziario>>>> mapTerzo =
-				righeDettFin.stream().collect(Collectors.groupingBy(DettaglioFinanziario::getCdTerzo,
-						Collectors.groupingBy(DettaglioFinanziario::getDtDaCompetenzaCoge,
-							Collectors.groupingBy(DettaglioFinanziario::getDtACompetenzaCoge))));
+			righeDettFin.stream().collect(Collectors.groupingBy(DettaglioFinanziario::getCdTerzo,
+				Collectors.groupingBy(DettaglioFinanziario::getDtDaCompetenzaCoge,
+					Collectors.groupingBy(DettaglioFinanziario::getDtACompetenzaCoge))));
 
 		mapTerzo.keySet().forEach(aCdTerzo -> mapTerzo.get(aCdTerzo).keySet().forEach(aDtDaCompCoge -> mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).keySet().forEach(aDtACompCoge -> {
 			List<DettaglioFinanziario> righeDettFinTerzo = mapTerzo.get(aCdTerzo).get(aDtDaCompCoge).get(aDtACompCoge);
@@ -1822,10 +1837,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							testataPrimaNota.openDettaglioPatrimonialePartita(docamm, partita, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo);
 
 							//Se intraUE o extraUE sposto l'IVA anzichè darla al Fornitore (quindi chiudo il debito) la rilevo come debito verso Erario
-							if (Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast)
-									.map(el->el.getFl_intra_ue() || el.getFl_extra_ue()).orElse(Boolean.FALSE)) {
-								testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, partita, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, DEFAULT_MODIFICABILE);
-								testataPrimaNota.closeDettaglioIva(docamm, partita, aContoIva.getCd_voce_ep(), imIva, aCdTerzo, cdCoriIva);
+							if (isIntraUE || isExtraUE) {
+								if (optAutofattura.isPresent()) {
+									Voce_epBulk aContoIvaAutofattura = this.findContoIva(userContext, optAutofattura.get());
+									testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, partita, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, DEFAULT_MODIFICABILE);
+									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_VENDITE.value(), Movimento_cogeBulk.SEZIONE_AVERE, aContoIvaAutofattura.getCd_voce_ep(), imIva, aCdTerzo, docamm, cdCoriIva);
+								}
 							}
 
 							if (isSplitPayment) {
@@ -1884,7 +1901,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 						}
 					}));
 
-			if (optLetteraPagamento.isPresent() && !testataPrimaNotaList.isEmpty()) {
+			if (optLetteraPagamento.flatMap(el->Optional.ofNullable(el.getCd_sospeso())).isPresent() && !testataPrimaNotaList.isEmpty()) {
 				if (isFatturaPassivaDaOrdini)
 					throw new ApplicationException("Attenzione! Documento contabile " +docamm.getCd_tipo_doc() + "/" + docamm.getEsercizio() + "/" + docamm.getCd_uo() + "/" + docamm.getPg_doc() +
 							" da ordini con lettera di pagamento. Scrittura prima nota non possibile in quanto tipologia non gestita!");
@@ -1911,16 +1928,23 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				BigDecimal totDocContabile = mapScadenza.keySet().stream().map(Obbligazione_scadenzarioBase::getIm_scadenza).reduce(BigDecimal.ZERO, BigDecimal::add);
 				BigDecimal totIva = righeDocamm.stream().map(IDocumentoAmministrativoRigaBulk::getIm_iva).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-				if (optLetteraPagamento.get().getIm_pagamento().add(totIva).compareTo(totDocContabile) != 0)
+				BigDecimal totDaControllare = optLetteraPagamento.get().getIm_pagamento();
+				if (((Fattura_passivaBulk)docamm).isIstituzionale() && ((Fattura_passivaBulk)docamm).isFatturaDiServizi())
+					totDaControllare = totDaControllare.add(totIva);
+
+				if (totDaControllare.compareTo(totDocContabile) != 0)
 					throw new ApplicationException("L'importo totale (" + new it.cnr.contab.util.EuroFormat().format(totDocContabile) +
-							") dei documenti contabili associati alle righe del documento " +
+							") delle scadenze obbligazioni associate alle righe del documento " +
 							docamm.getCd_tipo_doc() + "/" + docamm.getEsercizio() + "/" + docamm.getCd_uo() + "/" + docamm.getPg_doc() +
-							" è diverso dall'importo (" + new it.cnr.contab.util.EuroFormat().format(optLetteraPagamento.get().getIm_pagamento()) +
-							") della lettera di pagamento associata.");
+							" è diverso dall'importo della lettera di pagamento associata "+(((Fattura_passivaBulk)docamm).isFatturaCommercialeDiServizi()?"aumentata dell'Iva":"") +
+							" (" + new it.cnr.contab.util.EuroFormat().format(totDaControllare) +").");
 
 				mapScadenza.keySet().forEach(os->{
 					try {
-						BigDecimal totFattura = mapScadenza.get(os).stream().map(el->el.getIm_imponibile().add(el.getIm_iva())).reduce(BigDecimal.ZERO, BigDecimal::add);
+						BigDecimal totFattura = mapScadenza.get(os).stream().map(el->el.getIm_imponibile()).reduce(BigDecimal.ZERO, BigDecimal::add);
+						if (((Fattura_passivaBulk)docamm).isIstituzionale() && ((Fattura_passivaBulk)docamm).isFatturaDiServizi())
+							totFattura = totFattura.add(mapScadenza.get(os).stream().map(el->el.getIm_iva()).reduce(BigDecimal.ZERO, BigDecimal::add));
+
 						BigDecimal diffCambio = os.getIm_scadenza().subtract(totFattura);
 						if (diffCambio.compareTo(BigDecimal.ZERO)!=0) {
 							ObbligazioneHome obbligazionehome = (ObbligazioneHome) getHome(userContext, ObbligazioneBulk.class);
@@ -4005,6 +4029,25 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return listAss.get(0);
 	}
 
+	private Voce_epBulk findContoIva(UserContext userContext, AutofatturaBulk autofatturaBulk) throws ComponentException, RemoteException, PersistencyException {
+		SezionaleBulk sezionale = ((SezionaleHome)getHome(userContext, SezionaleBulk.class)).getSezionaleByTipoDocumento(autofatturaBulk);
+
+		return Optional.ofNullable(sezionale).flatMap(el->Optional.ofNullable(el.getContoIva())).filter(el->el.getCd_voce_ep()!=null).flatMap(el->{
+			try {
+				Voce_epHome voceEpHome = (Voce_epHome) getHome(userContext, Voce_epBulk.class);
+				return Optional.ofNullable((Voce_epBulk) voceEpHome.findByPrimaryKey(new Voce_epBulk(el.getCd_voce_ep(), el.getEsercizio())));
+			} catch(ComponentException|PersistencyException ex) {
+				throw new DetailedRuntimeException(ex);
+			}
+		}).orElseGet(()->{
+			try {
+				return this.findContoIvaDebito(userContext, autofatturaBulk.getEsercizio());
+			} catch(ComponentException|RemoteException ex) {
+				throw new DetailedRuntimeException(ex);
+			}
+		});
+	}
+
 	private Voce_epBulk findContoIva(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException, RemoteException, PersistencyException {
 		SezionaleBulk sezionale = ((SezionaleHome)getHome(userContext, SezionaleBulk.class)).getSezionaleByTipoDocumento(docamm);
 
@@ -5067,27 +5110,6 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							aPartita.getCd_tipo_doc() + "/" + aPartita.getCd_cds() + "/" + aPartita.getCd_uo() + "/" + aPartita.getEsercizio() + "/" + aPartita.getPg_doc():""));
 */
 			return movimentoCoge;
-		} catch (PersistencyException e) {
-			throw handleException(e);
-		}
-	}
-
-	private boolean hasAutofattura(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException {
-		try {
-			final Optional<Fattura_passivaBulk> optionalFattura_passivaBulk = Optional.of(docamm)
-					.filter(Fattura_passivaBulk.class::isInstance)
-					.map(Fattura_passivaBulk.class::cast);
-			if (optionalFattura_passivaBulk.isPresent()) {
-				if (!optionalFattura_passivaBulk.get().isCommerciale())
-					return false;
-				if (!optionalFattura_passivaBulk.get().getFl_autofattura()) {
-					AutofatturaHome autofatturaHome = (AutofatturaHome) getHome(userContext, AutofatturaBulk.class);
-					AutofatturaBulk autof = autofatturaHome.findFor(optionalFattura_passivaBulk.get());
-					return Optional.ofNullable(autof).isPresent();
-				}
-				return optionalFattura_passivaBulk.get().getFl_autofattura();
-			}
-			return false;
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}

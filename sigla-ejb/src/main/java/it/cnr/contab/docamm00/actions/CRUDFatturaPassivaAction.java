@@ -25,12 +25,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
-import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
@@ -115,7 +112,6 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.Selection;
@@ -3181,7 +3177,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                     fattura.setFl_liquidazione_differita(Boolean.FALSE);
                     if (!fattura.isPromiscua())
                         fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
-                    fattura.setFl_autofattura((fattura.isFatturaDiServizi()) ? Boolean.TRUE : Boolean.FALSE);
+                    fattura.setFl_autofattura((fattura.isFatturaCommercialeDiServizi()) ? Boolean.TRUE : Boolean.FALSE);
                     //fattura.setAutoFatturaNeeded(fattura.isFatturaDiServizi());
                 } else {
                     fattura.setTi_bene_servizio(null);
@@ -3805,7 +3801,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 }
                 if (fattura.isCommerciale() && fattura.getFl_intra_ue() != null &&
                         fattura.getFl_intra_ue().booleanValue()) {
-                    if (fattura.isFatturaDiServizi()) {
+                    if (fattura.isFatturaCommercialeDiServizi()) {
                         fattura.setFl_autofattura(Boolean.TRUE);
                         fattura.setAutoFatturaNeeded(false);
                         fattura.setFl_merce_extra_ue(Boolean.FALSE);
@@ -3816,7 +3812,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                 }
                 if (fattura.isCommerciale() && fattura.getFl_san_marino_senza_iva() != null &&
                         fattura.getFl_san_marino_senza_iva().booleanValue()) {
-                    if (fattura.isFatturaDiServizi()) {
+                    if (fattura.isFatturaCommercialeDiServizi()) {
                         fattura.setFl_autofattura(Boolean.TRUE);
                         fattura.setAutoFatturaNeeded(false);
                     } else {
