@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 
 import java.rmi.RemoteException;
 import java.sql.*;
+import java.util.List;
 
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneHome;
@@ -531,56 +532,50 @@ public int getNumeroUoCollegateAdAreaInCds(Unita_organizzativaBulk uo)  throws A
  * @return 
  * @throws PersistencyException	
  */
-public boolean verificaEsercizioPreventivo( Unita_organizzativaBulk uo ) throws PersistencyException
-{	try
-	{
+public boolean verificaEsercizioPreventivo( Unita_organizzativaBulk uo ) throws PersistencyException {
+	try {
 		int esercizioPdG;
-		
+
 		LoggableStatement ps = new LoggableStatement(getConnection(),
-			"SELECT MAX(ESERCIZIO) FROM " +
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 			
-			"PDG_PREVENTIVO " +
-			"WHERE " +
-			"CD_CENTRO_RESPONSABILITA LIKE ? ",true,this.getClass());
-		try
-		{
-			ps.setString( 1, uo.getCd_unita_organizzativa() + "%" );
-		
+				"SELECT MAX(ESERCIZIO) FROM " +
+						it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+						"PDG_PREVENTIVO " +
+						"WHERE " +
+						"CD_CENTRO_RESPONSABILITA LIKE ? ", true, this.getClass());
+		try {
+			ps.setString(1, uo.getCd_unita_organizzativa() + "%");
+
 			ResultSet rs = ps.executeQuery();
-			try
-			{
-				if ( rs.next() )
-				{
-					esercizioPdG = rs.getInt( 1 );
-					if ( esercizioPdG > 0 && esercizioPdG > uo.getEsercizio_fine().intValue())
+			try {
+				if (rs.next()) {
+					esercizioPdG = rs.getInt(1);
+					if (esercizioPdG > 0 && esercizioPdG > uo.getEsercizio_fine().intValue())
 						return false;
 				}
+			} catch (SQLException e) {
+				throw new PersistencyException(e);
+			} finally {
+				try {
+					rs.close();
+				} catch (java.sql.SQLException e) {
+				}
+				;
 			}
-			catch( SQLException e )
-			{
-				throw new PersistencyException( e );
+		} catch (SQLException e) {
+			throw new PersistencyException(e);
+		} finally {
+			try {
+				ps.close();
+			} catch (java.sql.SQLException e) {
 			}
-			finally
-			{
-				try{rs.close();}catch( java.sql.SQLException e ){};
-			}
+			;
 		}
-		catch( SQLException e )
-		{
-			throw new PersistencyException( e );
-		}
-		finally
-		{
-			try{ps.close();}catch( java.sql.SQLException e ){};
-		}
-		
-		return true;
-	}
-	catch ( SQLException e )
-	{
-			throw new PersistencyException( e );
-	}
 
+		return true;
+	} catch (SQLException e) {
+		throw new PersistencyException(e);
+	}
+}
     public List<Unita_organizzativaBulk> findUnitaOrganizzativeValide(UserContext userContext, Integer esercizio, String codice, Boolean cds) throws PersistencyException {
         setFetchPolicy("fetchUnitaPadre");
         SQLBuilder sqlBuilder = super.createSQLBuilder();
@@ -635,7 +630,5 @@ public boolean verificaEsercizioPreventivo( Unita_organizzativaBulk uo ) throws 
         getHomeCache().fetchAll(userContext);
         return result;
     }
-
-}
 
 }

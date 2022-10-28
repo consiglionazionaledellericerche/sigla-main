@@ -107,6 +107,11 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
     }
 
     @Override
+    public String getRowCSSClass(Object obj, boolean even) {
+        return null;
+    }
+
+    @Override
     public boolean isRowEnabled(Object obj) {
         return true;
     }
