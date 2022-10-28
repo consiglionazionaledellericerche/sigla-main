@@ -2,44 +2,6 @@ logger:
   level: DEBUG
 
 thorntail:
-  undertow:
-    filter-configuration:
-      response-headers:
-        access-control-max-age:
-          header-name: Access-Control-Max-Age
-          header-value: 3600
-        access-control-allow-origin:
-          header-name: Access-Control-Allow-Origin
-          header-value: 'http://localhost:9000'
-        access-control-allow-headers:
-          header-name: Access-Control-Allow-Headers
-          header-value: '*'
-        access-control-allow-methods:
-          header-name: Access-Control-Allow-Methods
-          header-value: 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-        access-control-allow-credentials:
-          header-name: Access-Control-Allow-Credentials
-          header-value: true
-        # other headers configuration
-    servers:
-      default-server:
-        http-listeners:
-          default:
-            rfc6265-cookie-validation: true
-        hosts:
-          default-host:
-            filter-refs:
-              access-control-max-age:
-                priority: 1
-              access-control-allow-origin:
-                priority: 1
-              access-control-allow-headers:
-                priority: 1
-              access-control-allow-methods:
-                priority: 1
-              access-control-allow-credentials:
-                priority: 1
-              # other filter refs
   security:
     security-domains:
       sigla-auth:
@@ -71,7 +33,6 @@ thorntail:
                 dsJndiName: java:/jdbc/CIR
                 principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?)
                 rolesQuery: SELECT DISTINCT CD_RUOLO, 'Roles' FROM UTENTE_UNITA_RUOLO WHERE UPPER(cd_utente)=UPPER(?)
-                principalClass: 'it.cnr.contab.security.auth.SIGLAPrincipal'
                 hashAlgorithm: MD5
                 hashEncoding: BASE64
                 ignorePasswordCase: true
