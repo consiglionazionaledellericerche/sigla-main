@@ -62,12 +62,6 @@ import org.slf4j.LoggerFactory;
 public class RESTSecurityInterceptor implements ContainerRequestFilter, ContainerResponseFilter , ExceptionMapper<Exception> {
 
 	private Logger LOGGER = LoggerFactory.getLogger(RESTSecurityInterceptor.class);
-	public static final String CORS_ALLOW_ORIGIN = "cors.allow-origin";
-	public static final String ORIGIN = "Origin";
-	public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
-	public static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
-	public static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
-	public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
 
 	@Context
 	private ResourceInfo resourceInfo;
@@ -204,18 +198,18 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
-		final List<String> allowOrigins = Optional.ofNullable(System.getProperty(CORS_ALLOW_ORIGIN))
+		final List<String> allowOrigins = Optional.ofNullable(System.getProperty(CORSFilter.CORS_ALLOW_ORIGIN))
 				.filter(s -> !s.isEmpty())
 				.map(s -> Arrays.asList(s.split(";")))
 				.orElse(Collections.emptyList());
 		Optional.ofNullable(containerRequestContext.getHeaders())
-				.flatMap(s -> Optional.ofNullable(s.getFirst(ORIGIN)))
+				.flatMap(s -> Optional.ofNullable(s.getFirst(CORSFilter.ORIGIN)))
 				.filter(s -> allowOrigins.contains(s))
 				.ifPresent(s -> {
-					containerResponseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, s);
-					containerResponseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_HEADERS, "content-type");
-					containerResponseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
-					containerResponseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_ORIGIN, s);
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_HEADERS, "content-type");
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
 				});
 
 	}
