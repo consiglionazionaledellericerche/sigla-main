@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -172,8 +173,7 @@ public it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk getTipo_sezionale()
  * @return boolean
  */
 public boolean isAutofatturaDiBeni() {
-	return getTi_bene_servizio() != null &&
-			it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio());
+	return Bene_servizioBulk.BENE.equals(getTi_bene_servizio());
 }
 /**
  * Insert the method's description here.

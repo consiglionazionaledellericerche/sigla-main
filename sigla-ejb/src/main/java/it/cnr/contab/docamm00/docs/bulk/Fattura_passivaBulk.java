@@ -22,7 +22,6 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.*;
@@ -35,7 +34,6 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
@@ -1505,7 +1503,7 @@ public abstract class Fattura_passivaBulk
 
             } else {
                 if (isAutoFatturaNeeded())
-                    setFl_autofattura(isFatturaDiServizi() ? Boolean.TRUE : Boolean.FALSE);
+                    setFl_autofattura(isFatturaCommercialeDiServizi() ? Boolean.TRUE : Boolean.FALSE);
             }
             if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                 ((Fattura_passiva_IBulk) this).setFattura_estera(null);
@@ -1632,8 +1630,8 @@ public abstract class Fattura_passivaBulk
                 if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
                     ((Fattura_passiva_IBulk) this).setFattura_estera(null);
                 if (isAutoFatturaNeeded())
-                    setFl_autofattura(isFatturaDiServizi() ? Boolean.TRUE : Boolean.FALSE);
-                setAutoFatturaNeeded(isFatturaDiServizi());
+                    setFl_autofattura(isFatturaCommercialeDiServizi() ? Boolean.TRUE : Boolean.FALSE);
+                setAutoFatturaNeeded(isFatturaCommercialeDiServizi());
                 break;
             }
             case 4: {
@@ -2280,38 +2278,19 @@ public abstract class Fattura_passivaBulk
         return false;
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (2/15/2002 2:28:51 PM)
-     *
-     * @return java.util.Vector
-     */
-    public boolean isFatturaDiBeni() {
-
+    public boolean isFatturaIstituzionaleDiBeni() {
         return isIstituzionale() &&
                 getTi_bene_servizio() != null &&
                 Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio());
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (2/15/2002 2:28:51 PM)
-     *
-     * @return java.util.Vector
-     */
-    public boolean isFatturaDiServizi() {
+    public boolean isFatturaCommercialeDiServizi() {
 
         return isCommerciale() &&
                 getTi_bene_servizio() != null &&
                 Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(getTi_bene_servizio());
     }
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (2/15/2002 2:28:51 PM)
-     *
-     * @return java.util.Vector
-     */
     public boolean isGenerataDaCompenso() {
 
         return getFl_fattura_compenso() != null &&
@@ -2323,7 +2302,6 @@ public abstract class Fattura_passivaBulk
      *
      * @return boolean
      */
-
     public boolean isIstituzionale() {
         return TipoIVA.ISTITUZIONALE.value().equals(getTi_istituz_commerc());
     }
@@ -2695,11 +2673,11 @@ public abstract class Fattura_passivaBulk
         return isCommerciale() && (
                 (getFl_split_payment() != null && getFl_split_payment()) ||
                         ((getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio())) ||
-                                (getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())) ||
-                        (getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue()) ||
+                                (getFl_intra_ue() != null && getFl_intra_ue().booleanValue() && isFatturaCommercialeDiServizi() && getFl_autofattura().booleanValue())) ||
+                        (getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaCommercialeDiServizi() && getFl_autofattura().booleanValue()) ||
                         // quadratura in deroga per commerciali
                         //(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue()) ||
-                        (getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue()) ||
+                        (getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && isFatturaCommercialeDiServizi() && getFl_autofattura().booleanValue()) ||
                         (getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) && getFl_autofattura().booleanValue()
                                 && getFl_merce_intra_ue() != null && getFl_merce_intra_ue().booleanValue())
         );
@@ -2713,7 +2691,7 @@ public abstract class Fattura_passivaBulk
                 (getFl_intra_ue() != null && getFl_intra_ue().booleanValue()) ||
                         (getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&
                 (getTipo_sezionale() != null && getTipo_sezionale().getTi_bene_servizio().equalsIgnoreCase(getTi_bene_servizio())) &&
-                isFatturaDiBeni()) || (getTipo_sezionale() != null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue()) ||
+                isFatturaIstituzionaleDiBeni()) || (getTipo_sezionale() != null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue()) ||
                 (isIstituzionale() && getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio())
                         && getFl_merce_intra_ue() != null && getFl_merce_intra_ue().booleanValue()));
     }
@@ -3592,4 +3570,13 @@ public abstract class Fattura_passivaBulk
     public Long getReportIdLiquid() {
         return null;
     }
+
+    public boolean isFatturaDiBeni() {
+        return Bene_servizioBulk.BENE.equals(this.getTi_bene_servizio());
+    }
+
+    public boolean isFatturaDiServizi() {
+        return Bene_servizioBulk.SERVIZIO.equals(this.getTi_bene_servizio());
+    }
+
 }

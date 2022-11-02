@@ -22,9 +22,6 @@ import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
-import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -6819,7 +6816,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         try {
             VoceIvaComponentSession h = null;
             Voce_ivaBulk def = null;
-            if (riga instanceof Fattura_passiva_rigaIBulk && riga.getFattura_passiva().isFatturaDiBeni() && riga.getFattura_passiva().getFl_intra_ue()) {
+            if (riga instanceof Fattura_passiva_rigaIBulk && riga.getFattura_passiva().isFatturaIstituzionaleDiBeni() && riga.getFattura_passiva().getFl_intra_ue()) {
                 h = (VoceIvaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_VoceIvaComponentSession", VoceIvaComponentSession.class);
                 def = h.caricaVoceIvaDefault(aUC);
                 if (def != null && def.getCd_voce_iva() != null)
