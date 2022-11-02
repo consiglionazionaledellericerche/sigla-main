@@ -60,12 +60,12 @@ public class CORSFilter implements Filter {
                 .map(s -> Arrays.asList(s.split(";")))
                 .orElse(Collections.emptyList());
 
-        logger.info("CORS Filter AllowOrigins: {} ", allowOrigins);
+        logger.debug("CORS Filter AllowOrigins: {} ", allowOrigins);
 
         httpServletRequest
                 .map(httpServletRequest1 -> {
                     final String origin = httpServletRequest1.getHeader(ORIGIN);
-                    logger.info("CORS Filter Origin from Request: {} ", origin);
+                    logger.debug("CORS Filter Origin from Request: {} ", origin);
                     return origin;
                 })
                 .filter(s -> allowOrigins.contains(s))
