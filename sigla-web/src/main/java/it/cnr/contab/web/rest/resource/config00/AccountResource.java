@@ -20,12 +20,16 @@ package it.cnr.contab.web.rest.resource.config00;
 import it.cnr.contab.security.auth.SIGLALDAPPrincipal;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.web.rest.exception.InvalidPasswordException;
 import it.cnr.contab.web.rest.local.config00.AccountLocal;
 import it.cnr.contab.web.rest.model.AccountDTO;
+import it.cnr.contab.web.rest.model.PasswordDTO;
 import it.cnr.contab.web.rest.resource.util.AbstractResource;
 import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Base64Utils;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -33,6 +37,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -109,7 +115,37 @@ public class AccountResource implements AccountLocal {
     }
 
     @Override
-    public Response changePassword(HttpServletRequest request, String password) throws Exception {
-        return null;
+    public Response changePassword(HttpServletRequest request, PasswordDTO passwordDTO) throws Exception {
+        CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
+        final String newPassword = Optional.ofNullable(passwordDTO.getNewPassword())
+                .filter(s -> s.length() >= 4)
+                .filter(s -> s.length() < 50)
+                .orElseThrow(() -> new InvalidPasswordException(passwordDTO.getNewPassword()));
+        final UtenteBulk utente = (UtenteBulk) crudComponentSession.findByPrimaryKey(
+                userContext,
+                new UtenteBulk(securityContext
+                        .getUserPrincipal()
+                        .getName()
+                        .toUpperCase()
+                )
+        );
+        byte[] buser = utente.getCd_utente().getBytes();
+        byte[] bpassword = newPassword.toUpperCase().getBytes();
+        byte h = 0;
+        for (int i = 0;i < bpassword.length;i++) {
+            h = (byte)(bpassword[i] ^ h);
+            for (int j = 0;j < buser.length;j++)
+                bpassword[i] ^= buser[j] ^ h;
+        }
+        utente.setPassword( Base64Utils.encodeToString(bpassword));
+        utente.setDt_ultima_var_password(EJBCommonServices.getServerTimestamp());
+        utente.setToBeUpdated();
+        crudComponentSession.modificaConBulk(userContext, utente);
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response changePassword(HttpServletRequest request) throws Exception {
+        return Response.ok().build();
     }
 }
