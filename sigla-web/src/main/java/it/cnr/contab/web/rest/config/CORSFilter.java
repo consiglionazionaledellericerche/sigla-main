@@ -17,6 +17,9 @@
 
 package it.cnr.contab.web.rest.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +30,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@WebFilter(filterName = "CORSFilter", servletNames = "ActionServlet", asyncSupported = true)
+@WebFilter(filterName = "CORSFilter", value = "*.do")
 public class CORSFilter implements Filter {
+    private static final Logger logger = LoggerFactory.getLogger(CORSFilter.class);
+
     public static final String CORS_ALLOW_ORIGIN = "cors.allow-origin";
     public static final String ORIGIN = "Origin";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
@@ -38,7 +43,7 @@ public class CORSFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        logger.info("Init Filter: {}", filterConfig.getFilterName());
     }
 
     @Override
@@ -71,6 +76,6 @@ public class CORSFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        logger.info("Destroy CORS Filter");
     }
 }
