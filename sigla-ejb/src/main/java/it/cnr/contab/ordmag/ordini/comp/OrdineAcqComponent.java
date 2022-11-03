@@ -1282,7 +1282,7 @@ public class OrdineAcqComponent
 					if (ordine.isOrdineMepa()  && (!(ordine.isStatoDefinitivo() || ordine.isStatoInserito()))){
 						throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare uno stato diverso da inserito o Definitivo");
 					}
-					if (ordine.isStatoAllaFirma()){
+					if (ordine.isStatoAllaFirma() || (ordine.isOrdineMepa() && ordine.isStatoDefinitivo())){
 						for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
 							OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) i.next();
 							for (java.util.Iterator k= riga.getRigheConsegnaColl().iterator(); k.hasNext();) {
