@@ -839,6 +839,12 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
         if (selectedModels != null) {
             while (selectedModels.hasNext()) {
                 OrdineAcqRigaBulk rigaSelected = (OrdineAcqRigaBulk) selectedModels.next();
+                if(rigaSelected.getDspQuantita()==null || rigaSelected.getDspQuantita().compareTo(new BigDecimal(0)) <= 0){
+                   throw new it.cnr.jada.comp.ApplicationException("Impostare la quantità del dettaglio \"" + rigaSelected.getRiga() +"\"" );
+                }
+                if(rigaSelected.getPrezzoUnitario()==null || rigaSelected.getPrezzoUnitario().compareTo(new BigDecimal(0)) <= 0){
+                    throw new it.cnr.jada.comp.ApplicationException("Impostare il prezzo unitario del dettaglio \"" + rigaSelected.getRiga() +"\"" );
+                }
                 if (rigaSelected.getDspObbligazioneScadenzario() != null && rigaSelected.getDspObbligazioneScadenzario().getEsercizio_originale() != null) {
                     throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" è già stato associato ad impegno! Modificare la selezione.");
                 }
