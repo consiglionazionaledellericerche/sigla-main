@@ -1699,10 +1699,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		final boolean isFatturaPassivaIstituzionale = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isIstituzionale).orElse(Boolean.FALSE);
 		final boolean isIntraUE = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_intra_ue).orElse(Boolean.FALSE);
 		final boolean isExtraUE = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_extra_ue).orElse(Boolean.FALSE);
-		final boolean isMerceIntraUE = Optional.of(docamm).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_merce_intra_ue).orElse(Boolean.FALSE);
-		final boolean isFatturaDiBeni = Optional.of(docamm).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isFatturaDiBeni).orElse(Boolean.FALSE);
-		final boolean isFatturaDiServizi = Optional.of(docamm).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isFatturaDiServizi).orElse(Boolean.FALSE);
-		final boolean isSanMarinoSenzaIva = Optional.of(docamm).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_san_marino_senza_iva).orElse(Boolean.FALSE);
+		final boolean isMerceIntraUE = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_merce_intra_ue).orElse(Boolean.FALSE);
+		final boolean isFatturaDiBeni = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isFatturaDiBeni).orElse(Boolean.FALSE);
+		final boolean isFatturaDiServizi = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isFatturaDiServizi).orElse(Boolean.FALSE);
+		final boolean isSanMarinoSenzaIva = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_san_marino_senza_iva).orElse(Boolean.FALSE);
 		final boolean hasAutofattura = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_autofattura).orElse(Boolean.FALSE);
 		final boolean isServiziNonResidenti = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getTipo_sezionale)
 				.map(ts->Optional.of(ts).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
