@@ -129,7 +129,6 @@
 					0 10px rgba(0, 0, 0, 0.3);
 					box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
-					background: url('logo_sdi_trasparente.jpg') 98% 50px no-repeat;
 					}
 					#fattura-elettronica div.footer { padding: 50px 0 0 0; margin: 0; font-size: 11px; text-align: center; color: #777777; }
 				</style>
