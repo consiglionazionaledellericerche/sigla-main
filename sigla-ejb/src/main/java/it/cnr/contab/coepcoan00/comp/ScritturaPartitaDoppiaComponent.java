@@ -39,6 +39,7 @@ import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.SezionaleHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_economaleHome;
@@ -1703,6 +1704,16 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		final boolean isFatturaDiServizi = Optional.of(docamm).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::isFatturaDiServizi).orElse(Boolean.FALSE);
 		final boolean isSanMarinoSenzaIva = Optional.of(docamm).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_san_marino_senza_iva).orElse(Boolean.FALSE);
 		final boolean hasAutofattura = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getFl_autofattura).orElse(Boolean.FALSE);
+		final boolean isServiziNonResidenti = Optional.of(docamm).filter(Fattura_passivaBulk.class::isInstance).map(Fattura_passivaBulk.class::cast).map(Fattura_passivaBulk::getTipo_sezionale)
+				.map(ts->Optional.of(ts).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
+					try {
+						Tipo_sezionaleHome home = (Tipo_sezionaleHome) getHome(userContext, Tipo_sezionaleBulk.class);
+						return (Tipo_sezionaleBulk) home.findByPrimaryKey(ts);
+					} catch (ComponentException | PersistencyException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				}))
+				.map(Tipo_sezionaleBulk::getFl_servizi_non_residenti).orElse(Boolean.FALSE);
 
 		//L'iva viene registrata a costo se prevista le registrazione e se trattasi di fattura istituzionale passiva
 		final boolean registraIvaACosto = registraIva && isFatturaPassivaIstituzionale;
@@ -1789,7 +1800,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 							if (isFatturaPassivaIstituzionale) {
 								if ((isFatturaDiBeni && (isSanMarinoSenzaIva || isIntraUE || isMerceIntraUE)) ||
-										(isFatturaDiServizi && ((Fattura_passivaBulk)docamm).getTipo_sezionale().getFl_servizi_non_residenti())) {
+									(isFatturaDiServizi && isServiziNonResidenti)) {
 									testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, partita, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, DEFAULT_MODIFICABILE);
 									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aContoIva.getCd_voce_ep(), imIva, aCdTerzo, docamm, cdCoriIva);
 								}
