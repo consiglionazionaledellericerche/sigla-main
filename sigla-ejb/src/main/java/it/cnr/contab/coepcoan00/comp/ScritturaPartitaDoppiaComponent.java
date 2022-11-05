@@ -1794,7 +1794,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								if (optAutofattura.isPresent()) {
 									Voce_epBulk aContoIvaAutofattura = this.findContoIva(userContext, optAutofattura.get());
 									testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, partita, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, DEFAULT_MODIFICABILE);
-									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_VENDITE.value(), Movimento_cogeBulk.SEZIONE_AVERE, aContoIvaAutofattura.getCd_voce_ep(), imIva, aCdTerzo, docamm, cdCoriIva);
+									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_VENDITE.value(), docamm.getTipoDocumentoEnum().getSezionePatrimoniale(), aContoIvaAutofattura.getCd_voce_ep(), imIva, aCdTerzo, docamm, cdCoriIva);
 								}
 							}
 
@@ -1802,7 +1802,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 								if ((isFatturaDiBeni && (isSanMarinoSenzaIva || isIntraUE || isMerceIntraUE)) ||
 									(isFatturaDiServizi && isServiziNonResidenti)) {
 									testataPrimaNota.closeDettaglioPatrimonialePartita(docamm, partita, pairContoCosto.getSecond().getCd_voce_ep(), imIva, aCdTerzo, DEFAULT_MODIFICABILE);
-									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aContoIva.getCd_voce_ep(), imIva, aCdTerzo, docamm, cdCoriIva);
+									testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.IVA_ACQUISTO.value(), docamm.getTipoDocumentoEnum().getSezionePatrimoniale(), aContoIva.getCd_voce_ep(), imIva, aCdTerzo, docamm, cdCoriIva);
 								}
 							}
 
