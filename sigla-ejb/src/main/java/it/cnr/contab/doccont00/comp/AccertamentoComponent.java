@@ -23,6 +23,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
@@ -71,43 +73,7 @@ import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaHome;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoCdsBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceKey;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaHome;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaKey;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteHome;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
-import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_entrate_pgiroBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_accertamentiBulk;
-import it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_accertBulk;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_accertHome;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_accert_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_accert_scad_voceHome;
-import it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
@@ -1201,6 +1167,8 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	//generaDettagliScadenzaObbligazione( uc, obbligazione, null );
 	verificaAccertamento( uc, (AccertamentoBulk) bulk );
 
+	validaAccertamentoPluriennale(uc, (AccertamentoBulk) bulk);
+
 	bulk = super.creaConBulk( uc, bulk );
 
 	verificaCoperturaContratto( uc, (AccertamentoBulk) bulk );
@@ -1636,6 +1604,7 @@ private OggettoBulk inizializzaAccertamentoCdsPerModifica (UserContext aUC,Ogget
 		// Carico i Cdr con Codice Unita' Organizzativa uguale al Codice Unita Organizzativa dell'accertamento
 //		accertamento.getCdrColl().addAll( accertHome.findCdr( accertamento ));
 
+		accertamento.setAccertamentiPluriennali(new BulkList(accertHome.findAccertamentiPluriennali(aUC,accertamento)));
 		// Carico la scadenza
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
 		for (Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext();)
@@ -1654,6 +1623,7 @@ private OggettoBulk inizializzaAccertamentoCdsPerModifica (UserContext aUC,Ogget
 		BulkList dettagliScadenze = new BulkList();
 		dettagliScadenze =  new BulkList( dettaglioHome.findDettagli_scadenze( accertamento ));
 		String cdLA = ((Accertamento_scad_voceBulk)dettagliScadenze.get(0)).getCd_linea_attivita();
+
 
 		// Inizializzazione delle lista di tutte le linee di attivita eleggibili e di quella selezionata
 		// per l'accertamento
@@ -1806,7 +1776,10 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		if (accertamento instanceof AccertamentoResiduoBulk)
 			((AccertamentoResiduoBulk)bulk).setIm_quota_inesigibile(((AccertamentoResiduoBulk)bulk).getIm_quota_inesigibile_ripartita());
 
+		accertamento.setAccertamentiPluriennali(new BulkList(accertHome.findAccertamentiPluriennali(aUC,accertamento)));
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
+
+
 		for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
 		{
 			Accertamento_scadenzarioBulk os = (Accertamento_scadenzarioBulk) i.next();
@@ -2377,6 +2350,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 {
 	generaDettagliScadenzaAccertamento( aUC, (AccertamentoBulk) bulk, null );
 	verificaAccertamento( aUC, (AccertamentoBulk) bulk );
+	validaAccertamentoPluriennale(aUC, (AccertamentoBulk) bulk);
 
 	bulk =  super.modificaConBulk( aUC, bulk );
 
@@ -4265,6 +4239,7 @@ public PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(UserContext userContex
 		if (accertDB == null)
 			return prcImputazioneFinanziariaTable;
 
+		accertDB.setAccertamentiPluriennali(new BulkList(accertHome.findAccertamentiPluriennali(userContext,accertamento)));
 		accertDB.setAccertamento_scadenzarioColl(new BulkList(accertHome.findAccertamento_scadenzarioList(accertDB)));
 
 		for ( Iterator i = accertDB.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
@@ -4724,10 +4699,36 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 	SQLBuilder sql = getHome(userContext, assestato).createSQLBuilder();
 
 	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio( userContext ) );
-	sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
 	sql.addClause(FindClause.AND, "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
 	sql.addSQLClause(FindClause.AND, "IMPORTO_DISPONIBILE+IMPORTO_VINCOLI", SQLBuilder.GREATER, BigDecimal.ZERO);
+
+	if (CNRUserContext.getEsercizio( userContext )<2022)
+		sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
+	else {
+		sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio(userContext));
+			sql.openParenthesis(FindClause.OR);
+				sql.addClause(FindClause.AND, "progetto_dt_inizio", SQLBuilder.LESS_EQUALS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+				sql.openParenthesis(FindClause.AND);
+					sql.openParenthesis(FindClause.OR);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.ISNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.ISNULL, null);
+					sql.closeParenthesis();
+					sql.openParenthesis(FindClause.OR);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.ISNOTNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.ISNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.GREATER_EQUALS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+					sql.closeParenthesis();
+					sql.openParenthesis(FindClause.OR);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.ISNOTNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.ISNOTNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.GREATER_EQUALS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+					sql.closeParenthesis();
+				sql.closeParenthesis();
+			sql.closeParenthesis();
+		sql.closeParenthesis();
+	}
 
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);
@@ -4748,11 +4749,11 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResiduoBulk accertamento) throws ComponentException
 {
 	try {
-		if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoDubbio()) {
+		if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoDubbio() || accertamento.isStatoGiudizialmenteControverso()) {
 			if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile()) { 
 				if (accertamento.getIm_quota_inesigibile_da_ripartire().compareTo(BigDecimal.ZERO)!=0)
 					throw new ApplicationException("Attenzione! Non risulta correttamente coperta con spese vincolate la quota inesigibile dell'accertamento residuo. Operazione non possibile!");
-			} else { //accertamento.isStatoDubbio()
+			} else { //accertamento.isStatoDubbio() || accertamento.isStatoGiudizialmenteControverso()
 				if (Optional.ofNullable(accertamento.getImportoNonIncassato()).orElse(BigDecimal.ZERO).compareTo(
 							Optional.ofNullable(accertamento.getIm_quota_inesigibile_ripartita()).orElse(BigDecimal.ZERO))<0)
 					throw new ApplicationException("Attenzione! Le spese vincolate ("
@@ -4851,4 +4852,43 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 	sql.setOrderBy("pg_variazione", it.cnr.jada.util.OrderConstants.ORDER_DESC);
 	return sql;
 }
+
+	private void validaAccertamentoPluriennale(UserContext uc, AccertamentoBulk bulk) throws ComponentException{
+
+
+		for(Accertamento_pluriennaleBulk accPlur : bulk.getAccertamentiPluriennali()){
+			if(accPlur.getAnno() == null || accPlur.getAnno() == 0){
+				throw new ApplicationException("Impostare Anno Accertamento Pluriennale");
+			}
+			if( !isAnnoPluriennaleSuccessivo(bulk.getEsercizio(),accPlur.getAnno())){
+				throw new ApplicationException("L'anno dell'Accertamento Pluriennale deve essere successivo all'anno corrente");
+			}
+			if(isAnnoDuplicato(bulk)){
+				throw new ApplicationException("Risulta presente più volte lo stesso anno per l'Accertamento Pluriennale");
+			}
+			if(accPlur.getImporto() == null){
+				throw new ApplicationException("Impostare Importo dell'Accertamento Pluriennale");
+			}
+		}
+	}
+
+	private boolean isAnnoDuplicato(AccertamentoBulk bulk){
+		if ( bulk.getAccertamentiPluriennali().stream()
+				.filter(ap -> Optional.ofNullable(ap.getAnno()).isPresent())
+				.collect(Collectors.groupingBy(Accertamento_pluriennaleBulk::getAnno, Collectors.counting()))
+				.values().stream().filter(e->e.compareTo(Long.decode("1"))>0).count()>0) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+
+	private boolean isAnnoPluriennaleSuccessivo(Integer annoObbligazione, Integer annoObbPluriennale) {
+
+		if(annoObbPluriennale.compareTo(annoObbligazione) <= 0){
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+
+	}
+
 }

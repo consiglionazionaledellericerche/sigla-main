@@ -17,8 +17,8 @@
 <title> <%=(bp.getModel() instanceof Nota_di_creditoBulk) ?"Nota di Credito":(bp.getModel() instanceof Nota_di_debitoBulk)?"Nota di Debito":"Fattura Passiva"%></title>
 <script language="JavaScript">
 function doScaricaFatturaHtml() {
-	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeFileFirmato()%>.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
-			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeFileFirmato()%>.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
 }
 </script>
 </head>

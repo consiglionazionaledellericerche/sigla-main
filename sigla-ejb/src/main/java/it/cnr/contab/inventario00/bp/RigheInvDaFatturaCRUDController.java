@@ -59,6 +59,11 @@ public class RigheInvDaFatturaCRUDController
         return null;
     }
 
+    @Override
+    public String getRowCSSClass(Object obj, boolean even) {
+        return null;
+    }
+
     public OggettoBulk initializeForEdit(OggettoBulk bulk) {
 
         Inventario_beniBulk bene = (Inventario_beniBulk) bulk;

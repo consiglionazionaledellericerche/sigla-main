@@ -23,6 +23,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
 import it.cnr.contab.util.servlet.JSONRESTRequest;
+import it.cnr.contab.web.rest.exception.UnauthorizedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.AdminUserContext;
 import it.cnr.jada.comp.ApplicationException;
@@ -33,6 +34,8 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 import javax.ejb.EJBException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
 import org.slf4j.Logger;
@@ -126,12 +129,21 @@ public class BasicAuthentication {
 		return parts;
 	}
 	
-	private static UtenteBulk authenticate (String username, String password)throws ComponentException{
+	private static UtenteBulk authenticate (HttpServletRequest httpServletRequest, String username, String password)throws ComponentException{
 		UtenteBulk utente = new UtenteBulk();
 		utente.setCd_utente(username.toUpperCase());
 		utente.setLdap_password(password);
 		utente.setPasswordInChiaro(password.toUpperCase());
 		try {
+			try {
+				if (!Optional.ofNullable(httpServletRequest.getUserPrincipal()).isPresent())
+					httpServletRequest.login(username, password);
+			} catch (ServletException e) {
+				if (e.getMessage().contains("Login failed")) {
+					throw new UnauthorizedException("", e);
+				}
+				throw new RuntimeException(e);
+			}
 			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
 		} catch (RemoteException e) {
 			throw new ApplicationException(e.getMessage());
@@ -140,7 +152,7 @@ public class BasicAuthentication {
 		}
 	}
 
-	public static UtenteBulk authenticate(List<String> authorization) throws IOException, ComponentException{
+	public static UtenteBulk authenticate(HttpServletRequest httpServletRequest,List<String> authorization) throws IOException, ComponentException{
 		return Optional.ofNullable(getUsernameAndPassword(authorization))
 				.map(stringTokenizer -> {
 					try {
@@ -148,7 +160,7 @@ public class BasicAuthentication {
 						final String password = stringTokenizer.nextToken();
 						// Verifying Username and password
 						logger.debug("UserName: {} Password: {}", username, password);
-						return authenticate(username, password);
+						return authenticate(httpServletRequest, username, password);
 					} catch (ComponentException| NoSuchElementException e) {
 						return null;
 					}

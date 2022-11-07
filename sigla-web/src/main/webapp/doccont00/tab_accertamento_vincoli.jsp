@@ -13,7 +13,7 @@
 		<% 
 		   if (accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoInesigibile()) {
 			  bp.getController().writeFormField( out, "im_quota_inesigibile_da_ripartire");
-		   } else if (accertamento.isStatoDubbio()) {
+		   } else if (accertamento.isStatoDubbio() || accertamento.isStatoGiudizialmenteControverso()) {
 			  bp.getController().writeFormField( out, "importoNonIncassato");
 		   }
 		%>

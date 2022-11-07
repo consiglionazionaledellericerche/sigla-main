@@ -4166,8 +4166,6 @@ public class DistintaCassiereComponent extends
         sql.addSQLClause("AND", "CODICE_IBAN", SQLBuilder.ISNOTNULL, null);
         if (getHome(userContext, BancaBulk.class).fetchAll(sql).size() == 0)
             throw new ApplicationException("Configurazione iban uo mancante");
-        else if (getHome(userContext, BancaBulk.class).fetchAll(sql).size() > 1)
-            throw new ApplicationException("Configurazione iban uo errata");
         else
             return
                     (BancaBulk) getHome(userContext, BancaBulk.class).fetchAll(sql).get(0);
@@ -5238,8 +5236,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5367,8 +5364,7 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
                                     }
@@ -5403,7 +5399,8 @@ public class DistintaCassiereComponent extends
                             else
                                 clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                         } else {
-                            throw new ApplicationMessageFormatException("Impossibile generare il flusso, ripartizione per siope errata " +
+                            throw new ApplicationMessageFormatException("Impossibile generare il flusso, " +
+                                    "ripartizione per siope errata " +
                                     "sul Mandato {0}/{1}/{2}",
                                     String.valueOf(bulk.getEsercizio()),
                                     String.valueOf(bulk.getCd_cds()),

@@ -63,6 +63,12 @@ public abstract class CRUDVirtualAccertamentoBP
 	private boolean flNuovoPdg = false;
 	private boolean ribaltato;
 
+	private boolean attivaAccertamentoPluriennale = false;
+
+	public boolean isAttivaAccertamentoPluriennale() {
+		return attivaAccertamentoPluriennale;
+	}
+
 public CRUDVirtualAccertamentoBP() {
 
 	super();	
@@ -195,6 +201,9 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext()));
 		setAttivoRegolamento_2006(parCnr.getFl_regolamento_2006().booleanValue());
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+
+		attivaAccertamentoPluriennale = Utility.createConfigurazioneCnrComponentSession().isAccertamentoPluriennaleAttivo(context.getUserContext());
+
 	} catch (ComponentException e) {
 		throw new BusinessProcessException(e);
 	} catch (RemoteException e) {
@@ -511,6 +520,16 @@ public static AccertamentoAbstractComponentSession setSafePoint (
 	}
 	
 	public String [][] getTabs() {
+		if(attivaAccertamentoPluriennale){
+			if(!isSearching()) {
+				return new String[][]{
+						{"tabAccertamento", "Accertamento", "/doccont00/tab_accertamento.jsp"},
+						{"tabImputazioneFin", "Imputazione Finanziaria", "/doccont00/tab_imputazione_fin_accertamento.jsp"},
+						{"tabScadenziario", "Scadenziario", "/doccont00/tab_scadenziario_accertamento.jsp"},
+						{"tabAccertamentiPluriennali", "Accertamenti Pluriennali", "/doccont00/tab_acc_pluriennali.jsp"}
+				};
+			}
+		}
 		return new String[][] {
 				{ "tabAccertamento","Accertamento","/doccont00/tab_accertamento.jsp" } ,
 				{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_accertamento.jsp" },

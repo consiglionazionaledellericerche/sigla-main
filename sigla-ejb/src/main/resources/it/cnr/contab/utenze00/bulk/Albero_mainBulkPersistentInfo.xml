@@ -26,6 +26,9 @@
 			propertyName="nodo_padre.cd_nodo"
 			sqlTypeName="VARCHAR"
 			columnSize="100" />
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="accesso.cd_accesso"/>
 	</defaultColumnMap>
 	
 	<columnMap
@@ -38,10 +41,33 @@
 			sqlTypeName="CHAR"
 			columnSize="1" />
 	</columnMap>
-	
+
+	<columnMap
+			name="ACCESSO"
+			tableName="ALBERO_MAIN"
+			extends="default" >
+		<columnMapping
+				columnName="ACCESSO.DS_ACCESSO"
+				propertyName="ds_accesso"
+				sqlTypeName="VARCHAR"
+				columnSize="200" />
+	</columnMap>
+
 	<persistentProperty
 		name="nodo_padre" />
 	<persistentProperty
 		name="ti_funzione" />
-	
+	<persistentProperty
+		name="accesso" />
+	<persistentProperty
+		name="ds_accesso" />
+
+	<fetchPolicy
+			name="tree">
+		<exclude pattern="*" />
+		<exclude pattern="accesso" />
+		<include pattern="nodo_padre" />
+		<include pattern="nodo_padre.*" />
+	</fetchPolicy>
+
 </SQLPersistentInfo>

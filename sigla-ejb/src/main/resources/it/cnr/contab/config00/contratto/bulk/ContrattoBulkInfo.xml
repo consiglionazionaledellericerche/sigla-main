@@ -127,6 +127,7 @@
                 name="responsabile"
                 property="responsabile"
                 inputType="SEARCHTOOL"
+                formName="searchtool"
                 enabledOnSearch="true"
                 label="Responsabile procedimento/RUP" />
         <fieldProperty
@@ -668,7 +669,6 @@
 				enabledOnFreeSearch="true"
 				columnSet="filtro_ricerca_prog2"
 				freeSearchSet="filtro_ricerca_prog2" />
-               	
 	    <form name="searchtool">
 	          <formFieldProperty
 	                name="esercizio"

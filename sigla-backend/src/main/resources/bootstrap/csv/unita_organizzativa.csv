@@ -5,3 +5,4 @@ CD_UNITA_ORGANIZZATIVA,DS_UNITA_ORGANIZZATIVA,CD_PROPRIO_UNITA,CD_TIPO_UNITA,FL_
 "000.000","Struttura Amministrativa Centrale","000","SAC","N","Y","Y",2,"N","000",2100,"SYSTEM","SYSTEM","1"
 "300","Area di Ricerca","300","AREA","Y","N","NULL",1,"NULL","NULL",2100,"SYSTEM","SYSTEM","1"
 "300.000","Area di Ricerca","000","AREA","N","Y","Y",2,"N","300",2100,"SYSTEM","SYSTEM","1"
+"ASR","Amministrazione a Suporto della Ricerca","ASR","SAC","Y","N","NULL",1,"NULL","NULL",2100,"SYSTEM","SYSTEM","1"

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+
+	<fieldProperty
+			name="findAnagrafico"
+			property="anagrafico"
+			inputType="SEARCHTOOL"
+			formName="searchtool_completo"
+			enabledOnSearch="true"
+			label="Anagrafica"
+			enabledOnEdit="true" />
+
+	<fieldProperty
+		name="cdAnag"
+		property="anagrafico.cd_anag"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		label="Codice entità anagrafica di primo livello" />
+
+	<fieldProperty
+			name="dsAnagrafico"
+			property="ds_anagrafico"
+			inputSize="30"
+			enabledOnSearch="true"
+			inputType="TEXT"
+			label="Nominativo" />
+
+
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		command="doOnDataInizioAnagraficaProgettoChange"
+		label="Data inizio nel progetto" />
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		command="doOnDataFineAnagraficaProgettoChange"
+		label="Data fine  nel progetto" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.Importo2CifreFormat"
+		enabledOnEdit="false"
+		label="Importo totale" />
+
+
+	<formFieldProperty
+		name="dataInizio" />
+	<formFieldProperty
+		name="dataFine" />
+	<formFieldProperty
+		name="importo" />
+
+	<formFieldProperty
+			name="findAnagrafico" />
+	<formFieldProperty
+			name="cdAnag" />
+
+
+	<columnFieldProperty
+		name="idPrgAnagrafico" />
+	<columnFieldProperty
+		name="cdAnag" />
+	<columnFieldProperty
+		name="pgProgetto" />
+	<columnFieldProperty
+		name="dataInizio" />
+	<columnFieldProperty
+		name="dataFine" />
+	<columnFieldProperty
+		name="importo" />
+
+
+	<columnSet
+			name="ColumnsDettProgAnag">
+		<columnFieldProperty
+				name="dsAnagrafico" />
+		<columnFieldProperty
+				name="importo" />
+		<columnFieldProperty
+				name="dataInizio" />
+		<columnFieldProperty
+				name="dataFine" />
+
+	</columnSet>
+</bulkInfo>

@@ -18,9 +18,11 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Optional;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -37,32 +39,37 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	@SuppressWarnings("rawtypes")
 	public final static Dictionary stato_AccertamentoResiduoKeys = new OrderedHashtable();;
 	public enum Stato {
-		INCASSATO("Incassato","INS"),
-		CERTO("Certo","CER"),
-		DILAZIONATO("Dilazionato","DIL"),
-		INCERTO("Incerto","INC"),
-		DUBBIO("Dubbio","DUB"),
-		INESIGIBILE("Inesigibile","INE"),
-		PARZIALMENTE_INESIGIBILE("Parzialmente Inesigibile","PIN");
+		INCASSATO("Incassato","INS", 1900, 3000),
+		CERTO("Certo","CER", 1900, 3000),
+		DILAZIONATO("Dilazionato","DIL", 1900, 3000),
+		INCERTO("Incerto","INC", 1900, 2021),
+		DUBBIO("Dubbio","DUB", 1900, 3000),
+		INESIGIBILE("Inesigibile","INE", 1900, 3000),
+		PARZIALMENTE_INESIGIBILE("Parzialmente Inesigibile","PIN", 1900, 3000),
+		GIUDIZIALMENTE_CONTROVERSO("Giudizialmente Controverso","GIU", 2022, 3000);
 		private final String label, value;
-		private Stato(String label, String value) {
+		private final Integer from, to;
+
+		private Stato(String label, String value, Integer from, Integer to) {
 			this.value = value;
 			this.label = label;
+			this.from = from;
+			this.to = to;
 		}
 		public String value() {
 			return value;
 		}
 		public String label() {
 			return label;
-		}		
-	}
-	static
-	{
-		for (Stato stato : Stato.values()) {
-			stato_AccertamentoResiduoKeys.put(stato.value, stato.label);			
+		}
+		public Integer from() {
+			return from;
+		}
+		public Integer to() {
+			return to;
 		}
 	}
-	
+
 	/**
 	 * AccertamentoResiduoBulk constructor comment.
 	 */
@@ -156,6 +163,10 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	}
 	@SuppressWarnings("rawtypes")
 	public Dictionary getStato_AccertamentoResiduoKeys() {
+		Arrays.stream(Stato.values())
+				.filter(stato->Optional.ofNullable(this.getEsercizio()).map(ese->ese.compareTo(stato.from())>=0).orElse(Boolean.TRUE))
+				.filter(stato->Optional.ofNullable(this.getEsercizio()).map(ese->ese.compareTo(stato.to())<=0).orElse(Boolean.TRUE))
+				.forEach(stato->stato_AccertamentoResiduoKeys.put(stato.value, stato.label));
 		return stato_AccertamentoResiduoKeys;
 	}
 	
@@ -192,7 +203,11 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	public boolean isStatoDubbio() {
 		return Stato.DUBBIO.value.equals(getStato());
 	}
-	
+
+	public boolean isStatoGiudizialmenteControverso() {
+		return Stato.GIUDIZIALMENTE_CONTROVERSO.value.equals(getStato());
+	}
+
 	public boolean isStatoDilazionato() {
 		return Stato.DILAZIONATO.value.equals(getStato());
 	}

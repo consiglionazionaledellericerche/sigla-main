@@ -41,7 +41,7 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -57,6 +57,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 
@@ -1773,4 +1774,15 @@ public SQLBuilder selectAllEqualsObbligazioniByClause( ObbligazioneBulk bulk, Ob
 	sql.addClause( clause );
 	return sql;
 }
+	public java.util.Collection findObbligazioniPluriennali(it.cnr.jada.UserContext userContext, ObbligazioneBulk bulk) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Obbligazione_pluriennaleBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, bulk.getCd_cds());
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, bulk.getEsercizio());
+		sql.addSQLClause("AND", "ESERCIZIO_ORIGINALE", sql.EQUALS, bulk.getEsercizio_originale());
+		sql.addSQLClause("AND", "PG_OBBLIGAZIONE", sql.EQUALS, bulk.getPg_obbligazione());
+
+		sql.setOrderBy("ANNO", OrderConstants.ORDER_DESC);
+		return dettHome.fetchAll(sql);
+	}
 }

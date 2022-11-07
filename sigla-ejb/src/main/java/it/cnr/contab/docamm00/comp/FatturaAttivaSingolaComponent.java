@@ -64,6 +64,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
@@ -91,6 +92,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class FatturaAttivaSingolaComponent
@@ -2532,12 +2535,18 @@ public class FatturaAttivaSingolaComponent
             java.util.Calendar gc = java.util.Calendar.getInstance();
             gc.setTime(getHome(userContext, fattura).getServerTimestamp());
             //controlla che la data di registrazione non sia successiva alla data di sistema
-            if (fattura.getDt_registrazione() != null
-                    && fattura.getDt_registrazione().after(
-                    new java.sql.Timestamp(gc.getTime().getTime())))
-                throw new it.cnr.jada.comp.ApplicationException(
-                        "Attenzione: la data di registrazione non puo' essere successiva alla data attuale");
-            else {
+            LocalDateTime now =
+                    LocalDateTime.ofInstant(Instant.ofEpochMilli(gc.getTime().getTime()), TimeZone.getDefault().toZoneId());
+            if (fattura.getDt_registrazione() != null) {
+                LocalDateTime dtRegistrazione =
+                        LocalDateTime.ofInstant(Instant.ofEpochMilli(fattura.getDt_registrazione().getTime()), TimeZone.getDefault().toZoneId())
+                                .minusSeconds(1);
+                if (dtRegistrazione.isAfter(now)) {
+                    logger.error("ERROR: Data di registrazione sulla fattura attiva now: {} DataRegistrazione: {}", now, dtRegistrazione);
+                    throw new it.cnr.jada.comp.ApplicationException(
+                            "Attenzione: la data di registrazione non puo' essere successiva alla data attuale");
+                }
+            } else {
                 // controlla che la data di registrazione sia successiava all'ultima data di registrazione inserita
                 java.sql.Timestamp ultimaRegistrazione =
                         (
@@ -2548,8 +2557,9 @@ public class FatturaAttivaSingolaComponent
                                 fattura);
                 if (ultimaRegistrazione != null
                         && fattura.getDt_registrazione().before(ultimaRegistrazione))
-                    throw new it.cnr.jada.comp.ApplicationException(
-                            "La data di registrazione non e' valida: deve essere successiva all'ultima data di registrazione inserita (relativa al tipo sezionale)!");
+                    throw new ApplicationMessageFormatException(
+                            "La data di registrazione non e' valida: deve essere successiva all'ultima data di registrazione inserita (relativa al tipo sezionale {0})!",
+                            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(ultimaRegistrazione));
             }
         } catch (PersistencyException ex) {
             throw handleException(fattura, ex);

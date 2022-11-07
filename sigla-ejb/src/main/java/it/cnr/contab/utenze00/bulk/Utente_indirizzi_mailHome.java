@@ -25,13 +25,19 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.util.List;
+
 public class Utente_indirizzi_mailHome extends BulkHome {
 	public Utente_indirizzi_mailHome(java.sql.Connection conn) {
 		super(Utente_indirizzi_mailBulk.class, conn);
@@ -113,5 +119,11 @@ public class Utente_indirizzi_mailHome extends BulkHome {
 			sqlUtente.addSQLJoin("UTENTE.CD_UTENTE","UTENTE_INDIRIZZI_MAIL.CD_UTENTE");				
 		sql.addSQLExistsClause("AND",sqlUtente);
 		return fetchAll(sql);
-	}	
+	}
+
+	public List<Utente_indirizzi_mailBulk> findUtenteIndirizziMail(UserContext userContext) throws PersistencyException {
+		final SQLBuilder sqlBuilder = createSQLBuilder();
+		sqlBuilder.addClause(FindClause.AND, "cd_utente", SQLBuilder.EQUALS, CNRUserContext.getUser(userContext));
+		return fetchAll(sqlBuilder);
+	}
 }

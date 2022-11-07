@@ -18,7 +18,8 @@
 
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xmlns="https://contab.cnr.it/schema/SIGLA"
+		shortDescription="Fattura Passiva"
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<findFieldProperty name="stato_pagamento_fondo_ecoForSearch"/>

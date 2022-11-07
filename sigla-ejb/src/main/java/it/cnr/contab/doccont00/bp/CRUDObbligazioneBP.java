@@ -42,6 +42,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -67,6 +68,18 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     private final SimpleDetailCRUDController aggregatoPerCdr = new SimpleDetailCRUDController("AggregatoPerCdr", Obbligazione_scad_voce_aggregatoBulk.class, "cdrAggregatoColl", this);
     private final SimpleDetailCRUDController aggregatoPerCapitolo = new SimpleDetailCRUDController("AggregatoPerCapitolo", Obbligazione_scad_voce_aggregatoBulk.class, "capitoliAggregatoColl", this);
 
+    private final SimpleDetailCRUDController crudObbligazione_pluriennale = new SimpleDetailCRUDController("ObbligazioniPluriennali", Obbligazione_pluriennaleBulk.class, "obbligazioniPluriennali", this){
+        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+            Obbligazione_pluriennaleBulk riga = (Obbligazione_pluriennaleBulk) getCrudObbligazione_pluriennale().getModel();
+            super.validateForDelete(context,riga);
+
+        }
+    };
+
+    public SimpleDetailCRUDController getCrudObbligazione_pluriennale() {
+        return crudObbligazione_pluriennale;
+    }
+
     // "editingScadenza" viene messo a True solo quando si modifica una scadenza (bottone "editing scadenza")
     private boolean editingScadenza = false;
     private boolean bringBackWithoutCommit = false;
@@ -90,6 +103,22 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
 
         setTab("tab", "tabObbligazione");
         setTab("tabScadenzario", "tabScadenza");
+    }
+
+    private boolean attivaImpegnoPluriennale = false;
+
+    public boolean isAttivaImpegnoPluriennale() {
+        return attivaImpegnoPluriennale;
+    }
+
+    @Override
+    protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+        try {
+            attivaImpegnoPluriennale = Utility.createConfigurazioneCnrComponentSession().isImpegnoPluriennaleAttivo(actioncontext.getUserContext());
+        } catch (Throwable e) {
+            throw new BusinessProcessException(e);
+        }
+        super.init(config, actioncontext);
     }
 
     /**
@@ -1001,6 +1030,11 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         return;
     }
 
+    /**
+     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     *
+     * @param context Il contesto dell'azione
+     */
     public void verificaTestataObbligazione(ActionContext context) throws BusinessProcessException, it.cnr.jada.bulk.ValidationException {
         getModel().validate();
         try {
@@ -1211,6 +1245,13 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         pages.put(i++, new String[]{"tabImputazioneFin", "Imputazione Finanziaria", "/doccont00/tab_imputazione_fin_obbligazione.jsp"});
         pages.put(i++, new String[]{"tabScadenzario", "Scadenzario", "/doccont00/tab_scadenzario_obbligazione.jsp"});
         pages.put(i++, new String[]{"tabCdrCapitoli", "Cdr", "/doccont00/tab_cdr_capitoli.jsp"});
+
+        if(attivaImpegnoPluriennale) {
+            if (!isSearching()) {
+                    pages.put(i++, new String[]{"tabObbligazioniPluriennali", "Obbligazioni Pluriennali", "/doccont00/tab_obb_pluriennali.jsp"});
+            }
+        }
+
 
         String[][] tabs = new String[i][3];
 

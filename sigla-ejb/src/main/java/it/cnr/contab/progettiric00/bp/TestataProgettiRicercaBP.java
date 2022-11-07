@@ -34,6 +34,7 @@ import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
@@ -174,6 +175,14 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 		}
     };
 
+    private final SimpleDetailCRUDController crudProgetto_anagrafico = new SimpleDetailCRUDController("Progetto_anagrafico", Progetto_anagraficoBulk.class, "anagraficheProgetto", this){
+        public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
+            Progetto_anagraficoBulk riga = (Progetto_anagraficoBulk) getCrudProgetto_anagrafico().getModel();
+            super.validateForDelete(context,riga);
+
+        }
+    };
+
     /**
      * TestataProgettiRicercaBP constructor comment.
      */
@@ -188,6 +197,12 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
      */
     public TestataProgettiRicercaBP(String function) {
         super(function);
+    }
+
+    private boolean attivaAnagraficaProgetto = false;
+
+    public boolean isAttivaAnagraficaProgetto() {
+        return attivaAnagraficaProgetto;
     }
 
     @Override
@@ -515,6 +530,9 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         }
 
         if (!isSearching()) {
+            if(isAttivaAnagraficaProgetto()) {
+                hash.put(i++, new String[]{"tabAnagrafico", "Anagrafiche", "/progettiric00/progetto_anagrafico.jsp"});
+            }
             hash.put(i++, new String[]{"tabContratti", "Contratti", "/progettiric00/progetto_contratti_associati.jsp"});
             hash.put(i++, new String[]{"tabAllegati", "Allegati", "/util00/tab_allegati.jsp"});
         }
@@ -571,6 +589,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             Progetto_other_fieldBulk otherField = new Progetto_other_fieldBulk();
             otherField.setStato(StatoProgetto.STATO_INIZIALE.value());
             otherField.setFlControlliDisabled(Boolean.FALSE);
+            otherField.setFlControlliDateDisabled(Boolean.FALSE);
             otherField.setToBeCreated();
             progetto.setOtherField(otherField);
         }
@@ -693,8 +712,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
                 .map(ProgettoBulk.class::cast).flatMap(el -> Optional.ofNullable(el.getOtherField()))
                 .filter(Progetto_other_fieldBulk::isStatoIniziale)
                 .flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
-                .flatMap(el -> Optional.ofNullable(el.getCodice()))
-                .filter(el -> el.equals(TipoFinanziamentoBulk.CODICE_FIN) || el.equals(TipoFinanziamentoBulk.CODICE_COF))
+                .filter(tipoFin -> tipoFin.isFinanziamento() || tipoFin.isCofinanziamento())
                 .isPresent();
     }
 
@@ -885,6 +903,15 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             if (!optOtherField.flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
                     .flatMap(el -> Optional.ofNullable(el.getCodice())).isPresent())
                 throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
+
+            if (optOtherField.map(Progetto_other_fieldBulk::getTipoFinanziamento).map(TipoFinanziamentoBulk::isAutofinanziamento).orElse(Boolean.FALSE)) {
+                optProgetto.get().getArchivioAllegati().stream()
+                        .filter(AllegatoProgettoBulk.class::isInstance)
+                        .map(AllegatoProgettoBulk.class::cast)
+                        .filter(AllegatoProgettoBulk::isProvvedimentoCostituzione)
+                        .findFirst()
+                        .orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo Provvedimento di costituzione!"));
+            }
 
             if (optProgetto.get().isDatePianoEconomicoRequired()) {
                 if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
@@ -1107,5 +1134,9 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         } catch (ComponentException | RemoteException e) {
             throw handleException(e);
         }
+    }
+
+    public SimpleDetailCRUDController getCrudProgetto_anagrafico() {
+        return crudProgetto_anagrafico;
     }
 }

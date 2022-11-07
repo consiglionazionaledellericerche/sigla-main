@@ -124,20 +124,23 @@
 		name="totMandatiAnnullati"
 		property="totMandatiAnnullati"
 		inputType="ROTEXT"
-		label="Totale mandati annullati" 
+		inputCssClass="w-100 "
+		label="Totale mandati annullati"
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
 	<fieldProperty
 		name="totMandati"
 		property="totMandati"
 		inputType="ROTEXT"
-		label="Totale mandati" 
+		inputCssClass="w-100 "
+		label="Totale mandati"
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
 	<fieldProperty
 		name="totMandatiAnnullatiRitrasmessi"
 		property="totMandatiAnnullatiRitrasmessi"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati annullati ritrasmessi" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -145,6 +148,7 @@
 		name="totReversaliAnnullate"
 		property="totReversaliAnnullate"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali annullate" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -152,6 +156,7 @@
 		name="totReversali"
 		property="totReversali"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -159,6 +164,7 @@
 		name="totReversaliAnnullateRitrasmesse"
 		property="totReversaliAnnullateRitrasmesse"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali annullate ritrasmesse" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -166,6 +172,7 @@
 		name="totStoricoMandatiTrasmessi"
 		property="totStoricoMandatiTrasmessi"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati trasmessi" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -173,6 +180,7 @@
 		name="totStoricoMandatiPagamentoTrasmessi"
 		property="totStoricoMandatiPagamentoTrasmessi"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati pagamento trasmessi" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -180,6 +188,7 @@
 		name="totStoricoMandatiAccreditamentoTrasmessi"
 		property="totStoricoMandatiAccreditamentoTrasmessi"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati accreditamento trasmessi" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -187,6 +196,7 @@
 		name="totStoricoMandatiRegSospesoTrasmessi"
 		property="totStoricoMandatiRegSospesoTrasmessi"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati reg.sospeso trasmessi" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -194,6 +204,7 @@
 		name="totStoricoMandatiDaRitrasmettere"
 		property="totStoricoMandatiDaRitrasmettere"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati annullati da ritrasmettere" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -201,6 +212,7 @@
 		name="totStoricoReversaliTrasmesse"
 		property="totStoricoReversaliTrasmesse"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali trasmesse" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -208,6 +220,7 @@
 		name="totStoricoReversaliRegSospesoTrasmesse"
 		property="totStoricoReversaliRegSospesoTrasmesse"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali reg.sospeso trasmesse" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -215,6 +228,7 @@
 		name="totStoricoReversaliTrasferimentoTrasmesse"
 		property="totStoricoReversaliTrasferimentoTrasmesse"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali trasferimento trasmesse" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -222,6 +236,7 @@
 		name="totStoricoReversaliRitenuteTrasmesse"
 		property="totStoricoReversaliRitenuteTrasmesse"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali ritenute trasmesse" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -229,6 +244,7 @@
 		name="totStoricoReversaliDaRitrasmettere"
 		property="totStoricoReversaliDaRitrasmettere"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali annullate da ritrasmettere" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -236,6 +252,7 @@
 		name="totMandatiPagamento"
 		property="totMandatiPagamento"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati Pagamento" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -243,6 +260,7 @@
 		name="totMandatiPagamentoAnnullati"
 		property="totMandatiPagamentoAnnullati"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati Pagamento Annullati" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -250,6 +268,7 @@
 		name="totMandatiRegSospeso"
 		property="totMandatiRegSospeso"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati Reg.Sospeso" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -257,6 +276,7 @@
 		name="totMandatiRegSospesoAnnullati"
 		property="totMandatiRegSospesoAnnullati"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati Reg.Sospeso Annullati" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -264,6 +284,7 @@
 		name="totMandatiAccreditamento"
 		property="totMandatiAccreditamento"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati Accreditamento" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -271,6 +292,7 @@
 		name="totMandatiAccreditamentoAnnullati"
 		property="totMandatiAccreditamentoAnnullati"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale mandati Accreditamento Annullati" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -278,6 +300,7 @@
 		name="totReversaliRegSospesoBI"
 		property="totReversaliRegSospesoBI"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali Banca d'Italia " 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -285,6 +308,7 @@
 		name="totReversaliRegSospesoCC"
 		property="totReversaliRegSospesoCC"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali C/C" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -292,6 +316,7 @@
 		name="totReversaliRitenute"
 		property="totReversaliRitenute"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali di Ritenute" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -299,6 +324,7 @@
 		name="totReversaliTrasferimento"
 		property="totReversaliTrasferimento"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale reversali Trasferimento" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -306,6 +332,7 @@
 		name="totReversaliRegSospesoBIAnnullate"
 		property="totReversaliRegSospesoBIAnnullate"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali Banca d'Italia Annullate" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -313,6 +340,7 @@
 		name="totReversaliRegSospesoCCAnnullate"
 		property="totReversaliRegSospesoCCAnnullate"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali C/C Annullate" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -320,6 +348,7 @@
 		name="totReversaliRitenuteAnnullate"
 		property="totReversaliRitenuteAnnullate"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali di Ritenute Annullate" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -327,6 +356,7 @@
 		name="totReversaliTrasferimentoAnnullate"
 		property="totReversaliTrasferimentoAnnullate"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Totale Reversali Trasferimento Annullate" 
 		formatName = "it.cnr.contab.util.EuroFormat" 
 		enabledOnSearch="false" />
@@ -411,8 +441,8 @@
 		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
-		maxLength="10"
-		inputSize="10"/>
+		maxLength="30"
+		inputSize="20"/>
 
 	<fieldProperty
 		name="stato"

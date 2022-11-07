@@ -38,6 +38,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class UtenteHome extends BulkHome implements ConsultazioniRestHome {
 
@@ -284,6 +285,17 @@ public class UtenteHome extends BulkHome implements ConsultazioniRestHome {
 		return bulkList;
 	}
 
+	public List<UtenteBulk> findUtenteByUID(UserContext userContext, String cd_utente_uid) throws PersistencyException {
+		final SQLBuilder sqlBuilder = createSQLBuilder();
+		sqlBuilder.addClause(FindClause.AND, "cd_utente_uid", SQLBuilder.EQUALS, cd_utente_uid);
+		sqlBuilder.openParenthesis(FindClause.AND);
+		sqlBuilder.addSQLClause(FindClause.AND, "DT_FINE_VALIDITA", SQLBuilder.GREATER_EQUALS, EJBCommonServices.getServerTimestamp());
+		sqlBuilder.addSQLClause(FindClause.OR, "DT_FINE_VALIDITA", SQLBuilder.ISNULL, null);
+		sqlBuilder.closeParenthesis();
+		sqlBuilder.addClause("AND", "fl_autenticazione_ldap", SQLBuilder.EQUALS, Boolean.TRUE);
+		sqlBuilder.addOrderBy("dt_ultimo_accesso desc");
+		return fetchAll(sqlBuilder);
+	}
 
 	@Override
 	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {

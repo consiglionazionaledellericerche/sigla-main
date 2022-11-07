@@ -29,10 +29,10 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
@@ -41,6 +41,7 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
@@ -76,9 +77,11 @@ import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 
 public class ProgettoHome extends BulkHome {
 	public ProgettoHome(java.sql.Connection conn) {
@@ -619,6 +622,7 @@ public class ProgettoHome extends BulkHome {
                     progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
                     progetto_other_fieldBulk.setStato(StatoProgetto.STATO_INIZIALE.value());
 					progetto_other_fieldBulk.setFlControlliDisabled(Boolean.FALSE);
+					progetto_other_fieldBulk.setFlControlliDateDisabled(Boolean.FALSE);
                     progetto_other_fieldBulk.setUser(CNRUserContext.getUser(userContext));
                     progetto_other_fieldBulk.setToBeCreated();
                     progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
@@ -1034,5 +1038,48 @@ public class ProgettoHome extends BulkHome {
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		return dettHome.fetchAll(sql);
-	}	
+	}
+
+	public java.util.Collection findAnagraficheProgetto(it.cnr.jada.UserContext userContext, ProgettoBulk progetto) throws PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Progetto_anagraficoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND, "PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+
+		sql.setOrderBy("ID_PRG_ANAGRAFICO", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return dettHome.fetchAll(sql);
+	}
+
+	//Restituisce i progetti attivi per il tipo di finanziamento indicato
+	public List<ProgettoBulk> selectProgettiAttiviByTipoFinanziamento(UserContext userContext, String cdTipoFinanziamento) throws PersistencyException {
+		SQLBuilder sql = this.selectProgettiAbilitati(userContext);
+
+		sql.addTableToHeader("PROGETTO_OTHER_FIELD");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_OTHER_FIELD.PG_PROGETTO");
+		sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_INIZIO",SQLBuilder.LESS_EQUALS, DateServices.getDataOdierna());
+
+		sql.openParenthesis(FindClause.AND);
+
+			sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_FINE",SQLBuilder.ISNULL, null);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_PROROGA",SQLBuilder.ISNULL, null);
+			sql.closeParenthesis();
+
+			sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_PROROGA",SQLBuilder.ISNOTNULL, null);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_PROROGA",SQLBuilder.GREATER, DateServices.getDataOdierna());
+			sql.closeParenthesis();
+
+			sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_PROROGA",SQLBuilder.ISNULL, null);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_FINE",SQLBuilder.ISNOTNULL, null);
+			sql.addSQLClause(FindClause.AND,"PROGETTO_OTHER_FIELD.DT_FINE",SQLBuilder.GREATER, DateServices.getDataOdierna());
+			sql.closeParenthesis();
+		sql.closeParenthesis();
+
+		sql.addTableToHeader("TIPO_FINANZIAMENTO");
+		sql.addSQLJoin("PROGETTO_OTHER_FIELD.ID_TIPO_FINANZIAMENTO", "TIPO_FINANZIAMENTO.ID");
+		sql.addSQLClause(FindClause.AND,"TIPO_FINANZIAMENTO.CODICE",SQLBuilder.EQUALS, cdTipoFinanziamento);
+
+		return this.fetchAll(sql);
+	}
 }

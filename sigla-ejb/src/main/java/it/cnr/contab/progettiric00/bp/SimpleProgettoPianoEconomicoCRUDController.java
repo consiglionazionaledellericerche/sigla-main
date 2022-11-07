@@ -60,7 +60,14 @@ public class SimpleProgettoPianoEconomicoCRUDController extends it.cnr.jada.util
 	@Override
 	public String getRowStyle(Object obj) {
 		return null;
-	};		
+	}
+
+	@Override
+	public String getRowCSSClass(Object obj, boolean even) {
+		return null;
+	}
+
+	;
 
     @Override
 	public boolean isRowEnabled(Object obj) {

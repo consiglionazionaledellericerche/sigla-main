@@ -62,6 +62,11 @@
 			<description>Allegato di tipo Final Statement Payment del Progetto</description>
 			<parent>sigla_progetti_attachment:document</parent>
 		</type>
+		<type name="sigla_progetti_attachment:valutazione_utilizzo_risorse">
+			<title>Allegato di tipo Valutazione Utilizzo Risorse del Progetto</title>
+			<description>Allegato di tipo Valutazione Utilizzo Risorse del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
 		<type name="sigla_progetti_attachment:allegato_generico">
 			<title>Allegato Generico del Progetto</title>
 			<description>Allegato Generico del Progetto</description>

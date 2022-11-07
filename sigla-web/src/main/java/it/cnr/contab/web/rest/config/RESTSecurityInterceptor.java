@@ -17,9 +17,12 @@
 
 package it.cnr.contab.web.rest.config;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.RESTUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.exception.RestException;
+import it.cnr.contab.web.rest.exception.UnauthorizedException;
+import it.cnr.contab.web.rest.resource.util.AbstractResource;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -41,6 +44,8 @@ import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.container.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -60,11 +65,13 @@ import org.slf4j.LoggerFactory;
 public class RESTSecurityInterceptor implements ContainerRequestFilter, ContainerResponseFilter , ExceptionMapper<Exception> {
 
 	private Logger LOGGER = LoggerFactory.getLogger(RESTSecurityInterceptor.class);
+
 	@Context
 	private ResourceInfo resourceInfo;
     @Context
     private Providers providers;
-    
+	@Context
+	private HttpServletRequest httpServletRequest;
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
 	private final static Map<String, String> UNAUTHORIZED_MAP = Collections.singletonMap("ERROR", "User cannot access the resource.");
 
@@ -79,6 +86,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 		String[] rolesAllowed = null;
 		boolean denyAll;
 		boolean permitAll;
+		boolean allUserAllowedWithoutAbort = declaring.isAnnotationPresent(AllUserAllowedWithoutAbort.class);
 		RolesAllowed allowed = declaring.getAnnotation(RolesAllowed.class),
 			methodAllowed = method.getAnnotation(RolesAllowed.class);
 		if (methodAllowed != null) allowed = methodAllowed;
@@ -100,9 +108,18 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				&& method.isAnnotationPresent(DenyAll.class) == false) || method.isAnnotationPresent(PermitAll.class);
 		
 		UtenteBulk utenteBulk = null;		
-		if (rolesAllowed != null || accessoAllowed != null) {
+		if (rolesAllowed != null || accessoAllowed != null || allUserAllowedWithoutAbort) {
 			final MultivaluedMap<String, String> headers = requestContext.getHeaders();
 			final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+			if (!Optional.ofNullable(authorization).filter(s -> !s.isEmpty()).isPresent() && allUserAllowedWithoutAbort) {
+				try {
+					AbstractResource.getUserContext(requestContext.getSecurityContext(), httpServletRequest);
+					return;
+				} catch (BadRequestException e) {
+					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).build());
+					return;
+				}
+			}
 			try {
 				final Optional<Principal> principalOptional = Optional.ofNullable(requestContext.getSecurityContext().getUserPrincipal());
 				if (principalOptional.isPresent()) {
@@ -116,7 +133,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 							});
 					utenteBulk = BasicAuthentication.findUtenteBulk(idToken.get().getPreferredUsername());
 				} else {
-					utenteBulk = BasicAuthentication.authenticate(authorization);
+					utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
 				}
 				if (utenteBulk == null){
 					requestContext.abortWith(
@@ -127,6 +144,10 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 					return;
 				}
 		    	requestContext.setSecurityContext(new SIGLASecurityContext(requestContext, utenteBulk.getCd_utente()));
+			} catch (UnauthorizedException e) {
+				LOGGER.error("ERROR for REST SERVICE", e);
+				requestContext.abortWith(Response.status(Status.UNAUTHORIZED).build());
+				return;
 			} catch (Exception e) {
 				LOGGER.error("ERROR for REST SERVICE", e);
 				requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
@@ -144,7 +165,9 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 						Arrays.asList(rolesAllowed));
 				try {
 					if (!isUserAllowed(utenteBulk, rolesSet)) {
-						requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", "User doesn't have the following roles: " + rolesSet)).build());
+						final String message = "User " + utenteBulk.getCd_utente() + " doesn't have the following roles: " + rolesSet;
+						LOGGER.warn(message);
+						requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(Collections.singletonMap("ERROR", message)).build());
 						return;
 					}
 				} catch (Exception e) {
@@ -155,10 +178,13 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 		if (accessoAllowed != null) {
 			List<String> accessi = Stream.of(accessoAllowed.value()).map(x -> x.name()).collect(Collectors.toList());
 			try {
+				final UserContext userPrincipal = (UserContext) requestContext.getSecurityContext().getUserPrincipal();
 				if (!BasicAuthentication.loginComponentSession().isUserAccessoAllowed(
-						(UserContext)requestContext.getSecurityContext().getUserPrincipal(), 
+						userPrincipal,
 						accessi.toArray(new String[accessi.size()]))) {
-					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(Collections.singletonMap("ERROR", "User doesn't have the following access: " + accessi)).build());
+					final String message = "User " + userPrincipal.getUser() + " doesn't have the following access: " + accessi;
+					LOGGER.warn(message);
+					requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(Collections.singletonMap("ERROR", message)).build());
 				}
 			} catch (ComponentException|RemoteException|EJBException e) {
 				requestContext.abortWith(Response.status(Status.INTERNAL_SERVER_ERROR).entity(e).build());
@@ -188,10 +214,19 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
-		containerRequestContext.getHeaders().add("Access-Control-Allow-Origin", "*");
-		containerRequestContext.getHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
-		containerRequestContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
-		containerRequestContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-		containerRequestContext.getHeaders().add("Access-Control-Max-Age", "1209600");
+		final List<String> allowOrigins = Optional.ofNullable(System.getProperty(CORSFilter.CORS_ALLOW_ORIGIN))
+				.filter(s -> !s.isEmpty())
+				.map(s -> Arrays.asList(s.split(";")))
+				.orElse(Collections.emptyList());
+		Optional.ofNullable(containerRequestContext.getHeaders())
+				.flatMap(s -> Optional.ofNullable(s.getFirst(CORSFilter.ORIGIN)))
+				.filter(s -> allowOrigins.contains(s))
+				.ifPresent(s -> {
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_ORIGIN, s);
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_HEADERS, "origin, content-type, accept, authorization");
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
+				});
+
 	}
 }

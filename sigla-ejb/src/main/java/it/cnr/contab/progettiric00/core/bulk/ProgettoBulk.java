@@ -176,6 +176,7 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private BulkList<Progetto_rimodulazioneBulk> rimodulazioni = new BulkList<Progetto_rimodulazioneBulk>();
 	private BulkList<ContrattoBulk> contratti = new BulkList<ContrattoBulk>();
+	private BulkList<Progetto_anagraficoBulk> anagraficheProgetto = new BulkList<Progetto_anagraficoBulk>();
 
 	public ProgettoBulk() {
 		super();
@@ -234,7 +235,7 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 	}
 
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPianoEconomicoTotale,dettagliPianoEconomicoAnnoCorrente,dettagliPianoEconomicoAltriAnni};
+		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPianoEconomicoTotale,dettagliPianoEconomicoAnnoCorrente,dettagliPianoEconomicoAltriAnni,anagraficheProgetto};
 	}
 
 public java.lang.String getCd_divisa() {
@@ -1389,4 +1390,25 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public void setContratti(BulkList<ContrattoBulk> contratti) {
 		this.contratti = contratti;
 	}
+
+
+	public BulkList<Progetto_anagraficoBulk> getAnagraficheProgetto() {
+		return anagraficheProgetto;
+	}
+
+	public void setAnagraficheProgetto(BulkList<Progetto_anagraficoBulk> anagraficheProgetto) {
+		this.anagraficheProgetto = anagraficheProgetto;
+	}
+
+	public int addToAnagraficheProgetto(Progetto_anagraficoBulk dett){
+		dett.setPgProgetto(this.getPg_progetto());
+		getAnagraficheProgetto().add(dett);
+		return anagraficheProgetto.size()-1;
+	}
+
+	public Progetto_anagraficoBulk removeFromAnagraficheProgetto(int index) {
+		Progetto_anagraficoBulk dett = (Progetto_anagraficoBulk)getAnagraficheProgetto().remove(index);
+		return dett;
+	}
+
 }

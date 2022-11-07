@@ -176,10 +176,18 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_STIPENDI = "STIPENDI";
     public final static String SK_CODICE_BOLLO = "CODICE_BOLLO";
 
+    public final static String PK_IMPEGNI = "IMPEGNI";
+    public final static String SK_IMPEGNI_PLURIENNALI = "IMPEGNI_PLURIENNALI";
+
+    public final static String PK_ACCERTAMENTI = "ACCERTAMENTI";
+    public final static String SK_ACCERTAMENTI_PLURIENNALI = "ACCERTAMENTI_PLURIENNALI";
+
     public Configurazione_cnrBulk() {
         super();
     }
 
+    public final static String PK_ESERCIZIO_SPECIALE = "ESERCIZIO_SPECIALE";
+    public final static String SK_ESERCIZIO_PARTENZA = "ESERCIZIO_PARTENZA";
     public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria, java.lang.String cd_chiave_secondaria, java.lang.String cd_unita_funzionale, java.lang.Integer esercizio) {
         super(cd_chiave_primaria, cd_chiave_secondaria, cd_unita_funzionale, esercizio);
     }

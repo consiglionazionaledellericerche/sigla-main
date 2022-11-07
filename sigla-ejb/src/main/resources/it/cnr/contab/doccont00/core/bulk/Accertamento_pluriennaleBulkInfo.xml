@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="cdCds"
+		property="accertamento.cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Cds dell'accertamento - chiave primaria" />
+	<fieldProperty
+		name="esercizio"
+		property="accertamento.esercizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esercizio dell'accertamento - chiave primaria" />
+	<fieldProperty
+		name="esercizioOriginale"
+		property="accertamento.esercizio_originale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esercizio Originale dell'accertamento - chiave primaria" />
+	<fieldProperty
+		name="pgAccertamento"
+		property="accertamento.pg_accertamento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Numero dell'accertamento - chiave primaria" />
+	<fieldProperty
+		name="anno"
+		property="anno"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="5"
+		enabledOnEdit="true"
+		command="doOnAnnoAccertamentoPluriennaleChange"
+		label="Anno Accertamento Pluriennale " />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.Importo2CifrePositivoFormat"
+		enabledOnEdit="true"
+		label="Importo totale" />
+	<fieldProperty
+		name="cdCdsRif"
+		property="accertamentoRif.cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Cds dell'accertamento di riferimento" />
+	<fieldProperty
+		name="esercizioRif"
+		property="accertamentoRif.esercizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio riferimento" />
+	<fieldProperty
+		name="esercizioOriginaleRif"
+		property="accertamentoRif.esercizio_originale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio Originale di riferimento" />
+	<fieldProperty
+		name="pgAccertamentoRif"
+		property="accertamentoRif.pg_accertamento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Numero di riferimento" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="esercizioOriginale" />
+		<formFieldProperty
+			name="pgAccertamento" />
+		<formFieldProperty
+			name="anno" />
+	</form>
+	<formFieldProperty
+		name="anno" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+			name="cdCds" />
+	<formFieldProperty
+			name="esercizio" />
+	<formFieldProperty
+			name="esercizioOriginale" />
+	<formFieldProperty
+			name="pgAccertamento" />
+
+
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizioOriginale" />
+	<columnFieldProperty
+		name="pgAccertamento" />
+	<columnFieldProperty
+		name="anno" />
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="cdCdsRif" />
+	<columnFieldProperty
+		name="esercizioRif" />
+	<columnFieldProperty
+		name="esercizioOriginaleRif" />
+	<columnFieldProperty
+		name="pgAccertamentoRif" />
+
+	<columnSet
+			name="ColumnsDettAccPluriennale">
+		<columnFieldProperty
+				name="anno" />
+		<columnFieldProperty
+				name="importo" />
+		<columnFieldProperty
+				name="esercizioRif" />
+		<columnFieldProperty
+				name="esercizioOriginaleRif" />
+		<columnFieldProperty
+				name="pgAccertamentoRif" />
+	</columnSet>
+</bulkInfo>
