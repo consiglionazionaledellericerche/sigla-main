@@ -40,6 +40,9 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.action.FormBP;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
+import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -156,6 +159,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 
     public Forward doDefaultNG(ActionContext context) {
         try {
+            if (!Optional.ofNullable(context.getUserContext()).isPresent()) {
+                final BusinessProcess businessProcess = context.getBusinessProcess();
+                log.debug("Current BusinessProcess name {}", businessProcess.getName());
+            }
             return doInitializeWorkspace(context);
         } catch (Throwable e) {
             return handleException(context, e);
@@ -303,6 +310,26 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         }
     }
 
+    public Forward doLogout(ActionContext context) {
+        context.invalidateSession();
+        final Optional<KeycloakPrincipal> principalOptional = Optional.ofNullable(context)
+                .filter(HttpActionContext.class::isInstance)
+                .map(HttpActionContext.class::cast)
+                .map(HttpActionContext::getRequest)
+                .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+                .filter(KeycloakPrincipal.class::isInstance)
+                .map(KeycloakPrincipal.class::cast);
+        if (principalOptional.isPresent()) {
+            Optional.ofNullable(principalOptional.get().getKeycloakSecurityContext())
+                    .filter(RefreshableKeycloakSecurityContext.class::isInstance)
+                    .map(RefreshableKeycloakSecurityContext.class::cast)
+                    .ifPresent(rKSC -> {
+                        rKSC.logout(rKSC.getDeployment());
+                    });
+        }
+        return context.findForward("logout");
+    }
+
     private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
         boolean utentiMultipliFound = false;
         CNRUserInfo ui = null;
@@ -332,6 +359,21 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             if (ui.getLdap_userid() != null) {
                 utente.setCd_utente_uid(ui.getLdap_userid());
             }
+            final Optional<IDToken> idToken = principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(KeycloakPrincipal.class::cast)
+                    .map(KeycloakPrincipal::getKeycloakSecurityContext)
+                    .map(keycloakSecurityContext -> {
+                        return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+                                .orElse(keycloakSecurityContext.getToken());
+                    });
+            if (idToken.isPresent()) {
+                final String username_cnr = idToken
+                        .flatMap(t -> Optional.ofNullable(t.getOtherClaims().get("username_cnr")).map(String::valueOf))
+                        .orElse(idToken.get().getPreferredUsername());
+                utente.setCd_utente(username_cnr);
+                utente.setCd_utente_uid(username_cnr);
+            }
             utente.setUtente_multiplo(ui.getUtente_multiplo());
             ui.setUtente(utente);
             try {
@@ -350,8 +392,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             }
 
             if (utente == null) {
-                setErrorMessage(context, "Nome utente o password sbagliati.");
-                return context.findDefaultForward();
+                if (idToken.isPresent()) {
+                    return context.findForward("unauthorized");
+                } else {
+                    setErrorMessage(context, "Nome utente o password sbagliati.");
+                    return context.findDefaultForward();
+                }
             }
             ui.setUserid(utente.getCd_utente());
             if (utente.isAutenticazioneLdap())
@@ -379,17 +425,29 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             setErrorMessage(context, "Password scaduta da più di tre mesi.");
             return context.findForward("password_scaduta_ldap");
         } catch (it.cnr.contab.utente00.nav.comp.UtenteNonValidoException e) {
-            setErrorMessage(context, "Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
-            return context.findDefaultForward();
+            setErrorMessage(context, "Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                    .orElse(context.findDefaultForward());
         } catch (it.cnr.contab.utente00.nav.comp.UtenteInDisusoException e) {
             setErrorMessage(context, "Utente non utilizzato da più di sei mesi.");
-            return context.findDefaultForward();
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                            .orElse(context.findDefaultForward());
         } catch (it.cnr.contab.utente00.nav.comp.UtenteLdapException e) {
             setErrorMessage(context, "Utente non più valido. Utilizzare l'utente di accesso ufficiale di tipo \"nome.cognome\"");
-            return context.findDefaultForward();
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                    .orElse(context.findDefaultForward());
         } catch (it.cnr.contab.utente00.nav.comp.UtenteLdapNonUtenteSiglaException e) {
             setErrorMessage(context, "Utente valido ma che non possiede nessun profilo/abilitazione in SIGLA. Contattare l'amministratore delle utenze Sigla dell'Istituto.");
-            return context.findDefaultForward();
+            return principalOptional
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(principal -> context.findForward("unauthorized"))
+                    .orElse(context.findDefaultForward());
         } catch (Throwable e) {
             return handleException(context, e);
         }
@@ -543,7 +601,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             bp.cercaCds(context);
         else
             bp.cercaUnitaOrganizzative(context);
-        return context.findForward("desktop");
+        return context.findForward("home");
     }
 
     public Forward doSelezionaContesto(ActionContext context, Integer esercizio) {
@@ -558,7 +616,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
      */
     public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
         try {
-            LoginBP bp = (LoginBP) context.getBusinessProcess();
+            LoginBP bp = (LoginBP) context.getBusinessProcessRoot(false);
             CNRUserInfo ui = Optional.ofNullable(context.getUserInfo())
                     .filter(CNRUserInfo.class::isInstance)
                     .map(CNRUserInfo.class::cast)
@@ -607,12 +665,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                                 .flatMap(unita_organizzativaBulk -> Optional.ofNullable(unita_organizzativaBulk.getCd_unita_organizzativa())).isPresent()) {
                             try {
                                 return createCRUDComponentSession().find(
-                                        context.getUserContext(),
-                                        V_struttura_organizzativaBulk.class,
-                                        "findCDRCollegatiUO",
-                                        ui.getUnita_organizzativa(),
-                                        ui.getEsercizio()
-                                ).stream()
+                                                context.getUserContext(),
+                                                V_struttura_organizzativaBulk.class,
+                                                "findCDRCollegatiUO",
+                                                ui.getUnita_organizzativa(),
+                                                ui.getEsercizio()
+                                        ).stream()
                                         .filter(CdrBulk.class::isInstance)
                                         .map(CdrBulk.class::cast)
                                         .findAny()
@@ -637,6 +695,15 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             context.setUserContext(userContext);
             return context.findDefaultForward();
         } catch (NoSuchSessionException _ex) {
+            final Optional<Principal> principalOptional = Optional.ofNullable(context)
+                    .filter(HttpActionContext.class::isInstance)
+                    .map(HttpActionContext.class::cast)
+                    .map(HttpActionContext::getRequest)
+                    .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+                    .filter(KeycloakPrincipal.class::isInstance);
+            if (principalOptional.isPresent()) {
+                return doDefaultNG(context);
+            }
             return context.findForward("sessionExpired");
         } catch (Throwable e) {
             return handleException(context, e);

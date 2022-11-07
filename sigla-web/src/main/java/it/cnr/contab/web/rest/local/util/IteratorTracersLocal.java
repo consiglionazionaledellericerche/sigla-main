@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import it.cnr.contab.web.rest.config.AccessoAllowed;
-import it.cnr.contab.web.rest.config.AccessoEnum;
+import it.cnr.contab.util.enumeration.AccessoEnum;
 import it.cnr.jada.util.ejb.EJBTracer;
 
 import javax.ejb.Local;

@@ -17,7 +17,6 @@
 
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.contab.WSAttributes;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -44,20 +43,21 @@ import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
+import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.Costanti;
 import it.cnr.contab.utenze00.bp.WSUserContext;
+import it.cnr.contab.util.enumeration.AccessoEnum;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 import it.cnr.jada.util.DateUtils;
-import org.jboss.ws.api.annotation.WebContext;
+import org.keycloak.KeycloakPrincipal;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
-import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.soap.*;
@@ -66,13 +66,11 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 
 @XmlSeeAlso({java.util.ArrayList.class})
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.docamm00.ejb.FatturaAttivaComponentSessionWS")
-@DeclareRoles({WSAttributes.WSUSERROLE, WSAttributes.IITROLE})
-@WebContext(authMethod = WSAttributes.AUTHMETHOD)
-@HandlerChain(file = "/it/cnr/contab/handler/handlers.xml")
 public class FatturaAttivaComponentWS {
     @EJB
     FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
@@ -82,11 +80,26 @@ public class FatturaAttivaComponentWS {
     AccertamentoComponentSession accertamentoComponentSession;
     @EJB
     ObbligazioneComponentSession obbligazioneComponentSession;
+    @EJB
+    GestioneLoginComponentSession gestioneLoginComponentSession;
+    @Resource
+    private EJBContext ejbContext;
 
-    @RolesAllowed({WSAttributes.WSUSERROLE, WSAttributes.IITROLE})
-    public FatturaAttiva InserimentoFattura(FatturaAttiva fattura) throws FatturaAttivaException_Exception {
+    public FatturaAttiva InserimentoFattura(FatturaAttiva fattura) throws Exception {
         java.util.ArrayList<FatturaAttiva> fatture = new ArrayList<FatturaAttiva>();
         fatture.add(fattura);
+        if (!gestioneLoginComponentSession.isUserAccessoAllowed(
+                Optional.ofNullable(ejbContext.getCallerPrincipal())
+                        .filter(KeycloakPrincipal.class::isInstance)
+                        .map(KeycloakPrincipal.class::cast)
+                        .orElse(null),
+                fattura.getEsercizio(),
+                fattura.getCd_cds_origine(),
+                fattura.getCd_uo_origine(),
+                AccessoEnum.AMMFATTURDOCSFATATTM.name()
+        )) {
+            throw new SOAPFaultException(faultAccesononConsentito());
+        }
         try {
             fatture = InserimentoFatture(fatture);
         } catch (Exception e) {
@@ -105,7 +118,6 @@ public class FatturaAttivaComponentWS {
 
     }
 
-    @RolesAllowed({WSAttributes.WSUSERROLE, WSAttributes.IITROLE})
     public java.util.ArrayList<FatturaAttiva> InserimentoFatture(java.util.ArrayList<FatturaAttiva> fatture) throws Exception {
 
         UserContext context = new WSUserContext("System", null, new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)), null, null, null);
@@ -113,6 +125,18 @@ public class FatturaAttivaComponentWS {
         Fattura_attiva_rigaBulk riga;
         java.util.ArrayList<FatturaAttiva> listOfFatture = fatture;
         try {
+            if (!gestioneLoginComponentSession.isUserAccessoAllowed(
+                    Optional.ofNullable(ejbContext.getCallerPrincipal())
+                            .filter(KeycloakPrincipal.class::isInstance)
+                            .map(KeycloakPrincipal.class::cast)
+                            .orElse(null),
+                    listOfFatture.stream().map(FatturaAttiva::getEsercizio).findAny().orElse(null),
+                    listOfFatture.stream().map(FatturaAttiva::getCd_cds_origine).findAny().orElse(null),
+                    listOfFatture.stream().map(FatturaAttiva::getCd_uo_origine).findAny().orElse(null),
+                    AccessoEnum.AMMFATTURDOCSFATATTM.name()
+            )) {
+                throw new SOAPFaultException(faultAccesononConsentito());
+            }
             for (int s = 0; s < listOfFatture.size(); s++) {
                 FatturaAttiva fat = listOfFatture.get(s);
                 String nome = Controllo_campo_errore(fat);
@@ -420,7 +444,7 @@ public class FatturaAttivaComponentWS {
                                     else {
                                         //controllo cliente coerente fattura - NC
                                         ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().setFattura_attivaI((Fattura_attiva_IBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext,
-												new Fattura_attiva_IBulk(testata.getCd_cds(), testata.getCd_unita_organizzativa(), ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getEsercizio(), ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getPg_fattura_attiva())));
+                                                new Fattura_attiva_IBulk(testata.getCd_cds(), testata.getCd_unita_organizzativa(), ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getEsercizio(), ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getPg_fattura_attiva())));
                                         ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getFattura_attivaI().setCliente((TerzoBulk) fatturaAttivaSingolaComponentSession.completaOggetto(userContext, ((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getFattura_attivaI().getCliente()));
                                         if (testata.getCliente().getCd_terzo().compareTo(((Nota_di_credito_attiva_rigaBulk) riga).getRiga_fattura_associata().getFattura_attivaI().getCd_terzo()) != 0)
                                             fat = ValorizzaErrore(fat, Costanti.ERRORE_FA_116.toString());
@@ -909,7 +933,6 @@ public class FatturaAttivaComponentWS {
         return listOfFatture;
     }
 
-    @RolesAllowed({WSAttributes.WSUSERROLE, WSAttributes.IITROLE})
     public FatturaAttiva RicercaFattura(String user, Long esercizio, String cds, String uo, Long pg) throws Exception {
         FatturaAttiva ritorno = new FatturaAttiva();
         java.util.ArrayList<FatturaAttivaRiga> righe = new java.util.ArrayList<FatturaAttivaRiga>();
@@ -924,6 +947,18 @@ public class FatturaAttivaComponentWS {
         if (cds == null || uo == null || pg == null || esercizio == null)
             throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
         try {
+            if (!gestioneLoginComponentSession.isUserAccessoAllowed(
+                    Optional.ofNullable(ejbContext.getCallerPrincipal())
+                            .filter(KeycloakPrincipal.class::isInstance)
+                            .map(KeycloakPrincipal.class::cast)
+                            .orElse(null),
+                    esercizio.intValue(),
+                    cds,
+                    uo,
+                    AccessoEnum.AMMFATTURDOCSFATATTV.name()
+            )) {
+                throw new SOAPFaultException(faultAccesononConsentito());
+            }
             Fattura_attivaBulk fatturaAt = fatturaAttivaSingolaComponentSession.ricercaFattura(userContext, esercizio, cds, uo, pg);
             ritorno.setCambio(fatturaAt.getCambio());
             ritorno.setCd_cds_origine(fatturaAt.getCd_cds_origine());
@@ -1043,6 +1078,10 @@ public class FatturaAttivaComponentWS {
         } catch (FatturaNonTrovataException e) {
             throw new SOAPFaultException(faultFatturaNonTrovata());
         }
+    }
+
+    private SOAPFault faultAccesononConsentito() throws SOAPException {
+        return generaFault("000", "Accesso non consentito!");
     }
 
     private SOAPFault faultChiaveFatturaNonCompleta() throws SOAPException {

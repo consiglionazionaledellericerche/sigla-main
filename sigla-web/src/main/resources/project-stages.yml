@@ -2,6 +2,8 @@ logger:
   level: DEBUG
 
 thorntail:
+  app:
+    name: sigla.war
   security:
     security-domains:
       sigla-auth:
@@ -23,7 +25,7 @@ thorntail:
                 rolesCtxDN: ou=groups,o=cnr,c=it
                 roleFilter: member={1}
                 roleAttributeID: cn
-                defaultRole: USER
+                defaultRole: default-roles-cnr
                 password-stacking: useFirstPass
                 storePass: true
             Database:
@@ -302,6 +304,14 @@ thorntail:
         use-java-context: true
         jndi-name: java:/jdbc/CIR
   deployment:
+    sigla.war:
+      web:
+        security-constraints:
+          - url-pattern: /restapi/version
+          - url-pattern: /restapi/login
+          - url-pattern: /restapi/*
+            roles:
+              - "*"
     timeout: 1200
 
 spring:
@@ -509,3 +519,31 @@ thorntail:
 spring:
   profiles:
     active: liquibase-isin
+---
+project:
+  stage: keycloak
+thorntail:
+  keycloak:
+    secure-deployments:
+      sigla.war:
+        auth-server-url: "http://dockerwebtest02.si.cnr.it:8110/auth"
+        realm: cnr
+        resource: sigla
+        ssl-required: NONE
+        public-client: false
+        enable-basic-auth: true
+        credentials:
+          secret:
+            value: secret
+
+  deployment:
+    sigla.war:
+      web:
+        security-constraints:
+          - url-pattern: /restapi/version
+          - url-pattern: /restapi/login
+          - url-pattern: /restapi/swagger.json
+          - url-pattern: /restapi/*
+            roles:
+              - "default-roles-cnr"
+              - "default-roles-cnr.it"

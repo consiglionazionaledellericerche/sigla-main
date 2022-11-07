@@ -20,9 +20,8 @@ package it.cnr.contab.web.rest.local.util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import io.swagger.annotations.AuthorizationScope;
 import it.cnr.contab.web.rest.config.AccessoAllowed;
-import it.cnr.contab.web.rest.config.AccessoEnum;
+import it.cnr.contab.util.enumeration.AccessoEnum;
 import it.cnr.si.siopeplus.model.Esito;
 import it.cnr.si.siopeplus.model.Risultato;
 
@@ -32,7 +31,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Map;
 
 @Local
 @Path("/messaggi")
