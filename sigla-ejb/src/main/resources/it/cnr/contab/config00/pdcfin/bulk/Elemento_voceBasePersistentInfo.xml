@@ -74,7 +74,7 @@
 			columnName="DS_ELEMENTO_VOCE"
 			propertyName="ds_elemento_voce"
 			sqlTypeName="VARCHAR"
-			columnSize="100" />
+			columnSize="200" />
 		<columnMapping
 			columnName="ESERCIZIO_ELEMENTO_PADRE"
 			propertyName="esercizio_elemento_padre"
