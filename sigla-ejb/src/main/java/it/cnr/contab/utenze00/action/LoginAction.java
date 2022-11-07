@@ -601,7 +601,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             bp.cercaCds(context);
         else
             bp.cercaUnitaOrganizzative(context);
-        return context.findForward("home");
+        final Optional<Principal> principalOptional = Optional.ofNullable(context)
+                .filter(HttpActionContext.class::isInstance)
+                .map(HttpActionContext.class::cast)
+                .map(HttpActionContext::getRequest)
+                .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+                .filter(KeycloakPrincipal.class::isInstance);
+        if (principalOptional.isPresent()) {
+            return context.findForward("home");
+        }
+        return context.findForward("desktop");
     }
 
     public Forward doSelezionaContesto(ActionContext context, Integer esercizio) {
