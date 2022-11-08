@@ -22,6 +22,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.exception.InvalidPasswordException;
 import it.cnr.contab.web.rest.exception.UnauthorizedException;
+import it.cnr.contab.web.rest.exception.UnprocessableEntityException;
 import it.cnr.contab.web.rest.local.config00.AccountLocal;
 import it.cnr.contab.web.rest.model.AccountDTO;
 import it.cnr.contab.web.rest.model.PasswordDTO;
@@ -94,7 +95,7 @@ public class AccountResource implements AccountLocal {
             );
             final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
             if (!utenteBulk1.isPresent()) {
-                throw new UnauthorizedException("User not found " + idToken.getPreferredUsername(), null);
+                throw new UnprocessableEntityException(idToken);
             }
             accountDTO = new AccountDTO(utenteBulk1.get());
             accountDTO.setLogin(idToken.getPreferredUsername());
@@ -132,8 +133,8 @@ public class AccountResource implements AccountLocal {
             if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
                 return Response.status(Response.Status.OK).entity(getAccountDTO(request)).build();
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        } catch (UnauthorizedException _ex) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (UnprocessableEntityException _ex) {
+            return Response.status(422).entity(_ex.getEntity()).build();
         }
     }
 
