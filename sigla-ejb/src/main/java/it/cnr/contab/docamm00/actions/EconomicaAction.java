@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.actions;
 
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotEnabledException;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotRequiredException;
 import it.cnr.contab.coepcoan00.consultazioni.bp.ConsultazionePartitarioBP;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
@@ -58,7 +59,7 @@ public abstract class EconomicaAction extends CRUDAction {
             bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
             bp.setDirty(true);
-        } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
             bp.setMessage(FormBP.INFO_MESSAGE, e.getMessage());
         } catch (ComponentException | RemoteException e) {
             return handleException(actionContext, e);

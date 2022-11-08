@@ -99,7 +99,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 				listCdCds.stream().sorted().forEach(cdCds -> {
 					List<IDocumentoCogeBulk> allDocuments;
 					try {
-						allDocuments = session.getAllDocumentiCoge(param0, param1, cdCds);
+						allDocuments = session.getAllDocumentiCogeDaContabilizzare(param0, param1, cdCds);
 					} catch (ComponentException | RemoteException | PersistencyException ex) {
 						SendMail.sendErrorMail(subjectError, "Errore durante la lettura dei documenti del cds " + cdCds + " - Errore: " + ex.getMessage());
 						throw new DetailedRuntimeException(ex);

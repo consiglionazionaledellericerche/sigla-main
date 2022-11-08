@@ -24,6 +24,7 @@ import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
 public class RimborsoBulk extends RimborsoBase implements IDocumentoCogeBulk {
     // Stati documento riportato
@@ -180,5 +181,45 @@ public class RimborsoBulk extends RimborsoBase implements IDocumentoCogeBulk {
     @Override
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
+    }
+
+    @Override
+    public java.lang.String getCd_cds_anticipo() {
+        return Optional.ofNullable(this.getAnticipo()).map(AnticipoBulk::getCd_cds).orElse(null);
+    }
+
+    @Override
+    public void setCd_cds_anticipo(String cd_cds_anticipo) {
+        Optional.ofNullable(this.getAnticipo()).ifPresent(el->el.setCd_cds(cd_cds_anticipo));
+    }
+
+    @Override
+    public String getCd_uo_anticipo() {
+        return Optional.ofNullable(this.getAnticipo()).map(AnticipoBulk::getCd_uo).orElse(null);
+    }
+
+    @Override
+    public void setCd_uo_anticipo(String cd_uo_anticipo) {
+        Optional.ofNullable(this.getAnticipo()).ifPresent(el->el.setCd_uo(cd_uo_anticipo));
+    }
+
+    @Override
+    public Integer getEsercizio_anticipo() {
+        return Optional.ofNullable(this.getAnticipo()).map(AnticipoBulk::getEsercizio).orElse(null);
+    }
+
+    @Override
+    public void setEsercizio_anticipo(Integer esercizio_anticipo) {
+        Optional.ofNullable(this.getAnticipo()).ifPresent(el->el.setEsercizio(esercizio_anticipo));
+    }
+
+    @Override
+    public Long getPg_anticipo() {
+        return Optional.ofNullable(this.getAnticipo()).map(AnticipoBulk::getPg_anticipo).orElse(null);
+    }
+
+    @Override
+    public void setPg_anticipo(Long pg_anticipo) {
+        Optional.ofNullable(this.getAnticipo()).ifPresent(el->el.setPg_anticipo(pg_anticipo));
     }
 }

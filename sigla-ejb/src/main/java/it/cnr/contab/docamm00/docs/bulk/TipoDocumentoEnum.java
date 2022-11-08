@@ -26,17 +26,19 @@ import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public enum TipoDocumentoEnum {
 	ANTICIPO(Numerazione_doc_ammBulk.TIPO_ANTICIPO, AnticipoBulk.class, "Anticipo"),
 	MISSIONE(Numerazione_doc_ammBulk.TIPO_MISSIONE, MissioneBulk.class, "Missione"),
 	COMPENSO(Numerazione_doc_ammBulk.TIPO_COMPENSO, CompensoBulk.class, "Compenso"),
+	RIMBORSO(Numerazione_doc_ammBulk.TIPO_RIMBORSO, RimborsoBulk.class, "Rimborso"),
 	FATTURA_PASSIVA(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA, Fattura_passiva_IBulk.class, "Fattura Passiva"),
 	NOTA_CREDITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_CREDITO_PASSIVA, Nota_di_creditoBulk.class,"Nota di Credito Passiva"),
 	NOTA_DEBITO_PASSIVA(TipoDocumentoEnum.TIPO_NOTA_DEBITO_PASSIVA, Nota_di_debitoBulk.class, "Nota di Debito Passiva"),
@@ -308,6 +310,8 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.TipoRiga.COSTO.value();
 		if (this.isDocumentoAttivo())
 			return Movimento_cogeBulk.TipoRiga.RICAVO.value();
+		if (this.isRimborso())
+			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		return null;
 	}
 
@@ -325,9 +329,13 @@ public enum TipoDocumentoEnum {
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
 		if (this.isChiusuraFondo())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		//Lw fatture passive, incluse le note credito, movimentano sempre un debito (le note credito in diminuzione)
 		if (this.isDocumentoPassivo())
 			return Movimento_cogeBulk.TipoRiga.DEBITO.value();
+		//I documenti attivi, incluse le note credito attive, movimentano sempre un crebito (le note credito in aumento)
 		if (this.isDocumentoAttivo())
+			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
+		if (this.isRimborso())
 			return Movimento_cogeBulk.TipoRiga.CREDITO.value();
 		return null;
 	}
@@ -353,6 +361,8 @@ public enum TipoDocumentoEnum {
 		if (this.isDocumentoPassivo())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		if (this.isDocumentoAttivo())
+			return Movimento_cogeBulk.SEZIONE_AVERE;
+		if (this.isRimborso())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		return null;
 	}
@@ -395,6 +405,8 @@ public enum TipoDocumentoEnum {
 		if (this.isDocumentoPassivo())
 			return Movimento_cogeBulk.SEZIONE_AVERE;
 		if (this.isDocumentoAttivo())
+			return Movimento_cogeBulk.SEZIONE_DARE;
+		if (this.isRimborso())
 			return Movimento_cogeBulk.SEZIONE_DARE;
 		return null;
 	}

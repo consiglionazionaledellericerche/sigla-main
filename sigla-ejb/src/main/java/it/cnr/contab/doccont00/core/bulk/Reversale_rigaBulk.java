@@ -22,6 +22,7 @@ import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
@@ -589,4 +590,16 @@ public class Reversale_rigaBulk extends Reversale_rigaBase {
 	public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
 		throw new IllegalStateException();
 	}
+
+    public boolean isRigaTipoFatturaAttiva() {
+        return Fattura_attivaBulk.TIPO_FATTURA_ATTIVA.equals(this.getTi_fattura());
+    }
+
+    public boolean isRigaTipoNotaCredito() {
+        return Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO.equals(this.getTi_fattura());
+    }
+
+    public boolean isRigaTipoNotaDebito() {
+        return Fattura_attivaBulk.TIPO_NOTA_DI_DEBITO.equals(this.getTi_fattura());
+    }
 }

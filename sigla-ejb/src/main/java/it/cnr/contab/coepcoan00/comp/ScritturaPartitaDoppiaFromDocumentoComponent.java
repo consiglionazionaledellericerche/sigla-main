@@ -22,10 +22,12 @@ import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -85,7 +87,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                         try {
                             optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
                                                 .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
-                        } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
                             optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
                         }
 
@@ -127,7 +129,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                             try {
                                 optionalScritturaPartitaDoppiaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
                                         .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
-                            } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+                            } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
                                 optionalScritturaPartitaDoppiaBulk = Optional.empty();
                             }
                             if (optionalScritturaPartitaDoppiaBulk.isPresent()) {
@@ -163,13 +165,17 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
     }
 
-    public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException {
+    public List<IDocumentoCogeBulk> getAllDocumentiCogeDaContabilizzare(UserContext userContext, Integer esercizio, String cdCds) throws PersistencyException, ComponentException {
         List<IDocumentoCogeBulk> allDocuments = new ArrayList<>();
         {
             PersistentHome anticipoHome = getHome(userContext, AnticipoBulk.class);
             SQLBuilder sql = anticipoHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(anticipoHome.fetchAll(sql));
         }
         {
@@ -177,6 +183,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = missioneHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(missioneHome.fetchAll(sql));
         }
         {
@@ -184,13 +194,32 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = compensoHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(compensoHome.fetchAll(sql));
+        }
+        {
+            PersistentHome rimborsoHome = getHome(userContext, RimborsoBulk.class);
+            SQLBuilder sql = rimborsoHome.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+            Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
+            allDocuments.addAll(rimborsoHome.fetchAll(sql));
         }
         {
             PersistentHome docgenHome = getHome(userContext, Documento_genericoBulk.class);
             SQLBuilder sql = docgenHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(docgenHome.fetchAll(sql));
         }
         {
@@ -198,6 +227,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
         }
         {
@@ -205,6 +238,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
         }
         {
@@ -212,6 +249,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatattHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(fatattHome.fetchAll(fatattHome.createBroker(sql)));
         }
         {
@@ -219,6 +260,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatpasHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
         }
         {
@@ -226,6 +271,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatpasHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
         }
         {
@@ -233,6 +282,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = fatpasHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(fatpasHome.fetchAll(fatpasHome.createBroker(sql)));
         }
         {
@@ -240,6 +293,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = mandatoHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(mandatoHome.fetchAll(sql));
         }
         {
@@ -247,6 +304,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             SQLBuilder sql = reversaleHome.createSQLBuilder();
             sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
             Optional.ofNullable(cdCds).ifPresent(el -> sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, el));
+            sql.openParenthesis(FindClause.AND);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_N);
+            sql.addClause(FindClause.OR, "stato_coge", SQLBuilder.EQUALS, MandatoBulk.STATO_COGE_R);
+            sql.closeParenthesis();
             allDocuments.addAll(reversaleHome.fetchAll(sql));
         }
         return allDocuments;
@@ -276,6 +337,8 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             try {
                 optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
                         .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+            } catch (ScritturaPartitaDoppiaNotEnabledException e) {
+                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
             } catch (ScritturaPartitaDoppiaNotRequiredException e) {
                 optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
                 documentoCoge.setStato_coge(Fattura_passivaBulk.NON_PROCESSARE_IN_COGE);

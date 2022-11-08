@@ -338,9 +338,9 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
         }
     }
     @Override
-    public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, RemoteException {
+    public List<IDocumentoCogeBulk> getAllDocumentiCogeDaContabilizzare(UserContext param0, Integer param1, String param2) throws ComponentException, RemoteException {
         try {
-            return (List<IDocumentoCogeBulk>)invoke("getAllDocumentiCoge", new Object[]{
+            return (List<IDocumentoCogeBulk>)invoke("getAllDocumentiCogeDaContabilizzare", new Object[]{
                     param0,
                     param1,
                     param2});
