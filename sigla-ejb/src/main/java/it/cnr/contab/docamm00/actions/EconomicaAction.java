@@ -28,6 +28,8 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDAction;
@@ -51,6 +53,9 @@ public abstract class EconomicaAction extends CRUDAction {
                 .map(IDocumentoCogeBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Modello di business non compatibile!"));
         try {
+            if (Optional.ofNullable(bp.getModel()).filter(OggettoBulk::isToBeCreated).isPresent())
+                throw new ApplicationException("Il documento risulta non salvato! Proposta scrittura prima nota non possibile.");
+
             documentoCogeBulk.setScrittura_partita_doppia(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(
                     actionContext.getUserContext(),
                     documentoCogeBulk)

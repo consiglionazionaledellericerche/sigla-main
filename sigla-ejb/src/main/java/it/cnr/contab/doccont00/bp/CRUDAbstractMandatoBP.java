@@ -79,6 +79,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
 		try {
 			attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(actioncontext.getUserContext());
+			setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
 		} catch (ComponentException|RemoteException e) {
 			throw handleException(e);
 		}
@@ -531,5 +532,9 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		for (int j = 0; j < i; j++)
 			tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
 		return tabs;
+	}
+
+	public boolean isButtonGeneraScritturaVisible() {
+		return this.isSupervisore();
 	}
 }

@@ -19,6 +19,7 @@
                     .map(IDocumentoCogeBulk::getScrittura_partita_doppia)
                     .orElse(new Scrittura_partita_doppiaBulk());
 %>
+<% if (bp.isButtonGeneraScritturaVisible()) { %>
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
 		<% JSPUtils.button(out,
@@ -31,6 +32,7 @@
 				bp.getParentRoot().isBootstrap()); %>
     </div>
 </div>
+<% } %>
 <div class="Panel card p-2 mb-2 card-shadow">
     <table cellpadding="2">
         <tr>

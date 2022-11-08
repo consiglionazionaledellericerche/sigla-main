@@ -1664,7 +1664,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					rigaDocAmm.getIm_imponibile(), rigaDocAmm.getIm_iva());
 			}
 			return null;
-		}).collect(Collectors.toList());
+		}).filter(el->el!=null).collect(Collectors.toList());
 
 		/*
 		  Le fatture Commerciali con autofattura sono praticamente tutte le fatture Commerciali con Iva positiva

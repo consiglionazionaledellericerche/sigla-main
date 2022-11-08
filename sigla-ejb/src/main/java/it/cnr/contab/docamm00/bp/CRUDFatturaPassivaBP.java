@@ -150,6 +150,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean attivoOrdini = false;
     private boolean propostaFatturaDaOrdini = false;
     protected boolean attivaEconomicaParallela = false;
+    private boolean supervisore = false;
 
     /**
      * CRUDAnagraficaBP constructor comment.
@@ -548,6 +549,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
             propostaFatturaDaOrdini = Utility.createConfigurazioneCnrComponentSession().propostaFatturaDaOrdini(context.getUserContext());
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
             super.init(config, context);
 
             int solaris = Fattura_passivaBulk.getDateCalendar(
@@ -1903,5 +1905,17 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));
             }
         }
+    }
+
+    public boolean isSupervisore() {
+        return supervisore;
+    }
+
+    public void setSupervisore(boolean supervisore) {
+        this.supervisore = supervisore;
+    }
+
+    public boolean isButtonGeneraScritturaVisible() {
+        return this.isSupervisore();
     }
 }
