@@ -33,7 +33,7 @@ thorntail:
               flag: sufficient
               module-options:
                 dsJndiName: java:/jdbc/CIR
-                principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?)
+                principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?) AND FL_AUTENTICAZIONE_LDAP='N'
                 rolesQuery: SELECT DISTINCT CD_RUOLO, 'Roles' FROM UTENTE_UNITA_RUOLO WHERE UPPER(cd_utente)=UPPER(?)
                 hashAlgorithm: MD5
                 hashEncoding: BASE64
