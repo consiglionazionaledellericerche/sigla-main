@@ -69,6 +69,9 @@ public class AlberoMainService {
     @Cacheable(value = "tree", key = "{#userId, #esercizio, #unitaOrganizzativa}")
     public Map<String, List<TreeNode>> tree(UserContext userContext, String userId, Integer esercizio, String unitaOrganizzativa) throws ComponentException, RemoteException {
         LOGGER.info("Start GET Tree for User: {} and Unita Organizzativa: {}", userId, unitaOrganizzativa);
+        if (!Optional.ofNullable(userId).isPresent()) {
+            return Collections.emptyMap();
+        }
         final UtenteBulk utenteBulk = (UtenteBulk) crudComponentSession.findByPrimaryKey(userContext, new UtenteBulk(userId));
         List<String> accessi = accessoService.accessi(userContext, userId, esercizio, unitaOrganizzativa);
         if (Optional.ofNullable(utenteBulk.getCd_utente_templ()).isPresent()) {

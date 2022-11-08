@@ -21,12 +21,16 @@ import it.cnr.contab.security.auth.SIGLALDAPPrincipal;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.exception.InvalidPasswordException;
+import it.cnr.contab.web.rest.exception.UnauthorizedException;
+import it.cnr.contab.web.rest.exception.UnprocessableEntityException;
 import it.cnr.contab.web.rest.local.config00.AccountLocal;
 import it.cnr.contab.web.rest.model.AccountDTO;
 import it.cnr.contab.web.rest.model.PasswordDTO;
 import it.cnr.contab.web.rest.resource.util.AbstractResource;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
@@ -58,6 +62,10 @@ public class AccountResource implements AccountLocal {
         final Optional<SIGLALDAPPrincipal> siglaldapPrincipal = Optional.ofNullable(securityContext.getUserPrincipal())
                 .filter(SIGLALDAPPrincipal.class::isInstance)
                 .map(SIGLALDAPPrincipal.class::cast);
+        final Optional<KeycloakPrincipal> keycloakPrincipal = Optional.ofNullable(securityContext.getUserPrincipal())
+                .filter(KeycloakPrincipal.class::isInstance)
+                .map(KeycloakPrincipal.class::cast);
+
         AccountDTO accountDTO = null;
         if (siglaldapPrincipal.isPresent()) {
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
@@ -73,6 +81,28 @@ public class AccountResource implements AccountLocal {
             accountDTO.setEmail((String) siglaldapPrincipal.get().getAttribute("mail"));
             accountDTO.setFirstName((String) siglaldapPrincipal.get().getAttribute("cnrnome"));
             accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
+            accountDTO.setLdap(Boolean.TRUE);
+            accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+        } else if (keycloakPrincipal.isPresent()) {
+            final IDToken idToken = Optional.ofNullable(keycloakPrincipal.get().getKeycloakSecurityContext().getIdToken())
+                    .orElse(keycloakPrincipal.get().getKeycloakSecurityContext().getToken());
+            final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
+                    userContext,
+                    UtenteBulk.class,
+                    "findUtenteByUID",
+                    userContext,
+                    idToken.getPreferredUsername()
+            );
+            final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
+            if (!utenteBulk1.isPresent()) {
+                throw new UnprocessableEntityException(idToken);
+            }
+            accountDTO = new AccountDTO(utenteBulk1.get());
+            accountDTO.setLogin(idToken.getPreferredUsername());
+            accountDTO.setUsers(findUtenteByUID.stream().map(utenteBulk -> new AccountDTO(utenteBulk)).collect(Collectors.toList()));
+            accountDTO.setEmail(idToken.getEmail());
+            accountDTO.setFirstName(idToken.getGivenName());
+            accountDTO.setLastName(idToken.getFamilyName());
             accountDTO.setLdap(Boolean.TRUE);
             accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
         } else {
@@ -99,9 +129,18 @@ public class AccountResource implements AccountLocal {
 
     @Override
     public Response get(HttpServletRequest request) throws Exception {
-        if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
-            return Response.status(Response.Status.OK).entity(getAccountDTO(request)).build();
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        try {
+            if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
+                return Response.status(Response.Status.OK).entity(getAccountDTO(request)).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (UnprocessableEntityException _ex) {
+            return Response.status(422).entity(_ex.getEntity()).build();
+        }
+    }
+
+    @Override
+    public Response optionsGet(HttpServletRequest request) throws Exception {
+        return Response.ok().build();
     }
 
     @Override

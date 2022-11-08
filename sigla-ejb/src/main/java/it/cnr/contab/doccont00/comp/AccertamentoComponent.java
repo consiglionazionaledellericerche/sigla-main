@@ -23,6 +23,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -4698,10 +4699,36 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 	SQLBuilder sql = getHome(userContext, assestato).createSQLBuilder();
 
 	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio( userContext ) );
-	sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
 	sql.addClause(FindClause.AND, "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
 	sql.addSQLClause(FindClause.AND, "IMPORTO_DISPONIBILE+IMPORTO_VINCOLI", SQLBuilder.GREATER, BigDecimal.ZERO);
+
+	if (CNRUserContext.getEsercizio( userContext )<2022)
+		sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
+	else {
+		sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio(userContext));
+			sql.openParenthesis(FindClause.OR);
+				sql.addClause(FindClause.AND, "progetto_dt_inizio", SQLBuilder.LESS_EQUALS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+				sql.openParenthesis(FindClause.AND);
+					sql.openParenthesis(FindClause.OR);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.ISNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.ISNULL, null);
+					sql.closeParenthesis();
+					sql.openParenthesis(FindClause.OR);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.ISNOTNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.ISNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.GREATER_EQUALS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+					sql.closeParenthesis();
+					sql.openParenthesis(FindClause.OR);
+						sql.addClause(FindClause.AND, "progetto_dt_fine", SQLBuilder.ISNOTNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.ISNOTNULL, null);
+						sql.addClause(FindClause.AND, "progetto_dt_proroga", SQLBuilder.GREATER_EQUALS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+					sql.closeParenthesis();
+				sql.closeParenthesis();
+			sql.closeParenthesis();
+		sql.closeParenthesis();
+	}
 
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);
@@ -4722,11 +4749,11 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResiduoBulk accertamento) throws ComponentException
 {
 	try {
-		if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoDubbio()) {
+		if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoDubbio() || accertamento.isStatoGiudizialmenteControverso()) {
 			if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile()) { 
 				if (accertamento.getIm_quota_inesigibile_da_ripartire().compareTo(BigDecimal.ZERO)!=0)
 					throw new ApplicationException("Attenzione! Non risulta correttamente coperta con spese vincolate la quota inesigibile dell'accertamento residuo. Operazione non possibile!");
-			} else { //accertamento.isStatoDubbio()
+			} else { //accertamento.isStatoDubbio() || accertamento.isStatoGiudizialmenteControverso()
 				if (Optional.ofNullable(accertamento.getImportoNonIncassato()).orElse(BigDecimal.ZERO).compareTo(
 							Optional.ofNullable(accertamento.getIm_quota_inesigibile_ripartita()).orElse(BigDecimal.ZERO))<0)
 					throw new ApplicationException("Attenzione! Le spese vincolate ("

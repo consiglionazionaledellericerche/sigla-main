@@ -25,9 +25,11 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import javax.jws.WebResult;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 @WebService( name="CodiciCpaComponentWS",targetNamespace="http://contab.cnr.it/sigla")
 @Remote
-
+@XmlSeeAlso({java.util.ArrayList.class})
 public interface CodiciCpaComponentSessionWS extends  java.rmi.Remote{
 	
 		 @WebMethod  @WebResult(targetNamespace="http://contab.cnr.it/sigla",name="result") java.util.ArrayList<CodiciCpa>  cercaCodiciCpa(

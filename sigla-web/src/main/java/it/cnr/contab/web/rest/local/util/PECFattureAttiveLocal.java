@@ -18,7 +18,7 @@
 package it.cnr.contab.web.rest.local.util;
 
 import it.cnr.contab.web.rest.config.AccessoAllowed;
-import it.cnr.contab.web.rest.config.AccessoEnum;
+import it.cnr.contab.util.enumeration.AccessoEnum;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;

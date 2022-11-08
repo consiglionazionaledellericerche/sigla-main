@@ -20,7 +20,6 @@ package it.cnr.contab.util.servlet;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.HttpActionContext;
-import it.cnr.jada.action.NoSuchBusinessProcessException;
 import it.cnr.jada.util.Introspector;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
@@ -93,8 +92,6 @@ public class GenericDownloadServlet extends HttpServlet {
                 });
                 if (request.getParameter("methodName") != null)
                     Introspector.invoke(businessProcess, request.getParameter("methodName"), actionContext);
-            } catch (NoSuchBusinessProcessException e) {
-                response.setStatus(HttpStatus.SC_UNAUTHORIZED);
             } catch (NoSuchMethodException e) {
                 throw new ServletException(e);
             } catch (IllegalAccessException e) {

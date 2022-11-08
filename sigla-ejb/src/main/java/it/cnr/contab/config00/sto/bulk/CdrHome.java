@@ -25,10 +25,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.persistency.Broker;
-import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
@@ -38,6 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
+import java.util.Optional;
 
 public class CdrHome extends BulkHome {
 
@@ -521,13 +519,28 @@ public class CdrHome extends BulkHome {
         return dettHome.fetchAll(sql);
     }
 
-	public List<CdrBulk> findCdRByUO(UserContext userContext, Integer esercizio, String uo) throws PersistencyException {
-		final SQLBuilder sqlBuilder = super.createSQLBuilder();
-		sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA");
-		sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
-		sqlBuilder.addSQLClause(FindClause.AND, "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
-		sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
-		sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
-		return fetchAll(sqlBuilder);
+	public CdrBulk findCdrFromCds(UserContext userContext, String cdCds) throws IntrospectionException, PersistencyException {
+		Unita_organizzativaHome unita_organizzativaHome = (Unita_organizzativaHome) getHomeCache().getHome(Unita_organizzativaBulk.class);
+		final Unita_organizzativaBulk uo_cds = unita_organizzativaHome.findUo_cds(CNRUserContext.getEsercizio(userContext), cdCds);
+		final SQLBuilder sqlBuilderEsteso = createSQLBuilderEsteso();
+		sqlBuilderEsteso.addClause(FindClause.AND, "cd_cdr_afferenza", SQLBuilder.ISNULL, null);
+        sqlBuilderEsteso.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, uo_cds.getCd_unita_organizzativa());
+
+        final Optional<CdrBulk> cdr =
+                fetchAll(sqlBuilderEsteso)
+                .stream().findFirst();
+        if (cdr.isPresent())
+            return cdr.get();
+        throw new FetchException("CdR non trovato per il cds " + cdCds);
 	}
+
+    public List<CdrBulk> findCdRByUO(UserContext userContext, Integer esercizio, String uo) throws PersistencyException {
+        final SQLBuilder sqlBuilder = super.createSQLBuilder();
+        sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+        sqlBuilder.addSQLClause(FindClause.AND, "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
+        sqlBuilder.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, esercizio);
+        return fetchAll(sqlBuilder);
+    }
 }

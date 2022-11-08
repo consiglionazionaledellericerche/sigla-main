@@ -45,6 +45,24 @@ public class BasicAuthentication {
 	private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
 	private static final String AUTHENTICATION_SCHEME = "Basic";
 
+	public static UtenteBulk findUtenteBulk(String username) throws ComponentException {
+		UtenteBulk utente = new UtenteBulk();
+		try {
+			utente.setCd_utente(username);
+			utente = loginComponentSession().validaUtente(
+					AdminUserContext.getInstance(),
+					utente,
+					GestioneLoginComponent.VALIDA_FASE_INIZIALE);
+			if (utente != null)
+				return utente;
+		} catch (RemoteException e) {
+			throw new ApplicationException(e.getMessage());
+		} catch (EJBException e) {
+			throw new ApplicationException(e.getMessage());
+		}
+		return null;
+	}
+
 	public static UtenteBulk authenticateUtenteMultiplo(String authorization, String utenteMultiplo) throws ComponentException{
         boolean authorized = false;
 		UtenteBulk utente = new UtenteBulk();
@@ -117,17 +135,20 @@ public class BasicAuthentication {
 		utente.setLdap_password(password);
 		utente.setPasswordInChiaro(password.toUpperCase());
 		try {
-			httpServletRequest.login(username, password);
+			try {
+				if (!Optional.ofNullable(httpServletRequest.getUserPrincipal()).isPresent())
+					httpServletRequest.login(username, password);
+			} catch (ServletException e) {
+				if (e.getMessage().contains("Login failed")) {
+					throw new UnauthorizedException("", e);
+				}
+				throw new RuntimeException(e);
+			}
 			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
 		} catch (RemoteException e) {
 			throw new ApplicationException(e.getMessage());
 		} catch (EJBException e) {
 			throw new ApplicationException(e.getMessage());				
-		} catch (ServletException e) {
-			if (e.getMessage().contains("Login failed")) {
-				throw new UnauthorizedException("", e);
-			}
-			throw new RuntimeException(e);
 		}
 	}
 

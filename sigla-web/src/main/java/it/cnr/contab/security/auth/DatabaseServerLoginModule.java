@@ -60,7 +60,7 @@ public class DatabaseServerLoginModule extends org.jboss.security.auth.spi.Datab
         } catch (Exception _ex) {
             groups.add(new SimpleGroup("Roles"));
         }
-        groups.get(0).addMember(new SimplePrincipal("USER"));
+        groups.get(0).addMember(new SimplePrincipal("default-roles-cnr"));
         return groups
                 .toArray(new Group[groups.size()]);
     }

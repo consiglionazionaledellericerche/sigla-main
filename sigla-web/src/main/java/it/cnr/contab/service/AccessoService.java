@@ -35,7 +35,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.rmi.RemoteException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +56,13 @@ public class AccessoService {
                 .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb JADAEJB_CRUDComponentSession"));
     }
 
+    @CacheEvict(value = "accessi", key = "{#userId, #esercizio, #unitaOrganizzativa}")
+    public boolean evictCacheAccessi(String userId, Integer esercizio, String unitaOrganizzativa) {
+        LOGGER.info("Evict cache Accessi for User: {}", userId);
+        return true;
+    }
+
+    @Cacheable(value = "accessi", key = "{#userId, #esercizio, #unitaOrganizzativa}")
     public List<String> accessi(UserContext userContext, String userId, Integer esercizio, String unitaOrganizzativa) throws ComponentException, RemoteException {
         LOGGER.info("Start Accessi for User: {} esercizio {} and Unita Organizzativa: {}", userId, esercizio, unitaOrganizzativa);
         final List<Utente_unita_ruoloBulk> utente_unita_ruoloBulks =
@@ -65,23 +71,7 @@ public class AccessoService {
                 crudComponentSession.find(userContext, Utente_unita_accessoBulk.class, FIND_ACCESSI_BY_CD_UTENTE, userContext, userId, esercizio, unitaOrganizzativa);
 
         final List<Unita_organizzativaBulk> unita_organizzativaBulks =
-                Optional.ofNullable(unitaOrganizzativa)
-                                .map(s -> {
-                                    try {
-                                        List<Unita_organizzativaBulk> result = crudComponentSession.find(
-                                                userContext,
-                                                Unita_organizzativaBulk.class,
-                                                FIND_CODICE_UO_PARENTS,
-                                                userContext,
-                                                esercizio,
-                                                s
-                                        );
-                                        return result;
-                                    } catch (ComponentException|RemoteException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }).orElse(Collections.emptyList());
-
+                crudComponentSession.find(userContext, Unita_organizzativaBulk.class, FIND_CODICE_UO_PARENTS, userContext, esercizio, unitaOrganizzativa);
         unita_organizzativaBulks.stream()
                 .map(Unita_organizzativaBulk::getCd_unita_organizzativa)
                 .forEach(parentUO -> {

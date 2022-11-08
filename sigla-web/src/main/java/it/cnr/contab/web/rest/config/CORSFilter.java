@@ -73,7 +73,7 @@ public class CORSFilter implements Filter {
                     httpServletResponse
                             .ifPresent(httpServletResponse1 -> {
                                 httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_ORIGIN, s);
-                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, "*");
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, "origin, content-type, accept, authorization");
                                 httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, OPTIONS, PUT, PATCH, DELETE");
                                 httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE.toString());
                             });

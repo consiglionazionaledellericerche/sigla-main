@@ -49,6 +49,16 @@ public interface AccountLocal {
     )
     Response get(@Context HttpServletRequest request) throws Exception;
 
+    @OPTIONS
+    @ApiOperation(value = "Fornisce le informazioni dell'account",
+            notes = "Accesso consentito a tutte le utenze registrate",
+            response = AccountDTO.class,
+            authorizations = {
+                    @Authorization(value = "BASIC")
+            }
+    )
+    Response optionsGet(@Context HttpServletRequest request) throws Exception;
+
     @GET
     @Path("/{username}")
     @ApiOperation(value = "Fornisce le informazioni dell'account in base allo username",

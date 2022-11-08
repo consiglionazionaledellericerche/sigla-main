@@ -270,7 +270,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 						getArchivioAllegati().setReadonlyOnEdit(true);
 					}
 				} else if (getTab( "tab" ).equalsIgnoreCase("tabVincoli")) {
-					if (!isROStato() || ((AccertamentoResiduoBulk)getModel()).isStatoDubbio())
+					if (!isROStato() || ((AccertamentoResiduoBulk)getModel()).isStatoDubbio() || ((AccertamentoResiduoBulk)getModel()).isStatoGiudizialmenteControverso())
 						setStatusAndEditableMap(EDIT);
 				}
 			}
@@ -490,7 +490,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 			pages.put(i++, new String[]{ "tabAllegati","Allegati","/util00/tab_allegati.jsp" });
 		if (getModel() != null) {
 			AccertamentoResiduoBulk doc = ((AccertamentoResiduoBulk)getModel());
-			if (doc.isStatoInesigibile() || doc.isStatoParzialmenteInesigibile() || doc.isStatoDubbio())
+			if (doc.isStatoInesigibile() || doc.isStatoParzialmenteInesigibile() || doc.isStatoDubbio() || doc.isStatoGiudizialmenteControverso())
 				pages.put(i++, new String[]{ "tabVincoli","Spese Vincolate","/doccont00/tab_accertamento_vincoli.jsp" });
 		}
 		String[][] tabs = new String[i][3];
@@ -503,7 +503,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 		super.validate(context);
 		if (getModel() != null) {
 			AccertamentoResiduoBulk doc = ((AccertamentoResiduoBulk)getModel());
-			if (doc.isStatoDilazionato() || doc.isStatoIncerto() || doc.isStatoDubbio() ||
+			if (doc.isStatoDilazionato() || doc.isStatoIncerto() || doc.isStatoDubbio() || doc.isStatoGiudizialmenteControverso() ||
 				doc.isStatoInesigibile() || doc.isStatoParzialmenteInesigibile()) {
 				doc.getArchivioAllegati().stream()
 					.map(AllegatoAccertamentoBulk.class::cast)

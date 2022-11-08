@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2022  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -15,10 +15,8 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab;
+package it.cnr.contab.util.enumeration;
 
-public final class WSAttributes {
-    public static final String IITROLE = "IITRole";
-    public static final String WSUSERROLE = "WSUserRole";
-    public static final String AUTHMETHOD = "WSSE";
+public enum AccessoEnum {
+	AMMFATTURDOCSFATATTV, AMMFATTURDOCSFATATTM, XXXHTTPSESSIONXXXXXX
 }
