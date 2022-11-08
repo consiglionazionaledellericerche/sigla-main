@@ -21,6 +21,7 @@ import it.cnr.contab.security.auth.SIGLALDAPPrincipal;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.exception.InvalidPasswordException;
+import it.cnr.contab.web.rest.exception.UnauthorizedException;
 import it.cnr.contab.web.rest.local.config00.AccountLocal;
 import it.cnr.contab.web.rest.model.AccountDTO;
 import it.cnr.contab.web.rest.model.PasswordDTO;
@@ -91,7 +92,11 @@ public class AccountResource implements AccountLocal {
                     userContext,
                     idToken.getPreferredUsername()
             );
-            accountDTO = new AccountDTO(findUtenteByUID.stream().findFirst().get());
+            final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
+            if (!utenteBulk1.isPresent()) {
+                throw new UnauthorizedException("User not found " + idToken.getPreferredUsername(), null);
+            }
+            accountDTO = new AccountDTO(utenteBulk1.get());
             accountDTO.setLogin(idToken.getPreferredUsername());
             accountDTO.setUsers(findUtenteByUID.stream().map(utenteBulk -> new AccountDTO(utenteBulk)).collect(Collectors.toList()));
             accountDTO.setEmail(idToken.getEmail());
@@ -123,9 +128,13 @@ public class AccountResource implements AccountLocal {
 
     @Override
     public Response get(HttpServletRequest request) throws Exception {
-        if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
-            return Response.status(Response.Status.OK).entity(getAccountDTO(request)).build();
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        try {
+            if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
+                return Response.status(Response.Status.OK).entity(getAccountDTO(request)).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (UnauthorizedException _ex) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
 
     @Override
