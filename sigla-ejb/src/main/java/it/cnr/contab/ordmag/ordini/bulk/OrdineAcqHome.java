@@ -33,6 +33,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
@@ -84,9 +85,9 @@ public class OrdineAcqHome extends BulkHome {
 
 	public SQLBuilder selectNumerazioneOrdByClause(UserContext userContext, OrdineAcqBulk ordine, 
 			NumerazioneOrdHome numerazioneHome, NumerazioneOrdBulk numerazioneBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException{
+			CompoundFindClause compoundfindclause) throws PersistencyException,ApplicationException{
 		if (ordine == null || ordine.getCdUopOrdine() == null){
-			throw new PersistencyException("Selezionare prima l'unità operativa");
+			throw new ApplicationException("Selezionare prima l'unità operativa");
 		}
 		SQLBuilder sql = numerazioneHome.selectByClause(userContext, compoundfindclause);
 		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, ordine.getCdUopOrdine());
