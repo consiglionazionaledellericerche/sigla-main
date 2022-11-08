@@ -199,6 +199,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         super(function);
     }
 
+
     private boolean attivaAnagraficaProgetto = false;
 
     public boolean isAttivaAnagraficaProgetto() {
@@ -715,8 +716,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
                 .map(ProgettoBulk.class::cast).flatMap(el -> Optional.ofNullable(el.getOtherField()))
                 .filter(Progetto_other_fieldBulk::isStatoIniziale)
                 .flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
-                .flatMap(el -> Optional.ofNullable(el.getCodice()))
-                .filter(el -> el.equals(TipoFinanziamentoBulk.CODICE_FIN) || el.equals(TipoFinanziamentoBulk.CODICE_COF))
+                .filter(tipoFin -> tipoFin.isFinanziamento() || tipoFin.isCofinanziamento())
                 .isPresent();
     }
 
@@ -907,6 +907,15 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             if (!optOtherField.flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
                     .flatMap(el -> Optional.ofNullable(el.getCodice())).isPresent())
                 throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
+
+            if (optOtherField.map(Progetto_other_fieldBulk::getTipoFinanziamento).map(TipoFinanziamentoBulk::isAutofinanziamento).orElse(Boolean.FALSE)) {
+                optProgetto.get().getArchivioAllegati().stream()
+                        .filter(AllegatoProgettoBulk.class::isInstance)
+                        .map(AllegatoProgettoBulk.class::cast)
+                        .filter(AllegatoProgettoBulk::isProvvedimentoCostituzione)
+                        .findFirst()
+                        .orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo Provvedimento di costituzione!"));
+            }
 
             if (optProgetto.get().isDatePianoEconomicoRequired()) {
                 if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
@@ -1130,6 +1139,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             throw handleException(e);
         }
     }
+
+
 
     public SimpleDetailCRUDController getCrudProgetto_anagrafico() {
         return crudProgetto_anagrafico;

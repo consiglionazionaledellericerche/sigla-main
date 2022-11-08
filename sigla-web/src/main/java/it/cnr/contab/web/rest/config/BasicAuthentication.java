@@ -117,20 +117,17 @@ public class BasicAuthentication {
 		utente.setLdap_password(password);
 		utente.setPasswordInChiaro(password.toUpperCase());
 		try {
-			try {
-				if (!Optional.ofNullable(httpServletRequest.getUserPrincipal()).isPresent())
-					httpServletRequest.login(username, password);
-			} catch (ServletException e) {
-				if (e.getMessage().contains("Login failed")) {
-					throw new UnauthorizedException("", e);
-				}
-				throw new RuntimeException(e);
-			}
+			httpServletRequest.login(username, password);
 			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
 		} catch (RemoteException e) {
 			throw new ApplicationException(e.getMessage());
 		} catch (EJBException e) {
 			throw new ApplicationException(e.getMessage());				
+		} catch (ServletException e) {
+			if (e.getMessage().contains("Login failed")) {
+				throw new UnauthorizedException("", e);
+			}
+			throw new RuntimeException(e);
 		}
 	}
 
