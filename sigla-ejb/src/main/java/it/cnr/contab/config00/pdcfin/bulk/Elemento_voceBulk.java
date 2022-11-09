@@ -17,6 +17,7 @@
 
 package it.cnr.contab.config00.pdcfin.bulk;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Dictionary;
 
@@ -73,6 +74,36 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	private boolean isGestoreIstat;
 	protected Voce_piano_economico_prgBulk voce_piano_economico;
 	protected String cd_voce_piano_associato;
+
+	/**
+	 * Questo campo viene valorizzato dalla view V_ELEMENTO_VOCE_ASSESTATO
+	 * Indica il centro responsabilità sul quale ci sono disponibilità
+	 */
+	protected String cd_cdr_bilancio;
+
+	/**
+	 * Questo campo viene valorizzato dalla view V_ELEMENTO_VOCE_ASSESTATO
+	 * Indica l'esercizio di bilancio sul quale ci sono disponibilità
+	 */
+	protected Integer esercizio_bilancio;
+
+	/**
+	 * Questo campo viene valorizzato dalla view V_ELEMENTO_VOCE_ASSESTATO
+	 * Indica l'importo assestato previsto in bilancio
+	 */
+	protected BigDecimal importo_assestato_bilancio;
+
+	/**
+	 * Questo campo viene valorizzato dalla view V_ELEMENTO_VOCE_ASSESTATO
+	 * Indica l'importo utilizzato previsto in bilancio
+	 */
+	protected BigDecimal importo_utilizzato_bilancio;
+
+	/**
+	 * Questo campo viene valorizzato dalla view V_ELEMENTO_VOCE_ASSESTATO
+	 * Indica l'importo disponibile previsto in bilancio
+	 */
+	protected BigDecimal importo_disponibile_bilancio;
 
 	public Elemento_voceBulk( ) 
 	{
@@ -483,5 +514,45 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 
 	public void setCd_voce_piano_associato(String cd_voce_piano_associato) {
 			this.cd_voce_piano_associato = cd_voce_piano_associato;
+	}
+
+	public String getCd_cdr_bilancio() {
+		return cd_cdr_bilancio;
+	}
+
+	public void setCd_cdr_bilancio(String cd_cdr_bilancio) {
+		this.cd_cdr_bilancio = cd_cdr_bilancio;
+	}
+
+	public Integer getEsercizio_bilancio() {
+		return esercizio_bilancio;
+	}
+
+	public void setEsercizio_bilancio(Integer esercizio_bilancio) {
+		this.esercizio_bilancio = esercizio_bilancio;
+	}
+
+	public BigDecimal getImporto_assestato_bilancio() {
+		return importo_assestato_bilancio;
+	}
+
+	public void setImporto_assestato_bilancio(BigDecimal importo_assestato_bilancio) {
+		this.importo_assestato_bilancio = importo_assestato_bilancio;
+	}
+
+	public BigDecimal getImporto_utilizzato_bilancio() {
+		return importo_utilizzato_bilancio;
+	}
+
+	public void setImporto_utilizzato_bilancio(BigDecimal importo_utilizzato_bilancio) {
+		this.importo_utilizzato_bilancio = importo_utilizzato_bilancio;
+	}
+
+	public BigDecimal getImporto_disponibile_bilancio() {
+		return importo_disponibile_bilancio;
+	}
+
+	public void setImporto_disponibile_bilancio(BigDecimal importo_disponibile_bilancio) {
+		this.importo_disponibile_bilancio = importo_disponibile_bilancio;
 	}
 }

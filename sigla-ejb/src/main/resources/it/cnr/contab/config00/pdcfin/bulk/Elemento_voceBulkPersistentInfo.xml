@@ -108,6 +108,45 @@
 			nullable="true"/>
 	</columnMap>
 
+	<columnMap
+			name="V_ELEMENTO_VOCE_ASSESTATO"
+			extends="default"
+			tableName="V_ELEMENTO_VOCE_ASSESTATO" >
+		<columnMapping
+			columnName="CD_CDR_BILANCIO"
+			propertyName="cd_cdr_bilancio"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true"/>
+		<columnMapping
+			columnName="ESERCIZIO_BILANCIO"
+			propertyName="esercizio_bilancio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true"/>
+		<columnMapping
+			columnName="IMPORTO_ASSESTATO_BILANCIO"
+			propertyName="importo_assestato_bilancio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_UTILIZZATO_BILANCIO"
+			propertyName="importo_utilizzato_bilancio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DISPONIBILE_BILANCIO"
+			propertyName="importo_disponibile_bilancio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</columnMap>
+
 	<persistentProperty
 		name="elemento_padre" />
 	<persistentProperty
@@ -124,6 +163,17 @@
 		name="voce_piano_economico" />
 	<persistentProperty
 		name="cd_voce_piano_associato" />
+
+	<persistentProperty
+		name="cd_cdr_bilancio" />
+	<persistentProperty
+		name="esercizio_bilancio" />
+	<persistentProperty
+		name="importo_assestato_bilancio" />
+	<persistentProperty
+		name="importo_utilizzato_bilancio" />
+	<persistentProperty
+		name="importo_disponibile_bilancio" />
 
 	<fetchPolicy
 		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.elemento_voce">

@@ -444,6 +444,51 @@
             inputType="TEXT"
             label="Voce Piano Economico" />
 
+    <fieldProperty
+            name="esercizio_bilancio"
+            property="esercizio_bilancio"
+            label="Esercizio Bilancio"
+            inputType="TEXT"
+            maxLength="4"
+            inputSize="6"
+            enabledOnEdit="false"
+            enabledOnInsert="false"/>
+    <fieldProperty
+            name="cd_cdr_bilancio"
+            property="cd_cdr_bilancio"
+            inputType="TEXT"
+            enabledOnFreeSearch="true"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            label="Codice CdR Bilancio" />
+    <fieldProperty
+            name="importo_assestato_bilancio"
+            property="importo_assestato_bilancio"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            label="Importo Assestato Bilancio"
+            formatName = "it.cnr.contab.util.EuroFormat"
+    />
+    <fieldProperty
+            name="importo_utilizzato_bilancio"
+            property="importo_utilizzato_bilancio"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            label="Importo Utilizzato Bilancio"
+            formatName = "it.cnr.contab.util.EuroFormat"
+    />
+    <fieldProperty
+            name="importo_disponibile_bilancio"
+            property="importo_disponibile_bilancio"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            label="Importo Disponibile Bilancio"
+            formatName = "it.cnr.contab.util.EuroFormat"
+    />
+
     <form
             name="searchtool">
         <formFieldProperty
@@ -654,6 +699,28 @@
                 name="ds_elemento_voce" />
         <columnFieldProperty
                 name="cd_voce_piano_associato" />
+    </columnSet>
+
+    <columnSet name="voce_importi_bilancio">
+        <columnFieldProperty
+                name="esercizio" />
+        <columnFieldProperty
+                name="cd_elemento_voce"
+                label="Codice" />
+        <columnFieldProperty
+                name="ds_elemento_voce" />
+        <columnFieldProperty
+                name="fl_limite_ass_obblig"
+                label="Limita" />
+        <columnFieldProperty
+                name="importo_assestato_bilancio"
+                label="Assestato" />
+        <columnFieldProperty
+                name="importo_utilizzato_bilancio"
+                label="Utilizzato" />
+        <columnFieldProperty
+                name="importo_disponibile_bilancio"
+                label="Disponibile" />
     </columnSet>
 
     <formFieldProperty
