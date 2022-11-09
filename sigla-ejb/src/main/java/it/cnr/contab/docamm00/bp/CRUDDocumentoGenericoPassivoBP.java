@@ -76,6 +76,7 @@ public class CRUDDocumentoGenericoPassivoBP
     private boolean carryingThrough = false;
     private boolean ribaltato;
     private boolean attivaEconomicaParallela = false;
+    private boolean supervisore = false;
 
     public CRUDDocumentoGenericoPassivoBP() {
         super();
@@ -389,6 +390,7 @@ public class CRUDDocumentoGenericoPassivoBP
             int solaris = Documento_genericoBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.YEAR);
             int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue();
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
             setAnnoSolareInScrivania(solaris == esercizioScrivania);
             setRibaltato(initRibaltato(context));
             if (!isAnnoSolareInScrivania()) {
@@ -1002,4 +1004,16 @@ public class CRUDDocumentoGenericoPassivoBP
 	public CollapsableDetailCRUDController getMovimentiAvere() {
 		return movimentiAvere;
 	}
+
+    public boolean isSupervisore() {
+        return supervisore;
+    }
+
+    public void setSupervisore(boolean supervisore) {
+        this.supervisore = supervisore;
+    }
+
+    public boolean isButtonGeneraScritturaVisible() {
+        return this.isSupervisore();
+    }
 }

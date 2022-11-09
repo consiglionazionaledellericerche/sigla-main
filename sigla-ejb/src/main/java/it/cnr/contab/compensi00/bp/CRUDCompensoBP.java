@@ -136,6 +136,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
     private Boolean isGestioneIncarichiEnabled = null;
     private boolean attivaEconomicaParallela = false;
+    private boolean supervisore = false;
 
     /**
      * CRUDCompensoBP constructor comment.
@@ -690,6 +691,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         try {
             setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {
@@ -1827,4 +1829,15 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         return movimentiAvere;
     }
 
+    public boolean isSupervisore() {
+        return supervisore;
+    }
+
+    public void setSupervisore(boolean supervisore) {
+        this.supervisore = supervisore;
+    }
+
+    public boolean isButtonGeneraScritturaVisible() {
+        return this.isSupervisore();
+    }
 }

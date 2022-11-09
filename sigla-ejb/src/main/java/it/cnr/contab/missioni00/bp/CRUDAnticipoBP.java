@@ -61,6 +61,7 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
     private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
     private boolean attivaEconomicaParallela = false;
+    private boolean supervisore = false;
 
 	/**
      * CRUDAnticipoBP constructor comment.
@@ -396,6 +397,7 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         try {
             verificoUnitaENTE(context);
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
         } catch (Throwable e) {
             throw handleException(e);
         }
@@ -1043,4 +1045,15 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 		return movimentiAvere;
 	}
 
+    public boolean isSupervisore() {
+        return supervisore;
+    }
+
+    public void setSupervisore(boolean supervisore) {
+        this.supervisore = supervisore;
+    }
+
+    public boolean isButtonGeneraScritturaVisible() {
+        return this.isSupervisore();
+    }
 }

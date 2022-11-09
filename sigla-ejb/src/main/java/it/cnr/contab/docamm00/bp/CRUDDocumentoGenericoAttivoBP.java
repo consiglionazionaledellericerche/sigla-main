@@ -80,6 +80,7 @@ public class CRUDDocumentoGenericoAttivoBP
     private boolean ribaltato;
     private boolean contoEnte;
     private boolean attivaEconomicaParallela = false;
+    private boolean supervisore = false;
 
     public CRUDDocumentoGenericoAttivoBP() {
         super();
@@ -396,6 +397,7 @@ public class CRUDDocumentoGenericoAttivoBP
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
             setAnnoSolareInScrivania(solaris == esercizioScrivania);
             setRibaltato(initRibaltato(context));
+            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
             if (!isAnnoSolareInScrivania()) {
                 String cds = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(context.getUserContext());
                 try {
@@ -620,7 +622,6 @@ public class CRUDDocumentoGenericoAttivoBP
      * Attiva oltre al normale reset il metodo di set dei tab di default.
      *
      * @param context <code>ActionContext</code>
-     * @see resetTabs
      */
 
     public void reset(ActionContext context) throws BusinessProcessException {
@@ -633,9 +634,7 @@ public class CRUDDocumentoGenericoAttivoBP
      * Attiva oltre al normale reset il metodo di set dei tab di default.
      *
      * @param context <code>ActionContext</code>
-     * @see resetTabs
      */
-
     public void resetForSearch(ActionContext context) throws BusinessProcessException {
 
         setCarryingThrough(false);
@@ -645,8 +644,6 @@ public class CRUDDocumentoGenericoAttivoBP
 
     /**
      * Imposta come attivi i tab di default.
-     *
-     * @param context <code>ActionContext</code>
      */
 
     public void resetTabs() {
@@ -1150,5 +1147,17 @@ public class CRUDDocumentoGenericoAttivoBP
 
     public CollapsableDetailCRUDController getMovimentiAvere() {
         return movimentiAvere;
+    }
+
+    public boolean isSupervisore() {
+        return supervisore;
+    }
+
+    public void setSupervisore(boolean supervisore) {
+        this.supervisore = supervisore;
+    }
+
+    public boolean isButtonGeneraScritturaVisible() {
+        return this.isSupervisore();
     }
 }
