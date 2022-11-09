@@ -1582,6 +1582,22 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
+	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAnnullo(UserContext userContext, IDocumentoCogeBulk doccoge) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
+		try {
+			if (doccoge.getTipoDocumentoEnum().isAnticipo()) {
+				if (!((AnticipoBulk)doccoge).isAnnullato())
+					throw new ScritturaPartitaDoppiaNotEnabledException("L'anticipo non risulta in stato annullato. Annullamento scrittura partita doppia non possibile!");
+				Optional<Scrittura_partita_doppiaBulk> scritturaOpt = this.getScritturaPartitaDoppia(userContext, doccoge);
+				if (!scritturaOpt.isPresent())
+					throw new ScritturaPartitaDoppiaNotEnabledException("L'anticipo non risulta ancora collegato ad una scrittura partita doppia. Annullamento scrittura partita doppia non possibile!");
+				return this.proposeStornoScritturaPartitaDoppia(userContext, scritturaOpt.get(), ((AnticipoBulk) doccoge).getDt_cancellazione());
+			}
+			throw new ApplicationException("Annullamento Scrittura Economica non gestita per la tipologia di documento "+doccoge.getCd_tipo_doc()+" selezionato.");
+		} catch (ApplicationException|ApplicationRuntimeException|PersistencyException e) {
+			throw new NoRollbackException(e);
+		}
+	}
+
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaDocumento(UserContext userContext, IDocumentoAmministrativoBulk docamm) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
 		List<TestataPrimaNota> testataPrimaNotaList = this.proposeTestataPrimaNotaDocumento(userContext, docamm);
 		return Optional.of(testataPrimaNotaList).map(el->this.generaScrittura(userContext, docamm, el, true)).orElse(null);
@@ -2087,7 +2103,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			TestataPrimaNota testataPrimaNotaCompenso = new TestataPrimaNota(compenso.getDt_da_competenza_coge(), compenso.getDt_a_competenza_coge());
 			testataPrimaNotaDocumentoPassivo.getDett().forEach(el-> testataPrimaNotaCompenso.addDettaglio(el.getTipoDett(), el.getSezione(), el.getCdConto(), el.getImporto(), el.getCdTerzo(), el.getPartita(), el.getCdCori()));
 
-			return this.generaScrittura(userContext, compenso, Collections.singletonList(testataPrimaNotaCompenso), true);
+			return this.generaScrittura(userContext, compenso, Collections.singletonList(testataPrimaNotaCompenso), Boolean.TRUE);
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
@@ -2105,7 +2121,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_DARE, aContoCreditoAnticipo.getCd_voce_ep(), imCostoAnticipo, anticipo.getCd_terzo(), anticipo);
 				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aContoDebitoAnticipo.getCd_voce_ep(), imCostoAnticipo, anticipo.getCd_terzo(), anticipo);
 			}
-			return this.generaScrittura(userContext, anticipo, Collections.singletonList(testataPrimaNota), false);
+			return this.generaScrittura(userContext, anticipo, Collections.singletonList(testataPrimaNota), Boolean.FALSE);
 		} catch (RemoteException e) {
 			throw handleException(e);
 		}
@@ -2466,6 +2482,65 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							mov.getCd_terzo(), TipoDocumentoEnum.fromValue(mov.getCd_tipo_documento()))).orElse(null);
 					testataPrimaNota.addDettaglio(movimento.getTi_riga(), Movimento_cogeBulk.getControSezione(movimento.getSezione()), movimento.getSezione(), movimento.getIm_movimento(), movimento.getCd_terzo(), partita, movimento.getCd_contributo_ritenuta());
 				});
+	}
+
+	public Scrittura_partita_doppiaBulk proposeStornoScritturaPartitaDoppia(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppiaDaStornare, Timestamp dataStorno) {
+		Scrittura_partita_doppiaBulk scritturaPartitaDoppiaStorno = new Scrittura_partita_doppiaBulk();
+
+		scritturaPartitaDoppiaStorno.setToBeCreated();
+		scritturaPartitaDoppiaStorno.setDt_contabilizzazione(dataStorno);
+		scritturaPartitaDoppiaStorno.setUser(userContext.getUser());
+		scritturaPartitaDoppiaStorno.setCd_unita_organizzativa(scritturaPartitaDoppiaDaStornare.getCd_unita_organizzativa());
+		scritturaPartitaDoppiaStorno.setCd_cds(scritturaPartitaDoppiaDaStornare.getCd_cds());
+		scritturaPartitaDoppiaStorno.setTi_scrittura(scritturaPartitaDoppiaDaStornare.getTi_scrittura());
+		scritturaPartitaDoppiaStorno.setStato(Scrittura_partita_doppiaBulk.STATO_DEFINITIVO);
+		scritturaPartitaDoppiaStorno.setDs_scrittura("Storno "+scritturaPartitaDoppiaDaStornare.getDs_scrittura());
+		scritturaPartitaDoppiaStorno.setEsercizio(scritturaPartitaDoppiaDaStornare.getEsercizio());
+		scritturaPartitaDoppiaStorno.setEsercizio_documento_amm(scritturaPartitaDoppiaDaStornare.getEsercizio_documento_amm());
+		scritturaPartitaDoppiaStorno.setCd_cds_documento(scritturaPartitaDoppiaDaStornare.getCd_cds_documento());
+		scritturaPartitaDoppiaStorno.setCd_uo_documento(scritturaPartitaDoppiaDaStornare.getCd_uo_documento());
+		scritturaPartitaDoppiaStorno.setCd_tipo_documento(scritturaPartitaDoppiaDaStornare.getCd_tipo_documento());
+		scritturaPartitaDoppiaStorno.setPg_numero_documento(scritturaPartitaDoppiaDaStornare.getPg_numero_documento());
+		scritturaPartitaDoppiaStorno.setDt_inizio_liquid(scritturaPartitaDoppiaDaStornare.getDt_inizio_liquid());
+		scritturaPartitaDoppiaStorno.setDt_fine_liquid(scritturaPartitaDoppiaDaStornare.getDt_fine_liquid());
+		scritturaPartitaDoppiaStorno.setTipo_liquidazione(scritturaPartitaDoppiaDaStornare.getTipo_liquidazione());
+		scritturaPartitaDoppiaStorno.setReport_id_liquid(scritturaPartitaDoppiaDaStornare.getReport_id_liquid());
+		scritturaPartitaDoppiaStorno.setIm_scrittura(scritturaPartitaDoppiaDaStornare.getIm_scrittura());
+
+		scritturaPartitaDoppiaStorno.setAttiva(scritturaPartitaDoppiaDaStornare.getAttiva());
+		scritturaPartitaDoppiaStorno.setPg_scrittura_annullata(scritturaPartitaDoppiaDaStornare.getPg_scrittura());
+
+		scritturaPartitaDoppiaDaStornare.getAllMovimentiColl().forEach(movimentoDaStornare -> {
+			Movimento_cogeBulk movimentoStorno = new Movimento_cogeBulk();
+			movimentoStorno.setToBeCreated();
+			movimentoStorno.setUser(userContext.getUser());
+
+			movimentoStorno.setConto(movimentoDaStornare.getConto());
+			movimentoStorno.setIm_movimento(movimentoDaStornare.getIm_movimento());
+			movimentoStorno.setTerzo(movimentoDaStornare.getTerzo());
+			movimentoStorno.setDt_da_competenza_coge(movimentoDaStornare.getDt_da_competenza_coge());
+			movimentoStorno.setDt_a_competenza_coge(movimentoDaStornare.getDt_a_competenza_coge());
+			movimentoStorno.setStato(Movimento_cogeBulk.STATO_DEFINITIVO);
+			movimentoStorno.setCd_contributo_ritenuta(movimentoDaStornare.getCd_contributo_ritenuta());
+			movimentoStorno.setFl_modificabile(Boolean.FALSE);
+			movimentoStorno.setCd_cds(movimentoDaStornare.getCd_cds());
+			movimentoStorno.setEsercizio(movimentoDaStornare.getEsercizio());
+			movimentoStorno.setCd_unita_organizzativa(movimentoDaStornare.getCd_unita_organizzativa());
+			movimentoStorno.setTi_istituz_commerc(movimentoDaStornare.getTi_istituz_commerc());
+			movimentoStorno.setCd_tipo_documento(movimentoDaStornare.getCd_tipo_documento());
+			movimentoStorno.setCd_cds_documento(movimentoDaStornare.getCd_cds_documento());
+			movimentoStorno.setCd_uo_documento(movimentoDaStornare.getCd_uo_documento());
+			movimentoStorno.setEsercizio_documento(movimentoDaStornare.getEsercizio_documento());
+			movimentoStorno.setPg_numero_documento(movimentoDaStornare.getPg_numero_documento());
+			movimentoStorno.setTi_riga(movimentoDaStornare.getTi_riga());
+
+			if (movimentoDaStornare.getSezione().equals(Movimento_cogeBulk.SEZIONE_DARE))
+				scritturaPartitaDoppiaStorno.addToMovimentiAvereColl(movimentoStorno);
+			else
+				scritturaPartitaDoppiaStorno.addToMovimentiDareColl(movimentoStorno);
+		});
+
+		return scritturaPartitaDoppiaStorno;
 	}
 
 	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandatoCompenso(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException, RemoteException {

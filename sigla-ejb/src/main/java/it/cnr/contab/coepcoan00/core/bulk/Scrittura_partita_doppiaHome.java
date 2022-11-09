@@ -23,6 +23,8 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -172,4 +174,24 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
     }
 
+    public Optional<Scrittura_partita_doppiaBulk> getScritturaAnnullo(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws PersistencyException, ComponentException {
+        //Recupero prima la scrittura princiaple
+        Optional<Scrittura_partita_doppiaBulk> optScritturaPrinc = this.getScrittura(userContext, documentoCogeBulk, Boolean.TRUE);
+        if (optScritturaPrinc.isPresent()) {
+            Scrittura_partita_doppiaBulk scritturaPrinc = optScritturaPrinc.get();
+
+            SQLBuilder sql = this.createSQLBuilder();
+            sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, scritturaPrinc.getEsercizio());
+            sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, scritturaPrinc.getCd_cds());
+            sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, scritturaPrinc.getCd_unita_organizzativa());
+            sql.addClause(FindClause.AND, "pg_scrittura_annullata", SQLBuilder.EQUALS, scritturaPrinc.getPg_scrittura());
+            List<Scrittura_partita_doppiaBulk> result = fetchAll(sql);
+            if (result.size()>1)
+                throw new ApplicationException("Errore nell'individuazione della scrittura di annullamento della prima nota "+scritturaPrinc.getEsercizio()
+                        +"/"+scritturaPrinc.getCd_cds()+"/"+scritturaPrinc.getCd_unita_organizzativa()+"/"+scritturaPrinc.getPg_scrittura()
+                        +": sono state individuate troppe righe.");
+            return result.stream().findFirst();
+        }
+        return Optional.empty();
+    }
 }

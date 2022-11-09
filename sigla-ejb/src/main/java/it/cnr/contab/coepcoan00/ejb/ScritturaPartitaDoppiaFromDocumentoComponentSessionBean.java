@@ -21,6 +21,7 @@ import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponen
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
@@ -40,24 +41,6 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
     public void ejbCreate() {
         componentObj = new ScritturaPartitaDoppiaFromDocumentoComponent();
     }
-
-	public void createScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException {
-		pre_component_invocation(param0, componentObj);
-		try {
-			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).createScrittura(param0, param1);
-			component_invocation_succes(param0, componentObj);
-		} catch (it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0, componentObj);
-			throw e;
-		} catch (it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0, componentObj);
-			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(param0, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(param0, componentObj, e);
-		}
-	}
 
 	public void removeScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException {
 		pre_component_invocation(param0, componentObj);

@@ -301,25 +301,6 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
     }
 
     @Override
-    public void createScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException, RemoteException {
-        try {
-            invoke("createScrittura", new Object[]{
-                    param0,
-                    param1});
-        } catch (RemoteException e) {
-            throw e;
-        } catch (java.lang.reflect.InvocationTargetException e) {
-            try {
-                throw e.getTargetException();
-            } catch (ComponentException ex) {
-                throw ex;
-            } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
-            }
-        }
-    }
-
-    @Override
     public void removeScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException, RemoteException {
         try {
             invoke("removeScrittura", new Object[]{

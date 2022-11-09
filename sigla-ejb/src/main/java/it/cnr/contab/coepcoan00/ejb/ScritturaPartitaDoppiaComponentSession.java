@@ -25,8 +25,12 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import javax.ejb.Remote;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 @Remote
 public interface ScritturaPartitaDoppiaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession {
     Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoCogeBulk docamm) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException;
+    Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAnnullo(UserContext userContext, IDocumentoCogeBulk docamm) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException;
+    Scrittura_partita_doppiaBulk proposeStornoScritturaPartitaDoppia(UserContext userContext, Scrittura_partita_doppiaBulk scritturaPartitaDoppiaDaStornare, Timestamp dataStorno) throws RemoteException;
 }

@@ -31,6 +31,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 @Stateless(name = "CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaComponentSession")
 public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScritturaPartitaDoppiaComponentSession {
@@ -99,4 +100,36 @@ public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.
 			throw uncaughtError(param0, componentObj, e);
 		}
 	}
+
+    public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAnnullo(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            Scrittura_partita_doppiaBulk result = ((ScritturaPartitaDoppiaComponent) componentObj).proposeScritturaPartitaDoppiaAnnullo(param0, param1);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException | ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    public Scrittura_partita_doppiaBulk proposeStornoScritturaPartitaDoppia(UserContext param0, Scrittura_partita_doppiaBulk param1, Timestamp param2)  {
+        pre_component_invocation(param0, componentObj);
+        try {
+            Scrittura_partita_doppiaBulk result = ((ScritturaPartitaDoppiaComponent) componentObj).proposeStornoScritturaPartitaDoppia(param0, param1, param2);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
 }

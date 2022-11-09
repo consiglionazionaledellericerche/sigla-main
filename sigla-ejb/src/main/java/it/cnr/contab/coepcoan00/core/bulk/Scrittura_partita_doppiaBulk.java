@@ -340,4 +340,8 @@ public class Scrittura_partita_doppiaBulk extends Scrittura_partita_doppiaBase {
                 .findAny()
                 .orElse(null);
     }
+
+    public boolean isScritturaAttiva() {
+        return ATTIVA_YES.equals(this.getAttiva());
+    }
 }
