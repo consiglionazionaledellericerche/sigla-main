@@ -52,6 +52,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.action.BulkAction;
 import it.cnr.jada.util.action.OptionBP;
+import org.keycloak.KeycloakPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +95,16 @@ public class MacroAction extends BulkAction {
 
     public Forward doDefault(ActionContext actioncontext) {
         try {
-            actioncontext.invalidateSession();
+            final Optional<KeycloakPrincipal> principalOptional = Optional.ofNullable(actioncontext)
+                    .filter(HttpActionContext.class::isInstance)
+                    .map(HttpActionContext.class::cast)
+                    .map(HttpActionContext::getRequest)
+                    .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()))
+                    .filter(KeycloakPrincipal.class::isInstance)
+                    .map(KeycloakPrincipal.class::cast);
+            if (!principalOptional.isPresent()){
+                actioncontext.invalidateSession();
+            }
             String cd_utente, pwd, cd_uo = null;
             Integer pg_modulo = null;
             ProgettoBulk modulo = null;
@@ -130,14 +140,6 @@ public class MacroAction extends BulkAction {
                 setErrorMessage(actioncontext, "Parametri non corretti.");
                 return actioncontext.findDefaultForward();
             }
-            //Parametri Opzionali
-			/*try{
-				cd_uo = ((HttpActionContext)actioncontext).getParameter("cd_uo").toUpperCase();
-			}catch(NullPointerException e){}
-			catch(NumberFormatException e){
-				setErrorMessage(actioncontext,"Parametri non corretti.");
-				return actioncontext.findDefaultForward();
-			}*/
             try {
                 if (((HttpActionContext) actioncontext).getParameter("pg_modulo") != null)
                     pg_modulo = new Integer(((HttpActionContext) actioncontext).getParameter("pg_modulo"));
@@ -189,12 +191,21 @@ public class MacroAction extends BulkAction {
             actioncontext.setUserContext(userContext);
             actioncontext.setUserInfo(ui);
             HttpServletRequest request = ((HttpActionContext) actioncontext).getRequest();
-            try {
-                request.logout();
-                request.login(cd_utente, pwd);
-            } catch (ServletException e) {
-                setErrorMessage(actioncontext, "Nome utente o password sbagliati.");
-                return actioncontext.findDefaultForward();
+            if (!principalOptional.isPresent()){
+                try {
+                    request.logout();
+                    request.login(cd_utente, pwd);
+                } catch (ServletException|IllegalStateException e) {
+                    setErrorMessage(actioncontext, "Nome utente o password sbagliati.");
+                    return actioncontext.findDefaultForward();
+                }
+            } else {
+                if (!Optional.ofNullable(utente)
+                    .flatMap(utenteBulk -> Optional.ofNullable(utenteBulk.getPassword()))
+                    .filter(s -> s.equals(pwd)).isPresent()) {
+                    setErrorMessage(actioncontext, "Nome utente o password sbagliati.");
+                    return actioncontext.findDefaultForward();
+                }
             }
             //Se il mode è H allora va in sola visualizzazione altrimenti in modifica
             mode = mode.equals("H") ? "V" : "M";

@@ -208,7 +208,6 @@
 			<url-pattern>/RicercaCDRAction.do</url-pattern>
 			<url-pattern>/RicercaVoceAction.do</url-pattern>
 			<url-pattern>/RicercaContrattoAction.do</url-pattern>
-			<url-pattern>/Macro.do</url-pattern>
 			<url-pattern>/RicercaTerziAction.do</url-pattern>
 			<url-pattern>/RicercaNaProComAction.do</url-pattern>
 			<url-pattern>/RicercaGAEAction.do</url-pattern>
