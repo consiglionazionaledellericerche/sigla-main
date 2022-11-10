@@ -168,6 +168,7 @@
 			<property name="com.jaspersoft.studio.field.name" value="PG_OBBLIGAZIONE_SCADENZARIO"/>
 			<property name="com.jaspersoft.studio.field.label" value="PG_OBBLIGAZIONE_SCADENZARIO"/>
 		</field>
+		<sortField name="DATA_TRASMISSIONE"/>
 	</subDataset>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/mspasiano/git/sigla-reports/img/ISIN/"]]></defaultValueExpression>
