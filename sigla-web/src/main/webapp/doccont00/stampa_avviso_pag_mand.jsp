@@ -22,7 +22,7 @@
 	bp.openFormWindow(pageContext);
 	Stampa_avviso_pag_mandBulk bulk = (Stampa_avviso_pag_mandBulk)bp.getModel(); %>
 
-<table>
+<table class="card">
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
 	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>

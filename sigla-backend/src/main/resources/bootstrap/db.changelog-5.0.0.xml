@@ -1,20 +1,20 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
-  ~
-  ~     This program is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU Affero General Public License as
-  ~     published by the Free Software Foundation, either version 3 of the
-  ~     License, or (at your option) any later version.
-  ~
-  ~     This program is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU Affero General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU Affero General Public License
-  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
+﻿﻿<?xml version="1.0" encoding="UTF-8"?>
+        <!--
+          ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+          ~
+          ~     This program is free software: you can redistribute it and/or modify
+          ~     it under the terms of the GNU Affero General Public License as
+          ~     published by the Free Software Foundation, either version 3 of the
+          ~     License, or (at your option) any later version.
+          ~
+          ~     This program is distributed in the hope that it will be useful,
+          ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+          ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+          ~     GNU Affero General Public License for more details.
+          ~
+          ~     You should have received a copy of the GNU Affero General Public License
+          ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+          -->
 
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
@@ -3104,7 +3104,7 @@ TRASPORTO_AEREO"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            
+
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
@@ -4361,7 +4361,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="report_name_ente"
                     remarks="Nome del report per l'ENTE comprensivo di percorso relativo alla cartella reports, nel fomrato UNIX es. /preventivo/pdg/pdgdett_voce_funzione_natura.rpt"
                     type="VARCHAR(1500)" >
-                 <constraints nullable="true"/>
+                <constraints nullable="true"/>
             </column>
         </addColumn>
     </changeSet>
@@ -5381,6 +5381,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     </changeSet>
 
     <include file="bootstrap/add_index_on_pluriennali.xml"/>
+    <include file="bootstrap/add_indicatore_pagamenti.xml"/>
 
 
 

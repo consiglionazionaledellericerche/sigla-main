@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="sigla" runOnChange="true" id="create-view-V_CONS_INDICATORE_PAGAMENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_INDICATORE_PAGAMENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="sigla" runOnChange="true" id="create-view-V_INDICATORE_PAGAMENTI_DETAIL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INDICATORE_PAGAMENTI_DETAIL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="accessi_indicatore_pagamenti">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCSTAMPAINDPAGAMENT"/>
+            <column name="ti_accesso" type="CHAR(1)" value="null"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Stampa Indicatore Tempestività Pagamenti"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCSTAMPAINDPAGAMENT"/>
+            <column name="business_process" type="VARCHAR(200)" value="StampaIndiceTempestivitaPagamentiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.DOC.MANDAT.STAMPE.SINDPAG"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Stampa Indicatore Tempestività Pagamenti"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCSTAMPAINDPAGAMENT"/>
+            <column name="business_process" type="VARCHAR(200)" value="StampaIndiceTempestivitaPagamentiBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="5"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="SINDPAG"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.DOC.MANDAT.STAMPE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="nuova_stampa_indice_tempestivita_pagamenti">
+        <insert tableName="print_priority">
+            <column name="report_name" type="VARCHAR(1500)" value="/doccont/doccont/indice_tempestivita_pagamenti.jasper"/>
+            <column name="priority" type="SMALLINT"  value="1" />
+            <column name="ds_report" type="VARCHAR(300)" value="Stampa Indice Tempestività Pagamenti"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -26,7 +26,10 @@
 	<action
 		path="/StampaAvvisoPagamentoAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
 	</action>
-	
+	<action
+			path="/StampaIndiceTempestivitaPagamentiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
 	<action
 		path="/StampaOrdineAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
 	</action>
@@ -57,7 +60,16 @@
 	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
 	    <init-param name="reportName" value="/cnrdoccont/doccont/avvpagmnd.jasper" />
 	</businessProcess>
-	
+
+	<businessProcess name="StampaIndiceTempestivitaPagamentiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_indice_tempestivita_pagamenti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.StampaIndiceTempestivitaPagamentiBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+		<init-param name="defaultAction" value="StampaIndiceTempestivitaPagamentiAction" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
+		<init-param name="reportName" value="/doccont/doccont/indice_tempestivita_pagamenti.jasper" />
+	</businessProcess>
+
 	<businessProcess name="StampaOrdineBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">									  
 		<forward name="default" path="/doccont00/stampa_ordine.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.ordine.bulk.Stampa_ordineBulk" />
