@@ -263,14 +263,6 @@
 				<reportElement style="TNR16" x="110" y="140" width="300" height="60" uuid="ee10e07c-51ae-4836-9d4f-31b26a236dd0"/>
 				<text><![CDATA[(*) Elaborato secondo la metodologia indicata All’art.9 del DPCM del 22 settembre 2014]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="10" y="50" width="100" height="30" uuid="72542907-13f3-452f-84c6-fa372629181f"/>
-				<textFieldExpression><![CDATA[$V{DATA_TRASMISSIONE_INIZIO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="16" y="90" width="100" height="30" uuid="f50a68f2-8697-4938-9c46-fe229909b510"/>
-				<textFieldExpression><![CDATA[$V{DATA_TRASMISSIONE_FINE}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>
