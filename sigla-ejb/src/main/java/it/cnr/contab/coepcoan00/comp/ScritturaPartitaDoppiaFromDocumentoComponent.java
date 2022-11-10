@@ -31,7 +31,6 @@ import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
@@ -121,30 +120,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(documentoCoge);
                 if (optionalIDocumentoCogeBulk.isPresent()){
                     if (Utility.createConfigurazioneCnrComponentSession().isBloccoScrittureProposte(usercontext)) {
-                        Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
-                        try {
-                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                                .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
-                        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
-                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
-                        }
-
-                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
-                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(usercontext, optionalIDocumentoCogeBulk.get());
-                        optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
-                            //Elimino vecchia scrittura
-                            try {
-                                optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
-                                this.removeScrittura(usercontext, oldScrittura);
-                            } catch (ComponentException e) {
-                                throw new DetailedRuntimeException(e);
-                            }
-                        });
-                        //Ricreo
-                        if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
-                            makeBulkPersistent(usercontext, optionalScritturaPartitaDoppiaPropostaBulk.get());
-                            return optionalScritturaPartitaDoppiaPropostaBulk.get();
-                        }
+                        return this.loadScritturaPatrimoniale(usercontext, optionalIDocumentoCogeBulk.get());
                     } else {
                         final Optional<Scrittura_partita_doppiaBulk> optionalScrittura_partita_doppiaBulk = optionalIDocumentoCogeBulk
                                 .map(IDocumentoCogeBulk::getScrittura_partita_doppia);
@@ -434,7 +410,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             }
         });
     }
-    public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+    public Scrittura_partita_doppiaBulk loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             documentoCoge.setStato_coge(Fattura_passivaBulk.NON_REGISTRATO_IN_COGE);
 
@@ -468,7 +444,8 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 documentoCoge.setStato_coge(Fattura_passivaBulk.REGISTRATO_IN_COGE);
             }
             ((OggettoBulk)documentoCoge).setToBeUpdated();
-            updateBulk(userContext, (OggettoBulk) documentoCoge);
+            updateBulk(userContext, (OggettoBulk)documentoCoge);
+            return optionalScritturaPartitaDoppiaPropostaBulk.orElse(null);
         } catch (RemoteException|PersistencyException e) {
             throw handleException(e);
         }
