@@ -72,8 +72,8 @@
 		<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
 			<defaultValueExpression><![CDATA[new Integer(2021)]]></defaultValueExpression>
 		</parameter>
-		<parameter name="trimestre" class="java.lang.Integer" isForPrompting="false">
-			<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
+		<parameter name="trimestre" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["4"]]></defaultValueExpression>
 		</parameter>
 		<parameter name="DATA_TRASMISSIONE_INIZIO" class="java.util.Date" isForPrompting="false">
 			<defaultValueExpression><![CDATA[new GregorianCalendar(2021, 1, 1).getTime()]]></defaultValueExpression>
@@ -85,8 +85,8 @@
 			<![CDATA[select * from V_CONS_INDICATORE_PAGAMENTI 
 			where esercizio = $P{esercizio}
 			   and TIPO_RIGA='DETAIL'
-				and (($P{trimestre} is not null and DATA_TRASMISSIONE BETWEEN $P{DATA_TRASMISSIONE_INIZIO} AND $P{DATA_TRASMISSIONE_FINE})
-					or ($P{trimestre} is null ))]]>
+				and (($P{trimestre} != '*' and DATA_TRASMISSIONE BETWEEN $P{DATA_TRASMISSIONE_INIZIO} AND $P{DATA_TRASMISSIONE_FINE})
+					or ($P{trimestre} = '*' ))]]>
 		</queryString>
 		<field name="ESERCIZIO" class="java.math.BigDecimal">
 			<property name="com.jaspersoft.studio.field.name" value="ESERCIZIO"/>
@@ -178,22 +178,24 @@
 	<parameter name="dettagli" class="java.lang.Boolean" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="trimestre" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="trimestre" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select INDICE_PAGAMENTI from V_CONS_INDICATORE_PAGAMENTI 
 			where esercizio = $P{esercizio}
-				and (($P{trimestre} is not null and TRIMESTRE = $P{trimestre} and TIPO_RIGA='SUM_TRIMESTRE') 
-					or ($P{trimestre} is null and TIPO_RIGA='SUM_ANNO'))]]>
+				and (($P{trimestre} != '*' and TRIMESTRE = $P{trimestre} and TIPO_RIGA='SUM_TRIMESTRE') 
+					or ($P{trimestre} = '*' and TIPO_RIGA='SUM_ANNO'))]]>
 	</queryString>
 	<field name="INDICE_PAGAMENTI" class="java.math.BigDecimal"/>
 	<variable name="periodo" class="java.lang.String">
-		<variableExpression><![CDATA[$P{trimestre} == null ? "gennaio - dicembre" : $P{trimestre} == 1 ? "gennaio - marzo" : $P{trimestre} == 2 ? "aprile - giugno" : $P{trimestre} == 3 ? "luglio - settembre" : "ottobre - dicembre"]]></variableExpression>
+		<variableExpression><![CDATA[$P{trimestre} == "*" ? "gennaio - dicembre" : $P{trimestre} == "1" ? "gennaio - marzo" : $P{trimestre} == "2" ? "aprile - giugno" : $P{trimestre} == "3" ? "luglio - settembre" : "ottobre - dicembre"]]></variableExpression>
 	</variable>
 	<variable name="DATA_TRASMISSIONE_INIZIO" class="java.util.Date">
-		<variableExpression><![CDATA[$P{trimestre} == null ? new GregorianCalendar($P{esercizio}, 0, 1).getTime() : $P{trimestre} == 1 ?new GregorianCalendar($P{esercizio}, 0, 1).getTime()  : $P{trimestre} == 2 ? new GregorianCalendar($P{esercizio}, 3, 1).getTime()  : $P{trimestre} == 3 ? new GregorianCalendar($P{esercizio}, 6, 1).getTime()  : new GregorianCalendar($P{esercizio}, 9, 1).getTime()]]></variableExpression>
+		<variableExpression><![CDATA[$P{trimestre} == "*" ? new GregorianCalendar($P{esercizio}, 0, 1).getTime() : $P{trimestre} == "1" ?new GregorianCalendar($P{esercizio}, 0, 1).getTime()  : $P{trimestre} == "2" ? new GregorianCalendar($P{esercizio}, 3, 1).getTime()  : $P{trimestre} == "3" ? new GregorianCalendar($P{esercizio}, 6, 1).getTime()  : new GregorianCalendar($P{esercizio}, 9, 1).getTime()]]></variableExpression>
 	</variable>
 	<variable name="DATA_TRASMISSIONE_FINE" class="java.util.Date">
-		<variableExpression><![CDATA[$P{trimestre} == null ? new GregorianCalendar($P{esercizio}, 11, 31).getTime() : $P{trimestre} == 1 ?new GregorianCalendar($P{esercizio}, 2, 31).getTime()  : $P{trimestre} == 2 ? new GregorianCalendar($P{esercizio}, 5, 30).getTime()  : $P{trimestre} == 3 ? new GregorianCalendar($P{esercizio}, 8, 30).getTime()  : new GregorianCalendar($P{esercizio}, 11, 31).getTime()]]></variableExpression>
+		<variableExpression><![CDATA[$P{trimestre} == "*" ? new GregorianCalendar($P{esercizio}, 11, 31).getTime() : $P{trimestre} == "1" ?new GregorianCalendar($P{esercizio}, 2, 31).getTime()  : $P{trimestre} == "2" ? new GregorianCalendar($P{esercizio}, 5, 30).getTime()  : $P{trimestre} == "3" ? new GregorianCalendar($P{esercizio}, 8, 30).getTime()  : new GregorianCalendar($P{esercizio}, 11, 31).getTime()]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -293,7 +295,19 @@
 					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="dettagli" uuid="6ae8f211-6bbd-4805-95b6-eb3cb27049f4">
+					<datasetRun subDataset="dettagli" uuid="c91d25b3-190d-4d38-99e3-daee9670a33e">
+						<datasetParameter name="DATA_TRASMISSIONE_INIZIO">
+							<datasetParameterExpression><![CDATA[$V{DATA_TRASMISSIONE_INIZIO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="DATA_TRASMISSIONE_FINE">
+							<datasetParameterExpression><![CDATA[$V{DATA_TRASMISSIONE_FINE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="esercizio">
+							<datasetParameterExpression><![CDATA[$P{esercizio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="trimestre">
+							<datasetParameterExpression><![CDATA[$P{trimestre}]]></datasetParameterExpression>
+						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="61" uuid="6c862192-2931-485d-991b-25bc628c0d00">
