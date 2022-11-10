@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final utlizzo versione della libreria JasperReports6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indice tempestivita pagamenti" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="d5b58e66-f221-4adc-b52e-6aca1883a3fb">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dettagli" uuid="dac475cc-3fe7-423c-b7cc-1da6fce1dcb1">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+		<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Integer(2021)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="trimestre" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DATA_TRASMISSIONE_INIZIO" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new GregorianCalendar(2021, 1, 1).getTime()]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DATA_TRASMISSIONE_FINE" class="java.util.Date" isForPrompting="false">
+			<defaultValueExpression><![CDATA[new GregorianCalendar($P{esercizio}, 12, 31).getTime()]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select * from V_CONS_INDICATORE_PAGAMENTI 
+			where esercizio = $P{esercizio}
+			   and TIPO_RIGA='DETAIL'
+				and (($P{trimestre} is not null and DATA_TRASMISSIONE BETWEEN $P{DATA_TRASMISSIONE_INIZIO} AND $P{DATA_TRASMISSIONE_FINE})
+					or ($P{trimestre} is null ))]]>
+		</queryString>
+		<field name="ESERCIZIO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ESERCIZIO"/>
+			<property name="com.jaspersoft.studio.field.label" value="ESERCIZIO"/>
+		</field>
+		<field name="TRIMESTRE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="TRIMESTRE"/>
+			<property name="com.jaspersoft.studio.field.label" value="TRIMESTRE"/>
+		</field>
+		<field name="TIPO_RIGA" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TIPO_RIGA"/>
+			<property name="com.jaspersoft.studio.field.label" value="TIPO_RIGA"/>
+		</field>
+		<field name="CD_TERZO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="CD_TERZO"/>
+			<property name="com.jaspersoft.studio.field.label" value="CD_TERZO"/>
+		</field>
+		<field name="TIPO_DOCUMENTO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TIPO_DOCUMENTO"/>
+			<property name="com.jaspersoft.studio.field.label" value="TIPO_DOCUMENTO"/>
+		</field>
+		<field name="ESERCIZIO_DOCUMENTO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ESERCIZIO_DOCUMENTO"/>
+			<property name="com.jaspersoft.studio.field.label" value="ESERCIZIO_DOCUMENTO"/>
+		</field>
+		<field name="UO_DOCUMENTO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="UO_DOCUMENTO"/>
+			<property name="com.jaspersoft.studio.field.label" value="UO_DOCUMENTO"/>
+		</field>
+		<field name="NUMERO_DOCUMENTO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="NUMERO_DOCUMENTO"/>
+			<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO"/>
+		</field>
+		<field name="IMPORTO_DOCUMENTO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="IMPORTO_DOCUMENTO"/>
+			<property name="com.jaspersoft.studio.field.label" value="IMPORTO_DOCUMENTO"/>
+		</field>
+		<field name="DATA_SCADENZA" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="DATA_SCADENZA"/>
+			<property name="com.jaspersoft.studio.field.label" value="DATA_SCADENZA"/>
+		</field>
+		<field name="DATA_TRASMISSIONE" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="DATA_TRASMISSIONE"/>
+			<property name="com.jaspersoft.studio.field.label" value="DATA_TRASMISSIONE"/>
+		</field>
+		<field name="DIFFERENZA_GIORNI" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="DIFFERENZA_GIORNI"/>
+			<property name="com.jaspersoft.studio.field.label" value="DIFFERENZA_GIORNI"/>
+		</field>
+		<field name="IMPORTO_PAGATO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="IMPORTO_PAGATO"/>
+			<property name="com.jaspersoft.studio.field.label" value="IMPORTO_PAGATO"/>
+		</field>
+		<field name="IMPORTO_PESATO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="IMPORTO_PESATO"/>
+			<property name="com.jaspersoft.studio.field.label" value="IMPORTO_PESATO"/>
+		</field>
+		<field name="INDICE_PAGAMENTI" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="INDICE_PAGAMENTI"/>
+			<property name="com.jaspersoft.studio.field.label" value="INDICE_PAGAMENTI"/>
+		</field>
+		<field name="CD_CDS_OBBLIGAZIONE" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="CD_CDS_OBBLIGAZIONE"/>
+			<property name="com.jaspersoft.studio.field.label" value="CD_CDS_OBBLIGAZIONE"/>
+		</field>
+		<field name="ESERCIZIO_OBBLIGAZIONE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ESERCIZIO_OBBLIGAZIONE"/>
+			<property name="com.jaspersoft.studio.field.label" value="ESERCIZIO_OBBLIGAZIONE"/>
+		</field>
+		<field name="ESERCIZIO_ORI_OBBLIGAZIONE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ESERCIZIO_ORI_OBBLIGAZIONE"/>
+			<property name="com.jaspersoft.studio.field.label" value="ESERCIZIO_ORI_OBBLIGAZIONE"/>
+		</field>
+		<field name="PG_OBBLIGAZIONE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PG_OBBLIGAZIONE"/>
+			<property name="com.jaspersoft.studio.field.label" value="PG_OBBLIGAZIONE"/>
+		</field>
+		<field name="PG_OBBLIGAZIONE_SCADENZARIO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PG_OBBLIGAZIONE_SCADENZARIO"/>
+			<property name="com.jaspersoft.studio.field.label" value="PG_OBBLIGAZIONE_SCADENZARIO"/>
+		</field>
+	</subDataset>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/mspasiano/git/sigla-reports/img/ISIN/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2021)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dettagli" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean(true)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="trimestre" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select INDICE_PAGAMENTI from V_CONS_INDICATORE_PAGAMENTI 
+			where esercizio = $P{esercizio}
+				and (($P{trimestre} is not null and TRIMESTRE = $P{trimestre} and TIPO_RIGA='SUM_TRIMESTRE') 
+					or ($P{trimestre} is null and TIPO_RIGA='SUM_ANNO'))]]>
+	</queryString>
+	<field name="INDICE_PAGAMENTI" class="java.math.BigDecimal"/>
+	<variable name="periodo" class="java.lang.String">
+		<variableExpression><![CDATA[$P{trimestre} == null ? "gennaio - dicembre" : $P{trimestre} == 1 ? "gennaio - marzo" : $P{trimestre} == 2 ? "aprile - giugno" : $P{trimestre} == 3 ? "luglio - settembre" : "ottobre - dicembre"]]></variableExpression>
+	</variable>
+	<variable name="DATA_TRASMISSIONE_INIZIO" class="java.util.Date">
+		<variableExpression><![CDATA[$P{trimestre} == null ? new GregorianCalendar($P{esercizio}, 0, 1).getTime() : $P{trimestre} == 1 ?new GregorianCalendar($P{esercizio}, 0, 1).getTime()  : $P{trimestre} == 2 ? new GregorianCalendar($P{esercizio}, 3, 1).getTime()  : $P{trimestre} == 3 ? new GregorianCalendar($P{esercizio}, 6, 1).getTime()  : new GregorianCalendar($P{esercizio}, 9, 1).getTime()]]></variableExpression>
+	</variable>
+	<variable name="DATA_TRASMISSIONE_FINE" class="java.util.Date">
+		<variableExpression><![CDATA[$P{trimestre} == null ? new GregorianCalendar($P{esercizio}, 11, 31).getTime() : $P{trimestre} == 1 ?new GregorianCalendar($P{esercizio}, 2, 31).getTime()  : $P{trimestre} == 2 ? new GregorianCalendar($P{esercizio}, 5, 30).getTime()  : $P{trimestre} == 3 ? new GregorianCalendar($P{esercizio}, 8, 30).getTime()  : new GregorianCalendar($P{esercizio}, 11, 31).getTime()]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="180" splitType="Stretch">
+			<textField>
+				<reportElement key="staticText-1" style="TNRG16" x="20" y="100" width="505" height="70" uuid="43738462-c690-4553-ac78-a65cc4bd7209"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[" INDICATORE DI TEMPESTIVITA’ DEI PAGAMENTI ANNO " + $P{esercizio}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement key="image-1" x="0" y="0" width="530" height="39" uuid="7db8dda3-5354-4016-8ba8-35acf0d1eaa7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="212" splitType="Prevent">
+			<textField evaluationTime="Column">
+				<reportElement style="TNRG16" mode="Opaque" x="130" y="20" width="260" height="70" backcolor="#C0D5EC" uuid="5a706330-f663-4ade-a992-341ff65aa3b5"/>
+				<box padding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Indicatore relativo al periodo " + $V{periodo} + "  " + $P{esercizio} + " (*)"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column">
+				<reportElement style="TNRG16" mode="Opaque" x="130" y="90" width="260" height="40" uuid="b8eb1a4e-70af-44bf-9b47-3b5ab13a3137"/>
+				<box padding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INDICE_PAGAMENTI}.setScale( 2, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TNR16" x="110" y="140" width="300" height="60" uuid="ee10e07c-51ae-4836-9d4f-31b26a236dd0"/>
+				<text><![CDATA[(*) Elaborato secondo la metodologia indicata All’art.9 del DPCM del 22 settembre 2014]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement key="textField-1" style="TNRG10" x="0" y="10" width="330" height="13" uuid="fbd781e9-a1db-47e6-8fe9-aafc055e9b69"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA["Pubblicazione al  "+ new SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="255">
+			<printWhenExpression><![CDATA[$P{dettagli}]]></printWhenExpression>
+			<componentElement>
+				<reportElement x="0" y="10" width="530" height="200" uuid="a16cfecd-67ee-4308-99ee-1a680ee8e287">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dettagli" uuid="6ae8f211-6bbd-4805-95b6-eb3cb27049f4">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="61" uuid="6c862192-2931-485d-991b-25bc628c0d00">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="61" height="30" uuid="f36fa7fc-94d5-4639-8d33-50643fb02958"/>
+								<text><![CDATA[ESERCIZIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="61" height="30" uuid="4214da17-5a4b-429d-a76f-8e7f43c1f8f2"/>
+								<textFieldExpression><![CDATA[$F{ESERCIZIO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="61" uuid="3d0e323a-a58d-4bee-a3a5-6047e1b50d8b">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="61" height="30" uuid="f71f6704-eb12-49b2-8300-18ca86d2cdad"/>
+								<text><![CDATA[TIPO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="61" height="30" uuid="314cf070-7e55-44df-81ca-d72d34f4f2a5"/>
+								<textFieldExpression><![CDATA[$F{TIPO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="59" uuid="342356a9-5b09-4bc5-97c2-1b173964cf30">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="59" height="30" uuid="4a520217-ddcc-45bc-b89b-a7ae6e34656f"/>
+								<text><![CDATA[UO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="59" height="30" uuid="bc5639e9-10d8-4dfd-b9d0-cc649dd68dea"/>
+								<textFieldExpression><![CDATA[$F{UO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="59" uuid="7aeb72eb-cc2c-401d-8f4d-72b9dad97ce4">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="59" height="30" uuid="3f9eae81-d351-434b-9552-2014b7082d7a"/>
+								<text><![CDATA[NUMERO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="59" height="30" uuid="d376022e-a9fe-4179-83ee-372b4efe8c75"/>
+								<textFieldExpression><![CDATA[$F{NUMERO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="5874b562-ee40-43f4-863f-c2fb1b1188d7">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="58" height="30" uuid="e42ef572-73b5-446a-9c60-5b1dcb4e6b3a"/>
+								<textElement textAlignment="Right"/>
+								<text><![CDATA[IMPORTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="58" height="30" uuid="f74deb78-82ac-4712-af76-b3192a97d34d"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{IMPORTO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="a7a38e58-16e4-4e42-a6bd-d8c082f21090">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="58" height="30" uuid="4932f946-1b0d-4247-8ca0-cc4cfaacb864"/>
+								<text><![CDATA[TERZO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="58" height="30" uuid="d977a9b2-2242-4e90-8ebf-b061cf474b7e"/>
+								<textFieldExpression><![CDATA[$F{CD_TERZO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="6a6ea61b-c414-4524-9bc4-23ba221e9d87">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="58" height="30" uuid="997e7308-9494-4b38-b5d3-8d93531d57a9"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[SCADENZA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="58" height="30" uuid="77437e6c-d955-47e5-b3b0-c8ebdabb3fa4"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{DATA_SCADENZA}]]></textFieldExpression>
+								<patternExpression><![CDATA["dd/MM/YYYY"]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="32450121-d887-4ca8-824f-9fa68dbb51fb">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="58" height="30" uuid="dcbc2865-8ddb-4eb2-abeb-d2c5d08f6c06"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[TRASMISSIONE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="58" height="30" uuid="ffed220f-7d8b-4e9d-a838-c107a8a4e5b0"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{DATA_TRASMISSIONE}]]></textFieldExpression>
+								<patternExpression><![CDATA["dd/MM/YYYY"]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="f55026d8-a370-4130-b0bd-e532b5f08c0e">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="58" height="30" uuid="4579533d-020a-44e2-b9e0-fab98ef30e24"/>
+								<textElement textAlignment="Right"/>
+								<text><![CDATA[DIFF. GIORNI]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="58" height="30" uuid="6bf98b54-c804-4654-99d6-bf3d09109075"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{DIFFERENZA_GIORNI}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>
