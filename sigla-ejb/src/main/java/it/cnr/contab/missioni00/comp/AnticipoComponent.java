@@ -19,6 +19,7 @@ package it.cnr.contab.missioni00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -606,6 +607,14 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
                 cs.setObject(5, CNRUserContext.getEsercizio(userContext));
                 cs.setString(6, userContext.getUser());
                 cs.executeQuery();
+
+                //Recupero il rimborso
+                Optional<RimborsoBulk> optRimborso = ((RimborsoHome)getHome(userContext, RimborsoBulk.class)).findByAnticipo(anticipo);
+
+                //Se creato effettuo la scrittura prima nota del rimborso
+                if (optRimborso.isPresent())
+                  this.createScrittura(userContext, optRimborso.get());
+
                 return anticipo;
             } catch (SQLException e) {
                 throw handleException(e);
@@ -1253,16 +1262,9 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      */
     private AnticipoBulk inizializzaRimborso(UserContext userContext, AnticipoBulk anticipo) throws ComponentException {
         try {
-            SQLBuilder sql = getHome(userContext, RimborsoBulk.class).createSQLBuilder();
-            sql.addClause("AND", "esercizio_anticipo", SQLBuilder.EQUALS, anticipo.getEsercizio());
-            sql.addClause("AND", "cd_cds_anticipo", SQLBuilder.EQUALS, anticipo.getCd_cds());
-            sql.addClause("AND", "cd_uo_anticipo", SQLBuilder.EQUALS, anticipo.getCd_unita_organizzativa());
-            sql.addClause("AND", "pg_anticipo", SQLBuilder.EQUALS, anticipo.getPg_anticipo());
-            List result = getHome(userContext, RimborsoBulk.class).fetchAll(sql);
-            if (result.size() > 1)
-                throw new ApplicationException("Attenzione esiste piu' di un rimborso associato all'anticipo");
-            if (result.size() == 1)
-                anticipo.setRimborso((RimborsoBulk) result.get(0));
+            Optional<RimborsoBulk> optRimborso = ((RimborsoHome)getHome(userContext, RimborsoBulk.class)).findByAnticipo(anticipo);
+            if (optRimborso.isPresent())
+                anticipo.setRimborso(optRimborso.get());
 
             //	In base allo stato di riporto dell'obbligazione dell'rimborso
             //	inizializzo la variabile 'riportata' del rimborso
@@ -2033,12 +2035,12 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
     }
 
     @Override
-    protected Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+    public Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(usercontext)) {
-                Scrittura_partita_doppiaBulk scritturaPrinc = super.createScrittura(usercontext, oggettobulk);
-                if (oggettobulk instanceof AnticipoBulk && ((AnticipoBulk) oggettobulk).isAnnullato()) {
-                    Scrittura_partita_doppiaBulk scritturaStorno = this.createScritturaAnnullo(usercontext, oggettobulk, scritturaPrinc, ((AnticipoBulk) oggettobulk).getDt_cancellazione());
+                Scrittura_partita_doppiaBulk scritturaPrinc = super.createScrittura(usercontext, documentoCoge);
+                if (documentoCoge instanceof AnticipoBulk && ((AnticipoBulk) documentoCoge).isAnnullato()) {
+                    Scrittura_partita_doppiaBulk scritturaStorno = this.createScritturaAnnullo(usercontext, documentoCoge, scritturaPrinc, ((AnticipoBulk) documentoCoge).getDt_cancellazione());
 
                     scritturaPrinc.setAttiva(Scrittura_partita_doppiaBulk.ATTIVA_NO);
                     scritturaPrinc.setToBeUpdated();

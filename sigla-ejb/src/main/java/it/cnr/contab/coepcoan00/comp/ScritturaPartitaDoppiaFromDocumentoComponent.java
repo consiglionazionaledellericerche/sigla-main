@@ -90,27 +90,36 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
     @Override
     protected OggettoBulk eseguiCreaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
         OggettoBulk bulk = super.eseguiCreaConBulk(usercontext, oggettobulk);
-        this.createScrittura(usercontext, oggettobulk);
+        Optional.ofNullable(bulk).filter(IDocumentoCogeBulk.class::isInstance).map(IDocumentoCogeBulk.class::cast)
+            .ifPresent(el->{
+                try {
+                    this.createScrittura(usercontext, el);
+                } catch (ComponentException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
         return bulk;
     }
 
     @Override
     protected OggettoBulk eseguiModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
         OggettoBulk bulk = super.eseguiModificaConBulk(usercontext, oggettobulk);
-        this.createScrittura(usercontext, oggettobulk);
+        Optional.ofNullable(bulk).filter(IDocumentoCogeBulk.class::isInstance).map(IDocumentoCogeBulk.class::cast)
+            .ifPresent(el->{
+                try {
+                    this.createScrittura(usercontext, el);
+                } catch (ComponentException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
         return bulk;
     }
 
-    protected Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+    public Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(usercontext)) {
-                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
-                        .filter(IDocumentoCogeBulk.class::isInstance)
-                        .map(IDocumentoCogeBulk.class::cast);
-                if (optionalIDocumentoCogeBulk.isPresent() && !(
-                        optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isMandato() ||
-                                optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isReversale()
-                )){
+                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(documentoCoge);
+                if (optionalIDocumentoCogeBulk.isPresent()){
                     if (Utility.createConfigurazioneCnrComponentSession().isBloccoScrittureProposte(usercontext)) {
                         Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
                         try {
@@ -185,10 +194,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
                         .filter(IDocumentoCogeBulk.class::isInstance)
                         .map(IDocumentoCogeBulk.class::cast);
-                if (optionalIDocumentoCogeBulk.isPresent() && !(
-                        optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isMandato() ||
-                                optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isReversale()
-                )){
+                if (optionalIDocumentoCogeBulk.isPresent()){
                     Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
                     try {
                         optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
@@ -221,11 +227,9 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
     }
 
-    protected Scrittura_partita_doppiaBulk createScritturaAnnullo(UserContext usercontext, OggettoBulk oggettobulk, Scrittura_partita_doppiaBulk scritturaPrinc, Timestamp dataStorno) throws ComponentException {
+    protected Scrittura_partita_doppiaBulk createScritturaAnnullo(UserContext usercontext, IDocumentoCogeBulk documentoCoge, Scrittura_partita_doppiaBulk scritturaPrinc, Timestamp dataStorno) throws ComponentException {
         try {
-            final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
-                        .filter(IDocumentoCogeBulk.class::isInstance)
-                        .map(IDocumentoCogeBulk.class::cast);
+            final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(documentoCoge);
 
             final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
                         .proposeStornoScritturaPartitaDoppia(usercontext, scritturaPrinc, dataStorno));
@@ -460,7 +464,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             });
             //Ricreo
             if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
-                this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                makeBulkPersistent(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
                 documentoCoge.setStato_coge(Fattura_passivaBulk.REGISTRATO_IN_COGE);
             }
             ((OggettoBulk)documentoCoge).setToBeUpdated();

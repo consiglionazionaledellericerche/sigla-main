@@ -29,6 +29,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.rmi.RemoteException;
 import java.util.List;
 
 @Stateless(name = "CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaFromDocumentoComponentSession")
@@ -41,6 +42,25 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
     public void ejbCreate() {
         componentObj = new ScritturaPartitaDoppiaFromDocumentoComponent();
     }
+
+	public Scrittura_partita_doppiaBulk createScrittura(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			Scrittura_partita_doppiaBulk result = ((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).createScrittura(param0, param1);
+			component_invocation_succes(param0, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
 
 	public void removeScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException {
 		pre_component_invocation(param0, componentObj);
@@ -72,19 +92,6 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 		} catch (ComponentException e) {
 			component_invocation_failure(param0, componentObj);
 			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(param0, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(param0, componentObj, e);
-		}
-	}
-
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void loadScritturePatrimoniali(UserContext param0, List<IDocumentoCogeBulk> param1) {
-		pre_component_invocation(param0, componentObj);
-		try {
-			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).loadScritturePatrimoniali(param0, param1);
-			component_invocation_succes(param0, componentObj);
 		} catch (RuntimeException e) {
 			throw uncaughtRuntimeException(param0, componentObj, e);
 		} catch (Error e) {

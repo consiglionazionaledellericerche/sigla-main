@@ -197,58 +197,58 @@
                 columnSize="15"
                 columnScale="2"/>
 
-        <!-- FETCH Documento Amministrativo -->
+        <!-- FETCH Documento Coge -->
         <columnMapping
                 columnName="CD_CDS_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_cds"
+                propertyName="documentoCoge.cd_cds"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_uo"
+                propertyName="documentoCoge.cd_uo"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_unita_organizzativa"
-                fetchOnly="true"/>
-        <columnMapping
-                columnName="CD_UO_DOCUMENTO"
-                propertyName="documentoAmministrativo.cd_unita_organizzativa"
+                propertyName="documentoCoge.cd_unita_organizzativa"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="ESERCIZIO_DOCUMENTO"
-                propertyName="documentoAmministrativo.esercizio"
+                propertyName="documentoCoge.esercizio"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_doc_amm"
+                propertyName="documentoCoge.pg_doc"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_fattura_attiva"
+                propertyName="documentoCoge.pg_doc_amm"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_fattura_passiva"
+                propertyName="documentoCoge.pg_fattura_attiva"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_missione"
+                propertyName="documentoCoge.pg_missione"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_compenso"
+                propertyName="documentoCoge.pg_compenso"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_anticipo"
+                propertyName="documentoCoge.pg_anticipo"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
-                propertyName="documentoAmministrativo.pg_documento_generico"
+                propertyName="documentoCoge.pg_documento_generico"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoCoge.pg_rimborso"
                 fetchOnly="true"/>
         <columnMapping
                 columnName="CD_TIPO_DOCUMENTO"
-                propertyName="documentoAmministrativo.tipo_documento.cd_tipo_documento_amm"
+                propertyName="documentoCoge.tipo_documento.cd_tipo_documento_amm"
                 fetchOnly="true"/>
     </columnMap>
 

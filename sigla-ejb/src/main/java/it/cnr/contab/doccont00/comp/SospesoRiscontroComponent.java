@@ -35,6 +35,7 @@ import it.cnr.contab.pagopa.ejb.PendenzaPagopaComponentSession;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.UserContext;
@@ -2652,6 +2653,11 @@ public class SospesoRiscontroComponent extends CRUDComponent implements ISospeso
                             aggiornaSaldiCapitoli(userContext, manRev);
                         }
                         super.updateBulk(userContext,rev);
+                        try {
+                            Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession().createScrittura(userContext, rev);
+                        } catch (RemoteException e) {
+                            throw new ComponentException("La reversale "+rev.getIdReversaleAsString()+" presenta un errore in fase di scrittura partita doppia.");
+                        }
                         return aggiornaRigaProcessata(userContext, riga);
                     } else if (riga.isMandato()){
                         MandatoBulk man = new MandatoIBulk();
@@ -2737,6 +2743,11 @@ public class SospesoRiscontroComponent extends CRUDComponent implements ISospeso
                             aggiornaSaldiCapitoli(userContext, manRev);
                         }
                         super.updateBulk(userContext, man);
+                        try {
+                            Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession().createScrittura(userContext, man);
+                        } catch (RemoteException e) {
+                            throw new ComponentException("Il mandato "+man.getIdMandatoAsString()+" presenta un errore in fase di scrittura partita doppia.");
+                        }
                         return aggiornaRigaProcessata(userContext, riga);
                     } else {
                         throw  new ComponentException("Il Tipo Ordinativo "+ riga.getTipoDocumento()+" non è compatibile, può assumere solo i valori R (Reversale) e M (Mandato)");
@@ -2776,7 +2787,11 @@ public class SospesoRiscontroComponent extends CRUDComponent implements ISospeso
                         man.setStato_trasmissione_annullo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
                         man.setToBeUpdated();
                         super.updateBulk(userContext,man);
-
+                        try {
+                            Utility.createScritturaPartitaDoppiaFromDocumentoComponentSession().createScrittura(userContext, man);
+                        } catch (RemoteException e) {
+                            throw new ComponentException("Il mandato annullato "+man.getIdMandatoAsString()+" presenta un errore in fase di scrittura partita doppia.");
+                        }
                         return aggiornaRigaProcessata(userContext, riga);
                     }
                 }

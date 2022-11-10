@@ -710,6 +710,18 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		public void setReportIdLiquid(Long reportIdLiquid) {
 			this.reportIdLiquid = reportIdLiquid;
 		}
+
+		protected int calculateKeyHashCode(Object obj) {
+			return obj == null ? 0 : obj.hashCode();
+		}
+
+		public int primaryKeyHashCode() {
+			return calculateKeyHashCode(getCd_tipo_doc()) +
+					calculateKeyHashCode(getCd_cds()) +
+					calculateKeyHashCode(getCd_uo()) +
+					calculateKeyHashCode(getPg_doc()) +
+					calculateKeyHashCode(getTipoDocumentoEnum());
+		}
 	}
 	/**
 	 * ScritturaPartitaDoppiaComponent constructor comment.
@@ -2177,11 +2189,11 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			BigDecimal imCostoRimborso = rimborso.getIm_rimborso();
 			if (imCostoRimborso.compareTo(BigDecimal.ZERO)!=0) {
 				Voce_epBulk aContoCreditoAnticipo = this.findContoCreditoAnticipo(userContext, optAnticipo.get().getEsercizio());
-				Voce_epBulk aContoDebitoAnticipo = this.findContoDebitoAnticipo(userContext, optAnticipo.get().getEsercizio());
+				Voce_epBulk aContoCreditoRimborsoAnticipo = this.findContoCreditoRimborsoAnticipo(userContext, optAnticipo.get().getEsercizio());
 				//Il rimborso chiude il credito conto anticipi verso il dipendente
 				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_AVERE, aContoCreditoAnticipo.getCd_voce_ep(), imCostoRimborso, optAnticipo.get().getCd_terzo(), optAnticipo.get());
-				//e apre credito generico dell'ente verso il dipendente
-				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_DARE, aContoDebitoAnticipo.getCd_voce_ep(), imCostoRimborso, optAnticipo.get().getCd_terzo(), optAnticipo.get());
+				//e apre credito conto rimborso anticipi dell'ente verso il dipendente
+				testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.CREDITO.value(), Movimento_cogeBulk.SEZIONE_DARE, aContoCreditoRimborsoAnticipo.getCd_voce_ep(), imCostoRimborso, rimborso.getCd_terzo(), rimborso);
 			}
 			return this.generaScrittura(userContext, rimborso, Collections.singletonList(testataPrimaNota), false);
 		} catch (RemoteException e) {
@@ -2273,7 +2285,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		}
 	}
 
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandato(UserContext userContext, MandatoBulk mandato) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaMandato(UserContext userContext, MandatoBulk mandato) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
 		try {
 			//Completo l'oggetto mandato con i sottooggetti che serviranno durante l'elaborazione
 			completeMandato(userContext, mandato);
@@ -2360,7 +2372,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				}
 				return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 			}
-			throw new ApplicationException("Scrittura Economica non prevista in quanto il mandato non risulta pagato.");
+			throw new ScritturaPartitaDoppiaNotEnabledException("Scrittura Economica non prevista in quanto il mandato non risulta pagato.");
 		} catch (PersistencyException | RemoteException e) {
 			throw handleException(e);
 		}
@@ -2952,7 +2964,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					testataPrimaNotaReversale = proposeTestataPrimaNotaReversale(userContext, reversale, false);
 				} catch (ComponentException e) {
 					throw new DetailedRuntimeException(e);
-				} catch (ScritturaPartitaDoppiaNotRequiredException ignored) {
+				} catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException ignored) {
 				}
 				Optional.ofNullable(testataPrimaNotaReversale).ifPresent(el->testataPrimaNota.getDett().addAll(el.getDett()));
 			});
@@ -3619,12 +3631,12 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.generaScrittura(userContext, mandato, Collections.singletonList(testataPrimaNota), true);
 	}
 
-	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversale(UserContext userContext, ReversaleBulk reversale) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
+	private Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaReversale(UserContext userContext, ReversaleBulk reversale) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
 		TestataPrimaNota testataPrimaNota = proposeTestataPrimaNotaReversale(userContext, reversale, Boolean.TRUE);
 		return Optional.ofNullable(testataPrimaNota).map(el->this.generaScrittura(userContext, reversale, Collections.singletonList(el), true)).orElse(null);
 	}
 
-	private TestataPrimaNota proposeTestataPrimaNotaReversale(UserContext userContext, ReversaleBulk reversale, boolean bloccoVincoli) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException {
+	private TestataPrimaNota proposeTestataPrimaNotaReversale(UserContext userContext, ReversaleBulk reversale, boolean bloccoVincoli) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
 		try {
 			if (bloccoVincoli &&
 					((Ass_mandato_reversaleHome) getHome(userContext, Ass_mandato_reversaleBulk.class)).findMandati(userContext, reversale, false).stream().findFirst().isPresent())
@@ -3678,7 +3690,7 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 				});
 				return testataPrimaNota;
 			}
-			return null;
+			throw new ScritturaPartitaDoppiaNotEnabledException("Scrittura Economica non prevista in quanto la reversale non risulta incassata.");
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
@@ -4299,6 +4311,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private Voce_epBulk findContoDebitoAnticipo(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
 		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_CREDITO_DEBITO_ANTICIPO, 2);
+	}
+
+	private Voce_epBulk findContoCreditoRimborsoAnticipo(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
+		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_CREDITO_RIMBORSO_ANTICIPO, 1);
 	}
 
 	private Voce_epBulk findContoCreditoEconomo(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {

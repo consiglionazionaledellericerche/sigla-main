@@ -374,4 +374,23 @@
             AND NATURA_VOCE IS NULL;
         </sql>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="configurazione_cnr_aggiorna_voce_ep_varie_2">
+        <addDefaultValue tableName="configurazione_cnr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="configurazione_cnr" columnName="duva" defaultValueDate="${now}"/>
+        <sql>
+            INSERT INTO CONFIGURAZIONE_CNR
+            (ESERCIZIO, CD_UNITA_FUNZIONALE, CD_CHIAVE_PRIMARIA, CD_CHIAVE_SECONDARIA, VAL01, UTCR, UTUV, PG_VER_REC)
+            SELECT A.ESERCIZIO, '*', 'VOCEEP_SPECIALE', 'CREDITO_RIMBORSO_ANTICIPO', 'A35013', 'SYSTEM', 'SYSTEM', 1
+            FROM ESERCIZIO_BASE A
+            WHERE NOT EXISTS(SELECT '1' FROM CONFIGURAZIONE_CNR B
+            WHERE B.ESERCIZIO = A.ESERCIZIO
+            AND   B.CD_UNITA_FUNZIONALE = '*'
+            AND   B.CD_CHIAVE_PRIMARIA = 'VOCEEP_SPECIALE'
+            AND   B.CD_CHIAVE_SECONDARIA = 'CREDITO_RIMBORSO_ANTICIPO')
+            AND   EXISTS(SELECT '1' FROM VOCE_EP C WHERE C.ESERCIZIO = A.ESERCIZIO AND C.CD_VOCE_EP = 'A35013')
+        </sql>
+        <dropDefaultValue tableName="configurazione_cnr" columnName="dacr"/>
+        <dropDefaultValue tableName="configurazione_cnr" columnName="duva"/>
+    </changeSet>
 </databaseChangeLog>

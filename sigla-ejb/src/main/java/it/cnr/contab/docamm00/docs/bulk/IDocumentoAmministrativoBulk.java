@@ -198,6 +198,4 @@ public interface IDocumentoAmministrativoBulk extends IDocumentoCogeBulk {
     void setIsDeleting(boolean deletingStatus);
 
     TipoDocumentoEnum getTipoDocumentoEnum();
-
-    int primaryKeyHashCode();
 }
