@@ -2200,8 +2200,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			if (missione.isAnnullato())
 				throw new ScritturaPartitaDoppiaNotRequiredException("Missione " + descMissione + " annullata. Registrazione economica non prevista.");
 
-			if (missione.isMissioneProvvisoria())
-				throw new ScritturaPartitaDoppiaNotEnabledException("Missione " + descMissione + " provvisoria. Registrazione economica non prevista.");
+			if (!missione.isMissioneDefinitiva())
+				throw new ScritturaPartitaDoppiaNotEnabledException("Missione " + descMissione + " non definitiva. Registrazione economica non prevista.");
 
 			Optional<AnticipoBulk> optAnticipo = Optional.ofNullable(missione.getAnticipo()).map(anticipo->
 					Optional.of(anticipo).filter(el->el.getCrudStatus()!=OggettoBulk.UNDEFINED).orElseGet(()-> {
