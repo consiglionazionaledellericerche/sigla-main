@@ -192,10 +192,10 @@
 		<variableExpression><![CDATA[$P{trimestre} == "*" ? "gennaio - dicembre" : $P{trimestre} == "1" ? "gennaio - marzo" : $P{trimestre} == "2" ? "aprile - giugno" : $P{trimestre} == "3" ? "luglio - settembre" : "ottobre - dicembre"]]></variableExpression>
 	</variable>
 	<variable name="DATA_TRASMISSIONE_INIZIO" class="java.util.Date">
-		<variableExpression><![CDATA[$P{trimestre} == "*" ? new GregorianCalendar($P{esercizio}, 0, 1).getTime() : $P{trimestre} == "1" ?new GregorianCalendar($P{esercizio}, 0, 1).getTime()  : $P{trimestre} == "2" ? new GregorianCalendar($P{esercizio}, 3, 1).getTime()  : $P{trimestre} == "3" ? new GregorianCalendar($P{esercizio}, 6, 1).getTime()  : new GregorianCalendar($P{esercizio}, 9, 1).getTime()]]></variableExpression>
+		<variableExpression><![CDATA[$P{trimestre}.equals( "*") ? new GregorianCalendar($P{esercizio}, 0, 1).getTime() : $P{trimestre}.equals("1") ?new GregorianCalendar($P{esercizio}, 0, 1).getTime()  : $P{trimestre}.equals("2") ? new GregorianCalendar($P{esercizio}, 3, 1).getTime()  : $P{trimestre}.equals("3") ? new GregorianCalendar($P{esercizio}, 6, 1).getTime()  : new GregorianCalendar($P{esercizio}, 9, 1).getTime()]]></variableExpression>
 	</variable>
 	<variable name="DATA_TRASMISSIONE_FINE" class="java.util.Date">
-		<variableExpression><![CDATA[$P{trimestre} == "*" ? new GregorianCalendar($P{esercizio}, 11, 31).getTime() : $P{trimestre} == "1" ?new GregorianCalendar($P{esercizio}, 2, 31).getTime()  : $P{trimestre} == "2" ? new GregorianCalendar($P{esercizio}, 5, 30).getTime()  : $P{trimestre} == "3" ? new GregorianCalendar($P{esercizio}, 8, 30).getTime()  : new GregorianCalendar($P{esercizio}, 11, 31).getTime()]]></variableExpression>
+		<variableExpression><![CDATA[$P{trimestre}.equals("*") ? new GregorianCalendar($P{esercizio}, 11, 31).getTime() : $P{trimestre}.equals("1") ?new GregorianCalendar($P{esercizio}, 2, 31).getTime()  : $P{trimestre}.equals("2") ? new GregorianCalendar($P{esercizio}, 5, 30).getTime()  : $P{trimestre}.equals("3") ? new GregorianCalendar($P{esercizio}, 8, 30).getTime()  : new GregorianCalendar($P{esercizio}, 11, 31).getTime()]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
