@@ -22,6 +22,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.*;
@@ -424,6 +425,51 @@ public abstract class Fattura_passivaBulk
         setToBeCreated();
 
         return fattura_passiva_dettColl.size() - 1;
+    }
+
+    public int addToFattura_passiva_intrastatColl(Fattura_passiva_intraBulk dettaglio){
+        dettaglio.initialize();
+        dettaglio.setFattura_passiva(this);
+
+        long max = 0;
+        for (Iterator i = fattura_passiva_dettColl.iterator(); i.hasNext(); ) {
+            long prog = ((Fattura_passiva_rigaBulk) i.next()).getProgressivo_riga().longValue();
+            if (prog > max) max = prog;
+        }
+        dettaglio.setPg_riga_intra(new Long(max + 1));
+        if (getFornitore() != null && getFornitore().getAnagrafico() != null &&
+                getFornitore().getAnagrafico().getComune_fiscale() != null) {
+            NazioneBulk nazione = getFornitore().getAnagrafico().getComune_fiscale().getNazione();
+            if (getTi_bene_servizio().compareTo(Bene_servizioBulk.BENE) == 0) {
+                dettaglio.setNazione_origine(nazione);
+                dettaglio.setNazione_provenienza(nazione);
+            } else
+                dettaglio.setNazione_provenienza(nazione);
+        }
+        //if (fatturaPassiva != null && fatturaPassiva.getFl_intra_ue() != null &&
+        //fatturaPassiva.getFl_intra_ue().booleanValue())	{
+        for (Iterator i = fattura_passiva_dettColl.iterator(); i.hasNext(); ) {
+            Fattura_passiva_rigaBulk riga = ((Fattura_passiva_rigaBulk) i.next());
+            if (riga.getBene_servizio().getFl_obb_intrastat_acq().booleanValue())
+                dettaglio.setAmmontare_euro(dettaglio.getAmmontare_euro().add(riga.getIm_imponibile()));
+            if (!this.isDefaultValuta() &&
+                    ((this.getFornitore() != null &&
+                            this.getFornitore().getAnagrafico() != null &&
+                            this.getFornitore().getAnagrafico().getNazionalita() != null &&
+                            this.getFornitore().getAnagrafico().getNazionalita().getDivisa() != null) ||
+                            this.getFornitore().getAnagrafico().getComune_fiscale() != null &&
+                                    this.getFornitore().getAnagrafico().getComune_fiscale().getNazione() != null &&
+                                    this.getFornitore().getAnagrafico().getComune_fiscale().getNazione().getDivisa() != null)) {
+                dettaglio.setAmmontare_divisa(dettaglio.getAmmontare_divisa().add(riga.getIm_totale_divisa()));
+            }
+        }
+        dettaglio.setModalita_trasportoColl(getModalita_trasportoColl());
+        dettaglio.setCondizione_consegnaColl(getCondizione_consegnaColl());
+        dettaglio.setModalita_incassoColl(getModalita_incassoColl());
+        dettaglio.setModalita_erogazioneColl(getModalita_erogazioneColl());
+
+        fattura_passiva_intrastatColl.add(dettaglio);
+        return fattura_passiva_intrastatColl.size() - 1;
     }
 
     public int addToFattura_passiva_ordini(FatturaOrdineBulk fatturaOrdineBulk) {
