@@ -74,6 +74,10 @@
                 fetchOnly="true"/>
         <columnMapping
                 columnName="PG_NUMERO_DOCUMENTO"
+                propertyName="documentoCoge.pg_fattura_passiva"
+                fetchOnly="true"/>
+        <columnMapping
+                columnName="PG_NUMERO_DOCUMENTO"
                 propertyName="documentoCoge.pg_missione"
                 fetchOnly="true"/>
         <columnMapping

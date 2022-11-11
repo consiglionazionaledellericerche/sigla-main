@@ -54,7 +54,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection<Movimento_cogeBulk> findMovimentiAvereColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
-        final PersistentHome home = getHomeCache().getHome(Movimento_cogeBulk.class, "default", "documentoAmministrativo");
+        final PersistentHome home = getHomeCache().getHome(Movimento_cogeBulk.class, "default", "documentoCoge");
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
@@ -71,7 +71,7 @@ public class Scrittura_partita_doppiaHome extends BulkHome {
     }
 
     public Collection<Movimento_cogeBulk> findMovimentiDareColl(UserContext userContext, Scrittura_partita_doppiaBulk scrittura, boolean fetchAll) throws PersistencyException {
-        final PersistentHome home = getHomeCache().getHome(Movimento_cogeBulk.class, "default", "documentoAmministrativo");
+        final PersistentHome home = getHomeCache().getHome(Movimento_cogeBulk.class, "default", "documentoCoge");
         SQLBuilder sql = home.createSQLBuilder();
         sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, scrittura.getEsercizio());
         sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, scrittura.getCd_cds());
