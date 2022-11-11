@@ -1,3 +1,24 @@
+## Release 6.5.2  -- _November 11, 2022_ 
+**Changes**
+
+>**FIX security-constraint without SSO**
+>
+>[c0ee211729dff82](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0ee211729dff82) marco.spasiano *November 11, 2022*
+
+>**Revert "FIX security-constraint without SSO"**
+> * This reverts commit c5206144061e6ad067f6e0d70bce3e639ee2aa3e.
+>
+>[671f355d353cd0d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/671f355d353cd0d) marco.spasiano *November 11, 2022*
+
+>**FIX security-constraint without SSO**
+>
+>[c5206144061e6ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c5206144061e6ad) marco.spasiano *November 11, 2022*
+
+>**Add keycloak dependencies to MANIFEST**
+>
+>[e96faaec7355749](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e96faaec7355749) marco.spasiano *November 11, 2022*
+
+
 ## Release 6.5.1  -- _November 10, 2022_ 
 **Changes**
 
