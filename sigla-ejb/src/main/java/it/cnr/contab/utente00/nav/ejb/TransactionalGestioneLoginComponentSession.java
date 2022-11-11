@@ -24,9 +24,9 @@ import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-import org.keycloak.KeycloakPrincipal;
 
 import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.List;
 
 public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements GestioneLoginComponentSession {
@@ -510,7 +510,7 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
         }
     }
 
-    public java.lang.Boolean isUserAccessoAllowed(KeycloakPrincipal param0, Integer param1, String param2, String param3, String... param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public java.lang.Boolean isUserAccessoAllowed(Principal param0, Integer param1, String param2, String param3, String... param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
             return (java.lang.Boolean) invoke("isUserAccessoAllowed", new Object[]{
                     param0,

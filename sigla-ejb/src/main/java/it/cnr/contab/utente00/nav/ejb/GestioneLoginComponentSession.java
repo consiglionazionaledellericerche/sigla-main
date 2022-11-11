@@ -23,10 +23,10 @@ import it.cnr.contab.utenze00.bulk.PreferitiBulk;
 import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.UserContext;
-import org.keycloak.KeycloakPrincipal;
 
 import javax.ejb.Remote;
 import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.List;
 
 @Remote
@@ -83,5 +83,5 @@ public interface GestioneLoginComponentSession extends it.cnr.jada.ejb.GenericCo
 
     java.lang.Boolean isUserAccessoAllowed(UserContext userContext, String... accessi) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
-    java.lang.Boolean isUserAccessoAllowed(KeycloakPrincipal principal, Integer esercizio, String cds, String uo, String... accessi) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    java.lang.Boolean isUserAccessoAllowed(Principal principal, Integer esercizio, String cds, String uo, String... accessi) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 }

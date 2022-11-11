@@ -46,6 +46,7 @@ import org.keycloak.representations.IDToken;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -964,7 +965,7 @@ public class GestioneLoginComponent
         }
     }
 
-    public boolean isUserAccessoAllowed(KeycloakPrincipal principal, Integer esercizio, String cds, String uo, String... accessi) throws ComponentException {
+    public boolean isUserAccessoAllowed(Principal principal, Integer esercizio, String cds, String uo, String... accessi) throws ComponentException {
         CNRUserContext context = new CNRUserContext();
         context.setEsercizio(esercizio);
         context.setCd_cds(cds);
