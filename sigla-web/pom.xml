@@ -22,7 +22,7 @@
     <parent>
         <groupId>it.cnr.si.sigla</groupId>
         <artifactId>sigla-parent</artifactId>
-        <version>6.4.58-SNAPSHOT</version>
+        <version>6.5.1-SNAPSHOT</version>
     </parent>
     <dependencyManagement>
         <dependencies>
@@ -228,6 +228,10 @@
         <dependency>
             <groupId>io.thorntail</groupId>
             <artifactId>management-console</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>keycloak</artifactId>
         </dependency>
         <!-- SIGLA  dependency-->
         <dependency>

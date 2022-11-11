@@ -1660,106 +1660,64 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
 	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
 
-	SQLBuilder sql = home.createSQLBuilder();
-	if ( bulk instanceof ObbligazioneOrdBulk || bulk instanceof ObbligazioneResBulk || 
+	SQLBuilder sql = getHomeCache().getHome(Elemento_voceBulk.class , "V_ELEMENTO_VOCE_ASSESTATO").createSQLBuilder();
+	if ( bulk instanceof ObbligazioneOrdBulk || bulk instanceof ObbligazioneResBulk ||
 	     bulk instanceof ObbligazioneRes_impropriaBulk || bulk instanceof ImpegnoBulk)
 	{
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
-		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );
-		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
-		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
-		// selezionando solo la parte 1 e' implicito che non siano partite di giro (fl_pgiro='N')		
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+		sql.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );
+		sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
+		sql.addClause(FindClause.AND, "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
+		// selezionando solo la parte 1 e' implicito che non siano partite di giro (fl_pgiro='N')
 		if (parCNR==null || !parCNR.getFl_nuovo_pdg())
-			sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_1 );
+			sql.addClause(FindClause.AND, "cd_parte", SQLBuilder.EQUALS, home.PARTE_1 );
 		if ( bulk.getCds() != null && bulk.getCds().getCd_tipo_unita()!=null && !bulk.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
-			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );		
+			sql.addClause(FindClause.AND, "fl_voce_sac", SQLBuilder.EQUALS, Boolean.FALSE);
 		sql.addClause( clause );
 	}
-	
-/*	else if ( bulk instanceof ObbligazionePGiroBulk )
-	{
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
-		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );
-		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
-		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
-		sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
-		sql.addClause("AND", "fl_partita_giro", SQLBuilder.EQUALS, new Boolean(true) );		
-		sql.addClause( clause );
-	}*/
-	
-	/* non usato perchè ridefinito nella sottoclasse ImpegnoPGiroHome, ma viene usato per ImpegnoPGiroResiduo */
 	else if ( bulk instanceof ImpegnoPGiroBulk )
 	{
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
 		if ( ((ImpegnoPGiroBulk) bulk).getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_IMP))
-			sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CNR );
+			sql.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CNR );
 		else // == OBB_PGIRO
-			sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );		
-		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
-		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
+			sql.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );
+		sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
+		sql.addClause(FindClause.AND, "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
 		if (!parCNR.getFl_nuovo_pdg())
-			sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
-		sql.addClause("AND", "fl_partita_giro", SQLBuilder.EQUALS, new Boolean(true) );
+			sql.addClause(FindClause.AND, "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
+		sql.addClause(FindClause.AND, "fl_partita_giro", SQLBuilder.EQUALS, Boolean.TRUE );
 		if ( bulk.getCds() != null && bulk.getCds().getCd_tipo_unita()!=null && !bulk.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
-			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );				
+			sql.addClause(FindClause.AND, "fl_voce_sac", SQLBuilder.EQUALS, Boolean.FALSE );
 		sql.addClause( clause );
 	}
 	if (bulk instanceof ObbligazioneResBulk || bulk instanceof ObbligazioneRes_impropriaBulk||bulk instanceof ImpegnoPGiroResiduoBulk)
-		 sql.addClause("AND", "fl_solo_competenza", SQLBuilder.EQUALS, new Boolean( false) );		 
+		 sql.addClause(FindClause.AND, "fl_solo_competenza", SQLBuilder.EQUALS, Boolean.FALSE );
 	else
-		sql.addClause("AND", "fl_solo_residuo", SQLBuilder.EQUALS, new Boolean( false) );
+		sql.addClause(FindClause.AND, "fl_solo_residuo", SQLBuilder.EQUALS, Boolean.FALSE );
 	if (bulk instanceof ObbligazioneRes_impropriaBulk)
-		sql.addClause("AND", "fl_azzera_residui", SQLBuilder.EQUALS, new Boolean( false) );
-	
-	//Select che serve per limitare la visualizzazione alle sole voci di bilancio che hanno avuto almeno uno stanziamento
-	try {
-		SQLBuilder sqlAssestato = new SQLBuilder();
-		sqlAssestato.addTableToHeader("VOCE_F_SALDI_CDR_LINEA");
-		sqlAssestato.setHeader(String.valueOf("SELECT 1"));
-		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
-		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
-		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
-		sqlAssestato.addSQLJoin("VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
+		sql.addClause(FindClause.AND, "fl_azzera_residui", SQLBuilder.EQUALS, Boolean.FALSE );
 
-		sqlAssestato.openParenthesis(FindClause.AND);
-		sqlAssestato.addSQLClause(FindClause.OR, "ELEMENTO_VOCE.FL_LIMITE_ASS_OBBLIG", SQLBuilder.EQUALS, "N" );
-		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(VOCE_F_SALDI_CDR_LINEA.IM_STANZ_INIZIALE_A1,0)+nvl(VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_PIU,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_MENO,0))", SQLBuilder.GREATER, 0);
-		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(VOCE_F_SALDI_CDR_LINEA.IM_STANZ_RES_IMPROPRIO,0)+nvl(VOCE_F_SALDI_CDR_LINEA.VAR_PIU_STANZ_RES_IMP,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VAR_MENO_STANZ_RES_IMP,0) +  nvl(VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VAR_PIU_OBBL_RES_PRO,0))", SQLBuilder.GREATER, 0);
-		sqlAssestato.closeParenthesis();
-		
-		if (bulk.getListaVociSelezionabili() != null && !bulk.getListaVociSelezionabili().isEmpty()) {
-			sql.openParenthesis("AND");
-			for (Elemento_voceBulk voce : bulk.getListaVociSelezionabili()){
-				sql.openParenthesis("OR");
-				sql.addSQLClause("AND","ELEMENTO_VOCE.CD_ELEMENTO_VOCE",sql.EQUALS, voce.getCd_elemento_voce());
-				sql.addSQLClause("AND","ELEMENTO_VOCE.TI_APPARTENENZA",sql.EQUALS, voce.getTi_appartenenza());
-				sql.addSQLClause("AND","ELEMENTO_VOCE.TI_GESTIONE",sql.EQUALS, voce.getTi_gestione());
-				sql.addSQLClause("AND","ELEMENTO_VOCE.ESERCIZIO",sql.EQUALS, voce.getEsercizio());
-				sql.closeParenthesis();
-				
-			}
-			sql.closeParenthesis();
-		}
-		
+	sql.addClause(FindClause.AND, "esercizio_bilancio", SQLBuilder.EQUALS, bulk.getEsercizio_originale() );
+
+	sql.openParenthesis(FindClause.AND);
+	sql.addClause(FindClause.OR, "fl_limite_ass_obblig", SQLBuilder.EQUALS, Boolean.FALSE );
+	sql.addClause(FindClause.OR, "importo_disponibile_bilancio", SQLBuilder.GREATER, BigDecimal.ZERO);
+	sql.closeParenthesis();
+
+	try {
 		SQLBuilder sqlstrOrg = new SQLBuilder();
 		sqlstrOrg.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
-		sqlstrOrg.setHeader(String.valueOf("SELECT 1"));
-		sqlstrOrg.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+		sqlstrOrg.setHeader("SELECT V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA");
 		sqlstrOrg.addSQLClause(FindClause.AND,"V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, bulk.getUnita_organizzativa().getCd_unita_organizzativa());
-		
-		sqlAssestato.addSQLExistsClause(FindClause.AND, sqlstrOrg);
-		
-		sql.openParenthesis(FindClause.AND);
-		sql.addClause(FindClause.OR, "fl_limite_ass_obblig", SQLBuilder.EQUALS, Boolean.FALSE );
-		sql.addSQLExistsClause(FindClause.OR, sqlAssestato);
-		sql.closeParenthesis();
+
+		sql.addSQLINClause(FindClause.AND, "V_ELEMENTO_VOCE_ASSESTATO.CD_CDR_BILANCIO", sqlstrOrg);
 	} catch (IntrospectionException e) {
 		e.printStackTrace();
 	}
-
-	return sql; 
-		
+	return sql;
 }
+
 /**
  * Ritorna tutti le obbligazioni uguali al bulk indipendentemente dall'esercizio
  * comprensivo di quello indicato nel bulk

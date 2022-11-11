@@ -29,6 +29,7 @@ import it.cnr.jada.comp.ComponentException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -55,6 +56,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +121,20 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				}
 			}
 			try {
-				utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
+				final Optional<Principal> principalOptional = Optional.ofNullable(requestContext.getSecurityContext().getUserPrincipal());
+				if (principalOptional.isPresent()) {
+					final Optional<IDToken> idToken = principalOptional
+							.filter(KeycloakPrincipal.class::isInstance)
+							.map(KeycloakPrincipal.class::cast)
+							.map(KeycloakPrincipal::getKeycloakSecurityContext)
+							.map(keycloakSecurityContext -> {
+								return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+										.orElse(keycloakSecurityContext.getToken());
+							});
+					utenteBulk = BasicAuthentication.findUtenteBulk(idToken.get().getPreferredUsername());
+				} else {
+					utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
+				}
 				if (utenteBulk == null){
 					requestContext.abortWith(
 							Response.status(Response.Status.UNAUTHORIZED)
@@ -166,7 +182,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				if (!BasicAuthentication.loginComponentSession().isUserAccessoAllowed(
 						userPrincipal,
 						accessi.toArray(new String[accessi.size()]))) {
-					final String message = "User " + userPrincipal + " doesn't have the following access: " + accessi;
+					final String message = "User " + userPrincipal.getUser() + " doesn't have the following access: " + accessi;
 					LOGGER.warn(message);
 					requestContext.abortWith(Response.status(Status.FORBIDDEN).entity(Collections.singletonMap("ERROR", message)).build());
 				}
@@ -207,7 +223,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				.filter(s -> allowOrigins.contains(s))
 				.ifPresent(s -> {
 					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_ORIGIN, s);
-					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_HEADERS, "content-type");
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_HEADERS, "origin, content-type, accept, authorization");
 					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
 					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
 				});

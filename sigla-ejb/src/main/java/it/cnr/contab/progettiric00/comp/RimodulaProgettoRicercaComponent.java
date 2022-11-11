@@ -17,36 +17,16 @@
 
 package it.cnr.contab.progettiric00.comp;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.google.gson.GsonBuilder;
-
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
-import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazione_wizardBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
-import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoRimodulazioneType;
 import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
@@ -58,6 +38,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -72,7 +53,6 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.StoreService;
 

@@ -17,36 +17,18 @@
 
 package it.cnr.contab.coepcoan00.ejb;
 
-import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.compensi00.comp.CompensoComponent;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
-import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import java.rmi.RemoteException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Stateless(name = "CNRCOEPCOAN00_EJB_ScritturaPartitaDoppiaFromDocumentoComponentSession")
 public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScritturaPartitaDoppiaFromDocumentoComponentSession {
@@ -95,10 +77,10 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 		}
 	}
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public List<IDocumentoCogeBulk> getAllDocumentiCoge(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException {
+	public List<IDocumentoCogeBulk> getAllDocumentiCogeDaContabilizzare(UserContext param0, Integer param1, String param2) throws ComponentException, PersistencyException {
 		pre_component_invocation(param0, componentObj);
 		try {
-			List<IDocumentoCogeBulk>  result = ((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).getAllDocumentiCoge(param0, param1, param2);
+			List<IDocumentoCogeBulk>  result = ((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).getAllDocumentiCogeDaContabilizzare(param0, param1, param2);
 			component_invocation_succes(param0, componentObj);
 			return result;
 		} catch (it.cnr.jada.comp.NoRollbackException e) {

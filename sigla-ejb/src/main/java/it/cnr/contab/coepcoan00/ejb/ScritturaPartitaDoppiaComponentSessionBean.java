@@ -18,6 +18,7 @@
 package it.cnr.contab.coepcoan00.ejb;
 
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaComponent;
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotEnabledException;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotRequiredException;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
@@ -80,7 +81,7 @@ public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.
         }
     }
 
-	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException, ScritturaPartitaDoppiaNotRequiredException {
+	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
 		pre_component_invocation(param0, componentObj);
 		try {
 			Scrittura_partita_doppiaBulk result = ((ScritturaPartitaDoppiaComponent) componentObj).proposeScritturaPartitaDoppia(param0, param1);
@@ -89,7 +90,7 @@ public class ScritturaPartitaDoppiaComponentSessionBean extends it.cnr.jada.ejb.
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0, componentObj);
 			throw e;
-		} catch (it.cnr.jada.comp.ComponentException e) {
+		} catch (it.cnr.jada.comp.ComponentException | ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
 			component_invocation_failure(param0, componentObj);
 			throw e;
 		} catch (RuntimeException e) {

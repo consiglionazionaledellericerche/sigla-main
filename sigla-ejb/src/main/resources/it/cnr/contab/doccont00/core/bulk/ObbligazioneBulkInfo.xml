@@ -63,6 +63,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		label="Voce del piano"
+		columnSet="voce_importi_bilancio"
 		enabledOnSearch="true"
 		completeOnSave="false"
 		nullable="false"

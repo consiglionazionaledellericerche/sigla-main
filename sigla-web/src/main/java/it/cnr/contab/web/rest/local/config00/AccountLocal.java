@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import it.cnr.contab.web.rest.config.AllUserAllowedWithoutAbort;
 import it.cnr.contab.web.rest.model.AccountDTO;
+import it.cnr.contab.web.rest.model.PasswordDTO;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,16 @@ public interface AccountLocal {
     )
     Response get(@Context HttpServletRequest request) throws Exception;
 
+    @OPTIONS
+    @ApiOperation(value = "Fornisce le informazioni dell'account",
+            notes = "Accesso consentito a tutte le utenze registrate",
+            response = AccountDTO.class,
+            authorizations = {
+                    @Authorization(value = "BASIC")
+            }
+    )
+    Response optionsGet(@Context HttpServletRequest request) throws Exception;
+
     @GET
     @Path("/{username}")
     @ApiOperation(value = "Fornisce le informazioni dell'account in base allo username",
@@ -68,7 +79,18 @@ public interface AccountLocal {
                     @Authorization(value = "BASIC")
             }
     )
-    Response changePassword(@Context HttpServletRequest request, String password) throws Exception;
+    Response changePassword(@Context HttpServletRequest request, PasswordDTO passwordDTO) throws Exception;
+
+    @OPTIONS
+    @Path("/change-password")
+    @ApiOperation(value = "Cambia la passwod dell'utente collegato",
+            notes = "Accesso consentito a tutte le utenze registrate",
+            response = AccountDTO.class,
+            authorizations = {
+                    @Authorization(value = "BASIC")
+            }
+    )
+    Response changePassword(@Context HttpServletRequest request) throws Exception;
 
     AccountDTO getAccountDTO(HttpServletRequest request) throws Exception;
 }

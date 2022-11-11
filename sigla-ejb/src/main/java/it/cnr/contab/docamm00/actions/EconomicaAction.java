@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.actions;
 
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotEnabledException;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotRequiredException;
 import it.cnr.contab.coepcoan00.consultazioni.bp.ConsultazionePartitarioBP;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
@@ -27,6 +28,8 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDAction;
@@ -50,6 +53,9 @@ public abstract class EconomicaAction extends CRUDAction {
                 .map(IDocumentoCogeBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Modello di business non compatibile!"));
         try {
+            if (Optional.ofNullable(bp.getModel()).filter(OggettoBulk::isToBeCreated).isPresent())
+                throw new ApplicationException("Il documento risulta non salvato! Proposta scrittura prima nota non possibile.");
+
             documentoCogeBulk.setScrittura_partita_doppia(Utility.createScritturaPartitaDoppiaComponentSession().proposeScritturaPartitaDoppia(
                     actionContext.getUserContext(),
                     documentoCogeBulk)
@@ -58,7 +64,7 @@ public abstract class EconomicaAction extends CRUDAction {
             bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
             bp.setDirty(true);
-        } catch (ScritturaPartitaDoppiaNotRequiredException e) {
+        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
             bp.setMessage(FormBP.INFO_MESSAGE, e.getMessage());
         } catch (ComponentException | RemoteException e) {
             return handleException(actionContext, e);

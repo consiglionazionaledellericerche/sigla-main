@@ -519,7 +519,6 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
             setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
             setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
             setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_tesoreria_unica().booleanValue());
-            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
             final CNRUserInfo cnrUserInfo = Optional.ofNullable(actioncontext)
                     .flatMap(actionContext -> Optional.ofNullable(actionContext.getUserInfo()))
                     .filter(CNRUserInfo.class::isInstance)

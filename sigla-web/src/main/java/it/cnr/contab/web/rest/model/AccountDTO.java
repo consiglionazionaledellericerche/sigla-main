@@ -113,9 +113,7 @@ public class AccountDTO {
         return Optional.ofNullable(this.currentUser)
                 .filter(utente -> !utente.getFl_autenticazione_ldap())
                 .flatMap(utente -> Optional.ofNullable(utente.getDt_ultima_var_password()))
-                .filter(java.sql.Date.class::isInstance)
-                .map(java.sql.Date.class::cast)
-                .map(java.sql.Date::toLocalDate)
+                .map(timestamp -> timestamp.toLocalDateTime().toLocalDate())
                 .map(localDate -> localDate.plusMonths(MONTH_EXPIRED))
                 .map(localDate -> localDate.isAfter(LocalDate.now(ZoneId.systemDefault())))
                 .orElse(Boolean.TRUE);
@@ -131,9 +129,7 @@ public class AccountDTO {
     public boolean isCredentialsNonExpired() {
         return !Optional.ofNullable(currentUser)
                 .flatMap(utente -> Optional.ofNullable(utente.getDt_ultimo_accesso()))
-                .filter(java.sql.Date.class::isInstance)
-                .map(java.sql.Date.class::cast)
-                .map(java.sql.Date::toLocalDate)
+                .map(timestamp -> timestamp.toLocalDateTime().toLocalDate())
                 .map(localDate -> localDate.plusMonths(MONTH_EXPIRED))
                 .map(localDate -> localDate.isBefore(LocalDate.now(ZoneId.systemDefault())))
                 .orElse(Boolean.FALSE);
@@ -142,9 +138,7 @@ public class AccountDTO {
     public boolean isEnabled() {
         return !Optional.ofNullable(currentUser)
                 .flatMap(utente -> Optional.ofNullable(utente.getDt_fine_validita()))
-                .filter(java.sql.Date.class::isInstance)
-                .map(java.sql.Date.class::cast)
-                .map(Date::toLocalDate)
+                .map(timestamp -> timestamp.toLocalDateTime().toLocalDate())
                 .map(localDate -> localDate.isBefore(LocalDate.now(ZoneId.systemDefault())))
                 .orElse(Boolean.FALSE);
     }

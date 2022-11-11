@@ -17,6 +17,7 @@
 
 package it.cnr.contab.coepcoan00.ejb;
 
+import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotEnabledException;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaNotRequiredException;
 import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
@@ -27,5 +28,5 @@ import javax.ejb.Remote;
 
 @Remote
 public interface ScritturaPartitaDoppiaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession {
-    Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoCogeBulk docamm) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, ScritturaPartitaDoppiaNotRequiredException;
+    Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoCogeBulk docamm) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException;
 }

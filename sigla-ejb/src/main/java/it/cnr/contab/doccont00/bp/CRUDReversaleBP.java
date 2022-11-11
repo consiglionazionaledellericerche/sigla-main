@@ -98,6 +98,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	private final CollapsableDetailCRUDController movimentiDare = new EconomicaDareDetailCRUDController(this);
 	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 	private boolean attivaEconomicaParallela = false;
+	private boolean supervisore = false;
 
 	public CRUDReversaleBP() {
 		super();
@@ -761,6 +762,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
 					.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
 			attivaEconomicaParallela = sess.isAttivaEconomicaParallela(actioncontext.getUserContext());
+			setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
 
 			this.attivoSiopeplus = Optional.ofNullable(sess.getVal01(
 					actioncontext.getUserContext(),
@@ -823,4 +825,15 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 		return tabs;
 	}
 
+	public boolean isSupervisore() {
+		return supervisore;
+	}
+
+	public void setSupervisore(boolean supervisore) {
+		this.supervisore = supervisore;
+	}
+
+	public boolean isButtonGeneraScritturaVisible() {
+		return this.isSupervisore();
+	}
 }

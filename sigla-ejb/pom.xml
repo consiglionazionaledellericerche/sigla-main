@@ -22,7 +22,7 @@
     <parent>
         <groupId>it.cnr.si.sigla</groupId>
         <artifactId>sigla-parent</artifactId>
-        <version>6.4.58-SNAPSHOT</version>
+        <version>6.5.1-SNAPSHOT</version>
     </parent>
     <build>
         <pluginManagement>
@@ -345,6 +345,18 @@
             <artifactId>jbossws-spi</artifactId>
             <version>3.1.0.Final</version>
             <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-core</artifactId>
+            <version>9.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-undertow-adapter</artifactId>
+            <version>9.0.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

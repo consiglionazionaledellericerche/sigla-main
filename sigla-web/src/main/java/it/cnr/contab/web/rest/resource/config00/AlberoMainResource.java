@@ -17,11 +17,14 @@
 
 package it.cnr.contab.web.rest.resource.config00;
 
+import it.cnr.contab.service.AccessoService;
 import it.cnr.contab.service.AlberoMainService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.local.config00.AlberoMainLocal;
 import it.cnr.contab.web.rest.resource.util.AbstractResource;
+import it.cnr.jada.UserContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +46,7 @@ public class AlberoMainResource implements AlberoMainLocal {
     public Response evictCacheTree(HttpServletRequest request) throws Exception {
         try {
             CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
+            SpringUtil.getBean(AccessoService.class).evictCacheAccessi(userContext.getUser(), userContext.getEsercizio(), userContext.getCd_unita_organizzativa());
             return Response.status(Response.Status.OK).entity(
                     SpringUtil.getBean(AlberoMainService.class).evictCacheTree(
                             userContext.getUser(), userContext.getEsercizio(), userContext.getCd_unita_organizzativa()

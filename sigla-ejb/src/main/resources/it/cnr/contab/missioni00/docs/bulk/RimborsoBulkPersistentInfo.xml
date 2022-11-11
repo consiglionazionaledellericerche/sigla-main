@@ -16,11 +16,25 @@
   ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
-  <handler-chain>
-    <handler>
-      <handler-name>Must Understand SOAP Message</handler-name>
-      <handler-class>it.cnr.contab.handler.MustUnderstandSOAPMessageHandler</handler-class>
-    </handler>
-  </handler-chain>
-</handler-chains>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoBulk"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoHome" >
+	
+	<defaultColumnMap tableName="RIMBORSO">
+		<columnMapping
+			columnName="CD_CDS_ANTICIPO"
+			propertyName="anticipo.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_ANTICIPO"
+			propertyName="anticipo.esercizio"/>
+		<columnMapping
+			columnName="CD_UO_ANTICIPO"
+			propertyName="anticipo.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_ANTICIPO"
+			propertyName="anticipo.pg_anticipo" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="anticipo" />
+</SQLPersistentInfo>

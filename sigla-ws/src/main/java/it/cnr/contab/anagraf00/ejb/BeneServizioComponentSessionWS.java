@@ -25,9 +25,11 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import javax.jws.WebResult;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+@XmlSeeAlso({java.util.ArrayList.class})
 @WebService( name="BeneServizioComponentWS",targetNamespace="http://contab.cnr.it/sigla")
 @Remote
-
 public interface BeneServizioComponentSessionWS extends  java.rmi.Remote{
 	
 		 @WebMethod  @WebResult(targetNamespace="http://contab.cnr.it/sigla",name="result") java.util.ArrayList<BeneServizio>  cercaBeneServizio(

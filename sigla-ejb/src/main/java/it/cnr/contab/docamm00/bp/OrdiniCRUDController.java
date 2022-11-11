@@ -88,6 +88,11 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
     }
 
     @Override
+    public String getRowCSSClass(Object obj, boolean even) {
+        return null;
+    }
+
+    @Override
     public boolean isRowEnabled(Object obj) {
         return true;
     }
@@ -101,10 +106,6 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
     public String getTableClass() {
         return null;
     }
-    @Override
-    public String getRowCSSClass(Object obj, boolean even) {
-        return null;
-    };
     @Override
     public void writeTfoot(JspWriter jspWriter) throws IOException {
         final EuroFormat euroFormat = new EuroFormat();

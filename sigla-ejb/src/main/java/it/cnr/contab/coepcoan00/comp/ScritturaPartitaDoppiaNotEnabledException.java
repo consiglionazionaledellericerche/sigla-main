@@ -15,8 +15,23 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.web.rest.config;
+package it.cnr.contab.coepcoan00.comp;
 
-public enum AccessoEnum {
-	AMMFATTURDOCSFATATTV, AMMFATTURDOCSFATATTM, XXXHTTPSESSIONXXXXXX
+import it.cnr.jada.bulk.ValidationException;
+
+/**
+ * Eccezione lanciata dalla contabilizzazione delle prime note.
+ * Indica che per il documento non è ancora prevista la contabilizzazione a causa dello stato del documento
+ * Es: Mandato non pagato, Missione provvisoria.....
+ * Nessun settaggio viene messo sul flag stato_coge
+ */
+public class ScritturaPartitaDoppiaNotEnabledException extends ValidationException {
+    public ScritturaPartitaDoppiaNotEnabledException()
+    {
+    }
+
+    public ScritturaPartitaDoppiaNotEnabledException(String s)
+    {
+        super(s);
+    }
 }

@@ -39,6 +39,7 @@
       needExistingSession="false">
     <forward name="default" path="/utenze00/form_login.jsp"/>
   	<forward name="primo_login" path="/utenze00/primo_login.jsp"/>
+    <forward name="unauthorized" path="/utenze00/unauthorized.jsp"/>
   	<forward name="login_ldap" path="/utenze00/form_login_ldap.jsp"/>
   	<forward name="login_multiplo" path="/utenze00/form_login_multiplo.jsp"/>
   	<forward name="password_scaduta" path="/utenze00/cambio_password.jsp"/>

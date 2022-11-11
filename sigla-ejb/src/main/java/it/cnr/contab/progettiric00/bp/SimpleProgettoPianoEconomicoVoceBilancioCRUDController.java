@@ -75,7 +75,9 @@ public class SimpleProgettoPianoEconomicoVoceBilancioCRUDController extends it.c
 	@Override
 	public String getRowCSSClass(Object obj, boolean even) {
 		return null;
-	};
+	}
+
+	;
 
     @Override
 	public boolean isRowEnabled(Object obj) {

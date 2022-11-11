@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.bulk.FieldValidationMap;
@@ -54,6 +55,8 @@ public interface IDocAmmEconomicaBP {
     void setDirty(boolean dirty);
 
     void setMessage(int status, String message);
+
+    boolean isButtonGeneraScritturaVisible();
 
     public static Button[] addPartitario(Button[] buttons, boolean attivaEconomicaParallela, boolean isEditing, OggettoBulk model) {
         if (attivaEconomicaParallela) {

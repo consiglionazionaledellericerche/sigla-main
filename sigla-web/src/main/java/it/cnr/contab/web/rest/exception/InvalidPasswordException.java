@@ -15,10 +15,13 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab;
+package it.cnr.contab.web.rest.exception;
 
-public final class WSAttributes {
-    public static final String IITROLE = "IITRole";
-    public static final String WSUSERROLE = "WSUserRole";
-    public static final String AUTHMETHOD = "WSSE";
+public class InvalidPasswordException extends RuntimeException{
+    private final String password;
+
+    public InvalidPasswordException(String password) {
+        super(String.format("%s is not valid", password));
+        this.password = password;
+    }
 }

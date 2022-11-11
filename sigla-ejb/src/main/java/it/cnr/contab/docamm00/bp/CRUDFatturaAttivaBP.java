@@ -108,6 +108,7 @@ public abstract class CRUDFatturaAttivaBP
     private boolean contoEnte;
     private DocumentiCollegatiDocAmmService docCollService;
     protected boolean attivaEconomicaParallela = false;
+    private boolean supervisore = false;
 
     public CRUDFatturaAttivaBP() {
         this(Fattura_attiva_rigaBulk.class);
@@ -420,6 +421,7 @@ public abstract class CRUDFatturaAttivaBP
             int solaris = Fattura_attivaBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.YEAR);
             int esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue();
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
             setAnnoSolareInScrivania(solaris == esercizioScrivania);
             setRibaltato(initRibaltato(context));
             if (!isAnnoSolareInScrivania()) {
@@ -1455,4 +1457,15 @@ public abstract class CRUDFatturaAttivaBP
         return movimentiAvere;
     }
 
+    public boolean isSupervisore() {
+        return supervisore;
+    }
+
+    public void setSupervisore(boolean supervisore) {
+        this.supervisore = supervisore;
+    }
+
+    public boolean isButtonGeneraScritturaVisible() {
+        return this.isSupervisore();
+    }
 }
