@@ -1555,58 +1555,74 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 	}
 
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppia(UserContext userContext, IDocumentoCogeBulk doccoge) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
-		try {
-			if (doccoge.getTipoDocumentoEnum().isGenericoStipendiSpesa())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di pagamento stipendi. " +
-						"La scrittura principale viene eseguita sul compenso associato.");
-			else if (doccoge.getTipoDocumentoEnum().isGenericoCoriVersamentoSpesa())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di versamento contributi/ritenute. " +
-						"La scrittura principale viene eseguita sul compenso associato.");
-			else if (doccoge.getTipoDocumentoEnum().isChiusuraFondo())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di chiusura fondo economale. " +
-						"La scrittura principale viene eseguita sulla reversale associata.");
-			else if (!doccoge.getTipoDocumentoEnum().isScritturaEconomicaRequired())
-				throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per la tipologia di documento selezionato.");
-			else if (doccoge.getTipoDocumentoEnum().isAnticipo())
-				return this.proposeScritturaPartitaDoppiaAnticipo(userContext, (AnticipoBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isRimborso())
-				return this.proposeScritturaPartitaDoppiaRimborso(userContext, (RimborsoBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isMissione())
-				return this.proposeScritturaPartitaDoppiaMissione(userContext, (MissioneBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isCompenso()) {
-				if (((CompensoBulk) doccoge).getFl_compenso_stipendi())
-					return this.proposeScritturaPartitaDoppiaCompensoStipendi(userContext, (CompensoBulk) doccoge);
-				else
-					return this.proposeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk) doccoge);
-			} else if (doccoge.getTipoDocumentoEnum().isAperturaFondo())
-				return this.proposeScritturaPartitaDoppiaAperturaFondo(userContext, (Documento_genericoBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isDocumentoPassivo() || doccoge.getTipoDocumentoEnum().isDocumentoAttivo())
-				return this.proposeScritturaPartitaDoppiaDocumento(userContext, (IDocumentoAmministrativoBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isLiquidazioneIva())
-				return this.proposeScritturaPartitaDoppiaLiquidazioneUo(userContext, (Liquidazione_ivaBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isMandato())
-				return this.proposeScritturaPartitaDoppiaMandato(userContext, (MandatoBulk) doccoge);
-			else if (doccoge.getTipoDocumentoEnum().isReversale())
-				return this.proposeScritturaPartitaDoppiaReversale(userContext, (ReversaleBulk) doccoge);
-			throw new ApplicationException("Scrittura Economica non gestita per la tipologia di documento "+doccoge.getCd_tipo_doc()+" selezionato.");
+		try{
+			try {
+				setSavepoint(userContext, "proposeScritturaPartitaDoppia");
+				if (doccoge.getTipoDocumentoEnum().isGenericoStipendiSpesa())
+					throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di pagamento stipendi. " +
+							"La scrittura principale viene eseguita sul compenso associato.");
+				else if (doccoge.getTipoDocumentoEnum().isGenericoCoriVersamentoSpesa())
+					throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di versamento contributi/ritenute. " +
+							"La scrittura principale viene eseguita sul compenso associato.");
+				else if (doccoge.getTipoDocumentoEnum().isChiusuraFondo())
+					throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per il documento generico di chiusura fondo economale. " +
+							"La scrittura principale viene eseguita sulla reversale associata.");
+				else if (!doccoge.getTipoDocumentoEnum().isScritturaEconomicaRequired())
+					throw new ScritturaPartitaDoppiaNotRequiredException("Scrittura Economica non prevista per la tipologia di documento selezionato.");
+				else if (doccoge.getTipoDocumentoEnum().isAnticipo())
+					return this.proposeScritturaPartitaDoppiaAnticipo(userContext, (AnticipoBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isRimborso())
+					return this.proposeScritturaPartitaDoppiaRimborso(userContext, (RimborsoBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isMissione())
+					return this.proposeScritturaPartitaDoppiaMissione(userContext, (MissioneBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isCompenso()) {
+					if (((CompensoBulk) doccoge).getFl_compenso_stipendi())
+						return this.proposeScritturaPartitaDoppiaCompensoStipendi(userContext, (CompensoBulk) doccoge);
+					else
+						return this.proposeScritturaPartitaDoppiaCompenso(userContext, (CompensoBulk) doccoge);
+				} else if (doccoge.getTipoDocumentoEnum().isAperturaFondo())
+					return this.proposeScritturaPartitaDoppiaAperturaFondo(userContext, (Documento_genericoBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isDocumentoPassivo() || doccoge.getTipoDocumentoEnum().isDocumentoAttivo())
+					return this.proposeScritturaPartitaDoppiaDocumento(userContext, (IDocumentoAmministrativoBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isLiquidazioneIva())
+					return this.proposeScritturaPartitaDoppiaLiquidazioneUo(userContext, (Liquidazione_ivaBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isMandato())
+					return this.proposeScritturaPartitaDoppiaMandato(userContext, (MandatoBulk) doccoge);
+				else if (doccoge.getTipoDocumentoEnum().isReversale())
+					return this.proposeScritturaPartitaDoppiaReversale(userContext, (ReversaleBulk) doccoge);
+				throw new ApplicationException("Scrittura Economica non gestita per la tipologia di documento "+doccoge.getCd_tipo_doc()+" selezionato.");
+			} catch (ScritturaPartitaDoppiaNotEnabledException|ScritturaPartitaDoppiaNotRequiredException e) {
+				rollbackToSavepoint(userContext, "proposeScritturaPartitaDoppia");
+				throw e;
+			}
 		} catch (ApplicationException|ApplicationRuntimeException e) {
 			throw new NoRollbackException(e);
+		} catch (SQLException e) {
+			throw handleException(e);
 		}
 	}
 
 	public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAnnullo(UserContext userContext, IDocumentoCogeBulk doccoge) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException {
-		try {
-			if (doccoge.getTipoDocumentoEnum().isAnticipo()) {
-				if (!((AnticipoBulk)doccoge).isAnnullato())
-					throw new ScritturaPartitaDoppiaNotEnabledException("L'anticipo non risulta in stato annullato. Annullamento scrittura partita doppia non possibile!");
-				Optional<Scrittura_partita_doppiaBulk> scritturaOpt = this.getScritturaPartitaDoppia(userContext, doccoge);
-				if (!scritturaOpt.isPresent())
-					throw new ScritturaPartitaDoppiaNotEnabledException("L'anticipo non risulta ancora collegato ad una scrittura partita doppia. Annullamento scrittura partita doppia non possibile!");
-				return this.proposeStornoScritturaPartitaDoppia(userContext, scritturaOpt.get(), ((AnticipoBulk) doccoge).getDt_cancellazione());
+		try{
+			try {
+				setSavepoint(userContext, "proposeScritturaPartitaDoppiaAnnullo");
+				if (doccoge.getTipoDocumentoEnum().isAnticipo()) {
+					if (!((AnticipoBulk)doccoge).isAnnullato())
+						throw new ScritturaPartitaDoppiaNotEnabledException("L'anticipo non risulta in stato annullato. Annullamento scrittura partita doppia non possibile!");
+					Optional<Scrittura_partita_doppiaBulk> scritturaOpt = this.getScritturaPartitaDoppia(userContext, doccoge);
+					if (!scritturaOpt.isPresent())
+						throw new ScritturaPartitaDoppiaNotEnabledException("L'anticipo non risulta ancora collegato ad una scrittura partita doppia. Annullamento scrittura partita doppia non possibile!");
+					return this.proposeStornoScritturaPartitaDoppia(userContext, scritturaOpt.get(), ((AnticipoBulk) doccoge).getDt_cancellazione());
+				}
+				throw new ApplicationException("Annullamento Scrittura Economica non gestita per la tipologia di documento "+doccoge.getCd_tipo_doc()+" selezionato.");
+			} catch (ScritturaPartitaDoppiaNotEnabledException e) {
+				rollbackToSavepoint(userContext, "proposeScritturaPartitaDoppiaAnnullo");
+				throw e;
 			}
-			throw new ApplicationException("Annullamento Scrittura Economica non gestita per la tipologia di documento "+doccoge.getCd_tipo_doc()+" selezionato.");
 		} catch (ApplicationException|ApplicationRuntimeException|PersistencyException e) {
 			throw new NoRollbackException(e);
+		} catch (SQLException e) {
+			throw handleException(e);
 		}
 	}
 
@@ -2244,8 +2260,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			else
 				pairContoCostoMissione = pairContoCostoAnticipo;
 
-			Voce_epBulk contoCostoMissione = pairContoCostoMissione.get().getFirst();
-			Voce_epBulk contoPatrimonialeMissione = pairContoCostoMissione.get().getSecond();
+			Voce_epBulk contoCostoMissione = pairContoCostoMissione.map(Pair::getFirst).orElse(null);
+			Voce_epBulk contoPatrimonialeMissione = pairContoCostoMissione.map(Pair::getSecond).orElse(null);
 
 			if (imCostoMissioneNettoAnticipo.compareTo(BigDecimal.ZERO)>0) {
 				if (!pairContoCostoMissione.isPresent())

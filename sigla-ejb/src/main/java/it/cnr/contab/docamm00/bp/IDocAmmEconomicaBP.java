@@ -17,21 +17,15 @@
 
 package it.cnr.contab.docamm00.bp;
 
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.bulk.FieldValidationMap;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.FormController;
-import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface IDocAmmEconomicaBP {
@@ -58,12 +52,12 @@ public interface IDocAmmEconomicaBP {
 
     boolean isButtonGeneraScritturaVisible();
 
-    public static Button[] addPartitario(Button[] buttons, boolean attivaEconomicaParallela, boolean isEditing, OggettoBulk model) {
+    static Button[] addPartitario(Button[] buttons, boolean attivaEconomicaParallela, boolean isEditing, OggettoBulk model) {
         if (attivaEconomicaParallela) {
-            return Stream.concat(Arrays.asList(buttons).stream(),
-                    Arrays.asList(
+            return Stream.concat(Arrays.stream(buttons),
+                    Stream.of(
                             new Button(Config.getHandler().getProperties(IDocAmmEconomicaBP.class), "CRUDToolbar.partitario")
-                    ).stream()).toArray(Button[]::new);
+                    )).toArray(Button[]::new);
         }
         return buttons;
     }

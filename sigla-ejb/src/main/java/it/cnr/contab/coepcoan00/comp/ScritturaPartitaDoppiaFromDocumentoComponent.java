@@ -42,6 +42,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             .ifPresent(el->{
                 try {
                     this.createScrittura(usercontext, el);
+                } catch (NoRollbackException ignored) {
                 } catch (ComponentException e) {
                     throw new DetailedRuntimeException(e);
                 }
@@ -107,6 +109,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             .ifPresent(el->{
                 try {
                     this.createScrittura(usercontext, el);
+                } catch (NoRollbackException ignored) {
                 } catch (ComponentException e) {
                     throw new DetailedRuntimeException(e);
                 }
@@ -145,8 +148,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                         } else {
                             Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk;
                             try {
-                                optionalScritturaPartitaDoppiaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                        .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                                optionalScritturaPartitaDoppiaBulk = this.proposeScritturaPartitaDoppiaWithSavepoint(usercontext, optionalIDocumentoCogeBulk.get());
                             } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
                                 optionalScritturaPartitaDoppiaBulk = Optional.empty();
                             }
@@ -159,9 +161,13 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                 }
             }
             return null;
-        } catch (RemoteException | PersistencyException e) {
+        } catch (RemoteException | PersistencyException | SQLException e) {
             throw handleException(e);
         }
+    }
+
+    public Scrittura_partita_doppiaBulk createScritturaRequiresNew(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+        return createScrittura(usercontext, documentoCoge);
     }
 
     protected Scrittura_partita_doppiaBulk createScritturaAnnullo(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -395,22 +401,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
         return allDocuments;
     }
-    public void loadScritturePatrimoniali(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
-        documentiCoge.forEach(documentoCoge->{
-            try {
-                this.loadScritturaPatrimoniale(userContext, documentoCoge);
-                logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
-            } catch (NoRollbackException e) {
-                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
-                        " - Anomalia: " + e.getMessage());
-            } catch (Exception e) {
-                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
-                        " - Anomalia: " + e.getMessage());
-                throw new DetailedRuntimeException(e);
-            }
-        });
-    }
-    public Scrittura_partita_doppiaBulk loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+    private Scrittura_partita_doppiaBulk loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             documentoCoge.setStato_coge(Fattura_passivaBulk.NON_REGISTRATO_IN_COGE);
 
@@ -418,8 +409,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
 
             Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
             try {
-                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                        .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+                optionalScritturaPartitaDoppiaPropostaBulk1 = this.proposeScritturaPartitaDoppiaWithSavepoint(userContext, documentoCoge);
             } catch (ScritturaPartitaDoppiaNotEnabledException e) {
                 optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
             } catch (ScritturaPartitaDoppiaNotRequiredException e) {
@@ -446,7 +436,20 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             ((OggettoBulk)documentoCoge).setToBeUpdated();
             updateBulk(userContext, (OggettoBulk)documentoCoge);
             return optionalScritturaPartitaDoppiaPropostaBulk.orElse(null);
-        } catch (RemoteException|PersistencyException e) {
+        } catch (PersistencyException|SQLException e) {
+            throw handleException(e);
+        }
+    }
+
+    private Optional<Scrittura_partita_doppiaBulk> proposeScritturaPartitaDoppiaWithSavepoint(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException, SQLException{
+        try {
+            setSavepoint(userContext, "INIT_SCRITTURA_PRIMA_NOTA");
+            return Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                        .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
+            rollbackToSavepoint(userContext, "INIT_SCRITTURA_PRIMA_NOTA");
+            throw e;
+        } catch (RemoteException e) {
             throw handleException(e);
         }
     }

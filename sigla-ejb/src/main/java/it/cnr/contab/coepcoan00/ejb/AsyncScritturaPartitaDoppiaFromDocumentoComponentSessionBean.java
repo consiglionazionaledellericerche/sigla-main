@@ -120,7 +120,7 @@ public class AsyncScritturaPartitaDoppiaFromDocumentoComponentSessionBean extend
 									documentoCoge.getPg_doc());
 							listRigheAll.add("X");
 							logger.info("Documento in elaborazione: "+documentoCoge.getEsercizio()+"/"+documentoCoge.getCd_uo()+"/"+documentoCoge.getCd_tipo_doc()+"/"+documentoCoge.getPg_doc());
-							session.loadScritturaPatrimoniale(param0, documentoCoge);
+							session.createScritturaRequiresNew(param0, documentoCoge);
 							listInsert.add("X");
 							listInsertAll.add("X");
 						} catch (Throwable e) {

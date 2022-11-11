@@ -61,7 +61,25 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 			throw uncaughtError(param0, componentObj, e);
 		}
 	}
-
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public Scrittura_partita_doppiaBulk createScritturaRequiresNew(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			Scrittura_partita_doppiaBulk result = ((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).createScrittura(param0, param1);
+			component_invocation_succes(param0, componentObj);
+			return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
 	public void removeScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException {
 		pre_component_invocation(param0, componentObj);
 		try {
@@ -89,22 +107,6 @@ public class ScritturaPartitaDoppiaFromDocumentoComponentSessionBean extends it.
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0, componentObj);
 			throw e;
-		} catch (ComponentException e) {
-			component_invocation_failure(param0, componentObj);
-			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(param0, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(param0, componentObj, e);
-		}
-	}
-
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void loadScritturaPatrimoniale(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException{
-		pre_component_invocation(param0, componentObj);
-		try {
-			((ScritturaPartitaDoppiaFromDocumentoComponent) componentObj).loadScritturaPatrimoniale(param0, param1);
-			component_invocation_succes(param0, componentObj);
 		} catch (ComponentException e) {
 			component_invocation_failure(param0, componentObj);
 			throw e;
