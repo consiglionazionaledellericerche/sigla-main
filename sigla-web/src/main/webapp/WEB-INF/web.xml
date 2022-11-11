@@ -220,6 +220,8 @@
 			<url-pattern>/ConsNazioneAction.do</url-pattern>
 			<url-pattern>/RicercaFatturaPassivaAction.do</url-pattern>
 			<url-pattern>/cancellaSchedulazioneExcel.do</url-pattern>
+			<!-- TODO da eliminare una volta attivato SSO -->
+			<url-pattern>/Login.do</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>
