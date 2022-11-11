@@ -35,6 +35,7 @@ import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.dto.SiopeBilancioDTO;
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoPGiroComponentSession;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
@@ -3915,4 +3916,36 @@ REVERSALE
             throw handleException(e);
         }
     }
+
+    private Configurazione_cnrBulk getConfigurazioneInviaBilancio(UserContext userContext) throws RemoteException, ComponentException {
+        return ((Configurazione_cnrComponentSession) EJBCommonServices
+                .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getConfigurazione(
+                userContext,
+                CNRUserContext.getEsercizio(userContext),
+                null,
+                Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                Configurazione_cnrBulk.SK_INVIA_TAG_BILACIO);
+    }
+    /*
+    @Override
+    protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+        super.validaCreaModificaConBulk(usercontext, oggettobulk);
+        Configurazione_cnrBulk inviaTagBilanio= null;
+        try {
+            inviaTagBilanio= getConfigurazioneInviaBilancio( usercontext);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        if ( Optional.ofNullable(inviaTagBilanio).map(s->Boolean.valueOf(s.getVal01())).orElse(Boolean.FALSE)) {
+            Integer numMaxVociBilancio =Optional.ofNullable(inviaTagBilanio.getVal02()).map(s->Integer.valueOf(s)).orElse(1);
+
+            ReversaleBulk reversale = (ReversaleBulk) oggettobulk;
+            ReversaleHome reversaleHome = (ReversaleHome) getHome(usercontext,reversale.getClass());
+            List<SiopeBilancioDTO> siope= reversaleHome.getSiopeBilancio(usercontext,reversale);
+            if ( siope!=null && siope.size()>numMaxVociBilancio)
+                throw new ApplicationException("Validazione voci bilancio");
+        }
+        throw new ApplicationException("Validazione voci bilancio");
+    }
+     */
 }

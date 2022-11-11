@@ -19,13 +19,13 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.doccont00.dto.EnumSiopeBilancioGestione;
+import it.cnr.contab.doccont00.dto.SiopeBilancioDTO;
+import it.cnr.contab.doccont00.dto.SiopeBilancioKeyDto;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BusyResourceException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -37,6 +37,7 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import javax.ejb.EJBException;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -333,5 +334,36 @@ public abstract class MandatoHome extends BulkHome {
 
     public MandatoBulk findAndLockMandatoNonAnnullato(UserContext userContext, String cdCds, Integer esercizio, Long pgMandato) throws PersistencyException, OutdatedResourceException, BusyResourceException {
         return findAndLockMandato(cdCds, esercizio, pgMandato, false);
+    }
+
+    public List getSiopeBilancio(UserContext userContext, MandatoBulk mandato ){
+        List<SiopeBilancioDTO> bilancio = new ArrayList<SiopeBilancioDTO>();
+
+            Optional.ofNullable(mandato).ifPresent(s -> {
+                    s.getMandato_rigaColl().stream().forEach(m -> {
+                        EnumSiopeBilancioGestione gestione = EnumSiopeBilancioGestione.COMPETENZA;
+                        Integer annoResiduo = null;
+                        if ( m.getEsercizio_obbligazione().compareTo(m.getEsercizio_ori_obbligazione())!=0) {
+                            gestione = EnumSiopeBilancioGestione.RESIDUO;
+                            annoResiduo=m.getEsercizio_ori_obbligazione();
+                        }
+                        final SiopeBilancioKeyDto keyBilancio = new SiopeBilancioKeyDto(m.elemento_voce.getCd_voce(),
+                                gestione,
+                                annoResiduo) ;
+                        Optional<SiopeBilancioDTO> el=bilancio.stream().
+                                filter(b->b.equals(keyBilancio)).
+                                findFirst();
+                        if ( el.isPresent()){
+                            SiopeBilancioDTO voceBilancio = el.get();
+                            voceBilancio.setImporto(voceBilancio.getImporto().add( m.getIm_mandato_riga()));
+                        }else{
+                            SiopeBilancioDTO voceBilancio = new SiopeBilancioDTO(keyBilancio);
+                                voceBilancio.setDescrzioneVoceBilancio( m.elemento_voce.getDs_elemento_voce());
+                                voceBilancio.setImporto(m.getIm_mandato_riga());
+                                bilancio.add(voceBilancio);
+                        }
+                    });
+                });
+        return bilancio;
     }
 }

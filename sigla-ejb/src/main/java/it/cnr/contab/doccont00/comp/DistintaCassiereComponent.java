@@ -39,6 +39,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.dto.SiopeBilancioDTO;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.ejb.SospesoRiscontroComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
@@ -4539,6 +4540,19 @@ public class DistintaCassiereComponent extends
         }
     }
 
+    private List<Bilancio> createBilancio(UserContext userContext, List<SiopeBilancioDTO> siopeBilancio){
+        if ( Optional.ofNullable(siopeBilancio).isPresent()) {
+            final ObjectFactory objectFactory = new ObjectFactory();
+            List<Bilancio> bilancio= new ArrayList<Bilancio>();
+            siopeBilancio.forEach(m -> {
+                Bilancio b = objectFactory.createBilancio();
+                bilancio.add(b);
+            });
+            return bilancio;
+        }
+        return Collections.EMPTY_LIST;
+
+    }
     public StorageObject generaFlussoSiopeplus(UserContext userContext, Distinta_cassiereBulk distinta) throws ComponentException,
             RemoteException {
         try {
@@ -4736,7 +4750,7 @@ public class DistintaCassiereComponent extends
             Reversale reversale = objectFactory.createReversale();
             List list = findDocumentiFlusso(userContext, bulk);
             reversale.setTipoOperazione(getTipoOperazione(userContext, bulk));
-
+            //reversale.getBilancio().addAll()
             GregorianCalendar gcdi = new GregorianCalendar();
             VDocumentiFlussoBulk docContabile = null;
             for (Iterator i = list.iterator(); i.hasNext(); ) {
@@ -4988,6 +5002,7 @@ public class DistintaCassiereComponent extends
             Mandato mandato = objectFactory.createMandato();
             List list = findDocumentiFlusso(userContext, bulk);
             mandato.setTipoOperazione(getTipoOperazione(userContext, bulk));
+            //mandato.getBilancio().addAll();
             GregorianCalendar gcdi = new GregorianCalendar();
 
             Mandato.InformazioniBeneficiario infoben = objectFactory.createMandatoInformazioniBeneficiario();
