@@ -68,6 +68,7 @@ public class AccountResource implements AccountLocal {
 
         AccountDTO accountDTO = null;
         if (siglaldapPrincipal.isPresent()) {
+            LOGGER.info("Try to find user: {}", securityContext.getUserPrincipal().getName());
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
                     userContext,
                     UtenteBulk.class,
@@ -75,14 +76,17 @@ public class AccountResource implements AccountLocal {
                     userContext,
                     securityContext.getUserPrincipal().getName()
             );
-            accountDTO = new AccountDTO(findUtenteByUID.stream().findFirst().get());
-            accountDTO.setLogin(siglaldapPrincipal.get().getName());
-            accountDTO.setUsers(findUtenteByUID.stream().map(utenteBulk -> new AccountDTO(utenteBulk)).collect(Collectors.toList()));
-            accountDTO.setEmail((String) siglaldapPrincipal.get().getAttribute("mail"));
-            accountDTO.setFirstName((String) siglaldapPrincipal.get().getAttribute("cnrnome"));
-            accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
-            accountDTO.setLdap(Boolean.TRUE);
-            accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+            final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
+            if (utenteBulk1.isPresent()) {
+                accountDTO = new AccountDTO(utenteBulk1.get());
+                accountDTO.setLogin(siglaldapPrincipal.get().getName());
+                accountDTO.setUsers(findUtenteByUID.stream().map(utenteBulk -> new AccountDTO(utenteBulk)).collect(Collectors.toList()));
+                accountDTO.setEmail((String) siglaldapPrincipal.get().getAttribute("mail"));
+                accountDTO.setFirstName((String) siglaldapPrincipal.get().getAttribute("cnrnome"));
+                accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
+                accountDTO.setLdap(Boolean.TRUE);
+                accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+            }
         } else if (keycloakPrincipal.isPresent()) {
             final IDToken idToken = Optional.ofNullable(keycloakPrincipal.get().getKeycloakSecurityContext().getIdToken())
                     .orElse(keycloakPrincipal.get().getKeycloakSecurityContext().getToken());
