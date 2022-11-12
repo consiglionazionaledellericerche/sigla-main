@@ -64,6 +64,8 @@ public class GestioneLoginComponent
     public static final int VALIDA_NUOVO_UTENTE_LDAP_ANNULLA = 2;
     public static final int VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO = 3;
 
+    public static final int VALIDA_FASE_SSO = 5;
+
     public GestioneLoginComponent() {
     }
 
@@ -727,7 +729,7 @@ public class GestioneLoginComponent
                 if (faseValidazione == VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO)
                     sqlUtente.addSQLClause("AND", "cd_utente", SQLBuilder.EQUALS, utente.getUtente_multiplo());
 
-                List result = getHome(userContext, UtenteBulk.class).fetchAll(sqlUtente);
+                List<UtenteBulk> result = getHome(userContext, UtenteBulk.class).fetchAll(sqlUtente);
 
                 // contiamo prima quanti sono gli utenti validi
                 int numValidi = 0;
@@ -740,12 +742,18 @@ public class GestioneLoginComponent
                         numValidi++;
                     }
                 }
-                if (numValidi > 1 && faseValidazione != VALIDA_NUOVO_UTENTE_LDAP) {
+                if (numValidi > 1 && faseValidazione != VALIDA_NUOVO_UTENTE_LDAP && faseValidazione != VALIDA_FASE_SSO) {
                     throw new UtenteMultiploException();
                 }
 
                 if (!result.isEmpty() && faseValidazione != VALIDA_NUOVO_UTENTE_LDAP) {
                     // se ne esiste uno valido lo impostiamo a quello altrimenti al primo disponibile
+                    if (faseValidazione == VALIDA_FASE_SSO) {
+                        return result
+                                .stream()
+                                .findFirst()
+                                .get();
+                    }
                     if (uteValido != null)
                         utenteReale = uteValido;
                     else
@@ -777,9 +785,11 @@ public class GestioneLoginComponent
                                 }
                                 throw new UtenteLdapNuovoException();
                             }
+                            if (faseValidazione == VALIDA_FASE_SSO)
+                                return utenteReale;
                         } else {
                             // verifichiamo se è un utente nuovo creato in sigla (dt_ultima_var_password nulla)
-                            if (utenteReale.getDt_ultima_var_password() == null)
+                            if (utenteReale.getDt_ultima_var_password() == null || faseValidazione == VALIDA_FASE_SSO)
                                 return utenteReale;
                         }
                     }
