@@ -17,7 +17,6 @@
 
 package it.cnr.contab.web.rest.config;
 
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.RESTUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.exception.RestException;

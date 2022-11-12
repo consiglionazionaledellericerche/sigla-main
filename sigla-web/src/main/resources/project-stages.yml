@@ -544,6 +544,10 @@ thorntail:
           - url-pattern: /restapi/login
           - url-pattern: /restapi/swagger.json
           - url-pattern: /restapi/*
+            methods:
+              - POST
+              - GET
+              - HEAD
             roles:
               - "default-roles-cnr"
               - "default-roles-cnr.it"
