@@ -250,6 +250,10 @@
                 columnName="CD_TIPO_DOCUMENTO"
                 propertyName="documentoCoge.tipo_documento.cd_tipo_documento_amm"
                 fetchOnly="true"/>
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO"
+                propertyName="documentoCoge.cd_tipo_doc"
+                fetchOnly="true"/>
     </columnMap>
 
     <persistentProperty

@@ -31,7 +31,7 @@ import java.util.List;
 @Remote
 public interface ScritturaPartitaDoppiaFromDocumentoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
     Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException, RemoteException;
+    Scrittura_partita_doppiaBulk createScritturaRequiresNew(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException, RemoteException;
     void removeScrittura(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws ComponentException, PersistencyException, java.rmi.RemoteException;
     List<IDocumentoCogeBulk> getAllDocumentiCogeDaContabilizzare(UserContext param0, Integer param1, String param2) throws it.cnr.jada.comp.ComponentException, PersistencyException, java.rmi.RemoteException;
-    void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 }
