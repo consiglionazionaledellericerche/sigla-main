@@ -1,3 +1,11 @@
+## Release 6.5.4  -- _November 14, 2022_ 
+**Changes**
+
+>**FIX table display increased the height from 150px to 40vh**
+>
+>[22878771b965c83](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22878771b965c83) marco.spasiano *November 14, 2022*
+
+
 ## Release 6.5.3  -- _November 14, 2022_ 
 **Changes**
 
