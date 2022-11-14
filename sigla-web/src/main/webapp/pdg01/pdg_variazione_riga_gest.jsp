@@ -63,7 +63,7 @@
 			true,
 			!isDettaglioGestionaleEnable,
 			"100%",
-			"150px",
+			"40vh",
 			true);
 	else
 	  	bp.getRigheVariazioneGestionale().writeHTMLTable(
@@ -73,7 +73,7 @@
 			true,
 			!isDettaglioGestionaleEnable,
 			"100%",
-			"150px",
+			"40vh",
 			true); 
 	%>
 </div>
