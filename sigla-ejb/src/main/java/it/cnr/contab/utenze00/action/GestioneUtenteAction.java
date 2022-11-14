@@ -340,6 +340,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			Optional.ofNullable(principalOptional.get().getKeycloakSecurityContext())
 					.filter(RefreshableKeycloakSecurityContext.class::isInstance)
 					.map(RefreshableKeycloakSecurityContext.class::cast)
+                    .filter(refreshableKeycloakSecurityContext -> Optional.ofNullable(refreshableKeycloakSecurityContext.getRefreshToken()).isPresent())
 					.ifPresent(rKSC -> {
 						rKSC.logout(rKSC.getDeployment());
 					});

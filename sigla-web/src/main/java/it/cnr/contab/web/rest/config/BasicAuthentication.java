@@ -49,7 +49,6 @@ public class BasicAuthentication {
 		UtenteBulk utente = new UtenteBulk();
 		try {
 			utente.setCd_utente(username);
-			utente.setCd_utente_uid(username);
 			utente = loginComponentSession().validaUtente(
 					AdminUserContext.getInstance(),
 					utente,

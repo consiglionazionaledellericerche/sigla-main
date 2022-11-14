@@ -143,11 +143,6 @@ public class AccountResource implements AccountLocal {
     }
 
     @Override
-    public Response optionsGet(HttpServletRequest request) throws Exception {
-        return Response.ok().build();
-    }
-
-    @Override
     public Response getUsername(HttpServletRequest request, String username) throws Exception {
         if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent()) {
             final AccountDTO accountDTO = getAccountDTO(request);
@@ -184,11 +179,6 @@ public class AccountResource implements AccountLocal {
         utente.setDt_ultima_var_password(EJBCommonServices.getServerTimestamp());
         utente.setToBeUpdated();
         crudComponentSession.modificaConBulk(userContext, utente);
-        return Response.ok().build();
-    }
-
-    @Override
-    public Response changePassword(HttpServletRequest request) throws Exception {
         return Response.ok().build();
     }
 }

@@ -55,9 +55,4 @@ public class Login {
             return Response.serverError().build();
         }
     }
-
-    @OPTIONS
-    public Response options() {
-        return Response.ok().build();
-    }
 }
