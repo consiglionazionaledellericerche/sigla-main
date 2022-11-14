@@ -54,7 +54,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
-
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
@@ -63,6 +62,10 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class RESTSecurityInterceptor implements ContainerRequestFilter, ContainerResponseFilter , ExceptionMapper<Exception> {
 
+	public static final String ACCOUNT = "/account";
+	public static final String TREE = "/tree";
+	public static final String CONTEXT = "/context";
+	public static final String OPTIONS_METHOD_EXCEPTION = "org.jboss.resteasy.spi.DefaultOptionsMethodException";
 	private Logger LOGGER = LoggerFactory.getLogger(RESTSecurityInterceptor.class);
 
 	@Context
@@ -121,28 +124,36 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 			}
 			try {
 				final Optional<Principal> principalOptional = Optional.ofNullable(requestContext.getSecurityContext().getUserPrincipal());
+				final Optional<IDToken> idToken = principalOptional
+						.filter(KeycloakPrincipal.class::isInstance)
+						.map(KeycloakPrincipal.class::cast)
+						.map(KeycloakPrincipal::getKeycloakSecurityContext)
+						.map(keycloakSecurityContext -> {
+							return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+									.orElse(keycloakSecurityContext.getToken());
+						});
 				if (principalOptional.isPresent()) {
-					final Optional<IDToken> idToken = principalOptional
-							.filter(KeycloakPrincipal.class::isInstance)
-							.map(KeycloakPrincipal.class::cast)
-							.map(KeycloakPrincipal::getKeycloakSecurityContext)
-							.map(keycloakSecurityContext -> {
-								return Optional.ofNullable(keycloakSecurityContext.getIdToken())
-										.orElse(keycloakSecurityContext.getToken());
-							});
 					utenteBulk = BasicAuthentication.findUtenteBulk(idToken.get().getPreferredUsername());
 				} else {
 					utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
 				}
-				if (utenteBulk == null){
-					requestContext.abortWith(
+				if (utenteBulk == null && !requestContext.getUriInfo().getPath().startsWith(ACCOUNT)){
+					if (idToken.isPresent())
+						requestContext.abortWith(
+								Response.status(Response.Status.UNAUTHORIZED)
+										.build());
+					else
+						requestContext.abortWith(
 							Response.status(Response.Status.UNAUTHORIZED)
 									.header(HttpHeaders.WWW_AUTHENTICATE,
 											AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"")
 									.build());
 					return;
 				}
-		    	requestContext.setSecurityContext(new SIGLASecurityContext(requestContext, utenteBulk.getCd_utente()));
+				if (!requestContext.getUriInfo().getPath().startsWith(ACCOUNT) &&
+						!requestContext.getUriInfo().getPath().startsWith(TREE) &&
+						!requestContext.getUriInfo().getPath().startsWith(CONTEXT))
+					requestContext.setSecurityContext(new SIGLASecurityContext(requestContext, utenteBulk.getCd_utente()));
 			} catch (UnauthorizedException e) {
 				LOGGER.error("ERROR for REST SERVICE", e);
 				requestContext.abortWith(Response.status(Status.UNAUTHORIZED).build());
@@ -205,6 +216,8 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 
 	@Override
 	public Response toResponse(Exception exception) {
+		if (exception.getClass().getName().equalsIgnoreCase(OPTIONS_METHOD_EXCEPTION))
+			return Response.ok().build();
 		if (exception.getCause() instanceof RestException)
 			return Response.status(((RestException)exception.getCause()).getStatus()).entity(((RestException)exception.getCause()).getErrorMap()).build();			
 		LOGGER.error("ERROR for REST SERVICE", exception);
@@ -226,6 +239,5 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
 					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
 				});
-
 	}
 }
