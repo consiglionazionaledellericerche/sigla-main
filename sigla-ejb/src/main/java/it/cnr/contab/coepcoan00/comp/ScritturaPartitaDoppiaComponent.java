@@ -74,6 +74,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -236,9 +237,108 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 			dettPN.setPartita(partita);
 		}
 
+
+		private long getGiorniCompetenzaAnniPrecedenti(int esercizio) {
+			GregorianCalendar calDataDa = new GregorianCalendar();
+			calDataDa.setTimeInMillis(this.getDtDa().getTime());
+
+			GregorianCalendar calDataA = new GregorianCalendar();
+			calDataA.setTimeInMillis(this.getDtA().getTime());
+
+			if (calDataDa.get(Calendar.YEAR)<esercizio) {
+				if (calDataA.get(Calendar.YEAR)>=esercizio)
+					calDataA = new GregorianCalendar(esercizio - 1, Calendar.DECEMBER, 31);
+				return calendarDaysBetween(calDataDa, calDataA);
+			}
+			return 0;
+		}
+
+		private long getGiorniCompetenzaAnnoCorrente(int esercizio) {
+			GregorianCalendar calDataDa = new GregorianCalendar();
+			calDataDa.setTimeInMillis(this.getDtDa().getTime());
+
+			GregorianCalendar calDataA = new GregorianCalendar();
+			calDataA.setTimeInMillis(this.getDtA().getTime());
+
+			if (calDataDa.get(Calendar.YEAR)<=esercizio && calDataA.get(Calendar.YEAR)>=esercizio) {
+				calDataDa = new GregorianCalendar(esercizio, Calendar.JANUARY, 1);
+				if (calDataA.get(Calendar.YEAR)>esercizio)
+					calDataA = new GregorianCalendar(esercizio, Calendar.DECEMBER, 31);
+				return calendarDaysBetween(calDataDa, calDataA);
+			}
+			return 0;
+		}
+
+		private long getGiorniCompetenzaAnniSuccessivi(int esercizio) {
+			GregorianCalendar calDataDa = new GregorianCalendar();
+			calDataDa.setTimeInMillis(this.getDtDa().getTime());
+
+			GregorianCalendar calDataA = new GregorianCalendar();
+			calDataA.setTimeInMillis(this.getDtA().getTime());
+
+			if (calDataA.get(Calendar.YEAR)>esercizio) {
+				if (calDataDa.get(Calendar.YEAR)<=esercizio)
+					calDataDa = new GregorianCalendar(esercizio + 1, Calendar.JANUARY, 1);
+				return calendarDaysBetween(calDataDa, calDataA);
+			}
+			return 0;
+		}
+
 		public void openDettaglioCostoRicavo(UserContext userContext, IDocumentoCogeBulk docamm, Voce_epBulk conto, BigDecimal importo) {
-			DettaglioPrimaNota dettPN = this.addDettaglioCostoRicavo(userContext, docamm, conto, importo, Boolean.FALSE, null, null, Boolean.TRUE);
-			dettPN.setModificabile(Boolean.TRUE);
+			BigDecimal importoAnniPrecedenti = BigDecimal.ZERO;
+			BigDecimal importoAnnoCorrente = BigDecimal.ZERO;
+			BigDecimal importoAnniSuccessivi = BigDecimal.ZERO;
+			BigDecimal delta;
+
+			long giorniAnniPrecedenti = this.getGiorniCompetenzaAnniPrecedenti(docamm.getEsercizio());
+			long giorniAnnoCorrente = this.getGiorniCompetenzaAnnoCorrente(docamm.getEsercizio());
+			long giorniAnniSuccessivi = this.getGiorniCompetenzaAnniSuccessivi(docamm.getEsercizio());
+			long giorniTotali = giorniAnniPrecedenti + giorniAnnoCorrente + giorniAnniSuccessivi;
+
+			if (giorniAnniPrecedenti > 0)
+				importoAnniPrecedenti = importo.multiply(BigDecimal.valueOf(giorniAnniPrecedenti)).divide(BigDecimal.valueOf(giorniTotali), 2, RoundingMode.HALF_EVEN);
+			if (giorniAnnoCorrente > 0)
+				importoAnnoCorrente = importo.multiply(BigDecimal.valueOf(giorniAnnoCorrente)).divide(BigDecimal.valueOf(giorniTotali), 2, RoundingMode.HALF_EVEN);
+			if (giorniAnniSuccessivi > 0)
+				importoAnniSuccessivi = importo.multiply(BigDecimal.valueOf(giorniAnniSuccessivi)).divide(BigDecimal.valueOf(giorniTotali), 2, RoundingMode.HALF_EVEN);
+
+			//Scarico il delta prodotto fdall'arrotondamento sulla competenza anno in corso....altrimenti su quella anno precedente... altrimenti su quella successiva
+			delta = importo.subtract(importoAnniPrecedenti).subtract(importoAnnoCorrente).subtract(importoAnniSuccessivi);
+			if (delta.compareTo(BigDecimal.ZERO)!=0) {
+				if (importoAnnoCorrente.compareTo(BigDecimal.ZERO)!=0)
+					importoAnnoCorrente = importoAnnoCorrente.add(delta);
+				else if (importoAnniPrecedenti.compareTo(BigDecimal.ZERO)!=0)
+					importoAnniPrecedenti = importoAnniPrecedenti.add(delta);
+				else
+					importoAnniSuccessivi = importoAnniSuccessivi.add(delta);
+			}
+
+			try {
+				if (importoAnniPrecedenti.compareTo(BigDecimal.ZERO)!=0) {
+					Voce_epBulk aContoFatturaDaEmettereRicevere;
+					if (docamm instanceof Documento_amministrativo_attivoBulk)
+						aContoFatturaDaEmettereRicevere = findContoFattureDaEmettere(userContext, docamm.getEsercizio());
+					else
+						aContoFatturaDaEmettereRicevere = findContoFattureDaRicevere(userContext, docamm.getEsercizio());
+					DettaglioPrimaNota dettPN = this.addDettaglioCostoRicavo(userContext, docamm, aContoFatturaDaEmettereRicevere, importo, Boolean.FALSE, null, null, Boolean.TRUE);
+					dettPN.setModificabile(Boolean.FALSE);
+				}
+				if (importoAnnoCorrente.compareTo(BigDecimal.ZERO)!=0) {
+					DettaglioPrimaNota dettPN = this.addDettaglioCostoRicavo(userContext, docamm, conto, importo, Boolean.FALSE, null, null, Boolean.TRUE);
+					dettPN.setModificabile(Boolean.TRUE);
+				}
+				if (importoAnniSuccessivi.compareTo(BigDecimal.ZERO)!=0) {
+					Voce_epBulk aContoRateiPassiviAttivi;
+					if (docamm instanceof Documento_amministrativo_attivoBulk)
+						aContoRateiPassiviAttivi = findContoRateiAttivi(userContext, docamm.getEsercizio());
+					else
+						aContoRateiPassiviAttivi = findContoRateiPassivi(userContext, docamm.getEsercizio());
+					DettaglioPrimaNota dettPN = this.addDettaglioCostoRicavo(userContext, docamm, aContoRateiPassiviAttivi, importo, Boolean.FALSE, null, null, Boolean.TRUE);
+					dettPN.setModificabile(Boolean.FALSE);
+				}
+			} catch (ComponentException | RemoteException e) {
+				throw new ApplicationRuntimeException(e);
+			}
 		}
 
 		public void closeDettaglioCostoRicavoPartita(UserContext userContext, IDocumentoCogeBulk docamm, Voce_epBulk conto, BigDecimal importo, Integer cdTerzo) {
@@ -2292,10 +2392,10 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 					Movimento_cogeBulk movimentoAnticipo = this.findMovimentoAperturaCreditoAnticipo(allMovimentiPrimaNota, anticipo, anticipo.getCd_terzo());
 
 					testataPrimaNota.addDettaglio(movimentoAnticipo.getTi_riga(), Movimento_cogeBulk.SEZIONE_AVERE, movimentoAnticipo.getConto().getCd_voce_ep(), imCostoAnticipo, anticipo.getCd_terzo(), anticipo);
-					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, contoPatrimonialeMissione.getCd_voce_ep(), imCostoAnticipo, missione.getCd_terzo(), missione);
+					testataPrimaNota.addDettaglio(Movimento_cogeBulk.TipoRiga.DEBITO.value(), Movimento_cogeBulk.SEZIONE_DARE, contoPatrimonialeMissione.getCd_voce_ep(), imCostoAnticipo, missione.getCd_terzo(), missione, null, DEFAULT_MODIFICABILE, Boolean.FALSE);
 				}
 			}
-			return this.generaScrittura(userContext, missione, Collections.singletonList(testataPrimaNota), true);
+			return this.generaScrittura(userContext, missione, Collections.singletonList(testataPrimaNota), Boolean.TRUE);
 		} catch (PersistencyException|RemoteException e) {
 			throw handleException(e);
 		}
@@ -4263,6 +4363,22 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_COMMISSIONI_BANCARIE, 1);
 	}
 
+	private Voce_epBulk findContoFattureDaRicevere(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
+		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_FATTURE_DA_RICEVERE, 1);
+	}
+
+	private Voce_epBulk findContoFattureDaEmettere(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
+		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_FATTURE_DA_EMETTERE, 1);
+	}
+
+	private Voce_epBulk findContoRateiPassivi(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
+		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_RATEI_PASSIVI, 1);
+	}
+
+	private Voce_epBulk findContoRateiAttivi(UserContext userContext, Integer esercizio) throws ComponentException, RemoteException {
+		return this.findContoByConfigurazioneCNR(userContext, esercizio, Configurazione_cnrBulk.PK_VOCEEP_SPECIALE, Configurazione_cnrBulk.SK_RATEI_ATTIVI, 1);
+	}
+
 	private String findCodiceTributoIva(UserContext userContext) throws ComponentException, RemoteException {
 		return this.findValueByConfigurazioneCNR(userContext, null, Configurazione_cnrBulk.PK_CORI_SPECIALE, Configurazione_cnrBulk.SK_IVA, 1);
 	}
@@ -5622,5 +5738,43 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 
 	private String getDescrizione(CompensoBulk compenso){
 		return compenso.getEsercizio() + "/" + compenso.getCd_cds() + "/" + compenso.getPg_compenso();
+	}
+
+	/**
+	 * Compute the number of calendar days between two Calendar objects.
+	 * The desired value is the number of days of the month between the
+	 * two Calendars, not the number of milliseconds' worth of days.
+	 * @param startCal The earlier calendar
+	 * @param endCal The later calendar
+	 * @return the number of calendar days of the month between startCal and endCal
+	 */
+	private static long calendarDaysBetween(Calendar startCal, Calendar endCal) {
+		// Create copies so we don't update the original calendars.
+		Calendar start = Calendar.getInstance();
+		start.setTimeZone(startCal.getTimeZone());
+		start.setTimeInMillis(startCal.getTimeInMillis());
+
+		Calendar end = Calendar.getInstance();
+		end.setTimeZone(endCal.getTimeZone());
+		end.setTimeInMillis(endCal.getTimeInMillis());
+
+		// Set the copies to be at midnight, but keep the day information.
+
+		start.set(Calendar.HOUR_OF_DAY, 0);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		start.set(Calendar.MILLISECOND, 0);
+
+		end.set(Calendar.HOUR_OF_DAY, 0);
+		end.set(Calendar.MINUTE, 0);
+		end.set(Calendar.SECOND, 0);
+		end.set(Calendar.MILLISECOND, 0);
+
+		// At this point, each calendar is set to midnight on
+		// their respective days. Now use TimeUnit.MILLISECONDS to
+		// compute the number of full days between the two of them.
+
+		return TimeUnit.MILLISECONDS.toDays(
+				Math.abs(end.getTimeInMillis() - start.getTimeInMillis()));
 	}
 }
