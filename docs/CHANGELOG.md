@@ -1,3 +1,19 @@
+## Release 6.5.3  -- _November 14, 2022_ 
+**Changes**
+
+>**Fix duplicate method**
+>
+>[c078487beb9531e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c078487beb9531e) marco.spasiano *November 14, 2022*
+
+>**FIX authentication user with SSO on RESTEasy and remove all OPTIONS method**
+>
+>[70154946b584b4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70154946b584b4c) marco.spasiano *November 14, 2022*
+
+>**FIX authentication user with SSO on RESTEasy**
+>
+>[673ac7ccc623580](https://github.com/consiglionazionaledellericerche/sigla-main/commit/673ac7ccc623580) marco.spasiano *November 12, 2022*
+
+
 ## Release 6.5.2  -- _November 11, 2022_ 
 **Changes**
 
