@@ -150,17 +150,6 @@ public interface ContextLocal {
     )
     Response inserisciIndirizziMail(@Context HttpServletRequest request, List<UtenteIndirizziMailDTO> utente_indirizzi_mailBulks) throws Exception;
 
-    @Path("/indirizzi-mail")
-    @ApiOperation(value = "Inserisce la lista degli indirizzi email per Utente",
-            notes = "Accesso consentito a tutte le utenze registrate",
-            response = List.class,
-            responseContainer = "List",
-            authorizations = {
-                    @Authorization(value = "BASIC")
-            }
-    )
-    Response inserisciIndirizziMail(@Context HttpServletRequest request) throws Exception;
-
     @DELETE
     @Path("/indirizzi-mail/{indirizzi:.+}/delete")
     @ApiOperation(value = "Elimina la lista degli indirizzi email per Utente",

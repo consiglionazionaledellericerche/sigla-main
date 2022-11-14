@@ -206,12 +206,6 @@ public class ContextResource implements ContextLocal {
     }
 
     @Override
-    public Response inserisciIndirizziMail(HttpServletRequest request) throws Exception {
-        return Response.ok()
-                .build();
-    }
-
-    @Override
     public Response eliminaIndirizziMail(HttpServletRequest request, String indirizzi) throws Exception {
         CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
         final List<String> indirizziMails = Arrays.asList(indirizzi.split("/"));
