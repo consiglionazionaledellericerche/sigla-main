@@ -60,6 +60,10 @@ public abstract class EconomicaAction extends CRUDAction {
                     actionContext.getUserContext(),
                     documentoCogeBulk)
             );
+            Optional.ofNullable(documentoCogeBulk)
+                    .filter(OggettoBulk.class::isInstance)
+                    .map(OggettoBulk.class::cast)
+                    .ifPresent(oggettoBulk -> oggettoBulk.setToBeUpdated());
             bp.getMovimentiAvere().reset(actionContext);
             bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
