@@ -20,6 +20,7 @@ package it.cnr.contab.web.rest.resource.config00;
 import it.cnr.contab.security.auth.SIGLALDAPPrincipal;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.web.rest.config.RESTSecurityInterceptor;
 import it.cnr.contab.web.rest.exception.InvalidPasswordException;
 import it.cnr.contab.web.rest.exception.UnauthorizedException;
 import it.cnr.contab.web.rest.exception.UnprocessableEntityException;
@@ -50,7 +51,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class AccountResource implements AccountLocal {
-    public static final String USERNAME_CNR = "username_cnr";
+    public static final String FIND_UTENTE_BY_UID = "findUtenteByUID";
     private final Logger LOGGER = LoggerFactory.getLogger(AccountResource.class);
     @Context
     SecurityContext securityContext;
@@ -73,7 +74,7 @@ public class AccountResource implements AccountLocal {
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
                     userContext,
                     UtenteBulk.class,
-                    "findUtenteByUID",
+                    FIND_UTENTE_BY_UID,
                     userContext,
                     securityContext.getUserPrincipal().getName()
             );
@@ -94,10 +95,10 @@ public class AccountResource implements AccountLocal {
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
                     userContext,
                     UtenteBulk.class,
-                    "findUtenteByUID",
+                    FIND_UTENTE_BY_UID,
                     userContext,
                     Optional.ofNullable(idToken.getOtherClaims())
-                            .flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(USERNAME_CNR)))
+                            .flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(RESTSecurityInterceptor.USERNAME_CNR)))
                             .filter(String.class::isInstance)
                             .map(String.class::cast)
                             .orElse(idToken.getPreferredUsername())

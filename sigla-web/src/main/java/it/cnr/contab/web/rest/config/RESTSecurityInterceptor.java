@@ -65,6 +65,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 	public static final String ACCOUNT = "/account";
 	public static final String TREE = "/tree";
 	public static final String CONTEXT = "/context";
+	public static final String USERNAME_CNR = "username_cnr";
 	public static final String OPTIONS_METHOD_EXCEPTION = "org.jboss.resteasy.spi.DefaultOptionsMethodException";
 	private Logger LOGGER = LoggerFactory.getLogger(RESTSecurityInterceptor.class);
 
@@ -133,7 +134,14 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 									.orElse(keycloakSecurityContext.getToken());
 						});
 				if (idToken.isPresent()) {
-					utenteBulk = BasicAuthentication.findUtenteBulk(idToken.get().getPreferredUsername());
+					utenteBulk = BasicAuthentication.findUtenteBulk(
+							idToken
+									.flatMap(idToken1 -> Optional.ofNullable(idToken1.getOtherClaims()))
+									.flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(USERNAME_CNR)))
+									.filter(String.class::isInstance)
+									.map(String.class::cast)
+									.orElse(idToken.get().getPreferredUsername())
+					);
 				} else {
 					utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
 				}
