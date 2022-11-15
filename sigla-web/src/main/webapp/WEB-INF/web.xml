@@ -233,6 +233,7 @@
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>default-roles-cnr</role-name>
+			<role-name>default-roles-cnr.it</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<welcome-file-list>
