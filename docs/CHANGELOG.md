@@ -1,3 +1,15 @@
+## Release 6.5.5  -- _November 15, 2022_ 
+**Changes**
+
+>**FIX Rest Interceptor without SSO**
+>
+>[2018506419ebbd0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2018506419ebbd0) marco.spasiano *November 15, 2022*
+
+>**FIX Rest Interceptor without SSO**
+>
+>[ec38e2e424aa597](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ec38e2e424aa597) marco.spasiano *November 15, 2022*
+
+
 ## Release 6.5.4  -- _November 14, 2022_ 
 **Changes**
 
