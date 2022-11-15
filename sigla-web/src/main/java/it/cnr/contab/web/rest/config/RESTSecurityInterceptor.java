@@ -132,7 +132,7 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 							return Optional.ofNullable(keycloakSecurityContext.getIdToken())
 									.orElse(keycloakSecurityContext.getToken());
 						});
-				if (principalOptional.isPresent()) {
+				if (idToken.isPresent()) {
 					utenteBulk = BasicAuthentication.findUtenteBulk(idToken.get().getPreferredUsername());
 				} else {
 					utenteBulk = BasicAuthentication.authenticate(httpServletRequest, authorization);
