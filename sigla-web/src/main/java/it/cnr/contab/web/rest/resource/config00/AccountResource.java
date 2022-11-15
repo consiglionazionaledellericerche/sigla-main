@@ -50,6 +50,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class AccountResource implements AccountLocal {
+    public static final String USERNAME_CNR = "username_cnr";
     private final Logger LOGGER = LoggerFactory.getLogger(AccountResource.class);
     @Context
     SecurityContext securityContext;
@@ -95,7 +96,11 @@ public class AccountResource implements AccountLocal {
                     UtenteBulk.class,
                     "findUtenteByUID",
                     userContext,
-                    idToken.getPreferredUsername()
+                    Optional.ofNullable(idToken.getOtherClaims())
+                            .flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(USERNAME_CNR)))
+                            .filter(String.class::isInstance)
+                            .map(String.class::cast)
+                            .orElse(idToken.getPreferredUsername())
             );
             final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
             if (!utenteBulk1.isPresent()) {
