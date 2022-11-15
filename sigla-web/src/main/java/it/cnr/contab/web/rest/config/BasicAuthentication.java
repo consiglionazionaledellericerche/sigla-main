@@ -140,7 +140,7 @@ public class BasicAuthentication {
 				}
 				throw new RuntimeException(e);
 			}
-			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
+			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente, GestioneLoginComponent.VALIDA_FASE_SSO);
 		} catch (RemoteException e) {
 			throw new ApplicationException(e.getMessage());
 		} catch (EJBException e) {
