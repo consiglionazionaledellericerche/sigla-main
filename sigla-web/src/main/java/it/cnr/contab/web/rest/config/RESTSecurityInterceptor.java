@@ -243,9 +243,9 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Containe
 				.filter(s -> allowOrigins.contains(s))
 				.ifPresent(s -> {
 					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_ORIGIN, s);
-					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_HEADERS, "origin, content-type, accept, authorization");
-					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_METHODS,"GET, POST, OPTIONS, PUT, PATCH, DELETE");
-					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS,Boolean.TRUE);
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_HEADERS, CORSFilter.ORIGIN_CONTENT_TYPE_ACCEPT_AUTHORIZATION);
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_METHODS, CORSFilter.GET_POST_OPTIONS_PUT_PATCH_DELETE);
+					containerResponseContext.getHeaders().add(CORSFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE);
 				});
 	}
 }

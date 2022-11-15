@@ -40,6 +40,8 @@ public class CORSFilter implements Filter {
     public static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
     public static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
     public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
+    public static final String GET_POST_OPTIONS_PUT_PATCH_DELETE = "GET, POST, OPTIONS, PUT, PATCH, DELETE";
+    public static final String ORIGIN_CONTENT_TYPE_ACCEPT_AUTHORIZATION = "origin, content-type, accept, authorization";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -73,8 +75,8 @@ public class CORSFilter implements Filter {
                     httpServletResponse
                             .ifPresent(httpServletResponse1 -> {
                                 httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_ORIGIN, s);
-                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, "origin, content-type, accept, authorization");
-                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, ORIGIN_CONTENT_TYPE_ACCEPT_AUTHORIZATION);
+                                httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_METHODS, GET_POST_OPTIONS_PUT_PATCH_DELETE);
                                 httpServletResponse1.addHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE.toString());
                             });
                 });
