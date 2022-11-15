@@ -1,3 +1,23 @@
+## Release 6.5.6  -- _November 15, 2022_ 
+**Changes**
+
+>**Refactor response header for CORS**
+>
+>[32e9dd21a9212f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/32e9dd21a9212f4) marco.spasiano *November 15, 2022*
+
+>**FIX access with SPID and CIE [ci skip]**
+>
+>[f7abc9434e0a3e4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f7abc9434e0a3e4) marco.spasiano *November 15, 2022*
+
+>**FIX access with SPID and CIE [ci skip]**
+>
+>[0f49f6e6e54db3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f49f6e6e54db3a) marco.spasiano *November 15, 2022*
+
+>**FIX Rest Interceptor without SSO [ci skip]**
+>
+>[bffb0a494cedc80](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bffb0a494cedc80) marco.spasiano *November 15, 2022*
+
+
 ## Release 6.5.5  -- _November 15, 2022_ 
 **Changes**
 
