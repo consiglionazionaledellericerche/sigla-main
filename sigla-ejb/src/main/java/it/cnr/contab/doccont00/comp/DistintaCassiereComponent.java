@@ -4830,7 +4830,7 @@ public class DistintaCassiereComponent extends
                             reversaleBulk.getCd_cds().concat(reversaleBulk.getEsercizio().toString()).concat(reversaleBulk.getPg_reversale().toString()),
                             numMaxVociBilancio);
                 reversale.getBilancio().addAll(bilancioTag);
-                throw new ComponentException("test Bilancio");
+                throw new ApplicationException("test Bilancio");
             }
 
             GregorianCalendar gcdi = new GregorianCalendar();
@@ -5138,7 +5138,7 @@ public class DistintaCassiereComponent extends
                             mandatoBulk.getCd_cds().concat(mandatoBulk.getEsercizio().toString()).concat(mandatoBulk.getPg_mandato().toString()),
                             numMaxVociBilancio);
                 mandato.getBilancio().addAll(bilancioTag);
-                throw new ComponentException("test Bilancio");
+                throw new ApplicationException("test Bilancio");
             }
             GregorianCalendar gcdi = new GregorianCalendar();
 
