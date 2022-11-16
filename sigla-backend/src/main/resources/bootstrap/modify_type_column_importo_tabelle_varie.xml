@@ -23,11 +23,11 @@
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet author="ciro.salvio" id="modify_type_column_importo_tabelle_varie">
-        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO" columnName="im_residui_ac" newDataType="numeric(15,2)"/>
-        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO" columnName="im_cassa_ac" newDataType="numeric(15,2)"/>
-        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_residui_ap" newDataType="numeric(15,2)"/>
-        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_residui_ac" newDataType="numeric(15,2)"/>
-        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_cassa_ac" newDataType="numeric(15,2)"/>
-        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_previsione_ac" newDataType="numeric(15,2)"/>
+        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO" columnName="im_residui_ac" newDataType="numeric"/>
+        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO" columnName="im_cassa_ac" newDataType="numeric"/>
+        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_residui_ap" newDataType="numeric"/>
+        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_residui_ac" newDataType="numeric"/>
+        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_cassa_ac" newDataType="numeric"/>
+        <modifyDataType tableName="PDG_DATI_STAMPA_BILANCIO_TEMP" columnName="im_previsione_ac" newDataType="numeric"/>
     </changeSet>
 </databaseChangeLog>
