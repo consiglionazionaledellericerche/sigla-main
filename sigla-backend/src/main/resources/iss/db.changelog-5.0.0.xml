@@ -82,5 +82,5 @@
     <include file="iss/update_conf_gestione_etichetta_inventario.xml"/>
     <!--Configurazione per abilitare l'invio del tag bilancio negli opi e il numero massimo di elementi
     ( per definizione del flussi OPI al massimo 10)-->
-    <include file="iss/insert_configurazioneCnr_invia_tag_bilancio.xml"/>
+    <include file="iss/update_configurazioneCnr_invia_tag_bilancio.xml"/>
 </databaseChangeLog>

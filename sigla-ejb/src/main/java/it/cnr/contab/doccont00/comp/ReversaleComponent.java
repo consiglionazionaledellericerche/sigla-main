@@ -20,8 +20,6 @@ package it.cnr.contab.doccont00.comp;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
@@ -43,7 +41,6 @@ import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
@@ -54,7 +51,6 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
-import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -3924,9 +3920,9 @@ REVERSALE
                 CNRUserContext.getEsercizio(userContext),
                 null,
                 Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                Configurazione_cnrBulk.SK_INVIA_TAG_BILACIO);
+                Configurazione_cnrBulk.SK_INVIA_TAG_BILANCIO);
     }
-    /*
+
     @Override
     protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
         super.validaCreaModificaConBulk(usercontext, oggettobulk);
@@ -3934,7 +3930,7 @@ REVERSALE
         try {
             inviaTagBilanio= getConfigurazioneInviaBilancio( usercontext);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw new ComponentException(e);
         }
         if ( Optional.ofNullable(inviaTagBilanio).map(s->Boolean.valueOf(s.getVal01())).orElse(Boolean.FALSE)) {
             Integer numMaxVociBilancio =Optional.ofNullable(inviaTagBilanio.getVal02()).map(s->Integer.valueOf(s)).orElse(1);
@@ -3943,9 +3939,8 @@ REVERSALE
             ReversaleHome reversaleHome = (ReversaleHome) getHome(usercontext,reversale.getClass());
             List<SiopeBilancioDTO> siope= reversaleHome.getSiopeBilancio(usercontext,reversale);
             if ( siope!=null && siope.size()>numMaxVociBilancio)
-                throw new ApplicationException("Validazione voci bilancio");
+                throw new ApplicationException("Le voci di Bilancio sono maggiori di quelle previste. Max:"+numMaxVociBilancio);
         }
-        throw new ApplicationException("Validazione voci bilancio");
     }
-     */
+
 }

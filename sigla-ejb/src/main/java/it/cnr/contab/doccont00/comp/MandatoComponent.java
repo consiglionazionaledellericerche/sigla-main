@@ -24,8 +24,6 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
@@ -6648,9 +6646,9 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
                 CNRUserContext.getEsercizio(userContext),
                 null,
                 Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                Configurazione_cnrBulk.SK_INVIA_TAG_BILACIO);
+                Configurazione_cnrBulk.SK_INVIA_TAG_BILANCIO);
     }
-    /*
+
     @Override
     protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
         super.validaCreaModificaConBulk(usercontext, oggettobulk);
@@ -6658,7 +6656,7 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
         try {
              inviaTagBilanio= getConfigurazioneInviaBilancio( usercontext);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw new ComponentException(e);
         }
         if ( Optional.ofNullable(inviaTagBilanio).map(s->Boolean.valueOf(s.getVal01())).orElse(Boolean.FALSE)) {
             Integer numMaxVociBilancio =Optional.ofNullable(inviaTagBilanio.getVal02()).map(s->Integer.valueOf(s)).orElse(1);
@@ -6667,10 +6665,9 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
             MandatoHome mandatoHome = (MandatoHome) getHome(usercontext, mandato.getClass());
             List<SiopeBilancioDTO> siope = mandatoHome.getSiopeBilancio(usercontext, mandato);
             if ( siope!=null && siope.size()>numMaxVociBilancio)
-                throw new ApplicationException("Validazione voci bilancio");
+                throw new ApplicationException("Le voci di Bilancio sono maggiori di quelle previste. Max:"+numMaxVociBilancio);
         }
-        throw new ApplicationException("Validazione voci bilancio");
     }
-    */
+
 
 }

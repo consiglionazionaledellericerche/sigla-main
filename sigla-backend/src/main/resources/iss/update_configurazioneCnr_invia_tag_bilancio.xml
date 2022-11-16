@@ -22,20 +22,12 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet author="ciro.salvio" id="insert_configurazioneCnr_invia_tag_bilancio">
-        <insert tableName="configurazione_cnr">
-            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
-            <column name="cd_unita_funzionale" type="STRING" value="*"/>
-            <column name="cd_chiave_primaria" type="STRING" value="FLUSSO_ORDINATIVI"/>
-            <column name="cd_chiave_secondaria" type="STRING" value="INVIA_TAG_BILACIO"/>
+    <changeSet author="ciro.salvio" id="update_configurazioneCnr_invia_tag_bilancio">
+        <update tableName="configurazione_cnr">
             <column name="val01" type="STRING" value="true"/>
             <column name="val02" type="STRING" value="1"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="STRING" value="SYSTEM"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="STRING" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='INVIA_TAG_BILANCIO'</where>
+        </update>
     </changeSet>
 
 </databaseChangeLog>
