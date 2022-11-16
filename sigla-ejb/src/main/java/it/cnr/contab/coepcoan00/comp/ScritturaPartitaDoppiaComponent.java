@@ -5125,8 +5125,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							.filter(DettaglioPrimaNota::isDettaglioCostoRicavo)
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
 								Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
-									Collectors.groupingBy(dett->Objects.requireNonNull(dett.getDtDaCompetenzaCoge().toString(), "NO_VALUE"),
-										Collectors.groupingBy(dett->Objects.requireNonNull(dett.getDtACompetenzaCoge().toString(), "NO_VALUE"),
+									Collectors.groupingBy(dett->Optional.ofNullable(dett.getDtDaCompetenzaCoge()).map(Timestamp::toString).orElse("NO_VALUE"),
+										Collectors.groupingBy(dett->Optional.ofNullable(dett.getDtACompetenzaCoge()).map(Timestamp::toString).orElse("NO_VALUE"),
 											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
 
 					mapTipoDettCostoRicavo.keySet().forEach(aTipoDett -> {
@@ -5282,8 +5282,8 @@ public class ScritturaPartitaDoppiaComponent extends it.cnr.jada.comp.CRUDCompon
 							.filter(el -> !Optional.ofNullable(el.getPartita()).isPresent())
 							.collect(Collectors.groupingBy(DettaglioPrimaNota::getTipoDett,
 								Collectors.groupingBy(DettaglioPrimaNota::isModificabile,
-									Collectors.groupingBy(dett->Objects.requireNonNull(dett.getDtDaCompetenzaCoge().toString(), "NO_VALUE"),
-										Collectors.groupingBy(dett->Objects.requireNonNull(dett.getDtACompetenzaCoge().toString(), "NO_VALUE"),
+									Collectors.groupingBy(dett->Optional.ofNullable(dett.getDtDaCompetenzaCoge()).map(Timestamp::toString).orElse("NO_VALUE"),
+										Collectors.groupingBy(dett->Optional.ofNullable(dett.getDtACompetenzaCoge()).map(Timestamp::toString).orElse("NO_VALUE"),
 											Collectors.groupingBy(DettaglioPrimaNota::getCdConto))))));
 
 					mapTipoDett.keySet().forEach(aTipoDett -> {
