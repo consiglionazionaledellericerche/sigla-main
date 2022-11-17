@@ -1,3 +1,11 @@
+## Release 6.5.7  -- _November 17, 2022_ 
+**Changes**
+
+>**FIX selection of enabled organizational units**
+>
+>[777a4e63a7f67c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/777a4e63a7f67c9) marco.spasiano *November 17, 2022*
+
+
 ## Release 6.5.6  -- _November 15, 2022_ 
 **Changes**
 
