@@ -596,6 +596,7 @@ public class Unita_organizzativaHome extends BulkHome {
 		sqlBuilder.addTableToHeader("RUOLO_ACCESSO");
 		sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA", "UO_CDR");
 		sqlBuilder.addTableToHeader("CDR");
+		sqlBuilder.addTableToHeader("CDR", "CDR2");
 
 		sqlBuilder.addSQLJoin("UO_CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA");
 		sqlBuilder.addSQLClause(FindClause.AND, "UTENTE_UNITA_RUOLO.CD_UTENTE", SQLBuilder.EQUALS, username);
