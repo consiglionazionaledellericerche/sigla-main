@@ -1,3 +1,27 @@
+## Release 6.5.10  -- _November 17, 2022_ 
+**Changes**
+
+>**FIX selection of enabled organizational units**
+>
+>[f2870d7015adea1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f2870d7015adea1) marco.spasiano *November 17, 2022*
+
+
+## Release 6.5.9  -- _November 17, 2022_ 
+**Changes**
+
+>**Controllo sulla lunghezza massima della descrizione di un mandato di pagamento di tipo BOEST, la lunghezza può essere personalizzata con la variabile di ambiente "boest.max.length.description" il default è 140 caratteri**
+>
+>[8aadb9b0fba0f12](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8aadb9b0fba0f12) marco.spasiano *November 17, 2022*
+
+
+## Release 6.5.8  -- _November 17, 2022_ 
+**Changes**
+
+>**Fix Stato Incerto sui residui**
+>
+>[8ca331639f3bde2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8ca331639f3bde2) raffaelepagano *November 17, 2022*
+
+
 ## Release 6.5.7  -- _November 17, 2022_ 
 **Changes**
 
