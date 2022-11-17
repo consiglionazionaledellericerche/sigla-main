@@ -327,11 +327,6 @@
 			name="ti_riga"
 			textTruncate="true"/>
 		<columnFieldProperty
-			name="dt_da_competenza_coge"
-			textTruncate="true"/>
-		<columnFieldProperty
-			name="dt_a_competenza_coge" />
-		<columnFieldProperty
 			name="stato" />
 		<columnFieldProperty
 			name="im_movimento" />

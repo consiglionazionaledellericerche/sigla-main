@@ -5916,4 +5916,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <include file="bootstrap/add_view_v_elemento_voce_assestato.xml"/>
     <include file="bootstrap/add_indicatore_pagamenti.xml"/>
 
+    <include file="bootstrap/modify_type_column_importo_tabelle_varie.xml"/>
+
 </databaseChangeLog>
