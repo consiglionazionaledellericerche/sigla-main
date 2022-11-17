@@ -38,6 +38,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -88,6 +89,9 @@ public class AccountResource implements AccountLocal {
                 accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
                 accountDTO.setLdap(Boolean.TRUE);
                 accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+            } else {
+                LOGGER.warn("User {} not found!", securityContext.getUserPrincipal().getName());
+                throw new ServletException("");
             }
         } else if (keycloakPrincipal.isPresent()) {
             final IDToken idToken = Optional.ofNullable(keycloakPrincipal.get().getKeycloakSecurityContext().getIdToken())
