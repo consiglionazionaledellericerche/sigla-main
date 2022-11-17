@@ -313,7 +313,7 @@
 			propertyName="stato_coge"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="false" />
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="iva_credito" />
