@@ -4810,7 +4810,7 @@ public class DistintaCassiereComponent extends
             if ( Optional.ofNullable(inviaTagBilanio).map(s->Boolean.valueOf(s.getVal01())).orElse(Boolean.FALSE)) {
                 Integer numMaxVociBilancio =Optional.ofNullable(inviaTagBilanio.getVal02()).map(s->Integer.valueOf(s)).orElse(1);
                 reversale.setTipoOperazione(getTipoOperazione(userContext, bulk));
-                ReversaleIHome reversaleHome = Optional.ofNullable(getHome(userContext, ReversaleIHome.class))
+                ReversaleIHome reversaleHome = Optional.ofNullable(getHome(userContext, ReversaleIBulk.class))
                         .filter(ReversaleIHome.class::isInstance)
                         .map(ReversaleIHome.class::cast)
                         .orElseThrow(() -> new ComponentException("Home della Reversale non trovata!"));
