@@ -51,8 +51,8 @@ public class Login {
                 request.login(username, password);
             return Response.ok(accountLocal.getAccountDTO(request)).build();
         } catch (ServletException e) {
-            LOGGER.error("Login error for user:{} password:{}", username, password, e);
-            return Response.serverError().build();
+            LOGGER.trace("Login error for user:{} password:{}", username, password, e);
+            return Response.status(Response.Status.UNAUTHORIZED) .build();
         }
     }
 }
