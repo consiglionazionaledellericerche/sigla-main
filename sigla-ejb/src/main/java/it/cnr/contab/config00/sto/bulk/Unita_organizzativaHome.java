@@ -567,9 +567,16 @@ public class Unita_organizzativaHome extends BulkHome {
 		sqlBuilder.addTableToHeader("UTENTE_UNITA_ACCESSO");
 		sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA", "UO_CDR");
 		sqlBuilder.addTableToHeader("CDR");
-		sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+		sqlBuilder.addTableToHeader("CDR", "CDR2");
 		sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_ACCESSO.CD_UNITA_ORGANIZZATIVA");
 		sqlBuilder.addSQLJoin("UO_CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_ACCESSO.CD_UNITA_ORGANIZZATIVA");
+
+		sqlBuilder.openParenthesis(FindClause.AND);
+		sqlBuilder.addSQLJoin("CDR2.CD_CDR_AFFERENZA", "CDR.CD_CENTRO_RESPONSABILITA");
+		sqlBuilder.addSQLJoin(FindClause.OR, "CDR2.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, "CDR.CD_CENTRO_RESPONSABILITA");
+		sqlBuilder.closeParenthesis();
+		sqlBuilder.addSQLJoin("CDR2.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+
 		sqlBuilder.addSQLClause(FindClause.AND, "UTENTE_UNITA_ACCESSO.CD_UTENTE", SQLBuilder.EQUALS, username);
 
 		sqlBuilder.addSQLClause(FindClause.AND, cds ? "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA": "UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", SQLBuilder.EQUALS, codice);
@@ -589,11 +596,18 @@ public class Unita_organizzativaHome extends BulkHome {
 		sqlBuilder.addTableToHeader("RUOLO_ACCESSO");
 		sqlBuilder.addTableToHeader("UNITA_ORGANIZZATIVA", "UO_CDR");
 		sqlBuilder.addTableToHeader("CDR");
-		sqlBuilder.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+
 		sqlBuilder.addSQLJoin("UO_CDR.CD_UNITA_ORGANIZZATIVA", "UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA");
 		sqlBuilder.addSQLClause(FindClause.AND, "UTENTE_UNITA_RUOLO.CD_UTENTE", SQLBuilder.EQUALS, username);
 		sqlBuilder.addSQLJoin("UTENTE_UNITA_RUOLO.CD_RUOLO", "RUOLO_ACCESSO.CD_RUOLO");
 		sqlBuilder.addSQLJoin("UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+
+		sqlBuilder.openParenthesis(FindClause.AND);
+		sqlBuilder.addSQLJoin("CDR2.CD_CDR_AFFERENZA", "CDR.CD_CENTRO_RESPONSABILITA");
+		sqlBuilder.addSQLJoin(FindClause.OR, "CDR2.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, "CDR.CD_CENTRO_RESPONSABILITA");
+		sqlBuilder.closeParenthesis();
+		sqlBuilder.addSQLJoin("CDR2.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+
 		sqlBuilder.addSQLClause(FindClause.AND, cds ? "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA": "UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", SQLBuilder.EQUALS, codice);
 		sqlBuilder.addClause(FindClause.AND, "fl_cds", SQLBuilder.EQUALS, Boolean.FALSE);
 		sqlBuilder.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, esercizio);
