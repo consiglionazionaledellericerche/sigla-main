@@ -1,3 +1,11 @@
+## Release 6.5.11  -- _November 17, 2022_ 
+**Changes**
+
+>**FIX user access with LDAP**
+>
+>[496c386fec302f3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/496c386fec302f3) marco.spasiano *November 17, 2022*
+
+
 ## Release 6.5.10  -- _November 17, 2022_ 
 **Changes**
 
