@@ -4824,13 +4824,14 @@ public class DistintaCassiereComponent extends
                 completeReversale(userContext,reversaleBulk);
                 List<Bilancio> bilancioTag = this.createBilancio(userContext, reversaleHome.getSiopeBilancio(userContext, reversaleBulk));
                 if ( bilancioTag.isEmpty())
-                    throw new ApplicationMessageFormatException("La reversale {0} non ha le voci di Bilancio",reversaleBulk.getCd_cds().concat(reversaleBulk.getEsercizio().toString()).concat(reversaleBulk.getPg_reversale().toString()));
+                    throw new ApplicationMessageFormatException("La reversale {0} non ha le voci di Bilancio",
+                            reversaleBulk.getCds().getDs_unita_organizzativa().concat("/").concat(reversaleBulk.getEsercizio().toString()).concat("/").concat(reversaleBulk.getPg_reversale().toString()));
                 if ( bilancioTag.size()>numMaxVociBilancio)
                     throw new ApplicationMessageFormatException("Per la reversale  {0} ci sono più voci di {1} voce/i bilancio",
-                            reversaleBulk.getCd_cds().concat(reversaleBulk.getEsercizio().toString()).concat(reversaleBulk.getPg_reversale().toString()),
+                            reversaleBulk.getCds().getDs_unita_organizzativa().concat("/").concat(reversaleBulk.getEsercizio().toString()).concat("/").concat(reversaleBulk.getPg_reversale().toString()),
                             numMaxVociBilancio);
                 reversale.getBilancio().addAll(bilancioTag);
-                throw new ApplicationException("test Bilancio");
+
             }
 
             GregorianCalendar gcdi = new GregorianCalendar();
@@ -5132,13 +5133,14 @@ public class DistintaCassiereComponent extends
 
                 List<Bilancio> bilancioTag = this.createBilancio(userContext, mandatoHome.getSiopeBilancio(userContext, mandatoBulk));
                 if ( bilancioTag.isEmpty())
-                    throw new ApplicationMessageFormatException("La reversale {0} non ha le voci di Bilancio",mandatoBulk.getCd_cds().concat(mandatoBulk.getEsercizio().toString()).concat(mandatoBulk.getPg_mandato().toString()));
+                    throw new ApplicationMessageFormatException("Per il mandato  {0} non ha le voci di Bilancio",
+                            mandatoBulk.getCds().getDs_unita_organizzativa().concat("/").concat(mandatoBulk.getEsercizio().toString()).concat("/").concat(mandatoBulk.getPg_mandato().toString()));
                 if ( bilancioTag.size()>numMaxVociBilancio)
-                    throw new ApplicationMessageFormatException("Per la reversale  {0} ci sono più voci di {1} voce/i bilancio",
-                            mandatoBulk.getCd_cds().concat(mandatoBulk.getEsercizio().toString()).concat(mandatoBulk.getPg_mandato().toString()),
+                    throw new ApplicationMessageFormatException("Per il mandato  {0} ci sono più voci di {1} voce/i bilancio",
+                            mandatoBulk.getCds().getDs_unita_organizzativa().concat("/").concat(mandatoBulk.getEsercizio().toString()).concat("/").concat(mandatoBulk.getPg_mandato().toString()),
                             numMaxVociBilancio);
                 mandato.getBilancio().addAll(bilancioTag);
-                throw new ApplicationException("test Bilancio");
+
             }
             GregorianCalendar gcdi = new GregorianCalendar();
 
