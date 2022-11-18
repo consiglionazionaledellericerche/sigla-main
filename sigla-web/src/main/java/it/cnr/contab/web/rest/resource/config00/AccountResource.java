@@ -91,7 +91,8 @@ public class AccountResource implements AccountLocal {
                 accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
             } else {
                 LOGGER.warn("User {} not found!", securityContext.getUserPrincipal().getName());
-                throw new ServletException("");
+                request.logout();
+                throw new UnprocessableEntityException("");
             }
         } else if (keycloakPrincipal.isPresent()) {
             final IDToken idToken = Optional.ofNullable(keycloakPrincipal.get().getKeycloakSecurityContext().getIdToken())
