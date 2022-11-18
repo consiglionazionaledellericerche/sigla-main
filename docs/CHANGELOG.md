@@ -1,3 +1,19 @@
+## Release 6.5.12  -- _November 18, 2022_ 
+**Changes**
+
+>**Updated access from PDGP for migration to authentication on Keycloak [ci skip]**
+>
+>[5b23c53bd1fcbe0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b23c53bd1fcbe0) marco.spasiano *November 18, 2022*
+
+>**Fix conguagli CUNEODL320: non calcolava correttamente il conguaglio finale**
+>
+>[e9c547fa1e30da3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e9c547fa1e30da3) raffaelepagano *November 18, 2022*
+
+>**Specified error message for valid users but without any enabling profile**
+>
+>[1896cc92fcc6154](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1896cc92fcc6154) marco.spasiano *November 18, 2022*
+
+
 ## Release 6.5.11  -- _November 17, 2022_ 
 **Changes**
 
