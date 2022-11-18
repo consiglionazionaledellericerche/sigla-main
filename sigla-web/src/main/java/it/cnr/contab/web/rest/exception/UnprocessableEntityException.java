@@ -2,7 +2,7 @@ package it.cnr.contab.web.rest.exception;
 
 import java.io.Serializable;
 
-public class UnprocessableEntityException  extends RuntimeException{
+public class UnprocessableEntityException  extends Exception{
     private final Serializable entity;
 
     public Serializable getEntity() {
