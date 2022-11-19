@@ -21,6 +21,7 @@ import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.GestioneUtenteBP;
 import it.cnr.contab.utenze00.bp.SelezionaCdsBP;
+import it.cnr.contab.utenze00.bp.SelezionatoreUnitaOrganizzativaBP;
 import it.cnr.contab.utenze00.bulk.Albero_mainBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -403,7 +404,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
     public Forward doSelezionaPreferiti(ActionContext context, String cd_nodo) {
         it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = null;
         BusinessProcess currentBusinessProcess = context.getCurrentBusinessProcess();
-        if (currentBusinessProcess instanceof SelezionaCdsBP)
+        if (currentBusinessProcess instanceof SelezionaCdsBP || currentBusinessProcess instanceof SelezionatoreUnitaOrganizzativaBP)
             return doSelezionaMenu(context, cd_nodo);
         try {
             bp = Optional.ofNullable(context.getBusinessProcess("/GestioneUtenteBP"))
