@@ -1,3 +1,11 @@
+## Release 6.5.13  -- _November 19, 2022_ 
+**Changes**
+
+>**FIX user selected favorites**
+>
+>[dc8002ebb9cd6c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dc8002ebb9cd6c6) marco.spasiano *November 19, 2022*
+
+
 ## Release 6.5.12  -- _November 18, 2022_ 
 **Changes**
 
