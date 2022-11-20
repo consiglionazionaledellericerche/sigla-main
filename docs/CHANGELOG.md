@@ -1,3 +1,11 @@
+## Release 6.5.14  -- _November 20, 2022_ 
+**Changes**
+
+>**FIX demo on H2**
+>
+>[a9079753db9e217](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9079753db9e217) marco.spasiano *November 20, 2022*
+
+
 ## Release 6.5.13  -- _November 19, 2022_ 
 **Changes**
 
