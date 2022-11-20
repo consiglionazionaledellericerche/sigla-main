@@ -5700,7 +5700,7 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     </changeSet>
 
     <changeSet author="raffaele.pagano" id="ass_tipo_cori_voce_ep_alter_column_cd_voce_ep_contr">
-        <dropNotNullConstraint tableName="ASS_TIPO_CORI_VOCE_EP" columnName="CD_VOCE_EP_CONTR"/>
+        <dropNotNullConstraint tableName="ASS_TIPO_CORI_VOCE_EP" columnDataType="VARCHAR" columnName="CD_VOCE_EP_CONTR"/>
     </changeSet>
 
     <changeSet author="raffaele.pagano" id="voce_ep_add_column_fl_conto_versamento">
