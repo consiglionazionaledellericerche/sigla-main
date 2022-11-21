@@ -669,6 +669,16 @@
 				enabledOnFreeSearch="true"
 				columnSet="filtro_ricerca_prog2"
 				freeSearchSet="filtro_ricerca_prog2" />
+        <fieldProperty
+                name="tipo_dettaglio_contratto"
+                property="tipo_dettaglio_contratto"
+                inputType="SELECT"
+                keysProperty="tipoDettaglioContrattoKeys"
+                nullable="true"
+                enabledOnSearch="true"
+                command="doDefault"
+                readonlyProperty="ROTipoContratto"
+                label="Tipo Dettaglio Contratto" />
 	    <form name="searchtool">
 	          <formFieldProperty
 	                name="esercizio"
@@ -858,7 +868,8 @@
                 name="crea_cup" />
 		<formFieldProperty
 				name="findProgetto"/>
-
+        <formFieldProperty
+                name="tipo_dettaglio_contratto"/>
         <findFieldProperty
                 name="stato"/>
         <findFieldProperty
@@ -943,6 +954,8 @@
                 name="cdCup" />
    		<findFieldProperty
                 name="cdCig" />
+        <findFieldProperty
+                name="tipo_dettaglio_contratto"/>
         <columnFieldProperty
                 name="stato"/>
         <columnFieldProperty
@@ -992,7 +1005,8 @@
         <columnFieldProperty
                 name="cdCup" />
         <columnFieldProperty
-                name="cdCig" />                
+                name="cdCig" />
+
         <columnFieldProperty
                 name="cdCigFatturaAttiva"
                 textTruncate="true"
@@ -1029,5 +1043,7 @@
                 name="dt_fine_validita"/>
         <columnFieldProperty
                 name="dt_proroga"/>
+        <columnFieldProperty
+                name="tipo_dettaglio_contratto"/>
 	</columnSet>
 </bulkInfo>
