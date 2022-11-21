@@ -41,6 +41,7 @@ import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
 import it.cnr.contab.util.servlet.JSONRequest.Clause;
 import it.cnr.contab.util.servlet.JSONRequest.OrderBy;
 import it.cnr.contab.web.rest.config.BasicAuthentication;
+import it.cnr.contab.web.rest.config.RESTSecurityInterceptor;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -54,6 +55,8 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +72,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.*;
 
 public class RESTServlet extends HttpServlet{
@@ -120,17 +124,38 @@ public class RESTServlet extends HttpServlet{
                 throw new ServletException("Action not found ["+action+"]");
             UtenteBulk utente = null;
     		try {
-    			if (actionmapping.needExistingSession())
-    				try {
-						utente = BasicAuthentication.authenticateUtenteMultiplo(req.getHeader(AUTHORIZATION), null);
-					} catch (UtenteMultiploException _ex) {
-						utente = BasicAuthentication.authenticateUtenteMultiplo(req.getHeader(AUTHORIZATION),
+    			if (actionmapping.needExistingSession()) {
+					Optional<Principal> principalOptional = Optional.ofNullable(req.getUserPrincipal());
+					final Optional<IDToken> idToken = principalOptional
+							.filter(KeycloakPrincipal.class::isInstance)
+							.map(KeycloakPrincipal.class::cast)
+							.map(KeycloakPrincipal::getKeycloakSecurityContext)
+							.map(keycloakSecurityContext -> {
+								return Optional.ofNullable(keycloakSecurityContext.getIdToken())
+										.orElse(keycloakSecurityContext.getToken());
+							});
+					if (idToken.isPresent()) {
+						utente = BasicAuthentication.findUtenteBulk(
+								idToken
+										.flatMap(idToken1 -> Optional.ofNullable(idToken1.getOtherClaims()))
+										.flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(RESTSecurityInterceptor.USERNAME_CNR)))
+										.filter(String.class::isInstance)
+										.map(String.class::cast)
+										.orElse(idToken.get().getPreferredUsername())
+						);
+					} else {
+						try {
+							utente = BasicAuthentication.authenticateUtenteMultiplo(req.getHeader(AUTHORIZATION), null);
+						} catch (UtenteMultiploException _ex) {
+							utente = BasicAuthentication.authenticateUtenteMultiplo(req.getHeader(AUTHORIZATION),
 									Optional.ofNullable(req.getParameterValues("utente-multiplo"))
-										.filter(strings -> strings.length == 1)
-										.map(strings -> strings[0])
-										.orElse(null)
-								);
+											.filter(strings -> strings.length == 1)
+											.map(strings -> strings[0])
+											.orElse(null)
+							);
+						}
 					}
+				}
     			if (utente != null || !actionmapping.needExistingSession()) {
     				JSONRequest jsonRequest = null;
     	            HttpActionContext httpactioncontext = new HttpActionContext(this, req, resp);
