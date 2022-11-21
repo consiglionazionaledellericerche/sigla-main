@@ -1,3 +1,11 @@
+## Release 6.5.15  -- _November 21, 2022_ 
+**Changes**
+
+>**Protected *.json width SSO Token**
+>
+>[90ed30199eaef50](https://github.com/consiglionazionaledellericerche/sigla-main/commit/90ed30199eaef50) marco.spasiano *November 21, 2022*
+
+
 ## Release 6.5.14  -- _November 20, 2022_ 
 **Changes**
 
