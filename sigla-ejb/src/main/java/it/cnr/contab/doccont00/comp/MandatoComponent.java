@@ -1850,7 +1850,7 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
         }
     }
 
-    private void aggiornaCausale(UserContext userContext, MandatoBulk mandato) {
+    private void aggiornaCausale(UserContext userContext, MandatoBulk mandato) throws ComponentException, PersistencyException {
         final String dsCUP = mandato.getMandato_rigaColl()
                 .stream()
                 .flatMap(mandato_rigaBulk -> mandato_rigaBulk.getMandato_siopeColl().stream())
@@ -1872,6 +1872,23 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
                             })
                             .orElseGet(() -> mandato.getDs_mandato())
             );
+            try {
+                mandato.getMandato_rigaColl()
+                        .stream()
+                        .forEach(mandato_rigaBulk -> {
+                            try {
+                                mandato_rigaBulk.setModalita_pagamento(
+                                        (Modalita_pagamentoBulk) getHome(userContext, Modalita_pagamentoBulk.class).findByPrimaryKey(mandato_rigaBulk.getModalita_pagamento())
+                                );
+                            } catch (PersistencyException|ComponentException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                getHomeCache(userContext).fetchAll(userContext);
+                mandato.validate();
+            } catch (ValidationException e) {
+                throw handleException(new ApplicationException(e));
+            }
         }
     }
 

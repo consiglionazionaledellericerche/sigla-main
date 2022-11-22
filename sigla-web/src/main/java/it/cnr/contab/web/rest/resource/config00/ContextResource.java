@@ -166,11 +166,6 @@ public class ContextResource implements ContextLocal {
     }
 
     @Override
-    public Response deleteMessaggi(HttpServletRequest request) throws Exception {
-        return Response.ok().build();
-    }
-
-    @Override
     public Response indirizziMail(HttpServletRequest request) throws Exception {
         try {
             CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
@@ -208,12 +203,6 @@ public class ContextResource implements ContextLocal {
                     }
                 });
         return indirizziMail(request);
-    }
-
-    @Override
-    public Response inserisciIndirizziMail(HttpServletRequest request) throws Exception {
-        return Response.ok()
-                .build();
     }
 
     @Override

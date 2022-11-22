@@ -51,8 +51,7 @@
                                 <Dependencies>org.dom4j,javax.mail.api</Dependencies>
                                 <Specification-Title>${project.name}</Specification-Title>
                                 <Specification-Version>${project.version}</Specification-Version>
-                                <Implementation-Version>${project.version}-${sigla.build.number}
-                                </Implementation-Version>
+                                <Implementation-Version>${project.version}-${sigla.build.number}</Implementation-Version>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -106,6 +105,7 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -294,13 +294,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-email</artifactId>
             <version>1.5</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.9.10</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

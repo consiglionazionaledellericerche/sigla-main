@@ -178,11 +178,16 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_CREDITO_DEBITO_ANTICIPO = "CREDITO_DEBITO_ANTICIPO";
     public final static String SK_CREDITO_DEBITO_ECONOMO = "CREDITO_DEBITO_ECONOMO";
     public final static String SK_CREDITO_DEBITO_DEFAULT = "CREDITO_DEBITO_DEFAULT";
+    public final static String SK_CREDITO_RIMBORSO_ANTICIPO = "CREDITO_RIMBORSO_ANTICIPO";
     public final static String SK_COSTO_IVA_NON_DETRAIBILE = "COSTO_IVA_NON_DETRAIBILE";
     public final static String SK_UTILE_PERDITE_CAMBI = "UTILE_PERDITE_CAMBI";
     public final static String SK_COMMISSIONI_BANCARIE = "COMMISSIONI_BANCARIE";
     public final static String SK_CONTI_LIQUIDAZIONE_ESTERNA_IVA = "CONTI_LIQUIDAZIONE_ESTERNA_IVA";
     public final static String SK_CREDITO_RITENUTE_SPLIT_PAYMENT = "CREDITO_RITENUTE_SPLIT_PAYMENT";
+    public final static String SK_FATTURE_DA_RICEVERE = "FATTURE_DA_RICEVERE";
+    public final static String SK_FATTURE_DA_EMETTERE = "FATTURE_DA_EMETTERE";
+    public final static String SK_RATEI_PASSIVI = "RATEI_PASSIVI";
+    public final static String SK_RATEI_ATTIVI = "RATEI_ATTIVI";
     public final static String SK_BANCA = "BANCA";
 
     public final static String PK_VARIAZIONE_AUTOMATICA = "VARIAZIONE_AUTOMATICA";

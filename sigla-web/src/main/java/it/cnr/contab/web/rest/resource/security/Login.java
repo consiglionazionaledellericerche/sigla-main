@@ -17,8 +17,8 @@
 
 package it.cnr.contab.web.rest.resource.security;
 
+import it.cnr.contab.web.rest.exception.UnprocessableEntityException;
 import it.cnr.contab.web.rest.local.config00.AccountLocal;
-import it.cnr.contab.web.rest.resource.config00.AccountResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,13 +51,11 @@ public class Login {
                 request.login(username, password);
             return Response.ok(accountLocal.getAccountDTO(request)).build();
         } catch (ServletException e) {
-            LOGGER.error("Login error for user:{} password:{}", username, password, e);
-            return Response.serverError().build();
+            LOGGER.trace("Login error for user:{} password:{}", username, password, e);
+            return Response.status(Response.Status.UNAUTHORIZED) .build();
+        } catch (UnprocessableEntityException e) {
+            LOGGER.trace("Login error for user:{} password:{}", username, password, e);
+            return Response.status(Response.Status.NOT_ACCEPTABLE) .build();
         }
-    }
-
-    @OPTIONS
-    public Response options() {
-        return Response.ok().build();
     }
 }

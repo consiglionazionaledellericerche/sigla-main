@@ -23,12 +23,12 @@ import it.cnr.contab.utenze00.bulk.PreferitiBulk;
 import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.UserContext;
-import org.keycloak.KeycloakPrincipal;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
+import java.security.Principal;
 import java.util.List;
 
 @Stateless(name = "CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")
@@ -531,7 +531,7 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
         }
     }
 
-    public java.lang.Boolean isUserAccessoAllowed(KeycloakPrincipal param0, Integer param1, String param2, String param3, String... param4) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+    public java.lang.Boolean isUserAccessoAllowed(Principal param0, Integer param1, String param2, String param3, String... param4) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
         pre_component_invocation(null, componentObj);
         try {
             java.lang.Boolean result = componentObj.isUserAccessoAllowed(param0, param1, param2, param3, param4);

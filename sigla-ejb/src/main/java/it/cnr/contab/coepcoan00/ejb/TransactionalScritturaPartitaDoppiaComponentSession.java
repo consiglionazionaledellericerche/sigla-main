@@ -23,6 +23,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 public class TransactionalScritturaPartitaDoppiaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements ScritturaPartitaDoppiaComponentSession {
     public it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext param0, it.cnr.jada.persistency.sql.CompoundFindClause param1, it.cnr.jada.bulk.OggettoBulk param2) throws RemoteException, it.cnr.jada.comp.ComponentException {
@@ -316,5 +317,41 @@ public class TransactionalScritturaPartitaDoppiaComponentSession extends it.cnr.
 				throw new java.rmi.RemoteException("Uncaugth exception", ex);
 			}
 		}
+    }
+
+    @Override
+    public Scrittura_partita_doppiaBulk proposeScritturaPartitaDoppiaAnnullo(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
+        try {
+            return (Scrittura_partita_doppiaBulk) invoke("proposeScritturaPartitaDoppiaAnnullo", new Object[]{
+                    param0,
+                    param1});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+    @Override
+    public Scrittura_partita_doppiaBulk proposeStornoScritturaPartitaDoppia(UserContext param0, Scrittura_partita_doppiaBulk param1, Timestamp param2) throws RemoteException {
+        try {
+            return (Scrittura_partita_doppiaBulk) invoke("proposeStornoScritturaPartitaDoppia", new Object[]{
+                    param0,
+                    param1});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
     }
 }

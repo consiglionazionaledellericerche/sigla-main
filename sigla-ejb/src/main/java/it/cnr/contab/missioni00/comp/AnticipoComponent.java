@@ -19,6 +19,7 @@ package it.cnr.contab.missioni00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
+import it.cnr.contab.coepcoan00.core.bulk.IDocumentoCogeBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -350,7 +351,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Pre:  Il sistema non trova il terzo da caricare per l'anticipo che si sta aprendo in modifica
      * Post: Una segnalazione di errore viene restituita all'utente
      *
-     * @param    uc            lo UserContext che ha generato la richiesta
+     * @param    userContext            lo UserContext che ha generato la richiesta
      * @param    anticipo    l'AnticipoBulk da caricare
      */
     private void caricaTerzoInModificaAnticipo(UserContext userContext, AnticipoBulk anticipo) throws ComponentException {
@@ -585,7 +586,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Una segnalazione di errore viene restituita all'utente
      *
      * @return l'AnticipoBulk con il rimborso associato
-     * @param    uc            lo UserContext che ha generato la richiesta
+     * @param    userContext            lo UserContext che ha generato la richiesta
      * @param    anticipo l' AnticipoBulk per cui creare il rimborso
      */
 
@@ -606,6 +607,14 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
                 cs.setObject(5, CNRUserContext.getEsercizio(userContext));
                 cs.setString(6, userContext.getUser());
                 cs.executeQuery();
+
+                //Recupero il rimborso
+                Optional<RimborsoBulk> optRimborso = ((RimborsoHome)getHome(userContext, RimborsoBulk.class)).findByAnticipo(anticipo);
+
+                //Se creato effettuo la scrittura prima nota del rimborso
+                if (optRimborso.isPresent())
+                  this.createScrittura(userContext, optRimborso.get());
+
                 return anticipo;
             } catch (SQLException e) {
                 throw handleException(e);
@@ -642,7 +651,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * contabilizzato in Coge/Coan riporto i relativi stati ad "R"
      *
      * @param    userContext    lo UserContext che ha generato la richiesta
-     * @param    bulk        l' AnticipoBulk da cancellare
+     * @param    anticipo        l' AnticipoBulk da cancellare
      */
     private void deleteLogically(UserContext userContext, AnticipoBulk anticipo) throws ComponentException {
         try {
@@ -673,6 +682,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
                 anticipo.setStato_coge(AnticipoBulk.STATO_RICONTABILIZZARE_COGE);
 
             updateBulk(userContext, anticipo);
+            this.createScrittura(userContext, anticipo);
         } catch (Throwable e) {
             throw handleException(e);
         }
@@ -698,7 +708,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * obbligazione e' stata riportata
      * Post: 	Il sistema consente l'eliminazione logica dell'anticipo
      *
-     * @param    userContext    lo UserContext che ha generato la richiesta
+     * @param    aUC    lo UserContext che ha generato la richiesta
      * @param    bulk        l' AnticipoBulk da cancellare
      */
 
@@ -777,7 +787,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Il sistema restituisce la divisa di default
      *
      * @return la DivisaBulk di default oppure null se non esiste nessuna divisa di default
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    aUC    lo UserContext che ha generato la richiesta
      */
 
     private DivisaBulk findDivisaDefault(UserContext aUC) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException, RemoteException {
@@ -797,7 +807,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Il sistema restituisce la lista delle coordinate bancarie relative al terzo dell'anticipo
      *
      * @return la collezione di istanze di tipo BancaBulk
-     * @param    uc            lo UserContext che ha generato la richiesta
+     * @param    aUC            lo UserContext che ha generato la richiesta
      * @param    anticipo l' AnticipoBulk da cui ricavare il terzo per cui selezionare le coordinate bancarie
      */
 
@@ -818,7 +828,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Il sistema restituisce la lista delle modalità di pagamento relative al terzo dell'anticipo
      *
      * @return la collezione di istanze di tipo Rif_modalita_pagamentoBulk
-     * @param    uc        lo UserContext che ha generato la richiesta
+     * @param    userContext        lo UserContext che ha generato la richiesta
      * @param    bulk l' AnticipoBulk da cui ricavare il terzo per cui selezionare le modalità di pagamento
      */
 
@@ -847,7 +857,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Il sistema restituisce la lista dei termini di pagamento relativi al terzo dell'anticipo
      *
      * @return la collezione di istanze di tipo Rif_termini_pagamentoBulk
-     * @param    uc        lo UserContext che ha generato la richiesta
+     * @param    userContext        lo UserContext che ha generato la richiesta
      * @param    bulk l' AnticipoBulk da cui ricavare il terzo per cui selezionare i termini di pagamento
      */
 
@@ -916,7 +926,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: La data restituita viene inizializzata alla data odierna
      *
      * @return La data correttamente inizializzata
-     * @param    aUC        lo UserContext che ha generato la richiesta
+     * @param    userContext        lo UserContext che ha generato la richiesta
      * @param    bulk L' AnticipoBulk la cui data deve essere inizializzata.
      */
 
@@ -962,8 +972,8 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Viene restituita la stringa 'N'
      *
      * @return Lo stato del documento contabile associato all'anticipo
-     * @param    aUC        lo UserContext che ha generato la richiesta
-     * @param    bulk L' AnticipoBulk caricato in modifica.
+     * @param    context        lo UserContext che ha generato la richiesta
+     * @param    anticipo L' AnticipoBulk caricato in modifica.
      */
     private String getStatoRiporto(UserContext context, AnticipoBulk anticipo) throws ComponentException {
         try {
@@ -982,8 +992,8 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: Viene restituita la stringa 'N'
      *
      * @return Lo stato del documento contabile associato all'anticipo
-     * @param    aUC        lo UserContext che ha generato la richiesta
-     * @param    bulk L' AnticipoBulk caricato in modifica.
+     * @param    context        lo UserContext che ha generato la richiesta
+     * @param    anticipo L' AnticipoBulk caricato in modifica.
      */
     private String getStatoRiportoInScrivania(UserContext context, AnticipoBulk anticipo) throws ComponentException {
         try {
@@ -1002,8 +1012,8 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: La procedura restitusce la stringa 'N'
      *
      * @return Lo stato del documento contabile associato al rimborso
-     * @param    aUC        lo UserContext che ha generato la richiesta
-     * @param    bulk il RimborsoBulk caricato in modifica.
+     * @param    context        lo UserContext che ha generato la richiesta
+     * @param    rimborso il RimborsoBulk caricato in modifica.
      */
 
     private String getStatoRiportoRimborso(UserContext context, RimborsoBulk rimborso) throws ComponentException {
@@ -1046,8 +1056,8 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: La procedura restitusce la stringa 'N'
      *
      * @return Lo stato del documento contabile associato al rimborso
-     * @param    aUC        lo UserContext che ha generato la richiesta
-     * @param    bulk il RimborsoBulk caricato in modifica.
+     * @param    context        lo UserContext che ha generato la richiesta
+     * @param    rimborso il RimborsoBulk caricato in modifica.
      */
 
     private String getStatoRiportoRimborsoInScrivania(UserContext context, RimborsoBulk rimborso) throws ComponentException {
@@ -1094,8 +1104,8 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      *
      * @return il tipo di cancellazione (NULL = non cancellabile; F = cancellazione
      * fisica; L = cancellazione logica)
-     * @param    userContext    lo UserContext che ha generato la richiesta
-     * @param    missione    l' AnticipoBulk da cancellare
+     * @param    aUC    lo UserContext che ha generato la richiesta
+     * @param    bulk    l' AnticipoBulk da cancellare
      */
 
     private Character getTipoCancellazione(UserContext aUC, OggettoBulk bulk) throws ComponentException {
@@ -1183,7 +1193,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * e verifica se il documento contabile associato all'anticipo e' stato riportato
      *
      * @return l'AnticipoBulk inizializzato
-     * @param    aUC        lo UserContext che ha generato la richiesta
+     * @param    userContext        lo UserContext che ha generato la richiesta
      * @param    bulk l' AnticipoBulk da inizializzare
      */
     public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws ComponentException {
@@ -1247,21 +1257,14 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * restituisce l'anticipo con impostati tutti i dati relativi al rimborso
      *
      * @return l'AnticipoBulk inizializzato
-     * @param    aUC        lo UserContext che ha generato la richiesta
-     * @param    bulk l' AnticipoBulk da inizializzare
+     * @param    userContext        lo UserContext che ha generato la richiesta
+     * @param    anticipo l' AnticipoBulk da inizializzare
      */
     private AnticipoBulk inizializzaRimborso(UserContext userContext, AnticipoBulk anticipo) throws ComponentException {
         try {
-            SQLBuilder sql = getHome(userContext, RimborsoBulk.class).createSQLBuilder();
-            sql.addClause("AND", "esercizio_anticipo", SQLBuilder.EQUALS, anticipo.getEsercizio());
-            sql.addClause("AND", "cd_cds_anticipo", SQLBuilder.EQUALS, anticipo.getCd_cds());
-            sql.addClause("AND", "cd_uo_anticipo", SQLBuilder.EQUALS, anticipo.getCd_unita_organizzativa());
-            sql.addClause("AND", "pg_anticipo", SQLBuilder.EQUALS, anticipo.getPg_anticipo());
-            List result = getHome(userContext, RimborsoBulk.class).fetchAll(sql);
-            if (result.size() > 1)
-                throw new ApplicationException("Attenzione esiste piu' di un rimborso associato all'anticipo");
-            if (result.size() == 1)
-                anticipo.setRimborso((RimborsoBulk) result.get(0));
+            Optional<RimborsoBulk> optRimborso = ((RimborsoHome)getHome(userContext, RimborsoBulk.class)).findByAnticipo(anticipo);
+            if (optRimborso.isPresent())
+                anticipo.setRimborso(optRimborso.get());
 
             //	In base allo stato di riporto dell'obbligazione dell'rimborso
             //	inizializzo la variabile 'riportata' del rimborso
@@ -1516,7 +1519,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      *
      * @return l'AnticipoBulk rimborsato
      * @param    userContext    lo UserContext che ha generato la richiesta
-     * @param    bulk        l'AnticipoBulk rimborsato
+     * @param    anticipo        l'AnticipoBulk rimborsato
      */
 
     public AnticipoBulk riportaRimborsoAvanti(UserContext userContext, AnticipoBulk anticipo) throws ComponentException {
@@ -1588,7 +1591,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Pre:  	Una richiesta di annullare tutte le modifiche apportate e di ritornare al savepoint e' stata generata
      * Post: 	Tutte le modifiche effettuate sull'anticipo da quando si e' impostato il savepoint vengono annullate
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      */
     public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
         try {
@@ -1641,7 +1644,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * a quello selezionato dall'utente (bancario, postale, etc.)
      *
      * @return il SQLBuilder con tutte le clausole
-     * @param    userContext    lo UserContext che ha generato la richiesta
+     * @param    aUC    lo UserContext che ha generato la richiesta
      * @param    anticipo    l'AnticipoBulk da cui ricavare il terzo e il tipo di pagamento
      * @param    banca    la BancaBulk da ricercare
      * @param    clauses    le clausole specificate dall'utente
@@ -1664,7 +1667,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * la linea di attività sia di Entrata e il Cdr della Linea di attività appartenga all'Uo di scrivania
      *
      * @return il SQLBuilder con tutte le clausole
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    aUC    lo UserContext che ha generato la richiesta
      * @param    anticipo l' AnticipoBulk per cui selezionare la linea di attività
      * @param    latt la Linea_attivitaBulk da ricercare
      * @param    clauses le clausole specificate dall'utente
@@ -1798,7 +1801,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Pre:  Una richiesta di impostare un savepoint e' stata generata
      * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      */
     public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
         try {
@@ -1855,7 +1858,7 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * La nuova data e' antecedente alla data dell'ultimo anticipo inserito
      * Post: Il sistema segnala con un errore all'utente la non validazione della data inserita
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      * @param    anticipo    l'AnticipoBulk per cui validare la data di registrazione
      */
 
@@ -1999,8 +2002,8 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * Post: 	Ritorna un ApplicationException con la descrizione dell'errore
      *
      * @param    userContext        lo UserContext che genera la richiesta
-     * @param    compenso        l'anticipo di cui validare il terzo
-     * @param    obblig            l'obbligazione di cui validare il terzo
+     * @param    anticipo        l'anticipo di cui validare il terzo
+     * @param    obbligazione            l'obbligazione di cui validare il terzo
      **/
     private void validaTerzoObbligazione(UserContext userContext, AnticipoBulk anticipo, ObbligazioneBulk obbligazione) throws ComponentException {
         try {
@@ -2027,6 +2030,31 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
 
             return !eHome.isEsercizioChiuso(userContext, anEsercizio.getEsercizio(), anEsercizio.getCd_cds());
         } catch (it.cnr.jada.persistency.PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    @Override
+    public Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+        try {
+            if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(usercontext)) {
+                Scrittura_partita_doppiaBulk scritturaPrinc = super.createScrittura(usercontext, documentoCoge);
+                if (documentoCoge instanceof AnticipoBulk && ((AnticipoBulk) documentoCoge).isAnnullato()) {
+                    Scrittura_partita_doppiaBulk scritturaStorno = this.createScritturaAnnullo(usercontext, documentoCoge, scritturaPrinc, ((AnticipoBulk) documentoCoge).getDt_cancellazione());
+
+                    scritturaPrinc.setAttiva(Scrittura_partita_doppiaBulk.ATTIVA_NO);
+                    scritturaPrinc.setToBeUpdated();
+                    makeBulkPersistent(usercontext, scritturaPrinc);
+
+                    scritturaStorno.setAttiva(Scrittura_partita_doppiaBulk.ATTIVA_NO);
+                    scritturaStorno.setPg_scrittura_annullata(scritturaPrinc.getPg_scrittura());
+                    scritturaStorno.setToBeUpdated();
+                    makeBulkPersistent(usercontext, scritturaStorno);
+                }
+                return scritturaPrinc;
+            }
+            return null;
+        } catch (it.cnr.jada.persistency.PersistencyException | RemoteException e) {
             throw handleException(e);
         }
     }

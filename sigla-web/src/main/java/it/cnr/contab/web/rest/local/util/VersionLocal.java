@@ -31,7 +31,4 @@ public interface VersionLocal {
     @GET
     Response get(@Context HttpServletRequest request) throws Exception;
 
-    @OPTIONS
-    Response options();
-
 }

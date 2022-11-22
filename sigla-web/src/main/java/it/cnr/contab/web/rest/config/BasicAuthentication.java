@@ -52,7 +52,7 @@ public class BasicAuthentication {
 			utente = loginComponentSession().validaUtente(
 					AdminUserContext.getInstance(),
 					utente,
-					GestioneLoginComponent.VALIDA_FASE_INIZIALE);
+					GestioneLoginComponent.VALIDA_FASE_SSO);
 			if (utente != null)
 				return utente;
 		} catch (RemoteException e) {
@@ -85,11 +85,7 @@ public class BasicAuthentication {
 				utente.setPasswordInChiaro(password.toUpperCase());
 				utente.setUtente_multiplo(utenteMultiplo);
 				try {
-					utente = loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente,
-							Optional.ofNullable(utenteMultiplo)
-								.map(s -> GestioneLoginComponent.VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO)
-								.orElseGet(() -> GestioneLoginComponent.VALIDA_FASE_INIZIALE)
-							);
+					utente = loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente, GestioneLoginComponent.VALIDA_FASE_SSO);
 					if (utente != null)
 						authorized = true;
 				} catch (RemoteException e) {
@@ -144,7 +140,7 @@ public class BasicAuthentication {
 				}
 				throw new RuntimeException(e);
 			}
-			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
+			return loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente, GestioneLoginComponent.VALIDA_FASE_SSO);
 		} catch (RemoteException e) {
 			throw new ApplicationException(e.getMessage());
 		} catch (EJBException e) {

@@ -301,9 +301,28 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
     }
 
     @Override
-    public void createScrittura(UserContext param0, Scrittura_partita_doppiaBulk param1) throws ComponentException, RemoteException {
+    public Scrittura_partita_doppiaBulk createScrittura(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
         try {
-            invoke("createScrittura", new Object[]{
+            return (Scrittura_partita_doppiaBulk)invoke("createScrittura", new Object[]{
+                    param0,
+                    param1});
+        } catch (RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+    @Override
+    public Scrittura_partita_doppiaBulk createScritturaRequiresNew(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
+        try {
+            return (Scrittura_partita_doppiaBulk)invoke("createScritturaRequiresNew", new Object[]{
                     param0,
                     param1});
         } catch (RemoteException e) {
@@ -344,43 +363,6 @@ public class TransactionalScritturaPartitaDoppiaFromDocumentoComponentSession ex
                     param0,
                     param1,
                     param2});
-        } catch (RemoteException e) {
-            throw e;
-        } catch (java.lang.reflect.InvocationTargetException e) {
-            try {
-                throw e.getTargetException();
-            } catch (ComponentException ex) {
-                throw ex;
-            } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
-            }
-        }
-    }
-    @Override
-    public void loadScritturePatrimoniali(UserContext param0, List<IDocumentoCogeBulk> param1) throws ComponentException, RemoteException {
-        try {
-            invoke("loadScritturePatrimoniali", new Object[]{
-                    param0,
-                    param1});
-        } catch (RemoteException e) {
-            throw e;
-        } catch (java.lang.reflect.InvocationTargetException e) {
-            try {
-                throw e.getTargetException();
-            } catch (ComponentException ex) {
-                throw ex;
-            } catch (Throwable ex) {
-                throw new RemoteException("Uncaugth exception", ex);
-            }
-        }
-    }
-
-    @Override
-    public void loadScritturaPatrimoniale(UserContext param0, IDocumentoCogeBulk param1) throws ComponentException, RemoteException {
-        try {
-            invoke("loadScritturaPatrimoniale", new Object[]{
-                    param0,
-                    param1});
         } catch (RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {

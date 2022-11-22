@@ -1698,7 +1698,10 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 	if (bulk instanceof ObbligazioneRes_impropriaBulk)
 		sql.addClause(FindClause.AND, "fl_azzera_residui", SQLBuilder.EQUALS, Boolean.FALSE );
 
-	sql.addClause(FindClause.AND, "esercizio_bilancio", SQLBuilder.EQUALS, bulk.getEsercizio_originale() );
+	if (bulk.getEsercizio_originale()!=null)
+		sql.addClause(FindClause.AND, "esercizio_bilancio", SQLBuilder.EQUALS, bulk.getEsercizio_originale() );
+	else
+		sql.addClause(FindClause.AND, "esercizio_bilancio", SQLBuilder.EQUALS, bulk.getEsercizio() );
 
 	sql.openParenthesis(FindClause.AND);
 	sql.addClause(FindClause.OR, "fl_limite_ass_obblig", SQLBuilder.EQUALS, Boolean.FALSE );
@@ -1709,8 +1712,10 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		SQLBuilder sqlstrOrg = new SQLBuilder();
 		sqlstrOrg.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
 		sqlstrOrg.setHeader("SELECT V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA");
-		sqlstrOrg.addSQLClause(FindClause.AND,"V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, bulk.getUnita_organizzativa().getCd_unita_organizzativa());
-
+		if (bulk.getUnita_organizzativa().getCd_unita_organizzativa()!=null)
+			sqlstrOrg.addSQLClause(FindClause.AND,"V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, bulk.getUnita_organizzativa().getCd_unita_organizzativa());
+		else
+			sqlstrOrg.addSQLClause(FindClause.AND,"V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, bulk.getCd_uo_origine());
 		sql.addSQLINClause(FindClause.AND, "V_ELEMENTO_VOCE_ASSESTATO.CD_CDR_BILANCIO", sqlstrOrg);
 	} catch (IntrospectionException e) {
 		e.printStackTrace();

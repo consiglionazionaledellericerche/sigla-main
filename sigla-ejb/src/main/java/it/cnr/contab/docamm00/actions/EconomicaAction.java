@@ -60,6 +60,10 @@ public abstract class EconomicaAction extends CRUDAction {
                     actionContext.getUserContext(),
                     documentoCogeBulk)
             );
+            Optional.ofNullable(documentoCogeBulk)
+                    .filter(OggettoBulk.class::isInstance)
+                    .map(OggettoBulk.class::cast)
+                    .ifPresent(oggettoBulk -> oggettoBulk.setToBeUpdated());
             bp.getMovimentiAvere().reset(actionContext);
             bp.getMovimentiDare().reset(actionContext);
             bp.setMessage(FormBP.INFO_MESSAGE, "Scrittura di economica generata correttamente.");
@@ -86,15 +90,15 @@ public abstract class EconomicaAction extends CRUDAction {
                     .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
                     .orElse(Collections.emptyList())
                     .stream();
-            List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = Stream.concat(
-                            movimentoCogeBulks.filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoAmministrativo()).isPresent()).map(Movimento_cogeBulk::getDocumentoAmministrativo),
+            List<IDocumentoCogeBulk> iDocumentoCogeBulks = Stream.concat(
+                            movimentoCogeBulks.filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoCoge()).isPresent()).map(Movimento_cogeBulk::getDocumentoCoge),
                             Stream.of(documentoAmministrativoBulk.get()))
                     .distinct()
                     .collect(Collectors.toList());
 
             ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                     "ConsultazionePartitarioBP",
-                    new Object[]{iDocumentoAmministrativoBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario"}
+                    new Object[]{iDocumentoCogeBulks.stream().filter(Utility.distinctByKey(o -> o.primaryKeyHashCode())).collect(Collectors.toList()), "partitario"}
             );
             RemoteIterator ri = consBP.openIterator(actionContext);
             try {
@@ -119,19 +123,19 @@ public abstract class EconomicaAction extends CRUDAction {
                 .filter(IDocumentoCogeBulk.class::isInstance)
                 .map(IDocumentoCogeBulk.class::cast);
         if (documentoCogeBulk.isPresent()) {
-            final List<IDocumentoAmministrativoBulk> iDocumentoAmministrativoBulks = documentoCogeBulk
+            final List<IDocumentoCogeBulk> iDocumentoCogeBulks = documentoCogeBulk
                     .flatMap(documentoCogeBulk1 -> Optional.ofNullable(documentoCogeBulk1.getScrittura_partita_doppia()))
                     .flatMap(scrittura_partita_doppiaBulk -> Optional.ofNullable(scrittura_partita_doppiaBulk.getAllMovimentiColl()))
                     .orElse(Collections.emptyList())
                     .stream()
-                    .filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoAmministrativo()).isPresent())
-                    .map(Movimento_cogeBulk::getDocumentoAmministrativo)
+                    .filter(movimento_cogeBulk -> Optional.ofNullable(movimento_cogeBulk.getDocumentoCoge()).isPresent())
+                    .map(Movimento_cogeBulk::getDocumentoCoge)
                     .distinct()
                     .collect(Collectors.toList());
-            if (!iDocumentoAmministrativoBulks.isEmpty()) {
+            if (!iDocumentoCogeBulks.isEmpty()) {
                 ConsultazionePartitarioBP consBP = (ConsultazionePartitarioBP) actionContext.createBusinessProcess(
                         "ConsultazionePartitarioBP",
-                        new Object[]{iDocumentoAmministrativoBulks, "partitario"}
+                        new Object[]{iDocumentoCogeBulks, "partitario"}
                 );
                 RemoteIterator ri = consBP.openIterator(actionContext);
                 try {

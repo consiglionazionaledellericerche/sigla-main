@@ -59,4 +59,6 @@ public interface IDocumentoCogeBulk extends KeyedPersistent{
     void setStato_coge(java.lang.String stato_coge);
 
     java.lang.String getStato_coge();
+
+    int primaryKeyHashCode();
 }

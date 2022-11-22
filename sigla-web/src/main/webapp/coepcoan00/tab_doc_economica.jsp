@@ -18,9 +18,17 @@
                     .map(IDocumentoCogeBulk.class::cast)
                     .map(IDocumentoCogeBulk::getScrittura_partita_doppia)
                     .orElse(new Scrittura_partita_doppiaBulk());
+    boolean scritturaNonAttiva =
+                Optional.ofNullable(bp.getModel())
+                    .filter(IDocumentoCogeBulk.class::isInstance)
+                    .map(IDocumentoCogeBulk.class::cast)
+                    .map(IDocumentoCogeBulk::getScrittura_partita_doppia)
+                    .map(spd->!spd.isScritturaAttiva())
+                    .orElse(Boolean.FALSE);
 %>
+<% if (bp.isButtonGeneraScritturaVisible() || scritturaNonAttiva) { %>
+<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
 <% if (bp.isButtonGeneraScritturaVisible()) { %>
-<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group">
 		<% JSPUtils.button(out,
 				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-bolt" : "img/bringback24.gif",
@@ -31,6 +39,12 @@
 				true,
 				bp.getParentRoot().isBootstrap()); %>
     </div>
+<% } %>
+<% if (scritturaNonAttiva) { %>
+    <div class="alert alert-danger" role="alert">
+      Scrittura Partita Doppia annullata!
+    </div>
+<% } %>
 </div>
 <% } %>
 <div class="Panel card p-2 mb-2 card-shadow">

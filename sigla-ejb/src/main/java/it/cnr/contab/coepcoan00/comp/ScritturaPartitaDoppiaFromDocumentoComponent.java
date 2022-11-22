@@ -31,7 +31,6 @@ import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
@@ -43,6 +42,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,45 +67,63 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
     }
 
+    private Optional<Scrittura_partita_doppiaBulk> getScritturaAnnullo(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
+        try {
+            Optional<Scrittura_partita_doppiaBulk> scritturaOpt = Optional.empty();
+            if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(userContext)) {
+                Scrittura_partita_doppiaHome partitaDoppiaHome = Optional.ofNullable(getHome(userContext, Scrittura_partita_doppiaBulk.class))
+                        .filter(Scrittura_partita_doppiaHome.class::isInstance)
+                        .map(Scrittura_partita_doppiaHome.class::cast)
+                        .orElseThrow(() -> new DetailedRuntimeException("Partita doppia Home not found"));
+                scritturaOpt = partitaDoppiaHome.getScritturaAnnullo(userContext, documentoCogeBulk);
+            }
+            return scritturaOpt;
+        } catch (ComponentException | RemoteException | PersistencyException e) {
+            throw handleException((OggettoBulk) documentoCogeBulk, e);
+        }
+    }
+
     protected void caricaScrittura(UserContext userContext, IDocumentoCogeBulk documentoCogeBulk) throws ComponentException {
         this.getScrittura(userContext, documentoCogeBulk).ifPresent(documentoCogeBulk::setScrittura_partita_doppia);
     }
 
     @Override
-    protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
-        super.validaCreaModificaConBulk(usercontext, oggettobulk);
+    protected OggettoBulk eseguiCreaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+        OggettoBulk bulk = super.eseguiCreaConBulk(usercontext, oggettobulk);
+        Optional.ofNullable(bulk).filter(IDocumentoCogeBulk.class::isInstance).map(IDocumentoCogeBulk.class::cast)
+            .ifPresent(el->{
+                try {
+                    this.createScrittura(usercontext, el);
+                } catch (NoRollbackException ignored) {
+                } catch (ComponentException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        return bulk;
+    }
+
+    @Override
+    protected OggettoBulk eseguiModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+        OggettoBulk bulk = super.eseguiModificaConBulk(usercontext, oggettobulk);
+        Optional.ofNullable(bulk).filter(IDocumentoCogeBulk.class::isInstance).map(IDocumentoCogeBulk.class::cast)
+            .ifPresent(el->{
+                try {
+                    this.createScrittura(usercontext, el);
+                } catch (NoRollbackException ignored) {
+                } catch (ComponentException e) {
+                    throw new DetailedRuntimeException(e);
+                }
+            });
+        return bulk;
+    }
+
+    public Scrittura_partita_doppiaBulk createScrittura(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(usercontext)) {
-                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
-                        .filter(IDocumentoCogeBulk.class::isInstance)
-                        .map(IDocumentoCogeBulk.class::cast);
-                if (optionalIDocumentoCogeBulk.isPresent() && !(
-                        optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isMandato() ||
-                                optionalIDocumentoCogeBulk.get().getTipoDocumentoEnum().isReversale()
-                )){
+                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(documentoCoge);
+                if (optionalIDocumentoCogeBulk.isPresent()){
                     if (Utility.createConfigurazioneCnrComponentSession().isBloccoScrittureProposte(usercontext)) {
-                        Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
-                        try {
-                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                                .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
-                        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
-                            optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
-                        }
-
-                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
-                        final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScrittura(usercontext, optionalIDocumentoCogeBulk.get());
-                        optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
-                            //Elimino vecchia scrittura
-                            try {
-                                optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
-                                this.removeScrittura(usercontext, oldScrittura);
-                            } catch (ComponentException e) {
-                                throw new DetailedRuntimeException(e);
-                            }
-                        });
-                        //Ricreo
-                        if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent())
-                            super.creaConBulk(usercontext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                        return this.loadScritturaPatrimoniale(usercontext, optionalIDocumentoCogeBulk.get());
                     } else {
                         final Optional<Scrittura_partita_doppiaBulk> optionalScrittura_partita_doppiaBulk = optionalIDocumentoCogeBulk
                                 .map(IDocumentoCogeBulk::getScrittura_partita_doppia);
@@ -120,32 +139,102 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
                                         throw new DetailedRuntimeException(e);
                                     }
                                 });
-                                super.creaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                                makeBulkPersistent(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                                return optionalScrittura_partita_doppiaBulk.get();
                             } else if (optionalScrittura_partita_doppiaBulk.get().isToBeUpdated()) {
-                                super.modificaConBulk(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                                makeBulkPersistent(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                                return optionalScrittura_partita_doppiaBulk.get();
                             }
                         } else {
                             Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaBulk;
                             try {
-                                optionalScritturaPartitaDoppiaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                                        .proposeScritturaPartitaDoppia(usercontext, optionalIDocumentoCogeBulk.get()));
+                                optionalScritturaPartitaDoppiaBulk = this.proposeScritturaPartitaDoppiaWithSavepoint(usercontext, optionalIDocumentoCogeBulk.get());
                             } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
                                 optionalScritturaPartitaDoppiaBulk = Optional.empty();
                             }
                             if (optionalScritturaPartitaDoppiaBulk.isPresent()) {
-                                super.creaConBulk(usercontext, optionalScritturaPartitaDoppiaBulk.get());
+                                makeBulkPersistent(usercontext, optionalScrittura_partita_doppiaBulk.get());
+                                return optionalScritturaPartitaDoppiaBulk.get();
                             }
                         }
                     }
                 }
             }
-        } catch (RemoteException e) {
+            return null;
+        } catch (RemoteException | PersistencyException | SQLException e) {
             throw handleException(e);
         }
     }
 
-    public void createScrittura(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws ComponentException {
-        super.creaConBulk(userContext, scrittura);
+    public Scrittura_partita_doppiaBulk createScritturaRequiresNew(UserContext usercontext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+        return createScrittura(usercontext, documentoCoge);
+    }
+
+    protected Scrittura_partita_doppiaBulk createScritturaAnnullo(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+        try {
+            if (Utility.createConfigurazioneCnrComponentSession().isAttivaEconomica(usercontext)) {
+                final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(oggettobulk)
+                        .filter(IDocumentoCogeBulk.class::isInstance)
+                        .map(IDocumentoCogeBulk.class::cast);
+                if (optionalIDocumentoCogeBulk.isPresent()){
+                    Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
+                    try {
+                        optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                            .proposeScritturaPartitaDoppiaAnnullo(usercontext, optionalIDocumentoCogeBulk.get()));
+                    } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
+                        optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
+                    }
+
+                    final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = optionalScritturaPartitaDoppiaPropostaBulk1;
+                    final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScritturaAnnullo(usercontext, optionalIDocumentoCogeBulk.get());
+                    optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
+                            //Elimino vecchia scrittura
+                            try {
+                                optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
+                                this.removeScrittura(usercontext, oldScrittura);
+                            } catch (ComponentException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                    });
+                    //Ricreo
+                    if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
+                        makeBulkPersistent(usercontext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                        return optionalScritturaPartitaDoppiaPropostaBulk.get();
+                    }
+                }
+            }
+            return null;
+        } catch (RemoteException | PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    protected Scrittura_partita_doppiaBulk createScritturaAnnullo(UserContext usercontext, IDocumentoCogeBulk documentoCoge, Scrittura_partita_doppiaBulk scritturaPrinc, Timestamp dataStorno) throws ComponentException {
+        try {
+            final Optional<IDocumentoCogeBulk> optionalIDocumentoCogeBulk = Optional.ofNullable(documentoCoge);
+
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                        .proposeStornoScritturaPartitaDoppia(usercontext, scritturaPrinc, dataStorno));
+
+            final Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaOldBulk = this.getScritturaAnnullo(usercontext, optionalIDocumentoCogeBulk.get());
+            optionalScritturaPartitaDoppiaOldBulk.ifPresent(oldScrittura->{
+                //Elimino vecchia scrittura
+                try {
+                    optionalScritturaPartitaDoppiaPropostaBulk.ifPresent(prop->prop.setPg_scrittura(oldScrittura.getPg_scrittura()));
+                        this.removeScrittura(usercontext, oldScrittura);
+                } catch (ComponentException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+            });
+            //Ricreo
+            if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
+                makeBulkPersistent(usercontext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                return optionalScritturaPartitaDoppiaPropostaBulk.get();
+            }
+            return null;
+        } catch (RemoteException | PersistencyException e) {
+            throw handleException(e);
+        }
     }
 
     public void removeScrittura(UserContext userContext, Scrittura_partita_doppiaBulk scrittura) throws ComponentException {
@@ -312,22 +401,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
         }
         return allDocuments;
     }
-    public void loadScritturePatrimoniali(UserContext userContext, List<IDocumentoCogeBulk> documentiCoge) {
-        documentiCoge.forEach(documentoCoge->{
-            try {
-                this.loadScritturaPatrimoniale(userContext, documentoCoge);
-                logger.info("DOCUMENTO CONTABILIZZATO - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc());
-            } catch (NoRollbackException e) {
-                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
-                        " - Anomalia: " + e.getMessage());
-            } catch (Exception e) {
-                logger.error("ANOMALIA - Esercizio: " + documentoCoge.getEsercizio() + " - CdUo: " + documentoCoge.getCd_uo() + " - CdTipoDoc: " + documentoCoge.getCd_tipo_doc() + " - PgDoc: " + documentoCoge.getPg_doc() +
-                        " - Anomalia: " + e.getMessage());
-                throw new DetailedRuntimeException(e);
-            }
-        });
-    }
-    public void loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
+    private Scrittura_partita_doppiaBulk loadScritturaPatrimoniale(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException {
         try {
             documentoCoge.setStato_coge(Fattura_passivaBulk.NON_REGISTRATO_IN_COGE);
 
@@ -335,8 +409,7 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
 
             Optional<Scrittura_partita_doppiaBulk> optionalScritturaPartitaDoppiaPropostaBulk1;
             try {
-                optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
-                        .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+                optionalScritturaPartitaDoppiaPropostaBulk1 = this.proposeScritturaPartitaDoppiaWithSavepoint(userContext, documentoCoge);
             } catch (ScritturaPartitaDoppiaNotEnabledException e) {
                 optionalScritturaPartitaDoppiaPropostaBulk1 = Optional.empty();
             } catch (ScritturaPartitaDoppiaNotRequiredException e) {
@@ -357,12 +430,26 @@ public class ScritturaPartitaDoppiaFromDocumentoComponent extends CRUDComponent 
             });
             //Ricreo
             if (optionalScritturaPartitaDoppiaPropostaBulk.isPresent()) {
-                this.createScrittura(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
+                makeBulkPersistent(userContext, optionalScritturaPartitaDoppiaPropostaBulk.get());
                 documentoCoge.setStato_coge(Fattura_passivaBulk.REGISTRATO_IN_COGE);
             }
             ((OggettoBulk)documentoCoge).setToBeUpdated();
-            updateBulk(userContext, (OggettoBulk) documentoCoge);
-        } catch (RemoteException|PersistencyException e) {
+            updateBulk(userContext, (OggettoBulk)documentoCoge);
+            return optionalScritturaPartitaDoppiaPropostaBulk.orElse(null);
+        } catch (PersistencyException|SQLException e) {
+            throw handleException(e);
+        }
+    }
+
+    private Optional<Scrittura_partita_doppiaBulk> proposeScritturaPartitaDoppiaWithSavepoint(UserContext userContext, IDocumentoCogeBulk documentoCoge) throws ComponentException, ScritturaPartitaDoppiaNotRequiredException, ScritturaPartitaDoppiaNotEnabledException, SQLException{
+        try {
+            setSavepoint(userContext, "INIT_SCRITTURA_PRIMA_NOTA");
+            return Optional.ofNullable(Utility.createScritturaPartitaDoppiaComponentSession()
+                        .proposeScritturaPartitaDoppia(userContext, documentoCoge));
+        } catch (ScritturaPartitaDoppiaNotRequiredException | ScritturaPartitaDoppiaNotEnabledException e) {
+            rollbackToSavepoint(userContext, "INIT_SCRITTURA_PRIMA_NOTA");
+            throw e;
+        } catch (RemoteException e) {
             throw handleException(e);
         }
     }

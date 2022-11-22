@@ -49,16 +49,6 @@ public interface AccountLocal {
     )
     Response get(@Context HttpServletRequest request) throws Exception;
 
-    @OPTIONS
-    @ApiOperation(value = "Fornisce le informazioni dell'account",
-            notes = "Accesso consentito a tutte le utenze registrate",
-            response = AccountDTO.class,
-            authorizations = {
-                    @Authorization(value = "BASIC")
-            }
-    )
-    Response optionsGet(@Context HttpServletRequest request) throws Exception;
-
     @GET
     @Path("/{username}")
     @ApiOperation(value = "Fornisce le informazioni dell'account in base allo username",
@@ -81,16 +71,6 @@ public interface AccountLocal {
     )
     Response changePassword(@Context HttpServletRequest request, PasswordDTO passwordDTO) throws Exception;
 
-    @OPTIONS
-    @Path("/change-password")
-    @ApiOperation(value = "Cambia la passwod dell'utente collegato",
-            notes = "Accesso consentito a tutte le utenze registrate",
-            response = AccountDTO.class,
-            authorizations = {
-                    @Authorization(value = "BASIC")
-            }
-    )
-    Response changePassword(@Context HttpServletRequest request) throws Exception;
 
     AccountDTO getAccountDTO(HttpServletRequest request) throws Exception;
 }

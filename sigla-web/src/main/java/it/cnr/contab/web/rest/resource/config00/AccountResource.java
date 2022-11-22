@@ -20,6 +20,7 @@ package it.cnr.contab.web.rest.resource.config00;
 import it.cnr.contab.security.auth.SIGLALDAPPrincipal;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.web.rest.config.RESTSecurityInterceptor;
 import it.cnr.contab.web.rest.exception.InvalidPasswordException;
 import it.cnr.contab.web.rest.exception.UnauthorizedException;
 import it.cnr.contab.web.rest.exception.UnprocessableEntityException;
@@ -37,6 +38,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -50,6 +52,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class AccountResource implements AccountLocal {
+    public static final String FIND_UTENTE_BY_UID = "findUtenteByUID";
     private final Logger LOGGER = LoggerFactory.getLogger(AccountResource.class);
     @Context
     SecurityContext securityContext;
@@ -68,30 +71,42 @@ public class AccountResource implements AccountLocal {
 
         AccountDTO accountDTO = null;
         if (siglaldapPrincipal.isPresent()) {
+            LOGGER.info("Try to find user: {}", securityContext.getUserPrincipal().getName());
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
                     userContext,
                     UtenteBulk.class,
-                    "findUtenteByUID",
+                    FIND_UTENTE_BY_UID,
                     userContext,
                     securityContext.getUserPrincipal().getName()
             );
-            accountDTO = new AccountDTO(findUtenteByUID.stream().findFirst().get());
-            accountDTO.setLogin(siglaldapPrincipal.get().getName());
-            accountDTO.setUsers(findUtenteByUID.stream().map(utenteBulk -> new AccountDTO(utenteBulk)).collect(Collectors.toList()));
-            accountDTO.setEmail((String) siglaldapPrincipal.get().getAttribute("mail"));
-            accountDTO.setFirstName((String) siglaldapPrincipal.get().getAttribute("cnrnome"));
-            accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
-            accountDTO.setLdap(Boolean.TRUE);
-            accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+            final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
+            if (utenteBulk1.isPresent()) {
+                accountDTO = new AccountDTO(utenteBulk1.get());
+                accountDTO.setLogin(siglaldapPrincipal.get().getName());
+                accountDTO.setUsers(findUtenteByUID.stream().map(utenteBulk -> new AccountDTO(utenteBulk)).collect(Collectors.toList()));
+                accountDTO.setEmail((String) siglaldapPrincipal.get().getAttribute("mail"));
+                accountDTO.setFirstName((String) siglaldapPrincipal.get().getAttribute("cnrnome"));
+                accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
+                accountDTO.setLdap(Boolean.TRUE);
+                accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+            } else {
+                LOGGER.warn("User {} not found!", securityContext.getUserPrincipal().getName());
+                request.logout();
+                throw new UnprocessableEntityException("");
+            }
         } else if (keycloakPrincipal.isPresent()) {
             final IDToken idToken = Optional.ofNullable(keycloakPrincipal.get().getKeycloakSecurityContext().getIdToken())
                     .orElse(keycloakPrincipal.get().getKeycloakSecurityContext().getToken());
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
                     userContext,
                     UtenteBulk.class,
-                    "findUtenteByUID",
+                    FIND_UTENTE_BY_UID,
                     userContext,
-                    idToken.getPreferredUsername()
+                    Optional.ofNullable(idToken.getOtherClaims())
+                            .flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(RESTSecurityInterceptor.USERNAME_CNR)))
+                            .filter(String.class::isInstance)
+                            .map(String.class::cast)
+                            .orElse(idToken.getPreferredUsername())
             );
             final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
             if (!utenteBulk1.isPresent()) {
@@ -139,11 +154,6 @@ public class AccountResource implements AccountLocal {
     }
 
     @Override
-    public Response optionsGet(HttpServletRequest request) throws Exception {
-        return Response.ok().build();
-    }
-
-    @Override
     public Response getUsername(HttpServletRequest request, String username) throws Exception {
         if (Optional.ofNullable(securityContext.getUserPrincipal()).isPresent()) {
             final AccountDTO accountDTO = getAccountDTO(request);
@@ -180,11 +190,6 @@ public class AccountResource implements AccountLocal {
         utente.setDt_ultima_var_password(EJBCommonServices.getServerTimestamp());
         utente.setToBeUpdated();
         crudComponentSession.modificaConBulk(userContext, utente);
-        return Response.ok().build();
-    }
-
-    @Override
-    public Response changePassword(HttpServletRequest request) throws Exception {
         return Response.ok().build();
     }
 }

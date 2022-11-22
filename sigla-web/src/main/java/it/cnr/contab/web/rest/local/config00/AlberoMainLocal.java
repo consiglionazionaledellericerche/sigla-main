@@ -41,7 +41,6 @@ import java.util.Map;
 public interface AlberoMainLocal {
 
     @DELETE
-    @OPTIONS
     @ApiOperation(value = "Elimina la cache e ricalcola l'albero delle funzioni abilitate",
             notes = "Accesso consentito a tutte le utenze registrate",
             response = Map.class,

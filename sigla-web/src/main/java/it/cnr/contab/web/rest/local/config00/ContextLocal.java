@@ -126,18 +126,6 @@ public interface ContextLocal {
     )
     Response deleteMessaggi(@Context HttpServletRequest request, List<MessaggioBulk> messaggi) throws Exception;
 
-    @OPTIONS
-    @Path("/messaggi")
-    @ApiOperation(value = "Cancella la lista dei Messaggi per Utente",
-            notes = "Accesso consentito a tutte le utenze registrate",
-            response = List.class,
-            responseContainer = "List",
-            authorizations = {
-                    @Authorization(value = "BASIC")
-            }
-    )
-    Response deleteMessaggi(@Context HttpServletRequest request) throws Exception;
-
     @GET
     @Path("/indirizzi-mail")
     @ApiOperation(value = "Ritorna la lista degli indirizzi email per Utente",
@@ -151,7 +139,6 @@ public interface ContextLocal {
     Response indirizziMail(@Context HttpServletRequest request) throws Exception;
 
     @POST
-    @OPTIONS
     @Path("/indirizzi-mail")
     @ApiOperation(value = "Inserisce la lista degli indirizzi email per Utente",
             notes = "Accesso consentito a tutte le utenze registrate",
@@ -163,20 +150,7 @@ public interface ContextLocal {
     )
     Response inserisciIndirizziMail(@Context HttpServletRequest request, List<UtenteIndirizziMailDTO> utente_indirizzi_mailBulks) throws Exception;
 
-    @OPTIONS
-    @Path("/indirizzi-mail")
-    @ApiOperation(value = "Inserisce la lista degli indirizzi email per Utente",
-            notes = "Accesso consentito a tutte le utenze registrate",
-            response = List.class,
-            responseContainer = "List",
-            authorizations = {
-                    @Authorization(value = "BASIC")
-            }
-    )
-    Response inserisciIndirizziMail(@Context HttpServletRequest request) throws Exception;
-
     @DELETE
-    @OPTIONS
     @Path("/indirizzi-mail/{indirizzi:.+}/delete")
     @ApiOperation(value = "Elimina la lista degli indirizzi email per Utente",
             notes = "Accesso consentito a tutte le utenze registrate",

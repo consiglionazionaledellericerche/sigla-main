@@ -21,13 +21,11 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
-import it.cnr.si.spring.storage.StorageDriver;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,7 +72,7 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
     protected ContoBulk conto = new ContoBulk();
     protected Scrittura_partita_doppiaBulk scrittura = new Scrittura_partita_doppiaBulk();
     protected TerzoBulk terzo;
-    protected IDocumentoAmministrativoBulk documentoAmministrativo;
+    protected IDocumentoCogeBulk documentoCoge;
 
     public Movimento_cogeBulk() {
         super();
@@ -412,45 +410,45 @@ public class Movimento_cogeBulk extends Movimento_cogeBase {
         }
     }
 
-    public IDocumentoAmministrativoBulk getDocumentoAmministrativo() {
-        return Optional.ofNullable(documentoAmministrativo)
+    public IDocumentoCogeBulk getDocumentoCoge() {
+        return Optional.ofNullable(this.documentoCoge)
                 .orElseGet(() -> {
                     return Optional.ofNullable(getCd_tipo_documento())
                             .map(s -> TipoDocumentoEnum.fromValue(s))
-                            .map(tipoDocumentoEnum -> tipoDocumentoEnum.getDocumentoAmministrativoBulk())
+                            .map(tipoDocumentoEnum -> tipoDocumentoEnum.getDocumentoCogeBulk())
                             .orElse(null);
                 });
     }
 
-    public void setDocumentoAmministrativo(IDocumentoAmministrativoBulk documentoAmministrativo) {
-        this.documentoAmministrativo = documentoAmministrativo;
+    public void setDocumentoCoge(IDocumentoCogeBulk documentoCoge) {
+        this.documentoCoge = documentoCoge;
     }
 
     @Override
     public String getCd_cds_documento() {
-        return Optional.ofNullable(getDocumentoAmministrativo())
-                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getCd_cds()))
+        return Optional.ofNullable(this.getDocumentoCoge())
+                .flatMap(documentoCogeBulk -> Optional.ofNullable(documentoCogeBulk.getCd_cds()))
                 .orElse(super.getCd_cds_documento());
     }
 
     @Override
     public String getCd_uo_documento() {
-        return Optional.ofNullable(getDocumentoAmministrativo())
-                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getCd_uo()))
+        return Optional.ofNullable(this.getDocumentoCoge())
+                .flatMap(documentoCogeBulk -> Optional.ofNullable(documentoCogeBulk.getCd_uo()))
                 .orElse(super.getCd_uo_documento());
     }
 
     @Override
     public Integer getEsercizio_documento() {
-        return Optional.ofNullable(getDocumentoAmministrativo())
-                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getEsercizio()))
+        return Optional.ofNullable(this.getDocumentoCoge())
+                .flatMap(documentoCogeBulk -> Optional.ofNullable(documentoCogeBulk.getEsercizio()))
                 .orElse(super.getEsercizio_documento());
     }
 
     @Override
     public Long getPg_numero_documento() {
-        return Optional.ofNullable(getDocumentoAmministrativo())
-                .flatMap(documentoAmministrativoBulk -> Optional.ofNullable(documentoAmministrativoBulk.getPg_doc_amm()))
+        return Optional.ofNullable(this.getDocumentoCoge())
+                .flatMap(documentoCogeBulk -> Optional.ofNullable(documentoCogeBulk.getPg_doc()))
                 .orElse(super.getPg_numero_documento());
     }
 }

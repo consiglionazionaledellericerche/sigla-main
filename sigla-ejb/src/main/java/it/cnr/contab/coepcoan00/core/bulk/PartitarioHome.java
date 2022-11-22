@@ -54,16 +54,16 @@ public class PartitarioHome extends Movimento_cogeHome {
         SQLBuilder sqlBuilder = super.createSQLBuilderWithoutJoin();
         sqlBuilder.openParenthesis(FindClause.AND);
         for (Object obj : objects) {
-            Optional<IDocumentoAmministrativoBulk> documentoAmministrativoBulk = Optional.ofNullable(obj)
-                    .filter(IDocumentoAmministrativoBulk.class::isInstance)
-                    .map(IDocumentoAmministrativoBulk.class::cast);
-            if (documentoAmministrativoBulk.isPresent()) {
+            Optional<IDocumentoCogeBulk> documentoCogeBulk = Optional.ofNullable(obj)
+                    .filter(IDocumentoCogeBulk.class::isInstance)
+                    .map(IDocumentoCogeBulk.class::cast);
+            if (documentoCogeBulk.isPresent()) {
                 sqlBuilder.openParenthesis(FindClause.OR);
-                sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getCd_tipo_doc_amm());
-                sqlBuilder.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getEsercizio());
-                sqlBuilder.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getCd_cds());
-                sqlBuilder.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getCd_uo());
-                sqlBuilder.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoAmministrativoBulk.get().getPg_doc_amm());
+                sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento", SQLBuilder.EQUALS, documentoCogeBulk.get().getCd_tipo_doc());
+                sqlBuilder.addClause(FindClause.AND, "esercizio_documento", SQLBuilder.EQUALS, documentoCogeBulk.get().getEsercizio());
+                sqlBuilder.addClause(FindClause.AND, "cd_cds_documento", SQLBuilder.EQUALS, documentoCogeBulk.get().getCd_cds());
+                sqlBuilder.addClause(FindClause.AND, "cd_uo_documento", SQLBuilder.EQUALS, documentoCogeBulk.get().getCd_uo());
+                sqlBuilder.addClause(FindClause.AND, "pg_numero_documento", SQLBuilder.EQUALS, documentoCogeBulk.get().getPg_doc());
                 sqlBuilder.closeParenthesis();
             }
             Optional<TerzoBulk> terzoBulk = Optional.ofNullable(obj)
