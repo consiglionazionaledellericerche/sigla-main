@@ -66,7 +66,12 @@ public it.cnr.jada.action.Forward doOnMeseChange(ActionContext context) {
 	RiepilogativiIvaCentroDefinitivoBP bp= (RiepilogativiIvaCentroDefinitivoBP) context.getBusinessProcess();
 	Riepilogativi_iva_centro_definitivoVBulk stampaBulk = (Riepilogativi_iva_centro_definitivoVBulk) bp.getModel();
 	stampaBulk.setIntero_anno(new Boolean(false));
-	return super.doOnMeseChange(context);
+	try {
+		bp.fillModel(context);
+		bp.doOnMeseChange(context);
+	} catch (Throwable e) {
+	}
+	return context.findDefaultForward();
 }
 
 }

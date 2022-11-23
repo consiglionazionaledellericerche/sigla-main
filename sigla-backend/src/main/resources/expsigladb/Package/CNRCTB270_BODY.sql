@@ -1799,7 +1799,14 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
             -- =======================================================================================================
             CNRCTB037.generaDocumento(aManP,aListRigheManP); -- IVA COMMERCIALE
           Else --nvl(recParametriCNR.fl_tesoreria_unica,'N') = 'Y'
-            generaVariazioneBilancio(aCdCds,aEs,aCdUo,aEV,aLiquidIva,aTSNow,aUser);
+            Declare
+              aTipoStanziamenti varchar2(100);
+            Begin
+              aTipoStanziamenti:=CNRCTB015.GETVAL02PERCHIAVE('UO_SPECIALE','UO_VERSAMENTO_IVA');
+              If aTipoLiquidazione is null Then
+                generaVariazioneBilancio(aCdCds,aEs,aCdUo,aEV,aLiquidIva,aTSNow,aUser);
+              End If;
+            End;
           End If;
         Else --Else di ("If aLiquidIva.tipo_liquidazione = CNRCTB250.TI_LIQ_IVA_COMMERC Then")
           -- ====================================================

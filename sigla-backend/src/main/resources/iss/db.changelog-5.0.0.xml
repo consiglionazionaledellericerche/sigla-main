@@ -83,4 +83,6 @@
     <!--Configurazione per abilitare l'invio del tag bilancio negli opi e il numero massimo di elementi
     ( per definizione del flussi OPI al massimo 10)-->
     <include file="iss/update_configurazioneCnr_invia_tag_bilancio.xml"/>
+    <!-- Autore : RAFFAELE PAGANO-Configurazione liquidazione iva -->
+    <include file="iss/update_conf_liquidazione_iva.xml"/>
 </databaseChangeLog>

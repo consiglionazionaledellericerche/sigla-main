@@ -17,9 +17,12 @@
 
 package it.cnr.contab.gestiva00.bp;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.util.action.CompoundPropertyController;
+
+import java.sql.Timestamp;
 
 
 public class LiquidazioneIvaBP extends StampaRegistriIvaBP {
@@ -64,4 +67,37 @@ public void setLiquidato(boolean newLiquidato) {
 }
 public void inizializzaMese(ActionContext context) throws BusinessProcessException {
 }
+	@Override
+	public void doOnMeseChange(ActionContext context) throws BusinessProcessException {
+		super.doOnMeseChange(context);
+		try {
+			inizializzaMese(context);
+		} catch (Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	@Override
+	protected void setDataDaA(ActionContext context, Stampa_registri_ivaVBulk stampaBulk) {
+		int esercizio = stampaBulk.getEsercizio().intValue();
+		int meseIndex = ((Integer)stampaBulk.getMesi_int().get(stampaBulk.getMese())).intValue();
+
+		java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+		gc.set(java.util.Calendar.HOUR, 0);
+		gc.set(java.util.Calendar.MINUTE, 0);
+		gc.set(java.util.Calendar.SECOND, 0);
+		gc.set(java.util.Calendar.MILLISECOND, 0);
+		gc.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+
+		gc.set(java.util.Calendar.DAY_OF_MONTH, 1);
+		gc.set(java.util.Calendar.YEAR, esercizio);
+
+		gc.set(java.util.Calendar.MONTH, ((meseIndex > 0) ? meseIndex-1 : meseIndex));
+		stampaBulk.setData_da(new Timestamp(gc.getTime().getTime()));
+		if (meseIndex < 0)
+			gc.set(java.util.Calendar.YEAR, esercizio);
+		gc.set(java.util.Calendar.MONTH, ((meseIndex > 0) ? meseIndex : meseIndex + 1));
+		gc.add(java.util.Calendar.DAY_OF_MONTH, -1);
+		stampaBulk.setData_a(new Timestamp(gc.getTime().getTime()));
+	}
 }

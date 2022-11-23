@@ -170,16 +170,14 @@ public final Forward doCerca(ActionContext context) {
  * @return Il Forward alla pagina di risposta
  */
 public it.cnr.jada.action.Forward doOnMeseChange(ActionContext context) {
-
     StampaRegistriIvaBP bp= (StampaRegistriIvaBP) context.getBusinessProcess();
     try {
         bp.fillModel(context);
-        if (bp.isBulkReprintable())
-      	  bp.getRegistri_stampati().reset(context);
-    } catch (Exception e) {
-
+		bp.doOnMeseChange(context);
+		bp.aggiornaRegistriStampati(context);
+	} catch (Throwable e) {
     }
-	return setDataDaA(context, (Stampa_registri_ivaVBulk) bp.getModel());
+	return context.findDefaultForward();
 }
 public Forward doOnTipoSezionaleChange(ActionContext context) {
 
@@ -303,18 +301,7 @@ public final Forward doStampaAnnullata(ActionContext context) {
 		return handleException(context,e);
 	}
 }
-protected java.util.GregorianCalendar getGregorianCalendar() {
 
-	java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
-	
-	gc.set(java.util.Calendar.HOUR, 0);
-	gc.set(java.util.Calendar.MINUTE, 0);
-	gc.set(java.util.Calendar.SECOND, 0);
-	gc.set(java.util.Calendar.MILLISECOND, 0);
-	gc.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
-	
-	return gc;
-}
 /**
  * Gestisce la selezione dopo una richiesta di ricerca.
  *
@@ -363,26 +350,5 @@ protected MTUWrapper manageStampa(
 
         return wrapper;
 }
-protected it.cnr.jada.action.Forward setDataDaA(
-	ActionContext context,
-	Stampa_registri_ivaVBulk stampaBulk) {
 
-    try {
-	    int esercizio = stampaBulk.getEsercizio().intValue();
-	    int meseIndex = ((Integer)stampaBulk.getMesi_int().get(stampaBulk.getMese())).intValue();
-		java.util.GregorianCalendar gc = getGregorianCalendar();
-		gc.set(java.util.Calendar.DAY_OF_MONTH, 1);
-		gc.set(java.util.Calendar.YEAR, esercizio);
-
-		gc.set(java.util.Calendar.MONTH, meseIndex-1);
-		stampaBulk.setData_da(new Timestamp(gc.getTime().getTime()));
-		gc.set(java.util.Calendar.MONTH, meseIndex);
-		gc.add(java.util.Calendar.DAY_OF_MONTH, -1);
-        stampaBulk.setData_a(new Timestamp(gc.getTime().getTime()));
-
-    } catch (Exception e) {
-		return handleException(context, e);
-    }
-    return context.findDefaultForward();
-}
 }
