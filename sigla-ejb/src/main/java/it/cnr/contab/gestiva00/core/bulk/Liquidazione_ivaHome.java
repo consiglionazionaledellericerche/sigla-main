@@ -146,12 +146,15 @@ public java.util.List findMandatoRigheAssociateList( Liquidazione_ivaBulk bulk )
 
     SQLBuilder sql= home.createSQLBuilder();
 
-	sql.addClause(FindClause.AND,"cd_tipo_documento_amm",SQLBuilder.EQUALS, bulk.getCd_tipo_documento());
-	sql.addClause(FindClause.AND,"cd_cds_doc_amm",SQLBuilder.EQUALS, bulk.getCd_cds_doc_amm());
-	sql.addClause(FindClause.AND,"cd_uo_doc_amm",SQLBuilder.EQUALS, bulk.getCd_uo_doc_amm());
-	sql.addClause(FindClause.AND,"esercizio_doc_amm",SQLBuilder.EQUALS, bulk.getEsercizio_doc_amm());
-	sql.addClause(FindClause.AND,"pg_doc_amm",SQLBuilder.EQUALS, bulk.getPg_doc_amm());
-	sql.addOrderBy("esercizio_ori_obbligazione");
+	if (bulk.getPg_doc_amm()!=null) {
+		sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, bulk.getCd_tipo_documento());
+		sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, bulk.getCd_cds_doc_amm());
+		sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, bulk.getCd_uo_doc_amm());
+		sql.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, bulk.getEsercizio_doc_amm());
+		sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, bulk.getPg_doc_amm());
+		sql.addOrderBy("esercizio_ori_obbligazione");
+	} else
+		sql.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
 
 	return home.fetchAll(sql);
 }

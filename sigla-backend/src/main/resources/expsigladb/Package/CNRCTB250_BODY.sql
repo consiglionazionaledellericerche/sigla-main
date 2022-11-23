@@ -329,11 +329,12 @@ PROCEDURE creaReportPredefinito
    repID_loop INTEGER;
    gen_cv GenericCurTyp;
 BEGIN
+ IF   ((inTipoStampa = TI_ELAB_REGISTRO_IVA or aTipoReportStato = CNRCTB255.TI_RIEPILOGATIVO_ACQUISTI or aTipoReportStato = CNRCTB255.TI_RIEPILOGATIVO_VENDITE)
+     and inRistampa = 'N' and inCdUoOrigine=UOENTE.cd_unita_organizzativa ) then
 
- IF   (inTipoStampa = TI_ELAB_REGISTRO_IVA and  inRistampa = 'N' and inCdUoOrigine=UOENTE.cd_unita_organizzativa ) then
- OPEN gen_cv FOR
+     OPEN gen_cv FOR
 
-                    SELECT A.cd_unita_organizzativa,
+                    SELECT DISTINCT A.cd_unita_organizzativa,
                            A.cd_unita_padre
                     FROM   UNITA_ORGANIZZATIVA A,SEZIONALE B
                     WHERE  A.livello = 2 AND
@@ -344,16 +345,16 @@ BEGIN
                            B.cd_unita_organizzativa = A.cd_unita_organizzativa AND
                            B.esercizio = aEsercizioReale AND
                            B.ti_fattura = 'T' AND
-                           B.cd_tipo_sezionale = inCdTipoSezionale and
+                           (inTipoStampa != TI_ELAB_REGISTRO_IVA OR B.cd_tipo_sezionale = inCdTipoSezionale) and
                            NOT EXISTS
                                 (SELECT 1
                          FROM   TIPO_SEZIONALE C, REPORT_STATO D
                          WHERE
-                                C.cd_tipo_sezionale = B.cd_tipo_sezionale AND
+                                C.cd_tipo_sezionale = inCdTipoSezionale AND
                                 d.cd_tipo_sezionale = c.cd_tipo_sezionale and
                                 D.cd_cds = B.cd_cds AND
                                 D.cd_unita_organizzativa = B.cd_unita_organizzativa  AND
-                                D.tipo_report = CNRCTB255.TI_REGISTRO_ACQUISTI AND
+                                D.tipo_report = aTipoReportStato AND
                                 D.dt_inizio = inDataInizio AND
                                 D.dt_fine = inDataFine AND
                                 D.stato IN ('B', 'C'))
@@ -443,11 +444,17 @@ BEGIN
    -------------------------------------------------------------------------------------------------
    --  Ciclo per l'esecuzione delle query di valorizzazione dei campi per la stampa del report
    --  generico IVA. Differenziati per stampa
-
+   	  IF    inTipoStampa = TI_ELAB_REGISTRO_IVA THEN
          stampaRegistri(aRecUnitaOrganizzativa.cd_unita_padre, aRecUnitaOrganizzativa.cd_unita_organizzativa, inEsercizio, inCdTipoSezionale,
                         inDataInizio, inDataFine, inTipoStampa, inTipoRegistro,
                         inTipoReport, inRistampa, repID_loop, msg_out, id_utente,
                         inGruppoReport, aTipoReportStato);
+      ELSIF inTipoStampa = TI_ELAB_RIEPILOGATIVO_UO THEN
+         stampaRiepilogativi(aRecUnitaOrganizzativa.cd_unita_padre, aRecUnitaOrganizzativa.cd_unita_organizzativa, inEsercizio, inCdTipoSezionale,
+                             inDataInizio, inDataFine, inTipoStampa, inTipoRegistro,
+                             inTipoReport, inRistampa, repID_loop, msg_out, id_utente,
+                             inGruppoReport, aTipoReportStato);
+      END IF;
   end if;
 
 end loop;
@@ -636,9 +643,9 @@ BEGIN
    END IF;
    aMessaggio1:='Elaborazione interrotta. ';
    IF inTipoStampa in (TI_ELAB_LIQUIDAZIONE_MASSA, TI_ELAB_LIQUIDAZIONE_MASSA_PRV) THEN
-      aMessaggio2:='La funzione di stampa ' || inTipoStampa || ' per il sezionale ' || aMessaggioSezionale;
+      aMessaggio2:='La funzione di stampa ' || inTipoStampa || ' per il sezionale ' || aMessaggioSezionale || ' della UO '||inCdUoOrigine;
    ELSE
-      aMessaggio2:='La funzione di stampa ' || aTipoReportStato || ' per il sezionale ' || aMessaggioSezionale;
+      aMessaggio2:='La funzione di stampa ' || aTipoReportStato || ' per il sezionale ' || aMessaggioSezionale || ' della UO '||inCdUoOrigine;
    END IF;
    -------------------------------------------------------------------------------------------------
    -- Ritorna l'esistenza di record nella tabella REPORT_STATO per un dato aCdTipoSezionale nelle
@@ -810,7 +817,7 @@ BEGIN
                     flEsistePeriodoPrima = 1 OR
                     flEsistePeriodoDopo = 1) THEN
                    IBMERR001.RAISE_ERR_GENERICO
-                      (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto non esiste liquidazione definitiva per ' ||
+                      (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto non esiste liquidazione definitiva per ' ||
                        'il periodo precedente ed esistono stampe registri definitivi in periodi diversi dal corrente.');
                 END IF;
               End if;
@@ -846,7 +853,7 @@ BEGIN
 
       IF flEsistePeriodo = 1 THEN
          IBMERR001.RAISE_ERR_GENERICO
-            (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto esiste la liquidazione centro in stato ' ||
+            (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto esiste la liquidazione centro in stato ' ||
              'definitivo per il periodo richiesto');
       END IF;
 
@@ -928,11 +935,11 @@ BEGIN
 
                If aSezionaliError is not null Then
                   IBMERR001.RAISE_ERR_GENERICO
-                     (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto i seguenti sezionali ('||aSezionaliError||
+                     (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto i seguenti sezionali ('||aSezionaliError||
                       ') non risultano in stato stampa registri definitiva');
                Elsif contaError > 0 Then
                   IBMERR001.RAISE_ERR_GENERICO
-                     (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto tutti i sezionali '||
+                     (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto tutti i sezionali '||
                      'non risultano in stato stampa registri definitiva');
                End If;
             End;
@@ -945,7 +952,7 @@ BEGIN
             IF flUoHaSezionali = 'N' THEN
 
                IBMERR001.RAISE_ERR_GENERICO
-                  (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto non ט stato definito alcun sezionale ' ||
+                  (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto non è stato definito alcun sezionale ' ||
                    'per la U.O. ' || inCdUoOrigine);
 
             END IF;
@@ -1022,7 +1029,7 @@ BEGIN
 
          IF aErrore = 'Y' THEN
             IBMERR001.RAISE_ERR_GENERICO
-               (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto non ט stata fatta la liquidazione ' ||
+               (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto non è stata fatta la liquidazione ' ||
                 'definita per le seguenti UO ' || aStringa);
          END IF;
 
@@ -1110,7 +1117,7 @@ BEGIN
 
          IF aErrore = 'Y' THEN
             IBMERR001.RAISE_ERR_GENERICO
-               (aMessaggio1 || aMessaggio2 || ' non ט ammessa in quanto non ט stata fatta la stampa definitiva ' ||
+               (aMessaggio1 || aMessaggio2 || ' non è ammessa in quanto non è stata fatta la stampa definitiva ' ||
                 'dei registri per le seguenti UO ' || aStringa);
          END IF;
 

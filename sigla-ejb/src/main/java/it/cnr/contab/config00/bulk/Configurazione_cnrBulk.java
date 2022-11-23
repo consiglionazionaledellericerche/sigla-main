@@ -83,6 +83,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_UO_ACCREDITAMENTO_SAC = "UO_ACCREDITAMENTO_SAC";
     public final static String SK_UO_DISTINTA_TUTTA_SAC = "UO_DISTINTA_TUTTA_SAC";
     public final static String SK_UO_RAGIONERIA = "UO_RAGIONERIA";
+    public final static String SK_UO_VERSAMENTO_IVA = "UO_VERSAMENTO_IVA";
 
     public final static String PK_PDG_VARIAZIONE = "PDG_VARIAZIONE";
     public final static String SK_TIPO_VAR_APPROVA_CDS = "TIPO_VAR_APPROVA_CDS";

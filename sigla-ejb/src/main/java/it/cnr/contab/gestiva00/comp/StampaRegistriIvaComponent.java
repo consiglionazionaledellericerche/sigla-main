@@ -51,6 +51,7 @@ import it.cnr.contab.gestiva00.core.bulk.Riepilogativi_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeBulk;
 import it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -441,7 +442,7 @@ public BulkList findRegistriStampati(
 	Report_statoHome home = (Report_statoHome)getHome(userContext, reportStato);
 
 	try {
-		BulkList registriStampati = new BulkList(home.findAndOrderByDt_inizio(reportStato));
+		BulkList registriStampati = new BulkList(home.findAndOrderByDt_inizio(userContext, reportStato));
 		getHomeCache(userContext).fetchAll(userContext);
 		return registriStampati;
 	} catch (PersistencyException e) {

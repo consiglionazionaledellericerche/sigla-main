@@ -1027,4 +1027,16 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         }
         return gestioneEtichettaInventarioAttiva;
     }
+
+    public String getTipoStanziamentoLiquidazioneIva(UserContext userContext) throws ComponentException {
+        try {
+            return Optional.ofNullable(getHome(userContext, Configurazione_cnrBulk.class))
+                    .filter(Configurazione_cnrHome.class::isInstance)
+                    .map(Configurazione_cnrHome.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Configurazione Home not found"))
+                    .getLiquidazioneIvaTipoStanziamento();
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
 }

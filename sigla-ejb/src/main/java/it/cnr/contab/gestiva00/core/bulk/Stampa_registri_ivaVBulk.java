@@ -137,6 +137,8 @@ public void completeFrom(Report_statoBulk reportStato) {
 	setTipo_sezionale(reportStato.getTipo_sezionale());
 	setData_da(reportStato.getDt_inizio());
 	setData_a(reportStato.getDt_fine());
+	setCd_cds(reportStato.getCd_cds());
+	setCd_unita_organizzativa(reportStato.getCd_unita_organizzativa());
 
 	java.util.Calendar cal = java.util.GregorianCalendar.getInstance();
 	cal.setTime(new java.util.Date(getData_da().getTime()));

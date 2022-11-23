@@ -80,4 +80,6 @@
     </changeSet>
     <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->
     <include file="iss/update_conf_gestione_etichetta_inventario.xml"/>
+    <!-- Autore : RAFFAELE PAGANO-Configurazione liquidazione iva -->
+    <include file="iss/update_conf_liquidazione_iva.xml"/>
 </databaseChangeLog>

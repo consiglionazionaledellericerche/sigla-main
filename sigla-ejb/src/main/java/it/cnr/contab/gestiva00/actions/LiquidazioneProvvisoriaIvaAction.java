@@ -17,15 +17,14 @@
 
 package it.cnr.contab.gestiva00.actions;
 
-import it.cnr.contab.gestiva00.ejb.*;
-import java.util.*;
-import it.cnr.contab.gestiva00.core.bulk.*;
-import it.cnr.contab.gestiva00.bp.*;
-import it.cnr.jada.action.*;
+import it.cnr.contab.gestiva00.bp.LiquidazioneIvaBP;
+import it.cnr.contab.gestiva00.bp.LiquidazioneProvvisoriaIvaBP;
+import it.cnr.contab.gestiva00.core.bulk.IPrintable;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_provvisoria_ivaVBulk;
+import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.MTUWrapper;
-import it.cnr.jada.util.action.BulkBP;
-
-import java.sql.Timestamp;
 
 /**
  * liquidazione iva
@@ -103,29 +102,5 @@ public Forward doReset(ActionContext context) {
     } catch (Throwable e) {
         return handleException(context, e);
     }
-}
-protected it.cnr.jada.action.Forward setDataDaA(
-	ActionContext context,
-	Stampa_registri_ivaVBulk stampaBulk) {
-
-	try {
-	    int esercizio = stampaBulk.getEsercizio().intValue();
-	    int meseIndex = ((Integer)stampaBulk.getMesi_int().get(stampaBulk.getMese())).intValue();
-		java.util.GregorianCalendar gc = getGregorianCalendar();
-		gc.set(java.util.Calendar.DAY_OF_MONTH, 1);
-		gc.set(java.util.Calendar.YEAR, esercizio);
-
-		gc.set(java.util.Calendar.MONTH, ((meseIndex > 0) ? meseIndex-1 : meseIndex));
-		stampaBulk.setData_da(new Timestamp(gc.getTime().getTime()));
-		if (meseIndex < 0)
-			gc.set(java.util.Calendar.YEAR, esercizio);
-		gc.set(java.util.Calendar.MONTH, ((meseIndex > 0) ? meseIndex : meseIndex + 1));
-		gc.add(java.util.Calendar.DAY_OF_MONTH, -1);
-        stampaBulk.setData_a(new Timestamp(gc.getTime().getTime()));
-
-    } catch (Exception e) {
-		return handleException(context, e);
-    }
-    return context.findDefaultForward();
 }
 }

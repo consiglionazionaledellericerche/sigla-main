@@ -618,4 +618,8 @@ public class Unita_organizzativaHome extends BulkHome {
 		return result;
 	}
 
+	public Unita_organizzativaBulk getUoScrivania(UserContext userContext) throws PersistencyException {
+		Unita_organizzativaBulk uo = new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext));
+		return (Unita_organizzativaBulk)findByPrimaryKey(uo);
+	}
 }

@@ -423,4 +423,11 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(BigDecimal::intValue)
                 .orElse(null);
     }
+
+    public String getLiquidazioneIvaTipoStanziamento() throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_VERSAMENTO_IVA))
+                .map(Configurazione_cnrBulk::getVal02)
+                .orElse(null);
+    }
 }
