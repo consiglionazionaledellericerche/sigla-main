@@ -19,6 +19,9 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.doccont00.dto.EnumSiopeBilancioGestione;
+import it.cnr.contab.doccont00.dto.SiopeBilancioDTO;
+import it.cnr.contab.doccont00.dto.SiopeBilancioKeyDto;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -38,6 +41,7 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import javax.ejb.EJBException;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -330,5 +334,37 @@ public abstract class ReversaleHome extends BulkHome {
         } else  {
             throw new PersistencyException("Errore nel recupero della Reversale "+esercizio+"-"+pgReversale);
         }
+    }
+
+    public List<SiopeBilancioDTO> getSiopeBilancio(UserContext userContext, ReversaleBulk reversale ){
+        List<SiopeBilancioDTO> bilancio = new ArrayList<SiopeBilancioDTO>();
+
+        Optional.ofNullable(reversale).ifPresent(s -> {
+            s.getReversale_rigaColl().stream().forEach(m -> {
+                EnumSiopeBilancioGestione gestione = EnumSiopeBilancioGestione.COMPETENZA;
+                Integer annoResiduo = null;
+                if ( m.getEsercizio_accertamento().compareTo(m.getEsercizio_ori_accertamento())!=0) {
+                    gestione = EnumSiopeBilancioGestione.RESIDUO;
+                    annoResiduo=m.getEsercizio_ori_accertamento();
+                }
+                final SiopeBilancioKeyDto keyBilancio = new SiopeBilancioKeyDto(m.elemento_voce.getCd_voce(),
+                        gestione,
+                        annoResiduo) ;
+                Optional<SiopeBilancioDTO> el=bilancio.stream().
+                        filter(b->b.equals(keyBilancio)).
+                        findFirst();
+                if ( el.isPresent()){
+                    SiopeBilancioDTO voceBilancio = el.get();
+                    voceBilancio.setImporto(voceBilancio.getImporto().add( m.getIm_reversale_riga()));
+                }else{
+                    SiopeBilancioDTO voceBilancio = new SiopeBilancioDTO(keyBilancio);
+                    voceBilancio.setDescrzioneVoceBilancio( m.elemento_voce.getDs_elemento_voce());
+                    voceBilancio.setImporto(m.getIm_reversale_riga());
+                    bilancio.add(voceBilancio);
+                }
+            });
+
+        });
+        return bilancio;
     }
 }

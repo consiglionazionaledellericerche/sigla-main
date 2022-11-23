@@ -35,7 +35,6 @@ function escludiPrimo(index){
 <%	CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
 	Voce_ivaBulk voce_iva = (Voce_ivaBulk) bp.getModel();
 	bp.openFormWindow(pageContext); %>
-	
 	<div class="Group card p-2">
 	    <table>
 			<tr>
@@ -98,6 +97,7 @@ function escludiPrimo(index){
                         <% bp.getController().writeFormInput(out,null,"fl_escluso",false,null,"onclick=\"escludiPrimo(5);submitForm('doDefault')\""); %>
                     </td>
                 </tr>
+
             </table>
         </div>
 		<table cellspacing="0" cellpadding="2">
@@ -112,10 +112,12 @@ function escludiPrimo(index){
                     <% bp.getController().writeFormField(out,"gruppo_iva"); %>
             </tr>
         </table>
+
         <table cellspacing="0" cellpadding="2">
             <tr>
                 <% bp.getController().writeFormField(out,"fl_default_istituzionale"); %>
                 <% bp.getController().writeFormField(out,"fl_solo_italia"); %>
+                <% bp.getController().writeFormField(out,"fl_intra");%>
                 <% bp.getController().writeFormField(out,"fl_obb_dichiarazione_intento"); %>
                 <% bp.getController().writeFormField(out,"fl_iva_non_recuperabile"); %>
             </tr>

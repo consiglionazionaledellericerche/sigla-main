@@ -145,7 +145,7 @@
 		name="ds_elemento_voce"
 		property="ds_elemento_voce"
 		inputType="TEXT"
-		maxLength="100"
+		maxLength="300"
 		label="Desc. Voce" />
 	<fieldProperty
 		name="im_stanz_iniziale_a1"

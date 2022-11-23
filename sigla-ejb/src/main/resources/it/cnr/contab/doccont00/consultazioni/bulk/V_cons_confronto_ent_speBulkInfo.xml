@@ -114,7 +114,7 @@
 		inputType="TEXTAREA"
 		cols="60"
 		rows="5"
-		maxLength="100"
+		maxLength="300"
 		label="Descrizione Elemento Voce" />
 	<fieldProperty
 		name="im_stanz_iniziale_a1"

@@ -210,14 +210,22 @@
 		inputType="CHECKBOX" 
 		label="Solo in Italia"
 		enabledOnFreeSearch="false"
-		enabledOnSearch="false"/>		
+		enabledOnSearch="false"/>
+	<fieldProperty
+			name="fl_intra"
+			property="fl_intra"
+			inputType="CHECKBOX"
+			label="Intra"
+			enabledOnFreeSearch="false"
+			enabledOnSearch="false"/>
 	 <fieldProperty
 		name="fl_obb_dichiarazione_intento"
 		property="fl_obb_dichiarazione_intento"
 		inputType="CHECKBOX" 
 		label="Obb. Dichiarazione Intento"
 		enabledOnFreeSearch="false"
-		enabledOnSearch="false"/>		
+		enabledOnSearch="false"/>
+
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -286,13 +294,16 @@
 	<formFieldProperty
 		name="fl_autofattura" />		
 	<formFieldProperty
-		name="fl_solo_italia" />	
+		name="fl_solo_italia" />
+	<formFieldProperty
+			name="fl_intra" />
 	<formFieldProperty
 		name="ti_bene_servizio" />	
 	<formFieldProperty
 		name="ti_bollo" />	
 	<formFieldProperty
-		name="fl_obb_dichiarazione_intento" />		
+		name="fl_obb_dichiarazione_intento" />
+
 	<columnFieldProperty
 		name="cd_voce_iva" />
 	<columnFieldProperty
@@ -328,7 +339,9 @@
 	<columnFieldProperty
 		name="rifNormOperNonImpSdi" />
 	<columnFieldProperty
-		name="fl_solo_italia" />	
+		name="fl_solo_italia" />
+	<columnFieldProperty
+			name="fl_intra" />
 	<columnFieldProperty
 		name="ti_bene_servizio" />	
 	<columnFieldProperty

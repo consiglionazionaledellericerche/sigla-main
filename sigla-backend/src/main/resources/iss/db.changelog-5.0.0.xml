@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
   ~
@@ -80,6 +80,9 @@
     </changeSet>
     <!-- Autore : VALENTINA TOMADA-Configurazione gestione etichetta inventario bene -->
     <include file="iss/update_conf_gestione_etichetta_inventario.xml"/>
+    <!--Configurazione per abilitare l'invio del tag bilancio negli opi e il numero massimo di elementi
+    ( per definizione del flussi OPI al massimo 10)-->
+    <include file="iss/update_configurazioneCnr_invia_tag_bilancio.xml"/>
     <!-- Autore : RAFFAELE PAGANO-Configurazione liquidazione iva -->
     <include file="iss/update_conf_liquidazione_iva.xml"/>
 </databaseChangeLog>

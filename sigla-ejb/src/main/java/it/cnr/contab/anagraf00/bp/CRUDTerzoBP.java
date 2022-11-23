@@ -395,16 +395,19 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 				else
 					reset(context);
 			} else {
-
 				TerzoBulk terzo = getTerzoEdit(context);
 				if (terzo == null) {
-					if (isEditable())
-						reset(context,
-								terzo = ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession())
-										.inizializzaTerzoPerUnitaOrganizzativa(
-												context.getUserContext(),
-												unita_organizzativa));
-					else
+					if (isEditable()) {
+						terzo = ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession())
+								.inizializzaTerzoPerUnitaOrganizzativa(
+										context.getUserContext(),
+										unita_organizzativa);
+
+						reset(context,terzo);
+						anagrafico = terzo.getAnagrafico();
+						terzo.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(context
+								.getUserContext()));
+					}else
 						throw new MessageToUser(
 								"Non esiste nessun terzo per l'unità organizzativa "
 										+ unita_organizzativa
