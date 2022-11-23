@@ -139,7 +139,7 @@
 			columnName="DS_ELEMENTO_VOCE"
 			propertyName="ds_elemento_voce"
 			sqlTypeName="VARCHAR"
-			columnSize="100"
+			columnSize="300"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_STANZ_RES_IMPROPRIO"
@@ -731,7 +731,7 @@
 			columnName="DS_ELEMENTO_VOCE"
 			propertyName="ds_elemento_voce"
 			sqlTypeName="VARCHAR"
-			columnSize="100"
+			columnSize="300"
 			nullable="true" />
 		</columnMap>
 
@@ -865,7 +865,7 @@
 				columnName="DS_ELEMENTO_VOCE"
 				propertyName="ds_elemento_voce"
 				sqlTypeName="VARCHAR"
-				columnSize="100"
+				columnSize="300"
 				nullable="true" />
 		<columnMapping
 				columnName="ESERCIZIO_RES"
