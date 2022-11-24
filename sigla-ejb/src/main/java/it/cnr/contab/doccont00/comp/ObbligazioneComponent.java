@@ -4443,11 +4443,6 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
  
 	verificaFl_spese_costi_altrui( aUC, obbligazione );
 
-	if (obbligazione.getFl_gara_in_corso().booleanValue() &&
-			obbligazione.isObbligazioneResiduo()
-			&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
-		throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento, si prega di riportarlo indietro all'esercizio precedente e di renderlo definitivo");
-
 	/*
 	 * Controllo l'eventuale obbligatorietà del Contratto
 	 */

@@ -1906,9 +1906,8 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		getIncarico_repertorio().setPg_repertorio(pg_repertorio);
 	}
 	public boolean isROFlGaraInCorso(){
-		return (getStato_obbligazione()!=null && !getStato_obbligazione().equals( ObbligazioneBulk.STATO_OBB_PROVVISORIO )) || 
-			  (getCrudStatus()!=OggettoBulk.UNDEFINED &&
-			   getFl_gara_in_corso()!=null &&
+		return !isProvvisoria() ||
+			  (getCrudStatus()!=OggettoBulk.UNDEFINED && getFl_gara_in_corso()!=null &&
 		      !getFl_gara_in_corso().booleanValue() && 
 			   ((getIncarico_repertorio()!=null && getIncarico_repertorio().getEsercizio()!=null &&
 				 getIncarico_repertorio().getPg_repertorio()!=null) ||
@@ -2049,6 +2048,15 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		return dett;
 	}
 
+	public boolean isProvvisoria() {
+		return STATO_OBB_PROVVISORIO.equals(this.getStato_obbligazione());
+	}
 
+	public boolean isDefinitiva() {
+		return STATO_OBB_DEFINITIVO.equals(this.getStato_obbligazione());
+	}
 
+	public boolean isStornata() {
+		return STATO_OBB_STORNATO.equals(this.getStato_obbligazione());
+	}
 }
