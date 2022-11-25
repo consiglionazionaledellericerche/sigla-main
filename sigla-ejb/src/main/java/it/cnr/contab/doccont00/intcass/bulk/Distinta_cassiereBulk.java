@@ -17,8 +17,7 @@
 
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.pdg00.bulk.storage.AllegatoPdGVariazioneDocumentBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
@@ -37,14 +36,37 @@ import it.cnr.jada.bulk.OggettoBulk;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 @StorageType(name="D:doccont:document")
 public class Distinta_cassiereBulk extends Distinta_cassiereBase implements AllegatoParentBulk {
 
 	@SuppressWarnings("rawtypes")
 	public final static Dictionary stato_DistintaKeys = new OrderedHashtable();
+	public final static Dictionary tesoreriaKeys = new OrderedHashtable();
 
+	public enum Tesoreria {
+		BANCA_ITALIA("Banca d'Italia", "BI"),
+		BANCA_TESORIERE("Banca Tesoriere", "BT");
+		private final String label, value;
+		private Tesoreria(String label, String value) {
+			this.value = value;
+			this.label = label;
+		}
+		public String value() {
+			return value;
+		}
+		public String label() {
+			return label;
+		}
+
+		public static Tesoreria getValueFrom(String value) {
+			for (Tesoreria tesoreria : Tesoreria.values()) {
+				if (tesoreria.value.equals(value))
+					return tesoreria;
+			}
+			throw new IllegalArgumentException("Tesoreria no found for value: " + value);
+		}
+	}
 	public enum Stato {
 		PROVVISORIA("Provvisoria","PRO"),
 		DEFINITIVA("Definitiva","DEF"),
@@ -69,6 +91,9 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 	{
 		for (Distinta_cassiereBulk.Stato stato : Distinta_cassiereBulk.Stato.values()) {
 			stato_DistintaKeys.put(stato.value, stato.label);
+		}
+		for (Distinta_cassiereBulk.Tesoreria tesoreria : Distinta_cassiereBulk.Tesoreria.values()) {
+			tesoreriaKeys.put(tesoreria.value, tesoreria.label);
 		}
 	}
 
@@ -394,8 +419,14 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 			setFl_flusso(((CRUDDistintaCassiereBP)bp).isFlusso());
 			setFl_sepa(((CRUDDistintaCassiereBP)bp).isSepa());
 			setFl_annulli(((CRUDDistintaCassiereBP)bp).isAnnulli());
-		}
-		else {
+			Optional.of(bp)
+					.filter(CRUDDistintaCassiereBP.class::isInstance)
+					.map(CRUDDistintaCassiereBP.class::cast)
+					.flatMap(crudDistintaCassiereBP -> Optional.ofNullable(crudDistintaCassiereBP.getTesoreria()))
+					.ifPresent(s -> {
+						this.setCd_tesoreria(s);
+					});
+		} else {
 			setFl_flusso(Boolean.FALSE);
 			setFl_sepa(Boolean.FALSE);
 			setFl_annulli(Boolean.FALSE);
@@ -784,5 +815,19 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 							.orElse(null);
 				})
 				.orElse(null);
+	}
+
+
+	public Boolean isBancaItalia() {
+		return Optional.ofNullable(getCd_tesoreria())
+				.map(s -> Distinta_cassiereBulk.Tesoreria.getValueFrom(s))
+				.map(tesoreria -> tesoreria.equals(Distinta_cassiereBulk.Tesoreria.BANCA_ITALIA))
+				.orElse(Boolean.FALSE);
+	}
+	public Boolean isBancaTesoriere() {
+		return Optional.ofNullable(getCd_tesoreria())
+				.map(s -> Distinta_cassiereBulk.Tesoreria.getValueFrom(s))
+				.map(tesoreria -> tesoreria.equals(Distinta_cassiereBulk.Tesoreria.BANCA_TESORIERE))
+				.orElse(Boolean.FALSE);
 	}
 }

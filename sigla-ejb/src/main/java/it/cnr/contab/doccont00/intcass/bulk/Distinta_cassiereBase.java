@@ -19,6 +19,9 @@ package it.cnr.contab.doccont00.intcass.bulk;
 
 import it.cnr.jada.persistency.*;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
+
+import java.util.Optional;
+
 public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed {
 
 	// DT_EMISSIONE TIMESTAMP
@@ -58,6 +61,8 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	private Integer progFlusso;
 	private String identificativoFlussoBT;
 	private String stato;
+
+	private String cd_tesoreria;
 
 	public Distinta_cassiereBase() {
 		super();
@@ -230,4 +235,13 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	public void setInviaPEC(Boolean inviaPEC) {
 		this.inviaPEC = inviaPEC;
 	}
+
+	public String getCd_tesoreria() {
+		return cd_tesoreria;
+	}
+
+	public void setCd_tesoreria(String cd_tesoreria) {
+		this.cd_tesoreria = cd_tesoreria;
+	}
+
 }

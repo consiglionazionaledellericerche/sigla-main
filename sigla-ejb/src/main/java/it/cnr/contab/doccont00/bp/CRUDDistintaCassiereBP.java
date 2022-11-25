@@ -132,6 +132,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     public Boolean flusso;
     public Boolean sepa;
     public Boolean annulli;
+    public String tesoreria;
     protected DocumentiContabiliService documentiContabiliService;
     protected OrdinativiSiopePlusService ordinativiSiopePlusService;
     protected String controlloCodiceFiscale;
@@ -276,7 +277,10 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             this.setFlusso(new Boolean(config.getInitParameter("flusso")));
             this.setSepa(new Boolean(config.getInitParameter("sepa")));
             this.setAnnulli(new Boolean(config.getInitParameter("annulli")));
-
+            Optional.ofNullable(config.getInitParameter("tesoreria"))
+                            .ifPresent(s -> {
+                                this.setTesoreria(s);
+                            });
             setParametriCnr(Utility.createParametriCnrComponentSession()
                     .getParametriCnr(
                             context.getUserContext(),
@@ -632,6 +636,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             fs.setFl_flusso(isFlusso());
             fs.setFl_sepa(isSepa());
             fs.setFl_annulli(isAnnulli());
+            fs.setCd_tesoreria(getTesoreria());
         }
         return fs;
     }
@@ -2459,5 +2464,13 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         } catch (ComponentException e) {
             throw handleException(e);
         }
+    }
+
+    public String getTesoreria() {
+        return tesoreria;
+    }
+
+    public void setTesoreria(String tesoreria) {
+        this.tesoreria = tesoreria;
     }
 }
