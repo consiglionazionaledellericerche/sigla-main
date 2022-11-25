@@ -128,13 +128,9 @@ public class AccountDTO {
     }
 
     public Timestamp getUpdatedAt() {
-        return null;
-        /*
         return Optional.ofNullable(currentUser)
                 .flatMap(utente -> Optional.ofNullable(utente.getDt_ultimo_accesso()))
                 .orElse(null);
-
-         */
     }
 
     public boolean isCredentialsNonExpired() {
