@@ -56,6 +56,7 @@ import it.cnr.contab.util.*;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -74,8 +75,10 @@ import it.cnr.jada.util.jsp.JSPUtils;
 import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
 import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceException;
 import it.cnr.si.firmadigitale.firma.arss.stub.XmlSignatureType;
+import it.cnr.si.siopeplus.exception.SIOPEPlusServiceNotInstantiated;
 import it.cnr.si.siopeplus.exception.SIOPEPlusServiceUnavailable;
 import it.cnr.si.siopeplus.model.Risultato;
+import it.cnr.si.siopeplus.service.OrdinativiSiopePlusFactory;
 import it.cnr.si.siopeplus.service.OrdinativiSiopePlusService;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageException;
@@ -295,9 +298,26 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             documentiContabiliService = SpringUtil.getBean(
                     "documentiContabiliService",
                     DocumentiContabiliService.class);
-            ordinativiSiopePlusService = SpringUtil.getBean(
-                    "ordinativiSiopePlusService",
-                    OrdinativiSiopePlusService.class);
+            if (this.attivoSiopeplus) {
+                final OrdinativiSiopePlusFactory ordinativiSiopePlusFactory = SpringUtil.getBean(OrdinativiSiopePlusFactory.class);
+                try {
+                    this.ordinativiSiopePlusService = Optional.ofNullable(config.getInitParameter("tesoreria"))
+                            .map(s -> {
+                                try {
+                                    return ordinativiSiopePlusFactory.getOrdinativiSiopePlusService(s);
+                                } catch (SIOPEPlusServiceNotInstantiated e) {
+                                    throw new DetailedRuntimeException(e);
+                                }
+                            }).orElseGet(() -> {
+                                return ordinativiSiopePlusFactory.getListOrdinativiSiopeService()
+                                        .stream()
+                                        .findAny()
+                                        .orElseThrow(() -> new DetailedRuntimeException("Cannot find any implemention of OrdinativiSiopePlusService"));
+                            });
+                } catch (DetailedRuntimeException _ex) {
+                    throw new ApplicationException("Funzione non utilizzabile, mancano i parametri di configurazione di SIOPE+");
+                }
+            }
             firmatarioDistinta = ((UtenteComponentSession) createComponentSession(
                     "CNRUTENZE00_EJB_UtenteComponentSession",
                     UtenteComponentSession.class)).isUtenteAbilitatoFirma(

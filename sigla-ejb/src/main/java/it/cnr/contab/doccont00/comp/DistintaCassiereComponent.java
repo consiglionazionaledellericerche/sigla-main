@@ -4893,6 +4893,7 @@ public class DistintaCassiereComponent extends
             final ObjectFactory objectFactory = new ObjectFactory();
             Reversale reversale = objectFactory.createReversale();
             List list = findDocumentiFlusso(userContext, bulk);
+            reversale.setTipoOperazione(getTipoOperazione(userContext, bulk));
             Configurazione_cnrBulk inviaTagBilanio= null;
             try {
                 inviaTagBilanio= getConfigurazioneInviaBilancio( userContext);
@@ -4901,7 +4902,6 @@ public class DistintaCassiereComponent extends
             }
             if ( Optional.ofNullable(inviaTagBilanio).map(s->Boolean.valueOf(s.getVal01())).orElse(Boolean.FALSE)) {
                 Integer numMaxVociBilancio =Optional.ofNullable(inviaTagBilanio.getVal02()).map(s->Integer.valueOf(s)).orElse(1);
-                reversale.setTipoOperazione(getTipoOperazione(userContext, bulk));
                 ReversaleIHome reversaleHome = Optional.ofNullable(getHome(userContext, ReversaleIBulk.class))
                         .filter(ReversaleIHome.class::isInstance)
                         .map(ReversaleIHome.class::cast)

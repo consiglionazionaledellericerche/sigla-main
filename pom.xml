@@ -40,7 +40,7 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
-		<siopeplus.version>1.0.0</siopeplus.version>
+		<siopeplus.version>1.0.1</siopeplus.version>
 		<sdi.fatturapa.version>0.0.1</sdi.fatturapa.version>
 		<ws.client.version>0.0.5</ws.client.version>
 		<spring.version>5.2.5.RELEASE</spring.version>

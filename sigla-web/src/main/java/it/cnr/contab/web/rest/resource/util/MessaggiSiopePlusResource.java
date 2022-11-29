@@ -28,7 +28,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.si.siopeplus.model.Esito;
 import it.cnr.si.siopeplus.model.MessaggioXML;
 import it.cnr.si.siopeplus.model.Risultato;
-import it.cnr.si.siopeplus.service.OrdinativiSiopePlusService;
+import it.cnr.si.siopeplus.service.OrdinativiSiopePlusFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,17 +44,14 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
-    private transient static final Logger logger = LoggerFactory.getLogger(MessaggiSiopePlusResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessaggiSiopePlusResource.class);
     @EJB
     private Configurazione_cnrComponentSession configurazione_cnrComponentSession;
 
@@ -68,33 +65,33 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
         try {
             annullaMandati =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
-                            userContext,
-                            Calendar.getInstance().get(Calendar.YEAR),
-                            "*",
-                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                            Configurazione_cnrBulk.SK_ANNULLA_MANDATI
-                    ))
+                                    userContext,
+                                    Calendar.getInstance().get(Calendar.YEAR),
+                                    "*",
+                                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                                    Configurazione_cnrBulk.SK_ANNULLA_MANDATI
+                            ))
                             .map(s -> Boolean.valueOf(s))
                             .orElse(Boolean.FALSE);
             riportaMandatoDaFirmare =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
-                            userContext,
-                            Calendar.getInstance().get(Calendar.YEAR),
-                            "*",
-                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                            Configurazione_cnrBulk.SK_RIPORTA_MANDATO_DAFIRMARE
-                    ))
+                                    userContext,
+                                    Calendar.getInstance().get(Calendar.YEAR),
+                                    "*",
+                                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                                    Configurazione_cnrBulk.SK_RIPORTA_MANDATO_DAFIRMARE
+                            ))
                             .map(s -> Boolean.valueOf(s))
                             .orElse(Boolean.FALSE);
 
             annullaReversali =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
-                            userContext,
-                            Calendar.getInstance().get(Calendar.YEAR),
-                            "*",
-                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                            Configurazione_cnrBulk.SK_ANNULLA_REVERSALI
-                    ))
+                                    userContext,
+                                    Calendar.getInstance().get(Calendar.YEAR),
+                                    "*",
+                                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                                    Configurazione_cnrBulk.SK_ANNULLA_REVERSALI
+                            ))
                             .map(s -> Boolean.valueOf(s))
                             .orElse(Boolean.FALSE);
         } catch (ComponentException | RemoteException _ex) {
@@ -158,31 +155,33 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
 
     @Override
     public Response downloadxml(HttpServletRequest request, Esito esito, String dataDa, String dataA, Boolean download, String localFolder) throws Exception {
-        OrdinativiSiopePlusService ordinativiSiopePlusService = SpringUtil.getBean("ordinativiSiopePlusService", OrdinativiSiopePlusService.class);
-
-        final Stream<Risultato> risultatoStream = Optional.ofNullable(ordinativiSiopePlusService.getAllMessaggi(esito, Optional.ofNullable(dataDa)
-                        .map(s -> LocalDateTime.parse(dataDa, DateTimeFormatter.ISO_DATE_TIME))
-                        .orElse(null),
-                Optional.ofNullable(dataA)
-                        .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
-                        .orElse(null), download, null))
-                .orElseGet(() -> Collections.emptyList())
+        return Response.ok(SpringUtil.getBean(OrdinativiSiopePlusFactory.class)
+                .getListOrdinativiSiopeService()
                 .stream()
-                .map(risultato -> {
-                    try {
-                        final MessaggioXML<Object> messaggioXML =
-                                ordinativiSiopePlusService.getLocation(risultato.getLocation(), Object.class);
-                        Files.write(
-                                Files.createFile(
-                                        Paths.get(localFolder.concat(File.separator).concat(UUID.randomUUID().toString()).concat("-").concat(messaggioXML.getName()))),
-                                messaggioXML.getContent()
-                        );
-                    } catch (Exception _ex) {
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
-                    }
-                    return risultato;
-                });
-        return Response.ok(risultatoStream.collect(Collectors.toList())).build();
+                .map(ordinativiSiopePlusService -> {
+                    return Optional.ofNullable(ordinativiSiopePlusService.getAllMessaggi(esito, Optional.ofNullable(dataDa)
+                                            .map(s -> LocalDateTime.parse(dataDa, DateTimeFormatter.ISO_DATE_TIME))
+                                            .orElse(null),
+                                    Optional.ofNullable(dataA)
+                                            .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
+                                            .orElse(null), download, null))
+                            .orElseGet(() -> Collections.emptyList())
+                            .stream()
+                            .map(risultato -> {
+                                try {
+                                    final MessaggioXML<Object> messaggioXML =
+                                            ordinativiSiopePlusService.getLocation(risultato.getLocation(), Object.class);
+                                    Files.write(
+                                            Files.createFile(
+                                                    Paths.get(localFolder.concat(File.separator).concat(UUID.randomUUID().toString()).concat("-").concat(messaggioXML.getName()))),
+                                            messaggioXML.getContent()
+                                    );
+                                } catch (Exception _ex) {
+                                    logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                                }
+                                return risultato;
+                            }).collect(Collectors.toList());
+                }).collect(ArrayList::new, List::addAll, List::addAll)).build();
     }
 
     @Override
