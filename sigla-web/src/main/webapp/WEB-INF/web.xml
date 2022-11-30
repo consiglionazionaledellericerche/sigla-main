@@ -220,6 +220,7 @@
 			<url-pattern>/RicercaFatturaPassivaAction.do</url-pattern>
 			<url-pattern>/cancellaSchedulazioneExcel.do</url-pattern>
 			<url-pattern>/info.json</url-pattern>
+			<url-pattern>/restapi/swagger.json</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>
