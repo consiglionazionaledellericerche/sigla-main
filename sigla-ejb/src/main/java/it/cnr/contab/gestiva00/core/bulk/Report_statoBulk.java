@@ -39,6 +39,8 @@ public void completeFrom(Stampa_registri_ivaVBulk stampa) {
 	setEsercizio(stampa.getEsercizio());
 	setTi_documento(stampa.getTipo_documento_stampato());
 	setTipo_report(stampa.getTipo_report_stampato());
+	setDt_inizio(stampa.getData_da());
+	setDt_fine(stampa.getData_a());
 }
 public java.lang.String getCd_tipo_sezionale() {
 	it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk tipo_sezionale = this.getTipo_sezionale();

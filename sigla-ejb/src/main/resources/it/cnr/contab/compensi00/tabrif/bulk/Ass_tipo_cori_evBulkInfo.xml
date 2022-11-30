@@ -78,7 +78,7 @@
 		property="elemento_voce.ds_elemento_voce"
 		label=""
 		inputType="ROTEXT"
-		inputSize="100"
+		inputSize="300"
 		enabledOnSearch="true"/>
 	<fieldProperty
 		name="find_contributo_ritenuta"

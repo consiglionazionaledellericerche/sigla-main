@@ -156,6 +156,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TESORERIA"
+			propertyName="cd_tesoreria"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_distinta_def" />
@@ -201,5 +207,7 @@
 		name="stato" />
 	<persistentProperty
 		name="inviaPEC" />
+	<persistentProperty
+		name="cd_tesoreria" />
 
 </SQLPersistentInfo>

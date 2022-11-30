@@ -83,6 +83,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_UO_ACCREDITAMENTO_SAC = "UO_ACCREDITAMENTO_SAC";
     public final static String SK_UO_DISTINTA_TUTTA_SAC = "UO_DISTINTA_TUTTA_SAC";
     public final static String SK_UO_RAGIONERIA = "UO_RAGIONERIA";
+    public final static String SK_UO_VERSAMENTO_IVA = "UO_VERSAMENTO_IVA";
 
     public final static String PK_PDG_VARIAZIONE = "PDG_VARIAZIONE";
     public final static String SK_TIPO_VAR_APPROVA_CDS = "TIPO_VAR_APPROVA_CDS";
@@ -154,6 +155,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String SK_CODICE_TRAMITE_BT = "CODICE_TRAMITE_BT";
     public final static String SK_CODICE_ISTAT_ENTE = "CODICE_ISTAT_ENTE";
     public final static String SK_ATTIVO_SIOPEPLUS = "ATTIVO_SIOPEPLUS";
+    public final static String SK_INVIA_TAG_BILANCIO = "INVIA_TAG_BILANCIO";
+
     public final static String SK_ANNULLA_MANDATI = "ANNULLA_MANDATI";
     public final static String SK_ANNULLA_REVERSALI = "ANNULLA_REVERSALI";
     public final static String SK_RIPORTA_MANDATO_DAFIRMARE = "RIPORTA_MANDATO_DAFIRMARE";

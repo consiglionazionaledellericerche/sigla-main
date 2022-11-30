@@ -231,10 +231,20 @@ siopeplus:
   certificate:
     path: file:${user.home}/cert/siope+/cert.p12
     password: changeit
-  codice:
-    a2a: A2A-00000000
-    uni:
-      uo: 000000
+  vAPI: v1
+  base_url: https://certa2a.siopeplus.it/${siopeplus.vAPI}
+  endpoints: BT
+  endpoint:
+    BT:
+      a2a: A2A-31432329
+      uniuo: O5WZO8
+      base_url: ${siopeplus.base_url}/${siopeplus.endpoint.BT.a2a}/PA/${siopeplus.endpoint.BT.uniuo}
+      flusso: ${siopeplus.endpoint.BT.base_url}/flusso/
+      ack: ${siopeplus.endpoint.BT.flusso}ack/
+      esitoflusso: ${siopeplus.endpoint.BT.flusso}esitoflusso/
+      esitoapplicativo: ${siopeplus.endpoint.BT.base_url}/esitoapplicativo/
+      giornaledicassa: ${siopeplus.endpoint.BT.base_url}/giornale/
+
 liquibase:
   bootstrap:
     esercizio: 2019
@@ -262,11 +272,6 @@ pagopa:
 project:
   stage: demo-h2
 thorntail:
-  undertow:
-    servlet-containers:
-      default:
-        session-cookie-setting:
-          comment: ";HttpOnly;Secure;SameSite=None"
   security:
     security-domains:
       sigla-auth:
@@ -303,15 +308,6 @@ thorntail:
         password: sa
         use-java-context: true
         jndi-name: java:/jdbc/CIR
-  deployment:
-    sigla.war:
-      web:
-        security-constraints:
-          - url-pattern: /restapi/version
-          - url-pattern: /restapi/login
-          - url-pattern: /restapi/*
-            roles:
-              - "*"
     timeout: 1200
 
 spring:
@@ -324,11 +320,6 @@ cnr:
 project:
   stage: demo-postgres
 thorntail:
-  undertow:
-    servlet-containers:
-      default:
-        session-cookie-setting:
-          comment: ";HttpOnly;Secure;SameSite=None"
   security:
     security-domains:
       sigla-auth:
@@ -375,11 +366,6 @@ cnr:
 project:
   stage: demo-oracle
 thorntail:
-  undertow:
-    servlet-containers:
-      default:
-        session-cookie-setting:
-          comment: ";HttpOnly;Secure;SameSite=None"
   security:
     security-domains:
       sigla-auth:

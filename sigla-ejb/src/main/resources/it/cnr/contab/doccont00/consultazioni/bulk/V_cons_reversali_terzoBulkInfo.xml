@@ -166,7 +166,7 @@
 		inputType="TEXTAREA"
 		cols="60"
 		rows="5"
-		maxLength="100"
+		maxLength="300"
 		label="Descrizione Voce" />
 	<fieldProperty
 		name="cd_terzo"

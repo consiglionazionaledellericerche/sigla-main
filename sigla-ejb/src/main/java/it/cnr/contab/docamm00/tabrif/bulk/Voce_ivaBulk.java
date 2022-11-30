@@ -17,15 +17,14 @@
 
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
 import java.util.Dictionary;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
 public class Voce_ivaBulk extends Voce_ivaBase {
 	protected Voce_ivaBulk voce_iva;
@@ -273,7 +272,7 @@ public void validate() throws ValidationException {
 	}	
         
     // Flag attualmente non utilizzati da chiarire la gestione
-    setFl_intra(FALSE);
+    //setFl_intra(FALSE);
     setFl_autofattura(FALSE);
     setFl_bolla_doganale(FALSE);
     if (getPercentuale() == null)

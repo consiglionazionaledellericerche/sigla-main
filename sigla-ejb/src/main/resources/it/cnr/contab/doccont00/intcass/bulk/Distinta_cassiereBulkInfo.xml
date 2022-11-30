@@ -476,6 +476,17 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		label="Invia PEC" />
+	<fieldProperty
+		name="cd_tesoreria"
+		property="cd_tesoreria"
+		inputType="SELECT"
+		keysProperty="tesoreriaKeys"
+		label="Tesoreria"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		maxLength="50"
+		inputSize="50"/>
 
 	<formFieldProperty
 		name="cd_cds" />
@@ -635,5 +646,33 @@
 	<findFieldProperty
 		name="stato"/>
 	<findFieldProperty
-		name="utcr" />	
+		name="utcr" />
+
+	<columnSet name="tesoreria">
+		<columnFieldProperty
+				name="esercizio" />
+		<columnFieldProperty
+				name="cd_cds" />
+		<columnFieldProperty
+				name="cd_unita_organizzativa" />
+		<columnFieldProperty
+				name="pg_distinta" />
+		<columnFieldProperty
+				name="dt_emissione" />
+		<columnFieldProperty
+				name="dt_invio" />
+		<columnFieldProperty
+				name="pg_distinta_def" />
+		<columnFieldProperty
+				name="progFlusso"/>
+		<columnFieldProperty
+				name="identificativoFlussoBT"/>
+		<columnFieldProperty
+				name="statoLabel"/>
+		<columnFieldProperty
+				name="cd_tesoreria" />
+		<columnFieldProperty
+				name="utcr" />
+	</columnSet>
+
 </bulkInfo>

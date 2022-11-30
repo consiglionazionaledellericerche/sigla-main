@@ -17,19 +17,20 @@ function doVisualizzaSingoloDocumento(esercizio, cds , uo, numero_documento, tip
 </script>
 </head>
 <body class="Form">
-<% 
-	 bp.openFormWindow(pageContext); %>
-
-	<table class="Panel" height="100%" width="100%">
-		<tr height="100%"><td>
-		<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
-		</td></tr>
-		<tr><td>
-		<% bp.writeHTMLNavigator(out); %>
-		</td></tr>
-	</table>
-
+<% bp.openFormWindow(pageContext); %>
+    <%	if (bp.getParentRoot().isBootstrap()) { %>
+        <% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+        <% bp.writeHTMLNavigator(out); %>
+    <% } else {%>
+        <table class="Panel" height="100%" width="100%">
+            <tr height="100%"><td>
+            <% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+            </td></tr>
+            <tr><td>
+            <% bp.writeHTMLNavigator(out); %>
+            </td></tr>
+        </table>
+    <% } %>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
-
 </html>

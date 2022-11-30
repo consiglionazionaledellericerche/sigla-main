@@ -98,7 +98,7 @@
 			columnName="DS_ELEMENTO_VOCE"
 			propertyName="dsElementoVoce"
 			sqlTypeName="VARCHAR"
-			columnSize="200"
+			columnSize="300"
 			nullable="true" />
 		<columnMapping
 			columnName="RES_PRO_INI"

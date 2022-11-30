@@ -24,8 +24,6 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.coepcoan00.comp.ScritturaPartitaDoppiaFromDocumentoComponent;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk;
-import it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
@@ -39,6 +37,7 @@ import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.dto.SiopeBilancioDTO;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
@@ -82,6 +81,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -6655,4 +6655,36 @@ public class MandatoComponent extends ScritturaPartitaDoppiaFromDocumentoCompone
                 .map(mandatoRigaHome -> mandatoRigaHome.getDocumentoAmministrativoSpesaBulk(userContext, mandatoRiga))
                 .orElse(null);
     }
+
+    private Configurazione_cnrBulk getConfigurazioneInviaBilancio(UserContext userContext) throws RemoteException, ComponentException {
+        return ((Configurazione_cnrComponentSession) EJBCommonServices
+                .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getConfigurazione(
+                userContext,
+                CNRUserContext.getEsercizio(userContext),
+                null,
+                Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                Configurazione_cnrBulk.SK_INVIA_TAG_BILANCIO);
+    }
+
+    @Override
+    protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+        super.validaCreaModificaConBulk(usercontext, oggettobulk);
+        Configurazione_cnrBulk inviaTagBilanio= null;
+        try {
+             inviaTagBilanio= getConfigurazioneInviaBilancio( usercontext);
+        } catch (RemoteException e) {
+            throw new ComponentException(e);
+        }
+        if ( Optional.ofNullable(inviaTagBilanio).map(s->Boolean.valueOf(s.getVal01())).orElse(Boolean.FALSE)) {
+            Integer numMaxVociBilancio =Optional.ofNullable(inviaTagBilanio.getVal02()).map(s->Integer.valueOf(s)).orElse(1);
+
+            MandatoBulk mandato = (MandatoBulk) oggettobulk;
+            MandatoHome mandatoHome = (MandatoHome) getHome(usercontext, mandato.getClass());
+            List<SiopeBilancioDTO> siope = mandatoHome.getSiopeBilancio(usercontext, mandato);
+            if ( siope!=null && siope.size()>numMaxVociBilancio)
+                throw new ApplicationException("Le voci di Bilancio sono maggiori di quelle previste. Max:"+numMaxVociBilancio);
+        }
+    }
+
+
 }

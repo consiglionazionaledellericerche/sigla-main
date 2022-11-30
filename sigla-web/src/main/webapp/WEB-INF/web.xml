@@ -219,6 +219,8 @@
 			<url-pattern>/ConsNazioneAction.do</url-pattern>
 			<url-pattern>/RicercaFatturaPassivaAction.do</url-pattern>
 			<url-pattern>/cancellaSchedulazioneExcel.do</url-pattern>
+			<url-pattern>/info.json</url-pattern>
+			<url-pattern>/restapi/swagger.json</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>
@@ -228,6 +230,7 @@
 			<web-resource-name>HtmlAuth</web-resource-name>
 			<description>application security constraints</description>
 			<url-pattern>*.do</url-pattern>
+			<url-pattern>*.json</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>

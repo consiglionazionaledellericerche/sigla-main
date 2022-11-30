@@ -18,6 +18,7 @@
 package it.cnr.contab.gestiva00.bp;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 import javax.ejb.EJBException;
 
@@ -244,4 +245,29 @@ protected void init(Config config, ActionContext actioncontext) throws BusinessP
 public boolean isUoEnte(){
 	return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0);
 }
+	public void doOnMeseChange(ActionContext context) throws BusinessProcessException {
+		if (this.isBulkReprintable())
+			this.getRegistri_stampati().reset(context);
+		setDataDaA(context, (Stampa_registri_ivaVBulk) this.getModel());
+	}
+
+	protected void setDataDaA(ActionContext context, Stampa_registri_ivaVBulk stampaBulk) {
+		int esercizio = stampaBulk.getEsercizio().intValue();
+		int meseIndex = ((Integer)stampaBulk.getMesi_int().get(stampaBulk.getMese())).intValue();
+		java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+		gc.set(java.util.Calendar.HOUR, 0);
+		gc.set(java.util.Calendar.MINUTE, 0);
+		gc.set(java.util.Calendar.SECOND, 0);
+		gc.set(java.util.Calendar.MILLISECOND, 0);
+		gc.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+
+		gc.set(java.util.Calendar.DAY_OF_MONTH, 1);
+		gc.set(java.util.Calendar.YEAR, esercizio);
+
+		gc.set(java.util.Calendar.MONTH, meseIndex-1);
+		stampaBulk.setData_da(new Timestamp(gc.getTime().getTime()));
+		gc.set(java.util.Calendar.MONTH, meseIndex);
+		gc.add(java.util.Calendar.DAY_OF_MONTH, -1);
+		stampaBulk.setData_a(new Timestamp(gc.getTime().getTime()));
+	}
 }

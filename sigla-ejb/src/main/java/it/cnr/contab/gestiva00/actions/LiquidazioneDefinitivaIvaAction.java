@@ -68,11 +68,13 @@ protected Forward basicDoCerca(
 				    bulk.getTotaleRipartizioneFinanziaria().compareTo(newLiquidazione.getIva_da_versare().abs())!=0) {
 					bp.commitUserTransaction();
 					bp.inizializzaMese(context);
-					message = "Attenzione! L'importo da versare è stato aggiornato e non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
+					if (!bp.isStanziamentoAccentrato())
+						message = "Attenzione! L'importo da versare è stato aggiornato e non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
 				}
 			} else {
 				bp.rollbackUserTransaction();
-				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(bulk.getDebitoLastLiquidazioneProvvisoria())!=0)
+				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(bulk.getDebitoLastLiquidazioneProvvisoria())!=0 &&
+					!bp.isStanziamentoAccentrato())
 					message = "Attenzione! L'importo da versare non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
 			}
 
@@ -221,43 +223,6 @@ protected Forward doStampa(
 		message = s + "! Se si desidera, eseguire la stampa del report.";
 
 	return doStampa(context, stampaBulk, message);
-}
-protected it.cnr.jada.action.Forward setDataDaA(
-	ActionContext context,
-	Stampa_registri_ivaVBulk stampaBulk) {
-
-    try {
-	    int esercizio = stampaBulk.getEsercizio().intValue();
-	    int meseIndex = ((Integer)stampaBulk.getMesi_int().get(stampaBulk.getMese())).intValue();
-		java.util.GregorianCalendar gc = getGregorianCalendar();
-		gc.set(java.util.Calendar.DAY_OF_MONTH, 1);
-		gc.set(java.util.Calendar.YEAR, esercizio);
-
-		gc.set(java.util.Calendar.MONTH, ((meseIndex > 0) ? meseIndex-1 : meseIndex));
-		stampaBulk.setData_da(new Timestamp(gc.getTime().getTime()));
-		if (meseIndex < 0)
-			gc.set(java.util.Calendar.YEAR, esercizio);
-		gc.set(java.util.Calendar.MONTH, ((meseIndex > 0) ? meseIndex : meseIndex + 1));
-		gc.add(java.util.Calendar.DAY_OF_MONTH, -1);
-        stampaBulk.setData_a(new Timestamp(gc.getTime().getTime()));
-
-    } catch (Exception e) {
-		return handleException(context, e);
-    }
-    return context.findDefaultForward();
-
-}
-public it.cnr.jada.action.Forward doOnMeseChange(ActionContext context) {
-	super.doOnMeseChange(context);
-
-	LiquidazioneIvaBP bp= (LiquidazioneIvaBP) context.getBusinessProcess();
-    try {
-        bp.fillModel(context);
-		bp.inizializzaMese(context);
-    } catch (Exception e) {
-		return handleException(context, e);
-    }
-	return context.findDefaultForward();
 }
 public it.cnr.jada.action.Forward doSaveRipartizioneFinanziaria(ActionContext context) {
     LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();

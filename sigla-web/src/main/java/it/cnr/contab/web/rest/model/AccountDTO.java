@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -124,6 +125,12 @@ public class AccountDTO {
         return user
                 .flatMap(utente -> Optional.ofNullable(utente.getDt_ultima_var_password()))
                 .isPresent() || user.filter(UtenteBulk::getFl_autenticazione_ldap).isPresent();
+    }
+
+    public Timestamp getUpdatedAt() {
+        return Optional.ofNullable(currentUser)
+                .flatMap(utente -> Optional.ofNullable(utente.getDt_ultimo_accesso()))
+                .orElse(null);
     }
 
     public boolean isCredentialsNonExpired() {

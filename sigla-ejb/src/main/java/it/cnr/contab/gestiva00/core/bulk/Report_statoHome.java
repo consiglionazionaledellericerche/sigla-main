@@ -16,7 +16,11 @@
  */
 
 package it.cnr.contab.gestiva00.core.bulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
@@ -36,10 +40,19 @@ public Report_statoHome(java.sql.Connection conn,PersistentCache persistentCache
  *	 - Report_statoBulk reportStato
  *
 **/
-public java.util.List findAndOrderByDt_inizio(Report_statoBulk reportStato) throws PersistencyException{
-
+public java.util.List findAndOrderByDt_inizio(UserContext userContext, Report_statoBulk reportStato) throws ComponentException, PersistencyException{
 	SQLBuilder sql = createSQLBuilder();
-	sql.addClausesUsing(reportStato, false);	
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, reportStato.getEsercizio());
+	sql.addClause(FindClause.AND, "cd_tipo_sezionale", SQLBuilder.EQUALS, reportStato.getCd_tipo_sezionale());
+	sql.addClause(FindClause.AND, "tipo_report", SQLBuilder.EQUALS, reportStato.getTipo_report());
+	sql.addClause(FindClause.AND, "ti_documento", SQLBuilder.EQUALS, reportStato.getTi_documento());
+	if (!((Unita_organizzativa_enteHome)getHomeCache().getHome(Unita_organizzativa_enteBulk.class)).isUoEnte(userContext)) {
+		sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, reportStato.getCd_cds());
+		sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, reportStato.getCd_unita_organizzativa());
+	} else {
+		sql.addClause(FindClause.AND, "dt_inizio", SQLBuilder.EQUALS, reportStato.getDt_inizio());
+		sql.addClause(FindClause.AND, "dt_fine", SQLBuilder.EQUALS, reportStato.getDt_fine());
+	}
 	sql.addOrderBy("DT_INIZIO");
 	return fetchAll(sql);
 }
