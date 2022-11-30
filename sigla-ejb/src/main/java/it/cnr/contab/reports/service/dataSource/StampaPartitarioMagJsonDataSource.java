@@ -1,9 +1,8 @@
 package it.cnr.contab.reports.service.dataSource;
 
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.StampaPartitarioMagHome;
-import it.cnr.contab.ordmag.magazzino.bulk.Stampa_inventarioBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.Stampa_inventarioHome;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -20,7 +19,7 @@ public class StampaPartitarioMagJsonDataSource extends AbstractDataSourceOffline
 
     @Override
     public Class getBulkClass() {
-        return Stampa_inventarioBulk.class;
+        return StampaPartitarioMagBulk.class;
     }
 
     public String getDataSourceOffline(UserContext userContext, Print_spoolerBulk print_spoolerBulk, BulkHome bulkHome) throws ComponentException {

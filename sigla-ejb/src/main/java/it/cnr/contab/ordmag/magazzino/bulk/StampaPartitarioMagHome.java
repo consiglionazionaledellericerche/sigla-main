@@ -85,10 +85,11 @@ public class StampaPartitarioMagHome extends BulkHome {
 		super(Stampa_inventarioBulk.class, conn, persistentCache);
 	}
 
-	private static final String DATA_INVENTARIO="dataInventario";
 	private static final String COD_MAGAZZINO = "cdMagazzino";
-	private static final String CATEGORIA_GRUPPO = "cdCatGrp";
-	private static final String ORDINAMENTO = "ordinamento";
+	private static final String DA_DATA_MOVIMENTO = "daDataMovimento";
+	private static final String A_DATA_MOVIMENTO = "aDataMovimento";
+	private static final String DA_DATA_COMPETENZA = "daDataCompetenza";
+	private static final String A_DATA_COMPETENZA = "aDataCompetenza";
 
 	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, StampaPartitarioMagBulk bulk, UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
 															CompoundFindClause compoundfindclause) throws PersistencyException{
@@ -112,38 +113,37 @@ public class StampaPartitarioMagHome extends BulkHome {
 
 	public String getJsonDataSource(UserContext uc, Print_spoolerBulk print_spoolerBulk)  {
 		BulkList<Print_spooler_paramBulk> params= print_spoolerBulk.getParams();
-		Print_spooler_paramBulk dataInventario=params.stream().
-				filter(e->e.getNomeParam().equals(DATA_INVENTARIO)).findFirst().get();
-
 		Print_spooler_paramBulk codMagazzinoParam=params.stream().
 				filter(e->e.getNomeParam().equals(COD_MAGAZZINO)).findFirst().get();
 
-		Print_spooler_paramBulk catGruppoParam=params.stream().
-				filter(e->e.getNomeParam().equals(CATEGORIA_GRUPPO)).findFirst().get();
+		Print_spooler_paramBulk daDataMovimentoParam=params.stream().
+				filter(e->e.getNomeParam().equals(DA_DATA_MOVIMENTO)).findFirst().get();
 
-		Print_spooler_paramBulk ordinamentoParam=params.stream().
-				filter(e->e.getNomeParam().equals(ORDINAMENTO)).findFirst().get();
+		Print_spooler_paramBulk aDataMovimentoParam=params.stream().
+				filter(e->e.getNomeParam().equals(A_DATA_MOVIMENTO)).findFirst().get();
+
+		Print_spooler_paramBulk daDataCompetenzaParam=params.stream().
+				filter(e->e.getNomeParam().equals(DA_DATA_COMPETENZA)).findFirst().get();
+
+		Print_spooler_paramBulk aDataCompetenzaParam=params.stream().
+				filter(e->e.getNomeParam().equals(A_DATA_COMPETENZA)).findFirst().get();
 
 
-
-		Date dt = null;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
-		try {
-			dt =dateFormatter.parse(dataInventario.getValoreParam());
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		String codMag = null;
 		if(codMagazzinoParam != null){
 			codMag = codMagazzinoParam.getValoreParam();
 		}
-		String catGruppo = null;
-		if(catGruppoParam != null){
-			catGruppo = catGruppoParam.getValoreParam();
+		Date dt = null;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			dt =dateFormatter.parse(daDataMovimentoParam.getValoreParam());
+
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 
 		//LottoMagHome lottoMagHome  = ( LottoMagHome)getHomeCache().getHome(LottoMagBulk.class,null,"stampa_inventario");
+/*
 		MovimentiMagHome movimentiMagHome  = ( MovimentiMagHome)getHomeCache().getHome(LottoMagBulk.class);
 		SQLBuilder sql = movimentiMagHome.createSQLBuilder();
 		sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
@@ -156,6 +156,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 		sql.addTableToHeader("bolla_scarico_riga_mag","bs");
 		sql.addSQLJoin("bs.pg_movimento","LOTTO_MAG.pg_movimento(+)");
 		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.DT_CARICO",SQLBuilder.LESS_EQUALS, new Timestamp(dt.getTime()));
+*/
 		/*
 		List<StampaInventarioDTO> inventario= new ArrayList<StampaInventarioDTO>();
 		try {
@@ -255,6 +256,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 		}
 		*/
 
+		//String json="{}";
 		String json=null;
 		/*
 		try {

@@ -27,7 +27,7 @@ public class StampaPartitarioMagAction extends ParametricPrintAction {
             }
         }
     }
-    public Forward doOnDataInizioCompotenzaChange(ActionContext actioncontext) throws FillException {
+    public Forward doOnDataInizioCompetenzaChange(ActionContext actioncontext) throws FillException {
         ParametricPrintBP bp= (ParametricPrintBP) actioncontext.getBusinessProcess();
         StampaPartitarioMagBulk model=(StampaPartitarioMagBulk)bp.getModel();
         fillModel(actioncontext);
@@ -41,13 +41,13 @@ public class StampaPartitarioMagAction extends ParametricPrintAction {
             return handleException(actioncontext, e);
         }
     }
-    public Forward doOnDataFineCompotenzaChange(ActionContext actioncontext) throws FillException {
+    public Forward doOnDataFineCompetenzaChange(ActionContext actioncontext) throws FillException {
         ParametricPrintBP bp= (ParametricPrintBP) actioncontext.getBusinessProcess();
         StampaPartitarioMagBulk model=(StampaPartitarioMagBulk)bp.getModel();
         fillModel(actioncontext);
 
         try {
-            checkDateRange(model.getDaDataCompetenza(),model.getaDataCompetenza(),"Data Compotenza");
+            checkDateRange(model.getDaDataCompetenza(),model.getaDataCompetenza(),"Data Competenza");
             return actioncontext.findDefaultForward();
         } catch (Throwable e) {
             return handleException(actioncontext, e);
