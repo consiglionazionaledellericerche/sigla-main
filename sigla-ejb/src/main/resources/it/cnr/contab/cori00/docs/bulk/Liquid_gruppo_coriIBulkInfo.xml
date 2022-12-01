@@ -63,25 +63,34 @@
 
 	<columnSet name="v_liquid_gruppo">	
 		<columnFieldProperty
+			textTruncate="true"
 			name="cd_gruppo_cr" />
 		<columnFieldProperty
 			name="ds_gruppo_cr" />	
 		<columnFieldProperty
-			name="terzo_versamento" />
+				textTruncate="true"
+				name="terzo_versamento" />
 		<columnFieldProperty
-			name="fl_accentrato" />
+				textTruncate="true"
+				name="fl_accentrato" />
 		<columnFieldProperty
-			name="cd_uo_origine" />
+				textTruncate="true"
+				name="cd_uo_origine" />
 		<columnFieldProperty
-			name="pg_liquidazione_origine" />
+				textTruncate="true"
+				name="pg_liquidazione_origine" />
 		<columnFieldProperty
-			name="cd_regione" />
+				textTruncate="true"
+				name="cd_regione" />
 		<columnFieldProperty
-			name="pg_comune" />
+				textTruncate="true"
+				name="pg_comune" />
 		<columnFieldProperty
-			name="im_liquidato" />
+				textTruncate="true"
+				name="im_liquidato" />
 		<columnFieldProperty
-			name="pg_doc" />	
+				textTruncate="true"
+				name="pg_doc" />
 	</columnSet>
 		
 	<columnSet name="v_liquid_centro_uo">	

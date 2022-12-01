@@ -17,7 +17,7 @@
 				false,
 				false,
 				"100%",
-				"200px",
+				"40vh",
 				true); %>
 
 <% if (compenso.isSenzaCalcoli()) { %>
