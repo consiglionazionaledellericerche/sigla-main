@@ -298,12 +298,13 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         .orElseThrow(() -> new ApplicationException("File non presente"));
                 try {
                     allegato.complete(actioncontext.getUserContext());
-                    storeService.storeSimpleDocument(allegato,
+                    StorageObject storageObject = storeService.storeSimpleDocument(allegato,
                             new FileInputStream(file),
                             allegato.getContentType(),
                             allegato.getNome(),
                             getStorePath((K) allegatoParentBulk,
                                     true));
+                    completeCreateAllegato((T)allegato, storageObject);
                     allegato.setCrudStatus(OggettoBulk.NORMAL);
                 } catch (FileNotFoundException e) {
                     throw handleException(e);
@@ -322,6 +323,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         }
                         allegato.complete(actioncontext.getUserContext());
                         storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
+                        completeUpdateAllegato((T)allegato);
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
@@ -334,6 +336,14 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             }
         }
         gestioneCancellazioneAllegati(allegatoParentBulk);
+    }
+
+    //Metodo utilizzato per effettuare altre operazioni sullo StorageObject creato come aggiungere Aspect.
+    protected void completeCreateAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
+    }
+
+    //Metodo utilizzato per effettuare altre operazioni sullo StorageObject modificato come aggiungere/rimuovere Aspect.
+    protected void completeUpdateAllegato(T allegato) throws ApplicationException {
     }
 
     protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {
