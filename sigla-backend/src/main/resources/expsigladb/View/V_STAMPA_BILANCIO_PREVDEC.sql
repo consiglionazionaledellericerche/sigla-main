@@ -2,7 +2,7 @@
 --  DDL for View V_STAMPA_BILANCIO_PREVDEC
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_STAMPA_BILANCIO_PREVDEC" ("FONTE", "ESERCIZIO", "TIPO", "CD_LIVELLO1", "CD_LIVELLO2", "CD_LIVELLO3", "CD_LIVELLO4", "CD_LIVELLO5", "CD_LIVELLO6", "CD_LIVELLO7", "CD_LIVELLO8", "CD_LIVELLO9", "DS_LIVELLO1", "DS_LIVELLO2", "DS_LIVELLO3", "DS_LIVELLO4", "DS_LIVELLO5", "DS_LIVELLO6", "DS_LIVELLO7", "DS_LIVELLO8", "DS_LIVELLO9", "IM_RESIDUI_AC", "IM_PREVISIONE_AC", "IM_ASSESTATO_AC", "IM_CASSA_AC", "IM_RESIDUI_AP", "IM_PREVISIONE_AP", "IM_CASSA_AP", "IM_PREVISIONE_AC2", "IM_PREVISIONE_AC3") AS
+CREATE OR REPLACE FORCE VIEW "V_STAMPA_BILANCIO_PREVDEC" ("FONTE", "ESERCIZIO", "TIPO", "CD_LIVELLO1", "CD_LIVELLO2", "CD_LIVELLO3", "CD_LIVELLO4", "CD_LIVELLO5", "CD_LIVELLO6", "CD_LIVELLO7", "CD_LIVELLO8", "CD_LIVELLO9", "DS_LIVELLO1", "DS_LIVELLO2", "DS_LIVELLO3", "DS_LIVELLO4", "DS_LIVELLO5", "DS_LIVELLO6", "DS_LIVELLO7", "DS_LIVELLO8", "DS_LIVELLO9", "IM_RESIDUI_AC", "IM_PREVISIONE_AC", "IM_ASSESTATO_AC", "IM_CASSA_AC", "IM_RESIDUI_AP", "IM_PREVISIONE_AP", "IM_CASSA_AP", "IM_PREVISIONE_AC2", "IM_PREVISIONE_AC3") AS
   (SELECT   e.fonte, e.esercizio, e.ti_gestione tipo,
              e.cd_missione cd_livello1, e.cd_programma cd_livello2,
              e.cd_livello1 cd_livello3, e.cd_livello2 cd_livello4,
@@ -33,10 +33,7 @@
                      + NVL (a.im_spese_gest_decentrata_est, 0)
                      + NVL (a.im_spese_gest_accentrata_int, 0)
                      + NVL (a.im_spese_gest_accentrata_est, 0) im_previsione_ac,
-                       NVL (a.im_spese_gest_decentrata_int, 0)
-                     + NVL (a.im_spese_gest_decentrata_est, 0)
-                     + NVL (a.im_spese_gest_accentrata_int, 0)
-                     + NVL (a.im_spese_gest_accentrata_est, 0) im_assestato_ac,
+                     0 im_assestato_ac,
                      CASE WHEN e.descrizione='CNR'
                           then 0
                           else (SELECT NVL(SUM(IM_PAGAMENTI),0) FROM PDG_MODULO_SPESE_GEST SG
@@ -75,10 +72,7 @@
                      + NVL (a.im_spese_gest_decentrata_est, 0)
                      + NVL (a.im_spese_gest_accentrata_int, 0)
                      + NVL (a.im_spese_gest_accentrata_est, 0) im_previsione_ac,
-                       NVL (a.im_spese_gest_decentrata_int, 0)
-                     + NVL (a.im_spese_gest_decentrata_est, 0)
-                     + NVL (a.im_spese_gest_accentrata_int, 0)
-                     + NVL (a.im_spese_gest_accentrata_est, 0) im_assestato_ac,
+                     0 im_assestato_ac,
                      CASE WHEN e.descrizione='CNR'
                           then 0
                           else NVL (a.im_pagamenti, 0)
@@ -101,57 +95,45 @@
                  AND e.attivo='Y'
               UNION ALL
               --PARTE SPESE DECISIONALE SCIENTIFICO PER VALORIZZAZIONE VARIAZIONI
-              SELECT 'DECSCI' fonte, a.esercizio, a.ti_gestione,
-                     NVL (d.cd_missione, 'NDF'), NVL (d.cd_programma, 'NDF'),
+              SELECT 'DECSCI' fonte, b.esercizio, 'S',
+                     NVL (a.cd_missione, 'NDF'), NVL (a.cd_programma, 'NDF'),
                      c.cd_livello1, c.cd_livello2, c.cd_livello3,
                      c.cd_livello4, c.cd_livello5, c.cd_livello6,
                      c.cd_livello7, c.ds_liv1, c.ds_liv2, c.ds_liv3,
                      c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7,
-                     0 im_residui_ac,
-                     0 im_previsione_ac,
-                     NVL(variazioni_positive, 0) - NVL(variazioni_negative, 0) im_assestato_ac,
+                     0 im_residui_ac, 0 im_previsione_ac,
+                     NVL(a.im_previsione_ap, 0) im_assestato_ac,
                      0 im_cassa_ac, 0 im_residui_ap,
                      0 im_previsione_ap, 0 im_cassa_ap,
                      0 im_previsione_ac2, 0 im_previsione_ac3
-                FROM v_assestato a,
+                FROM pdg_dati_stampa_bilancio_temp a,
                      elemento_voce b,
-                     linea_attivita d,
                      v_classificazione_voci_all c
                WHERE a.ti_gestione = 'S'
-                 AND a.esercizio_res = a.esercizio
-                 AND a.esercizio = b.esercizio
-                 AND a.ti_appartenenza = b.ti_appartenenza
-                 AND a.ti_gestione = b.ti_gestione
-                 AND a.cd_elemento_voce = b.cd_elemento_voce
-                 AND a.cd_centro_responsabilita = d.cd_centro_responsabilita
-                 AND a.cd_linea_attivita = d.cd_linea_attivita
+                 AND b.esercizio = a.esercizio-1
+                 AND b.ti_gestione = a.ti_gestione
+                 AND b.cd_elemento_voce = a.cd_elemento_voce
                  AND b.id_classificazione = c.id_classificazione
               UNION ALL
               --PARTE SPESE GESTIONALE SCIENTIFICO PER VALORIZZAZIONE VARIAZIONI
-              SELECT 'GESTSCI' fonte, a.esercizio, a.ti_gestione,
-                     NVL (d.cd_missione, 'NDF'), NVL (d.cd_programma, 'NDF'),
+              SELECT 'GESTSCI' fonte, b.esercizio, 'S',
+                     NVL (a.cd_missione, 'NDF'), NVL (a.cd_programma, 'NDF'),
                      c.cd_livello1, c.cd_livello2, c.cd_livello3,
                      c.cd_livello4, c.cd_livello5, c.cd_livello6,
                      c.cd_livello7, c.ds_liv1, c.ds_liv2, c.ds_liv3,
                      c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7,
-                     0 im_residui_ac,
-                     0 im_previsione_ac,
-                     NVL(variazioni_positive, 0) - NVL(variazioni_negative, 0) im_assestato_ac,
+                     0 im_residui_ac, 0 im_previsione_ac,
+                     NVL(a.im_previsione_ap, 0) im_assestato_ac,
                      0 im_cassa_ac, 0 im_residui_ap,
                      0 im_previsione_ap, 0 im_cassa_ap,
                      0 im_previsione_ac2, 0 im_previsione_ac3
-                FROM v_assestato a,
+                FROM pdg_dati_stampa_bilancio_temp a,
                      elemento_voce b,
-                     linea_attivita d,
                      v_classificazione_voci_all c
                WHERE a.ti_gestione = 'S'
-                 AND a.esercizio_res = a.esercizio
-                 AND a.esercizio = b.esercizio
-                 AND a.ti_appartenenza = b.ti_appartenenza
-                 AND a.ti_gestione = b.ti_gestione
-                 AND a.cd_elemento_voce = b.cd_elemento_voce
-                 AND a.cd_centro_responsabilita = d.cd_centro_responsabilita
-                 AND a.cd_linea_attivita = d.cd_linea_attivita
+                 AND b.esercizio = a.esercizio-1
+                 AND b.ti_gestione = a.ti_gestione
+                 AND b.cd_elemento_voce = a.cd_elemento_voce
                  AND b.id_classificazione = c.id_classificazione
               UNION ALL
               --PARTE SPESE STANZIAMENTO SCIENTIFICO
@@ -307,10 +289,7 @@
              + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_previsione_ac,
-               NVL (SUM (a.im_spese_gest_decentrata_int), 0)
-             + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
-             + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
-             + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_assestato_ac,
+             0 im_assestato_ac,
              NVL(SUM(CASE WHEN e.descrizione='CNR'
                           then 0
                           else (SELECT NVL(SUM(IM_PAGAMENTI),0) FROM PDG_MODULO_SPESE_GEST SG
@@ -351,7 +330,7 @@
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac,
              NVL (SUM (NVL (a.im_entrata_app, a.im_entrata)), 0) im_previsione_ac,
-             NVL (SUM (NVL (a.im_entrata_app, a.im_entrata)), 0) im_assestato_ac,
+             0 im_assestato_ac,
              NVL(SUM(CASE WHEN e.descrizione='CNR'
                           then 0
                           else (SELECT NVL(SUM(IM_INCASSI),0) FROM PDG_MODULO_ENTRATE_GEST EG
@@ -397,10 +376,7 @@
              + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_previsione_ac,
-               NVL (SUM (a.im_spese_gest_decentrata_int), 0)
-             + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
-             + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
-             + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_assestato_ac,
+             0 im_assestato_ac,
              NVL (SUM (CASE WHEN e.descrizione='CNR'
                             then 0
                             else NVL(a.im_pagamenti, 0)
@@ -450,7 +426,7 @@
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac,
              NVL (SUM (a.im_entrata), 0) im_previsione_ac,
-             NVL (SUM (a.im_entrata), 0) im_assestato_ac,
+             0 im_assestato_ac,
              NVL (SUM (a.im_incassi), 0) im_cassa_ac,
              0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
              NVL (SUM (d.im_entrata_a2), 0) im_previsione_ac2,
@@ -490,24 +466,23 @@
              c.ds_liv7
     UNION ALL
     --PARTE ENTRATE E SPESE DECISIONALE FINANZIARIO PER VALORIZZAZIONE VARIAZIONI
-    SELECT   'DECFIN' fonte, a.esercizio, a.ti_gestione, c.cd_livello1,
+    SELECT   'DECFIN' fonte, b.esercizio, a.ti_gestione, c.cd_livello1,
              c.cd_livello2, c.cd_livello3, c.cd_livello4, c.cd_livello5,
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
-             NULL, 0 im_residui_ac,
-             0 im_previsione_ac,
-             NVL (SUM (variazioni_positive), 0) - NVL (SUM (variazioni_negative), 0) im_assestato_ac,
+             NULL, 0 im_residui_ac, 0 im_previsione_ac,
+             NVL (SUM (a.im_previsione_ap), 0) im_assestato_ac,
              0 im_cassa_ac, 0 im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
              0 im_previsione_ac2, 0 im_previsione_ac3
-        FROM v_assestato a, elemento_voce b, v_classificazione_voci_all c
-       WHERE a.esercizio_res = a.esercizio
-         AND a.esercizio = b.esercizio
-         AND a.ti_appartenenza = b.ti_appartenenza
-         AND a.ti_gestione = b.ti_gestione
-         AND a.cd_elemento_voce = b.cd_elemento_voce
+        FROM pdg_dati_stampa_bilancio_temp a,
+             elemento_voce b,
+             v_classificazione_voci_all c
+       WHERE b.esercizio = a.esercizio-1
+         AND b.ti_gestione = a.ti_gestione
+         AND b.cd_elemento_voce = a.cd_elemento_voce
          AND b.id_classificazione = c.id_classificazione
-    GROUP BY a.esercizio,
+    GROUP BY b.esercizio,
              a.ti_gestione,
              c.cd_livello1,
              c.cd_livello2,
@@ -525,24 +500,23 @@
              c.ds_liv7
     UNION ALL
     --PARTE ENTRATE E SPESE GESTIONALE FINANZIARIO PER VALORIZZAZIONE VARIAZIONI
-    SELECT   'GESTFIN' fonte, a.esercizio, a.ti_gestione, c.cd_livello1,
+    SELECT   'GESTFIN' fonte, b.esercizio, a.ti_gestione, c.cd_livello1,
              c.cd_livello2, c.cd_livello3, c.cd_livello4, c.cd_livello5,
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
-             NULL, 0 im_residui_ac,
-             0 im_previsione_ac,
-             NVL (SUM (variazioni_positive), 0) - NVL (SUM (variazioni_negative), 0) im_assestato_ac,
+             NULL, 0 im_residui_ac, 0 im_previsione_ac,
+             NVL (SUM (a.im_previsione_ap), 0) im_assestato_ac,
              0 im_cassa_ac, 0 im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
              0 im_previsione_ac2, 0 im_previsione_ac3
-        FROM v_assestato a, elemento_voce b, v_classificazione_voci_all c
-       WHERE a.esercizio_res = a.esercizio
-         AND a.esercizio = b.esercizio
-         AND a.ti_appartenenza = b.ti_appartenenza
-         AND a.ti_gestione = b.ti_gestione
-         AND a.cd_elemento_voce = b.cd_elemento_voce
+        FROM pdg_dati_stampa_bilancio_temp a,
+             elemento_voce b,
+             v_classificazione_voci_all c
+       WHERE b.esercizio = a.esercizio-1
+         AND b.ti_gestione = a.ti_gestione
+         AND b.cd_elemento_voce = a.cd_elemento_voce
          AND b.id_classificazione = c.id_classificazione
-    GROUP BY a.esercizio,
+    GROUP BY b.esercizio,
              a.ti_gestione,
              c.cd_livello1,
              c.cd_livello2,
