@@ -83,7 +83,8 @@
 	<table class="w-100">
     <tr>
     <td colspan=3>
-	    <% if (obbligazione!=null && (obbligazione.isCompetenza() || obbligazione.isObbligazioneResiduoImproprio())) { %>
+	    <% if (obbligazione!=null && (obbligazione.isCompetenza() || obbligazione.isObbligazioneResiduoImproprio() ||
+	    (obbligazione.isObbligazioneResiduo() && obbligazione.isProvvisoria()))) { %>
 	    <table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		    <tr><td>
 			    <table border="0" cellspacing="0" cellpadding="2" class="w-100"> 
@@ -124,16 +125,6 @@
 		</table>
 		<% } %>
 	</td></tr>    
-<!-- <% if (obbligazione!=null && 
-    		(obbligazione.getDs_gara_in_corso()!=null || 
-    		 (obbligazione.getFl_gara_in_corso()!=null && obbligazione.getFl_gara_in_corso().booleanValue()))) {%>
-		<tr>
-		<td><% bp.getController().writeFormLabel( out, "ds_gara_in_corso"); %></td>
-		<td colspan=2>
-			<% bp.getController().writeFormInput( out, "ds_gara_in_corso"); %></td>
-		</tr>
-    <% } %> 		
- -->
 	</table>
 </div>
 
@@ -145,7 +136,7 @@
 	<table class="w-100">
 	  <tr>
 	   <td><% bp.getController().writeFormLabel( out, "find_creditore"); %></td>
-	   <td colspan="2"><% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
+	   <td colspan="2"><% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprioRibaltato(),null,null); %>
 	   </td>
 	  </tr>
 	  <tr>
@@ -195,7 +186,7 @@
 			<table>
 			<tr>
 			<td>
-			    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),null,null); %>
+			    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio() || bp.isROFindElemento_voce(),null,null); %>
 			</td>
 			<td>
 			<%JSPUtils.button(out, 
@@ -204,7 +195,7 @@
 					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce",
 					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
 					"btn-outline-primary btn-title faa-parent animated-hover",
-					true, 
+					!(bp.isViewing() || bp.isSearching() || bp.isRoCampiResiduoProprio() || bp.isROFindElemento_voce()),
 					bp.getParentRoot().isBootstrap());%>
 			</td>
 			</tr>

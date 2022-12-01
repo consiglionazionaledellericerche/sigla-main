@@ -94,7 +94,7 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		ObbligazioneBulk obb = (ObbligazioneBulk)getModel();
 		if ( "Y".equals(obb.getRiportato()) )
 		{
-	//		setStatus(VIEW);
+			setStatus(VIEW);
 			setMessage("Il documento è stato riportato all'esercizio successivo. Non consentita la modifica.");
 		}
 

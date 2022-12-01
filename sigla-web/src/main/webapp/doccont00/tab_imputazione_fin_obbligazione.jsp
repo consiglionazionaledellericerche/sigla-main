@@ -24,7 +24,7 @@
                     bp.getParentRoot().isBootstrap() ?"Conferma" : null,
                     "javascript:submitForm('doCaricaLineeAttivita')",
                     "btn-outline-secondary btn-title",
-                    obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
+                    obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable() && !bp.isViewing(),
                     bp.getParentRoot().isBootstrap()); %>
             <% Button.write(out,
                     bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-lizard-o fa-flip-horizontal text-primary" : "img/zoom16.gif",
@@ -51,7 +51,7 @@
                         bp.getParentRoot().isBootstrap() ?"Conferma" : null,
                         "javascript:submitForm('doConfermaLineeAttivita')",
                         "btn-outline-secondary btn-title",
-                        obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
+                        obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable() && !bp.isViewing(),
                         bp.getParentRoot().isBootstrap()); %>
         </td>
 	</tr>

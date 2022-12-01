@@ -694,12 +694,13 @@ public class FatturaAttivaComponentWS {
                                     obb.setCd_cds_origine(testata.getCd_cds_origine());
                                     obb.setCd_uo_origine(testata.getCd_uo_origine());
                                     obb.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_OBB);
-                                    obb.setFl_pgiro(new Boolean(false));
+                                    obb.setFl_pgiro(Boolean.FALSE);
                                     obb.setRiportato("N");
-                                    obb.setFromDocAmm(new Boolean(true));
-                                    obb.setFl_calcolo_automatico(new Boolean(false));
-                                    obb.setFl_spese_costi_altrui(new Boolean(false));
-                                    obb.setFl_gara_in_corso(new Boolean(false));
+                                    obb.setFromDocAmm(Boolean.TRUE);
+                                    obb.setFl_calcolo_automatico(Boolean.FALSE);
+                                    obb.setFl_spese_costi_altrui(Boolean.FALSE);
+                                    obb.setFl_gara_in_corso(Boolean.FALSE);
+                                    obb.setFl_determina_allegata(Boolean.FALSE);
                                     obb.setUtcr(testata.getUtcr());
                                     obb.setUser(testata.getUtcr());
                                     it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();

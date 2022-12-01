@@ -85,7 +85,7 @@ public class CRUDScadenzeController extends it.cnr.jada.util.action.SimpleDetail
 
         super.writeHTMLToolbar(context, reset, find, delete, false);
 
-        if (getParentController() instanceof CRUDObbligazioneBP) {
+        if (getParentController() instanceof CRUDObbligazioneBP && !((CRUDObbligazioneBP) getParentController()).isViewing()) {
             String command = "javascript:submitForm('doRaggruppaScadenze')";
             it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
                     context,

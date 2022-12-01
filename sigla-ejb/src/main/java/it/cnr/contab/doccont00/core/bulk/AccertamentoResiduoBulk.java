@@ -37,7 +37,7 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	private boolean saldiDaAggiornare = false;
 	private String stato;
 	@SuppressWarnings("rawtypes")
-	public final static Dictionary stato_AccertamentoResiduoKeys = new OrderedHashtable();;
+	public final static Dictionary stato_AccertamentoResiduoKeys = new OrderedHashtable();
 	public enum Stato {
 		INCASSATO("Incassato","INS", 1900, 3000),
 		CERTO("Certo","CER", 1900, 3000),
@@ -163,11 +163,12 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	}
 	@SuppressWarnings("rawtypes")
 	public Dictionary getStato_AccertamentoResiduoKeys() {
+		Dictionary statoAccertamentoResiduoKeys = new OrderedHashtable();
 		Arrays.stream(Stato.values())
 				.filter(stato->Optional.ofNullable(this.getEsercizio()).map(ese->ese.compareTo(stato.from())>=0).orElse(Boolean.TRUE))
 				.filter(stato->Optional.ofNullable(this.getEsercizio()).map(ese->ese.compareTo(stato.to())<=0).orElse(Boolean.TRUE))
-				.forEach(stato->stato_AccertamentoResiduoKeys.put(stato.value, stato.label));
-		return stato_AccertamentoResiduoKeys;
+				.forEach(stato->statoAccertamentoResiduoKeys.put(stato.value, stato.label));
+		return statoAccertamentoResiduoKeys;
 	}
 	
 	private java.math.BigDecimal im_quota_inesigibile;
