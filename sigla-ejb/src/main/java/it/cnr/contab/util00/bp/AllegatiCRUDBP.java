@@ -24,6 +24,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleCRUDBP;
@@ -72,6 +73,12 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 return super.removeDetail(i);
             return null;
         }
+
+        @Override
+        protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+            super.validate(actioncontext, oggettobulk);
+            validateChildDetail(actioncontext, oggettobulk);
+        }
     };
 
     public AllegatiCRUDBP() {
@@ -111,6 +118,9 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     protected void addChildDetail(OggettoBulk oggettobulk) {
+    }
+
+    protected void validateChildDetail(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
     }
 
     protected StoreService getBeanStoreService(ActionContext actioncontext)
