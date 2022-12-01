@@ -1061,6 +1061,29 @@ Begin
 		end if;
 	end if;
 
+    -- verifico se il documento è provvisorio e non ha determina allegata se deve essere obbligatoria la determina
+    If aObb.stato_obbligazione = cnrctb035.STATO_PROVVISORIO and
+       (aObb.FL_DETERMINA_ALLEGATA ='N' OR TO_CHAR(aObb.DT_DETERMINA_ALLEGATA,'YYYY') > aObb.esercizio) then
+       Declare
+           pRibaltaDeterminaObblig parametri_cds.fl_ribalta_determina_obblig%type;
+       Begin
+           Select fl_ribalta_determina_obblig
+           into pRibaltaDeterminaObblig
+           from parametri_cds
+           where esercizio = aObb.esercizio
+           and   cd_cds = aObb.cd_cds;
+
+           if pRibaltaDeterminaObblig = 'Y' Then
+               if aObb.FL_DETERMINA_ALLEGATA ='N' Then
+                  aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio senza determina.';
+               else
+                  aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio con determina avente data protocollo superiore al 31/12/'||aObb.esercizio||'.';
+               end if;
+               ibmerr001.RAISE_ERR_GENERICO(aErrMsn);
+           end if;
+       End;
+    End If;
+
 	-- verifico se il documento è ribaltabile
 	if controlloRibalt then
 		if isEligibileRibalt(CNRCTB001.GESTIONE_SPESE,
