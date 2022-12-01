@@ -234,6 +234,12 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_RIBALTA_DETERMINA_OBBLIG"
+			propertyName="fl_ribalta_determina_obblig"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="ABIL_PROGETTO_STRORG"
 			propertyName="abil_progetto_strorg"
 			sqlTypeName="VARCHAR"
@@ -307,6 +313,8 @@
 		name="fl_blocco_impegni_natfin" />
 	<persistentProperty
 		name="fl_allega_determina_obblig" />
+	<persistentProperty
+		name="fl_ribalta_determina_obblig" />
 	<persistentProperty
 		name="abil_progetto_strorg" />
 

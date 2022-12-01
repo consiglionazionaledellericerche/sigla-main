@@ -90,7 +90,7 @@ begin
      aRowtype.FL_GARA_IN_CORSO:=:new.FL_GARA_IN_CORSO;
      aRowtype.DS_GARA_IN_CORSO:=:new.DS_GARA_IN_CORSO;
      aRowtype.FL_DETERMINA_ALLEGATA:=:new.FL_DETERMINA_ALLEGATA;
-
+     aRowtype.DT_DETERMINA_ALLEGATA:=:new.DT_DETERMINA_ALLEGATA;
 
      aOldRowtype.ESERCIZIO:=:old.ESERCIZIO;
      aOldRowtype.CD_CDS:=:old.CD_CDS;
@@ -139,6 +139,7 @@ begin
      aOldRowtype.FL_GARA_IN_CORSO:=:old.FL_GARA_IN_CORSO;
      aOldRowtype.DS_GARA_IN_CORSO:=:old.DS_GARA_IN_CORSO;
      aOldRowtype.FL_DETERMINA_ALLEGATA:=:old.FL_DETERMINA_ALLEGATA;
+     aOldRowtype.DT_DETERMINA_ALLEGATA:=:old.DT_DETERMINA_ALLEGATA;
 
 -- Scarico dello storico
   CNRSTO035.SCARICASUSTORICO('STOOBB',aOldRowType, aRowtype);
