@@ -74,6 +74,7 @@ import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
@@ -4491,6 +4492,38 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 	}
 	verificaGestioneTrovato(aUC, obbligazione, elemento_voce);
 	verificaGestioneMissioni(aUC, obbligazione, elemento_voce);
+
+	if (obbligazione.getArchivioAllegati().stream()
+			.filter(AllegatoObbligazioneBulk.class::isInstance)
+			.map(AllegatoObbligazioneBulk.class::cast)
+			.filter(el->el.getEsercizioDiAppartenenza().equals(obbligazione.getEsercizio()))
+			.filter(AllegatoObbligazioneBulk::isTipoDetermina).count()>1)
+		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Determina' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
+
+	if (obbligazione.getArchivioAllegati().stream()
+			.filter(AllegatoObbligazioneBulk.class::isInstance)
+			.map(AllegatoObbligazioneBulk.class::cast)
+			.filter(el->el.getEsercizioDiAppartenenza().equals(obbligazione.getEsercizio()))
+			.filter(AllegatoObbligazioneBulk::isTipoRiaccertamentoResidui).count()>1)
+		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Riaccertamento Residui' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
+
+	if (obbligazione.getAllegatoDetermina() != null && obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
+		throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
+
+	if (obbligazione.getAllegatoDetermina() == null &&
+			(obbligazione.isProvvisoria() || obbligazione.isToBeCreated() || (obbligazione.getFl_determina_allegata()!=null && obbligazione.getFl_determina_allegata().equals(Boolean.TRUE)))) {
+		obbligazione.setFl_determina_allegata(Boolean.FALSE);
+		try {
+			Parametri_cdsBulk parametriCds = Utility.createParametriCdsComponentSession().
+				getParametriCds(aUC, obbligazione.getCd_cds(), CNRUserContext.getEsercizio(aUC));
+			if (parametriCds.getFl_allega_determina_obblig()!=null && parametriCds.getFl_allega_determina_obblig().equals(Boolean.TRUE))
+				throw new it.cnr.jada.comp.ApplicationException("Allegare all'obbligazione un file di tipo 'Determina' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	} else {
+		obbligazione.setFl_determina_allegata(Boolean.TRUE);
+	}
 }
 private void verificaGestioneTrovato(UserContext aUC,
 		ObbligazioneBulk obbligazione, Elemento_voceBulk elemento_voce)

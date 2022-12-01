@@ -32,6 +32,7 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
+import it.cnr.contab.doccont00.storage.StorageObbligazioniAspect;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.missioni00.bp.CRUDAnticipoBP;
 import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
@@ -40,6 +41,7 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -47,10 +49,12 @@ import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
+import it.cnr.si.spring.storage.StorageObject;
 
 import java.util.*;
 
@@ -777,12 +781,8 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         try {
             it.cnr.jada.ejb.CRUDComponentSession compSession = (getUserTransaction() == null) ?
                     createComponentSession() :
-                    getVirtualComponentSession(context, false); //responsabilità setSafePoint(true) demandata all'init del bp
-            OggettoBulk oggettobulk = compSession.inizializzaBulkPerModifica(
-                    context.getUserContext(),
-                    bulk.initializeForEdit(this, context));
-
-
+                    getVirtualComponentSession(context, false);
+            OggettoBulk oggettobulk = compSession.inizializzaBulkPerModifica(context.getUserContext(), bulk.initializeForEdit(this, context));
             oggettobulk = initializeModelForEditAllegati(context, oggettobulk);
             ((ObbligazioneBulk) oggettobulk).caricaAnniResidui(context);
             return oggettobulk;
@@ -790,7 +790,48 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
             throw new it.cnr.jada.action.BusinessProcessException(e);
         }
     }
-//
+
+    @Override
+    protected void completeAllegato(AllegatoObbligazioneBulk allegato, StorageObject storageObject) throws ApplicationException {
+        super.completeAllegato(allegato, storageObject);
+        if (storeService.hasAspect(storageObject, StorageObbligazioniAspect.SIGLA_OBBLIGAZIONI_DETERMINA.value())) {
+            allegato.setTipoAllegato(AllegatoObbligazioneBulk.TIPO_DETERMINA);
+            GregorianCalendar calendar = storageObject.getPropertyValue("sigla_obbligazioni_aspect:determina_data_protocollo");
+            if (calendar!=null)
+                allegato.setDeterminaDataProtocollo(calendar.getTime());
+        } else
+            allegato.setTipoAllegato(AllegatoObbligazioneBulk.TIPO_RIACCERTAMENTO_RESIDUI);
+    }
+
+    @Override
+    protected void completeCreateAllegato(AllegatoObbligazioneBulk allegato, StorageObject storageObject) throws ApplicationException {
+        super.completeCreateAllegato(allegato, storageObject);
+        if (allegato.isTipoDetermina()) {
+            storeService.addAspect(storageObject, StorageObbligazioniAspect.SIGLA_OBBLIGAZIONI_DETERMINA.value());
+            Map<String, Object> metadataProperties = new HashMap();
+            metadataProperties.put("sigla_obbligazioni_aspect:determina_data_protocollo", allegato.getDeterminaDataProtocollo());
+            storeService.updateProperties((Map) metadataProperties, storageObject);
+        }
+    }
+
+    @Override
+    protected void completeUpdateAllegato(AllegatoObbligazioneBulk allegato) throws ApplicationException {
+        super.completeUpdateAllegato(allegato);
+        StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
+
+        if (storageObject!=null) {
+            if (allegato.isTipoDetermina()) {
+                storeService.addAspect(storageObject, StorageObbligazioniAspect.SIGLA_OBBLIGAZIONI_DETERMINA.value());
+                Map<String, Object> metadataProperties = new HashMap();
+                metadataProperties.put("sigla_obbligazioni_aspect:determina_data_protocollo", allegato.getDeterminaDataProtocollo());
+                storeService.updateProperties((Map) metadataProperties, storageObject);
+            } else {
+                storeService.removeAspect(storageObject, StorageObbligazioniAspect.SIGLA_OBBLIGAZIONI_DETERMINA.value());
+            }
+        }
+    }
+
+    //
 //	Abilito il bottone di ANNULLA RIPORTA documento solo se non ho scadenze in fase di modifica/inserimento
 //
 
@@ -1031,7 +1072,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     }
 
     /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     * Gestisce un cambiamento di pagina su un controllo tabbed
      *
      * @param context Il contesto dell'azione
      */
@@ -1249,21 +1290,71 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         int i = 0;
 
         pages.put(i++, new String[]{"tabObbligazione", "Impegni", "/doccont00/tab_obbligazione.jsp"});
-        pages.put(i++, new String[]{"tabImputazioneFin", "Imputazione Finanziaria", "/doccont00/tab_imputazione_fin_obbligazione.jsp"});
-        pages.put(i++, new String[]{"tabScadenzario", "Scadenzario", "/doccont00/tab_scadenzario_obbligazione.jsp"});
-        pages.put(i++, new String[]{"tabCdrCapitoli", "Cdr", "/doccont00/tab_cdr_capitoli.jsp"});
+        if (!this.isSearching()) {
+            pages.put(i++, new String[]{"tabImputazioneFin", "Imputazione Finanziaria", "/doccont00/tab_imputazione_fin_obbligazione.jsp"});
+            pages.put(i++, new String[]{"tabScadenzario", "Scadenzario", "/doccont00/tab_scadenzario_obbligazione.jsp"});
+            pages.put(i++, new String[]{"tabCdrCapitoli", "Cdr", "/doccont00/tab_cdr_capitoli.jsp"});
 
-        if(attivaImpegnoPluriennale) {
-            if (!isSearching()) {
+            if (attivaImpegnoPluriennale) {
+                if (!isSearching()) {
                     pages.put(i++, new String[]{"tabObbligazioniPluriennali", "Obbligazioni Pluriennali", "/doccont00/tab_obb_pluriennali.jsp"});
+                }
             }
+            pages.put(i++, new String[]{"tabAllegati", "Allegati", "/util00/tab_allegati.jsp"});
         }
-
 
         String[][] tabs = new String[i][3];
 
         for (int j = 0; j < i; j++)
             tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
         return tabs;
+    }
+    protected void addChildDetail(OggettoBulk oggettobulk) {
+        ((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiSenzaRiaccertamentoKeys();
+    }
+    @Override
+    protected void validateChildDetail(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+        if (((AllegatoObbligazioneBulk)oggettobulk).isTipoDetermina() && ((AllegatoObbligazioneBulk)oggettobulk).getDeterminaDataProtocollo()==null)
+            throw new ValidationException("Indicare la data di protocollo sul file di tipo determina.");
+        super.validateChildDetail(actioncontext, oggettobulk);
+    }
+
+    public String getAllegatiFormName() {
+        AllegatoObbligazioneBulk allegatoModel = (AllegatoObbligazioneBulk)this.getCrudArchivioAllegati().getModel();
+        if (allegatoModel!=null) {
+            if (!allegatoModel.isNew() && !isPossibileModifica(allegatoModel)) {
+                if (allegatoModel.isTipoDetermina())
+                    return "readonlyTipoDeterminaForm";
+                if (allegatoModel.isTipoRiaccertamentoResidui())
+                    return "readonlyTipoRiaccertamentoResiduiForm";
+                return "readonly";
+            }
+            if (allegatoModel.isTipoDetermina())
+                return "tipoDeterminaForm";
+            if (allegatoModel.isTipoRiaccertamentoResidui())
+                return "tipoRiaccertamentoResiduiForm";
+            return "tipoNonDefinito";
+        }
+        return "archivioAllegati";
+    }
+
+    @Override
+    protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
+        if (allegato instanceof AllegatoObbligazioneBulk && this.getModel()!=null && !allegato.isToBeCreated()) {
+            if (((AllegatoObbligazioneBulk)allegato).getEsercizioDiAppartenenza()==null || this.getModel()==null ||
+                !((AllegatoObbligazioneBulk)allegato).getEsercizioDiAppartenenza().equals(((ObbligazioneBulk)this.getModel()).getEsercizio()))
+                return false;
+        }
+        return super.isPossibileCancellazione(allegato);
+    }
+
+    @Override
+    protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
+        if (allegato instanceof AllegatoObbligazioneBulk && this.getModel()!=null) {
+            if (((AllegatoObbligazioneBulk)allegato).getEsercizioDiAppartenenza()==null || this.getModel()==null ||
+                !((AllegatoObbligazioneBulk)allegato).getEsercizioDiAppartenenza().equals(((ObbligazioneBulk)this.getModel()).getEsercizio()))
+                return false;
+        }
+        return super.isPossibileModifica(allegato);
     }
 }
