@@ -1,3 +1,35 @@
+## Release 6.5.16  -- _December 01, 2022_ 
+**Changes**
+
+>**Fixed: display anomaly on the new Angular interface**
+>
+>[92752411d92a0c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/92752411d92a0c5) marco.spasiano *December 01, 2022*
+
+>**View Stampa Bilancio Previsione: aggiunta la colonna assestato in quanto nella stampa la colonna della previsione anno precedente deve essere non iniziale ma assestata**
+>
+>[d353db4db1efc8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d353db4db1efc8d) raffaelepagano *November 29, 2022*
+
+>**FIX: controllo quadratura imponibile fattura**
+>
+>[ef0796751476c3f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef0796751476c3f) marco.spasiano *November 28, 2022*
+
+>**Remove SSO from test [ci skip]**
+>
+>[2be36ed821e9d56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2be36ed821e9d56) marco.spasiano *November 25, 2022*
+
+>**Add updatedAt to AccountDTO for expired authentication**
+>
+>[e416d206169ae7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e416d206169ae7e) marco.spasiano *November 25, 2022*
+
+>**Ribaltamento Impegni Provvisori: è stata data la possibilità di ribaltare impegni provvisori e di renderli definitivi nell'anno ribaltato**
+>
+>[62dc221d0a8e314](https://github.com/consiglionazionaledellericerche/sigla-main/commit/62dc221d0a8e314) raffaelepagano *November 24, 2022*
+
+>**Add updatedAt to AccountDTO for expired authentication**
+>
+>[d2f964f55f6538b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2f964f55f6538b) marco.spasiano *November 23, 2022*
+
+
 ## Release 6.5.15  -- _November 21, 2022_ 
 **Changes**
 
