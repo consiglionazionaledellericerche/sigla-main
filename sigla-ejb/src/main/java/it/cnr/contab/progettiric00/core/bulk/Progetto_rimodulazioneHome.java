@@ -45,7 +45,9 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -902,9 +904,9 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		return progetto;
 	}
 	
-	public void validaPassaggioStatoApprovato(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione, OggettoBulk variazioneInApprovazione) throws PersistencyException, IntrospectionException, RimodulazioneNonApprovataException {
+	public void validaPassaggioStatoApprovato(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione, OggettoBulk variazioneInApprovazione) throws ComponentException, PersistencyException, IntrospectionException, RimodulazioneNonApprovataException {
 		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoValidato)
-		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato approvato può essere assegnato solo a rimodulazioni in stato validato!"));
+		.orElseThrow(()->new ApplicationException("Operazione non possibile! Lo stato approvato può essere assegnato solo a rimodulazioni in stato validato!"));
 	
 		if (rimodulazione.getAllDetailsProgettoPianoEconomico().stream()
 						 .filter(el->el.getDispResiduaFinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0 ||
