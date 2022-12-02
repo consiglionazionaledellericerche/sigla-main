@@ -1,3 +1,31 @@
+## Release 6.5.17  -- _December 02, 2022_ 
+**Changes**
+
+>**Fixed: error message to user**
+>
+>[1ce90cdbcb9d6e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ce90cdbcb9d6e6) marco.spasiano *December 02, 2022*
+
+>**Determina Impegni: aggiunto sull'obbligazione il campo 'data protocollo determina' e controllato in fase di ribaltamento che la stessa sia inferiore al 31/12 dell'anno dell'impegno. Inserito sui parametri un flag 'FL_RIBALTA_DETERMINA_OBBLIG' che attiva o meno il controllo.**
+>
+>[972ff85bebb4624](https://github.com/consiglionazionaledellericerche/sigla-main/commit/972ff85bebb4624) raffaelepagano *December 01, 2022*
+
+>**Fixed: sort mesages by dacr**
+>
+>[dfa1640232e9364](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dfa1640232e9364) marco.spasiano *December 01, 2022*
+
+>**View Stampa Bilancio Previsione: letta la colonna assestato anno precedente dalla tabella storico in quanto deve essere quella calcolata ad una certa data**
+>
+>[a226eea8d7efd3b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a226eea8d7efd3b) raffaelepagano *December 01, 2022*
+
+>**Fix import**
+>
+>[0a33dd499de9c27](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0a33dd499de9c27) raffaelepagano *December 01, 2022*
+
+>**Impegni: gestione collegamento file di tipo Determina**
+>
+>[564de6d6da5e0a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/564de6d6da5e0a8) raffaelepagano *December 01, 2022*
+
+
 ## Release 6.5.16  -- _December 01, 2022_ 
 **Changes**
 
