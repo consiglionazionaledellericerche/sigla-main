@@ -195,7 +195,7 @@
 					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce",
 					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
 					"btn-outline-primary btn-title faa-parent animated-hover",
-					!(bp.isViewing() || bp.isSearching() || bp.isRoCampiResiduoProprio() || bp.isROFindElemento_voce()),
+					!bp.isViewing() && (bp.isRoCampiResiduoProprio() || bp.isROFindElemento_voce()),
 					bp.getParentRoot().isBootstrap());%>
 			</td>
 			</tr>

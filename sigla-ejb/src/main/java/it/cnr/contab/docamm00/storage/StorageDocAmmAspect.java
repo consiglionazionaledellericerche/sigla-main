@@ -51,8 +51,7 @@ public enum StorageDocAmmAspect {
 	SIGLA_FATTURE_CDS_ORIGINE("P:sigla_commons_aspect:cds_origine_codice"),
 	SIGLA_FATTURE_DESCR_CDS_ORIGINE("P:sigla_commons_aspect:cds_origine_descrizione"),
 	SIGLA_FATTURE_UO_ORIGINE("P:sigla_commons_aspect:uo_origine_codice"),
-	SIGLA_FATTURE_DESCR_UO_ORIGINE("P:sigla_commons_aspect:uo_origine_descrizione"),
-	SIGLA_OBBLIGAZIONI_DETERMINA("P:sigla_obbligazioni_aspect:determina");
+	SIGLA_FATTURE_DESCR_UO_ORIGINE("P:sigla_commons_aspect:uo_origine_descrizione");
 	
 	
 	private final String value;

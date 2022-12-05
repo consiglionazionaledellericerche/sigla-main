@@ -785,34 +785,36 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 		fillModel( context );
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
 		// validiamo anche se non è editabile, come nel caso dei residui propri 
-		if (!bp.isSearching()) {
-			bp.getModel().validate();
-
-			if (bp.isEditable()) {
-
-				if (bp.getTab(tabName).equalsIgnoreCase("tabObbligazione")) {
-					bp.getModel().validate();
-					if (((ObbligazioneBulk) bp.getModel()).getElemento_voce().getCrudStatus() == bp.getModel().UNDEFINED)
-						doSearch(context, "main.find_elemento_voce");
-					if (bp.getMessage() != null) {
-						//bp.setMessage("La ricerca della Voce del Piano non ha fornito alcun risultato.");
-						return context.findDefaultForward();
-					}
-					bp.verificaTestataObbligazione(context);
-				} else if (bp.getTab(tabName).equalsIgnoreCase("tabImputazioneFin")) {
-					bp.getModel().validate();
-					if (((ObbligazioneBulk) bp.getModel()).getInternalStatus() == ObbligazioneBulk.INT_STATO_CDR_CONFERMATI) {
-						OptionBP option = openConfirm(context, "Le linee di attività non sono state confermate. Si intende proseguire?", OptionBP.CONFIRM_YES_NO, "doConfirmTabImputazioneFin");
-						option.addAttribute("tabName", tabName);
-						option.addAttribute("pageName", pageName);
-						return option;
-					}
-				}
+		bp.getModel().validate();
+		if ( bp.isEditable() )
+		{
+			
+			if ( bp.getTab( tabName ).equalsIgnoreCase("tabObbligazione") )
+			{
+				bp.getModel().validate();
+				if ( ((ObbligazioneBulk) bp.getModel()).getElemento_voce().getCrudStatus() == bp.getModel().UNDEFINED )
+					doSearch( context, "main.find_elemento_voce" );
+				if ( bp.getMessage() != null )
+				{
+					//bp.setMessage("La ricerca della Voce del Piano non ha fornito alcun risultato.");
+					return context.findDefaultForward();
+				}	
+				bp.verificaTestataObbligazione( context );
 			}
-		}
+			else if ( bp.getTab( tabName ).equalsIgnoreCase("tabImputazioneFin") )
+			{
+				bp.getModel().validate(); 
+				if (((ObbligazioneBulk) bp.getModel()).getInternalStatus() == ObbligazioneBulk.INT_STATO_CDR_CONFERMATI )
+				{
+					OptionBP option = openConfirm(context,"Le linee di attività non sono state confermate. Si intende proseguire?",OptionBP.CONFIRM_YES_NO,"doConfirmTabImputazioneFin");
+					option.addAttribute("tabName",tabName);
+					option.addAttribute("pageName",pageName);					
+					return option;
+				}	
+			}	
+		}	
 		Forward frw = super.doTab( context, tabName, pageName );
-		if (!bp.isSearching() && bp instanceof CRUDObbligazioneResBP)
-			((CRUDObbligazioneResBP)bp).setStatusAndEditableMap();
+		if (bp instanceof CRUDObbligazioneResBP) ((CRUDObbligazioneResBP)bp).setStatusAndEditableMap();
 		return frw;		
 	}
 	catch(ValidationException e) 

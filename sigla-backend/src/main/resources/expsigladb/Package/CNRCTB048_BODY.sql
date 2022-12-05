@@ -1570,7 +1570,6 @@ begin
     aObbNext.DS_GARA_IN_CORSO   := aObb.DS_GARA_IN_CORSO ;
     aObbNext.stato_coge_docamm := aObb.stato_coge_docamm;
     aObbNext.stato_coge_doccont := aObb.stato_coge_doccont;
-    aObbNext.FL_DETERMINA_ALLEGATA   := 'N' ;
 End;
 
 procedure creaScadObb(aObbNext obbligazione%rowtype,

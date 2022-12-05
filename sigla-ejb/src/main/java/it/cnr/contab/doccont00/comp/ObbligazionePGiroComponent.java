@@ -935,11 +935,10 @@ public ImpegnoPGiroBulk creaObbligazione(
 	       	imp_pgiro.setStato_obbligazione(imp_pgiro.STATO_OBB_STORNATO);                        
             imp_pgiro.setDt_cancellazione(accert_pgiro.getDt_registrazione());
         }
-        imp_pgiro.setFl_calcolo_automatico(Boolean.TRUE);
+        imp_pgiro.setFl_calcolo_automatico(new Boolean(true));
 
-        imp_pgiro.setFl_spese_costi_altrui(Boolean.FALSE);
-        imp_pgiro.setFl_gara_in_corso(Boolean.FALSE);
-		imp_pgiro.setFl_determina_allegata(Boolean.FALSE);
+        imp_pgiro.setFl_spese_costi_altrui(new Boolean(false));
+        imp_pgiro.setFl_gara_in_corso(new Boolean(false));
         imp_pgiro.setEsercizio_competenza(accert_pgiro.getEsercizio());
         imp_pgiro.setIm_costi_anticipati(new java.math.BigDecimal(0));
         imp_pgiro.setRiportato("N");
