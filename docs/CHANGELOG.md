@@ -1,3 +1,11 @@
+## Release 6.5.18  -- _December 05, 2022_ 
+**Changes**
+
+>**Fixed: scarico file intrastat**
+>
+>[3257a0dfaeec6f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3257a0dfaeec6f9) marco.spasiano *December 05, 2022*
+
+
 ## Release 6.5.17  -- _December 02, 2022_ 
 **Changes**
 
