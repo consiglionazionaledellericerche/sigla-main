@@ -60,6 +60,7 @@ import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.soap.*;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
