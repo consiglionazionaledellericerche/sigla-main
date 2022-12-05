@@ -677,11 +677,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 HttpServletRequest httpservletrequest = (HttpServletRequest) pagecontext
                         .getRequest();
                 StringBuffer stringbuffer = new StringBuffer();
-                stringbuffer.append(pagecontext.getRequest().getScheme());
-                stringbuffer.append("://");
-                stringbuffer.append(pagecontext.getRequest().getServerName());
-                stringbuffer.append(':');
-                stringbuffer.append(pagecontext.getRequest().getServerPort());
                 stringbuffer.append(JSPUtils.getAppRoot(httpservletrequest));
                 toolbar[10].setHref("javascript:doPrint('" + stringbuffer
                         + getFile() + "')");

@@ -208,11 +208,6 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			//HttpServletResponse httpservletresp = (HttpServletResponse)pagecontext.getResponse();
 			HttpServletRequest httpservletrequest = (HttpServletRequest)pagecontext.getRequest();
 		    StringBuffer stringbuffer = new StringBuffer();
-		    stringbuffer.append(pagecontext.getRequest().getScheme());
-		    stringbuffer.append("://");
-		    stringbuffer.append(pagecontext.getRequest().getServerName());
-		    stringbuffer.append(':');
-		    stringbuffer.append(pagecontext.getRequest().getServerPort());
 		    stringbuffer.append(JSPUtils.getAppRoot(httpservletrequest));
 		    toolbar[7].setHref("javascript:doPrint('"+stringbuffer+getFile()+ "')");
 		}
