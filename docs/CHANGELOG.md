@@ -1,3 +1,22 @@
+## Release 6.5.19  -- _December 05, 2022_ 
+**Changes**
+
+>**Revert "Impegni: gestione collegamento file di tipo Determina"**
+> * This reverts commit 564de6d6da5e0a87364e28bea62d8e67fda80911.
+>
+>[e59606db24eeaa1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e59606db24eeaa1) marco.spasiano *December 05, 2022*
+
+>**Revert "Fix import"**
+> * This reverts commit 0a33dd499de9c27cfa921c0c207d4f755d2fd0ff.
+>
+>[9bec3b14be9fb01](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9bec3b14be9fb01) marco.spasiano *December 05, 2022*
+
+>**Revert "Determina Impegni: aggiunto sull'obbligazione il campo 'data protocollo determina' e controllato in fase di ribaltamento che la stessa sia inferiore al 31/12 dell'anno dell'impegno. Inserito sui parametri un flag 'FL_RIBALTA_DETERMINA_OBBLIG' che attiva o meno il controllo."**
+> * This reverts commit 972ff85bebb46244105873d6a850e637c364ddce.
+>
+>[438521b083760d6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/438521b083760d6) marco.spasiano *December 05, 2022*
+
+
 ## Release 6.5.18  -- _December 05, 2022_ 
 **Changes**
 
