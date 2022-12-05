@@ -39,4 +39,19 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="add-column-fl-ribalta-determina-obblig-on-parametri-cds" author="raffaele.pagano">
+        <addColumn tableName="parametri_cds">
+            <column name="fl_ribalta_determina_obblig" type="CHAR(1)" defaultValue="N" remarks="Indica che è obbligatorio allegare la determina sulle obbligazioni definitive per ribaltarle agli anni successivi - Dominio: S = Sì; N = No;"/>
+        </addColumn>
+
+        <addColumn tableName="obbligazione">
+            <column name="dt_determina_allegata" type="${date.type}" remarks="Data protocollo della eventuale determina allegata."/>
+        </addColumn>
+
+        <addColumn tableName="obbligazione_s">
+            <column name="dt_determina_allegata" type="${date.type}" remarks="Data protocollo della eventuale determina allegata."/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
