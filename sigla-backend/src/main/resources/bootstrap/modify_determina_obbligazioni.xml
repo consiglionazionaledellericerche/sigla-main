@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="add-column-fl-allega-determina-obblig-on-parametri-cds" author="marco.spasiano">
+        <addColumn tableName="parametri_cds">
+            <column name="fl_allega_determina_obblig" type="CHAR(1)" defaultValue="N" remarks="Indica che è obbligatorio allegare la determina sulle obbligazioni definitive - Dominio: S = Sì; N = No;"/>
+        </addColumn>
+
+        <addColumn tableName="obbligazione">
+            <column name="fl_determina_allegata" type="CHAR(1)" defaultValue="N" remarks="Indica che è allegata la determina sull'obbligazione - Dominio: S = Sì; N = No;">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="obbligazione_s">
+            <column name="fl_determina_allegata" type="CHAR(1)" defaultValue="N" remarks="Indica che è allegata la determina sull'obbligazione - Dominio: S = Sì; N = No;">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
