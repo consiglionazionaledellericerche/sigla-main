@@ -20,7 +20,7 @@
 <% ElaboraFileIntraBP bp = (ElaboraFileIntraBP)BusinessProcess.getBusinessProcess(request); 
    bp.openFormWindow(pageContext); %>
 
-	<div class="Group" style="width:100%">
+	<div class="Group card p-2" style="width:100%">
 	<fieldset>
 		<table width="100%">
 			<tr>
