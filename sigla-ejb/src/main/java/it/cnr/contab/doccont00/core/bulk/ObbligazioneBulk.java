@@ -27,7 +27,6 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.UtilService;
@@ -700,15 +699,14 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	unita_organizzativa = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 	setCd_cds( unita_organizzativa.getCd_unita_padre());
 
-	setFl_calcolo_automatico(Boolean.TRUE);
+	setFl_calcolo_automatico( new Boolean(true) );
 	if (this instanceof ObbligazioneResBulk)  
 		setStato_obbligazione( STATO_OBB_DEFINITIVO );
 	else
 		setStato_obbligazione( STATO_OBB_PROVVISORIO );
 
-	setFl_spese_costi_altrui(Boolean.FALSE);
-	setFl_gara_in_corso(Boolean.FALSE);
-	setFl_determina_allegata(Boolean.FALSE);
+	setFl_spese_costi_altrui( new Boolean( false ));
+	setFl_gara_in_corso( new Boolean( false ));
 	setRiportato("N");
 
 	// I seguenti campi sono definiti temporaneamente, ma DA CANCELLARE
@@ -1439,7 +1437,7 @@ public void validate() throws ValidationException {
 		throw new ValidationException( "Impossibile recuperare la data di sistema!");
 	}		
 
-	if (dataRegistrazione.after(dataSistema) && 1!=1)
+	if (dataRegistrazione.after(dataSistema))
 		throw new ValidationException( "Non è possibile inserire una data di registrazione posteriore a quella di sistema." );
 			
 	// controllo su campo DESCRIZIONE
@@ -1737,7 +1735,6 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		nuova.setCd_cds_origine( getCd_cds_origine());
 //		nuova.setRiportato( "N");
 		nuova.setFl_spese_costi_altrui( getFl_spese_costi_altrui());
-		nuova.setFl_determina_allegata(Boolean.FALSE);
 
 		nuova.setFl_gara_in_corso(getFl_gara_in_corso());
 		nuova.setDs_gara_in_corso(getDs_gara_in_corso());
@@ -2061,14 +2058,5 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 
 	public boolean isStornata() {
 		return STATO_OBB_STORNATO.equals(this.getStato_obbligazione());
-	}
-
-	public AllegatoObbligazioneBulk getAllegatoDetermina(){
-		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
-			AllegatoObbligazioneBulk allegato = (AllegatoObbligazioneBulk)i.next();
-			if (allegato.isTipoDetermina() && allegato.getEsercizioDiAppartenenza().equals(this.getEsercizio()))
-				return allegato;
-		}
-		return null;
 	}
 }

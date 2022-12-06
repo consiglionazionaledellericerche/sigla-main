@@ -1767,7 +1767,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
  */
 public SQLBuilder selectAllEqualsObbligazioniByClause( ObbligazioneBulk bulk, ObbligazioneHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException
 {	
-	SQLBuilder sql = super.createSQLBuilder();
+	SQLBuilder sql = this.createSQLBuilder();
 	sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, bulk.getCd_cds() );
 	sql.addClause(FindClause.AND, "esercizio_originale", SQLBuilder.EQUALS, bulk.getEsercizio_originale() );
 	sql.addClause(FindClause.AND, "pg_obbligazione", SQLBuilder.EQUALS, bulk.getPg_obbligazione() );

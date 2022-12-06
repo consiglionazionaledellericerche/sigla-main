@@ -255,11 +255,6 @@
 		label="Blocco Impegni per Natura/Finanziamento"
 		inputType="CHECKBOX" />
 	<fieldProperty
-		name="fl_allega_determina_obblig"
-		property="fl_allega_determina_obblig"
-		label="Allega Obbligatoriamente Determina su Obbligazioni Definitive"
-		inputType="CHECKBOX" />
-	<fieldProperty
 		name="abil_progetto_strorg"
 		property="abil_progetto_strorg"
 		keysProperty="abilProgettiKeys"
@@ -302,8 +297,6 @@
 	<formFieldProperty name="fl_riaccertamento" />		
 	<formFieldProperty name="fl_riobbligazione" />
 	<formFieldProperty name="fl_blocco_impegni_natfin" />
-	<formFieldProperty name="fl_allega_determina_obblig" />
-
 	<formFieldProperty name="abil_progetto_strorg" />
 
 	<columnFieldProperty name="esercizio" />
@@ -341,7 +334,6 @@
 	<columnFieldProperty name="fl_riaccertamento" />		
 	<columnFieldProperty name="fl_riobbligazione" />
 	<columnFieldProperty name="fl_blocco_impegni_natfin" />
-	<columnFieldProperty name="fl_allega_determina_obblig" />
 	<columnFieldProperty name="abil_progetto_strorg" />
 
 	<findFieldProperty name="cd_unita_organizzativa" />
@@ -374,7 +366,6 @@
 	<findFieldProperty name="fl_blocco_iban" />
 	<findFieldProperty name="fl_kit_firma_digitale" />
 	<findFieldProperty name="fl_blocco_impegni_natfin" />
-	<findFieldProperty name="fl_allega_determina_obblig" />
 	<findFieldProperty name="abil_progetto_strorg" />
 
 </bulkInfo>

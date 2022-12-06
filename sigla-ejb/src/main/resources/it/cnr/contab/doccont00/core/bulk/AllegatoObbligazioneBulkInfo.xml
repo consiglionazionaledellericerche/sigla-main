@@ -21,168 +21,18 @@
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
-		name="tipoAllegato"
-		property="tipoAllegato"
-		label="Tipo"
-		inputSize="20"
-		keysProperty="ti_allegatoKeys"
-		inputType="SELECT"
-		nullable="false"
-		readonlyPropertyOnEdit="typeEnabled"/>
-	<fieldProperty
 		name="esercizioDiAppartenenza"
 		property="esercizioDiAppartenenza"
 		label="Inserito nel"
 		inputType="ROTEXT"
 		maxLength="4"
 		inputSize="4" />
-	<fieldProperty
-		name="determinaDataProtocollo"
-		property="determinaDataProtocollo"
-		inputType="TEXT"
-		formatName="date_short"
-		inputSize="100"
-		maxLength="2000"
-		caseSensitiveSearch="false"
-		label="Data di protocollo" />
-
-	<formFieldProperty
-		name="tipoAllegato"
-		command="doDefault"/>
+		
 	<formFieldProperty
 		name="esercizioDiAppartenenza" />
-	<formFieldProperty
-		name="determinaDataProtocollo" />
-
-	<form name="default" >
-		<formFieldProperty
-				name="tipoAllegato"
-				command="doDefault"/>
-		<formFieldProperty
-				name="nome"/>
-		<formFieldProperty
-				name="descrizione"/>
-		<formFieldProperty
-				name="titolo"/>
-		<formFieldProperty
-				name="file"/>
-		<formFieldProperty
-				name="attivaFile"/>
-		<formFieldProperty
-				name="esercizioDiAppartenenza" />
-		<formFieldProperty
-				name="determinaDataProtocollo" />
-	</form>
-
-	<form name="tipoNonDefinito" >
-		<formFieldProperty
-				name="tipoAllegato"
-				command="doDefault"/>
-	</form>
-
-	<form
-		name="tipoDeterminaForm" >
-		<formFieldProperty
-				name="tipoAllegato"
-				command="doDefault"/>
-		<formFieldProperty
-				name="nome"/>
-		<formFieldProperty
-				name="descrizione"/>
-		<formFieldProperty
-				name="titolo"/>
-		<formFieldProperty
-				name="file"/>
-		<formFieldProperty
-				name="attivaFile"/>
-		<formFieldProperty
-				name="determinaDataProtocollo" />
-	</form>
-
-	<form
-			name="tipoRiaccertamentoResiduiForm" >
-		<formFieldProperty
-				name="tipoAllegato"
-				command="doDefault"/>
-		<formFieldProperty
-				name="nome"/>
-		<formFieldProperty
-				name="descrizione"/>
-		<formFieldProperty
-				name="titolo"/>
-		<formFieldProperty
-				name="file"/>
-		<formFieldProperty
-				name="attivaFile"/>
-		<formFieldProperty
-				name="esercizioDiAppartenenza" />
-	</form>
-
+		
 	<columnSet
-			name="tipoNonDefinito" >
-		<columnFieldProperty
-				name="tipoAllegato" />
-		<columnFieldProperty
-				name="nome" />
-		<columnFieldProperty
-				name="descrizione" />
-		<columnFieldProperty
-				name="titolo" />
-		<columnFieldProperty
-				name="esercizioDiAppartenenza" />
-	</columnSet>
-
-	<columnSet
-			name="tipoDeterminaForm" >
-		<columnFieldProperty
-				name="tipoAllegato" />
-		<columnFieldProperty
-				name="nome" />
-		<columnFieldProperty
-				name="descrizione" />
-		<columnFieldProperty
-				name="titolo" />
-		<columnFieldProperty
-				name="esercizioDiAppartenenza" />
-	</columnSet>
-
-	<columnSet
-			name="tipoRiaccertamentoResiduiForm" >
-		<columnFieldProperty
-				name="tipoAllegato" />
-		<columnFieldProperty
-				name="nome" />
-		<columnFieldProperty
-				name="descrizione" />
-		<columnFieldProperty
-				name="titolo" />
-		<columnFieldProperty
-				name="esercizioDiAppartenenza" />
-	</columnSet>
-
-	<form name="readonlyTipoDeterminaForm">
-		<formFieldProperty
-				name="tipoAllegato"
-				enabledOnEdit="false"/>
-		<formFieldProperty
-				name="nome"/>
-		<formFieldProperty
-				name="descrizione"
-				enabledOnEdit="false"/>
-		<formFieldProperty
-				name="titolo"
-				enabledOnEdit="false"/>
-		<formFieldProperty
-				name="attivaFile"/>
-		<formFieldProperty
-				name="determinaDataProtocollo"
-				enabledOnEdit="false"/>
-	</form>
-
-	<columnSet
-		name="readonlyTipoDeterminaForm" >
-		<columnFieldProperty
-			name="tipoAllegato" />
+		name="readonly" >
 		<columnFieldProperty
 			name="nome" />
 		<columnFieldProperty
@@ -192,55 +42,9 @@
 		<columnFieldProperty
 			name="esercizioDiAppartenenza" />
 	</columnSet>
-
-	<form name="readonlyTipoRiaccertamentoResiduiForm">
-		<formFieldProperty
-				name="tipoAllegato"
-				enabledOnEdit="false"/>
-		<formFieldProperty
-				name="nome"/>
-		<formFieldProperty
-				name="descrizione"
-				enabledOnEdit="false"/>
-		<formFieldProperty
-				name="titolo"
-				enabledOnEdit="false"/>
-		<formFieldProperty
-				name="attivaFile"/>
-	</form>
-
-	<columnSet
-			name="readonlyTipoRiaccertamentoResiduiForm" >
-		<columnFieldProperty
-				name="tipoAllegato" />
-		<columnFieldProperty
-				name="nome" />
-		<columnFieldProperty
-				name="descrizione" />
-		<columnFieldProperty
-				name="titolo" />
-		<columnFieldProperty
-				name="esercizioDiAppartenenza" />
-	</columnSet>
-
-	<columnSet
-			name="readonly" >
-		<columnFieldProperty
-				name="tipoAllegato" />
-		<columnFieldProperty
-				name="nome" />
-		<columnFieldProperty
-				name="descrizione" />
-		<columnFieldProperty
-				name="titolo" />
-		<columnFieldProperty
-				name="esercizioDiAppartenenza" />
-	</columnSet>
-
+	
 	<columnSet
 		name="archivioAllegati" >
-		<columnFieldProperty
-			name="tipoAllegato" />
 		<columnFieldProperty
 			name="nome" />
 		<columnFieldProperty

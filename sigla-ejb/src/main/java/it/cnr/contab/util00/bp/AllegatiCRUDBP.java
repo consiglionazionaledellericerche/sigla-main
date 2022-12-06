@@ -24,7 +24,6 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.Introspector;
 import it.cnr.jada.util.action.SimpleCRUDBP;
@@ -73,12 +72,6 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 return super.removeDetail(i);
             return null;
         }
-
-        @Override
-        protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
-            super.validate(actioncontext, oggettobulk);
-            validateChildDetail(actioncontext, oggettobulk);
-        }
     };
 
     public AllegatiCRUDBP() {
@@ -118,9 +111,6 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     protected void addChildDetail(OggettoBulk oggettobulk) {
-    }
-
-    protected void validateChildDetail(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
     }
 
     @Override
@@ -236,7 +226,6 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
         return initializeModelForEditAllegati(actioncontext, oggettobulk);
     }
 
-    //Metodo utilizzato per completare l'oggetto Allegato con informazioni presenti nello StorageObject associato.
     protected void completeAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
     }
 
@@ -294,13 +283,12 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         .orElseThrow(() -> new ApplicationException("File non presente"));
                 try {
                     allegato.complete(actioncontext.getUserContext());
-                    StorageObject storageObject = storeService.storeSimpleDocument(allegato,
+                    storeService.storeSimpleDocument(allegato,
                             new FileInputStream(file),
                             allegato.getContentType(),
                             allegato.getNome(),
                             getStorePath((K) allegatoParentBulk,
                                     true));
-                    completeCreateAllegato((T)allegato, storageObject);
                     allegato.setCrudStatus(OggettoBulk.NORMAL);
                 } catch (FileNotFoundException e) {
                     throw handleException(e);
@@ -319,7 +307,6 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         }
                         allegato.complete(actioncontext.getUserContext());
                         storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
-                        completeUpdateAllegato((T)allegato);
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
@@ -332,14 +319,6 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             }
         }
         gestioneCancellazioneAllegati(allegatoParentBulk);
-    }
-
-    //Metodo utilizzato per effettuare altre operazioni sullo StorageObject creato come aggiungere Aspect.
-    protected void completeCreateAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
-    }
-
-    //Metodo utilizzato per effettuare altre operazioni sullo StorageObject modificato come aggiungere/rimuovere Aspect.
-    protected void completeUpdateAllegato(T allegato) throws ApplicationException {
     }
 
     protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {

@@ -2639,7 +2639,6 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 						obbligazionePGiroBulk.setFl_calcolo_automatico(Boolean.TRUE);
 						obbligazionePGiroBulk.setFl_spese_costi_altrui(Boolean.FALSE);
 						obbligazionePGiroBulk.setFl_gara_in_corso(Boolean.FALSE);
-						obbligazionePGiroBulk.setFl_determina_allegata(Boolean.FALSE);
 						obbligazionePGiroBulk.setStato_obbligazione(ObbligazioneBulk.STATO_OBB_DEFINITIVO);
 						obbligazionePGiroBulk.setRiportato("N");
 						obbligazionePGiroBulk.setIm_costi_anticipati(BigDecimal.ZERO);
