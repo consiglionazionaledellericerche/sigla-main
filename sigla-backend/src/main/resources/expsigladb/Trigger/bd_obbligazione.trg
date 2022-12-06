@@ -81,6 +81,7 @@ begin
      aOldRowtype.FL_NETTO_SOSPESO:=:old.FL_NETTO_SOSPESO;
      aOldRowtype.FL_GARA_IN_CORSO:=:old.FL_GARA_IN_CORSO;
      aOldRowtype.FL_DETERMINA_ALLEGATA:=:old.FL_DETERMINA_ALLEGATA;
+     aOldRowtype.DT_DETERMINA_ALLEGATA:=:old.DT_DETERMINA_ALLEGATA;
      aOldRowtype.DS_GARA_IN_CORSO:=:old.DS_GARA_IN_CORSO;
 
 -- Scarico dello storico
