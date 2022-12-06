@@ -4510,22 +4510,19 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 	if (obbligazione.getAllegatoDetermina() != null && obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
 
-	if (obbligazione.getAllegatoDetermina() == null) {
-		if (obbligazione.isProvvisoria() || obbligazione.isToBeCreated() || (obbligazione.getFl_determina_allegata()!=null && obbligazione.getFl_determina_allegata().equals(Boolean.TRUE))) {
-			try {
-				Parametri_cdsBulk parametriCds = Utility.createParametriCdsComponentSession().
-						getParametriCds(aUC, obbligazione.getCd_cds(), CNRUserContext.getEsercizio(aUC));
-				if (parametriCds.getFl_allega_determina_obblig() != null && parametriCds.getFl_allega_determina_obblig().equals(Boolean.TRUE))
-					throw new it.cnr.jada.comp.ApplicationException("Allegare all'obbligazione un file di tipo 'Determina' per l'esercizio in corso (" + obbligazione.getEsercizio() + ").");
-			} catch (Throwable e) {
-				throw handleException(e);
-			}
-		}
+	if (obbligazione.getAllegatoDetermina() == null &&
+			(obbligazione.isProvvisoria() || obbligazione.isToBeCreated() || (obbligazione.getFl_determina_allegata()!=null && obbligazione.getFl_determina_allegata().equals(Boolean.TRUE)))) {
 		obbligazione.setFl_determina_allegata(Boolean.FALSE);
-		obbligazione.setDt_determina_allegata(null);
+		try {
+			Parametri_cdsBulk parametriCds = Utility.createParametriCdsComponentSession().
+				getParametriCds(aUC, obbligazione.getCd_cds(), CNRUserContext.getEsercizio(aUC));
+			if (parametriCds.getFl_allega_determina_obblig()!=null && parametriCds.getFl_allega_determina_obblig().equals(Boolean.TRUE))
+				throw new it.cnr.jada.comp.ApplicationException("Allegare all'obbligazione un file di tipo 'Determina' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
 	} else {
 		obbligazione.setFl_determina_allegata(Boolean.TRUE);
-		obbligazione.setDt_determina_allegata(new Timestamp(obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo().getTime()));
 	}
 }
 private void verificaGestioneTrovato(UserContext aUC,

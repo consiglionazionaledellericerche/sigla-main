@@ -274,12 +274,6 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="DT_DETERMINA_ALLEGATA"
-			propertyName="dt_determina_allegata"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
 			columnName="ESERCIZIO_EV_NEXT"
 			propertyName="esercizio_ev_next"
 			sqlTypeName="DECIMAL"
@@ -391,8 +385,6 @@
 		name="ds_gara_in_corso" />
 	<persistentProperty
 		name="fl_determina_allegata" />
-	<persistentProperty
-		name="dt_determina_allegata" />
 	<persistentProperty
 		name="esercizio_ev_next" />
 	<persistentProperty
