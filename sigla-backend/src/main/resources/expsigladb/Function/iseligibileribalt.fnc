@@ -81,6 +81,10 @@ begin
 	   and a.pg_obbligazione = b.pg_obbligazione
        and a.DT_CANCELLAZIONE is null
 	   and riportato = 'N'
+       and (
+	           a.STATO_OBBLIGAZIONE  <> 'P'  or (a.STATO_OBBLIGAZIONE  = 'P' and a.FL_GARA_IN_CORSO ='Y' )
+  	        or a.STATO_OBBLIGAZIONE = 'P' and a.esercizio <> a.esercizio_competenza
+		   )
    group by
     a.esercizio_originale, a.pg_obbligazione, a.fl_pgiro, a.im_obbligazione, a.cd_tipo_documento_cont
   ) loop

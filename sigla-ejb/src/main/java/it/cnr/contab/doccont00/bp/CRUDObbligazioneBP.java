@@ -865,7 +865,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
      */
 
     public boolean isEditScadenzaButtonEnabled() throws it.cnr.jada.action.BusinessProcessException {
-        return isEditable() && !isViewing() && getScadenzario().getModel() != null && !isEditingScadenza();
+        return (isEditable() && getScadenzario().getModel() != null && !isEditingScadenza());
     }
 
     /**
@@ -1173,13 +1173,6 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     public boolean isRoCampiResiduoProprio() {
         ObbligazioneBulk obbligazione = (ObbligazioneBulk) getModel();
         if (obbligazione == null || (obbligazione != null && !obbligazione.isObbligazioneResiduo()) || this.getStatus() == SEARCH)
-            return false;
-        return obbligazione != null && obbligazione.isObbligazioneResiduo() && this.getStatus() != INSERT;
-    }
-
-    public boolean isRoCampiResiduoProprioRibaltato() {
-        ObbligazioneBulk obbligazione = (ObbligazioneBulk) getModel();
-        if (obbligazione == null || (obbligazione != null && (!obbligazione.isObbligazioneResiduo() || obbligazione.isProvvisoria())) || this.getStatus() == SEARCH)
             return false;
         return obbligazione != null && obbligazione.isObbligazioneResiduo() && this.getStatus() != INSERT;
     }

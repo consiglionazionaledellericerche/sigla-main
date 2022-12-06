@@ -1061,6 +1061,12 @@ Begin
 		end if;
 	end if;
 
+        -- verifico se il documento è provvisorio
+        If aObb.stato_obbligazione = cnrctb035.STATO_PROVVISORIO and aObb.FL_GARA_IN_CORSO ='N' then
+         aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio';
+         ibmerr001.RAISE_ERR_GENERICO(aErrMsn);
+        End If;
+
 	-- verifico se il documento è ribaltabile
 	if controlloRibalt then
 		if isEligibileRibalt(CNRCTB001.GESTIONE_SPESE,
