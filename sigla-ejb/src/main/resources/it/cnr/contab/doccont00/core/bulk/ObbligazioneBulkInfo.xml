@@ -554,7 +554,6 @@
 		readonlyProperty="RODsGaraInCorso"
 		inputType="TEXTAREA"
 		nullable="false" />
-
 	<fieldProperty
 		name="esercizio_ev_next"
 		property="elemento_voce_next.esercizio"
