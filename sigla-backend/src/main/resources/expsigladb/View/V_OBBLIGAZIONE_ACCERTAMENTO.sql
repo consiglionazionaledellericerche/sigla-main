@@ -138,8 +138,6 @@ from obbligazione obb
 	,obbligazione_scadenzario obbscad
 	,ass_obb_acr_pgiro ass
 where obb.DT_CANCELLAZIONE    is null
-  and (obb.STATO_OBBLIGAZIONE  <> 'P' or ( obb.STATO_OBBLIGAZIONE ='P' and obb.FL_GARA_IN_CORSO ='Y' )
-  	  or (obb.STATO_OBBLIGAZIONE = 'P' and obb.esercizio <> obb.esercizio_competenza))
   and obbscad.CD_CDS 		  = obb.CD_CDS
   and obbscad.ESERCIZIO 	  = obb.ESERCIZIO
   and obbscad.ESERCIZIO_ORIGINALE = obb.ESERCIZIO_ORIGINALE
