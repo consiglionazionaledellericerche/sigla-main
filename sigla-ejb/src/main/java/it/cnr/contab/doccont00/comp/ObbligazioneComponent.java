@@ -4496,16 +4496,8 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 	if (obbligazione.getArchivioAllegati().stream()
 			.filter(AllegatoObbligazioneBulk.class::isInstance)
 			.map(AllegatoObbligazioneBulk.class::cast)
-			.filter(el->el.getEsercizioDiAppartenenza().equals(obbligazione.getEsercizio()))
 			.filter(AllegatoObbligazioneBulk::isTipoDetermina).count()>1)
-		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Determina' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
-
-	if (obbligazione.getArchivioAllegati().stream()
-			.filter(AllegatoObbligazioneBulk.class::isInstance)
-			.map(AllegatoObbligazioneBulk.class::cast)
-			.filter(el->el.getEsercizioDiAppartenenza().equals(obbligazione.getEsercizio()))
-			.filter(AllegatoObbligazioneBulk::isTipoRiaccertamentoResidui).count()>1)
-		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Riaccertamento Residui' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
+		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Determina'.");
 
 	if (obbligazione.getAllegatoDetermina() != null && obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
@@ -4516,7 +4508,7 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 				Parametri_cdsBulk parametriCds = Utility.createParametriCdsComponentSession().
 						getParametriCds(aUC, obbligazione.getCd_cds(), CNRUserContext.getEsercizio(aUC));
 				if (parametriCds.getFl_allega_determina_obblig() != null && parametriCds.getFl_allega_determina_obblig().equals(Boolean.TRUE))
-					throw new it.cnr.jada.comp.ApplicationException("Allegare all'obbligazione un file di tipo 'Determina' per l'esercizio in corso (" + obbligazione.getEsercizio() + ").");
+					throw new it.cnr.jada.comp.ApplicationException("Allegare all'impegno un file di tipo 'Determina'.");
 			} catch (Throwable e) {
 				throw handleException(e);
 			}

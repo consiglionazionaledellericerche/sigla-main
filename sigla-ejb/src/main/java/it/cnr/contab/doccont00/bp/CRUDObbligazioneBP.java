@@ -800,7 +800,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
             if (calendar!=null)
                 allegato.setDeterminaDataProtocollo(calendar.getTime());
         } else
-            allegato.setTipoAllegato(AllegatoObbligazioneBulk.TIPO_RIACCERTAMENTO_RESIDUI);
+            allegato.setTipoAllegato(AllegatoObbligazioneBulk.TIPO_ALLEGATO_GENERICO);
     }
 
     @Override
@@ -1325,14 +1325,14 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
             if (!allegatoModel.isNew() && !isPossibileModifica(allegatoModel)) {
                 if (allegatoModel.isTipoDetermina())
                     return "readonlyTipoDeterminaForm";
-                if (allegatoModel.isTipoRiaccertamentoResidui())
-                    return "readonlyTipoRiaccertamentoResiduiForm";
+                if (allegatoModel.isTipoAllegatoGenerico())
+                    return "readonlyTipoAllegatoGenericoForm";
                 return "readonly";
             }
             if (allegatoModel.isTipoDetermina())
                 return "tipoDeterminaForm";
-            if (allegatoModel.isTipoRiaccertamentoResidui())
-                return "tipoRiaccertamentoResiduiForm";
+            if (allegatoModel.isTipoAllegatoGenerico())
+                return "tipoAllegatoGenericoForm";
             return "tipoNonDefinito";
         }
         return "archivioAllegati";

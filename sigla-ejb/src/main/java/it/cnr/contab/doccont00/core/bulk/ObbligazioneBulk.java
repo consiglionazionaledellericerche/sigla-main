@@ -2066,7 +2066,7 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	public AllegatoObbligazioneBulk getAllegatoDetermina(){
 		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
 			AllegatoObbligazioneBulk allegato = (AllegatoObbligazioneBulk)i.next();
-			if (allegato.isTipoDetermina() && allegato.getEsercizioDiAppartenenza().equals(this.getEsercizio()))
+			if (allegato.isTipoDetermina())
 				return allegato;
 		}
 		return null;

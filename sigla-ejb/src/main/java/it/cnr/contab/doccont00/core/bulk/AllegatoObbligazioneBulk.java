@@ -17,16 +17,11 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.si.spring.storage.annotation.StoragePolicy;
-import it.cnr.si.spring.storage.annotation.StorageProperty;
-import it.cnr.si.spring.storage.converter.Converter;
+import it.cnr.si.spring.storage.StorageObject;
 
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.GregorianCalendar;
 import java.util.Optional;
 
 public class AllegatoObbligazioneBulk extends AllegatoGenericoBulk {
@@ -37,13 +32,13 @@ public class AllegatoObbligazioneBulk extends AllegatoGenericoBulk {
 
 	private java.util.Dictionary tipoAllegatiKeys;
 
-	final public static String TIPO_RIACCERTAMENTO_RESIDUI = "RIACCERTAMENTO_RESIDUI";
+	final public static String TIPO_ALLEGATO_GENERICO = "ALLEGATO_GENERICO";
 	final public static String TIPO_DETERMINA = "DETERMINA";
 
 	static {
 		ti_allegatiSenzaRiaccertamentoKeys.put(TIPO_DETERMINA,"Determina");
 
-		ti_allegatiKeys.put(TIPO_RIACCERTAMENTO_RESIDUI,"Riaccertamento Residui");
+		ti_allegatiKeys.put(TIPO_ALLEGATO_GENERICO,"Allegato Generico");
 		ti_allegatiKeys.put(TIPO_DETERMINA,"Determina");
 	}
 
@@ -97,8 +92,8 @@ public class AllegatoObbligazioneBulk extends AllegatoGenericoBulk {
 		return !isToBeCreated();
 	}
 
-	public boolean isTipoRiaccertamentoResidui() {
-		return TIPO_RIACCERTAMENTO_RESIDUI.equals(this.getTipoAllegato());
+	public boolean isTipoAllegatoGenerico() {
+		return TIPO_ALLEGATO_GENERICO.equals(this.getTipoAllegato());
 	}
 
 	public boolean isTipoDetermina() {

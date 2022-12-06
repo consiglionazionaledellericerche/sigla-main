@@ -100,7 +100,7 @@
 	</form>
 
 	<form
-			name="tipoRiaccertamentoResiduiForm" >
+			name="tipoAllegatoGenericoForm" >
 		<formFieldProperty
 				name="tipoAllegato"
 				command="doDefault"/>
@@ -147,7 +147,7 @@
 	</columnSet>
 
 	<columnSet
-			name="tipoRiaccertamentoResiduiForm" >
+			name="tipoAllegatoGenericoForm" >
 		<columnFieldProperty
 				name="tipoAllegato" />
 		<columnFieldProperty
@@ -193,7 +193,7 @@
 			name="esercizioDiAppartenenza" />
 	</columnSet>
 
-	<form name="readonlyTipoRiaccertamentoResiduiForm">
+	<form name="readonlyTipoAllegatoGenericoForm">
 		<formFieldProperty
 				name="tipoAllegato"
 				enabledOnEdit="false"/>
@@ -210,7 +210,7 @@
 	</form>
 
 	<columnSet
-			name="readonlyTipoRiaccertamentoResiduiForm" >
+			name="readonlyTipoAllegatoGenericoForm" >
 		<columnFieldProperty
 				name="tipoAllegato" />
 		<columnFieldProperty
