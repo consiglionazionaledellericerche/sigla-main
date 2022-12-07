@@ -1066,6 +1066,8 @@ Begin
        (aObb.FL_DETERMINA_ALLEGATA ='N' OR TO_CHAR(aObb.DT_DETERMINA_ALLEGATA,'YYYY') > aObb.esercizio) then
        Declare
            pRibaltaDeterminaObblig parametri_cds.fl_ribalta_determina_obblig%type;
+           pFlDeterminaAllegata aObb.FL_DETERMINA_ALLEGATA%type := 'N';
+           pDtDeterminaAllegata aObb.DT_DETERMINA_ALLEGATA%type;
        Begin
            Select fl_ribalta_determina_obblig
            into pRibaltaDeterminaObblig
@@ -1073,14 +1075,39 @@ Begin
            where esercizio = aObb.esercizio
            and   cd_cds = aObb.cd_cds;
 
-           if pRibaltaDeterminaObblig = 'Y' Then
-               if aObb.FL_DETERMINA_ALLEGATA ='N' Then
-                  aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio senza determina.';
-               else
-                  aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio con determina avente data protocollo superiore al 31/12/'||aObb.esercizio||'.';
-               end if;
-               ibmerr001.RAISE_ERR_GENERICO(aErrMsn);
-           end if;
+           If pRibaltaDeterminaObblig = 'Y' Then
+              pFlDeterminaAllegata := aObb.FL_DETERMINA_ALLEGATA;
+              pDtDeterminaAllegata := aObb.DT_DETERMINA_ALLEGATA;
+
+              If pFlDeterminaAllegata ='N' Then
+                 --devo verificare che la delibera non sia stata collegata su obbligazioni simili di anni precedenti
+                 Begin
+                    Select FL_DETERMINA_ALLEGATA, DT_DETERMINA_ALLEGATA
+                    into pFlDeterminaAllegata, pDtDeterminaAllegata
+                    from obbligazione
+                    where esercizio < aObb.esercizio
+                    and   esercizio_originale = aObb.esercizio_originale
+                    and   cd_cds = aObb.cd_cds
+                    and   pg_obbligazione = aObb.pg_obbligazione
+                    and   FL_DETERMINA_ALLEGATA = 'Y';
+                 Exception
+                    When too_many_rows Then
+                       aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio su cui sono state collegate troppe determine.';
+                       ibmerr001.RAISE_ERR_GENERICO(aErrMsn);
+                    When no_data_found Then
+                       null;
+                 End;
+              End If;
+
+              If pFlDeterminaAllegata ='N' OR TO_CHAR(pDtDeterminaAllegata,'YYYY') > aObb.esercizio Then
+	             If pFlDeterminaAllegata ='N' Then
+    	            aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio senza determina.';
+	             Else
+                  	aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio con determina avente data protocollo superiore al 31/12/'||aObb.esercizio||'.';
+              	 End if;
+                 ibmerr001.RAISE_ERR_GENERICO(aErrMsn);
+	          End if;
+           End if;
        End;
     End If;
 
