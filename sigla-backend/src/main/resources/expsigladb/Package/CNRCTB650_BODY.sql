@@ -1015,13 +1015,15 @@ BEGIN
             IF glbImportoIrpefDovuto < aImTotaleDetrazioni THEN
                aImTotaleNetto:=(glbImportoIrpefDovuto - aImTotaleDetrazioni) * -1;
                k := 0;
-               FOR K IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
-                  IF tabCreditoIrpef(K).PAREGGIO_DETRAZIONI = 'Y' THEN
-                    IF aImTotaleNetto <= tabCreditoIrpef(K).tImCreditoIrpefDovuto * -1 THEN
-                      tabCreditoIrpef(K).tImCreditoIrpefDovuto := aImTotaleNetto * -1;
-                    END IF;
-                  END IF;
-               END LOOP;
+               IF tabCreditoIrpef.COUNT > 0 THEN
+                  FOR K IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                     IF tabCreditoIrpef(K).PAREGGIO_DETRAZIONI = 'Y' THEN
+                        IF aImTotaleNetto <= tabCreditoIrpef(K).tImCreditoIrpefDovuto * -1 THEN
+                           tabCreditoIrpef(K).tImCreditoIrpefDovuto := aImTotaleNetto * -1;
+                        END IF;
+                     END IF;
+                  END LOOP;
+               END IF;
 
                nettizzaDetrazioni(aImTotaleNetto,
                                   aImTotDetrazioniNettoPe,
