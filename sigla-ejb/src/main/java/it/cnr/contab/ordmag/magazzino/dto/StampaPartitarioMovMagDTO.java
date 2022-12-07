@@ -21,9 +21,13 @@ public class StampaPartitarioMovMagDTO {
 
     BigDecimal importo;
 
+    BigDecimal entrata;
+
+    BigDecimal uscita;
+
     Long quantita;
 
-    Long giacenza;
+    BigDecimal giacenza;
 
     public Long getPg_movimento() {
         return pg_movimento;
@@ -89,6 +93,21 @@ public class StampaPartitarioMovMagDTO {
         this.importo = importo;
     }
 
+    public BigDecimal getEntrata() {
+        return entrata;
+    }
+
+    public void setEntrata(BigDecimal entrata) {
+        this.entrata = entrata;
+    }
+
+    public BigDecimal getUscita() {
+        return uscita;
+    }
+
+    public void setUscita(BigDecimal uscita) {
+        this.uscita = uscita;
+    }
     public Long getQuantita() {
         return quantita;
     }
@@ -97,11 +116,11 @@ public class StampaPartitarioMovMagDTO {
         this.quantita = quantita;
     }
 
-    public Long getGiacenza() {
+    public BigDecimal getGiacenza() {
         return giacenza;
     }
 
-    public void setGiacenza(Long giacenza) {
+    public void setGiacenza(BigDecimal giacenza) {
         this.giacenza = giacenza;
     }
 }
