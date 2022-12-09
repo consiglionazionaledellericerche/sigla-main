@@ -13,6 +13,8 @@ public class StampaPartitarioBeneServizioDTO {
 
     Long giacenza;
 
+    String codiceDivisa;
+
     List<StampaPartitarioMovMagDTO> movimenti= new ArrayList<StampaPartitarioMovMagDTO>();
 
     public String getCodiceBeneServizio() {
@@ -46,6 +48,10 @@ public class StampaPartitarioBeneServizioDTO {
     public void setGiacenza(Long giacenza) {
         this.giacenza = giacenza;
     }
+
+    public String getCodiceDivisa() { return codiceDivisa; }
+
+    public void setCodiceDivisa(String codiceDivisa) { this.codiceDivisa = codiceDivisa; }
 
     public List<StampaPartitarioMovMagDTO> getMovimenti() {
         return movimenti;
