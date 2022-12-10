@@ -1799,7 +1799,6 @@ Procedure processaInterfaccia(aEs number, aNomeFile varchar2,aUser varchar2) is
 							  WHERE CD_CDS 				  = dett_dist.CD_CDS
 							  and  	ESERCIZIO 			  = dett_dist.ESERCIZIO
 							  and   CD_UNITA_ORGANIZZATIVA= dett_dist.CD_UNITA_ORGANIZZATIVA
-							  and   PG_DISTINTA 		  = dett_dist.PG_DISTINTA
 							  and 	PG_MANDATO IS NOT NULL
 							  )
 						  )
@@ -1811,7 +1810,6 @@ Procedure processaInterfaccia(aEs number, aNomeFile varchar2,aUser varchar2) is
 							  WHERE CD_CDS 				  = dett_dist.CD_CDS
 							  and  	ESERCIZIO 			  = dett_dist.ESERCIZIO
 							  and   CD_UNITA_ORGANIZZATIVA= dett_dist.CD_UNITA_ORGANIZZATIVA
-							  and   PG_DISTINTA 		  = dett_dist.PG_DISTINTA
 							  and 	PG_REVERSALE IS NOT NULL
 							  )
 						   )

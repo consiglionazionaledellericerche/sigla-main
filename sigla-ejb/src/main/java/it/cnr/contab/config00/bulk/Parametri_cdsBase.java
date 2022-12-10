@@ -70,6 +70,10 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	// ABIL_PROGETTO_STRORG VARCHAR2(3)
 	private java.lang.String abil_progetto_strorg;
 
+	private Boolean fl_allega_determina_obblig;
+
+	private Boolean fl_ribalta_determina_obblig;
+
 	public Parametri_cdsBase() {
 		super();
 	}
@@ -330,5 +334,21 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 
 	public void setAbil_progetto_strorg(String abil_progetto_strorg) {
 		this.abil_progetto_strorg = abil_progetto_strorg;
+	}
+
+	public Boolean getFl_allega_determina_obblig() {
+		return fl_allega_determina_obblig;
+	}
+
+	public void setFl_allega_determina_obblig(Boolean fl_allega_determina_obblig) {
+		this.fl_allega_determina_obblig = fl_allega_determina_obblig;
+	}
+
+	public Boolean getFl_ribalta_determina_obblig() {
+		return fl_ribalta_determina_obblig;
+	}
+
+	public void setFl_ribalta_determina_obblig(Boolean fl_ribalta_determina_obblig) {
+		this.fl_ribalta_determina_obblig = fl_ribalta_determina_obblig;
 	}
 }

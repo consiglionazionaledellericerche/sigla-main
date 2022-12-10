@@ -1387,23 +1387,8 @@ BEGIN
                aAmmontareCompCong:=aImCompCongAddComNetto;
                aAmmontareCompCongNetto:=aImCompCongAddComNetto;
          ELSIF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y' THEN
-              i_credito := 0;
-
-              FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
-                if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_Validita then
-                    if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
-			           IF tabCreditoIrpef(i_credito).PAREGGIO_DETRAZIONI = 'Y' THEN
-	                      aAmmontareCompCong:=-(glbImportoCredIrpParDetDovuto - glbImportoCredIrpParDetGoduto);
-	                   ELSE
-	                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
-					   END IF;
-                    else
-                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoBonusIrpefGoduto);
-                    end if;
-                  aAmmontareCompCongNetto:=aAmmontareCompCong;
-                 exit;
-                end if;
-              END LOOP;
+              aAmmontareCompCong := -(glbImportoCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto) - (glbImportoCredIrpParDetDovuto - glbImportoCredIrpParDetGoduto);
+              aAmmontareCompCongNetto:=aAmmontareCompCong;
          ELSE
                aImponibileCompCong:=aRecCoriConguaglio.imponibile;
                aAmmontareCompCong:=aRecCoriConguaglio.ammontare;

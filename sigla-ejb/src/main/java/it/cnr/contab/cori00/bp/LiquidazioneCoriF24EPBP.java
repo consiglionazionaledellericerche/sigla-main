@@ -99,11 +99,6 @@ public class LiquidazioneCoriF24EPBP extends it.cnr.jada.util.action.Selezionato
         if (getFile() != null) {
             HttpServletRequest httpservletrequest = (HttpServletRequest) pagecontext.getRequest();
             StringBuffer stringbuffer = new StringBuffer();
-            stringbuffer.append(pagecontext.getRequest().getScheme());
-            stringbuffer.append("://");
-            stringbuffer.append(pagecontext.getRequest().getServerName());
-            stringbuffer.append(':');
-            stringbuffer.append(pagecontext.getRequest().getServerPort());
             stringbuffer.append(JSPUtils.getAppRoot(httpservletrequest));
             toolbar[3].setHref("javascript:doPrint('" + stringbuffer + getFile() + "')");
         }

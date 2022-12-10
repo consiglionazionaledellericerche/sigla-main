@@ -35,14 +35,7 @@ import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.doccont00.core.bulk.AllegatoObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
 import it.cnr.contab.service.SpringUtil;
@@ -162,7 +155,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 			
 		super.confermaScadenza(context);
 	}
-	public boolean isEditScadenzaButtonEnabled() throws BusinessProcessException {
+	public boolean isEditScadenzaButtonEnabled() {
 		return (isScadenzaModificabile() && getScadenzario().getModel() != null && !isEditingScadenza());
 	}
 	/**
@@ -361,13 +354,12 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		int i=0;
 
 		pages.put(i++, new String[]{ "tabObbligazione","Impegni","/doccont00/tab_obbligazione.jsp" });
-		pages.put(i++, new String[]{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_obbligazione.jsp" });
-		pages.put(i++, new String[]{ "tabScadenzario","Scadenzario","/doccont00/tab_scadenzario_obbligazione.jsp" });
-		if (isStatoResiduoVisibile())
-			pages.put(i++, new String[]{ "tabAllegati","Allegati","/util00/tab_allegati.jsp" });
-
-		pages.put(i++, new String[]{ "tabCdrCapitoli","Cdr","/doccont00/tab_cdr_capitoli.jsp" });
-		
+		if (!this.isSearching()) {
+			pages.put(i++, new String[]{"tabImputazioneFin", "Imputazione Finanziaria", "/doccont00/tab_imputazione_fin_obbligazione.jsp"});
+			pages.put(i++, new String[]{"tabScadenzario", "Scadenzario", "/doccont00/tab_scadenzario_obbligazione.jsp"});
+			pages.put(i++, new String[]{"tabAllegati", "Allegati", "/util00/tab_allegati.jsp"});
+			pages.put(i++, new String[]{"tabCdrCapitoli", "Cdr", "/doccont00/tab_cdr_capitoli.jsp"});
+		}
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++)
 			tabs[j]=new String[]{pages.get(j)[0],pages.get(j)[1],pages.get(j)[2]};
@@ -420,12 +412,6 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		}
 	}
 
-    public String getAllegatiFormName() {
-    	if (this.getCrudArchivioAllegati().getModel()!=null && !this.getCrudArchivioAllegati().getModel().isNew())
-    		if (!isPossibileModifica((AllegatoGenericoBulk)this.getCrudArchivioAllegati().getModel()))
-    			return "readonly";
-    	return "archivioAllegati";
-    }
 	/**
 	 * Inizializza il modello per la modifica.
 	 * @param context Il contesto dell'azione
@@ -435,35 +421,44 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 	public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
 		try {
 			ObbligazioneBulk oggettobulk = (ObbligazioneBulk)super.initializeModelForEdit(context, bulk);
-
-			if (isStatoVisibile()) {
-				BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-				try	{
-					RemoteIterator ri = this.find(context, new CompoundFindClause(), new ObbligazioneBulk(), oggettobulk, "allEqualsObbligazioni");
-					ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
-					while (ri.hasMoreElements()) {
-						ObbligazioneBulk currObbligazione = (ObbligazioneBulk) ri.nextElement();
-						if (currObbligazione.getEsercizio().compareTo(oggettobulk.getEsercizio())<=0) {
-							currObbligazione = (ObbligazioneBulk)initializeModelForEditAllegati(context, currObbligazione);
-							for (AllegatoGenericoBulk allegatoGenericoBulk : currObbligazione.getArchivioAllegati())
-								((AllegatoObbligazioneBulk)allegatoGenericoBulk).setEsercizioDiAppartenenza(currObbligazione.getEsercizio());
-							archivioAllegati.addAll(currObbligazione.getArchivioAllegati());
-						}
-					}
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
-				}catch(java.rmi.RemoteException ex){
-					throw handleException(ex);
-				}
-	
-				((AllegatoParentBulk)oggettobulk).setArchivioAllegati(archivioAllegati);
-			}
-			
+			oggettobulk = initializeModelForEditAllegatiEqualsObbligazioni(context, oggettobulk);
 			return oggettobulk;
 		} catch(Throwable e) {
 			throw new it.cnr.jada.action.BusinessProcessException(e);
 		}
 	}
-	
+
+	//Questo metodo recupera gli allegati sulle obbligazioni simili e li fa vedere tutte sull'obbligazione aperta
+	private ObbligazioneBulk initializeModelForEditAllegatiEqualsObbligazioni(ActionContext actioncontext, ObbligazioneBulk oggettobulk) throws BusinessProcessException {
+		BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<>();
+		try	{
+			RemoteIterator ri = this.find(actioncontext, new CompoundFindClause(), new ObbligazioneBulk(), oggettobulk, "allEqualsObbligazioni");
+			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
+			while (ri.hasMoreElements()) {
+				ObbligazioneBulk currObbligazione = (ObbligazioneBulk) ri.nextElement();
+				if (currObbligazione.getEsercizio().compareTo(oggettobulk.getEsercizio())<0) {
+					CRUDObbligazioneBP obbligazioneBP=null;
+					if (currObbligazione.isCompetenza())
+						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneBP",new Object[] { "MRSWTh" });
+					else if (currObbligazione.isObbligazioneResiduoImproprio())
+						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneResImpropriaBP",new Object[] { "MRSWTh" });
+					else
+						obbligazioneBP = this;
+					currObbligazione = (ObbligazioneBulk)obbligazioneBP.initializeModelForEditAllegati(actioncontext, currObbligazione);
+					for (AllegatoGenericoBulk allegatoGenericoBulk : currObbligazione.getArchivioAllegati())
+						((AllegatoObbligazioneBulk)allegatoGenericoBulk).setEsercizioDiAppartenenza(currObbligazione.getEsercizio());
+					archivioAllegati.addAll(currObbligazione.getArchivioAllegati());
+				}
+			}
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(actioncontext, ri);
+		}catch(java.rmi.RemoteException ex){
+			throw handleException(ex);
+		}
+
+		((AllegatoParentBulk)oggettobulk).getArchivioAllegati().addAll(archivioAllegati);
+		return oggettobulk;
+	}
+
 	@Override
 	protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
 		if (allegato instanceof AllegatoObbligazioneBulk && this.getModel()!=null && !allegato.isToBeCreated()) {
@@ -473,7 +468,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		}
 		return super.isPossibileCancellazione(allegato);
 	}
-	
+
 	@Override
 	protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
 		if (allegato instanceof AllegatoObbligazioneBulk && this.getModel()!=null) {
@@ -482,5 +477,12 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 				return false;
 		}
 		return super.isPossibileModifica(allegato);
+	}
+
+	protected void addChildDetail(OggettoBulk oggettobulk) {
+		if (this.isStatoResiduoVisibile())
+			((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiAllKeys();
+		else
+			((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiSenzaRiaccertamentoKeys();
 	}
 }

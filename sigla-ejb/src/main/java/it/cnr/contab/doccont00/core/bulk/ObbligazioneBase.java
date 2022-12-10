@@ -19,6 +19,8 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.sql.Timestamp;
+
 public class ObbligazioneBase extends ObbligazioneKey implements Keyed {
 	private static final long serialVersionUID = 1L;
 
@@ -145,7 +147,11 @@ public class ObbligazioneBase extends ObbligazioneKey implements Keyed {
 	// CD_ELEMENTO_VOCE_NEXT VARCHAR(20) NOT NULL
 	private java.lang.String cd_elemento_voce_next;
 
-public ObbligazioneBase() {
+	private Boolean fl_determina_allegata;
+
+	private java.sql.Timestamp dt_determina_allegata;
+
+	public ObbligazioneBase() {
 	super();
 }
 public ObbligazioneBase(java.lang.String cd_cds,java.lang.Integer esercizio,java.lang.Integer esercizio_originale,java.lang.Long pg_obbligazione) {
@@ -587,5 +593,21 @@ public void setTi_gestione(java.lang.String ti_gestione) {
 	}
 	public void setCd_elemento_voce_next(java.lang.String cd_elemento_voce_next) {
 		this.cd_elemento_voce_next = cd_elemento_voce_next;
+	}
+
+	public Boolean getFl_determina_allegata() {
+		return fl_determina_allegata;
+	}
+
+	public void setFl_determina_allegata(Boolean fl_determina_allegata) {
+		this.fl_determina_allegata = fl_determina_allegata;
+	}
+
+	public Timestamp getDt_determina_allegata() {
+		return dt_determina_allegata;
+	}
+
+	public void setDt_determina_allegata(Timestamp dt_determina_allegata) {
+		this.dt_determina_allegata = dt_determina_allegata;
 	}
 }

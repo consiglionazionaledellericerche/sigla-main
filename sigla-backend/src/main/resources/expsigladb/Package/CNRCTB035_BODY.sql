@@ -1203,6 +1203,8 @@ Procedure aggiornaSaldoDettScad(aObb obbligazione%rowtype, aObbScadVoce obbligaz
     ,DS_GARA_IN_CORSO
     ,STATO_COGE_DOCAMM
     ,STATO_COGE_DOCCONT
+    ,FL_DETERMINA_ALLEGATA
+    ,DT_DETERMINA_ALLEGATA
    ) values (
      aDest.ESERCIZIO
     ,aDest.CD_CDS
@@ -1252,6 +1254,8 @@ Procedure aggiornaSaldoDettScad(aObb obbligazione%rowtype, aObbScadVoce obbligaz
     ,aDest.DS_GARA_IN_CORSO
     ,aDest.stato_coge_docamm
     ,aDest.stato_coge_doccont
+    ,nvl(aDest.FL_DETERMINA_ALLEGATA,'N')
+    ,aDest.DT_DETERMINA_ALLEGATA
     );
  end;
  procedure ins_OBBLIGAZIONE_SCADENZARIO (aDest OBBLIGAZIONE_SCADENZARIO%rowtype) is

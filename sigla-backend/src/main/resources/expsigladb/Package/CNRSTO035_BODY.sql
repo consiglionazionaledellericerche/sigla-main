@@ -96,6 +96,8 @@
     ,FL_NETTO_SOSPESO
     ,FL_GARA_IN_CORSO
     ,DS_GARA_IN_CORSO
+    ,FL_DETERMINA_ALLEGATA
+    ,DT_DETERMINA_ALLEGATA
    ) values (
      aPgStorico
     ,aDsStorico
@@ -145,6 +147,8 @@
     ,aDest.FL_NETTO_SOSPESO
     ,aDest.FL_GARA_IN_CORSO
     ,aDest.DS_GARA_IN_CORSO
+    ,aDest.FL_DETERMINA_ALLEGATA
+    ,aDest.DT_DETERMINA_ALLEGATA
     );
  end;
  procedure sto_OBBLIGAZIONE_SCADENZARIO (aPgStorico number, aDsStorico varchar2, aDest OBBLIGAZIONE_SCADENZARIO%rowtype) is

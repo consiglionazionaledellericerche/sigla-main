@@ -859,10 +859,11 @@ public ImpegnoBulk creaObbligazione(
 	       	imp.setStato_obbligazione(imp.STATO_OBB_STORNATO);                        
             imp.setDt_cancellazione(accert_pgiro.getDt_registrazione());
         }
-        imp.setFl_calcolo_automatico(new Boolean(true));
+        imp.setFl_calcolo_automatico(Boolean.TRUE);
 
-        imp.setFl_spese_costi_altrui(new Boolean(false));
-        imp.setFl_gara_in_corso(new Boolean(false));
+        imp.setFl_spese_costi_altrui(Boolean.FALSE);
+        imp.setFl_gara_in_corso(Boolean.FALSE);
+		imp.setFl_determina_allegata(Boolean.FALSE);
         imp.setEsercizio_competenza(accert_pgiro.getEsercizio());
         imp.setIm_costi_anticipati(new java.math.BigDecimal(0));
         imp.setRiportato("N");

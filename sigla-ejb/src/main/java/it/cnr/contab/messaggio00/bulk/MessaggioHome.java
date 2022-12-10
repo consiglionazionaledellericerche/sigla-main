@@ -91,6 +91,7 @@ public class MessaggioHome extends BulkHome {
 		sql.addClause(FindClause.AND, "dt_fine_validita", SQLBuilder.GREATER_EQUALS, EJBCommonServices.getServerTimestamp());
 		sql.addClause(FindClause.OR, "dt_fine_validita", SQLBuilder.ISNULL, null);
 		sql.closeParenthesis();
+        sql.addOrderBy("dacr desc");
 		return fetchAll(sql);
 	}
 }
