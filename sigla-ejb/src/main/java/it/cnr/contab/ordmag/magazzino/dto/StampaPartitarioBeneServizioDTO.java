@@ -2,12 +2,15 @@ package it.cnr.contab.ordmag.magazzino.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StampaPartitarioBeneServizioDTO {
 
     String codiceBeneServizio;
 
     String descrBeneServizio;
+
+    String codiceUnitaMisura;
 
     String unitaMisura;
 
@@ -33,6 +36,14 @@ public class StampaPartitarioBeneServizioDTO {
         this.descrBeneServizio = descrBeneServizio;
     }
 
+
+    public String getCodiceUnitaMisura() {
+        return codiceUnitaMisura;
+    }
+
+    public void setCodiceUnitaMisura(String codiceUnitaMisura) {
+        this.codiceUnitaMisura = codiceUnitaMisura;
+    }
     public String getUnitaMisura() {
         return unitaMisura;
     }
@@ -59,5 +70,22 @@ public class StampaPartitarioBeneServizioDTO {
 
     public void setMovimenti(List<StampaPartitarioMovMagDTO> movimenti) {
         this.movimenti = movimenti;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        StampaPartitarioBeneServizioDTO c = (StampaPartitarioBeneServizioDTO)o;
+        return Optional.ofNullable(c.codiceBeneServizio).equals(Optional.ofNullable(codiceBeneServizio)) &&
+               Optional.ofNullable(c.codiceUnitaMisura).equals(Optional.ofNullable(codiceUnitaMisura)) &&
+               Optional.ofNullable(c.codiceDivisa).equals(Optional.ofNullable(codiceDivisa));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + ((codiceBeneServizio == null) ? 0 : codiceBeneServizio.hashCode());
+        result = 37 * result + ((codiceUnitaMisura == null) ? 0 : codiceUnitaMisura.hashCode());
+        result = 37 * result + ((codiceDivisa == null) ? 0 : codiceDivisa.hashCode());
+        return result;
     }
 }

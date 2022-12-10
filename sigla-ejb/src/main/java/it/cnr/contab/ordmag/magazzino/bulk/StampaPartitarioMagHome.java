@@ -42,6 +42,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Insert the type's description here.
@@ -109,19 +110,33 @@ public class StampaPartitarioMagHome extends BulkHome {
 		return myJson;
 	}
 
-	public String getJsonDataSource(UserContext uc, Print_spoolerBulk print_spoolerBulk)  {
+	public String getJsonDataSource(UserContext uc, Print_spoolerBulk print_spoolerBulk) throws ComponentException {
+
 		String json=null;
-
-
-		List<StampaPartitarioMovMagDTO> partitario = new ArrayList<StampaPartitarioMovMagDTO>();
+		StampaPartitarioMagDTO stampaPartitarioMag = new StampaPartitarioMagDTO();
 		try {
-//			List<MovimentiMagBulk> movMag=movimentiMagHome.fetchAll(sql);
-//			getHomeCache().fetchAll(uc);
+
+			LinkedHashSet<StampaPartitarioBeneServizioDTO> articoliSet = new LinkedHashSet<StampaPartitarioBeneServizioDTO>();
 			List<MovimentiMagBulk> movMag = findMovimentiMagForJson(uc, print_spoolerBulk);
 
 			for (MovimentiMagBulk m:movMag) {
 
-				StampaPartitarioMovMagDTO mov=new StampaPartitarioMovMagDTO();
+				StampaPartitarioBeneServizioDTO art = new StampaPartitarioBeneServizioDTO();
+				art.setCodiceBeneServizio(m.getLottoMag().getBeneServizio().getCd_bene_servizio());
+				art.setDescrBeneServizio(m.getLottoMag().getBeneServizio().getDs_bene_servizio());
+				art.setCodiceUnitaMisura(m.getCdUnitaMisura());
+				art.setUnitaMisura(m.getCdUnitaMisura()+" - "+m.getUnitaMisura().getDsUnitaMisura());
+				art.setCodiceDivisa(m.getCdDivisa());
+				articoliSet.add(art);
+
+			}
+
+			List<StampaPartitarioBeneServizioDTO> articoli = articoliSet.stream().collect(Collectors.toList());
+			stampaPartitarioMag.setBeniServizio(articoli);
+
+			for (MovimentiMagBulk m:movMag) {
+
+				StampaPartitarioMovMagDTO mov = new StampaPartitarioMovMagDTO();
 				mov.setPg_movimento(m.getPgMovimento());
 				mov.setDataMovimento(m.getDtMovimento());
 				mov.setCausaleMovimento(m.getTipoMovimentoMag().getDsTipoMovimento());
@@ -144,30 +159,20 @@ public class StampaPartitarioMagHome extends BulkHome {
 				if(m.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOMMA)){
 					mov.setEntrata(m.getQuantita());
 				}
-				partitario.add(mov);
 
-			}
-
-			List<StampaPartitarioBeneServizioDTO> articolo = new ArrayList<StampaPartitarioBeneServizioDTO>();
-			try {
-				List<MovimentiMagBulk> artMov = findMovimentiMagForJson(uc, print_spoolerBulk);
-
-				for (MovimentiMagBulk m:artMov) {
-
-					StampaPartitarioBeneServizioDTO art = new StampaPartitarioBeneServizioDTO();
-					art.setCodiceBeneServizio(m.getCdBeneServizio());
-					art.setDescrBeneServizio(m.getBeneServizioUt().getDs_bene_servizio());
-					art.setUnitaMisura(m.getCdUnitaMisura()+" - "+m.getUnitaMisura().getDsUnitaMisura());
-					art.setCodiceDivisa(m.getCdDivisa());
-					articolo.add(art);
-
+				for (StampaPartitarioBeneServizioDTO n:articoli) {
+					if (Optional.ofNullable(n.getCodiceBeneServizio()).equals(Optional.ofNullable(m.getLottoMag().getBeneServizio().getCd_bene_servizio())) &&
+						Optional.ofNullable(n.getCodiceUnitaMisura()).equals(Optional.ofNullable(m.getCdUnitaMisura())) &&
+						Optional.ofNullable(n.getCodiceDivisa()).equals(Optional.ofNullable(m.getCdDivisa()))) {
+							if (n.getMovimenti()==null)
+								n.setMovimenti(new ArrayList<StampaPartitarioMovMagDTO>());
+							n.getMovimenti().add(mov);
+							continue;
+					}
 				}
-			} catch (PersistencyException e) {
-				throw e;
 			}
 
-			StampaPartitarioMagDTO stampaPartitarioMag = new StampaPartitarioMagDTO();
-			stampaPartitarioMag.setBeniServizio(articolo);
+
 
 //			MovimentiMagHome movimentoMagHome=(MovimentiMagHome)getHomeCache().getHome(MovimentiMagBulk.class);
 //
@@ -191,20 +196,21 @@ public class StampaPartitarioMagHome extends BulkHome {
 //			List<MovimentiMagBulk> movimenti=movimentoMagHome.fetchAll(sql);
 //			getHomeCache().fetchAll(uc);
 
-			// genera il file json solo se il ciclo si è completato senza errori
-			try {
-				json=createJsonForPrint(partitario);
-			} catch (ComponentException e) {
-				e.printStackTrace();
-			}
-
 		} catch (PersistencyException e) {
 			e.printStackTrace();
+			throw new ComponentException("Errore nella ricerca dei dati per la generazione del file JSON per l'esecuzione della stampa (errore json).",e);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			throw new ComponentException("Errore nella produzione della stampa.",e);
 		}
 
+		try {
+			json=createJsonForPrint(stampaPartitarioMag);
+		} catch (ComponentException e) {
+			e.printStackTrace();
+			throw e;
+		}
 		return json;
 	}
 
@@ -257,8 +263,6 @@ public class StampaPartitarioMagHome extends BulkHome {
 //		sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 //		sql.generateJoin(OrdineAcqRigaBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZO");
 
-//		final List result = fetchAll(sql);
-//		getHomeCache().fetchAll(userContext);
 		List<MovimentiMagBulk> result = movimentiMagHome.fetchAll(sql);
 		getHomeCache().fetchAll(userContext);
 		return result;
