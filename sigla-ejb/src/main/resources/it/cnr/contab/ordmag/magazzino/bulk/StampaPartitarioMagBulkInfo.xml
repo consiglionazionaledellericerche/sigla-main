@@ -120,6 +120,38 @@
             command="doOnDataFineCompetenzaChange"
             label="A Data Competenza"/>
 
+    <fieldProperty
+            name="uopForPrint"
+            property="uopForPrint"/>
+
+    <fieldProperty
+            name="cdMagazzinoForPrint"
+            property="cdMagazzinoForPrint"/>
+
+    <fieldProperty
+            name="uopForPrint"
+            property="uopForPrint"/>
+
+    <fieldProperty
+            name="daCdFornitoreForPrint"
+            property="daCdFornitoreForPrint"/>
+
+    <fieldProperty
+            name="aCdFornitoreForPrint"
+            property="aCdFornitoreForPrint"/>
+
+    <fieldProperty
+            name=""
+            property=""/>
+
+    <fieldProperty
+            name="daCdBeneServizioForPrint"
+            property="daCdBeneServizioForPrint"/>
+
+    <fieldProperty
+            name="aCdBeneServizioForPrint"
+            property="aCdBeneServizioForPrint"/>
+
     <formFieldProperty name="daDataMovimento"/>
     <formFieldProperty name="aDataMovimento"/>
     <formFieldProperty name="daDataCompetenza"/>
@@ -163,6 +195,36 @@
                 parameterPosition="4"
                 parameterType="STRING"
                 paramNameJR="cdMagazzino"
+                paramTypeJR="java.lang.String"/>
+        <printFieldProperty
+                name="uopForPrint"
+                parameterPosition="5"
+                parameterType="STRING"
+                paramNameJR="uop"
+                paramTypeJR="java.lang.String"/>
+        <printFieldProperty
+                name="daCdFornitoreForPrint"
+                parameterPosition="6"
+                parameterType="STRING"
+                paramNameJR="daCdFornitore"
+                paramTypeJR="java.lang.Integer"/>
+        <printFieldProperty
+                name="aCdFornitoreForPrint"
+                parameterPosition="7"
+                parameterType="STRING"
+                paramNameJR="aCdFornitore"
+                paramTypeJR="java.lang.Integer"/>
+        <printFieldProperty
+                name="daCdBeneServizioForPrint"
+                parameterPosition="8"
+                parameterType="STRING"
+                paramNameJR="daCdBeneServizio"
+                paramTypeJR="java.lang.String"/>
+        <printFieldProperty
+                name="aCdBeneServizioForPrint"
+                parameterPosition="9"
+                parameterType="STRING"
+                paramNameJR="aCdBeneServizio"
                 paramTypeJR="java.lang.String"/>
 
     </printForm>

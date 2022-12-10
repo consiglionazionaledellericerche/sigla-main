@@ -85,6 +85,11 @@ public class StampaPartitarioMagHome extends BulkHome {
 	}
 
 	private static final String COD_MAGAZZINO = "cdMagazzino";
+	private static final String UOP = "uop";
+	private static final String DA_FORNITORE = "daCdFornitore";
+	private static final String A_FORNITORE = "aCdFornitore";
+	private static final String DA_BENE_SERVIZIO = "daCdBeneServizio";
+	private static final String A_BENE_SERVIZIO = "aCdBeneServizio";
 	private static final String DA_DATA_MOVIMENTO = "daDataMovimento";
 	private static final String A_DATA_MOVIMENTO = "aDataMovimento";
 	private static final String DA_DATA_COMPETENZA = "daDataCompetenza";
@@ -172,8 +177,6 @@ public class StampaPartitarioMagHome extends BulkHome {
 				}
 			}
 
-
-
 //			MovimentiMagHome movimentoMagHome=(MovimentiMagHome)getHomeCache().getHome(MovimentiMagBulk.class);
 //
 //			sql=movimentoMagHome.createSQLBuilder();
@@ -214,10 +217,25 @@ public class StampaPartitarioMagHome extends BulkHome {
 		return json;
 	}
 
-	private List<MovimentiMagBulk> findMovimentiMagForJson(UserContext userContext, Print_spoolerBulk print_spoolerBulk) throws PersistencyException {
+	private List<MovimentiMagBulk> findMovimentiMagForJson(UserContext userContext, Print_spoolerBulk print_spoolerBulk) throws PersistencyException, ParseException {
 		BulkList<Print_spooler_paramBulk> params= print_spoolerBulk.getParams();
+		Print_spooler_paramBulk uopParam=params.stream().
+				filter(e->e.getNomeParam().equals(UOP)).findFirst().get();
+
 		Print_spooler_paramBulk codMagazzinoParam=params.stream().
 				filter(e->e.getNomeParam().equals(COD_MAGAZZINO)).findFirst().get();
+
+		Print_spooler_paramBulk daFornitoreParam=params.stream().
+				filter(e->e.getNomeParam().equals(DA_FORNITORE)).findFirst().get();
+
+		Print_spooler_paramBulk aFornitoreParam=params.stream().
+				filter(e->e.getNomeParam().equals(A_FORNITORE)).findFirst().get();
+
+		Print_spooler_paramBulk daBeneServizioParam=params.stream().
+				filter(e->e.getNomeParam().equals(DA_BENE_SERVIZIO)).findFirst().get();
+
+		Print_spooler_paramBulk aBeneServizioParam=params.stream().
+				filter(e->e.getNomeParam().equals(A_BENE_SERVIZIO)).findFirst().get();
 
 		Print_spooler_paramBulk daDataMovimentoParam=params.stream().
 				filter(e->e.getNomeParam().equals(DA_DATA_MOVIMENTO)).findFirst().get();
@@ -231,17 +249,62 @@ public class StampaPartitarioMagHome extends BulkHome {
 		Print_spooler_paramBulk aDataCompetenzaParam=params.stream().
 				filter(e->e.getNomeParam().equals(A_DATA_COMPETENZA)).findFirst().get();
 
+		String uop = null;
+		if(uopParam != null && !uopParam.getValoreParam().equals("*")){
+			uop = uopParam.getValoreParam();
+		}
 		String codMag = null;
-		if(codMagazzinoParam != null){
+		if(codMagazzinoParam != null && !codMagazzinoParam.getValoreParam().equals("*")){
 			codMag = codMagazzinoParam.getValoreParam();
 		}
-		Date dt = null;
+		Integer daFornitore = null;
+		if(daFornitoreParam != null && !daFornitoreParam.getValoreParam().equals("*")){
+			daFornitore = Integer.valueOf(daFornitoreParam.getValoreParam());
+		}
+		Integer aFornitore = null;
+		if(aFornitoreParam != null && !aFornitoreParam.getValoreParam().equals("*")){
+			 aFornitore = Integer.valueOf(aFornitoreParam.getValoreParam());
+		}
+		String daBeneServizio = null;
+		if(daBeneServizioParam != null && !daBeneServizioParam.getValoreParam().equals("*")){
+			daBeneServizio = daBeneServizioParam.getValoreParam();
+		}
+		String aBeneServizio = null;
+		if(aBeneServizioParam != null && !aBeneServizioParam.getValoreParam().equals("*")){
+			aBeneServizio = aBeneServizioParam.getValoreParam();
+		}
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
+		Date daDataMovimento = null;
 		try {
-			dt =dateFormatter.parse(daDataMovimentoParam.getValoreParam());
-
+			if (daDataMovimentoParam != null && !daDataMovimentoParam.getValoreParam().equals("*"))
+				daDataMovimento = dateFormatter.parse(daDataMovimentoParam.getValoreParam());
 		} catch (ParseException e) {
 			e.printStackTrace();
+			throw e;
+		}
+		Date aDataMovimento = null;
+		try {
+			if (aDataMovimentoParam != null && !aDataMovimentoParam.getValoreParam().equals("*"))
+				aDataMovimento = dateFormatter.parse(aDataMovimentoParam.getValoreParam());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		Date daDataCompetenza = null;
+		try {
+			if (daDataCompetenzaParam != null && !daDataCompetenzaParam.getValoreParam().equals("*"))
+				daDataCompetenza = dateFormatter.parse(daDataCompetenzaParam.getValoreParam());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		Date aDataCompetenza = null;
+		try {
+			if (aDataCompetenzaParam != null && !aDataCompetenzaParam.getValoreParam().equals("*"))
+				aDataCompetenza = dateFormatter.parse(aDataCompetenzaParam.getValoreParam());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw e;
 		}
 
 		MovimentiMagHome movimentiMagHome = (MovimentiMagHome) getHomeCache().getHome(MovimentiMagBulk.class);
@@ -257,8 +320,28 @@ public class StampaPartitarioMagHome extends BulkHome {
 		sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
 		sql.addTableToHeader("bolla_scarico_riga_mag","bs");
 		sql.addSQLJoin("movimenti_mag.pg_movimento","bs.pg_movimento (+)");
-		sql.addSQLClause(FindClause.AND,"LOTTO_MAG.DT_CARICO",SQLBuilder.LESS_EQUALS, new Timestamp(dt.getTime()));
 		sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.STATO",SQLBuilder.EQUALS, MovimentiMagBulk.STATO_INSERITO);
+		if (uop!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.CD_UOP",SQLBuilder.EQUALS, uop);
+		if (codMag!=null)
+			sql.addSQLClause(FindClause.AND,"LOTTO_MAG.CD_MAGAZZINO",SQLBuilder.EQUALS, codMag);
+		if (daBeneServizio!=null)
+			sql.addSQLClause(FindClause.AND,"LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS, daBeneServizio);
+		if (aBeneServizio!=null)
+			sql.addSQLClause(FindClause.AND,"LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.EQUALS, aBeneServizio);
+		if (daFornitore!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.CD_TERZO",SQLBuilder.GREATER_EQUALS, daFornitore);
+		if (aFornitore!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.CD_TERZO",SQLBuilder.LESS_EQUALS, aFornitore);
+		if (daDataMovimento!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS, new Timestamp(daDataMovimento.getTime()));
+		if (aDataMovimento!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_MOVIMENTO",SQLBuilder.LESS_EQUALS, new Timestamp(aDataMovimento.getTime()));
+		if (daDataCompetenza!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS, new Timestamp(daDataCompetenza.getTime()));
+		if (aDataCompetenza!=null)
+			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_RIFERIMENTO",SQLBuilder.LESS_EQUALS, new Timestamp(aDataCompetenza.getTime()));
+
 //		sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
 //		sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 //		sql.generateJoin(OrdineAcqRigaBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZO");

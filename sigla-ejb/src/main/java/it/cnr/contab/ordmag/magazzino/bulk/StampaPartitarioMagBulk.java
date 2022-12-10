@@ -18,9 +18,7 @@
 package it.cnr.contab.ordmag.magazzino.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -224,5 +222,33 @@ public class StampaPartitarioMagBulk extends AbilitazioneMagazzinoBulk {
         return getMagazzinoAbilitato().getCdMagazzino();
     }
 
+    public String getUopForPrint() {
+        if (unitaOperativaAbilitata!=null)
+            return unitaOperativaAbilitata.getCdUnitaOperativa();
+        return null;
+    }
 
+    public Integer getDaCdFornitoreForPrint() {
+        if (daFornitore!=null)
+            return daFornitore.getCd_terzo();
+        return null;
+    }
+
+    public Integer getaCdFornitoreForPrint() {
+        if (aFornitore!=null)
+            return aFornitore.getCd_terzo();
+        return null;
+    }
+
+    public String getDaCdBeneServizioForPrint() {
+        if (daBeneServizio!=null)
+            return daBeneServizio.getCd_bene_servizio();
+        return null;
+    }
+
+    public String getaCdBeneServizioForPrint() {
+        if (aBeneServizio!=null)
+            return aBeneServizio.getCd_bene_servizio();
+        return null;
+    }
 }
