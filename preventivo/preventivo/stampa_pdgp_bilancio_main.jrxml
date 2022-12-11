@@ -173,7 +173,7 @@ CASE WHEN $P{P_NUM_LIV}>5 THEN a.ds_livello6 ELSE null END ds_livello6,
 CASE WHEN $P{P_NUM_LIV}>6 THEN a.ds_livello7 ELSE null END ds_livello7,
 CASE WHEN $P{P_NUM_LIV}>7 THEN a.ds_livello8 ELSE null END ds_livello8,
 CASE WHEN $P{P_NUM_LIV}>8 THEN a.ds_livello9 ELSE null END ds_livello9,
-0, 0, 0, 0, a.im_previsione_ac, a.im_cassa_ac
+0, 0, 0, 0, a.im_assestato_ac, a.im_cassa_ac
 FROM V_STAMPA_BILANCIO_PREVDEC a
 WHERE SUBSTR($P{P_FONTE},1,3) != 'EXT'
 AND a.ESERCIZIO = $P{P_ESERCIZIO}-1
