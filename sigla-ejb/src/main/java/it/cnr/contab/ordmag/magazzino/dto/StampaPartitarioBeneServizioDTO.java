@@ -1,5 +1,6 @@
 package it.cnr.contab.ordmag.magazzino.dto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +13,9 @@ public class StampaPartitarioBeneServizioDTO {
 
     String codiceUnitaMisura;
 
-    String unitaMisura;
+    String descrUnitaMisura;
 
-    Long giacenza;
+    BigDecimal giacenza;
 
     String codiceDivisa;
 
@@ -44,19 +45,20 @@ public class StampaPartitarioBeneServizioDTO {
     public void setCodiceUnitaMisura(String codiceUnitaMisura) {
         this.codiceUnitaMisura = codiceUnitaMisura;
     }
-    public String getUnitaMisura() {
-        return unitaMisura;
+
+    public String getDescrUnitaMisura() {
+        return descrUnitaMisura;
     }
 
-    public void setUnitaMisura(String unitaMisura) {
-        this.unitaMisura = unitaMisura;
+    public void setDescrUnitaMisura(String descrUnitaMisura) {
+        this.descrUnitaMisura = descrUnitaMisura;
     }
 
-    public Long getGiacenza() {
+    public BigDecimal getGiacenza() {
         return giacenza;
     }
 
-    public void setGiacenza(Long giacenza) {
+    public void setGiacenza(BigDecimal giacenza) {
         this.giacenza = giacenza;
     }
 

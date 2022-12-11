@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class StampaPartitarioMovMagDTO {
 
-    Long pg_movimento;
+    Long pgMovimento;
 
-    Date dataMovimento;
+    String dataMovimento;
 
     String causaleMovimento;
 
@@ -15,7 +15,7 @@ public class StampaPartitarioMovMagDTO {
 
     String descrizione;
 
-    Date dataCompetenza;
+    String dataCompetenza;
 
     String bolla;
 
@@ -29,19 +29,19 @@ public class StampaPartitarioMovMagDTO {
 
     BigDecimal giacenza;
 
-    public Long getPg_movimento() {
-        return pg_movimento;
+    public Long getPgMovimento() {
+        return pgMovimento;
     }
 
-    public void setPg_movimento(Long pg_movimento) {
-        this.pg_movimento = pg_movimento;
+    public void setPgMovimento(Long pgMovimento) {
+        this.pgMovimento = pgMovimento;
     }
 
-    public Date getDataMovimento() {
+    public String getDataMovimento() {
         return dataMovimento;
     }
 
-    public void setDataMovimento(Date dataMovimento) {
+    public void setDataMovimento(String dataMovimento) {
         this.dataMovimento = dataMovimento;
     }
 
@@ -69,11 +69,11 @@ public class StampaPartitarioMovMagDTO {
         this.descrizione = descrizione;
     }
 
-    public Date getDataCompetenza() {
+    public String getDataCompetenza() {
         return dataCompetenza;
     }
 
-    public void setDataCompetenza(Date dataCompetenza) {
+    public void setDataCompetenza(String dataCompetenza) {
         this.dataCompetenza = dataCompetenza;
     }
 

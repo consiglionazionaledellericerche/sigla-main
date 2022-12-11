@@ -19,7 +19,6 @@ package it.cnr.contab.ordmag.magazzino.bulk;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.ordmag.anag00.*;
 import it.cnr.contab.ordmag.magazzino.dto.StampaPartitarioBeneServizioDTO;
@@ -35,9 +34,11 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.OrderConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,12 +47,11 @@ import java.util.stream.Collectors;
 
 /**
  * Insert the type's description here.
- * Creation date: (23/01/2003 16.03.39)
- * @author: Roberto Fantino
+ * @author: Mario Incarnato
  */
 public class StampaPartitarioMagHome extends BulkHome {
 	/**
-	 * Stampa_consumiHome constructor comment.
+	 * StampaPartitarioMagHome constructor comment.
 	 * @param clazz java.lang.Class
 	 * @param conn java.sql.Connection
 	 */
@@ -60,7 +60,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 		super(clazz, conn);
 	}
 	/**
-	 * Stampa_consumiHome constructor comment.
+	 * StampaPartitarioMagHome constructor comment.
 	 * @param clazz java.lang.Class
 	 * @param conn java.sql.Connection
 	 * @param persistentCache it.cnr.jada.persistency.PersistentCache
@@ -130,33 +130,39 @@ public class StampaPartitarioMagHome extends BulkHome {
 				art.setCodiceBeneServizio(m.getLottoMag().getBeneServizio().getCd_bene_servizio());
 				art.setDescrBeneServizio(m.getLottoMag().getBeneServizio().getDs_bene_servizio());
 				art.setCodiceUnitaMisura(m.getCdUnitaMisura());
-				art.setUnitaMisura(m.getCdUnitaMisura()+" - "+m.getUnitaMisura().getDsUnitaMisura());
+				art.setDescrUnitaMisura(m.getUnitaMisura().getDsUnitaMisura());
 				art.setCodiceDivisa(m.getCdDivisa());
 				articoliSet.add(art);
 
 			}
 
 			List<StampaPartitarioBeneServizioDTO> articoli = articoliSet.stream().collect(Collectors.toList());
+			articoli = articoli.stream().sorted(Comparator.comparing(StampaPartitarioBeneServizioDTO::getCodiceBeneServizio)).collect(Collectors.toList());
 			stampaPartitarioMag.setBeniServizio(articoli);
 
 			for (MovimentiMagBulk m:movMag) {
 
 				StampaPartitarioMovMagDTO mov = new StampaPartitarioMovMagDTO();
-				mov.setPg_movimento(m.getPgMovimento());
-				mov.setDataMovimento(m.getDtMovimento());
+				mov.setPgMovimento(m.getPgMovimento());
+				mov.setDataMovimento(Optional.ofNullable(m.getDtMovimento())
+						.map(s -> new SimpleDateFormat("dd/MM/yyyy").format(s))
+						.orElse(""));
 				mov.setCausaleMovimento(m.getTipoMovimentoMag().getDsTipoMovimento());
 				mov.setOrigine(m.getLottoMag().getMagazzino().getCdMagazzino()+"-"+m.getLottoMag().getMagazzino().getDsMagazzino());
 				mov.setDescrizione(Optional.ofNullable(m.getBollaScaricoMag())
 						.map(s -> s.getMagazzino().getCdMagazzino()+"-"+s.getMagazzino().getDsMagazzino())
 						.orElse(""));
-				mov.setDataCompetenza(m.getDataBolla());
+				mov.setDataCompetenza(Optional.ofNullable(m.getDataBolla())
+						.map(s -> new SimpleDateFormat("dd/MM/yyyy").format(s))
+						.orElse(""));
 				mov.setBolla(Optional.ofNullable(m.getNumeroBolla())
 							.orElse("")
 						+Optional.of(Optional.ofNullable(m.getDataBolla())
-							.map(s -> " - "+new SimpleDateFormat("MM/dd/yyyy").format(s))
+							.map(s -> " - "+new SimpleDateFormat("dd/MM/yyyy").format(s))
 							.orElse("")).get());
 
-				mov.setImporto(m.getImporto());
+				if (m.getLottoMag().getCostoUnitario()!=null && m.getQuantita()!=null && m.getCoeffConv()!=null)
+					mov.setImporto(m.getLottoMag().getCostoUnitario().multiply(m.getQuantita().subtract(m.getCoeffConv())));
 
 				if(m.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOTTRAE)){
 					mov.setUscita(m.getQuantita());
@@ -164,6 +170,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 				if(m.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOMMA)){
 					mov.setEntrata(m.getQuantita());
 				}
+				mov.setGiacenza(m.getLottoMag().getGiacenza());
 
 				for (StampaPartitarioBeneServizioDTO n:articoli) {
 					if (Optional.ofNullable(n.getCodiceBeneServizio()).equals(Optional.ofNullable(m.getLottoMag().getBeneServizio().getCd_bene_servizio())) &&
@@ -177,27 +184,20 @@ public class StampaPartitarioMagHome extends BulkHome {
 				}
 			}
 
-//			MovimentiMagHome movimentoMagHome=(MovimentiMagHome)getHomeCache().getHome(MovimentiMagBulk.class);
-//
-//			sql=movimentoMagHome.createSQLBuilder();
-//			sql.generateJoin(MovimentiMagBulk.class, LottoMagBulk.class, "lottoMag", "LOTTO_MAG");
-//			sql.generateJoin(MovimentiMagBulk.class, TipoMovimentoMagBulk.class, "tipoMovimentoMag","TIPO_MOVIMENTO_MAG");
-//			sql.addTableToHeader("BENE_SERVIZIO","BENE_SERVIZIO");
-//			sql.addSQLJoin("BENE_SERVIZIO.CD_BENE_SERVIZIO","LOTTO_MAG.CD_BENE_SERVIZIO");
+			for (StampaPartitarioBeneServizioDTO invDto : articoli){
+				for(MovimentiMagBulk movimento : movMag){
+					if(invDto.getCodiceBeneServizio().equals(movimento.getLottoMag().getCdBeneServizio()))
+					{
+						if(movimento.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOTTRAE)){
+							invDto.setGiacenza(invDto.getGiacenza()!=null ? invDto.getGiacenza().add(movimento.getQuantita()) : BigDecimal.ZERO);
+						}
+						if(movimento.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOMMA)){
+							invDto.setGiacenza(invDto.getGiacenza()!=null ? invDto.getGiacenza().subtract(movimento.getQuantita()) : BigDecimal.ZERO);
+						}
 
-//			// tipo movimento != CHIUSURE (CH)
-//			sql.addSQLClause(FindClause.AND,"TIPO_MOVIMENTO_MAG.TIPO",SQLBuilder.NOT_EQUALS, TipoMovimentoMagBulk.CHIUSURE);
-//			// stato movimento = STATO_INSERITO (INS)
-//			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.STATO",SQLBuilder.EQUALS, MovimentiMagBulk.STATO_INSERITO);
-//			// data movimento maggiore/uguale della data in input
-//			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS, new Timestamp(dt.getTime()));
-//			// codice magazzino uguale a quello in input
-//			sql.addSQLClause(FindClause.AND,"LOTTO_MAG.CD_MAGAZZINO_MAG",SQLBuilder.EQUALS, codMag);
-//			// data carico lotto minore/uguale della data in input
-//			sql.addSQLClause(FindClause.AND,"LOTTO_MAG.DT_CARICO",SQLBuilder.LESS_EQUALS, new Timestamp(dt.getTime()));
-//
-//			List<MovimentiMagBulk> movimenti=movimentoMagHome.fetchAll(sql);
-//			getHomeCache().fetchAll(uc);
+					}
+				}
+			}
 
 		} catch (PersistencyException e) {
 			e.printStackTrace();
@@ -250,33 +250,33 @@ public class StampaPartitarioMagHome extends BulkHome {
 				filter(e->e.getNomeParam().equals(A_DATA_COMPETENZA)).findFirst().get();
 
 		String uop = null;
-		if(uopParam != null && !uopParam.getValoreParam().equals("*")){
+		if(uopParam != null && !"*".equals(uopParam.getValoreParam())){
 			uop = uopParam.getValoreParam();
 		}
 		String codMag = null;
-		if(codMagazzinoParam != null && !codMagazzinoParam.getValoreParam().equals("*")){
+		if(codMagazzinoParam != null && !"*".equals(codMagazzinoParam.getValoreParam())){
 			codMag = codMagazzinoParam.getValoreParam();
 		}
 		Integer daFornitore = null;
-		if(daFornitoreParam != null && !daFornitoreParam.getValoreParam().equals("*")){
+		if(daFornitoreParam != null && !"*".equals(daFornitoreParam.getValoreParam())){
 			daFornitore = Integer.valueOf(daFornitoreParam.getValoreParam());
 		}
 		Integer aFornitore = null;
-		if(aFornitoreParam != null && !aFornitoreParam.getValoreParam().equals("*")){
+		if(aFornitoreParam != null && !"*".equals(aFornitoreParam.getValoreParam())){
 			 aFornitore = Integer.valueOf(aFornitoreParam.getValoreParam());
 		}
 		String daBeneServizio = null;
-		if(daBeneServizioParam != null && !daBeneServizioParam.getValoreParam().equals("*")){
+		if(daBeneServizioParam != null && !"*".equals(daBeneServizioParam.getValoreParam())){
 			daBeneServizio = daBeneServizioParam.getValoreParam();
 		}
 		String aBeneServizio = null;
-		if(aBeneServizioParam != null && !aBeneServizioParam.getValoreParam().equals("*")){
+		if(aBeneServizioParam != null && !"*".equals(aBeneServizioParam.getValoreParam())){
 			aBeneServizio = aBeneServizioParam.getValoreParam();
 		}
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
 		Date daDataMovimento = null;
 		try {
-			if (daDataMovimentoParam != null && !daDataMovimentoParam.getValoreParam().equals("*"))
+			if (daDataMovimentoParam != null && !"*".equals(daDataMovimentoParam.getValoreParam()))
 				daDataMovimento = dateFormatter.parse(daDataMovimentoParam.getValoreParam());
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -284,7 +284,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 		}
 		Date aDataMovimento = null;
 		try {
-			if (aDataMovimentoParam != null && !aDataMovimentoParam.getValoreParam().equals("*"))
+			if (aDataMovimentoParam != null && !"*".equals(aDataMovimentoParam.getValoreParam()))
 				aDataMovimento = dateFormatter.parse(aDataMovimentoParam.getValoreParam());
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -292,7 +292,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 		}
 		Date daDataCompetenza = null;
 		try {
-			if (daDataCompetenzaParam != null && !daDataCompetenzaParam.getValoreParam().equals("*"))
+			if (daDataCompetenzaParam != null && !"*".equals(daDataCompetenzaParam.getValoreParam()))
 				daDataCompetenza = dateFormatter.parse(daDataCompetenzaParam.getValoreParam());
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -300,7 +300,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 		}
 		Date aDataCompetenza = null;
 		try {
-			if (aDataCompetenzaParam != null && !aDataCompetenzaParam.getValoreParam().equals("*"))
+			if (aDataCompetenzaParam != null && !"*".equals(aDataCompetenzaParam.getValoreParam()))
 				aDataCompetenza = dateFormatter.parse(aDataCompetenzaParam.getValoreParam());
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -341,10 +341,7 @@ public class StampaPartitarioMagHome extends BulkHome {
 			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS, new Timestamp(daDataCompetenza.getTime()));
 		if (aDataCompetenza!=null)
 			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_RIFERIMENTO",SQLBuilder.LESS_EQUALS, new Timestamp(aDataCompetenza.getTime()));
-
-//		sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
-//		sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
-//		sql.generateJoin(OrdineAcqRigaBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZO");
+		sql.setOrderBy("movimenti_mag.pg_movimento", OrderConstants.ORDER_ASC);
 
 		List<MovimentiMagBulk> result = movimentiMagHome.fetchAll(sql);
 		getHomeCache().fetchAll(userContext);
