@@ -79,6 +79,9 @@
 	<variable name="importo1" class="java.math.BigDecimal" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
 		<variableExpression><![CDATA[$F{importo}]]></variableExpression>
 	</variable>
+	<variable name="uscita1" class="java.lang.Integer" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
+		<variableExpression><![CDATA[$F{uscita}]]></variableExpression>
+	</variable>
 	<group name="GruppoArticoli">
 		<groupExpression><![CDATA[$F{codiceBeneServizio}+$F{codiceUnitaMisura}+$F{codiceDivisa}]]></groupExpression>
 		<groupHeader>
@@ -211,7 +214,7 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="42">
+			<band height="59">
 				<staticText>
 					<reportElement stretchType="ElementGroupHeight" x="460" y="2" width="100" height="15" uuid="a74ac685-e900-41fb-84b1-ade61d00a736">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -228,15 +231,6 @@
 					</textElement>
 					<text><![CDATA[TOTALE SCARICATO:]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="562" y="2" width="76" height="14" uuid="9b17e7cc-5eef-49a8-9f6c-d10d83a2ad5e">
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Right">
-						<font size="9" isBold="true" isItalic="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{giacenzaIniziale}.subtract($F{giacenza})]]></textFieldExpression>
-				</textField>
 				<textField>
 					<reportElement x="646" y="2" width="78" height="14" uuid="ac95d93a-a880-4826-bfd8-5d822d2831e2">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -266,6 +260,15 @@
 						<font size="9" isBold="true" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{codiceDivisa}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="563" y="2" width="80" height="14" uuid="8e3130dc-3a5b-4bf2-9223-e8c262c5aa60">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{uscita1}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
