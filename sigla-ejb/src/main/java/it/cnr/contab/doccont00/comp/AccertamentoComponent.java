@@ -4572,7 +4572,10 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 		sql.openParenthesis(FindClause.AND);
 			sql.addClause(FindClause.OR, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio(userContext));
 			sql.openParenthesis(FindClause.OR);
-				sql.addClause(FindClause.AND, "progetto_dt_inizio", SQLBuilder.LESS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+				sql.openParenthesis(FindClause.AND);
+					sql.addClause(FindClause.OR, "progetto_dt_inizio", SQLBuilder.ISNULL, null);
+					sql.addClause(FindClause.OR, "progetto_dt_inizio", SQLBuilder.LESS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+				sql.closeParenthesis();
 				sql.openParenthesis(FindClause.AND);
 					sql.addClause(FindClause.OR, "progetto_dt_fine", SQLBuilder.ISNOTNULL, null);
 					sql.addClause(FindClause.OR, "progetto_dt_proroga", SQLBuilder.ISNOTNULL, null);
