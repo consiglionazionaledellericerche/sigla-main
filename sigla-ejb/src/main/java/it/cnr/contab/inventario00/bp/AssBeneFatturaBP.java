@@ -32,7 +32,15 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.*;
- 
+import it.cnr.jada.util.jsp.Button;
+
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class AssBeneFatturaBP extends SimpleCRUDBP implements SelectionListener{	
 	
 	private Boolean perAumentoValore = new Boolean(false);
@@ -114,9 +122,14 @@ public class AssBeneFatturaBP extends SimpleCRUDBP implements SelectionListener{
 			modificaBeneAssociatoConBulk(context, bulk);
 			resync(context);
 		}
-		/*protected void validate(ActionContext context,OggettoBulk bulk) throws ValidationException {
-			validaAssocia(context, bulk);
-		}*/
+
+		@Override
+		public void writeHTMLToolbar(PageContext pagecontext, boolean canAddToCRUD, boolean canFilter, boolean canRemoveFromCRUD, boolean closedToolbar, boolean openToolbar) throws IOException, ServletException {
+			super.writeHTMLToolbar(pagecontext, canAddToCRUD, canFilter, canRemoveFromCRUD, false, openToolbar);
+			final Button button = new Button(it.cnr.jada.util.Config.getHandler().getProperties(AssBeneFatturaBP.class), "Toolbar.filtraPrezzoUnitario");
+			button.writeToolbarButton(pagecontext.getOut(), isGrowable(), HttpActionContext.isFromBootstrap(pagecontext));
+			closeButtonGROUPToolbar(pagecontext);
+		}
 	};
 	private final RemoteDetailCRUDController righeDaDocumento = new RemoteDetailCRUDController("RigheDaDocumento",Buono_carico_scarico_dettBulk.class,"buoniAssociati","CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession",dettagliDocumento){
 		protected it.cnr.jada.util.RemoteIterator createRemoteIterator(ActionContext context) {
