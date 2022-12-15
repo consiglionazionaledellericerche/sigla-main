@@ -4499,8 +4499,12 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 			.filter(AllegatoObbligazioneBulk::isTipoDetermina).count()>1)
 		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Determina'.");
 
-	if (obbligazione.getAllegatoDetermina() != null && obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
-		throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
+	if (obbligazione.getAllegatoDetermina() != null) {
+		if (obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
+			throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
+		else if (obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
+			throw new ApplicationException("Attenzione la data di protocollo sul file di tipo 'Determina' è superiore alla data odierna.");
+	}
 
 	if (obbligazione.getAllegatoDetermina() == null) {
 		if (obbligazione.isProvvisoria() || obbligazione.isToBeCreated() || (obbligazione.getFl_determina_allegata()!=null && obbligazione.getFl_determina_allegata().equals(Boolean.TRUE))) {
