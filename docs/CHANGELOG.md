@@ -1,3 +1,94 @@
+## Release 6.5.21  -- _December 19, 2022_ 
+**Changes**
+
+>**Impegni: gestione collegamento file di tipo Determina - inserito controllo che la data di protocollo non sia superiore alla data di inserimento.**
+>
+>[8018f1d1d12d9f0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8018f1d1d12d9f0) raffaelepagano *December 15, 2022*
+
+>**Fix riaccertamento residui: non permetteva di selezionare progetti con data inizio non impostata (es. Commerciali)**
+>
+>[ba53d5cf7e53a5b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba53d5cf7e53a5b) raffaelepagano *December 15, 2022*
+
+>**Aggiunto filtra per prezzo unitario nell'associazione delle righe di fattura al buono di carico o scarico**
+>
+>[1ed84c5b035c1a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ed84c5b035c1a9) marco.spasiano *December 15, 2022*
+
+>**Fix Conguaglio**
+>
+>[556a9dda306cee7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/556a9dda306cee7) raffaelepagano *December 07, 2022*
+
+>**Impegni: gestione collegamento file di tipo Determina**
+>
+>[d64f37908eb7373](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d64f37908eb7373) raffaelepagano *December 07, 2022*
+
+>**Impegni: gestione collegamento file di tipo Determina**
+>
+>[43d18e6d7d86605](https://github.com/consiglionazionaledellericerche/sigla-main/commit/43d18e6d7d86605) raffaelepagano *December 06, 2022*
+
+>**Revert "Revert "Revert "Revert "Fix import""""**
+> * This reverts commit 761dff48b8933c743f8f1c7c2887a474d42bc091.
+>
+>[e1ca48f096881fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1ca48f096881fe) marco.spasiano *December 06, 2022*
+
+>**Revert "Revert "Revert "Revert "Impegni: gestione collegamento file di tipo Determina""""**
+> * This reverts commit e9474c5ad91db55c73c95f432ede4a44c977c680.
+>
+>[55d5f1666cb86a7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/55d5f1666cb86a7) marco.spasiano *December 06, 2022*
+
+>**Revert "Revert "Ribaltamento Impegni Provvisori: è stata data la possibilità di ribaltare impegni provvisori e di renderli definitivi nell'anno ribaltato""**
+> * This reverts commit 2f428a28d42ff7de79e73a5f2a36eba5a2e34c84.
+>
+>[2b7955d2004a1bb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b7955d2004a1bb) marco.spasiano *December 06, 2022*
+
+>**Revert "Revert "Revert "Revert "Determina Impegni: aggiunto sull'obbligazione il campo 'data protocollo determina' e controllato in fase di ribaltamento che la stessa sia inferiore al 31/12 dell'anno dell'impegno. Inserito sui parametri un flag 'FL_RIBALTA_DETERMINA_OBBLIG' che attiva o meno il controllo.""""**
+> * This reverts commit 152652d4954c7706ad0e3a09384da4139b37d783.
+>
+>[0e4a01419d773f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0e4a01419d773f9) marco.spasiano *December 06, 2022*
+
+
+## Release 6.5.20  -- _December 06, 2022_ 
+**Changes**
+
+>**Revert "Revert "Revert "Impegni: gestione collegamento file di tipo Determina"""**
+> * This reverts commit 6f7f5ce62494b1fd15d3a0d6d83173c48884e2bb.
+>
+>[e9474c5ad91db55](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e9474c5ad91db55) marco.spasiano *December 06, 2022*
+
+>**Revert "Revert "Revert "Fix import"""**
+> * This reverts commit 04c6950301bbc4477ffdddd6464f8b53647fcf45.
+>
+>[761dff48b8933c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/761dff48b8933c7) marco.spasiano *December 06, 2022*
+
+>**Revert "Ribaltamento Impegni Provvisori: è stata data la possibilità di ribaltare impegni provvisori e di renderli definitivi nell'anno ribaltato"**
+> * This reverts commit 62dc221d0a8e314d7ced55c639194e968346985a.
+>
+>[2f428a28d42ff7d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2f428a28d42ff7d) marco.spasiano *December 06, 2022*
+
+>**Revert "Revert "Revert "Determina Impegni: aggiunto sull'obbligazione il campo 'data protocollo determina' e controllato in fase di ribaltamento che la stessa sia inferiore al 31/12 dell'anno dell'impegno. Inserito sui parametri un flag 'FL_RIBALTA_DETERMINA_OBBLIG' che attiva o meno il controllo."""**
+> * This reverts commit ef9de2053e5dc1b287c061ccf074a5c9680438f4.
+>
+>[152652d4954c770](https://github.com/consiglionazionaledellericerche/sigla-main/commit/152652d4954c770) marco.spasiano *December 06, 2022*
+
+>**Rimosso controllo che i mandati o le reversali associate al compenso siano presenti nella stessa distinta di invio in banca**
+>
+>[1ef8d4a45871214](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ef8d4a45871214) marco.spasiano *December 06, 2022*
+
+>**Revert "Revert "Determina Impegni: aggiunto sull'obbligazione il campo 'data protocollo determina' e controllato in fase di ribaltamento che la stessa sia inferiore al 31/12 dell'anno dell'impegno. Inserito sui parametri un flag 'FL_RIBALTA_DETERMINA_OBBLIG' che attiva o meno il controllo.""**
+> * This reverts commit 438521b083760d6e0ee6a690369ea1bcddcccee7.
+>
+>[ef9de2053e5dc1b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef9de2053e5dc1b) marco.spasiano *December 05, 2022*
+
+>**Revert "Revert "Impegni: gestione collegamento file di tipo Determina""**
+> * This reverts commit e59606db24eeaa1cd22bc2f24bf62566df8f2615.
+>
+>[6f7f5ce62494b1f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6f7f5ce62494b1f) marco.spasiano *December 05, 2022*
+
+>**Revert "Revert "Fix import""**
+> * This reverts commit 9bec3b14be9fb01b53dc03243634db34b7c59c7d.
+>
+>[04c6950301bbc44](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04c6950301bbc44) marco.spasiano *December 05, 2022*
+
+
 ## Release 6.5.19  -- _December 05, 2022_ 
 **Changes**
 
