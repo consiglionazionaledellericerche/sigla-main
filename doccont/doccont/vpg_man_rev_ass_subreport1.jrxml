@@ -971,6 +971,7 @@ $F{TI_RECORD}.equals("D")
 					<textFieldExpression class="java.lang.String"><![CDATA["Riferimenti "+
 ($F{CD_TIPO_DOCUMENTO_AMM}.equals("FATTURA_A")?"Fattura attiva":
 $F{CD_TIPO_DOCUMENTO_AMM}.equals("FATTURA_P")?"Fattura passiva":
+$F{CD_TIPO_DOCUMENTO_AMM}.equals("FAT_ORDINE")?"Fattura da Ordine":
 $F{CD_TIPO_DOCUMENTO_AMM}.equals("GENERICO_E")?"Documento generico di entrata":
 $F{CD_TIPO_DOCUMENTO_AMM}.equals("GENERICO_S")?"Documento generico di spesa":
 $F{CD_TIPO_DOCUMENTO_AMM}.equals("TRASF_E")?"Generico di entrata per accreditamento":
