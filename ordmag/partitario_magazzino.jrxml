@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final utlizzo versione della libreria JasperReports6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="partitario_magazzino" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f0d89f3e-72f6-4a88-8eb5-d2ab40476bd9">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Json Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="partitario.jrdax"/>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="jsonql">
 		<![CDATA[..movimenti(@size > 0).*]]>
@@ -76,11 +76,23 @@
 	<variable name="totaleScaricato1" class="java.math.BigDecimal" resetType="Group" resetGroup="GruppoArticoli" calculation="First">
 		<variableExpression><![CDATA[$F{totaleScaricato}]]></variableExpression>
 	</variable>
-	<variable name="importo1" class="java.math.BigDecimal" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
-		<variableExpression><![CDATA[$F{importo}]]></variableExpression>
+	<variable name="importoUscite" class="java.math.BigDecimal" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
+		<variableExpression><![CDATA[$V{importoUscita}]]></variableExpression>
+	</variable>
+	<variable name="importoEntrate" class="java.math.BigDecimal" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
+		<variableExpression><![CDATA[$V{importoEntrata}]]></variableExpression>
 	</variable>
 	<variable name="uscita1" class="java.lang.Integer" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
 		<variableExpression><![CDATA[$F{uscita}]]></variableExpression>
+	</variable>
+	<variable name="entrata1" class="java.lang.Integer" resetType="Group" resetGroup="GruppoArticoli" calculation="Sum">
+		<variableExpression><![CDATA[$F{entrata}]]></variableExpression>
+	</variable>
+	<variable name="importoEntrata" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{entrata}==null || $F{entrata}.equals(BigDecimal.ZERO) ? BigDecimal.ZERO : $F{importo}]]></variableExpression>
+	</variable>
+	<variable name="importoUscita" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{uscita}==null || $F{uscita}.equals(BigDecimal.ZERO) ? BigDecimal.ZERO : $F{importo}]]></variableExpression>
 	</variable>
 	<group name="GruppoArticoli">
 		<groupExpression><![CDATA[$F{codiceBeneServizio}+$F{codiceUnitaMisura}+$F{codiceDivisa}]]></groupExpression>
@@ -214,9 +226,9 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="59">
+			<band height="20">
 				<staticText>
-					<reportElement stretchType="ElementGroupHeight" x="460" y="2" width="100" height="15" uuid="a74ac685-e900-41fb-84b1-ade61d00a736">
+					<reportElement stretchType="ElementGroupHeight" x="502" y="2" width="94" height="15" uuid="a74ac685-e900-41fb-84b1-ade61d00a736">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
@@ -226,28 +238,28 @@
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement>
-						<font size="9" isBold="true" isItalic="true"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true"/>
 					</textElement>
 					<text><![CDATA[TOTALE SCARICATO:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="646" y="2" width="78" height="14" uuid="ac95d93a-a880-4826-bfd8-5d822d2831e2">
+					<reportElement x="679" y="2" width="78" height="14" uuid="ac95d93a-a880-4826-bfd8-5d822d2831e2">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="9" isBold="true" isItalic="true"/>
+						<font size="8" isBold="true" isItalic="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{importo1}==null?new DecimalFormat("#,##0.00").format(BigDecimal.ZERO):new DecimalFormat("#,##0.00").format($V{importo1})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{importoUscite}==null?new DecimalFormat("#,##0.00").format(BigDecimal.ZERO):new DecimalFormat("#,##0.00").format($V{importoUscite})]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="450" y="0" width="350" height="1" uuid="3e299346-d9d9-418f-93b6-92ffc7e64c22">
+					<reportElement x="203" y="0" width="597" height="1" uuid="3e299346-d9d9-418f-93b6-92ffc7e64c22">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 				</line>
 				<textField textAdjust="StretchHeight">
-					<reportElement stretchType="ElementGroupHeight" x="733" y="2" width="64" height="15" uuid="4cf91715-7fb0-4e0f-b4d0-45a11092be68">
+					<reportElement stretchType="ElementGroupHeight" x="760" y="2" width="36" height="15" uuid="4cf91715-7fb0-4e0f-b4d0-45a11092be68">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
@@ -257,18 +269,67 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right">
-						<font size="9" isBold="true" isItalic="true"/>
+						<font size="8" isBold="true" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{codiceDivisa}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="563" y="2" width="80" height="14" uuid="8e3130dc-3a5b-4bf2-9223-e8c262c5aa60">
+					<reportElement x="598" y="2" width="80" height="14" uuid="8e3130dc-3a5b-4bf2-9223-e8c262c5aa60">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="9" isBold="true" isItalic="true"/>
+						<font size="8" isBold="true" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{uscita1}==null?new DecimalFormat("#,##0.0").format(BigDecimal.ZERO):new DecimalFormat("#,##0.0").format($V{uscita1})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="ElementGroupHeight" x="203" y="2" width="94" height="15" uuid="a030bb98-7694-4aff-9758-7641b972a078">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[TOTALE CARICATO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="299" y="2" width="80" height="14" uuid="1b3b19df-1911-4352-b1e2-cbbd3e98fcdf">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{entrata1}==null?new DecimalFormat("#,##0.0").format(BigDecimal.ZERO):new DecimalFormat("#,##0.0").format($V{entrata1})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="2" width="78" height="14" uuid="682e0ca9-722e-4a57-9608-d73f0e009fc2">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{importoEntrate}==null?new DecimalFormat("#,##0.00").format(BigDecimal.ZERO):new DecimalFormat("#,##0.00").format($V{importoEntrate})]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement stretchType="ElementGroupHeight" x="461" y="2" width="36" height="15" uuid="6fad650a-2175-4d22-ae9e-46d354f1b80e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{codiceDivisa}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -492,7 +553,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="26" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<textField>
 				<reportElement x="667" y="4" width="127" height="22" uuid="11021c62-0fd1-4bd8-b106-4ef2114f8afb"/>
 				<textElement textAlignment="Right"/>
