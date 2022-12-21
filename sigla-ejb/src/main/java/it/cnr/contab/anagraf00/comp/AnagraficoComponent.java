@@ -1802,7 +1802,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 if (anagrafico.getPartita_iva() != null && !verificaStrutturaPiva(userContext, anagrafico))
                     throw new ApplicationMessageFormatException(
                             "Verificare la partita Iva non corrisponde al modello della sua nazionalità. " +
-                                    "Modello di riferimento: '{0}'", Optional.ofNullable(anagrafico.getNazionalita())
+                                    "Modello di riferimento: {0}", Optional.ofNullable(anagrafico.getNazionalita())
                             .map(NazioneBulk::getStruttura_piva).orElse(""));
             } catch (ValidationException e) {
                 throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
