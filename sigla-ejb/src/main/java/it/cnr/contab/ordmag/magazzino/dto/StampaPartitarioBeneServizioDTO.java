@@ -11,6 +11,10 @@ public class StampaPartitarioBeneServizioDTO {
 
     String descrBeneServizio;
 
+    String codiceCds;
+
+    String codiceMagazzino;
+
     String codiceUnitaMisura;
 
     String descrUnitaMisura;
@@ -37,6 +41,22 @@ public class StampaPartitarioBeneServizioDTO {
         this.descrBeneServizio = descrBeneServizio;
     }
 
+
+    public String getCodiceCds() {
+        return codiceCds;
+    }
+
+    public void setCodiceCds(String codiceCds) {
+        this.codiceCds = codiceCds;
+    }
+
+    public String getCodiceMagazzino() {
+        return codiceMagazzino;
+    }
+
+    public void setCodiceMagazzino(String codiceMagazzino) {
+        this.codiceMagazzino = codiceMagazzino;
+    }
 
     public String getCodiceUnitaMisura() {
         return codiceUnitaMisura;
@@ -78,14 +98,18 @@ public class StampaPartitarioBeneServizioDTO {
     public boolean equals(Object o) {
         StampaPartitarioBeneServizioDTO c = (StampaPartitarioBeneServizioDTO)o;
         return Optional.ofNullable(c.codiceBeneServizio).equals(Optional.ofNullable(codiceBeneServizio)) &&
-               Optional.ofNullable(c.codiceUnitaMisura).equals(Optional.ofNullable(codiceUnitaMisura)) &&
-               Optional.ofNullable(c.codiceDivisa).equals(Optional.ofNullable(codiceDivisa));
+                Optional.ofNullable(c.codiceMagazzino).equals(Optional.ofNullable(codiceMagazzino)) &&
+                Optional.ofNullable(c.codiceCds).equals(Optional.ofNullable(codiceCds)) &&
+                Optional.ofNullable(c.codiceUnitaMisura).equals(Optional.ofNullable(codiceUnitaMisura)) &&
+                Optional.ofNullable(c.codiceDivisa).equals(Optional.ofNullable(codiceDivisa));
     }
 
     @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + ((codiceBeneServizio == null) ? 0 : codiceBeneServizio.hashCode());
+        result = 37 * result + ((codiceMagazzino == null) ? 0 : codiceMagazzino.hashCode());
+        result = 37 * result + ((codiceCds == null) ? 0 : codiceCds.hashCode());
         result = 37 * result + ((codiceUnitaMisura == null) ? 0 : codiceUnitaMisura.hashCode());
         result = 37 * result + ((codiceDivisa == null) ? 0 : codiceDivisa.hashCode());
         return result;

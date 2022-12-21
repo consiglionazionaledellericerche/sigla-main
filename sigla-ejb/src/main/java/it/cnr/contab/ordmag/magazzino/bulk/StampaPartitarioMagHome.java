@@ -129,6 +129,8 @@ public class StampaPartitarioMagHome extends BulkHome {
 				StampaPartitarioBeneServizioDTO art = new StampaPartitarioBeneServizioDTO();
 				art.setCodiceBeneServizio(m.getLottoMag().getBeneServizio().getCd_bene_servizio());
 				art.setDescrBeneServizio(m.getLottoMag().getBeneServizio().getDs_bene_servizio());
+				art.setCodiceMagazzino(m.getLottoMag().getMagazzino().getCdMagazzino());
+				art.setCodiceCds(m.getLottoMag().getMagazzino().getCdCds());
 				art.setCodiceUnitaMisura(m.getCdUnitaMisura());
 				art.setDescrUnitaMisura(m.getUnitaMisura().getDsUnitaMisura());
 				art.setCodiceDivisa(m.getCdDivisa());
@@ -184,15 +186,19 @@ public class StampaPartitarioMagHome extends BulkHome {
 				}
 			}
 
+			List<MovimentiMagBulk> movMagGiacenza = findMovimentiMagForJson(uc, print_spoolerBulk, true);
+
 			for (StampaPartitarioBeneServizioDTO invDto : articoli){
-				for(MovimentiMagBulk movimento : movMag){
-					if(invDto.getCodiceBeneServizio().equals(movimento.getLottoMag().getCdBeneServizio()))
+				for(MovimentiMagBulk movimento : movMagGiacenza){
+					if(invDto.getCodiceBeneServizio().equals(movimento.getLottoMag().getCdBeneServizio()) &&
+						invDto.getCodiceMagazzino().equals(movimento.getLottoMag().getMagazzino().getCdMagazzino()) &&
+						invDto.getCodiceCds().equals(movimento.getLottoMag().getMagazzino().getCdCds()))
 					{
 						if(movimento.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOTTRAE)){
-							invDto.setGiacenza(invDto.getGiacenza()!=null ? invDto.getGiacenza().add(movimento.getQuantita()) : BigDecimal.ZERO);
+							invDto.setGiacenza(invDto.getGiacenza()!=null ? invDto.getGiacenza().subtract(movimento.getQuantita()) : BigDecimal.ZERO);
 						}
 						if(movimento.getTipoMovimentoMag().getModAggQtaMagazzino().equals(TipoMovimentoMagBulk.AZIONE_SOMMA)){
-							invDto.setGiacenza(invDto.getGiacenza()!=null ? invDto.getGiacenza().subtract(movimento.getQuantita()) : BigDecimal.ZERO);
+							invDto.setGiacenza(invDto.getGiacenza()!=null ? invDto.getGiacenza().add(movimento.getQuantita()) : BigDecimal.ZERO);
 						}
 
 					}
@@ -218,6 +224,10 @@ public class StampaPartitarioMagHome extends BulkHome {
 	}
 
 	private List<MovimentiMagBulk> findMovimentiMagForJson(UserContext userContext, Print_spoolerBulk print_spoolerBulk) throws PersistencyException, ParseException {
+		return findMovimentiMagForJson(userContext, print_spoolerBulk, false);
+	}
+
+	private List<MovimentiMagBulk> findMovimentiMagForJson(UserContext userContext, Print_spoolerBulk print_spoolerBulk, boolean perGiacenza) throws PersistencyException, ParseException {
 		BulkList<Print_spooler_paramBulk> params= print_spoolerBulk.getParams();
 		Print_spooler_paramBulk uopParam=params.stream().
 				filter(e->e.getNomeParam().equals(UOP)).findFirst().get();
@@ -333,14 +343,21 @@ public class StampaPartitarioMagHome extends BulkHome {
 			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.CD_TERZO",SQLBuilder.GREATER_EQUALS, daFornitore);
 		if (aFornitore!=null)
 			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.CD_TERZO",SQLBuilder.LESS_EQUALS, aFornitore);
-		if (daDataMovimento!=null)
-			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS, new Timestamp(daDataMovimento.getTime()));
-		if (aDataMovimento!=null)
-			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_MOVIMENTO",SQLBuilder.LESS_EQUALS, new Timestamp(aDataMovimento.getTime()));
-		if (daDataCompetenza!=null)
-			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS, new Timestamp(daDataCompetenza.getTime()));
-		if (aDataCompetenza!=null)
-			sql.addSQLClause(FindClause.AND,"MOVIMENTI_MAG.DT_RIFERIMENTO",SQLBuilder.LESS_EQUALS, new Timestamp(aDataCompetenza.getTime()));
+		if (!perGiacenza) {
+			if (daDataMovimento != null)
+				sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_MOVIMENTO", SQLBuilder.GREATER_EQUALS, new Timestamp(daDataMovimento.getTime()));
+			if (aDataMovimento != null)
+				sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_MOVIMENTO", SQLBuilder.LESS_EQUALS, new Timestamp(aDataMovimento.getTime()));
+			if (daDataCompetenza != null)
+				sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_RIFERIMENTO", SQLBuilder.GREATER_EQUALS, new Timestamp(daDataCompetenza.getTime()));
+			if (aDataCompetenza != null)
+				sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_RIFERIMENTO", SQLBuilder.LESS_EQUALS, new Timestamp(aDataCompetenza.getTime()));
+		} else {
+			if (daDataMovimento != null)
+				sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_MOVIMENTO", SQLBuilder.LESS, new Timestamp(daDataMovimento.getTime()));
+			if (daDataCompetenza != null)
+				sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.DT_RIFERIMENTO", SQLBuilder.LESS, new Timestamp(daDataCompetenza.getTime()));
+		}
 		sql.setOrderBy("movimenti_mag.pg_movimento", OrderConstants.ORDER_ASC);
 
 		List<MovimentiMagBulk> result = movimentiMagHome.fetchAll(sql);
