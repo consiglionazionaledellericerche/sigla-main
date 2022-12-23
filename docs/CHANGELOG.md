@@ -1,3 +1,11 @@
+## Release 6.5.22  -- _December 23, 2022_ 
+**Changes**
+
+>**Aggiunto il codice fiscale all'utenza collegata**
+>
+>[d83409ec29788e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d83409ec29788e7) marco.spasiano *December 23, 2022*
+
+
 ## Release 6.5.21  -- _December 19, 2022_ 
 **Changes**
 
