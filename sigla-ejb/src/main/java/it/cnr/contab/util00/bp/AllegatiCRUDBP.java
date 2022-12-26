@@ -130,7 +130,6 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     @Override
     protected void initialize(ActionContext actioncontext)
             throws BusinessProcessException {
-        //storeService = SpringUtil.getBean("storeService", StoreService.class);
         storeService=getBeanStoreService( actioncontext);
         super.initialize(actioncontext);
     }
@@ -241,6 +240,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
         return initializeModelForEditAllegati(actioncontext, oggettobulk);
     }
 
+    //Metodo utilizzato per completare l'oggetto Allegato con informazioni presenti nello StorageObject associato.
     protected void completeAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
     }
 

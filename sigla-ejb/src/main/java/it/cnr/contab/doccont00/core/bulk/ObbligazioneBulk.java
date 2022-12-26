@@ -1439,7 +1439,7 @@ public void validate() throws ValidationException {
 		throw new ValidationException( "Impossibile recuperare la data di sistema!");
 	}		
 
-	if (dataRegistrazione.after(dataSistema) && 1!=1)
+	if (dataRegistrazione.after(dataSistema))
 		throw new ValidationException( "Non è possibile inserire una data di registrazione posteriore a quella di sistema." );
 			
 	// controllo su campo DESCRIZIONE
@@ -1909,9 +1909,8 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		getIncarico_repertorio().setPg_repertorio(pg_repertorio);
 	}
 	public boolean isROFlGaraInCorso(){
-		return (getStato_obbligazione()!=null && !getStato_obbligazione().equals( ObbligazioneBulk.STATO_OBB_PROVVISORIO )) || 
-			  (getCrudStatus()!=OggettoBulk.UNDEFINED &&
-			   getFl_gara_in_corso()!=null &&
+		return !isProvvisoria() ||
+			  (getCrudStatus()!=OggettoBulk.UNDEFINED && getFl_gara_in_corso()!=null &&
 		      !getFl_gara_in_corso().booleanValue() && 
 			   ((getIncarico_repertorio()!=null && getIncarico_repertorio().getEsercizio()!=null &&
 				 getIncarico_repertorio().getPg_repertorio()!=null) ||
@@ -2067,7 +2066,7 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	public AllegatoObbligazioneBulk getAllegatoDetermina(){
 		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
 			AllegatoObbligazioneBulk allegato = (AllegatoObbligazioneBulk)i.next();
-			if (allegato.isTipoDetermina() && allegato.getEsercizioDiAppartenenza().equals(this.getEsercizio()))
+			if (allegato.isTipoDetermina())
 				return allegato;
 		}
 		return null;

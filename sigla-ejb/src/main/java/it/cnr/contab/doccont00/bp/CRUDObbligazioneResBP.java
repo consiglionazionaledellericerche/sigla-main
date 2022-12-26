@@ -406,9 +406,10 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 			if (obb.isLiquidabile() || obb.isNonLiquidabile())
 				obb.getArchivioAllegati().stream()
 					.map(AllegatoObbligazioneBulk.class::cast)
+					.filter(AllegatoObbligazioneBulk::isTipoAllegatoGenerico)
 					.filter(e->e.isNew() || e.getEsercizioDiAppartenenza().equals(CNRUserContext.getEsercizio(context.getUserContext())))
 					.findAny()
-					.orElseThrow(()->new ValidationException("Inserire almeno un allegato per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+"!"));
+					.orElseThrow(()->new ValidationException("Inserire almeno un 'Allegato Generico' per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+"!"));
 		}
 	}
 

@@ -67,7 +67,7 @@ public class SIOPEPlusTest extends DeploymentsOracle {
         compoundFindClause.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
         compoundFindClause.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.ISNOTNULL, null);
         compoundFindClause.addClause(FindClause.AND, "dt_emissione", SQLBuilder.GREATER_EQUALS,
-                Timestamp.valueOf(LocalDateTime.now().minusWeeks(3))
+                Timestamp.valueOf(LocalDateTime.now().minusWeeks(1))
         );
 
         BulkLoaderIterator remoteIterator =

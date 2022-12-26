@@ -1782,7 +1782,6 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	validaCampi(uc, obbligazione);
 	validaObbligazionePluriennale(uc, obbligazione);
 
-
 	try {
 		if (Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(uc) && obbligazione.getGaeDestinazioneFinale()!=null &&
 				obbligazione.getGaeDestinazioneFinale().getCd_linea_attivita()!=null) {
@@ -4493,19 +4492,15 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 	if (obbligazione.getArchivioAllegati().stream()
 			.filter(AllegatoObbligazioneBulk.class::isInstance)
 			.map(AllegatoObbligazioneBulk.class::cast)
-			.filter(el->el.getEsercizioDiAppartenenza().equals(obbligazione.getEsercizio()))
 			.filter(AllegatoObbligazioneBulk::isTipoDetermina).count()>1)
-		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Determina' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
+		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Determina'.");
 
-	if (obbligazione.getArchivioAllegati().stream()
-			.filter(AllegatoObbligazioneBulk.class::isInstance)
-			.map(AllegatoObbligazioneBulk.class::cast)
-			.filter(el->el.getEsercizioDiAppartenenza().equals(obbligazione.getEsercizio()))
-			.filter(AllegatoObbligazioneBulk::isTipoRiaccertamentoResidui).count()>1)
-		throw new it.cnr.jada.comp.ApplicationException("E' possibile allegare solo un file di tipo 'Riaccertamento Residui' per l'esercizio in corso ("+obbligazione.getEsercizio()+").");
-
-	if (obbligazione.getAllegatoDetermina() != null && obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
-		throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
+	if (obbligazione.getAllegatoDetermina() != null) {
+		if (obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo() == null)
+			throw new it.cnr.jada.comp.ApplicationException("Indicare la data di protocollo sul file di tipo 'Determina'.");
+		else if (obbligazione.getAllegatoDetermina().getDeterminaDataProtocollo().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
+			throw new ApplicationException("Attenzione la data di protocollo sul file di tipo 'Determina' è superiore alla data odierna.");
+	}
 
 	if (obbligazione.getAllegatoDetermina() == null) {
 		if (obbligazione.isProvvisoria() || obbligazione.isToBeCreated() || (obbligazione.getFl_determina_allegata()!=null && obbligazione.getFl_determina_allegata().equals(Boolean.TRUE))) {
@@ -4513,7 +4508,7 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 				Parametri_cdsBulk parametriCds = Utility.createParametriCdsComponentSession().
 						getParametriCds(aUC, obbligazione.getCd_cds(), CNRUserContext.getEsercizio(aUC));
 				if (parametriCds.getFl_allega_determina_obblig() != null && parametriCds.getFl_allega_determina_obblig().equals(Boolean.TRUE))
-					throw new it.cnr.jada.comp.ApplicationException("Allegare all'obbligazione un file di tipo 'Determina' per l'esercizio in corso (" + obbligazione.getEsercizio() + ").");
+					throw new it.cnr.jada.comp.ApplicationException("Allegare all'impegno un file di tipo 'Determina'.");
 			} catch (Throwable e) {
 				throw handleException(e);
 			}
@@ -5418,7 +5413,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			ObbligazioneHome obbligazioneHome = (ObbligazioneHome) getHome( userContext, ObbligazioneBulk.class );
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk)obbligazioneHome.findByPrimaryKey(scadenzaVecchia.getObbligazione());
 			obbligazione = (ObbligazioneBulk)inizializzaBulkPerModifica(userContext, (OggettoBulk)obbligazione);
-
+			
 			//cerco nell'obbligazione riletto la scadenza indicata
 			for (Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk)s.next();
@@ -5431,8 +5426,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				}
 			}
 
-			if (scadenzaVecchia == null)
-				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");
+			if (scadenzaVecchia == null) 
+				throw new ApplicationException("Scadenza da sdoppiare non trovata nell'impegno indicato!");	
 
 			Obbligazione_scadenzarioBulk scadenzaNuova = new Obbligazione_scadenzarioBulk();
 			scadenzaNuova.setDt_scadenza(nuovaScadenza!=null ? nuovaScadenza : scadenzaVecchia.getDt_scadenza());
@@ -5440,8 +5435,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			obbligazione.addToObbligazione_scadenzarioColl(scadenzaNuova);
 		
 			// Rigenero i relativi dettagli	
-			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);
-
+			generaDettagliScadenzaObbligazione(userContext, obbligazione, scadenzaNuova, false);	
+		
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scad_voceBulk osvOld = (Obbligazione_scad_voceBulk)s.next();
 				if (nuovaGae != null && cdr != null){
@@ -5452,15 +5447,15 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 						osvOld.setToBeUpdated();
 					}
 				} else {
-					newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP);
+					newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
 					
 					aggiornaImportoScadVoceScadenzaNuova(newImportoOsv, scadenzaNuova, osvOld);
 						
 					osvOld.setIm_voce(newImportoOsv);
 					osvOld.setToBeUpdated();
 				}
-			}
-
+			}		
+		
 			//Quadro la sommatoria sulla vecchia scadenza
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); )
 				totImporto = totImporto.add(((Obbligazione_scad_voceBulk)s.next()).getIm_voce()); 
@@ -6094,7 +6089,6 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		return Boolean.TRUE;
 
 	}
-
 
 	public SQLBuilder selectGaeDestinazioneFinaleByClause(UserContext userContext, ObbligazioneBulk obbligazione, WorkpackageBulk lineaAttivita, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 		WorkpackageHome home = (WorkpackageHome)getHome(userContext, lineaAttivita,"V_LINEA_ATTIVITA_VALIDA");

@@ -313,7 +313,7 @@ public boolean isRiportaIndietroButtonEnabled()
 	IDocumentoContabileBulk doc = ((IDocumentoContabileBulk)getModel());
 	
 	return !isRiportaIndietroButtonHidden() &&
-				isEditing() &&
+				isViewing() &&
 				!isDirty() &&
 				doc != null &&
 				((ObbligazioneBulk)doc).isDocRiportato();
