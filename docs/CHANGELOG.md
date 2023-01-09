@@ -1,3 +1,11 @@
+## Release 6.5.23  -- _January 09, 2023_ 
+**Changes**
+
+>**Obbligazione residuo proprio: ripristinato funzionamento bottone riporta avanti/indietro**
+>
+>[e17602d93d803db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e17602d93d803db) raffaelepagano *January 09, 2023*
+
+
 ## Release 6.5.22  -- _December 23, 2022_ 
 **Changes**
 
