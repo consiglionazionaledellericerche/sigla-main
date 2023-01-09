@@ -284,7 +284,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		ObbligazioneBulk doc = ((ObbligazioneBulk)getModel());
 		
 		return !isRiportaAvantiButtonHidden() &&
-					(isEditing() || isScadenzaModificabile()) &&
+					(isViewing() || isScadenzaModificabile()) &&
 					doc != null &&
 					!((ObbligazioneBulk)doc).isDocRiportato();
 
@@ -294,7 +294,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		ObbligazioneBulk doc = ((ObbligazioneBulk)getModel());
 		
 		return !isRiportaIndietroButtonHidden() &&
-					(isEditing() || isScadenzaModificabile()) &&
+					(isViewing() || isScadenzaModificabile()) &&
 					!isDirty() &&
 					doc != null &&
 					((ObbligazioneBulk)doc).isDocRiportato();
