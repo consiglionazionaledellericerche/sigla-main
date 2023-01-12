@@ -1099,11 +1099,11 @@ Begin
                  End;
               End If;
 
-              If pFlDeterminaAllegata ='N' OR TO_CHAR(pDtDeterminaAllegata,'YYYY') > aObb.esercizio Then
+              If pFlDeterminaAllegata ='N' OR TRUNC(pDtDeterminaAllegata) > TRUNC(sysdate) Then
 	             If pFlDeterminaAllegata ='N' Then
     	            aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio senza determina.';
 	             Else
-                  	aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio con determina avente data protocollo superiore al 31/12/'||aObb.esercizio||'.';
+                  	aErrMsn := 'L'''||cnrutil.getLabelObbligazioneMin()||' '||CNRCTB035.GETDESC(aObb)||' è un documento Provvisorio con determina avente data protocollo superiore alla data odierna.';
               	 End if;
                  ibmerr001.RAISE_ERR_GENERICO(aErrMsn);
 	          End if;
