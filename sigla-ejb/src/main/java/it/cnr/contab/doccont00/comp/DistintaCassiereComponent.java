@@ -1203,8 +1203,16 @@ public class DistintaCassiereComponent extends
                 log_riga.setPg_riga(BigDecimal.valueOf(contaErrori));
                 log_riga.setTi_messaggio("E");
                 log_riga.setMessaggio(cdsEnte.getCd_unita_organizzativa()+"-"+file.getNome_file()+"-Riga-"+riga.getProgressivo());
-                log_riga.setTrace(log_riga.getMessaggio());
-                log_riga.setNote(e.getMessage());
+                log_riga.setTrace(
+                        Optional.ofNullable(log_riga.getMessaggio())
+                                .map(s -> s.substring(0, Math.min(s.length(), 4000)))
+                                .orElse(null)
+                );
+                log_riga.setNote(
+                        Optional.ofNullable(e.getMessage())
+                                .map(s -> s.substring(0, Math.min(s.length(), 4000)))
+                                .orElse(null)
+                );
                 log_riga.setToBeCreated();
                 try {
                     log_riga = (Batch_log_rigaBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,log_riga);
@@ -1243,7 +1251,11 @@ public class DistintaCassiereComponent extends
                     scarto.setTi_sospeso_riscontro_sr(riga.isTipoOperazioneStornato() ? SospesoBulk.TI_SOSPESO : SospesoBulk.TI_RISCONTRO);
                     scarto.setCd_sr(riga.recuperoNumeroSospeso());
                 }
-                scarto.setAnomalia(e.getMessage());
+                scarto.setAnomalia(
+                        Optional.ofNullable(e.getMessage())
+                                .map(s -> s.substring(0, Math.min(s.length(), 1000)))
+                                .orElse(null)
+                );
                 scarto.setToBeCreated();
                 try {
                     scarto = (Ext_cassiere00_scartiBulk)batchControlComponentSession.creaConBulkRequiresNew(userContext,scarto);

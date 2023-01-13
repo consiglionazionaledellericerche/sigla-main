@@ -215,7 +215,7 @@
 	<columnFieldProperty name="ds_scadenza"/>
 	<columnFieldProperty name="cd_terzo" label="Beneficiario" property="accertamento.cd_terzo"/>
 	<columnFieldProperty name="cdCup" label="CUP" property="accertamento.contratto.cup.cdCup"/>
-	<columnFieldProperty name="cdCigFatturaAttiva" label="CIG Comunicato dal Committente" property="accertamento.contratto.cdCigFatturaAttiva"/>
+	<columnFieldProperty name="cdCigFatturaAttiva" textTruncate="true" label="CIG Comunicato dal Committente" property="accertamento.contratto.cdCigFatturaAttiva"/>
 	</columnSet>
 
 	<columnSet
