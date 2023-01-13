@@ -51,10 +51,6 @@ public class PagopaService {
     private transient static final Logger log = LoggerFactory.getLogger(PagopaService.class);
     @Value("${pagopa.govpay.base_url}")
     String baseUrl;
-    @Value("${pagopa.govpay.username}")
-    String username;
-    @Value("${pagopa.govpay.password}")
-    String password;
     @Value("${pagopa.govpay.usernameApp}")
     String usernameApp;
     @Value("${pagopa.govpay.passwordApp}")
@@ -85,22 +81,6 @@ public class PagopaService {
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @PostConstruct

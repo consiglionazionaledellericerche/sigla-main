@@ -21,7 +21,7 @@
 <% CRUDTestataLogBP bp = (CRUDTestataLogBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 
-	<table class="Group" style="width:100%">
+	<table class="Group card mb-1 p-2" style="width:100%">
 		<tr>
 			<td><% bp.getController().writeFormLabel(out,"pg_esecuzione");%></td>
 			<td><% bp.getController().writeFormInput(out,"pg_esecuzione");%></td>
@@ -29,7 +29,7 @@
 			<td><% bp.getController().writeFormInput(out,"dacr");%></td>
 		</tr>
 	</table>
-	<table class="Group" style="width:100%">
+	<table class="Group card mb-1 p-2" style="width:100%">
 		<tr>
 			<td><% bp.getController().writeFormLabel(out,"pg_batch");%></td>
 			<td><% bp.getController().writeFormInput(out,"pg_batch");%></td>
@@ -52,28 +52,17 @@
 		</tr>
 	</table>
 
-	<table class="Group" style="width:100%">
-	  <tr>
-		<td>
-		  <span class="FormLabel" style="color:black">Dettagli</span>
-		</td>
-	  <tr>
-	  <tr>
-		<td>
-		  <% bp.getDettagli().writeHTMLTable(
-				pageContext,
-				null,
-				false,
-				false,
-				false,
-				"700px",
-				"200px",
-				true); %>
-		</td>
-	  </tr>
-	</table>
+    <% bp.getDettagli().writeHTMLTable(
+        pageContext,
+        null,
+        false,
+        false,
+        false,
+        "100%",
+        "60vh",
+        true); %>
 
-	<table class="Group" style="width:100%">
+	<table class="Group card p-2" style="width:100%">
 		<tr>
 			<td><% bp.getDettagli().writeFormLabel(out,"note");%></td>
 			<td><% bp.getDettagli().writeFormInput(out,"note");%></td>

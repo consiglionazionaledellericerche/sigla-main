@@ -66,8 +66,9 @@ import java.util.stream.Collectors;
 public class PendenzaPagopaComponent extends CRUDComponent {
 	private static final long serialVersionUID = 1L;
 	private transient static final Logger logger = LoggerFactory.getLogger(PendenzaPagopaComponent.class);
-	PagopaService pagopaService =
-			SpringUtil.getBean("pagopaService", PagopaService.class);
+	Optional<PagopaService> pagopaService =
+			SpringUtil.containsBean("pagopaService") ?
+			Optional.ofNullable(SpringUtil.getBean("pagopaService", PagopaService.class)) : Optional.empty();
 
 	@Override
 	public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -92,6 +93,8 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 	public PendenzaPagopaBulk riconciliaIncassoPagopa(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
 		try {
+			if (!pagopaService.isPresent())
+				return null;
 			MovimentoCassaPagopa movimentoCassaPagopa = new MovimentoCassaPagopa();
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
 			movimentoCassaPagopa.setDataContabile(formatter.format(movimentoContoEvidenzaBulk.getDataMovimento()));
@@ -100,7 +103,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			movimentoCassaPagopa.setImporto(movimentoContoEvidenzaBulk.getImporto());
 			movimentoCassaPagopa.setSct(movimentoContoEvidenzaBulk.getIdentificativoFlusso());
 			try  {
-				movimentoCassaPagopa = pagopaService.riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
+				movimentoCassaPagopa = pagopaService.get().riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
 				logger.info(movimentoCassaPagopa.toString());
 			} catch (HttpClientErrorException.BadRequest e ){
 				String error = "pagoPA: Errore durante la chiamata per la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso() +" "+e.getMessage();
@@ -197,9 +200,9 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 	private void generaPendenzaSuPagopa(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException, IntrospectionException, PersistencyException {
 		Pendenza pendenza = getPendenza(userContext, pendenzaPagopaBulk);
-		PendenzaResponse pendenzaCreata = null;
 		try {
-			pendenzaCreata = pagopaService.creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
+			if (pagopaService.isPresent())
+				pagopaService.get().creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
 		} catch (Exception e){
 			logger.error("Errore su creaPendenza",e);
 			throw new ComponentException("Errore nella creazione della pendenza"+e.getMessage());
@@ -208,7 +211,8 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 	private void annullaPendenzaSuPagopa(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException, IntrospectionException, PersistencyException {
 		try {
-			pagopaService.aggiornaPendenza(pendenzaPagopaBulk.getId(), new AnnullaPendenza());
+			if (pagopaService.isPresent())
+				pagopaService.get().aggiornaPendenza(pendenzaPagopaBulk.getId(), new AnnullaPendenza());
 		} catch (Exception e){
 			logger.error("Errore su creaPendenza",e);
 			throw new ComponentException("Errore nella creazione della pendenza"+e.getMessage());
@@ -403,7 +407,9 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 
 		try {
-			return pagopaService.getRt(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdIuv(), pagamentoPagopaBulk.getCcp());
+			if (pagopaService.isPresent())
+				return pagopaService.get().getRt(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdIuv(), pagamentoPagopaBulk.getCcp());
+			return new byte[0];
 		} catch (Throwable t) {
 			logger.info(t.getMessage());
 			throw handleException(t);
@@ -420,7 +426,9 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		}
 
 		try {
-			return pagopaService.getAvviso(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
+			if (pagopaService.isPresent())
+				return pagopaService.get().getAvviso(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
+			return new byte[0];
 		} catch (Throwable t) {
 			logger.info(t.getMessage());
 			throw handleException(t);
