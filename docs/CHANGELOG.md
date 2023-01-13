@@ -1,3 +1,15 @@
+## Release 6.5.24  -- _January 13, 2023_ 
+**Changes**
+
+>**FIX PagoPA service**
+>
+>[04ff50118d38bff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04ff50118d38bff) marco.spasiano *January 13, 2023*
+
+>**Impegni: gestione collegamento file di tipo Determina - in fase di ribaltamento modificato controllo sulla data di protocollo che non deve essere superiore alla data corrente.**
+>
+>[49d30d7d1b26dba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/49d30d7d1b26dba) raffaelepagano *January 12, 2023*
+
+
 ## Release 6.5.23  -- _January 09, 2023_ 
 **Changes**
 
