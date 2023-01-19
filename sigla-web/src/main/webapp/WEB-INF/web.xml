@@ -204,6 +204,8 @@
 			<description>public url</description>
 			<url-pattern>/RicercaIncarichiRichiesta.do</url-pattern>
 			<url-pattern>/cancellaSchedulazione.do</url-pattern>
+			<url-pattern>/cancellaSchedulazioneExcel.do</url-pattern>
+			<url-pattern>/Option.do</url-pattern>
 			<url-pattern>/RicercaUOAction.do</url-pattern>
 			<url-pattern>/RicercaCDRAction.do</url-pattern>
 			<url-pattern>/RicercaVoceAction.do</url-pattern>
@@ -218,7 +220,6 @@
 			<url-pattern>/ConsDivisaAction.do</url-pattern>
 			<url-pattern>/ConsNazioneAction.do</url-pattern>
 			<url-pattern>/RicercaFatturaPassivaAction.do</url-pattern>
-			<url-pattern>/cancellaSchedulazioneExcel.do</url-pattern>
 			<url-pattern>/info.json</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>

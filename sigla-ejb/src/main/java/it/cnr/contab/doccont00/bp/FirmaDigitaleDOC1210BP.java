@@ -149,6 +149,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                 else
                     ((PDCheckBox)field).unCheck();
             } else {
+				field.getAcroForm().setNeedAppearances(Boolean.TRUE);
                 field.setValue(
                         Optional.ofNullable(fieldValue)
 							.map(s -> s.replace("\r", " "))
