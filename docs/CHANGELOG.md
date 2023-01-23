@@ -1,5 +1,13 @@
-## Release 6.5.24  -- _January 13, 2023_ 
+## Release 6.5.25  -- _January 23, 2023_ 
 **Changes**
+
+>**FIX: U+0130 is not available in this font's encoding: WinAnsiEncoding**
+>
+>[1a408f330457757](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1a408f330457757) marco.spasiano *January 23, 2023*
+
+>**FIX: Cancellazione schedulazione di stampe ed estrazioni excel direttaente dal link presente nella email**
+>
+>[2ebc359815f6fe5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2ebc359815f6fe5) marco.spasiano *January 19, 2023*
 
 >**FIX PagoPA service**
 >
