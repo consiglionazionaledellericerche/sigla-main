@@ -45,6 +45,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -55,6 +56,9 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.interactive.form.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,7 +167,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 						.filter(PDTextField.class::isInstance)
 						.map(PDTextField.class::cast)
 						.ifPresent(pdTextField -> {
-							pdTextField.setDefaultAppearance("/Helv 0 Tf 0 0 0 rg");
+							pdTextField.setDefaultAppearance("/F5 0 Tf 0 0 0 rg");
 						});
 				}
             }
@@ -175,6 +179,11 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		PDDocument document = PDDocument.load(this.getClass().getResourceAsStream("1210.pdf"));
 		PDDocumentCatalog pdCatalog = document.getDocumentCatalog();
 		PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
+		PDResources dr = pdAcroForm.getDefaultResources();
+		final InputStream stream = this.getClass().getResourceAsStream("LiberationSans-Regular.ttf");
+		PDFont liberationSans = PDType0Font.load(document, stream, true);
+		COSName fontName = dr.add(liberationSans);
+
 		List<PDField> fields = new ArrayList<PDField>();
 		fields.add(valorizzaField(pdAcroForm, "DATA ESECUZIONE", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()), false));
 		fields.add(valorizzaField(pdAcroForm, "IDENTIFICATIVO_INTERNO", String.valueOf(lettera.getPg_lettera()) + " - " + lettera.getCd_unita_organizzativa(), false));
