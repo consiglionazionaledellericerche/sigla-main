@@ -167,7 +167,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 						.filter(PDTextField.class::isInstance)
 						.map(PDTextField.class::cast)
 						.ifPresent(pdTextField -> {
-							pdTextField.setDefaultAppearance("/F5 0 Tf 0 0 0 rg");
+							pdTextField.setDefaultAppearance("/Helv 0 Tf 0 0 0 rg");
 						});
 				}
             }
@@ -179,10 +179,6 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		PDDocument document = PDDocument.load(this.getClass().getResourceAsStream("1210.pdf"));
 		PDDocumentCatalog pdCatalog = document.getDocumentCatalog();
 		PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
-		PDResources dr = pdAcroForm.getDefaultResources();
-		final InputStream stream = this.getClass().getResourceAsStream("LiberationSans-Regular.ttf");
-		PDFont liberationSans = PDType0Font.load(document, stream, true);
-		COSName fontName = dr.add(liberationSans);
 
 		List<PDField> fields = new ArrayList<PDField>();
 		fields.add(valorizzaField(pdAcroForm, "DATA ESECUZIONE", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()), false));
@@ -220,11 +216,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 					.filter(pdField -> Optional.ofNullable(pdField).isPresent())
 					.collect(Collectors.toList()), true);
 		} catch (IllegalArgumentException _ex) {
-			fields.stream()
-					.filter(pdField -> Optional.ofNullable(pdField).isPresent())
-							.forEach(pdField -> {
-								pdField.setReadOnly(Boolean.TRUE);
-							});
+			throw new ApplicationMessageFormatException("Errore durante la predisposizione, controllare i caratteri inseriti: {0}", _ex.getMessage());
 		}
 		return document;
 	}
