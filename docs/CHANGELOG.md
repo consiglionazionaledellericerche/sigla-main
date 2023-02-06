@@ -1,3 +1,11 @@
+## Release 6.5.26  -- _January 24, 2023_ 
+**Changes**
+
+>**Add LiberationSans-Regular for fix U+0130 is not available in this font's encoding: WinAnsiEncoding**
+>
+>[ad60bae0a15f81a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ad60bae0a15f81a) marco.spasiano *January 24, 2023*
+
+
 ## Release 6.5.25  -- _January 23, 2023_ 
 **Changes**
 
