@@ -1,9 +1,25 @@
-## Release 6.5.26  -- _January 24, 2023_ 
+## Release 6.5.28  -- _February 06, 2023_ 
 **Changes**
+
+>**Fix Disponibilità voce: si disabilitava in presenza di documenti amministrativi associati.**
+>
+>[8405dca95b234e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8405dca95b234e2) raffaelepagano *February 06, 2023*
+
+>**Rimosse le reversali legate ai mandati dalla distinta nel caso fossero già inviate a SIOPE+**
+>
+>[8f09587bb03fded](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8f09587bb03fded) marco.spasiano *February 06, 2023*
 
 >**Add LiberationSans-Regular for fix U+0130 is not available in this font's encoding: WinAnsiEncoding**
 >
 >[ad60bae0a15f81a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ad60bae0a15f81a) marco.spasiano *January 24, 2023*
+
+
+## Release 6.5.27  -- _January 25, 2023_ 
+**Changes**
+
+>**Remove LiberationSans-Regular for fix U+0130 is not available in this font's encoding: WinAnsiEncoding and add Helvetica**
+>
+>[592972d9e5a748f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/592972d9e5a748f) marco.spasiano *January 25, 2023*
 
 
 ## Release 6.5.25  -- _January 23, 2023_ 
