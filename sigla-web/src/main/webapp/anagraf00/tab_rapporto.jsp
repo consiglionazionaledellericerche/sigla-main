@@ -19,7 +19,7 @@
 %>
 
 <%if( !anagrafico.isStrutturaCNR() ) { %>
-	<%	bp.getCrudRapporti().writeHTMLTable(pageContext,null,(!anagrafico.isDipendente() || anagrafico.isAbilitatoTrattamenti()),false,(!anagrafico.isDipendente() || anagrafico.isAbilitatoTrattamenti()),"100%","150px"); %>
+	<%	bp.getCrudRapporti().writeHTMLTable(pageContext,null,(!anagrafico.isDipendente() || anagrafico.isAbilitatoTrattamenti()),false,(!anagrafico.isDipendente() || anagrafico.isAbilitatoTrattamenti()),"100%","auto;max-height:30vh;"); %>
 	
 	<%	JSPUtils.tabbed(
 				pageContext,

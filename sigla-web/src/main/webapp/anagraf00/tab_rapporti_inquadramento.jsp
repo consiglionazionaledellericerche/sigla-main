@@ -18,4 +18,4 @@
 	RapportoBulk rapporto =(RapportoBulk)bp.getCrudRapporti().getModel();
 %>
 
-<%	bp.getCrudInquadramenti().writeHTMLTable(pageContext,null,(!anagrafico.isDipendente()&& rapporto!=null && rapporto.isAbilitato_inquadramento()),false,(!anagrafico.isDipendente()),"100%","150px",false); %>
+<%	bp.getCrudInquadramenti().writeHTMLTable(pageContext,null,(!anagrafico.isDipendente()&& rapporto!=null && rapporto.isAbilitato_inquadramento()),false,(!anagrafico.isDipendente()),"100%","auto;max-height:40vh;",false); %>

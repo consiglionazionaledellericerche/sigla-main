@@ -43,12 +43,12 @@
 			     <%	bp.getScadenzario().setEnabled( !bp.isEditingScadenza());
 			      	if((bp.isEditable()) && (accertamento.getDt_cancellazione() == null))
 			      	{
-			      		bp.getScadenzario().writeHTMLTable(pageContext,"accertamento",true,false,true,"100%","100px");
+			      		bp.getScadenzario().writeHTMLTable(pageContext,"accertamento",true,false,true,"100%","auto;max-height:40vh");
 			      	}
 			      	else
 			      	{
 				      	// Visualizzazione accertamento
-			      		bp.getScadenzario().writeHTMLTable(pageContext,"accertamento",false,false,false,"100%","100px");
+			      		bp.getScadenzario().writeHTMLTable(pageContext,"accertamento",false,false,false,"100%","auto;max-height:40vh");
 				    }  		
 		      	%>
 			</td>
