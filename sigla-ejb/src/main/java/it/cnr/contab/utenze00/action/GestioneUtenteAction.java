@@ -395,7 +395,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
     /**
      * Gestisce le azioni di controllo e validazione della richiesta di apertura dai preferiti di una certa funzione applicativa
 	 * in questo caso il {@link BusinessProcess} viene aggiunto al corrente senza chiudere i precedenti tranne nel caso
-	 * di un cui la transazione si {@link BusinessProcess.REQUIRES_NEW_TRANSACTION}
+	 * di un cui la transazione sia {@link BusinessProcess.REQUIRES_NEW_TRANSACTION} oppure {@link BusinessProcess.REQUIRES_TRANSACTION}
      *
      * @param context L'ActionContext della richiesta
      * @param cd_nodo codice del nodo su cui è stata effettuata la richiesta
@@ -414,7 +414,8 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
             it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = bp.getUserInfo().getUnita_organizzativa();
             it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(), bp.getUserInfo().getUtente(), uo == null ? null : uo.getCd_unita_organizzativa(), cd_nodo);
             if (nodo == null) return context.findDefaultForward();
-            if (currentBusinessProcess.getTransactionPolicy() == BusinessProcess.REQUIRES_NEW_TRANSACTION) {
+            if (currentBusinessProcess.getTransactionPolicy() == BusinessProcess.REQUIRES_NEW_TRANSACTION ||
+                    currentBusinessProcess.getTransactionPolicy() == BusinessProcess.REQUIRES_TRANSACTION) {
                 bp.closeAllChildren(context);
                 currentBusinessProcess = bp;
             }
