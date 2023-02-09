@@ -1,3 +1,11 @@
+## Release 6.5.29  -- _February 09, 2023_ 
+**Changes**
+
+>**Nel caso in il BusinessProcess sia REQUIRES_TRANSACTION allora vengono chiusi tutti i BP quando si tenta di aprirne uno nuovo.**
+>
+>[54861b53bcd3b8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54861b53bcd3b8b) marco.spasiano *February 09, 2023*
+
+
 ## Release 6.5.28  -- _February 06, 2023_ 
 **Changes**
 
