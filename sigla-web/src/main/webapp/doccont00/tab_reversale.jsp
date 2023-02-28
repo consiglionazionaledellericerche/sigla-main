@@ -126,12 +126,13 @@
           <table border="0" cellspacing="0" cellpadding="2" class="w-100">
             <tr>
                     <% bp.getController().writeFormField( out, "esitoOperazione"); %>
+                    <% bp.getController().writeFormField( out, "statoVarSos"); %>
                     <td class="text-right"><% bp.getController().writeFormLabel( out, "dtOraEsitoOperazione"); %></td>
                     <td><% bp.getController().writeFormInput( out, "dtOraEsitoOperazione"); %></td>
             </tr>
             <tr>
                 <td><% bp.getController().writeFormLabel( out, "erroreSiopePlus"); %></td>
-                <td colspan="3"><% bp.getController().writeFormInput( out, "erroreSiopePlus"); %></td>
+                <td colspan="6"><% bp.getController().writeFormInput( out, "erroreSiopePlus"); %></td>
             </tr>
           </table>
 	  </div>

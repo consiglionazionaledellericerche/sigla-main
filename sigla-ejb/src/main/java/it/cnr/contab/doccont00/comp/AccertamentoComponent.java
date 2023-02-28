@@ -4802,5 +4802,23 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 		return Boolean.TRUE;
 
 	}
+	public AccertamentoBulk aggiornaAccertamentiTemporanei(UserContext userContext, AccertamentoBulk accertamentoTemporaneo) throws ComponentException {
+		try {
+			Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache(userContext).getHome(Numerazione_doc_contBulk.class);
+			Long pg = null;
+			pg = numHome.getNextPg(userContext,
+					accertamentoTemporaneo.getEsercizio(),
+					accertamentoTemporaneo.getCd_cds(),
+					accertamentoTemporaneo.getCd_tipo_documento_cont(),
+					accertamentoTemporaneo.getUser());
+			AccertamentoHome home = (AccertamentoHome) getHome(userContext, accertamentoTemporaneo);
+			home.confirmAccertamentoTemporaneo(userContext, accertamentoTemporaneo, pg);
+			return (AccertamentoBulk) inizializzaBulkPerModifica(userContext, accertamentoTemporaneo);
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			throw handleException(accertamentoTemporaneo, e);
+		} catch (it.cnr.jada.persistency.IntrospectionException e) {
+			throw handleException(accertamentoTemporaneo, e);
+		}
+	}
 
 }

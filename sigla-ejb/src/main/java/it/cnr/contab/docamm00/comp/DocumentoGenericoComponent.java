@@ -121,9 +121,10 @@ public class DocumentoGenericoComponent
                             && !isDettaglioAnnullatoConScadResNulla(scadenza, documento))
                         throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza " + scadenza.getDs_scadenza() + " deve essere coperto interamente.");
 
-                    if (scadenza.getIm_associato_doc_amm().add(calcolaTotaleAccertamentoPer(userContext, scadenza, documento, TIPO_TOTALE_PARZIALE)).compareTo(scadenza.getIm_scadenza()) > 0)
+                    final BigDecimal totaleAccertamentoPer = calcolaTotaleAccertamentoPer(userContext, scadenza, documento, TIPO_TOTALE_PARZIALE);
+                    if (scadenza.getIm_associato_doc_amm().add(totaleAccertamentoPer).compareTo(scadenza.getIm_scadenza()) > 0)
                         throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza " + scadenza.getDs_scadenza() + " è minore del totale associato.");
-                    scadenza.setIm_associato_doc_amm(scadenza.getIm_associato_doc_amm().add(calcolaTotaleAccertamentoPer(userContext, scadenza, documento, TIPO_TOTALE_PARZIALE)));
+                    scadenza.setIm_associato_doc_amm(scadenza.getIm_associato_doc_amm().add(totaleAccertamentoPer));
 
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }

@@ -247,8 +247,9 @@
 		<columnFieldProperty
 			name="ds_siope" />
 		<columnFieldProperty
-			name="importo" 
-			columnStyle="text-align: right;"
+			name="importo"
+			columnStyle="width: 50%!important; text-align: right;"
+			style="z-index: auto;"
 			command="doDefault"
 			enabledOnEdit="true"
 			enabledOnInsert="true"/>

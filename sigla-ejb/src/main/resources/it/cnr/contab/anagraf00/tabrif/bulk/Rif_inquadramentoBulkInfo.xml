@@ -139,4 +139,17 @@
 		<formFieldProperty
 			name="ds_inquadramento" />
 	</form>
+
+
+	<form
+			name="column_searchtool" >
+		<formFieldProperty
+				name="cd_progressione" />
+		<formFieldProperty
+				name="cd_livello" />
+		<formFieldProperty
+				name="cd_profilo" />
+		<formFieldProperty
+				name="ds_inquadramento" />
+	</form>
 </bulkInfo>

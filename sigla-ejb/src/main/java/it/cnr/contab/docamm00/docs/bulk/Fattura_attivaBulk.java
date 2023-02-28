@@ -59,7 +59,7 @@ import java.util.*;
 
 @JsonInclude(value = Include.NON_NULL)
 public abstract class Fattura_attivaBulk extends Fattura_attivaBase
-        implements IDocumentoAmministrativoBulk,
+        implements IDocumentoAmministrativoEntrataBulk,
         Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
         AllegatoParentBulk {
     public final static String BENEDUREVOLE = "B";
@@ -2508,5 +2508,16 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     @Override
     public Long getReportIdLiquid() {
         return null;
+    }
+    public void setCd_tipo_doc_amm(java.lang.String newCd_tipo_doc_amm) {}
+
+    @Override
+    public void setCd_uo(String newCd_uo) {
+        setCd_unita_organizzativa(newCd_uo);
+    }
+
+    @Override
+    public void setPg_doc_amm(Long newPg) {
+        setPg_fattura_attiva(newPg);
     }
 }

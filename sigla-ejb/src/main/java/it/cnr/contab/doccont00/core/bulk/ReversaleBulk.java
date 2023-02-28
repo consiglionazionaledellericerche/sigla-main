@@ -24,17 +24,15 @@ import it.cnr.contab.docamm00.docs.bulk.TipoDocumentoEnum;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
+import it.cnr.jada.bulk.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
+public class ReversaleBulk extends ReversaleBase implements IManRevBulk, IDefferUpdateSaldi {
 
     public final static String STATO_REVERSALE_ANNULLATO = "A";
     public final static String STATO_REVERSALE_EMESSO = "E";
@@ -57,6 +55,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     public final static String TIPO_INCASSO = "I";
     public final static java.util.Dictionary tipoReversaleCNRKeys;
     public final static java.util.Dictionary tipoReversaleCdSKeys;
+    public final static  Map<String,String> statoVariazioneSostituzioneKeys = StatoVariazioneSostituzione.KEYS;
     protected final static java.util.Dictionary classeDiPagamentoKeys = it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk.TI_PAGAMENTO_KEYS;
     public final static Map<String,String> esito_OperazioneKeys = Arrays.asList(EsitoOperazione.values())
             .stream()
@@ -122,6 +121,7 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     private java.math.BigDecimal im_residuo_reversale;
     private boolean siopeDaCompletare = false;
     private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+    private it.cnr.jada.bulk.PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 
     public ReversaleBulk() {
         super();
@@ -937,4 +937,62 @@ public class ReversaleBulk extends ReversaleBase implements IManRevBulk {
     public Long getReportIdLiquid() {
         return null;
     }
+
+    @Override
+    public void addToDefferredSaldi(IDocumentoContabileBulk docCont, Map values) {
+        Optional.ofNullable(docCont)
+                .ifPresent(iDocumentoContabileBulk -> {
+                    final PrimaryKeyHashMap primaryKeyHashMap = Optional.ofNullable(deferredSaldi)
+                            .orElse(new PrimaryKeyHashMap());
+                    if(primaryKeyHashMap.containsKey(iDocumentoContabileBulk)) {
+                        primaryKeyHashMap.put(docCont, values);
+                    } else {
+                        Map firstValues = (Map)primaryKeyHashMap.get(iDocumentoContabileBulk);
+                        primaryKeyHashMap.remove(iDocumentoContabileBulk);
+                        primaryKeyHashMap.put(iDocumentoContabileBulk, firstValues);
+                    }
+                });
+    }
+
+    @Override
+    public PrimaryKeyHashMap getDefferredSaldi() {
+        return deferredSaldi;
+    }
+
+    @Override
+    public IDocumentoContabileBulk getDefferredSaldoFor(IDocumentoContabileBulk docCont) {
+        return Optional.ofNullable(docCont)
+                .flatMap(iDocumentoContabileBulk -> Optional.ofNullable(deferredSaldi))
+                .map(primaryKeyHashMap -> primaryKeyHashMap.get(docCont))
+                .filter(IDocumentoContabileBulk.class::isInstance)
+                .map(IDocumentoContabileBulk.class::cast)
+                .orElse(null);
+    }
+
+    @Override
+    public void removeFromDefferredSaldi(IDocumentoContabileBulk docCont) {
+        Optional.ofNullable(docCont)
+                .flatMap(iDocumentoContabileBulk -> Optional.ofNullable(deferredSaldi))
+                .filter(primaryKeyHashMap -> primaryKeyHashMap.containsKey(docCont))
+                .ifPresent(primaryKeyHashMap -> primaryKeyHashMap.remove(docCont));
+    }
+
+    @Override
+    public void resetDefferredSaldi() {
+        deferredSaldi = null;
+    }
+
+
+    /**
+     * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
+     * inizializzandone alcuni campi
+     *
+     * @param riga dettaglio da aggiungere alla lista
+     * @return int
+     */
+    public int addToReversale_rigaColl(Reversale_rigaBulk riga) {
+        reversale_rigaColl.add(riga);
+        return reversale_rigaColl.size() - 1;
+    }
+
 }

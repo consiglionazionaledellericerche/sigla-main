@@ -22,44 +22,52 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.bp.IDocAmmEconomicaBP;
-import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleCupBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleCupIBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleSiopeCupBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleSiopeCupIBulk;
-import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Reversale_siopeBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBulk;
-import it.cnr.contab.doccont00.core.bulk.V_ass_doc_contabiliBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.docamm00.ejb.IDocumentoAmministrativoEntrataComponentSession;
+import it.cnr.contab.docamm00.ejb.IDocumentoAmministrativoSpesaComponentSession;
+import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
+import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.service.ContabiliService;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.action.GestioneUtenteAction;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
+import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.CRUDBP;
@@ -71,7 +79,7 @@ import it.cnr.jada.util.jsp.Button;
  * Business Process che gestisce le attività di CRUD per l'entita' Reversale
  */
 
-public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDocAmmEconomicaBP {
+public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDocAmmEconomicaBP, IDefferedUpdateSaldiBP {
 	private final SimpleDetailCRUDController documentiAttivi = new SimpleDetailCRUDController("DocumentiAttivi",it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk.class,"docAttiviColl",this);
 	private final CRUDReversaleRigaController documentiAttiviSelezionati = new CRUDReversaleRigaController("DocumentiAttiviSelezionati",it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk.class,"reversale_rigaColl",this);
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_etrBulk.class,"sospeso_det_etrColl",this);
@@ -99,6 +107,8 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	private final CollapsableDetailCRUDController movimentiAvere = new EconomicaAvereDetailCRUDController(this);
 	private boolean attivaEconomicaParallela = false;
 	private boolean supervisore = false;
+	public static final String REVERSALE_VARIAZIONE_BP = "CRUDReversaleVariazioneBP";
+	boolean isAbilitatoCrudRevesaleVariazioneBP = Boolean.FALSE;
 
 	public CRUDReversaleBP() {
 		super();
@@ -181,48 +191,76 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws BusinessProcessException {
 
 		super.basicEdit(context, bulk, doInitializeForEdit);
+		final ReversaleBulk reversaleBulk = Optional.ofNullable(getModel())
+				.filter(ReversaleBulk.class::isInstance)
+				.map(ReversaleBulk.class::cast)
+				.orElseThrow(() -> new BusinessProcessException("Reversale non trovata!"));
 
 		ReversaleComponentSession session = (ReversaleComponentSession) createComponentSession();
 
-		if (getStatus()!=VIEW){
-			ReversaleBulk reversale = (ReversaleBulk)getModel();
-			if ( reversale != null && !reversale.getCd_uo_origine().equals( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa( context ).getCd_unita_organizzativa()))
-			{
+		if (Optional.ofNullable(reversaleBulk.getStatoVarSos())
+				.map(s -> s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()) || s.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+				.orElse(Boolean.FALSE)) {
+			if (reversaleBulk.getStatoVarSos().equalsIgnoreCase(StatoVariazioneSostituzione.DA_VARIARE.value())) {
+				if (!isAbilitatoCrudRevesaleVariazioneBP) {
+					setModel(context, createEmptyModelForSearch(context));
+					setStatus(SEARCH);
+					setMessage(ERROR_MESSAGE, "Reversale in stato 'DA VARIARE', accesso non consentito!");
+				} else {
+					context.closeBusinessProcess();
+					CRUDReversaleVariazioneBP crudReversaleVariazioneBP =
+							Optional.ofNullable(context.createBusinessProcess("CRUDReversaleVariazioneBP", new Object[]{"M"}))
+									.filter(CRUDReversaleVariazioneBP.class::isInstance)
+									.map(CRUDReversaleVariazioneBP.class::cast)
+									.orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione della Reversale"));
+					crudReversaleVariazioneBP.setModel(context, reversaleBulk);
+					crudReversaleVariazioneBP.setStatus(EDIT);
+					context.addBusinessProcess(crudReversaleVariazioneBP);
+				}
+			} else {
 				setStatus(VIEW);
-				setMessage("Reversale creata dall'Unità Organizzativa " + reversale.getCd_uo_origine() + ". Non consentita la modifica.");
+				setMessage("La Reversale risulta in variazione definitiva. Non consentita la modifica.");
 			}
-			else if ( reversale != null &&  reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO )&& (reversale.getFl_riemissione()==null || !reversale.getFl_riemissione()))
-			{
-				setStatus(VIEW);
-				setMessage("Reversale annullata. Non consentita la modifica.");
-			}
-			else try {
-				if ( reversale != null &&  reversale.getTi_reversale().equals( ReversaleBulk.TIPO_TRASFERIMENTO) &&
-						Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), reversale.getEsercizio()).getFl_siope().equals(Boolean.TRUE))
+		} else {
+			if (getStatus()!=VIEW){
+				ReversaleBulk reversale = (ReversaleBulk)getModel();
+				if ( reversale != null && !reversale.getCd_uo_origine().equals( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa( context ).getCd_unita_organizzativa()))
 				{
 					setStatus(VIEW);
-					setMessage("Reversale di trasferimento. Non consentita la modifica.");
+					setMessage("Reversale creata dall'Unità Organizzativa " + reversale.getCd_uo_origine() + ". Non consentita la modifica.");
 				}
-				if (!session.isChiudibileReversaleProvvisoria(context.getUserContext(), reversale))
+				else if ( reversale != null &&  reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO )&& (reversale.getFl_riemissione()==null || !reversale.getFl_riemissione()))
 				{
 					setStatus(VIEW);
-					setMessage("Reversale Provvisoria relativa a Liquidazioni IVA ancora aperte. Non consentita la modifica.");
-				}
-				if ( reversale != null && !reversale.getStato_trasmissione().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO) && !reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ) )  
-				{
-					setStatus(VIEW);
-					setMessage("Verificare lo stato di trasmissione della reversale. Non consentita la modifica.");
-				}
-				else if( reversale != null  && reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ) && reversale.getFl_riemissione()!=null && reversale.getFl_riemissione() && !reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)){
-					setStatus(VIEW);
-					setMessage("Verificare lo stato di trasmissione della reversale annullata. Non consentita la modifica.");
-				}
-				else if (session.isRevProvvLiquidCoriCentroAperta(context.getUserContext(), reversale))
-				{
-					setMessage("Reversale Provvisoria relativa a Liquidazioni CORI ancora aperte. La modifica è comunque consentita.");
-				}
-			}catch(Exception e){
-				throw handleException(e);
+					setMessage("Reversale annullata. Non consentita la modifica.");
+				} else try {
+						if ( reversale != null &&  reversale.getTi_reversale().equals( ReversaleBulk.TIPO_TRASFERIMENTO) &&
+								Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), reversale.getEsercizio()).getFl_siope().equals(Boolean.TRUE))
+						{
+							setStatus(VIEW);
+							setMessage("Reversale di trasferimento. Non consentita la modifica.");
+						}
+						if (!session.isChiudibileReversaleProvvisoria(context.getUserContext(), reversale))
+						{
+							setStatus(VIEW);
+							setMessage("Reversale Provvisoria relativa a Liquidazioni IVA ancora aperte. Non consentita la modifica.");
+						}
+						if ( reversale != null && !reversale.getStato_trasmissione().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO) && !reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ) )
+						{
+							setStatus(VIEW);
+							setMessage("Verificare lo stato di trasmissione della reversale. Non consentita la modifica.");
+						}
+						else if( reversale != null  && reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO ) && reversale.getFl_riemissione()!=null && reversale.getFl_riemissione() && !reversale.getStato_trasmissione_annullo().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)){
+							setStatus(VIEW);
+							setMessage("Verificare lo stato di trasmissione della reversale annullata. Non consentita la modifica.");
+						}
+						else if (session.isRevProvvLiquidCoriCentroAperta(context.getUserContext(), reversale))
+						{
+							setMessage("Reversale Provvisoria relativa a Liquidazioni CORI ancora aperte. La modifica è comunque consentita.");
+						}
+					}catch(Exception e){
+						throw handleException(e);
+					}
 			}
 		}
 	}
@@ -279,20 +317,87 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	 */
 
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-		Button[] toolbar = new Button[9];
-		int i = 0;
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.search");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.freeSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.new");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.save");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.delete");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");	
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearchSiope");	
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.contabile");
-		toolbar = IDocAmmEconomicaBP.addPartitario(toolbar, attivaEconomicaParallela, isEditing(), getModel());
-		return toolbar;
+		final Properties properties = it.cnr.jada.util.Config.getHandler().getProperties(getClass());
+		Button[] buttons = Stream.concat(Arrays.asList(super.createToolbar()).stream(),
+				Arrays.asList(
+						new Button(properties, "CRUDToolbar.startSearchSiope"),
+						new Button(properties, "CRUDToolbar.contabile"),
+						new Button(properties, "CRUDToolbar.davariare"),
+						new Button(properties, "CRUDToolbar.save.variazione.sostituzione")
+				).stream()).toArray(Button[]::new);
+		buttons = IDocAmmEconomicaBP.addPartitario(buttons, attivaEconomicaParallela, isEditing(), getModel());
+		return  buttons;
 	}
+
+
+	public boolean isDaVariareButtonHidden() {
+		if (!isAbilitatoCrudRevesaleVariazioneBP)
+			return Boolean.TRUE;
+		final Optional<ReversaleBulk> reversaleBulk1 = Optional.ofNullable(getModel())
+				.filter(ReversaleBulk.class::isInstance)
+				.map(ReversaleBulk.class::cast)
+				.filter(reversaleBulk -> reversaleBulk.getCrudStatus() == OggettoBulk.NORMAL);
+		final boolean partitaDiGiro = Optional.ofNullable(getModel())
+				.filter(ReversaleBulk.class::isInstance)
+				.map(ReversaleBulk.class::cast)
+				.map(ReversaleBulk::getReversale_rigaColl)
+				.orElse(new BulkList<Reversale_rigaBulk>())
+				.stream()
+				.filter(Reversale_rigaBase::getFl_pgiro)
+				.findAny().isPresent();
+
+
+		return !isSupervisore() ||
+				partitaDiGiro ||
+				reversaleBulk1
+						.flatMap(reversaleBulk -> Optional.ofNullable(reversaleBulk.getEsitoOperazione()))
+						.map(s -> !Arrays.asList(
+								EsitoOperazione.ACQUISITO.value(),
+								EsitoOperazione.RISCOSSO.value(),
+								EsitoOperazione.REGOLARIZZATO.value()
+						).contains(s)).orElse(Boolean.TRUE)
+				|| reversaleBulk1
+				.map(reversaleBulk -> {
+					return Optional.ofNullable(reversaleBulk.getStatoVarSos())
+							.map(s -> Arrays.asList(
+									StatoVariazioneSostituzione.DA_VARIARE.value(),
+									StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value()
+							).contains(s))
+							.orElse(Boolean.FALSE);
+				}).orElse(Boolean.TRUE);
+	}
+
+	public boolean isDaVariare() {
+		return isSupervisore() &&
+				Optional.ofNullable(getModel())
+						.filter(ReversaleBulk.class::isInstance)
+						.map(ReversaleBulk.class::cast)
+						.flatMap(reversaleBulk -> Optional.ofNullable(reversaleBulk.getStatoVarSos()))
+						.map(s -> Arrays.asList(
+								StatoVariazioneSostituzione.DA_VARIARE.value()
+						).contains(s)).orElse(Boolean.FALSE);
+	}
+
+	public boolean isSalvaVariazioneSostituzioneButtonHidden() {
+		return !isDaVariare();
+	}
+
+	public void impostaReversaleDaVariare(ActionContext actionContext) throws it.cnr.jada.action.BusinessProcessException {
+		final ReversaleBulk reversaleBulk = Optional.ofNullable(getModel())
+				.filter(ReversaleBulk.class::isInstance)
+				.map(ReversaleBulk.class::cast)
+				.orElseThrow(() -> new BusinessProcessException("Reversale non trovata!"));
+		reversaleBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
+		reversaleBulk.setToBeUpdated();
+		try {
+			final OggettoBulk oggettoBulk = createComponentSession().modificaConBulk(actionContext.getUserContext(), reversaleBulk);
+			commitUserTransaction();
+			basicEdit(actionContext, oggettoBulk, true);
+		} catch (ComponentException | RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
 	/**
 	 * Gestisce l'annullamento di una Reversale.
 	 * @param context contesto dell'azione
@@ -459,6 +564,18 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 						)
 						;
 	}
+
+	@Override
+	public boolean isSaveButtonHidden() {
+		return super.isSaveButtonHidden() ||
+				Optional.ofNullable(getModel())
+						.filter(ReversaleBulk.class::isInstance)
+						.map(ReversaleBulk.class::cast)
+						.flatMap(reversaleBulk -> Optional.ofNullable(reversaleBulk.getStatoVarSos()))
+						.map(s -> s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
+						.orElse(Boolean.FALSE);
+	}
+
 	/**
 	 * Inzializza il ricevente nello stato di SEARCH.
 	 * @param context <code>ActionContext</code> in uso.
@@ -478,17 +595,24 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	 * @param context <code>ActionContext</code> in uso.
 	 */
 	public void save(ActionContext context) throws ValidationException,BusinessProcessException {
+		final ReversaleBulk reversaleBulk = Optional.ofNullable(getModel())
+				.filter(ReversaleBulk.class::isInstance)
+				.map(ReversaleBulk.class::cast)
+				.orElseThrow(() -> new ValidationException("Modello non trovato!"));
+		final boolean daVariare = isDaVariare();
 		if (getStatus()==CRUDBP.VIEW &&
-				isUoEnte() && 
-				!((ReversaleBulk)getModel()).getCd_uo_origine().equals(getUoSrivania().getCd_unita_organizzativa()) &&
-				((ReversaleBulk)getModel()).isSiopeDaCompletare()) {
+				isUoEnte() &&
+				!reversaleBulk.getCd_uo_origine().equals(getUoSrivania().getCd_unita_organizzativa()) && reversaleBulk.isSiopeDaCompletare()) {
 			setStatus(CRUDBP.EDIT);
 			super.save(context);
 			setStatus(CRUDBP.VIEW);
-		}
-		else
+		} else {
+			if (daVariare) {
+				reversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+				reversaleBulk.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value());
+			}
 			super.save(context);
-
+		}
 		this.setTab("tab", "tabReversale");
 	}
 	/**
@@ -520,6 +644,21 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			setReversaleIncassoAbilitata(UtenteBulk.isAbilitatoReversaleIncasso(actioncontext.getUserContext()));
 			setCup_attivo(parCnr.getFl_cup().booleanValue());
 			setSiope_cup_attivo(parCnr.getFl_siope_cup().booleanValue());
+			final CNRUserInfo cnrUserInfo = Optional.ofNullable(actioncontext)
+					.flatMap(actionContext -> Optional.ofNullable(actionContext.getUserInfo()))
+					.filter(CNRUserInfo.class::isInstance)
+					.map(CNRUserInfo.class::cast)
+					.orElseThrow(() -> new BusinessProcessException("Cannot find UserInfo in context"));
+			final Unita_organizzativa_enteBulk uoEnte = Optional.ofNullable(Utility.createUnita_organizzativaComponentSession().getUoEnte(actioncontext.getUserContext()))
+					.filter(Unita_organizzativa_enteBulk.class::isInstance)
+					.map(Unita_organizzativa_enteBulk.class::cast)
+					.orElseThrow(() -> new BusinessProcessException("Unita ENTE non trovata"));
+
+			isAbilitatoCrudRevesaleVariazioneBP = Optional.ofNullable(GestioneUtenteAction.getComponentSession()
+					.validaBPPerUtente(actioncontext.getUserContext(),
+							cnrUserInfo.getUtente(),
+							uoEnte.getCd_unita_organizzativa(), REVERSALE_VARIAZIONE_BP)).isPresent();
+
 		}
 		catch(Throwable throwable)
 		{
@@ -567,11 +706,15 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 							.isPresent() && !isInputReadonly() && getStatus()!= VIEW &&
 							Optional.ofNullable(reversaleBulk.getStato_trasmissione())
 								.filter(statoTrasmissione -> statoTrasmissione.equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO))
-								.isPresent()) || (
-										isUoEnte() && Optional.ofNullable(reversaleBulk.getCd_uo_origine())
-												.filter(uoOrigine -> !uoOrigine.equals(getUoSrivania().getCd_unita_organizzativa()))
-												.isPresent() && reversaleBulk.isSiopeDaCompletare()
-							);
+								.isPresent()
+							) || (
+									isUoEnte()
+									&& Optional.ofNullable(reversaleBulk.getCd_uo_origine()).filter(uoOrigine -> !uoOrigine.equals(getUoSrivania().getCd_unita_organizzativa())).isPresent()
+									&& reversaleBulk.isSiopeDaCompletare()
+							) ||
+							Optional.ofNullable(reversaleBulk.getStatoVarSos())
+								.filter(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
+								.isPresent();
 				}).orElse(false);
 	}
 
@@ -835,5 +978,254 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 
 	public boolean isButtonGeneraScritturaVisible() {
 		return this.isSupervisore();
+	}
+
+
+	private Reversale_rigaBulk getCurrentReversale_rigaBulk() throws BusinessProcessException {
+		return Optional.ofNullable(getDocumentiAttiviSelezionati().getModel())
+				.filter(Reversale_rigaBulk.class::isInstance)
+				.map(Reversale_rigaBulk.class::cast)
+				.orElseThrow(() -> new BusinessProcessException("Riga non selezionata!"));
+	}
+
+	public IDocumentoAmministrativoEntrataBulk getDocumentoAmministrativoCorrente(UserContext userContext) {
+		try {
+			return ((ReversaleComponentSession) createComponentSession()).getDocumentoAmministrativoEntrataBulk(
+					userContext,
+					getCurrentReversale_rigaBulk()
+			);
+		} catch (ComponentException | RemoteException | BusinessProcessException e) {
+			throw new DetailedRuntimeException(e);
+		}
+	}
+
+	private IDocumentoAmministrativoEntrataComponentSession getDocumentoAmministrativoEntrataComponentSession(String jndiName) throws BusinessProcessException {
+		return Optional.ofNullable(createComponentSession(jndiName))
+				.filter(IDocumentoAmministrativoEntrataComponentSession.class::isInstance)
+				.map(IDocumentoAmministrativoEntrataComponentSession.class::cast)
+				.orElseThrow(() -> new BusinessProcessException("Errore nella creazione dell'EJB"));
+	}
+
+	private Accertamento_scadenzarioBulk cambiaAccertamento(UserContext context, Reversale_rigaBulk reversaleRigaBulk,
+															IDocumentoAmministrativoEntrataBulk documentoAmministrativoEntrataBulk,
+															Accertamento_scadenzarioBulk accertamentoScadenzarioBulk) throws BusinessProcessException, RemoteException, ComponentException {
+		switch (documentoAmministrativoEntrataBulk.getCd_tipo_doc_amm()) {
+			case Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA: {
+				final IDocumentoAmministrativoEntrataComponentSession fatturaAttivaComponentSession =
+						getDocumentoAmministrativoEntrataComponentSession("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession");
+				Fattura_attivaBulk fatturaAttivaBulk = Optional.ofNullable(
+								fatturaAttivaComponentSession.inizializzaBulkPerModifica(context,
+										Optional.ofNullable(documentoAmministrativoEntrataBulk)
+												.filter(Fattura_attivaBulk.class::isInstance)
+												.map(Fattura_attivaBulk.class::cast)
+												.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Fattura!"))))
+						.filter(Fattura_attivaBulk.class::isInstance)
+						.map(Fattura_attivaBulk.class::cast)
+						.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Fattura!"));
+				final BulkList<Fattura_attiva_rigaBulk> fatturaAttivaDettColl = fatturaAttivaBulk.getFattura_attiva_dettColl();
+				final AtomicReference<Fattura_attiva_rigaBulk> fatturaAttivaRigaBulkAtomicReference = new AtomicReference<>();
+				for (Fattura_attiva_rigaBulk fatturaAttivaRigaBulk : fatturaAttivaDettColl) {
+					if (fatturaAttivaRigaBulk.getAccertamento_scadenzario().equalsByPrimaryKey(
+							new Accertamento_scadenzarioBulk(
+									reversaleRigaBulk.getCd_cds(),
+									reversaleRigaBulk.getEsercizio_accertamento(),
+									reversaleRigaBulk.getEsercizio_ori_accertamento(),
+									reversaleRigaBulk.getPg_accertamento(),
+									reversaleRigaBulk.getPg_accertamento_scadenzario()
+							)
+					)) {
+						fatturaAttivaRigaBulk.getAccertamento_scadenzario().setIm_associato_doc_contabile(BigDecimal.ZERO);
+						fatturaAttivaBulk.removeFromFattura_attiva_accertamentiHash(fatturaAttivaRigaBulk);
+						fatturaAttivaBulk.getDocumentiContabiliCancellati().add(fatturaAttivaRigaBulk.getAccertamento_scadenzario());
+
+						fatturaAttivaBulk.addToFattura_attiva_accertamentiHash(accertamentoScadenzarioBulk, fatturaAttivaRigaBulk);
+
+						fatturaAttivaRigaBulk.setAccertamento_scadenzario(accertamentoScadenzarioBulk);
+						fatturaAttivaRigaBulk.setToBeUpdated();
+						fatturaAttivaRigaBulkAtomicReference.set(fatturaAttivaRigaBulk);
+
+					}
+				}
+				fatturaAttivaBulk.setToBeUpdated();
+				final Fattura_attivaBulk fattura_attivaBulkNew = Optional.ofNullable(fatturaAttivaComponentSession.modificaConBulk(context, fatturaAttivaBulk))
+						.filter(Fattura_attivaBulk.class::isInstance)
+						.map(Fattura_attivaBulk.class::cast)
+						.orElseThrow(() -> new BusinessProcessException("Errore nell'aggiornamento della Fattura Attiva"));
+				return fattura_attivaBulkNew
+						.getFattura_attiva_dettColl()
+						.stream()
+						.filter(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk.equalsByPrimaryKey(fatturaAttivaRigaBulkAtomicReference.get()))
+						.findAny()
+						.map(Fattura_attiva_rigaBulk::getAccertamento_scadenzario)
+						.orElseThrow(() -> new BusinessProcessException("Accertamento sulla riga non trovato!"));
+			} case Numerazione_doc_ammBulk.TIPO_RIMBORSO: {
+				final CRUDComponentSession crudComponentSession = (CRUDComponentSession) createComponentSession("JADAEJB_CRUDComponentSession");
+				RimborsoBulk rimborsoBulk = Optional.ofNullable(
+								crudComponentSession.inizializzaBulkPerModifica(context,
+										Optional.ofNullable(documentoAmministrativoEntrataBulk)
+												.filter(RimborsoBulk.class::isInstance)
+												.map(RimborsoBulk.class::cast)
+												.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Rimborso!"))))
+						.filter(RimborsoBulk.class::isInstance)
+						.map(RimborsoBulk.class::cast)
+						.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Rimborso!"));
+
+				final Accertamento_scadenzarioBulk accertamentoScadenzarioOld = rimborsoBulk.getAccertamentoScadenzario();
+				accertamentoScadenzarioOld.setIm_associato_doc_amm(BigDecimal.ZERO);
+				accertamentoScadenzarioOld.setIm_associato_doc_contabile(BigDecimal.ZERO);
+				accertamentoScadenzarioOld.setToBeUpdated();
+				crudComponentSession.modificaConBulk(context, accertamentoScadenzarioOld);
+				if (accertamentoScadenzarioBulk.getPg_accertamento() < 0) {
+					AccertamentoComponentSession accertamentoComponentSession = (AccertamentoComponentSession) createComponentSession("CNRDOCCONT00_EJB_AccertamentoComponentSession");
+					final AccertamentoBulk accertamentoBulk = accertamentoComponentSession.aggiornaAccertamentiTemporanei(context, accertamentoScadenzarioBulk.getAccertamento());
+					accertamentoScadenzarioBulk = accertamentoBulk.getAccertamento_scadenzarioColl().get(0);
+				}
+				rimborsoBulk.setAccertamentoScadenzario(accertamentoScadenzarioBulk);
+				rimborsoBulk.setToBeUpdated();
+				crudComponentSession.modificaConBulk(context, rimborsoBulk);
+				return accertamentoScadenzarioBulk;
+			} default: {
+				final IDocumentoAmministrativoEntrataComponentSession documentoGenericoComponentSession =
+						getDocumentoAmministrativoEntrataComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession");
+				Documento_genericoBulk documentoGenericoAttivoBulk = Optional.ofNullable(
+								documentoGenericoComponentSession.inizializzaBulkPerModifica(context,
+										Optional.ofNullable(documentoAmministrativoEntrataBulk)
+												.filter(Documento_genericoBulk.class::isInstance)
+												.map(Documento_genericoBulk.class::cast)
+												.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"))))
+						.filter(Documento_genericoBulk.class::isInstance)
+						.map(Documento_genericoBulk.class::cast)
+						.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"));
+				final BulkList<Documento_generico_rigaBulk> documento_generico_dettColl = documentoGenericoAttivoBulk.getDocumento_generico_dettColl();
+				final AtomicReference<Documento_generico_rigaBulk> documentoGenericoRigaBulkAtomicReference = new AtomicReference<>();
+				for (Documento_generico_rigaBulk documentoGenericoRigaBulk : documento_generico_dettColl) {
+					if (documentoGenericoRigaBulk.getAccertamento_scadenziario().equalsByPrimaryKey(
+							new Accertamento_scadenzarioBulk(
+									reversaleRigaBulk.getCd_cds(),
+									reversaleRigaBulk.getEsercizio_accertamento(),
+									reversaleRigaBulk.getEsercizio_ori_accertamento(),
+									reversaleRigaBulk.getPg_accertamento(),
+									reversaleRigaBulk.getPg_accertamento_scadenzario()
+							)
+					)) {
+						documentoGenericoRigaBulk.getAccertamento_scadenziario().setIm_associato_doc_contabile(BigDecimal.ZERO);
+
+						documentoGenericoAttivoBulk.removeFromDocumento_generico_accertamentiHash(documentoGenericoRigaBulk);
+						documentoGenericoAttivoBulk.getDocumentiContabiliCancellati().add(documentoGenericoRigaBulk.getAccertamento_scadenziario());
+
+						documentoGenericoAttivoBulk.addToDocumento_generico_accertamentiHash(accertamentoScadenzarioBulk, documentoGenericoRigaBulk);
+
+						documentoGenericoRigaBulk.setAccertamento_scadenziario(accertamentoScadenzarioBulk);
+						documentoGenericoRigaBulk.setToBeUpdated();
+						documentoGenericoRigaBulkAtomicReference.set(documentoGenericoRigaBulk);
+					}
+				}
+				documentoGenericoAttivoBulk.setToBeUpdated();
+				final Documento_genericoBulk documento_genericoBulkNew = Optional.ofNullable(documentoGenericoComponentSession.modificaConBulk(context, documentoGenericoAttivoBulk))
+						.filter(Documento_genericoBulk.class::isInstance)
+						.map(Documento_genericoBulk.class::cast)
+						.orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"));
+
+				return documento_genericoBulkNew
+						.getDocumento_generico_dettColl()
+						.stream()
+						.filter(documentoGenericoRigaBulk -> documentoGenericoRigaBulk.equalsByPrimaryKey(documentoGenericoRigaBulkAtomicReference.get()))
+						.findAny()
+						.map(Documento_generico_rigaBulk::getAccertamento_scadenziario)
+						.orElseThrow(() -> new BusinessProcessException("Accertamento sulla riga non trovato!"));
+			}
+		}
+	}
+	public void cambiaAccertamentoScadenzario(ActionContext context, Reversale_rigaBulk reversaleRigaBulk, Accertamento_scadenzarioBulk scadenza) throws BusinessProcessException {
+		try {
+			/**
+			 * Cambio l'accertamento sul documento amministrativo collegato
+			 */
+			Accertamento_scadenzarioBulk accertamentoScadenzarioBulk =
+					Optional.ofNullable(
+							cambiaAccertamento(context.getUserContext(), reversaleRigaBulk, getDocumentoAmministrativoCorrente(context.getUserContext()), scadenza)
+					).orElse(scadenza);
+			/**
+			 * Aggiorno sul nuovo Accertamento gli importi
+			 */
+			CRUDComponentSession crudComponentSession = (CRUDComponentSession) createComponentSession("JADAEJB_CRUDComponentSession");
+			accertamentoScadenzarioBulk = (Accertamento_scadenzarioBulk) crudComponentSession.inizializzaBulkPerModifica(context.getUserContext(), accertamentoScadenzarioBulk);
+			accertamentoScadenzarioBulk.setIm_associato_doc_amm(reversaleRigaBulk.getIm_reversale_riga());
+			accertamentoScadenzarioBulk.setIm_associato_doc_contabile(reversaleRigaBulk.getIm_reversale_riga());
+			accertamentoScadenzarioBulk.setToBeUpdated();
+			accertamentoScadenzarioBulk = (Accertamento_scadenzarioBulk) crudComponentSession.modificaConBulk(context.getUserContext(), accertamentoScadenzarioBulk);
+
+			final Reversale_rigaBulk reversaleRigaClone = (Reversale_rigaBulk) reversaleRigaBulk.clone();
+			reversaleRigaClone.setReversale_siopeColl(new BulkList());
+			reversaleRigaClone.setReversaleCupColl(new BulkList());
+
+			Optional.ofNullable(
+							getDocumentiAttiviSelezionati().removeDetail(getDocumentiAttiviSelezionati().getModelIndex())
+					)
+					.filter(Reversale_rigaBulk.class::isInstance)
+					.map(Reversale_rigaBulk.class::cast)
+					.map(Reversale_rigaBulk::getReversale_siopeColl)
+					.map(BulkList::stream)
+					.orElse(Stream.empty())
+					.forEach(reversaleSiope -> {
+						reversaleSiope.setToBeDeleted();
+						for (ReversaleSiopeCupBulk reversaleSiopeCupBulk : reversaleSiope.getReversaleSiopeCupColl()) {
+							reversaleSiopeCupBulk.setToBeDeleted();
+						}
+					});
+
+			reversaleRigaClone.setEsercizio_accertamento(accertamentoScadenzarioBulk.getEsercizio());
+			reversaleRigaClone.setEsercizio_ori_accertamento(accertamentoScadenzarioBulk.getEsercizio_originale());
+			reversaleRigaClone.setPg_accertamento(accertamentoScadenzarioBulk.getPg_accertamento());
+			reversaleRigaClone.setPg_accertamento_scadenzario(accertamentoScadenzarioBulk.getPg_accertamento_scadenzario());
+			reversaleRigaClone.setElemento_voce(
+					(Elemento_voceBulk) Utility.createCRUDComponentSession().findByPrimaryKey(
+							context.getUserContext(),
+							new Elemento_voceBulk(
+									accertamentoScadenzarioBulk.getAccertamento().getCd_elemento_voce(),
+									accertamentoScadenzarioBulk.getAccertamento().getEsercizio(),
+									accertamentoScadenzarioBulk.getAccertamento().getTi_appartenenza(),
+									accertamentoScadenzarioBulk.getAccertamento().getTi_gestione()
+							)
+					)
+			);
+
+			reversaleRigaClone.getReversale_siopeColl().clear();
+			reversaleRigaClone.setCodici_siopeColl(
+					getReversaleComponentSession()
+							.setCodiciSIOPECollegabili(context.getUserContext(), reversaleRigaClone)
+							.getCodici_siopeColl()
+			);
+
+			getDocumentiAttiviSelezionati().
+					setModelIndex(context, getDocumentiAttiviSelezionati().addDetail(reversaleRigaClone));
+			codiciSiopeCollegabili.resync(context);
+			getModel().setToBeUpdated();
+			reversaleRigaClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+			setDirty(true);
+		} catch (ComponentException | RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
+
+	private ReversaleComponentSession getReversaleComponentSession() throws BusinessProcessException {
+		return Optional.ofNullable(createComponentSession())
+				.filter(ReversaleComponentSession.class::isInstance)
+				.map(ReversaleComponentSession.class::cast)
+				.orElseThrow(() -> new BusinessProcessException("Errore nella creazione dell'EJB"));
+	}
+
+	@Override
+	public IDefferUpdateSaldi getDefferedUpdateSaldiBulk() {
+		return Optional.ofNullable(getModel())
+				.filter(IDefferUpdateSaldi.class::isInstance)
+				.map(IDefferUpdateSaldi.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("Modello non presente o non implementa IDefferUpdateSaldi"));
+	}
+
+	@Override
+	public IDefferedUpdateSaldiBP getDefferedUpdateSaldiParentBP() {
+		return this;
 	}
 }

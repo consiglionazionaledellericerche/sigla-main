@@ -382,14 +382,14 @@ public class Reversale_rigaBulk extends Reversale_rigaBase {
     /**
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getReversale_siopeColl() {
+    public it.cnr.jada.bulk.BulkList<Reversale_siopeBulk> getReversale_siopeColl() {
         return reversale_siopeColl;
     }
 
     /**
      * @param newReversale_siopeColl it.cnr.jada.bulk.BulkList
      */
-    public void setReversale_siopeColl(it.cnr.jada.bulk.BulkList newReversale_siopeColl) {
+    public void setReversale_siopeColl(it.cnr.jada.bulk.BulkList<Reversale_siopeBulk> newReversale_siopeColl) {
         reversale_siopeColl = newReversale_siopeColl;
     }
 

@@ -17,7 +17,9 @@
 
 package it.cnr.contab.doccont00.ejb;
 
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoEntrataBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -572,6 +574,24 @@ public class TransactionalReversaleComponentSession extends it.cnr.jada.ejb.Tran
         }
     }
 
+    public it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk setCodiciSIOPECollegabili(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk) invoke("setCodiciSIOPECollegabili", new Object[]{
+                    param0,
+                    param1});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
     public byte[] lanciaStampa(UserContext userContext, String cds, Integer esercizio, Long pgReversale)
             throws PersistencyException, ComponentException, RemoteException {
         try {
@@ -698,5 +718,24 @@ public class TransactionalReversaleComponentSession extends it.cnr.jada.ejb.Tran
 			}
 		}
 	}
+
+    @Override
+    public IDocumentoAmministrativoEntrataBulk getDocumentoAmministrativoEntrataBulk(UserContext param0, Reversale_rigaBulk param1) throws ComponentException, RemoteException {
+        try {
+            return (IDocumentoAmministrativoEntrataBulk) invoke("getDocumentoAmministrativoEntrataBulk", new Object[]{
+                    param0,
+                    param1});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
 
 }

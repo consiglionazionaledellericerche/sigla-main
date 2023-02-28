@@ -307,6 +307,16 @@
         <init-param name="printbp" value="OfflineReportPrintBP"/>
     </businessProcess>
     <businessProcess
+            name="CRUDReversaleVariazioneBP" className="it.cnr.contab.doccont00.bp.CRUDReversaleVariazioneBP">
+        <forward name="default" path="/doccont00/main_reversale.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ReversaleIBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_reversale_terzoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ReversaleComponentSession"/>
+        <init-param name="defaultAction" value="CRUDReversaleAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+
+    <businessProcess
             name="ListaReversaliBP" className="it.cnr.contab.doccont00.bp.ListaReversaliBP">
         <forward name="default" path="/doccont00/lista_reversali.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ReversaleIBulk"/>

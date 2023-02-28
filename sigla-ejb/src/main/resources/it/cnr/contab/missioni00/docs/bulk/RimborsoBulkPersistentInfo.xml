@@ -33,8 +33,30 @@
 		<columnMapping
 			columnName="PG_ANTICIPO"
 			propertyName="anticipo.pg_anticipo" />
+
+		<columnMapping
+				columnName="CD_CDS_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+				columnName="ESERCIZIO_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.esercizio" />
+		<columnMapping
+				columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.esercizio_originale" />
+		<columnMapping
+				columnName="PG_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.pg_accertamento" />
+		<columnMapping
+				columnName="PG_ACCERTAMENTO_SCADENZARIO"
+				propertyName="accertamentoScadenzario.pg_accertamento_scadenzario" />
+
+
 	</defaultColumnMap>
 
 	<persistentProperty
 		name="anticipo" />
+	<persistentProperty
+		name="accertamentoScadenzario" />
+
+
 </SQLPersistentInfo>
