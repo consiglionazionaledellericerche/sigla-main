@@ -170,7 +170,7 @@ public class RimborsoBulk extends RimborsoBase implements IDocumentoCogeBulk, ID
 
     @Override
     public String getCd_tipo_doc_amm() {
-        return TipoDocumentoEnum.RIMBORSO.getValue();
+        return Numerazione_doc_ammBulk.TIPO_RIMBORSO;
     }
 
     @Override
@@ -260,38 +260,6 @@ public class RimborsoBulk extends RimborsoBase implements IDocumentoCogeBulk, ID
 	public void setScrittura_partita_doppia(Scrittura_partita_doppiaBulk scrittura_partita_doppia) {
 		this.scrittura_partita_doppia = scrittura_partita_doppia;
 	}
-
-    /**
-     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
-     */
-    @Override
-    public Timestamp getDtInizioLiquid() {
-        return null;
-    }
-
-    /**
-     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
-     */
-    @Override
-    public Timestamp getDtFineLiquid() {
-        return null;
-    }
-
-    /**
-     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
-     */
-    @Override
-    public String getTipoLiquid() {
-        return null;
-    }
-
-    /**
-     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
-     */
-    @Override
-    public Long getReportIdLiquid() {
-        return null;
-    }
 
     @Override
     public Timestamp getDt_contabilizzazione() {

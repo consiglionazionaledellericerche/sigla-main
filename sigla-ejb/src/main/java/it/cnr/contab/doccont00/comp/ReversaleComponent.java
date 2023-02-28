@@ -3908,4 +3908,12 @@ REVERSALE
             throw handleException(e);
         }
     }
+
+    public IDocumentoAmministrativoEntrataBulk getDocumentoAmministrativoEntrataBulk(UserContext userContext, Reversale_rigaBulk reversaleRigaBulk) throws ComponentException {
+        return Optional.ofNullable(getHome(userContext, reversaleRigaBulk.getClass()))
+                .filter(Reversale_rigaHome.class::isInstance)
+                .map(Reversale_rigaHome.class::cast)
+                .map(reversaleRigaHome -> reversaleRigaHome.getDocumentoAmministrativoBulk(userContext, reversaleRigaBulk))
+                .orElse(null);
+    }
 }

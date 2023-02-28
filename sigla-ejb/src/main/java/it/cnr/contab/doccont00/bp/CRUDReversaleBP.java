@@ -325,7 +325,6 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 						new Button(properties, "CRUDToolbar.davariare"),
 						new Button(properties, "CRUDToolbar.save.variazione.sostituzione")
 				).stream()).toArray(Button[]::new);
-		buttons = IDocAmmEconomicaBP.addPartitario(buttons, attivaEconomicaParallela, isEditing(), getModel());
 		return  buttons;
 	}
 
@@ -1179,7 +1178,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			reversaleRigaClone.setPg_accertamento(accertamentoScadenzarioBulk.getPg_accertamento());
 			reversaleRigaClone.setPg_accertamento_scadenzario(accertamentoScadenzarioBulk.getPg_accertamento_scadenzario());
 			reversaleRigaClone.setElemento_voce(
-					(Elemento_voceBulk) Utility.createCRUDComponentSession().findByPrimaryKey(
+					(Elemento_voceBulk) crudComponentSession.findByPrimaryKey(
 							context.getUserContext(),
 							new Elemento_voceBulk(
 									accertamentoScadenzarioBulk.getAccertamento().getCd_elemento_voce(),
