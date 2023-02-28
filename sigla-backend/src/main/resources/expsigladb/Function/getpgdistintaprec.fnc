@@ -40,7 +40,7 @@ BEGIN
 	    tipo_sac := CNRCTB020.TIPO_SAC;
 
 	 	  if aTipo_doc = 'M' then
-		 	  select dc.PG_DISTINTA into aPg
+		 	  select max(dc.PG_DISTINTA) into aPg
 			  from distinta_cassiere dc
 			  where dc.CD_CDS 		          = aCd_cds
 			    and dc.ESERCIZIO 	          = aEs
@@ -56,7 +56,7 @@ BEGIN
 								and dcd.cd_cds_origine      = aCds_origine
 								and dcd.PG_MANDATO 		   	   = aPg_doc);
 		  else
-		 	  select dc.PG_DISTINTA into aPg
+		 	  select max(dc.PG_DISTINTA) into aPg
 			  from distinta_cassiere dc
 			  where dc.CD_CDS 		          = aCd_cds
 			    and dc.ESERCIZIO 	          = aEs

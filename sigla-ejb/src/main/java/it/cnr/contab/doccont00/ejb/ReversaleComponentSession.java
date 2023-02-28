@@ -17,6 +17,10 @@
 
 package it.cnr.contab.doccont00.ejb;
 
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoEntrataBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
@@ -43,11 +47,13 @@ boolean isChiudibileReversaleProvvisoria(it.cnr.jada.UserContext param0, it.cnr.
 boolean isRevProvvLiquidCoriCentroAperta(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException;
 java.lang.Boolean isCollegamentoSiopeCompleto (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.doccont00.core.bulk.ReversaleBulk setCodiciSIOPECollegabili (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk setCodiciSIOPECollegabili (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 byte[] lanciaStampa( it.cnr.jada.UserContext userContext, String cds, Integer esercizio , Long pgReversale) throws PersistencyException, ComponentException, RemoteException, ParseException;
 it.cnr.contab.doccont00.core.bulk.ReversaleBulk annullaReversale(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1,boolean param2,boolean param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.String isAnnullabile(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean esisteAnnullodaRiemettereNonCollegato(it.cnr.jada.UserContext userContext,Integer esercizio, String cds )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean isReversaleCollegataAnnullodaRiemettere(it.cnr.jada.UserContext userContext,it.cnr.contab.doccont00.core.bulk.ReversaleBulk rev )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean isReversaleCORINonAssociataMandato(it.cnr.jada.UserContext userContext,it.cnr.contab.doccont00.core.bulk.ReversaleBulk rev )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+IDocumentoAmministrativoEntrataBulk getDocumentoAmministrativoEntrataBulk(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 
 }

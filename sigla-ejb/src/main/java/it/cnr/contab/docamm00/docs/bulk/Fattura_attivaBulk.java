@@ -58,7 +58,9 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @JsonInclude(value = Include.NON_NULL)
-public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements IDocumentoAmministrativoBulk, Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
+public abstract class Fattura_attivaBulk extends Fattura_attivaBase
+        implements IDocumentoAmministrativoEntrataBulk,
+        Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
         AllegatoParentBulk {
     public final static String BENEDUREVOLE = "B";
     public final static String CONTRATTO = "C";
@@ -2475,4 +2477,47 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public boolean isROpendenza() {
 		return isROPendenzaSearchTool() || getPendenzaPagopa() == null;
 	}
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public Timestamp getDtInizioLiquid() {
+        return null;
+    }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public Timestamp getDtFineLiquid() {
+        return null;
+    }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public String getTipoLiquid() {
+        return null;
+    }
+
+    /**
+     * Ritorna sempre valore null in quanto campo valido solo per liquidazioni
+     */
+    @Override
+    public Long getReportIdLiquid() {
+        return null;
+    }
+    public void setCd_tipo_doc_amm(java.lang.String newCd_tipo_doc_amm) {}
+
+    @Override
+    public void setCd_uo(String newCd_uo) {
+        setCd_unita_organizzativa(newCd_uo);
+    }
+
+    @Override
+    public void setPg_doc_amm(Long newPg) {
+        setPg_fattura_attiva(newPg);
+    }
 }

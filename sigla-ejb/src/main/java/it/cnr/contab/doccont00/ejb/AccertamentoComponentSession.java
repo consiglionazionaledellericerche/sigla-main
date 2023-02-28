@@ -19,6 +19,8 @@ package it.cnr.contab.doccont00.ejb;
 
 import javax.ejb.Remote;
 
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 @Remote
 public interface AccertamentoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession, it.cnr.jada.ejb.PrintComponentSession {
@@ -43,4 +45,5 @@ java.util.Vector listaCdrPerCapitoli (it.cnr.jada.UserContext aUC,it.cnr.contab.
 void validaContratto(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.AccertamentoBulk param1, it.cnr.contab.config00.contratto.bulk.ContrattoBulk param2, it.cnr.jada.persistency.sql.CompoundFindClause param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.PersistencyException;
 it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1, java.math.BigDecimal param2)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.PersistencyException;
 PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(it.cnr.jada.UserContext userContext, it.cnr.contab.doccont00.core.bulk.AccertamentoBulk accertamento) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.contab.doccont00.core.bulk.AccertamentoBulk aggiornaAccertamentiTemporanei(UserContext param0, it.cnr.contab.doccont00.core.bulk.AccertamentoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

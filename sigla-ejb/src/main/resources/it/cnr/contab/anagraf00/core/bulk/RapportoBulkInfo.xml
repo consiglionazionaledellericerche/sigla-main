@@ -44,6 +44,7 @@
 		name="find_tipo_rapporto"
 		label="Codice tipo rapporto"
 		property="tipo_rapporto"
+		formName="searchtool"
 		inputType="SEARCHTOOL"
 		readonlyProperty="notNew" />
 	<fieldProperty

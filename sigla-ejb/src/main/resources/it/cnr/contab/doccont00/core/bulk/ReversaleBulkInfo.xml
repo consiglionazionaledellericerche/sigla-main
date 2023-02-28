@@ -340,6 +340,17 @@
 			cols="100"
 			rows="3"
 			label="Errore"/>
+	<fieldProperty
+			name="statoVarSos"
+			property="statoVarSos"
+			keysProperty="statoVariazioneSostituzioneKeys"
+			inputType="SELECT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Stato Variazione/Sostituzione"/>
+
+
 	<formFieldProperty
 		name="dt_trasmissione" />
 	<formFieldProperty
@@ -407,6 +418,8 @@
 			name="dtOraEsitoOperazione" />
 	<formFieldProperty
 			name="erroreSiopePlus" />
+	<formFieldProperty
+			name="statoVarSos"/>
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -488,4 +501,7 @@
 			name="dtOraEsitoOperazione" />
 	<findFieldProperty
 			name="erroreSiopePlus" />
+	<findFieldProperty
+			name="statoVarSos" />
+
 </bulkInfo>

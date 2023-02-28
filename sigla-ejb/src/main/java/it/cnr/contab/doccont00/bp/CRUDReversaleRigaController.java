@@ -17,12 +17,16 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+
+import java.util.Optional;
 
 public class CRUDReversaleRigaController extends it.cnr.jada.util.action.SimpleDetailCRUDController {
     public CRUDReversaleRigaController(String name, Class modelClass, String listPropertyName, it.cnr.jada.util.action.FormController parent) {
@@ -58,6 +62,16 @@ public class CRUDReversaleRigaController extends it.cnr.jada.util.action.SimpleD
                     row.setToBeDeleted();
                 }
             }
+            return rigaDaCancellare;
+        } else if (
+                Optional.ofNullable(getParentModel())
+                        .filter(ReversaleBulk.class::isInstance)
+                        .map(ReversaleBulk.class::cast)
+                        .filter(reversaleBulk -> Optional.ofNullable(reversaleBulk.getStatoVarSos()).isPresent())
+                        .map(reversaleBulk -> reversaleBulk.getStatoVarSos().equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
+                        .orElse(Boolean.FALSE)){
+            rigaDaCancellare.setToBeDeleted();
+            ((ReversaleBulk) getParentModel()).removeFromReversale_rigaColl(index);
             return rigaDaCancellare;
         }
         // la riga e' già stata inserita nel db e il suo stato e' != da STATO_ANNULLATO --> aggiorno lo stato
@@ -125,6 +139,16 @@ public class CRUDReversaleRigaController extends it.cnr.jada.util.action.SimpleD
                         true,
                         "SIOPE - Vai a riga successiva da completare",
                         "btn-sm btn-outline-primary",
+                        isFromBootstrap);
+            }
+            if (bp.isDaVariare()) {
+                it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+                        context,
+                        isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
+                        "javascript:submitForm('doRicercaAccertamento')",
+                        true,
+                        "Cambia accertamento",
+                        "btn-sm btn-outline-primary btn-title",
                         isFromBootstrap);
             }
         }

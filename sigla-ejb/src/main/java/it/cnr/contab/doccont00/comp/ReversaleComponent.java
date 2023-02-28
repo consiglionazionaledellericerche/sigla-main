@@ -49,6 +49,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -3035,21 +3036,18 @@ REVERSALE
             }
 
             aggiornaImportoSospesi(userContext, reversale);
-		/*
-		Reversale_rigaBulk riga;
-		SaldoComponentSession session = createSaldoComponentSession();
-		//itera su tutte le righe
-		for ( Iterator i = reversale.getReversale_rigaColl().iterator(); i.hasNext(); )
-		{
-			riga = (Reversale_rigaBulk) i.next();
-			aggiornaImportoAccertamento(userContext, riga );
-
-			aggiornaCapitoloSaldoRiga( userContext, riga, session );
-		}
-		aggiornaStatoFattura( userContext, mandato );
-		*/
             reversale = (ReversaleBulk) super.modificaConBulk(userContext, reversale);
-            return bulk;
+            if (Optional.ofNullable(reversale.getStatoVarSos())
+                    .map(s -> s.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .orElse(Boolean.FALSE)) {
+                aggiornaImportoAccertamenti(userContext, reversale);
+                SaldoComponentSession session = createSaldoComponentSession(); //itera su tutte le righe
+                for (Iterator i = reversale.getReversale_rigaColl().iterator(); i.hasNext(); ) {
+                    Reversale_rigaBulk riga = (Reversale_rigaBulk) i.next();
+                    aggiornaCapitoloSaldoRiga(userContext, riga, session);
+                }
+            }
+            return reversale;
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -3584,7 +3582,7 @@ REVERSALE
      * @param riga        <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
      * @return riga <code>Reversale_rigaBulk</code> la riga reversale aggiornata
      */
-    private Reversale_rigaBulk setCodiciSIOPECollegabili(UserContext userContext, Reversale_rigaBulk riga) throws ComponentException {
+    public Reversale_rigaBulk setCodiciSIOPECollegabili(UserContext userContext, Reversale_rigaBulk riga) throws ComponentException {
         try {
             Reversale_rigaHome reversale_rigaHome = (Reversale_rigaHome) getHome(userContext, Reversale_rigaBulk.class);
 

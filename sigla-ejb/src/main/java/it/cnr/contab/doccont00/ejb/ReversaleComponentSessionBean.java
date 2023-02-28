@@ -17,8 +17,10 @@
 
 package it.cnr.contab.doccont00.ejb;
 
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoEntrataBulk;
 import it.cnr.contab.doccont00.comp.ReversaleComponent;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -359,24 +361,25 @@ public class ReversaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
         }
     }
 
-    //public  String lanciaStampa( it.cnr.jada.UserContext userContext, String cds, Integer esercizio , Long pgReversale) throws PersistencyException, ComponentException, RemoteException{
-//	pre_component_invocation(userContext,componentObj);
-//	try {
-//		String result=((ReversaleComponent)componentObj).lanciaStampa(userContext,cds,esercizio,pgReversale);
-//		component_invocation_succes(userContext,componentObj);
-//		return result;
-//	} catch(it.cnr.jada.comp.NoRollbackException e) {
-//		component_invocation_succes(userContext,componentObj);
-//		throw e;
-//	} catch(it.cnr.jada.comp.ComponentException e) {
-//		component_invocation_failure(userContext,componentObj);
-//		throw e;
-//	} catch(RuntimeException e) {
-//		throw uncaughtRuntimeException(userContext,componentObj,e);
-//	} catch(Error e) {
-//		throw uncaughtError(userContext,componentObj,e);
-//	}
-//}
+    public it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk setCodiciSIOPECollegabili(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk param1) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk result = ((ReversaleComponent) componentObj).setCodiciSIOPECollegabili(param0, param1);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
     public byte[] lanciaStampa(it.cnr.jada.UserContext userContext, String cds, Integer esercizio, Long pgReversale) throws PersistencyException, ComponentException, RemoteException, ParseException {
         pre_component_invocation(userContext, componentObj);
         try {
@@ -481,6 +484,26 @@ public class ReversaleComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
         pre_component_invocation(param0, componentObj);
         try {
             java.lang.Boolean result = ((ReversaleComponent) componentObj).isReversaleCORINonAssociataMandato(param0, param1);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    @Override
+    public IDocumentoAmministrativoEntrataBulk getDocumentoAmministrativoEntrataBulk(UserContext param0, Reversale_rigaBulk param1) throws ComponentException, RemoteException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            IDocumentoAmministrativoEntrataBulk result = ((ReversaleComponent) componentObj).getDocumentoAmministrativoEntrataBulk(param0, param1);
             component_invocation_succes(param0, componentObj);
             return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {

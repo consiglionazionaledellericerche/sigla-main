@@ -131,12 +131,15 @@
 		name="cd_profilo" />
 	<columnFieldProperty
 		name="ds_inquadramento" />
+
 	<columnFieldProperty
 		name="cd_tipo_rapporto" />
 	<columnFieldProperty
 		name="pg_rif_inquadramento" />
 	<columnFieldProperty
+		label="Tipo Rapporto"
 		name="rif_inquadramento" />
+
 	<columnFieldProperty
 		name="dt_ini_validita" />
 	<columnFieldProperty 

@@ -20,10 +20,7 @@
 
 <table border="0" cellspacing="0" cellpadding="2" align=center>
 <tr>
-  <td><% bp.getCrudRapporti().writeFormLabel(out,"cd_tipo_rapporto");%></td>
-  <td><% bp.getCrudRapporti().writeFormInput(out,"cd_tipo_rapporto");%>
-  <td><% bp.getCrudRapporti().writeFormInput(out,"ds_tipo_rapporto");%>
-  <td><% bp.getCrudRapporti().writeFormInput(out,"find_tipo_rapporto");%></td>
+  <% bp.getCrudRapporti().writeFormField(out,"find_tipo_rapporto");%>
 </tr>
 <tr>
   <td><% bp.getCrudRapporti().writeFormLabel(out,"dt_ini_validita");%></td>

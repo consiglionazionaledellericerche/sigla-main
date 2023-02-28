@@ -2689,8 +2689,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                                     rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate()
                                             );
                                             logger.info(personaEntitaOrganizzativaDto.toString());
-                                            final PersonaEntitaOrganizzativaWebDto personaEntitaOrganizzativaWebDto =
-                                                    aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+                                            aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
                                         }
                                     }
                                 }
@@ -2704,9 +2703,13 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 }
             }
         } catch (Throwable e) {
-            String error = "Per la persona con codice fiscale: " + anagraficoBulk.getCodice_fiscale() + " è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: " + e.getMessage();
-            logger.error(error);
-            SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con codice fiscale " + anagraficoBulk.getCodice_fiscale(), error);
+            String message = "Per la persona con codice fiscale: " + anagraficoBulk.getCodice_fiscale() + " è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: " + e.getMessage();
+            if (e instanceof FeignException.NotFound) {
+                logger.warn(message);
+            } else {
+                logger.error(message);
+                SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con codice fiscale " + anagraficoBulk.getCodice_fiscale(), message);
+            }
         }
     }
 

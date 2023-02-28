@@ -224,10 +224,10 @@ public abstract class Reversale_siopeBulk extends Reversale_siopeBase {
 		it.cnr.contab.config00.bulk.Codici_siopeBulk codice_siope = this.getCodice_siope();
 		if (codice_siope != null) this.getCodice_siope().setCd_siope(cd_siope);
 	}
-	public BulkList getReversaleSiopeCupColl() {
+	public BulkList<ReversaleSiopeCupBulk> getReversaleSiopeCupColl() {
 		return reversaleSiopeCupColl;
 	}
-	public void setReversaleSiopeCupColl(BulkList reversaleSiopeCupColl) {
+	public void setReversaleSiopeCupColl(BulkList<ReversaleSiopeCupBulk> reversaleSiopeCupColl) {
 		this.reversaleSiopeCupColl = reversaleSiopeCupColl;
 	}
 	
