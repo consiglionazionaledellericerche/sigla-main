@@ -4698,7 +4698,7 @@ public class DistintaCassiereComponent extends
         Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
                 .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
                 .orElse(Boolean.FALSE);
-        if (bulk.isReversale()) {
+        if (bulk.isReversale() && !isVariazioneDefinitiva) {
             isVariazioneDefinitiva = Optional.ofNullable(getHome(userContext, V_mandato_reversaleBulk.class)
                 .findByPrimaryKey(
                         new V_mandato_reversaleBulk(
