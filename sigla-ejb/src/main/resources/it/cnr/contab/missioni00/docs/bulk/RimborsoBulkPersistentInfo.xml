@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoBulk"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoHome" >
+	
+	<defaultColumnMap tableName="RIMBORSO">
+		<columnMapping
+			columnName="CD_CDS_ANTICIPO"
+			propertyName="anticipo.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_ANTICIPO"
+			propertyName="anticipo.esercizio"/>
+		<columnMapping
+			columnName="CD_UO_ANTICIPO"
+			propertyName="anticipo.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_ANTICIPO"
+			propertyName="anticipo.pg_anticipo" />
+
+		<columnMapping
+				columnName="CD_CDS_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+				columnName="ESERCIZIO_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.esercizio" />
+		<columnMapping
+				columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.esercizio_originale" />
+		<columnMapping
+				columnName="PG_ACCERTAMENTO"
+				propertyName="accertamentoScadenzario.accertamento.pg_accertamento" />
+		<columnMapping
+				columnName="PG_ACCERTAMENTO_SCADENZARIO"
+				propertyName="accertamentoScadenzario.pg_accertamento_scadenzario" />
+
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="anticipo" />
+	<persistentProperty
+		name="accertamentoScadenzario" />
+
+
+</SQLPersistentInfo>
