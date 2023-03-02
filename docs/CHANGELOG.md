@@ -1,3 +1,27 @@
+## Release 6.5.30  -- _March 02, 2023_ 
+**Changes**
+
+>**Aggiunta la colonna ds_atto nella ricerca dei contratti**
+>
+>[beed195934b8949](https://github.com/consiglionazionaledellericerche/sigla-main/commit/beed195934b8949) marco.spasiano *March 02, 2023*
+
+>**Aggiunta la possibilità di variare le reversali già trasmesse a SIOPE+**
+>
+>[ac64f5088411035](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac64f5088411035) marco.spasiano *March 01, 2023*
+
+>**Aggiunta la possibilità di variare le reversali già trasmesse a SIOPE+**
+>
+>[e616c95c3b55593](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e616c95c3b55593) marco.spasiano *March 01, 2023*
+
+>**Aggiunta la possibilità di variare le reversali già trasmesse a SIOPE+**
+>
+>[78d56561e01bc22](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78d56561e01bc22) marco.spasiano *February 28, 2023*
+
+>**Aggiunta la possibilità di variare le reversali già trasmesse a SIOPE+**
+>
+>[09ed338fc80c359](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09ed338fc80c359) marco.spasiano *February 28, 2023*
+
+
 ## Release 6.5.29  -- _February 09, 2023_ 
 **Changes**
 
