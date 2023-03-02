@@ -974,6 +974,8 @@
         <columnFieldProperty
                 name="fl_pubblica_contratto" />
         <columnFieldProperty
+                name="ds_atto"/>
+        <columnFieldProperty
                 name="oggetto"/>
         <columnFieldProperty
                 name="natura_contabile"/>
