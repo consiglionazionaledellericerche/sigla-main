@@ -12,3 +12,4 @@ log
 /Makefile
 /_build/
 /sigla-web/src/main/webapp/tmp/
+.run
