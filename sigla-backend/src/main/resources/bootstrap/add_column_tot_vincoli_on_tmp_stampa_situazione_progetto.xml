@@ -22,7 +22,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet author="raffaele.pagano" id="add_column_tot_vincoli_on_tmp_stampa_situazione_progetto">
+    <changeSet author="raffaele.pagano" dbms="oracle" id="add_column_tot_vincoli_on_tmp_stampa_situazione_progetto">
         <addColumn tableName="TMP_STAMPA_SITUAZIONE_PROGETTI">
             <column name="TOT_VINCOLI" type="NUMERIC(15,2)" remarks="Totale vincoli presenti nella tabella PDG_VINCOLI."/>
         </addColumn>
