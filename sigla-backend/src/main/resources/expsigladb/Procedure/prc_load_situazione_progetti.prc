@@ -51,7 +51,7 @@ Begin
           CD_UNITA_PIANO, CD_VOCE_PIANO, DS_VOCE_PIANO,
           CD_LINEA_ATTIVITA, DS_LINEA_ATTIVITA,
           CD_ELEMENTO_VOCE, DS_ELEMENTO_VOCE, TIPO_RECORD,
-          STANZIAMENTO_ACC, VARIAZIONI_ACC, STANZIAMENTO_DEC, VARIAZIONI_DEC,
+          STANZIAMENTO_ACC, VARIAZIONI_ACC, STANZIAMENTO_DEC, VARIAZIONI_DEC, TOT_VINCOLI,
           TOT_IMPACC, TOT_MANREV, TOT_NUMMOV, TOT_NUMMOV_OBBACC, TOT_NUMMOV_VARIAZIONI)
       (SELECT P_ESERCIZIO, p.esercizio_res, p.tipo,
               P_CENTRO_RESPONSABILITA, P_PG_PROGLIV2,
@@ -80,7 +80,7 @@ Begin
                    END ds_elemento_voce,
               P_REC_PRINCIPALE,
               p.stanziamento_acc, p.variazioni_acc,
-              p.stanziamento, p.variazioni,
+              p.stanziamento, p.variazioni, p.vincoli,
               p.impacc, p.pagris, p.nummov, 0, 0
        FROM (SELECT a.tipo, a.esercizio_res, a.cd_unita_piano, a.cd_voce_piano,
                     a.cd_linea_attivita, a.cd_elemento_voce,
@@ -88,6 +88,7 @@ Begin
                     sum(a.variazioni_acc) variazioni_acc,
                     sum(a.stanziamento) stanziamento,
                     sum(a.variazioni) variazioni,
+                    sum(a.vincoli) vincoli,
                     sum(CASE WHEN a.esercizio=P_ESERCIZIO
                              THEN a.impacc
                              ELSE (CASE WHEN a.impacc<a.pagris
@@ -129,6 +130,7 @@ Begin
                                THEN NVL(VAR_PIU,0)-NVL(VAR_MENO,0)
                                ELSE 0
                                END variazioni,
+                          0 vincoli,
                           CASE WHEN esercizio = esercizio_res
                                THEN NVL(ACC_COMP,0)
                                ELSE NVL(ACC_RES_PRO,0)+
@@ -197,6 +199,16 @@ Begin
                                ELSE NVL(VAR_PIU_STANZ_RES_IMP,0)-NVL(VAR_MENO_STANZ_RES_IMP,0)
                                END variazioni,
                           CASE WHEN esercizio = esercizio_res
+                               THEN cnrutl002.IM_VINCOLI(P_ESERCIZIO,
+                                       v_cons_disp_comp_res.ESERCIZIO_RES,
+                                       v_cons_disp_comp_res.CDR,
+                                       v_cons_disp_comp_res.LDA,
+                                       'D',
+                                       'S',
+                                       v_cons_disp_comp_res.cd_elemento_voce)
+                               ELSE 0
+                               END vincoli,
+                          CASE WHEN esercizio = esercizio_res
                                THEN NVL(OBB_COMP,0)
                                ELSE NVL(OBB_RES_IMP,0)+NVL(OBB_RES_PRO,0)+
                                     NVL(VAR_PIU_RES_PRO,0)-NVL(VAR_MENO_RES_PRO,0)
@@ -261,7 +273,7 @@ Begin
                                NVL (a.im_spese_gest_accentrata_int, 0) + NVL (a.im_spese_gest_accentrata_est, 0),
                                0) stanziamento_acc,
                           0 variazioni_acc,
-                          0 stanziamento, 0 variazioni, 0 impegnato, 0 pagato,
+                          0 stanziamento, 0 variazioni, 0 vincoli, 0 impegnato, 0 pagato,
                           CASE WHEN P_ROTTURA_PIANO='S' AND
                                     (NVL(a.im_spese_gest_accentrata_int,0)!=0 OR
                                      NVL(a.im_spese_gest_accentrata_est,0)!=0)
@@ -317,7 +329,7 @@ Begin
                           DECODE(b.cd_cdr_assegnatario_clgs, NULL,
                                  NVL (b.im_spese_gest_accentrata_int, 0) + NVL (b.im_spese_gest_accentrata_est, 0),
                                  0) variazioni_acc,
-                          0 stanziamento, 0 variazioni, 0 impegnato, 0 pagato,
+                          0 stanziamento, 0 variazioni, 0 vincoli, 0 impegnato, 0 pagato,
                           CASE WHEN P_ROTTURA_PIANO='S' AND
                                     (NVL(b.im_spese_gest_accentrata_int,0)!=0 OR
                                      NVL(b.im_spese_gest_accentrata_est,0)!=0)
@@ -376,7 +388,7 @@ Begin
                                END cd_elemento_voce,
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
-                          0 impegnato, 0 pagato, 1 contamov
+                          0 vincoli, 0 impegnato, 0 pagato, 1 contamov
                    FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
@@ -434,7 +446,7 @@ Begin
                                END cd_elemento_voce,
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
-                          0 impegnato, 0 pagato, 1 contamov
+                          0 vincoli, 0 impegnato, 0 pagato, 1 contamov
                    FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
@@ -493,7 +505,7 @@ Begin
                                END cd_elemento_voce,
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
-                          0 impegnato, 0 pagato, 1 contamov
+                          0 vincoli, 0 impegnato, 0 pagato, 1 contamov
                    FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
@@ -551,7 +563,7 @@ Begin
                                END cd_elemento_voce,
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
-                          0 impegnato, 0 pagato, 1 contamov
+                          0 vincoli, 0 impegnato, 0 pagato, 1 contamov
                    FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
@@ -609,7 +621,7 @@ Begin
                                ELSE 'VOCE_UNICA'
                                END cd_elemento_voce,
                           0 stanziamento_acc, 0 variazioni_acc,
-                          NVL(a.im_residuo, 0), 0 variazioni, 0 impegnato, 0 pagato, 1 contamov
+                          NVL(a.im_residuo, 0), 0 variazioni, 0 vincoli, 0 impegnato, 0 pagato, 1 contamov
                    FROM pdg_residuo_det a, v_linea_attivita_valida b, ass_progetto_piaeco_voce c
                    WHERE a.esercizio = 2005
                    AND   a.stato != 'A'
