@@ -1,5 +1,21 @@
-## Release 6.5.30  -- _March 02, 2023_ 
+## Release 6.5.31  -- _March 24, 2023_ 
 **Changes**
+
+>**Per la distinta estera non SEPA viene inizializzato il flag di invio PEC a false**
+>
+>[aa4df364d4bb8f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aa4df364d4bb8f6) marco.spasiano *March 24, 2023*
+
+>**Fix tests**
+>
+>[2d7295d33a58f10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2d7295d33a58f10) raffaelepagano *March 23, 2023*
+
+>**Aggiornato gitignore**
+>
+>[8942a06d5bb3bbc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8942a06d5bb3bbc) raffaelepagano *March 23, 2023*
+
+>**Stampa Situazione Progetti: adeguamento stampa ai vincoli sulle spese (PDG_VINCOLO)**
+>
+>[80b70d2d8120441](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80b70d2d8120441) raffaelepagano *March 23, 2023*
 
 >**Aggiunta la colonna ds_atto nella ricerca dei contratti**
 >
