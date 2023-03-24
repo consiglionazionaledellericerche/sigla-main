@@ -562,6 +562,7 @@
         <init-param name="flusso" value="false"/>
         <init-param name="sepa" value="true"/>
         <init-param name="annulli" value="false"/>
+        <init-param name="inviapec" value="false"/>
     </businessProcess>
     <businessProcess
             name="CRUDDistintaCassiereABP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">

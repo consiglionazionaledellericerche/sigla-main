@@ -389,18 +389,17 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 
 		setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
 		setUnita_organizzativa( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
-		setInviaPEC(Boolean.TRUE);
 		if(bp instanceof CRUDDistintaCassiereBP){
 			setFl_flusso(((CRUDDistintaCassiereBP)bp).isFlusso());
 			setFl_sepa(((CRUDDistintaCassiereBP)bp).isSepa());
 			setFl_annulli(((CRUDDistintaCassiereBP)bp).isAnnulli());
-		}
-		else {
+			setInviaPEC(((CRUDDistintaCassiereBP)bp).isInviapec());
+		} else {
 			setFl_flusso(Boolean.FALSE);
 			setFl_sepa(Boolean.FALSE);
 			setFl_annulli(Boolean.FALSE);
+			setInviaPEC(Boolean.FALSE);
 		}
-
 		return this;
 	}
 	/**

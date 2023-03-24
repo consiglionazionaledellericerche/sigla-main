@@ -132,6 +132,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     public Boolean flusso;
     public Boolean sepa;
     public Boolean annulli;
+    public Boolean inviapec = Boolean.TRUE;
     protected DocumentiContabiliService documentiContabiliService;
     protected OrdinativiSiopePlusService ordinativiSiopePlusService;
     protected String controlloCodiceFiscale;
@@ -276,6 +277,9 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             this.setFlusso(new Boolean(config.getInitParameter("flusso")));
             this.setSepa(new Boolean(config.getInitParameter("sepa")));
             this.setAnnulli(new Boolean(config.getInitParameter("annulli")));
+            Optional.ofNullable(config.getInitParameter("inviapec"))
+                    .map(s -> new Boolean(s))
+                    .ifPresent(aBoolean -> this.setInviapec(aBoolean));
 
             setParametriCnr(Utility.createParametriCnrComponentSession()
                     .getParametriCnr(
@@ -2293,6 +2297,14 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
 
     public boolean isAttivoSiopeplus() {
         return attivoSiopeplus;
+    }
+
+    public Boolean isInviapec() {
+        return inviapec;
+    }
+
+    public void setInviapec(Boolean inviapec) {
+        this.inviapec = inviapec;
     }
 
     public void generaFlussoSeRifiutato(ActionContext actionContext) throws BusinessProcessException {
