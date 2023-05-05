@@ -17,6 +17,7 @@
 
 package it.cnr.contab.pagopa.comp;
 
+import feign.FeignException;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -102,9 +103,13 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			movimentoCassaPagopa.setCausale(movimentoContoEvidenzaBulk.getCausale());
 			movimentoCassaPagopa.setImporto(movimentoContoEvidenzaBulk.getImporto());
 			movimentoCassaPagopa.setSct(movimentoContoEvidenzaBulk.getIdentificativoFlusso());
-			try  {
+			try {
 				movimentoCassaPagopa = pagopaService.get().riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
 				logger.info(movimentoCassaPagopa.toString());
+			} catch (FeignException.UnprocessableEntity _ex) {
+				String error = "pagoPA: Errore durante la chiamata per la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso() +" "+_ex.getMessage();
+				logger.error(error);
+				SendMail.sendErrorMail("pagoPA: Errore durante la chiamata per la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso(), error);
 			} catch (HttpClientErrorException.BadRequest e ){
 				String error = "pagoPA: Errore durante la chiamata per la riconciliazione dell'incasso: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso() +" "+e.getMessage();
 				logger.error(error);
@@ -136,7 +141,6 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				String error = "pagoPA: Errore durante la riconciliazione dell'incasso, riscossione non trovata: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso();
 				logger.error(error);
 				SendMail.sendErrorMail("pagoPA: Errore durante riconciliazione dell'incasso, riscossione non trovata: "  + movimentoContoEvidenzaBulk.getIdentificativoFlusso(), error);
-				throw new ComponentException(error);
 			}
 			return null;
 		} catch (Throwable t) {
