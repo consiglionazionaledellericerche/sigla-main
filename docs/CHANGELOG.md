@@ -1,5 +1,9 @@
-## Release 6.5.31  -- _March 24, 2023_ 
+## Release 6.5.32  -- _May 05, 2023_ 
 **Changes**
+
+>**FIX pendenze pagoPA**
+>
+>[d4e4b124e9aa68c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4e4b124e9aa68c) marco.spasiano *May 05, 2023*
 
 >**Per la distinta estera non SEPA viene inizializzato il flag di invio PEC a false**
 >
