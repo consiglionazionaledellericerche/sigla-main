@@ -193,7 +193,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		fields.add(valorizzaField(pdAcroForm, "INDIRIZZO BENEFICIARIO", lettera.getIndirizzo_beneficiario(), true));
 		fields.add(valorizzaField(pdAcroForm, "INDIRIZZO BENEFICIARIO_2", "", true));
 		fields.add(valorizzaField(pdAcroForm, "ANAGRAFICA BANCA BENEFICIARIA Opzionale", lettera.getIndirizzo(), true));
-		fields.add(valorizzaField(pdAcroForm, "IBAN o CONTO BENEFICIARIO", lettera.getIban(), false));
+		fields.add(valorizzaField(pdAcroForm, "IBAN o CONTO BENEFICIARIO", lettera.getIban(), true));
 		fields.add(valorizzaField(pdAcroForm, "BIC BANCA BENEFICIARIA o CODICI ROUTING", lettera.getIndirizzo_swift(), false));
 		fields.add(valorizzaField(pdAcroForm, "BIC BANCA INTERMEDIARIA Opzionale", Optional.ofNullable(lettera.getBic_banca_intermediaria()).orElse(""), false));
 		fields.add(valorizzaField(pdAcroForm, "CAUSALE DEL PAGAMENTO", lettera.getMotivo_pag(), true));
