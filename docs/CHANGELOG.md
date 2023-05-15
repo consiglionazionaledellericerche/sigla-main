@@ -1,3 +1,11 @@
+## Release 6.5.33  -- _May 15, 2023_ 
+**Changes**
+
+>**FIX IBAN o CONTO BENEFICIARIO nel documento 1210**
+>
+>[9478c3f7b6d49bd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9478c3f7b6d49bd) marco.spasiano *May 15, 2023*
+
+
 ## Release 6.5.32  -- _May 05, 2023_ 
 **Changes**
 
