@@ -96,6 +96,11 @@
 	    keysProperty="ruoloKeys"
 	    enabledOnSearch="true"
 	    label="Ruolo RTI" />
+	<fieldProperty
+		name="fl_offerta_presentata"
+		property="fl_offerta_presentata"
+		inputType="CHECKBOX"
+		label="Offerta Presentata" />
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -117,7 +122,10 @@
 	<formFieldProperty
 		name="ruolo" />	
 	<formFieldProperty
-		name="denominazione_rti" />	
+		name="denominazione_rti" />
+	<formFieldProperty
+		name="fl_offerta_presentata" />
+
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -135,7 +143,10 @@
 	<findFieldProperty
 		name="ruolo" />	
 	<findFieldProperty
-		name="denominazione_rti" />	
+		name="denominazione_rti" />
+	<findFieldProperty
+		name="fl_offerta_presentata" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -153,7 +164,10 @@
 	<columnFieldProperty
 		name="ruolo" />	
 	<columnFieldProperty
-		name="denominazione_rti" />	
+		name="denominazione_rti" />
+	<columnFieldProperty
+		name="fl_offerta_presentata" />
+
 	<columnSet name="ditte">
 		<columnFieldProperty
 			name="denominazione"/>
@@ -164,6 +178,8 @@
 		<columnFieldProperty
 			name="ruolo"/>		
 		<columnFieldProperty
-			name="denominazione_rti"/>	
-	</columnSet>			
+			name="denominazione_rti"/>
+		<columnFieldProperty
+			name="fl_offerta_presentata" />
+	</columnSet>
 </bulkInfo>

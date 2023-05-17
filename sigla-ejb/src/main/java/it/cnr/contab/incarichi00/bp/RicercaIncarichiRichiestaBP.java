@@ -509,9 +509,15 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 							dato =ditteInvRag.getRuolo(); 					
 							ruolo.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 							ditta.appendChild(ruolo);
+
+							Element offerta_presentata = xmldoc.createElement(getTagRadice()+":offerta_presentata");
+							dato =ditteInvRag.getFl_offerta_presentata()?"true":"false";
+							offerta_presentata.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+							ditta.appendChild(offerta_presentata);
+
 							oldRag=ditteInvRag.getDenominazione_rti();
 							raggruppamento.appendChild(ditta);
-						} // ditteInv denominazioneRti = ditteInvRag denominazioneRti									    	
+						} // ditteInv denominazioneRti = ditteInvRag denominazioneRti
 					}  // for ditteInvRag 
 					  ditte.appendChild(raggruppamento);
 				}  // if rti e nuovorag o cambio rag
@@ -533,7 +539,12 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 					dato =ditteInv.getId_fiscale(); 					
 					id_fiscale.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 					ditta.appendChild(id_fiscale);
-					
+
+					Element offerta_presentata = xmldoc.createElement(getTagRadice()+":offerta_presentata");
+					dato =ditteInv.getFl_offerta_presentata()?"true":"false";
+					offerta_presentata.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+					ditta.appendChild(offerta_presentata);
+
 					ditte.appendChild(ditta);	
 				}	
 			}

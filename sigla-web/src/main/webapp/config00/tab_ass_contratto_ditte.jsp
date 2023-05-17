@@ -57,4 +57,8 @@
 	        <td><% controller.writeFormLabel(out,"default","ruolo"); %></td>
 	        <td><% controller.writeFormInput(out,"default","ruolo"); %></td>
 		</tr>	
+		<tr>
+	        <td><% controller.writeFormLabel(out,"default","fl_offerta_presentata"); %></td>
+	        <td><% controller.writeFormInput(out,"default","fl_offerta_presentata"); %></td>
+		</tr>
 </table>

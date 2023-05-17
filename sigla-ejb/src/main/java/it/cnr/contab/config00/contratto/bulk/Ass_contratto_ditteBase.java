@@ -28,7 +28,8 @@ public class Ass_contratto_ditteBase extends Ass_contratto_ditteKey implements K
 	java.lang.String codice_fiscale;
 	java.lang.String id_fiscale;
 	java.lang.String ruolo;
-	
+	private Boolean fl_offerta_presentata;
+
 	public Ass_contratto_ditteBase() {
 		super();
 	}
@@ -70,5 +71,13 @@ public class Ass_contratto_ditteBase extends Ass_contratto_ditteKey implements K
 	}
 	public void setRuolo(java.lang.String ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public Boolean getFl_offerta_presentata() {
+		return fl_offerta_presentata;
+	}
+
+	public void setFl_offerta_presentata(Boolean fl_offerta_presentata) {
+		this.fl_offerta_presentata = fl_offerta_presentata;
 	}
 }

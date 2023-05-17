@@ -57,7 +57,14 @@
 			propertyName="id_fiscale"
 			sqlTypeName="VARCHAR"
 			columnSize="30"
-			nullable="true" />	
+			nullable="true" />
+		<columnMapping
+			columnName="FL_OFFERTA_PRESENTATA"
+			propertyName="fl_offerta_presentata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
@@ -101,6 +108,8 @@
 		name="codice_fiscale" />
 	<persistentProperty
 		name="id_fiscale" />
+	<persistentProperty
+		name="fl_offerta_presentata" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty
