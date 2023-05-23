@@ -1,3 +1,15 @@
+## Release 6.5.34  -- _May 23, 2023_ 
+**Changes**
+
+>**Fix Visualizzazione Impegni residui propri da anni precedenti: restituiva errore di non accesso.**
+>
+>[bd2fd5143bdb4b2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd2fd5143bdb4b2) raffaelepagano *May 23, 2023*
+
+>**Pubblicazione bandi di gara e contratti: aggiunta l'informazione della effettiva presenzazione dell'offerta da parte delle ditte invitate e aggiornato il servizio rest corrispondente.**
+>
+>[2b70ed985ec1199](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b70ed985ec1199) raffaelepagano *May 17, 2023*
+
+
 ## Release 6.5.33  -- _May 15, 2023_ 
 **Changes**
 
