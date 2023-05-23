@@ -440,9 +440,9 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 				if (currObbligazione.getEsercizio().compareTo(oggettobulk.getEsercizio())<0) {
 					CRUDObbligazioneBP obbligazioneBP=null;
 					if (currObbligazione.isCompetenza())
-						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneBP",new Object[] { "MRSWTh" });
+						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneBP",new Object[] { "V" });
 					else if (currObbligazione.isObbligazioneResiduoImproprio())
-						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneResImpropriaBP",new Object[] { "MRSWTh" });
+						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneResImpropriaBP",new Object[] { "V" });
 					else
 						obbligazioneBP = this;
 					currObbligazione = (ObbligazioneBulk)obbligazioneBP.initializeModelForEditAllegati(actioncontext, currObbligazione);
