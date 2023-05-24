@@ -30,6 +30,7 @@ import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Stateless(name = "CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")
 public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements GestioneLoginComponentSession {
@@ -270,6 +271,25 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
         pre_component_invocation(param0, componentObj);
         try {
             java.lang.String result = componentObj.validaBPPerUtente(param0, param1, param2, param3);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    public java.lang.String validaBPPerUtente(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3, String param4) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            java.lang.String result = componentObj.validaBPPerUtente(param0, param1, param2, param3, param4);
             component_invocation_succes(param0, componentObj);
             return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {

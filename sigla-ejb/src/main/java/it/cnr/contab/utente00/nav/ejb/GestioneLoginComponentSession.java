@@ -28,6 +28,7 @@ import javax.ejb.Remote;
 import java.rmi.RemoteException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Remote
 public interface GestioneLoginComponentSession extends it.cnr.jada.ejb.GenericComponentSession {
@@ -56,6 +57,8 @@ public interface GestioneLoginComponentSession extends it.cnr.jada.ejb.GenericCo
     void unregisterUsers(java.lang.String param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     java.lang.String validaBPPerUtente(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.String validaBPPerUtente(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3, String param4) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     java.lang.Boolean isBPEnableForUser(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 

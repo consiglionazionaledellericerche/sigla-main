@@ -28,6 +28,7 @@ import it.cnr.jada.comp.ComponentException;
 import java.rmi.RemoteException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements GestioneLoginComponentSession {
     public it.cnr.contab.utenze00.bulk.UtenteBulk cambiaPassword(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2) throws RemoteException, it.cnr.jada.comp.ComponentException {
@@ -257,6 +258,27 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
                     param1,
                     param2,
                     param3});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+    public java.lang.String validaBPPerUtente(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3, String param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return (java.lang.String) invoke("validaBPPerUtente", new Object[]{
+                    param0,
+                    param1,
+                    param2,
+                    param3,
+                    param4});
         } catch (java.rmi.RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {

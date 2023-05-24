@@ -491,6 +491,9 @@ public class GestioneLoginComponent
      */
     //^^@@
     public String validaBPPerUtente(UserContext userContext, UtenteBulk utente, String cd_unita_organizzativa, String bp) throws it.cnr.jada.comp.ComponentException {
+        return validaBPPerUtente(userContext, utente, cd_unita_organizzativa, bp, null);
+    }
+    public String validaBPPerUtente(UserContext userContext, UtenteBulk utente, String cd_unita_organizzativa, String bp, String tiFunzione) throws it.cnr.jada.comp.ComponentException {
         try {
             Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);
             if (cd_unita_organizzativa == null) {
@@ -505,6 +508,9 @@ public class GestioneLoginComponent
             sql.addSQLClause("AND", "BUSINESS_PROCESS", SQLBuilder.EQUALS, bp);
             sql.addSQLClause("AND", "CD_UTENTE", SQLBuilder.EQUALS, utente.getCd_utente());
             sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, esercizio);
+            if (tiFunzione != null) {
+                sql.addSQLClause("AND", "TI_FUNZIONE", SQLBuilder.EQUALS, tiFunzione);
+            }
             LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
             try {
                 java.sql.ResultSet rs = stm.executeQuery();

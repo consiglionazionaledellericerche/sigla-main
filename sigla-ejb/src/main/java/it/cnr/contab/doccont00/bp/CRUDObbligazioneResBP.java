@@ -40,6 +40,7 @@ import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -439,10 +440,11 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 				ObbligazioneBulk currObbligazione = (ObbligazioneBulk) ri.nextElement();
 				if (currObbligazione.getEsercizio().compareTo(oggettobulk.getEsercizio())<0) {
 					CRUDObbligazioneBP obbligazioneBP=null;
+					CNRUserInfo userInfo = (CNRUserInfo) actioncontext.getUserInfo();
 					if (currObbligazione.isCompetenza())
-						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneBP",new Object[] { "V" });
+						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)userInfo.createBusinessProcess(actioncontext,"CRUDObbligazioneBP",new Object[] { "V" }, "V");
 					else if (currObbligazione.isObbligazioneResiduoImproprio())
-						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext,"CRUDObbligazioneResImpropriaBP",new Object[] { "V" });
+						obbligazioneBP = (it.cnr.contab.doccont00.bp.CRUDObbligazioneBP)userInfo.createBusinessProcess(actioncontext,"CRUDObbligazioneResImpropriaBP",new Object[] { "V" }, "V");
 					else
 						obbligazioneBP = this;
 					currObbligazione = (ObbligazioneBulk)obbligazioneBP.initializeModelForEditAllegati(actioncontext, currObbligazione);

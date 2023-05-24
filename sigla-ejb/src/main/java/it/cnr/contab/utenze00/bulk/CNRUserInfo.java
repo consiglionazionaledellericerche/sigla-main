@@ -24,6 +24,8 @@ import it.cnr.jada.bulk.FieldValidationMap;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.ValidationException;
 
+import java.util.Optional;
+
 /**
  * Bean che contiene informazioni di buse su sessione utente/password utente/UO di scrivania/CDR utente/esercizi
  */
@@ -105,13 +107,13 @@ public class CNRUserInfo extends it.cnr.jada.bulk.UserInfo implements Cloneable 
      * @return il BP creato
      * @throws BusinessProcessException
      */
-    public it.cnr.jada.action.BusinessProcess createBusinessProcess(it.cnr.jada.action.ActionContext context, String name, Object[] params) throws it.cnr.jada.action.BusinessProcessException {
+    public it.cnr.jada.action.BusinessProcess createBusinessProcess(it.cnr.jada.action.ActionContext context, String name, Object[] params, String tiFunzione) throws it.cnr.jada.action.BusinessProcessException {
         try {
             if (params.length > 0 &&
                     params[0] instanceof String) {
                 if (getUtente().isUtenteComune() && getUnita_organizzativa() == null)
                     throw new it.cnr.jada.action.MessageToUser("Unità organizzativa su cui l'utente ha l'accesso richiesto non specificata!");
-                String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(), getUtente(), getUtente().isUtenteComune() ? getUnita_organizzativa().getCd_unita_organizzativa() : "*", name);
+                String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(), getUtente(), getUtente().isUtenteComune() ? getUnita_organizzativa().getCd_unita_organizzativa() : "*", name, tiFunzione);
                 if (mode == null)
                     throw new it.cnr.jada.action.MessageToUser("Accesso non consentito");
                 String rmode = params[0].toString();
@@ -124,6 +126,10 @@ public class CNRUserInfo extends it.cnr.jada.bulk.UserInfo implements Cloneable 
         } catch (Throwable e) {
             throw new it.cnr.jada.action.BusinessProcessException(e);
         }
+    }
+
+    public it.cnr.jada.action.BusinessProcess createBusinessProcess(it.cnr.jada.action.ActionContext context, String name, Object[] params) throws it.cnr.jada.action.BusinessProcessException {
+        return createBusinessProcess(context, name, params, null);
     }
 
     public boolean fillFromActionContext(it.cnr.jada.action.ActionContext context, String prefix, int status, FieldValidationMap fillExceptionMap) throws FillException {
