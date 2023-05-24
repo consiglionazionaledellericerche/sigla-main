@@ -1,3 +1,11 @@
+## Release 6.5.35  -- _May 24, 2023_ 
+**Changes**
+
+>**Fix Visualizzazione Impegni residui propri da anni precedenti: restituiva errore di non accesso.**
+>
+>[10c23f373937602](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10c23f373937602) marco.spasiano *May 24, 2023*
+
+
 ## Release 6.5.34  -- _May 23, 2023_ 
 **Changes**
 
