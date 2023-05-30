@@ -17,7 +17,10 @@
 
 package it.cnr.contab.config00.ejb;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -392,5 +395,22 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 		} catch(Error e) {
 			throw uncaughtError(userContext,componentObj,e);
 		}
-	}	
+	}
+	public ContrattoBulk calcolaMapPagamentiForServizioRest(UserContext userContext, ContrattoBulk contratto) throws ComponentException {
+		try {
+			ContrattoBulk result = ((ContrattoComponent)componentObj).calcolaMapPagamentiForServizioRest(userContext, contratto);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
 }

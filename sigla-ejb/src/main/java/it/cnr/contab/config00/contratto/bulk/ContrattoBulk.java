@@ -19,8 +19,8 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
-import java.util.Arrays;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.Transient;
@@ -121,6 +121,9 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private java.math.BigDecimal tot_docamm_cont_spe_netto;
 
 	private boolean checkDisponibilitaContrattoEseguito = false;
+
+	//Questa variabile viene valorizzata dalla procedura che genera XML per la pubblicazione dei contratti
+	private Map<Date, BigDecimal> mapPagamenti = new HashMap<>();
 
 	public ContrattoBulk() {
 		super();
@@ -977,5 +980,15 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		if (!Optional.ofNullable(getResponsabile()).isPresent())
 			setResponsabile(new V_persona_fisicaBulk());
 		return super.initializeForFreeSearch(crudbp, actioncontext);
+	}
+
+	//Questa variabile viene valorizzata dalla procedura che genera XML per la pubblicazione dei contratti
+	public Map<Date, BigDecimal> getMapPagamenti() {
+		return mapPagamenti;
+	}
+
+	//Questa variabile viene valorizzata dalla procedura che genera XML per la pubblicazione dei contratti
+	public void setMapPagamenti(Map<Date, BigDecimal> mapPagamenti) {
+		this.mapPagamenti = mapPagamenti;
 	}
 }

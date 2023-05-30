@@ -22,7 +22,10 @@
 package it.cnr.contab.config00.consultazioni.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
-	public class VContrattiTotaliDetBulk extends  OggettoBulk implements Persistent {
+
+import java.sql.Timestamp;
+
+public class VContrattiTotaliDetBulk extends  OggettoBulk implements Persistent {
 //	    TIPO CHAR(3)
 		private java.lang.String tipo;
 	 
@@ -70,8 +73,10 @@ import it.cnr.jada.persistency.Persistent;
 	 
 //	    PG_MAN_REV DECIMAL(22,0)
 		private java.lang.Long pgManRev;
-	 
-//	    ES_DOC_AMM DECIMAL(22,0)
+
+		private java.sql.Timestamp dt_paginc_manrev;
+
+		//	    ES_DOC_AMM DECIMAL(22,0)
 		private java.lang.Long esDocAmm;
 	 
 //	    PG_DOC_AMM DECIMAL(22,0)
@@ -361,7 +366,16 @@ import it.cnr.jada.persistency.Persistent;
 		public void setPgManRev(java.lang.Long pgManRev)  {
 			this.pgManRev=pgManRev;
 		}
-		/**
+
+		public Timestamp getDt_paginc_manrev() {
+			return dt_paginc_manrev;
+		}
+
+		public void setDt_paginc_manrev(Timestamp dt_paginc_manrev) {
+			this.dt_paginc_manrev = dt_paginc_manrev;
+		}
+
+	/**
 		 * Created by BulkGenerator 2.0 [07/12/2009]
 		 * Restituisce il valore di: [esDocAmm]
 		 **/

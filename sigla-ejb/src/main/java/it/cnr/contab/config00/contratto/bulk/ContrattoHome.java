@@ -365,7 +365,7 @@ public class ContrattoHome extends BulkHome {
         return sql;
     }
 
-    public SQLBuilder calcolaTotMandatiNetto(it.cnr.jada.UserContext userContext, ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+    public SQLBuilder calcolaTotMandatiNetto(ContrattoBulk contratto) {
         PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
         SQLBuilder sql = dettHome.createSQLBuilder();
         sql.resetColumns();
@@ -431,7 +431,7 @@ public class ContrattoHome extends BulkHome {
         return sql;
     }
 
-    public SQLBuilder calcolaTotMandatiPadre(it.cnr.jada.UserContext userContext, ContrattoBulk contratto_padre) throws IntrospectionException, PersistencyException {
+    public SQLBuilder calcolaTotMandatiPadre(ContrattoBulk contratto_padre) {
         PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
         SQLBuilder sql = dettHome.createSQLBuilder();
         sql.resetColumns();

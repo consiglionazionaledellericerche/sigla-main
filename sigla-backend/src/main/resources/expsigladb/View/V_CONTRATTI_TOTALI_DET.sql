@@ -17,6 +17,7 @@ CREATE OR REPLACE FORCE VIEW v_contratti_totali_det (tipo,
                                                      pg_obbligazione_accertamento,
                                                      esercizio_man_rev,
                                                      pg_man_rev,
+                                                     dt_paginc_manrev,
                                                      es_doc_amm,
                                                      pg_doc_amm,
                                                      tipo_doc,
@@ -46,7 +47,8 @@ AS
             a.oggetto, a.dt_inizio_validita, a.dt_fine_validita,
             a.cd_linea_attivita, a.cd_centro_responsabilita,
             esercizio_obb_acr, pg_obbligazione_accertamento,
-            esercizio_man_rev, pg_man_rev, es_doc_amm, pg_doc_amm, tipo_doc,
+            esercizio_man_rev, pg_man_rev, dt_paginc_manrev,
+            es_doc_amm, pg_doc_amm, tipo_doc,
             a.esercizio_contratto_padre, a.pg_contratto_padre,
             a.stato_contratto_padre, desc_voce, desc_terzo, desc_gae, a.cds,
             a.cd_tipo_contratto, NVL (a.im_contratto_attivo, 0),
@@ -68,7 +70,7 @@ AS
                       accertamento.esercizio esercizio_obb_acr,
                       accertamento.pg_accertamento
                                                  pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       NULL es_doc_amm, NULL pg_doc_amm, NULL tipo_doc,
                       contratto_padre.esercizio esercizio_contratto_padre,
                       contratto_padre.pg_contratto pg_contratto_padre,
@@ -165,6 +167,7 @@ AS
                       NULL,
                       NULL,
                       NULL,
+                      NULL,
                       contratto_padre.esercizio,
                       contratto_padre.pg_contratto,
                       contratto_padre.stato,
@@ -188,7 +191,7 @@ AS
                       accertamento.esercizio esercizio_obb_acr,
                       accertamento.pg_accertamento
                                                  pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       NULL es_doc_amm, NULL pg_doc_amm, NULL tipo_doc,
                       contratto_padre.esercizio esercizio_contratto_padre,
                       contratto_padre.pg_contratto pg_contratto_padre,
@@ -274,6 +277,7 @@ AS
                       NULL,
                       NULL,
                       NULL,
+                      NULL,
                       contratto_padre.esercizio,
                       contratto_padre.pg_contratto,
                       contratto_padre.stato,
@@ -299,6 +303,7 @@ AS
                       riga.pg_accertamento pg_obbligazione_accertamento,
                       riga.esercizio esercizio_man_rev,
                       riga.pg_reversale pg_man_rev,
+                      reversale.dt_incasso dt_paginc_manrev,
                       riga.esercizio_doc_amm es_doc_amm,
                       riga.pg_doc_amm pg_doc_amm,
                       cnrctb002.getdestipodocamm
@@ -333,6 +338,7 @@ AS
                       accertamento_scadenzario,
                       accertamento_scad_voce,
                       reversale_riga riga,
+                      reversale,
                       terzo,
                       elemento_voce,
                       linea_attivita
@@ -351,6 +357,9 @@ AS
                   AND accertamento_scadenzario.pg_accertamento_scadenzario =
                                               riga.pg_accertamento_scadenzario
                   AND riga.stato <> 'A'
+                  AND riga.cd_cds = reversale.cd_cds
+                  AND riga.esercizio = reversale.esercizio
+                  AND riga.pg_reversale = reversale.pg_reversale
                   AND accertamento.cd_cds = accertamento_scadenzario.cd_cds
                   AND accertamento.esercizio =
                                             accertamento_scadenzario.esercizio
@@ -395,6 +404,7 @@ AS
                       riga.pg_accertamento,
                       riga.esercizio,
                       riga.pg_reversale,
+                      reversale.dt_incasso,
                       riga.esercizio_doc_amm,
                       riga.pg_doc_amm,
                       cnrctb002.getdestipodocamm (riga.cd_tipo_documento_amm),
@@ -420,7 +430,7 @@ AS
                       accertamento_scad_voce.cd_centro_responsabilita,
                       v.esercizio_ori_accertamento esercizio_obb_acr,
                       v.pg_accertamento pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       v.esercizio es_doc_amm, v.pg_documento_amm pg_doc_amm,
                       cnrctb002.getdestipodocamm
                                             (v.cd_tipo_documento_amm)
@@ -516,6 +526,7 @@ AS
                       v.pg_accertamento,
                       NULL,
                       NULL,
+                      NULL,
                       v.esercizio,
                       v.pg_documento_amm,
                       cnrctb002.getdestipodocamm (v.cd_tipo_documento_amm),
@@ -542,7 +553,7 @@ AS
                       obbligazione.esercizio esercizio_obb_acr,
                       obbligazione.pg_obbligazione
                                                  pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       NULL es_doc_amm, NULL pg_doc_amm, NULL tipo_doc,
                       contratto_padre.esercizio esercizio_contratto_padre,
                       contratto_padre.pg_contratto pg_contratto_padre,
@@ -639,6 +650,7 @@ AS
                       NULL,
                       NULL,
                       NULL,
+                      NULL,
                       contratto_padre.esercizio,
                       contratto_padre.pg_contratto,
                       contratto_padre.stato,
@@ -662,7 +674,7 @@ AS
                       obbligazione.esercizio esercizio_obb_acr,
                       obbligazione.pg_obbligazione
                                                  pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       NULL es_doc_amm, NULL pg_doc_amm, NULL tipo_doc,
                       contratto_padre.esercizio esercizio_contratto_padre,
                       contratto_padre.pg_contratto pg_contratto_padre,
@@ -750,6 +762,7 @@ AS
                       NULL,
                       NULL,
                       NULL,
+                      NULL,
                       contratto_padre.esercizio,
                       contratto_padre.pg_contratto,
                       contratto_padre.stato,
@@ -775,6 +788,7 @@ AS
                       riga.pg_obbligazione pg_obbligazione_accertamento,
                       riga.esercizio esercizio_man_rev,
                       riga.pg_mandato pg_man_rev,
+                      mandato.dt_pagamento dt_paginc_manrev,
                       riga.esercizio_doc_amm es_doc_amm,
                       riga.pg_doc_amm pg_doc_amm,
                       cnrctb002.getdestipodocamm
@@ -824,6 +838,7 @@ AS
                       obbligazione_scadenzario,
                       obbligazione_scad_voce,
                       mandato_riga riga,
+                      mandato,
                       v_doc_passivo_obbligazione v,
                       terzo,
                       elemento_voce,
@@ -852,6 +867,9 @@ AS
                   AND v.cd_tipo_documento_amm = riga.cd_tipo_documento_amm
                   AND v.pg_documento_amm = riga.pg_doc_amm
                   AND riga.stato <> 'A'
+                  AND riga.cd_cds = mandato.cd_cds
+                  AND riga.esercizio = mandato.esercizio
+                  AND riga.pg_mandato = mandato.pg_mandato
                   AND im_totale_doc_amm > 0
                   AND contratto.esercizio = obbligazione.esercizio_contratto
                   AND contratto.stato = obbligazione.stato_contratto
@@ -900,6 +918,7 @@ AS
                       riga.pg_obbligazione,
                       riga.esercizio,
                       riga.pg_mandato,
+                      mandato.dt_pagamento,
                       riga.esercizio_doc_amm,
                       riga.pg_doc_amm,
                       cnrctb002.getdestipodocamm (riga.cd_tipo_documento_amm),
@@ -925,7 +944,7 @@ AS
                       obbligazione_scad_voce.cd_centro_responsabilita,
                       v.esercizio_ori_obbligazione esercizio_obb_acr,
                       v.pg_obbligazione pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       v.esercizio es_doc_amm, v.pg_documento_amm pg_doc_amm,
                       cnrctb002.getdestipodocamm
                                             (v.cd_tipo_documento_amm)
@@ -1043,6 +1062,7 @@ AS
                       v.pg_obbligazione,
                       NULL,
                       NULL,
+                      NULL,
                       v.esercizio,
                       v.pg_documento_amm,
                       cnrctb002.getdestipodocamm (v.cd_tipo_documento_amm),
@@ -1068,7 +1088,7 @@ AS
                       obbligazione.esercizio esercizio_obb_acr,
                       obbligazione.pg_obbligazione
                                                  pg_obbligazione_accertamento,
-                      NULL esercizio_man_rev, NULL pg_man_rev,
+                      NULL esercizio_man_rev, NULL pg_man_rev, NULL dt_paginc_manrev,
                       NULL es_doc_amm, NULL pg_doc_amm, NULL tipo_doc,
                       contratto_padre.esercizio esercizio_contratto_padre,
                       contratto_padre.pg_contratto pg_contratto_padre,
@@ -1147,6 +1167,7 @@ AS
                       NULL,
                       NULL,
                       NULL,
+                      NULL,
                       contratto_padre.esercizio,
                       contratto_padre.pg_contratto,
                       contratto_padre.stato,
@@ -1173,6 +1194,7 @@ AS
             a.pg_obbligazione_accertamento,
             a.esercizio_man_rev,
             a.pg_man_rev,
+            a.dt_paginc_manrev,
             a.es_doc_amm,
             a.pg_doc_amm,
             a.tipo_doc,

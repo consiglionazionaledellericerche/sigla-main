@@ -18,19 +18,12 @@
 package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.config00.bp.ResponseXMLBP;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.util.Constants;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rapp_detBulk;
-import it.cnr.contab.incarichi00.bulk.V_incarichi_collaborazioneBulk;
-import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoBulk;
-import it.cnr.contab.incarichi00.bulk.V_incarichi_richiestaBulk;
+import it.cnr.contab.incarichi00.bulk.*;
 import it.cnr.contab.incarichi00.ejb.IncarichiRichiestaComponentSession;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
@@ -41,34 +34,36 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
-
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-import java.util.*;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.*;
 
 public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements ResponseXMLBP {
 	private String query;
@@ -352,7 +347,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		return elementRichiesta;
 	}
 
-	private Element generaDettaglioContratti(Document xmldoc, ContrattoBulk contratto) throws ParseException{
+	private Element generaDettaglioContratti(Document xmldoc, ContrattoBulk contratto, String tipoFile) throws ParseException{
 
 		String dato;
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -398,11 +393,32 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getIm_contratto_passivo_netto());
 		elementImportoNetto.appendChild(xmldoc.createTextNode(dato!=null?dato:"0")); 
 		elementContratto.appendChild(elementImportoNetto);
-		 
-		Element elementImportoLiq = xmldoc.createElement(getTagRadice()+":importo_liquidato_netto");
-		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_docamm_cont_spe_netto()); 
-		elementImportoLiq.appendChild(xmldoc.createTextNode(dato!=null?dato:"0"));
+
+		Element elementImportoLiq = xmldoc.createElement(getTagRadice() + ":importo_liquidato_netto");
+		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_docamm_cont_spe_netto());
+		elementImportoLiq.appendChild(xmldoc.createTextNode(dato != null ? dato : "0"));
 		elementContratto.appendChild(elementImportoLiq);
+
+		if (tipoFile.equals("6")) {
+			Element elementPagamenti = xmldoc.createElement(getTagRadice() + ":pagamenti");
+
+			contratto.getMapPagamenti().forEach((dataInizio, importoMandati) -> {
+				Element elementPagamento = xmldoc.createElement(getTagRadice() + ":pagamento");
+
+				Element elementDataLimite = xmldoc.createElement(getTagRadice()+":data_limite");
+				String datalimite = formatter.format(dataInizio.getTime()).toString();
+				elementDataLimite.appendChild(xmldoc.createTextNode(datalimite!=null?datalimite:""));
+				elementPagamento.appendChild(elementDataLimite);
+
+				Element elementImportoPagato = xmldoc.createElement(getTagRadice()+":importo_pagato_netto");
+				String importo = new it.cnr.contab.util.EuroFormat().format(importoMandati);
+				elementImportoPagato.appendChild(xmldoc.createTextNode(importo!=null?importo:""));
+				elementPagamento.appendChild(elementImportoPagato);
+
+				elementPagamenti.appendChild(elementPagamento);
+			});
+			elementContratto.appendChild(elementPagamenti);
+		}
 
 		Element elementTipoNorma = xmldoc.createElement(getTagRadice()+":tiponorma");
 		dato = contratto.getTipo_norma(); 
@@ -919,8 +935,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		    				elem = generaDettaglioIncarichiCollaborazione(xmldoc,(V_incarichi_collaborazioneBulk)incarico);
 		    			else if (getTipofile().equals("3"))
 		    				elem = generaDettaglioIncarichiElenco(xmldoc,(V_incarichi_elencoBulk)incarico);
-		    			else if (getTipofile().equals("4")){
-		    				elem = generaDettaglioContratti(xmldoc,(ContrattoBulk)incarico);
+		    			else if (getTipofile().equals("4") || getTipofile().equals("6")){
+		    				elem = generaDettaglioContratti(xmldoc,(ContrattoBulk)incarico, getTipofile());
 		    			}
 		    			else if (getTipofile().equals("5"))
 		    				elem = generaDettaglioIncarichiArt18(xmldoc,(V_incarichi_elencoBulk)incarico);
@@ -961,7 +977,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			dominio="data";
 		}
 		if(dominio.equalsIgnoreCase("data")){
-			if (!getTipofile().equals("4")){
+			if (!getTipofile().equals("4") && !getTipofile().equals("6")){
 				if (query!=null&&(!query.equalsIgnoreCase(Constants.RICHIESTE_IN_CORSO)&&!query.equalsIgnoreCase(Constants.RICHIESTE_SCADUTE))) {
 					codiceErrore = Constants.ERRORE_INC_104;
 					return;
@@ -978,8 +994,12 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				codiceErrore = Constants.ERRORE_INC_104;
 				return;
 			}
+		} else if (getTipofile().equals("6")) {
+			//il file di tipo 6 richiede come obbligatorio l'anno
+			codiceErrore = Constants.ERRORE_INC_104;
+			return;
 		}
-        try{
+		try{
             this.setPageSize(
                     Optional.ofNullable(getRows())
                         .map(s -> Integer.valueOf(s))
@@ -992,7 +1012,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 
         logger.debug("query: {} dominio: {} anno:{} rows: {}", query, dominio, anno, getRows());
 		IncarichiRichiestaComponentSession componentSession = ((IncarichiRichiestaComponentSession)createComponentSession("CNRINCARICHI00_EJB_IncarichiRichiestaComponentSession",IncarichiRichiestaComponentSession.class));
-		ContrattoComponentSession contrattoComponentSession = ((ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class));
+		ContrattoComponentSession contrattoComponentSession = Utility.createContrattoComponentSession();
 		try {
 			if (getTipofile().equals("1"))
 				this.setIterator(context, componentSession.findListaIncarichiRichiesta(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
@@ -1000,11 +1020,10 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				this.setIterator(context, componentSession.findListaIncarichiCollaborazione(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 			else if (getTipofile().equals("3"))
 				this.setIterator(context, componentSession.findListaIncarichiElenco(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic(),getTipoInc()));
-			else if (getTipofile().equals("4"))
+			else if (getTipofile().equals("4") || getTipofile().equals("6"))
 				this.setIterator(context, contrattoComponentSession.findListaContrattiElenco(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 			else if (getTipofile().equals("5"))
 				this.setIterator(context, componentSession.findListaIncarichiElencoArt18(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
-
 		} catch (ComponentException e) {
             logger.error(Constants.erroriINC.get(Constants.ERRORE_INC_100), e);
 			codiceErrore = Constants.ERRORE_INC_100;
@@ -1047,8 +1066,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				setIncarichi(componentSession.completaListaIncarichiCollaborazione(context.getUserContext(false),list));
 			else if (getTipofile().equals("3") || getTipofile().equals("5"))
 				setIncarichi(componentSession.completaListaIncarichiElenco(context.getUserContext(false),list));
-			else if (getTipofile().equals("4"))
-				setIncarichi(completaListaContrattiElenco(context.getUserContext(false),list));
+			else if (getTipofile().equals("4")||getTipofile().equals("6"))
+				setIncarichi(completaListaContrattiElenco(context.getUserContext(false),list,getTipofile().equals("6")));
 		} catch (ComponentException e) {
 			codiceErrore = Constants.ERRORE_INC_100;
 		} catch (RemoteException e) {
@@ -1057,7 +1076,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	}	
 	
 	@SuppressWarnings("rawtypes")
-	private List<ContrattoBulk> completaListaContrattiElenco(UserContext userContext, List list) throws ApplicationException {
+	private List<ContrattoBulk> completaListaContrattiElenco(UserContext userContext, List list, boolean caricaPagamenti) throws ApplicationException {
 		List<ContrattoBulk> result = new ArrayList<ContrattoBulk>();
 		ContrattoService contrattoService = SpringUtil.getBean("contrattoService", ContrattoService.class);		
 		for (Object object : list) {
@@ -1072,10 +1091,11 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				}
 			}
 			try {
-				ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
-				contratto=(ContrattoBulk)contrattoComponentSession.calcolaTotDocCont(userContext, contratto);
-				
-			} catch (BusinessProcessException|ComponentException|RemoteException e) {
+				ContrattoComponentSession contrattoComponentSession= Utility.createContrattoComponentSession();
+				contratto = contrattoComponentSession.calcolaTotDocCont(userContext, contratto);
+				if (caricaPagamenti)
+					contratto = contrattoComponentSession.calcolaMapPagamentiForServizioRest(userContext, contratto);
+			} catch (ComponentException|RemoteException e) {
 				logger.error("ERROR -> ", e);
 				codiceErrore = Constants.ERRORE_INC_100;
 				return null;

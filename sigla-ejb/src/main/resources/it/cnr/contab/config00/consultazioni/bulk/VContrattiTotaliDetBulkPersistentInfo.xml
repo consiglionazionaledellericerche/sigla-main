@@ -118,6 +118,12 @@
 			columnSize="22"
 			nullable="true" />
 		<columnMapping
+			columnName="DT_PAGINC_MANREV"
+			propertyName="dt_paginc_manrev"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
 			columnName="ES_DOC_AMM"
 			propertyName="esDocAmm"
 			sqlTypeName="DECIMAL"
@@ -285,6 +291,8 @@
 		name="esercizioManRev" />
 	<persistentProperty
 		name="pgManRev" />
+	<persistentProperty
+		name="dt_paginc_manrev" />
 	<persistentProperty
 		name="esDocAmm" />
 	<persistentProperty

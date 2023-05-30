@@ -25,6 +25,9 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
 
 import javax.ejb.Remote;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Map;
 
 @Remote
 public interface ContrattoComponentSession
@@ -39,4 +42,5 @@ RemoteIterator findListaContrattiElenco(UserContext userContext,String query,Str
 RemoteIterator findContrattoByCig(UserContext userContext, ContrattoBulk contratto, CigBulk cig)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 ContrattoBulk calcolaTotDocCont (UserContext userContext,ContrattoBulk contratto) throws ComponentException,java.rmi.RemoteException;
 ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+ContrattoBulk calcolaMapPagamentiForServizioRest(UserContext userContext, ContrattoBulk contratto) throws ComponentException;
 }

@@ -23,32 +23,11 @@
  */
 package it.cnr.contab.config00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
-import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaHome;
+import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.bulk.CigHome;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsHome;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
+import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
-import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
@@ -56,30 +35,18 @@ import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.doccont00.comp.CheckDisponibilitaContrattoFailed;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
-import it.cnr.contab.doccont00.tabrif.bulk.CupHome;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.util.SIGLAGroups;
-import it.cnr.jada.util.DateUtils;
-import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -90,15 +57,13 @@ import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.StorageObject;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
+import javax.ejb.EJBException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
@@ -107,15 +72,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.ejb.EJBException;
 
 /**
  * @author mspasiano
@@ -814,7 +772,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 
 			  sqlOrdini = testataHome.calcolaTotOrdini( userContext, contratto);
 			  sql_liq_netto= testataHome.calcolaTotDocumentiPasNetto(userContext, contratto);
-			  sql_pag_netto=testataHome.calcolaTotMandatiNetto(userContext, contratto);
+			  sql_pag_netto=testataHome.calcolaTotMandatiNetto(contratto);
 			}
 			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			java.math.BigDecimal tot_ordini = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
@@ -1027,7 +985,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			sqlLiqEtr =testataHome.calcolaTotDocumentiAttPadre(userContext, contratto);
 			sqlLiqSpe =testataHome.calcolaTotDocumentiPasPadre(userContext, contratto);
 			sqlPagEtr =testataHome.calcolaTotReversaliPadre(userContext, contratto);
-			sqlPagSpe =testataHome.calcolaTotMandatiPadre(userContext, contratto);
+			sqlPagSpe =testataHome.calcolaTotMandatiPadre(contratto);
 			sqlPagSpeNetto =testataHome.calcolaTotMandatiPadreNetto(userContext, contratto);
 			sqlLiqSpeNetto=testataHome.calcolaTotDocumentiPasNettoPadre(userContext, contratto);
 			sqlOrdini = testataHome.calcolaTotOrdiniPadre( userContext, contratto);
@@ -2398,5 +2356,42 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		} catch (Throwable e) {
 			throw handleException(e);
 		}
+	}
+
+	public ContrattoBulk calcolaMapPagamentiForServizioRest (UserContext userContext,ContrattoBulk contratto) throws ComponentException {
+		Calendar dtStipula = GregorianCalendar.getInstance();
+		dtStipula.setTime(contratto.getDt_stipula());
+
+		Calendar dataInizio = GregorianCalendar.getInstance();
+		dataInizio.setTime(new GregorianCalendar(dtStipula.get(Calendar.YEAR) + 1, Calendar.JANUARY, 31).getTime());
+
+		SQLBuilder sqlPagSpe = ((ContrattoHome) getHome(userContext, ContrattoBulk.class)).calcolaTotMandatiNetto(contratto);
+		sqlPagSpe.addSQLClause(FindClause.AND, "dt_paginc_manrev", SQLBuilder.LESS_EQUALS, new Timestamp(dataInizio.getTime().getTime()));
+
+		BigDecimal importoMandati = Utility.ZERO;
+		try {
+			java.sql.ResultSet rs = null;
+			LoggableStatement ps = null;
+			try {
+				ps = sqlPagSpe.prepareStatement(getConnection(userContext));
+				try {
+					rs = ps.executeQuery();
+					if (rs.next() && rs.getBigDecimal(1)!= null)
+						importoMandati = importoMandati.add(rs.getBigDecimal(1));
+				} catch (java.sql.SQLException e) {
+					throw handleSQLException(e);
+				} finally {
+					if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+				}
+			} finally {
+				if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
+			}
+		} catch (java.sql.SQLException ex) {
+			throw handleException(ex);
+		}
+		Map<Date, BigDecimal> map = new HashMap<>();
+		map.put(dataInizio.getTime(), importoMandati);
+		contratto.setMapPagamenti(map);
+		return contratto;
 	}
 }

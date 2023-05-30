@@ -64,6 +64,7 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=5                  * Tirocini con tipo attività 12
 
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=4                                * elenco contratti conferiti
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=6&anno=2008                      * elenco contratti conferiti nel 2008 con l'informazione del liquidato al 31/01/2009
 
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=5                                * elenco incarichi per art.18
 	*/
