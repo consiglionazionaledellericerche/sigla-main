@@ -1,3 +1,19 @@
+## Release 6.5.36  -- _June 15, 2023_ 
+**Changes**
+
+>**Vincoli Accertamenti Residui: in caso di pulizia del campo Stato dalla funzione di 'Amministra Accertamenti Residui' i vincoli non vengono disattivati.**
+>
+>[875680e65a66da3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/875680e65a66da3) raffaelepagano *June 15, 2023*
+
+>**Vincoli Accertamenti Residui: consentito il cambio stato se i vincoli sono presenti anche per i valori Dubbio e Giudizialemente Controverso.**
+>
+>[eba2a1255a7a911](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eba2a1255a7a911) raffaelepagano *June 15, 2023*
+
+>**Pubblicazione bandi di gara e contratti: aggiunto il nuovo servizio per la pubblicazione dei resoconti della gestione finanziaria dei contratti al termine della loro esecuzione.**
+>
+>[743ac57678a3af8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/743ac57678a3af8) raffaelepagano *May 30, 2023*
+
+
 ## Release 6.5.35  -- _May 24, 2023_ 
 **Changes**
 
