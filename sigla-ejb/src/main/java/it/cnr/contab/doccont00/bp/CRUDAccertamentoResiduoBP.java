@@ -490,7 +490,8 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 			pages.put(i++, new String[]{ "tabAllegati","Allegati","/util00/tab_allegati.jsp" });
 		if (getModel() != null) {
 			AccertamentoResiduoBulk doc = ((AccertamentoResiduoBulk)getModel());
-			if (doc.isStatoInesigibile() || doc.isStatoParzialmenteInesigibile() || doc.isStatoDubbio() || doc.isStatoGiudizialmenteControverso())
+			if (doc.isStatoInesigibile() || doc.isStatoParzialmenteInesigibile() || doc.isStatoDubbio() || doc.isStatoGiudizialmenteControverso() ||
+					(doc.getPdgVincoliColl()!=null && !doc.getPdgVincoliColl().isEmpty()))
 				pages.put(i++, new String[]{ "tabVincoli","Spese Vincolate","/doccont00/tab_accertamento_vincoli.jsp" });
 		}
 		String[][] tabs = new String[i][3];

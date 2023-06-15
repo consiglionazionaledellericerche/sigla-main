@@ -1140,7 +1140,8 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
                     accertamento.setIm_quota_inesigibile(BigDecimal.ZERO);
                 if (accertamento.isStatoInesigibile())
                     accertamento.setIm_quota_inesigibile(accertamento.getImportoNonIncassato());
-            } else if (accertamento.getPdgVincoliColl().size() > 0 || accertamento.getAccertamentoVincoliPerentiColl().size() > 0)
+            } else if (!accertamento.isStatoDubbio() && !accertamento.isStatoGiudizialmenteControverso() &&
+                    (accertamento.getPdgVincoliColl().size() > 0 || accertamento.getAccertamentoVincoliPerentiColl().size() > 0))
                 if (bp instanceof CRUDAccertamentoResiduoAmministraBP)
                     bp.setMessage("Attenzione! Esistono vincoli associati all'accertamento non coerenti con il suo nuovo stato che saranno azzerati all'atto del salvataggio.");
                 else {
