@@ -120,21 +120,22 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
 				for (RiscossioneMovimentoCassaPagopa riscossione : movimentoCassaPagopa.getRiscossioni()){
 					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, riscossione.getIur());
-					pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA.getValue());
-					pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
-					pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
-					pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
-					pagamentoPagopaBulk.setToBeUpdated();
-					super.modificaConBulk(userContext, pagamentoPagopaBulk);
-
-					PendenzaPagopaBulk pendenzaPagopaBulk = new PendenzaPagopaBulk();
-					pendenzaPagopaBulk.setId(pagamentoPagopaBulk.getIdPendenzaPagopa());
-					pendenzaPagopaBulk = (PendenzaPagopaBulk) getHome(userContext, pendenzaPagopaBulk).findByPrimaryKey(pendenzaPagopaBulk);
-					pendenzaPagopaBulk.setStato(PendenzaPagopaBulk.STATO_INCASSATA);
-					pendenzaPagopaBulk.setToBeUpdated();
-					pendenzaPagopaBulk = (PendenzaPagopaBulk) super.modificaConBulk(userContext, pendenzaPagopaBulk);
-					if (movimentoCassaPagopa.getRiscossioni().size() == 1){
-						return pendenzaPagopaBulk;
+					if (pagamentoPagopaBulk != null) {
+						pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA.getValue());
+						pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
+						pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
+						pagamentoPagopaBulk.setCd_sospeso (movimentoContoEvidenzaBulk.recuperoNumeroSospeso());
+						pagamentoPagopaBulk.setToBeUpdated();
+						super.modificaConBulk(userContext, pagamentoPagopaBulk);
+						PendenzaPagopaBulk pendenzaPagopaBulk = new PendenzaPagopaBulk();
+						pendenzaPagopaBulk.setId(pagamentoPagopaBulk.getIdPendenzaPagopa());
+						pendenzaPagopaBulk = (PendenzaPagopaBulk) getHome(userContext, pendenzaPagopaBulk).findByPrimaryKey(pendenzaPagopaBulk);
+						pendenzaPagopaBulk.setStato(PendenzaPagopaBulk.STATO_INCASSATA);
+						pendenzaPagopaBulk.setToBeUpdated();
+						pendenzaPagopaBulk = (PendenzaPagopaBulk) super.modificaConBulk(userContext, pendenzaPagopaBulk);
+						if (movimentoCassaPagopa.getRiscossioni().size() == 1){
+							return pendenzaPagopaBulk;
+						}
 					}
 				}
 			} else {

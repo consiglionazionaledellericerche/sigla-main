@@ -75,7 +75,7 @@ public class PagamentoPagopaHome extends BulkHome {
 
 		sql.addClause(FindClause.AND, "iur", SQLBuilder.EQUALS, iur);
 		List lista =  this.fetchAll(sql);
-		if (lista != null){
+		if (lista != null && !lista.isEmpty()){
 			if (lista.size() == 1){
 				return (PagamentoPagopaBulk) lista.get(0);
 			} else {
