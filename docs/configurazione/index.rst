@@ -12,5 +12,7 @@ Configurazione
    anagrafica_clienti_fornitori
    terzi
    incarichi_di_collaborazione/index
+   borse_di_studio/index
+
    
    
