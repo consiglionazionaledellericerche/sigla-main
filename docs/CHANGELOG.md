@@ -1,3 +1,11 @@
+## Release 6.5.37  -- _July 11, 2023_ 
+**Changes**
+
+>**Fix riconciliazione pendenze pagoPA**
+>
+>[ca91794f23b6033](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca91794f23b6033) marco.spasiano *July 11, 2023*
+
+
 ## Release 6.5.36  -- _June 15, 2023_ 
 **Changes**
 
