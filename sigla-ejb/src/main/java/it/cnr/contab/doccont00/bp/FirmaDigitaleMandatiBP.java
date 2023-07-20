@@ -24,6 +24,7 @@ import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
+import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
@@ -32,6 +33,7 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
@@ -201,10 +203,11 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			String message = "";
 			boolean isBloccoFirma = false;
 			addSomethingToSelectedElements(actioncontext, selectedElements);
+			final MandatoComponentSession mandatoComponentSession = Utility.createMandatoComponentSession();
 			for (StatoTrasmissione statoTrasmissione : selectedElements) {
 				V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk)statoTrasmissione;
 				if (v_mandato_reversaleBulk.isMandato()) {
-					if (Utility.createMandatoComponentSession().esisteAnnullodaRiemettereNonCollegato(
+					if (mandatoComponentSession.esisteAnnullodaRiemettereNonCollegato(
 							actioncontext.getUserContext(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getCd_cds_origine())) {
 						message += "\nEsistono mandati di annullo con riemissione da completamente.";
 						isBloccoFirma=true;
@@ -212,27 +215,37 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					}
 					boolean isReversaleCollegataSiope = true;
 					try {
-						Utility.createMandatoComponentSession().esistonoPiuModalitaPagamento(actioncontext.getUserContext(),
+						mandatoComponentSession.esistonoPiuModalitaPagamento(actioncontext.getUserContext(),
 								new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()));
 					} catch (ApplicationException _ex) {
-						message += "\nSul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont() + " , le modalità di pagamento dei dettagli del mandato sono diverse, " +
+						message += "<BR>Sul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont() + " , le modalità di pagamento dei dettagli del mandato sono diverse, " +
 								"pertanto è stato escluso dalla selezione.";
 						continue;
 					}
+					try {
+						final MandatoBulk mandatoBulk = (MandatoBulk) mandatoComponentSession.inizializzaBulkPerModifica(
+								actioncontext.getUserContext(),
+								new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont())
+						);
+						MandatoBulk.validateBOESTDescription(mandatoBulk.getDs_mandato(), mandatoBulk.getMandato_rigaColl());
+					} catch (ValidationException _ex) {
+						message += "<BR>Il mandato n. " + v_mandato_reversaleBulk.getPg_documento_cont()+ " non è stato predisposto in quanto, " + _ex.getMessage();
+						continue;
+					}
 
-					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
+					if (!mandatoComponentSession.isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
-						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto è stato escluso dalla selezione.";
+						message += "<BR>Il mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto è stato escluso dalla selezione.";
 						continue;
 					}
-					if (v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!Utility.createMandatoComponentSession().isCollegamentoSospesoCompleto(
+					if (v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!mandatoComponentSession.isCollegamentoSospesoCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
-						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a sospeso, pertanto è stato escluso dalla selezione.";
+						message += "<BR>Il mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a sospeso, pertanto è stato escluso dalla selezione.";
 						continue;
 					}
-					if(v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!Utility.createMandatoComponentSession().isVerificataModPagMandato(actioncontext.getUserContext(),
+					if(v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!mandatoComponentSession.isVerificataModPagMandato(actioncontext.getUserContext(),
 							(V_mandato_reversaleBulk) statoTrasmissione)){
-						message += "\nModalità di pagamento non valida presente sul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+", pertanto è stato escluso dalla selezione.";
+						message += "<BR>Modalità di pagamento non valida presente sul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+", pertanto è stato escluso dalla selezione.";
 						continue;
 					}
 					for (StatoTrasmissione reversaleCollegata : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
