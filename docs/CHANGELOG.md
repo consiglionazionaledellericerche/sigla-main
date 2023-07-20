@@ -1,5 +1,33 @@
-## Release 6.5.37  -- _July 11, 2023_ 
+## Release 6.5.38  -- _July 20, 2023_ 
 **Changes**
+
+>**Aggiunto il blocco sulla predisposizione del mandato se è un BOEST con una descrizione superiore a 140 caratteri.**
+>
+>[e3c54971fc263b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3c54971fc263b8) marco.spasiano *July 20, 2023*
+
+>**Aggiunto manuale liquidazione CORI**
+>
+>[e4653432b006cee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4653432b006cee) marco.spasiano *July 18, 2023*
+
+>**Delete test**
+>
+>[d309b718c201c14](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d309b718c201c14) Marco Spasiano *July 18, 2023*
+
+>**Add files via upload**
+>
+>[321c68bf6e5e57c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/321c68bf6e5e57c) patriziavillani *July 18, 2023*
+
+>**Create test**
+>
+>[2bfa24a3bfeb411](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bfa24a3bfeb411) patriziavillani *July 18, 2023*
+
+>**Create index.rst**
+>
+>[bd994427e339477](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd994427e339477) patriziavillani *July 18, 2023*
+
+>**Aggiunto manuale borse di studio**
+>
+>[53e6f3733bc6e5d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53e6f3733bc6e5d) marco.spasiano *July 14, 2023*
 
 >**Fix riconciliazione pendenze pagoPA**
 >
