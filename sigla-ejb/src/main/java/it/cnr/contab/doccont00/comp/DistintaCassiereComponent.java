@@ -680,7 +680,12 @@ public class DistintaCassiereComponent extends
                 .orElse(Boolean.TRUE)) {
             for (Iterator i = docContabili.iterator(); i.hasNext(); ) {
                 docContabile = (V_mandato_reversaleBulk) i.next();
-                if (Optional.ofNullable(docContabile.getEsitoOperazione()).map(s -> s.equals(EsitoOperazione.NON_ACQUISITO.value())).orElse(Boolean.TRUE)) {
+                if (Optional.ofNullable(docContabile.getEsitoOperazione())
+                        .map(s -> s.equals(EsitoOperazione.NON_ACQUISITO.value()))
+                        .orElse(Boolean.TRUE) ||
+                    Optional.ofNullable(docContabile.getStato())
+                            .map(s -> s.equals(MandatoBulk.STATO_MANDATO_ANNULLATO))
+                            .orElse(Boolean.FALSE)) {
                     last_pg_dettaglio = inserisciDettaglioDistinta(userContext,
                             distinta, docContabile, last_pg_dettaglio);
                     inserisciDettaglioDistinteCollegate(userContext, distinta,
