@@ -1,5 +1,5 @@
-LIQUIDAZIONE CORI CENTRALIZZATA
-===============================
+Liquidazione CORI con Versamento Centralizzato
+==============================================
 
 Nelle configurazioni del sistema viene indicato il CDS/UO che accentra i
 Contributi/Ritenute ed emette mandati di versamento.
