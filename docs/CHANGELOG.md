@@ -1,5 +1,9 @@
-## Release 6.5.38  -- _July 20, 2023_ 
+## Release 6.5.39  -- _July 24, 2023_ 
 **Changes**
+
+>**Aggiunte le reversali annullate nella trasmissione di un mandato annullato.**
+>
+>[4fbf57e6f883e76](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4fbf57e6f883e76) marco.spasiano *July 24, 2023*
 
 >**Aggiunto il blocco sulla predisposizione del mandato se è un BOEST con una descrizione superiore a 140 caratteri.**
 >
