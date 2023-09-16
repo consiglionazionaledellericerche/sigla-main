@@ -1,5 +1,9 @@
-## Release 6.5.39  -- _July 24, 2023_ 
+## Release 6.5.40  -- _August 04, 2023_ 
 **Changes**
+
+>**Upgrade version of ace-client artifact**
+>
+>[a198c3ac9feb2e3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a198c3ac9feb2e3) marco.spasiano *August 04, 2023*
 
 >**Aggiunte le reversali annullate nella trasmissione di un mandato annullato.**
 >
@@ -8,6 +12,14 @@
 >**Aggiunto il blocco sulla predisposizione del mandato se è un BOEST con una descrizione superiore a 140 caratteri.**
 >
 >[e3c54971fc263b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3c54971fc263b8) marco.spasiano *July 20, 2023*
+
+>**Update fattura_attiva_elettronica.rst**
+>
+>[c9afa82e11701ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c9afa82e11701ad) patriziavillani *July 18, 2023*
+
+>**Update index.rst**
+>
+>[1ec830382f2fd1a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ec830382f2fd1a) patriziavillani *July 18, 2023*
 
 >**Aggiunto manuale liquidazione CORI**
 >
