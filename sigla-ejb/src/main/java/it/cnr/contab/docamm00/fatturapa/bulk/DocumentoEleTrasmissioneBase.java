@@ -20,7 +20,16 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.SIGLAStoragePropertyNames;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.persistency.Keyed;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+
+import java.util.List;
+import java.util.Optional;
+
 public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey implements Keyed {
 	
 	private java.lang.String progressivoInvio;
@@ -1396,7 +1405,16 @@ public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey im
 	}
 	
 	public java.lang.String getCmisNodeRef() {
-		return cmisNodeRef;
+		return Optional.ofNullable(cmisNodeRef)
+				.orElseGet(() -> {
+					final StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
+					StringBuffer query = new StringBuffer("select cmis:objectId from sigla_fatture:fatture_passive");
+					query.append(" where ").append("sigla_fatture:identificativoSdI").append(" = ").append(getIdentificativoSdi());
+					List<StorageObject> storageObjects = storeService.search(query.toString());
+					return storeService.search(query.toString()).stream()
+							.map(StorageObject::getKey)
+							.findAny().orElseThrow(() -> new ApplicationRuntimeException("Fattura non trovata sulla base documentale!"));
+				});
 	}
 	public void setCmisNodeRef(java.lang.String cmisNodeRef) {
 		this.cmisNodeRef = cmisNodeRef;
