@@ -76,7 +76,7 @@ public class Documento_amministrativo_attivoHome extends Fattura_attivaHome {
         sqlBuilder.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(context));
         sqlBuilder.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(context));
         sqlBuilder.addClause("AND", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.TRUE);
-        sqlBuilder.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+        sqlBuilder.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
         sqlBuilder.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
         return sqlBuilder;
     }

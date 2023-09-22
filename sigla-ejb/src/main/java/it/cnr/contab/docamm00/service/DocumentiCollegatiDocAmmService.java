@@ -17,13 +17,13 @@
 
 package it.cnr.contab.docamm00.service;
 
+import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoElettronicoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
-import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
-import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
-import it.cnr.contab.docamm00.storage.StorageFolderFatturaAttiva;
+import it.cnr.contab.docamm00.storage.*;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
@@ -160,6 +160,24 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
+    public StorageObject recuperoFolderAutofattura(Integer esercizio, String cds, String cdUo, Long pgAutoFattura) throws DetailedException {
+        int posizionePunto = cdUo.indexOf(".");
+        StringBuffer query = new StringBuffer("select fat.cmis:objectId from sigla_fatture:autofatture fat join strorg:uo uo on fat.cmis:objectId = uo.cmis:objectId ");
+        query.append(" join strorg:cds cds on fat.cmis:objectId = cds.cmis:objectId ");
+        query.append(" where fat.sigla_fatture:esercizio = ").append(esercizio);
+        query.append(" and fat.sigla_fatture:pg_fattura = ").append(pgAutoFattura);
+        query.append(" and uo.strorguo:codice like '").append(cdUo.substring(0, posizionePunto) + "%").append("'");
+        query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
+        List<StorageObject> resultsFolder = search(query.toString());
+        if (resultsFolder.size() == 0)
+            return null;
+        else if (resultsFolder.size() > 1) {
+            throw new ApplicationException("Errore di sistema, esistono sul documentale piu' autofatture.  Anno:" + esercizio + " cds:" + cds + " uo:" + cdUo + " numero:" + pgAutoFattura);
+        } else {
+            return resultsFolder.get(0);
+        }
+    }
+
     public InputStream getStreamDocumentoAttivo(Integer esercizio, String cds, String cdUo, Long pgFattura) throws Exception {
         List<String> ids = getNodeRefDocumentoAttivo(esercizio, cds, cdUo, pgFattura);
         return getStream(ids);
@@ -210,12 +228,16 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     }
 
     private void archiviaFileCMIS(UserContext userContext, DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService,
-                                  Fattura_attivaBulk fattura, File file) throws ComponentException {
+                                  IDocumentoAmministrativoElettronicoBulk docammElettronico, File file) throws ComponentException {
         List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
         List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
         try {
-            StorageFileFatturaAttiva storageFile = new StorageFileFatturaAttiva(file, fattura,
-                    "application/pdf", "FAPP" + fattura.constructCMISNomeFile() + ".pdf");
+            StorageFile storageFile;
+            if (docammElettronico instanceof Fattura_attivaBulk)
+                storageFile = new StorageFileFatturaAttiva(file, (Fattura_attivaBulk)docammElettronico, "application/pdf", "FAPP" + (((Fattura_attivaBulk)docammElettronico)).constructCMISNomeFile() + ".pdf");
+            else
+                storageFile = new StorageFileAutofattura(file, (AutofatturaBulk) docammElettronico, "application/pdf", "FAPP" + (((AutofatturaBulk)docammElettronico)).constructCMISNomeFile() + ".pdf");
+
             String path = storageFile.getStorageParentPath();
             StorageObject folder = documentiCollegatiDocAmmService.getStorageObjectByPath(path);
             try {
@@ -229,7 +251,12 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                 )).ifPresent(storageObject -> {
                     List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
                     aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
-                    documentiCollegatiDocAmmService.updateProperties(storageFile.getCMISFolder(fattura), folder);
+
+                    if (docammElettronico instanceof Fattura_attivaBulk)
+                        documentiCollegatiDocAmmService.updateProperties(((StorageFileFatturaAttiva)storageFile).getCMISFolder((Fattura_attivaBulk)docammElettronico), folder);
+                    else
+                        documentiCollegatiDocAmmService.updateProperties(((StorageFileAutofattura)storageFile).getCMISFolder((AutofatturaBulk)docammElettronico), folder);
+
                     documentiCollegatiDocAmmService.updateProperties(
                             Collections.singletonMap(
                                     StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
@@ -258,22 +285,20 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
-    public File gestioneAllegatiPerFatturazioneElettronica(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
-        if (fattura.isDocumentoFatturazioneElettronica()) {
+    public File gestioneAllegatiPerFatturazioneElettronica(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException {
+        if (docammElettronico.isDocumentoFatturazioneElettronica()) {
             DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
-            File file = lanciaStampaFatturaElettronica(userContext, fattura);
-            archiviaFileCMIS(userContext, documentiCollegatiDocAmmService, fattura, file);
+            File file = lanciaStampaFatturaElettronica(userContext, docammElettronico);
+            archiviaFileCMIS(userContext, documentiCollegatiDocAmmService, docammElettronico, file);
             return file;
         }
         return null;
     }
 
-    public File lanciaStampaFatturaElettronica(
-            UserContext userContext,
-            Fattura_attivaBulk fattura) throws ComponentException {
+    public File lanciaStampaFatturaElettronica(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException {
         try {
-            String nomeProgrammaStampa = "fattura_attiva_provvisoria.jasper";
-            String nomeFileStampaFattura = getOutputFileNameFatturazioneElettronica(nomeProgrammaStampa, fattura);
+            String nomeProgrammaStampa = docammElettronico instanceof AutofatturaBulk ? "autofattura_provvisoria.jasper":"fattura_attiva_provvisoria.jasper";
+            String nomeFileStampaFattura = getOutputFileNameFatturazioneElettronica(nomeProgrammaStampa, docammElettronico);
             File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileStampaFattura);
             Print_spoolerBulk print = new Print_spoolerBulk();
             print.setFlEmail(false);
@@ -281,9 +306,13 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
             print.setNomeFile(nomeFileStampaFattura);
             print.setUtcr(userContext.getUser());
             print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-            print.addParam("esercizio", fattura.getEsercizio(), Integer.class);
-            print.addParam("cd_uo_origine", fattura.getCd_uo_origine(), String.class);
-            print.addParam("pg_fattura", fattura.getPg_fattura_attiva(), Long.class);
+            print.addParam("esercizio", docammElettronico.getEsercizio(), Integer.class);
+            print.addParam("cd_uo_origine", docammElettronico.getCd_uo_origine(), String.class);
+            if (docammElettronico instanceof AutofatturaBulk)
+                print.addParam("pg_autofattura", docammElettronico.getPg_docamm(), Long.class);
+            else
+                print.addParam("pg_fattura", docammElettronico.getPg_docamm(), Long.class);
+
             Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
 
             FileOutputStream f = new FileOutputStream(output);
@@ -294,9 +323,9 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
-    private String getOutputFileNameFatturazioneElettronica(String reportName, Fattura_attivaBulk fattura) {
+    private String getOutputFileNameFatturazioneElettronica(String reportName, IDocumentoAmministrativoElettronicoBulk docammElettronico) {
         String fileName = preparaFileNamePerStampa(reportName);
-        fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fattura.recuperoIdFatturaAsString() + '_' + fileName;
+        fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + docammElettronico.recuperoIdFatturaAsString() + '_' + fileName;
         return fileName;
     }
 
@@ -428,13 +457,26 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
+    public StorageObject recuperoFolderDocammElettronicoByPath(IDocumentoAmministrativoElettronicoBulk docammElettronico) {
+        if (docammElettronico instanceof Fattura_attivaBulk)
+            return this.recuperoFolderFatturaByPath((Fattura_attivaBulk) docammElettronico);
+        else
+            return this.recuperoFolderAutofatturaByPath((AutofatturaBulk) docammElettronico);
+    }
+
     public StorageObject recuperoFolderFatturaByPath(Fattura_attivaBulk fattura) {
     	StorageFolderFatturaAttiva folder = new StorageFolderFatturaAttiva(fattura);
     	String path = folder.getCMISPathForSearch();
     	return SpringUtil.getBean("storeService", StoreService.class).getStorageObjectByPath(path);
     }
-    
-	protected List<StorageObject> recuperoDocumento(StorageObject node, String tipoDocumento) {
+
+    public StorageObject recuperoFolderAutofatturaByPath(AutofatturaBulk autofattura) {
+        StorageFolderAutofattura folder = new StorageFolderAutofattura(autofattura);
+        String path = folder.getCMISPathForSearch();
+        return SpringUtil.getBean("storeService", StoreService.class).getStorageObjectByPath(path);
+    }
+
+    protected List<StorageObject> recuperoDocumento(StorageObject node, String tipoDocumento) {
 		return Optional.ofNullable(node) 
              .map(StorageObject::getKey)
              .map(key -> getChildren(key))
@@ -443,9 +485,13 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
 			 .collect(Collectors.toList())).orElse(new ArrayList<StorageObject>());
 	}
 	
-    private List<StorageObject> getStorageObjectFatturaAttiva(Fattura_attivaBulk fattura, String tipoDocumento) throws DetailedException {
-    	StorageObject node = recuperoFolderFatturaByPath(fattura);
-    	
+    private List<StorageObject> getStorageObjectDocammElettronico(IDocumentoAmministrativoElettronicoBulk docammElettronico, String tipoDocumento) throws DetailedException {
+    	StorageObject node = null;
+        if (docammElettronico instanceof Fattura_attivaBulk)
+            node = recuperoFolderFatturaByPath((Fattura_attivaBulk)docammElettronico);
+        else if (docammElettronico instanceof AutofatturaBulk)
+            node = recuperoFolderAutofatturaByPath((AutofatturaBulk)docammElettronico);
+
         List<StorageObject> results = recuperoDocumento(node, tipoDocumento);
         if (results.size() == 0)
             return null;
@@ -453,6 +499,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
             return results;
         }
     }
+
     private List<String> getDocumentoFatturaAttiva(Fattura_attivaBulk fattura, String tipoDocumento) throws DetailedException {
     	StorageObject node = recuperoFolderFatturaByPath(fattura);
     	
@@ -484,7 +531,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     }
     public StorageObject getFileFirmatoFatturaAttiva(Fattura_attivaBulk fattura)  throws ApplicationException, IOException {
     	try {
-        	List<StorageObject> lista = getStorageObjectFatturaAttiva(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value());
+        	List<StorageObject> lista = getStorageObjectDocammElettronico(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value());
             if (lista.size() == 0)
                 throw new ApplicationException("Non esiste il file firmato per la fattura attiva");
             else if (lista.size() > 1) {
@@ -496,13 +543,13 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
 			throw new ApplicationException(e);
 		}
     }
-    public StorageObject getFileXmlFatturaAttiva(Fattura_attivaBulk fattura)  throws ApplicationException, IOException {
+    public StorageObject getFileXmlDocammElettronico(IDocumentoAmministrativoElettronicoBulk docammElettronico)  throws ApplicationException, IOException {
     	try {
-        	List<StorageObject> lista = getStorageObjectFatturaAttiva(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
+        	List<StorageObject> lista = getStorageObjectDocammElettronico(docammElettronico, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
             if (lista.size() == 0)
-                throw new ApplicationException("Non esiste il file per la fattura attiva"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
+                throw new ApplicationException("Non esiste il file per il documento elettronico "+docammElettronico.getTipoDocumentoElettronico()+"-"+docammElettronico.getEsercizio()+"-"+docammElettronico.getPg_docamm());
             else if (lista.size() > 1) {
-                throw new ApplicationException("Esistono due file per la fattura attiva"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
+                throw new ApplicationException("Esistono due file per per il documento elettronico "+docammElettronico.getTipoDocumentoElettronico()+"-"+docammElettronico.getEsercizio()+"-"+docammElettronico.getPg_docamm());
             } else {	
             	return lista.get(0);
             }

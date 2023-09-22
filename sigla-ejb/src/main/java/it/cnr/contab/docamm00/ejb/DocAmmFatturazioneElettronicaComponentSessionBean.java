@@ -19,17 +19,18 @@ package it.cnr.contab.docamm00.ejb;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.comp.DocAmmFatturazioneElettronicaComponent;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoElettronicoBulk;
+import it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
-
-import java.rmi.RemoteException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.xml.bind.JAXBElement;
+import java.rmi.RemoteException;
+import java.util.Date;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession
@@ -62,10 +63,10 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 			throw uncaughtError(userContext,componentObj,e);
 		}
 	}
-	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura)  throws it.cnr.jada.comp.ComponentException{
+	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico)  throws it.cnr.jada.comp.ComponentException{
 		pre_component_invocation(userContext,componentObj);
 		try {
-			JAXBElement<FatturaElettronicaType> result = ((DocAmmFatturazioneElettronicaComponent)componentObj).creaFatturaElettronicaType(userContext, fattura);
+			JAXBElement<FatturaElettronicaType> result = ((DocAmmFatturazioneElettronicaComponent)componentObj).creaFatturaElettronicaType(userContext, docammElettronico);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -81,10 +82,10 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 		}
 	}
 
-	public String recuperoNomeFileXml(UserContext userContext, Fattura_attivaBulk fattura)  throws RemoteException, it.cnr.jada.comp.ComponentException{
+	public String recuperoNomeFileXml(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico)  throws RemoteException, it.cnr.jada.comp.ComponentException{
 		pre_component_invocation(userContext,componentObj);
 		try {
-			String result = ((DocAmmFatturazioneElettronicaComponent)componentObj).recuperoNomeFileXml(userContext, fattura);
+			String result = ((DocAmmFatturazioneElettronicaComponent)componentObj).recuperoNomeFileXml(userContext, docammElettronico);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -119,10 +120,10 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 		}
 	}
 	
-	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws ComponentException{
+	public FatturaElettronicaType preparaFattura(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico)throws ComponentException{
 		pre_component_invocation(userContext,componentObj);
 		try {
-			FatturaElettronicaType result = ((DocAmmFatturazioneElettronicaComponent)componentObj).preparaFattura(userContext, fattura);
+			FatturaElettronicaType result = ((DocAmmFatturazioneElettronicaComponent)componentObj).preparaFattura(userContext, docammElettronico);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -141,6 +142,81 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 		pre_component_invocation(userContext,componentObj);
 		try {
 			((DocAmmFatturazioneElettronicaComponent)componentObj).aggiornaMetadati(userContext, esercizio, cdCds,  pgFatturaAttiva);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public IDocumentoAmministrativoElettronicoBulk castDocumentoElettronico(UserContext userContext, VDocammElettroniciAttiviBulk vDocamm) throws ComponentException{
+		pre_component_invocation(userContext,componentObj);
+		try {
+			IDocumentoAmministrativoElettronicoBulk result = ((DocAmmFatturazioneElettronicaComponent)componentObj).castDocumentoElettronico(userContext, vDocamm);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public IDocumentoAmministrativoElettronicoBulk aggiornaDocammElettronicoPredispostoAllaFirma(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws RemoteException, ComponentException{
+		pre_component_invocation(userContext,componentObj);
+		try {
+			IDocumentoAmministrativoElettronicoBulk result = ((DocAmmFatturazioneElettronicaComponent)componentObj).aggiornaDocammElettronicoPredispostoAllaFirma(userContext, docammElettronico);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+	public IDocumentoAmministrativoElettronicoBulk aggiornaFatturaConsegnaSDI(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico, Date dataConsegnaSdi) throws RemoteException, ComponentException{
+		pre_component_invocation(userContext,componentObj);
+		try {
+			IDocumentoAmministrativoElettronicoBulk result = ((DocAmmFatturazioneElettronicaComponent)componentObj).aggiornaFatturaConsegnaSDI(userContext, docammElettronico, dataConsegnaSdi);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public IDocumentoAmministrativoElettronicoBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico, String codiceSdi, String noteInvioSdi) throws RemoteException, ComponentException{
+		pre_component_invocation(userContext,componentObj);
+		try {
+			IDocumentoAmministrativoElettronicoBulk result = ((DocAmmFatturazioneElettronicaComponent)componentObj).aggiornaFatturaMancataConsegnaInvioSDI(userContext, docammElettronico, codiceSdi, noteInvioSdi);
+			component_invocation_succes(userContext,componentObj);
+			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(userContext,componentObj);
 			throw e;

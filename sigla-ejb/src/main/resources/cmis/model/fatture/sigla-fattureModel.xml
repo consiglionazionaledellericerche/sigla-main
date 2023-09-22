@@ -125,9 +125,6 @@
 				<aspect>strorg:uo</aspect>
 				<aspect>sigla_commons_aspect:terzi</aspect>
 				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
-				<!--
-				<aspect>sigla_commons_aspect:applicativo</aspect>
-				-->
 			</mandatory-aspects>
 		</type>
 		<type name="sigla_fatture:fatture_passive">
@@ -194,11 +191,16 @@
 					<type>d:datetime</type>
 				</property>
 				<property name="sigla_fatture:modalita_incasso">
-					<title>Modalità  Incasso</title>
-					<description>Modalità  Incasso</description>
+					<title>Modalità Incasso</title>
+					<description>Modalità Incasso</description>
 					<type>d:text</type>
 				</property>
 			</properties>
+		</type>
+		<type name="sigla_fatture:autofatture">
+			<title>Autofatture</title>
+			<description>Autofatture</description>
+			<parent>sigla_fatture:fatture_attive</parent>
 		</type>
 		<type name="sigla_fatture:note_credito_attive">
 			<title>Note Credito</title>

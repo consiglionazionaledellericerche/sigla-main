@@ -21,8 +21,8 @@
 	CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)BusinessProcess.getBusinessProcess(request);
 %>
 <script language="JavaScript">
-function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_organizzativa, pg_fattura) {	
-  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/DocumentiCollegati '+esercizio+'-'+cd_cds+'-'+cd_unita_organizzativa+'-'+pg_fattura+'.pdf?esercizio='+esercizio+'&cds='+cd_cds+'&cdUo='+cd_unita_organizzativa+'&pgFattura='+pg_fattura+'&methodName=scaricaDocumentiCollegati&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+function doVisualizzaSingoloDocumentiCollegati(tipo_docamm, esercizio, cd_cds , cd_unita_organizzativa, pg_fattura) {
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/DocumentiCollegati '+tipo_docamm+'-'+esercizio+'-'+cd_cds+'-'+cd_unita_organizzativa+'-'+pg_fattura+'.pdf?tipoDocamm='+tipo_docamm+'&esercizio='+esercizio+'&cds='+cd_cds+'&cdUo='+cd_unita_organizzativa+'&pgFattura='+pg_fattura+'&methodName=scaricaDocumentiCollegati&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 </head>

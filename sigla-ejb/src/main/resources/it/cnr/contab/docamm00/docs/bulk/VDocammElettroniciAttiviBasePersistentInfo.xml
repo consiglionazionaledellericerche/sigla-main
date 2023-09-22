@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+		persistentClassName="it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBase"
+		keyClassName="it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviKey"
+		homeClassName="it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviHome">
+	<defaultColumnMap
+			tableName="V_DOCAMM_ELETTRONICI_ATTIVI">
+		<columnMapping
+				columnName="CD_CDS_ORIGINE"
+				propertyName="cdCdsOrigine"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+		<columnMapping
+				columnName="CD_UO_ORIGINE"
+				propertyName="cdUoOrigine"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+		<columnMapping
+				columnName="DT_REGISTRAZIONE"
+				propertyName="dtRegistrazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<columnMapping
+				columnName="DS_DOCAMM"
+				propertyName="dsDocamm"
+				sqlTypeName="VARCHAR"
+				columnSize="1000" />
+		<columnMapping
+				columnName="CD_TERZO"
+				propertyName="cdTerzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8" />
+		<columnMapping
+				columnName="COGNOME"
+				propertyName="cognome"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
+		<columnMapping
+				columnName="NOME"
+				propertyName="nome"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
+		<columnMapping
+				columnName="RAGIONE_SOCIALE"
+				propertyName="ragioneSociale"
+				sqlTypeName="VARCHAR"
+				columnSize="100" />
+		<columnMapping
+				columnName="CODICE_FISCALE"
+				propertyName="codice_fiscale"
+				sqlTypeName="VARCHAR"
+				columnSize="20" />
+		<columnMapping
+				columnName="PARTITA_IVA"
+				propertyName="partita_iva"
+				sqlTypeName="VARCHAR"
+				columnSize="20" />
+		<columnMapping
+				columnName="PROTOCOLLO_IVA"
+				propertyName="protocollo_iva"
+				sqlTypeName="DECIMAL"
+				columnSize="10"/>
+		<columnMapping
+				columnName="DT_EMISSIONE"
+				propertyName="dtEmissione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<fieldProperty
+				name="im_totale_docamm"
+				property="im_totale_docamm"
+				inputType="TEXT"
+				formatName="it.cnr.contab.util.EuroFormat"
+				label="Totale" />
+		<columnMapping
+				columnName="CODICE_UNIVOCO_UFFICIO_IPA"
+				propertyName="codiceUnivocoUfficioIpa"
+				sqlTypeName="VARCHAR"
+				columnSize="6" />
+		<columnMapping
+				columnName="STATO_INVIO_SDI"
+				propertyName="statoInvioSdi"
+				sqlTypeName="VARCHAR"
+				columnSize="3" />
+		<columnMapping
+				columnName="TI_FATTURA"
+				propertyName="ti_fattura"
+				sqlTypeName="CHAR"
+				columnSize="1" />
+	</defaultColumnMap>
+	<persistentProperty
+			name="cdCdsOrigine" />
+	<persistentProperty
+			name="cdUoOrigine" />
+	<persistentProperty
+			name="dtRegistrazione" />
+	<persistentProperty
+			name="dsDocamm" />
+	<persistentProperty
+			name="cdTerzo" />
+	<persistentProperty
+			name="cognome" />
+	<persistentProperty
+			name="nome" />
+	<persistentProperty
+			name="ragioneSociale" />
+	<persistentProperty
+			name="codice_fiscale" />
+	<persistentProperty
+			name="partita_iva" />
+	<persistentProperty
+			name="protocollo_iva" />
+	<persistentProperty
+			name="dtEmissione" />
+	<persistentProperty
+			name="im_totale_docamm" />
+	<persistentProperty
+			name="codiceUnivocoUfficioIpa" />
+	<persistentProperty
+			name="statoInvioSdi" />
+	<persistentProperty
+			name="ti_fattura" />
+</SQLPersistentInfo>

@@ -882,23 +882,6 @@
 		label="Servizi/Beni"
 		caseSensitiveSearch="false" />	
 	<fieldProperty
-		name="collegamentoDocumentale"
-		property="collegamentoDocumentale"
-		inputType="TEXT"
-		label="Documenti Elettronici Collegati" />		
-	<fieldProperty
-		name="statoFattElett"
-		property="statoFattElett"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		keysProperty="statoFattureElettronicheKeys"
-		label="Stato"
-		nullable="false"
-		enabledOnEdit="true"
-		enabledOnInsert="true"
-		enabledOnSearch="true" />
-	<fieldProperty
 			name="dt_ordine"
 			property="dt_ordine"
 			maxLength="10"
@@ -964,8 +947,6 @@
 	<findFieldProperty name="fl_ordine_elettronico" />
 	<findFieldProperty name="codiceUnivocoUfficioOrdine" />
 
-	<formFieldProperty
-		name="statoFattElett" />
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1244,26 +1225,4 @@
 		<columnFieldProperty name="ti_associato_manrev" />
 		<columnFieldProperty name="stato_cofi" />
 	</columnSet>
-
-	<columnSet name="fatturazioneElettronicaSet">
-	<columnFieldProperty name="esercizio" />
-	<columnFieldProperty name="cd_uo_origine" />
-	<columnFieldProperty name="pg_fattura_attiva" />
-	<columnFieldProperty name="dt_registrazione" />
-	<columnFieldProperty name="ds_fattura_attiva" />
-	<columnFieldProperty name="cd_cliente" />
-	<columnFieldProperty name="cognome" />
-	<columnFieldProperty name="nome" />
-	<columnFieldProperty name="ragione_sociale" />
-	<columnFieldProperty name="codice_fiscale" />
-	<columnFieldProperty name="partita_iva" />
-	<columnFieldProperty name="protocollo_iva"  label="Registr. IVA"/>
-	<columnFieldProperty name="dt_emissione" />
-	<columnFieldProperty name="im_totale_fattura" />
-	<columnFieldProperty name="codiceUnivocoUfficioIpa" />
-	<columnFieldProperty name="statoInvioSdi"  label="Stato"/>
-	<columnFieldProperty name="ti_fattura"  label="Tipo"/>
-	<columnFieldProperty name="collegamentoDocumentale" label="Documenti"/>
-	</columnSet>
-
 </bulkInfo>

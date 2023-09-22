@@ -17,13 +17,14 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.util.StrServ;
 
-public class AutofatturaBulk extends AutofatturaBase {
+import java.util.Optional;
+
+public class AutofatturaBulk extends AutofatturaBase implements IDocumentoAmministrativoElettronicoBulk {
 
 	public final static String STATO_INIZIALE = "I";
 	public final static String STATO_CONTABILIZZATO = "C";
@@ -42,216 +43,279 @@ public class AutofatturaBulk extends AutofatturaBase {
 	private java.lang.Boolean fl_san_marino_senza_iva;
 	private java.lang.String ti_bene_servizio = null;
 	private boolean autofatturaNeeded = false;
-public AutofatturaBulk() {
-	super();
-}
-public AutofatturaBulk(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_autofattura) {
-	super(cd_cds,cd_unita_organizzativa,esercizio,pg_autofattura);
-}
-/**
- * Insert the method's description here.
- * Creation date: (2/12/2002 4:10:01 PM)
- */
-public void completeFrom(Fattura_passivaBulk fatturaPassiva) {
+	private TerzoBulk terzoDocumentoElettronico;
+	public AutofatturaBulk() {
+		super();
+	}
+	public AutofatturaBulk(java.lang.String cd_cds,java.lang.String cd_unita_organizzativa,java.lang.Integer esercizio,java.lang.Long pg_autofattura) {
+		super(cd_cds,cd_unita_organizzativa,esercizio,pg_autofattura);
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (2/12/2002 4:10:01 PM)
+	 */
+	public void completeFrom(Fattura_passivaBulk fatturaPassiva) {
 
-	setFattura_passiva(fatturaPassiva);
+		setFattura_passiva(fatturaPassiva);
 
-	setCd_cds_origine(fatturaPassiva.getCd_cds_origine());
-	setCd_uo_origine(fatturaPassiva.getCd_uo_origine());
+		setCd_cds_origine(fatturaPassiva.getCd_cds_origine());
+		setCd_uo_origine(fatturaPassiva.getCd_uo_origine());
 
-	setDt_registrazione(fatturaPassiva.getDt_registrazione());
-	setData_esigibilita_iva(getDt_registrazione());
-	setStato_cofi(AutofatturaBulk.STATO_CONTABILIZZATO);
-	setStato_coge(Fattura_passivaBulk.NON_PROCESSARE_IN_COGE);
-	
-	setFl_liquidazione_differita(Boolean.FALSE);
-	setFl_intra_ue(fatturaPassiva.getFl_intra_ue());
-	setFl_extra_ue(fatturaPassiva.getFl_extra_ue());
-	setFl_san_marino_con_iva(fatturaPassiva.getFl_san_marino_con_iva());
-	setFl_san_marino_senza_iva(fatturaPassiva.getFl_san_marino_senza_iva());
-	setFl_split_payment(fatturaPassiva.getFl_split_payment());
-	setTi_bene_servizio(fattura_passiva.getTi_bene_servizio());
+		setDt_registrazione(fatturaPassiva.getDt_registrazione());
+		setData_esigibilita_iva(getDt_registrazione());
+		setStato_cofi(AutofatturaBulk.STATO_CONTABILIZZATO);
+		setStato_coge(Fattura_passivaBulk.NON_PROCESSARE_IN_COGE);
 
-	if (fatturaPassiva.getFl_split_payment())
-		setFl_autofattura(fatturaPassiva.getFl_autofattura());
-	else
-		setFl_autofattura(Boolean.TRUE);
-	
-	setAutofatturaNeeded(
-		fatturaPassiva.isCommerciale() &&
-		((getFl_intra_ue() != null && Boolean.TRUE.equals(getFl_intra_ue())) ||
-		(getFl_san_marino_senza_iva() != null && Boolean.TRUE.equals(getFl_san_marino_senza_iva())))
-	);
+		setFl_liquidazione_differita(Boolean.FALSE);
+		setFl_intra_ue(fatturaPassiva.getFl_intra_ue());
+		setFl_extra_ue(fatturaPassiva.getFl_extra_ue());
+		setFl_san_marino_con_iva(fatturaPassiva.getFl_san_marino_con_iva());
+		setFl_san_marino_senza_iva(fatturaPassiva.getFl_san_marino_senza_iva());
+		setFl_split_payment(fatturaPassiva.getFl_split_payment());
+		setTi_bene_servizio(fattura_passiva.getTi_bene_servizio());
 
-	setEsercizio(fatturaPassiva.getEsercizio());
-	setProtocollo_iva(fatturaPassiva.getProtocollo_iva());
-	setProtocollo_iva_generale(fatturaPassiva.getProtocollo_iva_generale());
-	setTi_istituz_commerc(fatturaPassiva.getTi_istituz_commerc());
-	setTi_fattura(fatturaPassiva.getTi_fattura());
-	setToBeCreated();
-}
-public java.lang.String getCd_cds_ft_passiva() {
-	it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase fattura_passiva = this.getFattura_passiva();
-	if (fattura_passiva == null)
-		return null;
-	return fattura_passiva.getCd_cds();
-}
-public java.lang.String getCd_tipo_sezionale() {
-	it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk tipo_sezionale = this.getTipo_sezionale();
-	if (tipo_sezionale == null)
-		return null;
-	return tipo_sezionale.getCd_tipo_sezionale();
-}
-public java.lang.String getCd_uo_ft_passiva() {
-	it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase fattura_passiva = this.getFattura_passiva();
-	if (fattura_passiva == null)
-		return null;
-	return fattura_passiva.getCd_unita_organizzativa();
-}
-/**
- * Insert the method's description here.
- * Creation date: (2/12/2002 4:06:00 PM)
- * @return it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk
- */
-public Fattura_passivaBase getFattura_passiva() {
-	return fattura_passiva;
-}
-/* 
- * Getter dell'attributo fl_intra_ue
- */
-public java.lang.Boolean getFl_extra_ue() {
-	return fl_extra_ue;
-}
-/**
- * Insert the method's description here.
- * Creation date: (9/20/2002 10:08:36 AM)
- * @return java.lang.Boolean
- */
-public java.lang.Boolean getFl_san_marino_con_iva() {
-	return fl_san_marino_con_iva;
-}
-/**
- * Insert the method's description here.
- * Creation date: (9/20/2002 10:08:36 AM)
- * @return java.lang.Boolean
- */
-public java.lang.Boolean getFl_san_marino_senza_iva() {
-	return fl_san_marino_senza_iva;
-}
-public java.lang.Long getPg_fattura_passiva() {
-	it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase fattura_passiva = this.getFattura_passiva();
-	if (fattura_passiva == null)
-		return null;
-	return fattura_passiva.getPg_fattura_passiva();
-}
-public String getStatoIVA() {
+		if (fatturaPassiva.getFl_split_payment())
+			setFl_autofattura(fatturaPassiva.getFl_autofattura());
+		else
+			setFl_autofattura(Boolean.TRUE);
 
-	return (getProtocollo_iva() == null ||
-			getProtocollo_iva_generale() == null) ?
-				"A" : "B";
-}
-/**
- * Insert the method's description here.
- * Creation date: (10/14/2002 5:22:33 PM)
- * @return java.lang.String
- */
-public java.lang.String getTi_bene_servizio() {
-	return ti_bene_servizio;
-}
-/**
- * Insert the method's description here.
- * Creation date: (2/12/2002 4:06:00 PM)
- * @return it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk
- */
-public it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk getTipo_sezionale() {
-	return tipo_sezionale;
-}
-/**
- * Insert the method's description here.
- * Creation date: (4/8/2003 3:38:07 PM)
- * @return boolean
- */
-public boolean isAutofatturaDiBeni() {
-	return getTi_bene_servizio() != null &&
-			it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio());
-}
-/**
- * Insert the method's description here.
- * Creation date: (4/8/2003 3:38:07 PM)
- * @return boolean
- */
-public boolean isAutofatturaNeeded() {
-	return autofatturaNeeded;
-}
-public boolean isStampataSuRegistroIVA() {
+		setAutofatturaNeeded(
+			fatturaPassiva.isCommerciale() &&
+			((getFl_intra_ue() != null && Boolean.TRUE.equals(getFl_intra_ue())) ||
+			(getFl_san_marino_senza_iva() != null && Boolean.TRUE.equals(getFl_san_marino_senza_iva())))
+		);
 
-	return STATO_IVA_B.equalsIgnoreCase(getStatoIVA()) ||
-			STATO_IVA_C.equalsIgnoreCase(getStatoIVA());
-}
-/**
- * Insert the method's description here.
- * Creation date: (4/8/2003 3:38:07 PM)
- * @param newAutofatturaNeeded boolean
- */
-public void setAutofatturaNeeded(boolean newAutofatturaNeeded) {
-	autofatturaNeeded = newAutofatturaNeeded;
-}
-public void setCd_cds_ft_passiva(java.lang.String cd_cds_ft_passiva) {
-	this.getFattura_passiva().setCd_cds(cd_cds_ft_passiva);
-}
-public void setCd_tipo_sezionale(java.lang.String cd_tipo_sezionale) {
-	this.getTipo_sezionale().setCd_tipo_sezionale(cd_tipo_sezionale);
-}
-public void setCd_uo_ft_passiva(java.lang.String cd_uo_ft_passiva) {
-	this.getFattura_passiva().setCd_unita_organizzativa(cd_uo_ft_passiva);
-}
-/**
- * Insert the method's description here.
- * Creation date: (2/12/2002 4:06:00 PM)
- * @param newFattura_passiva it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk
- */
-public void setFattura_passiva(Fattura_passivaBase newFattura_passiva) {
-	fattura_passiva = newFattura_passiva;
-}
-/* 
- * Setter dell'attributo fl_intra_ue
- */
-public void setFl_extra_ue(java.lang.Boolean fl_extra_ue) {
-	this.fl_extra_ue = fl_extra_ue;
-}
-/**
- * Insert the method's description here.
- * Creation date: (9/20/2002 10:08:36 AM)
- * @param newFl_san_marino_con_iva java.lang.Boolean
- */
-public void setFl_san_marino_con_iva(java.lang.Boolean newFl_san_marino_con_iva) {
-	fl_san_marino_con_iva = newFl_san_marino_con_iva;
-}
-/**
- * Insert the method's description here.
- * Creation date: (9/20/2002 10:08:36 AM)
- * @param newFl_san_marino_senza_iva java.lang.Boolean
- */
-public void setFl_san_marino_senza_iva(java.lang.Boolean newFl_san_marino_senza_iva) {
-	fl_san_marino_senza_iva = newFl_san_marino_senza_iva;
-}
-public void setPg_fattura_passiva(java.lang.Long pg_fattura_passiva) {
-	this.getFattura_passiva().setPg_fattura_passiva(pg_fattura_passiva);
-}
-/**
- * Insert the method's description here.
- * Creation date: (10/14/2002 5:22:33 PM)
- * @param newTi_bene_servizio java.lang.String
- */
-public void setTi_bene_servizio(java.lang.String newTi_bene_servizio) {
-	ti_bene_servizio = newTi_bene_servizio;
-}
-/**
- * Insert the method's description here.
- * Creation date: (2/12/2002 4:06:00 PM)
- * @param newTipo_sezionale it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk
- */
-public void setTipo_sezionale(it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk newTipo_sezionale) {
-	tipo_sezionale = newTipo_sezionale;
-}
+		setEsercizio(fatturaPassiva.getEsercizio());
+		setProtocollo_iva(fatturaPassiva.getProtocollo_iva());
+		setProtocollo_iva_generale(fatturaPassiva.getProtocollo_iva_generale());
+		setTi_istituz_commerc(fatturaPassiva.getTi_istituz_commerc());
+		setTi_fattura(fatturaPassiva.getTi_fattura());
+		setToBeCreated();
+	}
+	public java.lang.String getCd_cds_ft_passiva() {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase fattura_passiva = this.getFattura_passiva();
+		if (fattura_passiva == null)
+			return null;
+		return fattura_passiva.getCd_cds();
+	}
+	public java.lang.String getCd_tipo_sezionale() {
+		it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk tipo_sezionale = this.getTipo_sezionale();
+		if (tipo_sezionale == null)
+			return null;
+		return tipo_sezionale.getCd_tipo_sezionale();
+	}
+	public java.lang.String getCd_uo_ft_passiva() {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase fattura_passiva = this.getFattura_passiva();
+		if (fattura_passiva == null)
+			return null;
+		return fattura_passiva.getCd_unita_organizzativa();
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (2/12/2002 4:06:00 PM)
+	 * @return it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk
+	 */
+	public Fattura_passivaBase getFattura_passiva() {
+		return fattura_passiva;
+	}
+	/*
+	 * Getter dell'attributo fl_intra_ue
+	 */
+	public java.lang.Boolean getFl_extra_ue() {
+		return fl_extra_ue;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (9/20/2002 10:08:36 AM)
+	 * @return java.lang.Boolean
+	 */
+	public java.lang.Boolean getFl_san_marino_con_iva() {
+		return fl_san_marino_con_iva;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (9/20/2002 10:08:36 AM)
+	 * @return java.lang.Boolean
+	 */
+	public java.lang.Boolean getFl_san_marino_senza_iva() {
+		return fl_san_marino_senza_iva;
+	}
+	public java.lang.Long getPg_fattura_passiva() {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase fattura_passiva = this.getFattura_passiva();
+		if (fattura_passiva == null)
+			return null;
+		return fattura_passiva.getPg_fattura_passiva();
+	}
+	public String getStatoIVA() {
+
+		return (getProtocollo_iva() == null ||
+				getProtocollo_iva_generale() == null) ?
+					"A" : "B";
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/14/2002 5:22:33 PM)
+	 * @return java.lang.String
+	 */
+	public java.lang.String getTi_bene_servizio() {
+		return ti_bene_servizio;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (2/12/2002 4:06:00 PM)
+	 * @return it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk
+	 */
+	public it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk getTipo_sezionale() {
+		return tipo_sezionale;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (4/8/2003 3:38:07 PM)
+	 * @return boolean
+	 */
+	public boolean isAutofatturaDiBeni() {
+		return getTi_bene_servizio() != null &&
+				it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio());
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (4/8/2003 3:38:07 PM)
+	 * @return boolean
+	 */
+	public boolean isAutofatturaNeeded() {
+		return autofatturaNeeded;
+	}
+	public boolean isStampataSuRegistroIVA() {
+
+		return STATO_IVA_B.equalsIgnoreCase(getStatoIVA()) ||
+				STATO_IVA_C.equalsIgnoreCase(getStatoIVA());
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (4/8/2003 3:38:07 PM)
+	 * @param newAutofatturaNeeded boolean
+	 */
+	public void setAutofatturaNeeded(boolean newAutofatturaNeeded) {
+		autofatturaNeeded = newAutofatturaNeeded;
+	}
+	public void setCd_cds_ft_passiva(java.lang.String cd_cds_ft_passiva) {
+		this.getFattura_passiva().setCd_cds(cd_cds_ft_passiva);
+	}
+	public void setCd_tipo_sezionale(java.lang.String cd_tipo_sezionale) {
+		this.getTipo_sezionale().setCd_tipo_sezionale(cd_tipo_sezionale);
+	}
+	public void setCd_uo_ft_passiva(java.lang.String cd_uo_ft_passiva) {
+		this.getFattura_passiva().setCd_unita_organizzativa(cd_uo_ft_passiva);
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (2/12/2002 4:06:00 PM)
+	 * @param newFattura_passiva it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk
+	 */
+	public void setFattura_passiva(Fattura_passivaBase newFattura_passiva) {
+		fattura_passiva = newFattura_passiva;
+	}
+	/*
+	 * Setter dell'attributo fl_intra_ue
+	 */
+	public void setFl_extra_ue(java.lang.Boolean fl_extra_ue) {
+		this.fl_extra_ue = fl_extra_ue;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (9/20/2002 10:08:36 AM)
+	 * @param newFl_san_marino_con_iva java.lang.Boolean
+	 */
+	public void setFl_san_marino_con_iva(java.lang.Boolean newFl_san_marino_con_iva) {
+		fl_san_marino_con_iva = newFl_san_marino_con_iva;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (9/20/2002 10:08:36 AM)
+	 * @param newFl_san_marino_senza_iva java.lang.Boolean
+	 */
+	public void setFl_san_marino_senza_iva(java.lang.Boolean newFl_san_marino_senza_iva) {
+		fl_san_marino_senza_iva = newFl_san_marino_senza_iva;
+	}
+	public void setPg_fattura_passiva(java.lang.Long pg_fattura_passiva) {
+		this.getFattura_passiva().setPg_fattura_passiva(pg_fattura_passiva);
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/14/2002 5:22:33 PM)
+	 * @param newTi_bene_servizio java.lang.String
+	 */
+	public void setTi_bene_servizio(java.lang.String newTi_bene_servizio) {
+		ti_bene_servizio = newTi_bene_servizio;
+	}
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (2/12/2002 4:06:00 PM)
+	 * @param newTipo_sezionale it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk
+	 */
+	public void setTipo_sezionale(it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk newTipo_sezionale) {
+		tipo_sezionale = newTipo_sezionale;
+	}
+
+	public String constructCMISNomeFile() {
+		StringBuffer nomeFile = new StringBuffer();
+		nomeFile = nomeFile.append(getTi_fattura());
+		nomeFile = nomeFile.append("-" + this.getCd_unita_organizzativa());
+		nomeFile = nomeFile.append("-" + this.getEsercizio().toString() + Utility.lpad(this.getPg_autofattura().toString(), 9, '0'));
+		return nomeFile.toString();
+	}
+
+	@Override
+	public Long getPg_docamm() {
+		return this.getPg_autofattura();
+	}
+
+	@Override
+	public Boolean isFatturaEstera() {
+		return Boolean.FALSE;
+	}
+
+	@Override
+	public String recuperoIdFatturaAsString() {
+		if (getProtocollo_iva() != null) {
+			return StrServ.replace(getCd_uo_origine(), ".", "") + getEsercizio() + StrServ.lpad(getCd_tipo_sezionale().substring(2), 4) + getTi_fattura() + StrServ.lpad(getProtocollo_iva().toString(), 5);
+		}
+		return StrServ.replace(getCd_unita_organizzativa(), ".", "") + getEsercizio() + StrServ.lpad(getPg_autofattura().toString(), 5);
+	}
+
+	@Override
+	public String getTipoDocumentoElettronico() {
+		return Numerazione_doc_ammBulk.TIPO_AUTOFATTURA;
+	}
+
+	public TerzoBulk getTerzoDocumentoElettronico() {
+		return terzoDocumentoElettronico;
+	}
+
+	public void setTerzoDocumentoElettronico(TerzoBulk terzoDocumentoElettronico) {
+		this.terzoDocumentoElettronico = terzoDocumentoElettronico;
+	}
+
+	@Override
+	public Integer getCdTerzoDocumentoElettronico() {
+		return Optional.ofNullable(this.getTerzoDocumentoElettronico())
+				.map(TerzoBulk::getCd_terzo)
+				.orElse(null);
+	}
+
+	@Override
+	public String getPartita_iva() {
+		if (this.getFlTerzoEnte())
+			return Optional.ofNullable(this.getTerzoDocumentoElettronico())
+					.map(TerzoBulk::getPartita_iva_anagrafico)
+					.orElse(null);
+		else
+			return Optional.ofNullable(this.getFattura_passiva())
+					.map(Fattura_passivaBase::getPartita_iva)
+					.orElse(null);
+	}
+
+	public boolean isDocumentoFatturazioneElettronica() {
+		return Optional.ofNullable(getFlFatturaElettronica()).orElse(Boolean.FALSE);
+	}
 }

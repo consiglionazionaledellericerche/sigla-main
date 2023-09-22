@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="raffaele.pagano" runOnChange="true" id="add-columns-fattura-elettronica-on-autofattura">
+        <addColumn tableName="autofattura">
+            <column name="codice_univoco_ufficio_ipa" remarks="Codice Univoco Ufficio nel sistema IPA" type="VARCHAR(6)"/>
+            <column name="codice_invio_sdi" remarks="Codice Univoco di invio al SDI" type="VARCHAR(30)"/>
+            <column name="stato_invio_sdi" remarks="Stato invio Fatturazione Elettronica: FIR=Alla Firma; SCA=Scartata da SDI; INV=Inviata a SDI; COS=Consegnata SDI; MAC=Mancata consegna; NRE=Non recapitabile; CON=Consegnata al destinatario; ACC=Accettata dal destinatario; RIF=Rifiutata dal destinatario; DEC=Decorrenza termini accettazione/rifiuto da parte del destinatario; FIN=Firmata(solo per le note di credito)" type="VARCHAR(3)"/>
+            <column name="note_invio_sdi" remarks="Note di invio alla Fatturazione Elettronica" type="VARCHAR(500)"/>
+            <column name="nc_annullo_sdi" remarks="Nota Credito di Annullo da Fatturazione Elettronica. S=Sì" type="VARCHAR(1)"/>
+            <column name="progr_univoco_anno" remarks="Progressivo Univoco per anno" type="BIGINT"/>
+            <column name="dt_consegna_sdi" remarks="Data Consegna SDI" type="${date.type}"/>
+            <column name="DT_RICEZIONE_SDI" type="date" remarks="Data Ricezione della fattura da parte di SDI"/>
+            <column name="nome_file_invio_sdi" remarks="Nome file inviato a SDI per la fatturazione elettronica" type="VARCHAR(100)"/>
+            <column name="CODICE_DESTINATARIO_FATT" type="VARCHAR(7)" remarks="Codice destinatario fattura (solo per privati non persone fisiche)"/>
+            <column name="MAIL_FATTURA_ELETTRONICA" type="VARCHAR(100)" remarks="Indirizzo Mail per la fatturazione elettronica (solo per persone fisiche"/>
+            <column name="PEC_FATTURA_ELETTRONICA" type="VARCHAR(100)" remarks="Indirizzo PEC per la fatturazione elettronica (solo per privati non persone fisiche)" />
+            <column name="FL_FATTURA_ELETTRONICA" type="VARCHAR(1)" defaultValue="N" remarks="Fattura Elettronica Y=Si N=No">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" runOnChange="true" id="create-view-v-fattura-elettronica-attiva">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOCAMM_ELETTRONICI_ATTIVI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" runOnChange="true" id="add-columns-fattura-elettronica-on-autofattura-2">
+        <addColumn tableName="autofattura">
+            <column name="fl_terzo_ente" type="VARCHAR(1)" defaultValue="N" remarks="Autofattura elettronica da intestare all'ente.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

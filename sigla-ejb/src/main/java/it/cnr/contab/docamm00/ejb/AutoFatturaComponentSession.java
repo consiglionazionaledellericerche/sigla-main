@@ -17,6 +17,11 @@
 
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+
 import javax.ejb.Remote;
 
 @Remote
@@ -35,4 +40,6 @@ it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk update(it.cnr.
 it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk updateImportoAssociatoDocAmm(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean verificaStatoEsercizio(it.cnr.jada.UserContext param0,it.cnr.contab.config00.esercizio.bulk.EsercizioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.Vector estraeSezionali(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+AutofatturaBulk impostaDatiPerFatturazioneElettronica(UserContext userContext, AutofatturaBulk autofattura) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+AutofatturaBulk aggiornaAutofatturaInvioSDI(UserContext userContext, AutofatturaBulk autofattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 }

@@ -153,7 +153,7 @@
     <businessProcess name="SelezionatoreDocAmmFatturazioneElettronica"
                      className="it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP">
         <forward name="default" path="/docamm00/lista_docamm_fatturazione_elettronica.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk"/>
         <init-param name="defaultAction" value="SelezionatoreDocumentiAmministrativiFatturazioneElettronicaAction"/>
         <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"/>
         <init-param name="multiSelezione" value="Y" />	    				

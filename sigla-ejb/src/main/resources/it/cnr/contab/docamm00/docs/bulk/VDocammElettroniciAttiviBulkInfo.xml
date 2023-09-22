@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+	shortDescription="Riepilogativi BlackList"
+	longDescription="Riepilogativi BlackList"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tipoDocamm"
+		property="tipoDocamm"
+		keysProperty="tipoDocammKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="Origine" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+			name="cdUoOrigine"
+			property="cdUoOrigine"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			enabledOnEdit="false"
+			nullable="false"
+			label="UO Origine" />
+	<fieldProperty
+			name="pg_docamm"
+			property="pg_docamm"
+			inputType="TEXT"
+			inputSize="10"
+			label="Progressivo"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"/>
+	<fieldProperty
+			name="dtRegistrazione"
+			property="dtRegistrazione"
+			inputType="TEXT"
+			maxLength="10"
+			inputSize="10"
+			formatName="date_short"
+			enabledOnSearch="true"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Data registrazione" />
+	<fieldProperty
+			name="dsDocamm"
+			property="dsDocamm"
+			maxLength="1000"
+			inputType="TEXTAREA"
+			cols="80"
+			rows="5"
+			label="Descrizione"
+			enabledOnSearch="true"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="cdTerzo"
+			property="cdTerzo"
+			maxLength="30"
+			inputSize="10"
+			inputType="TEXT"
+			label="Cliente"
+			enabledOnSearch="true"
+			nullable="false"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="cognome"
+			property="cognome"
+			maxLength="50"
+			inputSize="50"
+			inputType="TEXT"
+			label="Cognome"
+			enabledOnSearch="true"
+			caseSensitiveSearch="false"/>
+	<fieldProperty
+			name="nome"
+			property="nome"
+			maxLength="50"
+			inputSize="50"
+			inputType="TEXT"
+			label="Nome"
+			enabledOnSearch="true"
+			caseSensitiveSearch="false"/>
+	<fieldProperty
+			name="ragioneSociale"
+			property="ragioneSociale"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Ragione Sociale"
+			caseSensitiveSearch="false"/>
+	<fieldProperty
+			name="partita_iva"
+			property="partita_iva"
+			maxLength="20"
+			inputSize="20"
+			inputType="TEXT"
+			enabledOnSearch="true"
+			label="Partita Iva"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="protocollo_iva"
+			property="protocollo_iva"
+			maxLength="8"
+			inputSize="8"
+			inputType="TEXT"
+			label="N. Registrazione IVA"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="dtEmissione"
+			property="dtEmissione"
+			inputType="TEXT"
+			maxLength="10"
+			inputSize="10"
+			formatName="date_short"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Data Stampa" />
+	<fieldProperty
+			name="im_totale_docamm"
+			property="im_totale_docamm"
+			inputType="TEXT"
+			formatName="it.cnr.contab.util.EuroFormat"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Totale" />
+	<fieldProperty
+			name="codiceUnivocoUfficioIpa"
+			property="codiceUnivocoUfficioIpa"
+			maxLength="6"
+			inputSize="6"
+			inputType="ROTEXT"
+			label="Codice IPA"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="statoInvioSdi"
+			property="statoInvioSdi"
+			keysProperty="statoInvioSdiKeys"
+			label="Stato invio Fatturazione Elettronica"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			inputType="SELECT"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="ti_fattura"
+			property="ti_fattura"
+			maxLength="1"
+			inputSize="1"
+			inputType="SELECT"
+			label="Tipo Fattura"
+			enabledOnEdit="false"/>
+	<fieldProperty
+			name="collegamentoDocumentale"
+			property="collegamentoDocumentale"
+			inputType="TEXT"
+			label="Documenti Elettronici Collegati" />
+	<fieldProperty
+			name="statoFattElett"
+			property="statoFattElett"
+			maxLength="1"
+			inputSize="1"
+			inputType="SELECT"
+			keysProperty="statoFattureElettronicheKeys"
+			label="Stato"
+			nullable="false"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			enabledOnSearch="true" />
+
+	<formFieldProperty
+		name="tipoDocamm" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdUoOrigine" />
+	<formFieldProperty
+		name="pg_docamm" />
+	<formFieldProperty
+		name="dtRegistrazione" />
+	<formFieldProperty
+		name="dsDocamm" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="ragioneSociale" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="protocollo_iva" />
+	<formFieldProperty
+		name="dtEmissione" />
+	<formFieldProperty
+		name="im_totale_docamm" />
+	<formFieldProperty
+		name="codiceUnivocoUfficioIpa" />
+	<formFieldProperty
+		name="statoInvioSdi" />
+	<formFieldProperty
+		name="ti_fattura" />
+	<formFieldProperty
+		name="collegamentoDocumentale" />
+	<formFieldProperty
+			name="statoFattElett" />
+
+	<findFieldProperty
+			name="tipoDocamm" />
+	<findFieldProperty
+			name="esercizio" />
+	<findFieldProperty
+			name="cdUoOrigine" />
+	<findFieldProperty
+			name="pg_docamm" />
+	<findFieldProperty
+			name="dtRegistrazione" />
+	<findFieldProperty
+			name="dsDocamm" />
+	<findFieldProperty
+			name="cdTerzo" />
+	<findFieldProperty
+			name="cognome" />
+	<findFieldProperty
+			name="nome" />
+	<findFieldProperty
+			name="ragioneSociale" />
+	<findFieldProperty
+			name="partita_iva" />
+	<findFieldProperty
+			name="protocollo_iva" />
+	<findFieldProperty
+			name="dtEmissione" />
+	<findFieldProperty
+			name="im_totale_docamm" />
+	<findFieldProperty
+			name="codiceUnivocoUfficioIpa" />
+	<findFieldProperty
+			name="statoInvioSdi" />
+	<findFieldProperty
+			name="ti_fattura" />
+	<findFieldProperty
+			name="collegamentoDocumentale" />
+
+	<columnFieldProperty
+			name="tipoDocamm" />
+	<columnFieldProperty
+			name="esercizio" />
+	<columnFieldProperty
+			name="cdUoOrigine" />
+	<columnFieldProperty
+			name="pg_docamm" />
+	<columnFieldProperty
+			name="dtRegistrazione" />
+	<columnFieldProperty
+			name="dsDocamm" />
+	<columnFieldProperty
+			name="cdTerzo" />
+	<columnFieldProperty
+			name="cognome" />
+	<columnFieldProperty
+			name="nome" />
+	<columnFieldProperty
+			name="ragioneSociale" />
+	<columnFieldProperty
+			name="partita_iva" />
+	<columnFieldProperty
+			name="protocollo_iva" />
+	<columnFieldProperty
+			name="dtEmissione" />
+	<columnFieldProperty
+			name="im_totale_docamm" />
+	<columnFieldProperty
+			name="codiceUnivocoUfficioIpa" />
+	<columnFieldProperty
+			name="statoInvioSdi" />
+	<columnFieldProperty
+			name="ti_fattura" />
+	<columnFieldProperty
+			name="collegamentoDocumentale" />
+</bulkInfo>

@@ -27,6 +27,8 @@ import it.cnr.contab.docamm00.comp.AutoFatturaComponent;
 import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+
 @Stateless(name="CNRDOCAMM00_EJB_AutoFatturaComponentSession")
 public class AutoFatturaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AutoFatturaComponentSession {
 @PostConstruct
@@ -288,6 +290,44 @@ public class AutoFatturaComponentSessionBean extends it.cnr.jada.ejb.CRUDCompone
 			throw uncaughtRuntimeException(param0,componentObj,e);
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+
+	public AutofatturaBulk impostaDatiPerFatturazioneElettronica(UserContext userContext, AutofatturaBulk autofattura) throws ComponentException, RemoteException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			AutofatturaBulk result = ((AutoFatturaComponent)componentObj).impostaDatiPerFatturazioneElettronica(userContext,autofattura);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public AutofatturaBulk aggiornaAutofatturaInvioSDI(UserContext userContext, AutofatturaBulk autofattura) throws ComponentException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			AutofatturaBulk result = ((AutoFatturaComponent)componentObj).aggiornaAutofatturaInvioSDI(userContext,autofattura);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
 		}
 	}
 }

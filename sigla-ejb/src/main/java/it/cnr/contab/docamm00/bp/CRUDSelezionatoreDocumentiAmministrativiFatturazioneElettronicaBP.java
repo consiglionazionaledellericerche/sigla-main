@@ -18,12 +18,14 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.docamm00.ejb.AutoFatturaComponentSession;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
+import it.cnr.contab.docamm00.storage.StorageFileAutofattura;
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
@@ -31,6 +33,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -120,13 +123,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                 logger.error("Utente Non Abilitato Firma", e);
             }
             if (isUtenteNonAbilitatoFirma()) {
-                ((Fattura_attivaBulk) model).setStatoFattElett(Fattura_attivaBulk.DA_PREDISPORRE_ALLA_FIRMA);
+                ((VDocammElettroniciAttiviBulk) model).setStatoFattElett(VDocammElettroniciAttiviBulk.DA_PREDISPORRE_ALLA_FIRMA);
             } else {
-                ((Fattura_attivaBulk) model).setStatoFattElett(Fattura_attivaBulk.DA_PREDISPORRE_E_FIRMARE);
+                ((VDocammElettroniciAttiviBulk) model).setStatoFattElett(VDocammElettroniciAttiviBulk.DA_FIRMARE);
             }
             setModel(context, model);
             super.init(config, context);
-            setColumns(getBulkInfo().getColumnFieldPropertyDictionary("fatturazioneElettronicaSet"));
             openIterator(context);
             documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
         } catch (InstantiationException e) {
@@ -160,12 +162,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
             CompoundFindClause compoundfindclause,
             OggettoBulk oggettobulk)
             throws BusinessProcessException {
-        Fattura_attivaBulk fattura = (Fattura_attivaBulk) oggettobulk;
+        VDocammElettroniciAttiviBulk docamm = (VDocammElettroniciAttiviBulk) oggettobulk;
         try {
             return getComponentSession().cerca(
                     actioncontext.getUserContext(),
                     compoundfindclause,
-                    fattura,
+                    docamm,
                     "selectByClauseForFatturazioneElettronica");
         } catch (ComponentException | RemoteException e) {
             throw handleException(e);
@@ -177,11 +179,18 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
     }
 
     public void scaricaDocumentiCollegati(ActionContext actioncontext) throws Exception {
+        String tipoDocamm = ((HttpActionContext) actioncontext).getParameter("tipoDocamm");
         Integer esercizio = Integer.valueOf(((HttpActionContext) actioncontext).getParameter("esercizio"));
         String cds = ((HttpActionContext) actioncontext).getParameter("cds");
         String cdUo = ((HttpActionContext) actioncontext).getParameter("cdUo");
         Long pgFattura = Long.valueOf(((HttpActionContext) actioncontext).getParameter("pgFattura"));
-        StorageObject storageObject = documentiCollegatiDocAmmService.recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+
+        StorageObject storageObject=null;
+        if (Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA.equals(tipoDocamm))
+            storageObject = documentiCollegatiDocAmmService.recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+        else if (Numerazione_doc_ammBulk.TIPO_AUTOFATTURA.equals(tipoDocamm))
+            storageObject = documentiCollegatiDocAmmService.recuperoFolderAutofattura(esercizio, cds, cdUo, pgFattura);
+
         InputStream is = null;
         if (storageObject == null) {
             is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
@@ -251,20 +260,23 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
             logger.info("Inizio Predisposizione per la firma");
             UserContext userContext = context.getUserContext();
             List<OggettoBulk> lista = getSelectedElements(context);
-
-            FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
-                    "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
-                    FatturaAttivaSingolaComponentSession.class);
-
+            if (lista == null || lista.isEmpty())
+                throw new ApplicationException("Selezionare almeno un elemento!");
+            int contaScartati = 0;
+            int contaAggiornati = 0;
             for (Iterator<OggettoBulk> i = lista.iterator(); i.hasNext(); ) {
                 OggettoBulk docAmm = i.next();
-                if (docAmm instanceof Fattura_attivaBulk) {
-                    protocollaECreaFileXml(userContext, componentFatturaAttiva, (Fattura_attivaBulk) docAmm);
-                }
+                if (docAmm instanceof VDocammElettroniciAttiviBulk &&
+                        VDocammElettroniciAttiviBulk.DA_PREDISPORRE_ALLA_FIRMA.equals(((VDocammElettroniciAttiviBulk)docAmm).getStatoInvioSdi())) {
+                    protocollaECreaFileXml(userContext, (VDocammElettroniciAttiviBulk) docAmm);
+                    contaAggiornati++;
+                } else
+                    contaScartati++;
             }
             setFocusedElement(context, null);
             refresh(context);
-
+            this.setMessage("Sono stati predisposti per la firma "+contaAggiornati+" documenti."+
+                    (contaScartati>0?" Ne sono stati scartati "+contaScartati+" che non risultano da predisporre per la firma.":""));
         } catch (ApplicationException e) {
             throw handleException(e);
         } catch (ComponentException e) {
@@ -276,27 +288,50 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         }
     }
 
-
-    public Fattura_attivaBulk protocollaECreaFileXml(UserContext userContext,
-                                                     FatturaAttivaSingolaComponentSession componentFatturaAttiva, Fattura_attivaBulk fatturaAttiva)
+    public IDocumentoAmministrativoElettronicoBulk protocollaECreaFileXml(UserContext userContext, VDocammElettroniciAttiviBulk vDocamm)
             throws BusinessProcessException, ComponentException, RemoteException, PersistencyException {
-        logger.info("Processo la fattura {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
-        DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
-        // Questo metodo va invocato perchè fa tutti i controlli prima che la fattura venga protocollata
-        component.preparaFattura(userContext, fatturaAttiva);
+        logger.info("Processo il documento elettronico {}/{}/{}", vDocamm.getTipoDocamm(), vDocamm.getEsercizio(), vDocamm.getPg_docamm());
 
-        if (fatturaAttiva.getProtocollo_iva() == null) {
-            Fattura_attivaBulk fatturaAttivaProtocollata = protocollazione(userContext, fatturaAttiva);
-            fatturaAttiva = fatturaAttivaProtocollata;
-            logger.info("Creato protocollazione {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
+        if (VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI.equals(vDocamm.getStatoInvioSdi()))
+            throw new ApplicationException("Operazione non possibile! Il documento elettronico "+ vDocamm.getTipoDocamm()+"/"+vDocamm.getEsercizio()+"/"+vDocamm.getPg_docamm()+
+                    " risulta firmato.");
+
+        DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
+
+        IDocumentoAmministrativoElettronicoBulk docammElettronico = component.castDocumentoElettronico(userContext, vDocamm);
+
+        if (docammElettronico instanceof AutofatturaBulk && docammElettronico.getProgrUnivocoAnno()==null)
+            docammElettronico = Utility.createAutoFatturaComponentSession().impostaDatiPerFatturazioneElettronica(userContext, (AutofatturaBulk)docammElettronico);
+
+        // Questo metodo va invocato perchè fa tutti i controlli prima che la fattura venga protocollata
+        component.preparaFattura(userContext, docammElettronico);
+
+        if (docammElettronico.getProtocollo_iva() == null) {
+            if (docammElettronico instanceof Fattura_attivaBulk) {
+                Fattura_attivaBulk fatturaAttivaProtocollata = protocollazione(userContext, (Fattura_attivaBulk) docammElettronico);
+                docammElettronico = fatturaAttivaProtocollata;
+                logger.info("Creato protocollazione {}/{}/{}", docammElettronico.getTipoDocumentoElettronico(), docammElettronico.getEsercizio(), docammElettronico.getPg_docamm());
+            } else {
+                throw new ApplicationException("Protocollo Iva non presente sul documento elettronico "+ docammElettronico.getTipoDocumentoElettronico()+"/"+docammElettronico.getEsercizio()+"/"+docammElettronico.getPg_docamm());
+            }
         }
-        File file = creaFileXml(userContext, fatturaAttiva);
-        logger.info("Creato file XML {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
+
+        File file = creaFileXml(userContext, docammElettronico);
+        logger.info("Creato file XML {}/{}/{}", docammElettronico.getTipoDocumentoElettronico(), docammElettronico.getEsercizio(), docammElettronico.getPg_docamm());
+
         List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
         List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
         try {
-            StorageFile storageFile = new StorageFileFatturaAttiva(file, fatturaAttiva,
-                    "application/xml", "FAXA" + fatturaAttiva.constructCMISNomeFile() + ".xml");
+            StorageFile storageFile;
+
+            if (docammElettronico instanceof AutofatturaBulk)
+                storageFile = new StorageFileAutofattura(file, (AutofatturaBulk)docammElettronico,
+                    "application/xml", "FAXA" + ((AutofatturaBulk)docammElettronico).constructCMISNomeFile() + ".xml");
+            else if (docammElettronico instanceof Fattura_attivaBulk)
+                storageFile = new StorageFileFatturaAttiva(file, (Fattura_attivaBulk)docammElettronico,
+                        "application/xml", "FAXA" + ((Fattura_attivaBulk)docammElettronico).constructCMISNomeFile() + ".xml");
+            else
+                storageFile = null;
 
             if (storageFile != null) {
                 //E' previsto solo l'inserimento ma non l'aggiornamento
@@ -310,12 +345,13 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                             path,
                             false
                     )).ifPresent(storageObject -> {
-                        List<String> aspects = storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+                        List<String> aspects = new ArrayList<>();
+                        aspects.addAll(storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()));
                         aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
+                        Map<String, Object> metadataProperties = new HashMap<>();
+                        metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects);
                         documentiCollegatiDocAmmService.updateProperties(
-                                Collections.singletonMap(
-                                        StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
-                                        aspects),
+                                metadataProperties,
                                 storageObject);
                         storageFile.setStorageObject(storageObject);
                         storageFileCreate.add(storageFile);
@@ -326,7 +362,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                         throw new ApplicationException("CMIS - File [" + storageFile.getFileName() + "] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
                     throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + _ex.getMessage() + ")");
                 }
-                fatturaAttiva = componentFatturaAttiva.aggiornaFatturaPredispostaAllaFirma(userContext, fatturaAttiva);
+                docammElettronico = component.aggiornaDocammElettronicoPredispostoAllaFirma(userContext, docammElettronico);
             }
         } catch (Exception e) {
 			/*
@@ -341,8 +377,8 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
             }
             throw new BusinessProcessException(e);
         }
-        documentiCollegatiDocAmmService.gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva);
-        return fatturaAttiva;
+        documentiCollegatiDocAmmService.gestioneAllegatiPerFatturazioneElettronica(userContext, docammElettronico);
+        return docammElettronico;
     }
 
     public void firmaOTP(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
@@ -351,7 +387,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         refresh(context);
     }
 
-    public Integer firmaFatture(UserContext userContext, FirmaOTPBulk firmaOTPBulk, List<Fattura_attivaBulk> listFattura) throws ApplicationException, BusinessProcessException {
+    public Integer firmaFatture(UserContext userContext, FirmaOTPBulk firmaOTPBulk, List<VDocammElettroniciAttiviBulk> listVDocammElettronici) throws ApplicationException, BusinessProcessException {
         try {
             DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
             Configurazione_cnrBulk config = component.getAuthenticatorPecSdi(userContext);
@@ -365,18 +401,16 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
             }
             final String password = pwd;
             logger.info("Decrypt password");
-            FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
-                    "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
-                    FatturaAttivaSingolaComponentSession.class);
+
             final List<byte[]> fattureFirmate = documentiCollegatiDocAmmService
                     .getArubaSignServiceClient()
                     .pkcs7SignV2Multiple(
                             firmaOTPBulk.getUserName(),
                             firmaOTPBulk.getPassword(),
                             firmaOTPBulk.getOtp(),
-                            listFattura.stream()
-                                    .filter(fattura_attivaBulk -> !fattura_attivaBulk.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))
-                                    .map(Fattura_attivaBulk::getStorageObject)
+                            listVDocammElettronici.stream()
+                                    .filter(vDocammElettronico -> !vDocammElettronico.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI))
+                                    .map(VDocammElettroniciAttiviBulk::getStorageObject)
                                     .filter(storageObject -> Optional.ofNullable(storageObject).isPresent())
                                     .filter(storageObject -> storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
                                     .map(storageObject -> documentiCollegatiDocAmmService.getResource(storageObject))
@@ -391,12 +425,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                     );
             AtomicInteger index = new AtomicInteger();
             AtomicInteger indexInviate = new AtomicInteger();
-            listFattura.stream()
-                    .filter(fattura_attivaBulk -> Optional.ofNullable(fattura_attivaBulk.getStorageObject()).isPresent())
-                    .filter(fattura_attivaBulk -> fattura_attivaBulk.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
-                    .filter(fattura_attivaBulk -> !fattura_attivaBulk.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))
-                    .forEach(fattura_attivaBulk -> {
-                        StorageObject storageObject = fattura_attivaBulk.getStorageObject();
+            listVDocammElettronici.stream()
+                    .filter(vDocammElettronico -> Optional.ofNullable(vDocammElettronico.getStorageObject()).isPresent())
+                    .filter(vDocammElettronico -> vDocammElettronico.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
+                    .filter(vDocammElettronico -> !vDocammElettronico.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI))
+                    .forEach(vDocammElettronico -> {
+                        StorageObject storageObject = vDocammElettronico.getStorageObject();
                         final int indexAndIncrement = index.getAndIncrement();
                         String nomeFile = storageObject.getPropertyValue(StoragePropertyNames.NAME.value());
                         String nomeFileP7m = nomeFile + ".p7m";
@@ -409,10 +443,18 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                             metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
                                     Arrays.asList(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()));
 
+                            IDocumentoAmministrativoElettronicoBulk docammElettronico = null;
+                            try {
+                                docammElettronico = createComponentSession().castDocumentoElettronico(userContext, vDocammElettronico);
+                            } catch (ComponentException | RemoteException |  BusinessProcessException e) {
+                                throw new RuntimeException(e);
+                            }
+
                             final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
                                     documentiCollegatiDocAmmService.getStorageObjectByPath(
-                                            documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
+                                            documentiCollegatiDocAmmService.recuperoFolderDocammElettronicoByPath(docammElettronico).getPath()
                                                     .concat(StorageDriver.SUFFIX).concat(nomeFileP7m)));
+
                             if (storageObjectByPath.isPresent()) {
                                 /**
                                  * Se trovo il p7m caricato manualmente allora non aggiorno il contenuto
@@ -432,7 +474,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                 documentiCollegatiDocAmmService.storeSimpleDocument(
                                         new ByteArrayInputStream(byteSigned),
                                         MimeTypes.P7M.mimetype(),
-                                        documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath(),
+                                        documentiCollegatiDocAmmService.recuperoFolderDocammElettronicoByPath(docammElettronico).getPath(),
                                         metadataProperties);
                             }
 
@@ -442,20 +484,56 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                 if (documentiCollegatiDocAmmService.hasAspect(storageObject, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_INVIATA.value())){
                                     daInviare = false;
                                 } else {
-                                    if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()){
+                                    if (docammElettronico instanceof Fattura_attivaBulk && !((Fattura_attivaBulk)docammElettronico).isNotaCreditoDaNonInviareASdi()){
                                         aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_INVIATA.value());
                                     }
                                 }
                                 aspects.add(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-                                final Fattura_attivaBulk fatturaAttivaByPrimaryKey =
-                                        Optional.ofNullable(componentFatturaAttiva.findByPrimaryKey(userContext, fattura_attivaBulk))
-                                                .filter(Fattura_attivaBulk.class::isInstance)
-                                                .map(Fattura_attivaBulk.class::cast)
-                                                .orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
-                                if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi() ) {
-                                    final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
-                                    fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
-                                    if (daInviare){
+
+                                if (docammElettronico instanceof Fattura_attivaBulk) {
+                                    Fattura_attivaBulk fattura_attivaBulk = (Fattura_attivaBulk) docammElettronico;
+
+                                    FatturaAttivaSingolaComponentSession componentFatturaAttiva = Utility.createFatturaAttivaSingolaComponentSession();
+
+                                    final Fattura_attivaBulk fatturaAttivaByPrimaryKey =
+                                            Optional.ofNullable(componentFatturaAttiva.findByPrimaryKey(userContext, fattura_attivaBulk))
+                                                    .filter(Fattura_attivaBulk.class::isInstance)
+                                                    .map(Fattura_attivaBulk.class::cast)
+                                                    .orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
+                                    if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
+                                        final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
+                                        fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
+                                        if (daInviare) {
+                                            fatturaService.inviaFatturaElettronica(
+                                                    config.getVal01(),
+                                                    password,
+                                                    new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
+                                                    nomeFileInvioSDI);
+                                            logger.info("File firmato inviato");
+                                        }
+                                    }
+                                    documentiCollegatiDocAmmService.updateProperties(
+                                            Collections.singletonMap(
+                                                    StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                                                    aspects),
+                                            storageObject);
+                                    componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaAttivaByPrimaryKey);
+                                    logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(), fattura_attivaBulk.getProgrUnivocoAnno());
+                                    indexInviate.getAndIncrement();
+                                } else if (docammElettronico instanceof AutofatturaBulk) {
+                                    AutofatturaBulk autofatturaBulk = (AutofatturaBulk) docammElettronico;
+
+                                    AutoFatturaComponentSession componentAutofattura = Utility.createAutoFatturaComponentSession();
+
+                                    final AutofatturaBulk autofatturaByPrimaryKey =
+                                            Optional.ofNullable(componentAutofattura.findByPrimaryKey(userContext, autofatturaBulk))
+                                                    .filter(AutofatturaBulk.class::isInstance)
+                                                    .map(AutofatturaBulk.class::cast)
+                                                    .orElseThrow(() -> new DetailedRuntimeException("Autofattura non trovata!"));
+
+                                    final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, autofatturaByPrimaryKey).concat(".p7m");
+                                    autofatturaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
+                                    if (daInviare) {
                                         fatturaService.inviaFatturaElettronica(
                                                 config.getVal01(),
                                                 password,
@@ -463,15 +541,16 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                                 nomeFileInvioSDI);
                                         logger.info("File firmato inviato");
                                     }
+
+                                    documentiCollegatiDocAmmService.updateProperties(
+                                            Collections.singletonMap(
+                                                    StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                                                    aspects),
+                                            storageObject);
+                                    componentAutofattura.aggiornaAutofatturaInvioSDI(userContext, autofatturaByPrimaryKey);
+                                    logger.info("Autofattura con progressivo univoco {}/{} aggiornata.", autofatturaBulk.getEsercizio(), autofatturaBulk.getProgrUnivocoAnno());
+                                    indexInviate.getAndIncrement();
                                 }
-                                documentiCollegatiDocAmmService.updateProperties(
-                                        Collections.singletonMap(
-                                                StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
-                                                aspects),
-                                        storageObject);
-                                componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaAttivaByPrimaryKey);
-                                logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(), fattura_attivaBulk.getProgrUnivocoAnno());
-                                indexInviate.getAndIncrement();
                             } catch (PersistencyException | ComponentException | IOException | EmailException e) {
                                 throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
                             }
@@ -487,31 +566,36 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
     }
 
 
-    public void recuperoFilePerFirma(ActionContext context, List<Fattura_attivaBulk> lista)
-            throws ApplicationException, IOException {
-        FatturaAttivaSingolaComponentSession componentFatturaAttiva;
-        try {
-            componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
-                    "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
-                    FatturaAttivaSingolaComponentSession.class);
-        } catch (BusinessProcessException e1) {
-            throw new ApplicationException(e1);
-        }
-        for (Iterator<Fattura_attivaBulk> i = lista.iterator(); i.hasNext(); ) {
-            Fattura_attivaBulk docAmm = i.next();
-            if (Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA.equals(docAmm.getStatoInvioSdi())) {
-                try {
-                    protocollaECreaFileXml(context.getUserContext(), componentFatturaAttiva, docAmm);
-                } catch (BusinessProcessException | ComponentException | PersistencyException e) {
-                    throw new ApplicationException(e);
+    public void recuperoFilePerFirma(ActionContext context, List<VDocammElettroniciAttiviBulk> lista)
+            throws ComponentException, IOException, BusinessProcessException {
+        if (lista == null || lista.isEmpty())
+            throw new ApplicationException("Selezionare almeno un elemento!");
+        int contaScartati = 0;
+        int contaDaAggiornare = 0;
+        for (Iterator<VDocammElettroniciAttiviBulk> i = lista.iterator(); i.hasNext(); ) {
+            VDocammElettroniciAttiviBulk vDocamm = i.next();
+            if (VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI.equals(vDocamm.getStatoInvioSdi()))
+                contaScartati++;
+            else {
+                if (VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA.equals(vDocamm.getStatoInvioSdi())) {
+                    try {
+                        protocollaECreaFileXml(context.getUserContext(), vDocamm);
+                    } catch (BusinessProcessException | ComponentException | PersistencyException e) {
+                        throw new ApplicationException(e);
+                    }
                 }
-            }
-            StorageObject so = documentiCollegatiDocAmmService.getFileXmlFatturaAttiva(docAmm);
-            if (so != null) {
-                logger.info("Recuperato File XML");
-                docAmm.setStorageObject(so);
+                IDocumentoAmministrativoElettronicoBulk docammElettronico = createComponentSession().castDocumentoElettronico(context.getUserContext(), vDocamm);
+                StorageObject so = documentiCollegatiDocAmmService.getFileXmlDocammElettronico(docammElettronico);
+                if (so != null) {
+                    logger.info("Recuperato File XML");
+                    vDocamm.setStorageObject(so);
+                }
+                contaDaAggiornare++;
             }
         }
+        if (contaDaAggiornare==0)
+            throw new ApplicationException("Attenzione! Non risulta selezionato alcun documento da firmare."+
+                    (contaScartati>0?" Ne sono stati scartati "+contaScartati+" che non risultano da firmare.":""));
     }
 
     public Fattura_attivaBulk protocollazione(UserContext userContext,
@@ -534,12 +618,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         throw new ApplicationException(e.getMessage());
     }
 
-    private File creaFileXml(UserContext userContext, Fattura_attivaBulk fattura) throws BusinessProcessException {
+    private File creaFileXml(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws BusinessProcessException {
         try {
             DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
 
-            JAXBElement<FatturaElettronicaType> fatturaType = component.creaFatturaElettronicaType(userContext, fattura);
-            String nomeFile = component.recuperoNomeFileXml(userContext, fattura);
+            JAXBElement<FatturaElettronicaType> fatturaType = component.creaFatturaElettronicaType(userContext, docammElettronico);
+            String nomeFile = component.recuperoNomeFileXml(userContext, docammElettronico);
             File file = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", nomeFile);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
 

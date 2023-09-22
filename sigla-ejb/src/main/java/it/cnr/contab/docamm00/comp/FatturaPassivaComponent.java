@@ -2767,6 +2767,7 @@ public class FatturaPassivaComponent extends ScritturaPartitaDoppiaFromDocumento
                 autofattura.setCd_unita_organizzativa(uoEnte.getCd_unita_organizzativa());
                 autofattura.setEsercizio(fattura_passiva.getEsercizio());
                 autofattura.completeFrom(fattura_passiva);
+
                 AutoFatturaComponentSession h = getAutofatturaComponentSession(userContext);
                 try {
                     Vector sez = h.estraeSezionali(userContext, autofattura, autoObb || fatturaSplit);

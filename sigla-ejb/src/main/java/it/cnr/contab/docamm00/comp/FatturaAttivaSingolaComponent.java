@@ -2655,7 +2655,7 @@ public class FatturaAttivaSingolaComponent
             if (fattura.getCliente() != null) {
                 impostaDatiPerFatturazioneElettronica(userContext, fattura, fattura.getCliente());
                 if (fattura.isDocumentoFatturazioneElettronica()) {
-                    fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+                    fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA);
                 }
             }
         }
@@ -7750,7 +7750,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO);
+        fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO);
         fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
         fattura.setToBeUpdated();
         updateBulk(userContext, fattura);
@@ -7764,7 +7764,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     public Fattura_attivaBulk aggiornaFatturaDecorrenzaTerminiSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI);
+        fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_DECORRENZA_TERMINI);
         fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
         fattura.setToBeUpdated();
         updateBulk(userContext, fattura);
@@ -7772,7 +7772,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     public Fattura_attivaBulk aggiornaFatturaEsitoAccettatoSDI(UserContext userContext, Fattura_attivaBulk fattura) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO);
+        fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_ACCETTATA_DESTINATARIO);
         fattura.setToBeUpdated();
         updateBulk(userContext, fattura);
         return fattura;
@@ -7780,7 +7780,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
     public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
     	if (!noteSdi.contains("Fattura duplicata")){
-            fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_SCARTATA_DA_SDI);
+            fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_SCARTATA_DA_SDI);
             fattura.setCodiceInvioSdi(codiceInvioSdi);
             fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
             fattura.setToBeUpdated();
@@ -7834,9 +7834,9 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
     public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException, java.rmi.RemoteException {
         if (fatturaAttiva.isNotaCreditoDaNonInviareASdi()) {
-            fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_FIRMATA_NC);
+            fatturaAttiva.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_FIRMATA_NC);
         } else {
-            fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
+            fatturaAttiva.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI);
         }
         fatturaAttiva.setToBeUpdated();
         updateBulk(userContext, fatturaAttiva);
@@ -7845,14 +7845,14 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
     public Fattura_attivaBulk aggiornaFatturaPredispostaAllaFirma(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException, java.rmi.RemoteException {
            
-    	fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+    	fatturaAttiva.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
         fatturaAttiva.setToBeUpdated();
         updateBulk(userContext, fatturaAttiva);
         return fatturaAttiva;
     }
 
     public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, Date dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+        fatturaAttiva.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_SDI);
         fatturaAttiva.setDtRicezioneSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime()):null);
         fatturaAttiva.setToBeUpdated();
         updateBulk(userContext, fatturaAttiva);
@@ -7860,7 +7860,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     public Fattura_attivaBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA);
+        fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_MANCATA_CONSEGNA);
         fattura.setCodiceInvioSdi(codiceSdi);
         fattura.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
         fattura.setToBeUpdated();
@@ -7900,7 +7900,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 	}
 
     public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
+        fatturaAttiva.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
         fatturaAttiva.setCodiceInvioSdi(codiceSdi);
         fatturaAttiva.setNoteInvioSdi(null);
         fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi != null ? new Timestamp(dataConsegnaSdi.toGregorianCalendar().getTimeInMillis()) : null);
@@ -7912,7 +7912,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     public java.util.List recuperoFattureElettronicheSenzaNotificaConsegna(UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk) throws PersistencyException, ComponentException, it.cnr.jada.persistency.IntrospectionException, java.rmi.RemoteException {
-        return recuperoFattureElettroniche(userContext, unita_organizzativaBulk, Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
+        return recuperoFattureElettroniche(userContext, unita_organizzativaBulk, VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI);
     }
 
     private java.util.List recuperoFattureElettroniche(UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk, String statoInvioSdi) throws PersistencyException, ComponentException, it.cnr.jada.persistency.IntrospectionException, java.rmi.RemoteException {
@@ -7963,7 +7963,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     }
 
     public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
-        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE);
+        fattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_NON_RECAPITABILE);
         fattura.setCodiceInvioSdi(codiceInvioSdi);
         fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
         fattura.setToBeUpdated();
@@ -8115,7 +8115,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
 
         sql.addSQLClause("AND", "FL_FATTURA_ELETTRONICA", sql.EQUALS, "Y");
-        sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+        sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_SDI);
         sql.addSQLClause("AND", "DT_RICEZIONE_SDI", sql.LESS_EQUALS, dateOfSearch);
         sql.addSQLClause("AND", "CODICE_UNIVOCO_UFFICIO_IPA", sql.ISNULL,null);
         sql.addSQLClause("AND", "PEC_FATTURA_ELETTRONICA", sql.ISNULL,null);
@@ -8137,7 +8137,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         sql = homeNc.createSQLBuilder();
         
         sql.addSQLClause("AND", "FL_FATTURA_ELETTRONICA", sql.EQUALS, "Y");
-        sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+        sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_SDI);
         sql.addSQLClause("AND", "DT_RICEZIONE_SDI", sql.LESS_EQUALS, dateOfSearch);
         sql.addSQLClause("AND", "CODICE_UNIVOCO_UFFICIO_IPA", sql.ISNULL,null);
         sql.addSQLClause("AND", "PEC_FATTURA_ELETTRONICA", sql.ISNULL,null);
@@ -8184,7 +8184,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 			}
 		}
 		
-		fatturaProtocollata.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL);
+		fatturaProtocollata.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL);
 		updateBulk(aUC, fatturaProtocollata);
 	}
 }

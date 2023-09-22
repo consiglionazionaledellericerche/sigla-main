@@ -18,7 +18,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -74,16 +74,16 @@ public class ReversaleIHome extends ReversaleHome {
         clausesFattElett.addClause("AND", "codiceInvioSdi", SQLBuilder.ISNOTNULL, null);
         CompoundFindClause clausesFattElettPubbliciAnd = new CompoundFindClause();
         CompoundFindClause clausesFattElettPubblici = new CompoundFindClause();
-        clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO);
-        clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI);
-        clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE);
+        clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_ACCETTATA_DESTINATARIO);
+        clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_DECORRENZA_TERMINI);
+        clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_NON_RECAPITABILE);
         CompoundFindClause clausesFattElettPrivati = new CompoundFindClause();
         CompoundFindClause clausesFattElettPrivatiAnd = new CompoundFindClause();
         CompoundFindClause clausesFattElettPrivatiOr = new CompoundFindClause();
         clausesFattElettPrivatiAnd.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNULL, null);
-        clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA);
-        clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL);
-        clausesFattElettPrivatiOr.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
+        clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_MANCATA_CONSEGNA);
+        clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL);
+        clausesFattElettPrivatiOr.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
 
         clausesFattElettPrivati.addChild(CompoundFindClause.and(clausesFattElettPrivatiAnd, clausesFattElettPrivatiOr));
 
@@ -158,7 +158,7 @@ public class ReversaleIHome extends ReversaleHome {
     /**
      * Carica la reversale <reversale> con tutti gli oggetti complessi
      *
-     * @param reversale
+     * @param userContext
      * @return
      * @throws PersistencyException
      */

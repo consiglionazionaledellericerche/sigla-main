@@ -22,6 +22,7 @@ import java.util.List;
 import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -48,16 +49,12 @@ public SelezionatoreDocumentiAmministrativiFatturazioneElettronicaAction() {
 public Forward doPredisponiPerLaFirma(ActionContext context) {
 	CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
 	OggettoBulk bulk = bp.getModel();
-	Fattura_attivaBulk fattura = ((Fattura_attivaBulk)bulk);
+	VDocammElettroniciAttiviBulk docamm = (VDocammElettroniciAttiviBulk)bulk;
 	try {
 		fillModel(context);
 		bp.setModel(context, bulk);
-//		try {
-			bp.setSelection(context);
-			bp.predisponiPerLaFirma(context);							
-//		} finally {
-//			bp.openIterator(context);				
-//		}
+		bp.setSelection(context);
+		bp.predisponiPerLaFirma(context);
 		return context.findDefaultForward();
 	} catch(Exception e) {
 		return handleException(context,e);
@@ -70,9 +67,7 @@ public Forward doSignOTP(ActionContext context) {
 	try {
 		fillModel(context);
 		bp.setSelection(context);
-		List<Fattura_attivaBulk> selectedElements = bp.getSelectedElements(context);
-		if (selectedElements == null || selectedElements.isEmpty())
-			throw new ApplicationException("Selezionare almeno un elemento!");
+		List<VDocammElettroniciAttiviBulk> selectedElements = bp.getSelectedElements(context);
 		bp.recuperoFilePerFirma(context, selectedElements);
 		BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
 		firmaOTPBP.setModel(context, new FirmaOTPBulk());
@@ -108,13 +103,13 @@ public Forward basicDoBringBack(ActionContext actioncontext) throws BusinessProc
 public Forward doCambiaVisibilita(ActionContext context) {
 	CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
 	OggettoBulk bulk = bp.getModel();
-	Fattura_attivaBulk fattura = ((Fattura_attivaBulk)bulk);
+	VDocammElettroniciAttiviBulk docamm = ((VDocammElettroniciAttiviBulk)bulk);
 	try {
 		fillModel(context);
-		String stato = fattura.getStatoFattElett();
+		String stato = docamm.getStatoFattElett();
 		bulk = (OggettoBulk)bp.getBulkInfo().getBulkClass().newInstance();
-		fattura = ((Fattura_attiva_IBulk)bulk);
-		fattura.setStatoFattElett(stato);
+		docamm = ((VDocammElettroniciAttiviBulk)bulk);
+		docamm.setStatoFattElett(stato);
 		bp.setModel(context, bulk);
 		bp.openIterator(context);
 		return context.findDefaultForward();

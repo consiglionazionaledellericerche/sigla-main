@@ -41,6 +41,7 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -146,7 +147,7 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
             logger.info("Fatture Elettroniche: Attive: Ricevuta Consegna. MessageId:" + ricevuta.getMessageId());
 
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, ricevuta.getIdentificativoSdI());
-            if (fattura != null && (fattura.getStatoInvioSdi() == null || !fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA))) {
+            if (fattura != null && (fattura.getStatoInvioSdi() == null || !fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_MANCATA_CONSEGNA))) {
                 logger.info("Fatture Elettroniche: Attive: Fattura già elaborata " + ricevuta.getIdentificativoSdI());
             } else {
                 if (fattura == null) {
@@ -244,7 +245,7 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
             logger.info("Fatture Elettroniche: Attive: Trasmissione non recapitata. MessageId:" + notifica.getMessageId());
             String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
-            if (fattura != null && fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE)) {
+            if (fattura != null && fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_NON_RECAPITABILE)) {
                 logger.info("Fatture Elettroniche: Attive: Fattura già elaborata " + codiceSDI);
             } else {
                 String nomeFileP7m = notifica.getNomeFile();
@@ -294,10 +295,10 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
             Fattura_attivaBulk fattura = recuperoFatturaDaNomeFile(userContext, nomeFile);
             if (fattura != null) {
                 if (fattura.getStatoInvioSdi() != null &&
-                        (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI))) {
+                        (fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_SDI))) {
                     logger.info("Fatture Elettroniche: Attive: PEC. Fattura già elaborata. " + nomeFile);
                 } else if (fattura.getStatoInvioSdi() != null &&
-                        (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))) {
+                        (fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI))) {
                     try {
                         component.aggiornaFatturaConsegnaSDI(userContext, fattura, dataConsegna);
                         logger.info("Fatture Elettroniche: Attive: PEC. Aggiornamento Fattura consegnata a SDI " + nomeFile);
@@ -414,10 +415,10 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
             if (fattura != null) {
                 if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())) {
-                    if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI)) {
+                    if (fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_DECORRENZA_TERMINI)) {
                         logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
-                    } else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI) ||
-                            fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)) {
+                    } else if (fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_SDI) ||
+                            fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)) {
                         salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
                         try {
                             component.aggiornaFatturaDecorrenzaTerminiSDI(userContext, fattura, notifica.getDescrizione());
@@ -451,9 +452,9 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
             if (fattura != null) {
                 if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())) {
-                    if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO) || fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO)) {
+                    if (fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_ACCETTATA_DESTINATARIO) || fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO)) {
                         logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
-                    } else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)) {
+                    } else if (fattura.getStatoInvioSdi().equals(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)) {
                         if (esitoAccettato(notifica)) {
                             salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO);
                             try {

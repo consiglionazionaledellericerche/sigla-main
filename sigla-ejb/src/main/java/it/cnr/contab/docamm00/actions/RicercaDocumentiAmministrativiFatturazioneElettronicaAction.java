@@ -25,6 +25,7 @@ import it.cnr.contab.docamm00.bp.IGenericSearchDocAmmBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -81,16 +82,16 @@ public class RicercaDocumentiAmministrativiFatturazioneElettronicaAction extends
             clauses.addClause("AND", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.TRUE);
             if (filtro.isDaFirmare()) {
             	if (bp.isUtenteNonAbilitatoFirma(context.getUserContext())){
-                    clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+                    clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA);
             	} else {
                 	CompoundFindClause clausesFir = new CompoundFindClause();
-                    clausesFir.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+                    clausesFir.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA);
                 	CompoundFindClause clausesPre = new CompoundFindClause();
-                    clausesPre.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+                    clausesPre.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
                     clauses.addChild(CompoundFindClause.or(clausesFir, clausesPre));
             	}
             } else if (filtro.isFirmata()) {
-                clauses.addClause("AND", "statoInvioSdi", SQLBuilder.NOT_EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+                clauses.addClause("AND", "statoInvioSdi", SQLBuilder.NOT_EQUALS, VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA);
             }
             if (filtro.getCodiceUnivocoUfficioIpa() != null) {
                 clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.EQUALS, filtro.getCodiceUnivocoUfficioIpa());

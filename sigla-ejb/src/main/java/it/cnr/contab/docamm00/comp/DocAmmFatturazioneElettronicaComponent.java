@@ -17,18 +17,36 @@
 
 package it.cnr.contab.docamm00.comp;
 
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.TerzoKey;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.*;
+import it.gov.fatturapa.sdi.ws.trasmissione.v1_0.types.FileSdIBaseType;
 import org.springframework.util.StringUtils;
 
 import javax.activation.DataHandler;
@@ -39,59 +57,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.CRUDComponent;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AnagraficaType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.BolloVirtualeType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CondizioniPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ContattiTrasmittenteType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiAnagraficiCedenteType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiAnagraficiCessionarioType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBeniServiziType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.EsigibilitaIVAType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaHeaderType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IndirizzoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ModalitaPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.NaturaType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ObjectFactory;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
-import it.gov.fatturapa.sdi.ws.trasmissione.v1_0.types.FileSdIBaseType;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @XmlRootElement(name = "fileSdIBase_Type")
 public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
@@ -285,12 +257,12 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	quindi: (208)16
 	 */
 
-	private String recuperoCodiceUnivocoFile(Fattura_attivaBulk fattura) throws ComponentException{
+	private String recuperoCodiceUnivocoFile(IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException{
 		StringBuffer result = new StringBuffer();
-		if (fattura.getProgrUnivocoAnno() > 99999){
-			throw new ApplicationException("Impossibile Procedere! La Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" ha un progressivo univoco per anno troppo grande"); 
+		if (docammElettronico.getProgrUnivocoAnno() > 99999){
+			throw new ApplicationException("Impossibile Procedere! Il documento elettronico "+docammElettronico.getTipoDocumentoElettronico()+"/"+docammElettronico.getEsercizio()+"/"+docammElettronico.getPg_docamm()+" ha un progressivo univoco per anno troppo grande");
 		} else {
-			String stringaUnivoca = fattura.getEsercizio().toString() + Utility.lpad(fattura.getProgrUnivocoAnno().toString(),5,'0');
+			String stringaUnivoca = docammElettronico.getEsercizio().toString() + Utility.lpad(docammElettronico.getProgrUnivocoAnno().toString(),5,'0');
 			BigDecimal idUnivocoBigD = new BigDecimal(stringaUnivoca);
 			Hashtable<Integer, Integer> risultati = new Hashtable<Integer, Integer>(); 
 			BigDecimal base = new BigDecimal(62);
@@ -308,18 +280,18 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		return result.toString();
 	}
 	
-	public String recuperoNomeFileXml(UserContext userContext, Fattura_attivaBulk fattura) throws RemoteException,  ComponentException {
+	public String recuperoNomeFileXml(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws RemoteException,  ComponentException {
 		try {
-			return recuperoNomeFileSenzaEstensione(userContext, fattura) +".xml";
+			return recuperoNomeFileSenzaEstensione(userContext, docammElettronico) +".xml";
 		} catch(Exception e) {
 			throw handleException(e);
 		}
 	}
 
-	public String recuperoNomeFileSenzaEstensione(UserContext userContext, Fattura_attivaBulk fattura) throws RemoteException,  ComponentException {
+	public String recuperoNomeFileSenzaEstensione(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws RemoteException,  ComponentException {
 		try {
 			String inizioNomeFile = recuperoInizioNomeFile(userContext);
-			return inizioNomeFile+"_"+recuperoCodiceUnivocoFile(fattura);
+			return inizioNomeFile+"_"+recuperoCodiceUnivocoFile(docammElettronico);
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -372,8 +344,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
-	private String getMailAddress(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
-		UtenteBulk utente = new UtenteBulk(fattura.getUtcr());
+	private String getMailAddress(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docamm) throws ComponentException {
+		UtenteBulk utente = new UtenteBulk(docamm.getUtcr());
 		try {
 			utente = (UtenteBulk) getHome(userContext, UtenteBulk.class).findByPrimaryKey(utente);
 			if (utente != null){
@@ -388,48 +360,67 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
-
-	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws ComponentException {
+	public FatturaElettronicaType preparaFattura(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico)throws ComponentException {
 		try {
-
 			ObjectFactory factory = new ObjectFactory();
 			FatturaElettronicaType fatturaType = factory.createFatturaElettronicaType();
 			fatturaType.setSistemaEmittente(Utility.APPLICATION_TITLE.substring(0, 5));
-			fatturaType.setVersione(fattura.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
+			fatturaType.setVersione(docammElettronico.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
 			FatturaElettronicaHeaderType fatturaHeaderType = factory.createFatturaElettronicaHeaderType();
+
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
-			TerzoBulk cliente = fattura.getCliente();
-			TerzoBulk terzoUo = fattura.getTerzo_uo();
+
+			Unita_organizzativaBulk uoOrigine = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(docammElettronico.getCd_uo_origine()));
+			TerzoBulk terzoUo = Utility.createTerzoComponentSession().cercaTerzoPerUnitaOrganizzativa(userContext, uoOrigine);
+
+			TerzoBulk cliente = null;
+			if (docammElettronico instanceof Fattura_attivaBulk)
+				cliente = (TerzoBulk) getHome(userContext, TerzoBulk.class).findByPrimaryKey(new TerzoKey(((Fattura_attivaBulk)docammElettronico).getCd_terzo()));
+			else if (docammElettronico instanceof AutofatturaBulk) {
+				AutofatturaBulk autofattura = (AutofatturaBulk)docammElettronico;
+				if (autofattura.getFlTerzoEnte())
+					cliente = terzoUo;
+				else {
+					Integer cdTerzo = Optional.ofNullable(autofattura.getFattura_passiva()).map(Fattura_passivaBase::getCd_terzo).orElse(null);
+					if (cdTerzo != null)
+						cliente = (TerzoBulk) getHome(userContext, TerzoBulk.class).findByPrimaryKey(new TerzoKey(cdTerzo));
+				}
+			}
+
+			if (cliente.getAnagrafico()==null || cliente.getAnagrafico().getNome()==null) {
+				AnagraficoBulk anagraficoDB = (AnagraficoBulk) getHome(userContext, AnagraficoBulk.class).findByPrimaryKey(new AnagraficoBulk(cliente.getCd_anag()));
+				cliente.setAnagrafico(anagraficoDB);
+			}
 
 			if (terzoCnr != null){
 				DatiTrasmissioneType datiTrasmissione = factory.createDatiTrasmissioneType();
 
 				datiTrasmissione.setIdTrasmittente(impostaIdTrasmittente(userContext, factory, terzoCnr));
 
-				datiTrasmissione.setProgressivoInvio(fattura.getEsercizio().toString() + Utility.lpad(fattura.getProgrUnivocoAnno().toString(),6,'0'));
+				datiTrasmissione.setProgressivoInvio(docammElettronico.getEsercizio().toString() + Utility.lpad(docammElettronico.getProgrUnivocoAnno().toString(),6,'0'));
 
-				if (fattura.getCodiceUnivocoUfficioIpa() != null){
-					datiTrasmissione.setCodiceDestinatario(fattura.getCodiceUnivocoUfficioIpa());
+				if (docammElettronico.getCodiceUnivocoUfficioIpa() != null){
+					datiTrasmissione.setCodiceDestinatario(docammElettronico.getCodiceUnivocoUfficioIpa());
 				} else {
-					if (fattura.getCodiceDestinatarioFatt() != null){
-						datiTrasmissione.setCodiceDestinatario(fattura.getCodiceDestinatarioFatt());
+					if (docammElettronico.getCodiceDestinatarioFatt() != null){
+						datiTrasmissione.setCodiceDestinatario(docammElettronico.getCodiceDestinatarioFatt());
 					} else {
-						if (fattura.isFatturaEstera()){
+						if (docammElettronico.isFatturaEstera()){
 							datiTrasmissione.setCodiceDestinatario(CODICE_DESTINATARIO_ESTERO);
 						} else {
 							datiTrasmissione.setCodiceDestinatario(CODICE_DESTINATARIO_CON_PEC_O_NON_REGISTRATO);
 						}
-						datiTrasmissione.setPECDestinatario(fattura.getPecFatturaElettronica());
+						datiTrasmissione.setPECDestinatario(docammElettronico.getPecFatturaElettronica());
 					}
 				}
 
 				ContattiTrasmittenteType contattiTrasmittenteType = factory.createContattiTrasmittenteType();
-				contattiTrasmittenteType.setEmail(getMailAddress(userContext, fattura));
+				contattiTrasmittenteType.setEmail(getMailAddress(userContext, docammElettronico));
 				String telefonoReferente = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_TELEFONO_REFERENTE_TECNICO);
 				contattiTrasmittenteType.setTelefono(telefonoReferente);
 				datiTrasmissione.setContattiTrasmittente(contattiTrasmittenteType);
 
-				datiTrasmissione.setFormatoTrasmissione(fattura.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
+				datiTrasmissione.setFormatoTrasmissione(docammElettronico.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
 
 				fatturaHeaderType.setDatiTrasmissione(datiTrasmissione);
 
@@ -465,33 +456,42 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setAnagrafica(impostaAnagrafica(factory, cliente));
 
-				if (fattura.getFl_intra_ue() && cliente.getAnagrafico().isPersonaGiuridica()  && cliente.getCodiceUnivocoUfficioIpa() == null && cliente.getAnagrafico().getPartita_iva() == null){
-					throw new ApplicationException("Impossibile Procedere! E' necessario indicare la partita IVA"); 
-				}
-				if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && (fattura.getCodice_fiscale() == null && !cliente.getAnagrafico().isGruppoIVA())){
-					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
-				}
-				if (!fattura.isFatturaEstera() ) {
-					datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
+				if (docammElettronico instanceof Fattura_attivaBulk) {
+					Fattura_attivaBulk fattura = (Fattura_attivaBulk) docammElettronico;
+					if (fattura.getFl_intra_ue() && cliente.getAnagrafico().isPersonaGiuridica() && cliente.getCodiceUnivocoUfficioIpa() == null && cliente.getAnagrafico().getPartita_iva() == null) {
+						throw new ApplicationException("Impossibile Procedere! E' necessario indicare la partita IVA");
+					}
+					if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && (fattura.getCodice_fiscale() == null && !cliente.getAnagrafico().isGruppoIVA())) {
+						throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: " + fattura.getEsercizio() + "-" + fattura.getPg_fattura_attiva());
+					}
+					if (!fattura.isFatturaEstera()) {
+						datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
+					}
+
+					if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || (fattura.getCodice_fiscale() != null && cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0) )){
+						datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, fattura));
+					} else if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale())){
+						datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, fattura));
+					} else if (docammElettronico.isFatturaEstera() && cliente.getAnagrafico().isPersonaFisica()){
+						IdFiscaleType idFiscale= factory.createIdFiscaleType();
+						idFiscale.setIdCodice("99999999999");
+						idFiscale.setIdPaese(impostaCodicePaese(userContext, cliente));
+						datiAnagraficiClienteType.setIdFiscaleIVA(idFiscale);
+					}
+
+					clienteType.setSede(impostaIndirizzo(userContext, factory, cliente, fattura));
+				} else if (docammElettronico instanceof AutofatturaBulk) {
+					datiAnagraficiClienteType.setCodiceFiscale(cliente.getCodice_fiscale_anagrafico());
+					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, null));
+
+					clienteType.setSede(impostaIndirizzo(userContext, factory, cliente, null));
 				}
 
-				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || (fattura.getCodice_fiscale() != null && cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0) )){
-					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, fattura));
-				} else if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale())){
-					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, fattura));
-				} else if (fattura.isFatturaEstera() && cliente.getAnagrafico().isPersonaFisica()){
-					IdFiscaleType idFiscale= factory.createIdFiscaleType();
-					idFiscale.setIdCodice("99999999999");
-					idFiscale.setIdPaese(impostaCodicePaese(userContext, cliente));
-					datiAnagraficiClienteType.setIdFiscaleIVA(idFiscale);
-				}
 				if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale()) && !StringUtils.hasLength(datiAnagraficiClienteType.getIdFiscaleIVA().getIdCodice())){
 					datiAnagraficiClienteType.getIdFiscaleIVA().setIdCodice("99999999999");
 				}
 
 				clienteType.setDatiAnagrafici(datiAnagraficiClienteType);
-
-				clienteType.setSede(impostaIndirizzo(userContext, factory, cliente, fattura));
 
 				fatturaHeaderType.setCessionarioCommittente(clienteType);
 
@@ -502,150 +502,85 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				DatiGeneraliType datiGenerali = factory.createDatiGeneraliType();
 
 				DatiGeneraliDocumentoType datiGeneraliDocumento = factory.createDatiGeneraliDocumentoType();
-				datiGeneraliDocumento.setTipoDocumento(tipoDocumento.get(fattura.getTi_fattura()));
 				datiGeneraliDocumento.setDivisa("EUR");
-				datiGeneraliDocumento.setData(convertDateToXmlGregorian(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
-				datiGeneraliDocumento.setNumero(fattura.recuperoIdFatturaAsString());
-				
-				List list = (List)((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).findDettagli(userContext, fattura);
+				datiGeneraliDocumento.setNumero(docammElettronico.recuperoIdFatturaAsString());
 
-				if (list != null){
-					BulkList dettaglio = new BulkList(list);
-					
-					if (dettaglio == null || dettaglio.isEmpty()){
-						throw new ApplicationException("Impossibile Procedere! La Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" non ha dettagli"); 
-					}
-					Boolean esisteBollo = gestioneBollo(userContext, factory, datiGeneraliDocumento, fattura, dettaglio);
-					
-					datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
-					String descrizione = "";
-					if (fattura.getDs_fattura_attiva() != null){
-						descrizione = fattura.getDs_fattura_attiva();
-					}
-					List<String> listaCausali = new ArrayList<String>();
-					if (fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() == null){
-						if (!descrizione.equals("")){
-							descrizione += "  ";
-						} 
-						descrizione += "Riferimento ordine:"+fattura.getRiferimento_ordine();
-					}
-					
-					int lunghezzaStringaCausale = 200;
-					int numeroCaratteriFinali = 0;
-					for (int i = 0; i <= descrizione.length()/lunghezzaStringaCausale; i++) {
-						int numeroCaratteri = i*lunghezzaStringaCausale;
-						int numeroCaratteriOccorrenti = (numeroCaratteri + lunghezzaStringaCausale );
-						if (numeroCaratteriOccorrenti > descrizione.length()){
-							numeroCaratteriFinali = numeroCaratteri + (descrizione.length() - numeroCaratteri); 
-						} else {
-							numeroCaratteriFinali = numeroCaratteri + lunghezzaStringaCausale;
+				if (docammElettronico instanceof AutofatturaBulk) {
+					AutofatturaBulk autofattura = (AutofatturaBulk)docammElettronico;
+					Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)getHome(userContext, Fattura_passiva_IBulk.class).findByPrimaryKey(autofattura.getFattura_passiva());
+
+					datiGeneraliDocumento.setData(convertDateToXmlGregorian(fatturaPassiva.getDt_registrazione()));
+
+					List detailFattura = new BulkList(Utility.createFatturaPassivaComponentSession().findDettagli(userContext, fatturaPassiva));
+
+					if (fatturaPassiva.isSanMarinoConIVA()) {
+						datiGeneraliDocumento.setTipoDocumento(TipoDocumentoType.TD_28);
+					} else if (fatturaPassiva.isEstera() || fatturaPassiva.isSanMarinoSenzaIVA()) {
+						if (fatturaPassiva.isFatturaDiServizi())
+							datiGeneraliDocumento.setTipoDocumento(TipoDocumentoType.TD_17);
+						else if (fatturaPassiva.isFatturaDiBeni()) {
+							if (!fatturaPassiva.getFl_extra_ue())
+								datiGeneraliDocumento.setTipoDocumento(TipoDocumentoType.TD_18);
+							else if (fatturaPassiva.getFl_merce_intra_ue())
+								datiGeneraliDocumento.setTipoDocumento(TipoDocumentoType.TD_19);
 						}
-						if (numeroCaratteri < numeroCaratteriFinali){
-							String causale = descrizione.substring(numeroCaratteri,numeroCaratteriFinali);
-							listaCausali.add(RemoveAccent.convert(causale));
-						}
+					} else if (fatturaPassiva.isCommerciale()) {
+						datiGeneraliDocumento.setTipoDocumento(TipoDocumentoType.TD_16);
 					}
 
-					datiGeneraliDocumento.getCausale().addAll(listaCausali);
-					
+					if (datiGeneraliDocumento.getTipoDocumento()==null)
+						throw new ApplicationException("Impossibile Procedere! Non è stato possibile individuare il tipo documento da imputare nel file XML per il documento elettronico "+autofattura.getTipoDocumentoElettronico()+"-"+autofattura.getEsercizio()+"-"+autofattura.getPg_docamm());
+
+					datiGeneraliDocumento.setImportoTotaleDocumento(autofattura.getFattura_passiva().getIm_totale_fattura().setScale(2));
+					//datiGeneraliDocumento.getCausale().add("");
 					datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
 
 					DatiBeniServiziType datiBeniServizi = factory.createDatiBeniServiziType();
-					List<DettaglioLineeType> listaDettagli = new ArrayList<DettaglioLineeType>();
-					List<RiepilogoPerAliquotaIVA> listaRiepilogo = new ArrayList<DocAmmFatturazioneElettronicaComponent.RiepilogoPerAliquotaIVA>();
-					HashMap<ContrattoBulk, List<Integer>> mappaContratti = new HashMap<ContrattoBulk, List<Integer>>();
-					HashMap<Fattura_attivaBulk,List<Integer>> dettagliNoteSenzaContratto = new HashMap<Fattura_attivaBulk, List<Integer>>();
-					HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati = new HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>>();
+					List<DettaglioLineeType> listaDettagli = new ArrayList<>();
+					List<RiepilogoPerAliquotaIVA> listaRiepilogo = new ArrayList<>();
 					List<Integer> listaTutteLinee = new ArrayList<>();
-					for (Iterator<Fattura_attiva_rigaBulk> i= dettaglio.iterator(); i.hasNext();) {
-						Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
+
+					for (Iterator<Fattura_passiva_rigaBulk> i = detailFattura.iterator(); i.hasNext(); ) {
+						Fattura_passiva_rigaBulk riga = i.next();
+						DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
+
+						rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
 						listaTutteLinee.add(riga.getProgressivo_riga().intValue());
-							DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
-							rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
-							if (riga.getDs_riga_fattura() != null){
-								rigaFattura.setDescrizione(RemoveAccent.convert(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E")));
-							} else {
-								rigaFattura.setDescrizione("Descrizione");
-							}
-							rigaFattura.setQuantita(riga.getQuantita().setScale(2));
-							if (riga.getTariffario()!=null && riga.getTariffario().getCd_tariffario()!=null) {
-								if (riga.getTariffario().getUnita_misura()==null)
-									riga.setTariffario((TariffarioBulk)findByPrimaryKey(userContext, riga.getTariffario()));
-								rigaFattura.setUnitaMisura(riga.getTariffario().getUnita_misura());
-							}
-							rigaFattura.setDataInizioPeriodo(convertDateToXmlGregorian(riga.getDt_da_competenza_coge()));
-							rigaFattura.setDataFinePeriodo(convertDateToXmlGregorian(riga.getDt_a_competenza_coge()));
-							rigaFattura.setPrezzoUnitario(riga.getPrezzo_unitario().setScale(2));
-							rigaFattura.setPrezzoTotale(rigaFattura.getPrezzoUnitario().multiply(rigaFattura.getQuantita()).setScale(2));
-							if (riga.getVoce_iva()!=null && riga.getVoce_iva().getCd_voce_iva()!=null && riga.getVoce_iva().getPercentuale()==null)
-								riga.setVoce_iva((Voce_ivaBulk)findByPrimaryKey(userContext, riga.getVoce_iva()));
-							rigaFattura.setAliquotaIVA(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
-							rigaFattura.setNatura(impostaDatiNatura(riga.getVoce_iva().getNaturaOperNonImpSdi()));
-							listaDettagli.add(rigaFattura);
-							if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)){
-								impostaDatiPerNoteCredito(userContext,mappaDocumentiCollegati, riga, dettagliNoteSenzaContratto);
-							}
-							preparaDatiContratto(userContext, mappaContratti, riga);
-							impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
+
+						if (riga.getDs_riga_fattura() != null) {
+							rigaFattura.setDescrizione(RemoveAccent.convert(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E")));
+						} else {
+							rigaFattura.setDescrizione("Descrizione");
+						}
+						rigaFattura.setQuantita(riga.getQuantita().setScale(2));
+						rigaFattura.setDataInizioPeriodo(convertDateToXmlGregorian(riga.getDt_da_competenza_coge()));
+						rigaFattura.setDataFinePeriodo(convertDateToXmlGregorian(riga.getDt_a_competenza_coge()));
+						rigaFattura.setPrezzoUnitario(riga.getPrezzo_unitario().setScale(2));
+						rigaFattura.setPrezzoTotale(rigaFattura.getPrezzoUnitario().multiply(rigaFattura.getQuantita()).setScale(2));
+						if (riga.getVoce_iva() != null && riga.getVoce_iva().getCd_voce_iva() != null && riga.getVoce_iva().getPercentuale() == null)
+							riga.setVoce_iva((Voce_ivaBulk) findByPrimaryKey(userContext, riga.getVoce_iva()));
+						rigaFattura.setAliquotaIVA(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
+						rigaFattura.setNatura(impostaDatiNatura(riga.getVoce_iva().getNaturaOperNonImpSdi()));
+						listaDettagli.add(rigaFattura);
+						impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 					}
 					datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
-					impostaDatiContratto(factory, datiGenerali, mappaContratti);
-					impostaDatiDocumentiCollegati(factory, datiGenerali, mappaDocumentiCollegati, dettagliNoteSenzaContratto);
-
-					if (!fattura.isFatturaEstera() && fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() != null){
-						DatiDocumentiCorrelatiType datiOrdineAcquisto = factory.createDatiDocumentiCorrelatiType();
-						datiOrdineAcquisto.getRiferimentoNumeroLinea().addAll(listaTutteLinee);
-						datiOrdineAcquisto.setData(convertDateToXmlGregorian(fattura.getDt_ordine()));
-						datiOrdineAcquisto.setIdDocumento(substring(fattura.getRiferimento_ordine(),20));
-						String soggettoOrdine = null;
-						if (!fattura.getFl_ordine_elettronico()){
-							soggettoOrdine = "#NO#";
-						}  else {
-							if (fattura.getCodiceUnivocoUfficioIpa() != null){
-								String cuu = null;
-								if (fattura.getCodiceUnivocoUfficioOrdine() != null){
-									cuu = fattura.getCodiceUnivocoUfficioOrdine();
-								} else {
-									cuu = fattura.getCodiceUnivocoUfficioIpa();
-								}
-								soggettoOrdine = "#0201:"+cuu+"#";
-							} else {
-								if (fattura.getPartita_iva() != null){
-									soggettoOrdine = "#9906:";
-								} else {
-									soggettoOrdine = "#9907:";
-								}
-								if (fattura.getCodiceDestinatarioFatt() != null){
-									soggettoOrdine += fattura.getCodiceDestinatarioFatt();
-								} else if (fattura.getPecFatturaElettronica() != null) {
-									soggettoOrdine += fattura.getPecFatturaElettronica();
-								} else {
-									soggettoOrdine += datiTrasmissione.getCodiceDestinatario();
-								}
-									soggettoOrdine += "#";
-							}
-						}
-						datiOrdineAcquisto.setCodiceCommessaConvenzione(soggettoOrdine);
-						datiGenerali.getDatiOrdineAcquisto().add(datiOrdineAcquisto);
-					}
-
-
 					fatturaBodyType.setDatiGenerali(datiGenerali);
 
-					List<DatiRiepilogoType> listaRiepilogoType = new ArrayList<DatiRiepilogoType>();
-					for (Iterator<RiepilogoPerAliquotaIVA> i= listaRiepilogo.iterator(); i.hasNext();) {
-						RiepilogoPerAliquotaIVA riepilogo= (RiepilogoPerAliquotaIVA) i.next();
+					List<DatiRiepilogoType> listaRiepilogoType = new ArrayList<>();
+					for (Iterator<RiepilogoPerAliquotaIVA> i = listaRiepilogo.iterator(); i.hasNext(); ) {
+						RiepilogoPerAliquotaIVA riepilogo = i.next();
 						DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
 						datiRiepilogo.setAliquotaIVA(riepilogo.getAliquota());
-						if (fattura.getFl_liquidazione_differita()){
-							datiRiepilogo.setEsigibilitaIVA(fattura.getEsercizio() > 2014 ? EsigibilitaIVAType.S :  EsigibilitaIVAType.D);
+						if (autofattura.getFl_liquidazione_differita()) {
+							datiRiepilogo.setEsigibilitaIVA(autofattura.getEsercizio() > 2014 ? EsigibilitaIVAType.S : EsigibilitaIVAType.D);
 						} else {
 							datiRiepilogo.setEsigibilitaIVA(EsigibilitaIVAType.I);
 						}
 						datiRiepilogo.setImponibileImporto(riepilogo.getImponibile().setScale(2));
 						datiRiepilogo.setImposta(riepilogo.getImposta().setScale(2));
-						impostaDatiNonImponibile(fattura, riepilogo, datiRiepilogo);
+						impostaDatiNonImponibile(autofattura, riepilogo, datiRiepilogo);
 						listaRiepilogoType.add(datiRiepilogo);
 					}
 					datiBeniServizi.getDatiRiepilogo().addAll(listaRiepilogoType);
@@ -655,27 +590,212 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					DatiPagamentoType datiPagamento = factory.createDatiPagamentoType();
 					datiPagamento.setCondizioniPagamento(CondizioniPagamentoType.TP_02);
 
-					List<DettaglioPagamentoType> listaDettagliPagamento = new ArrayList<DettaglioPagamentoType>();
-					if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)){
-						for(Iterator<Fattura_attivaBulk> y = mappaDocumentiCollegati.keySet().iterator(); y.hasNext();) {
-							Fattura_attivaBulk fatturaCollegata = y.next();
-							listaDettagliPagamento.add(impostaDatiPagamento(userContext, terzoCnr, factory, fatturaCollegata));
-						}
+					List<DettaglioPagamentoType> listaDettagliPagamento = new ArrayList<>();
+					DettaglioPagamentoType dettaglioPagamento = factory.createDettaglioPagamentoType();
+					dettaglioPagamento.setModalitaPagamento(ModalitaPagamentoType.MP_01);
+
+					if (autofattura.getFl_liquidazione_differita() && autofattura.getEsercizio() > 2014) {
+						dettaglioPagamento.setImportoPagamento(autofattura.getFattura_passiva().getIm_totale_imponibile().setScale(2));
 					} else {
-						DettaglioPagamentoType dettaglioPagamento = impostaDatiPagamento(userContext, terzoCnr, factory, fattura); 
-						dettaglioPagamento.setCodicePagamento(fattura.recuperoIdFatturaAsString());
-						listaDettagliPagamento.add(dettaglioPagamento);
+						dettaglioPagamento.setImportoPagamento(autofattura.getFattura_passiva().getIm_totale_fattura().setScale(2));
 					}
+
+					dettaglioPagamento.setCodicePagamento(autofattura.recuperoIdFatturaAsString());
+					listaDettagliPagamento.add(dettaglioPagamento);
+
 					datiPagamento.getDettaglioPagamento().addAll(listaDettagliPagamento);
 
-					List<DatiPagamentoType> listaDatiPagamento = new ArrayList<DatiPagamentoType>();
+					List<DatiPagamentoType> listaDatiPagamento = new ArrayList<>();
 					listaDatiPagamento.add(datiPagamento);
 					fatturaBodyType.getDatiPagamento().addAll(listaDatiPagamento);
 
+					//Aggiungo il legame dell'autofattura con la fattura passiva
+					DatiDocumentiCorrelatiType datiFattureCollegate = factory.createDatiDocumentiCorrelatiType();
+					datiFattureCollegate.getRiferimentoNumeroLinea().addAll(listaTutteLinee);
+					datiFattureCollegate.setData(convertDateToXmlGregorian(fatturaPassiva.getDt_fattura_fornitore()));
+					datiFattureCollegate.setIdDocumento(substring(fatturaPassiva.getIdentificativoSdi()!=null?fatturaPassiva.getIdentificativoSdi().toString()
+							:fatturaPassiva.getNr_fattura_fornitore(), 20));
+					datiGenerali.getDatiFattureCollegate().add(datiFattureCollegate);
 
-					List<FatturaElettronicaBodyType> listaFattureBody = new ArrayList<FatturaElettronicaBodyType>();
+					List<FatturaElettronicaBodyType> listaFattureBody = new ArrayList<>();
 					listaFattureBody.add(fatturaBodyType);
 					fatturaType.getFatturaElettronicaBody().addAll(listaFattureBody);
+				} else if (docammElettronico instanceof Fattura_attivaBulk) {
+					Fattura_attivaBulk fattura = (Fattura_attivaBulk)docammElettronico;
+
+					datiGeneraliDocumento.setData(convertDateToXmlGregorian(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
+					datiGeneraliDocumento.setTipoDocumento(tipoDocumento.get(docammElettronico.getTi_fattura()));
+
+					List list = Utility.createFatturaAttivaSingolaComponentSession().findDettagli(userContext, fattura);
+
+					if (list != null) {
+						BulkList dettaglio = new BulkList(list);
+
+						if (dettaglio == null || dettaglio.isEmpty()) {
+							throw new ApplicationException("Impossibile Procedere! La Fattura: " + fattura.getEsercizio() + "-" + fattura.getPg_fattura_attiva() + " non ha dettagli");
+						}
+						Boolean esisteBollo = gestioneBollo(userContext, factory, datiGeneraliDocumento, fattura, dettaglio);
+
+						datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
+						String descrizione = "";
+						if (fattura.getDs_fattura_attiva() != null) {
+							descrizione = fattura.getDs_fattura_attiva();
+						}
+						List<String> listaCausali = new ArrayList<String>();
+						if (fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() == null) {
+							if (!descrizione.equals("")) {
+								descrizione += "  ";
+							}
+							descrizione += "Riferimento ordine:" + fattura.getRiferimento_ordine();
+						}
+
+						int lunghezzaStringaCausale = 200;
+						int numeroCaratteriFinali = 0;
+						for (int i = 0; i <= descrizione.length() / lunghezzaStringaCausale; i++) {
+							int numeroCaratteri = i * lunghezzaStringaCausale;
+							int numeroCaratteriOccorrenti = (numeroCaratteri + lunghezzaStringaCausale);
+							if (numeroCaratteriOccorrenti > descrizione.length()) {
+								numeroCaratteriFinali = numeroCaratteri + (descrizione.length() - numeroCaratteri);
+							} else {
+								numeroCaratteriFinali = numeroCaratteri + lunghezzaStringaCausale;
+							}
+							if (numeroCaratteri < numeroCaratteriFinali) {
+								String causale = descrizione.substring(numeroCaratteri, numeroCaratteriFinali);
+								listaCausali.add(RemoveAccent.convert(causale));
+							}
+						}
+
+						datiGeneraliDocumento.getCausale().addAll(listaCausali);
+
+						datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
+
+						DatiBeniServiziType datiBeniServizi = factory.createDatiBeniServiziType();
+						List<DettaglioLineeType> listaDettagli = new ArrayList<DettaglioLineeType>();
+						List<RiepilogoPerAliquotaIVA> listaRiepilogo = new ArrayList<DocAmmFatturazioneElettronicaComponent.RiepilogoPerAliquotaIVA>();
+						HashMap<ContrattoBulk, List<Integer>> mappaContratti = new HashMap<ContrattoBulk, List<Integer>>();
+						HashMap<Fattura_attivaBulk, List<Integer>> dettagliNoteSenzaContratto = new HashMap<Fattura_attivaBulk, List<Integer>>();
+						HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati = new HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>>();
+						List<Integer> listaTutteLinee = new ArrayList<>();
+						for (Iterator<Fattura_attiva_rigaBulk> i = dettaglio.iterator(); i.hasNext(); ) {
+							Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk) i.next();
+							listaTutteLinee.add(riga.getProgressivo_riga().intValue());
+							DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
+							rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
+							if (riga.getDs_riga_fattura() != null) {
+								rigaFattura.setDescrizione(RemoveAccent.convert(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E")));
+							} else {
+								rigaFattura.setDescrizione("Descrizione");
+							}
+							rigaFattura.setQuantita(riga.getQuantita().setScale(2));
+							if (riga.getTariffario() != null && riga.getTariffario().getCd_tariffario() != null) {
+								if (riga.getTariffario().getUnita_misura() == null)
+									riga.setTariffario((TariffarioBulk) findByPrimaryKey(userContext, riga.getTariffario()));
+								rigaFattura.setUnitaMisura(riga.getTariffario().getUnita_misura());
+							}
+							rigaFattura.setDataInizioPeriodo(convertDateToXmlGregorian(riga.getDt_da_competenza_coge()));
+							rigaFattura.setDataFinePeriodo(convertDateToXmlGregorian(riga.getDt_a_competenza_coge()));
+							rigaFattura.setPrezzoUnitario(riga.getPrezzo_unitario().setScale(2));
+							rigaFattura.setPrezzoTotale(rigaFattura.getPrezzoUnitario().multiply(rigaFattura.getQuantita()).setScale(2));
+							if (riga.getVoce_iva() != null && riga.getVoce_iva().getCd_voce_iva() != null && riga.getVoce_iva().getPercentuale() == null)
+								riga.setVoce_iva((Voce_ivaBulk) findByPrimaryKey(userContext, riga.getVoce_iva()));
+							rigaFattura.setAliquotaIVA(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
+							rigaFattura.setNatura(impostaDatiNatura(riga.getVoce_iva().getNaturaOperNonImpSdi()));
+							listaDettagli.add(rigaFattura);
+							if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)) {
+								impostaDatiPerNoteCredito(userContext, mappaDocumentiCollegati, riga, dettagliNoteSenzaContratto);
+							}
+							preparaDatiContratto(userContext, mappaContratti, riga);
+							impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
+						}
+						datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
+
+						impostaDatiContratto(factory, datiGenerali, mappaContratti);
+						impostaDatiDocumentiCollegati(factory, datiGenerali, mappaDocumentiCollegati, dettagliNoteSenzaContratto);
+
+						if (!fattura.isFatturaEstera() && fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() != null) {
+							DatiDocumentiCorrelatiType datiOrdineAcquisto = factory.createDatiDocumentiCorrelatiType();
+							datiOrdineAcquisto.getRiferimentoNumeroLinea().addAll(listaTutteLinee);
+							datiOrdineAcquisto.setData(convertDateToXmlGregorian(fattura.getDt_ordine()));
+							datiOrdineAcquisto.setIdDocumento(substring(fattura.getRiferimento_ordine(), 20));
+							String soggettoOrdine = null;
+							if (!fattura.getFl_ordine_elettronico()) {
+								soggettoOrdine = "#NO#";
+							} else {
+								if (fattura.getCodiceUnivocoUfficioIpa() != null) {
+									String cuu = null;
+									if (fattura.getCodiceUnivocoUfficioOrdine() != null) {
+										cuu = fattura.getCodiceUnivocoUfficioOrdine();
+									} else {
+										cuu = fattura.getCodiceUnivocoUfficioIpa();
+									}
+									soggettoOrdine = "#0201:" + cuu + "#";
+								} else {
+									if (fattura.getPartita_iva() != null) {
+										soggettoOrdine = "#9906:";
+									} else {
+										soggettoOrdine = "#9907:";
+									}
+									if (fattura.getCodiceDestinatarioFatt() != null) {
+										soggettoOrdine += fattura.getCodiceDestinatarioFatt();
+									} else if (fattura.getPecFatturaElettronica() != null) {
+										soggettoOrdine += fattura.getPecFatturaElettronica();
+									} else {
+										soggettoOrdine += datiTrasmissione.getCodiceDestinatario();
+									}
+									soggettoOrdine += "#";
+								}
+							}
+							datiOrdineAcquisto.setCodiceCommessaConvenzione(soggettoOrdine);
+							datiGenerali.getDatiOrdineAcquisto().add(datiOrdineAcquisto);
+						}
+
+
+						fatturaBodyType.setDatiGenerali(datiGenerali);
+
+						List<DatiRiepilogoType> listaRiepilogoType = new ArrayList<DatiRiepilogoType>();
+						for (Iterator<RiepilogoPerAliquotaIVA> i = listaRiepilogo.iterator(); i.hasNext(); ) {
+							RiepilogoPerAliquotaIVA riepilogo = (RiepilogoPerAliquotaIVA) i.next();
+							DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
+							datiRiepilogo.setAliquotaIVA(riepilogo.getAliquota());
+							if (fattura.getFl_liquidazione_differita()) {
+								datiRiepilogo.setEsigibilitaIVA(fattura.getEsercizio() > 2014 ? EsigibilitaIVAType.S : EsigibilitaIVAType.D);
+							} else {
+								datiRiepilogo.setEsigibilitaIVA(EsigibilitaIVAType.I);
+							}
+							datiRiepilogo.setImponibileImporto(riepilogo.getImponibile().setScale(2));
+							datiRiepilogo.setImposta(riepilogo.getImposta().setScale(2));
+							impostaDatiNonImponibile(fattura, riepilogo, datiRiepilogo);
+							listaRiepilogoType.add(datiRiepilogo);
+						}
+						datiBeniServizi.getDatiRiepilogo().addAll(listaRiepilogoType);
+
+						fatturaBodyType.setDatiBeniServizi(datiBeniServizi);
+
+						DatiPagamentoType datiPagamento = factory.createDatiPagamentoType();
+						datiPagamento.setCondizioniPagamento(CondizioniPagamentoType.TP_02);
+
+						List<DettaglioPagamentoType> listaDettagliPagamento = new ArrayList<DettaglioPagamentoType>();
+						if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)) {
+							for (Iterator<Fattura_attivaBulk> y = mappaDocumentiCollegati.keySet().iterator(); y.hasNext(); ) {
+								Fattura_attivaBulk fatturaCollegata = y.next();
+								listaDettagliPagamento.add(impostaDatiPagamento(userContext, terzoCnr, factory, fatturaCollegata));
+							}
+						} else {
+							DettaglioPagamentoType dettaglioPagamento = impostaDatiPagamento(userContext, terzoCnr, factory, fattura);
+							dettaglioPagamento.setCodicePagamento(fattura.recuperoIdFatturaAsString());
+							listaDettagliPagamento.add(dettaglioPagamento);
+						}
+						datiPagamento.getDettaglioPagamento().addAll(listaDettagliPagamento);
+
+						List<DatiPagamentoType> listaDatiPagamento = new ArrayList<DatiPagamentoType>();
+						listaDatiPagamento.add(datiPagamento);
+						fatturaBodyType.getDatiPagamento().addAll(listaDatiPagamento);
+
+
+						List<FatturaElettronicaBodyType> listaFattureBody = new ArrayList<FatturaElettronicaBodyType>();
+						listaFattureBody.add(fatturaBodyType);
+						fatturaType.getFatturaElettronicaBody().addAll(listaFattureBody);
+					}
 				}
 			}
 			
@@ -686,11 +806,11 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		
 	}
 	
-	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
+	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException {
 		try {
 
 			ObjectFactory factory = new ObjectFactory();
-			return factory.createFatturaElettronica(preparaFattura(userContext, fattura));
+			return factory.createFatturaElettronica(preparaFattura(userContext, docammElettronico));
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -735,9 +855,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 		return false;
 	}
-	private void impostaDatiNonImponibile(Fattura_attivaBulk fattura, RiepilogoPerAliquotaIVA riepilogo, DatiRiepilogoType datiRiepilogo) throws ApplicationException{
+	private void impostaDatiNonImponibile(IDocumentoAmministrativoElettronicoBulk docammElettronico, RiepilogoPerAliquotaIVA riepilogo, DatiRiepilogoType datiRiepilogo) throws ApplicationException{
 		if (datiRiepilogo.getAliquotaIVA().compareTo(BigDecimal.ZERO) == 0){
-			String msg = "Impossibile Procedere! Per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" esiste almeno una riga con aliquota a 0 senza l'indicazione";
+			String msg = "Impossibile Procedere! Per il documento elettronico: "+docammElettronico.getTipoDocumentoElettronico()+"-"+docammElettronico.getEsercizio()+"-"+docammElettronico.getPg_docamm()+" esiste almeno una riga con aliquota a 0 senza l'indicazione";
 			if (riepilogo.getNaturaIvaNonImponibile() == null || riepilogo.getNaturaIvaNonImponibile().equals("")){
 				throw new ApplicationException(msg+" della Natura per invio SDI"); 
 			}
@@ -957,7 +1077,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 	private IndirizzoType impostaIndirizzo(UserContext userContext, ObjectFactory factory, TerzoBulk terzo, Fattura_attivaBulk fattura) throws ComponentException, PersistencyException{
 		IndirizzoType indirizzoCedente = factory.createIndirizzoType();
-		ComuneBulk comune = terzo.getComune_sede();
+		ComuneBulk comune = (ComuneBulk)findByPrimaryKey(userContext, terzo.getComune_sede());
 		
 		indirizzoCedente.setComune(substring60(comune.getDs_comune()));
 		
@@ -998,7 +1118,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 						
 	}
 
-	private void impostaDatiPerRiepilogoDatiIva(List<RiepilogoPerAliquotaIVA> listaRiepilogo, Fattura_attiva_rigaBulk riga) {
+	private void impostaDatiPerRiepilogoDatiIva(List<RiepilogoPerAliquotaIVA> listaRiepilogo, IDocumentoAmministrativoRigaBulk riga) {
 		RiepilogoPerAliquotaIVA riepilogo = new RiepilogoPerAliquotaIVA();
 		riepilogo.setAliquota(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
 		riepilogo.setNaturaIvaNonImponibile(riga.getVoce_iva().getNaturaOperNonImpSdi());
@@ -1083,5 +1203,121 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			home.aggiornaMetadatiFattura(fattura_attivaBulk);
 		}
 		return fatture;
+	}
+
+	public IDocumentoAmministrativoElettronicoBulk castDocumentoElettronico(UserContext userContext, VDocammElettroniciAttiviBulk docamm) throws ComponentException {
+		try {
+			if (docamm.isFatturaAttiva()) {
+				Fattura_attiva_IBulk fatturaAttivaIBulk = new Fattura_attiva_IBulk();
+				fatturaAttivaIBulk.setEsercizio(docamm.getEsercizio());
+				fatturaAttivaIBulk.setCd_cds(docamm.getCd_cds());
+				fatturaAttivaIBulk.setCd_unita_organizzativa(docamm.getCd_unita_organizzativa());
+				fatturaAttivaIBulk.setPg_fattura_attiva(docamm.getPg_docamm());
+				return (Fattura_attiva_IBulk)Utility.createFatturaAttivaSingolaComponentSession().inizializzaBulkPerModifica(userContext, fatturaAttivaIBulk);
+			} else {
+				AutofatturaBulk autofattura = ((VDocammElettroniciAttiviHome) getHome(userContext, VDocammElettroniciAttiviBulk.class)).findAutofattura(docamm);
+
+				//Carico il terzo documento elettronico
+				if (autofattura.getFlTerzoEnte()) {
+					Unita_organizzativaBulk uoOrigine = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(autofattura.getCd_uo_origine()));
+					autofattura.setTerzoDocumentoElettronico(Utility.createTerzoComponentSession().cercaTerzoPerUnitaOrganizzativa(userContext, uoOrigine));
+				} else {
+					Integer cdTerzo = Optional.ofNullable(autofattura.getFattura_passiva()).map(Fattura_passivaBase::getCd_terzo).orElse(null);
+					if (cdTerzo != null)
+						autofattura.setTerzoDocumentoElettronico((TerzoBulk) getHome(userContext, TerzoBulk.class).findByPrimaryKey(new TerzoKey(cdTerzo)));
+				}
+				return autofattura;
+			}
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+    }
+
+    public IDocumentoAmministrativoElettronicoBulk aggiornaDocammElettronicoPredispostoAllaFirma(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException, RemoteException {
+		try {
+			docammElettronico.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+			((OggettoBulk)docammElettronico).setToBeUpdated();
+			updateBulk(userContext, (OggettoBulk) docammElettronico);
+			return docammElettronico;
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	public IDocumentoAmministrativoElettronicoBulk aggiornaFatturaConsegnaSDI(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico, Date dataConsegnaSdi) throws ComponentException, RemoteException {
+		try {
+			docammElettronico.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_CONSEGNATA_SDI);
+			docammElettronico.setDtRicezioneSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime()):null);
+			((OggettoBulk)docammElettronico).setToBeUpdated();
+			updateBulk(userContext, (OggettoBulk) docammElettronico);
+			return docammElettronico;
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	public IDocumentoAmministrativoElettronicoBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico, String codiceSdi, String noteInvioSdi) throws ComponentException, java.rmi.RemoteException {
+		try {
+			docammElettronico.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_MANCATA_CONSEGNA);
+			docammElettronico.setCodiceInvioSdi(codiceSdi);
+			docammElettronico.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
+			((OggettoBulk)docammElettronico).setToBeUpdated();
+			updateBulk(userContext, (OggettoBulk)docammElettronico);
+			if (docammElettronico.getCodiceUnivocoUfficioIpa() != null){
+				gestioneEmailUtenteAvvisoFatturaElettronica(userContext, docammElettronico);
+			}
+			return docammElettronico;
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	private String impostaNoteSdi(String noteSdi) {
+		return noteSdi == null || noteSdi.length() <= 500 ? noteSdi : noteSdi.substring(0, 499);
+	}
+
+	private void gestioneEmailUtenteAvvisoFatturaElettronica(UserContext userContext, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException {
+		String msg = "Si comunica che occorre inviare al cliente il documento  "+docammElettronico.getTipoDocumentoElettronico()+"-"+docammElettronico.getCd_uo_origine()+"-"+docammElettronico.getEsercizio()+"-"+docammElettronico.getPg_docamm()+".";
+		String subject = "IMPORTANTE: Necessario inviare al cliente la fattura";
+
+		if (docammElettronico.isFatturaEstera() || (docammElettronico.getCodiceDestinatarioFatt() == null &&
+				docammElettronico.getPecFatturaElettronica() == null)){
+			String eMail = recuperoEmailUtente(userContext, docammElettronico);
+			if (eMail != null){
+				List<String> list = new ArrayList<>();
+				list.add(eMail);
+				if (docammElettronico.isFatturaEstera()){
+					SendMail.sendMail(subject, msg, list);
+				} else {
+					if (docammElettronico.getPartita_iva() == null){
+						String msgPersonaFisica = msg+" Bisogna inoltre avvisarlo che può visualizzare la fattura elettronica nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+						SendMail.sendMail(subject, msgPersonaFisica, list);
+					} else {
+						msg = "Comunicare al cliente che la fattura elettronica "+docammElettronico.getTipoDocumentoElettronico()+"-"+docammElettronico.getCd_uo_origine()+"-"+docammElettronico.getEsercizio()+"-"+docammElettronico.getPg_docamm()+" si trova nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+						subject = "Necessario comunicare al cliente trasmissione fattura elettronica";
+						SendMail.sendMail(subject, msg, list);
+					}
+				}
+			}
+		}
+	}
+
+	public String recuperoEmailUtente(UserContext aUC, IDocumentoAmministrativoElettronicoBulk docammElettronico) throws ComponentException {
+		UtenteBulk utente = new UtenteBulk(docammElettronico.getUtcr());
+		try {
+			utente = (UtenteBulk) getHome(aUC, UtenteBulk.class).findByPrimaryKey(utente);
+			if (utente != null){
+				if (utente.getCd_utente_uid() != null){
+					return utente.getCd_utente_uid()+"@cnr.it";
+				}
+
+				String msg = "Si comunica che occorre inviare al cliente il documento  "+docammElettronico.getTipoDocumentoElettronico()+"-"+docammElettronico.getCd_uo_origine()+"-"+docammElettronico.getEsercizio()+"-"+docammElettronico.getPg_docamm()+".";
+				String subject = "Email utente non trovata IMPORTANTE: Necessario inviare al cliente la fattura";
+				SendMail.sendErrorMail(subject, msg);
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		return null;
 	}
 }

@@ -17,14 +17,7 @@
 
 package it.cnr.contab.docamm00.storage;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.VDocammElettroniciAttiviBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
@@ -35,16 +28,22 @@ import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
 
-@StorageType(name="F:sigla_fatture:fatture_attive")
-public class StorageFolderFatturaAttiva extends StorageFolderFattura {
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@StorageType(name="F:sigla_fatture:autofatture")
+public class StorageFolderAutofattura extends StorageFolderFattura {
 	private static final long serialVersionUID = 4110702628275029148L;
 
-	private Fattura_attivaBulk fattura_attivaBulk;
+	private AutofatturaBulk autofatturaBulk;
 	private DigitalPreservationProperties dpProperties;
-	
-	public StorageFolderFatturaAttiva(Fattura_attivaBulk fattura_attivaBulk) {
+
+	public StorageFolderAutofattura(AutofatturaBulk autofatturaBulk) {
     	super();
-    	setFattura_attivaBulk(fattura_attivaBulk);
+    	setAutofatturaBulk(autofatturaBulk);
     	loadProperties();
 	}
 	
@@ -54,273 +53,278 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	}
 
 	@StorageProperty(name="sigla_fatture:esercizio")
-    public Integer getEsercizioFattura() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getEsercizio();
+    public Integer getEsercizioAutofattura() {
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getEsercizio)
+				.orElse(null);
     }
 
 	@StorageProperty(name="sigla_fatture:pg_fattura", converterBeanName="storage.converter.longToIntegerConverter")
-    public Long getPgFattura() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getPg_fattura_attiva();
+    public Long getPgAutofattura() {
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getPg_autofattura)
+				.orElse(null);
     }
 	
 	@StorageProperty(name="sigla_fatture:prot_iva", converterBeanName="storage.converter.longToIntegerConverter")
     public Long getProtocolloIva() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getProtocollo_iva();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getProtocollo_iva)
+				.orElse(null);
     }
 
 	@StorageProperty(name="sigla_fatture:prot_gen", converterBeanName="storage.converter.longToIntegerConverter")
     public Long getProtocolloGenerale() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getProtocollo_iva();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getProtocollo_iva)
+				.orElse(null);
     }
 
 	@StorageProperty(name="sigla_fatture:data_reg", converterBeanName="storage.converter.timestampToCalendarConverter")
 	public Timestamp getDataRegistrazione(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getDt_registrazione()==null)
-			return null;
-		return this.getFattura_attivaBulk().getDt_registrazione();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getDt_registrazione)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:descrizione")
 	public String getDescrizione() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getDs_fattura_attiva();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getDs_fattura_passiva)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:imponibile")
 	public BigDecimal getImponibile(){
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getIm_totale_imponibile();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getIm_totale_imponibile)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:iva")
 	public BigDecimal getIva(){
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getIm_totale_iva();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getIm_totale_iva)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:importo_totale")
 	public BigDecimal getImportoTotale(){
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getIm_totale_fattura();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getIm_totale_fattura)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:divisa")
 	public String getDivisa() {
-		if (this.getFattura_attivaBulk()==null ||
-				this.getFattura_attivaBulk().getValuta()==null)
-				return null;
-			return this.getFattura_attivaBulk().getValuta().getCd_divisa();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getCd_divisa)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:cambio")
 	public BigDecimal getCambio(){
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCambio();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getCambio)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:dt_competenza_dal", converterBeanName="storage.converter.timestampToCalendarConverter")
 	public Timestamp getDataCompetenzaDal(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getDt_da_competenza_coge()==null)
-			return null;
-		return this.getFattura_attivaBulk().getDt_da_competenza_coge();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getDt_da_competenza_coge)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:dt_competenza_al", converterBeanName="storage.converter.timestampToCalendarConverter")
 	public Timestamp getDataCompetenzaAl(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getDt_a_competenza_coge()==null)
-			return null;
-		return this.getFattura_attivaBulk().getDt_a_competenza_coge();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getDt_a_competenza_coge)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:data_emissione", converterBeanName="storage.converter.timestampToCalendarConverter")
 	public Timestamp getDataEmissione(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getDt_emissione()==null)
-			return null;
-		return this.getFattura_attivaBulk().getDt_emissione();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getDt_registrazione)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:codice_ipa")
 	public String getCodiceIpa() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		if (this.getFattura_attivaBulk().getCodiceUnivocoUfficioIpa() != null){
-			return this.getFattura_attivaBulk().getCodiceUnivocoUfficioIpa();
-		}
-		return this.getFattura_attivaBulk().getCodiceDestinatarioFatt();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getCodiceUnivocoUfficioIpa)
+				.orElse(Optional.ofNullable(this.getAutofatturaBulk())
+								.map(AutofatturaBulk::getCodiceDestinatarioFatt)
+								.orElse(null));
 	}
 	
 	@StorageProperty(name="sigla_fatture:codice_invio_sdi")
 	public String getCodiceInvioSdi() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCodiceInvioSdi();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getCodiceInvioSdi)
+				.orElse(null);
 	}
 	
 	@StorageProperty(name="sigla_fatture:stato_invio_sdi")
 	public String getStatoInvioSdi() {
-		return Optional.ofNullable(this.getFattura_attivaBulk())
-				.flatMap(fatatt->Optional.ofNullable(fatatt.getStatoInvioSdi()))
-				.map(statoInvioSdi-> VDocammElettroniciAttiviBulk.getStatoInvioSdiKeys().get(statoInvioSdi))
-				.map(String.class::cast)
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getStatoInvioSdi)
+				.map(el-> VDocammElettroniciAttiviBulk.getStatoInvioSdiKeys().get(el))
+				.map(String::valueOf)
 				.orElse(null);
 	}
 		
 	@StorageProperty(name="sigla_fatture:note_invio_sdi")
 	public String getNoteInvioSdi() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getNoteInvioSdi();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getNoteInvioSdi)
+				.orElse(null);
 	}
 		
 	@StorageProperty(name="sigla_fatture:data_consegna_sdi", converterBeanName="storage.converter.timestampToCalendarConverter")
 	public Timestamp getDataConsegnaSdi(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getDtConsegnaSdi()==null)
-			return null;
-		return this.getFattura_attivaBulk().getDtConsegnaSdi();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getDtConsegnaSdi)
+				.orElse(null);
 	}
 	
 	@StoragePolicy(name="P:strorg:cds", property=@StorageProperty(name="strorgcds:codice"))
 	public String getCodiceCds(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getCd_cds()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCd_cds();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getCd_cds)
+				.orElse(null);
 	}
 	
 	@StoragePolicy(name="P:strorg:uo", property=@StorageProperty(name="strorguo:codice"))
 	public String getCodiceUo(){
-		if (this.getFattura_attivaBulk()==null ||
-			this.getFattura_attivaBulk().getCd_unita_organizzativa()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCd_unita_organizzativa();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getCd_unita_organizzativa)
+				.orElse(null);
 	}
 	
 	@StoragePolicy(name="P:sigla_commons_aspect:utente_applicativo_sigla", property=@StorageProperty(name="sigla_commons_aspect:utente_applicativo"))
 	public String getUtenteSigla() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getUtuv();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getUtuv)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi", property=@StorageProperty(name="sigla_commons_aspect:terzi_cd_terzo"))
 	public String getCodiceTerzo() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCd_terzo().toString();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getCd_terzo)
+				.map(String::valueOf)
+				.orElse(null);
 	}
 
 	@StorageProperty(name="sigla_fatture:modalita_incasso")
 	public String getModalitaIncasso() {
-		if (this.getFattura_attivaBulk()==null||this.getFattura_attivaBulk().getModalita_pagamento_uo() ==null)
-			return null;
-		return this.getFattura_attivaBulk().getModalita_pagamento_uo().getCd_modalita_pag();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getCd_modalita_pag_uo_cds)
+				.orElse(null);
 	}
 
 	@StorageProperty(name="sigla_fatture:prog_univoco_anno", converterBeanName="storage.converter.longToIntegerConverter")
     public Long getProgrUnivocoAnno() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getProgrUnivocoAnno();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getProgrUnivocoAnno)
+				.orElse(null);
     }
 	
 	@StorageProperty(name="sigla_fatture:tipo_documento")
 	public String getTipoDocumento() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getTi_fattura();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getTi_fattura)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi_pg", property=@StorageProperty(name="sigla_commons_aspect:terzi_pg_denominazione"))
 	public String getRagioneSociale() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getRagione_sociale();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getRagione_sociale)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi_pg", property=@StorageProperty(name="sigla_commons_aspect:terzi_pg_pariva"))
 	public String getPariva() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getPartita_iva();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getPartita_iva)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi_pf", property=@StorageProperty(name="sigla_commons_aspect:terzi_pf_cognome"))
 	public String getCognome() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCognome();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getCognome)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi_pf", property=@StorageProperty(name="sigla_commons_aspect:terzi_pf_nome"))
 	public String getNome() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getNome();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getNome)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi_pf", property=@StorageProperty(name="sigla_commons_aspect:terzi_pf_codfis"))
 	public String getCodfis() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCodice_fiscale();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(el.getFattura_passiva()))
+				.map(Fattura_passivaBase::getCodice_fiscale)
+				.orElse(null);
 	}
 
 	@StorageProperty(name="sigla_fatture:cod_amministrazione")
 	public String getCodiceAmministrazione() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		if (dpProperties == null)
-			return null;
-		return dpProperties.getDigitalPreservationCodAmm();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(dpProperties))
+				.map(DigitalPreservationProperties::getDigitalPreservationCodAmm)
+				.orElse(null);
 	}
 
 	@StorageProperty(name="sigla_fatture:cod_registro")
 	public String getCodiceRegistro() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		if (dpProperties == null)
-			return null;
-		return dpProperties.getDigitalPreservationCodRegFA();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.flatMap(el->Optional.ofNullable(dpProperties))
+				.map(DigitalPreservationProperties::getDigitalPreservationCodRegFA)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:cds_origine", property=@StorageProperty(name="sigla_commons_aspect:cds_origine_codice"))
 	public String getCdsOrigine() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCd_cds_origine();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getCd_cds_origine)
+				.orElse(null);
 	}
 
 	@StoragePolicy(name="P:sigla_commons_aspect:uo_origine", property=@StorageProperty(name="sigla_commons_aspect:uo_origine_codice"))
 	public String getUoOrigine() {
-		if (this.getFattura_attivaBulk()==null)
-			return null;
-		return this.getFattura_attivaBulk().getCd_uo_origine();
+		return Optional.ofNullable(this.getAutofatturaBulk())
+				.map(AutofatturaBulk::getCd_uo_origine)
+				.orElse(null);
 	}
 
 
 	public String getCMISPrincipalPath() {
         return Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
-                this.getFattura_attivaBulk().getCd_uo_origine(),
-                "Fatture Attive"
+                this.getAutofatturaBulk().getCd_uo_origine(),
+                "AutoFatture"
         ).stream().collect(
                 Collectors.joining(StorageDriver.SUFFIX)
         );
@@ -329,45 +333,38 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	public String getCMISPath(){
 		return SpringUtil.getBean("storeService", StoreService.class)
 				.createFolderIfNotPresent(
-						getPathFolderFatturaAttiva(),
-						getLastFolderFatturaAttiva(),
+						getPathFolderAutofattura(),
+						getLastFolderAutofattura(),
 						null, null, this);
 	}
 
-	public String getPathFolderFatturaAttiva() {
+	public String getPathFolderAutofattura() {
 		return getCMISPrincipalPath().concat(StorageDriver.SUFFIX).concat(
-				Optional.ofNullable(getEsercizioFattura())
+				Optional.ofNullable(getEsercizioAutofattura())
 						.map(esercizio -> String.valueOf(esercizio))
 						.orElse("0")
 		);
 	}
 
-	private String getLastFolderFatturaAttiva() {
-		String fatNc = "";
-		if (!getFattura_attivaBulk().getTi_fattura().equals("C") || !getFattura_attivaBulk().getCd_unita_organizzativa().equals(getFattura_attivaBulk().getCd_uo_origine())){
-			fatNc = "Fattura";
-		} else {
-			fatNc = "Nota Credito non a storno";
-		}
-		final String folderName = fatNc+" " + this.getEsercizioFattura().toString() +
-				Utility.lpad(this.getPgFattura().toString(),10,'0');
-		return folderName;
+	private String getLastFolderAutofattura() {
+		return "Autofattura " + this.getEsercizioAutofattura().toString() +
+				Utility.lpad(this.getPgAutofattura().toString(),10,'0');
 	}
 	
 	public String getCMISPathForSearch(){
         return Arrays.asList(
-        		getPathFolderFatturaAttiva(),
-        		getLastFolderFatturaAttiva()
+        		getPathFolderAutofattura(),
+        		getLastFolderAutofattura()
         ).stream().collect(
                 Collectors.joining(StorageDriver.SUFFIX)
         );
 	}
 
-	public Fattura_attivaBulk getFattura_attivaBulk() {
-		return fattura_attivaBulk;
+	public AutofatturaBulk getAutofatturaBulk() {
+		return autofatturaBulk;
 	}
 
-	public void setFattura_attivaBulk(Fattura_attivaBulk fattura_attivaBulk) {
-		this.fattura_attivaBulk = fattura_attivaBulk;
+	public void setAutofatturaBulk(AutofatturaBulk autofatturaBulk) {
+		this.autofatturaBulk = autofatturaBulk;
 	}
 }

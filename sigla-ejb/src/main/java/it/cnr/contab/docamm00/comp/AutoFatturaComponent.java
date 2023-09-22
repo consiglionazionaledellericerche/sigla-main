@@ -17,30 +17,35 @@
 
 package it.cnr.contab.docamm00.comp;
 
-import java.rmi.RemoteException;
-import java.util.GregorianCalendar;
-
+import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk;
-
-import java.io.Serializable;
-
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+
+import javax.ejb.EJBException;
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Optional;
 
 public class AutoFatturaComponent 
 	extends CRUDComponent 
@@ -184,14 +189,24 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
  * creaConBulk method comment.
  */
 public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status) throws it.cnr.jada.comp.ComponentException {
-
 	AutofatturaBulk autofattura = (AutofatturaBulk)bulk;
-	assegnaProgressivo(userContext, autofattura);
-	
-	validaAutofattura(userContext, autofattura);
+	try {
+		assegnaProgressivo(userContext, autofattura);
 
-	autofattura.setUser(userContext.getUser());
-	return super.creaConBulk(userContext, autofattura);
+		validaAutofattura(userContext, autofattura);
+
+		if (autofattura.getFattura_passiva().getFl_autofattura() && isAttivaFatturazioneElettronica(userContext, autofattura.getDt_registrazione())) {
+			autofattura.setFlFatturaElettronica(Boolean.TRUE);
+			autofattura.setFlTerzoEnte(Boolean.TRUE);
+			autofattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA);
+		} else
+			autofattura.setFlFatturaElettronica(Boolean.FALSE);
+
+		autofattura.setUser(userContext.getUser());
+		return super.creaConBulk(userContext, autofattura);
+	} catch (Throwable t) {
+		throw handleException(autofattura, t);
+	}
 }
 //^^@@
 /** 
@@ -473,7 +488,7 @@ public it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk riportaIndi
  * Pre:  Una richiesta di annullare tutte le modifiche apportate e di ritornare al savepoint e' stata generata 
  * Post: Tutte le modifiche effettuate sul compenso vengono annullate, mentre rimangono valide le
  *       modifiche apportate al doc. amministrativo che ha aperto il compenso
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  */	
 public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -495,7 +510,7 @@ public void rollbackToSavePoint(UserContext userContext, String savePointName) t
  * Pre:  Una richiesta di impostare un savepoint e' stata generata 
  * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
  *
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  */	
 public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -609,4 +624,69 @@ public Configurazione_cnrBulk getLimitiRitardoDetraibile(UserContext userContext
         throw handleException(ex);
     }
 }
+	public AutofatturaBulk impostaDatiPerFatturazioneElettronica(UserContext userContext, AutofatturaBulk autofattura) throws ComponentException, RemoteException {
+		try {
+			if (autofattura.getProgrUnivocoAnno()==null) {
+				Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+				Numerazione_doc_ammBulk numerazioneProgressivoUnivoco = new Numerazione_doc_ammBulk();
+				numerazioneProgressivoUnivoco.setEsercizio(autofattura.getEsercizio());
+				numerazioneProgressivoUnivoco.setCd_cds(autofattura.getCd_cds());
+				numerazioneProgressivoUnivoco.setCd_unita_organizzativa(uoEnte.getCd_unita_organizzativa());
+
+				numerazioneProgressivoUnivoco.setCd_tipo_documento_amm(Numerazione_doc_ammBulk.TIPO_UNIVOCO_FATTURA_ATTIVA);
+				ProgressiviAmmComponentSession progressiviSession = (ProgressiviAmmComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_ProgressiviAmmComponentSession", ProgressiviAmmComponentSession.class);
+				autofattura.setProgrUnivocoAnno(progressiviSession.getNextPG(userContext, numerazioneProgressivoUnivoco));
+			}
+
+			TerzoBulk cliente = null;
+			if (autofattura.getFlTerzoEnte()) {
+				Unita_organizzativaBulk uoOrigine = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(autofattura.getCd_uo_origine()));
+				cliente = Utility.createTerzoComponentSession().cercaTerzoPerUnitaOrganizzativa(userContext, uoOrigine);
+			} else {
+				Integer cdTerzo = Optional.ofNullable(autofattura.getFattura_passiva()).map(Fattura_passivaBase::getCd_terzo).orElse(null);
+				if (cdTerzo != null)
+					cliente = (TerzoBulk) getHome(userContext, TerzoBulk.class).findByPrimaryKey(new TerzoKey(cdTerzo));
+			}
+			if (cliente!=null) {
+				cliente.setPec(new BulkList(((TerzoHome) getHome(userContext, TerzoBulk.class)).findTelefoni(cliente, TelefonoBulk.PEC)));
+
+				autofattura.setCodiceUnivocoUfficioIpa(cliente.getCodiceUnivocoUfficioIpa());
+				autofattura.setCodiceDestinatarioFatt(cliente.getCodiceDestinatarioFatt());
+				autofattura.setPecFatturaElettronica(cliente.getPecFatturazioneElettronica() == null ? null : cliente.getPecFatturazioneElettronica().getRiferimento());
+				autofattura.setMailFatturaElettronica(cliente.getEmailFatturazioneElettronica() == null ? null : cliente.getEmailFatturazioneElettronica().getRiferimento());
+			}
+	        autofattura.setToBeUpdated();
+			makeBulkPersistent(userContext, autofattura);
+			AutofatturaBulk autofatturaDB = (AutofatturaBulk)getHome(userContext, AutofatturaBulk.class).findByPrimaryKey(autofattura);
+			autofatturaDB.setFattura_passiva(autofattura.getFattura_passiva());
+			return autofatturaDB;
+		} catch (PersistencyException e) {
+            throw new RuntimeException(e);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+	private Boolean isAttivaFatturazioneElettronica(UserContext aUC, Date dataAutofattura) throws ComponentException {
+		Date dataInizio;
+		try {
+			dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt02(aUC, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_ATTIVA);
+		} catch (ComponentException | RemoteException | EJBException e) {
+			throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+		}
+		if (dataAutofattura == null || dataInizio == null || dataAutofattura.before(dataInizio))
+			return false;
+		return true;
+	}
+
+	public AutofatturaBulk aggiornaAutofatturaInvioSDI(UserContext userContext, AutofatturaBulk autofattura) throws ComponentException {
+		try {
+			autofattura.setStatoInvioSdi(VDocammElettroniciAttiviBulk.FATT_ELETT_INVIATA_SDI);
+			autofattura.setToBeUpdated();
+			updateBulk(userContext, autofattura);
+			return autofattura;
+		} catch (PersistencyException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

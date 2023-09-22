@@ -59,7 +59,7 @@ import java.util.*;
 
 @JsonInclude(value = Include.NON_NULL)
 public abstract class Fattura_attivaBulk extends Fattura_attivaBase
-        implements IDocumentoAmministrativoEntrataBulk,
+        implements IDocumentoAmministrativoEntrataBulk, IDocumentoAmministrativoElettronicoBulk,
         Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi,
         AllegatoParentBulk {
     public final static String BENEDUREVOLE = "B";
@@ -99,22 +99,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     public final static String FATTURA_DI_SERVIZI = Bene_servizioBulk.SERVIZIO;
     public final static String FATTURA_DI_BENI = Bene_servizioBulk.BENE;
     public final static Dictionary FATTURA_BENI_SERVIZI;
-    public final static String DA_PREDISPORRE_ALLA_FIRMA = "P";
-    public final static String DA_FIRMARE = "F";
-    public final static String DA_PREDISPORRE_E_FIRMARE = "S";
-    public final static String FATT_ELETT_PREDISPOSTA_FIRMA = "PRE";
-    public final static String FATT_ELETT_INVIATA_SDI = "INV";
-    public final static String FATT_ELETT_ALLA_FIRMA = "FIR";
-    public final static String FATT_ELETT_SCARTATA_DA_SDI = "SCA";
-    public final static String FATT_ELETT_CONSEGNATA_SDI = "COS";
-    public final static String FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL = "AVV";
-    public final static String FATT_ELETT_MANCATA_CONSEGNA = "MAC";
-    public final static String FATT_ELETT_NON_RECAPITABILE = "NRE";
-    public final static String FATT_ELETT_CONSEGNATA_DESTINATARIO = "CON";
-    public final static String FATT_ELETT_ACCETTATA_DESTINATARIO = "ACC";
-    public final static String FATT_ELETT_RIFIUTATA_DESTINATARIO = "RIF";
-    public final static String FATT_ELETT_DECORRENZA_TERMINI = "DEC";
-    public final static String FATT_ELETT_FIRMATA_NC = "FIN";
+
     public final static String TIPO_FATTURA_ATTIVA = "F";
     public final static String TIPO_NOTA_DI_CREDITO = "C";
     public final static String TIPO_NOTA_DI_DEBITO = "D";
@@ -135,13 +120,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     public final static String STATO_IVA_A = "A";
     public final static String STATO_IVA_B = "B";
     public final static String STATO_IVA_C = "C";
-    protected final static java.util.Dictionary statoFattureElettronicheKeys;
-
-    static {
-        statoFattureElettronicheKeys = new it.cnr.jada.util.OrderedHashtable();
-        statoFattureElettronicheKeys.put(DA_FIRMARE, "Da Firmare");
-        statoFattureElettronicheKeys.put(DA_PREDISPORRE_E_FIRMARE, "Da Predisporre e firmare");
-    }
 
     static {
         TMOTIVOEMISSIONE = new it.cnr.jada.util.OrderedHashtable();
@@ -202,20 +180,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
         FATTURA_BENI_SERVIZI.put(FATTURA_DI_BENI, "Fattura di beni");
         FATTURA_BENI_SERVIZI.put(FATTURA_DI_SERVIZI, "Fattura di servizi");
 
-        statoInvioSdiKeys = new it.cnr.jada.util.OrderedHashtable();
-        statoInvioSdiKeys.put(FATT_ELETT_INVIATA_SDI, "Inviata a SDI");
-        statoInvioSdiKeys.put(FATT_ELETT_ALLA_FIRMA, "Alla Firma");
-        statoInvioSdiKeys.put(FATT_ELETT_PREDISPOSTA_FIRMA, "Predisposta alla Firma");
-        statoInvioSdiKeys.put(FATT_ELETT_SCARTATA_DA_SDI, "Scartata da SDI");
-        statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI, "Consegnata SDI");
-        statoInvioSdiKeys.put(FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL, "Consegnata a SDI e Inviato Avviso notifica e-mail");
-        statoInvioSdiKeys.put(FATT_ELETT_MANCATA_CONSEGNA, "Mancata consegna");
-        statoInvioSdiKeys.put(FATT_ELETT_NON_RECAPITABILE, "Non recapitabile");
-        statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_DESTINATARIO, "Consegnata al destinatario");
-        statoInvioSdiKeys.put(FATT_ELETT_ACCETTATA_DESTINATARIO, "Accettata dal destinatario");
-        statoInvioSdiKeys.put(FATT_ELETT_RIFIUTATA_DESTINATARIO, "Rifiutata dal destinatario");
-        statoInvioSdiKeys.put(FATT_ELETT_DECORRENZA_TERMINI, "Decorrenza termini accettazione/rifiuto da parte del destinatario");
-        statoInvioSdiKeys.put(FATT_ELETT_FIRMATA_NC, "Firmata(solo per le note di credito)");
+        statoInvioSdiKeys = VDocammElettroniciAttiviBulk.statoInvioSdiKeys;
 
         tipoFatturaKeys = new it.cnr.jada.util.OrderedHashtable();
         tipoFatturaKeys.put(TIPO_FATTURA_ATTIVA, "Fattura");
@@ -251,7 +216,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     private String typeNameForCMIS;
     @JsonIgnore
     private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-    private String statoFattElett;
     @JsonIgnore
     private Fattura_attivaBulk fattura_attiva;
     @JsonIgnore
@@ -301,8 +265,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     private java.lang.String riportata = NON_RIPORTATO;
     private java.lang.String riportataInScrivania = NON_RIPORTATO;
     private Integer esercizioInScrivania;
-    @JsonIgnore
-    private String collegamentoDocumentale;
     @JsonIgnore
     private Boolean caricaDatiPerFatturazioneElettronica = true;
     /*
@@ -443,27 +405,20 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
         }
     }
 
-    public Object recuperoStatoInvioSdiKeys() {
-        if (getStatoInvioSdi() != null) {
-            return getStatoInvioSdiKeys().get(getStatoInvioSdi());
-        }
-        return null;
-    }
-
     public Boolean isFatturaElettronicaAllaFirma() {
-		return FATT_ELETT_ALLA_FIRMA.equals(getStatoInvioSdi());
+        return VDocammElettroniciAttiviBulk.FATT_ELETT_ALLA_FIRMA.equals(getStatoInvioSdi());
 	}
 
     public Boolean isFatturaElettronicaPredispostaAllaFirma() {
-		return FATT_ELETT_PREDISPOSTA_FIRMA.equals(getStatoInvioSdi());
+		return VDocammElettroniciAttiviBulk.FATT_ELETT_PREDISPOSTA_FIRMA.equals(getStatoInvioSdi());
 	}
 
     public Boolean isFatturaElettronicaScartata() {
-		return FATT_ELETT_SCARTATA_DA_SDI.equals(getStatoInvioSdi());
+		return VDocammElettroniciAttiviBulk.FATT_ELETT_SCARTATA_DA_SDI.equals(getStatoInvioSdi());
 	}
 
     public Boolean isFatturaElettronicaRifiutata() {
-		return FATT_ELETT_RIFIUTATA_DESTINATARIO.equals(getStatoInvioSdi());
+		return VDocammElettroniciAttiviBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO.equals(getStatoInvioSdi());
 	}
 
     public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
@@ -1168,7 +1123,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
      * @return java.util.Dictionary
      */
     public Long getPg_doc_amm() {
-
         return getPg_fattura_attiva();
     }
 
@@ -2194,11 +2148,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     }
 
     @JsonIgnore
-    public Dictionary getStatoFattureElettronicheKeys() {
-        return statoFattureElettronicheKeys;
-    }
-
-    @JsonIgnore
     public boolean isROTi_bene_servizio() {
         return    //isCommerciale() &&
                 ((getFl_extra_ue() != null && getFl_extra_ue().booleanValue()) ||
@@ -2323,26 +2272,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
         return Optional.ofNullable(getFlFatturaElettronica()).orElse(Boolean.FALSE);
     }
 
-    public String getCollegamentoDocumentale() {
-        return collegamentoDocumentale;
-    }
-    //public CMISFileFatturaAttiva getCMISFile(String typeName) throws IOException{
-    //	CMISFileFatturaAttiva cmisFile = null;
-    //	this.setTypeNameForCMIS(typeName);
-    //	if (this.getFile()==null)
-    //		cmisFile = new CMISFileFatturaAttiva(this);
-    //	else
-    //		cmisFile = new CMISFileFatturaAttiva(this.getFile(), this.getNomeFile(), this);
-    //	return cmisFile;
-    //}
-    //public CMISFile getCMISFile(Node node) {
-    //	return new CMISFileFatturaAttiva(node, this);
-    //}
-
-    public void setCollegamentoDocumentale(String collegamentoDocumentale) {
-        this.collegamentoDocumentale = collegamentoDocumentale;
-    }
-
     public String constructCMISNomeFile() {
         StringBuffer nomeFile = new StringBuffer();
         nomeFile = nomeFile.append(getTi_fattura());
@@ -2421,14 +2350,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
         this.storageObject = storageObject;
     }
 
-    public String getStatoFattElett() {
-        return statoFattElett;
-    }
-
-    public void setStatoFattElett(String statoFattElett) {
-        this.statoFattElett = statoFattElett;
-    }
-
     @Override
     public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
         return scrittura_partita_doppia;
@@ -2488,5 +2409,20 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
     @Override
     public void setPg_doc_amm(Long newPg) {
         setPg_fattura_attiva(newPg);
+    }
+
+    @Override
+    public Long getPg_docamm() {
+        return getPg_fattura_attiva();
+    }
+
+    @Override
+    public String getTipoDocumentoElettronico() {
+        return Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA;
+    }
+
+    @Override
+    public Integer getCdTerzoDocumentoElettronico() {
+        return this.getCd_terzo();
     }
 }

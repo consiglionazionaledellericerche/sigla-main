@@ -499,4 +499,40 @@ public Vector estraeSezionali(UserContext param0, AutofatturaBulk param1,
 		}
 	}
 }
+
+	public AutofatturaBulk impostaDatiPerFatturazioneElettronica(UserContext userContext, AutofatturaBulk autofattura) throws ComponentException, RemoteException {
+		try {
+			return (AutofatturaBulk)invoke("impostaDatiPerFatturazioneElettronica",new Object[] {
+					userContext,
+					autofattura});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
+	public AutofatturaBulk aggiornaAutofatturaInvioSDI(UserContext userContext, AutofatturaBulk autofattura) throws ComponentException, RemoteException {
+		try {
+			return (AutofatturaBulk)invoke("aggiornaAutofatturaInvioSDI",new Object[] {
+					userContext,
+					autofattura});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

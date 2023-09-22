@@ -171,6 +171,80 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CODICE_UNIVOCO_UFFICIO_IPA"
+			propertyName="codiceUnivocoUfficioIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+		<columnMapping
+			columnName="CODICE_INVIO_SDI"
+			propertyName="codiceInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO_INVIO_SDI"
+			propertyName="statoInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="NOTE_INVIO_SDI"
+			propertyName="noteInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="500" />
+		<columnMapping
+			columnName="NC_ANNULLO_SDI"
+			propertyName="ncAnnulloSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PROGR_UNIVOCO_ANNO"
+			propertyName="progrUnivocoAnno"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_CONSEGNA_SDI"
+			propertyName="dtConsegnaSdi"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_RICEZIONE_SDI"
+			propertyName="dtRicezioneSdi"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="NOME_FILE_INVIO_SDI"
+			propertyName="nomeFileInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CODICE_DESTINATARIO_FATT"
+			propertyName="codiceDestinatarioFatt"
+			sqlTypeName="VARCHAR"
+			columnSize="7" />
+		<columnMapping
+			columnName="MAIL_FATTURA_ELETTRONICA"
+			propertyName="mailFatturaElettronica"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="PEC_FATTURA_ELETTRONICA"
+			propertyName="pecFatturaElettronica"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="FL_FATTURA_ELETTRONICA"
+			propertyName="flFatturaElettronica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_TERZO_ENTE"
+			propertyName="flTerzoEnte"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="protocollo_iva" />
@@ -220,4 +294,32 @@
 		name="cd_uo_ft_passiva" />
 	<persistentProperty
 		name="fl_split_payment" />
+	<persistentProperty
+		name="codiceUnivocoUfficioIpa" />
+	<persistentProperty
+		name="codiceInvioSdi" />
+	<persistentProperty
+		name="statoInvioSdi" />
+	<persistentProperty
+		name="noteInvioSdi" />
+	<persistentProperty
+		name="ncAnnulloSdi" />
+	<persistentProperty
+		name="progrUnivocoAnno" />
+	<persistentProperty
+		name="dtConsegnaSdi" />
+	<persistentProperty
+		name="dtRicezioneSdi" />
+	<persistentProperty
+		name="nomeFileInvioSdi" />
+	<persistentProperty
+		name="codiceDestinatarioFatt" />
+	<persistentProperty
+		name="mailFatturaElettronica" />
+	<persistentProperty
+		name="pecFatturaElettronica" />
+	<persistentProperty
+		name="flFatturaElettronica" />
+	<persistentProperty
+		name="flTerzoEnte" />
 </SQLPersistentInfo>
