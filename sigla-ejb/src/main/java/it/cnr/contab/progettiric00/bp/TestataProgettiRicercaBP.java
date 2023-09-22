@@ -496,6 +496,9 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         super.basicEdit(actioncontext, oggettobulk, flag);
         ProgettoBulk progetto = (ProgettoBulk) getModel();
         if (!uoScrivania.isUoEnte() &&
+                !Optional.ofNullable(progetto.getProgettopadre())
+                        .flatMap(el->Optional.ofNullable(el.getCd_dipartimento()))
+                        .map(el->el.equals("PRR")).orElse(Boolean.FALSE) &&
         	(Optional.ofNullable(progetto.getCd_unita_organizzativa())
                 .map(el -> !el.equals(uoScrivania.getCd_unita_organizzativa()))
                 .orElse(Boolean.TRUE) ||
