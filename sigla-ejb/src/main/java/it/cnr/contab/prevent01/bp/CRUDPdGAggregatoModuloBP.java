@@ -547,7 +547,25 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 													.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()));
 
 		//Richiesta ufficio bilancio del 09/2023 di consentire a tutte le UO di caricare la previsione di spesa... non solo alla UO Coordinatrice
-    	boolean isUoCoordinatrice = Boolean.TRUE;
+		boolean isUoCoordinatrice = Optional.ofNullable(getCrudDettagli().getModel())
+				.filter(Pdg_moduloBulk.class::isInstance)
+				.map(Pdg_moduloBulk.class::cast)
+				.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
+				.map(progetto_sipBulk->
+						Optional.ofNullable(progetto_sipBulk.getProgettopadre())
+								.flatMap(el->Optional.ofNullable(el.getCd_dipartimento()))
+								.map(el->el.equals("PRR")).orElse(Boolean.FALSE) ||
+						Optional.ofNullable(progetto_sipBulk.getUnita_organizzativa())
+								.map(Unita_organizzativaBulk::getCd_cds)
+								.map(cdCds->cdCds.equals(
+										Optional.ofNullable(userInfo)
+												.filter(CNRUserInfo.class::isInstance)
+												.map(CNRUserInfo.class::cast)
+												.map(CNRUserInfo::getUnita_organizzativa)
+												.map(Unita_organizzativaBulk::getCd_cds)
+												.orElse(null)))
+								.orElse(Boolean.FALSE))
+				.orElse(Boolean.FALSE);
 
 		return optTipoFinanziamento
 				.map(tipoFinanziamentoBulk -> "Tipologia di Finanziamento: "
@@ -585,6 +603,21 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				.filter(Pdg_moduloBulk.class::isInstance)
 				.map(Pdg_moduloBulk.class::cast)
 				.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
+				.filter(progetto_sipBulk->
+						tipo.equals(Elemento_voceHome.GESTIONE_SPESE) ||
+								Optional.ofNullable(progetto_sipBulk.getProgettopadre())
+										.flatMap(el->Optional.ofNullable(el.getCd_dipartimento()))
+										.map(el->el.equals("PRR")).orElse(Boolean.FALSE) ||
+								Optional.ofNullable(progetto_sipBulk.getUnita_organizzativa())
+										.map(Unita_organizzativaBulk::getCd_cds)
+										.map(cdCds->cdCds.equals(
+												Optional.ofNullable(userInfo)
+														.filter(CNRUserInfo.class::isInstance)
+														.map(CNRUserInfo.class::cast)
+														.map(CNRUserInfo::getUnita_organizzativa)
+														.map(Unita_organizzativaBulk::getCd_cds)
+														.orElse(null)))
+										.orElse(Boolean.FALSE))
 				.map(progetto_sipBulk->
 					Optional.ofNullable(this.getAnnoFromPianoEconomico())
 							.map(el->el.compareTo(Optional.ofNullable(userInfo)
