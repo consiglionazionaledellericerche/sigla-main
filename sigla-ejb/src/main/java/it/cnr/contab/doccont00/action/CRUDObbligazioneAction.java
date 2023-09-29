@@ -1207,6 +1207,62 @@ public Forward handleException(ActionContext context, Throwable ex)
 		}
 	}
 
+	public Forward doCollegaScollegaDocumenti(ActionContext context)
+	{
+		try
+		{
+			if ( context.getBusinessProcess() instanceof CRUDObbligazioneBP)
+			{
+				fillModel( context );
+				CRUDObbligazioneBP bp = (CRUDObbligazioneBP)context.getBusinessProcess();
+				BulkList<Obbligazione_scadenzarioBulk> selected = new BulkList(bp.getScadenzario().getSelectedModels(context));
+				if  (selected.isEmpty()) {
+					bp.setMessage("Attenzione! Selezionare almeno una scadenza da aggiornare.");
+					return context.findDefaultForward();
+				}
+				if (!selected.stream()
+							.filter(Obbligazione_scadenzarioBulk.class::isInstance)
+							.map(Obbligazione_scadenzarioBulk.class::cast)
+							.filter(el->Optional.ofNullable(el.getEsercizio_doc_passivo()).isPresent())
+							.filter(el->!Optional.ofNullable(el.getEsercizio_mandato()).isPresent())
+							.findAny().isPresent()) {
+					bp.setMessage("Attenzione! Selezionare almeno una scadenza non pagata associata a documenti.");
+					return context.findDefaultForward();
+				}
+				return openConfirm(context, "Attenzione!! Vuoi aggiornare sulle scadenze selezionate l'informazione che indica se deve essere scollegata dai documenti?", OptionBP.CONFIRM_YES_NO, "doConfirmCollegaScollegaDocumenti");
+			}
+			return context.findDefaultForward();
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+	public Forward doConfirmCollegaScollegaDocumenti(ActionContext context, int option)
+	{
+		try
+		{
+			if (option == OptionBP.YES_BUTTON) {
+				CRUDObbligazioneBP bp = (CRUDObbligazioneBP)context.getBusinessProcess();
+				ObbligazioneBulk obbligazione = (ObbligazioneBulk)bp.getModel();
+				BulkList<Obbligazione_scadenzarioBulk> selected = new BulkList(bp.getScadenzario().getSelectedModels(context));
+				selected.stream()
+						.filter(Obbligazione_scadenzarioBulk.class::isInstance)
+						.map(Obbligazione_scadenzarioBulk.class::cast)
+						.filter(el->Optional.ofNullable(el.getEsercizio_doc_passivo()).isPresent())
+						.filter(el->!Optional.ofNullable(el.getEsercizio_mandato()).isPresent())
+						.forEach(el->{
+							el.setFlScollegaDocumenti(!el.getFlScollegaDocumenti());
+							el.setToBeUpdated();
+						});
+				bp.setDirty(Boolean.TRUE);
+				bp.getScadenzario().getSelection().clear();
+				return context.findDefaultForward();
+			}
+			return context.findDefaultForward();
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+
 	public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
 		try 
 		{

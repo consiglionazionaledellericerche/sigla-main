@@ -189,7 +189,8 @@ public int addToObbligazione_scadenzarioColl( Obbligazione_scadenzarioBulk os )
 	os.setObbligazione(this);
 	os.setIm_associato_doc_amm( new java.math.BigDecimal(0));
 	os.setIm_associato_doc_contabile( new java.math.BigDecimal(0));
-	os.setFlAssociataOrdine(false);
+	os.setFlAssociataOrdine(Boolean.FALSE);
+	os.setFlScollegaDocumenti(Boolean.FALSE);
 	os.setIm_scadenza( new java.math.BigDecimal(0));
 	if ( os.getPg_obbligazione_scadenzario() == null )
 		os.setPg_obbligazione_scadenzario( getNextPgScadenza());

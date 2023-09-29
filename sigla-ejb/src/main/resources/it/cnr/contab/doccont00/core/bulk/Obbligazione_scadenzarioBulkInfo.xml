@@ -279,6 +279,45 @@
 		/>
 	</columnSet>
 
+	<columnSet
+			name="obbligazione_with_scollega">
+		<columnFieldProperty
+				name="dt_scadenza"
+		/>
+		<columnFieldProperty
+				name="pg_obbligazione_scadenzario"
+		/>
+		<columnFieldProperty
+				name="ds_scadenza"
+		/>
+		<columnFieldProperty
+				name="im_scadenza"
+				columnStyle="width:80px; text-align: right; padding-right:20px"
+		/>
+		<columnFieldProperty
+				name="esercizio_mandato"
+		/>
+		<columnFieldProperty
+				name="pg_mandato"
+		/>
+		<columnFieldProperty
+				name="cd_tipo_documento_amm"
+		/>
+		<columnFieldProperty
+				name="esercizio_doc_passivo"
+		/>
+		<columnFieldProperty
+				name="pg_doc_passivo"
+		/>
+		<columnFieldProperty
+				name="flScollegaDocumenti"
+				property="flScollegaDocumenti"
+				inputType="CHECKBOX"
+				maxLength="1"
+				inputSize="1"
+				label="Scollega Documenti"
+		/>
+	</columnSet>
 
 	<formFieldProperty
 		name="cd_cds"

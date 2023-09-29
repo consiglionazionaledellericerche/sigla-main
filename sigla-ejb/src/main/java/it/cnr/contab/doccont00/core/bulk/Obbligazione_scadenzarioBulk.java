@@ -241,7 +241,8 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 {
 	Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) super.initializeForInsert( bp, context );
 	os.setStatus( os.STATUS_NOT_CONFIRMED );
-	os.setFlAssociataOrdine(false);
+	os.setFlAssociataOrdine(Boolean.FALSE);
+	os.setFlScollegaDocumenti(Boolean.FALSE);
 	return os;
 }
 public boolean isFromDocAmm() {
@@ -354,9 +355,12 @@ public void storna()
  */
 public void validate() throws ValidationException {
 	super.validate();
-	if (getFlAssociataOrdine() == null){
-		setFlAssociataOrdine(false);
-	}
+
+	if (getFlAssociataOrdine() == null)
+		setFlAssociataOrdine(Boolean.FALSE);
+	if (getFlScollegaDocumenti() == null)
+		setFlScollegaDocumenti(Boolean.FALSE);
+
 	// controllo su campo DATA SCADENZA
 	if ( getDt_scadenza() == null || getDt_scadenza().equals("") )
 		throw new ValidationException( "Il campo DATA SCADENZA è obbligatorio." );

@@ -41,6 +41,7 @@ public class Obbligazione_scadenzarioBase extends Obbligazione_scadenzarioKey im
 	// FL_ASSOCIATA_ORDINE CHAR(1) NOT NULL
 	private java.lang.Boolean flAssociataOrdine;
 
+	private java.lang.Boolean flScollegaDocumenti;
 
 public Obbligazione_scadenzarioBase() {
 	super();
@@ -114,4 +115,12 @@ public java.lang.Boolean getFlAssociataOrdine() {
 public void setFlAssociataOrdine(java.lang.Boolean flAssociataOrdine) {
 	this.flAssociataOrdine = flAssociataOrdine;
 }
+
+	public Boolean getFlScollegaDocumenti() {
+		return flScollegaDocumenti;
+	}
+
+	public void setFlScollegaDocumenti(Boolean flScollegaDocumenti) {
+		this.flScollegaDocumenti = flScollegaDocumenti;
+	}
 }

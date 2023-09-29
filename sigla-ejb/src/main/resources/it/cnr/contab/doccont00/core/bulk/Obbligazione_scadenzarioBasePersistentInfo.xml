@@ -86,6 +86,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_SCOLLEGA_DOCUMENTI"
+			propertyName="flScollegaDocumenti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="UTUV"
 			propertyName="utuv"
 			sqlTypeName="VARCHAR"
@@ -112,6 +119,8 @@
 		name="im_associato_doc_contabile" />
 	<persistentProperty
 		name="flAssociataOrdine" />
+	<persistentProperty
+		name="flScollegaDocumenti" />
 	<persistentProperty
 		name="utuv" />
 </SQLPersistentInfo>

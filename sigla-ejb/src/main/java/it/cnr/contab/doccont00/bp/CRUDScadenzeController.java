@@ -18,6 +18,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.HttpActionContext;
@@ -95,6 +96,19 @@ public class CRUDScadenzeController extends it.cnr.jada.util.action.SimpleDetail
                     "Raggruppa",
                     "btn-sm btn-outline-secondary btn-title",
                     HttpActionContext.isFromBootstrap(context));
+
+            if (getParentController().getModel()!=null && getParentController().getModel() instanceof ObbligazioneResBulk &&
+                    ((ObbligazioneResBulk)getParentController().getModel()).isNonLiquidabile()) {
+                String command2 = "javascript:submitForm('doCollegaScollegaDocumenti')";
+                it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+                        context,
+                        HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-object-group text-primary" : "img/properties16.gif",
+                        !(isInputReadonly() || getDetails().isEmpty() || ((CRUDObbligazioneBP) getParentController()).isSearching()) ? command2 : null,
+                        true,
+                        "Collega/Scollega Documenti",
+                        "btn-sm btn-outline-secondary btn-title",
+                        HttpActionContext.isFromBootstrap(context));
+            }
         }
         super.closeButtonGROUPToolbar(context);
     }

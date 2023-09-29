@@ -5,12 +5,13 @@
 -->
 
 <%@ page pageEncoding="UTF-8"
-	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*,it.cnr.contab.doccont00.bp.*"
+	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*,it.cnr.contab.doccont00.bp.*,it.cnr.contab.doccont00.core.bulk.*"
 %>
 
 
 <%  
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)BusinessProcess.getBusinessProcess(request);
+		ObbligazioneBulk obbligazione = (ObbligazioneBulk)bp.getModel();
 %>
 
 <div class="Group card">
@@ -34,7 +35,12 @@
 	<tr>
 		<td colspan="3">
 		      <% bp.getScadenzario().setEnabled( !bp.isEditingScadenza());
-			     bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione",true,false,true,"100%","300px"); %>
+		        if (obbligazione instanceof ObbligazioneResBulk && ((ObbligazioneResBulk)obbligazione).isNonLiquidabile()) {
+		            bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione_with_scollega",true,false,true,"100%","300px");
+                } else {
+			        bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione",true,false,true,"100%","300px");
+			    }
+			  %>
 		</td>
 	</tr>
   	<tr>

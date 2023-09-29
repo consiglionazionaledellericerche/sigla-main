@@ -4427,7 +4427,12 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		}
 		if ( totalScadenza.compareTo( os.getIm_scadenza()) != 0 )	
 			throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi dei singoli dettagli della scadenza e' diverso dall'importo complessivo della scadenza"))	;		
-			
+
+		if (os.getFlScollegaDocumenti().equals(Boolean.TRUE) &&
+				(!(obbligazione instanceof ObbligazioneResBulk) || !((ObbligazioneResBulk) obbligazione).isNonLiquidabile())) {
+			os.setFlScollegaDocumenti(Boolean.FALSE);
+			os.setToBeUpdated();
+		}
 	}
 	
 	if ( totalObbligazione.compareTo( obbligazione.getIm_obbligazione()) > 0 )
