@@ -1,5 +1,25 @@
-## Release 6.5.40  -- _August 04, 2023_ 
+## Release 6.5.41  -- _September 29, 2023_ 
 **Changes**
+
+>**Pdgp: data possibilità per i progetti PNRR di essere modificati anche da una UO diversa dalla coordinatrice.**
+>
+>[a5ee3060acd5eb6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a5ee3060acd5eb6) raffaelepagano *September 26, 2023*
+
+>**Pdgp: data possibilità per i progetti PNRR di essere modificati anche da una UO diversa dalla coordinatrice.**
+>
+>[75f38b899097632](https://github.com/consiglionazionaledellericerche/sigla-main/commit/75f38b899097632) raffaelepagano *September 26, 2023*
+
+>**Aggiunto flag su tabella obbligazione_scadenzario per individuare righe da scollegare dai documenti amministrativi.**
+>
+>[0a831d8f93a6fbc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0a831d8f93a6fbc) raffaelepagano *September 22, 2023*
+
+>**Pdgp: data possibilità per i progetti PNRR di essere modificati anche da una UO diversa dalla coordinatrice.**
+>
+>[20ce993fbb6933c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/20ce993fbb6933c) raffaelepagano *September 22, 2023*
+
+>**Managed error in case of invoice not present on the storage base.**
+>
+>[68a1b15fea0dfd2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/68a1b15fea0dfd2) marco.spasiano *September 16, 2023*
 
 >**Upgrade version of ace-client artifact**
 >
