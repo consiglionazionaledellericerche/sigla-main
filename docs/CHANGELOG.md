@@ -1,3 +1,15 @@
+## Release 6.5.42  -- _October 04, 2023_ 
+**Changes**
+
+>**Managed application message when entering a mission refund via REST**
+>
+>[b5afa0600455fe3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b5afa0600455fe3) marco.spasiano *October 04, 2023*
+
+>**Gestione flag su tabella obbligazione_scadenzario per individuare righe da scollegare dai documenti amministrativi.**
+>
+>[d66542027ee39a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d66542027ee39a0) raffaelepagano *September 29, 2023*
+
+
 ## Release 6.5.41  -- _September 29, 2023_ 
 **Changes**
 
