@@ -31,6 +31,7 @@ import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.PersistencyException;
@@ -175,13 +176,18 @@ public class MissioneResource implements MissioneLocal {
     		x.setToBeCreated();
     		x.setMissione(missione);
     	}));
-    	MissioneBulk missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missione);
-    	missioneCreated.setToBeUpdated();
-    	missioneCreated.setMissioneIniziale(missioneCreated);
-    	missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missioneCreated);
-    	missioneCreated.setObbligazione_scadenzario(null);
-    	missioneCreated.setObbligazione_scadenzarioClone(null);
-    	return Response.status(Status.CREATED).entity(missioneCreated).build();
+		try {
+			MissioneBulk missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missione);
+			missioneCreated.setToBeUpdated();
+			missioneCreated.setMissioneIniziale(missioneCreated);
+			missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missioneCreated);
+			missioneCreated.setObbligazione_scadenzario(null);
+			missioneCreated.setObbligazione_scadenzarioClone(null);
+			return Response.status(Status.CREATED).entity(missioneCreated).build();
+		} catch (ApplicationException _ex) {
+			return Response.status(Status.BAD_REQUEST)
+					.entity(Collections.singletonMap("error", _ex.getMessage())).build();
+		}
     }
 
     private NazioneBulk getNazione(UserContext userContext, Long nazione) throws PersistencyException, ComponentException, RemoteException, EJBException {
