@@ -1,5 +1,9 @@
-## Release 6.5.42  -- _October 04, 2023_ 
+## Release 6.5.43  -- _October 05, 2023_ 
 **Changes**
+
+>**FIX NPE on flScollegaDocumenti**
+>
+>[05f82e6ef2b62ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05f82e6ef2b62ef) marco.spasiano *October 05, 2023*
 
 >**Managed application message when entering a mission refund via REST**
 >
