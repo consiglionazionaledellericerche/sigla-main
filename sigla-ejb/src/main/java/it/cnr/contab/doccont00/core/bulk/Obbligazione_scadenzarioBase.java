@@ -22,6 +22,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.util.Optional;
+
 public class Obbligazione_scadenzarioBase extends Obbligazione_scadenzarioKey implements Keyed {
 	// DS_SCADENZA VARCHAR(300)
 	private java.lang.String ds_scadenza;
@@ -117,7 +119,7 @@ public void setFlAssociataOrdine(java.lang.Boolean flAssociataOrdine) {
 }
 
 	public Boolean getFlScollegaDocumenti() {
-		return flScollegaDocumenti;
+		return Optional.ofNullable(flScollegaDocumenti).orElse(Boolean.FALSE);
 	}
 
 	public void setFlScollegaDocumenti(Boolean flScollegaDocumenti) {
