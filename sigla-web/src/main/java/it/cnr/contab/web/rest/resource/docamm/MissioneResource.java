@@ -123,60 +123,60 @@ public class MissioneResource implements MissioneLocal {
 	}
     
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception {
-    	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
-    	Optional.ofNullable(missioneBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
-		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello della Missione"));
-		if (!isUoEnte(userContext)){
-	    	Optional.ofNullable(missioneBulk.getCd_cds()).filter(x -> userContext.getCd_cds().equals(x)).
-				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Missione"));
-	    	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
-				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
-		}
-
-    	Calendar cal = Calendar.getInstance();
-		missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
-		missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
-		cal.setTime(missioneBulk.getDt_inizio_missione());
-		cal.set(Calendar.SECOND,0);
-		cal.set(Calendar.MILLISECOND,0);
-		missioneBulk.setDt_inizio_missione(new Timestamp(cal.getTimeInMillis()));
-		cal.setTime(missioneBulk.getDt_fine_missione());
-		cal.set(Calendar.SECOND,0);
-		cal.set(Calendar.MILLISECOND,0);
-		missioneBulk.setDt_fine_missione(new Timestamp(cal.getTimeInMillis()));
-		final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
-    			userContext, 
-    			missioneBulk);
-				
-    	missione.setToBeCreated();
-    	missione.getTappeMissioneColl().stream().forEach(x -> {
-    		x.setToBeCreated();
-    		x.setMissione(missione);
-    		cal.setTime(x.getDt_inizio_tappa());
-    		cal.set(Calendar.SECOND,0);
-    		cal.set(Calendar.MILLISECOND,0);
-    		x.setDt_inizio_tappa(new Timestamp(cal.getTimeInMillis()));
-    		cal.setTime(x.getDt_fine_tappa());
-    		cal.set(Calendar.SECOND,0);
-    		cal.set(Calendar.MILLISECOND,0);
-    		x.setDt_fine_tappa(new Timestamp(cal.getTimeInMillis()));
-    	});    	
-    	missione.getSpeseMissioneColl().stream().forEach(x -> {
-    		cal.setTime(x.getDt_inizio_tappa());
-    		cal.set(Calendar.SECOND,0);
-    		cal.set(Calendar.MILLISECOND,0);
-    		x.setDt_inizio_tappa(new Timestamp(cal.getTimeInMillis()));
-    	});    	
-    	Stream.concat(
-    			Stream.concat(
-					missione.getSpeseMissioneColl().stream(), 
-					missione.getDiariaMissioneColl().stream()
-    			),
-    			missione.getRimborsoMissioneColl().stream()).forEach((x -> {
-    		x.setToBeCreated();
-    		x.setMissione(missione);
-    	}));
 		try {
+			CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+			Optional.ofNullable(missioneBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
+			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello della Missione"));
+			if (!isUoEnte(userContext)){
+				Optional.ofNullable(missioneBulk.getCd_cds()).filter(x -> userContext.getCd_cds().equals(x)).
+					orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Missione"));
+				Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
+					orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
+			}
+
+			Calendar cal = Calendar.getInstance();
+			missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
+			missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
+			cal.setTime(missioneBulk.getDt_inizio_missione());
+			cal.set(Calendar.SECOND,0);
+			cal.set(Calendar.MILLISECOND,0);
+			missioneBulk.setDt_inizio_missione(new Timestamp(cal.getTimeInMillis()));
+			cal.setTime(missioneBulk.getDt_fine_missione());
+			cal.set(Calendar.SECOND,0);
+			cal.set(Calendar.MILLISECOND,0);
+			missioneBulk.setDt_fine_missione(new Timestamp(cal.getTimeInMillis()));
+			final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
+					userContext,
+					missioneBulk);
+
+			missione.setToBeCreated();
+			missione.getTappeMissioneColl().stream().forEach(x -> {
+				x.setToBeCreated();
+				x.setMissione(missione);
+				cal.setTime(x.getDt_inizio_tappa());
+				cal.set(Calendar.SECOND,0);
+				cal.set(Calendar.MILLISECOND,0);
+				x.setDt_inizio_tappa(new Timestamp(cal.getTimeInMillis()));
+				cal.setTime(x.getDt_fine_tappa());
+				cal.set(Calendar.SECOND,0);
+				cal.set(Calendar.MILLISECOND,0);
+				x.setDt_fine_tappa(new Timestamp(cal.getTimeInMillis()));
+			});
+			missione.getSpeseMissioneColl().stream().forEach(x -> {
+				cal.setTime(x.getDt_inizio_tappa());
+				cal.set(Calendar.SECOND,0);
+				cal.set(Calendar.MILLISECOND,0);
+				x.setDt_inizio_tappa(new Timestamp(cal.getTimeInMillis()));
+			});
+			Stream.concat(
+					Stream.concat(
+						missione.getSpeseMissioneColl().stream(),
+						missione.getDiariaMissioneColl().stream()
+					),
+					missione.getRimborsoMissioneColl().stream()).forEach((x -> {
+				x.setToBeCreated();
+				x.setMissione(missione);
+			}));
 			MissioneBulk missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missione);
 			missioneCreated.setToBeUpdated();
 			missioneCreated.setMissioneIniziale(missioneCreated);
