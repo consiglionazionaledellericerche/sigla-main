@@ -2,8 +2,8 @@
 --  DDL for View V_PROG_COM_MOD
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_PROG_COM_MOD" ("ESERCIZIO", "CD_PROGETTO", "DS_PROGETTO", "CD_COMMESSA", "DS_COMMESSA", "CD_MODULO", "DS_MODULO", "CD_LINEA_ATTIVITA", "DS_LINEA_ATTIVITA", "DENOMINAZIONE_LA", "CDR", "CD_NATURA", "DS_NATURA", "PG_PROGETTO", "TI_GESTIONE", "FLG_PDG") AS 
-  Select /*+ optimizer_features_enable('10.1.0') */
+  CREATE OR REPLACE FORCE VIEW "V_PROG_COM_MOD" ("ESERCIZIO", "CD_PROGETTO", "DS_PROGETTO", "CD_COMMESSA", "DS_COMMESSA", "CD_MODULO", "DS_MODULO", "CD_LINEA_ATTIVITA", "DS_LINEA_ATTIVITA", "DENOMINAZIONE_LA", "CDR", "CD_NATURA", "DS_NATURA", "PG_PROGETTO", "TI_GESTIONE", "FLG_PDG") AS
+  Select 
 --
 -- Date: 09/11/2006
 -- Version: 1.1
@@ -80,7 +80,7 @@ Where
                And   cd_linea_attivita = V_LINEA_ATTIVITA_VALIDA.cd_linea_attivita)
         )
 Union
-Select /*+ optimizer_features_enable('10.1.0') */
+Select 
         V_LINEA_ATTIVITA_VALIDA.esercizio,
         PROGETTO.cd_progetto cd_progetto,
         PROGETTO.ds_progetto ds_progetto,
@@ -138,7 +138,7 @@ Where
                And   cd_linea_attivita = V_LINEA_ATTIVITA_VALIDA.cd_linea_attivita)
         )
   union
-  Select /*+ optimizer_features_enable('10.1.0') */
+  Select 
         V_LINEA_ATTIVITA_VALIDA.esercizio,
         PROGETTO.cd_progetto cd_progetto,
         PROGETTO.ds_progetto ds_progetto,
@@ -192,7 +192,7 @@ Where
                And   cd_linea_attivita = V_LINEA_ATTIVITA_VALIDA.cd_linea_attivita)
         )
 Union
-Select /*+ optimizer_features_enable('10.1.0') */
+Select 
         V_LINEA_ATTIVITA_VALIDA.esercizio,
         PROGETTO.cd_progetto cd_progetto,
         PROGETTO.ds_progetto ds_progetto,

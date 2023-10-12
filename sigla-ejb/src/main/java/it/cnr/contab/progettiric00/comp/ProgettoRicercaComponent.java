@@ -761,6 +761,7 @@ public ProgettoRicercaComponent() {
 		public OggettoBulk inizializzaBulkPerStampa(UserContext usercontext,Stampa_elenco_progetti_laBulk stampa) throws ComponentException { 
 		//	Imposta l'Esercizio come quello di scrivania
 			stampa.setEsercizio(CNRUserContext.getEsercizio(usercontext));
+			stampa.setCdr(CNRUserContext.getCd_cdr(usercontext));
 		return stampa;
 		}
 /**
