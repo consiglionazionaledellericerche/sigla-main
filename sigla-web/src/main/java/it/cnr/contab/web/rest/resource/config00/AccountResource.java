@@ -18,6 +18,7 @@
 package it.cnr.contab.web.rest.resource.config00;
 
 import it.cnr.contab.security.auth.SIGLALDAPPrincipal;
+import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.web.rest.config.RESTSecurityInterceptor;
@@ -59,6 +60,8 @@ public class AccountResource implements AccountLocal {
 
     @EJB
     private CRUDComponentSession crudComponentSession;
+    @EJB
+    private GestioneLoginComponentSession gestioneLoginComponentSession;
 
     public AccountDTO getAccountDTO(HttpServletRequest request) throws Exception {
         CNRUserContext userContext = AbstractResource.getUserContext(securityContext, request);
@@ -88,6 +91,7 @@ public class AccountResource implements AccountLocal {
                 accountDTO.setFirstName((String) siglaldapPrincipal.get().getAttribute("cnrnome"));
                 accountDTO.setLastName((String) siglaldapPrincipal.get().getAttribute("cnrcognome"));
                 accountDTO.setLdap(Boolean.TRUE);
+                accountDTO.setAbilitatoLdap(Boolean.TRUE);
                 accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
             } else {
                 LOGGER.warn("User {} not found!", securityContext.getUserPrincipal().getName());
@@ -97,16 +101,17 @@ public class AccountResource implements AccountLocal {
         } else if (keycloakPrincipal.isPresent()) {
             final IDToken idToken = Optional.ofNullable(keycloakPrincipal.get().getKeycloakSecurityContext().getIdToken())
                     .orElse(keycloakPrincipal.get().getKeycloakSecurityContext().getToken());
+            final String uid = Optional.ofNullable(idToken.getOtherClaims())
+                    .flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(RESTSecurityInterceptor.USERNAME_CNR)))
+                    .filter(String.class::isInstance)
+                    .map(String.class::cast)
+                    .orElse(idToken.getPreferredUsername());
             final List<UtenteBulk> findUtenteByUID = crudComponentSession.find(
                     userContext,
                     UtenteBulk.class,
                     FIND_UTENTE_BY_UID,
                     userContext,
-                    Optional.ofNullable(idToken.getOtherClaims())
-                            .flatMap(stringObjectMap -> Optional.ofNullable(stringObjectMap.get(RESTSecurityInterceptor.USERNAME_CNR)))
-                            .filter(String.class::isInstance)
-                            .map(String.class::cast)
-                            .orElse(idToken.getPreferredUsername())
+                    uid
             );
             final Optional<UtenteBulk> utenteBulk1 = findUtenteByUID.stream().findFirst();
             if (!utenteBulk1.isPresent()) {
@@ -118,8 +123,9 @@ public class AccountResource implements AccountLocal {
             accountDTO.setEmail(idToken.getEmail());
             accountDTO.setFirstName(idToken.getGivenName());
             accountDTO.setLastName(idToken.getFamilyName());
-            accountDTO.setLdap(Boolean.TRUE);
             accountDTO.setUtenteMultiplo(findUtenteByUID.size() > 1);
+            accountDTO.setLdap(Boolean.TRUE);
+            accountDTO.setAbilitatoLdap(gestioneLoginComponentSession.isUtenteAbilitatoLdap(userContext, uid, Boolean.TRUE));
         } else {
             final UtenteBulk utenteBulk = (UtenteBulk) crudComponentSession.findByPrimaryKey(
                     userContext,
@@ -133,6 +139,7 @@ public class AccountResource implements AccountLocal {
             accountDTO.setLogin(securityContext.getUserPrincipal().getName());
             accountDTO.setUsers(Arrays.asList(utenteBulk).stream().map(utente -> new AccountDTO(utente)).collect(Collectors.toList()));
             accountDTO.setLdap(Boolean.FALSE);
+            accountDTO.setAbilitatoLdap(Boolean.FALSE);
             accountDTO.setUtenteMultiplo(Boolean.FALSE);
         }
         accountDTO.setEsercizio(userContext.getEsercizio());

@@ -54,7 +54,7 @@ public class AccountDTO {
     private Map<String, List<String>> roles;
     private List<AccountDTO> users;
     private Boolean utenteMultiplo;
-
+    private Boolean abilitatoLdap;
     public AccountDTO(UtenteBulk currentUser) {
         super();
         this.roles = new HashMap<String, List<String>>();
@@ -279,5 +279,13 @@ public class AccountDTO {
 
     public void setUtenteMultiplo(Boolean utenteMultiplo) {
         this.utenteMultiplo = utenteMultiplo;
+    }
+
+    public Boolean getAbilitatoLdap() {
+        return abilitatoLdap;
+    }
+
+    public void setAbilitatoLdap(Boolean abilitatoLdap) {
+        this.abilitatoLdap = abilitatoLdap;
     }
 }

@@ -894,7 +894,7 @@ public class GestioneLoginComponent
                     .map(s -> s.equalsIgnoreCase("si"))
                     .orElse(Boolean.FALSE);
         } catch (NoSuchBeanDefinitionException _ex){
-            return true;
+            return false;
         } catch (Throwable e) {
             throw handleException(e);
         }
