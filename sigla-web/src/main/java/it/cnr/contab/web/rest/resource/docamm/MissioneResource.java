@@ -212,8 +212,12 @@ public class MissioneResource implements MissioneLocal {
         Optional.ofNullable(idRimborsoMissione).
                 orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Id Rimborso missione Obbligatorio"));
         LOGGER.info("Inizio Cancellazione Missione " + idRimborsoMissione);
-
-        missioneComponentSession.cancellazioneMissioneDaGemis(userContext, idRimborsoMissione);
+        try {
+            missioneComponentSession.cancellazioneMissioneDaGemis(userContext, idRimborsoMissione);
+        } catch (ApplicationException _ex) {
+            return Response.status(Status.BAD_REQUEST)
+                    .entity(Collections.singletonMap("error", _ex.getMessage())).build();
+        }
         return Response.ok("OK").build();
 
     }
