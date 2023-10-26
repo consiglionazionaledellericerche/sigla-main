@@ -1,5 +1,17 @@
-## Release 6.5.44  -- _October 06, 2023_ 
+## Release 6.5.46  -- _October 26, 2023_ 
 **Changes**
+
+>**Handled the error in case of user not enabled on LDAP**
+>
+>[bf93c18b6271edc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bf93c18b6271edc) marco.spasiano *October 26, 2023*
+
+>**Handled the error in case of user not enabled on LDAP**
+>
+>[2c9d3f411699d3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c9d3f411699d3d) marco.spasiano *October 26, 2023*
+
+>**Added the CdR as a parameter to the printout**
+>
+>[c475b881974b13a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c475b881974b13a) marco.spasiano *October 12, 2023*
 
 >**Managed application message when entering a mission refund via REST**
 >
