@@ -1,3 +1,11 @@
+## Release 6.5.47  -- _October 26, 2023_ 
+**Changes**
+
+>**Managed application message when try to delete Mission via REST**
+>
+>[56b1dd1c633c29f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56b1dd1c633c29f) marco.spasiano *October 26, 2023*
+
+
 ## Release 6.5.46  -- _October 26, 2023_ 
 **Changes**
 
