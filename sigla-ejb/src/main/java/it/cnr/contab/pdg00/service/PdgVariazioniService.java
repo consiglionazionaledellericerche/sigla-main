@@ -178,7 +178,11 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
         if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
-            return getChildren(storageObjectByPath.get().getKey(), -1).stream()
+            return getChildren(storageObjectByPath.get().getKey()).stream()
+                    .map(storageObject -> getChildren(storageObject.getKey()))
+                    .collect(ArrayList::new, List::addAll, List::addAll)
+                    .stream()
+                    .map(StorageObject.class::cast)
                     .filter(storageObject -> storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(SIGLAStoragePropertyNames.VARPIANOGEST_DOCUMENT.value()))
                     .filter(storageObject -> {
                         if (Optional.ofNullable(variazionePdg).isPresent()) {
