@@ -227,6 +227,7 @@ public class CRUDDistintaCassiereAction extends it.cnr.jada.util.action.CRUDActi
         FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
         try {
             fillModel(context);
+            firmaOTPBulk.validate();
             bp.invia(context, firmaOTPBulk);
         } catch (Exception e) {
             return handleException(context, e);
@@ -308,6 +309,7 @@ public class CRUDDistintaCassiereAction extends it.cnr.jada.util.action.CRUDActi
         FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
         try {
             fillModel(context);
+            firmaOTPBulk.validate();
             bp.inviaSiopeplus(context, firmaOTPBulk);
         } catch (Exception e) {
             return handleException(context, e);

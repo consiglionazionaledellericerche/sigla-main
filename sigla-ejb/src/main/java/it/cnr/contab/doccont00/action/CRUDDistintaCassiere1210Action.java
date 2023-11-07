@@ -88,6 +88,7 @@ public class CRUDDistintaCassiere1210Action extends CRUDAction {
 			CRUDDistintaCassiere1210BP bp = (CRUDDistintaCassiere1210BP)context.getBusinessProcess();	
 			HookForward caller = (HookForward)context.getCaller();
 			FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
+			firmaOTPBulk.validate();
 			bp.invia(context, firmaOTPBulk);			
 			return context.findDefaultForward();
 		} catch (Exception e ){
@@ -115,6 +116,7 @@ public class CRUDDistintaCassiere1210Action extends CRUDAction {
 			CRUDDistintaCassiere1210BP bp = (CRUDDistintaCassiere1210BP)context.getBusinessProcess();	
 			HookForward caller = (HookForward)context.getCaller();
 			FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
+			firmaOTPBulk.validate();
 			bp.signDocuments(context, firmaOTPBulk);			
 			return super.doSalva(context);
 		} catch (Exception e ){

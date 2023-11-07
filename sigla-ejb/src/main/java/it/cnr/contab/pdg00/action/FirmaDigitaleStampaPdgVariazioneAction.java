@@ -113,6 +113,7 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 		HookForward caller = (HookForward)context.getCaller();
 		FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
 		try {
+			firmaOTPBulk.validate();
 			bp.firmaOTP(context, firmaOTPBulk);			
 		} catch(Exception e) {
 			return handleException(context,e);

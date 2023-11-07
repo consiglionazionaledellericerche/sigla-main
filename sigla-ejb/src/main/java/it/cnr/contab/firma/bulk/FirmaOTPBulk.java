@@ -18,6 +18,10 @@
 package it.cnr.contab.firma.bulk;
 
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 public class FirmaOTPBulk extends OggettoBulk {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +47,15 @@ public class FirmaOTPBulk extends OggettoBulk {
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
-	
+
+	@Override
+	public void validate() throws ValidationException {
+		super.validate();
+		Optional.ofNullable(userName).orElseThrow(() -> new ValidationException("Valorizzare 'Username'!"));
+		Optional.ofNullable(password).orElseThrow(() -> new ValidationException("Valorizzare 'password'!"));
+		Optional.ofNullable(otp).orElseThrow(() -> new ValidationException("Valorizzare 'OTP'!"));
+	}
+
 	public static String errorMessage(String messageException) {
 	    if (messageException.contains("0001"))
 	    	return "Errore generico nel processo di firma";
