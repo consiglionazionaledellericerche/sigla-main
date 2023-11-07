@@ -1,5 +1,21 @@
-## Release 6.5.47  -- _October 26, 2023_ 
+## Release 6.5.48  -- _November 07, 2023_ 
 **Changes**
+
+>**Validating information for digital signature**
+>
+>[49ebc7742406561](https://github.com/consiglionazionaledellericerche/sigla-main/commit/49ebc7742406561) marco.spasiano *November 07, 2023*
+
+>**Cambiata implementazione sulla ricerca delle variazioni al PdG**
+>
+>[fd41c7f35f91210](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd41c7f35f91210) marco.spasiano *November 06, 2023*
+
+>**Cambiata implementazione sulla ricerca delle variazioni al PdG**
+>
+>[cbf0c05ff68c1d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cbf0c05ff68c1d4) marco.spasiano *November 06, 2023*
+
+>**Management of the advance linked to the mission**
+>
+>[80926463d1caef8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80926463d1caef8) marco.spasiano *October 30, 2023*
 
 >**Managed application message when try to delete Mission via REST**
 >
