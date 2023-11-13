@@ -42,6 +42,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -210,7 +211,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				pagopaService.get().creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
 		} catch (Exception e){
 			logger.error("Errore su creaPendenza",e);
-			throw new ComponentException("Errore nella creazione della pendenza"+e.getMessage());
+			throw new ApplicationException("Errore nella creazione della pendenza: " +e.getMessage());
 		}
 	}
 
