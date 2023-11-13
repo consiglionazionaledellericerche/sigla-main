@@ -412,9 +412,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         apparence
                 );
                 for (int i = 0; i < pdfSignApparence.getNodes().size(); i++) {
+                    final byte[] bytes1 = Optional.ofNullable(bytesSigned.get(i))
+                                    .orElseThrow(() -> new StorageException(StorageException.Type.GENERIC, "0011", new ApplicationException()));
                     storageDriver.updateStream(
                             pdfSignApparence.getNodes().get(i),
-                            new ByteArrayInputStream(bytesSigned.get(i)),
+                            new ByteArrayInputStream(bytes1),
                             MimeTypes.PDF.mimetype()
                     );
                 }

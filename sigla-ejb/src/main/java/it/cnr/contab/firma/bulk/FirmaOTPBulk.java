@@ -77,6 +77,8 @@ public class FirmaOTPBulk extends OggettoBulk {
     		return "Credenziali di delega non valide";
     	else if (messageException.contains("0010"))
     		return "Lo stato dell'utente non è valido (es. utente sospeso)";
+		else if (messageException.contains("0011"))
+			return "Il dispositivo che genera l'OTP va sostituito, contattare il supporto tecnico.";
 	    return messageException;
 	}
 }
