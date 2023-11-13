@@ -225,6 +225,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.getHandler().getProperties(getClass()), "Toolbar.download"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.downloadFatturaXML"));
+		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.downloadFatturaFirmata"));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.rifiuta"));
@@ -429,6 +431,39 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
         response.setDateHeader("Expires", 0);
         IOUtils.copyLarge(is, response.getOutputStream());
         response.getOutputStream().flush();
+	}
+
+
+	public void scaricaFatturaXML(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
+		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+		final StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
+		final StorageObject fattura = Optional.ofNullable(getModel())
+				.filter(DocumentoEleTestataBulk.class::isInstance)
+				.map(DocumentoEleTestataBulk.class::cast)
+				.map(DocumentoEleTestataBulk::getDocumentoEleTrasmissione)
+				.map(DocumentoEleTrasmissioneBulk::getCmisNodeRef)
+				.map(cmisNodeRef -> storeService.getStorageObjectBykey(cmisNodeRef))
+				.filter(storageObject -> Optional.ofNullable(storageObject).isPresent())
+				.map(fatturaFolder ->
+						storeService.getChildren(fatturaFolder.getKey()).stream()
+								.filter(storageObject -> !storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()
+								).contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()) &&
+										storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()
+										).contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA.value()))
+								.reduce((x, y) -> {
+									return Optional.ofNullable(x)
+											.filter(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()
+											).contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA.value()))
+											.orElse(y);
+								}).get()).orElseThrow(() -> new RuntimeException("Fattura non trovata!"));
+		final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
+		InputStream is = storeService.getResource(fattura);
+		response.setHeader("Content-disposition", "attachment; filename=" + fattura.getPropertyValue(StoragePropertyNames.NAME.value()));
+		response.setContentLength(fattura.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+		response.setContentType(fattura.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+		response.setDateHeader("Expires", 0);
+		IOUtils.copyLarge(is, response.getOutputStream());
+		response.getOutputStream().flush();
 	}
 
 	public String getNomeFileAllegato() {

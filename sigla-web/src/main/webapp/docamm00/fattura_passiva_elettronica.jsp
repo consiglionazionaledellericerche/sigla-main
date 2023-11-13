@@ -33,6 +33,10 @@ function doScaricaFatturaFirmata() {
 	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
 			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
 }
+function doScaricaFatturaXML() {
+	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaXML&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
+}
 function doScaricaEsito() {
 	doOpenWindow('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFile%>?methodName=scaricaEsito&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
 			'Notifica', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600');
