@@ -1,5 +1,17 @@
-## Release 6.5.48  -- _November 07, 2023_ 
+## Release 6.5.49  -- _November 13, 2023_ 
 **Changes**
+
+>**Added button for downloading xml invoice**
+>
+>[cdedbc4ae5abe7d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cdedbc4ae5abe7d) marco.spasiano *November 13, 2023*
+
+>**Handled pagoPA error**
+>
+>[8653bb8ce6ef500](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8653bb8ce6ef500) marco.spasiano *November 13, 2023*
+
+>**Validating information for digital signature**
+>
+>[35d679aa0cf7a33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/35d679aa0cf7a33) marco.spasiano *November 13, 2023*
 
 >**Validating information for digital signature**
 >
