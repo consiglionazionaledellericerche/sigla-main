@@ -1,8 +1,7 @@
 --------------------------------------------------------
 --  DDL for Package Body CNRMIG100
 --------------------------------------------------------
-
-CREATE OR REPLACE PACKAGE BODY "CNRMIG100" is
+create or replace PACKAGE BODY "CNRMIG100" is
 
 lPgExec number;
 
@@ -197,16 +196,13 @@ procedure ins_RIBALTAMENTO_LOG (aDest RIBALTAMENTO_LOG%rowtype) is
     );
 end;
 ----------------------------------------------------------------------------
-procedure init_ribaltamento_altro(aEs number, aMessage in out varchar2) is
+procedure init_ribaltamento_altro(aEs number, aPgEsec number,aMessage in out varchar2) is
 aEsPrec number;
-aPgEsec number;
 stato_fine char(1) := 'I';
 aNum number;
 begin
 
 	begin
-		aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_ALTRO,dsProcesso_altro,null,cgUtente,null,null);
-
 		startLogRibaltamento(aEs, aPgEsec, dsProcesso_altro , cgUtente);
 
 		if isRibaltamentoAltroEffettuato(aEs, aPgEsec) then
@@ -1022,6 +1018,13 @@ begin
 		ibmutl200.LOGERR(aPgEsec,aMessage,'','');
 	end;
 
+end;
+----------------------------------------------------------------------------
+procedure init_ribaltamento_altro(aEs number,aMessage in out varchar2) is
+ aPgEsec  number;
+begin
+	aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_ALTRO,dsProcesso_altro,null,cgUtente,null,null);
+    init_ribaltamento_altro(aEs, aPgEsec, aMessage);
 end;
 ----------------------------------------------------------------------------
 procedure init_ribaltamento_pdgp(aEs number, aPgEsec number, aMessage in out varchar2) is
@@ -3620,6 +3623,62 @@ begin
 
 end;
 
+procedure INSERIMENTO_PROGETTI(aEs number, pg_exec number) as
+aEsPrec         number;
+aMessage varchar2(500);
+aUser varchar2(20);
+BEGIN
+    aEsPrec := aEs - 1;
+     aUser:=IBMUTL200.getUserFromLog(pg_exec);
+
+    INSERT INTO PROGETTO_SIP
+        (ESERCIZIO, PG_PROGETTO, TIPO_FASE, ESERCIZIO_PROGETTO_PADRE, PG_PROGETTO_PADRE, TIPO_FASE_PROGETTO_PADRE, CD_PROGETTO, DS_PROGETTO,
+        CD_TIPO_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_RESPONSABILE_TERZO, DT_INIZIO, DT_FINE, DT_PROROGA, IMPORTO_PROGETTO, IMPORTO_DIVISA,
+        CD_DIVISA, NOTE, STATO, CONDIVISO, DURATA_PROGETTO, LIVELLO, CD_DIPARTIMENTO, FL_PIANO_TRIENNALE, FL_UTILIZZABILE,
+        CD_PROGRAMMA, CD_MISSIONE, PG_PROGETTO_OTHER_FIELD, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+        SELECT aEs, PG_PROGETTO, TIPO_FASE, aEs, PG_PROGETTO_PADRE, TIPO_FASE_PROGETTO_PADRE, CD_PROGETTO, DS_PROGETTO,
+        CD_TIPO_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_RESPONSABILE_TERZO, DT_INIZIO, DT_FINE, DT_PROROGA, IMPORTO_PROGETTO, IMPORTO_DIVISA,
+        CD_DIVISA, NOTE, STATO, CONDIVISO, DURATA_PROGETTO, LIVELLO, CD_DIPARTIMENTO, FL_PIANO_TRIENNALE, FL_UTILIZZABILE,
+        CD_PROGRAMMA, CD_MISSIONE, PG_PROGETTO_OTHER_FIELD, TRUNC(SYSDATE), aUser, TRUNC(SYSDATE), aUser, 1
+        FROM PROGETTO_SIP
+        WHERE ESERCIZIO = aEsPrec
+        AND LIVELLO = 1
+        AND (PG_PROGETTO, TIPO_FASE) NOT IN
+        (SELECT PG_PROGETTO, TIPO_FASE FROM PROGETTO_SIP WHERE ESERCIZIO = aEs);
+
+    INSERT INTO PROGETTO_SIP
+        (ESERCIZIO, PG_PROGETTO, TIPO_FASE, ESERCIZIO_PROGETTO_PADRE, PG_PROGETTO_PADRE, TIPO_FASE_PROGETTO_PADRE, CD_PROGETTO, DS_PROGETTO,
+        CD_TIPO_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_RESPONSABILE_TERZO, DT_INIZIO, DT_FINE, DT_PROROGA, IMPORTO_PROGETTO, IMPORTO_DIVISA,
+        CD_DIVISA, NOTE, STATO, CONDIVISO, DURATA_PROGETTO, LIVELLO, CD_DIPARTIMENTO, FL_PIANO_TRIENNALE, FL_UTILIZZABILE,
+        CD_PROGRAMMA, CD_MISSIONE, PG_PROGETTO_OTHER_FIELD, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+        SELECT aEs, PG_PROGETTO, TIPO_FASE, aEs, PG_PROGETTO_PADRE, TIPO_FASE_PROGETTO_PADRE, CD_PROGETTO, DS_PROGETTO,
+        CD_TIPO_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_RESPONSABILE_TERZO, DT_INIZIO, DT_FINE, DT_PROROGA, IMPORTO_PROGETTO, IMPORTO_DIVISA,
+        CD_DIVISA, NOTE, STATO, CONDIVISO, DURATA_PROGETTO, LIVELLO, CD_DIPARTIMENTO, FL_PIANO_TRIENNALE, FL_UTILIZZABILE,
+        CD_PROGRAMMA, CD_MISSIONE, PG_PROGETTO_OTHER_FIELD, TRUNC(SYSDATE), aUser, TRUNC(SYSDATE), aUser, 1
+        FROM PROGETTO_SIP
+        WHERE ESERCIZIO = aEsPrec
+        AND LIVELLO = 2
+        AND (PG_PROGETTO, TIPO_FASE) NOT IN
+        (SELECT PG_PROGETTO, TIPO_FASE FROM PROGETTO_SIP WHERE ESERCIZIO = aEs);
+
+    INSERT INTO PROGETTO_SIP
+        (ESERCIZIO, PG_PROGETTO, TIPO_FASE, ESERCIZIO_PROGETTO_PADRE, PG_PROGETTO_PADRE, TIPO_FASE_PROGETTO_PADRE, CD_PROGETTO, DS_PROGETTO,
+        CD_TIPO_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_RESPONSABILE_TERZO, DT_INIZIO, DT_FINE, DT_PROROGA, IMPORTO_PROGETTO, IMPORTO_DIVISA,
+        CD_DIVISA, NOTE, STATO, CONDIVISO, DURATA_PROGETTO, LIVELLO, CD_DIPARTIMENTO, FL_PIANO_TRIENNALE, FL_UTILIZZABILE,
+        CD_PROGRAMMA, CD_MISSIONE, PG_PROGETTO_OTHER_FIELD, DACR, UTCR, DUVA, UTUV, PG_VER_REC)
+        SELECT aEs, PG_PROGETTO, TIPO_FASE, aEs, PG_PROGETTO_PADRE, TIPO_FASE_PROGETTO_PADRE, CD_PROGETTO, DS_PROGETTO,
+        CD_TIPO_PROGETTO, CD_UNITA_ORGANIZZATIVA, CD_RESPONSABILE_TERZO, DT_INIZIO, DT_FINE, DT_PROROGA, IMPORTO_PROGETTO, IMPORTO_DIVISA,
+        CD_DIVISA, NOTE, STATO, CONDIVISO, DURATA_PROGETTO, LIVELLO, CD_DIPARTIMENTO, FL_PIANO_TRIENNALE, FL_UTILIZZABILE,
+        CD_PROGRAMMA, CD_MISSIONE, PG_PROGETTO_OTHER_FIELD, TRUNC(SYSDATE), aUser, TRUNC(SYSDATE), aUser, 1
+        FROM PROGETTO_SIP
+        WHERE ESERCIZIO = aEsPrec
+        AND LIVELLO = 3
+        AND (PG_PROGETTO, TIPO_FASE) NOT IN
+        (SELECT PG_PROGETTO, TIPO_FASE FROM PROGETTO_SIP WHERE ESERCIZIO = aEs);
+    aMessage := 'Aggiornamento  progetti. Inseriti ';
+    ibmutl200.LOGINF(pg_exec,aMessage,'','');
+end;
+
 procedure AGGIORMENTO_PROGETTI(aEs number, pg_exec number) as
    aTSNow date;
    aUser varchar2(20);
@@ -3755,4 +3814,26 @@ begin
     end if;
  end;
 ----------------------------------------------------------------------------
-end;
+
+procedure JOB_RIBALTAMENTO_ALTRO_PDGP(job number, pg_exec number, next_date date, aEs number) as
+    aTSNow date;
+    aUser varchar2(20);
+    aMessage varchar2(500);
+begin
+    aTSNow:=sysdate;
+    aUser:=IBMUTL200.getUserFromLog(pg_exec);
+    lPgExec := pg_exec;
+
+    -- Aggiorna le info di testata del log
+    IBMUTL210.logStartExecutionUpd(lPgExec, TI_LOG_RIBALTAMENTO_PDGP, job, 'Batch di ribaltamento inizio Anno. Start:'||to_char(aTSNow,'YYYY/MM/DD HH-MI-SS'));
+
+    if aEs = 0 then
+       ibmutl200.logErr(lPgExec,'Esercizio zero non gestito', '', '');
+    else
+       init_ribaltamento_altro( aEs,pg_exec,aMessage);
+       ibmutl200.logInf(pg_exec,aMessage, '', '');
+       ibmutl200.logInf(pg_exec,'Batch  di ribaltamento inizio Anno.', 'End:'||to_char(sysdate,'YYYY/MM/DD HH-MI-SS'), '');
+    end if;
+ end;
+ ----------------------------------------------------------------------------
+ end;

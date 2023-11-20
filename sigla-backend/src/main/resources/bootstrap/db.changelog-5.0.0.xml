@@ -5388,4 +5388,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <include file="bootstrap/add_column_tot_vincoli_on_tmp_stampa_situazione_progetto.xml"/>
     <include file="bootstrap/add_column_fl_offerta_presentata_on_ass_contratto_ditte.xml"/>
     <include file="bootstrap/add_column_fl_pagabile_on_obbligazione_scadenzario.xml"/>
+    <!-- Autore : CIRO SALVIO - Aggiunta possibilità di lanciare da applicazione la procedura per il ribaltamento di inizio anno -->
+    <include file="bootstrap/add_prc_ribaltamento_pdg_altro_schedulazione.xml"/>
 </databaseChangeLog>
