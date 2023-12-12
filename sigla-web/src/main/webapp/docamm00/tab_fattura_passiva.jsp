@@ -146,7 +146,7 @@
 		      		<% bp.getController().writeFormLabel(out,"ti_istituz_commerc");%>
 		      	</td>      	
 		     	<td colspan="10">
-		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",roOnAutoGen||roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
+		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
 		      	</td>
 			<% } else { %>
 		     	<td>
