@@ -1,5 +1,25 @@
-## Release 6.5.49  -- _November 13, 2023_ 
+## Release 6.5.50  -- _December 12, 2023_ 
 **Changes**
+
+>**Nel caso di nota di credito abilitata la possibilità di cambiare da istituzionale a commerciale**
+>
+>[cdb3250c102f2d2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cdb3250c102f2d2) marco.spasiano *December 12, 2023*
+
+>**Aggiornamento della versione di jada alla 7.0.46**
+>
+>[9f09b9e555cda52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9f09b9e555cda52) marco.spasiano *December 05, 2023*
+
+>**Fix Campi di ricerca obbligazione. I campi relativi alla gara in corso non erano selezionabili.**
+>
+>[327f94785ac77b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/327f94785ac77b4) raffaelepagano *December 04, 2023*
+
+>**aggiunta schedulazione ribaltamento apaterura nuovo anno**
+>
+>[17b1f93e44fcd0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17b1f93e44fcd0b) marco.spasiano *November 20, 2023*
+
+>**Java: DoS Vulnerability in JSON-JAVA #66**
+>
+>[b7752616af8d240](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b7752616af8d240) marco.spasiano *November 15, 2023*
 
 >**Added button for downloading xml invoice**
 >
