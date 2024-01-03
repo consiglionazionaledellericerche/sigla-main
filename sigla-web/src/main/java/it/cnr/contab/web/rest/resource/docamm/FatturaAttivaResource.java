@@ -156,6 +156,8 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
                 testata = new Fattura_attiva_IBulk();
             }
             testata.setToBeCreated();
+            testata.setUser(userContext.getUser());
+            testata.setUtcr(userContext.getUser());
             testata.setEsercizio(fattura.getEsercizio());
             testata.setTi_fattura(fattura.getTi_fattura());
             testata.setCd_cds_origine(fattura.getCd_cds_origine());
