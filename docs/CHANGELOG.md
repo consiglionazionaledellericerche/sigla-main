@@ -1,5 +1,13 @@
-## Release 6.5.50  -- _December 12, 2023_ 
+## Release 6.5.51  -- _January 08, 2024_ 
 **Changes**
+
+>**Piano di gestione preliminare aumentata l'altezza della griglia.**
+>
+>[321f071499dd01f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/321f071499dd01f) marco.spasiano *January 08, 2024*
+
+>**FIX Creazione fattura attiva da servizio REST**
+>
+>[3a4f75aeac61ab5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a4f75aeac61ab5) marco.spasiano *January 03, 2024*
 
 >**Nel caso di nota di credito abilitata la possibilità di cambiare da istituzionale a commerciale**
 >
