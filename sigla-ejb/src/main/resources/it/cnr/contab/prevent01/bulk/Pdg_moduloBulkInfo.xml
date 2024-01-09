@@ -453,6 +453,22 @@
 		enabledOnSearch="false"
 		/>
 
+	<freeSearchSet name="prg_liv2">
+		<findFieldProperty
+				name="cd_progetto_search"
+				property="progetto.cd_progetto"
+				inputType="TEXT"
+				enabledOnSearch="true"
+				enabledOnFreeSearch="true"
+				enabledOnEdit="true"
+				label="Progetto" />
+		<findFieldProperty
+				name="cd_progetto_padre"
+				label="Area Progettuale" />
+		<findFieldProperty
+				name="stato"
+				label="Stato attuale" />
+	</freeSearchSet>
 	<columnSet name="prg_liv2">
 		<columnFieldProperty
 			name="cd_progetto"

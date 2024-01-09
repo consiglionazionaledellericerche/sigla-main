@@ -33,6 +33,23 @@
 			columnSize="10"
 			fetchOnly="false" />
 	</defaultColumnMap>
+	<columnMap
+			name="CODICE_PROGETTO"
+			extends="default" >
+		<columnMapping
+				columnName="PROGETTO.CD_PROGETTO"
+				propertyName="progetto.cd_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+		<columnMapping
+				columnName="PROGETTOPADRE.CD_PROGETTO"
+				propertyName="progettopadre.cd_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+	</columnMap>
+
 	<persistentProperty
 		name="cdr"
 		partOfOid="true" />

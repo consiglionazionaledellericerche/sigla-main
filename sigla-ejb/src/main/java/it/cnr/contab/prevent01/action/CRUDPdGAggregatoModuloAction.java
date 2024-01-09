@@ -227,8 +227,19 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
         return context.findDefaultForward();
     }
 
-	public Forward doFilterCRUDMain_Dettagli(ActionContext context) {
-		return context.findDefaultForward();
+	public it.cnr.jada.action.Forward doFilterCRUDMain_Dettagli(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+		try {
+			CRUDPdGAggregatoModuloBP _tmp = (CRUDPdGAggregatoModuloBP) context.getBusinessProcess();
+			RicercaLiberaBP ricercaliberabp = (RicercaLiberaBP) context.createBusinessProcess("RicercaLibera");
+			ricercaliberabp.setFreeSearchSet("prg_liv2");
+			ricercaliberabp.setPrototype(new Pdg_moduloBulk());
+			context.addHookForward("filter", this, "doBringBackFilter");
+			HookForward hookforward = (HookForward) context.findForward("filter");
+			hookforward.addParameter("controller", _tmp.getCrudDettagli());
+			return context.addBusinessProcess(ricercaliberabp);
+		} catch (Exception exception) {
+			return handleException(context, exception);
+		}
 	}
 
 	public it.cnr.jada.action.Forward doCambiaStato(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {

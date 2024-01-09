@@ -23,12 +23,16 @@
  */
 package it.cnr.contab.prevent01.bp;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.RemoveException;
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -44,13 +48,17 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
+import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bp.CRUDRuoloBP;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.RuoloBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.UserInfo;
@@ -66,6 +74,7 @@ import it.cnr.jada.util.action.Selection;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
+import it.cnr.jada.util.jsp.TableCustomizer;
 
 /**
  * @author mincarnato
@@ -83,17 +92,43 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	private boolean isUtenteDirettore;
 	private Progetto_sipBulk progettoForUpdate;
 	private Integer annoFromPianoEconomico;
-	
+
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Pdg_moduloBulk.class, "dettagli", this, false) {
+		private CompoundFindClause compoundFindClausePdgModulo = null;
+
+		public void setFilter(ActionContext actioncontext, CompoundFindClause compoundfindclause)
+		{
+			compoundFindClausePdgModulo = compoundfindclause;
+			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP) actioncontext.getBusinessProcess();
+			CdrBulk cdrBulk = (CdrBulk) bp.getModel();
+			try {
+				cdrBulk.setDettagli(new BulkList(createComponentSession().find(
+						actioncontext.getUserContext(),
+						CdrBulk.class,
+						"findPdgModuloDettagli",
+						actioncontext.getUserContext(),
+						cdrBulk,
+						compoundfindclause)));
+				bp.setModel(actioncontext, cdrBulk);
+			} catch (BusinessProcessException e) {
+				handleException(e);
+			} catch (ComponentException e) {
+				handleException(e);
+			} catch (RemoteException e) {
+				handleException(e);
+			}
+			super.setFilter(actioncontext, compoundfindclause);
+		}
+
+		@Override
+		public boolean isFiltered() {
+			return Optional.ofNullable(compoundFindClausePdgModulo).isPresent();
+		}
 
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
 			validaCancellazionePdgModulo(context, (Pdg_moduloBulk)detail);
 		}
 
-		public boolean isFiltered()
-		{
-			return false;
-		}
 		public boolean isReadonly()
 		{
 			return super.isReadonly() && !isUtenteAbilitato() && !isCdrPdGPUtilizzabile();
@@ -105,6 +140,16 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		public boolean isShrinkable()
 		{
 			return super.isShrinkable() && isUtenteAbilitato() && isCdrPdGPUtilizzabile();	
+		}
+
+		@Override
+		public void writeHTMLTable(PageContext pagecontext, String s, boolean flag, boolean flag1, boolean flag2, String s1, String s2, boolean flag3, TableCustomizer tablecustomizer, List list) throws ServletException, IOException {
+			super.writeHTMLTable(pagecontext, s, flag, flag1, flag2, s1, s2, flag3, tablecustomizer, list);
+			if (HttpActionContext.isFromBootstrap(pagecontext)) {
+				pagecontext.getOut().print("<label class=\"ml-2 text-info font-italic h5\">");
+				pagecontext.getOut().print("Mostrati " + list.size() + " progetti.");
+				pagecontext.getOut().print("</label>");
+			}
 		}
 	};
 
