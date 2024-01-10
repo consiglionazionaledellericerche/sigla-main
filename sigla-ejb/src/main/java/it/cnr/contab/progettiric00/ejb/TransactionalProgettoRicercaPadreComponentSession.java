@@ -613,4 +613,37 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext para
 			}
 		}
 	}
+	public void aggiornaGECODipartimenti(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException {
+		try {
+			invoke("aggiornaGECODipartimenti", new Object[]{
+					param0});
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+
+	public void cancellaProgettoSIP(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException {
+		try {
+			invoke("cancellaProgettoSIP", new Object[]{
+					param0});
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
 }
