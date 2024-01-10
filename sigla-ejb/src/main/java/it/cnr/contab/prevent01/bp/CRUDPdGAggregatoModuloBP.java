@@ -108,7 +108,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 						"findPdgModuloDettagli",
 						actioncontext.getUserContext(),
 						cdrBulk,
-						compoundfindclause)));
+						Optional.ofNullable(compoundfindclause).orElse(new CompoundFindClause()))));
 				bp.setModel(actioncontext, cdrBulk);
 			} catch (BusinessProcessException e) {
 				handleException(e);
