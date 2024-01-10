@@ -1,3 +1,11 @@
+## Release 6.5.53  -- _January 10, 2024_ 
+**Changes**
+
+>**Aggiornamento anagrafica progetti, risoluzione anomalia batch notturno per transazione in rollback.**
+>
+>[162aaec54b80ef7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/162aaec54b80ef7) marco.spasiano *January 10, 2024*
+
+
 ## Release 6.5.52  -- _January 10, 2024_ 
 **Changes**
 
