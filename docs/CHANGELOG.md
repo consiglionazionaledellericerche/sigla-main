@@ -1,5 +1,13 @@
-## Release 6.5.51  -- _January 08, 2024_ 
+## Release 6.5.52  -- _January 10, 2024_ 
 **Changes**
+
+>**Piano di gestione preliminare aggiunta il filtro con la ricerca guidata sui progetti.**
+>
+>[8806ef143992d0d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8806ef143992d0d) marco.spasiano *January 10, 2024*
+
+>**Piano di gestione preliminare aggiunta il filtro con la ricerca guidata sui progetti.**
+>
+>[591ab129fda2212](https://github.com/consiglionazionaledellericerche/sigla-main/commit/591ab129fda2212) marco.spasiano *January 09, 2024*
 
 >**Piano di gestione preliminare aumentata l'altezza della griglia.**
 >
