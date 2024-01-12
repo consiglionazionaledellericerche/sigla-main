@@ -58,6 +58,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     final public static String MOTIVAZIONE_PROROGA = "PRG";
     final public static String MOTIVAZIONE_COMPENSI_INCENTIVANTI = "INC";
     final public static String MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA = "RAG";
+    final public static String MOTIVAZIONE_TRASFERIMENTO_FISCALE = "FIS";
     final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
     final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
     final public static String MOTIVAZIONE_VARIAZIONE_AUTOMATICA = "SAU";
@@ -88,7 +89,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA, "Personale - Proroga");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE, "Personale - Altre Spese");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_COMPENSI_INCENTIVANTI, "Personale - Compensi Incentivanti");
-        tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento a Ragioneria");
+        tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento alla Ragioneria");
+        tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_FISCALE, "Trasferimento Fiscale");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA, "Trasferimento ad Aree di Ricerca");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO, "Trasferimento In Deroga");
         tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE, "Trasferimento per Esigenze Finanziarie");
@@ -230,6 +232,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
         tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE, "Personale - Altri Trasferimenti");
 
         tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
+        tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_FISCALE, "Trasferimento Fiscale");
         tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE, "Trasferimento Esigenze Finanziarie");
 
         if (Optional.ofNullable(this.getCentro_responsabilita())
@@ -838,6 +841,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
     public boolean isMotivazioneTrasferimentoRagioneria() {
         return MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA.equals(this.getTiMotivazioneVariazione());
+    }
+
+    public boolean isMotivazioneTrasferimentoFiscale() {
+        return MOTIVAZIONE_TRASFERIMENTO_FISCALE.equals(this.getTiMotivazioneVariazione());
     }
 
     public boolean isMotivazioneTrasferimentoArea() {

@@ -524,6 +524,10 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA.equals(this.getTiMotivazioneVariazione());
 	}
 
+	public boolean isMotivazioneTrasferimentoFiscale() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_FISCALE.equals(this.getTiMotivazioneVariazione());
+	}
+
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
 	}
@@ -562,7 +566,8 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_COMPENSI_INCENTIVANTI,"Personale - Compensi Incentivanti");
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 
-		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento alla Ragioneria");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_FISCALE, "Trasferimento Fiscale");
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_ESIGENZE_FINANZIARIE, "Trasferimento Esigenze Finanziarie");
 
 		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())

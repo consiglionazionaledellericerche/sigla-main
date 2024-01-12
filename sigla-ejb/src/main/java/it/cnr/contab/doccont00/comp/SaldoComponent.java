@@ -123,6 +123,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		private boolean isUoArea;
 		private boolean isCdrPersonale;
 		private boolean isUoRagioneria;
+		private boolean isUoFiscale;
 		private boolean isVoceSpeciale;
 		private Elemento_voceBulk elementoVoce;
 		private String tipoDett;
@@ -152,6 +153,12 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		}
 		public boolean isUoRagioneria() { return isUoRagioneria; }
 		public void setUoRagioneria(boolean isUoRagioneria) { this.isUoRagioneria = isUoRagioneria; }
+		public boolean isUoFiscale() {
+			return isUoFiscale;
+		}
+		public void setUoFiscale(boolean uoFiscale) {
+			isUoFiscale = uoFiscale;
+		}
 		public boolean isVoceSpeciale() {
 			return isVoceSpeciale;
 		}
@@ -243,6 +250,12 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		}
 		public BigDecimal getImpSpesaNegativiRagioneria() {
 			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoRagioneria));
+		}
+		public BigDecimal getImpSpesaPositiviUoFiscale() {
+			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoFiscale));
+		}
+		public BigDecimal getImpSpesaNegativiUoFiscale() {
+			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoFiscale));
 		}
 		public BigDecimal getImpSpesaPositiviCdrPersonale() {
 			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isCdrPersonale));
@@ -2213,6 +2226,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
 
 				String uoRagioneria = ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoRagioneria(CNRUserContext.getEsercizio(userContext));
+				String uoFiscale = ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoFiscale(CNRUserContext.getEsercizio(userContext));
 
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(variazione);
@@ -2229,6 +2243,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					boolean isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
 
 					boolean isUoRagioneria = uoBulk.getCd_unita_organizzativa().equals(uoRagioneria);
+					boolean isUoFiscale = uoBulk.getCd_unita_organizzativa().equals(uoFiscale);
 
 					//recupero la GAE
 					WorkpackageBulk linea = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,
@@ -2304,6 +2319,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					dett.setCdrPersonale(isDettPersonale);
 					dett.setUoArea(isUoArea);
 					dett.setUoRagioneria(isUoRagioneria);
+					dett.setUoFiscale(isUoFiscale);
 					dett.setElementoVoce(varStanzResRiga.getElemento_voce());
 
 					if (Optional.ofNullable(cdNaturaReimpiego).map(el->el.equals(linea.getNatura().getCd_natura())).orElse(Boolean.FALSE))
@@ -2365,6 +2381,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
 
 				String uoRagioneria = ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoRagioneria(CNRUserContext.getEsercizio(userContext));
+				String uoFiscale = ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoFiscale(CNRUserContext.getEsercizio(userContext));
 
 				Ass_pdg_variazione_cdrHome ass_cdrHome = (Ass_pdg_variazione_cdrHome)getHome(userContext,Ass_pdg_variazione_cdrBulk.class);
 				java.util.Collection<Pdg_variazione_riga_gestBulk> dettagliVariazione = ass_cdrHome.findDettagli(variazione);
@@ -2381,6 +2398,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					boolean isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
 
 					boolean isUoRagioneria = uoBulk.getCd_unita_organizzativa().equals(uoRagioneria);
+					boolean isUoFiscale = uoBulk.getCd_unita_organizzativa().equals(uoFiscale);
 
 					//recupero la GAE
 					WorkpackageBulk linea = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,
@@ -2457,6 +2475,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					dett.setCdrPersonale(isDettPersonale);
 					dett.setUoArea(isUoArea);
 					dett.setUoRagioneria(isUoRagioneria);
+					dett.setUoFiscale(isUoFiscale);
 
 					dett.setElementoVoce(varStanzRiga.getElemento_voce());
 					
@@ -2525,6 +2544,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoRagioneria)
 					.orElse(Boolean.FALSE);
 
+			boolean isVariazioneFiscale = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::isMotivazioneTrasferimentoFiscale)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+							.filter(Var_stanz_resBulk.class::isInstance)
+							.map(Var_stanz_resBulk.class::cast)
+							.map(Var_stanz_resBulk::isMotivazioneTrasferimentoFiscale)
+							.orElse(Boolean.FALSE);
+
 			boolean isVariazioneTrasferimentoEsigenzeFinanziarie = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
@@ -2568,6 +2598,25 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							.map(CdrBulk::getUnita_padre)
 							.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
 							.map(uo->uo.equals(uoRagioneria))
+							.orElse(Boolean.FALSE);
+
+			String uoFiscale = ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoFiscale(CNRUserContext.getEsercizio(userContext));
+
+			boolean isCDRUoFiscale = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getCentro_responsabilita)
+					.map(CdrBulk::getUnita_padre)
+					.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+					.map(uo->uo.equals(uoFiscale))
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+							.filter(Var_stanz_resBulk.class::isInstance)
+							.map(Var_stanz_resBulk.class::cast)
+							.map(Var_stanz_resBulk::getCentroDiResponsabilita)
+							.map(CdrBulk::getUnita_padre)
+							.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+							.map(uo->uo.equals(uoFiscale))
 							.orElse(Boolean.FALSE);
 
 			boolean isCDRPersonaleVariazione = Optional.of(variazione)
@@ -2721,42 +2770,86 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						listCtrlPianoEco.stream()
 								.filter(el->el.getImpSpesaPositiviRagioneria().compareTo(BigDecimal.ZERO)>0)
 								.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti dalla Ragioneria' non è possibile "
+							throw new DetailedRuntimeException("Attenzione! In una variazione generata dall'Ufficio Ragioneria di tipo 'Trasferimento alla Ragioneria' non è possibile "
 									+ "assegnare fondi alla Ragioneria (UO: "+uoRagioneria+").");
 						});
 
 						listCtrlPianoEco.stream()
 								.filter(el->el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)>0)
 								.findFirst().orElseThrow(()->
-								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti dalla Ragioneria' è necessario "
+								new DetailedRuntimeException("Attenzione! In una variazione generata dall'Ufficio Ragioneria di tipo 'Trasferimento alla Ragioneria' è necessario "
 										+ "sottrarre fondi alla Ragioneria (UO: "+uoRagioneria+")."));
 
 						listCtrlPianoEco.stream()
 								.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiRagioneria()).compareTo(BigDecimal.ZERO)>0)
 								.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti dalla Ragioneria' non è possibile "
+							throw new DetailedRuntimeException("Attenzione! In una variazione generata dall'Ufficio Ragioneria di tipo 'Trasferimento alla Ragioneria' non è possibile "
 									+ "sottrarre fondi a CDR non qualificati come Ragioneria.");
 						});
 					} else {
 						listCtrlPianoEco.stream()
 								.filter(el->el.getImpSpesaPositiviRagioneria().compareTo(BigDecimal.ZERO)>0)
 								.findFirst().orElseThrow(()->
-								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti alla Ragioneria' è necessario "
+								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimento alla Ragioneria' è necessario "
 										+ "assegnare fondi alla Ragioneria (UO: "+uoRagioneria+")."));
 
 						listCtrlPianoEco.stream()
 								.filter(el->el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)>0)
 								.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti alla Ragioneria' non è possibile "
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimento alla Ragioneria' non è possibile "
 									+ "sottrarre fondi alla Ragioneria (UO: "+uoRagioneria+").");
 						});
 
 						listCtrlPianoEco.stream()
 								.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviRagioneria()).compareTo(BigDecimal.ZERO)>0)
 								.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti alla Ragioneria' non è possibile "
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimento alla Ragioneria' non è possibile "
 									+ "assegnare fondi a CDR non qualificati come Ragioneria.");
 						});
+					}
+				}
+
+				if (isVariazioneFiscale) {
+					if (isCDRUoFiscale) {
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviUoFiscale().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+									throw new DetailedRuntimeException("Attenzione! In una variazione generata dall'Ufficio Fiscale di tipo 'Trasferimento Fiscale' non è possibile "
+											+ "assegnare fondi all'Ufficio Fiscale (UO: "+uoFiscale+").");
+								});
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaNegativiUoFiscale().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().orElseThrow(()->
+										new DetailedRuntimeException("Attenzione! In una variazione generata dall'Ufficio Fiscale di tipo 'Trasferimento Fiscale' è necessario "
+												+ "sottrarre fondi all'Ufficio Fiscale' (UO: "+uoFiscale+")."));
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiUoFiscale()).compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+									throw new DetailedRuntimeException("Attenzione! In una variazione generata dall'Ufficio Fiscale di tipo 'Trasferimento Fiscale' non è possibile "
+											+ "sottrarre fondi a CDR non qualificati come Ufficio Fiscale.");
+								});
+					} else {
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviUoFiscale().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().orElseThrow(()->
+										new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimento Fiscale' è necessario "
+												+ "assegnare fondi all'Ufficio Fiscale' (UO: "+uoFiscale+")."));
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaNegativiUoFiscale().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+									throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimento Fiscale' non è possibile "
+											+ "sottrarre fondi all'Ufficio Fiscale (UO: "+uoFiscale+").");
+								});
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviUoFiscale()).compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+									throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimento Fiscale' non è possibile "
+											+ "assegnare fondi a CDR non qualificati come Ufficio Fiscale.");
+								});
 					}
 				}
 			} else if (!isCDRUoRagioneria) {
@@ -2766,8 +2859,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)!=0)
 						.findFirst().ifPresent(el->{
 					throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci sulla Ragioneria (Uo: "+uoRagioneria+") "
-							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
+							+ "in una variazione non effettuata per 'Trasferimento alla Ragioneria'.");
 				});
+			} else if (!isCDRUoFiscale) {
+				//Il controllo non vale se la variazione viene fatta dal CDR Fiscale
+				listCtrlPianoEco.stream()
+						.filter(el->el.getImpSpesaPositiviUoFiscale().compareTo(BigDecimal.ZERO)!=0 ||
+								el.getImpSpesaNegativiUoFiscale().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci sull'Ufficio Fiscale (Uo: "+uoFiscale+") "
+									+ "in una variazione non effettuata per 'Trasferimento Fiscale'.");
+						});
 			}
 
 			if (isVariazioneTrasferimentoEsigenzeFinanziarie) {
@@ -2920,10 +3022,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 				/*
 				  20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
-				     dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria o per esigenze finanziarie)
+				     dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria o Fiscale o per esigenze finanziarie)
 			  	  10/06/2022 - regola non valida per variazioni di tipo Trasferimento Finanziario - documento analisi cda
 				 */
-				if (!isVariazioneArea && !isVariazioneRagioneria && !isVariazioneTrasferimentoEsigenzeFinanziarie)
+				if (!isVariazioneArea && !isVariazioneRagioneria && !isVariazioneFiscale && !isVariazioneTrasferimentoEsigenzeFinanziarie)
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
@@ -2938,11 +3040,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		
 				/*
 				  30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto
-				  	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
+				  	  (regola non valida per progetti di Aree, CdrPersonale, Ragioneria e Fiscale)
 				  	  24/02/2022 - regola valida anche per progetti di Aree su indicazione di Sabrina Miceli
   				  	  10/06/2022 - regola non valida per variazioni di tipo Trasferimento Finanziario - documento analisi cda
 				 */
-				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk) && !isVariazioneTrasferimentoEsigenzeFinanziarie) {
+				if (!isVariazioneArea && !isVariazioneRagioneria && !isVariazioneFiscale && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk) && !isVariazioneTrasferimentoEsigenzeFinanziarie) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
@@ -3005,9 +3107,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				/**
 				 * 40. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stessa area
-				 *    (regola non valida per Trasferimenti a Ragioneria)
+				 *    (regola non valida per Trasferimenti a Ragioneria e Fiscale)
 				 *    08/03/2022 Controllo eliminato su richiesta di Sabrina Miceli (Segnalazione Helpdesk 107720)
-				if (!isVariazioneRagioneria) {
+				if (!isVariazioneRagioneria && !isVariazioneFiscale) {
 					listCtrlPianoEco.stream()
 							.filter(el -> !el.isScaduto(dataChiusura))
 							.filter(el -> el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO) > 0)
@@ -3052,6 +3154,21 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviRagioneria()) + ")");});
 
+				/**
+				 * 50.1 se un progetto è aperto e vengono sottratte somme al CDR Fiscale queste devono essere riassegnate
+				 *    allo stesso progetto e alla stesso CDR
+				 */
+				listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.filter(el->el.getImpSpesaNegativiUoFiscale().compareTo(BigDecimal.ZERO)>0)
+						.filter(el->el.getImpSpesaNegativiUoFiscale().compareTo(el.getImpSpesaPositiviUoFiscale())>0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dal CDR Fiscale fondi dal progetto "+
+									el.getProgetto().getCd_progetto()+" (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiUoFiscale()) +
+									") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviUoFiscale()) + ")");});
+
 				//CONTROLLI SUL TOTALE PROGETTI
 				BigDecimal impNegativiPrgScaduti = listCtrlPianoEco.stream()
 						.filter(el->el.isScaduto(dataChiusura))
@@ -3061,13 +3178,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				
 				{
 					/**
-					 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria
+					 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria o alla Uo Fiscale
 					 */
 					BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.map(CtrlPianoEco::getDett)
 							.flatMap(List::stream)
-							.filter(el->el.isNaturaReimpiego()||el.isCdrPersonale()||el.isUoRagioneria())
+							.filter(el->el.isNaturaReimpiego()||el.isCdrPersonale()||el.isUoRagioneria()||el.isUoFiscale())
 							.filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
 							.map(CtrlPianoEcoDett::getImporto)
 							.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
@@ -3076,7 +3193,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						throw new ApplicationException("Attenzione! Risultano prelievi da progetti scaduti"
 								+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)
 								+ " che non risultano totalmente coperti da variazioni a favore"
-								+ " di GAE di natura 6 - 'Reimpiego di risorse' o del CDR Personale o del CDR Ragioneria ("
+								+ " di GAE di natura 6 - 'Reimpiego di risorse' o del CDR Personale o del CDR Ragioneria o del CDR Fiscale ("
 								+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)+").");
 				}
 				{
@@ -3122,6 +3239,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.filter(el->!el.isCdrPersonale())
 						.filter(el->!el.isVoceSpeciale())
 						.filter(el->!el.isUoRagioneria())
+						.filter(el->!el.isUoFiscale())
 						.filter(el->el.isNaturaFonteEsterna())
 						.map(CtrlPianoEcoDett::getImporto)
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
@@ -3129,7 +3247,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				{
 					/**
 					 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o
-					 *    al CDR Personale o alla UO Ragioneria su GAE Natura 6 se variazione multiprogetto o su GAE natura FES se variazione monoprogetto
+					 *    al CDR Personale o alla UO Ragioneria o alla UO Fiscale su GAE Natura 6 se variazione multiprogetto o su GAE natura FES se variazione monoprogetto
 					 */
 					if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
 						//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
@@ -3138,10 +3256,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.filter(el->!el.isScaduto(dataChiusura))
 								.map(CtrlPianoEco::getDett)
 								.flatMap(List::stream)
-								.filter(el->el.isUoArea()||el.isCdrPersonale()||el.isUoRagioneria())
+								.filter(el->el.isUoArea()||el.isCdrPersonale()||el.isUoRagioneria()||el.isUoFiscale())
 								.filter(el->el.isUoArea()?el.isNaturaFonteEsterna():Boolean.TRUE)
 								.filter(el->{
-									if (el.isUoRagioneria()) {
+									if (el.isUoRagioneria()||el.isUoFiscale()) {
 										if (!isVariazioneMonoProgetto)
 											return el.isNaturaReimpiego();
 										else
@@ -3157,7 +3275,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
 									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
 									+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
-									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE "
+									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria o Uo Fiscale su GAE "
 									+ (isVariazioneMonoProgetto?"Fonte Esterna":"di natura 6") + " ("
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviCashFund.abs())+").");						
 					}
@@ -3188,9 +3306,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					 * 		a. un progetto scaduto
 					 * 		b. dalla voce speciale (11048) sullo stesso progetto
 					 * 		c. da una GAE di natura 6 sullo stesso progetto
-					 * 	(regola non valida per trasferimenti ad Aree)
+					 * 	(regola non valida per trasferimenti ad Aree, Ragioneria e Fiscale)
 					 */
-					if (!isVariazioneArea && !isVariazioneRagioneria) {
+					if (!isVariazioneArea && !isVariazioneRagioneria && !isVariazioneFiscale) {
 						if (!isVariazioneTrasferimentoEsigenzeFinanziarie) {
 							listCtrlPianoEco.stream()
 									.filter(el -> !el.isScaduto(dataChiusura))
@@ -3225,7 +3343,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						}
 					} else {
 						/**
-						 * 90. in una variazione di area/ragioneria se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree o Ragioneria di uguale Natura
+						 * 90. in una variazione di area/ragioneria/fiscale se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree o Ragioneria o Fiscale di uguale Natura
 						 */
 						BigDecimal impSaldoNaturaReimpiego = listCtrlPianoEco.stream()
 								.map(CtrlPianoEco::getDett)
@@ -3236,23 +3354,23 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
 						if (impSaldoNaturaReimpiego.compareTo(BigDecimal.ZERO)<0) {
-							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree/Ragioneria di uguale natura
-							BigDecimal impSaldoNaturaReimpiegoAreaRagioneria = listCtrlPianoEco.stream()
+							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree/Ragioneria/Fiscale di uguale natura
+							BigDecimal impSaldoNaturaReimpiegoAreaRagioneriaFiscale = listCtrlPianoEco.stream()
 									.map(CtrlPianoEco::getDett)
 									.flatMap(List::stream)
-									.filter(el->isVariazioneArea?el.isUoArea():el.isUoRagioneria())
+									.filter(el->isVariazioneArea?el.isUoArea():(isVariazioneRagioneria?el.isUoRagioneria():el.isUoFiscale()))
 									.filter(el->el.isNaturaReimpiego())
 									.map(CtrlPianoEcoDett::getImporto)
 									.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
-							if (impSaldoNaturaReimpiegoAreaRagioneria.compareTo(BigDecimal.ZERO)<0 ||
-									impSaldoNaturaReimpiegoAreaRagioneria.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
+							if (impSaldoNaturaReimpiegoAreaRagioneriaFiscale.compareTo(BigDecimal.ZERO)<0 ||
+									impSaldoNaturaReimpiegoAreaRagioneriaFiscale.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
 								throw new ApplicationException("Attenzione! Risultano prelievi"
 										+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiego.abs())
 										+ " su GAE di natura 6 - 'Reimpiego di risorse' che non risultano totalmente coperti da variazioni a favore "
-										+ (isVariazioneArea?"di Aree":"della Ragioneria")
+										+ (isVariazioneArea?"di Aree":(isVariazioneRagioneria?"della Ragioneria":"dell'Ufficio Fiscale"))
 										+ " su GAE di natura 6 - 'Reimpiego di risorse' ("
-										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoAreaRagioneria.abs())+").");
+										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoAreaRagioneriaFiscale.abs())+").");
 						}
 					}
 				}
