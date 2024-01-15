@@ -23,9 +23,13 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.jsp.TableCustomizer;
 import it.cnr.jada.util.upload.UploadedFile;
 
-public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends SimpleDetailCRUDController {
+import javax.servlet.jsp.JspWriter;
+import java.io.IOException;
+
+public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends SimpleDetailCRUDController implements TableCustomizer {
 	private static final long serialVersionUID = 1L;
 	private boolean shrinkable = true;
 	private boolean growable = true;
@@ -80,4 +84,33 @@ public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends Simple
 		this.readonlyOnEdit = readonlyOnEdit;
 	}
 
+	@Override
+	public String getRowStyle(Object obj) {
+		return null;
+	}
+
+	@Override
+	public String getRowCSSClass(Object obj, boolean even) {
+		return null;
+	}
+
+	@Override
+	public boolean isRowEnabled(Object obj) {
+		return true;
+	}
+
+	@Override
+	public boolean isRowReadonly(Object obj) {
+		return false;
+	}
+
+	@Override
+	public String getTableClass() {
+		return null;
+	}
+
+	@Override
+	public void writeTfoot(JspWriter jspwriter) throws IOException {
+
+	}
 }

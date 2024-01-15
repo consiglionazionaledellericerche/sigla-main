@@ -68,6 +68,23 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
         }
     }
 
+    public boolean controllaAccessoSenzaUO(it.cnr.jada.UserContext param0, java.lang.String param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
+        try {
+            return ((Boolean) invoke("controllaAccessoSenzaUO", new Object[]{
+                    param0,
+                    param1})).booleanValue();
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
     public it.cnr.contab.utenze00.bulk.Albero_mainBulk generaAlberoPerUtente(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3, short param4) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
             return (it.cnr.contab.utenze00.bulk.Albero_mainBulk) invoke("generaAlberoPerUtente", new Object[]{

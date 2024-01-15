@@ -69,8 +69,12 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 
         public OggettoBulk removeDetail(int i) {
             AllegatoGenericoBulk all = (AllegatoGenericoBulk) getDetails().get(i);
-            if (all.isNew() || isPossibileCancellazione(all))
+            if (all.isNew() || isPossibileCancellazione(all)) {
+                if (isDaCancellareLogicamente(all)) {
+                    return cancellaLogicamente(all);
+                }
                 return super.removeDetail(i);
+            }
             return null;
         }
 
@@ -79,7 +83,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             super.validate(actioncontext, oggettobulk);
             validateChildDetail(actioncontext, oggettobulk);
         }
+
+        @Override
+        public String getRowStyle(Object obj) {
+            AllegatoGenericoBulk allegatoGenericoBulk = (AllegatoGenericoBulk) obj;
+            return getRowDetailStyle(allegatoGenericoBulk);
+        }
     };
+
+    protected String getRowDetailStyle(AllegatoGenericoBulk allegatoGenericoBulk) {
+        return null;
+    }
 
     public AllegatiCRUDBP() {
         super();
@@ -93,10 +107,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 
     protected abstract Class<T> getAllegatoClass();
 
+    protected OggettoBulk cancellaLogicamente(AllegatoGenericoBulk allegato) {
+        allegato.setToBeUpdated();
+        return allegato;
+    }
     protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
-        return true;
+        return false;
     }
 
+    protected Boolean isDaCancellareLogicamente(AllegatoGenericoBulk allegato) {
+        return false;
+    }
     protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
         return true;
     }
