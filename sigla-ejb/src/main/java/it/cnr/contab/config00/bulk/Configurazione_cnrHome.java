@@ -192,6 +192,22 @@ public class Configurazione_cnrHome extends BulkHome {
                 .orElse(null);
     }
 
+    /**
+     * Ritorna il codice uo dell'Ufficio Fiscale
+     * <p><b>chiave_primaria: UO_SPECIALE</b>
+     * <p><b>chiave_secondaria: UO_RAGIONERIA</b>
+     *
+     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @return String - il codice uo della Ragioneria
+     * @throws PersistencyException
+     */
+    public String getUoFiscale(Integer esercizio) throws PersistencyException {
+        return Optional.ofNullable(
+                        this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA))
+                .map(Configurazione_cnrBulk::getVal02)
+                .orElse(null);
+    }
+
     public String getContoCorrenteEnte(Integer esercizio) throws PersistencyException {
         return Optional.ofNullable(
                 this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CONTO_CORRENTE_SPECIALE, Configurazione_cnrBulk.SK_ENTE))
