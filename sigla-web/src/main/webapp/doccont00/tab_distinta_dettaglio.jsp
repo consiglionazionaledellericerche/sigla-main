@@ -19,7 +19,7 @@ function doVisualizzaSingoloDocumento(esercizio, cds , uo, numero_documento, tip
 	if (bp.isElencoConUo())
 		setCol = "elencoConUo";
 %>
-    <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","60vh", true); %>
+    <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","auto;max-height:60vh", true); %>
     <table class="card p-2 mt-2 mb-2">
      <tr>
         <td><big class="text-primary mr-2">Totale Mandati</big></td>

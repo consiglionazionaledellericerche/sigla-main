@@ -59,7 +59,7 @@
         false,
         false,
         "100%",
-        "60vh",
+        "auto;max-height:60vh",
         true); %>
 
 	<table class="Group card p-2" style="width:100%">
