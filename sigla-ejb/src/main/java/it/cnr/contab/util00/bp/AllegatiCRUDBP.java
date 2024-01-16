@@ -112,7 +112,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
         return allegato;
     }
     protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
-        return false;
+        return true;
     }
 
     protected Boolean isDaCancellareLogicamente(AllegatoGenericoBulk allegato) {

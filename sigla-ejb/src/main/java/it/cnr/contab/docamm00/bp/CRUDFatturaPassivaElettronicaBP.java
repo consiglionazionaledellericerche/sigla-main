@@ -949,7 +949,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 
     @Override
     protected Boolean isDaCancellareLogicamente(AllegatoGenericoBulk allegato) {
-        if (isAdminFatturaElettronica &&
+        if (isComunicazioneNonRegistabilita(allegato) && isAdminFatturaElettronica &&
                 Optional.ofNullable(allegato)
                         .filter(AllegatoFatturaBulk.class::isInstance)
                         .map(AllegatoFatturaBulk.class::cast)
@@ -963,14 +963,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 
     @Override
     protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
-        if (isComunicazioneNonRegistabilita(allegato) &&
-                Optional.ofNullable(getModel())
-                        .filter(DocumentoEleTestataBulk.class::isInstance)
-                        .map(DocumentoEleTestataBulk.class::cast)
-                        .map(DocumentoEleTestataBulk::getFlIrregistrabile)
-                        .map(s -> s.equalsIgnoreCase("S"))
-                        .orElse(Boolean.TRUE)
-        ) {
+        if (isComunicazioneNonRegistabilita(allegato)) {
 			if (isAdminFatturaElettronica &&
                     Optional.ofNullable(allegato)
                             .filter(AllegatoFatturaBulk.class::isInstance)
