@@ -942,7 +942,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
         allegatoFatturaBulk.setDataCancellazione(EJBCommonServices.getServerTimestamp());
         DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
         documentoEleTestata.setFlIrregistrabile("N");
-        documentoEleTestata.setStatoDocumento(StatoDocumentoEleEnum.COMPLETO.name());
+        documentoEleTestata.setStatoDocumento(StatoDocumentoEleEnum.AGGIORNATO.name());
         documentoEleTestata.setToBeUpdated();
         return super.cancellaLogicamente(allegato);
     }
