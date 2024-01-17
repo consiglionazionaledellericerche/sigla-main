@@ -1,5 +1,33 @@
-## Release 6.5.53  -- _January 10, 2024_ 
+## Release 6.5.57  -- _January 17, 2024_ 
 **Changes**
+
+>**Aggiunta la possibilità tramite l'assegnazione di un nuovo accesso "AMMFATTURDOCELADMIN" di cancellare logicamente la comunicazione di non registrabilità di una fattura elettronica**
+>
+>[f9f7438fc576d26](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f7438fc576d26) marco.spasiano *January 16, 2024*
+
+
+## Release 6.5.56  -- _January 16, 2024_ 
+**Changes**
+
+>**Aggiunta la possibilità tramite l'assegnazione di un nuovo accesso "AMMFATTURDOCELADMIN" di cancellare logicamente la comunicazione di non registrabilità di una fattura elettronica**
+>
+>[607d189b7819c9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/607d189b7819c9c) marco.spasiano *January 16, 2024*
+
+>**Aggiunta la possibilità tramite l'assegnazione di un nuovo accesso "AMMFATTURDOCELADMIN" di cancellare logicamente la comunicazione di non registrabilità di una fattura elettronica**
+>
+>[1107779e6592b0a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1107779e6592b0a) marco.spasiano *January 15, 2024*
+
+>**FIX Html Table Height**
+>
+>[221c801261e646a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/221c801261e646a) marco.spasiano *January 15, 2024*
+
+>**Variazioni: aggunta e gestita la tipologia 'Trasferimento Fiscale'**
+>
+>[d88fa3da3d835fc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d88fa3da3d835fc) raffaelepagano *January 12, 2024*
+
+>**Upgrade version of ace client**
+>
+>[c84f93a518df5c3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c84f93a518df5c3) marco.spasiano *January 10, 2024*
 
 >**Aggiornamento anagrafica progetti, risoluzione anomalia batch notturno per transazione in rollback.**
 >
