@@ -821,15 +821,15 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Mandato man = new Mandato();
             List list = componentDistinta.findDocumentiFlusso(userContext, bulk);
             Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
-                    .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
-                    .orElse(Boolean.FALSE);
+                    .filter(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .isPresent();
             if (bulk.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO)) {
                 man.setTipoOperazione(DistintaCassiereComponent.ANNULLO);
             } else {
                 if (isVariazioneDefinitiva) {
-                    man.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
-                } else {
                     man.setTipoOperazione(DistintaCassiereComponent.VARIAZIONE);
+                } else {
+                    man.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
                 }
             }
             GregorianCalendar gcdi = new GregorianCalendar();
