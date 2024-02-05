@@ -1,3 +1,11 @@
+## Release 6.5.58  -- _February 01, 2024_ 
+**Changes**
+
+>**Gestito errore in caso di variazione del CUP di un mandato pagato.**
+>
+>[a208bb2c9965736](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a208bb2c9965736) marco.spasiano *February 01, 2024*
+
+
 ## Release 6.5.57  -- _January 17, 2024_ 
 **Changes**
 
