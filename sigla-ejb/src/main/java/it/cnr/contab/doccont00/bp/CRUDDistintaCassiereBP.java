@@ -170,19 +170,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             getClass()), "CRUDToolbar.inviaPEC"));
             return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
         } else {
-            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isFlusso() && !isAnnulli()) {
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.stampaProv"));
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.firma"));
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.downloadFirmato"));
-                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-            }
-            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && (isFlusso() || isAnnulli())) {
                 newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
                         it.cnr.jada.util.Config.getHandler().getProperties(
                                 getClass()), "CRUDToolbar.stampaProv"));
@@ -199,17 +186,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         it.cnr.jada.util.Config.getHandler().getProperties(
                                 getClass()), "CRUDToolbar.downloadFirmato"));
                 return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-            } else if (this.isFlusso()) {
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.flusso"));
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.download"));
-                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-            } else {
-                return toolbar;
-            }
         }
 
     }
@@ -1830,7 +1806,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .map(Distinta_cassiereBulk.class::cast)
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
                     .isPresent() || isViewing() || isDirty();
-        return !(isFlusso() || isAnnulli());
+        return Boolean.FALSE;
     }
 
     public boolean isSalvaDefButtonEnabled() {
