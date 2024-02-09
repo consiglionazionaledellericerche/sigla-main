@@ -1,5 +1,17 @@
-## Release 6.5.58  -- _February 01, 2024_ 
+## Release 6.5.60  -- _February 06, 2024_ 
 **Changes**
+
+>**Gestione della distinta cassiere in caso che SIOPE+ non sia attivo.**
+>
+>[30fbc945c09d72e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30fbc945c09d72e) marco.spasiano *February 05, 2024*
+
+
+## Release 6.5.59  -- _February 05, 2024_ 
+**Changes**
+
+>**Gestione della distinta cassiere in caso che SIOPE+ non sia attivo.**
+>
+>[f38c74fe6ddb08f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f38c74fe6ddb08f) marco.spasiano *February 05, 2024*
 
 >**Gestito errore in caso di variazione del CUP di un mandato pagato.**
 >
