@@ -17,141 +17,223 @@
   -->
 
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
-	<fieldProperty
-		name="aspectName"
-		property="aspectName"
-		inputType="SELECT"
-		keysProperty="aspectNamesKeys"
-		inputSize="40"
-		nullable="false"
-		label="Tipologia" />
-	<fieldProperty
-		name="utente"
-		inputType="TEXT"
-		property="utenteSIGLA"
-		label="Utente"/>
-	<fieldProperty
-		name="data"
-		inputType="TEXT"
-		property="lastModificationDate"
-		formatName="timestamp"
-		label="Data"/>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+    <fieldProperty
+            name="aspectName"
+            property="aspectName"
+            inputType="SELECT"
+            keysProperty="aspectNamesKeys"
+            command="doDefault"
+            inputSize="40"
+            nullable="false"
+            label="Tipologia"/>
+    <fieldProperty
+            name="utente"
+            inputType="TEXT"
+            property="utenteSIGLA"
+            label="Utente"/>
+    <fieldProperty
+            name="data"
+            inputType="TEXT"
+            property="lastModificationDate"
+            formatName="timestamp"
+            label="Data"/>
+    <fieldProperty
+            name="dataProtocollo"
+            property="dataProtocollo"
+            maxLength="10"
+            inputSize="10"
+            formatName="date_short"
+            inputType="TEXT"
+            nullable="false"
+            label="Data Protocollo"/>
+    <fieldProperty
+            name="numProtocollo"
+            property="numProtocollo"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            nullable="false"
+            label="Numero Protocollo"/>
 
-	<form name="readonly">
-		<formFieldProperty
-				enabledOnEdit="false"
-				name="aspectName" />
-		<formFieldProperty
-				name="nome" />
-		<formFieldProperty
-				name="descrizione"
-				enabledOnEdit="false" />
-		<formFieldProperty
-				name="titolo"
-				enabledOnEdit="false" />
-		<formFieldProperty
-				name="attivaFile" />
-	</form>
+    <form name="readonly">
+        <formFieldProperty
+                enabledOnEdit="false"
+                name="aspectName"/>
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="descrizione"
+                enabledOnEdit="false"/>
+        <formFieldProperty
+                name="titolo"
+                enabledOnEdit="false"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
 
-	<form name="default">
-		<formFieldProperty
-			name="aspectName" />
-		<formFieldProperty
-			name="nome" />
-		<formFieldProperty
-			name="descrizione" />
-		<formFieldProperty
-			name="titolo" />
-		<formFieldProperty
-			name="file" />
-		<formFieldProperty
-			name="attivaFile" />	    	    
-	</form>	
-	
-	<form name="decorrenzaTermini">
-		<formFieldProperty
-			name="aspectName"
-			keysProperty="aspectNamesDecorrenzaTerminiKeys" />
-		<formFieldProperty
-			name="nome" />
-		<formFieldProperty
-			name="descrizione" />
-		<formFieldProperty
-			name="titolo" />
-		<formFieldProperty
-			name="file" />
-		<formFieldProperty
-			name="attivaFile" />	    	    
-	</form>	
-			
-	<form name="fatturaAttiva">
-		<formFieldProperty
-			name="nome" />
-		<formFieldProperty
-			name="descrizione" />
-		<formFieldProperty
-			name="titolo" />
-		<formFieldProperty
-			name="file" />
-		<formFieldProperty
-			name="attivaFile" />	    	    
-	</form>	
-	
-	<columnSet name="decorrenzaTermini">
-		<columnFieldProperty
-			name="aspectName"
-			keysProperty="aspectNamesDecorrenzaTerminiKeys" />
-		<columnFieldProperty
-			name="nome" />
-		<columnFieldProperty
-			name="descrizione" />
-		<columnFieldProperty
-			name="titolo" />
-		<columnFieldProperty
-			name="utente"/>
-		<columnFieldProperty
-			name="data"/>
-	</columnSet>	
-	
-	<columnSet name="default">
-		<columnFieldProperty
-			name="aspectName"/>
-		<columnFieldProperty
-			name="nome" />
-		<columnFieldProperty
-			name="descrizione" />
-		<columnFieldProperty
-			name="titolo" />
-		<columnFieldProperty
-			name="utente"/>
-		<columnFieldProperty
-			name="data"/>
-	</columnSet>
+    <form name="default">
+        <formFieldProperty
+                name="aspectName"/>
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="descrizione"/>
+        <formFieldProperty
+                name="titolo"/>
+        <formFieldProperty
+                name="dataProtocollo"/>
+        <formFieldProperty
+                name="numProtocollo"/>
+        <formFieldProperty
+                name="file"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
 
-	<columnSet name="readonly">
-		<columnFieldProperty
-				name="aspectName"/>
-		<columnFieldProperty
-				name="nome" />
-		<columnFieldProperty
-				name="descrizione" />
-		<columnFieldProperty
-				name="titolo" />
-		<columnFieldProperty
-				name="utente"/>
-		<columnFieldProperty
-				name="data"/>
-	</columnSet>
+    <form name="base">
+        <formFieldProperty
+                name="aspectName"/>
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="descrizione"/>
+        <formFieldProperty
+                name="titolo"/>
+        <formFieldProperty
+                name="file"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
 
-	<columnSet name="fatturaAttiva">
-		<columnFieldProperty
-			name="nome" />
-		<columnFieldProperty
-			name="descrizione" />
-		<columnFieldProperty
-			name="titolo" />
-	</columnSet>	
+    <form name="decorrenzaTermini">
+        <formFieldProperty
+                name="aspectName"
+                keysProperty="aspectNamesDecorrenzaTerminiKeys"/>
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="descrizione"/>
+        <formFieldProperty
+                name="titolo"/>
+        <formFieldProperty
+                name="file"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
+
+    <form name="fatturaAttiva">
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="descrizione"/>
+        <formFieldProperty
+                name="titolo"/>
+        <formFieldProperty
+                name="file"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
+
+    <form name="protocollo">
+        <formFieldProperty
+                name="aspectName"/>
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="dataProtocollo"/>
+        <formFieldProperty
+                name="numProtocollo"/>
+        <formFieldProperty
+                name="file"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
+
+    <columnSet name="protocollo">
+        <columnFieldProperty
+                name="aspectName"/>
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="dataProtocollo"/>
+        <columnFieldProperty
+                name="numProtocollo"/>
+        <columnFieldProperty
+                name="utente"/>
+        <columnFieldProperty
+                name="data"/>
+    </columnSet>
+
+    <columnSet name="decorrenzaTermini">
+        <columnFieldProperty
+                name="aspectName"
+                keysProperty="aspectNamesDecorrenzaTerminiKeys"/>
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="descrizione"/>
+        <columnFieldProperty
+                name="titolo"/>
+        <columnFieldProperty
+                name="utente"/>
+        <columnFieldProperty
+                name="data"/>
+    </columnSet>
+
+    <columnSet name="default">
+        <columnFieldProperty
+                name="aspectName"/>
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="descrizione"/>
+        <columnFieldProperty
+                name="titolo"/>
+        <columnFieldProperty
+                name="utente"/>
+        <columnFieldProperty
+                name="data"/>
+    </columnSet>
+
+    <columnSet name="base">
+        <columnFieldProperty
+                name="aspectName"/>
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="descrizione"/>
+        <columnFieldProperty
+                name="titolo"/>
+        <columnFieldProperty
+                name="utente"/>
+        <columnFieldProperty
+                name="data"/>
+    </columnSet>
+
+    <columnSet name="readonly">
+        <columnFieldProperty
+                name="aspectName"/>
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="descrizione"/>
+        <columnFieldProperty
+                name="titolo"/>
+        <columnFieldProperty
+                name="utente"/>
+        <columnFieldProperty
+                name="data"/>
+    </columnSet>
+
+    <columnSet name="fatturaAttiva">
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="descrizione"/>
+        <columnFieldProperty
+                name="titolo"/>
+    </columnSet>
 </bulkInfo>

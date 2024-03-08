@@ -151,7 +151,7 @@
 
   <businessProcess
       name="CRUDConfigParametriCdsBP" className="it.cnr.contab.config00.bp.CRUDConfigParametriCdsBP">
-    <forward name="default" path="/util/form.jsp"/>
+    <forward name="default" path="/config00/parametri_cds.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.bulk.Parametri_cdsBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Parametri_cdsComponentSession" />								
 		<init-param name="defaultAction" value="CRUDConfigParametriCdsAction" />

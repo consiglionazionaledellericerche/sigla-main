@@ -244,6 +244,13 @@
 			propertyName="abil_progetto_strorg"
 			sqlTypeName="VARCHAR"
 			columnSize="3"/>
+		<columnMapping
+			columnName="FL_OBBLIG_LIQ_FATT"
+			propertyName="fl_obblig_liq_fatt"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="blocco_impegni_cdr_gae" />	
@@ -317,5 +324,7 @@
 		name="fl_ribalta_determina_obblig" />
 	<persistentProperty
 		name="abil_progetto_strorg" />
+	<persistentProperty
+		name="fl_obblig_liq_fatt" />
 
 </SQLPersistentInfo>

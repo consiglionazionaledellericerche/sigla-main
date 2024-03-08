@@ -1006,6 +1006,11 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
         Optional.ofNullable(storageObject.<GregorianCalendar>getPropertyValue("sigla_commons_aspect:data_cancellazione"))
                 .ifPresent(g -> allegato.setDataCancellazione(Date.from(g.toZonedDateTime().toInstant())));
 
+        Optional.ofNullable(storageObject.<GregorianCalendar>getPropertyValue("sigla_commons_aspect:data_protocollo"))
+                .ifPresent(g -> allegato.setDataProtocollo(Date.from(g.toZonedDateTime().toInstant())));
+        Optional.ofNullable(storageObject.<String>getPropertyValue("sigla_commons_aspect:numero_protocollo"))
+                .ifPresent(s -> allegato.setNumProtocollo(s));
+
         super.completeAllegato(allegato, storageObject);
     }
 
@@ -1014,8 +1019,16 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
         DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
         String allegatiFormName = super.getAllegatiFormName();
         if (documentoEleTestata.isRicevutaDecorrenzaTermini() && allegatiFormName.equalsIgnoreCase("default"))
-            return "decorrenzaTermini";
-        return allegatiFormName;
+            allegatiFormName = "decorrenzaTermini";
+        if(Optional.ofNullable(this.getCrudArchivioAllegati().getModel())
+                        .filter(AllegatoFatturaBulk.class::isInstance)
+                        .map(AllegatoFatturaBulk.class::cast)
+                        .flatMap(afb -> Optional.ofNullable(afb.getAspectName()))
+                        .filter(s -> s.equalsIgnoreCase(AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE))
+                        .isPresent()) {
+            return "protocollo";
+        }
+        return allegatiFormName.equalsIgnoreCase("default") ? "base" : allegatiFormName;
     }
 
     @Override

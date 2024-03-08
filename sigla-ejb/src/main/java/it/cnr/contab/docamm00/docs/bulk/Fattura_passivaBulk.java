@@ -3547,4 +3547,11 @@ public abstract class Fattura_passivaBulk
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
     }
+
+    public boolean isLiquidabile() {
+        return Optional.ofNullable(getStato_liquidazione())
+                .map(s -> s.equalsIgnoreCase(LIQ))
+                .orElse(Boolean.FALSE);
+    }
+
 }

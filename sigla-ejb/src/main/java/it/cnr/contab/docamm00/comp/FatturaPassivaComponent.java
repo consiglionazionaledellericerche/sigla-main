@@ -66,6 +66,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
@@ -6208,6 +6209,18 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         controllaQuadraturaIntrastat(aUC, fatturaPassiva);
         controllaQuadraturaObbligazioni(aUC, fatturaPassiva);
         controllaQuadraturaOrdini(aUC, fatturaPassiva);
+        try {
+            final Parametri_cdsBulk parametriCdsBulk = (Parametri_cdsBulk) getHome(aUC, Parametri_cdsBulk.class).findByPrimaryKey(
+                    new Parametri_cdsBulk(fatturaPassiva.getCd_cds(), fatturaPassiva.getEsercizio())
+            );
+            if (fatturaPassiva.isLiquidabile() &&
+                    Optional.ofNullable(parametriCdsBulk.getFl_obblig_liq_fatt()).orElse(Boolean.FALSE) &&
+                    fatturaPassiva.getDt_protocollo_liq() == null) {
+                throw new it.cnr.jada.comp.ApplicationException("Attenzione è obbligatorio allegare un file di tipo <b>Provvedimento di Liquidazione</b> alla fattura!");
+            }
+        } catch (PersistencyException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void controlliCig(Fattura_passiva_rigaBulk riga) throws ApplicationException {

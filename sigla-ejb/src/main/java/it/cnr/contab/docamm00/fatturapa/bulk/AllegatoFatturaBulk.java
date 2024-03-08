@@ -20,6 +20,7 @@ package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -41,11 +42,13 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	public static final String P_SIGLA_FATTURE_ATTACHMENT_TACCIABILITA = "P:sigla_fatture_attachment:tacciabilita";
 	public static final String P_SIGLA_FATTURE_ATTACHMENT_PRESTAZIONE_RESA = "P:sigla_fatture_attachment:prestazione_resa";
 	public static final String P_SIGLA_FATTURE_ATTACHMENT_ALTRO = "P:sigla_fatture_attachment:altro";
+	public static final String P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE = "P:sigla_fatture_attachment:provvedimento_liquidazione";
 
 	static {
 		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_DURC,"DURC");
 		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_TACCIABILITA,"Tracciabilità");
 		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_PRESTAZIONE_RESA,"Prestazione Resa");
+		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE,"Provvedimento di Liquidazione");
 		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_ALTRO,"Altro");
 		aspectNamesKeys.put(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA.value(),"Comunicazione di non registrabilità");
 
@@ -54,7 +57,16 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	}
 	private String aspectName;
 	private Date dataCancellazione;
-
+	@StoragePolicy(
+			name = "P:sigla_commons_aspect:protocollo",
+			property = @StorageProperty(name = "sigla_commons_aspect:data_protocollo")
+	)
+	private Date dataProtocollo;
+	@StoragePolicy(
+			name = "P:sigla_commons_aspect:protocollo",
+			property = @StorageProperty(name = "sigla_commons_aspect:numero_protocollo")
+	)
+	private String numProtocollo;
 	public AllegatoFatturaBulk() {
 		super();
 	}
@@ -92,8 +104,13 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	}
 	@Override
 	public void validate() throws ValidationException {
-		if (getAspectName() == null) {
-			throw new ValidationException("Attenzione: selezionare la tipologia di File!");
+		Optional.ofNullable(getAspectName())
+				.orElseThrow(() -> new ValidationException("Attenzione: selezionare la tipologia di File!"));
+		if (getAspectName().equalsIgnoreCase(P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE)) {
+			Optional.ofNullable(getDataProtocollo())
+					.orElseThrow(() -> new ValidationException("Attenzione: la data protocollo è obbligatoria!"));
+			Optional.ofNullable(getNumProtocollo())
+					.orElseThrow(() -> new ValidationException("Attenzione: il numero di protocollo è obbligatorio!"));
 		}
 		super.validate();
 	}
@@ -120,4 +137,19 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 		this.dataCancellazione = dataCancellazione;
 	}
 
+	public Date getDataProtocollo() {
+		return dataProtocollo;
+	}
+
+	public void setDataProtocollo(Date dataProtocollo) {
+		this.dataProtocollo = dataProtocollo;
+	}
+
+	public String getNumProtocollo() {
+		return numProtocollo;
+	}
+
+	public void setNumProtocollo(String numProtocollo) {
+		this.numProtocollo = numProtocollo;
+	}
 }

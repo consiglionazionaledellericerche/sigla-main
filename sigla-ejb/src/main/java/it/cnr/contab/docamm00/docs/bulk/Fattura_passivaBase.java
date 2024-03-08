@@ -19,6 +19,8 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.sql.Timestamp;
+
 public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
     private static final long serialVersionUID = 1L;
 
@@ -236,6 +238,10 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 
     // PG_COMPENSO DECIMAL(10,0)
     private java.lang.Long pg_compenso;
+    // DT_PROTOCOLLO_LIQ TIMESTAMP
+    private java.sql.Timestamp dt_protocollo_liq;
+    // NR_PROTOCOLLO_LIQ VARCHAR2(20)
+    private java.lang.String nr_protocollo_liq;
 
 
     private java.lang.String idPaese;
@@ -1251,4 +1257,19 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
         this.flDaOrdini = flDaOrdini;
     }
 
+    public Timestamp getDt_protocollo_liq() {
+        return dt_protocollo_liq;
+    }
+
+    public void setDt_protocollo_liq(Timestamp dt_protocollo_liq) {
+        this.dt_protocollo_liq = dt_protocollo_liq;
+    }
+
+    public String getNr_protocollo_liq() {
+        return nr_protocollo_liq;
+    }
+
+    public void setNr_protocollo_liq(String nr_protocollo_liq) {
+        this.nr_protocollo_liq = nr_protocollo_liq;
+    }
 }
