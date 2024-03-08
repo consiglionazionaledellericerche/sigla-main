@@ -39,6 +39,7 @@
 		name="dettagli"
 		property="dettagli"
 		inputType="CHECKBOX"
+		command="doDefault"
 		nullable="true"
 		label="Stampa dettagli" />
 

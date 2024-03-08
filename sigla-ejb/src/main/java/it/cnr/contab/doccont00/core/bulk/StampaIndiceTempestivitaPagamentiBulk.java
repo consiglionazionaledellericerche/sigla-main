@@ -43,6 +43,7 @@ public class StampaIndiceTempestivitaPagamentiBulk extends OggettoBulk {
     @Override
     public OggettoBulk initializeForPrint(BulkBP bulkBP, ActionContext actioncontext) {
         setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
+        setTrimestre("1");
         return super.initializeForPrint(bulkBP, actioncontext);
     }
 
