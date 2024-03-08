@@ -124,6 +124,23 @@
                 nullable="false"
                 label="Figura Giuridica Esterna" />
         <fieldProperty
+                name="fig_giur_est_denominazione"
+                property="figura_giuridica_esterna.denominazione_sede"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="8"
+                nullable="false"
+                label="Denominazione" />
+        <fieldProperty
+                name="fig_giur_est_nazione"
+                property="figura_giuridica_esterna.anagrafico.comune_fiscale.nazione.ds_nazione"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="8"
+                nullable="false"
+                label="Nazione" />
+
+        <fieldProperty
                 name="responsabile"
                 property="responsabile"
                 inputType="SEARCHTOOL"
@@ -960,7 +977,18 @@
         <columnFieldProperty
                 name="cd_unita_organizzativa"/>
         <columnFieldProperty
-                name="fig_giur_est"/>
+                name="fig_giur_est"
+                headerLabel="Figura Giuridica Esterna"
+                label="Codice"/>
+        <columnFieldProperty
+                name="fig_giur_est_denominazione"
+                headerLabel="Figura Giuridica Esterna"
+                label="Descrizione"/>
+        <columnFieldProperty
+                name="fig_giur_est_nazione"
+                headerLabel="Figura Giuridica Esterna"
+                label="Nazione"/>
+
         <columnFieldProperty
                 name="cd_terzo_resp"
                 textTruncate="true"

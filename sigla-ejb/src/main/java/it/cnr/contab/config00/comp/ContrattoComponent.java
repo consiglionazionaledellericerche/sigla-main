@@ -24,6 +24,9 @@
 package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.client.docamm.Nazione;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
@@ -93,8 +96,19 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 	 */        
 	public Query select(UserContext userContext,CompoundFindClause clauses,ContrattoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
-	   SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses,bulk);
-	   sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.LESS_EQUALS,CNRUserContext.getEsercizio(userContext));
+		if (clauses == null) {
+			if (bulk != null)
+				clauses = bulk.buildFindClauses(null);
+		} else {
+			clauses = CompoundFindClause.and(clauses, bulk.buildFindClauses(Boolean.FALSE));
+		}
+		SQLBuilder sql = getHome(userContext, ContrattoBulk.class, "BASE").selectByClause(userContext, clauses);
+		sql.generateJoin(ContrattoBulk.class, TerzoBulk.class, "figura_giuridica_esterna", "TERZO");
+		sql.generateJoin(TerzoBulk.class, AnagraficoBulk.class, "anagrafico", "ANAGRAFICO");
+		sql.generateJoin(AnagraficoBulk.class, ComuneBulk.class, "comune_fiscale", "COMUNE");
+		sql.generateJoin(ComuneBulk.class, NazioneBulk.class, "nazione", "NAZIONE");
+
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.LESS_EQUALS,CNRUserContext.getEsercizio(userContext));
 
 	   Optional.ofNullable(bulk.getPg_progetto()).ifPresent(el->{
 		   sql.addSQLClause(FindClause.AND,"PG_PROGETTO",SQLBuilder.EQUALS,el);
