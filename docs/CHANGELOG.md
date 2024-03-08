@@ -1,5 +1,29 @@
-## Release 6.5.60  -- _February 06, 2024_ 
+## Release 6.5.62  -- _March 08, 2024_ 
 **Changes**
+
+>**Aggiunte alla ricerca dei contratti le informazioni della denominazione e della nazione riferiti alla Figura Giuridica Esterna**
+>
+>[4566853acadf48b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4566853acadf48b) marco.spasiano *March 08, 2024*
+
+>**Aggiunta l'estrazione excel del dettaglio dell'indice di tempestività dei pagamenti.**
+>
+>[c797043354d3162](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c797043354d3162) marco.spasiano *March 08, 2024*
+
+>**Aggiunto nei Parametri del CdS la possibilità di richiedere obbligatoriamente il provvedimento di liquidazione della fattura, che diventa obbligatorio quando la fattura viene resa liquidabile.**
+>
+>[15a3f8470639894](https://github.com/consiglionazionaledellericerche/sigla-main/commit/15a3f8470639894) marco.spasiano *March 08, 2024*
+
+
+## Release 6.5.61  -- _February 23, 2024_ 
+**Changes**
+
+>**When entering active invoices via Rest API, the intra lines were duplicated also based on the invoice lines**
+>
+>[a8a3afb9e69bb76](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8a3afb9e69bb76) marco.spasiano *February 21, 2024*
+
+>**FIX NPE when user is not present**
+>
+>[6af48eab87be364](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6af48eab87be364) marco.spasiano *February 09, 2024*
 
 >**Gestione della distinta cassiere in caso che SIOPE+ non sia attivo.**
 >
