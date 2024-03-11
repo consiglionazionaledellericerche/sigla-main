@@ -1,3 +1,11 @@
+## Release 6.5.63  -- _March 11, 2024_ 
+**Changes**
+
+>**Aggiunto nei Parametri del CdS la possibilità di richiedere obbligatoriamente il provvedimento di liquidazione della fattura, che diventa obbligatorio quando la fattura viene resa liquidabile.**
+>
+>[e20e66d6af832c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e20e66d6af832c2) marco.spasiano *March 11, 2024*
+
+
 ## Release 6.5.62  -- _March 08, 2024_ 
 **Changes**
 
