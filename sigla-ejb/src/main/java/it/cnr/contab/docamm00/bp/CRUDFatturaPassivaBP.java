@@ -1040,7 +1040,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                         .filter(AllegatoFatturaBulk.class::isInstance)
                         .map(AllegatoFatturaBulk.class::cast)
                         .filter(allegatoFatturaBulk -> AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE.equalsIgnoreCase(allegatoFatturaBulk.getAspectName()))
-                        .findAny();
+                        .filter(allegatoFatturaBulk -> Optional.ofNullable(allegatoFatturaBulk.getDataProtocollo()).isPresent())
+                        .sorted(Comparator.comparing(AllegatoFatturaBulk::getDataProtocollo).reversed())
+                        .findFirst();
                     if (optAllegatoFatturaBulk.isPresent()) {
                         fatturaPassivaBulk.setDt_protocollo_liq(
                                 Optional.ofNullable(optAllegatoFatturaBulk.get().getDataProtocollo())
