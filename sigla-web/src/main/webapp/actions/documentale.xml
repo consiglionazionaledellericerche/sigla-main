@@ -103,4 +103,12 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 	</businessProcess>
 
+
+	<businessProcess name="AllegatiMultipliFatturaPassivaBP"
+					 className="it.cnr.contab.docamm00.bp.AllegatiMultipliFatturaPassivaBP">
+		<forward name="default" path="/docamm00/allegati_multipli_fattura.jsp" />
+		<init-param name="defaultAction" value="CRUDAction" />
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	</businessProcess>
 </action-mappings>

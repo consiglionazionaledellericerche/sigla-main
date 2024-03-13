@@ -20,6 +20,8 @@ package it.cnr.contab.docamm00.docs.bulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 
@@ -155,5 +157,22 @@ public class Fattura_passiva_IHome
         } catch (java.sql.SQLException e) {
             throw it.cnr.jada.persistency.sql.SQLExceptionHandler.getInstance().handleSQLException(e, spesa);
         }
+    }
+    public SQLBuilder selectLiquidazioneSospesa(UserContext usercontext, Fattura_passiva_IBulk fattura, CompoundFindClause compoundfindclause) throws PersistencyException {
+        SQLBuilder sqlBuilder = super.createSQLBuilder();
+        if(compoundfindclause == null){
+            if(fattura != null)
+                compoundfindclause = fattura.buildFindClauses(null);
+        } else {
+            compoundfindclause = CompoundFindClause.and(compoundfindclause, fattura.buildFindClauses(Boolean.FALSE));
+        }
+        sqlBuilder.addClause(compoundfindclause);
+
+        sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext));
+        sqlBuilder.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
+        sqlBuilder.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(usercontext));
+        sqlBuilder.addClause(FindClause.AND, "stato_liquidazione", SQLBuilder.NOT_EQUALS, IDocumentoAmministrativoBulk.LIQ);
+
+        return sqlBuilder;
     }
 }

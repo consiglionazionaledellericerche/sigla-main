@@ -36,6 +36,7 @@ public interface ToDoLocal {
         CRUDFatturaPassivaElettronicaBP("AMMFATTURDOCELEPASS"),
         CRUDMissioneBP("AMMMISSIOCOREMISSIOM"),
         SelezionatoreDocAmmFatturazioneElettronica("AMMDOCFATTELETTVM"),
+        SelezionatoreFattureLiquidazioneSospesaBP("AMMFATTURDOCLIQUIMAS"),
         ConsMandatiNonAcquisitiBP("CONSDOCAMMMANNONAC"),
         ConsReversaliNonAcquisitiBP("CONSDOCAMMREVNONAC");
 
