@@ -30,7 +30,8 @@ public class SelezionatoreFattureLiquidazioneSospesaBP extends SelezionatoreList
         try {
             setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(Fattura_passiva_IBulk.class));
             setMultiSelection(true);
-            OggettoBulk model = (OggettoBulk) getBulkInfo().getBulkClass().newInstance();
+            Fattura_passiva_IBulk model = (Fattura_passiva_IBulk) getBulkInfo().getBulkClass().newInstance();
+            model.setStato_liquidazione(IDocumentoAmministrativoBulk.SOSP);
             setModel(context, model);
             setColumns(getBulkInfo().getColumnFieldPropertyDictionary("liquidazione"));
             super.init(config, context);
@@ -63,8 +64,7 @@ public class SelezionatoreFattureLiquidazioneSospesaBP extends SelezionatoreList
         final Properties properties = it.cnr.jada.util.Config.getHandler().getProperties(getClass());
         return Stream.concat(Arrays.asList(super.createToolbar()).stream(),
                 Arrays.asList(
-                        new Button(properties, "Toolbar.provvedimento"),
-                        new Button(properties, "Toolbar.liquida")
+                        new Button(properties, "Toolbar.provvedimento")
                 ).stream()).toArray(Button[]::new);
     }
 
@@ -79,22 +79,9 @@ public class SelezionatoreFattureLiquidazioneSospesaBP extends SelezionatoreList
                     actioncontext.getUserContext(),
                     compoundfindclause,
                     fattura,
-                    "selectLiquidazioneSospesa");
+                    "selectFattureNonPagate");
         } catch (ComponentException | RemoteException e) {
             throw handleException(e);
-        }
-    }
-
-    public void liquida(ActionContext actioncontext,  List<Fattura_passiva_IBulk> selectedElements) throws BusinessProcessException, ComponentException, RemoteException {
-        final FatturaPassivaComponentSession fatturaPassivaComponentSession = getComponentSession();
-        for (Fattura_passiva_IBulk fatturaPassivaIBulk : selectedElements) {
-            fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
-                    .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
-            fatturaPassivaIBulk.setToBeUpdated();
-            fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
-            fatturaPassivaIBulk.setCausale(null);
-            fatturaPassivaComponentSession
-                    .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
         }
     }
 }

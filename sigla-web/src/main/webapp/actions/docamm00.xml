@@ -417,7 +417,7 @@
 
     <businessProcess name="SelezionatoreFattureLiquidazioneSospesaBP"
                      className="it.cnr.contab.docamm00.bp.SelezionatoreFattureLiquidazioneSospesaBP">
-        <forward name="default" path="/util/form_lista.jsp"/>
+        <forward name="default" path="/docamm00/fatture_liduidazione_sospesa.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk"/>
         <init-param name="defaultAction" value="SelezionatoreFattureLiquidazioneSospesaAction"/>
         <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaPassivaComponentSession"/>

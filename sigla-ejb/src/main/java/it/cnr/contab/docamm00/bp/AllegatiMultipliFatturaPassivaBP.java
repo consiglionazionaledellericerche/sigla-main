@@ -19,6 +19,7 @@ package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
@@ -148,9 +149,9 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
                     final Optional<AllegatoFatturaBulk> provvedimentoLiquidazione = Optional.of(allegato)
                             .filter(allegatoFatturaBulk -> AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE.equalsIgnoreCase(allegatoFatturaBulk.getAspectName()))
                             .filter(allegatoFatturaBulk -> Optional.ofNullable(allegatoFatturaBulk.getDataProtocollo()).isPresent());
+                    final FatturaPassivaComponentSession fatturaPassivaComponentSession =
+                            (FatturaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession");
                     if (provvedimentoLiquidazione.isPresent()) {
-                        final FatturaPassivaComponentSession fatturaPassivaComponentSession =
-                                (FatturaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession");
                         fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
                                 .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
                         fatturaPassivaIBulk.setToBeUpdated();
@@ -161,6 +162,20 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
                                         .orElse(null)
                         );
                         fatturaPassivaIBulk.setNr_protocollo_liq(provvedimentoLiquidazione.get().getNumProtocollo());
+                        fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
+                        fatturaPassivaIBulk.setCausale(null);
+                        fatturaPassivaComponentSession
+                                .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                    } else if (
+                            Optional.ofNullable(fatturaPassivaIBulk.getStato_liquidazione())
+                                    .filter(s1 -> !s1.equalsIgnoreCase(IDocumentoAmministrativoBulk.LIQ))
+                                    .isPresent()
+                    ) {
+                        fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
+                                .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                        fatturaPassivaIBulk.setToBeUpdated();
+                        fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
+                        fatturaPassivaIBulk.setCausale(null);
                         fatturaPassivaComponentSession
                                 .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
                     }

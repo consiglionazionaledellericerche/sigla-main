@@ -158,21 +158,23 @@ public class Fattura_passiva_IHome
             throw it.cnr.jada.persistency.sql.SQLExceptionHandler.getInstance().handleSQLException(e, spesa);
         }
     }
-    public SQLBuilder selectLiquidazioneSospesa(UserContext usercontext, Fattura_passiva_IBulk fattura, CompoundFindClause compoundfindclause) throws PersistencyException {
+    public SQLBuilder selectFattureNonPagate(UserContext usercontext, Fattura_passiva_IBulk fattura, CompoundFindClause compoundfindclause) throws PersistencyException {
         SQLBuilder sqlBuilder = createSQLBuilder();
         if(compoundfindclause == null){
             if(fattura != null)
-                compoundfindclause = fattura.buildFindClauses(null);
+                compoundfindclause = fattura.buildFindClauses(Boolean.TRUE);
         } else {
-            compoundfindclause = CompoundFindClause.and(compoundfindclause, fattura.buildFindClauses(Boolean.FALSE));
+            compoundfindclause = CompoundFindClause.and(compoundfindclause, fattura.buildFindClauses(Boolean.TRUE));
         }
         sqlBuilder.addClause(compoundfindclause);
 
         sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext));
         sqlBuilder.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
         sqlBuilder.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(usercontext));
-        sqlBuilder.addClause(FindClause.AND, "stato_liquidazione", SQLBuilder.NOT_EQUALS, IDocumentoAmministrativoBulk.LIQ);
+        sqlBuilder.addClause(FindClause.AND, "ti_associato_manrev", SQLBuilder.EQUALS, "N");
 
         return sqlBuilder;
     }
+
+
 }

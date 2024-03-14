@@ -21,6 +21,7 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -437,12 +438,14 @@ public class ToDoResource implements ToDoLocal {
                     break;
                 }
                 case SelezionatoreFattureLiquidazioneSospesaBP: {
+                    final CompoundFindClause compoundFindClause = new CompoundFindClause();
+                    compoundFindClause.addClause(FindClause.AND, "stato_liquidazione", SQLBuilder.EQUALS, IDocumentoAmministrativoBulk.SOSP);
                     BulkLoaderIterator remoteIterator =
                             Optional.ofNullable(crudComponentSession.cerca(
                                             userContext,
-                                            new CompoundFindClause(),
+                                            compoundFindClause,
                                             new Fattura_passiva_IBulk(),
-                                            "selectLiquidazioneSospesa"))
+                                            "selectFattureNonPagate"))
                                     .filter(BulkLoaderIterator.class::isInstance)
                                     .map(BulkLoaderIterator.class::cast)
                                     .orElseThrow(() -> new RestException(Response.Status.INTERNAL_SERVER_ERROR, "Cannot create remote iterator"));

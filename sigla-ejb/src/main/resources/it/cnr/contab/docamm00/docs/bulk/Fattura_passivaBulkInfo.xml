@@ -1626,6 +1626,12 @@
         <columnFieldProperty
                 name="data_protocollo"/>
         <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="stato_liquidazione"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
                 name="dt_protocollo_liq"
                 property="dt_protocollo_liq"
                 inputType="TEXT"
@@ -1653,8 +1659,6 @@
         <columnFieldProperty
                 name="ds_fattura_passiva"/>
         <columnFieldProperty
-                name="dt_registrazione"/>
-        <columnFieldProperty
                 name="ti_istituz_commerc"/>
         <columnFieldProperty
                 name="sezionale"/>
@@ -1680,12 +1684,6 @@
                 label="Valuta"/>
         <columnFieldProperty
                 name="stato_cofi"/>
-        <columnFieldProperty
-                name="ti_associato_manrev"/>
-        <columnFieldProperty
-                name="stato_liquidazione"/>
-        <columnFieldProperty
-                name="causale"/>
         <columnFieldProperty name="progr_univoco"/>
         <columnFieldProperty name="identificativoSdi"/>
         <columnFieldProperty name="progressivo"/>
