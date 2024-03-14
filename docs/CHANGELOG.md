@@ -1,5 +1,9 @@
-## Release 6.5.64  -- _March 14, 2024_ 
+## Release 6.5.65  -- _March 14, 2024_ 
 **Changes**
+
+>**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
+>
+>[e892ed5969a72c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e892ed5969a72c6) marco.spasiano *March 14, 2024*
 
 >**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
 >
