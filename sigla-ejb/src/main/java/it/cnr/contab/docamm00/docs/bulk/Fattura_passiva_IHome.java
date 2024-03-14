@@ -159,7 +159,7 @@ public class Fattura_passiva_IHome
         }
     }
     public SQLBuilder selectLiquidazioneSospesa(UserContext usercontext, Fattura_passiva_IBulk fattura, CompoundFindClause compoundfindclause) throws PersistencyException {
-        SQLBuilder sqlBuilder = super.createSQLBuilder();
+        SQLBuilder sqlBuilder = createSQLBuilder();
         if(compoundfindclause == null){
             if(fattura != null)
                 compoundfindclause = fattura.buildFindClauses(null);
