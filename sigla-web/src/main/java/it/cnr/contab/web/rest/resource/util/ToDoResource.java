@@ -455,7 +455,7 @@ public class ToDoResource implements ToDoLocal {
                                         result.add(new ToDoDetail(
                                                 cdNodo,
                                                 "fa fa-fw fa-eur text-danger",
-                                                "Liuidazione massiva",
+                                                "Liquidazione massiva",
                                                 firstLabel(i),
                                                 detailLabel(i, "Fattura", "Fatture", "da liquidare.")
                                         ));
