@@ -1968,32 +1968,35 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_stipula,'yyyy')", SQLBuilder.EQUALS, anno);
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
 			sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
-			if(strRicerca!=null){
-				strRicerca=strRicerca.replace("'", "''");
-				sql.openParenthesis(FindClause.AND);
-				sql.addSQLClause(FindClause.AND,"instr(CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO,'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.CD_CIG),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.OGGETTO),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(CONTRATTO.DT_INIZIO_VALIDITA,'dd/mm/yyyy'),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(CONTRATTO.DT_PROROGA, CONTRATTO.DT_FINE_VALIDITA),'dd/mm/yyyy'),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.PARTITA_IVA),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.CODICE_FISCALE),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'"+strRicerca +"')>0");
-				sql.closeParenthesis();
-			} 
-			if (query!=null && query.equals("chiave")){
-				// per ricerca mirata per chiave per la visualizzazione dettaglio contratto
-				if(strRicerca!=null)
+			if(strRicerca!=null) {
+				if (query==null) {
+					strRicerca = strRicerca.replace("'", "''");
+					sql.openParenthesis(FindClause.AND);
+					sql.addSQLClause(FindClause.AND, "instr(CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO,'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(CONTRATTO.CD_CIG),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(CONTRATTO.OGGETTO),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(CONTRATTO.DT_INIZIO_VALIDITA,'dd/mm/yyyy'),'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(nvl(CONTRATTO.DT_PROROGA, CONTRATTO.DT_FINE_VALIDITA),'dd/mm/yyyy'),'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(ANAGRAFICO.PARTITA_IVA),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(ANAGRAFICO.CODICE_FISCALE),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'" + strRicerca + "')>0");
+					sql.closeParenthesis();
+				} else if (query.equals("chiave"))
+					// per ricerca mirata per chiave per la visualizzazione dettaglio contratto
 					sql.addSQLClause(FindClause.AND,"CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO",SQLBuilder.EQUALS,strRicerca);
+				else if (query.equals("cig"))
+					sql.addSQLClause(FindClause.AND,"CONTRATTO.CD_CIG",SQLBuilder.EQUALS,strRicerca);
 			}
 			if(order!=null) {
 				if (order.equals("chiave"))
 					sql.addOrderBy("CONTRATTO.ESERCIZIO DESC,CONTRATTO.PG_CONTRATTO DESC");
+				else if (order.equals("cig"))
+					sql.addOrderBy("CONTRATTO.CD_CIG");
 				else if (order.equals("oggetto"))
 					sql.addOrderBy("CONTRATTO.OGGETTO");
 				else if (order.equals("datainizio"))
