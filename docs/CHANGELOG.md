@@ -1,5 +1,17 @@
-## Release 6.5.65  -- _March 14, 2024_ 
+## Release 6.5.66  -- _April 09, 2024_ 
 **Changes**
+
+>**Aggiunta nuova funzionalità per allegare il provvedimento di liquidazione in maniera massiva sulle fatture elettroniche.**
+>
+>[257f37a8b25b867](https://github.com/consiglionazionaledellericerche/sigla-main/commit/257f37a8b25b867) marco.spasiano *April 09, 2024*
+
+>**Nel caso di aggiunta di un provvedimento di liquidazione nella fattura elettronica registrata aggiorna le date sulla fattura**
+>
+>[aec745a3a857163](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aec745a3a857163) marco.spasiano *March 27, 2024*
+
+>**Servizio rest Contratti: data la possibilità di ricercare per cig**
+>
+>[ceadfc47b005396](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ceadfc47b005396) raffaelepagano *March 15, 2024*
 
 >**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
 >
