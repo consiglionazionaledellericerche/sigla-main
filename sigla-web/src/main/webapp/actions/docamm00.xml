@@ -424,4 +424,19 @@
         <init-param name="multiSelezione" value="Y"/>
     </businessProcess>
 
+
+    <action
+            path="/SelezionatoreFattureElettronicheLiquidazioneAction"
+            actionClass="it.cnr.contab.docamm00.actions.SelezionatoreFattureElettronicheLiquidazioneAction">
+    </action>
+
+    <businessProcess name="SelezionatoreFattureElettronicheLiquidazioneBP"
+                     className="it.cnr.contab.docamm00.bp.SelezionatoreFattureElettronicheLiquidazioneBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk"/>
+        <init-param name="defaultAction" value="SelezionatoreFattureElettronicheLiquidazioneAction"/>
+        <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"/>
+        <init-param name="multiSelezione" value="Y"/>
+    </businessProcess>
+
 </action-mappings>

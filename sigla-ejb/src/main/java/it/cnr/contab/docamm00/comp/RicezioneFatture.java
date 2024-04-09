@@ -117,7 +117,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                 bytesMetadata = Base64.decodeBase64(bytesMetadata);
 
             boolean isp7m = parametersIn.getFile().getContentType().toLowerCase().endsWith("p7m") ||
-                    parametersIn.getNomeFile().toLowerCase().endsWith("p7m");
+                    parametersIn.getNomeFile().toLowerCase().endsWith("p7m")||parametersIn.getFile().getContentType().equalsIgnoreCase("application/pkcs7-signature");
             ByteArrayOutputStream bStream = new ByteArrayOutputStream();
             if (isp7m)
                 bStream = estraiFirma(parametersIn.getFile().getInputStream(), jc);

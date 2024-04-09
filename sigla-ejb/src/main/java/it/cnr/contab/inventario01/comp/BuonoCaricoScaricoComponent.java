@@ -104,7 +104,7 @@ implements Cloneable,Serializable{
 	public BuonoCaricoScaricoComponent()	
 	{
 	}
-	protected void initializeKeysAndOptionsInto(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
+	public void initializeKeysAndOptionsInto(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
 			try {
 				Tipo_carico_scaricoHome tipoHome = (Tipo_carico_scaricoHome)getHome(usercontext, Tipo_carico_scaricoBulk.class);
 				java.util.Collection tipi;

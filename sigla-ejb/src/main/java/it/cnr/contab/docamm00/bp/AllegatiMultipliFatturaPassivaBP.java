@@ -17,14 +17,12 @@
 
 package it.cnr.contab.docamm00.bp;
 
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.IAllegatoFatturaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
-import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -48,23 +46,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
-    private final List<Fattura_passiva_IBulk> documents;
-    private String type;
+    private final List<IAllegatoFatturaBulk> documents;
     protected StoreService storeService;
+    private final String type;
 
-    public AllegatiMultipliFatturaPassivaBP(List<Fattura_passiva_IBulk> documents, String type) {
+    public AllegatiMultipliFatturaPassivaBP(List<IAllegatoFatturaBulk> documents, String type) {
         this.documents = documents;
         this.type = type;
     }
 
-    public AllegatiMultipliFatturaPassivaBP(String s, List<Fattura_passiva_IBulk> documents, String type) {
+    public AllegatiMultipliFatturaPassivaBP(String s, List<IAllegatoFatturaBulk> documents, String type) {
         super(s);
         this.documents = documents;
         this.type = type;
@@ -85,19 +82,19 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
     }
 
     public String getLabel() {
-        return "Aggiungi allegato alle fatture: " + documentsLabel(documents);
+        return documents.stream().findAny().get().getTitleAllegatoMultiplo() + documentsLabel(documents);
     }
 
-    private String documentsLabel(List<Fattura_passiva_IBulk> list) {
+    private String documentsLabel(List<IAllegatoFatturaBulk> list) {
         return list
                 .stream()
-                .map(fatturaPassivaIBulk -> fatturaPassivaIBulk.getPg_fattura_passiva())
-                .map(String::valueOf)
+                .map(iAllegatoFatturaBulk -> iAllegatoFatturaBulk.getAllegatoLabel())
                 .collect(Collectors.joining("-"));
     }
+
     public String getAllegatiFormName() {
         final String allegatiFormName = "default";
-        if(Optional.ofNullable(getModel())
+        if (Optional.ofNullable(getModel())
                 .filter(AllegatoFatturaBulk.class::isInstance)
                 .map(AllegatoFatturaBulk.class::cast)
                 .flatMap(afb -> Optional.ofNullable(afb.getAspectName()))
@@ -107,6 +104,7 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
         }
         return allegatiFormName.equalsIgnoreCase("default") ? "base" : allegatiFormName;
     }
+
     @Override
     public void save(ActionContext actioncontext) throws ValidationException, BusinessProcessException {
         AllegatoFatturaBulk allegato = (AllegatoFatturaBulk) getModel();
@@ -133,8 +131,8 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
             );
             allegato.validate();
             try {
-                for (Fattura_passiva_IBulk fatturaPassivaIBulk : documents) {
-                    final String s = fatturaPassivaIBulk.getStorePath().get(0);
+                for (IAllegatoFatturaBulk iAllegatoFatturaBulk : documents) {
+                    final String s = iAllegatoFatturaBulk.getStorePath().get(0);
                     final Optional<StorageObject> parentFolder =
                             Optional.ofNullable(storeService.getStorageObjectByPath(s));
                     if (parentFolder.isPresent()) {
@@ -146,38 +144,41 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
                                 parentFolder.get().getPath()
                         );
                     }
-                    final Optional<AllegatoFatturaBulk> provvedimentoLiquidazione = Optional.of(allegato)
-                            .filter(allegatoFatturaBulk -> AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE.equalsIgnoreCase(allegatoFatturaBulk.getAspectName()))
-                            .filter(allegatoFatturaBulk -> Optional.ofNullable(allegatoFatturaBulk.getDataProtocollo()).isPresent());
-                    final FatturaPassivaComponentSession fatturaPassivaComponentSession =
-                            (FatturaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession");
-                    if (provvedimentoLiquidazione.isPresent()) {
-                        fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
-                                .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
-                        fatturaPassivaIBulk.setToBeUpdated();
-                        fatturaPassivaIBulk.setDt_protocollo_liq(
-                                Optional.ofNullable(provvedimentoLiquidazione.get().getDataProtocollo())
-                                        .map(Date::getTime)
-                                        .map(aLong -> new Timestamp(aLong))
-                                        .orElse(null)
-                        );
-                        fatturaPassivaIBulk.setNr_protocollo_liq(provvedimentoLiquidazione.get().getNumProtocollo());
-                        fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
-                        fatturaPassivaIBulk.setCausale(null);
-                        fatturaPassivaComponentSession
-                                .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
-                    } else if (
-                            Optional.ofNullable(fatturaPassivaIBulk.getStato_liquidazione())
-                                    .filter(s1 -> !s1.equalsIgnoreCase(IDocumentoAmministrativoBulk.LIQ))
-                                    .isPresent()
-                    ) {
-                        fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
-                                .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
-                        fatturaPassivaIBulk.setToBeUpdated();
-                        fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
-                        fatturaPassivaIBulk.setCausale(null);
-                        fatturaPassivaComponentSession
-                                .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                    if (iAllegatoFatturaBulk instanceof Fattura_passiva_IBulk) {
+                        Fattura_passiva_IBulk fatturaPassivaIBulk = (Fattura_passiva_IBulk) iAllegatoFatturaBulk;
+                        final Optional<AllegatoFatturaBulk> provvedimentoLiquidazione = Optional.of(allegato)
+                                .filter(allegatoFatturaBulk -> AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE.equalsIgnoreCase(allegatoFatturaBulk.getAspectName()))
+                                .filter(allegatoFatturaBulk -> Optional.ofNullable(allegatoFatturaBulk.getDataProtocollo()).isPresent());
+                        final FatturaPassivaComponentSession fatturaPassivaComponentSession =
+                                (FatturaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaPassivaComponentSession");
+                        if (provvedimentoLiquidazione.isPresent()) {
+                            fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
+                                    .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                            fatturaPassivaIBulk.setToBeUpdated();
+                            fatturaPassivaIBulk.setDt_protocollo_liq(
+                                    Optional.ofNullable(provvedimentoLiquidazione.get().getDataProtocollo())
+                                            .map(Date::getTime)
+                                            .map(aLong -> new Timestamp(aLong))
+                                            .orElse(null)
+                            );
+                            fatturaPassivaIBulk.setNr_protocollo_liq(provvedimentoLiquidazione.get().getNumProtocollo());
+                            fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
+                            fatturaPassivaIBulk.setCausale(null);
+                            fatturaPassivaComponentSession
+                                    .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                        } else if (
+                                Optional.ofNullable(fatturaPassivaIBulk.getStato_liquidazione())
+                                        .filter(s1 -> !s1.equalsIgnoreCase(IDocumentoAmministrativoBulk.LIQ))
+                                        .isPresent()
+                        ) {
+                            fatturaPassivaIBulk = (Fattura_passiva_IBulk) fatturaPassivaComponentSession
+                                    .inizializzaBulkPerModifica(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                            fatturaPassivaIBulk.setToBeUpdated();
+                            fatturaPassivaIBulk.setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
+                            fatturaPassivaIBulk.setCausale(null);
+                            fatturaPassivaComponentSession
+                                    .modificaConBulk(actioncontext.getUserContext(), fatturaPassivaIBulk);
+                        }
                     }
                 }
             } catch (FileNotFoundException | ComponentException | RemoteException e) {
@@ -188,6 +189,7 @@ public class AllegatiMultipliFatturaPassivaBP extends SimpleCRUDBP {
                 throw handleException(e);
             }
         }
+        allegato.setNome(null);
         setMessage(FormBP.INFO_MESSAGE, "Allegati inseriti correttamente ai documenti.");
         setDirty(Boolean.FALSE);
     }

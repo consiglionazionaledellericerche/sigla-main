@@ -62,7 +62,7 @@ public CRUDCostoDelDipendenteComponent() {
  *		dei costi per voce del pdc (Costo_del_dipendenteBulk)
  */
 
-protected void initializeKeysAndOptionsInto(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
+public void initializeKeysAndOptionsInto(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
 	if (oggettobulk instanceof Stipendi_cofi_coriBulk)
 	{
 		try {

@@ -1020,7 +1020,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
     /**
      * Inizializza l'unità organizzativa del Fondo_economaleBulk all'unità organizzativa corrente.
      */
-    protected void initializeKeysAndOptionsInto(UserContext aUC, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+    public void initializeKeysAndOptionsInto(UserContext aUC, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
         super.initializeKeysAndOptionsInto(aUC, bulk);
 
         if (bulk instanceof Fondo_economaleBulk) {
