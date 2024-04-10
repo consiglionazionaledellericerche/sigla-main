@@ -11,6 +11,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CondizioneComplessaBulk;
+import it.cnr.jada.util.action.CondizioneSempliceBulk;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -33,6 +34,14 @@ public class SelezionatoreFattureElettronicheLiquidazioneBP extends Selezionator
             DocumentoEleTestataBulk model = (DocumentoEleTestataBulk) getBulkInfo().getBulkClass().newInstance();
             setModel(context, model);
             super.init(config, context);
+            final CondizioneComplessaBulk condizioneCorrente = new CondizioneComplessaBulk();
+            CondizioneSempliceBulk condizioneSempliceBulk = new CondizioneSempliceBulk(model);
+            condizioneSempliceBulk.setFindFieldProperty(getBulkInfo().getFindFieldProperty("flIrregistrabile"));
+            condizioneSempliceBulk.setOperator(new Integer(8192));
+            condizioneSempliceBulk.setValue("N");
+            condizioneCorrente.aggiungiCondizione(condizioneSempliceBulk);
+            setCondizioneCorrente(condizioneCorrente);
+
             openIterator(context);
             setOrderBy(context,"documentoEleTrasmissione.dataRicezione", OrderConstants.ORDER_DESC);
             reset(context);
