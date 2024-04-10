@@ -1,5 +1,9 @@
-## Release 6.5.67  -- _April 10, 2024_ 
+## Release 6.5.68  -- _April 10, 2024_ 
 **Changes**
+
+>**Aggiunta nuova funzionalità per allegare il provvedimento di liquidazione in maniera massiva sulle fatture elettroniche.**
+>
+>[22a4bd2f16e2af9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22a4bd2f16e2af9) marco.spasiano *April 10, 2024*
 
 >**Aggiunta nuova funzionalità per allegare il provvedimento di liquidazione in maniera massiva sulle fatture elettroniche.**
 >
