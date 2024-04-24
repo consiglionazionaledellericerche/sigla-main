@@ -23,10 +23,26 @@ SELECT to_number(to_char(data_trasmissione,'yyyy')) esercizio,
 FROM V_INDICATORE_PAGAMENTI_DETAIL
 GROUP BY to_number(to_char(data_trasmissione,'yyyy')), round((to_number(to_char(data_trasmissione,'mm')+1)/3),0)
 UNION ALL
+SELECT to_number(to_char(data_trasmissione,'yyyy')) esercizio,
+	   round((to_number(to_char(data_trasmissione,'mm')+1)/3),0) trimestre, 'SUM_TRIMESTRE_UO' tipo_riga,
+	   NULL, NULL, NULL, UO_DOCUMENTO, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	   sum(importo_pagato), sum(importo_pesato), sum(importo_pesato)/sum(importo_pagato),
+	   NULL, NULL, NULL, NULL, NULL
+FROM V_INDICATORE_PAGAMENTI_DETAIL
+GROUP BY to_number(to_char(data_trasmissione,'yyyy')), round((to_number(to_char(data_trasmissione,'mm')+1)/3),0), UO_DOCUMENTO
+UNION ALL
 SELECT to_number(to_char(data_trasmissione,'yyyy')) esercizio, NULL trimestre, 'SUM_ANNO' tipo_riga,
 	   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	   sum(importo_pagato), sum(importo_pesato), sum(importo_pesato)/sum(importo_pagato),
 	   NULL, NULL, NULL, NULL, NULL
 FROM V_INDICATORE_PAGAMENTI_DETAIL
-GROUP BY to_number(to_char(data_trasmissione,'yyyy')))
+GROUP BY to_number(to_char(data_trasmissione,'yyyy'))
+UNION ALL
+SELECT to_number(to_char(data_trasmissione,'yyyy')) esercizio, NULL trimestre, 'SUM_ANNO' tipo_riga,
+	   NULL, NULL, NULL, UO_DOCUMENTO, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	   sum(importo_pagato), sum(importo_pesato), sum(importo_pesato)/sum(importo_pagato),
+	   NULL, NULL, NULL, NULL, NULL
+FROM V_INDICATORE_PAGAMENTI_DETAIL
+GROUP BY to_number(to_char(data_trasmissione,'yyyy'))), UO_DOCUMENTO)
+
 /

@@ -1,7 +1,10 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.StampaIndiceTempestivitaPagamentiBulk;
 import it.cnr.contab.reports.bp.ParametricPrintBP;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.jsp.Button;
 
@@ -16,6 +19,20 @@ public class StampaIndiceTempestivitaPagamentiBP extends ParametricPrintBP {
 
     public StampaIndiceTempestivitaPagamentiBP(String function) {
         super(function);
+    }
+
+    @Override
+    protected void init(it.cnr.jada.action.Config config, ActionContext context) throws BusinessProcessException {
+        super.init(config, context);
+        Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+        if (!uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
+            Optional.ofNullable(getModel())
+                    .filter(StampaIndiceTempestivitaPagamentiBulk.class::isInstance)
+                    .map(StampaIndiceTempestivitaPagamentiBulk.class::cast)
+                    .ifPresent(stampaIndiceTempestivitaPagamentiBulk -> {
+                        stampaIndiceTempestivitaPagamentiBulk.setUo_documento(uo.getCd_unita_organizzativa());
+                    });
+        }
     }
 
     @Override

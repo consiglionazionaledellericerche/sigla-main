@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.action;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.VConsIndicatorePagamentiBulk;
 import it.cnr.contab.doccont00.core.bulk.StampaIndiceTempestivitaPagamentiBulk;
 import it.cnr.contab.reports.action.ParametricPrintAction;
@@ -40,6 +41,10 @@ public class StampaIndiceTempestivitaPagamentiAction extends ParametricPrintActi
                     .filter(s -> !s.equalsIgnoreCase("*"))
                     .map(Integer::valueOf)
                     .ifPresent(trimestre -> vConsIndicatorePagamentiBulk.setTrimestre(trimestre));
+            Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext);
+            if (!uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)) {
+                vConsIndicatorePagamentiBulk.setUoDocumento(uo.getCd_unita_organizzativa());
+            }
             final RemoteIterator remoteiterator = crudComponentSession.cerca(actioncontext.getUserContext(), new CompoundFindClause(), vConsIndicatorePagamentiBulk);
 
             String longDescription = "Tempestivita Pagamenti";

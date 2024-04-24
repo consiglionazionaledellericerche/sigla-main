@@ -26,6 +26,7 @@ public class StampaIndiceTempestivitaPagamentiBulk extends OggettoBulk {
     private Integer esercizio;
     private String trimestre;
     private Boolean dettagli;
+    private String uo_documento;
 
     public static final java.util.Dictionary<String, String> trimesteValues = new it.cnr.jada.util.OrderedHashtable();
     static {
@@ -44,6 +45,7 @@ public class StampaIndiceTempestivitaPagamentiBulk extends OggettoBulk {
     public OggettoBulk initializeForPrint(BulkBP bulkBP, ActionContext actioncontext) {
         setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
         setTrimestre("1");
+        setUo_documento("*");
         return super.initializeForPrint(bulkBP, actioncontext);
     }
 
@@ -71,4 +73,11 @@ public class StampaIndiceTempestivitaPagamentiBulk extends OggettoBulk {
         this.esercizio = esercizio;
     }
 
+    public String getUo_documento() {
+        return uo_documento;
+    }
+
+    public void setUo_documento(String uo_documento) {
+        this.uo_documento = uo_documento;
+    }
 }

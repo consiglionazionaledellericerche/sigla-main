@@ -59,6 +59,8 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
 		label="UO Documento" />
 	<fieldProperty
 		name="numeroDocumento"
