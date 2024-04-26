@@ -43,6 +43,5 @@ SELECT to_number(to_char(data_trasmissione,'yyyy')) esercizio, NULL trimestre, '
 	   sum(importo_pagato), sum(importo_pesato), sum(importo_pesato)/sum(importo_pagato),
 	   NULL, NULL, NULL, NULL, NULL
 FROM V_INDICATORE_PAGAMENTI_DETAIL
-GROUP BY to_number(to_char(data_trasmissione,'yyyy'))), UO_DOCUMENTO)
-
+GROUP BY to_number(to_char(data_trasmissione,'yyyy')), UO_DOCUMENTO)
 /
