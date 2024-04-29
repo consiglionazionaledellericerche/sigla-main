@@ -1,3 +1,15 @@
+## Release 6.5.69  -- _April 29, 2024_ 
+**Changes**
+
+>**Stampa e estrazione excel dell'indice di tempestività dei pagamenti per UO**
+>
+>[fea7372a3d68fc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fea7372a3d68fc7) marco.spasiano *April 26, 2024*
+
+>**Stampa e estrazione excel dell'indice di tempestività dei pagamenti per UO**
+>
+>[d75f12d0344e5f0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d75f12d0344e5f0) marco.spasiano *April 24, 2024*
+
+
 ## Release 6.5.68  -- _April 10, 2024_ 
 **Changes**
 
