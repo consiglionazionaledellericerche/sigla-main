@@ -2264,9 +2264,31 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
         } catch (Throwable e) {
             return handleException(context, e);
         }
-
-
     }
+
+    public Forward doCambiaDataInizioSospensione(ActionContext context) {
+        try {
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+            java.sql.Timestamp dtInizioSospensione = fattura.getDt_inizio_sospensione();
+            try {
+                fillModel(context);
+                if (!bp.isSearching()) {
+                    if (Optional.ofNullable(fattura.getDt_inizio_sospensione()).orElse(EJBCommonServices.getServerTimestamp())
+                            .before(Optional.ofNullable(fattura.getDt_registrazione()).orElse(EJBCommonServices.getServerTimestamp())))
+                        throw new ValidationException("La data di sospensione non può essere antecedente o uguale alla data di registrazione!");
+                }
+                return context.findDefaultForward();
+            } catch (Throwable e) {
+                fattura.setDt_inizio_sospensione(dtInizioSospensione);
+                bp.setModel(context, fattura);
+                throw e;
+            }
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
     public Forward doCambiaDataProtocollo(ActionContext context) {
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
@@ -5171,22 +5193,12 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
-            String oldCausale = fattura.getCausale();
             fillModel(context);
-            if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.LIQ)) {
-                if (fattura.getCausale() != null) {
-                    fattura.setCausale(null);
-                }
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.SOSP)) {
-                fattura.setCausale(fattura.ATTLIQ);
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)) {
-                if (fattura.getCausale() != null && fattura.getCausale().equals(fattura.ATTLIQ)) {
-                    if (oldCausale != null && !oldCausale.equals(fattura.ATTLIQ))
-                        fattura.setCausale(oldCausale);
-                    else
-                        fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
-                }
+            if (fattura.getStato_liquidazione() != null && (
+                    fattura.getStato_liquidazione().equals(fattura.LIQ) ||
+                            fattura.getStato_liquidazione().equals(fattura.NOLIQ))) {
+                fattura.setCausale(null);
+                fattura.setDt_inizio_sospensione(null);
             }
             bp.setModel(context, fattura);
         } catch (Throwable t) {
@@ -5201,29 +5213,12 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
             String oldCausale = fattura.getCausale();
             fillModel(context);
-            if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.LIQ)) {
-                if (fattura.getCausale() != null) {
-                    fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
-                }
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)) {
-                if (fattura.getCausale() != null && fattura.getCausale().equals(fattura.ATTLIQ)) {
-                    if (oldCausale != null && !oldCausale.equals(fattura.ATTLIQ))
-                        fattura.setCausale(oldCausale);
-                    else
-                        fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
-                }
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.SOSP)) {
-                if (fattura.getCausale() != null && !fattura.getCausale().equals(fattura.ATTLIQ)) {
-                    if (oldCausale != null)
-                        fattura.setCausale(oldCausale);
-                    else
-                        fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+            if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(Fattura_passivaBulk.SOSP)) {
+                if (fattura.getCausale() == null) {
+                    fattura.setCausale(oldCausale);
+                    throw new ApplicationException("Bisogna valorizzare la Causale per la sospensione!");
                 }
             }
-
             bp.setModel(context, fattura);
         } catch (Throwable t) {
             return handleException(context, t);

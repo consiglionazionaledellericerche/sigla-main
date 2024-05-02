@@ -172,9 +172,9 @@ public abstract class Fattura_passivaBulk
         STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
 
         CAUSALE = new it.cnr.jada.util.OrderedHashtable();
-        CAUSALE.put(ATTLIQ, "In attesa di liquidazione");
-        CAUSALE.put(CONT, "Contenzioso");
-        CAUSALE.put(ATTNC, "In attesa di nota credito");
+        CAUSALE.put(CONT, "Importo sospeso in Contenzioso");
+        CAUSALE.put(CONT_NORM, "Importo sospeso in contestazione/adempimenti normativi");
+        CAUSALE.put(CONT_CONF, "Importo sospeso per data esito regolare verifica di conformità");
     }
     protected Tipo_sezionaleBulk tipo_sezionale;
     protected DivisaBulk valuta;
@@ -3553,6 +3553,12 @@ public abstract class Fattura_passivaBulk
                 .map(s -> s.equalsIgnoreCase(LIQ))
                 .orElse(Boolean.FALSE);
     }
+    public boolean isLiquidazioneSospesa() {
+        return Optional.ofNullable(getStato_liquidazione())
+                .map(s -> s.equalsIgnoreCase(SOSP))
+                .orElse(Boolean.FALSE);
+    }
+
     @Override
     public String getAllegatoLabel() {
         return Optional.ofNullable(getPg_fattura_passiva()).map(String::valueOf).orElse(null);

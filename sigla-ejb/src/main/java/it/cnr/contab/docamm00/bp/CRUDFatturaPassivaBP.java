@@ -21,7 +21,10 @@ import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBase;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
@@ -40,6 +43,10 @@ import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -133,6 +140,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean isDetailDoubling = false;
     private boolean attivoOrdini = false;
     private boolean attivaEconomicaParallela = false;
+    private boolean isSupervisore;
+    private boolean isModificaPCC;
 
     /**
      * CRUDAnagraficaBP constructor comment.
@@ -522,9 +531,22 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             throws it.cnr.jada.action.BusinessProcessException {
 
         try {
-            attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
-            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            final Configurazione_cnrComponentSession configurazioneCnrComponentSession = Utility.createConfigurazioneCnrComponentSession();
+            attivoOrdini = configurazioneCnrComponentSession.isAttivoOrdini(context.getUserContext());
+            attivaEconomicaParallela = configurazioneCnrComponentSession.isAttivaEconomicaParallela(context.getUserContext());
+            isModificaPCC = Optional.ofNullable(
+                    configurazioneCnrComponentSession.getConfigurazione(
+                    context.getUserContext(),
+                    CNRUserContext.getEsercizio(context.getUserContext()),
+                    "*",
+                    Configurazione_cnrBulk.PK_PCC,
+                    Configurazione_cnrBulk.SK_MODIFICA)
+            ).map(Configurazione_cnrBase::getVal01).map(s -> s.equalsIgnoreCase("Y")).orElse(Boolean.FALSE);
             super.init(config, context);
+            CNRUserInfo ui = (CNRUserInfo) context.getUserInfo();
+            UtenteBulk utente = ui.getUtente();
+            isSupervisore = utente.isSupervisore();
+
 
             int solaris = Fattura_passivaBulk.getDateCalendar(
                             it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())
@@ -1489,8 +1511,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
     */
     @Override
-    public void validate(ActionContext actioncontext)
-            throws ValidationException {
+    public void validate(ActionContext actioncontext) throws ValidationException {
         Fattura_passivaBulk fp = (Fattura_passivaBulk) getModel();
         try {
             fp.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(actioncontext));
@@ -1868,5 +1889,21 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             return "protocollo";
         }
         return allegatiFormName.equalsIgnoreCase("default") ? "base" : allegatiFormName;
+    }
+
+    public boolean isLiquidazioneSospesa() {
+        return Optional.ofNullable(getModel())
+                .filter(Fattura_passiva_IBulk.class::isInstance)
+                .map(Fattura_passiva_IBulk.class::cast)
+                .map(fatturaPassivaIBulk -> fatturaPassivaIBulk.isLiquidazioneSospesa())
+                .orElse(Boolean.FALSE);
+    }
+
+    @Override
+    public boolean isInputReadonlyFieldName(String fieldName) {
+        if (Arrays.asList("stato_liquidazione","causale", "dt_inizio_sospensione").contains(fieldName) && isSupervisore && isModificaPCC) {
+            return Boolean.FALSE;
+        }
+        return super.isInputReadonlyFieldName(fieldName);
     }
 }

@@ -250,6 +250,7 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
     private java.lang.Long progressivo;
     // FL_DA_ORDINI CHAR(1)
     private java.lang.Boolean flDaOrdini;
+    private java.sql.Timestamp dt_inizio_sospensione;
 
     public Fattura_passivaBase() {
         super();
@@ -1271,5 +1272,13 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 
     public void setNr_protocollo_liq(String nr_protocollo_liq) {
         this.nr_protocollo_liq = nr_protocollo_liq;
+    }
+
+    public Timestamp getDt_inizio_sospensione() {
+        return dt_inizio_sospensione;
+    }
+
+    public void setDt_inizio_sospensione(Timestamp dt_inizio_sospensione) {
+        this.dt_inizio_sospensione = dt_inizio_sospensione;
     }
 }
