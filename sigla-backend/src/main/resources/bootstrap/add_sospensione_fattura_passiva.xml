@@ -26,17 +26,6 @@
             <column name="dt_inizio_sospensione" type="${date.type}"/>
         </addColumn>
     </changeSet>
-    <changeSet author="marco.spasiano" id="modify_sospensione_non_liq_att_nota">
-        <update tableName="fattura_passiva">
-            <column name="stato_liquidazione" value='SOSP' type="VARCHAR(10)"/>
-            <column name="causale" value='CONTNOR' type="VARCHAR(10)"/>
-            <column name="dt_inizio_sospensione" valueComputed='dt_registrazione + 1' type="${date.type}"/>
-            <column name="utuv" value='SYSTEM' type="VARCHAR(20)"/>
-            <column name="duva" valueDate="${now}" type="${date.type}"/>
-            <column name="pg_ver_rec" type="BIGINT" valueComputed='pg_ver_rec + 1'/>
-            <where>stato_liquidazione = 'NOLIQ' and causale = 'ATTNC'</where>
-        </update>
-    </changeSet>
     <changeSet author="marco.spasiano" id="modify_sospensione_non_liq_conten">
         <update tableName="fattura_passiva">
             <column name="stato_liquidazione" value='SOSP' type="VARCHAR(10)"/>

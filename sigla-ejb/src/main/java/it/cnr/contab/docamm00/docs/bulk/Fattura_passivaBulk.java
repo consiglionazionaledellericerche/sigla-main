@@ -175,6 +175,8 @@ public abstract class Fattura_passivaBulk
         CAUSALE.put(CONT, "Importo sospeso in Contenzioso");
         CAUSALE.put(CONT_NORM, "Importo sospeso in contestazione/adempimenti normativi");
         CAUSALE.put(CONT_CONF, "Importo sospeso per data esito regolare verifica di conformità");
+
+        CAUSALE.put(ATTNC, "In attesa di nota credito");
     }
     protected Tipo_sezionaleBulk tipo_sezionale;
     protected DivisaBulk valuta;
@@ -3558,9 +3560,25 @@ public abstract class Fattura_passivaBulk
                 .map(s -> s.equalsIgnoreCase(SOSP))
                 .orElse(Boolean.FALSE);
     }
+    public boolean isNonLiquidabile() {
+        return Optional.ofNullable(getStato_liquidazione())
+                .map(s -> s.equalsIgnoreCase(NOLIQ))
+                .orElse(Boolean.FALSE);
+    }
 
     @Override
     public String getAllegatoLabel() {
         return Optional.ofNullable(getPg_fattura_passiva()).map(String::valueOf).orElse(null);
+    }
+
+    @Override
+    public Boolean isOptionDisabled(FieldProperty fieldProperty, Object key) {
+        if (fieldProperty.getName().equalsIgnoreCase("causale")) {
+            if (isLiquidazioneSospesa() && key.equals(ATTNC))
+                return true;
+            if (isNonLiquidabile() && (key.equals(CONT) ||key.equals(CONT_CONF) || key.equals(CONT_NORM)))
+                return true;
+        }
+        return super.isOptionDisabled(fieldProperty, key);
     }
 }

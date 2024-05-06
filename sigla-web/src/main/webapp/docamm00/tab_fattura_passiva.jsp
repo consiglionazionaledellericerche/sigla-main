@@ -82,7 +82,7 @@
       			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
       			<% bp.getController().writeFormInput(out,null,"stato_liquidazione", isInSpesaMode,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
       		</td>
-            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa()) { %>
+            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile()) { %>
       		<td>
       			<% bp.getController().writeFormLabel(out,"causale");%>
       			<% bp.getController().writeFormInput(out,null,"causale",isInSpesaMode,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
@@ -134,7 +134,7 @@
             <td>
                 <% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
             </td>
-            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa()) { %>
+            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile()) { %>
             <td>
                 <% bp.getController().writeFormLabel(out,"causale");%>
              </td>

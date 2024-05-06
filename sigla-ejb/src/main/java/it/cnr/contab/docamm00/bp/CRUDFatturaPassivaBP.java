@@ -1899,6 +1899,14 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 .orElse(Boolean.FALSE);
     }
 
+    public boolean isNonLiquidabile() {
+        return Optional.ofNullable(getModel())
+                .filter(Fattura_passiva_IBulk.class::isInstance)
+                .map(Fattura_passiva_IBulk.class::cast)
+                .map(fatturaPassivaIBulk -> fatturaPassivaIBulk.isNonLiquidabile())
+                .orElse(Boolean.FALSE);
+    }
+
     @Override
     public boolean isInputReadonlyFieldName(String fieldName) {
         if (Arrays.asList("stato_liquidazione","causale", "dt_inizio_sospensione").contains(fieldName) && isSupervisore && isModificaPCC) {
