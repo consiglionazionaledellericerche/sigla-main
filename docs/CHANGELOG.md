@@ -1,5 +1,45 @@
-## Release 6.5.69  -- _April 29, 2024_ 
+## Release 6.5.70  -- _May 27, 2024_ 
 **Changes**
+
+>**Il controllo sulla liquidabilità dei documenti ora avviene solo per le fatture elettroniche.**
+>
+>[ce6e9631fc5b9e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce6e9631fc5b9e2) marco.spasiano *May 24, 2024*
+
+>**2. Comunicazione Sospensione documenti:**
+> * a. Inserire su Sigla le informazioni relative alla Sospensione:
+> * i. Stato ‘Liquidazione sospesa’ – Fatture non pagate alla data di inizio sospensione.
+> * Controlli:
+> * La data inizio sospensione deve essere:
+> * Non antecedente o uguale alla data di registrazione;
+> * Non uguale o successiva alla data del pagamento;
+> * Non può riguardare solo una parte del documento.
+> * ii. Motivo della sospensione:
+> * 1. Importo sospeso in Contenzioso (già previsto in Sigla);
+> * 2. Importo sospeso in contestazione/adempimenti normativi;
+> * 3. Importo sospeso per data esito regolare verifica di conformità.
+> * iii. Data inizio sospensione.
+> * Prevedere la modifica dei dati relativi alla sospensione (Motivo e Data inizio) sempre per utente SUPERVISORE (per l’anno di gestione consentito in configurazione. Se in configurazione non è previsto MODIFICA PER PCC nemmeno il supervisore può operare);
+> * Per utenti normali se la fattura è parzialmente o totalmente pagata non può essere messa in sospensione né resa non Liquidabile.
+>
+>[346e121f7cc1e5a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/346e121f7cc1e5a) marco.spasiano *May 06, 2024*
+
+>**2. Comunicazione Sospensione documenti:**
+> * a. Inserire su Sigla le informazioni relative alla Sospensione:
+> * i. Stato ‘Liquidazione sospesa’ – Fatture non pagate alla data di inizio sospensione.
+> * Controlli:
+> * La data inizio sospensione deve essere:
+> * Non antecedente o uguale alla data di registrazione;
+> * Non uguale o successiva alla data del pagamento;
+> * Non può riguardare solo una parte del documento.
+> * ii. Motivo della sospensione:
+> * 1. Importo sospeso in Contenzioso (già previsto in Sigla);
+> * 2. Importo sospeso in contestazione/adempimenti normativi;
+> * 3. Importo sospeso per data esito regolare verifica di conformità.
+> * iii. Data inizio sospensione.
+> * Prevedere la modifica dei dati relativi alla sospensione (Motivo e Data inizio) sempre per utente SUPERVISORE (per l’anno di gestione consentito in configurazione. Se in configurazione non è previsto MODIFICA PER PCC nemmeno il supervisore può operare);
+> * Per utenti normali se la fattura è parzialmente o totalmente pagata non può essere messa in sospensione né resa non Liquidabile.
+>
+>[ee06a1ac686e7a2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee06a1ac686e7a2) marco.spasiano *May 02, 2024*
 
 >**Stampa e estrazione excel dell'indice di tempestività dei pagamenti per UO**
 >
