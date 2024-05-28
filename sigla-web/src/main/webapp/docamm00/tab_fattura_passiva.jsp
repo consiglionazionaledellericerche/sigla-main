@@ -82,14 +82,14 @@
       			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
       			<% bp.getController().writeFormInput(out,null,"stato_liquidazione", isInSpesaMode,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
       		</td>
-            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile()|| isLiquidazioneSospesaView()) { %>
+            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile()|| bp.isLiquidazioneSospesaView()) { %>
       		<td>
       			<% bp.getController().writeFormLabel(out,"causale");%>
       			<% bp.getController().writeFormInput(out,null,"causale",isInSpesaMode,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
       		</td>
       		<% } %>
       	  </tr>
-          <%	if (bp.isSearching() || bp.isLiquidazioneSospesa()|| isLiquidazioneSospesaView()) { %>
+          <%	if (bp.isSearching() || bp.isLiquidazioneSospesa()|| bp.isLiquidazioneSospesaView()) { %>
       	  <tr>
       	    <% bp.getController().writeFormField(out,"dt_inizio_sospensione"); %>
       	  </tr>
@@ -134,7 +134,7 @@
             <td>
                 <% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
             </td>
-            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile() || isLiquidazioneSospesaView()) { %>
+            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile() || bp.isLiquidazioneSospesaView()) { %>
             <td>
                 <% bp.getController().writeFormLabel(out,"causale");%>
              </td>
@@ -143,7 +143,7 @@
             </td>
             <% } %>
 	      </tr>
-          <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || isLiquidazioneSospesaView()) { %>
+          <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isLiquidazioneSospesaView()) { %>
       	  <tr>
       	    <% bp.getController().writeFormField(out,"dt_inizio_sospensione"); %>
       	  </tr>
