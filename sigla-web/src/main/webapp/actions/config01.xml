@@ -236,4 +236,26 @@
         <init-param name="searchResultColumnSet" value="consultazione" />
         <init-param name="openIterator" value="true" />
     </businessProcess>
+
+    <action
+            path="/ConsControlliPCCAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsControlliPCCAction">
+    </action>
+    <businessProcess
+            name="ConsControlliPCCBP" className="it.cnr.contab.doccont00.consultazioni.bp.ConsControlliPCCBP">
+        <forward name="default" path="/doccont00/form_lista_controlli_pcc.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="ConsControlliPCCAction"/>
+    </businessProcess>
+    <action
+            path="/ControlliPCCParamsAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ControlliPCCParamsAction">
+    </action>
+
+    <businessProcess name="ControlliPCCParamsBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/doccont00/controlli_pcc_params.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.ControlliPCCParams"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="ControlliPCCParamsAction"/>
+    </businessProcess>
+
 </action-mappings>

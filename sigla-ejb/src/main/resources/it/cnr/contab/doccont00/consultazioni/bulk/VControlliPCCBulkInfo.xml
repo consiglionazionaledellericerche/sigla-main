@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="identificativoSdi"
+		property="identificativoSdi"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="numeroDocumento"
+		property="numeroDocumento"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Numero Documento" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		enabledOnEdit="false"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="codiceDestinatario"
+		property="codiceDestinatario"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="Codice Destinatario" />
+	<fieldProperty
+		name="dataRicezione"
+		property="dataRicezione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Ricezione" />
+	<fieldProperty
+		name="dataScadenza"
+		property="dataScadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="statoDocumento"
+		property="statoDocumento"
+		inputType="SELECT"
+		keysProperty="tiStatoDocumentoKeys"
+		maxLength="60"
+		enabledOnEdit="false"
+		label="Stato Documento" />
+	<fieldProperty
+		name="importoDocumento"
+		property="importoDocumento"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Documento" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="imposta"
+		property="imposta"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imposta" />
+	<fieldProperty
+		name="tipoDocumento"
+		property="tipoDocumento"
+		inputType="SELECT"
+		keysProperty="tiTipoDocumentoKeys"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="dataDocumento"
+		property="dataDocumento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Documento" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="pgFatturaPassiva"
+		property="pgFatturaPassiva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Progressivo Fattura Passiva" />
+	<fieldProperty
+		name="dtRegistrazione"
+		property="dtRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="statoLiquidazione"
+		property="statoLiquidazione"
+		inputType="SELECT"
+		keysProperty="tiStatoLiquidazioneKeys"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Stato Liquidazione" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="SELECT"
+		keysProperty="tiCausaleKeys"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Causale" />
+	<fieldProperty
+		name="dtInizioSospensione"
+		property="dtInizioSospensione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Inizio Sospensione" />
+	<fieldProperty
+		name="dtEmissioneMan"
+		property="dtEmissioneMan"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Emissione Mandato" />
+	<fieldProperty
+		name="imMandato"
+		property="imMandato"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Mandato" />
+	<fieldProperty
+		name="cdTipoContratto"
+		property="cdTipoContratto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="Codice Contratto" />
+
+	<formFieldProperty
+		name="identificativoSdi" />
+	<formFieldProperty
+		name="numeroDocumento" />
+	<formFieldProperty
+		name="dataDocumento"/>
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="codiceDestinatario" />
+	<formFieldProperty
+		name="dataRicezione" />
+	<formFieldProperty
+		name="dataScadenza" />
+	<formFieldProperty
+		name="statoDocumento" />
+	<formFieldProperty
+		name="importoDocumento" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="imposta" />
+	<formFieldProperty
+		name="tipoDocumento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="pgFatturaPassiva" />
+	<formFieldProperty
+		name="dtRegistrazione" />
+	<formFieldProperty
+		name="statoLiquidazione" />
+	<formFieldProperty
+		name="causale" />
+	<formFieldProperty
+		name="dtInizioSospensione" />
+	<formFieldProperty
+		name="dtEmissioneMan" />
+	<formFieldProperty
+		name="imMandato" />
+	<formFieldProperty
+		name="cdTipoContratto" />
+
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="numeroDocumento" />
+	<findFieldProperty
+		name="dataDocumento"/>
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="codiceDestinatario" />
+	<findFieldProperty
+		name="dataRicezione" />
+	<findFieldProperty
+		name="dataScadenza" />
+	<findFieldProperty
+		name="statoDocumento" />
+	<findFieldProperty
+		name="importoDocumento" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="imposta" />
+	<findFieldProperty
+		name="tipoDocumento" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="pgFatturaPassiva" />
+	<findFieldProperty
+		name="dtRegistrazione" />
+	<findFieldProperty
+		name="statoLiquidazione" />
+	<findFieldProperty
+		name="causale" />
+	<findFieldProperty
+		name="dtInizioSospensione" />
+	<findFieldProperty
+		name="dtEmissioneMan" />
+	<findFieldProperty
+		name="imMandato" />
+	<findFieldProperty
+		name="cdTipoContratto" />
+
+	<columnFieldProperty
+		name="identificativoSdi" />
+	<columnFieldProperty
+		name="numeroDocumento" />
+	<columnFieldProperty
+		name="dataDocumento"/>
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="codiceDestinatario" />
+	<columnFieldProperty
+		name="dataRicezione" />
+	<columnFieldProperty
+		name="dataScadenza" />
+	<columnFieldProperty
+		name="statoDocumento" />
+	<columnFieldProperty
+		name="importoDocumento" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="imposta" />
+	<columnFieldProperty
+		name="tipoDocumento" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="pgFatturaPassiva" />
+	<columnFieldProperty
+		name="dtRegistrazione" />
+	<columnFieldProperty
+		name="statoLiquidazione" />
+	<columnFieldProperty
+		name="causale" />
+	<columnFieldProperty
+		name="dtInizioSospensione" />
+	<columnFieldProperty
+		name="dtEmissioneMan" />
+	<columnFieldProperty
+		name="imMandato" />
+	<columnFieldProperty
+		name="cdTipoContratto" />
+</bulkInfo>

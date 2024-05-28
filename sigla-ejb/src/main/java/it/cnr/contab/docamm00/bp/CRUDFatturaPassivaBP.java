@@ -1907,6 +1907,10 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 .orElse(Boolean.FALSE);
     }
 
+    public boolean isLiquidazioneSospesaView() {
+        return isModificaPCC && isSupervisore;
+    }
+
     @Override
     public boolean isInputReadonlyFieldName(String fieldName) {
         if (Arrays.asList("stato_liquidazione","causale", "dt_inizio_sospensione").contains(fieldName) && isSupervisore && isModificaPCC) {

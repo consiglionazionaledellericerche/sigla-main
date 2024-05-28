@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xmlns="http://contab.cnr.it/schema/SIGLA"
+		  xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		  shortDescription="Controlli PCC"
+          longDescription="Controlli PCC">
+	<fieldProperty
+		name="tipoOperazione"
+		property="tipoOperazione"
+		inputType="SELECT"
+		keysProperty="tipoOperazioneKeys"
+		maxLength="60"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		label="Tipo Operazione" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		label="Codice Fiscale" />
+
+	<formFieldProperty
+		name="tipoOperazione" />
+	<formFieldProperty
+		name="codiceFiscale" />
+
+	<findFieldProperty
+		name="tipoOperazione" />
+	<findFieldProperty
+		name="codiceFiscale" />
+
+	<columnFieldProperty
+		name="tipoOperazione" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+
+</bulkInfo>

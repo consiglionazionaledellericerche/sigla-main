@@ -5194,8 +5194,6 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
             fillModel(context);
-            fattura.setCausale(null);
-            fattura.setDt_inizio_sospensione(null);
             bp.setModel(context, fattura);
         } catch (Throwable t) {
             return handleException(context, t);

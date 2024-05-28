@@ -22,8 +22,7 @@ package it.cnr.contab.incarichi00.comp;
  * @author: CNRADM
  */
 
-import com.googlecode.jcsv.reader.CSVReader;
-import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
+import com.opencsv.CSVReader;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -400,7 +399,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
             {
 				//read csv file
 				Reader reader = new FileReader(incaricoArchivioXmlFp.getFile_ric());
-				CSVReader<String[]> csvParser = CSVReaderBuilder.newDefaultReader(reader);
+				CSVReader csvParser = new CSVReader(reader);
 				List<String[]> csvAllLine = csvParser.readAll();
 
             	int lineNumber = 0;

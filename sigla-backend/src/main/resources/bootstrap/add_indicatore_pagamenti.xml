@@ -78,4 +78,43 @@
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="marco.spasiano" id="accessi_controlli_pcc">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCCONSCONTROLLIPCC"/>
+            <column name="ti_accesso" type="CHAR(1)" value="null"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Controlli PCC"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCCONSCONTROLLIPCC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsControlliPCCBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.SERV.CONTRPCC"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Controlli PCC"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCCONSCONTROLLIPCC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsControlliPCCBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="60"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="2"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CONTRPCC"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.SERV"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
