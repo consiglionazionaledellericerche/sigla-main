@@ -1,5 +1,17 @@
-## Release 6.5.70  -- _May 27, 2024_ 
+## Release 6.5.71  -- _May 28, 2024_ 
 **Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[8fc7ff6be45bd6c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fc7ff6be45bd6c) marco.spasiano *May 28, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[a78b306620b3156](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a78b306620b3156) marco.spasiano *May 28, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[97e5dee2e2ae611](https://github.com/consiglionazionaledellericerche/sigla-main/commit/97e5dee2e2ae611) marco.spasiano *May 28, 2024*
 
 >**Il controllo sulla liquidabilità dei documenti ora avviene solo per le fatture elettroniche.**
 >
