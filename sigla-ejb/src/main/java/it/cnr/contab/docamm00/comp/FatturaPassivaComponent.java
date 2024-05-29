@@ -6213,7 +6213,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             final Parametri_cdsBulk parametriCdsBulk = (Parametri_cdsBulk) getHome(aUC, Parametri_cdsBulk.class).findByPrimaryKey(
                     new Parametri_cdsBulk(fatturaPassiva.getCd_cds(), fatturaPassiva.getEsercizio())
             );
-            if (fatturaPassiva.isLiquidabile() && fatturaPassiva.isElettronica() &&
+            if (!(fatturaPassiva instanceof Nota_di_creditoBulk) && fatturaPassiva.isLiquidabile() && fatturaPassiva.isElettronica() &&
                     Optional.ofNullable(parametriCdsBulk.getFl_obblig_liq_fatt()).orElse(Boolean.FALSE) &&
                     fatturaPassiva.getDt_protocollo_liq() == null) {
                 throw new it.cnr.jada.comp.ApplicationException("Attenzione è obbligatorio allegare un file di tipo <b>Provvedimento di Liquidazione</b> alla fattura!");
