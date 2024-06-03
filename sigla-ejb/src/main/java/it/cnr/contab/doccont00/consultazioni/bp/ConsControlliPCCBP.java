@@ -150,38 +150,55 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         }
     }
 
+    private String[] createArray(String... values) {
+        List<String> baseList = new ArrayList<>();
+        if (Optional.ofNullable(values).isPresent()) {
+            baseList.addAll(Arrays.asList(values));
+        }
+        for (int i=baseList.size(); i <= 57; i++){
+            baseList.add(null);
+        }
+        return baseList.toArray(new String[57]);
+    }
+
     public void elaboraCSV(ControlliPCCParams controlliPCCParams, List<VControlliPCCBulk> vControlliPCCBulks) throws BusinessProcessException{
         try {
             this.fileName = UUID.randomUUID().toString().concat(".csv");
             final DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
             File file = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", this.fileName);
-            CSVWriter writer = new CSVWriter(new FileWriter(file));
+
+            CSVWriter writer = new CSVWriter(
+                    new FileWriter(file),
+                    ';',
+                    CSVWriter.DEFAULT_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
             //La prima riga deve essere vuota
-            writer.writeNext(new String[]{});
-            writer.writeNext(new String[]{"Codice del modello","GESTIONE IMPORTI DOCUMENTI", EMPTY,"i campi contrassegnati da * sono obbligatori"});
-            writer.writeNext(new String[]{"Versione del modello","1"});
-            writer.writeNext(new String[]{"Utente che trasmette il file (Codice Fiscale)", controlliPCCParams.getCodiceFiscale()});
-            writer.writeNext(new String[]{"DATI IDENTIFICATIVI FATTURA*", EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            writer.writeNext(createArray());
+            writer.writeNext(createArray("Codice del modello","GESTIONE IMPORTI DOCUMENTI", EMPTY,"i campi contrassegnati da * sono obbligatori"));
+            writer.writeNext(createArray("Versione del modello","1"));
+            writer.writeNext(createArray("Utente che trasmette il file (Codice Fiscale)", controlliPCCParams.getCodiceFiscale()));
+            writer.writeNext(createArray("DATI IDENTIFICATIVI FATTURA*", EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
                     "TIPO OPERAZIONE*","VARIAZIONE IMPORTI DOCUMENTI\n" +
                     "Tutti i campi sono obbligatori\n" +
                     "Sezione da compilare solo per le righe del modello per le quali Azione = 'SID'"
                     , EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,"REGIME IVA\n" +
                     "Sezione da compilare solo per le righe del modello per le quali Azione = 'MI'","RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA \n" +
-                    "Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'", EMPTY,"ESITO ELABORAZIONE"});
-            writer.writeNext(new String[]{"IDENTIFICATIVO 1", EMPTY,"IDENTIFICATIVO 3"});
-            writer.writeNext(new String[]{"Numero progressivo di registrazione","IDENTIFICATIVO 2", EMPTY,
+                    "Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'", EMPTY,"ESITO ELABORAZIONE"));
+            writer.writeNext(createArray("IDENTIFICATIVO 1", EMPTY,"IDENTIFICATIVO 3"));
+            writer.writeNext(createArray("Numero progressivo di registrazione","IDENTIFICATIVO 2", EMPTY,
                     "Data documento (SDI 2.1.1.3 Data)","Codice fiscale fornitore","Codice ufficio","Azione","Imponibile","Imposta",
                     "Importo non commerciale*","Importo sospeso in Contenzioso*","Data inizio sospesione in Contenzioso*",
                     "Importo sospeso in contestazione/adempimenti normativi*","Data inizio sospesione in contestazione /adempimenti normativi*",
                     "Importo sospeso per data esito regolare verifica di conformità*","Data inizio sospensione per data esito regolare verifica di conformità*",
-                    "Importo non liquidabile*","Flag split (S/N)","Data","Numero protocollo di entrata","Codice segnalazione","Descrizione segnalazione"});
-            writer.writeNext(new String[]{EMPTY,"Lotto SDI","Numero fattura \n" + "(SDI 2.1.1.4 Numero)"});
+                    "Importo non liquidabile*","Flag split (S/N)","Data","Numero protocollo di entrata","Codice segnalazione","Descrizione segnalazione"));
+            writer.writeNext(createArray(EMPTY,"Lotto SDI","Numero fattura \n" + "(SDI 2.1.1.4 Numero)"));
             final boolean isOperazioneSID = controlliPCCParams.getTipoOperazione().equalsIgnoreCase(ControlliPCCParams.TipoOperazioneType.SID.name());
             final boolean isComunicazioneScadenza = Arrays.asList(
                     ControlliPCCParams.TipoOperazioneType.RC.name()
                     ).contains(controlliPCCParams.getTipoOperazione());
             vControlliPCCBulks.stream().forEach(vControlliPCCBulk -> {
-                writer.writeNext(new String[]{
+                writer.writeNext(createArray(
                         EMPTY,
                         Optional.ofNullable(vControlliPCCBulk.getIdentificativoSdi())
                                 .map(String::valueOf)
@@ -244,8 +261,8 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                         EMPTY, // Flag split (S/N) Per ora non gestito
                         !isComunicazioneScadenza ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getDataScadenza())
                                 .map(timestamp -> DateTimeFormatter.ofPattern("dd/MM/yyyy").format(timestamp.toLocalDateTime()))
-                                .orElse(EMPTY), // RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'
-                });
+                                .orElse(EMPTY) // RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'
+                ));
             });
             writer.close();
             setMessage(INFO_MESSAGE, "Il file è stato creato, per poterlo scaricare utilizzare <b>Scarica CSV</b>");
