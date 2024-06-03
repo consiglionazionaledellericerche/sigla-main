@@ -2201,21 +2201,10 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             java.sql.Timestamp dataRegistrazione = fattura.getDt_registrazione();
             try {
                 fillModel(context);
-                if (!bp.isSearching())
+                if (!bp.isSearching()){
                     fattura.validateDate();
-                //NON ELIMINARE QUESTO COMMENTO: POSSIBILE VARIAZIONE IN FUTURO
-                //java.sql.Timestamp dataFatturaFornitore = fattura.getDt_fattura_fornitore();
-                //if (dataFatturaFornitore != null &&
-                //!dataFatturaFornitore.equals(fattura.getInizio_validita_valuta()) &&
-                //!dataFatturaFornitore.equals(fattura.getFine_validita_valuta())) {
-
-                //if (fattura.getInizio_validita_valuta() == null || fattura.getFine_validita_valuta() == null ||
-                //(!dataFatturaFornitore.after(fattura.getInizio_validita_valuta()) && !dataFatturaFornitore.before(fattura.getFine_validita_valuta()))) {
-
-                //return doSelezionaValuta(context);
-                //}
-                //}
-                //bp.valorizzaInfoDocEle(context, fattura);
+                    fattura.impostaDataScadenza();
+                }
                 return context.findDefaultForward();
             } catch (Throwable e) {
                 fattura.setDt_registrazione(dataRegistrazione);
@@ -2307,7 +2296,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                     else
                         throw new ValidationException("La data di protocollo/ricezione non può essere nulla!");
                     cal.add(Calendar.DAY_OF_MONTH, 45);
-
+                    fattura.impostaDataScadenza();
                 }
                 return context.findDefaultForward();
             } catch (Throwable e) {

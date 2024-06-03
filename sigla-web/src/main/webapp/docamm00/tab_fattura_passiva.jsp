@@ -367,7 +367,7 @@
 				<% bp.getController().writeFormLabel(out,"dt_scadenza");%>			  
 			</td>
 			<td>
-				<% bp.getController().writeFormInput(out,null,"dt_scadenza",false,null,"");%>
+				<% bp.getController().writeFormInput(out,null,"dt_scadenza",!(bp.isSupervisore() || bp.isSearching()),null,"");%>
 			</td>
       </tr>
       <tr>

@@ -38,7 +38,9 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.util.ApplicationMessageFormatException;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
@@ -3028,6 +3030,25 @@ public abstract class Fattura_passivaBulk
 //        if ((Optional.ofNullable(getCig()).isPresent() && Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
 //            throw new ValidationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
 //        }
+    }
+
+    public void impostaDataScadenza() {
+        if (Optional.ofNullable(getDocumentoEleTestata())
+                .flatMap(documentoEleTestataBulk -> Optional.ofNullable(documentoEleTestataBulk.getIdentificativoSdi()))
+                .isPresent()) {
+            Optional.ofNullable(getData_protocollo())
+                .map(timestamp -> Utility.addDays(timestamp, SpringUtil.getBean(UtilService.class).getNumGiorniScadenza()))
+                .ifPresent(timestamp -> {
+                    setDt_scadenza(timestamp);
+                });
+        } else {
+            Optional.ofNullable(getDt_registrazione())
+                    .map(timestamp -> Utility.addDays(timestamp, SpringUtil.getBean(UtilService.class).getNumGiorniScadenza()))
+                    .ifPresent(timestamp -> {
+                        setDt_scadenza(timestamp);
+                    });
+        }
+
     }
 
     public void validateDate() throws ValidationException {

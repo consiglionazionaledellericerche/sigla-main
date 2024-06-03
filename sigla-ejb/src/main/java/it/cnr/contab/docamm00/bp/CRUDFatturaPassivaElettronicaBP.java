@@ -550,6 +550,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
             fatturaPassivaBulk.setDt_fattura_fornitore(documentoEleTestata.getDataDocumento());
             fatturaPassivaBulk.setEsercizio_fattura_fornitore(CNRUserContext.getEsercizio(context.getUserContext()));//TODO
             fatturaPassivaBulk.setData_protocollo(documentoEleTestata.getDocumentoEleTrasmissione().getDataRicezione());
+            fatturaPassivaBulk.impostaDataScadenza();
             Calendar date = Calendar.getInstance();
             date.setTimeInMillis(documentoEleTestata.getDataDocumento().getTime());
             date.add(Calendar.MONTH, 1);

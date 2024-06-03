@@ -4306,6 +4306,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             if (annoSolare != it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
                 throw new it.cnr.jada.comp.ApplicationException("Non è possibile inserire " + fattura.getDescrizioneEntitaPlurale() + " in esercizi non corrispondenti all'anno solare!");
             fattura.setDt_registrazione(date);
+            fattura.impostaDataScadenza();
         } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(fattura, e);
         }
