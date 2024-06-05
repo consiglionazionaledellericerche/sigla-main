@@ -1,5 +1,21 @@
-## Release 6.5.71  -- _May 28, 2024_ 
+## Release 6.5.73  -- _June 03, 2024_ 
 **Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[fd267e3dffe1562](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd267e3dffe1562) marco.spasiano *June 03, 2024*
+
+>**Resa non modificabile la data di scadenza della fattura passiva ed impostata a 30 giorni dalla data di ricezione o di registrazione**
+>
+>[1b4565f8fdefb75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b4565f8fdefb75) marco.spasiano *June 03, 2024*
+
+
+## Release 6.5.72  -- _May 29, 2024_ 
+**Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[b24cca72606a22a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b24cca72606a22a) marco.spasiano *May 29, 2024*
 
 >**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
 >
