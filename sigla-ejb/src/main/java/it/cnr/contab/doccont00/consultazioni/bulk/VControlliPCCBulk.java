@@ -85,10 +85,17 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 	//    CD_TIPO_CONTRATTO VARCHAR(5)
 	private String cdTipoContratto;
 
+	//    FL_IRREGISTRABILE CHAR(1)
+	private String flIrregistrabile;
+
+	//    CD_UO_CUU VARCHAR2(30)
+	private String cdUoCUU;
+
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = DocumentoEleTestataBulk.tiStatoDocumentoKeys;
 	public static final java.util.Dictionary<String, String> tiTipoDocumentoKeys = DocumentoEleTestataBulk.tiTipoDocumentoKeys;
 	public static final java.util.Dictionary<String, String> tiCausaleKeys = Fattura_passivaBulk.CAUSALE;
 	public static final java.util.Dictionary<String, String> tiStatoLiquidazioneKeys = Fattura_passivaBulk.STATO_LIQUIDAZIONE;
+	public static final java.util.Dictionary<String, String> decorrenzaTerminiKeys = DocumentoEleTestataBulk.tiDecorrenzaTerminiKeys;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -368,5 +375,21 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 
 	public void setDataDocumento(Timestamp dataDocumento) {
 		this.dataDocumento = dataDocumento;
+	}
+
+	public String getFlIrregistrabile() {
+		return flIrregistrabile;
+	}
+
+	public void setFlIrregistrabile(String flIrregistrabile) {
+		this.flIrregistrabile = flIrregistrabile;
+	}
+
+	public String getCdUoCUU() {
+		return cdUoCUU;
+	}
+
+	public void setCdUoCUU(String cdUoCUU) {
+		this.cdUoCUU = cdUoCUU;
 	}
 }

@@ -176,6 +176,24 @@
 		maxLength="5"
 		enabledOnEdit="false"
 		label="Codice Contratto" />
+	<fieldProperty
+		name="flIrregistrabile"
+		property="flIrregistrabile"
+		maxLength="2"
+		inputSize="2"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		keysProperty="decorrenzaTerminiKeys"
+		label="Non registrabile" />
+	<fieldProperty
+		name="cdUoCUU"
+		property="cdUoCUU"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="UO CUU" />
 
 	<formFieldProperty
 		name="identificativoSdi" />
@@ -221,6 +239,10 @@
 		name="imMandato" />
 	<formFieldProperty
 		name="cdTipoContratto" />
+	<formFieldProperty
+		name="flIrregistrabile" />
+	<formFieldProperty
+		name="cdUoCUU" />
 
 	<findFieldProperty
 		name="identificativoSdi" />
@@ -233,11 +255,15 @@
 	<findFieldProperty
 		name="codiceDestinatario" />
 	<findFieldProperty
+		name="cdUoCUU" />
+	<findFieldProperty
 		name="dataRicezione" />
 	<findFieldProperty
 		name="dataScadenza" />
 	<findFieldProperty
 		name="statoDocumento" />
+	<findFieldProperty
+		name="cdUoCUU" />
 	<findFieldProperty
 		name="importoDocumento" />
 	<findFieldProperty
@@ -278,11 +304,15 @@
 	<columnFieldProperty
 		name="codiceDestinatario" />
 	<columnFieldProperty
+		name="cdUoCUU" />
+	<columnFieldProperty
 		name="dataRicezione" />
 	<columnFieldProperty
 		name="dataScadenza" />
 	<columnFieldProperty
 		name="statoDocumento" />
+	<columnFieldProperty
+		name="flIrregistrabile" />
 	<columnFieldProperty
 		name="importoDocumento" />
 	<columnFieldProperty

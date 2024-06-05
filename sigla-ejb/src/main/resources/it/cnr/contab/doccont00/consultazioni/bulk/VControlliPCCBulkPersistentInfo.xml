@@ -137,6 +137,18 @@
 				sqlTypeName="VARCHAR"
 				columnSize="5"
 				nullable="true" />
+		<columnMapping
+				columnName="FL_IRREGISTRABILE"
+				propertyName="flIrregistrabile"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_UO_CUU"
+				propertyName="cdUoCUU"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+
 	</defaultColumnMap>
 	<persistentProperty
 			name="identificativoSdi" />
@@ -182,5 +194,9 @@
 			name="imMandato" />
 	<persistentProperty
 			name="cdTipoContratto" />
+	<persistentProperty
+			name="flIrregistrabile" />
+	<persistentProperty
+			name="cdUoCUU"/>
 
 </SQLPersistentInfo>
