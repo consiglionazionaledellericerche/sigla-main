@@ -1,5 +1,9 @@
-## Release 6.5.73  -- _June 03, 2024_ 
+## Release 6.5.74  -- _June 05, 2024_ 
 **Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[42c268f64598b6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/42c268f64598b6f) marco.spasiano *June 05, 2024*
 
 >**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
 >
