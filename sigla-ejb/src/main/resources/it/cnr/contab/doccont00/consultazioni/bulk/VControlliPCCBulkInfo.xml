@@ -263,6 +263,8 @@
 	<findFieldProperty
 		name="statoDocumento" />
 	<findFieldProperty
+		name="flIrregistrabile" />
+	<findFieldProperty
 		name="cdUoCUU" />
 	<findFieldProperty
 		name="importoDocumento" />
