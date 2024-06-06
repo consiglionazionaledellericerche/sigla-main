@@ -148,6 +148,13 @@
 				propertyName="cdUoCUU"
 				sqlTypeName="VARCHAR"
 				columnSize="30"/>
+		<columnMapping
+				columnName="FL_DA_COMPENSO"
+				propertyName="flDaCompenso"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+				nullable="true" />
 
 	</defaultColumnMap>
 	<persistentProperty
@@ -198,5 +205,6 @@
 			name="flIrregistrabile" />
 	<persistentProperty
 			name="cdUoCUU"/>
-
+	<persistentProperty
+			name="flDaCompenso"/>
 </SQLPersistentInfo>

@@ -90,6 +90,8 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 
 	//    CD_UO_CUU VARCHAR2(30)
 	private String cdUoCUU;
+	//    CD_UO_CUU VARCHAR2(30)
+	private Boolean flDaCompenso;
 
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = DocumentoEleTestataBulk.tiStatoDocumentoKeys;
 	public static final java.util.Dictionary<String, String> tiTipoDocumentoKeys = DocumentoEleTestataBulk.tiTipoDocumentoKeys;
@@ -391,5 +393,13 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 
 	public void setCdUoCUU(String cdUoCUU) {
 		this.cdUoCUU = cdUoCUU;
+	}
+
+	public Boolean getFlDaCompenso() {
+		return flDaCompenso;
+	}
+
+	public void setFlDaCompenso(Boolean flDaCompenso) {
+		this.flDaCompenso = flDaCompenso;
 	}
 }

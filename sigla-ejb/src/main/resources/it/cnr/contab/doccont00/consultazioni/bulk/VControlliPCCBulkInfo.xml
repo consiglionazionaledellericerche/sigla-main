@@ -194,6 +194,11 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		label="UO CUU" />
+	<fieldProperty
+		name="flDaCompenso"
+		property="flDaCompenso"
+		inputType="CHECKBOX"
+		label="Da Compenso" />
 
 	<formFieldProperty
 		name="identificativoSdi" />
@@ -243,6 +248,8 @@
 		name="flIrregistrabile" />
 	<formFieldProperty
 		name="cdUoCUU" />
+	<formFieldProperty
+		name="flDaCompenso"/>
 
 	<findFieldProperty
 		name="identificativoSdi" />
@@ -287,6 +294,8 @@
 	<findFieldProperty
 		name="causale" />
 	<findFieldProperty
+		name="flDaCompenso"/>
+	<findFieldProperty
 		name="dtInizioSospensione" />
 	<findFieldProperty
 		name="dtEmissioneMan" />
@@ -323,6 +332,8 @@
 		name="imposta" />
 	<columnFieldProperty
 		name="tipoDocumento" />
+	<columnFieldProperty
+		name="flDaCompenso"/>
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
