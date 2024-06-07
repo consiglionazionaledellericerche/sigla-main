@@ -2371,6 +2371,8 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP) context.getBusinessProcess();
             if (bp instanceof CRUDFatturaPassivaBP && ((CRUDFatturaPassivaBP) bp).isFromFatturaElettronica())
                 return this.doCloseForm(context);
+            bp.rollbackAndCloseUserTransaction();
+            bp.initializeUserTransaction(context);
             bp.edit(context, bp.getModel());
             return context.findDefaultForward();
         } catch (BusinessProcessException e) {
