@@ -1603,7 +1603,18 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Reversale rev = new Reversale();
             List list = componentDistinta
                     .findDocumentiFlusso(userContext, bulk);
-            rev.setTipoOperazione("INSERIMENTO");
+            Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
+                    .filter(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .isPresent();
+            if (bulk.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO)) {
+                rev.setTipoOperazione(DistintaCassiereComponent.ANNULLO);
+            } else {
+                if (isVariazioneDefinitiva) {
+                    rev.setTipoOperazione(DistintaCassiereComponent.VARIAZIONE);
+                } else {
+                    rev.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
+                }
+            }
             GregorianCalendar gcdi = new GregorianCalendar();
 
             it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante infover = new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante();
