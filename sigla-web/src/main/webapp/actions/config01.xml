@@ -242,11 +242,19 @@
     </action>
     <businessProcess
             name="ConsControlliPCCBP" className="it.cnr.contab.doccont00.consultazioni.bp.ConsControlliPCCBP">
-        <forward name="default" path="/doccont00/form_lista_controlli_pcc.jsp"/>
+        <forward name="default" path="/util/form_lista.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
         <init-param name="defaultAction" value="ConsControlliPCCAction"/>
     </businessProcess>
+
+    <businessProcess name="AllegatiPCCBP" className="it.cnr.contab.doccont00.consultazioni.bp.AllegatiPCCBP">
+        <forward name="default" path="/util00/allegati.jsp" />
+        <init-param name="defaultAction" value="CRUDAction" />
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk" />
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+    </businessProcess>
+
     <action
             path="/ControlliPCCParamsAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ControlliPCCParamsAction">
     </action>

@@ -169,6 +169,15 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Mandato" />
 	<fieldProperty
+		name="imTotaleNC"
+		property="imTotaleNC"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Note di Credito" />
+	<fieldProperty
 		name="cdTipoContratto"
 		property="cdTipoContratto"
 		inputType="TEXT"
@@ -243,6 +252,8 @@
 	<formFieldProperty
 		name="imMandato" />
 	<formFieldProperty
+		name="imTotaleNC" />
+	<formFieldProperty
 		name="cdTipoContratto" />
 	<formFieldProperty
 		name="flIrregistrabile" />
@@ -302,6 +313,8 @@
 	<findFieldProperty
 		name="imMandato" />
 	<findFieldProperty
+		name="imTotaleNC" />
+	<findFieldProperty
 		name="cdTipoContratto" />
 
 	<columnFieldProperty
@@ -352,6 +365,8 @@
 		name="dtEmissioneMan" />
 	<columnFieldProperty
 		name="imMandato" />
+	<columnFieldProperty
+		name="imTotaleNC" />
 	<columnFieldProperty
 		name="cdTipoContratto" />
 </bulkInfo>

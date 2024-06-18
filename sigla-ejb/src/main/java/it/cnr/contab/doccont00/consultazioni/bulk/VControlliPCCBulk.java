@@ -8,6 +8,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class VControlliPCCBulk extends OggettoBulk implements Persistent {
@@ -81,6 +82,9 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 
 	//    IM_MANDATO DECIMAL(0,-127)
 	private java.math.BigDecimal imMandato;
+
+	//    IM_TOTALE_NC DECIMAL(0,-127)
+	private java.math.BigDecimal imTotaleNC;
 
 	//    CD_TIPO_CONTRATTO VARCHAR(5)
 	private String cdTipoContratto;
@@ -401,5 +405,13 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 
 	public void setFlDaCompenso(Boolean flDaCompenso) {
 		this.flDaCompenso = flDaCompenso;
+	}
+
+	public BigDecimal getImTotaleNC() {
+		return imTotaleNC;
+	}
+
+	public void setImTotaleNC(BigDecimal imTotaleNC) {
+		this.imTotaleNC = imTotaleNC;
 	}
 }

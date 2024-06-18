@@ -132,6 +132,12 @@
 				columnSize="0"
 				nullable="true" />
 		<columnMapping
+				columnName="IM_TOTALE_NC"
+				propertyName="imTotaleNC"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
+		<columnMapping
 				columnName="CD_TIPO_CONTRATTO"
 				propertyName="cdTipoContratto"
 				sqlTypeName="VARCHAR"
@@ -199,6 +205,8 @@
 			name="dtEmissioneMan" />
 	<persistentProperty
 			name="imMandato" />
+	<persistentProperty
+			name="imTotaleNC" />
 	<persistentProperty
 			name="cdTipoContratto" />
 	<persistentProperty

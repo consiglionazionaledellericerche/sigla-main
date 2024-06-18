@@ -21,12 +21,13 @@ import com.opencsv.CSVWriter;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.ControlliPCCParams;
 import it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentIBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
-import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
@@ -34,26 +35,28 @@ import it.cnr.jada.util.action.CondizioneComplessaBulk;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.jsp.Button;
-import it.cnr.jada.util.jsp.JSPUtils;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
-import javax.servlet.ServletException;
-import javax.servlet.jsp.JspWriter;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchProvider {
-    private static final long serialVersionUID = 1L;
     public static final String EMPTY = "";
-    private String fileName;
+    private static final long serialVersionUID = 1L;
+    protected StoreService storeService;
+    protected Integer esercizio;
+
     public ConsControlliPCCBP() {
         super();
     }
@@ -64,9 +67,6 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         super.table.setOnselect("select");
     }
 
-    public boolean isScaricaCSVHidden() {
-        return !Optional.ofNullable(fileName).isPresent();
-    }
 
     @Override
     protected void init(Config config, ActionContext context)
@@ -82,6 +82,8 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         setColumns(getBulkInfo().getColumnFieldPropertyDictionary());
         super.init(config, context);
         openIterator(context);
+        storeService = SpringUtil.getBean("storeService", StoreService.class);
+        esercizio = CNRUserContext.getEsercizio(context.getUserContext());
     }
 
     public it.cnr.jada.ejb.CRUDComponentSession createComponentSession() throws javax.ejb.EJBException, RemoteException, BusinessProcessException {
@@ -94,7 +96,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         return Stream.concat(Arrays.asList(super.createToolbar()).stream(),
                 Arrays.asList(
                         new Button(properties, "CRUDToolbar.estrazionecsv"),
-                        new Button(properties, "CRUDToolbar.scaricacsv")
+                        new Button(properties, "CRUDToolbar.allegaticsv")
                 ).stream()).toArray(Button[]::new);
     }
 
@@ -130,42 +132,22 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         }
     }
 
-    public void scaricaCSV(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
-        if (fileName != null) {
-            final Path path = Paths.get(System.getProperty("tmp.dir.SIGLAWeb"), "/tmp/", fileName);
-            FileInputStream fileInputStream = new FileInputStream(path.toFile());
-            ((HttpActionContext) actioncontext).getResponse().setContentLength(fileInputStream.available());
-            ((HttpActionContext) actioncontext).getResponse().setContentType("text/csv");
-            OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
-            ((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
-            byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
-            int buflength;
-            while ((buflength = fileInputStream.read(buffer)) > 0) {
-                os.write(buffer, 0, buflength);
-            }
-            fileInputStream.close();
-            os.flush();
-            Files.deleteIfExists(path);
-            fileName = null;
-        }
-    }
-
     private String[] createArray(String... values) {
         List<String> baseList = new ArrayList<>();
         if (Optional.ofNullable(values).isPresent()) {
             baseList.addAll(Arrays.asList(values));
         }
-        for (int i=baseList.size(); i <= 57; i++){
+        for (int i = baseList.size(); i <= 57; i++) {
             baseList.add(null);
         }
         return baseList.toArray(new String[57]);
     }
 
-    public void elaboraCSV(ControlliPCCParams controlliPCCParams, List<VControlliPCCBulk> vControlliPCCBulks) throws BusinessProcessException{
+    public void elaboraCSV(ControlliPCCParams controlliPCCParams, List<VControlliPCCBulk> vControlliPCCBulks) throws BusinessProcessException {
         try {
-            this.fileName = UUID.randomUUID().toString().concat(".csv");
+            String fileName = UUID.randomUUID().toString().concat(".csv");
             final DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-            File file = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", this.fileName);
+            File file = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", fileName);
 
             CSVWriter writer = new CSVWriter(
                     new FileWriter(file),
@@ -175,28 +157,26 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                     CSVWriter.DEFAULT_LINE_END);
             //La prima riga deve essere vuota
             writer.writeNext(createArray());
-            writer.writeNext(createArray("Codice del modello","GESTIONE IMPORTI DOCUMENTI", EMPTY,"i campi contrassegnati da * sono obbligatori"));
-            writer.writeNext(createArray("Versione del modello","1"));
+            writer.writeNext(createArray("Codice del modello", "GESTIONE IMPORTI DOCUMENTI", EMPTY, "i campi contrassegnati da * sono obbligatori"));
+            writer.writeNext(createArray("Versione del modello", "1"));
             writer.writeNext(createArray("Utente che trasmette il file (Codice Fiscale)", controlliPCCParams.getCodiceFiscale()));
             writer.writeNext(createArray("DATI IDENTIFICATIVI FATTURA*", EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-                    "TIPO OPERAZIONE*","VARIAZIONE IMPORTI DOCUMENTI\n" +
-                    "Tutti i campi sono obbligatori\n" +
-                    "Sezione da compilare solo per le righe del modello per le quali Azione = 'SID'"
-                    , EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,"REGIME IVA\n" +
-                    "Sezione da compilare solo per le righe del modello per le quali Azione = 'MI'","RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA \n" +
-                    "Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'", EMPTY,"ESITO ELABORAZIONE"));
-            writer.writeNext(createArray("IDENTIFICATIVO 1", EMPTY,"IDENTIFICATIVO 3"));
-            writer.writeNext(createArray("Numero progressivo di registrazione","IDENTIFICATIVO 2", EMPTY,
-                    "Data documento (SDI 2.1.1.3 Data)","Codice fiscale fornitore","Codice ufficio","Azione","Imponibile","Imposta",
-                    "Importo non commerciale*","Importo sospeso in Contenzioso*","Data inizio sospesione in Contenzioso*",
-                    "Importo sospeso in contestazione/adempimenti normativi*","Data inizio sospesione in contestazione /adempimenti normativi*",
-                    "Importo sospeso per data esito regolare verifica di conformità*","Data inizio sospensione per data esito regolare verifica di conformità*",
-                    "Importo non liquidabile*","Flag split (S/N)","Data","Numero protocollo di entrata","Codice segnalazione","Descrizione segnalazione"));
-            writer.writeNext(createArray(EMPTY,"Lotto SDI","Numero fattura \n" + "(SDI 2.1.1.4 Numero)"));
+                    "TIPO OPERAZIONE*", "VARIAZIONE IMPORTI DOCUMENTI\n" +
+                            "Tutti i campi sono obbligatori\n" +
+                            "Sezione da compilare solo per le righe del modello per le quali Azione = 'SID'"
+                    , EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, "REGIME IVA\n" +
+                            "Sezione da compilare solo per le righe del modello per le quali Azione = 'MI'", "RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA \n" +
+                            "Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'", EMPTY, "ESITO ELABORAZIONE"));
+            writer.writeNext(createArray("IDENTIFICATIVO 1", EMPTY, "IDENTIFICATIVO 3"));
+            writer.writeNext(createArray("Numero progressivo di registrazione", "IDENTIFICATIVO 2", EMPTY,
+                    "Data documento (SDI 2.1.1.3 Data)", "Codice fiscale fornitore", "Codice ufficio", "Azione", "Imponibile", "Imposta",
+                    "Importo non commerciale*", "Importo sospeso in Contenzioso*", "Data inizio sospesione in Contenzioso*",
+                    "Importo sospeso in contestazione/adempimenti normativi*", "Data inizio sospesione in contestazione /adempimenti normativi*",
+                    "Importo sospeso per data esito regolare verifica di conformità*", "Data inizio sospensione per data esito regolare verifica di conformità*",
+                    "Importo non liquidabile*", "Flag split (S/N)", "Data", "Numero protocollo di entrata", "Codice segnalazione", "Descrizione segnalazione"));
+            writer.writeNext(createArray(EMPTY, "Lotto SDI", "Numero fattura \n" + "(SDI 2.1.1.4 Numero)"));
             final boolean isOperazioneSID = controlliPCCParams.getTipoOperazione().equalsIgnoreCase(ControlliPCCParams.TipoOperazioneType.SID.name());
-            final boolean isComunicazioneScadenza = Arrays.asList(
-                    ControlliPCCParams.TipoOperazioneType.RC.name()
-                    ).contains(controlliPCCParams.getTipoOperazione());
+            final boolean isComunicazioneScadenza = Objects.equals(ControlliPCCParams.TipoOperazioneType.RC.name(), controlliPCCParams.getTipoOperazione());
             vControlliPCCBulks.stream().forEach(vControlliPCCBulk -> {
                 writer.writeNext(createArray(
                         EMPTY,
@@ -254,8 +234,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                                 .map(timestamp -> DateTimeFormatter.ofPattern("dd/MM/yyyy").format(timestamp.toLocalDateTime()))
                                 .orElse(EMPTY), // Data inizio sospensione per data esito regolare verifica di conformità*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getStatoLiquidazione())
-                                .filter(s -> s.equalsIgnoreCase(Fattura_passivaBulk.NOLIQ))
-                                .map(s -> vControlliPCCBulk.getImponibile())
+                                .map(s -> s.equalsIgnoreCase(Fattura_passivaBulk.NOLIQ) ? vControlliPCCBulk.getImponibile() : vControlliPCCBulk.getImTotaleNC())
                                 .map(bigDecimal -> decimalFormat.format(bigDecimal))
                                 .orElse(String.valueOf(BigDecimal.ZERO)), // Importo non liquidabile*
                         EMPTY, // Flag split (S/N) Per ora non gestito
@@ -265,7 +244,22 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                 ));
             });
             writer.close();
-            setMessage(INFO_MESSAGE, "Il file è stato creato, per poterlo scaricare utilizzare <b>Scarica CSV</b>");
+            final StorageObject storageObject = storeService.storeSimpleDocument(
+                    new FileInputStream(file),
+                    "text/csv",
+                    storeService.getStorageObjectByPath(AllegatoParentIBulk.getStorePath(AllegatiPCCBP.COMUNICAZIONI_PCC, esercizio), true).getPath(),
+                    Stream.of(
+                            new AbstractMap.SimpleEntry<>(StoragePropertyNames.NAME.value(), fileName),
+                            new AbstractMap.SimpleEntry<>(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), Arrays.asList("P:cm:titled")),
+                            new AbstractMap.SimpleEntry<>(StoragePropertyNames.TITLE.value(),
+                                    String.format("Operazione %s con codice fiscale %s",
+                                        ControlliPCCParams.TipoOperazioneType.valueOf(controlliPCCParams.getTipoOperazione()).label(),
+                                        controlliPCCParams.getCodiceFiscale()
+                                    )
+                            ),
+                            new AbstractMap.SimpleEntry<>(StoragePropertyNames.OBJECT_TYPE_ID.value(), "cmis:document"))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+            );
         } catch (IOException e) {
             throw handleException(e);
         }

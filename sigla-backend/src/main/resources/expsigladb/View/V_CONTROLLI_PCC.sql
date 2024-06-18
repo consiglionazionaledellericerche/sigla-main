@@ -23,6 +23,7 @@ CREATE OR REPLACE FORCE VIEW "V_CONTROLLI_PCC" (
     "DT_INIZIO_SOSPENSIONE",
     "DT_EMISSIONE_MAN",
     "IM_MANDATO",
+    "IM_TOTALE_NC",
     "CD_TIPO_CONTRATTO",
     "FL_IRREGISTRABILE",
     "CD_UO_CUU",
@@ -49,6 +50,7 @@ CREATE OR REPLACE FORCE VIEW "V_CONTROLLI_PCC" (
     "DT_INIZIO_SOSPENSIONE",
     "DT_EMISSIONE_MAN",
     "IM_MANDATO",
+    "IM_TOTALE_NC",
     "CD_TIPO_CONTRATTO",
     "FL_IRREGISTRABILE",
     "CD_UO_CUU",
@@ -98,7 +100,7 @@ CREATE OR REPLACE FORCE VIEW "V_CONTROLLI_PCC" (
             AND mr.pg_mandato = m.pg_mandato
         ) DT_EMISSIONE_MAN,
 
-        (SELECT SUM(fpr.IM_TOTALE_DIVISA) FROM FATTURA_PASSIVA_RIGA fpr, OBBLIGAZIONE_SCADENZARIO os, mandato_riga mr
+        (SELECT SUM(mr.IM_MANDATO_RIGA) FROM FATTURA_PASSIVA_RIGA fpr, OBBLIGAZIONE_SCADENZARIO os, mandato_riga mr
             WHERE fp.CD_CDS = fpr.CD_CDS(+)
             AND fp.CD_UNITA_ORGANIZZATIVA = fpr.CD_UNITA_ORGANIZZATIVA(+)
             AND fp.ESERCIZIO = fpr.ESERCIZIO(+)
@@ -113,7 +115,24 @@ CREATE OR REPLACE FORCE VIEW "V_CONTROLLI_PCC" (
             AND os.esercizio_originale = mr.esercizio_ori_obbligazione
             AND os.pg_obbligazione = mr.pg_obbligazione
             AND os.pg_obbligazione_scadenzario = mr.pg_obbligazione_scadenzario
+            AND fpr.ESERCIZIO = mr.ESERCIZIO_DOC_AMM
+            AND fpr.CD_CDS = mr.CD_CDS_DOC_AMM
+            AND fpr.CD_UNITA_ORGANIZZATIVA = mr.CD_UO_DOC_AMM
+            AND fpr.PG_FATTURA_PASSIVA = mr.PG_DOC_AMM
+            AND mr.CD_TIPO_DOCUMENTO_AMM = 'FATTURA_P'
         ) IM_MANDATO,
+
+        (SELECT SUM(ncr.IM_TOTALE_DIVISA) FROM FATTURA_PASSIVA_RIGA fpr, FATTURA_PASSIVA_RIGA ncr
+            WHERE fp.CD_CDS = fpr.CD_CDS(+)
+            AND fp.CD_UNITA_ORGANIZZATIVA = fpr.CD_UNITA_ORGANIZZATIVA(+)
+            AND fp.ESERCIZIO = fpr.ESERCIZIO(+)
+            AND fp.PG_FATTURA_PASSIVA = fpr.PG_FATTURA_PASSIVA(+)
+            AND ncr.CD_CDS_ASSNCNA_ECO = fpr.CD_CDS
+            AND ncr.CD_UO_ASSNCNA_ECO = fpr.CD_UNITA_ORGANIZZATIVA
+            AND ncr.ESERCIZIO_ASSNCNA_ECO = fpr.ESERCIZIO
+            AND ncr.PG_FATTURA_ASSNCNA_ECO = fpr.PG_FATTURA_PASSIVA
+            AND ncr.PG_RIGA_ASSNCNA_ECO = fpr.PROGRESSIVO_RIGA
+        ) IM_TOTALE_NC,
 
         (SELECT min(c.CD_TIPO_CONTRATTO) FROM FATTURA_PASSIVA_RIGA fpr, OBBLIGAZIONE o, OBBLIGAZIONE_SCADENZARIO os, CONTRATTO c
             WHERE fp.CD_CDS = fpr.CD_CDS(+)
@@ -172,7 +191,8 @@ CREATE OR REPLACE FORCE VIEW "V_CONTROLLI_PCC" (
  COMMENT ON COLUMN "V_CONTROLLI_PCC"."DT_INIZIO_SOSPENSIONE" IS 'Data Inizio Sospensione';
  COMMENT ON COLUMN "V_CONTROLLI_PCC"."DT_EMISSIONE_MAN" IS 'Data Emissione Mandato';
  COMMENT ON COLUMN "V_CONTROLLI_PCC"."IM_MANDATO" IS 'Importo Mandato';
- COMMENT ON COLUMN "V_CONTROLLI_PCC"."CD_TIPO_CONTRATTO" IS 'Codice Contratto';
+ COMMENT ON COLUMN "V_CONTROLLI_PCC"."IM_TOTALE_NC" IS 'totale note di credito collegate';
+  COMMENT ON COLUMN "V_CONTROLLI_PCC"."CD_TIPO_CONTRATTO" IS 'Codice Contratto';
  COMMENT ON COLUMN "V_CONTROLLI_PCC"."FL_IRREGISTRABILE" IS 'Fattura elettronica non registrabile';
  COMMENT ON COLUMN "V_CONTROLLI_PCC"."CD_UO_CUU" IS 'Unità Organizzativa del CUU';
  COMMENT ON COLUMN "V_CONTROLLI_PCC"."FL_DA_COMPENSO" IS 'Fattura da Compenso';

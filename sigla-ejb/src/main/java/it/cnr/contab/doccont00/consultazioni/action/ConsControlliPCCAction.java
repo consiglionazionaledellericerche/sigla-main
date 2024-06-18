@@ -53,7 +53,11 @@ public class ConsControlliPCCAction extends SelezionatoreListaAction {
         List<VControlliPCCBulk> vControlliPCCBulks = bp.getSelectedElements(context);
         bp.elaboraCSV(controlliPCCParams, vControlliPCCBulks);
         bp.clearSelection(context);
-        return context.findDefaultForward();
+        return doVisualizzaAllegatiCSV(context);
     }
 
+    public Forward doVisualizzaAllegatiCSV(ActionContext context) throws BusinessProcessException {
+        final BusinessProcess allegatiPCCBP = context.createBusinessProcess("AllegatiPCCBP", new Object[]{"M"});
+        return context.addBusinessProcess(allegatiPCCBP);
+    }
 }
