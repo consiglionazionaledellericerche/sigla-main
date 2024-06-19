@@ -147,6 +147,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         try {
             String fileName = UUID.randomUUID().toString().concat(".csv");
             final DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+            decimalFormat.setGroupingUsed(false);
             File file = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", fileName);
 
             CSVWriter writer = new CSVWriter(
