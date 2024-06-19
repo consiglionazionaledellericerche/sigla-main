@@ -792,6 +792,22 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
-	}	
+	}
 
+    public void aggiornaEsitoPCC(UserContext userContext, String identificativoSDI, String esitoPCC) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(userContext, DocumentoEleTestataBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSDI);
+		try {
+			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+			for (DocumentoEleTestataBulk documentoEleTestata : results) {
+				documentoEleTestata.setEsitoPCC(esitoPCC);
+				documentoEleTestata.setToBeUpdated();
+				super.modificaConBulk(userContext, documentoEleTestata);
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+
+	}
 }

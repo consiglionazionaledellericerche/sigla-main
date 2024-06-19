@@ -208,6 +208,14 @@
 		property="flDaCompenso"
 		inputType="CHECKBOX"
 		label="Da Compenso" />
+	<fieldProperty
+		name="esitoPCC"
+		property="esitoPCC"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Esito PCC" />
 
 	<formFieldProperty
 		name="identificativoSdi" />
@@ -261,6 +269,8 @@
 		name="cdUoCUU" />
 	<formFieldProperty
 		name="flDaCompenso"/>
+	<formFieldProperty
+		name="esitoPCC"/>
 
 	<findFieldProperty
 		name="identificativoSdi" />
@@ -316,6 +326,8 @@
 		name="imTotaleNC" />
 	<findFieldProperty
 		name="cdTipoContratto" />
+	<findFieldProperty
+		name="esitoPCC"/>
 
 	<columnFieldProperty
 		name="identificativoSdi" />
@@ -369,4 +381,7 @@
 		name="imTotaleNC" />
 	<columnFieldProperty
 		name="cdTipoContratto" />
+	<columnFieldProperty
+		name="esitoPCC"/>
+
 </bulkInfo>

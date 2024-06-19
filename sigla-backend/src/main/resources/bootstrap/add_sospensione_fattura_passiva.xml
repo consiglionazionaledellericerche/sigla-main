@@ -62,7 +62,9 @@
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
-
-
-
+    <changeSet author="marco.spasiano" id="add_esito_pcc_fattura_elettronica">
+        <addColumn tableName="documento_ele_testata">
+            <column name="esito_pcc" type="VARCHAR(30)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

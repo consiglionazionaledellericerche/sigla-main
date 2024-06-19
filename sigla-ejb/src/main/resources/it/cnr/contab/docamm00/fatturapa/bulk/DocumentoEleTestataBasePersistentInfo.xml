@@ -499,6 +499,11 @@
 			propertyName="progressivoFatCol"
 			sqlTypeName="DECIMAL"
 			columnSize="22" />
+		<columnMapping
+			columnName="ESITO_PCC"
+			propertyName="esitoPCC"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="tipoDocumento" />
@@ -658,4 +663,6 @@
 		name="identificativoSdiFatCol"/>
 	<persistentProperty
 		name="progressivoFatCol" />
+	<persistentProperty
+		name="esitoPCC" />
 </SQLPersistentInfo>

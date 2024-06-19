@@ -234,6 +234,8 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	private java.lang.String idCodiceFatCol;
 	private java.lang.Long identificativoSdiFatCol;
 	private java.lang.Long progressivoFatCol;
+	//  ESITO_PCC VARCHAR(30)
+	private java.lang.String esitoPCC;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -1217,5 +1219,13 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 
 	public void setProgressivoFatCol(Long progressivoFatCol) {
 		this.progressivoFatCol = progressivoFatCol;
+	}
+
+	public String getEsitoPCC() {
+		return esitoPCC;
+	}
+
+	public void setEsitoPCC(String esitoPCC) {
+		this.esitoPCC = esitoPCC;
 	}
 }

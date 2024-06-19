@@ -42,6 +42,7 @@ import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -815,8 +816,8 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     }
 
     @Override
-    protected void completeUpdateAllegato(AllegatoObbligazioneBulk allegato) throws ApplicationException {
-        super.completeUpdateAllegato(allegato);
+    protected void completeUpdateAllegato(UserContext userContext, AllegatoObbligazioneBulk allegato) throws ApplicationException {
+        super.completeUpdateAllegato(userContext, allegato);
         StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
 
         if (storageObject!=null) {
