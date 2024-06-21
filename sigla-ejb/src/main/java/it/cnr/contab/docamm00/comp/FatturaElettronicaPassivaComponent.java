@@ -76,6 +76,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -808,6 +809,31 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
-
 	}
+
+	public void aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(userContext, DocumentoEleTestataBulk.class);
+		AtomicInteger index = new AtomicInteger();
+		esiti
+				.entrySet()
+				.stream()
+				.forEach(esito -> {
+					SQLBuilder sql = home.createSQLBuilder();
+					sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, esito.getKey());
+					try {
+						final int indexAndIncrement = index.getAndIncrement();
+						List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+						if (results.size() == 1) {
+							DocumentoEleTestataBulk documentoEleTestata = results.get(0);
+							documentoEleTestata.setEsitoPCC(esito.getValue());
+							documentoEleTestata.setToBeUpdated();
+							super.modificaConBulk(userContext, documentoEleTestata);
+						}
+						logger.debug("Aggiornato documento elettronico {} di {}", indexAndIncrement, esiti.size());
+					} catch (PersistencyException | ComponentException e) {
+						logger.error("Fattura con IdentificativoSdi: {} e valore {}, non elaborata per il seguente motivo: ",esito.getKey(),esito.getValue(), e);
+					}
+				});
+	}
+
 }

@@ -33,6 +33,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -368,4 +369,21 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
         }
     }
 
+    public void aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws ComponentException, java.rmi.RemoteException {
+        pre_component_invocation(userContext, componentObj);
+        try{
+            ((FatturaElettronicaPassivaComponent)componentObj).aggiornaEsitoPCC(userContext, esiti);
+            component_invocation_succes(userContext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+    }
 }
