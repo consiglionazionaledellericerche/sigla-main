@@ -127,7 +127,7 @@
     </form>
 
     <columnSet
-            name="readonly">
+            name="archivioAllegati">
         <columnFieldProperty
                 name="nome"/>
         <columnFieldProperty
@@ -136,14 +136,32 @@
                 name="titolo"/>
     </columnSet>
 
+    <form name="lastModificationDate">
+        <formFieldProperty
+                name="nome"/>
+        <formFieldProperty
+                name="descrizione"/>
+        <formFieldProperty
+                name="titolo"/>
+        <formFieldProperty
+                name="file"/>
+        <formFieldProperty
+                name="attivaFile"/>
+    </form>
     <columnSet
-            name="archivioAllegati">
+            name="lastModificationDate">
         <columnFieldProperty
                 name="nome"/>
         <columnFieldProperty
                 name="descrizione"/>
         <columnFieldProperty
                 name="titolo"/>
+        <columnFieldProperty
+                name="lastModificationDate"
+                property="lastModificationDate"
+                inputType="TEXT"
+                formatName="timestamp"
+                label="Ultima Modifica"/>
     </columnSet>
 
 </bulkInfo>

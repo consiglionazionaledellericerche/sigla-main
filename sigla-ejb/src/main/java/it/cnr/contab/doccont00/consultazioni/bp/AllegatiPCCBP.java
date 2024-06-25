@@ -13,6 +13,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -49,6 +50,7 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
         final AllegatoParentIBulk allegatoParentIBulk = new AllegatoParentIBulk();
         allegatoParentIBulk.setCrudStatus(OggettoBulk.NORMAL);
         setModel(actioncontext, initializeModelForEditAllegati(actioncontext, allegatoParentIBulk));
+        getCrudArchivioAllegati().setOrderBy(actioncontext, "lastModificationDate", OrderConstants.ORDER_DESC);
     }
 
     @Override
@@ -93,6 +95,11 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
     @Override
     protected Class<AllegatoGenericoBulk> getAllegatoClass() {
         return AllegatoGenericoBulk.class;
+    }
+
+    @Override
+    public String getAllegatiFormName() {
+        return "lastModificationDate";
     }
 
     @Override

@@ -23,7 +23,7 @@
 <body class="Form">
 <% bp.openFormWindow(pageContext); %>
 <div class="Group m-1">
-<%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,bp.getAllegatiFormName(),true,false,true,"100%","auto;max-height:30vh"); %>
+    <%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,bp.getAllegatiFormName(),true,false,true,"100%","auto;max-height:40vh"); %>
 </div> 
 <div class="Group card mt-3">
   <table>
