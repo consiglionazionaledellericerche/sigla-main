@@ -1,5 +1,49 @@
-## Release 6.5.75  -- _June 06, 2024_ 
+## Release 6.5.80  -- _June 25, 2024_ 
 **Changes**
+
+>**Aggiunta la possibilità di allegare documenti anche alle fatture passive non elettroniche.**
+>
+>[a5cb4c4e75a7103](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a5cb4c4e75a7103) marco.spasiano *June 25, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[63404c05e98bb5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63404c05e98bb5c) marco.spasiano *June 25, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[c5e891309d45d52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c5e891309d45d52) marco.spasiano *June 21, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[45efb0f220a6de6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/45efb0f220a6de6) marco.spasiano *June 20, 2024*
+
+
+## Release 6.5.78  -- _June 19, 2024_ 
+**Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[58fc982cc1cc4c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/58fc982cc1cc4c1) marco.spasiano *June 19, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[8c4c1cfb86389dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c4c1cfb86389dd) marco.spasiano *June 19, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[b4863f63118540e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4863f63118540e) marco.spasiano *June 18, 2024*
+
+>**In caso di apertura di una nota di credito, alla successiva chiusura della stessa la transazione non veniva inizializzata nuovamente.**
+>
+>[5df10bb9e9fe93c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5df10bb9e9fe93c) marco.spasiano *June 07, 2024*
+
+>**In caso di trasmissione con il vecchio tracciato OPI non valorizzava correttamente il tipo operazione sulla reversale**
+>
+>[47678ccb4c6bffb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/47678ccb4c6bffb) marco.spasiano *June 07, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[757c74ef79a3e8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/757c74ef79a3e8d) marco.spasiano *June 06, 2024*
 
 >**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
 >
