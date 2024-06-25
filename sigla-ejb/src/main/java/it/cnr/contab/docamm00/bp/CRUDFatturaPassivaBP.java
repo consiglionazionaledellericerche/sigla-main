@@ -1704,8 +1704,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         }
         if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
-            pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
         }
+        pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
 
         String[][] tabs = new String[i][3];
         for (int j = 0; j < i; j++)

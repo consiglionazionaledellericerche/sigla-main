@@ -38,6 +38,7 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
@@ -50,11 +51,13 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class Fattura_passivaBulk
         extends Fattura_passivaBase
@@ -3521,7 +3524,19 @@ public abstract class Fattura_passivaBulk
                             .map(path -> Arrays.asList(path))
                             .orElse(Collections.emptyList());
                 })
-                .orElse(Collections.emptyList());
+                .orElseGet(() -> {
+                    return Collections.singletonList(Arrays.asList(
+                            SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                            getCd_unita_organizzativa(),
+                            "Fatture Passive non Elettroniche",
+                            Optional.ofNullable(getEsercizio())
+                                    .map(esercizio -> String.valueOf(esercizio))
+                                    .orElse("0"),
+                            "Fattura " + getEsercizio().toString() + Utility.lpad(getPg_fattura_passiva().toString(), 10, '0')
+                    ).stream().collect(
+                            Collectors.joining(StorageDriver.SUFFIX)
+                    ));
+                });
     }
 
     public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
