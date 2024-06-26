@@ -177,7 +177,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                     "Importo non liquidabile*", "Flag split (S/N)", "Data", "Numero protocollo di entrata", "Codice segnalazione", "Descrizione segnalazione"));
             writer.writeNext(createArray(EMPTY, "Lotto SDI", "Numero fattura \n" + "(SDI 2.1.1.4 Numero)"));
             final boolean isOperazioneSID = controlliPCCParams.getTipoOperazione().equalsIgnoreCase(ControlliPCCParams.TipoOperazioneType.SID.name());
-            final boolean isComunicazioneScadenza = Objects.equals(ControlliPCCParams.TipoOperazioneType.RC.name(), controlliPCCParams.getTipoOperazione());
+            final boolean isComunicazioneScadenza = Objects.equals(ControlliPCCParams.TipoOperazioneType.CS.name(), controlliPCCParams.getTipoOperazione());
             vControlliPCCBulks.stream().forEach(vControlliPCCBulk -> {
                 writer.writeNext(createArray(
                         EMPTY,
