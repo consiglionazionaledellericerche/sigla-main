@@ -38,11 +38,6 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
     }
 
     @Override
-    protected boolean isChildGrowable(boolean isGrowable) {
-        return Boolean.FALSE;
-    }
-
-    @Override
     protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
         super.initialize(actioncontext);
         esercizio = CNRUserContext.getEsercizio(actioncontext.getUserContext());
