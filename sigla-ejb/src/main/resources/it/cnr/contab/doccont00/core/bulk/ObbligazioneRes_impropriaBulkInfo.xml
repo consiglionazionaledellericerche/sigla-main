@@ -117,7 +117,28 @@
 		inputType="ROTEXT"
 		inputSize="60"
 		/>
-		
+	<fieldProperty
+			name="statoResiduoObbligazione"
+			property="statoResiduo"
+			maxLength="-1"
+			inputSize="1"
+			label="Stato"
+			caseSensitiveSearch="false"
+			enabledOnView="true"
+			enabledOnSearch="true"
+			keysProperty="stato_ObbligazioneResiduaKeys"
+			inputType="SELECT" />
+
+	<fieldProperty
+			name="statoResiduoObbligazione_ro"
+			property="statoResiduo"
+			maxLength="-1"
+			inputSize="1"
+			label="Stato"
+			caseSensitiveSearch="false"
+			enabledOnSearch="true"
+			keysProperty="stato_ObbligazioneResiduaKeys"
+			inputType="SELECT" />
 		
 	<formFieldProperty
 		name="stato_obbligazione"
@@ -146,7 +167,11 @@
 	<formFieldProperty
 		name="ds_voce"
 		/>
-		
+	<formFieldProperty
+			name="statoResiduoObbligazione"/>
+	<formFieldProperty
+			name="statoResiduoObbligazione_ro"/>
+
 	<columnFieldProperty
 		name="stato_obbligazione"
 		columnStyle="text-align: center"
@@ -155,6 +180,8 @@
 		name="esercizio_ori_ori_riporto"
 		columnStyle="padding-left:5px"
 		/>
+	<columnFieldProperty
+			name="statoResiduoObbligazione"/>
 
 	<columnFieldProperty
 		name="pg_obbligazione_ori_riporto"

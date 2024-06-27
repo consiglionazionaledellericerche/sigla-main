@@ -68,8 +68,6 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 	boolean scadenzaModificabile = false;
 	boolean scadenzaModificata = false;
 	boolean statusOriginarioSaveButtonEnabled = false;
-	Date dataVisibilitaStatoResiduo;
-	boolean isStatoModificabile = true;
 
 	public CRUDObbligazioneResBP() {
 		super("Tr");
@@ -99,40 +97,6 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		setStatus(SEARCH);
 	}
 
-	@Override
-	protected void initialize(ActionContext actioncontext)
-			throws BusinessProcessException {
-		super.initialize(actioncontext);
-		Configurazione_cnrComponentSession confCNR = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-		try {
-			String mesegiorno = confCNR.getVal01(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext()), 
-					"DATA", "RIACCERTAMENTO_RESIDUI", "STATO");
-			if (mesegiorno != null)
-				dataVisibilitaStatoResiduo = new SimpleDateFormat("dd/MM/yyyy").parse(mesegiorno + "/" + CNRUserContext.getEsercizio(actioncontext.getUserContext()));
-		} catch (ComponentException e) {
-			throw new BusinessProcessException(e);
-		} catch (RemoteException e) {
-			throw new BusinessProcessException(e);
-		} catch (ParseException e) {
-			throw new BusinessProcessException(e);		
-		}		
-	}
-
-	public boolean isStatoResiduoVisibile() {
-		if (dataVisibilitaStatoResiduo == null)
-			return false;
-		boolean statoVisible = EJBCommonServices.getServerDate().after(dataVisibilitaStatoResiduo);
-		if (statoVisible) {
-			if (this.isSearching())
-				return true;
-			else if (this.getModel()!=null && this.getModel() instanceof ObbligazioneResBulk) {
-				if (((ObbligazioneResBulk)this.getModel()).getStatoResiduo()!=null)
-					return true;
-			}
-		}
-		return statoVisible;
-	}
-
 	/* (non-Javadoc)
 	 * @see it.cnr.contab.doccont00.bp.CRUDObbligazioneBP#basicEdit(it.cnr.jada.action.ActionContext, it.cnr.jada.bulk.OggettoBulk, boolean)
 	 */
@@ -142,7 +106,6 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		if (getStatus()!=VIEW && isEditable())
 			setScadenzaModificabile(true);
 		setStatusAndEditableMap();
-		setStatoModificabile(getModel() instanceof ObbligazioneResBulk && ((ObbligazioneResBulk)getModel()).getStatoResiduo() == null);
 	}
 	/**
 	 * Metodo utilizzato per la conferma dei dati selezionati o immessi, relativi
@@ -367,31 +330,6 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		return tabs;
 	}
 
-	private void setStatoModificabile(boolean isStatoModificabile) {
-		this.isStatoModificabile = isStatoModificabile;
-	}
-	
-	public boolean isStatoModificabile() {
-		return isStatoModificabile;
-	}
-
-	public boolean isStatoVisibile() {
-		if (dataVisibilitaStatoResiduo == null)
-			return false;
-		boolean statoVisible = EJBCommonServices.getServerDate().after(dataVisibilitaStatoResiduo);
-		if (statoVisible) {
-			if (this.isSearching())
-				return true;
-			else if (this.getModel()!=null && this.getModel() instanceof ObbligazioneResBulk) {
-				if (((ObbligazioneResBulk)this.getModel()).getStatoResiduo()!=null)
-					return true;
-				if (((ObbligazioneResBulk)this.getModel()).getImportoNonPagato().compareTo(BigDecimal.ZERO)==0)
-					return false;
-			}
-		}
-		return statoVisible;
-	}
-
 	public boolean isROStato() {
 		boolean roStato = isROImporto();
 		if (getModel()!=null && !isStatoModificabile)
@@ -480,12 +418,5 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 				return false;
 		}
 		return super.isPossibileModifica(allegato);
-	}
-
-	protected void addChildDetail(OggettoBulk oggettobulk) {
-		if (this.isStatoResiduoVisibile())
-			((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiAllKeys();
-		else
-			((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiSenzaRiaccertamentoKeys();
 	}
 }
