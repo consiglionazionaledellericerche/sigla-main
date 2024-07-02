@@ -127,6 +127,16 @@
     </form>
 
     <columnSet
+            name="readonly">
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="descrizione"/>
+        <columnFieldProperty
+                name="titolo"/>
+    </columnSet>
+
+    <columnSet
             name="archivioAllegati">
         <columnFieldProperty
                 name="nome"/>
