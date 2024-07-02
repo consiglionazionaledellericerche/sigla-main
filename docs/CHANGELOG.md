@@ -1,5 +1,21 @@
-## Release 6.5.80  -- _June 25, 2024_ 
+## Release 6.5.82  -- _June 28, 2024_ 
 **Changes**
+
+>**Stato residuo: esteso anche su residui impropri**
+>
+>[17239a716b820ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17239a716b820ca) raffaelepagano *June 27, 2024*
+
+
+## Release 6.5.81  -- _June 26, 2024_ 
+**Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[9fc3fac31067b10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9fc3fac31067b10) marco.spasiano *June 26, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[6ef8f558e6064ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6ef8f558e6064ec) marco.spasiano *June 26, 2024*
 
 >**Aggiunta la possibilità di allegare documenti anche alle fatture passive non elettroniche.**
 >

@@ -69,12 +69,10 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
@@ -82,14 +80,11 @@ import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_anagraficoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -3439,7 +3434,14 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	{
 		verificaStatoEsercizio( userContext, ((CNRUserContext)userContext).getEsercizio(), ((CNRUserContext)userContext).getCd_cds() );
 		sql.addClause( "AND", "stato_obbligazione", sql.EQUALS, ((V_obbligazione_im_mandatoBulk) bulk).getStato_obbligazione());
-	}	
+	}
+	if ( bulk instanceof ObbligazioneResBulk)
+	{
+		sql.addClause( "AND", "statoResiduo", sql.EQUALS, ((ObbligazioneResBulk) bulk).getStatoResiduo());
+	} else if ( bulk instanceof ObbligazioneRes_impropriaBulk)
+	{
+		sql.addClause( "AND", "statoResiduo", sql.EQUALS, ((ObbligazioneRes_impropriaBulk) bulk).getStatoResiduo());
+	}
 	return sql;
 }
 /*

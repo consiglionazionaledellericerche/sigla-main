@@ -23,6 +23,8 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 
+import java.util.Dictionary;
+
 /**
  * Insert the method's description here.
  * Creation date: (12/10/2005 16.00.00)
@@ -30,6 +32,7 @@ import it.cnr.jada.util.action.CRUDBP;
  */
 public class ObbligazioneRes_impropriaBulk extends ObbligazioneBulk {
 	Voce_fBulk voce = new Voce_fBulk();
+	private String statoResiduo;
 /**
  * ObbligazioneRes_impropriaBulk constructor comment.
  */
@@ -96,4 +99,27 @@ public void validate() throws ValidationException {
 
 	super.validate();
 }
+	public String getStatoResiduo() {
+		return statoResiduo;
+	}
+	public void setStatoResiduo(String statoResiduo) {
+		this.statoResiduo = statoResiduo;
+	}
+	@SuppressWarnings("rawtypes")
+	public Dictionary getStato_ObbligazioneResiduaKeys() {
+		java.util.Dictionary tiStatoObbligazioneResiduaKeys = new it.cnr.jada.util.OrderedHashtable();
+
+		tiStatoObbligazioneResiduaKeys.put(ObbligazioneResBulk.STATORES_PAGATO, "Pagato");
+		tiStatoObbligazioneResiduaKeys.put(ObbligazioneResBulk.STATORES_PAGABILE, "Pagabile");
+		tiStatoObbligazioneResiduaKeys.put(ObbligazioneResBulk.STATORES_NON_PAGABILE, "Non Pagabile");
+		return tiStatoObbligazioneResiduaKeys;
+	}
+
+	public boolean isLiquidabile() {
+		return ObbligazioneResBulk.STATORES_PAGABILE.equals(getStatoResiduo());
+	}
+
+	public boolean isNonLiquidabile() {
+		return ObbligazioneResBulk.STATORES_NON_PAGABILE.equals(getStatoResiduo());
+	}
 }

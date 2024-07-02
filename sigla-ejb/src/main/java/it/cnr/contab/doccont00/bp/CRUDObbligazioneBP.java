@@ -57,6 +57,8 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageObject;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -72,6 +74,8 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     private final SimpleDetailCRUDController scadenzarioDettaglio = new SimpleDetailCRUDController("ScadenzarioDettaglio", Obbligazione_scad_voceBulk.class, "obbligazione_scad_voceColl", scadenzario);
     private final SimpleDetailCRUDController aggregatoPerCdr = new SimpleDetailCRUDController("AggregatoPerCdr", Obbligazione_scad_voce_aggregatoBulk.class, "cdrAggregatoColl", this);
     private final SimpleDetailCRUDController aggregatoPerCapitolo = new SimpleDetailCRUDController("AggregatoPerCapitolo", Obbligazione_scad_voce_aggregatoBulk.class, "capitoliAggregatoColl", this);
+    Date dataVisibilitaStatoResiduo;
+    boolean isStatoModificabile = true;
 
     private final SimpleDetailCRUDController crudObbligazione_pluriennale = new SimpleDetailCRUDController("ObbligazioniPluriennali", Obbligazione_pluriennaleBulk.class, "obbligazioniPluriennali", this){
         public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
@@ -251,6 +255,8 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     public void basicEdit(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {
 
         super.basicEdit(context, bulk, doInitializeForEdit);
+        setStatoModificabile((getModel() instanceof ObbligazioneResBulk && ((ObbligazioneResBulk)getModel()).getStatoResiduo() == null) ||
+                (getModel() instanceof ObbligazioneRes_impropriaBulk && ((ObbligazioneRes_impropriaBulk)getModel()).getStatoResiduo() == null));
 
         if (getStatus() != VIEW) {
             ObbligazioneBulk obb = (ObbligazioneBulk) getModel();
@@ -1056,12 +1062,28 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
     public void validate(ActionContext context) throws ValidationException {
 
         super.validate(context);
-        if (isEditOnly() && !isSaveOnBringBack())
+        if (isEditOnly() && !isSaveOnBringBack()) {
             try {
                 ((ObbligazioneComponentSession) createComponentSession()).verificaObbligazione(context.getUserContext(), (ObbligazioneBulk) getModel());
             } catch (Throwable e) {
                 throw new ValidationException(e.getMessage());
             }
+        }
+        if (getModel() != null) {
+            ObbligazioneBulk obb = ((ObbligazioneBulk)getModel());
+            boolean isAllegatoRequired =
+                    (getModel() instanceof ObbligazioneResBulk &&
+                            (((ObbligazioneResBulk)obb).isLiquidabile() || ((ObbligazioneResBulk)obb).isNonLiquidabile())) ||
+                    (getModel() instanceof ObbligazioneRes_impropriaBulk &&
+                            (((ObbligazioneRes_impropriaBulk)obb).isLiquidabile() || ((ObbligazioneRes_impropriaBulk)obb).isNonLiquidabile()));
+            if (isAllegatoRequired)
+                obb.getArchivioAllegati().stream()
+                        .map(AllegatoObbligazioneBulk.class::cast)
+                        .filter(AllegatoObbligazioneBulk::isTipoAllegatoGenerico)
+                        .filter(e->e.isNew() || e.getEsercizioDiAppartenenza().equals(CNRUserContext.getEsercizio(context.getUserContext())))
+                        .findAny()
+                        .orElseThrow(()->new ValidationException("Inserire almeno un 'Allegato Generico' per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+"!"));
+        }
     }
 
     /**
@@ -1176,7 +1198,15 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
                 Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext()) + 1);
                 setEnableVoceNext(parCnrNewAnno != null);
             }
-            setVariazioneAutomaticaEnabled(Utility.createConfigurazioneCnrComponentSession().isVariazioneAutomaticaSpesa(actioncontext.getUserContext()));
+
+            Configurazione_cnrComponentSession confCNR = Utility.createConfigurazioneCnrComponentSession();
+            setVariazioneAutomaticaEnabled(confCNR.isVariazioneAutomaticaSpesa(actioncontext.getUserContext()));
+            if (!(this.getModel()!=null && this.getModel() instanceof ObbligazioneRes_impropriaBulk && CNRUserContext.getEsercizio(actioncontext.getUserContext())<=2023)) {
+                String mesegiorno = confCNR.getVal01(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext()),
+                        "DATA", "RIACCERTAMENTO_RESIDUI", "STATO");
+                if (mesegiorno != null)
+                    dataVisibilitaStatoResiduo = new SimpleDateFormat("dd/MM/yyyy").parse(mesegiorno + "/" + CNRUserContext.getEsercizio(actioncontext.getUserContext()));
+            }
         } catch (Throwable throwable) {
             throw new BusinessProcessException(throwable);
         }
@@ -1311,7 +1341,10 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
         return tabs;
     }
     protected void addChildDetail(OggettoBulk oggettobulk) {
-        ((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiSenzaRiaccertamentoKeys();
+        if (this.isStatoResiduoVisibile())
+            ((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiAllKeys();
+        else
+            ((AllegatoObbligazioneBulk)oggettobulk).setTipoAllegatiSenzaRiaccertamentoKeys();
     }
     @Override
     protected void validateChildDetail(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -1357,5 +1390,64 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP {
                 return false;
         }
         return super.isPossibileModifica(allegato);
+    }
+
+    public boolean isStatoVisibile() {
+        if (dataVisibilitaStatoResiduo == null)
+            return false;
+        boolean statoVisible = EJBCommonServices.getServerDate().after(dataVisibilitaStatoResiduo);
+        if (statoVisible) {
+            if (this.isSearching())
+                return true;
+            else if (this.getModel()!=null) {
+                if (this.getModel() instanceof ObbligazioneResBulk) {
+                    if (((ObbligazioneResBulk) this.getModel()).getStatoResiduo() != null)
+                        return true;
+                    if (((ObbligazioneResBulk) this.getModel()).getImportoNonPagato().compareTo(BigDecimal.ZERO) == 0)
+                        return false;
+                } else if (this.getModel() instanceof ObbligazioneRes_impropriaBulk) {
+                    if (((ObbligazioneRes_impropriaBulk) this.getModel()).getStatoResiduo() != null)
+                        return true;
+                    if (((ObbligazioneRes_impropriaBulk) this.getModel()).getImportoNonPagato().compareTo(BigDecimal.ZERO) == 0)
+                        return false;
+                }
+            }
+        }
+        return statoVisible;
+    }
+
+    public boolean isStatoResiduoVisibile() {
+        if (dataVisibilitaStatoResiduo == null)
+            return false;
+        boolean statoVisible = EJBCommonServices.getServerDate().after(dataVisibilitaStatoResiduo);
+        if (statoVisible) {
+            if (this.isSearching())
+                return true;
+            else if (this.getModel()!=null) {
+                if (this.getModel() instanceof ObbligazioneResBulk) {
+                    if (((ObbligazioneResBulk) this.getModel()).getStatoResiduo() != null)
+                        return true;
+                } else if (this.getModel() instanceof ObbligazioneRes_impropriaBulk) {
+                    if (((ObbligazioneRes_impropriaBulk) this.getModel()).getStatoResiduo() != null)
+                        return true;
+                }
+            }
+        }
+        return statoVisible;
+    }
+
+    private void setStatoModificabile(boolean isStatoModificabile) {
+        this.isStatoModificabile = isStatoModificabile;
+    }
+
+    public boolean isStatoModificabile() {
+        return isStatoModificabile;
+    }
+
+    public boolean isROStato() {
+        boolean roStato = false;
+        if (getModel()!=null && !isStatoModificabile)
+            roStato = true;
+        return roStato;
     }
 }

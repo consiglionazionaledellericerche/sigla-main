@@ -230,6 +230,4 @@
 	<findFieldProperty
 		name="pg_obbligazione"
 		/>
-	<columnFieldProperty
-		name="statoResiduoObbligazione"/>		
 </bulkInfo>
