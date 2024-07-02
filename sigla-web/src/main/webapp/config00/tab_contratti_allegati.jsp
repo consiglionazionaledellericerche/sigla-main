@@ -61,20 +61,20 @@ function doScaricaAllegato() {
 					</td>
 					<td colspan="2">
 						<%
-							controller.writeFormInput(out, "default", "type", !bp.isAllegatiEnabled(), null, null);
+							controller.writeFormInput(out, "default", "type", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(), null, null);
 						%>
 					</td>
 				</tr>
 				<% if (bulk != null && AllegatoContrattoDocumentBulk.PROGETTO.equals(bulk.getType())){%>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","link"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","link", !bp.isAllegatiEnabled(),null,null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","link", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(),null,null); %></td>
 				</tr>
 			    <%}%>
 				<% if (bp.isAllegatiEnabled()){%>
 					<tr>
 				        <td><% controller.writeFormLabel(out,"default","file"); %></td>
-				        <td colspan="2"><% controller.writeFormInput(out,"default","file", !bp.isAllegatiEnabled(),null,null); %></td>
+				        <td colspan="2"><% controller.writeFormInput(out,"default","file", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(),null,null); %></td>
 				    </tr>
 			    <%}%>
 				<tr>
@@ -86,11 +86,11 @@ function doScaricaAllegato() {
 			    </tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","descrizione"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", !bp.isAllegatiEnabled(),null,null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","descrizione", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(),null,null); %></td>
 				</tr>
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","titolo"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", !bp.isAllegatiEnabled(),null,null); %></td>
+			        <td colspan="2"><% controller.writeFormInput(out,"default","titolo", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(),null,null); %></td>
 				</tr>
 			</table>  	
 	  	</td>

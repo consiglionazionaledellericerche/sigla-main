@@ -138,7 +138,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			return super.removeDetail(oggettobulk, i);
 		}
 		public boolean isShrinkable() {
-			return super.isShrinkable() && isAllegatiEnabled();
+			return super.isShrinkable() && (isAllegatiEnabled() || getModel().isToBeCreated());
 		};
 		public boolean isGrowable() {
 			return super.isGrowable();// && isAllegatiEnabled();			
