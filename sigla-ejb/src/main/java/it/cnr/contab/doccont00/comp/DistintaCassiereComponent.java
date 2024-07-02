@@ -1581,6 +1581,7 @@ public class DistintaCassiereComponent extends
                         sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
                             MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
                         sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.esito_operazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ACQUISITO.value());
+                        sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.esito_operazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ANNULLATO.value());
                     sql.closeParenthesis();
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
