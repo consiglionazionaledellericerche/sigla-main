@@ -92,12 +92,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
@@ -4033,6 +4028,25 @@ public class CompensoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
 		controlliCig(compenso);
 
 		aggiornaModalitaPagamentoMandatoAssociato(userContext, compenso);
+
+		/**
+		 * Aggiorno lo stato liquidbile dell'eventuale fattura collegata
+		 */
+		if (Optional.ofNullable(compenso.getFl_generata_fattura()).orElse(Boolean.FALSE)){
+			final CompensoHome home = (CompensoHome) getHome(userContext, compenso);
+            try {
+				final Optional<Fattura_passiva_IBulk> fatturaFornitore = home.findFatturaFornitore(userContext, compenso);
+				if (fatturaFornitore.isPresent() &&
+						compenso.getStato_liquidazione().equalsIgnoreCase(IDocumentoAmministrativoBulk.LIQ) &&
+						!fatturaFornitore.get().isLiquidabile()) {
+					fatturaFornitore.get().setStato_liquidazione(IDocumentoAmministrativoBulk.LIQ);
+					fatturaFornitore.get().setToBeUpdated();
+					super.modificaConBulk(userContext, fatturaFornitore.get());
+				}
+			} catch (PersistencyException e) {
+                throw handleException(e);
+            }
+		}
 
 		return compenso;
 

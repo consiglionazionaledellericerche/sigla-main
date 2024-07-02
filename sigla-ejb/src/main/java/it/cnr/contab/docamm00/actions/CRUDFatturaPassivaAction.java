@@ -5402,6 +5402,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             //fp.setCausale(null);
             fp.setStato_pagamento_fondo_eco(fp.NO_FONDO_ECO);
             fp.setCompenso(compenso);
+            fp.setStato_liquidazione(compenso.getStato_liquidazione());
             for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
 
