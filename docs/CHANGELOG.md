@@ -1,13 +1,25 @@
-## Release 6.5.82  -- _June 28, 2024_ 
+## Release 6.5.84  -- _July 02, 2024_ 
 **Changes**
 
->**Stato residuo: esteso anche su residui impropri**
+>**Aggiunta la possibilità di ritrasmettere i mandati non annullati.**
 >
->[17239a716b820ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17239a716b820ca) raffaelepagano *June 27, 2024*
+>[a1c43adb259e4a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1c43adb259e4a6) marco.spasiano *July 02, 2024*
 
 
-## Release 6.5.81  -- _June 26, 2024_ 
+## Release 6.5.83  -- _July 02, 2024_ 
 **Changes**
+
+>**In caso di Fattura legata a Compenso lo stato liquidazione viene ereditato dal copenso.**
+>
+>[d1df7ac1d8eb246](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1df7ac1d8eb246) marco.spasiano *July 02, 2024*
+
+>**Aggiunta la possibilità di allegare nuovi file al contratto anche se è definitivo.**
+>
+>[4bd6b0deb623c98](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4bd6b0deb623c98) marco.spasiano *July 02, 2024*
+
+>**FIX ColumnSet on AllegatoGenericoBulkInfo.xml**
+>
+>[52f0e240cb645c8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52f0e240cb645c8) marco.spasiano *July 02, 2024*
 
 >**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
 >
@@ -32,6 +44,14 @@
 >**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
 >
 >[45efb0f220a6de6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/45efb0f220a6de6) marco.spasiano *June 20, 2024*
+
+
+## Release 6.5.82  -- _June 28, 2024_ 
+**Changes**
+
+>**Stato residuo: esteso anche su residui impropri**
+>
+>[17239a716b820ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17239a716b820ca) raffaelepagano *June 27, 2024*
 
 
 ## Release 6.5.78  -- _June 19, 2024_ 
