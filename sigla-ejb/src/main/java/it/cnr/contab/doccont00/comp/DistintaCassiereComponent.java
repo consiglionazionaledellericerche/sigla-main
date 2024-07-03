@@ -4886,7 +4886,7 @@ public class DistintaCassiereComponent extends
                         if (doc.getCdSospeso() != null) {
                             if (Optional.ofNullable(doc.getCdSospeso()).isPresent() && isSospesoFromAccreditamento(userContext, doc)) {
                                 final V_mandato_reversaleBulk mandatoReversale = findMandatoReversale(userContext, findSospeso(userContext, doc).get().getMandatoRiaccredito());
-                                final CtClassificazioneDatiSiopeUscite classificazioneDatiSiope = getClassificazioneDatiSiope(userContext, objectFactory, mandatoReversale, null);
+                                final CtClassificazioneDatiSiopeUscite classificazioneDatiSiope = getClassificazioneDatiSiope(userContext, objectFactory, mandatoReversale, null, null);
                                 final Optional<Reversale.InformazioniVersante.Classificazione> any = infover.getClassificazione().stream().findAny();
                                 final Optional<StTipoDebitoCommerciale> stTipoDebitoCommerciale = classificazioneDatiSiope.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().stream()
                                         .filter(StTipoDebitoCommerciale.class::isInstance)
@@ -5872,13 +5872,13 @@ public class DistintaCassiereComponent extends
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
                                        String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
-        clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope));
+        clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope, clas.getImporto()));
     }
 
     private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(UserContext userContext,
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
-                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
+                                       String codiceSiope, BigDecimal importoClas) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
 
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
@@ -6070,7 +6070,7 @@ public class DistintaCassiereComponent extends
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                                 ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.getDt_scadenza()));
                                 //TODO CONTROLLARE SE NOTA
-                                ctDatiFatturaSiope.setImportoSiope(importo.setScale(2, BigDecimal.ROUND_HALF_UP));
+                                ctDatiFatturaSiope.setImportoSiope(Optional.ofNullable(importoClas).orElse(importo.setScale(2, BigDecimal.ROUND_HALF_UP)));
 
                                 ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                                 ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
@@ -6171,7 +6171,7 @@ public class DistintaCassiereComponent extends
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                             ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.get().getDt_scadenza()));
                             //TODO CONTROLLARE SE NOTA
-                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP));
+                            ctDatiFatturaSiope.setImportoSiope(Optional.ofNullable(importoClas).orElse(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP)));
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
                         } else {
