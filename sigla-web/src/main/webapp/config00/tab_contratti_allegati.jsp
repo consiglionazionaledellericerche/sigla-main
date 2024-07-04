@@ -71,7 +71,7 @@ function doScaricaAllegato() {
 			        <td colspan="2"><% controller.writeFormInput(out,"default","link", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(),null,null); %></td>
 				</tr>
 			    <%}%>
-				<% if (bp.isAllegatiEnabled()){%>
+				<% if (bp.isAllegatiEnabled() || bulk.isToBeCreated()){%>
 					<tr>
 				        <td><% controller.writeFormLabel(out,"default","file"); %></td>
 				        <td colspan="2"><% controller.writeFormInput(out,"default","file", !bp.isAllegatiEnabled() && !bulk.isToBeCreated(),null,null); %></td>
