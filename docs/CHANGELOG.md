@@ -1,5 +1,9 @@
-## Release 6.5.84  -- _July 02, 2024_ 
+## Release 6.5.85  -- _July 03, 2024_ 
 **Changes**
+
+>**Importo SIOPE associato alla fattura elettronica riportava l'importo taale del mandato e non quello relativo al codice SIOPE/CUP**
+>
+>[5bcf8c6193038ed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5bcf8c6193038ed) marco.spasiano *July 03, 2024*
 
 >**Aggiunta la possibilità di ritrasmettere i mandati non annullati.**
 >
