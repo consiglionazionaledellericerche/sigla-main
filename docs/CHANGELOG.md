@@ -1,3 +1,11 @@
+## Release 6.5.87  -- _July 09, 2024_ 
+**Changes**
+
+>**ControlliPCC: aggiunto campo FL_SPLIT_PAYMENT**
+>
+>[10745dd3375d713](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10745dd3375d713) raffaelepagano *July 08, 2024*
+
+
 ## Release 6.5.86  -- _July 04, 2024_ 
 **Changes**
 
