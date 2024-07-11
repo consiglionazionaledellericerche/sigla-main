@@ -216,6 +216,11 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		label="Esito PCC" />
+	<fieldProperty
+		name="flSplitPayment"
+		property="flSplitPayment"
+		inputType="CHECKBOX"
+		label="Split Payment" />
 
 	<formFieldProperty
 		name="identificativoSdi" />
@@ -271,6 +276,8 @@
 		name="flDaCompenso"/>
 	<formFieldProperty
 		name="esitoPCC"/>
+	<formFieldProperty
+		name="flSplitPayment"/>
 
 	<findFieldProperty
 		name="identificativoSdi" />
@@ -317,6 +324,8 @@
 	<findFieldProperty
 		name="flDaCompenso"/>
 	<findFieldProperty
+		name="flSplitPayment"/>
+	<findFieldProperty
 		name="dtInizioSospensione" />
 	<findFieldProperty
 		name="dtEmissioneMan" />
@@ -359,6 +368,8 @@
 		name="tipoDocumento" />
 	<columnFieldProperty
 		name="flDaCompenso"/>
+	<columnFieldProperty
+		name="flSplitPayment"/>
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

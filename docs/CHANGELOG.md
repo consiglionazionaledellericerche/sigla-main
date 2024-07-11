@@ -1,5 +1,17 @@
-## Release 6.5.85  -- _July 03, 2024_ 
+## Release 6.5.87  -- _July 09, 2024_ 
 **Changes**
+
+>**ControlliPCC: aggiunto campo FL_SPLIT_PAYMENT**
+>
+>[10745dd3375d713](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10745dd3375d713) raffaelepagano *July 08, 2024*
+
+
+## Release 6.5.86  -- _July 04, 2024_ 
+**Changes**
+
+>**Aggiunta la possibilità di allegare nuovi file al contratto anche se è definitivo.**
+>
+>[c8768bfcf9fd9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c8768bfcf9fd9f9) marco.spasiano *July 04, 2024*
 
 >**Importo SIOPE associato alla fattura elettronica riportava l'importo taale del mandato e non quello relativo al codice SIOPE/CUP**
 >

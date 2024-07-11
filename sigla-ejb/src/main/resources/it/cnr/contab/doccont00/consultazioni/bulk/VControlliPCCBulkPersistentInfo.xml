@@ -166,6 +166,13 @@
 				propertyName="esitoPCC"
 				sqlTypeName="VARCHAR"
 				columnSize="30"/>
+		<columnMapping
+				columnName="FL_SPLIT_PAYMENT"
+				propertyName="flSplitPayment"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+				nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 			name="identificativoSdi" />
@@ -221,4 +228,6 @@
 			name="flDaCompenso"/>
 	<persistentProperty
 			name="esitoPCC"/>
+	<persistentProperty
+			name="flSplitPayment"/>
 </SQLPersistentInfo>
