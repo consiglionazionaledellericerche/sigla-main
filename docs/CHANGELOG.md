@@ -1,13 +1,14 @@
-## Release 6.5.87  -- _July 09, 2024_ 
+## Release 6.5.88  -- _July 11, 2024_ 
 **Changes**
 
->**ControlliPCC: aggiunto campo FL_SPLIT_PAYMENT**
+>**Gestione della trasmissione del netto delle fatture passive in regime di spilt payment sul flusso SIOPE+.**
 >
->[10745dd3375d713](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10745dd3375d713) raffaelepagano *July 08, 2024*
+>[92974d2f5e8a51e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/92974d2f5e8a51e) marco.spasiano *July 11, 2024*
 
-
-## Release 6.5.86  -- _July 04, 2024_ 
-**Changes**
+>**Revert "Importo SIOPE associato alla fattura elettronica riportava l'importo taale del mandato e non quello relativo al codice SIOPE/CUP"**
+> * This reverts commit 5bcf8c6193038edb74da2519dc688552a93132e4.
+>
+>[049077ce0b33744](https://github.com/consiglionazionaledellericerche/sigla-main/commit/049077ce0b33744) marco.spasiano *July 10, 2024*
 
 >**Aggiunta la possibilità di allegare nuovi file al contratto anche se è definitivo.**
 >
@@ -20,6 +21,14 @@
 >**Aggiunta la possibilità di ritrasmettere i mandati non annullati.**
 >
 >[a1c43adb259e4a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1c43adb259e4a6) marco.spasiano *July 02, 2024*
+
+
+## Release 6.5.87  -- _July 09, 2024_ 
+**Changes**
+
+>**ControlliPCC: aggiunto campo FL_SPLIT_PAYMENT**
+>
+>[10745dd3375d713](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10745dd3375d713) raffaelepagano *July 08, 2024*
 
 
 ## Release 6.5.83  -- _July 02, 2024_ 
