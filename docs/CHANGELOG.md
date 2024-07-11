@@ -1,5 +1,9 @@
-## Release 6.5.88  -- _July 11, 2024_ 
+## Release 6.5.89  -- _July 11, 2024_ 
 **Changes**
+
+>**Aggiornamento dei campi della nota legata alla fattura**
+>
+>[f8e1a04504f3618](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f8e1a04504f3618) marco.spasiano *July 11, 2024*
 
 >**Gestione della trasmissione del netto delle fatture passive in regime di spilt payment sul flusso SIOPE+.**
 >
