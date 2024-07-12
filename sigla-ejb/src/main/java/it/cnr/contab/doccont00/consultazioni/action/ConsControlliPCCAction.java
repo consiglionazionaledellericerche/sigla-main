@@ -1,22 +1,14 @@
 package it.cnr.contab.doccont00.consultazioni.action;
 
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.doccont00.consultazioni.bp.ConsControlliPCCBP;
 import it.cnr.contab.doccont00.consultazioni.bulk.ControlliPCCParams;
 import it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCBulk;
-import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
-import javax.servlet.ServletException;
-import java.io.*;
-import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Optional;

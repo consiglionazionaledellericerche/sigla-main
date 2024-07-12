@@ -18,13 +18,16 @@
 package it.cnr.contab.doccont00.consultazioni.bp;
 
 import com.opencsv.CSVWriter;
+import it.cnr.contab.consultazioni.action.ConsObbligazioniAction;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.doccont00.consultazioni.action.ConsControlliPCCAction;
 import it.cnr.contab.doccont00.consultazioni.bulk.ControlliPCCParams;
 import it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentIBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -32,6 +35,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CondizioneComplessaBulk;
+import it.cnr.jada.util.action.RicercaLiberaBP;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.jsp.Button;
@@ -67,6 +71,21 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         super.table.setOnselect("select");
     }
 
+    @Override
+    public BusinessProcess initBusinessProcess(ActionContext actioncontext) throws BusinessProcessException {
+        BusinessProcess businessProcess = super.initBusinessProcess(actioncontext);
+        ConsControlliPCCAction consObbligazioniAction = new ConsControlliPCCAction();
+        RicercaLiberaBP ricercaLiberaBP = (RicercaLiberaBP) actioncontext.createBusinessProcess("RicercaLibera");
+        ricercaLiberaBP.setSearchProvider(this);
+        ricercaLiberaBP.setShowSearchResult(false);
+        ricercaLiberaBP.setCanPerformSearchWithoutClauses(false);
+        ricercaLiberaBP.setPrototype(getModel());
+        actioncontext.addHookForward("searchResult", consObbligazioniAction, "doRigheSelezionate");
+        actioncontext.addHookForward("close", consObbligazioniAction, "doCloseRicercaLibera");
+        actioncontext.addBusinessProcess(ricercaLiberaBP);
+        return ricercaLiberaBP;
+    }
+
 
     @Override
     protected void init(Config config, ActionContext context)
@@ -81,7 +100,6 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         }
         setColumns(getBulkInfo().getColumnFieldPropertyDictionary());
         super.init(config, context);
-        openIterator(context);
         storeService = SpringUtil.getBean("storeService", StoreService.class);
         esercizio = CNRUserContext.getEsercizio(context.getUserContext());
     }
