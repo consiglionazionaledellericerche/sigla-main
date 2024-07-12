@@ -1,5 +1,13 @@
-## Release 6.5.89  -- _July 11, 2024_ 
+## Release 6.5.90  -- _July 12, 2024_ 
 **Changes**
+
+>**La mappa dei controlli PCC ora entra in ricerca libera, per velocizzare l'utilizzo.**
+>
+>[78bbc1137cde6ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78bbc1137cde6ab) marco.spasiano *July 12, 2024*
+
+>**fix: Importo calcolato in presenza di SIOPE e CUP non corretto relativo alla gestione della trasmissione del netto delle fatture passive in regime di spilt payment sul flusso SIOPE+.**
+>
+>[7e8d083695b7179](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7e8d083695b7179) marco.spasiano *July 12, 2024*
 
 >**Aggiornamento dei campi della nota legata alla fattura**
 >
