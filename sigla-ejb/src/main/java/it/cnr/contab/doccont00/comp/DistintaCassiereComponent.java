@@ -6108,7 +6108,15 @@ public class DistintaCassiereComponent extends
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                                 ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.getDt_scadenza()));
-                                ctDatiFatturaSiope.setImportoSiope(calcolaImportoNettoSiope(fattura_passivaBulk.getFl_split_payment(), bulk, Optional.ofNullable(importoClas).orElse(importo.setScale(2, BigDecimal.ROUND_HALF_UP))));
+                                ctDatiFatturaSiope.setImportoSiope(
+                                        calcolaImportoNettoSiope(
+                                                fattura_passivaBulk.getFl_split_payment(),
+                                                bulk,
+                                                Optional.ofNullable(importoClas)
+                                                        .filter(i -> i.compareTo(importo) < 0)
+                                                        .orElse(importo.setScale(2, BigDecimal.ROUND_HALF_UP))
+                                        )
+                                );
 
                                 ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                                 ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
@@ -6213,7 +6221,9 @@ public class DistintaCassiereComponent extends
                                     calcolaImportoNettoSiope(
                                             fattura_passivaBulk.get().getFl_split_payment(),
                                             bulk,
-                                            Optional.ofNullable(importoClas).orElse(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP))
+                                            Optional.ofNullable(importoClas)
+                                                    .filter(i -> i.compareTo(fattura_passivaBulk.get().getIm_totale_fattura()) < 0)
+                                                    .orElse(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP))
                                     )
                             );
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
@@ -6252,7 +6262,7 @@ public class DistintaCassiereComponent extends
         if (importoLordo.equals(BigDecimal.ZERO) || vMandatoReversaleBulk.getIm_ritenute().equals(BigDecimal.ZERO))
             return BigDecimal.ZERO;
         if (splitpayment) {
-            final BigDecimal percentuale = importoLordo.multiply(BigDecimal.TEN.multiply(BigDecimal.TEN)).divide(vMandatoReversaleBulk.getIm_documento_cont(), 2, RoundingMode.HALF_UP);
+            final BigDecimal percentuale = importoLordo.multiply(BigDecimal.TEN.multiply(BigDecimal.TEN)).divide(vMandatoReversaleBulk.getIm_documento_cont(), 5, RoundingMode.HALF_UP);
             final BigDecimal importoNetto = vMandatoReversaleBulk.getIm_documento_cont().subtract(vMandatoReversaleBulk.getIm_ritenute());
             return importoNetto.multiply(percentuale).divide(BigDecimal.TEN.multiply(BigDecimal.TEN), 2, RoundingMode.HALF_UP);
         }
