@@ -18,6 +18,8 @@
 package it.cnr.contab.spring.service;
 
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
+import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.messaggio00.ejb.CRUDMessaggioComponentSession;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -44,6 +46,8 @@ public class UtilService implements InitializingBean {
     private CRUDMessaggioComponentSession crudMessaggioComponentSession;
     private ProgettoRicercaPadreComponentSession progettoRicercaPadreComponentSession;
     private CRUDComponentSession crudComponentSession;
+    private DistintaCassiereComponentSession distintaCassiereComponentSession;
+    private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
 
     @Value("${doccont.max.anni.residui}")
     private Integer anniResidui;
@@ -105,8 +109,14 @@ public class UtilService implements InitializingBean {
                 .filter(CRUDComponentSession.class::isInstance)
                 .map(CRUDComponentSession.class::cast)
                 .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb JADAEJB_CRUDComponentSession"));
-
-
+        this.distintaCassiereComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCCONT00_EJB_DistintaCassiereComponentSession"))
+                .filter(DistintaCassiereComponentSession.class::isInstance)
+                .map(DistintaCassiereComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCCONT00_EJB_DistintaCassiereComponentSession"));
+        this.fatturaElettronicaPassivaComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"))
+                .filter(FatturaElettronicaPassivaComponentSession.class::isInstance)
+                .map(FatturaElettronicaPassivaComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"));
     }
 
     public Integer getAnniResidui() {
@@ -133,5 +143,24 @@ public class UtilService implements InitializingBean {
         Optional.ofNullable(smtpPort).ifPresent(i -> simplePECMail.setSmtpPort(i));
         Optional.ofNullable(startTLSEnabled).ifPresent(b -> simplePECMail.setStartTLSEnabled(b));
         return simplePECMail;
+    }
+
+
+    public void unlockSIOPE() {
+        UserContext userContext = new CNRUserContext("UNLOCK", null, LocalDate.now().getYear(), null, null, null);
+        try {
+            distintaCassiereComponentSession.unlockMessaggiSIOPEPlus(userContext);
+        } catch (Throwable _ex) {
+            LOGGER.error("SIOPE+ ScheduleExecutor error", _ex);
+        }
+    }
+
+    public void unlockSDI() {
+        UserContext userContext = new CNRUserContext("UNLOCK", null, LocalDate.now().getYear(), null, null, null);
+        try {
+            fatturaElettronicaPassivaComponentSession.unlockEmailPEC(userContext);
+        } catch (Throwable _ex) {
+            LOGGER.error("SIOPE+ ScheduleExecutor error", _ex);
+        }
     }
 }

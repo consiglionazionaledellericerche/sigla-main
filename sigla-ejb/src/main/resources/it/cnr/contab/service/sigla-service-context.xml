@@ -143,6 +143,10 @@
 		<task:scheduled ref="fatturaPassivaElettronicaService" method="execute" cron="${pec.cron.expression}" />
 		<task:scheduled ref="documentiContabiliService" method="executeMessaggiSiopeplus" cron="${siopeplus.cron.expression}" />
 		<task:scheduled ref="pdgVariazioniService" method="executeDeletePECMessage" cron="${pec.cron.expression}" />
+
+		<task:scheduled ref="utilService" method="unlockSIOPE" cron="${siopeplus.unlock.cron.expression}" />
+		<task:scheduled ref="utilService" method="unlockSDI" cron="${sdi.unlock.cron.expression}" />
+
 		<task:scheduled ref="utilService" method="executeAggiornaGECO" cron="${aggiorna.geco.cron.expression}" />
 		<task:scheduled ref="utilService" method="executeDeleteMessaggi" cron="${delete.messaggi.cron.expression}" />
 		<task:scheduled ref="printService" method="executeReportWithJsonDataSource" cron="${print.jsondatasource.cron.expression}" />
