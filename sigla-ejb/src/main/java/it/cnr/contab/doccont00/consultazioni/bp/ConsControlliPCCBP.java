@@ -174,26 +174,27 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                     CSVWriter.DEFAULT_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
+
             //La prima riga deve essere vuota
-            writer.writeNext(createArray());
-            writer.writeNext(createArray("Codice del modello", "GESTIONE IMPORTI DOCUMENTI", EMPTY, "i campi contrassegnati da * sono obbligatori"));
-            writer.writeNext(createArray("Versione del modello", "1"));
-            writer.writeNext(createArray("Utente che trasmette il file (Codice Fiscale)", controlliPCCParams.getCodiceFiscale()));
+            writer.writeNext(createArray(), true);
+            writer.writeNext(createArray("Codice del modello", "GESTIONE IMPORTI DOCUMENTI", EMPTY, "i campi contrassegnati da * sono obbligatori"), true);
+            writer.writeNext(createArray("Versione del modello", "1"), true);
+            writer.writeNext(createArray("Utente che trasmette il file (Codice Fiscale)", controlliPCCParams.getCodiceFiscale()), true);
             writer.writeNext(createArray("DATI IDENTIFICATIVI FATTURA*", EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
                     "TIPO OPERAZIONE*", "VARIAZIONE IMPORTI DOCUMENTI\n" +
                             "Tutti i campi sono obbligatori\n" +
                             "Sezione da compilare solo per le righe del modello per le quali Azione = 'SID'"
                     , EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, "REGIME IVA\n" +
                             "Sezione da compilare solo per le righe del modello per le quali Azione = 'MI'", "RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA \n" +
-                            "Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'", EMPTY, "ESITO ELABORAZIONE"));
-            writer.writeNext(createArray("IDENTIFICATIVO 1", EMPTY, "IDENTIFICATIVO 3"));
+                            "Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'", EMPTY, "ESITO ELABORAZIONE"), true);
+            writer.writeNext(createArray("IDENTIFICATIVO 1", EMPTY, "IDENTIFICATIVO 3"),true);
             writer.writeNext(createArray("Numero progressivo di registrazione", "IDENTIFICATIVO 2", EMPTY,
                     "Data documento (SDI 2.1.1.3 Data)", "Codice fiscale fornitore", "Codice ufficio", "Azione", "Imponibile", "Imposta",
                     "Importo non commerciale*", "Importo sospeso in Contenzioso*", "Data inizio sospesione in Contenzioso*",
                     "Importo sospeso in contestazione/adempimenti normativi*", "Data inizio sospesione in contestazione /adempimenti normativi*",
                     "Importo sospeso per data esito regolare verifica di conformità*", "Data inizio sospensione per data esito regolare verifica di conformità*",
-                    "Importo non liquidabile*", "Flag split (S/N)", "Data", "Numero protocollo di entrata", "Codice segnalazione", "Descrizione segnalazione"));
-            writer.writeNext(createArray(EMPTY, "Lotto SDI", "Numero fattura \n" + "(SDI 2.1.1.4 Numero)"));
+                    "Importo non liquidabile*", "Flag split (S/N)", "Data", "Numero protocollo di entrata", "Codice segnalazione", "Descrizione segnalazione"), true);
+            writer.writeNext(createArray(EMPTY, "Lotto SDI", "Numero fattura \n" + "(SDI 2.1.1.4 Numero)"),true);
             final boolean isOperazioneSID = controlliPCCParams.getTipoOperazione().equalsIgnoreCase(ControlliPCCParams.TipoOperazioneType.SID.name());
             final boolean isComunicazioneScadenza = Objects.equals(ControlliPCCParams.TipoOperazioneType.CS.name(), controlliPCCParams.getTipoOperazione());
             vControlliPCCBulks.stream().forEach(vControlliPCCBulk -> {
@@ -260,7 +261,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                         !isComunicazioneScadenza ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getDataScadenza())
                                 .map(timestamp -> DateTimeFormatter.ofPattern("dd/MM/yyyy").format(timestamp.toLocalDateTime()))
                                 .orElse(EMPTY) // RICEZIONE/RIFIUTO/COMUNICAZIONE SCADENZA Sezione da compilare solo per le righe del modello per le quali Azione  = 'RC' ;  Azione = 'RF'; Azione = 'CS'
-                ));
+                ),true);
             });
             writer.close();
             final StorageObject storageObject = storeService.storeSimpleDocument(
@@ -282,6 +283,5 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
         } catch (IOException e) {
             throw handleException(e);
         }
-
     }
 }
