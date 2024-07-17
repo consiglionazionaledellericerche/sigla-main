@@ -1,5 +1,13 @@
-## Release 6.5.90  -- _July 12, 2024_ 
+## Release 6.5.91  -- _July 17, 2024_ 
 **Changes**
+
+>**Aggiunta applyQuotesToAll alla scrittura di tutte le righe**
+>
+>[429b7c929c19e06](https://github.com/consiglionazionaledellericerche/sigla-main/commit/429b7c929c19e06) marco.spasiano *July 17, 2024*
+
+>**Rimozione del lock per lo scan delle fatture su SDI e per SIOPE+**
+>
+>[f5b333083bc5a57](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f5b333083bc5a57) marco.spasiano *July 17, 2024*
 
 >**La mappa dei controlli PCC ora entra in ricerca libera, per velocizzare l'utilizzo.**
 >
