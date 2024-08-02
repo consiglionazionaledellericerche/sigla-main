@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Dictionary;
 import java.util.Iterator;
+import java.util.Optional;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
@@ -125,6 +126,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	private String fl_applicazione_norma_orig;
 	private Integer faseProcesso;
 
+	private boolean amministra = Boolean.FALSE;
 	public Incarichi_proceduraBulk() {
 		super();
 	}
@@ -634,6 +636,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		        !getProcedura_amministrativa().getFl_ricerca_incarico().booleanValue());
 	}
 	public boolean isRONr_Contratti(){
+		if (isAmministra())
+			return Boolean.FALSE;
 		return isROPrimaFaseProcedura() || !isProceduraDaPubblicare();
 	}
     private boolean isFasePubblicazione() {
@@ -740,7 +744,9 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		return false;
 	}
 	public boolean isRODataScadenza() {
-		Integer faseProcesso = getFaseProcesso();  
+		if (isAmministra())
+			return Boolean.FALSE;
+		Integer faseProcesso = getFaseProcesso();
 		return ((!isProceduraScaduta() && 
 				  (faseProcesso.compareTo(FASE_DEFINITIVA)==0 || 
 				   faseProcesso.compareTo(FASE_INSERIMENTO_INCARICO)!=0)) || 
@@ -752,7 +758,9 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	 * stato "Definitivo"
 	 */
 	public boolean isROTipoAttivita() {
-		Integer faseProcesso = getFaseProcesso();  
+		if (isAmministra())
+			return Boolean.FALSE;
+		Integer faseProcesso = getFaseProcesso();
 		if (faseProcesso.compareTo(FASE_DEFINITIVA)==0 || 
 			  (faseProcesso.compareTo(FASE_INSERIMENTO_INCARICO)!=0 &&
         	   !isUtenteCollegatoUoEnte() && !isUtenteCollegatoSuperUtente()))
@@ -788,6 +796,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	 * stato "Definitivo"
 	 */
 	public boolean isROImportoLordo() {
+		if (isAmministra())
+			return Boolean.FALSE;
 		Integer faseProcesso = getFaseProcesso();  
 		if (faseProcesso.compareTo(FASE_DEFINITIVA)==0 || 
 			   (faseProcesso.compareTo(FASE_INSERIMENTO_INCARICO)!=0 &&
@@ -1256,5 +1266,13 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	
 	public void setIncaricoRepertorioForSearch(Incarichi_repertorioBulk incaricoRepertorioForSearch) {
 		this.incaricoRepertorioForSearch = incaricoRepertorioForSearch;
+	}
+
+	public boolean isAmministra() {
+		return amministra;
+	}
+
+	public void setAmministra(boolean amministra) {
+		this.amministra = amministra;
 	}
 }
