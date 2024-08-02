@@ -1,5 +1,17 @@
-## Release 6.5.91  -- _July 17, 2024_ 
+## Release 6.5.93  -- _August 02, 2024_ 
 **Changes**
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[5192b396951f80f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5192b396951f80f) marco.spasiano *August 02, 2024*
+
+>**Modifica all'interfaccia per permettere una corretta visualizzazione degli allegati.**
+>
+>[e8db7b8e5d1c76f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e8db7b8e5d1c76f) marco.spasiano *August 02, 2024*
+
+>**Cambiato controllo per dare la possibilità di riportare in provvisoria una variazione allo stanziamento residuo annullata**
+>
+>[a8152638cd6cdfb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8152638cd6cdfb) marco.spasiano *July 26, 2024*
 
 >**Aggiunta applyQuotesToAll alla scrittura di tutte le righe**
 >
