@@ -190,9 +190,11 @@
 	<columnSet
 		name="archivioAllegati" >
 		<columnFieldProperty
-			name="tipo_archivio" />
+			name="tipo_archivio"
+			textTruncate="true"/>
 		<columnFieldProperty
-			name="stato" />
+			name="stato"
+			textTruncate="true"/>
 		<columnFieldProperty
 			name="nome_file" />
 		<columnFieldProperty
