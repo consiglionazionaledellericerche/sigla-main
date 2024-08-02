@@ -323,6 +323,9 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	           getIncarichi_procedura().isProceduraScaduta();
 	}
 	public boolean isROIncarico() {
+		if (Optional.ofNullable(getIncarichi_procedura()).map(Incarichi_proceduraBulk::isAmministra).orElse(Boolean.FALSE)) {
+			return Boolean.FALSE;
+		}
 		return isIncaricoAnnullato()||isIncaricoDefinitivo()||isIncaricoChiuso()||
 		       getIncarichi_procedura()==null || getIncarichi_procedura().isROProcedura();
 	}
