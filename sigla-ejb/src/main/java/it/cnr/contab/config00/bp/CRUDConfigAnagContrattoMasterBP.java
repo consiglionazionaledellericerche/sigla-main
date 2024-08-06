@@ -85,6 +85,9 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 			boolean doInitializeForEdit) throws BusinessProcessException {
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		setStatus(EDIT);
+		getCrudAssUO().setEnabled(true);
+		getCrudAssUODisponibili().setEnabled(true);
+
 	}
 
 	public void unpublishContratto(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
