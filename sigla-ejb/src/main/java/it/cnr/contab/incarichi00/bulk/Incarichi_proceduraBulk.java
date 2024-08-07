@@ -447,7 +447,9 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		return (Incarichi_archivioBulk)getArchivioAllegatiMI().remove(index);
 	}
 	public boolean isROCds() {
-		return getUnita_organizzativa()!=null && 
+		if (isAmministra())
+			return Boolean.FALSE;
+		return getUnita_organizzativa()!=null &&
 		       getUnita_organizzativa().getCd_unita_organizzativa()!=null;
 	}
 	public boolean isROProcAmm() {
@@ -626,6 +628,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		return getFaseProcesso().compareTo(FASE_PUBBLICAZIONE)!=-1;
 	}
 	public boolean isROProcedura(){
+		if (isAmministra())
+			return Boolean.FALSE;
 		return isProceduraAnnullata()||isProceduraChiusa()||
 			   isProceduraDefinitiva()||isProceduraScaduta();
 	}
