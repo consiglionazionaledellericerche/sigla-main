@@ -43,8 +43,27 @@ public class AmministraTestataProgettiRicercaBP extends TestataProgettiRicercaBP
     public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
         super.basicEdit(actioncontext, oggettobulk, flag);
         this.setStatus(EDIT);
+        amministra();
     }
 
+    @Override
+    public void update(ActionContext actioncontext) throws BusinessProcessException {
+        amministra();
+        super.update(actioncontext);
+    }
+
+    @Override
+    public void create(ActionContext actioncontext) throws BusinessProcessException {
+        amministra();
+        super.create(actioncontext);
+    }
+
+    private void amministra() {
+        Optional.ofNullable(getModel())
+                .filter(ProgettoBulk.class::isInstance)
+                .map(ProgettoBulk.class::cast)
+                .ifPresent(progettoBulk -> progettoBulk.setAmministra(true));
+    }
     @Override
     protected Button[] createToolbar() {
         Button[] toolbar = super.createToolbar();
