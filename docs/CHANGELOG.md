@@ -1,3 +1,27 @@
+## Release 6.5.95  -- _September 02, 2024_ 
+**Changes**
+
+>**fix: La generazione del flusso SIOPE+ veniva interrotta in caso di un mandato con righe sia da fattura che da documento generico, inoltre veniva valorizzato erroneamente l'imposrto siope nei dati della fattura quando la stessa non era soggetta a splitpayment.**
+>
+>[2a132458f671b47](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2a132458f671b47) marco.spasiano *September 02, 2024*
+
+>**Modificata la funzione di amministra per i progetti.**
+>
+>[274755bf8745877](https://github.com/consiglionazionaledellericerche/sigla-main/commit/274755bf8745877) marco.spasiano *August 09, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[a7b5c2ea918a751](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a7b5c2ea918a751) marco.spasiano *August 07, 2024*
+
+>**Sbloccata l'associazione delle UO nella funzione di amministra dei contratti.**
+>
+>[cb7a07f88bd509a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb7a07f88bd509a) marco.spasiano *August 06, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[0beec6e40974f7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0beec6e40974f7e) marco.spasiano *August 02, 2024*
+
+
 ## Release 6.5.93  -- _August 02, 2024_ 
 **Changes**
 
