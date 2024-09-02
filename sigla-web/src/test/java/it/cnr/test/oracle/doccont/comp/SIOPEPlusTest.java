@@ -143,7 +143,7 @@ public class SIOPEPlusTest extends DeploymentsOracle {
                                         .map(CtFatturaSiope.class::cast)
                                         .map(CtFatturaSiope::getDatiFatturaSiope)
                                         .collect(Collectors.toList());
-                                if (!ctDatiFatturaSiope.isEmpty()) {
+                                if (!ctDatiFatturaSiope.isEmpty() && bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
                                     assertEquals(bulk.getIm_documento_cont().subtract(bulk.getIm_ritenute()).setScale(2, RoundingMode.HALF_UP),
                                             ctDatiFatturaSiope.stream()
                                                     .map(CtDatiFatturaSiope::getImportoSiope)

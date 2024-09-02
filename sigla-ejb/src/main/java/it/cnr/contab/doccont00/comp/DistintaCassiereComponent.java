@@ -5830,7 +5830,9 @@ public class DistintaCassiereComponent extends
                     mandato.getInformazioniBeneficiario().add(infoben);
                 } // end else di multibeneficiario
             }
-            controllaQuadraturaNettoSiope(bulk, mandato);
+            if (bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
+                controllaQuadraturaNettoSiope(bulk, mandato);
+            }
             return mandato;
         } catch (Exception e) {
             throw handleException(e);
@@ -5964,6 +5966,7 @@ public class DistintaCassiereComponent extends
             if (mandatoDaFattura.isPresent()) {
                 final Map<Fattura_passivaBulk, Double> collect = siopeBulks
                         .stream()
+                        .filter(mandatoSiopeBulk -> mandatoSiopeBulk.getCd_tipo_documento_amm().equalsIgnoreCase(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA))
                         .map(mandato_siopeBulk -> {
                             try {
                                 return new AbstractMap.SimpleEntry<Fattura_passivaBulk, BigDecimal>(Optional.ofNullable(
@@ -6259,9 +6262,10 @@ public class DistintaCassiereComponent extends
     }
 
     private BigDecimal calcolaImportoNettoSiope(boolean splitpayment, V_mandato_reversaleBulk vMandatoReversaleBulk, BigDecimal importoLordo) {
-        if (importoLordo.equals(BigDecimal.ZERO) || vMandatoReversaleBulk.getIm_ritenute().equals(BigDecimal.ZERO))
-            return BigDecimal.ZERO;
         if (splitpayment) {
+            if (importoLordo.equals(BigDecimal.ZERO) || vMandatoReversaleBulk.getIm_ritenute().equals(BigDecimal.ZERO)) {
+                return BigDecimal.ZERO;
+            }
             final BigDecimal percentuale = importoLordo.multiply(BigDecimal.TEN.multiply(BigDecimal.TEN)).divide(vMandatoReversaleBulk.getIm_documento_cont(), 5, RoundingMode.HALF_UP);
             final BigDecimal importoNetto = vMandatoReversaleBulk.getIm_documento_cont().subtract(vMandatoReversaleBulk.getIm_ritenute());
             return importoNetto.multiply(percentuale).divide(BigDecimal.TEN.multiply(BigDecimal.TEN), 2, RoundingMode.HALF_UP);
