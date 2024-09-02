@@ -782,6 +782,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	 * stato "Definitivo"
 	 */
 	public boolean isROTipoNatura() {
+		if (isAmministra())
+			return Boolean.FALSE;
 		Integer faseProcesso = getFaseProcesso();
 		if (faseProcesso.compareTo(FASE_DEFINITIVA)==0 || 
 			(faseProcesso.compareTo(FASE_INSERIMENTO_INCARICO)!=0 &&
