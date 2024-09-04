@@ -1,5 +1,17 @@
-## Release 6.5.95  -- _September 02, 2024_ 
+## Release 6.5.96  -- _September 04, 2024_ 
 **Changes**
+
+>**Controlli PCC in caso di nota credito agganciata alla fattura l'importo veiene decurtato dall'imponibile.**
+>
+>[d4666f131ea943e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4666f131ea943e) marco.spasiano *September 04, 2024*
+
+>**Condizionato il controllo sulla data di fine rapporto del terzo al ruolo di supervisore.**
+>
+>[5721a5e1356cef6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5721a5e1356cef6) marco.spasiano *September 04, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[37e2a68bca78a99](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37e2a68bca78a99) marco.spasiano *September 02, 2024*
 
 >**fix: La generazione del flusso SIOPE+ veniva interrotta in caso di un mandato con righe sia da fattura che da documento generico, inoltre veniva valorizzato erroneamente l'imposrto siope nei dati della fattura quando la stessa non era soggetta a splitpayment.**
 >
