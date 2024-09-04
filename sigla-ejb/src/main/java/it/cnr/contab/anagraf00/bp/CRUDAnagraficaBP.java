@@ -47,6 +47,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
@@ -489,11 +490,13 @@ protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throw
 
 		// Non è possibile impostare una data di fine validità inferiore alla data
 		// di fine validita originale, a meno che sia superiore alla data odierna.
+		CNRUserInfo ui = (CNRUserInfo) context.getUserInfo();
+		UtenteBulk utente = ui.getUtente();
 		if (rapporto.getDt_fin_validita_originale() != null) {
 			java.sql.Timestamp dt_fin_validita_minima = DateUtils.min(
 				it.cnr.jada.util.ejb.EJBCommonServices.getServerDate(),
 				rapporto.getDt_fin_validita_originale());
-			if (rapporto.getDt_fin_validita().before(dt_fin_validita_minima)) {
+			if (rapporto.getDt_fin_validita().before(dt_fin_validita_minima) && !utente.isSupervisore()) {
 				rapporto.setDt_fin_validita(dt_fin_validita_minima);
 				throw new ValidationException("La data di fine validità non può essere anteriore al "+FieldProperty.getFormat("date_short").format(dt_fin_validita_minima));
 			}
