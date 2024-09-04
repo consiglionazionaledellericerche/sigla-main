@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -35,6 +36,14 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
 
     public AllegatiPCCBP(String s) {
         super(s);
+    }
+
+    @Override
+    protected void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
+        super.basicEdit(actioncontext, oggettobulk, flag);
+        getCrudArchivioAllegati().setOrderBy(actioncontext, "lastModificationDate", OrderConstants.ORDER_DESC);
+        getCrudArchivioAllegati().setSelection(Collections.emptyEnumeration());
+        getCrudArchivioAllegati().setModelIndex(actioncontext, -1);
     }
 
     @Override
@@ -111,7 +120,7 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
                         Map<String, String> results = new HashMap<String, String>();
                         for(int i=8; i <= s.getLastRowNum(); i++){
                             final XSSFRow row = s.getRow(i);
-                            final Optional<String> identifictivoSDI = Optional.ofNullable(row).map(cells -> cells.getCell(1)) .map(XSSFCell::getRawValue);
+                            final Optional<String> identifictivoSDI = Optional.ofNullable(row).map(cells -> cells.getCell(1)) .map(XSSFCell::getStringCellValue);
                             if (identifictivoSDI.isPresent()) {
                                 final Optional<String> esito = Optional.ofNullable(row.getCell(20)).map(XSSFCell::getStringCellValue);
                                 if (esito.filter(s1 -> s1.length() > 0).isPresent()) {

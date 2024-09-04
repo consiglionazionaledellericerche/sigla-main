@@ -18,7 +18,6 @@
 package it.cnr.contab.doccont00.consultazioni.bp;
 
 import com.opencsv.CSVWriter;
-import it.cnr.contab.consultazioni.action.ConsObbligazioniAction;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.doccont00.consultazioni.action.ConsControlliPCCAction;
 import it.cnr.contab.doccont00.consultazioni.bulk.ControlliPCCParams;
@@ -74,14 +73,14 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
     @Override
     public BusinessProcess initBusinessProcess(ActionContext actioncontext) throws BusinessProcessException {
         BusinessProcess businessProcess = super.initBusinessProcess(actioncontext);
-        ConsControlliPCCAction consObbligazioniAction = new ConsControlliPCCAction();
+        ConsControlliPCCAction consControlliPCCAction = new ConsControlliPCCAction();
         RicercaLiberaBP ricercaLiberaBP = (RicercaLiberaBP) actioncontext.createBusinessProcess("RicercaLibera");
         ricercaLiberaBP.setSearchProvider(this);
         ricercaLiberaBP.setShowSearchResult(false);
         ricercaLiberaBP.setCanPerformSearchWithoutClauses(false);
         ricercaLiberaBP.setPrototype(getModel());
-        actioncontext.addHookForward("searchResult", consObbligazioniAction, "doRigheSelezionate");
-        actioncontext.addHookForward("close", consObbligazioniAction, "doCloseRicercaLibera");
+        actioncontext.addHookForward("searchResult", consControlliPCCAction, "doRigheSelezionate");
+        actioncontext.addHookForward("close", consControlliPCCAction, "doCloseRicercaLibera");
         actioncontext.addBusinessProcess(ricercaLiberaBP);
         return ricercaLiberaBP;
     }
@@ -225,7 +224,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                                 .orElse(String.valueOf(BigDecimal.ZERO)), // Importo non commerciale*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getCausale())
                                 .filter(s -> s.equalsIgnoreCase(Fattura_passivaBulk.CONT))
-                                .map(s -> vControlliPCCBulk.getImponibile())
+                                .map(s -> vControlliPCCBulk.getImponibile().subtract(Optional.ofNullable(vControlliPCCBulk.getImTotaleNC()).orElse(BigDecimal.ZERO)))
                                 .map(bigDecimal -> decimalFormat.format(bigDecimal))
                                 .orElse(String.valueOf(BigDecimal.ZERO)), // Importo sospeso in Contenzioso*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getCausale())
@@ -235,7 +234,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                                 .orElse(EMPTY), // Data inizio sospesione in Contenzioso*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getCausale())
                                 .filter(s -> s.equalsIgnoreCase(Fattura_passivaBulk.CONT_NORM))
-                                .map(s -> vControlliPCCBulk.getImponibile())
+                                .map(s -> vControlliPCCBulk.getImponibile().subtract(Optional.ofNullable(vControlliPCCBulk.getImTotaleNC()).orElse(BigDecimal.ZERO)))
                                 .map(bigDecimal -> decimalFormat.format(bigDecimal))
                                 .orElse(String.valueOf(BigDecimal.ZERO)), // Importo sospeso in contestazione/adempimenti normativi*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getCausale())
@@ -245,7 +244,7 @@ public class ConsControlliPCCBP extends SelezionatoreListaBP implements SearchPr
                                 .orElse(EMPTY), // Data inizio sospesione in contestazione /adempimenti normativi*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getCausale())
                                 .filter(s -> s.equalsIgnoreCase(Fattura_passivaBulk.CONT_CONF))
-                                .map(s -> vControlliPCCBulk.getImponibile())
+                                .map(s -> vControlliPCCBulk.getImponibile().subtract(Optional.ofNullable(vControlliPCCBulk.getImTotaleNC()).orElse(BigDecimal.ZERO)))
                                 .map(bigDecimal -> decimalFormat.format(bigDecimal))
                                 .orElse(String.valueOf(BigDecimal.ZERO)), // Importo sospeso per data esito regolare verifica di conformità*
                         !isOperazioneSID ? EMPTY : Optional.ofNullable(vControlliPCCBulk.getCausale())
