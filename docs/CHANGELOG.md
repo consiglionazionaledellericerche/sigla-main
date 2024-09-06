@@ -1,3 +1,15 @@
+## Release 6.5.97  -- _September 05, 2024_ 
+**Changes**
+
+>**Aggiunta la visualizzazione del mandato partendo dalla riga di fattura**
+>
+>[54bb4e8891d3322](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54bb4e8891d3322) marco.spasiano *September 05, 2024*
+
+>**In caso di uo ente in scrivania, ora è possibile visualizzare la fattura collegata al documento elettronico.**
+>
+>[ca30b48fb334b12](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca30b48fb334b12) marco.spasiano *September 04, 2024*
+
+
 ## Release 6.5.96  -- _September 04, 2024_ 
 **Changes**
 
