@@ -1,5 +1,13 @@
-## Release 6.5.97  -- _September 05, 2024_ 
+## Release 6.5.98  -- _September 06, 2024_ 
 **Changes**
+
+>**Aggiunta la possibilità di caricare un CSV oltre all'excel per aggiornare lo stato della PCC.**
+>
+>[718a321af38cc9d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/718a321af38cc9d) marco.spasiano *September 06, 2024*
+
+>**Aggiunta la possibilità di caricare un CSV oltre all'excel per aggiornare lo stato della PCC.**
+>
+>[6e2f3bcf2b110fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6e2f3bcf2b110fb) marco.spasiano *September 06, 2024*
 
 >**Aggiunta la visualizzazione del mandato partendo dalla riga di fattura**
 >
