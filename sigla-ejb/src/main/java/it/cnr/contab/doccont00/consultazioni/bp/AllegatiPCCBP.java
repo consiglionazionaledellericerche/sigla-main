@@ -1,5 +1,8 @@
 package it.cnr.contab.doccont00.consultazioni.bp;
 
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -15,21 +18,23 @@ import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, AllegatoParentIBulk> {
     public static final String COMUNICAZIONI_PCC = "Comunicazioni PCC";
     private Integer esercizio;
+    private static final Logger logger = LoggerFactory.getLogger(AllegatiPCCBP.class);
 
     public AllegatiPCCBP() {
     }
@@ -131,6 +136,32 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
                         component.aggiornaEsitoPCC(userContext, results);
                     } catch (IOException | ComponentException e) {
                         throw new ApplicationRuntimeException(e);
+                    } catch (NotOfficeXmlFileException _ex) {
+                        try {
+                            final CSVReader reader = new CSVReaderBuilder(new FileReader(file))
+                                    .withCSVParser(new CSVParserBuilder()
+                                            .withSeparator(';')
+                                            .build()
+                                    ).build();
+                            reader.skip(13);
+                            Iterator<String[]> iterator = reader.iterator();
+                            Map<String, String> results = new HashMap<String, String>();
+                            while (iterator.hasNext()) {
+                                String[] record = iterator.next();
+                                final Optional<String> identifictivoSDI = Optional.ofNullable(record).map(strings -> strings[1]);
+                                if (identifictivoSDI.isPresent()) {
+                                    final Optional<String> esito = Optional.ofNullable(record).map(strings -> strings[20]);
+                                    if (esito.filter(s1 -> s1.length() > 0).isPresent()) {
+                                        results.put(identifictivoSDI.get(), esito.get());
+                                    }
+                                }
+                            }
+                            reader.close();
+                            results.entrySet().stream().forEach(stringStringEntry -> logger.debug("Aggiornamento IdentificativoSDI: {} con Esito: {}", stringStringEntry.getKey(), stringStringEntry.getValue()));
+                            component.aggiornaEsitoPCC(userContext, results);
+                        } catch (IOException|ComponentException e) {
+                            throw new ApplicationRuntimeException(e);
+                        }
                     }
                 });
         } catch (Exception _ex) {
