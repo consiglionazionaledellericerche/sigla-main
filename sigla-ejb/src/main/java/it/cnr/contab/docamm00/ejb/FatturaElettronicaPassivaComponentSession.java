@@ -70,5 +70,5 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 	void unlockEmailPEC(UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 	Boolean isPartitaIvaGruppoIva(UserContext usercontext, AnagraficoBulk anagrafico, String partitaIva, Timestamp dataDocumento) throws ComponentException,java.rmi.RemoteException;
 	void aggiornaEsitoPCC(UserContext userContext, String identificativoSDI, String esitoPCC) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-	void aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+	Integer aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

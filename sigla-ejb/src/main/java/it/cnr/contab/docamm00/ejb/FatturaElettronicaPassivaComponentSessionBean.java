@@ -369,11 +369,12 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
         }
     }
 
-    public void aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws ComponentException, java.rmi.RemoteException {
+    public Integer aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws ComponentException, java.rmi.RemoteException {
         pre_component_invocation(userContext, componentObj);
         try{
-            ((FatturaElettronicaPassivaComponent)componentObj).aggiornaEsitoPCC(userContext, esiti);
+            Integer result = ((FatturaElettronicaPassivaComponent)componentObj).aggiornaEsitoPCC(userContext, esiti);
             component_invocation_succes(userContext, componentObj);
+            return result;
         }catch(NoRollbackException norollbackexception){
             component_invocation_succes(userContext, componentObj);
             throw norollbackexception;

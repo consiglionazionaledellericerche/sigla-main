@@ -17,6 +17,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.OrderConstants;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -119,6 +120,7 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
         try {
             Optional.ofNullable(allegato.getFile())
                 .ifPresent(file -> {
+                    Integer result;
                     try {
                         XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
                         XSSFSheet s = wb.getSheet(wb.getSheetName(0));
@@ -133,7 +135,7 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
                                 }
                             }
                         }
-                        component.aggiornaEsitoPCC(userContext, results);
+                        result = component.aggiornaEsitoPCC(userContext, results);
                     } catch (IOException | ComponentException e) {
                         throw new ApplicationRuntimeException(e);
                     } catch (NotOfficeXmlFileException _ex) {
@@ -158,11 +160,12 @@ public class AllegatiPCCBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Allegato
                             }
                             reader.close();
                             results.entrySet().stream().forEach(stringStringEntry -> logger.debug("Aggiornamento IdentificativoSDI: {} con Esito: {}", stringStringEntry.getKey(), stringStringEntry.getValue()));
-                            component.aggiornaEsitoPCC(userContext, results);
+                            result = component.aggiornaEsitoPCC(userContext, results);
                         } catch (IOException|ComponentException e) {
                             throw new ApplicationRuntimeException(e);
                         }
                     }
+                    setMessage(FormBP.INFO_MESSAGE, "L'esito è stato aggiornato su " + result + " fatture elettroniche.");
                 });
         } catch (Exception _ex) {
             throw new ApplicationMessageFormatException("Il file non è stato elaborato per il seguente errore: {0}", _ex.getMessage());
