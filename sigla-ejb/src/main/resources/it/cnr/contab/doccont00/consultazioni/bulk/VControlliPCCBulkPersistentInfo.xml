@@ -173,6 +173,12 @@
 				columnSize="1"
 				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 				nullable="true" />
+		<columnMapping
+				columnName="DA_PAGARE"
+				propertyName="daPagare"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 			name="identificativoSdi" />
@@ -230,4 +236,7 @@
 			name="esitoPCC"/>
 	<persistentProperty
 			name="flSplitPayment"/>
+	<persistentProperty
+			name="daPagare"/>
+
 </SQLPersistentInfo>

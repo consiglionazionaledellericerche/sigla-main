@@ -67,6 +67,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.RemoteDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
@@ -262,12 +263,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             context.getUserContext(),
                             it.cnr.contab.utenze00.bulk.CNRUserInfo
                                     .getEsercizio(context)));
-            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue()
-                    && !isUoDistintaTuttaSac(context))
-                throw new ApplicationException(
-                        "Funzione non abilitata per la uo");
-            else
-                isUoDistintaTuttaSac(context);
             documentiContabiliService = SpringUtil.getBean(
                     "documentiContabiliService",
                     DocumentiContabiliService.class);
@@ -596,6 +591,19 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         super.initialize(actioncontext);
         setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo
                 .getUnita_organizzativa(actioncontext));
+        try {
+            final Unita_organizzativaBulk unitaOrganizzativa = CNRUserInfo.getUnita_organizzativa(actioncontext);
+            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isUoDistintaTuttaSac(actioncontext)) {
+                if (!(unitaOrganizzativa.isUoEnte() && getStatus() == SEARCH)) {
+                    throw new ApplicationException("Funzione non abilitata per la uo");
+                }
+            } else {
+                isUoDistintaTuttaSac(actioncontext);
+            }
+        } catch (ComponentException|RemoteException _ex) {
+            throw handleException(_ex);
+        }
+
         if (this.isEditable()) {
             ((Distinta_cassiereBulk) this.getModel()).setFl_flusso(flusso);
             ((Distinta_cassiereBulk) this.getModel()).setFl_sepa(sepa);

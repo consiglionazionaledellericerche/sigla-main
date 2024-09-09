@@ -99,6 +99,8 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 	//  ESITO_PCC VARCHAR(30)
 	private java.lang.String esitoPCC;
 	private Boolean flSplitPayment;
+	//    DA_PAGARE DECIMAL(17,2)
+	private java.math.BigDecimal daPagare;
 
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = DocumentoEleTestataBulk.tiStatoDocumentoKeys;
 	public static final java.util.Dictionary<String, String> tiTipoDocumentoKeys = DocumentoEleTestataBulk.tiTipoDocumentoKeys;
@@ -432,5 +434,13 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 
 	public void setFlSplitPayment(Boolean flSplitPayment) {
 		this.flSplitPayment = flSplitPayment;
+	}
+
+	public BigDecimal getDaPagare() {
+		return daPagare;
+	}
+
+	public void setDaPagare(BigDecimal daPagare) {
+		this.daPagare = daPagare;
 	}
 }

@@ -221,6 +221,15 @@
 		property="flSplitPayment"
 		inputType="CHECKBOX"
 		label="Split Payment" />
+	<fieldProperty
+		name="daPagare"
+		property="daPagare"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Da Pagare" />
 
 	<formFieldProperty
 		name="identificativoSdi" />
@@ -278,6 +287,8 @@
 		name="esitoPCC"/>
 	<formFieldProperty
 		name="flSplitPayment"/>
+	<formFieldProperty
+		name="daPagare"/>
 
 	<findFieldProperty
 		name="identificativoSdi" />
@@ -331,6 +342,8 @@
 		name="dtEmissioneMan" />
 	<findFieldProperty
 		name="imMandato" />
+	<findFieldProperty
+		name="daPagare" />
 	<findFieldProperty
 		name="imTotaleNC" />
 	<findFieldProperty
@@ -388,6 +401,8 @@
 		name="dtEmissioneMan" />
 	<columnFieldProperty
 		name="imMandato" />
+	<columnFieldProperty
+		name="daPagare" />
 	<columnFieldProperty
 		name="imTotaleNC" />
 	<columnFieldProperty
