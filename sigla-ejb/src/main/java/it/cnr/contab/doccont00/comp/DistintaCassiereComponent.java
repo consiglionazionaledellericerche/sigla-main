@@ -6151,15 +6151,19 @@ public class DistintaCassiereComponent extends
                         .orElseThrow(() -> new ComponentException("Compenso non trovato!"));
                 getHomeCache(userContext).fetchAll(userContext);
                 final TipoDebitoSIOPE tipoDebitoSIOPETrattamento = Optional.ofNullable(compensoBulk.getTipoTrattamento())
-                        .map(tipo_trattamentoBulk -> {
+                        .flatMap(tipo_trattamentoBulk -> {
                             try {
-                                return (Tipo_trattamentoBulk)tipo_trattamentoHome.findByPrimaryKey(tipo_trattamentoBulk);
+                                return tipo_trattamentoHome.findTipoTrattamento(tipo_trattamentoBulk.getCd_trattamento());
                             } catch (PersistencyException e) {
                                 throw new DetailedRuntimeException(e);
                             }
                         })
-                        .flatMap(tipo_trattamentoBulk -> Optional.ofNullable(tipo_trattamentoBulk.getTipoDebitoSiope()))
-                        .map(s -> TipoDebitoSIOPE.getValueFrom(s))
+                        .flatMap(tipo_trattamentoBulk -> {
+                            return Optional.ofNullable(tipo_trattamentoBulk.getTipoDebitoSiope());
+                        })
+                        .map(s -> {
+                            return TipoDebitoSIOPE.getValueFrom(s);
+                        })
                         .orElse(TipoDebitoSIOPE.NON_COMMERCIALE);
                 switch (tipoDebitoSIOPETrattamento) {
                     case IVA: {
@@ -6195,7 +6199,7 @@ public class DistintaCassiereComponent extends
                         if (motivoAssenzaCigCompenso.isPresent())
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StMotivoEsclusioneCigSiope.valueOf(motivoAssenzaCigCompenso.get()));
 
-                        final Optional<Fattura_passivaBulk> fattura_passivaBulk = Optional.ofNullable(compensoBulk.getFatturaPassiva());
+                        final Optional<Fattura_passiva_IBulk> fattura_passivaBulk = compensoHome.findFatturaFornitore(userContext, compensoBulk);
                         if (fattura_passivaBulk.isPresent()) {
                             CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
                             if (Optional.ofNullable(fattura_passivaBulk.get().getDocumentoEleTestata()).isPresent()) {
