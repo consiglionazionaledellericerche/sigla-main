@@ -2892,12 +2892,13 @@ public class DistintaCassiereComponent extends
                            OggettoBulk bulk) throws ComponentException,
             PersistencyException {
         SQLBuilder sql = (SQLBuilder) super.select(userContext, clauses, bulk);
-        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS,
-                ((CNRUserContext) userContext).getCd_unita_organizzativa());
-        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS,
-                ((CNRUserContext) userContext).getEsercizio());
-        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS,
-                ((CNRUserContext) userContext).getCd_cds());
+        Unita_organizzativaBulk uo = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+                findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getEsercizio());
+        if (!uo.isUoEnte()) {
+            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getCd_unita_organizzativa());
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getCd_cds());
+        }
         // visualizza solo le distinte che non sono state ancora inviate
         if (bulk instanceof V_distinta_cass_im_man_revBulk) {
             verificaStatoEsercizio(userContext);

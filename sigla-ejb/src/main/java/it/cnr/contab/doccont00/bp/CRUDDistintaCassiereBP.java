@@ -595,6 +595,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             final Unita_organizzativaBulk unitaOrganizzativa = CNRUserInfo.getUnita_organizzativa(actioncontext);
             if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isUoDistintaTuttaSac(actioncontext)) {
                 if (!(unitaOrganizzativa.isUoEnte() && getStatus() == SEARCH)) {
+                    rollbackAndCloseUserTransaction();
                     throw new ApplicationException("Funzione non abilitata per la uo");
                 }
             } else {
