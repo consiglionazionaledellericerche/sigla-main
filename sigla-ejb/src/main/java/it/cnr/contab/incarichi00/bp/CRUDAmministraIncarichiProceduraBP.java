@@ -48,4 +48,10 @@ public class CRUDAmministraIncarichiProceduraBP extends CRUDIncarichiProceduraBP
             .ifPresent(incarichiProceduraBulk -> incarichiProceduraBulk.setAmministra(Boolean.TRUE));
         getAndClearMessage();
     }
+
+    @Override
+    protected boolean isAmministra() {
+        return Boolean.TRUE;
+    }
+
 }
