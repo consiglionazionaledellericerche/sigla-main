@@ -1,5 +1,33 @@
-## Release 6.5.98  -- _September 06, 2024_ 
+## Release 6.5.100  -- _September 10, 2024_ 
 **Changes**
+
+>**fix: in caso di mandato da compenso legato a fattura nel flusso siope+ non trasmetteva la fattura legata a compenso**
+>
+>[00eb06437c9a5f7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/00eb06437c9a5f7) marco.spasiano *September 10, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[0b95d597f2b7b1f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0b95d597f2b7b1f) marco.spasiano *September 10, 2024*
+
+>**Resa disponibile la visualizzazione delle distinte di pagamento alla Uo Ente.**
+>
+>[ae1cc77f1302633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae1cc77f1302633) marco.spasiano *September 10, 2024*
+
+>**Aggiornato l'importo da pagare alla consultazione PCC per l'importo delle note di credito.**
+>
+>[77f168959b5519e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/77f168959b5519e) marco.spasiano *September 10, 2024*
+
+
+## Release 6.5.99  -- _September 09, 2024_ 
+**Changes**
+
+>**Aggiunto l'importo da pagare alla consultazione PCC.**
+>
+>[a2345d43e793477](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a2345d43e793477) marco.spasiano *September 09, 2024*
+
+>**Aggiunto l'importo da pagare alla consultazione PCC.**
+>
+>[7915a4682a828cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7915a4682a828cb) marco.spasiano *September 09, 2024*
 
 >**Aggiunta la possibilità di caricare un CSV oltre all'excel per aggiornare lo stato della PCC.**
 >
