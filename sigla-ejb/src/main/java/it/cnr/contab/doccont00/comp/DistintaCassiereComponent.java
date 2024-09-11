@@ -6200,6 +6200,7 @@ public class DistintaCassiereComponent extends
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StMotivoEsclusioneCigSiope.valueOf(motivoAssenzaCigCompenso.get()));
 
                         final Optional<Fattura_passiva_IBulk> fattura_passivaBulk = compensoHome.findFatturaFornitore(userContext, compensoBulk);
+                        getHomeCache(userContext).fetchAll(userContext);
                         if (fattura_passivaBulk.isPresent()) {
                             CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
                             if (Optional.ofNullable(fattura_passivaBulk.get().getDocumentoEleTestata()).isPresent()) {
