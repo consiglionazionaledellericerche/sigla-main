@@ -825,7 +825,9 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						Integer indexAndIncrement = null;
 						if (results.size() == 1) {
 							DocumentoEleTestataBulk documentoEleTestata = results.get(0);
-							if (!documentoEleTestata.getEsitoPCC().equalsIgnoreCase(esito.getValue())) {
+							if (Optional.ofNullable(documentoEleTestata.getEsitoPCC())
+									.map(s -> !s.equalsIgnoreCase(esito.getValue()))
+									.orElse(Boolean.TRUE)) {
 								documentoEleTestata.setEsitoPCC(esito.getValue());
 								documentoEleTestata.setToBeUpdated();
 								super.modificaConBulk(userContext, documentoEleTestata);
