@@ -646,7 +646,13 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                                 docEleLinea.setRiferimentoTesto(altriDatiGestionaliType.getRiferimentoTesto());
                                 docEleLinea.setRiferimentoNumero(
                                         Optional.ofNullable(altriDatiGestionaliType.getRiferimentoNumero())
-                                            .map(bigDecimal -> bigDecimal.setScale(2))
+                                            .map(bigDecimal -> {
+                                                try {
+                                                    return bigDecimal.setScale(2, RoundingMode.DOWN);
+                                                } catch (ArithmeticException _ex) {
+                                                    return bigDecimal;
+                                                }
+                                            })
                                             .orElse(BigDecimal.ZERO)
                                 );
                                 docEleLinea.setRiferimentodata(convert(altriDatiGestionaliType.getRiferimentoData()));
