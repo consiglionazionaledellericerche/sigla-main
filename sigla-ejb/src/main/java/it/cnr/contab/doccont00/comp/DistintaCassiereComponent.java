@@ -6175,7 +6175,6 @@ public class DistintaCassiereComponent extends
                         break;
                     }
                     case COMMERCIALE: {
-                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
                         final Optional<String> cigCompenso = Optional.ofNullable(compensoBulk.getCig()).map(CigBulk::getCdCig).filter(s -> Optional.ofNullable(s).isPresent());
                         final Optional<String> motivoAssenzaCigCompenso = Optional.ofNullable(compensoBulk.getMotivo_assenza_cig()).filter(s -> Optional.ofNullable(s).isPresent());
                         if (cigCompenso.isPresent() && motivoAssenzaCigCompenso.isPresent()) {
@@ -6202,6 +6201,7 @@ public class DistintaCassiereComponent extends
                         final Optional<Fattura_passiva_IBulk> fattura_passivaBulk = compensoHome.findFatturaFornitore(userContext, compensoBulk);
                         getHomeCache(userContext).fetchAll(userContext);
                         if (fattura_passivaBulk.isPresent()) {
+                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
                             CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
                             if (Optional.ofNullable(fattura_passivaBulk.get().getDocumentoEleTestata()).isPresent()) {
                                 ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
@@ -6238,12 +6238,7 @@ public class DistintaCassiereComponent extends
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
                         } else {
-                            CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
-                            ctFatturaSiope.setTipoDocumentoSiopeA(StTipoDocumentoAnalogico.ANALOGICO);
-                            ctFatturaSiope.setAnnoEmissioneFatturaSiope(compensoBulk.getEsercizio());
-                            ctFatturaSiope.setCodiceFiscaleEmittenteSiope(compensoBulk.getCodice_fiscale());
-                            ctFatturaSiope.setTipoDocumentoAnalogicoSiope(DOC_EQUIVALENTE);
-                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
                         }
                         break;
                     }
