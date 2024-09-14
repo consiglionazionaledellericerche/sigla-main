@@ -363,7 +363,7 @@ public SQLBuilder selectCdrAssociatiByClause(UserContext userContext, Tipo_linea
  * @author mspasiano
  * Inizializza la Funzione solo con la 01  
  */
-protected void initializeKeysAndOptionsInto(UserContext aUC, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+public void initializeKeysAndOptionsInto(UserContext aUC, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 	super.initializeKeysAndOptionsInto(aUC, bulk);
 	if(bulk instanceof Tipo_linea_attivitaBulk) {
 		try {

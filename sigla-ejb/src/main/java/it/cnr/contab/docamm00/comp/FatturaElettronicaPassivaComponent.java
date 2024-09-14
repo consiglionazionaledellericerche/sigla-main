@@ -52,6 +52,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
@@ -62,10 +63,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
@@ -73,9 +71,13 @@ import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteTyp
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -792,6 +794,98 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
-	}	
+	}
+
+    public void aggiornaEsitoPCC(UserContext userContext, String identificativoSDI, String esitoPCC) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(userContext, DocumentoEleTestataBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSDI);
+		try {
+			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+			for (DocumentoEleTestataBulk documentoEleTestata : results) {
+				documentoEleTestata.setEsitoPCC(esitoPCC);
+				documentoEleTestata.setToBeUpdated();
+				super.modificaConBulk(userContext, documentoEleTestata);
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	public Integer aggiornaEsitoPCC(UserContext userContext, Map<String,String> esiti) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(userContext, DocumentoEleTestataBulk.class);
+		if (esiti.size() > 1000) {
+			final Map<String, List<Map.Entry<String, String>>> collect = esiti
+					.entrySet()
+					.stream()
+					.collect(Collectors.groupingBy(o -> o.getValue()));
+			collect
+					.entrySet()
+					.stream()
+					.forEach(esito -> {
+						StringBuffer stm = new StringBuffer("UPDATE ");
+						stm.append(it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema());
+						stm.append("DOCUMENTO_ELE_TESTATA");
+						stm.append(" SET ESITO_PCC = ?, UTUV = ?, DUVA = SYSDATE");
+						AtomicBoolean where = new AtomicBoolean(true);
+						esito.getValue().stream().map(stringStringEntry -> stringStringEntry.getKey()).forEach(s -> {
+							stm.append(where.get() ? " WHERE ": " OR ");
+							stm.append(" IDENTIFICATIVO_SDI = ?");
+							where.set(false);
+						});
+						try {
+							LoggableStatement ps = new LoggableStatement(home.getConnection(), stm.toString(), true, this.getClass());
+							try {
+								ps.setString(1, esito.getKey());
+								ps.setString(2, userContext.getUser());
+								AtomicInteger index = new AtomicInteger(3);
+								esito.getValue().stream().map(stringStringEntry -> stringStringEntry.getKey()).forEach(s -> {
+                                    try {
+                                        ps.setLong(index.getAndIncrement(), new Long(s));
+                                    } catch (SQLException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                });
+								ps.executeUpdate();
+							} finally {
+								try {
+									ps.close();
+								} catch (SQLException e) {};
+							}
+						} catch (SQLException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					});
+			return esiti.size();
+		} else {
+			AtomicInteger index = new AtomicInteger();
+			esiti
+					.entrySet()
+					.stream()
+					.forEach(esito -> {
+						SQLBuilder sql = home.createSQLBuilder();
+						sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, esito.getKey());
+						try {
+							List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+							Integer indexAndIncrement = null;
+							if (results.size() == 1) {
+								DocumentoEleTestataBulk documentoEleTestata = results.get(0);
+								if (Optional.ofNullable(documentoEleTestata.getEsitoPCC())
+										.map(s -> !s.equalsIgnoreCase(esito.getValue()))
+										.orElse(Boolean.TRUE)) {
+									documentoEleTestata.setEsitoPCC(esito.getValue());
+									documentoEleTestata.setToBeUpdated();
+									super.modificaConBulk(userContext, documentoEleTestata);
+									indexAndIncrement = index.getAndIncrement();
+								}
+							}
+							logger.debug("Aggiornato documento elettronico {} di {}", indexAndIncrement, esiti.size());
+						} catch (PersistencyException | ComponentException e) {
+							logger.error("Fattura con IdentificativoSdi: {} e valore {}, non elaborata per il seguente motivo: ",esito.getKey(),esito.getValue(), e);
+						}
+					});
+			return index.get();
+		}
+	}
 
 }

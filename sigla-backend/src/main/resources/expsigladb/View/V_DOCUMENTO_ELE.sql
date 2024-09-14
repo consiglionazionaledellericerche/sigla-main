@@ -33,7 +33,7 @@
     "INTERMEDIARIO_PAESE", "INTERMEDIARIO_CODICE", "INTERMEDIARIO_CODICEFISCALE", "INTERMEDIARIO_DENOMINAZIONE", "INTERMEDIARIO_NOME",
     "INTERMEDIARIO_COGNOME", "INTERMEDIARIO_TITOLO", "INTERMEDIARIO_CODEORI", "INTERMEDIARIO_CD_TERZO", "INTERMEDIARIO_CD_ANAG",
     "SOGGETTO_EMITTENTE", "CODICE_UNIVOCO_SDI", "DATA_RICEZIONE", "ANOMALIE_RICEZIONE", "CMIS_NODE_REF", "NOME_FILE", "REPLY_TO",
-    "FL_IRREGISTRABILE","ID_PAESE_FAT_COL", "ID_CODICE_FAT_COL", "IDENTIFICATIVO_SDI_FAT_COL", "PROGRESSIVO_FAT_COL") AS
+    "FL_IRREGISTRABILE","ID_PAESE_FAT_COL", "ID_CODICE_FAT_COL", "IDENTIFICATIVO_SDI_FAT_COL", "PROGRESSIVO_FAT_COL", "ESITO_PCC") AS
   (SELECT tes."ID_PAESE", tes."ID_CODICE", tes."IDENTIFICATIVO_SDI",
            tes."PROGRESSIVO", tes."TIPO_DOCUMENTO", tes."DIVISA",
            tes."DATA_DOCUMENTO", tes."NUMERO_DOCUMENTO", tes."BOLLO_VIRTUALE",
@@ -102,7 +102,7 @@
            tra.intermediario_cd_terzo, tra.intermediario_cd_anag,
            tra.soggetto_emittente, tra.codice_univoco_sdi, tra.data_ricezione,
            tra.anomalie_ricezione, tra.cmis_node_ref, tra.nome_file, tra.reply_to,tes.fl_irregistrabile,
-           tes."ID_PAESE_FAT_COL", tes."ID_CODICE_FAT_COL", tes."IDENTIFICATIVO_SDI_FAT_COL", tes."PROGRESSIVO_FAT_COL"
+           tes."ID_PAESE_FAT_COL", tes."ID_CODICE_FAT_COL", tes."IDENTIFICATIVO_SDI_FAT_COL", tes."PROGRESSIVO_FAT_COL", tes."ESITO_PCC"
       FROM documento_ele_testata tes, documento_ele_trasmissione tra
      WHERE tes.id_paese = tra.id_paese
        AND tes.id_codice = tra.id_codice

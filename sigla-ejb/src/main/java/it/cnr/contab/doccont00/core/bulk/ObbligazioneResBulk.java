@@ -18,13 +18,12 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.util.Dictionary;
+import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk.Stato;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -38,30 +37,14 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 	private boolean saldiDaAggiornare = false;
 	private String statoResiduo;
 
-	public final static Dictionary stato_ObbligazioneResiduaKeys = new OrderedHashtable();;
-	public enum StatoResiduo {
-		PAGATO("Pagato","PAG"),
-		LIQUIDABILE("Liquidabile","LIQ"),
-		NON_LIQUIDABILE("Non Liquidabile","NLI");
-		private final String label, value;
-		private StatoResiduo(String label, String value) {
-			this.value = value;
-			this.label = label;
-		}
-		public String value() {
-			return value;
-		}
-		public String label() {
-			return label;
-		}		
-	}
-	static
-	{
-		for (StatoResiduo statoResiduo : StatoResiduo.values()) {
-			stato_ObbligazioneResiduaKeys.put(statoResiduo.value, statoResiduo.label);			
-		}
-	}	
-	
+	final static String STATORES_PAGATO = "PAG";
+	final static String STATORES_LIQUIDABILE = "LIQ";
+	final static String STATORES_NON_LIQUIDABILE = "NLI";
+
+	public final static String STATORES_DA_ELIMINARE = "ELI";
+	public final static String STATORES_PAGABILE = "PGB";
+	public final static String STATORES_NON_PAGABILE = "NPG";
+
 	public final static int LUNGHEZZA_NUMERO_IMPEGNO = 6;
 
 	/**
@@ -172,15 +155,28 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 	}
 	@SuppressWarnings("rawtypes")
 	public Dictionary getStato_ObbligazioneResiduaKeys() {
-		return stato_ObbligazioneResiduaKeys;
+		java.util.Dictionary tiStatoObbligazioneResiduaKeys = new it.cnr.jada.util.OrderedHashtable();
+
+		if (Optional.ofNullable(this.getEsercizio()).isPresent()) {
+			if (this.getEsercizio().compareTo(2023)>0) {
+				tiStatoObbligazioneResiduaKeys.put(STATORES_DA_ELIMINARE, "Da Eliminare");
+				tiStatoObbligazioneResiduaKeys.put(STATORES_PAGATO, "Pagato");
+				tiStatoObbligazioneResiduaKeys.put(STATORES_PAGABILE, "Pagabile");
+				tiStatoObbligazioneResiduaKeys.put(STATORES_NON_PAGABILE, "Non Pagabile");
+			} else {
+				tiStatoObbligazioneResiduaKeys.put(STATORES_PAGATO, "Pagato");
+				tiStatoObbligazioneResiduaKeys.put(STATORES_LIQUIDABILE, "Liquidabile");
+				tiStatoObbligazioneResiduaKeys.put(STATORES_NON_LIQUIDABILE, "Non Liquidabile");
+			}
+		}
+		return tiStatoObbligazioneResiduaKeys;
 	}
 	
 	public boolean isLiquidabile() {
-		return StatoResiduo.LIQUIDABILE.value.equals(getStatoResiduo());
+		return STATORES_LIQUIDABILE.equals(getStatoResiduo()) || STATORES_PAGABILE.equals(getStatoResiduo());
 	}
 
 	public boolean isNonLiquidabile() {
-		return StatoResiduo.NON_LIQUIDABILE.value.equals(getStatoResiduo());
+		return STATORES_NON_LIQUIDABILE.equals(getStatoResiduo()) || STATORES_NON_PAGABILE.equals(getStatoResiduo());
 	}
-	
 }

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsIndicatorePagamentiBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VConsIndicatorePagamentiHome">
+	<defaultColumnMap
+		tableName="V_CONS_INDICATORE_PAGAMENTI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="TRIMESTRE"
+			propertyName="trimestre"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_RIGA"
+			propertyName="tipoRiga"
+			sqlTypeName="VARCHAR"
+			columnSize="13"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_DOCUMENTO"
+			propertyName="tipoDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_DOCUMENTO"
+			propertyName="esercizioDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="UO_DOCUMENTO"
+			propertyName="uoDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_DOCUMENTO"
+			propertyName="numeroDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DOCUMENTO"
+			propertyName="importoDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_SCADENZA"
+			propertyName="dataScadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_TRASMISSIONE"
+			propertyName="dataTrasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+				columnName="DATA_RICEZIONE"
+				propertyName="dataRicezione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DATA_REGISTRAZIONE"
+				propertyName="dataRegistrazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DATA_LIQUIDAZIONE"
+				propertyName="dataLiquidazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+			columnName="DIFFERENZA_GIORNI"
+			propertyName="differenzaGiorni"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_PAGATO"
+			propertyName="importoPagato"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_PESATO"
+			propertyName="importoPesato"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="INDICE_PAGAMENTI"
+			propertyName="indicePagamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cdCdsObbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizioObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizioOriObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pgObbligazioneScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="0"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="trimestre" />
+	<persistentProperty
+		name="tipoRiga" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="tipoDocumento" />
+	<persistentProperty
+		name="esercizioDocumento" />
+	<persistentProperty
+		name="uoDocumento" />
+	<persistentProperty
+		name="numeroDocumento" />
+	<persistentProperty
+		name="importoDocumento" />
+	<persistentProperty
+		name="dataScadenza" />
+	<persistentProperty
+		name="dataTrasmissione" />
+	<persistentProperty
+		name="dataRicezione" />
+	<persistentProperty
+		name="dataRegistrazione" />
+	<persistentProperty
+		name="dataLiquidazione" />
+	<persistentProperty
+		name="differenzaGiorni" />
+	<persistentProperty
+		name="importoPagato" />
+	<persistentProperty
+		name="importoPesato" />
+	<persistentProperty
+		name="indicePagamenti" />
+	<persistentProperty
+		name="cdCdsObbligazione" />
+	<persistentProperty
+		name="esercizioObbligazione" />
+	<persistentProperty
+		name="esercizioOriObbligazione" />
+	<persistentProperty
+		name="pgObbligazione" />
+	<persistentProperty
+		name="pgObbligazioneScadenzario" />
+</SQLPersistentInfo>

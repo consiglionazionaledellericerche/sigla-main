@@ -20,6 +20,8 @@ package it.cnr.contab.web.rest.resource.util;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -75,6 +77,7 @@ public class ToDoResource implements ToDoLocal {
     public static final String FIRMA_DIGITALE_DOC_1210_BP = "FirmaDigitaleDOC1210BP";
     public static final String CRUD_FATTURA_PASSIVA_ELETTRONICA_BP = "CRUDFatturaPassivaElettronicaBP";
     public static final String CRUD_MISSIONE_BP = "CRUDMissioneBP";
+    public static final String LIQUIDAZIONE_SOSPESA_BP = "SelezionatoreFattureLiquidazioneSospesaBP";
     private final Logger LOGGER = LoggerFactory.getLogger(ToDoResource.class);
     @Context
     SecurityContext securityContext;
@@ -432,6 +435,40 @@ public class ToDoResource implements ToDoLocal {
                                     }
                                 });
                     }
+                    break;
+                }
+                case SelezionatoreFattureLiquidazioneSospesaBP: {
+                    final CompoundFindClause compoundFindClause = new CompoundFindClause();
+                    compoundFindClause.addClause(FindClause.AND, "stato_liquidazione", SQLBuilder.EQUALS, IDocumentoAmministrativoBulk.SOSP);
+                    BulkLoaderIterator remoteIterator =
+                            Optional.ofNullable(crudComponentSession.cerca(
+                                            userContext,
+                                            compoundFindClause,
+                                            new Fattura_passiva_IBulk(),
+                                            "selectFattureNonPagate"))
+                                    .filter(BulkLoaderIterator.class::isInstance)
+                                    .map(BulkLoaderIterator.class::cast)
+                                    .orElseThrow(() -> new RestException(Response.Status.INTERNAL_SERVER_ERROR, "Cannot create remote iterator"));
+                    Optional.ofNullable(remoteIterator)
+                            .ifPresent(iterator -> {
+                                try {
+                                    iterator.open(userContext);
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
+                                        result.add(new ToDoDetail(
+                                                cdNodo,
+                                                "fa fa-fw fa-eur text-danger",
+                                                "Liquidazione massiva",
+                                                firstLabel(i),
+                                                detailLabel(i, "Fattura", "Fatture", "da liquidare.")
+                                        ));
+                                    }
+                                } catch (ComponentException | RemoteException e) {
+                                    throw new RestException(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
+                                } finally {
+                                    iterator.ejbRemove();
+                                }
+                            });
                     break;
                 }
                 case ConsMandatiNonAcquisitiBP: {

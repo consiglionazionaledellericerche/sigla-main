@@ -635,6 +635,7 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
         return param;
     }
 
+
     public void aggiornaGECO(UserContext userContext) throws ComponentException {
         try {
             //L'aggiornamento parte solo se attivo informix
@@ -642,10 +643,6 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
             if (parEnte.getFl_informix()) {
                 ProgettoHome progettoHome = ((ProgettoHome) getHome(userContext, ProgettoBulk.class));
                 progettoHome.aggiornaGeco(userContext, null);
-                DipartimentoHome dipartimentoHome = ((DipartimentoHome) getHome(userContext, DipartimentoBulk.class));
-                dipartimentoHome.aggiornaDipartimenti(userContext, null);
-                if (userContext.getUser().equalsIgnoreCase("GECO"))
-                    cancellaProgettoSIP(userContext);
             }
         } catch (RemoteException e) {
             throw new ComponentException(e);
@@ -655,7 +652,20 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
     private void handleExceptionMail(UserContext userContext, Exception e) {
     }
 
-    private void cancellaProgettoSIP(UserContext userContext) {
+    public void aggiornaGECODipartimenti(UserContext userContext) throws ComponentException {
+        try {
+            //L'aggiornamento parte solo se attivo informix
+            Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(userContext);
+            if (parEnte.getFl_informix()) {
+                DipartimentoHome dipartimentoHome = ((DipartimentoHome) getHome(userContext, DipartimentoBulk.class));
+                dipartimentoHome.aggiornaDipartimenti(userContext, null);
+            }
+        } catch (RemoteException e) {
+            throw new ComponentException(e);
+        }
+    }
+
+    public void cancellaProgettoSIP(UserContext userContext) throws ComponentException {
         try {
             List<Progetto_sipBulk> listModuliNotDeleted = new BulkList<Progetto_sipBulk>(), listCommesseNotDeleted = new BulkList<Progetto_sipBulk>();
 

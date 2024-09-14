@@ -22,6 +22,7 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
 import it.cnr.contab.docamm00.bp.RifiutaFatturaBP;
@@ -485,8 +486,9 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
         CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
         DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
         try {
+            Unita_organizzativaBulk uoScrivania = CNRUserInfo.getUnita_organizzativa(context);
             CRUDFatturaPassivaBP nbp = (CRUDFatturaPassivaBP) context.createBusinessProcess(bulk.getBusinessProcessFattura(),
-                    new Object[]{"M"}
+                    new Object[]{uoScrivania.isUoEnte() ? "V":"M"}
             );
             nbp = (CRUDFatturaPassivaBP) context.addBusinessProcess(nbp);
             nbp.edit(context, ((FatturaElettronicaPassivaComponentSession) fatturaPassivaElettronicaBP.createComponentSession()).

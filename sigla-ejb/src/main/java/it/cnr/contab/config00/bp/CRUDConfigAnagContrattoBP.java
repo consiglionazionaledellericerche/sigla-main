@@ -32,10 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
@@ -43,6 +40,8 @@ import javax.ejb.RemoveException;
 import javax.servlet.ServletException;
 
 import it.cnr.contab.util.SIGLAGroups;
+import it.cnr.jada.util.Config;
+import it.cnr.jada.util.jsp.Button;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -138,7 +137,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			return super.removeDetail(oggettobulk, i);
 		}
 		public boolean isShrinkable() {
-			return super.isShrinkable() && isAllegatiEnabled();
+			return super.isShrinkable() && (isAllegatiEnabled() || getModel().isToBeCreated());
 		};
 		public boolean isGrowable() {
 			return super.isGrowable();// && isAllegatiEnabled();			
@@ -416,22 +415,12 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	 */
 
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[11];
-		int i = 0;
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.search");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.freeSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.new");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.save");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.delete");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.bringBack");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.undoBringBack");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.definitiveSave");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.publish");
-
-		return toolbar;
+		final Properties properties = Config.getHandler().getProperties(getClass());
+		return Stream.concat(Arrays.asList(super.createToolbar()).stream(),
+				Arrays.asList(
+						new Button(properties, "CRUDToolbar.definitiveSave"),
+						new Button(properties, "CRUDToolbar.publish")
+				).stream()).toArray(Button[]::new);
 	}
 	/**
 	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'

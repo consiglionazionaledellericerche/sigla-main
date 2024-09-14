@@ -796,6 +796,7 @@
             maxLength="10"
             inputSize="10"
             formatName="date_short"
+            enabledOnSearch="true"
             label="Data di scadenza"/>
 
     <fieldProperty
@@ -1136,6 +1137,16 @@
             enabledOnSearch="true"
             keysProperty="stato_liquidazioneKeys"/>
     <fieldProperty
+            name="dt_inizio_sospensione"
+            property="dt_inizio_sospensione"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            formatName="date_short"
+            enabledOnSearch="true"
+            label="Data inizio sospensione"
+            command="doCambiaDataInizioSospensione"/>
+    <fieldProperty
             name="causale"
             property="causale"
             inputType="SELECT"
@@ -1144,6 +1155,7 @@
             nullable="true"
             enabledOnSearch="true"
             keysProperty="causaleKeys"/>
+
     <fieldProperty
             name="cds_compenso"
             property="cds_compenso"
@@ -1253,6 +1265,7 @@
     <findFieldProperty name="fl_congelata"/>
     <findFieldProperty name="fl_liquidazione_differita"/>
     <findFieldProperty name="stato_liquidazione"/>
+    <findFieldProperty name="dt_inizio_sospensione"/>
     <findFieldProperty name="causale"/>
     <findFieldProperty name="cds_compenso"/>
     <findFieldProperty name="uo_compenso"/>
@@ -1528,6 +1541,8 @@
     <formFieldProperty
             name="stato_liquidazione"/>
     <formFieldProperty
+            name="dt_inizio_sospensione"/>
+    <formFieldProperty
             name="causale"/>
     <formFieldProperty
             name="cds_compenso"/>
@@ -1596,6 +1611,8 @@
     <columnFieldProperty
             name="stato_liquidazione"/>
     <columnFieldProperty
+            name="dt_inizio_sospensione"/>
+    <columnFieldProperty
             name="causale"/>
     <columnFieldProperty name="progr_univoco"/>
     <columnFieldProperty name="identificativoSdi"/>
@@ -1616,4 +1633,78 @@
                 inputType="ROTEXT"/>
     </form>
 
+    <columnSet name="liquidazione">
+        <columnFieldProperty
+                name="esercizio"/>
+        <columnFieldProperty
+                name="pg_fattura_passiva"/>
+        <columnFieldProperty
+                name="numero_protocollo"/>
+        <columnFieldProperty
+                name="data_protocollo"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="stato_liquidazione"/>
+        <columnFieldProperty
+                name="dt_inizio_sospensione"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="dt_protocollo_liq"
+                property="dt_protocollo_liq"
+                inputType="TEXT"
+                maxLength="10"
+                inputSize="10"
+                formatName="date_short"
+                enabledOnSearch="true"
+                headerLabel="Protocollo Liquidazione"
+                label="Data"/>
+        <columnFieldProperty
+                name="nr_protocollo_liq"
+                property="nr_protocollo_liq"
+                inputType="TEXT"
+                maxLength="10"
+                inputSize="10"
+                enabledOnSearch="true"
+                headerLabel="Protocollo Liquidazione"
+                label="Numero"/>
+        <columnFieldProperty
+                name="protocollo_iva"/>
+        <columnFieldProperty
+                name="protocollo_iva_generale"/>
+        <columnFieldProperty
+                name="progr_univoco"/>
+        <columnFieldProperty
+                name="ds_fattura_passiva"/>
+        <columnFieldProperty
+                name="ti_istituz_commerc"/>
+        <columnFieldProperty
+                name="sezionale"/>
+        <columnFieldProperty
+                name="nr_fattura_fornitore"/>
+        <columnFieldProperty
+                name="dt_fattura_fornitore"/>
+        <columnFieldProperty
+                name="dt_scadenza"/>
+        <columnFieldProperty
+                name="cd_fornitore"/>
+        <columnFieldProperty
+                name="cognome"/>
+        <columnFieldProperty
+                name="nome"/>
+        <columnFieldProperty
+                name="ragione_sociale"/>
+        <columnFieldProperty
+                name="im_totale_fattura"/>
+        <columnFieldProperty
+                name="ds_divisa"
+                property="valuta.ds_divisa"
+                label="Valuta"/>
+        <columnFieldProperty
+                name="stato_cofi"/>
+        <columnFieldProperty name="progr_univoco"/>
+        <columnFieldProperty name="identificativoSdi"/>
+        <columnFieldProperty name="progressivo"/>
+    </columnSet>
 </bulkInfo>

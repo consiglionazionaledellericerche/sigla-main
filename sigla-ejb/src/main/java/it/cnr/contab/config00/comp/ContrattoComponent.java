@@ -24,6 +24,9 @@
 package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.client.docamm.Nazione;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
@@ -93,8 +96,19 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 	 */        
 	public Query select(UserContext userContext,CompoundFindClause clauses,ContrattoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
-	   SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses,bulk);
-	   sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.LESS_EQUALS,CNRUserContext.getEsercizio(userContext));
+		if (clauses == null) {
+			if (bulk != null)
+				clauses = bulk.buildFindClauses(null);
+		} else {
+			clauses = CompoundFindClause.and(clauses, bulk.buildFindClauses(Boolean.FALSE));
+		}
+		SQLBuilder sql = getHome(userContext, ContrattoBulk.class, "BASE").selectByClause(userContext, clauses);
+		sql.generateJoin(ContrattoBulk.class, TerzoBulk.class, "figura_giuridica_esterna", "TERZO");
+		sql.generateJoin(TerzoBulk.class, AnagraficoBulk.class, "anagrafico", "ANAGRAFICO");
+		sql.generateJoin(AnagraficoBulk.class, ComuneBulk.class, "comune_fiscale", "COMUNE");
+		sql.generateJoin(ComuneBulk.class, NazioneBulk.class, "nazione", "NAZIONE");
+
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.LESS_EQUALS,CNRUserContext.getEsercizio(userContext));
 
 	   Optional.ofNullable(bulk.getPg_progetto()).ifPresent(el->{
 		   sql.addSQLClause(FindClause.AND,"PG_PROGETTO",SQLBuilder.EQUALS,el);
@@ -1954,32 +1968,35 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_stipula,'yyyy')", SQLBuilder.EQUALS, anno);
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
 			sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
-			if(strRicerca!=null){
-				strRicerca=strRicerca.replace("'", "''");
-				sql.openParenthesis(FindClause.AND);
-				sql.addSQLClause(FindClause.AND,"instr(CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO,'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.CD_CIG),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.OGGETTO),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(CONTRATTO.DT_INIZIO_VALIDITA,'dd/mm/yyyy'),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(CONTRATTO.DT_PROROGA, CONTRATTO.DT_FINE_VALIDITA),'dd/mm/yyyy'),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.PARTITA_IVA),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.CODICE_FISCALE),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'"+strRicerca +"')>0");
-				sql.closeParenthesis();
-			} 
-			if (query!=null && query.equals("chiave")){
-				// per ricerca mirata per chiave per la visualizzazione dettaglio contratto
-				if(strRicerca!=null)
+			if(strRicerca!=null) {
+				if (query==null) {
+					strRicerca = strRicerca.replace("'", "''");
+					sql.openParenthesis(FindClause.AND);
+					sql.addSQLClause(FindClause.AND, "instr(CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO,'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(CONTRATTO.CD_CIG),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(CONTRATTO.OGGETTO),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(CONTRATTO.DT_INIZIO_VALIDITA,'dd/mm/yyyy'),'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(nvl(CONTRATTO.DT_PROROGA, CONTRATTO.DT_FINE_VALIDITA),'dd/mm/yyyy'),'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(ANAGRAFICO.PARTITA_IVA),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(ANAGRAFICO.CODICE_FISCALE),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'" + strRicerca.toUpperCase() + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'" + strRicerca + "')>0");
+					sql.addSQLClause(FindClause.OR, "instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'" + strRicerca + "')>0");
+					sql.closeParenthesis();
+				} else if (query.equals("chiave"))
+					// per ricerca mirata per chiave per la visualizzazione dettaglio contratto
 					sql.addSQLClause(FindClause.AND,"CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO",SQLBuilder.EQUALS,strRicerca);
+				else if (query.equals("cig"))
+					sql.addSQLClause(FindClause.AND,"CONTRATTO.CD_CIG",SQLBuilder.EQUALS,strRicerca);
 			}
 			if(order!=null) {
 				if (order.equals("chiave"))
 					sql.addOrderBy("CONTRATTO.ESERCIZIO DESC,CONTRATTO.PG_CONTRATTO DESC");
+				else if (order.equals("cig"))
+					sql.addOrderBy("CONTRATTO.CD_CIG");
 				else if (order.equals("oggetto"))
 					sql.addOrderBy("CONTRATTO.OGGETTO");
 				else if (order.equals("datainizio"))

@@ -274,6 +274,12 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"/>
+	<fieldProperty
+			name="fl_obblig_liq_fatt"
+			property="fl_obblig_liq_fatt"
+			label="Obbligo di allegare il provvedimento di liquidazione alla fattura quando viene resa liquidabile"
+			inputType="CHECKBOX"
+	/>
 
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="centro_spesa" />
@@ -311,6 +317,7 @@
 	<formFieldProperty name="fl_ribalta_determina_obblig" />
 
 	<formFieldProperty name="abil_progetto_strorg" />
+	<formFieldProperty name="fl_obblig_liq_fatt" />
 
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -385,4 +392,48 @@
 	<findFieldProperty name="fl_ribalta_determina_obblig" />
 	<findFieldProperty name="abil_progetto_strorg" />
 
+	<form name="prima">
+		<formFieldProperty name="esercizio" />
+		<formFieldProperty name="centro_spesa" />
+		<formFieldProperty name="dipartimento" />
+	</form>
+	<form name="seconda">
+		<formFieldProperty name="fl_commessa_obbligatoria" />
+		<formFieldProperty name="fl_obbligo_protocollo_inf" />
+		<formFieldProperty name="fl_contratto_cessato"
+						   label="Consenti associazione Contratti cessati&lt;BR&gt;sui Documenti contabili" />
+		<formFieldProperty name="fl_progetto_numeratore" />
+		<formFieldProperty name="fl_approva_var_pdg" />
+		<formFieldProperty name="fl_approva_var_stanz_res" />
+	</form>
+	<form name="terza">
+		<formFieldProperty name="progetto_numeratore_cifre" />
+		<formFieldProperty name="im_soglia_contratto_e" />
+		<formFieldProperty name="im_soglia_contratto_s" />
+		<formFieldProperty name="im_soglia_consumo_residuo" />
+		<formFieldProperty name="blocco_impegni_cdr_gae" />
+		<formFieldProperty name="fl_mod_obbl_res" />
+		<formFieldProperty name="fl_ribaltato" />
+	</form>
+	<form name="quarta">
+		<formFieldProperty name="fl_riporta_avanti" />
+		<formFieldProperty name="fl_riporta_indietro" />
+		<formFieldProperty name="fl_linea_pgiro_e_cds" />
+		<formFieldProperty name="cd_cdr_linea_pgiro_e" />
+		<formFieldProperty name="cd_linea_pgiro_e" />
+		<formFieldProperty name="fl_linea_pgiro_s_cds" />
+		<formFieldProperty name="cd_cdr_linea_pgiro_s" />
+		<formFieldProperty name="cd_linea_pgiro_s" />
+		<formFieldProperty name="fl_blocco_iban" />
+		<formFieldProperty name="fl_kit_firma_digitale" />
+	</form>
+	<form name="quinta">
+		<formFieldProperty name="fl_riaccertamento" />
+		<formFieldProperty name="fl_riobbligazione" />
+		<formFieldProperty name="fl_blocco_impegni_natfin" />
+		<formFieldProperty name="fl_allega_determina_obblig" />
+		<formFieldProperty name="fl_ribalta_determina_obblig" />
+		<formFieldProperty name="abil_progetto_strorg" />
+		<formFieldProperty name="fl_obblig_liq_fatt" />
+	</form>
 </bulkInfo>

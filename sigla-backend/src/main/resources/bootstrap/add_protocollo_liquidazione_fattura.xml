@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="marco.spasiano" id="add_protocollo_liquidazione_fattura">
+        <addColumn tableName="fattura_passiva">
+            <column name="dt_protocollo_liq" type="${date.type}"/>
+            <column name="nr_protocollo_liq" type="VARCHAR(20)"/>
+        </addColumn>
+        <addColumn tableName="parametri_cds">
+            <column name="fl_obblig_liq_fatt" type="CHAR(1)" remarks="Indica se è obbligatorio allegare il provvedimento di liquidazione alla fattura. Valori possibili Y/N"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="add_protocollo_liquidazione_fattura_massiva">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURDOCLIQUIMAS"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Liquidazione massiva fatture passive"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURDOCLIQUIMAS"/>
+            <column name="business_process" type="VARCHAR(200)" value="SelezionatoreFattureLiquidazioneSospesaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.FATTUR.FATPAS.LIQMAS"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Liquidazione massiva"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURDOCLIQUIMAS"/>
+            <column name="business_process" type="VARCHAR(200)" value="SelezionatoreFattureLiquidazioneSospesaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="40"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="LIQMAS"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.FATTUR.FATPAS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="marco.spasiano" id="add_liquidazione_fattura_elettronica_massiva">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURELELIQUIMAS"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Liquidazione massiva fatture elettroniche"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURELELIQUIMAS"/>
+            <column name="business_process" type="VARCHAR(200)" value="SelezionatoreFattureElettronicheLiquidazioneBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.FATTUR.FATPAS.LIQMASELE"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Liquidazione massiva fatture elettroniche"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURELELIQUIMAS"/>
+            <column name="business_process" type="VARCHAR(200)" value="SelezionatoreFattureElettronicheLiquidazioneBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="100"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="LIQMASELE"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.FATTUR.FATPAS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

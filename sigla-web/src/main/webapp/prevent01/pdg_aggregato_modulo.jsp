@@ -44,9 +44,9 @@
 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		<td>
 		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
-				controller.writeHTMLTable(pageContext,"prg_liv2",true,false,true,"100%","180px");
+				controller.writeHTMLTable(pageContext,"prg_liv2",true,true,true,"100%","auto;max-height:50vh");
 			else
-				controller.writeHTMLTable(pageContext,null,true,false,true,"100%","180px");
+				controller.writeHTMLTable(pageContext,null,true,true,true,"100%","auto;max-height:50vh");
 		%>
 		</td>
 	</table>

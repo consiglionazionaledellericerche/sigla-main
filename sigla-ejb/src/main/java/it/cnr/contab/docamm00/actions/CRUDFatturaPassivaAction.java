@@ -18,15 +18,7 @@
 package it.cnr.contab.docamm00.actions;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Vector;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -34,7 +26,12 @@ import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.doccont00.bp.CRUDMandatoBP;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.util.enumeration.TipoIVA;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,22 +53,6 @@ import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.bp.RisultatoEliminazioneBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
-import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
-import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
-import it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk;
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
@@ -82,10 +63,6 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
@@ -2201,21 +2178,10 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             java.sql.Timestamp dataRegistrazione = fattura.getDt_registrazione();
             try {
                 fillModel(context);
-                if (!bp.isSearching())
+                if (!bp.isSearching()){
                     fattura.validateDate();
-                //NON ELIMINARE QUESTO COMMENTO: POSSIBILE VARIAZIONE IN FUTURO
-                //java.sql.Timestamp dataFatturaFornitore = fattura.getDt_fattura_fornitore();
-                //if (dataFatturaFornitore != null &&
-                //!dataFatturaFornitore.equals(fattura.getInizio_validita_valuta()) &&
-                //!dataFatturaFornitore.equals(fattura.getFine_validita_valuta())) {
-
-                //if (fattura.getInizio_validita_valuta() == null || fattura.getFine_validita_valuta() == null ||
-                //(!dataFatturaFornitore.after(fattura.getInizio_validita_valuta()) && !dataFatturaFornitore.before(fattura.getFine_validita_valuta()))) {
-
-                //return doSelezionaValuta(context);
-                //}
-                //}
-                //bp.valorizzaInfoDocEle(context, fattura);
+                    fattura.impostaDataScadenza();
+                }
                 return context.findDefaultForward();
             } catch (Throwable e) {
                 fattura.setDt_registrazione(dataRegistrazione);
@@ -2264,9 +2230,31 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
         } catch (Throwable e) {
             return handleException(context, e);
         }
-
-
     }
+
+    public Forward doCambiaDataInizioSospensione(ActionContext context) {
+        try {
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+            java.sql.Timestamp dtInizioSospensione = fattura.getDt_inizio_sospensione();
+            try {
+                fillModel(context);
+                if (!bp.isSearching()) {
+                    if (Optional.ofNullable(fattura.getDt_inizio_sospensione()).orElse(EJBCommonServices.getServerTimestamp())
+                            .before(Optional.ofNullable(fattura.getDt_registrazione()).orElse(EJBCommonServices.getServerTimestamp())))
+                        throw new ValidationException("La data di sospensione non può essere antecedente o uguale alla data di registrazione!");
+                }
+                return context.findDefaultForward();
+            } catch (Throwable e) {
+                fattura.setDt_inizio_sospensione(dtInizioSospensione);
+                bp.setModel(context, fattura);
+                throw e;
+            }
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
     public Forward doCambiaDataProtocollo(ActionContext context) {
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
@@ -2285,7 +2273,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
                     else
                         throw new ValidationException("La data di protocollo/ricezione non può essere nulla!");
                     cal.add(Calendar.DAY_OF_MONTH, 45);
-
+                    fattura.impostaDataScadenza();
                 }
                 return context.findDefaultForward();
             } catch (Throwable e) {
@@ -2360,6 +2348,8 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP) context.getBusinessProcess();
             if (bp instanceof CRUDFatturaPassivaBP && ((CRUDFatturaPassivaBP) bp).isFromFatturaElettronica())
                 return this.doCloseForm(context);
+            bp.rollbackAndCloseUserTransaction();
+            bp.initializeUserTransaction(context);
             bp.edit(context, bp.getModel());
             return context.findDefaultForward();
         } catch (BusinessProcessException e) {
@@ -5171,23 +5161,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
-            String oldCausale = fattura.getCausale();
             fillModel(context);
-            if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.LIQ)) {
-                if (fattura.getCausale() != null) {
-                    fattura.setCausale(null);
-                }
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.SOSP)) {
-                fattura.setCausale(fattura.ATTLIQ);
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)) {
-                if (fattura.getCausale() != null && fattura.getCausale().equals(fattura.ATTLIQ)) {
-                    if (oldCausale != null && !oldCausale.equals(fattura.ATTLIQ))
-                        fattura.setCausale(oldCausale);
-                    else
-                        fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
-                }
-            }
             bp.setModel(context, fattura);
         } catch (Throwable t) {
             return handleException(context, t);
@@ -5201,29 +5175,12 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
             String oldCausale = fattura.getCausale();
             fillModel(context);
-            if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.LIQ)) {
-                if (fattura.getCausale() != null) {
-                    fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
-                }
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)) {
-                if (fattura.getCausale() != null && fattura.getCausale().equals(fattura.ATTLIQ)) {
-                    if (oldCausale != null && !oldCausale.equals(fattura.ATTLIQ))
-                        fattura.setCausale(oldCausale);
-                    else
-                        fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
-                }
-            } else if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(fattura.SOSP)) {
-                if (fattura.getCausale() != null && !fattura.getCausale().equals(fattura.ATTLIQ)) {
-                    if (oldCausale != null)
-                        fattura.setCausale(oldCausale);
-                    else
-                        fattura.setCausale(null);
-                    throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+            if (fattura.getStato_liquidazione() != null && fattura.getStato_liquidazione().equals(Fattura_passivaBulk.SOSP)) {
+                if (fattura.getCausale() == null) {
+                    fattura.setCausale(oldCausale);
+                    throw new ApplicationException("Bisogna valorizzare la Causale per la sospensione!");
                 }
             }
-
             bp.setModel(context, fattura);
         } catch (Throwable t) {
             return handleException(context, t);
@@ -5422,6 +5379,7 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
             //fp.setCausale(null);
             fp.setStato_pagamento_fondo_eco(fp.NO_FONDO_ECO);
             fp.setCompenso(compenso);
+            fp.setStato_liquidazione(compenso.getStato_liquidazione());
             for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
 
@@ -5655,4 +5613,44 @@ public class CRUDFatturaPassivaAction extends EconomicaAction {
 		return context.findDefaultForward();
 
 	}
+
+    public Forward doVisualizzaMandato(ActionContext actioncontext) throws BusinessProcessException{
+        CRUDFatturaPassivaBP crudFatturaPassivaBP = Optional.ofNullable(getBusinessProcess(actioncontext))
+                .filter(CRUDFatturaPassivaBP.class::isInstance)
+                .map(CRUDFatturaPassivaBP.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("BP not found!"));
+        Optional<Fattura_passiva_rigaBulk> fattura_passiva_rigaBulk =
+                Optional.ofNullable(crudFatturaPassivaBP.getDettaglio().getDetails().get(crudFatturaPassivaBP.getDettaglio().getSelection().getFocus()))
+                        .filter(Fattura_passiva_rigaBulk.class::isInstance)
+                        .map(Fattura_passiva_rigaBulk.class::cast);
+        final CRUDComponentSession componentSession = (CRUDComponentSession) EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
+        try {
+            final List<Mandato_rigaIBulk> mandato_rigaIBulks = Optional.ofNullable(componentSession.find(
+                            actioncontext.getUserContext(), Mandato_rigaBulk.class,
+                            "findRighe", actioncontext.getUserContext(), (IDocumentoAmministrativoSpesaBulk)fattura_passiva_rigaBulk.get().getFattura_passiva()))
+                    .filter(List.class::isInstance)
+                    .map(List.class::cast)
+                    .orElse(Collections.emptyList());
+            final Optional<MandatoBulk> mandatoBulk = mandato_rigaIBulks
+                    .stream()
+                    .filter(mandatoRigaIBulk -> {
+                        return  mandatoRigaIBulk.getEsercizio_obbligazione().equals(fattura_passiva_rigaBulk.get().getObbligazione_scadenziario().getEsercizio()) &&
+                                mandatoRigaIBulk.getEsercizio_ori_obbligazione().equals(fattura_passiva_rigaBulk.get().getObbligazione_scadenziario().getEsercizio_originale()) &&
+                                mandatoRigaIBulk.getCd_cds().equals(fattura_passiva_rigaBulk.get().getObbligazione_scadenziario().getCd_cds()) &&
+                                mandatoRigaIBulk.getPg_obbligazione().equals(fattura_passiva_rigaBulk.get().getObbligazione_scadenziario().getPg_obbligazione()) &&
+                                mandatoRigaIBulk.getPg_obbligazione_scadenzario().equals(fattura_passiva_rigaBulk.get().getObbligazione_scadenziario().getPg_obbligazione_scadenzario());
+                    })
+                    .findAny()
+                    .map(Mandato_rigaIBulk::getMandato);
+            if (mandatoBulk.isPresent()) {
+                CRUDMandatoBP mandatoBP = (CRUDMandatoBP) actioncontext.getUserInfo().createBusinessProcess(actioncontext, "CRUDMandatoBP", new Object[]{"V"});
+                mandatoBP.edit(actioncontext, mandatoBulk.get());
+                return actioncontext.addBusinessProcess(mandatoBP);
+            }
+            crudFatturaPassivaBP.setMessage("Mandato non trovato!");
+            return actioncontext.findDefaultForward();
+        } catch (RemoteException|ComponentException e) {
+            return handleException(actioncontext, e);
+        }
+    }
 }

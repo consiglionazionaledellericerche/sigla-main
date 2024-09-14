@@ -67,6 +67,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.RemoteDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
@@ -170,19 +171,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             getClass()), "CRUDToolbar.inviaPEC"));
             return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
         } else {
-            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isFlusso() && !isAnnulli()) {
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.stampaProv"));
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.firma"));
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.downloadFirmato"));
-                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-            }
-            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && (isFlusso() || isAnnulli())) {
                 newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
                         it.cnr.jada.util.Config.getHandler().getProperties(
                                 getClass()), "CRUDToolbar.stampaProv"));
@@ -199,17 +187,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         it.cnr.jada.util.Config.getHandler().getProperties(
                                 getClass()), "CRUDToolbar.downloadFirmato"));
                 return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-            } else if (this.isFlusso()) {
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.flusso"));
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.download"));
-                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-            } else {
-                return toolbar;
-            }
         }
 
     }
@@ -286,12 +263,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             context.getUserContext(),
                             it.cnr.contab.utenze00.bulk.CNRUserInfo
                                     .getEsercizio(context)));
-            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue()
-                    && !isUoDistintaTuttaSac(context))
-                throw new ApplicationException(
-                        "Funzione non abilitata per la uo");
-            else
-                isUoDistintaTuttaSac(context);
             documentiContabiliService = SpringUtil.getBean(
                     "documentiContabiliService",
                     DocumentiContabiliService.class);
@@ -620,6 +591,20 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         super.initialize(actioncontext);
         setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo
                 .getUnita_organizzativa(actioncontext));
+        try {
+            final Unita_organizzativaBulk unitaOrganizzativa = CNRUserInfo.getUnita_organizzativa(actioncontext);
+            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isUoDistintaTuttaSac(actioncontext)) {
+                if (!(unitaOrganizzativa.isUoEnte() && getStatus() == SEARCH)) {
+                    rollbackAndCloseUserTransaction();
+                    throw new ApplicationException("Funzione non abilitata per la uo");
+                }
+            } else {
+                isUoDistintaTuttaSac(actioncontext);
+            }
+        } catch (ComponentException|RemoteException _ex) {
+            throw handleException(_ex);
+        }
+
         if (this.isEditable()) {
             ((Distinta_cassiereBulk) this.getModel()).setFl_flusso(flusso);
             ((Distinta_cassiereBulk) this.getModel()).setFl_sepa(sepa);
@@ -845,15 +830,15 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Mandato man = new Mandato();
             List list = componentDistinta.findDocumentiFlusso(userContext, bulk);
             Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
-                    .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
-                    .orElse(Boolean.FALSE);
+                    .filter(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .isPresent();
             if (bulk.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO)) {
                 man.setTipoOperazione(DistintaCassiereComponent.ANNULLO);
             } else {
                 if (isVariazioneDefinitiva) {
-                    man.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
-                } else {
                     man.setTipoOperazione(DistintaCassiereComponent.VARIAZIONE);
+                } else {
+                    man.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
                 }
             }
             GregorianCalendar gcdi = new GregorianCalendar();
@@ -1627,7 +1612,18 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Reversale rev = new Reversale();
             List list = componentDistinta
                     .findDocumentiFlusso(userContext, bulk);
-            rev.setTipoOperazione("INSERIMENTO");
+            Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
+                    .filter(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .isPresent();
+            if (bulk.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO)) {
+                rev.setTipoOperazione(DistintaCassiereComponent.ANNULLO);
+            } else {
+                if (isVariazioneDefinitiva) {
+                    rev.setTipoOperazione(DistintaCassiereComponent.VARIAZIONE);
+                } else {
+                    rev.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
+                }
+            }
             GregorianCalendar gcdi = new GregorianCalendar();
 
             it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante infover = new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante();
@@ -1830,7 +1826,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .map(Distinta_cassiereBulk.class::cast)
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
                     .isPresent() || isViewing() || isDirty();
-        return !(isFlusso() || isAnnulli());
+        return Boolean.FALSE;
     }
 
     public boolean isSalvaDefButtonEnabled() {

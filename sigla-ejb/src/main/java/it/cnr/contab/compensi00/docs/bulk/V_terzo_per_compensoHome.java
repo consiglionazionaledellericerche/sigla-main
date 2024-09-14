@@ -18,11 +18,14 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.time.format.DateTimeFormatter;
 
 public class V_terzo_per_compensoHome extends BulkHome {
 public V_terzo_per_compensoHome(Class clazz, java.sql.Connection conn) {
@@ -129,7 +132,12 @@ public V_terzo_per_compensoBulk loadVTerzo(it.cnr.jada.UserContext userContext,S
 	getHomeCache().fetchAll(userContext);
 
 	if (vTerzo==null)
-		throw new ApplicationException("Impossibile recuperare il terzo con codice: " + codiceTerzo + " per il periodo selezionato.");
+		throw new ApplicationMessageFormatException(
+				"Impossibile recuperare il terzo con codice: {0} per il periodo di validità del terzo {1} e del rapporto {2}.",
+				String.valueOf(codiceTerzo),
+				dtValiditaTerzo.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+				dtValiditaRapp.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+		);
 
 	return vTerzo;
 	

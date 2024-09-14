@@ -138,6 +138,7 @@ public void copyFrom(
 		if (annoSolare != getEsercizio().intValue())
 			date = new java.sql.Timestamp(new java.text.SimpleDateFormat("dd/MM/yyyy").parse("31/12/"+fattura_passiva.getEsercizio()).getTime());
 		setDt_registrazione(date);
+		impostaDataScadenza();
 	} catch (Throwable t) {
 		throw new it.cnr.jada.DetailedRuntimeException(t);
 	}

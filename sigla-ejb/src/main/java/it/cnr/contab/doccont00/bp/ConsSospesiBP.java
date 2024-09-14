@@ -47,11 +47,11 @@ public class ConsSospesiBP extends ConsultazioniBP {
 	private String livelloConsultazione;
 	private String pathConsultazione;	
 	private boolean tesoreria_unica=false;
-	
 
 	public ConsSospesiEntSpeComponentSession createConsSospesiEntSpeComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-		return (ConsSospesiEntSpeComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession", ConsSospesiEntSpeComponentSession.class);
-}
+		return it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsSospesiEntSpeComponentSession", ConsSospesiEntSpeComponentSession.class);
+	}
+
 	protected void init(it.cnr.jada.action.Config config,ActionContext context) throws BusinessProcessException {
 		  try {
 		   Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());

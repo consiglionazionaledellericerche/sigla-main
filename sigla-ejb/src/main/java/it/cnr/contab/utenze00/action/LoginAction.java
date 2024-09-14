@@ -383,11 +383,13 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             ui.setUtente(utente);
             try {
                 utente = getComponentSession().validaUtente(context.getUserContext(), utente, faseValidazione);
-                utente.setCodiceFiscaleLDAP(
-                        idToken
-                                .flatMap(t -> Optional.ofNullable(t.getOtherClaims().get("codice_fiscale")).map(String::valueOf))
-                                .orElse("")
-                );
+                if (utente != null) {
+                    utente.setCodiceFiscaleLDAP(
+                            idToken
+                                    .flatMap(t -> Optional.ofNullable(t.getOtherClaims().get("codice_fiscale")).map(String::valueOf))
+                                    .orElse("")
+                    );
+                }
             } catch (UtenteLdapNuovoException e) {
                 return context.findForward("login_ldap");
             } catch (UtenteMultiploException e) {

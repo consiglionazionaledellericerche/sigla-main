@@ -227,6 +227,7 @@ public class FirmaDigitaleDocContAction extends SelezionatoreListaAction {
 		FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
 		try {
 			fillModel(context);
+			firmaOTPBulk.validate();
 			String statoTrasmissione = statoTrasmissioneBulk.getStato_trasmissione();
 			bulk = (OggettoBulk)bp.getBulkInfo().getBulkClass().newInstance();
 			statoTrasmissioneBulk = ((StatoTrasmissione)bulk);

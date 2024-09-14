@@ -506,6 +506,21 @@
                 columnSize="1"
                 nullable="true"
                 converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DT_PROTOCOLLO_LIQ"
+                propertyName="dt_protocollo_liq"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="NR_PROTOCOLLO_LIQ"
+                propertyName="nr_protocollo_liq"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="DT_INIZIO_SOSPENSIONE"
+                propertyName="dt_inizio_sospensione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
     </defaultColumnMap>
     <persistentProperty
             name="dt_cancellazione"/>
@@ -673,4 +688,10 @@
             name="fl_split_payment"/>
     <persistentProperty
             name="flDaOrdini"/>
+    <persistentProperty
+            name="dt_protocollo_liq"/>
+    <persistentProperty
+            name="nr_protocollo_liq"/>
+    <persistentProperty
+            name="dt_inizio_sospensione"/>
 </SQLPersistentInfo>

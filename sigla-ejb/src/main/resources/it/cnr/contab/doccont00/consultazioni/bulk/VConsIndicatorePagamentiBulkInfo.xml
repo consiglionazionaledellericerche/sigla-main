@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="trimestre"
+		property="trimestre"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Trimestre" />
+	<fieldProperty
+		name="tipoRiga"
+		property="tipoRiga"
+		inputType="TEXT"
+		inputSize="13"
+		maxLength="13"
+		enabledOnEdit="false"
+		label="Tipo Riga" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Terzo" />
+	<fieldProperty
+		name="tipoDocumento"
+		property="tipoDocumento"
+		inputType="TEXT"
+		inputSize="9"
+		maxLength="9"
+		enabledOnEdit="false"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="esercizioDocumento"
+		property="esercizioDocumento"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Esercizio Documento" />
+	<fieldProperty
+		name="uoDocumento"
+		property="uoDocumento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="UO Documento" />
+	<fieldProperty
+		name="numeroDocumento"
+		property="numeroDocumento"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Numero Documento" />
+	<fieldProperty
+		name="importoDocumento"
+		property="importoDocumento"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Importo Documento" />
+	<fieldProperty
+		name="dataScadenza"
+		property="dataScadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="dataTrasmissione"
+		property="dataTrasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Trasmissione" />
+	<fieldProperty
+		name="dataRicezione"
+		property="dataRicezione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Ricezione" />
+	<fieldProperty
+		name="dataRegistrazione"
+		property="dataRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="dataLiquidazione"
+		property="dataLiquidazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Liquidazione" />
+
+	<fieldProperty
+		name="differenzaGiorni"
+		property="differenzaGiorni"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Differenza Giorni" />
+	<fieldProperty
+		name="importoPagato"
+		property="importoPagato"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Importo Pagato" />
+	<fieldProperty
+		name="importoPesato"
+		property="importoPesato"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Importo Pesato" />
+	<fieldProperty
+		name="indicePagamenti"
+		property="indicePagamenti"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Indice Pagamenti" />
+	<fieldProperty
+		name="cdCdsObbligazione"
+		property="cdCdsObbligazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="CdS Obbligazione" />
+	<fieldProperty
+		name="esercizioObbligazione"
+		property="esercizioObbligazione"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Esercizio Obbligazione" />
+	<fieldProperty
+		name="esercizioOriObbligazione"
+		property="esercizioOriObbligazione"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Esercizio Origininale Obbligazione" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="progressivo Obbligazione" />
+	<fieldProperty
+		name="pgObbligazioneScadenzario"
+		property="pgObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="0"
+		maxLength="0"
+		enabledOnEdit="false"
+		label="Progressivo Obbligazione Scadenzario" />
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="trimestre" />
+	<formFieldProperty
+		name="tipoRiga" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="tipoDocumento" />
+	<formFieldProperty
+		name="esercizioDocumento" />
+	<formFieldProperty
+		name="uoDocumento" />
+	<formFieldProperty
+		name="numeroDocumento" />
+	<formFieldProperty
+		name="importoDocumento" />
+	<formFieldProperty
+		name="dataScadenza" />
+	<formFieldProperty
+		name="dataTrasmissione" />
+	<formFieldProperty
+		name="dataRicezione" />
+	<formFieldProperty
+		name="dataRegistrazione" />
+	<formFieldProperty
+		name="dataLiquidazione" />
+	<formFieldProperty
+		name="differenzaGiorni" />
+	<formFieldProperty
+		name="importoPagato" />
+	<formFieldProperty
+		name="importoPesato" />
+	<formFieldProperty
+		name="indicePagamenti" />
+	<formFieldProperty
+		name="cdCdsObbligazione" />
+	<formFieldProperty
+		name="esercizioObbligazione" />
+	<formFieldProperty
+		name="esercizioOriObbligazione" />
+	<formFieldProperty
+		name="pgObbligazione" />
+	<formFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="trimestre" />
+	<findFieldProperty
+		name="tipoRiga" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="tipoDocumento" />
+	<findFieldProperty
+		name="esercizioDocumento" />
+	<findFieldProperty
+		name="uoDocumento" />
+	<findFieldProperty
+		name="numeroDocumento" />
+	<findFieldProperty
+		name="importoDocumento" />
+	<findFieldProperty
+		name="dataScadenza" />
+	<findFieldProperty
+		name="dataTrasmissione" />
+	<findFieldProperty
+			name="dataRicezione" />
+	<findFieldProperty
+			name="dataRegistrazione" />
+	<findFieldProperty
+			name="dataLiquidazione" />
+	<findFieldProperty
+		name="differenzaGiorni" />
+	<findFieldProperty
+		name="importoPagato" />
+	<findFieldProperty
+		name="importoPesato" />
+	<findFieldProperty
+		name="indicePagamenti" />
+	<findFieldProperty
+		name="cdCdsObbligazione" />
+	<findFieldProperty
+		name="esercizioObbligazione" />
+	<findFieldProperty
+		name="esercizioOriObbligazione" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="trimestre" />
+	<columnFieldProperty
+		name="tipoRiga" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="tipoDocumento" />
+	<columnFieldProperty
+		name="esercizioDocumento" />
+	<columnFieldProperty
+		name="uoDocumento" />
+	<columnFieldProperty
+		name="numeroDocumento" />
+	<columnFieldProperty
+		name="importoDocumento" />
+	<columnFieldProperty
+		name="dataScadenza" />
+	<columnFieldProperty
+		name="dataTrasmissione" />
+	<columnFieldProperty
+		name="dataRicezione" />
+	<columnFieldProperty
+		name="dataRegistrazione" />
+	<columnFieldProperty
+		name="dataLiquidazione" />
+	<columnFieldProperty
+		name="differenzaGiorni" />
+	<columnFieldProperty
+		name="importoPagato" />
+	<columnFieldProperty
+		name="importoPesato" />
+	<columnFieldProperty
+		name="indicePagamenti" />
+	<columnFieldProperty
+		name="cdCdsObbligazione" />
+	<columnFieldProperty
+		name="esercizioObbligazione" />
+	<columnFieldProperty
+		name="esercizioOriObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazione" />
+	<columnFieldProperty
+		name="pgObbligazioneScadenzario" />
+</bulkInfo>

@@ -21,7 +21,10 @@ import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.coepcoan00.bp.EconomicaAvereDetailCRUDController;
 import it.cnr.contab.coepcoan00.bp.EconomicaDareDetailCRUDController;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBase;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
@@ -40,6 +43,10 @@ import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -76,10 +83,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -136,6 +140,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private boolean isDetailDoubling = false;
     private boolean attivoOrdini = false;
     private boolean attivaEconomicaParallela = false;
+    private boolean isSupervisore;
+    private boolean isModificaPCC;
 
     /**
      * CRUDAnagraficaBP constructor comment.
@@ -525,9 +531,22 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             throws it.cnr.jada.action.BusinessProcessException {
 
         try {
-            attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(context.getUserContext());
-            attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
+            final Configurazione_cnrComponentSession configurazioneCnrComponentSession = Utility.createConfigurazioneCnrComponentSession();
+            attivoOrdini = configurazioneCnrComponentSession.isAttivoOrdini(context.getUserContext());
+            attivaEconomicaParallela = configurazioneCnrComponentSession.isAttivaEconomicaParallela(context.getUserContext());
+            isModificaPCC = Optional.ofNullable(
+                    configurazioneCnrComponentSession.getConfigurazione(
+                    context.getUserContext(),
+                    CNRUserContext.getEsercizio(context.getUserContext()),
+                    "*",
+                    Configurazione_cnrBulk.PK_PCC,
+                    Configurazione_cnrBulk.SK_MODIFICA)
+            ).map(Configurazione_cnrBase::getVal01).map(s -> s.equalsIgnoreCase("Y")).orElse(Boolean.FALSE);
             super.init(config, context);
+            CNRUserInfo ui = (CNRUserInfo) context.getUserInfo();
+            UtenteBulk utente = ui.getUtente();
+            isSupervisore = utente.isSupervisore();
+
 
             int solaris = Fattura_passivaBulk.getDateCalendar(
                             it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())
@@ -1034,7 +1053,31 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public void save(ActionContext context) throws ValidationException,
             BusinessProcessException {
-
+        Optional.ofNullable(getModel())
+            .filter(Fattura_passivaBulk.class::isInstance)
+            .map(Fattura_passivaBulk.class::cast)
+            .ifPresent(fatturaPassivaBulk -> {
+                final Optional<AllegatoFatturaBulk> optAllegatoFatturaBulk = fatturaPassivaBulk.getArchivioAllegati()
+                        .stream()
+                        .filter(AllegatoFatturaBulk.class::isInstance)
+                        .map(AllegatoFatturaBulk.class::cast)
+                        .filter(allegatoFatturaBulk -> AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE.equalsIgnoreCase(allegatoFatturaBulk.getAspectName()))
+                        .filter(allegatoFatturaBulk -> Optional.ofNullable(allegatoFatturaBulk.getDataProtocollo()).isPresent())
+                        .sorted(Comparator.comparing(AllegatoFatturaBulk::getDataProtocollo).reversed())
+                        .findFirst();
+                    if (optAllegatoFatturaBulk.isPresent()) {
+                        fatturaPassivaBulk.setDt_protocollo_liq(
+                                Optional.ofNullable(optAllegatoFatturaBulk.get().getDataProtocollo())
+                                        .map(Date::getTime)
+                                        .map(aLong -> new Timestamp(aLong))
+                                        .orElse(null)
+                        );
+                        fatturaPassivaBulk.setNr_protocollo_liq(optAllegatoFatturaBulk.get().getNumProtocollo());
+                    } else {
+                        fatturaPassivaBulk.setDt_protocollo_liq(null);
+                        fatturaPassivaBulk.setNr_protocollo_liq(null);
+                    }
+            });
         super.save(context);
         setCarryingThrough(false);
     }
@@ -1468,8 +1511,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
     */
     @Override
-    public void validate(ActionContext actioncontext)
-            throws ValidationException {
+    public void validate(ActionContext actioncontext) throws ValidationException {
         Fattura_passivaBulk fp = (Fattura_passivaBulk) getModel();
         try {
             fp.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(actioncontext));
@@ -1662,8 +1704,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         }
         if (Optional.ofNullable(fattura.getDocumentoEleTestata()).isPresent()) {
             pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_RICEVUTI);
-            pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
         }
+        pages.put(i++, TAB_FATTURA_PASSIVA_ALLEGATI_AGGIUNTI);
 
         String[][] tabs = new String[i][3];
         for (int j = 0; j < i; j++)
@@ -1712,6 +1754,12 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                             .ifPresent(s -> allegato.setAspectName(s));
                 });
         allegato.setUtenteSIGLA(storageObject.getPropertyValue("sigla_commons_aspect:utente_applicativo"));
+
+        Optional.ofNullable(storageObject.<GregorianCalendar>getPropertyValue("sigla_commons_aspect:data_protocollo"))
+                .ifPresent(g -> allegato.setDataProtocollo(Date.from(g.toZonedDateTime().toInstant())));
+        Optional.ofNullable(storageObject.<String>getPropertyValue("sigla_commons_aspect:numero_protocollo"))
+                .ifPresent(s -> allegato.setNumProtocollo(s));
+
         super.completeAllegato(allegato, storageObject);
     }
 
@@ -1827,5 +1875,50 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     public CollapsableDetailCRUDController getMovimentiAvere() {
         return movimentiAvere;
+    }
+
+    @Override
+    public String getAllegatiFormName() {
+        final String allegatiFormName = super.getAllegatiFormName();
+        if(Optional.ofNullable(this.getCrudArchivioAllegati().getModel())
+                .filter(AllegatoFatturaBulk.class::isInstance)
+                .map(AllegatoFatturaBulk.class::cast)
+                .flatMap(afb -> Optional.ofNullable(afb.getAspectName()))
+                .filter(s -> s.equalsIgnoreCase(AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_LIQUIDAZIONE))
+                .isPresent()) {
+            return "protocollo";
+        }
+        return allegatiFormName.equalsIgnoreCase("default") ? "base" : allegatiFormName;
+    }
+
+    public boolean isLiquidazioneSospesa() {
+        return Optional.ofNullable(getModel())
+                .filter(Fattura_passiva_IBulk.class::isInstance)
+                .map(Fattura_passiva_IBulk.class::cast)
+                .map(fatturaPassivaIBulk -> fatturaPassivaIBulk.isLiquidazioneSospesa())
+                .orElse(Boolean.FALSE);
+    }
+
+    public boolean isNonLiquidabile() {
+        return Optional.ofNullable(getModel())
+                .filter(Fattura_passiva_IBulk.class::isInstance)
+                .map(Fattura_passiva_IBulk.class::cast)
+                .map(fatturaPassivaIBulk -> fatturaPassivaIBulk.isNonLiquidabile())
+                .orElse(Boolean.FALSE);
+    }
+
+    public boolean isLiquidazioneSospesaView() {
+        return isModificaPCC && isSupervisore;
+    }
+
+    public boolean isSupervisore() {
+        return isSupervisore;
+    }
+    @Override
+    public boolean isInputReadonlyFieldName(String fieldName) {
+        if (Arrays.asList("stato_liquidazione","causale", "dt_inizio_sospensione").contains(fieldName) && isSupervisore && isModificaPCC) {
+            return Boolean.FALSE;
+        }
+        return super.isInputReadonlyFieldName(fieldName);
     }
 }

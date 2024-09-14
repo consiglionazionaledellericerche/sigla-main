@@ -49,6 +49,23 @@
 		inputSize="50"
 		/>
 	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Centro di spesa" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Unit&#224; organizzativa" />
+
+	<fieldProperty
 		name="im_man_ini_sos"
 		property="im_man_ini_sos"
 		inputType="ROTEXT"
@@ -485,6 +502,11 @@
 		name="cd_unita_organizzativa" />
 	<formFieldProperty
 		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+
 	<formFieldProperty
 		name="im_man_ini_sos" />
 	<formFieldProperty

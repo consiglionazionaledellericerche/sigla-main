@@ -176,5 +176,16 @@
 				</property>
 			</properties>
 		</aspect>
+		<aspect name="sigla_commons_aspect:cancellato_logicamente">
+			<title>Common Metadata for Cancellato logicamente</title>
+			<properties>
+				<property name="sigla_commons_aspect:data_cancellazione">
+					<title>Data Cancellazione</title>
+					<type>d:datetime</type>
+					<mandatory>true</mandatory>
+					<multiple>false</multiple>
+				</property>
+			</properties>
+		</aspect>
 	</aspects>
 </model>

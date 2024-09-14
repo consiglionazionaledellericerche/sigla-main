@@ -118,6 +118,9 @@
 		</aspect>		
 		<aspect name="sigla_fatture_attachment:altro">
 			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
-		</aspect>		
+		</aspect>
+		<aspect name="sigla_fatture_attachment:provvedimento_liquidazione">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
 	</aspects>
 </model>

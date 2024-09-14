@@ -120,7 +120,21 @@
 			columnSize="15" />
 
 	</defaultColumnMap>
-	
+	<columnMap
+			name="BASE"
+			tableName="CONTRATTO"
+			extends="default">
+		<columnMapping
+				columnName="TERZO.DENOMINAZIONE_SEDE"
+				propertyName="figura_giuridica_esterna.denominazione_sede"
+				sqlTypeName="VARCHAR"
+				columnSize="250"/>
+		<columnMapping
+				columnName="NAZIONE.DS_NAZIONE"
+				propertyName="figura_giuridica_esterna.anagrafico.comune_fiscale.nazione.ds_nazione"
+				sqlTypeName="VARCHAR"
+				columnSize="250"/>
+	</columnMap>
 	<persistentProperty
 		name="contratto_padre"/>
 	<persistentProperty

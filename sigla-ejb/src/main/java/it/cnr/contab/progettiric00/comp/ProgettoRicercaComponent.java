@@ -761,6 +761,7 @@ public ProgettoRicercaComponent() {
 		public OggettoBulk inizializzaBulkPerStampa(UserContext usercontext,Stampa_elenco_progetti_laBulk stampa) throws ComponentException { 
 		//	Imposta l'Esercizio come quello di scrivania
 			stampa.setEsercizio(CNRUserContext.getEsercizio(usercontext));
+			stampa.setCdr(CNRUserContext.getCd_cdr(usercontext));
 		return stampa;
 		}
 /**
@@ -1828,7 +1829,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
 				Integer currentAnno = saldiList.stream().mapToInt(Voce_f_saldi_cdr_lineaKey::getEsercizio).max().orElse(999);
 
-				if (!Optional.ofNullable(rimodulazione).isPresent()) {
+				if (!Optional.ofNullable(rimodulazione).isPresent() && !progetto.isAmministra()) {
 					//Recupero l'ultimo anno di gestione in corso
 					saldiList.stream()
 							.filter(el->{

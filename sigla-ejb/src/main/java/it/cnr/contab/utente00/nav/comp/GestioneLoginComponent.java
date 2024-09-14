@@ -106,6 +106,19 @@ public class GestioneLoginComponent
         }
     }
 
+    public boolean controllaAccessoSenzaUO(UserContext userContext, String cd_accesso) throws it.cnr.jada.comp.ComponentException {
+        try {
+            final BulkHome v_utente_accessoHome = getHome(userContext, Utente_unita_accessoBulk.class, "V_UTENTE_ACCESSO");
+            SQLBuilder sqlBuilder = v_utente_accessoHome.createSQLBuilder();
+            sqlBuilder.addClause(FindClause.AND, "cd_utente", SQLBuilder.EQUALS, CNRUserContext.getUser(userContext));
+            sqlBuilder.addClause(FindClause.AND, "cd_accesso", SQLBuilder.EQUALS, cd_accesso);
+            sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+            return sqlBuilder.executeExistsQuery(getConnection(userContext));
+        } catch (java.sql.SQLException e) {
+            throw handleException(e);
+        }
+
+    }
     public boolean controllaAccesso(UserContext userContext, String cd_accesso) throws it.cnr.jada.comp.ComponentException {
         try {
             final Optional<String> cd_unita_organizzativaOptional = Optional.ofNullable(CNRUserContext.getCd_unita_organizzativa(userContext));
@@ -1007,4 +1020,5 @@ public class GestioneLoginComponent
         }
         return Boolean.FALSE;
     }
+
 }

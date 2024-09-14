@@ -17,8 +17,11 @@
 
 package it.cnr.contab.config00.sto.bulk;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -26,10 +29,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -474,7 +474,35 @@ public class CdrHome extends BulkHome {
             throw new PersistencyException(e);
         }
     }
+    public java.util.List<Pdg_moduloBulk> findPdgModuloDettagli(UserContext userContext, CdrBulk testata, CompoundFindClause compoundfindclause) throws IntrospectionException, PersistencyException {
+        Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+        Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
 
+        PersistentHome dettHome = getHomeCache().getHome(Pdg_moduloBulk.class);
+        SQLBuilder sql = dettHome.createSQLBuilder();
+        if (Optional.ofNullable(compoundfindclause).isPresent()) {
+            dettHome = getHomeCache().getHome(Pdg_moduloBulk.class, "CODICE_PROGETTO");
+            sql = dettHome.createSQLBuilder();
+            sql.generateJoin("progetto", "PROGETTO");
+            sql.generateJoin(ProgettoBulk.class, Progetto_sipBulk.class, "progettopadre", "PROGETTOPADRE");
+
+            sql.addSQLClause(FindClause.AND, "PROGETTO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause(FindClause.AND, "PROGETTO.TIPO_FASE", SQLBuilder.EQUALS, "P");
+            sql.addClause(compoundfindclause);
+        };
+
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+        sql.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, testata.getCd_centro_responsabilita());
+
+        Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
+        if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals(ente.getCd_unita_organizzativa())) {
+            Progetto_sipHome progettohome = (Progetto_sipHome) getHomeCache().getHome(Progetto_sipBulk.class);
+            sql.addSQLExistsClause("AND", progettohome.abilitazioni(userContext, "PDG_MODULO.PG_PROGETTO", parCnrBulk.getLivelloProgetto()));
+        }
+        final List<Pdg_moduloBulk> result = dettHome.fetchAll(sql);
+        getHomeCache().fetchAll(userContext);
+        return result;
+    }
     public java.util.Collection findPdgModuloDettagli(UserContext userContext, CdrBulk testata, Integer livelloProgetto) throws IntrospectionException, PersistencyException {
         PersistentHome dettHome = getHomeCache().getHome(Pdg_moduloBulk.class);
         SQLBuilder sql = dettHome.createSQLBuilder();

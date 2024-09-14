@@ -117,7 +117,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                 bytesMetadata = Base64.decodeBase64(bytesMetadata);
 
             boolean isp7m = parametersIn.getFile().getContentType().toLowerCase().endsWith("p7m") ||
-                    parametersIn.getNomeFile().toLowerCase().endsWith("p7m");
+                    parametersIn.getNomeFile().toLowerCase().endsWith("p7m")||parametersIn.getFile().getContentType().equalsIgnoreCase("application/pkcs7-signature");
             ByteArrayOutputStream bStream = new ByteArrayOutputStream();
             if (isp7m)
                 bStream = estraiFirma(parametersIn.getFile().getInputStream(), jc);
@@ -646,7 +646,13 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                                 docEleLinea.setRiferimentoTesto(altriDatiGestionaliType.getRiferimentoTesto());
                                 docEleLinea.setRiferimentoNumero(
                                         Optional.ofNullable(altriDatiGestionaliType.getRiferimentoNumero())
-                                            .map(bigDecimal -> bigDecimal.setScale(2))
+                                            .map(bigDecimal -> {
+                                                try {
+                                                    return bigDecimal.setScale(2, RoundingMode.DOWN);
+                                                } catch (ArithmeticException _ex) {
+                                                    return bigDecimal;
+                                                }
+                                            })
                                             .orElse(BigDecimal.ZERO)
                                 );
                                 docEleLinea.setRiferimentodata(convert(altriDatiGestionaliType.getRiferimentoData()));

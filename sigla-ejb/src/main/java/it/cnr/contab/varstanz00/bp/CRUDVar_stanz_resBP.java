@@ -388,12 +388,11 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 
 	public boolean isStatoPrecedenteButtonEnabled() {
 		try{
-			return (isSaveButtonEnabled()||(((Var_stanz_resBulk)getModel()).isPropostaDefinitiva()))&& 
-					((Var_stanz_resBulk)getModel()).isPropostaDefinitiva() && 
-					((Var_stanz_resBulk)getModel()).isNotNew() &&
-					(controllaCdrDaAccMod() || isUoArea()||isUoSac())&&
-					((Var_stanz_resBulk)getModel()).getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
-		}catch(NullPointerException e){
+			final Var_stanz_resBulk varStanzResBulk = (Var_stanz_resBulk) getModel();
+			return (isSaveButtonEnabled()|| varStanzResBulk.isPropostaDefinitiva() || varStanzResBulk.isAnnullata()) &&
+					varStanzResBulk.isNotNew() &&
+					varStanzResBulk.getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
+		} catch (NullPointerException e){
 			return false;
 		}
 		

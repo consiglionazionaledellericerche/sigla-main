@@ -26,14 +26,8 @@ import java.util.*;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
@@ -41,9 +35,11 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ModalitaPagamentoType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
-public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements AllegatoParentBulk{
+public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements IAllegatoFatturaBulk {
 	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
 	/**
 	 * 
@@ -775,5 +771,22 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 
 	public void setNotaCollegata(DocumentoEleTestataBulk notaCollegata) {
 		this.notaCollegata = notaCollegata;
+	}
+
+	@Override
+	public List<String> getStorePath() {
+		return Optional.ofNullable(getDocumentoEleTrasmissione())
+				.map(DocumentoEleTrasmissioneBase::getCmisNodeRef)
+				.map(s -> {
+					return Arrays.asList(Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(s))
+							.map(StorageObject::getPath)
+							.orElse(null));
+				})
+				.orElse(Collections.emptyList());
+	}
+
+	@Override
+	public String getAllegatoLabel() {
+		return Optional.ofNullable(getIdentificativoSdi()).map(String::valueOf).orElse(null);
 	}
 }

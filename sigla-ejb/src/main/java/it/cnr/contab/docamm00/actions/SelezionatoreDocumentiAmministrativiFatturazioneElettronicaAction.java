@@ -90,6 +90,7 @@ public Forward doBackFirmaOTP(ActionContext context) {
 	HookForward caller = (HookForward)context.getCaller();
 	FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
 	try {
+		firmaOTPBulk.validate();
 		fillModel(context);
 		bulk = (OggettoBulk)bp.getBulkInfo().getBulkClass().newInstance();
 		bp.setModel(context, bulk);

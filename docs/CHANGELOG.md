@@ -1,5 +1,538 @@
-## Release 6.5.42  -- _October 04, 2023_ 
+## Release 6.5.100  -- _September 10, 2024_ 
 **Changes**
+
+>**fix: in caso di mandato da compenso legato a fattura nel flusso siope+ non trasmetteva la fattura legata a compenso**
+>
+>[00eb06437c9a5f7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/00eb06437c9a5f7) marco.spasiano *September 10, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[0b95d597f2b7b1f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0b95d597f2b7b1f) marco.spasiano *September 10, 2024*
+
+>**Resa disponibile la visualizzazione delle distinte di pagamento alla Uo Ente.**
+>
+>[ae1cc77f1302633](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae1cc77f1302633) marco.spasiano *September 10, 2024*
+
+>**Aggiornato l'importo da pagare alla consultazione PCC per l'importo delle note di credito.**
+>
+>[77f168959b5519e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/77f168959b5519e) marco.spasiano *September 10, 2024*
+
+
+## Release 6.5.99  -- _September 09, 2024_ 
+**Changes**
+
+>**Aggiunto l'importo da pagare alla consultazione PCC.**
+>
+>[a2345d43e793477](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a2345d43e793477) marco.spasiano *September 09, 2024*
+
+>**Aggiunto l'importo da pagare alla consultazione PCC.**
+>
+>[7915a4682a828cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7915a4682a828cb) marco.spasiano *September 09, 2024*
+
+>**Aggiunta la possibilità di caricare un CSV oltre all'excel per aggiornare lo stato della PCC.**
+>
+>[718a321af38cc9d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/718a321af38cc9d) marco.spasiano *September 06, 2024*
+
+>**Aggiunta la possibilità di caricare un CSV oltre all'excel per aggiornare lo stato della PCC.**
+>
+>[6e2f3bcf2b110fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6e2f3bcf2b110fb) marco.spasiano *September 06, 2024*
+
+>**Aggiunta la visualizzazione del mandato partendo dalla riga di fattura**
+>
+>[54bb4e8891d3322](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54bb4e8891d3322) marco.spasiano *September 05, 2024*
+
+>**In caso di uo ente in scrivania, ora è possibile visualizzare la fattura collegata al documento elettronico.**
+>
+>[ca30b48fb334b12](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca30b48fb334b12) marco.spasiano *September 04, 2024*
+
+
+## Release 6.5.96  -- _September 04, 2024_ 
+**Changes**
+
+>**Controlli PCC in caso di nota credito agganciata alla fattura l'importo veiene decurtato dall'imponibile.**
+>
+>[d4666f131ea943e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4666f131ea943e) marco.spasiano *September 04, 2024*
+
+>**Condizionato il controllo sulla data di fine rapporto del terzo al ruolo di supervisore.**
+>
+>[5721a5e1356cef6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5721a5e1356cef6) marco.spasiano *September 04, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[37e2a68bca78a99](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37e2a68bca78a99) marco.spasiano *September 02, 2024*
+
+>**fix: La generazione del flusso SIOPE+ veniva interrotta in caso di un mandato con righe sia da fattura che da documento generico, inoltre veniva valorizzato erroneamente l'imposrto siope nei dati della fattura quando la stessa non era soggetta a splitpayment.**
+>
+>[2a132458f671b47](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2a132458f671b47) marco.spasiano *September 02, 2024*
+
+>**Modificata la funzione di amministra per i progetti.**
+>
+>[274755bf8745877](https://github.com/consiglionazionaledellericerche/sigla-main/commit/274755bf8745877) marco.spasiano *August 09, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[a7b5c2ea918a751](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a7b5c2ea918a751) marco.spasiano *August 07, 2024*
+
+>**Sbloccata l'associazione delle UO nella funzione di amministra dei contratti.**
+>
+>[cb7a07f88bd509a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb7a07f88bd509a) marco.spasiano *August 06, 2024*
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[0beec6e40974f7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0beec6e40974f7e) marco.spasiano *August 02, 2024*
+
+
+## Release 6.5.93  -- _August 02, 2024_ 
+**Changes**
+
+>**Aggiunte le funzioni di amministra per gli incarichi.**
+>
+>[5192b396951f80f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5192b396951f80f) marco.spasiano *August 02, 2024*
+
+>**Modifica all'interfaccia per permettere una corretta visualizzazione degli allegati.**
+>
+>[e8db7b8e5d1c76f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e8db7b8e5d1c76f) marco.spasiano *August 02, 2024*
+
+>**Cambiato controllo per dare la possibilità di riportare in provvisoria una variazione allo stanziamento residuo annullata**
+>
+>[a8152638cd6cdfb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8152638cd6cdfb) marco.spasiano *July 26, 2024*
+
+>**Aggiunta applyQuotesToAll alla scrittura di tutte le righe**
+>
+>[429b7c929c19e06](https://github.com/consiglionazionaledellericerche/sigla-main/commit/429b7c929c19e06) marco.spasiano *July 17, 2024*
+
+>**Rimozione del lock per lo scan delle fatture su SDI e per SIOPE+**
+>
+>[f5b333083bc5a57](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f5b333083bc5a57) marco.spasiano *July 17, 2024*
+
+>**La mappa dei controlli PCC ora entra in ricerca libera, per velocizzare l'utilizzo.**
+>
+>[78bbc1137cde6ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78bbc1137cde6ab) marco.spasiano *July 12, 2024*
+
+>**fix: Importo calcolato in presenza di SIOPE e CUP non corretto relativo alla gestione della trasmissione del netto delle fatture passive in regime di spilt payment sul flusso SIOPE+.**
+>
+>[7e8d083695b7179](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7e8d083695b7179) marco.spasiano *July 12, 2024*
+
+>**Aggiornamento dei campi della nota legata alla fattura**
+>
+>[f8e1a04504f3618](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f8e1a04504f3618) marco.spasiano *July 11, 2024*
+
+>**Gestione della trasmissione del netto delle fatture passive in regime di spilt payment sul flusso SIOPE+.**
+>
+>[92974d2f5e8a51e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/92974d2f5e8a51e) marco.spasiano *July 11, 2024*
+
+>**Revert "Importo SIOPE associato alla fattura elettronica riportava l'importo taale del mandato e non quello relativo al codice SIOPE/CUP"**
+> * This reverts commit 5bcf8c6193038edb74da2519dc688552a93132e4.
+>
+>[049077ce0b33744](https://github.com/consiglionazionaledellericerche/sigla-main/commit/049077ce0b33744) marco.spasiano *July 10, 2024*
+
+>**Aggiunta la possibilità di allegare nuovi file al contratto anche se è definitivo.**
+>
+>[c8768bfcf9fd9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c8768bfcf9fd9f9) marco.spasiano *July 04, 2024*
+
+>**Importo SIOPE associato alla fattura elettronica riportava l'importo taale del mandato e non quello relativo al codice SIOPE/CUP**
+>
+>[5bcf8c6193038ed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5bcf8c6193038ed) marco.spasiano *July 03, 2024*
+
+>**Aggiunta la possibilità di ritrasmettere i mandati non annullati.**
+>
+>[a1c43adb259e4a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1c43adb259e4a6) marco.spasiano *July 02, 2024*
+
+
+## Release 6.5.87  -- _July 09, 2024_ 
+**Changes**
+
+>**ControlliPCC: aggiunto campo FL_SPLIT_PAYMENT**
+>
+>[10745dd3375d713](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10745dd3375d713) raffaelepagano *July 08, 2024*
+
+
+## Release 6.5.83  -- _July 02, 2024_ 
+**Changes**
+
+>**In caso di Fattura legata a Compenso lo stato liquidazione viene ereditato dal copenso.**
+>
+>[d1df7ac1d8eb246](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1df7ac1d8eb246) marco.spasiano *July 02, 2024*
+
+>**Aggiunta la possibilità di allegare nuovi file al contratto anche se è definitivo.**
+>
+>[4bd6b0deb623c98](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4bd6b0deb623c98) marco.spasiano *July 02, 2024*
+
+>**FIX ColumnSet on AllegatoGenericoBulkInfo.xml**
+>
+>[52f0e240cb645c8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52f0e240cb645c8) marco.spasiano *July 02, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[9fc3fac31067b10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9fc3fac31067b10) marco.spasiano *June 26, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[6ef8f558e6064ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6ef8f558e6064ec) marco.spasiano *June 26, 2024*
+
+>**Aggiunta la possibilità di allegare documenti anche alle fatture passive non elettroniche.**
+>
+>[a5cb4c4e75a7103](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a5cb4c4e75a7103) marco.spasiano *June 25, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[63404c05e98bb5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63404c05e98bb5c) marco.spasiano *June 25, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[c5e891309d45d52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c5e891309d45d52) marco.spasiano *June 21, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[45efb0f220a6de6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/45efb0f220a6de6) marco.spasiano *June 20, 2024*
+
+
+## Release 6.5.82  -- _June 28, 2024_ 
+**Changes**
+
+>**Stato residuo: esteso anche su residui impropri**
+>
+>[17239a716b820ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17239a716b820ca) raffaelepagano *June 27, 2024*
+
+
+## Release 6.5.78  -- _June 19, 2024_ 
+**Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[58fc982cc1cc4c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/58fc982cc1cc4c1) marco.spasiano *June 19, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[8c4c1cfb86389dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c4c1cfb86389dd) marco.spasiano *June 19, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[b4863f63118540e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4863f63118540e) marco.spasiano *June 18, 2024*
+
+>**In caso di apertura di una nota di credito, alla successiva chiusura della stessa la transazione non veniva inizializzata nuovamente.**
+>
+>[5df10bb9e9fe93c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5df10bb9e9fe93c) marco.spasiano *June 07, 2024*
+
+>**In caso di trasmissione con il vecchio tracciato OPI non valorizzava correttamente il tipo operazione sulla reversale**
+>
+>[47678ccb4c6bffb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/47678ccb4c6bffb) marco.spasiano *June 07, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[757c74ef79a3e8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/757c74ef79a3e8d) marco.spasiano *June 06, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[715025d004e86c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/715025d004e86c1) marco.spasiano *June 06, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[42c268f64598b6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/42c268f64598b6f) marco.spasiano *June 05, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[fd267e3dffe1562](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd267e3dffe1562) marco.spasiano *June 03, 2024*
+
+>**Resa non modificabile la data di scadenza della fattura passiva ed impostata a 30 giorni dalla data di ricezione o di registrazione**
+>
+>[1b4565f8fdefb75](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b4565f8fdefb75) marco.spasiano *June 03, 2024*
+
+
+## Release 6.5.72  -- _May 29, 2024_ 
+**Changes**
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[b24cca72606a22a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b24cca72606a22a) marco.spasiano *May 29, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[8fc7ff6be45bd6c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fc7ff6be45bd6c) marco.spasiano *May 28, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[a78b306620b3156](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a78b306620b3156) marco.spasiano *May 28, 2024*
+
+>**Aggiunta nuova funzionalità per la trasmissione della sospensione delle fatture passive in PCC tramite generazione di un file CSV**
+>
+>[97e5dee2e2ae611](https://github.com/consiglionazionaledellericerche/sigla-main/commit/97e5dee2e2ae611) marco.spasiano *May 28, 2024*
+
+>**Il controllo sulla liquidabilità dei documenti ora avviene solo per le fatture elettroniche.**
+>
+>[ce6e9631fc5b9e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce6e9631fc5b9e2) marco.spasiano *May 24, 2024*
+
+>**2. Comunicazione Sospensione documenti:**
+> * a. Inserire su Sigla le informazioni relative alla Sospensione:
+> * i. Stato ‘Liquidazione sospesa’ – Fatture non pagate alla data di inizio sospensione.
+> * Controlli:
+> * La data inizio sospensione deve essere:
+> * Non antecedente o uguale alla data di registrazione;
+> * Non uguale o successiva alla data del pagamento;
+> * Non può riguardare solo una parte del documento.
+> * ii. Motivo della sospensione:
+> * 1. Importo sospeso in Contenzioso (già previsto in Sigla);
+> * 2. Importo sospeso in contestazione/adempimenti normativi;
+> * 3. Importo sospeso per data esito regolare verifica di conformità.
+> * iii. Data inizio sospensione.
+> * Prevedere la modifica dei dati relativi alla sospensione (Motivo e Data inizio) sempre per utente SUPERVISORE (per l’anno di gestione consentito in configurazione. Se in configurazione non è previsto MODIFICA PER PCC nemmeno il supervisore può operare);
+> * Per utenti normali se la fattura è parzialmente o totalmente pagata non può essere messa in sospensione né resa non Liquidabile.
+>
+>[346e121f7cc1e5a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/346e121f7cc1e5a) marco.spasiano *May 06, 2024*
+
+>**2. Comunicazione Sospensione documenti:**
+> * a. Inserire su Sigla le informazioni relative alla Sospensione:
+> * i. Stato ‘Liquidazione sospesa’ – Fatture non pagate alla data di inizio sospensione.
+> * Controlli:
+> * La data inizio sospensione deve essere:
+> * Non antecedente o uguale alla data di registrazione;
+> * Non uguale o successiva alla data del pagamento;
+> * Non può riguardare solo una parte del documento.
+> * ii. Motivo della sospensione:
+> * 1. Importo sospeso in Contenzioso (già previsto in Sigla);
+> * 2. Importo sospeso in contestazione/adempimenti normativi;
+> * 3. Importo sospeso per data esito regolare verifica di conformità.
+> * iii. Data inizio sospensione.
+> * Prevedere la modifica dei dati relativi alla sospensione (Motivo e Data inizio) sempre per utente SUPERVISORE (per l’anno di gestione consentito in configurazione. Se in configurazione non è previsto MODIFICA PER PCC nemmeno il supervisore può operare);
+> * Per utenti normali se la fattura è parzialmente o totalmente pagata non può essere messa in sospensione né resa non Liquidabile.
+>
+>[ee06a1ac686e7a2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee06a1ac686e7a2) marco.spasiano *May 02, 2024*
+
+>**Stampa e estrazione excel dell'indice di tempestività dei pagamenti per UO**
+>
+>[fea7372a3d68fc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fea7372a3d68fc7) marco.spasiano *April 26, 2024*
+
+>**Stampa e estrazione excel dell'indice di tempestività dei pagamenti per UO**
+>
+>[d75f12d0344e5f0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d75f12d0344e5f0) marco.spasiano *April 24, 2024*
+
+
+## Release 6.5.68  -- _April 10, 2024_ 
+**Changes**
+
+>**Aggiunta nuova funzionalità per allegare il provvedimento di liquidazione in maniera massiva sulle fatture elettroniche.**
+>
+>[22a4bd2f16e2af9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22a4bd2f16e2af9) marco.spasiano *April 10, 2024*
+
+>**Aggiunta nuova funzionalità per allegare il provvedimento di liquidazione in maniera massiva sulle fatture elettroniche.**
+>
+>[61a837164c3848b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/61a837164c3848b) marco.spasiano *April 10, 2024*
+
+>**Aggiunta nuova funzionalità per allegare il provvedimento di liquidazione in maniera massiva sulle fatture elettroniche.**
+>
+>[257f37a8b25b867](https://github.com/consiglionazionaledellericerche/sigla-main/commit/257f37a8b25b867) marco.spasiano *April 09, 2024*
+
+>**Nel caso di aggiunta di un provvedimento di liquidazione nella fattura elettronica registrata aggiorna le date sulla fattura**
+>
+>[aec745a3a857163](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aec745a3a857163) marco.spasiano *March 27, 2024*
+
+>**Servizio rest Contratti: data la possibilità di ricercare per cig**
+>
+>[ceadfc47b005396](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ceadfc47b005396) raffaelepagano *March 15, 2024*
+
+>**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
+>
+>[e892ed5969a72c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e892ed5969a72c6) marco.spasiano *March 14, 2024*
+
+>**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
+>
+>[5e22ff3c4071f52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e22ff3c4071f52) marco.spasiano *March 14, 2024*
+
+>**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
+>
+>[bef3e98dfc1cbe9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bef3e98dfc1cbe9) marco.spasiano *March 14, 2024*
+
+>**Aggiunta funzionalità che permette di allegare uno stesso documento a più fatture e di passare allo stato liquidabile selezionando più di una fattura**
+>
+>[56affa03861db35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56affa03861db35) marco.spasiano *March 13, 2024*
+
+
+## Release 6.5.63  -- _March 11, 2024_ 
+**Changes**
+
+>**Aggiunto nei Parametri del CdS la possibilità di richiedere obbligatoriamente il provvedimento di liquidazione della fattura, che diventa obbligatorio quando la fattura viene resa liquidabile.**
+>
+>[e20e66d6af832c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e20e66d6af832c2) marco.spasiano *March 11, 2024*
+
+
+## Release 6.5.62  -- _March 08, 2024_ 
+**Changes**
+
+>**Aggiunte alla ricerca dei contratti le informazioni della denominazione e della nazione riferiti alla Figura Giuridica Esterna**
+>
+>[4566853acadf48b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4566853acadf48b) marco.spasiano *March 08, 2024*
+
+>**Aggiunta l'estrazione excel del dettaglio dell'indice di tempestività dei pagamenti.**
+>
+>[c797043354d3162](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c797043354d3162) marco.spasiano *March 08, 2024*
+
+>**Aggiunto nei Parametri del CdS la possibilità di richiedere obbligatoriamente il provvedimento di liquidazione della fattura, che diventa obbligatorio quando la fattura viene resa liquidabile.**
+>
+>[15a3f8470639894](https://github.com/consiglionazionaledellericerche/sigla-main/commit/15a3f8470639894) marco.spasiano *March 08, 2024*
+
+
+## Release 6.5.61  -- _February 23, 2024_ 
+**Changes**
+
+>**When entering active invoices via Rest API, the intra lines were duplicated also based on the invoice lines**
+>
+>[a8a3afb9e69bb76](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8a3afb9e69bb76) marco.spasiano *February 21, 2024*
+
+>**FIX NPE when user is not present**
+>
+>[6af48eab87be364](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6af48eab87be364) marco.spasiano *February 09, 2024*
+
+>**Gestione della distinta cassiere in caso che SIOPE+ non sia attivo.**
+>
+>[30fbc945c09d72e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30fbc945c09d72e) marco.spasiano *February 05, 2024*
+
+
+## Release 6.5.59  -- _February 05, 2024_ 
+**Changes**
+
+>**Gestione della distinta cassiere in caso che SIOPE+ non sia attivo.**
+>
+>[f38c74fe6ddb08f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f38c74fe6ddb08f) marco.spasiano *February 05, 2024*
+
+>**Gestito errore in caso di variazione del CUP di un mandato pagato.**
+>
+>[a208bb2c9965736](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a208bb2c9965736) marco.spasiano *February 01, 2024*
+
+
+## Release 6.5.57  -- _January 17, 2024_ 
+**Changes**
+
+>**Aggiunta la possibilità tramite l'assegnazione di un nuovo accesso "AMMFATTURDOCELADMIN" di cancellare logicamente la comunicazione di non registrabilità di una fattura elettronica**
+>
+>[f9f7438fc576d26](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f7438fc576d26) marco.spasiano *January 16, 2024*
+
+
+## Release 6.5.56  -- _January 16, 2024_ 
+**Changes**
+
+>**Aggiunta la possibilità tramite l'assegnazione di un nuovo accesso "AMMFATTURDOCELADMIN" di cancellare logicamente la comunicazione di non registrabilità di una fattura elettronica**
+>
+>[607d189b7819c9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/607d189b7819c9c) marco.spasiano *January 16, 2024*
+
+>**Aggiunta la possibilità tramite l'assegnazione di un nuovo accesso "AMMFATTURDOCELADMIN" di cancellare logicamente la comunicazione di non registrabilità di una fattura elettronica**
+>
+>[1107779e6592b0a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1107779e6592b0a) marco.spasiano *January 15, 2024*
+
+>**FIX Html Table Height**
+>
+>[221c801261e646a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/221c801261e646a) marco.spasiano *January 15, 2024*
+
+>**Variazioni: aggunta e gestita la tipologia 'Trasferimento Fiscale'**
+>
+>[d88fa3da3d835fc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d88fa3da3d835fc) raffaelepagano *January 12, 2024*
+
+>**Upgrade version of ace client**
+>
+>[c84f93a518df5c3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c84f93a518df5c3) marco.spasiano *January 10, 2024*
+
+>**Aggiornamento anagrafica progetti, risoluzione anomalia batch notturno per transazione in rollback.**
+>
+>[162aaec54b80ef7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/162aaec54b80ef7) marco.spasiano *January 10, 2024*
+
+
+## Release 6.5.52  -- _January 10, 2024_ 
+**Changes**
+
+>**Piano di gestione preliminare aggiunta il filtro con la ricerca guidata sui progetti.**
+>
+>[8806ef143992d0d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8806ef143992d0d) marco.spasiano *January 10, 2024*
+
+>**Piano di gestione preliminare aggiunta il filtro con la ricerca guidata sui progetti.**
+>
+>[591ab129fda2212](https://github.com/consiglionazionaledellericerche/sigla-main/commit/591ab129fda2212) marco.spasiano *January 09, 2024*
+
+>**Piano di gestione preliminare aumentata l'altezza della griglia.**
+>
+>[321f071499dd01f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/321f071499dd01f) marco.spasiano *January 08, 2024*
+
+>**FIX Creazione fattura attiva da servizio REST**
+>
+>[3a4f75aeac61ab5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a4f75aeac61ab5) marco.spasiano *January 03, 2024*
+
+>**Nel caso di nota di credito abilitata la possibilità di cambiare da istituzionale a commerciale**
+>
+>[cdb3250c102f2d2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cdb3250c102f2d2) marco.spasiano *December 12, 2023*
+
+>**Aggiornamento della versione di jada alla 7.0.46**
+>
+>[9f09b9e555cda52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9f09b9e555cda52) marco.spasiano *December 05, 2023*
+
+>**Fix Campi di ricerca obbligazione. I campi relativi alla gara in corso non erano selezionabili.**
+>
+>[327f94785ac77b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/327f94785ac77b4) raffaelepagano *December 04, 2023*
+
+>**aggiunta schedulazione ribaltamento apaterura nuovo anno**
+>
+>[17b1f93e44fcd0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/17b1f93e44fcd0b) marco.spasiano *November 20, 2023*
+
+>**Java: DoS Vulnerability in JSON-JAVA #66**
+>
+>[b7752616af8d240](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b7752616af8d240) marco.spasiano *November 15, 2023*
+
+>**Added button for downloading xml invoice**
+>
+>[cdedbc4ae5abe7d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cdedbc4ae5abe7d) marco.spasiano *November 13, 2023*
+
+>**Handled pagoPA error**
+>
+>[8653bb8ce6ef500](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8653bb8ce6ef500) marco.spasiano *November 13, 2023*
+
+>**Validating information for digital signature**
+>
+>[35d679aa0cf7a33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/35d679aa0cf7a33) marco.spasiano *November 13, 2023*
+
+>**Validating information for digital signature**
+>
+>[49ebc7742406561](https://github.com/consiglionazionaledellericerche/sigla-main/commit/49ebc7742406561) marco.spasiano *November 07, 2023*
+
+>**Cambiata implementazione sulla ricerca delle variazioni al PdG**
+>
+>[fd41c7f35f91210](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd41c7f35f91210) marco.spasiano *November 06, 2023*
+
+>**Cambiata implementazione sulla ricerca delle variazioni al PdG**
+>
+>[cbf0c05ff68c1d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cbf0c05ff68c1d4) marco.spasiano *November 06, 2023*
+
+>**Management of the advance linked to the mission**
+>
+>[80926463d1caef8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80926463d1caef8) marco.spasiano *October 30, 2023*
+
+>**Managed application message when try to delete Mission via REST**
+>
+>[56b1dd1c633c29f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56b1dd1c633c29f) marco.spasiano *October 26, 2023*
+
+
+## Release 6.5.46  -- _October 26, 2023_ 
+**Changes**
+
+>**Handled the error in case of user not enabled on LDAP**
+>
+>[bf93c18b6271edc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bf93c18b6271edc) marco.spasiano *October 26, 2023*
+
+>**Handled the error in case of user not enabled on LDAP**
+>
+>[2c9d3f411699d3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c9d3f411699d3d) marco.spasiano *October 26, 2023*
+
+>**Added the CdR as a parameter to the printout**
+>
+>[c475b881974b13a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c475b881974b13a) marco.spasiano *October 12, 2023*
+
+>**Managed application message when entering a mission refund via REST**
+>
+>[4cc858fc1aa0660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4cc858fc1aa0660) marco.spasiano *October 06, 2023*
+
+>**Managed application message when entering a mission refund via REST**
+>
+>[8f3df5329b7f624](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8f3df5329b7f624) marco.spasiano *October 05, 2023*
+
+>**FIX NPE on flScollegaDocumenti**
+>
+>[05f82e6ef2b62ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05f82e6ef2b62ef) marco.spasiano *October 05, 2023*
 
 >**Managed application message when entering a mission refund via REST**
 >

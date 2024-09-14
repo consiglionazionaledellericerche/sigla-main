@@ -315,15 +315,16 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 .filter(MandatoBulk.class::isInstance)
                 .map(MandatoBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Mandato non trovato!"));
-        CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
-                Optional.ofNullable(actionContext.createBusinessProcess("CRUDMandatoVariazioneBP"))
-                        .filter(CRUDMandatoVariazioneBP.class::isInstance)
-                        .map(CRUDMandatoVariazioneBP.class::cast)
-                        .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Manadato"));
-        crudMandatoVariazioneBP.setModel(actionContext, mandatoBulk);
-        crudMandatoVariazioneBP.setDaVariare(actionContext);
-        actionContext.closeBusinessProcess();
-        actionContext.addBusinessProcess(crudMandatoVariazioneBP);
+
+        mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
+        mandatoBulk.setToBeUpdated();
+        try {
+            final OggettoBulk oggettoBulk = createComponentSession().modificaConBulk(actionContext.getUserContext(), mandatoBulk);
+            commitUserTransaction();
+            basicEdit(actionContext, oggettoBulk, true);
+        } catch (ComponentException | RemoteException e) {
+            throw handleException(e);
+        }
     }
 
 

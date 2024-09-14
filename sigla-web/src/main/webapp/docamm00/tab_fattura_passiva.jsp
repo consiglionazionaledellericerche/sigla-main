@@ -82,11 +82,18 @@
       			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
       			<% bp.getController().writeFormInput(out,null,"stato_liquidazione", isInSpesaMode,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
       		</td>
-      		<td> 
+            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile()|| bp.isLiquidazioneSospesaView()) { %>
+      		<td>
       			<% bp.getController().writeFormLabel(out,"causale");%>
       			<% bp.getController().writeFormInput(out,null,"causale",isInSpesaMode,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
       		</td>
-      	  </tr>	
+      		<% } %>
+      	  </tr>
+          <%	if (bp.isSearching() || bp.isLiquidazioneSospesa()|| bp.isLiquidazioneSospesaView()) { %>
+      	  <tr>
+      	    <% bp.getController().writeFormField(out,"dt_inizio_sospensione"); %>
+      	  </tr>
+      	  <% } %>
 	      <%	if (bp instanceof CRUDFatturaPassivaIBP) { %>
 				      <tr>      	
 				     	<td>
@@ -127,13 +134,20 @@
             <td>
                 <% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
             </td>
+            <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isNonLiquidabile() || bp.isLiquidazioneSospesaView()) { %>
             <td>
                 <% bp.getController().writeFormLabel(out,"causale");%>
              </td>
              <td>
                 <% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
             </td>
+            <% } %>
 	      </tr>
+          <%	if (bp.isSearching() || bp.isLiquidazioneSospesa() || bp.isLiquidazioneSospesaView()) { %>
+      	  <tr>
+      	    <% bp.getController().writeFormField(out,"dt_inizio_sospensione"); %>
+      	  </tr>
+      	  <% } %>
 	<% } %>
     </table>
    </div>
@@ -146,7 +160,7 @@
 		      		<% bp.getController().writeFormLabel(out,"ti_istituz_commerc");%>
 		      	</td>      	
 		     	<td colspan="10">
-		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",roOnAutoGen||roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
+		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
 		      	</td>
 			<% } else { %>
 		     	<td>
@@ -353,7 +367,7 @@
 				<% bp.getController().writeFormLabel(out,"dt_scadenza");%>			  
 			</td>
 			<td>
-				<% bp.getController().writeFormInput(out,null,"dt_scadenza",false,null,"");%>
+				<% bp.getController().writeFormInput(out,null,"dt_scadenza",!(bp.isSupervisore() || bp.isSearching()),null,"");%>
 			</td>
       </tr>
       <tr>

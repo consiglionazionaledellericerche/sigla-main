@@ -31,6 +31,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.OrderConstants;
 
 import java.util.Optional;
 
@@ -232,5 +233,12 @@ public  Tipo_trattamentoBulk findTipoTrattamentoBonusValido(BonusBulk bonus) thr
 				.filter(Tipo_trattamentoBulk.class::isInstance)
 				.map(Tipo_trattamentoBulk.class::cast);
 		return optional.orElse(null);
+	}
+
+	public Optional<Tipo_trattamentoBulk> findTipoTrattamento(String cdTipoTrattamento) throws PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause(FindClause.AND,"cd_trattamento",SQLBuilder.EQUALS, cdTipoTrattamento);
+		sql.setOrderBy("dt_ini_validita", OrderConstants.ORDER_DESC);
+		return fetchAll(sql).stream().findFirst();
 	}
 }

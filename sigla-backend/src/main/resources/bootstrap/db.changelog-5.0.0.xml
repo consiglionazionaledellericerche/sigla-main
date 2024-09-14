@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
         <!--
           ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
           ~
@@ -5388,4 +5388,14 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <include file="bootstrap/add_column_tot_vincoli_on_tmp_stampa_situazione_progetto.xml"/>
     <include file="bootstrap/add_column_fl_offerta_presentata_on_ass_contratto_ditte.xml"/>
     <include file="bootstrap/add_column_fl_pagabile_on_obbligazione_scadenzario.xml"/>
+    <!-- Autore : CIRO SALVIO - Aggiunta possibilità di lanciare da applicazione la procedura per il ribaltamento di inizio anno -->
+    <include file="bootstrap/add_prc_ribaltamento_pdg_altro_schedulazione.xml"/>
+    <!-- Autore : MARCO SPASIANO - Aggiunto accesso per amministrare un fattura elettronica -->
+    <include file="bootstrap/add_accesso_amministra_fattura_elettronica.xml"/>
+    <include file="bootstrap/add_protocollo_liquidazione_fattura.xml"/>
+    <!-- Autore : MARCO SPASIANO - Aggiunto gestione sospensione fattura passiva -->
+    <include file="bootstrap/add_sospensione_fattura_passiva.xml"/>
+    <!-- Autore : MARCO SPASIANO - Aggiunto amministra incarichi -->
+    <include file="bootstrap/add_accesso_amministra_incarichi.xml"/>
+
 </databaseChangeLog>

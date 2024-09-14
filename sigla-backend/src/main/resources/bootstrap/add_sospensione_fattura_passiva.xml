@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="marco.spasiano" id="add_sospensione_fattura_passiva">
+        <addColumn tableName="fattura_passiva">
+            <column name="dt_inizio_sospensione" type="${date.type}"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="modify_sospensione_non_liq_conten">
+        <update tableName="fattura_passiva">
+            <column name="stato_liquidazione" value='SOSP' type="VARCHAR(10)"/>
+            <column name="causale" value='CONT' type="VARCHAR(10)"/>
+            <column name="dt_inizio_sospensione" valueComputed='dt_registrazione + 1' type="${date.type}"/>
+            <column name="utuv" value='SYSTEM' type="VARCHAR(20)"/>
+            <column name="duva" valueDate="${now}" type="${date.type}"/>
+            <column name="pg_ver_rec" type="BIGINT" valueComputed='pg_ver_rec + 1'/>
+            <where>stato_liquidazione = 'NOLIQ' and causale = 'CONT'</where>
+        </update>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="modify_sospensione_sosp_att_liq">
+        <update tableName="fattura_passiva">
+            <column name="stato_liquidazione" value='SOSP' type="VARCHAR(10)"/>
+            <column name="causale" value='CONTNOR' type="VARCHAR(10)"/>
+            <column name="dt_inizio_sospensione" valueComputed='dt_registrazione + 1' type="${date.type}"/>
+            <column name="utuv" value='SYSTEM' type="VARCHAR(20)"/>
+            <column name="duva" valueDate="${now}" type="${date.type}"/>
+            <column name="pg_ver_rec" type="BIGINT" valueComputed='pg_ver_rec + 1'/>
+            <where>stato_liquidazione = 'SOSP' and causale = 'ATTLIQ'</where>
+        </update>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione-cnr-add-modifica-per-pcc">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" valueNumeric="${esercizio_corrente}"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="PCC"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="MODIFICA"/>
+            <column name="val01" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="add_esito_pcc_fattura_elettronica">
+        <addColumn tableName="documento_ele_testata">
+            <column name="esito_pcc" type="VARCHAR(30)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

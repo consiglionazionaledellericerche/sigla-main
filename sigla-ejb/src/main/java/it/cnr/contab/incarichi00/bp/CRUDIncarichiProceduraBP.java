@@ -469,7 +469,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)procedura.getIncarichi_repertorioValidiColl().get(0);
 					if (parametri!=null) {
 						if (parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
-							if (incarico.getCurriculumVincitore() == null) {
+							if (incarico.getCurriculumVincitore() == null || isAmministra()) {
 								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 										context,
 										isFromBootstrap ? "fa fa-fw fa-address-card-o text-primary" : "img/paste16.gif",
@@ -552,7 +552,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"btn btn-sm btn-outline-secondary",
 							isFromBootstrap);
 
-				innerDelete = innerDelete || Optional.ofNullable(getModel())
+				innerDelete = isAmministra() || innerDelete || Optional.ofNullable(getModel())
 									.filter(Incarichi_archivioBulk.class::isInstance)
 									.map(Incarichi_archivioBulk.class::cast)
 									.filter(el->el.isToBeCreated())
@@ -2708,5 +2708,9 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		{
 			throw handleException(e);
 		}
+	}
+
+	protected boolean isAmministra() {
+		return Boolean.FALSE;
 	}
 }

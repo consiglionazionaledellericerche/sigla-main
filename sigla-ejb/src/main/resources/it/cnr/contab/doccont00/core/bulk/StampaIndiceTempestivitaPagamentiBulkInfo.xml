@@ -39,6 +39,7 @@
 		name="dettagli"
 		property="dettagli"
 		inputType="CHECKBOX"
+		command="doDefault"
 		nullable="true"
 		label="Stampa dettagli" />
 
@@ -60,5 +61,10 @@
 			name="dettagli"
 			paramNameJR="dettagli"
 			paramTypeJR="java.lang.Boolean"/>
+		<printFieldProperty
+			name="uo_documento"
+			property="uo_documento"
+			paramNameJR="uo_documento"
+			paramTypeJR="java.lang.String" />
 	</printForm>
 </bulkInfo>

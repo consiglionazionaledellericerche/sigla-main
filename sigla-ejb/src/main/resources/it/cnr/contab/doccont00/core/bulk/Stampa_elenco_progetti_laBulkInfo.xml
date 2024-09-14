@@ -27,6 +27,11 @@
 		inputSize="4"		
 		inputType="ROTEXT"
 		label="Esercizio" />
+	<formFieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="ROTEXT"
+		label="CdR" />
 	<fieldProperty
 		name="findProgettoForPrint"
 		property="progettoForPrint"
@@ -88,6 +93,7 @@
         label="Impegno/Accertamento" />
         
 	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="cdr" />
 	<formFieldProperty name="findProgettoForPrint" />
 	<formFieldProperty name="cdProgettoForPrint" />
 	<formFieldProperty name="findCommessaForPrint" />	
@@ -173,7 +179,13 @@
 			parameterType="STRING"
 			paramNameJR="Esercizio"
 			paramTypeJR="java.lang.Integer" />
-				
+		<printFieldProperty
+			name="cdr"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="cdr"
+			paramTypeJR="java.lang.String"/>
+
 	</printForm>
 		
 </bulkInfo>

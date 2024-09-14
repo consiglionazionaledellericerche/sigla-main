@@ -133,4 +133,10 @@
             <where>CD_CHIAVE_PRIMARIA='ECONOMICO_PATRIMONIALE' AND CD_CHIAVE_SECONDARIA='ASSOCIAZIONE_CONTI'</where>
         </update>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione-upd-uo-speciale-uo-ragioneria">
+        <update tableName="configurazione_cnr">
+            <column name="val02" type="STRING" value="ASR.205"/>
+            <where>CD_CHIAVE_PRIMARIA='UO_SPECIALE' AND CD_CHIAVE_SECONDARIA='UO_RAGIONERIA' AND ESERCIZIO>=2024</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

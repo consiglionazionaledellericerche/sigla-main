@@ -554,6 +554,27 @@
 		readonlyProperty="RODsGaraInCorso"
 		inputType="TEXTAREA"
 		nullable="false" />
+
+	<!--Campi aggiunti per gestire il freeSearch che a causa del RO viene disattivato con i campi precedenti-->
+	<fieldProperty
+			name="fl_gara_in_corso_freeSearch"
+			property="fl_gara_in_corso"
+			label="Gara\Procedura Conferimento Incarico in corso"
+			inputType="CHECKBOX"
+			enabledOnFreeSearch="true"
+			maxLength="1"
+			inputSize="1"/>
+	<fieldProperty
+			name="ds_gara_in_corso_freeSearch"
+			property="ds_gara_in_corso"
+			label="Descrizione gara d'appalto"
+			cols="60"
+			rows="2"
+			inputType="TEXTAREA"
+			enabledOnFreeSearch="true"
+			nullable="false" />
+	<!--Fine Campi aggiunti per gestire il freeSearch che a causa del RO viene disattivato con i campi precedenti-->
+
 	<fieldProperty
 		name="esercizio_ev_next"
 		property="elemento_voce_next.esercizio"
@@ -830,7 +851,10 @@
 		label="Descrizione gara d'appalto"
 		/>		
 
- 	<formFieldProperty
+	<formFieldProperty name="fl_gara_in_corso_freeSearch" />
+	<formFieldProperty name="ds_gara_in_corso_freeSearch"/>
+
+	<formFieldProperty
 		name="esercizio_ev_next" />
 	<formFieldProperty
 		name="ti_appartenenza_ev_next" />
@@ -936,10 +960,6 @@
 	<findFieldProperty
 		name="motivazione"
 		/>
-	<findFieldProperty
-		name="fl_gara_in_corso"
-		/>		
-	<findFieldProperty
-		name="ds_gara_in_corso"
-		/>		
+	<findFieldProperty name="fl_gara_in_corso_freeSearch" />
+	<findFieldProperty name="ds_gara_in_corso_freeSearch"/>
 </bulkInfo>

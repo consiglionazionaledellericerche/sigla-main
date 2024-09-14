@@ -883,17 +883,17 @@ public class MissioneComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
         return sql;
     }
 
-    private boolean checkEleggibilitaAnticipo(UserContext aUC, MissioneBulk missione) throws ComponentException {
+    private boolean checkEleggibilitaAnticipo(UserContext aUC, MissioneBulk missione, AnticipoBulk anticipoBulk) throws ComponentException {
         AnticipoHome anticipoHome = (AnticipoHome) getHome(aUC, AnticipoBulk.class);
         AnticipoBulk aAnticipo = null;
 
         try {
             SQLBuilder sql = selectAnticipoByClause(aUC, missione, new AnticipoBulk(), null);
 
-            sql.addClause("and", "pg_anticipo", sql.EQUALS, missione.getAnticipo().getPg_anticipo());
-            sql.addClause("and", "cd_cds", sql.EQUALS, missione.getAnticipo().getCd_cds());
-            sql.addClause("and", "cd_unita_organizzativa", sql.EQUALS, missione.getAnticipo().getCd_unita_organizzativa());
-            sql.addClause("and", "esercizio", sql.EQUALS, missione.getAnticipo().getEsercizio());
+            sql.addClause("and", "pg_anticipo", sql.EQUALS, anticipoBulk.getPg_anticipo());
+            sql.addClause("and", "cd_cds", sql.EQUALS, anticipoBulk.getCd_cds());
+            sql.addClause("and", "cd_unita_organizzativa", sql.EQUALS, anticipoBulk.getCd_unita_organizzativa());
+            sql.addClause("and", "esercizio", sql.EQUALS, anticipoBulk.getEsercizio());
 
             SQLBroker broker = anticipoHome.createBroker(sql);
             if (broker.next())
@@ -907,6 +907,11 @@ public class MissioneComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
             throw handleException(missione, e);
         }
         return true;
+
+    }
+
+    private boolean checkEleggibilitaAnticipo(UserContext aUC, MissioneBulk missione) throws ComponentException {
+        return checkEleggibilitaAnticipo(aUC, missione, missione.getAnticipo());
     }
 
     /**
@@ -2903,7 +2908,7 @@ public class MissioneComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
                             AnticipoKey key = new AnticipoKey(mandato.getCd_cds_doc_amm(), mandato.getCd_uo_doc_amm(), mandato.getEsercizio_doc_amm(), mandato.getPg_doc_amm());
                             AnticipoBulk anticipo = ((AnticipoBulk) anticipoHome.findByPrimaryKey(key));
                             if (anticipo != null && !anticipo.isAnticipoConMissione()) {
-                                if (checkEleggibilitaAnticipo(aUC, missione))
+                                if (checkEleggibilitaAnticipo(aUC, missione, anticipo))
                                     return anticipo;
                             }
                         }

@@ -55,10 +55,4 @@ public class PendenzaPagopaHome extends BulkHome {
 		((PendenzaPagopaBulk)persistent).setStato(PendenzaPagopaBulk.STATO_ANNULLATO);
 		super.update(persistent, userContext);
 	}
-	public SQLBuilder createSQLBuilder() {
-
-		SQLBuilder sql = super.createSQLBuilder();
-		sql.addSQLClause("AND", "STATO", sql.NOT_EQUALS, PendenzaPagopaBulk.STATO_ANNULLATO);
-		return sql;
-	}
 }

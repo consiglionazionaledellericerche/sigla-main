@@ -18,4 +18,14 @@
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk"
 	homeClassName="it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaHome" >
+	<defaultColumnMap tableName="OBBLIGAZIONE">
+		<columnMapping
+				columnName="STATO_RESIDUO"
+				propertyName="statoResiduo"
+				sqlTypeName="VARCHAR"
+				columnSize="3"
+				nullable="true"/>
+	</defaultColumnMap>
+	<persistentProperty
+			name="statoResiduo" />
 </SQLPersistentInfo>

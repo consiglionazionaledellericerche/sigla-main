@@ -27,7 +27,7 @@
 		path="/StampaAvvisoPagamentoAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
 	</action>
 	<action
-			path="/StampaIndiceTempestivitaPagamentiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+			path="/StampaIndiceTempestivitaPagamentiAction" actionClass="it.cnr.contab.doccont00.action.StampaIndiceTempestivitaPagamentiAction">
 	</action>
 
 	<action
@@ -61,7 +61,7 @@
 	    <init-param name="reportName" value="/cnrdoccont/doccont/avvpagmnd.jasper" />
 	</businessProcess>
 
-	<businessProcess name="StampaIndiceTempestivitaPagamentiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	<businessProcess name="StampaIndiceTempestivitaPagamentiBP" className="it.cnr.contab.doccont00.bp.StampaIndiceTempestivitaPagamentiBP">
 		<forward name="default" path="/doccont00/stampa_indice_tempestivita_pagamenti.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.StampaIndiceTempestivitaPagamentiBulk" />
 		<init-param name="printbp" value="OfflineReportPrintBP"/>

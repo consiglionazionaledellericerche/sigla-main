@@ -20,6 +20,7 @@ package it.cnr.contab.util00.bp;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -69,8 +70,12 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 
         public OggettoBulk removeDetail(int i) {
             AllegatoGenericoBulk all = (AllegatoGenericoBulk) getDetails().get(i);
-            if (all.isNew() || isPossibileCancellazione(all))
+            if (all.isNew() || isPossibileCancellazione(all)) {
+                if (isDaCancellareLogicamente(all)) {
+                    return cancellaLogicamente(all);
+                }
                 return super.removeDetail(i);
+            }
             return null;
         }
 
@@ -79,7 +84,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             super.validate(actioncontext, oggettobulk);
             validateChildDetail(actioncontext, oggettobulk);
         }
+
+        @Override
+        public String getRowStyle(Object obj) {
+            AllegatoGenericoBulk allegatoGenericoBulk = (AllegatoGenericoBulk) obj;
+            return getRowDetailStyle(allegatoGenericoBulk);
+        }
     };
+
+    protected String getRowDetailStyle(AllegatoGenericoBulk allegatoGenericoBulk) {
+        return null;
+    }
 
     public AllegatiCRUDBP() {
         super();
@@ -93,10 +108,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 
     protected abstract Class<T> getAllegatoClass();
 
+    protected OggettoBulk cancellaLogicamente(AllegatoGenericoBulk allegato) {
+        allegato.setToBeUpdated();
+        return allegato;
+    }
     protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
         return true;
     }
 
+    protected Boolean isDaCancellareLogicamente(AllegatoGenericoBulk allegato) {
+        return false;
+    }
     protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
         return true;
     }
@@ -319,7 +341,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         }
                         allegato.complete(actioncontext.getUserContext());
                         storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
-                        completeUpdateAllegato((T)allegato);
+                        completeUpdateAllegato(actioncontext.getUserContext(), (T)allegato);
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
@@ -339,7 +361,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     //Metodo utilizzato per effettuare altre operazioni sullo StorageObject modificato come aggiungere/rimuovere Aspect.
-    protected void completeUpdateAllegato(T allegato) throws ApplicationException {
+    protected void completeUpdateAllegato(UserContext userContext, T allegato) throws ApplicationException {
     }
 
     protected void gestioneCancellazioneAllegati(AllegatoParentBulk allegatoParentBulk) throws ApplicationException {

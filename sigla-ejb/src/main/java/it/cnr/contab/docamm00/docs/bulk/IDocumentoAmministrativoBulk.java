@@ -42,6 +42,8 @@ public interface IDocumentoAmministrativoBulk extends IDocumentoCogeBulk {
 
     String ATTLIQ = "ATTLIQ";
     String CONT = "CONT";
+    String CONT_NORM = "CONTNOR";
+    String CONT_CONF = "CONTCON";
     String ATTNC = "ATTNC";
     String NCRED = "NCRED";
 

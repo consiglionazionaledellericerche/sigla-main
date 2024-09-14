@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.VControlliPCCHome">
+	<defaultColumnMap
+			tableName="V_CONTROLLI_PCC">
+		<columnMapping
+				columnName="IDENTIFICATIVO_SDI"
+				propertyName="identificativoSdi"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="false" />
+		<columnMapping
+				columnName="NUMERO_DOCUMENTO"
+				propertyName="numeroDocumento"
+				sqlTypeName="VARCHAR"
+				columnSize="20"
+				nullable="true" />
+		<columnMapping
+				columnName="DATA_DOCUMENTO"
+				propertyName="dataDocumento"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="CODICE_FISCALE"
+				propertyName="codiceFiscale"
+				sqlTypeName="VARCHAR"
+				columnSize="256"
+				nullable="true" />
+		<columnMapping
+				columnName="CODICE_DESTINATARIO"
+				propertyName="codiceDestinatario"
+				sqlTypeName="VARCHAR"
+				columnSize="6"
+				nullable="true" />
+		<columnMapping
+				columnName="DATA_RICEZIONE"
+				propertyName="dataRicezione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DATA_SCADENZA"
+				propertyName="dataScadenza"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="STATO_DOCUMENTO"
+				propertyName="statoDocumento"
+				sqlTypeName="VARCHAR"
+				columnSize="60"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPORTO_DOCUMENTO"
+				propertyName="importoDocumento"
+				sqlTypeName="DECIMAL"
+				columnSize="17"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPONIBILE"
+				propertyName="imponibile"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
+		<columnMapping
+				columnName="IMPOSTA"
+				propertyName="imposta"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
+		<columnMapping
+				columnName="TIPO_DOCUMENTO"
+				propertyName="tipoDocumento"
+				sqlTypeName="VARCHAR"
+				columnSize="256"
+				nullable="true" />
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="cdUnitaOrganizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="PG_FATTURA_PASSIVA"
+				propertyName="pgFatturaPassiva"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_REGISTRAZIONE"
+				propertyName="dtRegistrazione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="STATO_LIQUIDAZIONE"
+				propertyName="statoLiquidazione"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="CAUSALE"
+				propertyName="causale"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_INIZIO_SOSPENSIONE"
+				propertyName="dtInizioSospensione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_EMISSIONE_MAN"
+				propertyName="dtEmissioneMan"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_MANDATO"
+				propertyName="imMandato"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_TOTALE_NC"
+				propertyName="imTotaleNC"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_TIPO_CONTRATTO"
+				propertyName="cdTipoContratto"
+				sqlTypeName="VARCHAR"
+				columnSize="5"
+				nullable="true" />
+		<columnMapping
+				columnName="FL_IRREGISTRABILE"
+				propertyName="flIrregistrabile"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_UO_CUU"
+				propertyName="cdUoCUU"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="FL_DA_COMPENSO"
+				propertyName="flDaCompenso"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+				nullable="true" />
+		<columnMapping
+				columnName="ESITO_PCC"
+				propertyName="esitoPCC"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="FL_SPLIT_PAYMENT"
+				propertyName="flSplitPayment"
+				sqlTypeName="VARCHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+				nullable="true" />
+		<columnMapping
+				columnName="DA_PAGARE"
+				propertyName="daPagare"
+				sqlTypeName="DECIMAL"
+				columnSize="0"
+				nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+			name="identificativoSdi" />
+	<persistentProperty
+			name="numeroDocumento" />
+	<persistentProperty
+			name="dataDocumento" />
+	<persistentProperty
+			name="codiceFiscale" />
+	<persistentProperty
+			name="codiceDestinatario" />
+	<persistentProperty
+			name="dataRicezione" />
+	<persistentProperty
+			name="dataScadenza" />
+	<persistentProperty
+			name="statoDocumento" />
+	<persistentProperty
+			name="importoDocumento" />
+	<persistentProperty
+			name="imponibile" />
+	<persistentProperty
+			name="imposta" />
+	<persistentProperty
+			name="tipoDocumento" />
+	<persistentProperty
+			name="esercizio" />
+	<persistentProperty
+			name="cdUnitaOrganizzativa" />
+	<persistentProperty
+			name="pgFatturaPassiva" />
+	<persistentProperty
+			name="dtRegistrazione" />
+	<persistentProperty
+			name="statoLiquidazione" />
+	<persistentProperty
+			name="causale" />
+	<persistentProperty
+			name="dtInizioSospensione" />
+	<persistentProperty
+			name="dtEmissioneMan" />
+	<persistentProperty
+			name="imMandato" />
+	<persistentProperty
+			name="imTotaleNC" />
+	<persistentProperty
+			name="cdTipoContratto" />
+	<persistentProperty
+			name="flIrregistrabile" />
+	<persistentProperty
+			name="cdUoCUU"/>
+	<persistentProperty
+			name="flDaCompenso"/>
+	<persistentProperty
+			name="esitoPCC"/>
+	<persistentProperty
+			name="flSplitPayment"/>
+	<persistentProperty
+			name="daPagare"/>
+
+</SQLPersistentInfo>

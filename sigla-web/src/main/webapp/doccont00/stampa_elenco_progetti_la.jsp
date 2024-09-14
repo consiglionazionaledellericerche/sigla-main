@@ -19,39 +19,36 @@
 
 <%	StampaElencoProgettiBP bp = (StampaElencoProgettiBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext);  %>
-<div class="Group" style="width:100%">
-<table>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
-  </tr>
-   
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"findProgettoForPrint"); %></td>
-	<td><% bp.getController().writeFormInput(out,"findProgettoForPrint"); %></td>
-  </tr>
- 
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"findCommessaForPrint"); %></td>
-	<td><% bp.getController().writeFormInput(out,"findCommessaForPrint"); %></td>
-  </tr>
- 	<% if (bp.getParametriCnr()!=null && !bp.getParametriCnr().getFl_nuovo_pdg()) { %>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"findModuloForPrint"); %></td>
-	<td><% bp.getController().writeFormInput(out,"findModuloForPrint"); %></td>
-  </tr>
-   <%}%>
-</table> 
-<table> 
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"flg_pdg"); %></td>
-	<td><% bp.getController().writeFormInput(out,"flg_pdg"); %></td>
-	<td><% bp.getController().writeFormLabel(out,"flg_impegno"); %></td>
-	<td><% bp.getController().writeFormInput(out,"flg_impegno"); %></td>
-  </tr>
-</table> 
+<div class="Group card p-2" style="width:100%">
+    <table>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
+        <td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
+      </tr>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"flg_pdg"); %></td>
+        <td><% bp.getController().writeFormInput(out,"flg_pdg"); %></td>
+      </tr>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"flg_impegno"); %></td>
+        <td><% bp.getController().writeFormInput(out,"flg_impegno"); %></td>
+      </tr>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"findProgettoForPrint"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findProgettoForPrint"); %></td>
+      </tr>
 
-
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"findCommessaForPrint"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findCommessaForPrint"); %></td>
+      </tr>
+        <% if (bp.getParametriCnr()!=null && !bp.getParametriCnr().getFl_nuovo_pdg()) { %>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"findModuloForPrint"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findModuloForPrint"); %></td>
+      </tr>
+       <%}%>
+    </table>
 </div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

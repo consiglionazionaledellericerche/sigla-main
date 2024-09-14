@@ -22,6 +22,8 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
@@ -38,10 +40,7 @@ import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 
@@ -49,6 +48,7 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class CompensoHome extends BulkHome implements
@@ -351,5 +351,12 @@ public class CompensoHome extends BulkHome implements
                 }
             }
         }
+    }
+
+    public Optional<Fattura_passiva_IBulk> findFatturaFornitore(UserContext userContext, CompensoBulk compenso) throws PersistencyException {
+        PersistentHome fattura_passivaHome = getHomeCache().getHome(Fattura_passiva_IBulk.class);
+        SQLBuilder sql = fattura_passivaHome.createSQLBuilder();
+        sql.addClause(FindClause.AND, "compenso", SQLBuilder.EQUALS, compenso);
+        return fattura_passivaHome.fetchAll(sql).stream().findAny();
     }
 }

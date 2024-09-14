@@ -51,10 +51,9 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	private boolean flNuovoPdg = false;
 	
 	public ConsConfrontoEntSpeComponentSession createConsConfrontoEntSpeComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-		return (ConsConfrontoEntSpeComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsConfrontoEntSpeComponentSession", ConsConfrontoEntSpeComponentSession.class);
+		return it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsConfrontoEntSpeComponentSession", ConsConfrontoEntSpeComponentSession.class);
 	}
-	
-	
+
 	public RemoteIterator search(ActionContext context, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
 		try {
 			setFindclause(compoundfindclause);

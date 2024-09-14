@@ -115,7 +115,7 @@ public class ConsDispCompetenzaResiduoIstitutoBP extends ConsultazioniBP {
 	public static final String LIV_ENTCDSVOCECDRGAEDET= "DET";
 	
 	public ConsDispCompetenzaResiduoIstitutoComponentSession createConsDispCompetenzaResiduoIstitutoComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-			return (ConsDispCompetenzaResiduoIstitutoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession", ConsDispCompetenzaResiduoIstitutoComponentSession.class);
+			return it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsDispCompetenzaResiduoIstitutoComponentSession", ConsDispCompetenzaResiduoIstitutoComponentSession.class);
 	}
 
 	protected void init(it.cnr.jada.action.Config config,ActionContext context) throws BusinessProcessException {

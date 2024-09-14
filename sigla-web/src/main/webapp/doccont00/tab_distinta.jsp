@@ -21,15 +21,15 @@ function doScaricaFirmato() {
 				<% bp.getController().writeFormInput( out, "esercizio"); %></td>
 		</tr>
 		<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_cds"); %></td>
-		<td colspan=3>
-			<% bp.getController().writeFormInput( out,"cd_cds" ); %>
-		    <% bp.getController().writeFormInput( out,"ds_cds" ); %></td>		
-		</tr>
+		    <td><% bp.getController().writeFormLabel( out, "cds"); %></td>
+            <td colspan=3>
+                <% bp.getController().writeFormInput( out, "default", "cds", !bp.isUoEnte(), null, null); %>
+            </tr>
 		<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>
-		<td colspan=3><% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %>
-					  <% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %></td>				 
+		    <td><% bp.getController().writeFormLabel( out, "unita_organizzativa"); %></td>
+            <td colspan=3>
+                <% bp.getController().writeFormInput( out, "default", "unita_organizzativa", !bp.isUoEnte(), null, null); %>
+            </tr>
 		</tr>
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "pg_distinta"); %></td>	

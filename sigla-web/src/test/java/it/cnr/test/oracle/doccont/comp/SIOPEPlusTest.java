@@ -31,7 +31,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.test.oracle.DeploymentsOracle;
-import it.siopeplus.Mandato;
+import it.siopeplus.*;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -39,6 +39,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
@@ -48,6 +51,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -69,7 +73,6 @@ public class SIOPEPlusTest extends DeploymentsOracle {
         compoundFindClause.addClause(FindClause.AND, "dt_emissione", SQLBuilder.GREATER_EQUALS,
                 Timestamp.valueOf(LocalDateTime.now().minusWeeks(1))
         );
-
         BulkLoaderIterator remoteIterator =
                 Optional.ofNullable(crudComponentSession.cerca(
                                 testUserContext,
@@ -92,6 +95,15 @@ public class SIOPEPlusTest extends DeploymentsOracle {
                                     continue;
                                 logger.info("Mandato {}/{}/{}/{}", bulk.getEsercizio(), bulk.getCd_cds(), bulk.getCd_tipo_documento_cont(), bulk.getPg_documento_cont());
                                 final Mandato mandato = distintaCassiereComponentSession.creaMandatoFlussoSiopeplus(testUserContext, bulk);
+
+                                JAXBContext jc = JAXBContext.newInstance("it.siopeplus");
+                                Marshaller jaxbMarshaller = jc.createMarshaller();
+                                jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+                                final ObjectFactory objectFactory = new ObjectFactory();
+                                FlussoOrdinativi currentFlusso = objectFactory.createFlussoOrdinativi();
+                                currentFlusso.getContent().add(objectFactory.createMandato(mandato));
+                                jaxbMarshaller.marshal(currentFlusso, System.out);
+
                                 assertEquals(
                                         bulk.getIm_documento_cont().setScale(2, RoundingMode.HALF_UP),
                                         BigDecimal.valueOf(mandato.getInformazioniBeneficiario()
@@ -113,7 +125,31 @@ public class SIOPEPlusTest extends DeploymentsOracle {
                                         .flatMap(List::stream)
                                         .map(classificazione -> classificazione.getImporto())
                                         .reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, RoundingMode.HALF_UP));
-                            } catch (ComponentException | RemoteException e) {
+                                final List<CtDatiFatturaSiope> ctDatiFatturaSiope = mandato
+                                        .getInformazioniBeneficiario()
+                                        .stream()
+                                        .map(Mandato.InformazioniBeneficiario::getClassificazione)
+                                        .collect(Collectors.toList())
+                                        .stream()
+                                        .flatMap(List::stream)
+                                        .map(classificazione -> classificazione.getClassificazioneDatiSiopeUscite())
+                                        .collect(Collectors.toList())
+                                        .stream()
+                                        .map(ctClassificazioneDatiSiopeUscite -> ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope())
+                                        .collect(Collectors.toList())
+                                        .stream()
+                                        .flatMap(List::stream)
+                                        .filter(CtFatturaSiope.class::isInstance)
+                                        .map(CtFatturaSiope.class::cast)
+                                        .map(CtFatturaSiope::getDatiFatturaSiope)
+                                        .collect(Collectors.toList());
+                                if (!ctDatiFatturaSiope.isEmpty() && bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
+                                    assertEquals(bulk.getIm_documento_cont().subtract(bulk.getIm_ritenute()).setScale(2, RoundingMode.HALF_UP),
+                                            ctDatiFatturaSiope.stream()
+                                                    .map(CtDatiFatturaSiope::getImportoSiope)
+                                                    .reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, RoundingMode.HALF_UP));
+                                }
+                            } catch (ComponentException | RemoteException | JAXBException e) {
                                 if (e.getMessage().contains("CIG")) {
                                     logger.error(e.getMessage());
                                 } else {

@@ -177,6 +177,7 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 	private BulkList<Progetto_rimodulazioneBulk> rimodulazioni = new BulkList<Progetto_rimodulazioneBulk>();
 	private BulkList<ContrattoBulk> contratti = new BulkList<ContrattoBulk>();
 	private BulkList<Progetto_anagraficoBulk> anagraficheProgetto = new BulkList<Progetto_anagraficoBulk>();
+	private boolean amministra = Boolean.FALSE;
 
 	public ProgettoBulk() {
 		super();
@@ -1411,4 +1412,11 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		return dett;
 	}
 
+	public boolean isAmministra() {
+		return amministra;
+	}
+
+	public void setAmministra(boolean amministra) {
+		this.amministra = amministra;
+	}
 }

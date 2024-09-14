@@ -41,7 +41,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.si.spring.storage.StorageException;
@@ -289,8 +291,32 @@ public class DocumentoEleTestataHome extends BulkHome {
 							StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
 							StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
     	}
-	}	
-
+	}
+	public SQLBuilder selectFattureAggiornateComplete(UserContext userContext, DocumentoEleTestataBulk documentoEleTestataBulk, CompoundFindClause clauses) throws PersistencyException {
+		if(clauses == null){
+			if(documentoEleTestataBulk != null)
+				clauses = documentoEleTestataBulk.buildFindClauses(null);
+		}else{
+			clauses = CompoundFindClause.and(clauses, documentoEleTestataBulk.buildFindClauses(Boolean.FALSE));
+		}
+		SQLBuilder sql = getHomeCache().getHome(DocumentoEleTestataBulk.class, "V_DOCUMENTO_ELE").selectByClause(userContext, clauses);
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.AGGIORNATO.name());
+		sql.addClause(FindClause.OR, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.COMPLETO.name());
+		sql.closeParenthesis();
+		if (CNRUserContext.getCd_unita_organizzativa(userContext) != null) {
+			Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class)
+					.findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
+			boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
+			if (!isUoEnte) {
+				sql.openParenthesis(FindClause.AND);
+				sql.addSQLClause(FindClause.AND, "V_DOCUMENTO_ELE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
+				sql.addSQLClause(FindClause.OR, "V_DOCUMENTO_ELE.CD_UNITA_COMPETENZA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
+				sql.closeParenthesis();
+			}
+		}
+		return sql;
+	}
 	class UploadedFileDataSource implements DataSource {
 		
 		private InputStream inputStream;

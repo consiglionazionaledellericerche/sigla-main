@@ -185,7 +185,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 	 }
 	return gruppo;
 }
-protected void initializeKeysAndOptionsInto(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
+public void initializeKeysAndOptionsInto(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
 	if (oggettobulk instanceof Gruppo_cr_detBulk){	
 		java.util.Collection tipi = findModalitaOptions(usercontext,oggettobulk);
 		Gruppo_cr_detBulk gruppo_det = (Gruppo_cr_detBulk)oggettobulk;

@@ -35,6 +35,7 @@ public interface GestioneLoginComponentSession extends it.cnr.jada.ejb.GenericCo
     it.cnr.contab.utenze00.bulk.UtenteBulk cambiaPassword(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     boolean controllaAccesso(it.cnr.jada.UserContext param0, java.lang.String param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    boolean controllaAccessoSenzaUO(it.cnr.jada.UserContext param0, java.lang.String param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     it.cnr.contab.utenze00.bulk.Albero_mainBulk generaAlberoPerUtente(it.cnr.jada.UserContext param0, it.cnr.contab.utenze00.bulk.UtenteBulk param1, java.lang.String param2, java.lang.String param3, short param4) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 

@@ -38,7 +38,10 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.util.ApplicationMessageFormatException;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
@@ -48,18 +51,20 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class Fattura_passivaBulk
         extends Fattura_passivaBase
         implements IDocumentoAmministrativoBulk,
         Voidable,
         IDefferUpdateSaldi,
-        AllegatoParentBulk,
+        IAllegatoFatturaBulk,
         AllegatoStorePath {
 
     public static final char DIVISIONE = '/';
@@ -172,8 +177,10 @@ public abstract class Fattura_passivaBulk
         STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
 
         CAUSALE = new it.cnr.jada.util.OrderedHashtable();
-        CAUSALE.put(ATTLIQ, "In attesa di liquidazione");
-        CAUSALE.put(CONT, "Contenzioso");
+        CAUSALE.put(CONT, "Importo sospeso in Contenzioso");
+        CAUSALE.put(CONT_NORM, "Importo sospeso in contestazione/adempimenti normativi");
+        CAUSALE.put(CONT_CONF, "Importo sospeso per data esito regolare verifica di conformità");
+
         CAUSALE.put(ATTNC, "In attesa di nota credito");
     }
     protected Tipo_sezionaleBulk tipo_sezionale;
@@ -3028,6 +3035,25 @@ public abstract class Fattura_passivaBulk
 //        }
     }
 
+    public void impostaDataScadenza() {
+        if (Optional.ofNullable(getDocumentoEleTestata())
+                .flatMap(documentoEleTestataBulk -> Optional.ofNullable(documentoEleTestataBulk.getIdentificativoSdi()))
+                .isPresent()) {
+            Optional.ofNullable(getData_protocollo())
+                .map(timestamp -> Utility.addDays(timestamp, SpringUtil.getBean(UtilService.class).getNumGiorniScadenza()))
+                .ifPresent(timestamp -> {
+                    setDt_scadenza(timestamp);
+                });
+        } else {
+            Optional.ofNullable(getDt_registrazione())
+                    .map(timestamp -> Utility.addDays(timestamp, SpringUtil.getBean(UtilService.class).getNumGiorniScadenza()))
+                    .ifPresent(timestamp -> {
+                        setDt_scadenza(timestamp);
+                    });
+        }
+
+    }
+
     public void validateDate() throws ValidationException {
 
         if (getDt_registrazione() == null)
@@ -3498,7 +3524,19 @@ public abstract class Fattura_passivaBulk
                             .map(path -> Arrays.asList(path))
                             .orElse(Collections.emptyList());
                 })
-                .orElse(Collections.emptyList());
+                .orElseGet(() -> {
+                    return Collections.singletonList(Arrays.asList(
+                            SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                            getCd_unita_organizzativa(),
+                            "Fatture Passive non Elettroniche",
+                            Optional.ofNullable(getEsercizio())
+                                    .map(esercizio -> String.valueOf(esercizio))
+                                    .orElse("0"),
+                            "Fattura " + getEsercizio().toString() + Utility.lpad(getPg_fattura_passiva().toString(), 10, '0')
+                    ).stream().collect(
+                            Collectors.joining(StorageDriver.SUFFIX)
+                    ));
+                });
     }
 
     public Scrittura_partita_doppiaBulk getScrittura_partita_doppia() {
@@ -3546,5 +3584,37 @@ public abstract class Fattura_passivaBulk
     @Override
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
+    }
+
+    public boolean isLiquidabile() {
+        return Optional.ofNullable(getStato_liquidazione())
+                .map(s -> s.equalsIgnoreCase(LIQ))
+                .orElse(Boolean.FALSE);
+    }
+    public boolean isLiquidazioneSospesa() {
+        return Optional.ofNullable(getStato_liquidazione())
+                .map(s -> s.equalsIgnoreCase(SOSP))
+                .orElse(Boolean.FALSE);
+    }
+    public boolean isNonLiquidabile() {
+        return Optional.ofNullable(getStato_liquidazione())
+                .map(s -> s.equalsIgnoreCase(NOLIQ))
+                .orElse(Boolean.FALSE);
+    }
+
+    @Override
+    public String getAllegatoLabel() {
+        return Optional.ofNullable(getPg_fattura_passiva()).map(String::valueOf).orElse(null);
+    }
+
+    @Override
+    public Boolean isOptionDisabled(FieldProperty fieldProperty, Object key) {
+        if (fieldProperty.getName().equalsIgnoreCase("causale")) {
+            if (isLiquidazioneSospesa() && key.equals(ATTNC))
+                return true;
+            if (isNonLiquidabile() && (key.equals(CONT) ||key.equals(CONT_CONF) || key.equals(CONT_NORM)))
+                return true;
+        }
+        return super.isOptionDisabled(fieldProperty, key);
     }
 }
