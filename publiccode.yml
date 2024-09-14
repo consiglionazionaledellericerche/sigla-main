@@ -2,7 +2,7 @@
 # metadata file that makes public software easily discoverable.
 # More info at https://github.com/italia/publiccode.yml
 
-publiccodeYmlVersion: '0.2'
+publiccodeYmlVersion: '0.4.0'
 name: sigla
 releaseDate: '2023-10-04'
 url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
@@ -179,8 +179,7 @@ description:
            - Le scritture in partita doppia, nella versione **parallela**, possono essere rese disponibili in modalità di sola visualizzazione oppure modificabili in modo da poter gestire periodicamente bilanci economici definiti e allineati alla reale situazione contabile dell'Ente, sia secondo regole finanziarie che reole economico patrimoniali;
            - E' in fase di realizzazione l'ultima configurazione prevista: l'uso di un sistema contabile esclusivamente ispirato alla Contabilità Economico Patrimoniale senza alcuna derivazione finanziaria.
 
-    localisedName: SIGLA
-    genericName: Sistema Informativo Contabile
+    localisedName: SIGLA - Sistema Informativo Contabile
     shortDescription: >-
       SIGLA – Sistema informativo contabile per Enti Pubblici basato sulla
       contabilità finanziaria con rendicontazione anche economica ed analitica.
