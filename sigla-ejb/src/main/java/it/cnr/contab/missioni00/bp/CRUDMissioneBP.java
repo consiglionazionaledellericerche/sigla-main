@@ -2939,4 +2939,8 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     public CollapsableDetailCRUDController getMovimentiAvere() {
         return movimentiAvere;
     }
+
+    public boolean isAmministra() {
+        return Boolean.FALSE;
+    }
 }

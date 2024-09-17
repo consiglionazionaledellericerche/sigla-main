@@ -33,6 +33,15 @@
       	<init-param name="defaultAction" value="CRUDMissioneAction"/>
 	    <init-param name="printbp" value="OfflineReportPrintBP" />		      	
   	</businessProcess>
+	<businessProcess
+			name="CRUDAmministraMissioneBP" className="it.cnr.contab.missioni00.bp.CRUDAmministraMissioneBP">
+		<forward name="default" path="/missioni00/main_missione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.docs.bulk.MissioneBulk"/>
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneComponentSession"/>
+		<init-param name="defaultAction" value="CRUDMissioneAction"/>
+		<init-param name="printbp" value="OfflineReportPrintBP" />
+	</businessProcess>
+
   	<businessProcess
                 name="RicercaMissioniBP" className="it.cnr.contab.missioni00.bp.RicercaMissioniBP">
     	        <forward name="default" path="/config00/responseXML.jsp"/>

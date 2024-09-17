@@ -5397,5 +5397,6 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <include file="bootstrap/add_sospensione_fattura_passiva.xml"/>
     <!-- Autore : MARCO SPASIANO - Aggiunto amministra incarichi -->
     <include file="bootstrap/add_accesso_amministra_incarichi.xml"/>
-
+    <!-- Autore : MARCO SPASIANO - Aggiunto amministra missioni -->
+    <include file="bootstrap/add_accesso_amministra_missioni.xml"/>
 </databaseChangeLog>
