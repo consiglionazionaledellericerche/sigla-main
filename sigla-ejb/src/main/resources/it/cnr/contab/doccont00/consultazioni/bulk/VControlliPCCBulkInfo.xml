@@ -7,7 +7,7 @@
 		inputSize="0"
 		maxLength="0"
 		enabledOnEdit="false"
-		nullable="false"
+		nullable="true"
 		label="Identificativo SDI" />
 	<fieldProperty
 		name="numeroDocumento"

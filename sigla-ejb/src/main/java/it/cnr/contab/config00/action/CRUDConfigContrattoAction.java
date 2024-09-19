@@ -51,6 +51,8 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.upload.UploadedFile;
 
+import java.util.Optional;
+
 /**
  * @author mspasiano
  *
@@ -523,7 +525,9 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 			AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk) bp.getCrudArchivioAllegati().getModel();
 			if (!allegato.isTipoAllegatoDuplicabile()){
 				for (AllegatoContrattoDocumentBulk child : contratto.getArchivioAllegati()) {
-					if (!child.equals(allegato) && child.getType().equals(allegato.getType())){
+					if (Optional.ofNullable(child)
+							.filter(a -> !a.equals(allegato) && a.getType().equals(allegato.getType()))
+							.isPresent()){
 						setErrorMessage(context,"Attenzione! Il tipo selezionato risulta gia' presente!");
 						allegato.setType(null);
 						break;

@@ -9,7 +9,7 @@
 				propertyName="identificativoSdi"
 				sqlTypeName="DECIMAL"
 				columnSize="0"
-				nullable="false" />
+				nullable="true" />
 		<columnMapping
 				columnName="NUMERO_DOCUMENTO"
 				propertyName="numeroDocumento"
