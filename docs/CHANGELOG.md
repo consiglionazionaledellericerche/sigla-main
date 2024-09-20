@@ -1,5 +1,9 @@
-## Release 6.5.105  -- _September 19, 2024_ 
+## Release 6.6.0  -- _September 20, 2024_ 
 **Changes**
+
+>**Aggiunte le Rupie indonesiane al modello della BNL 1210.pdf**
+>
+>[70e49b72ec7173c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70e49b72ec7173c) marco.spasiano *September 20, 2024*
 
 >**Change .gitlab-ci.yml [CI Skip]**
 >
