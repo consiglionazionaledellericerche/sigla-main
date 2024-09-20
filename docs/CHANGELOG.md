@@ -1,5 +1,53 @@
-## Release 6.5.100  -- _September 10, 2024_ 
+## Release 6.5.105  -- _September 19, 2024_ 
 **Changes**
+
+>**Change .gitlab-ci.yml [CI Skip]**
+>
+>[7c7dcd706ab95b3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c7dcd706ab95b3) marco.spasiano *September 19, 2024*
+
+>**Aggiunte le fattura senza Identifictivo SDI alla consultazione PCC**
+>
+>[b1d9c1f2b12f114](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1d9c1f2b12f114) marco.spasiano *September 19, 2024*
+
+>**Aggiunte la funzione di amministra per le missioni.**
+>
+>[842f4100ffb3b39](https://github.com/consiglionazionaledellericerche/sigla-main/commit/842f4100ffb3b39) marco.spasiano *September 17, 2024*
+
+>**fix: publiccode.yml**
+>
+>[46064968c31253a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46064968c31253a) marco.spasiano *September 14, 2024*
+
+>**fix: publiccode.yml**
+>
+>[191bbe2f1f8c2dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/191bbe2f1f8c2dd) marco.spasiano *September 14, 2024*
+
+>**fix: Nella ricezione delle fatture elettroniche se il riferimento sulla linea aveva più di due decimali la fattura non veniva inserita correttamente**
+>
+>[35dad9cbbbf46dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/35dad9cbbbf46dd) marco.spasiano *September 12, 2024*
+
+>**fix: La generazione del flusso SIOPE+ veniva interrotta in caso di un mandato da compenso senza fattura collegata [CI Skip]**
+>
+>[093daeb4466b1a2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/093daeb4466b1a2) marco.spasiano *September 12, 2024*
+
+>**fix: La generazione del flusso SIOPE+ veniva interrotta in caso di un mandato da compenso senza fattura collegata**
+>
+>[20fa6bb3f4a4dd4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/20fa6bb3f4a4dd4) marco.spasiano *September 12, 2024*
+
+>**Aggiornato l'importo da pagare alla consultazione PCC per l'importo delle note di credito.**
+>
+>[8cf124416df1cc2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8cf124416df1cc2) marco.spasiano *September 11, 2024*
+
+>**Velocizzato l'aggiornamento degli esiti da file csv**
+>
+>[8cf781fecf64b48](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8cf781fecf64b48) marco.spasiano *September 11, 2024*
+
+>**fix: NPE in caso di esito non valorizzato sul documento elettronico**
+>
+>[456262adbcdfb3b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/456262adbcdfb3b) marco.spasiano *September 11, 2024*
+
+>**fix: in caso di mandato da compenso legato a fattura nel flusso siope+ non trasmetteva la fattura legata a compenso**
+>
+>[fdb7efcd977c128](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fdb7efcd977c128) marco.spasiano *September 11, 2024*
 
 >**fix: in caso di mandato da compenso legato a fattura nel flusso siope+ non trasmetteva la fattura legata a compenso**
 >
@@ -533,6 +581,10 @@
 >**FIX NPE on flScollegaDocumenti**
 >
 >[05f82e6ef2b62ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05f82e6ef2b62ef) marco.spasiano *October 05, 2023*
+
+
+## Release 6.5.42  -- _October 04, 2023_ 
+**Changes**
 
 >**Managed application message when entering a mission refund via REST**
 >
