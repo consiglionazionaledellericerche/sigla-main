@@ -230,6 +230,21 @@
 		enabledOnEdit="false"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Da Pagare" />
+	<fieldProperty
+		name="estero"
+		property="estero"
+		inputType="SELECT"
+		keysProperty="tiEsteroKeys"
+		enabledOnEdit="false"
+		label="Estero" />
+	<fieldProperty
+		name="tiIstituzCommerc"
+		property="tiIstituzCommerc"
+		inputType="SELECT"
+		keysProperty="tiIstituzCommercKeys"
+		enabledOnEdit="false"
+		label="Istituzione/Commerciale" />
+
 
 	<formFieldProperty
 		name="identificativoSdi" />
@@ -350,6 +365,10 @@
 		name="cdTipoContratto" />
 	<findFieldProperty
 		name="esitoPCC"/>
+	<findFieldProperty
+		name="estero"/>
+	<findFieldProperty
+		name="tiIstituzCommerc"/>
 
 	<columnFieldProperty
 		name="identificativoSdi" />
@@ -402,12 +421,16 @@
 	<columnFieldProperty
 		name="imMandato" />
 	<columnFieldProperty
+			name="imTotaleNC" />
+	<columnFieldProperty
+			name="cdTipoContratto" />
+	<columnFieldProperty
+			name="esitoPCC"/>
+	<columnFieldProperty
+			name="estero"/>
+	<columnFieldProperty
+			name="tiIstituzCommerc"/>
+	<columnFieldProperty
 		name="daPagare" />
-	<columnFieldProperty
-		name="imTotaleNC" />
-	<columnFieldProperty
-		name="cdTipoContratto" />
-	<columnFieldProperty
-		name="esitoPCC"/>
 
 </bulkInfo>

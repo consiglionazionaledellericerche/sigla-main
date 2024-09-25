@@ -179,6 +179,17 @@
 				sqlTypeName="DECIMAL"
 				columnSize="0"
 				nullable="true" />
+		<columnMapping
+				columnName="ESTERO"
+				propertyName="estero"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="TI_ISTITUZ_COMMERC"
+				propertyName="tiIstituzCommerc"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+
 	</defaultColumnMap>
 	<persistentProperty
 			name="identificativoSdi" />
@@ -238,5 +249,9 @@
 			name="flSplitPayment"/>
 	<persistentProperty
 			name="daPagare"/>
+	<persistentProperty
+			name="estero"/>
+	<persistentProperty
+			name="tiIstituzCommerc"/>
 
 </SQLPersistentInfo>

@@ -5,11 +5,13 @@
 package it.cnr.contab.doccont00.consultazioni.bulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.util.enumeration.TipoIVA;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Dictionary;
 
 public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 	/**
@@ -102,12 +104,29 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 	//    DA_PAGARE DECIMAL(17,2)
 	private java.math.BigDecimal daPagare;
 
+	//  ESTERO VARCHAR(30)
+	private java.lang.String estero;
+	//  TI_ISTITUZ_COMMERC VARCHAR(30)
+	private java.lang.String tiIstituzCommerc;
+
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = DocumentoEleTestataBulk.tiStatoDocumentoKeys;
 	public static final java.util.Dictionary<String, String> tiTipoDocumentoKeys = DocumentoEleTestataBulk.tiTipoDocumentoKeys;
 	public static final java.util.Dictionary<String, String> tiCausaleKeys = Fattura_passivaBulk.CAUSALE;
 	public static final java.util.Dictionary<String, String> tiStatoLiquidazioneKeys = Fattura_passivaBulk.STATO_LIQUIDAZIONE;
 	public static final java.util.Dictionary<String, String> decorrenzaTerminiKeys = DocumentoEleTestataBulk.tiDecorrenzaTerminiKeys;
+	public static final java.util.Dictionary<String, String> tiIstituzCommercKeys = TipoIVA.TipoIVAKeys;
+	public static final java.util.Dictionary<String, String> tiEsteroKeys = Estero.EsteroKeys;
 
+	public enum Estero {
+		EXTRA_UE,INTRA_UE,SAN_MARINO_CON_IVA,SAN_MARINO_SENZA_IVA;
+		public final static Dictionary EsteroKeys = new it.cnr.jada.util.OrderedHashtable();
+		static {
+			for (Estero estero1 : Estero.values()) {
+				EsteroKeys.put(estero1.name(), estero1.name().replace("_", " "));
+			}
+		}
+
+	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Identificativo SDI]
@@ -440,7 +459,25 @@ public class VControlliPCCBulk extends OggettoBulk implements Persistent {
 		return daPagare;
 	}
 
+	public String getEstero() {
+		return estero;
+	}
+
+	public void setEstero(String estero) {
+		this.estero = estero;
+	}
+
+	public String getTiIstituzCommerc() {
+		return tiIstituzCommerc;
+	}
+
+	public void setTiIstituzCommerc(String tiIstituzCommerc) {
+		this.tiIstituzCommerc = tiIstituzCommerc;
+	}
+
 	public void setDaPagare(BigDecimal daPagare) {
 		this.daPagare = daPagare;
 	}
+
+
 }
