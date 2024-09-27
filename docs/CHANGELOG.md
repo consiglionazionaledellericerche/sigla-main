@@ -1,5 +1,9 @@
-## Release 6.6.1  -- _September 25, 2024_ 
+## Release 6.6.2  -- _September 27, 2024_ 
 **Changes**
+
+>**Aggiunte il bottone salva allegati sulla toolbar degli allegati agli impegni.**
+>
+>[11fc18434c9f35e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11fc18434c9f35e) marco.spasiano *September 27, 2024*
 
 >**Aggiunte informazioni ulteriori alla vista per i controlli PCC**
 >
