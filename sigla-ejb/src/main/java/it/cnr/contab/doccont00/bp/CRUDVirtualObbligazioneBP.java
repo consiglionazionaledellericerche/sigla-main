@@ -515,4 +515,9 @@ public static ObbligazioneAbstractComponentSession setSafePoint (
 	protected Class<AllegatoObbligazioneBulk> getAllegatoClass() {
 		return AllegatoObbligazioneBulk.class;
 	}
+
+	@Override
+	protected boolean isArchiviaAllegatiButtonHidden() {
+		return Boolean.FALSE;
+	}
 }

@@ -18,13 +18,14 @@
 package it.cnr.contab.doccont00.action;
 
 import it.cnr.contab.doccont00.bp.*;
+import it.cnr.contab.util00.action.AllegatiCRUDAction;
 import it.cnr.jada.action.*;
 /**
  * Insert the type's description here.
  * Creation date: (03/07/2003 16.14.44)
  * @author: Simonetta Costa
  */
-public abstract class CRUDAbstractObbligazioneAction extends it.cnr.jada.util.action.CRUDAction {
+public abstract class CRUDAbstractObbligazioneAction extends AllegatiCRUDAction {
 /**
  * CRUDAbstractObbligazioneAction constructor comment.
  */

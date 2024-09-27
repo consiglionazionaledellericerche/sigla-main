@@ -177,4 +177,8 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 
     public void complete(UserContext userContext) {
     }
+
+	public void setStorageKey(String storageKey) {
+		this.storageKey = storageKey;
+	}
 }

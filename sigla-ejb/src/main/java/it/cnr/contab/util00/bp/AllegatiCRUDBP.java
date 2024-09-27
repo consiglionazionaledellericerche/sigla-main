@@ -36,6 +36,7 @@ import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
@@ -90,6 +91,23 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             AllegatoGenericoBulk allegatoGenericoBulk = (AllegatoGenericoBulk) obj;
             return getRowDetailStyle(allegatoGenericoBulk);
         }
+        @Override
+        public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+            super.writeHTMLToolbar(context, reset, find, delete, false);
+            // Aggiungo un bottone alla toolbar del salvataggio degli allegati
+            boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+            if (isSaveButtonEnabled() && !isSaveButtonHidden() && !isArchiviaAllegatiButtonHidden() && !getParentModel().isToBeCreated()) {
+                it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context,
+                        isFromBootstrap ? "fa fa-fw fa-floppy-o" : "img/saveall16.gif",
+                        "javascript:submitForm('doArchiviaAllegati')",
+                        false,
+                        "Salva Allegati",
+                        "btn btn-sm btn-title btn-outline-primary",
+                        isFromBootstrap);
+            }
+            super.closeButtonGROUPToolbar(context);
+        }
+
     };
 
     protected String getRowDetailStyle(AllegatoGenericoBulk allegatoGenericoBulk) {
@@ -308,7 +326,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     @SuppressWarnings("unchecked")
-    protected void archiviaAllegati(ActionContext actioncontext) throws BusinessProcessException, ApplicationException {
+    public void archiviaAllegati(ActionContext actioncontext) throws BusinessProcessException, ApplicationException {
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) getModel();
         for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
             if (allegato.isToBeCreated()) {
@@ -358,6 +376,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 
     //Metodo utilizzato per effettuare altre operazioni sullo StorageObject creato come aggiungere Aspect.
     protected void completeCreateAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
+        allegato.setStorageKey(storageObject.getKey());
     }
 
     //Metodo utilizzato per effettuare altre operazioni sullo StorageObject modificato come aggiungere/rimuovere Aspect.
@@ -374,5 +393,9 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 allegato.setCrudStatus(OggettoBulk.NORMAL);
             }
         }
+    }
+
+    protected boolean isArchiviaAllegatiButtonHidden() {
+        return Boolean.TRUE;
     }
 }

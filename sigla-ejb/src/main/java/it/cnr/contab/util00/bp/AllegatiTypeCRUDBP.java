@@ -56,7 +56,7 @@ public abstract class AllegatiTypeCRUDBP<T extends AllegatoGenericoTypeBulk, K e
     }
  
     @SuppressWarnings("unchecked")
-    protected void archiviaAllegati(ActionContext actioncontext) throws BusinessProcessException, ApplicationException {
+    public void archiviaAllegati(ActionContext actioncontext) throws BusinessProcessException, ApplicationException {
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) getModel();
         for (AllegatoGenericoBulk model : allegatoParentBulk.getArchivioAllegati()) {
             AllegatoGenericoTypeBulk allegato = (AllegatoGenericoTypeBulk)model;
