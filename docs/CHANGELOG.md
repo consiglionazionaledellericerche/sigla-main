@@ -1,5 +1,9 @@
-## Release 6.6.0  -- _September 20, 2024_ 
+## Release 6.6.1  -- _September 25, 2024_ 
 **Changes**
+
+>**Aggiunte informazioni ulteriori alla vista per i controlli PCC**
+>
+>[bfec74ef8ebad5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bfec74ef8ebad5c) marco.spasiano *September 25, 2024*
 
 >**Aggiunte le Rupie indonesiane al modello della BNL 1210.pdf**
 >
