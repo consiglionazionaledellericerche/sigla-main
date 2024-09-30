@@ -379,12 +379,13 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 
 					if (terzoModPag != null){
 						SQLBuilder sqlModPag = modPagHome.createSQLBuilder();
-						sqlModPag.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, terzoModPag);
 						sqlModPag.openParenthesis(FindClause.AND);
 						for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : rifModPags) {
-							sqlModPag.addSQLClause(FindClause.OR, "CD_MODALITA_PAG", SQLBuilder.EQUALS, rif_modalita_pagamentoBulk.getCd_modalita_pag());
+							sqlModPag.addClause(FindClause.OR, "rif_modalita_pagamento", SQLBuilder.EQUALS, rif_modalita_pagamentoBulk);
 						}
 						sqlModPag.closeParenthesis();
+						sqlModPag.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, terzoModPag);
+
 						List<Modalita_pagamentoBulk> modPags = modPagHome.fetchAll(sqlModPag);
 						if (modPags != null){
 							for (Modalita_pagamentoBulk modalita_pagamentoBulk : modPags) {
@@ -433,7 +434,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			}
         	documentoEleTrasmissioneBulk.setToBeUpdated();
         	modificaConBulk(usercontext, documentoEleTrasmissioneBulk);
-        }catch(Throwable throwable){
+        } catch(Throwable throwable){
             throw handleException(throwable);
         }
     }
