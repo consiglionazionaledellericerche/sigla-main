@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2022  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet author="marco.spasiano" id="add-accesso-amministra-impegni-impropri">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCOBBCOREOBBRESIMPA"/>
+            <column name="ti_accesso" type="CHAR(1)" value="null"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Amministra impegni residui impropri"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCOBBCOREOBBRESIMPA"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDObbligazioneAmministraResImpropriBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.DOC.OBBLIG.OBBRESIMPRO.A"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="amministra"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCOBBCOREOBBRESIMPA"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDObbligazioneAmministraResImpropriBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="30"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="A"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.DOC.OBBLIG.OBBRESIMPRO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

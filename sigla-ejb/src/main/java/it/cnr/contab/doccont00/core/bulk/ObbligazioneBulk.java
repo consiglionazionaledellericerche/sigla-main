@@ -63,6 +63,9 @@ import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import javax.persistence.Transient;
+
 @JsonInclude(value=Include.NON_NULL)
 public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk, AllegatoParentBulk {
 	private static final long serialVersionUID = 1L;
@@ -153,6 +156,8 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 
 	private BulkList<Obbligazione_pluriennaleBulk> obbligazioniPluriennali = new BulkList<Obbligazione_pluriennaleBulk>();
 
+	@Transient
+	private boolean amministra = Boolean.FALSE;
 public ObbligazioneBulk() {
 	super();
 }
@@ -2071,5 +2076,13 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 				return allegato;
 		}
 		return null;
+	}
+
+	public boolean isAmministra() {
+		return amministra;
+	}
+
+	public void setAmministra(boolean amministra) {
+		this.amministra = amministra;
 	}
 }

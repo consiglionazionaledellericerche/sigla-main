@@ -1704,7 +1704,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 
 			localDateFineProgetto = localDateFineProgetto.plusDays(ggProroga);
 
-			if (localDateFineProgetto.isBefore(obbligazione.getDt_registrazione().toLocalDateTime().toLocalDate()))
+			if (!obbligazione.isAmministra() && localDateFineProgetto.isBefore(obbligazione.getDt_registrazione().toLocalDateTime().toLocalDate()))
 				throw new ApplicationMessageFormatException("Attenzione! GAE {0} non selezionabile. "
 						+ "La data fine/proroga del progetto {1} {2} ({3}) è precedente rispetto alla data di registrazione dell''impegno ({4}).",
 						linea.getCd_linea_attivita(),
