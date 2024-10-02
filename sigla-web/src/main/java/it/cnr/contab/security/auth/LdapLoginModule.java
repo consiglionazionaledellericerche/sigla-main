@@ -36,6 +36,10 @@ public class LdapLoginModule extends LdapExtLoginModule {
     private static final String USER_ATTRIBUTES = "userAttributes";
 
     @Override
+    protected void rolesSearch(LdapContext ctx, SearchControls constraints, String user, String userDN, int recursionMax, int nesting) throws NamingException {
+    }
+
+    @Override
     protected String bindDNAuthentication(InitialLdapContext ctx, String user, Object credential, String baseDN, String filter) throws NamingException {
         SearchControls constraints = new SearchControls();
         constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
