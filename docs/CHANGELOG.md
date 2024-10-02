@@ -1,5 +1,9 @@
-## Release 6.6.3  -- _September 30, 2024_ 
+## Release 6.6.4  -- _October 02, 2024_ 
 **Changes**
+
+>**Aggiunta la funzione di amministra per gli impegni residui impropri**
+>
+>[7dfda965e277eb8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7dfda965e277eb8) marco.spasiano *October 02, 2024*
 
 >**fix: nella ricezione delle fatture elttroniche non passava in stato aggiornato se il terzo aveva più di una modalità di pagamento**
 >
