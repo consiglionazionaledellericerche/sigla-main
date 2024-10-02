@@ -1,5 +1,9 @@
-## Release 6.6.2  -- _September 27, 2024_ 
+## Release 6.6.3  -- _September 30, 2024_ 
 **Changes**
+
+>**fix: nella ricezione delle fatture elttroniche non passava in stato aggiornato se il terzo aveva più di una modalità di pagamento**
+>
+>[8a0dc2b94fb5a7b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a0dc2b94fb5a7b) marco.spasiano *September 30, 2024*
 
 >**Aggiunte il bottone salva allegati sulla toolbar degli allegati agli impegni.**
 >
