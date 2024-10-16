@@ -71,6 +71,48 @@ CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE_DIST_ANN" (
      mandato.esercizio=v_mandato_reversale.esercizio and
      mandato.pg_mandato_riemissione =  v_mandato_reversale.PG_DOCUMENTO_CONT))
 union all
+  -- Aggiungo anche le reversali non acquisite che possono essere ritrasmesse non legate a mandati
+  Select "CD_TIPO_DOCUMENTO_CONT",
+            "CD_CDS",
+            "ESERCIZIO",
+            "PG_DOCUMENTO_CONT",
+            "CD_UNITA_ORGANIZZATIVA",
+            "CD_CDS_ORIGINE",
+            "CD_UO_ORIGINE",
+            "TI_DOCUMENTO_CONT",
+            "DS_DOCUMENTO_CONT",
+            "STATO",
+            "STATO_TRASMISSIONE",
+            "DT_EMISSIONE",
+            "DT_TRASMISSIONE",
+            "DT_RITRASMISSIONE",
+            "DT_PAGAMENTO_INCASSO",
+            "DT_ANNULLAMENTO",
+            "IM_DOCUMENTO_CONT",
+            "IM_RITENUTE",
+            "IM_PAGATO_INCASSATO",
+            "TI_CC_BI",
+            "CD_TERZO",
+            "CD_TIPO_DOCUMENTO_CONT_PADRE",
+            "PG_DOCUMENTO_CONT_PADRE",
+            "TI_DOCUMENTO_CONT_PADRE",
+            "PG_VER_REC",
+            "VERSAMENTO_CORI",
+            "DT_FIRMA",
+            "TIPO_DEBITO_SIOPE",
+            "ESITO_OPERAZIONE",
+            "STATO_VAR_SOS"
+    From v_mandato_reversale
+    where cd_tipo_documento_cont = 'REV'
+    and esito_operazione = 'NON_ACQUISITO'
+    and not exists (
+        select 1 from ASS_MANDATO_REVERSALE amr
+        where amr.ESERCIZIO_REVERSALE = v_mandato_reversale.esercizio
+          and amr.PG_REVERSALE = v_mandato_reversale.pg_documento_cont
+    )
+    and stato='E'
+    and dt_trasmissione is not null
+union all
   -- Aggiungo anche i mandati non acquisiti che possono essere ritrasmessi
   Select "CD_TIPO_DOCUMENTO_CONT",
             "CD_CDS",
