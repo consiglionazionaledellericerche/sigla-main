@@ -376,8 +376,8 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 							.filter(dettRim->dettRim.getCd_voce_piano().equals(el.getCd_voce_piano()))
 							.filter(dettRim->dettRim.getEsercizio_piano().equals(el.getEsercizio_piano()))
 							.findAny().orElse(null);
-				el.setImSpesaFinanziatoRimodulato(el.getIm_spesa_finanziato().add(Optional.ofNullable(dett).map(Progetto_rimodulazione_ppeBulk::getImVarSpesaFinanziato).orElse(BigDecimal.ZERO)));
-				el.setImSpesaCofinanziatoRimodulato(el.getIm_spesa_cofinanziato().add(Optional.ofNullable(dett).map(Progetto_rimodulazione_ppeBulk::getImVarSpesaCofinanziato).orElse(BigDecimal.ZERO)));
+				el.setImSpesaFinanziatoRimodulato(Optional.ofNullable(el.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO).add(Optional.ofNullable(dett).map(Progetto_rimodulazione_ppeBulk::getImVarSpesaFinanziato).orElse(BigDecimal.ZERO)));
+				el.setImSpesaCofinanziatoRimodulato(Optional.ofNullable(el.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO).add(Optional.ofNullable(dett).map(Progetto_rimodulazione_ppeBulk::getImVarSpesaCofinanziato).orElse(BigDecimal.ZERO)));
 			});
 
 		//Aggiungo i dettagli nuovi
