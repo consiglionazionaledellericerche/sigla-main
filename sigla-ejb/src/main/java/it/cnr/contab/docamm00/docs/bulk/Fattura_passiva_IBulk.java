@@ -501,6 +501,10 @@ public class Fattura_passiva_IBulk
 				throw new ValidationException("Per la sospensione, bisogna valorizzare la data di inizio!");
 			}
 		}
+        if (Optional.ofNullable(getDt_inizio_sospensione()).isPresent() &&
+                !Optional.ofNullable(getCausale()).isPresent()) {
+            throw new ValidationException("Per la sospensione, bisogna valorizzare la causale!");
+        }
 	}
 }
 
