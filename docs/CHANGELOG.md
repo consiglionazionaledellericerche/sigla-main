@@ -1,5 +1,21 @@
-## Release 6.6.4  -- _October 02, 2024_ 
+## Release 6.6.5  -- _October 21, 2024_ 
 **Changes**
+
+>**fix: NPE sulla rimodulazione del progetto**
+>
+>[57f2632f061eb12](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57f2632f061eb12) marco.spasiano *October 21, 2024*
+
+>**Aggiunte le reversali non acquisite e non vincolate a mandati, alla distinta degli annulli.**
+>
+>[3adda3c3e753ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3adda3c3e753ed0) marco.spasiano *October 18, 2024*
+
+>**Aggiunte le reversali non acquisite e non vincolate a mandati, alla distinta degli annulli.**
+>
+>[5b4a63a59b4fd26](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b4a63a59b4fd26) marco.spasiano *October 16, 2024*
+
+>**Remove rolesSearch from LdapLoginModule**
+>
+>[2cfdce40a3db0b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2cfdce40a3db0b9) marco.spasiano *October 02, 2024*
 
 >**Aggiunta la funzione di amministra per gli impegni residui impropri**
 >
