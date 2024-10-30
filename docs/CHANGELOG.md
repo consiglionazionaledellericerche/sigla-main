@@ -1,5 +1,21 @@
-## Release 6.6.5  -- _October 21, 2024_ 
+## Release 6.6.6  -- _October 30, 2024_ 
 **Changes**
+
+>**Aggiunti i mandati con stato "NON_SOSTITUITO" alla distinta degli annulli**
+>
+>[44624122f10bede](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44624122f10bede) marco.spasiano *October 30, 2024*
+
+>**Aggiornato il calcolo dell'indice di tempestività dei pagamenti**
+>
+>[26a8e932fe64d38](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26a8e932fe64d38) marco.spasiano *October 29, 2024*
+
+>**Rimossa la join con la riga del mandato per il calcolo dell'importo delle note legate a fattura**
+>
+>[236b1ae7b7c9513](https://github.com/consiglionazionaledellericerche/sigla-main/commit/236b1ae7b7c9513) marco.spasiano *October 28, 2024*
+
+>**Aggiunto controllo sulla causale in caso di sospensione della fattura**
+>
+>[6b5e5f6bd49f715](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6b5e5f6bd49f715) marco.spasiano *October 28, 2024*
 
 >**fix: NPE sulla rimodulazione del progetto**
 >
