@@ -4491,11 +4491,13 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		if (obbligazione.getPg_contratto() != null && obbligazione.getPg_repertorio() != null)
 		  throw new it.cnr.jada.comp.ApplicationException("Il campo contratto e incarico non possono essere valorizzati contemporaneamente. Eliminare uno dei due e ripetere l'operazione!");		
 
- 	    if(param_cds != null && param_cds.getIm_soglia_contratto_s()!= null &&
-			obbligazione.getIm_obbligazione().compareTo(param_cds.getIm_soglia_contratto_s())!=-1)
- 			if (!obbligazione.getFl_gara_in_corso().booleanValue() &&
- 				obbligazione.getPg_contratto() == null && obbligazione.getPg_repertorio() == null)
- 				throw new it.cnr.jada.comp.ApplicationException("I campi contratto e incarico non possono essere contemporaneamente nulli in assenza di una gara in corso di espletamento. Importo dell'Impegno superiore al limite stabilito!");		
+		if (!obbligazione.isAmministra()) {
+			if (param_cds != null && param_cds.getIm_soglia_contratto_s() != null &&
+					obbligazione.getIm_obbligazione().compareTo(param_cds.getIm_soglia_contratto_s()) != -1)
+				if (!obbligazione.getFl_gara_in_corso().booleanValue() &&
+						obbligazione.getPg_contratto() == null && obbligazione.getPg_repertorio() == null)
+					throw new it.cnr.jada.comp.ApplicationException("I campi contratto e incarico non possono essere contemporaneamente nulli in assenza di una gara in corso di espletamento. Importo dell'Impegno superiore al limite stabilito!");
+		}
 	}
 	verificaGestioneTrovato(aUC, obbligazione, elemento_voce);
 	verificaGestioneMissioni(aUC, obbligazione, elemento_voce);
