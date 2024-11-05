@@ -2530,8 +2530,33 @@ Begin
 								       And   ti_gestione = aPdgVariazioneRigaEnte.TI_GESTIONE
 								       And   cd_elemento_voce = aPdgVariazioneRigaEnte.CD_ELEMENTO_VOCE;
 								  exception when no_data_found then
-								        IBMERR001.RAISE_ERR_GENERICO('Saldo iniziale Fondo Mancante ');
-                  End;
+                                      --Creo il record null se non presente - potrebbe essere una prima assegnazione ad una voce tramite variazione
+    								  Insert INTO VOCE_F_SALDI_CDR_LINEA
+                                          (ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONSABILITA, CD_LINEA_ATTIVITA, TI_APPARTENENZA, TI_GESTIONE, CD_VOCE, IM_STANZ_INIZIALE_A1,
+                                           IM_STANZ_INIZIALE_A2, IM_STANZ_INIZIALE_A3, VARIAZIONI_PIU, VARIAZIONI_MENO, IM_STANZ_INIZIALE_CASSA, VARIAZIONI_PIU_CASSA,
+                                           VARIAZIONI_MENO_CASSA, IM_OBBL_ACC_COMP,IM_STANZ_RES_IMPROPRIO, VAR_PIU_STANZ_RES_IMP, VAR_MENO_STANZ_RES_IMP, IM_OBBL_RES_IMP,
+                                           VAR_PIU_OBBL_RES_IMP, VAR_MENO_OBBL_RES_IMP, IM_OBBL_RES_PRO, VAR_PIU_OBBL_RES_PRO, VAR_MENO_OBBL_RES_PRO,
+                                           IM_MANDATI_REVERSALI_PRO, IM_MANDATI_REVERSALI_IMP, IM_PAGAMENTI_INCASSI, DACR, UTCR, DUVA, UTUV, PG_VER_REC, CD_ELEMENTO_VOCE)
+                                      Values
+                                          (aEsercizio, aEsercizio, aPdgVariazioneRigaEnte.CD_CDR_ASSEGNATARIO, aPdgVariazioneRigaEnte.CD_LINEA_ATTIVITA,
+                                           aPdgVariazioneRigaEnte.TI_APPARTENENZA, aPdgVariazioneRigaEnte.TI_GESTIONE, aPdgVariazioneRigaEnte.CD_ELEMENTO_VOCE,
+                                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                           aTSNow, aUser, aTSNow, aUser, 1, aPdgVariazioneRigaEnte.CD_ELEMENTO_VOCE);
+
+                                      Begin
+                                          Select * Into aSaldoCdrLinea
+                                          From voce_f_saldi_cdr_linea
+                                          Where esercizio = aEsercizio
+                                          And   esercizio_res = aEsercizio
+                                          And   cd_centro_responsabilita = aPdgVariazioneRigaEnte.CD_CDR_ASSEGNATARIO
+                                          And   cd_linea_attivita = aPdgVariazioneRigaEnte.CD_LINEA_ATTIVITA
+                                          And   ti_appartenenza = aPdgVariazioneRigaEnte.TI_APPARTENENZA
+                                          And   ti_gestione = aPdgVariazioneRigaEnte.TI_GESTIONE
+                                          And   cd_elemento_voce = aPdgVariazioneRigaEnte.CD_ELEMENTO_VOCE;
+                                      exception when no_data_found then
+                           	            IBMERR001.RAISE_ERR_GENERICO('Saldo iniziale Fondo Mancante ');
+                           	          end;
+                                  End;
 
 									if(aTotVarEnte > 0 )then
 									 Update voce_f_saldi_cdr_linea
