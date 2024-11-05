@@ -1,5 +1,9 @@
-## Release 6.6.8  -- _November 05, 2024_ 
+## Release 6.6.9  -- _November 05, 2024_ 
 **Changes**
+
+>**BUG: in caso di pagamenti con più codici CUP per lo stesso codice SIOPE.**
+>
+>[64153b668a893c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64153b668a893c6) marco.spasiano *November 05, 2024*
 
 >**BUG: in caso di pagamenti di fatture commerciali senza ritenute l'importo siope comunicato era sempre zero.**
 >
