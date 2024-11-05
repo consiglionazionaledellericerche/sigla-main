@@ -1,3 +1,11 @@
+## Release 6.6.10  -- _November 05, 2024_ 
+**Changes**
+
+>**Approvazione variazione: in caso di assenza saldo viene caricato quello base con importi nulli**
+>
+>[e157e899ed7d3eb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e157e899ed7d3eb) raffaele.pagano *November 05, 2024*
+
+
 ## Release 6.6.9  -- _November 05, 2024_ 
 **Changes**
 
