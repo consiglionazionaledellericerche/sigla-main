@@ -4889,7 +4889,7 @@ public class DistintaCassiereComponent extends
                         if (doc.getCdSospeso() != null) {
                             if (Optional.ofNullable(doc.getCdSospeso()).isPresent() && isSospesoFromAccreditamento(userContext, doc)) {
                                 final V_mandato_reversaleBulk mandatoReversale = findMandatoReversale(userContext, findSospeso(userContext, doc).get().getMandatoRiaccredito());
-                                final CtClassificazioneDatiSiopeUscite classificazioneDatiSiope = getClassificazioneDatiSiope(userContext, objectFactory, mandatoReversale, null, null);
+                                final CtClassificazioneDatiSiopeUscite classificazioneDatiSiope = getClassificazioneDatiSiope(userContext, objectFactory, mandatoReversale, null, null, null);
                                 final Optional<Reversale.InformazioniVersante.Classificazione> any = infover.getClassificazione().stream().findAny();
                                 final Optional<StTipoDebitoCommerciale> stTipoDebitoCommerciale = classificazioneDatiSiope.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().stream()
                                         .filter(StTipoDebitoCommerciale.class::isInstance)
@@ -5915,13 +5915,17 @@ public class DistintaCassiereComponent extends
                                        V_mandato_reversaleBulk bulk,
                                        String codiceSiope,
                                        BigDecimal importo) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
-        clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope, importo));
+        clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope, importo, clas));
     }
 
-    private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(UserContext userContext,
-                                       ObjectFactory objectFactory,
-                                       V_mandato_reversaleBulk bulk,
-                                       String codiceSiope, BigDecimal importoClas) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
+    private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(
+            UserContext userContext,
+           ObjectFactory objectFactory,
+           V_mandato_reversaleBulk bulk,
+           String codiceSiope,
+            BigDecimal importoClas,
+            Mandato.InformazioniBeneficiario.Classificazione clas
+    ) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
 
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
@@ -5944,7 +5948,18 @@ public class DistintaCassiereComponent extends
                     .map(Mandato_siopeBulk.class::cast)
                     .filter(o -> o.getCd_siope().equals(Optional.ofNullable(codiceSiope).orElse(o.getCd_siope())))
                     .collect(Collectors.toList());
-
+            if (Optional.ofNullable(clas).flatMap(classificazione -> Optional.ofNullable(classificazione.getCodiceCup())).isPresent()) {
+                final List<MandatoSiopeCupBulk> siopeCUPBulks = mandatoHome.findMandato_siope_cup(userContext, mandatoBulk)
+                        .stream()
+                        .filter(MandatoSiopeCupBulk.class::isInstance)
+                        .map(MandatoSiopeCupBulk.class::cast)
+                        .filter(o -> o.getCdSiope().equals(Optional.ofNullable(codiceSiope).orElse(o.getCdSiope())))
+                        .filter(o -> !o.getCdCup().equals(Optional.ofNullable(clas.getCodiceCup()).orElse(o.getCdCup())))
+                        .collect(Collectors.toList());
+                siopeCUPBulks.stream().forEach(mandatoSiopeCupBulk -> {
+                    siopeBulks.remove(mandatoSiopeCupBulk.getMandatoSiope());
+                });
+            }
             final Optional<Mandato_siopeBulk> mandatoDaFattura = siopeBulks
                     .stream()
                     .filter(mandato_siopeBulk ->

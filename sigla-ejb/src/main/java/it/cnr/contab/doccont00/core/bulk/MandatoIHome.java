@@ -286,6 +286,22 @@ public class MandatoIHome extends MandatoHome {
     }
 
     /**
+     * Metodo per cercare la righe siope cup del mandato.
+     *
+     * @param mandato <code>MandatoBulk</code> il mandato
+     * @return result la riga siope del mandato
+     */
+    public Collection<MandatoSiopeCupBulk> findMandato_siope_cup(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+        PersistentHome home = getHomeCache().getHome(MandatoSiopeCupIBulk.class);
+        SQLBuilder sql = home.createSQLBuilder();
+        sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
+        sql.addClause("AND", "mandato_siopeI.mandato_rigaI.mandatoI.cds.cd_unita_organizzativa", sql.EQUALS, mandato.getCd_cds());
+        sql.addClause("AND", "mandato_siopeI.mandato_rigaI.mandatoI.pg_mandato", sql.EQUALS, mandato.getPg_mandato());
+        Collection result = home.fetchAll(sql);
+        getHomeCache().fetchAll(userContext);
+        return result;
+    }
+    /**
      * Metodo per cercare il Mandato_terzoBulk.
      *
      * @param mandato <code>MandatoBulk</code> il mandato
