@@ -1749,14 +1749,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								 Optional.ofNullable(pianoEconomicoList).orElse(new ArrayList<>()).stream()
 										 .filter(el -> el.getEsercizio_piano().equals(esercizioVariazione)).findAny().isPresent());
 
+						boolean isFoeProgetti = Optional.ofNullable(progetto.getOtherField())
+													.flatMap(of->Optional.ofNullable(of.getTipoFinanziamento()))
+													.map(TipoFinanziamentoBulk::isFoeProgetti).orElse(Boolean.FALSE);
+
 						if (ctrlFinanziamentoAnnuale) {
 							totFinanziato = pianoEconomicoList.stream()
 									.filter(el -> el.getEsercizio_piano().equals(esercizioVariazione))
-									.map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
-									.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
+									.map(el-> el.getIm_spesa_finanziato().add(isFoeProgetti?el.getIm_spesa_cofinanziato():BigDecimal.ZERO))
+									.reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 						} else {
 							totFinanziato = Optional.ofNullable(progetto.getOtherField())
 									.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
+							if (isFoeProgetti)
+								totFinanziato = totFinanziato.add(Optional.ofNullable(progetto.getOtherField())
+											.map(Progetto_other_fieldBulk::getImCofinanziato)
+											.orElse(BigDecimal.ZERO));
 						}
 
 						//Controllo che la quota finanziata sia almeno pari alle entrate del progetto

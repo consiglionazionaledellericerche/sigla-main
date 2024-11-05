@@ -1472,7 +1472,12 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			    sql.closeParenthesis();
 			    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.ESERCIZIO", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
 			    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
-			    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_SOLO_GESTIONE", SQLBuilder.EQUALS,"N");
+
+				Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+				//Tolto il controllo in caso di piano economico modificato dalla UO Ente
+				if (!uoScrivania.isUoEnte())
+			    	sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_SOLO_GESTIONE", SQLBuilder.EQUALS,"N");
     		}
 	    	sql.addOrderBy("cd_elemento_voce");
 	

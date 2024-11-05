@@ -467,9 +467,19 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	    if (dett.getProgetto()!=null && dett.getProgetto().getPg_progetto()!=null)
 	    	sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
 
+		String uoRagioneria = ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoRagioneria(CNRUserContext.getEsercizio(userContext));
+
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
-		sql.addSQLClause(FindClause.AND, "NATURA.FL_ENTRATA",SQLBuilder.EQUALS,"Y");
+
+		//Il controllo sul campo non viene fatto per variazioni fatte dalla ragioneria su fonti interne
+		if (!Optional.ofNullable(dett.getCdr_assegnatario())
+				.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+				.flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.map(el->el.equals(uoRagioneria))
+				.orElse(Boolean.FALSE) ||
+			!Optional.ofNullable(dett.getPdg_variazione().getTipologia_fin()).map(el->el.equals("FIN")).orElse(Boolean.FALSE))
+			sql.addSQLClause(FindClause.AND, "NATURA.FL_ENTRATA",SQLBuilder.EQUALS,"Y");
 
 		sql.addTableToHeader("PROGETTO_GEST");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","PROGETTO_GEST.ESERCIZIO");
