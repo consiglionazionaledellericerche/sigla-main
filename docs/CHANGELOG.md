@@ -1,5 +1,17 @@
-## Release 6.6.6  -- _October 30, 2024_ 
+## Release 6.6.7  -- _November 05, 2024_ 
 **Changes**
+
+>**Foe Progetti: gestite eccezioni segnalate da PROFICO per consentire l'inserimento da mappa di variazioni fonti interne**
+>
+>[14a921c20bd2f32](https://github.com/consiglionazionaledellericerche/sigla-main/commit/14a921c20bd2f32) raffaele.pagano *November 05, 2024*
+
+>**Residui Impropri: disabilitato controllo presenza contratto/incarico solo per funzione Amministra. Richiesta ufficio PROFICO.**
+>
+>[635fc5623154da6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/635fc5623154da6) raffaele.pagano *November 04, 2024*
+
+>**Aggiunto l'importo incassato delle note di credito nel da pagare delle fatture**
+>
+>[ed0502833ec6568](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ed0502833ec6568) marco.spasiano *October 30, 2024*
 
 >**Aggiunti i mandati con stato "NON_SOSTITUITO" alla distinta degli annulli**
 >

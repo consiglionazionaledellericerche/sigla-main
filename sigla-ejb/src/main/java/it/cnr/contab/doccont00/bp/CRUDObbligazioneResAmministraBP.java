@@ -17,6 +17,13 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
+
+import java.util.Optional;
+
 public class CRUDObbligazioneResAmministraBP extends CRUDObbligazioneResBP {
 	private static final long serialVersionUID = 1L;
 
@@ -36,5 +43,14 @@ public class CRUDObbligazioneResAmministraBP extends CRUDObbligazioneResBP {
 	@Override
 	public boolean isROStato() {
 		return false;
+	}
+
+	@Override
+	public void basicEdit(ActionContext context, OggettoBulk bulk, boolean doInitializeForEdit) throws BusinessProcessException {
+		super.basicEdit(context, bulk, doInitializeForEdit);
+		Optional.ofNullable(getModel())
+				.filter(ObbligazioneBulk.class::isInstance)
+				.map(ObbligazioneBulk.class::cast)
+				.ifPresent(obbligazioneBulk -> obbligazioneBulk.setAmministra(Boolean.TRUE));
 	}
 }
