@@ -6194,6 +6194,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             TerzoBulk terzo = null;
             for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
+                if (riga.isPagata())
+                    continue;
                 if (riga.getCessionario() == null) {
                     if (mod != null && mod.getCd_modalita_pag().compareTo(riga.getModalita_pagamento().getCd_modalita_pag()) == 0 &&
                             terzo.getCd_terzo() == riga.getFornitore().getCd_terzo() &&
