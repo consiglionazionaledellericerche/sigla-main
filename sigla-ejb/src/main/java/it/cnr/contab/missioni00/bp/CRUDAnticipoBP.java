@@ -394,7 +394,9 @@ public class CRUDAnticipoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
      */
     protected void init(Config config, ActionContext context) throws BusinessProcessException {
         try {
-            verificoUnitaENTE(context);
+            if (isEditable()) {
+                verificoUnitaENTE(context);
+            }
             attivaEconomicaParallela = Utility.createConfigurazioneCnrComponentSession().isAttivaEconomicaParallela(context.getUserContext());
         } catch (Throwable e) {
             throw handleException(e);

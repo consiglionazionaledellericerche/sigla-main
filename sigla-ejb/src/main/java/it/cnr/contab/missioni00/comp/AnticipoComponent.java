@@ -23,6 +23,8 @@ import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
@@ -1610,16 +1612,39 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
      * @param    bulk    l'AnticipoBulk da ricercare
      */
 
-    public Query select(UserContext userContext, it.cnr.jada.persistency.sql.CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
-        SQLBuilder sql = (SQLBuilder) super.select(userContext, clauses, bulk);
+    public Query select(UserContext userContext, it.cnr.jada.persistency.sql.CompoundFindClause compoundfindclause, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+        SQLBuilder sql = getHome(userContext, AnticipoBulk.class, "ANTICIPO_MANDATO").createSQLBuilder();
+        if (compoundfindclause == null) {
+            if (bulk != null)
+                compoundfindclause = bulk.buildFindClauses(null);
+        } else {
+            compoundfindclause = CompoundFindClause.and(compoundfindclause, bulk.buildFindClauses(Boolean.FALSE));
+        }
+        sql.addClause(compoundfindclause);
         AnticipoBulk anticipo = (AnticipoBulk) bulk;
-
-        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, anticipo.getCd_cds());
-        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, anticipo.getCd_unita_organizzativa());
-
+        Unita_organizzativaBulk uo = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+                findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+        if (!uo.isUoEnte()) {
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, anticipo.getCd_cds());
+            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, anticipo.getCd_unita_organizzativa());
+        }
         sql.addTableToHeader("TERZO");
         sql.addSQLJoin("ANTICIPO.CD_TERZO", "TERZO.CD_TERZO");
         sql.addSQLClause("AND", "TERZO.CD_PRECEDENTE", SQLBuilder.EQUALS, anticipo.getV_terzo().getCd_terzo_precedente());
+
+        sql.addTableToHeader("MANDATO");
+        sql.addTableToHeader("MANDATO_RIGA");
+
+        sql.addSQLJoin("ANTICIPO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO_DOC_AMM(+)");
+        sql.addSQLJoin("ANTICIPO.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM(+)");
+        sql.addSQLJoin("ANTICIPO.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM(+)");
+        sql.addSQLJoin("ANTICIPO.PG_ANTICIPO", "MANDATO_RIGA.PG_DOC_AMM(+)");
+        sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM(+)", SQLBuilder.EQUALS, Numerazione_doc_ammBulk.TIPO_ANTICIPO);
+        sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.STATO(+)", SQLBuilder.NOT_EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
+
+        sql.addSQLJoin("MANDATO_RIGA.CD_CDS", "MANDATO.CD_CDS(+)");
+        sql.addSQLJoin("MANDATO_RIGA.ESERCIZIO", "MANDATO.ESERCIZIO(+)");
+        sql.addSQLJoin("MANDATO_RIGA.PG_MANDATO", "MANDATO.PG_MANDATO(+)");
 
         return sql;
     }

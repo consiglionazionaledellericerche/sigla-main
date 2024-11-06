@@ -800,6 +800,21 @@
 	<columnFieldProperty name="ti_associato_manrev" />	
 	<columnFieldProperty name="dt_pagamento_fondo_eco" />
 	<columnFieldProperty name="stato_pagamento_fondo_eco" />
+	<columnFieldProperty
+			name="pg_mandato"
+			property="pg_mandato"
+			inputType="TEXT"
+			headerLabel="Mandato"
+			label="Numero"/>
+	<columnFieldProperty
+			name="dt_emissione_mandato"
+			property="dt_emissione_mandato"
+			inputType="TEXT"
+			formatName="date_short"
+			headerLabel="Mandato"
+			label="Data"/>
+
+
 
 	<findFieldProperty name="esercizio" />	
 	<findFieldProperty name="pg_anticipo" />

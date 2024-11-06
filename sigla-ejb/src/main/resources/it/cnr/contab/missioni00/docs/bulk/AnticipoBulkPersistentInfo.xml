@@ -71,9 +71,22 @@
 		<columnMapping
 			columnName="CD_CENTRO_RESPONSABILITA"
 			propertyName="lattPerRimborso.centro_responsabilita.cd_centro_responsabilita" />
-			
-			
-	</defaultColumnMap>		
+
+	</defaultColumnMap>
+	<columnMap
+			name="ANTICIPO_MANDATO"
+			extends="default">
+		<columnMapping
+				columnName="MANDATO.PG_MANDATO"
+				propertyName="pg_mandato"
+				sqlTypeName="DECIMAL"
+				columnSize="10"/>
+		<columnMapping
+				columnName="MANDATO.DT_EMISSIONE"
+				propertyName="dt_emissione_mandato"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"/>
+	</columnMap>
 
 	<persistentProperty
 		name="modalita_pagamento" />
@@ -87,6 +100,10 @@
 		name="scadenza_obbligazione" />
 	<persistentProperty
 		name="lattPerRimborso" />
-		
-		
+
+	<persistentProperty
+			name="pg_mandato" />
+	<persistentProperty
+			name="dt_emissione_mandato" />
+
 </SQLPersistentInfo>

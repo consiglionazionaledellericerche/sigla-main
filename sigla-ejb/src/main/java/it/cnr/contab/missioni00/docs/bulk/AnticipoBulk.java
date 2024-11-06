@@ -37,6 +37,8 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
+import javax.persistence.Transient;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Dictionary;
 import java.util.GregorianCalendar;
@@ -125,6 +127,11 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
     private java.lang.String riportata = NON_RIPORTATO;
     private java.lang.String riportataInScrivania = NON_RIPORTATO;
     private Scrittura_partita_doppiaBulk scrittura_partita_doppia;
+
+    @Transient
+    private Long pg_mandato;
+    @Transient
+    private java.sql.Timestamp dt_emissione_mandato;
 
     public AnticipoBulk() {
         super();
@@ -1457,5 +1464,21 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
     @Override
     public Timestamp getDt_contabilizzazione() {
         return this.getDt_registrazione();
+    }
+
+    public Long getPg_mandato() {
+        return pg_mandato;
+    }
+
+    public void setPg_mandato(Long pg_mandato) {
+        this.pg_mandato = pg_mandato;
+    }
+
+    public Timestamp getDt_emissione_mandato() {
+        return dt_emissione_mandato;
+    }
+
+    public void setDt_emissione_mandato(Timestamp dt_emissione_mandato) {
+        this.dt_emissione_mandato = dt_emissione_mandato;
     }
 }
