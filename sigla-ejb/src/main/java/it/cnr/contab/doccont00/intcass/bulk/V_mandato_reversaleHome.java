@@ -198,9 +198,13 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
 
         sql.addClause("AND", "cd_cds_origine", sql.EQUALS, mandato.getCd_cds_origine());
         sql.addClause("AND", "cd_uo_origine", sql.EQUALS, mandato.getCd_uo_origine());
-
-        sql.addClause("AND", "stato", sql.EQUALS, ReversaleIBulk.STATO_REVERSALE_EMESSO);
-        sql.addClause("AND", "stato_trasmissione", sql.EQUALS, ReversaleIBulk.STATO_TRASMISSIONE_NON_INSERITO);
+        sql.openParenthesis(FindClause.AND);
+            sql.openParenthesis(FindClause.AND);
+                sql.addClause("AND", "stato", sql.EQUALS, ReversaleIBulk.STATO_REVERSALE_EMESSO);
+                sql.addClause("AND", "stato_trasmissione", sql.EQUALS, ReversaleIBulk.STATO_TRASMISSIONE_NON_INSERITO);
+            sql.closeParenthesis();
+            sql.addClause(FindClause.OR, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
+        sql.closeParenthesis();
 
         MandatoHome home = (MandatoHome) getHomeCache().getHome(mandato.getClass());
         Mandato_terzoBulk terzo = home.findMandato_terzo(userContext, mandato);

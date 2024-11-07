@@ -20,6 +20,7 @@ package it.cnr.contab.doccont00.comp;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleHome;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -223,7 +224,9 @@ public class AssManualeMandatoReversaleComponent extends it.cnr.jada.comp.CRUDCo
             for (java.util.Iterator i = l.iterator(); i.hasNext(); ) {
                 V_mandato_reversaleBulk vManRev = (V_mandato_reversaleBulk) i.next();
                 if (
-                        vManRev.getCd_tipo_documento_cont_padre().equals(Numerazione_doc_contBulk.TIPO_REV)
+                        vManRev.getCd_tipo_documento_cont_padre().equals(Numerazione_doc_contBulk.TIPO_REV)  ||
+                                (Optional.ofNullable(vManRev.getEsitoOperazione()).filter(s -> s.equals(EsitoOperazione.ACQUISITO.value())).isPresent() &&
+                                        vManRev.getCd_tipo_documento_cont_padre().equals(Numerazione_doc_contBulk.TIPO_MAN))
                 ) {
                     ReversaleIHome revHome = (ReversaleIHome) getHome(userContext, ReversaleIBulk.class);
                     ReversaleBulk rev = revHome.loadReversale(userContext, vManRev.getCd_cds(), vManRev.getEsercizio(), vManRev.getPg_documento_cont());
