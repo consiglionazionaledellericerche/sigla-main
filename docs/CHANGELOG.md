@@ -1,3 +1,15 @@
+## Release 6.6.11  -- _November 06, 2024_ 
+**Changes**
+
+>**Aggiunto alla ricerca dell'anticipo il numero e la data di emissione del mandato e inoltre resa disponibile la funzione anche dalla UO Ente in sola visualizzazione.**
+>
+>[fcef85d7fa136a2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fcef85d7fa136a2) marco.spasiano *November 06, 2024*
+
+>**Sbloccato il cambiamento della modalità di pagamento sulle righe non pagate.**
+>
+>[bc5f45f5105877b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc5f45f5105877b) marco.spasiano *November 06, 2024*
+
+
 ## Release 6.6.10  -- _November 05, 2024_ 
 **Changes**
 
