@@ -20,6 +20,7 @@ package it.cnr.contab.pdg00.service;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
@@ -76,6 +77,19 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                 })));
     }
 
+    public PdgVariazioneDocument getPdgVariazioneDocument(Pdg_variazioneBulk pdgVariazioneBulk) {
+        return PdgVariazioneDocument.construct((Optional.ofNullable(getStorageObjectByPath(getCMISPath(pdgVariazioneBulk)))
+                .orElseGet(() -> {
+                    StringBuffer query = new StringBuffer("select * from varpianogest:document");
+                    query.append(" where ").append(SIGLAStoragePropertyNames.VARPIANOGEST_ESERCIZIO.value()).append(" = ").append(pdgVariazioneBulk.getEsercizio());
+                    query.append(" and ").append(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(pdgVariazioneBulk.getPg_variazione_pdg());
+                    List<StorageObject> storageObjects = super.search(query.toString());
+                    if (!storageObjects.isEmpty())
+                        return getStorageObjectBykey(storageObjects.get(0).getKey());
+                    return null;
+                })));
+    }
+
     public String getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
         return Arrays.asList(
                 getParentPath(archiviaStampaPdgVariazioneBulk),
@@ -83,6 +97,32 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                         + archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg()
                         + " CdR proponente "
                         + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf"
+        ).stream().collect(
+                Collectors.joining(StorageDriver.SUFFIX)
+        );
+    }
+
+    public String getCMISPath(Pdg_variazioneBulk pdgVariazioneBulk) {
+        return Arrays.asList(
+                getParentPath(pdgVariazioneBulk),
+                "Variazione al PdG n. "
+                        + pdgVariazioneBulk.getPg_variazione_pdg()
+                        + " CdR proponente "
+                        + pdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf"
+        ).stream().collect(
+                Collectors.joining(StorageDriver.SUFFIX)
+        );
+    }
+
+    public String getParentPath(Pdg_variazioneBulk pdgVariazioneBulk) {
+        return Arrays.asList(
+                SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(),
+                Optional.ofNullable(pdgVariazioneBulk.getEsercizio())
+                        .map(esercizio -> String.valueOf(esercizio))
+                        .orElse("0"),
+                sanitizeFolderName(pdgVariazioneBulk.getCentro_responsabilita().getUnita_padre().getCd_cds()),
+                "CdR " + pdgVariazioneBulk.getCd_centro_responsabilita() +
+                        " Variazione " + Utility.lpad(pdgVariazioneBulk.getPg_variazione_pdg(), 5, '0')
         ).stream().collect(
                 Collectors.joining(StorageDriver.SUFFIX)
         );

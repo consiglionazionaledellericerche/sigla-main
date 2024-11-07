@@ -96,7 +96,7 @@ public class FirmaDigitalePdgVariazioniBP extends
     private String nomeFileTest = "test-file.pdf";
     private String nomeFilePathTest = System.getProperty("tmp.dir.SIGLAWeb") + "applets/" + nomeFileTest;
     private String nomeFileTestFirmato;
-
+    private Parametri_cdsBulk parametriCds;
     public FirmaDigitalePdgVariazioniBP() {
         super();
         table.setMultiSelection(true);
@@ -229,14 +229,22 @@ public class FirmaDigitalePdgVariazioniBP extends
     protected void init(Config config, ActionContext context)
             throws BusinessProcessException {
         super.init(config, context);
-        setMultiSelection(false);
-        if (!isTestSession())
-            pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
-                    PdgVariazioniService.class);
-        ArchiviaStampaPdgVariazioneBulk bulk = new ArchiviaStampaPdgVariazioneBulk();
-        bulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
-        setModel(context, bulk);
-        refresh(context);
+        try {
+            parametriCds = Utility.createParametriCdsComponentSession().
+                    getParametriCds(context.getUserContext(),
+                            CNRUserContext.getCd_cds(context.getUserContext()),
+                            CNRUserContext.getEsercizio(context.getUserContext()));
+            setMultiSelection(!parametriCds.getFl_kit_firma_digitale());
+            if (!isTestSession())
+                pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
+                        PdgVariazioniService.class);
+            ArchiviaStampaPdgVariazioneBulk bulk = new ArchiviaStampaPdgVariazioneBulk();
+            bulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
+            setModel(context, bulk);
+            refresh(context);
+        } catch (Throwable e) {
+            throw new BusinessProcessException(e);
+        }
     }
 
     public boolean isPrintButtonEnabled() {
@@ -274,6 +282,8 @@ public class FirmaDigitalePdgVariazioniBP extends
     }
 
     public boolean isSignButtonEnabled() {
+        if (!Optional.ofNullable(parametriCds).map(Parametri_cdsBulk::getFl_kit_firma_digitale).orElse(Boolean.TRUE))
+            return Boolean.TRUE;
         ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
         if (!isTestSession())
             return getFocusedElement() != null
@@ -454,21 +464,20 @@ public class FirmaDigitalePdgVariazioniBP extends
     public void sign(ActionContext context) throws BusinessProcessException {
         try {
             ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
-            Parametri_cdsBulk parametriCds = Utility.createParametriCdsComponentSession().
-                    getParametriCds(context.getUserContext(),
-                            CNRUserContext.getCd_cds(context.getUserContext()),
-                            CNRUserContext.getEsercizio(context.getUserContext()));
             if (parametriCds.getFl_kit_firma_digitale() || isTestSession()) {
                 caricaDatiPEC(context);
                 setSignEnabled(true);
                 setSignFile(true);
             } else {
-                pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
-                                .getPdgVariazioneDocument().getStorageObject(),
-                        SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-                //rp 21/01/2014 inserisco data firma sulla variazione
-                createComponentSession().aggiornaDataFirma(context.getUserContext(), archiviaStampaPdgVariazioneBulk
-                        .getPdgVariazioneDocument().getEsercizio(), archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());
+                setSelection(context);
+                List<Pdg_variazioneBulk> archiviaStampaPdgVariazioneBulks = getSelectedElements(context);
+                for (Pdg_variazioneBulk bulk : archiviaStampaPdgVariazioneBulks) {
+                    pdgVariazioniService.addAspect(pdgVariazioniService.getPdgVariazioneDocument(bulk).getStorageObject(),
+                            SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+                    createComponentSession().aggiornaDataFirma(context.getUserContext(), bulk
+                            .getEsercizio(), bulk.getPg_variazione_pdg().intValue());
+                }
+                clearSelection(context);
                 setFocusedElement(context, null);
                 refresh(context);
             }
