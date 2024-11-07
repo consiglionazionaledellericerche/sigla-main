@@ -154,24 +154,25 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
         if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
-            return getChildren(storageObjectByPath.get().getKey(), -1).stream()
-                    .filter(storageObject -> storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(SIGLAStoragePropertyNames.VARPIANOGEST_DOCUMENT.value()))
-                    .filter(storageObject -> hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value()))
+            return getChildren(storageObjectByPath.get().getKey()).stream()
                     .filter(storageObject -> {
                         if (Optional.ofNullable(uo).isPresent()) {
-                            return storageObject.getPropertyValue(SIGLAStoragePropertyNames.STRORGUO_CODICE.value()).equals(uo);
+                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(uo);
                         } else {
                             return true;
                         }
                     })
                     .filter(storageObject -> {
                         if (Optional.ofNullable(variazionePdg).isPresent()) {
-                            return storageObject.getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).equals(variazionePdg);
+                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(String.valueOf(variazionePdg));
                         } else {
                             return true;
                         }
                     })
-                    .map(storageObject -> storageObject.<BigInteger>getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
+                    .map(storageObject -> {
+                        String name = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
+                        return new BigInteger(name.substring(name.length() - 5));
+                    })
                     .map(BigInteger::intValue)
                     .collect(Collectors.toList());
         } else {
@@ -218,39 +219,26 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
         if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
-            return getChildren(storageObjectByPath.get().getKey(), -1).stream()
-                    .filter(storageObject -> storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(SIGLAStoragePropertyNames.VARPIANOGEST_DOCUMENT.value()))
-                    .filter(storageObject -> {
-                        if (Optional.ofNullable(variazionePdg).isPresent()) {
-                            return storageObject.getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).equals(BigInteger.valueOf(variazionePdg));
-                        } else {
-                            return true;
-                        }
-                    })
-                    .filter(storageObject -> {
-                        if (Optional.ofNullable(tiSigned)
-                                .filter(s -> s.equals(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED)).isPresent())
-                            return hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-                        else if (Optional.ofNullable(tiSigned)
-                                .filter(s -> s.equals(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED)).isPresent())
-                            return !hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-                        else
-                            return true;
-                    })
+            return getChildren(storageObjectByPath.get().getKey()).stream()
                     .filter(storageObject -> {
                         if (Optional.ofNullable(uo).isPresent()) {
-                            return storageObject.getPropertyValue(SIGLAStoragePropertyNames.STRORGUO_CODICE.value()).equals(uo);
+                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(uo);
                         } else {
                             return true;
                         }
                     })
-                    .map(storageObject -> storageObject.getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
-                    .map(o -> {
-                        if (o instanceof BigInteger) {
-                            return ((BigInteger)o).intValue();
+                    .filter(storageObject -> {
+                        if (Optional.ofNullable(variazionePdg).isPresent()) {
+                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(String.valueOf(variazionePdg));
+                        } else {
+                            return true;
                         }
-                        return new BigInteger(String.valueOf(o)).intValue();
                     })
+                    .map(storageObject -> {
+                        String name = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
+                        return new BigInteger(name.substring(name.length() - 5));
+                    })
+                    .map(BigInteger::intValue)
                     .collect(Collectors.toList());
         } else {
             StringBuffer query = new StringBuffer("select var.cmis:objectId, ");

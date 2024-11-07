@@ -2740,6 +2740,9 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			variazionePdg = ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg();
 		}
 		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned, cdsBulk, uo, variazionePdg);
+		if (tiSigned != null) {
+			sql.addClause(FindClause.AND, "dt_firma", tiSigned.equals(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED) ? SQLBuilder.ISNOTNULL : SQLBuilder.ISNULL, null);
+		}
 		if (clausolaIn && variazioniPresentiSulDocumentale.isEmpty())
 			sql.addClause(FindClause.AND, "pg_variazione_pdg", SQLBuilder.EQUALS, -1);
 		sql.openParenthesis(FindClause.AND);
