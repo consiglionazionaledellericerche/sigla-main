@@ -784,7 +784,17 @@
 	<columnFieldProperty name="esercizio" />	
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_cds_origine" label = "Cds origine"/>
-	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty
+			headerLabel="UO"
+			label="Codice"
+			name="cd_unita_organizzativa" />
+	<columnFieldProperty
+			name="ds_unita_organizzativa"
+			property="ds_unita_organizzativa"
+			inputType="TEXT"
+			headerLabel="UO"
+			label="Descrizione"/>
+
 	<columnFieldProperty name="cd_uo_origine" label="UO origine"/>
 	<columnFieldProperty name="dt_registrazione" />	
 	<columnFieldProperty name="ti_anagrafico" />	

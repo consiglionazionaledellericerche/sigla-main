@@ -86,6 +86,11 @@
 				propertyName="dt_emissione_mandato"
 				sqlTypeName="TIMESTAMP"
 				columnSize="7"/>
+		<columnMapping
+				columnName="UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA"
+				propertyName="ds_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="300"/>
 	</columnMap>
 
 	<persistentProperty
@@ -105,5 +110,7 @@
 			name="pg_mandato" />
 	<persistentProperty
 			name="dt_emissione_mandato" />
+	<persistentProperty
+			name="ds_unita_organizzativa" />
 
 </SQLPersistentInfo>

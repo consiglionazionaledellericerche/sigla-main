@@ -1628,6 +1628,9 @@ public class AnticipoComponent extends ScritturaPartitaDoppiaFromDocumentoCompon
             sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, anticipo.getCd_cds());
             sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, anticipo.getCd_unita_organizzativa());
         }
+        sql.addTableToHeader("UNITA_ORGANIZZATIVA");
+        sql.addSQLJoin("ANTICIPO.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+
         sql.addTableToHeader("TERZO");
         sql.addSQLJoin("ANTICIPO.CD_TERZO", "TERZO.CD_TERZO");
         sql.addSQLClause("AND", "TERZO.CD_PRECEDENTE", SQLBuilder.EQUALS, anticipo.getV_terzo().getCd_terzo_precedente());

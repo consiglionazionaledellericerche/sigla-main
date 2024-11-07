@@ -132,6 +132,8 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
     private Long pg_mandato;
     @Transient
     private java.sql.Timestamp dt_emissione_mandato;
+    @Transient
+    private String ds_unita_organizzativa;
 
     public AnticipoBulk() {
         super();
@@ -1480,5 +1482,13 @@ public class AnticipoBulk extends AnticipoBase implements IDefferUpdateSaldi, ID
 
     public void setDt_emissione_mandato(Timestamp dt_emissione_mandato) {
         this.dt_emissione_mandato = dt_emissione_mandato;
+    }
+
+    public String getDs_unita_organizzativa() {
+        return ds_unita_organizzativa;
+    }
+
+    public void setDs_unita_organizzativa(String ds_unita_organizzativa) {
+        this.ds_unita_organizzativa = ds_unita_organizzativa;
     }
 }
