@@ -154,27 +154,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
         if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
-            return getChildren(storageObjectByPath.get().getKey()).stream()
-                    .filter(storageObject -> {
-                        if (Optional.ofNullable(uo).isPresent()) {
-                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(uo);
-                        } else {
-                            return true;
-                        }
-                    })
-                    .filter(storageObject -> {
-                        if (Optional.ofNullable(variazionePdg).isPresent()) {
-                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(String.valueOf(variazionePdg));
-                        } else {
-                            return true;
-                        }
-                    })
-                    .map(storageObject -> {
-                        String name = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
-                        return new BigInteger(name.substring(name.length() - 5));
-                    })
-                    .map(BigInteger::intValue)
-                    .collect(Collectors.toList());
+            return variazioniChildren(storageObjectByPath.get(), uo, variazionePdg);
         } else {
             StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
             query.append("var.").append(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value());
@@ -207,6 +187,30 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         return findVariazioniPresenti(esercizio, tiSigned, cds, uo, null);
     }
 
+    public List<Integer> variazioniChildren(StorageObject storageObjectByPath, String uo, Long variazionePdg) {
+        return getChildren(storageObjectByPath.getKey()).stream()
+                .filter(storageObject -> {
+                    if (Optional.ofNullable(uo).isPresent()) {
+                        return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(uo);
+                    } else {
+                        return true;
+                    }
+                })
+                .filter(storageObject -> {
+                    if (Optional.ofNullable(variazionePdg).isPresent()) {
+                        return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(String.valueOf(variazionePdg));
+                    } else {
+                        return true;
+                    }
+                })
+                .map(storageObject -> {
+                    String name = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
+                    return new BigInteger(name.substring(name.length() - 5));
+                })
+                .map(BigInteger::intValue)
+                .collect(Collectors.toList());
+    }
+
     public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, Unita_organizzativaBulk cds, String uo, Long variazionePdg) throws ApplicationException {
         String basePath = Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(), String.valueOf(esercizio)
@@ -219,27 +223,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
         if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
-            return getChildren(storageObjectByPath.get().getKey()).stream()
-                    .filter(storageObject -> {
-                        if (Optional.ofNullable(uo).isPresent()) {
-                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(uo);
-                        } else {
-                            return true;
-                        }
-                    })
-                    .filter(storageObject -> {
-                        if (Optional.ofNullable(variazionePdg).isPresent()) {
-                            return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(String.valueOf(variazionePdg));
-                        } else {
-                            return true;
-                        }
-                    })
-                    .map(storageObject -> {
-                        String name = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
-                        return new BigInteger(name.substring(name.length() - 5));
-                    })
-                    .map(BigInteger::intValue)
-                    .collect(Collectors.toList());
+            return variazioniChildren(storageObjectByPath.get(), uo, variazionePdg);
         } else {
             StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
             query.append("var.").append(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value());
