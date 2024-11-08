@@ -189,6 +189,8 @@ public class PdgVariazioniService extends DocumentiContabiliService {
 
     public List<Integer> variazioniChildren(StorageObject storageObjectByPath, String uo, Long variazionePdg) {
         return getChildren(storageObjectByPath.getKey()).stream()
+                .filter(storageObject -> storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value())
+                        .equals(StoragePropertyNames.CMIS_FOLDER.value()))
                 .filter(storageObject -> {
                     if (Optional.ofNullable(uo).isPresent()) {
                         return storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()).contains(uo);
