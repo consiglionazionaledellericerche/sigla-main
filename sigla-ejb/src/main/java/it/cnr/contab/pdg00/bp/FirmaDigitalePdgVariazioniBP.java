@@ -33,6 +33,7 @@ import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.SignP7M;
+import it.cnr.contab.util.StringFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -48,6 +49,7 @@ import it.cnr.jada.firma.DatiPEC;
 import it.cnr.jada.firma.FirmaInfos;
 import it.cnr.jada.firma.bp.SendPecMail;
 import it.cnr.jada.util.ListRemoteIterator;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
@@ -70,11 +72,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Insert the type's description here. Creation date: (11/04/2002 17:28:04)
@@ -165,63 +166,71 @@ public class FirmaDigitalePdgVariazioniBP extends
     }
 
     public it.cnr.jada.util.jsp.Button[] createToolbar() {
-        Button[] toolbar = new Button[4];
-        int i = 0;
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-                .getHandler().getProperties(getClass()), "Toolbar.refresh");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-                .getHandler().getProperties(getClass()), "Toolbar.print");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-                .getHandler().getProperties(getClass()), "Toolbar.signOTP");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-                .getHandler().getProperties(getClass()), "Toolbar.printSigned");
-        toolbar[i - 1].setSeparator(true);
-        return toolbar;
+        final Properties properties = it.cnr.jada.util.Config.getHandler().getProperties(getClass());
+        return Arrays.asList(
+                        new Button(properties, "Toolbar.selectAll"),
+                        new Button(properties, "Toolbar.deselectAll"),
+                        new Button(properties, "Toolbar.refresh"),
+                        new Button(properties, "Toolbar.print"),
+                        new Button(properties, "Toolbar.signOTP"),
+                        new Button(properties, "Toolbar.printSigned")
+                ).stream().toArray(Button[]::new);
     }
 
     public void writeToolbar(javax.servlet.jsp.PageContext pageContext)
             throws java.io.IOException, javax.servlet.ServletException {
         Button[] toolbar = getToolbar();
+        Optional<Button> toolbarPrint = Arrays.stream(toolbar)
+                .filter(button -> Optional.ofNullable(button.getName())
+                        .filter(s -> s.equalsIgnoreCase("Toolbar.print")).isPresent())
+                .findAny();
+        Optional<Button> toolbarPrintSigned = Arrays.stream(toolbar)
+                .filter(button -> Optional.ofNullable(button.getName())
+                        .filter(s -> s.equalsIgnoreCase("Toolbar.printSigned")).isPresent())
+                .findAny();
         ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
         if (bulk != null) {
-            String nomeFileAllegato = "";
+            AtomicReference<String> nomeFileAllegato = new AtomicReference("");
             if (!isTestSession())
-                nomeFileAllegato = bulk.getPdgVariazioneDocument().getStorageObject().getPropertyValue(StoragePropertyNames.NAME.value());
+                nomeFileAllegato.set(bulk.getPdgVariazioneDocument().getStorageObject().getPropertyValue(StoragePropertyNames.NAME.value()));
             else
-                nomeFileAllegato = nomeFileTest;
-
-            toolbar[1]
-                    .setHref("doPrint('" + JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "genericdownload/"
-                            + nomeFileAllegato
-                            + "?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess="
-                            + getPath() + "')");
+                nomeFileAllegato.set(nomeFileTest);
+            toolbarPrint
+                    .ifPresent(button -> {
+                        button.setHref("doPrint('" + JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "genericdownload/"
+                                + nomeFileAllegato.get()
+                                + "?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess="
+                                + getPath() + "')");
+                    });
             StorageObject nodeSignedFile = null;
             try {
                 nodeSignedFile = getNodeFileFirmato(bulk.getPdgVariazioneDocument().getStorageObject());
-                String signedFileName = null;
+                AtomicReference<String> signedFileName = new AtomicReference(nodeSignedFile);
                 if (!isTestSession()) {
                     if (nodeSignedFile != null)
-                        signedFileName = getNodeFileFirmato(bulk.getPdgVariazioneDocument().getStorageObject()).getPropertyValue(StoragePropertyNames.NAME.value());
+                        signedFileName.set(getNodeFileFirmato(bulk.getPdgVariazioneDocument().getStorageObject()).getPropertyValue(StoragePropertyNames.NAME.value()));
                 } else {
-                    signedFileName = nomeFileTestFirmato;
-                    if (signedFileName != null)
-                        signedFileName = signedFileName.replace("\\", "/");
+                    signedFileName.set(nomeFileTestFirmato);
+                    if (signedFileName.get() != null)
+                        signedFileName.set(signedFileName.get().replace("\\", "/"));
                 }
-                if (signedFileName != null)
-                    //toolbar[6]
-                    toolbar[3]
-                            .setHref("doPrint('" + JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "genericdownload/"
-                                    + signedFileName
-                                    + "?methodName=scaricaFileFirmato&it.cnr.jada.action.BusinessProcess="
-                                    + getPath() + "')");
+                if (signedFileName.get() != null) {
+                    toolbarPrintSigned.ifPresent(button -> {
+                        button
+                                .setHref("doPrint('" + JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "genericdownload/"
+                                        + signedFileName.get()
+                                        + "?methodName=scaricaFileFirmato&it.cnr.jada.action.BusinessProcess="
+                                        + getPath() + "')");
+                    });
+                } else {
+                    toolbarPrintSigned.ifPresent(button -> button.setHref(null));
+                }
             } catch (ApplicationException e) {
                 throw new ServletException(e);
             }
         } else {
-//			toolbar[1].setHref(null);
-            toolbar[1].setHref(null);
-            toolbar[3].setHref(null);
-//			toolbar[6].setHref(null);
+            toolbarPrint.ifPresent(button -> button.setHref(null));
+            toolbarPrintSigned.ifPresent(button -> button.setHref(null));
         }
         writeToolbar(pageContext.getOut(), toolbar);
     }
@@ -234,7 +243,7 @@ public class FirmaDigitalePdgVariazioniBP extends
                     getParametriCds(context.getUserContext(),
                             CNRUserContext.getCd_cds(context.getUserContext()),
                             CNRUserContext.getEsercizio(context.getUserContext()));
-            setMultiSelection(!parametriCds.getFl_kit_firma_digitale());
+            table.setMultiSelection(!parametriCds.getFl_kit_firma_digitale());
             if (!isTestSession())
                 pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
                         PdgVariazioniService.class);
@@ -471,12 +480,17 @@ public class FirmaDigitalePdgVariazioniBP extends
             } else {
                 setSelection(context);
                 List<Pdg_variazioneBulk> archiviaStampaPdgVariazioneBulks = getSelectedElements(context);
+                int firmate = 0;
                 for (Pdg_variazioneBulk bulk : archiviaStampaPdgVariazioneBulks) {
-                    pdgVariazioniService.addAspect(pdgVariazioniService.getPdgVariazioneDocument(bulk).getStorageObject(),
-                            SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-                    createComponentSession().aggiornaDataFirma(context.getUserContext(), bulk
-                            .getEsercizio(), bulk.getPg_variazione_pdg().intValue());
+                    if (!Optional.ofNullable(bulk.getDt_firma()).isPresent()) {
+                        pdgVariazioniService.addAspect(pdgVariazioniService.getPdgVariazioneDocument(bulk).getStorageObject(),
+                                SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+                        createComponentSession().aggiornaDataFirma(context.getUserContext(), bulk
+                                .getEsercizio(), bulk.getPg_variazione_pdg().intValue());
+                        firmate++;
+                    }
                 }
+                setMessage(FormBP.INFO_MESSAGE, String.format("Sono state firmate %d variazioni.", firmate));
                 clearSelection(context);
                 setFocusedElement(context, null);
                 refresh(context);

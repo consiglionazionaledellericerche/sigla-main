@@ -67,7 +67,7 @@ public class StampaIndiceTempestivitaPagamentiAction extends ParametricPrintActi
             OggettoBulk bulk = bframeExcelComponentSession.addQueue(
                     actioncontext.getUserContext(),
                     columnLabel,
-                    columnHeaderLabel, longDescription, colonnedaEstrarre, query.toString(), query.getColumnMap(), vConsIndicatorePagamentiBulk);
+                    columnHeaderLabel, longDescription, colonnedaEstrarre, query.toString(), null, query.getColumnMap(), vConsIndicatorePagamentiBulk);
             OfflineExcelSpoolerBP excelSpoolerBP = (OfflineExcelSpoolerBP) actioncontext.createBusinessProcess("OfflineExcelSpoolerBP");
             excelSpoolerBP.setModel(actioncontext, bulk);
             return actioncontext.addBusinessProcess(excelSpoolerBP);
