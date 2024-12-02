@@ -44,6 +44,16 @@
 				sqlTypeName="VARCHAR"
 				columnSize="10"
 				nullable="false" />
+		<columnMapping
+				columnName="COMUNE.CD_PROVINCIA"
+				propertyName="comune.cd_provincia"
+				sqlTypeName="VARCHAR"
+				columnSize="10" />
+		<columnMapping
+				columnName="COMUNE.DS_COMUNE"
+				propertyName="comune.ds_comune"
+				sqlTypeName="VARCHAR"
+				columnSize="100" />
 	</columnMap>
 	<persistentProperty
 		name="cd_contributo_ritenuta"
