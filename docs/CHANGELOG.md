@@ -1,5 +1,41 @@
-## Release 6.6.11  -- _November 06, 2024_ 
+## Release 6.6.17  -- _December 02, 2024_ 
 **Changes**
+
+>**Aggiunto il codice catastale del comune nella ricerca dello scaglione**
+>
+>[3d0f9a090df08e0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3d0f9a090df08e0) marco.spasiano *December 02, 2024*
+
+>**Migliorata la ricerca delle variazioni sul documentale**
+>
+>[281d688c998a9de](https://github.com/consiglionazionaledellericerche/sigla-main/commit/281d688c998a9de) marco.spasiano *November 08, 2024*
+
+>**Migliorata la ricerca delle variazioni sul documentale**
+>
+>[51818b4bac98660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51818b4bac98660) marco.spasiano *November 08, 2024*
+
+>**Migliorata la ricerca delle variazioni sul documentale**
+>
+>[c5849742afe2bc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c5849742afe2bc4) marco.spasiano *November 08, 2024*
+
+>**Migliorata la ricerca delle variazioni sul documentale**
+>
+>[033ac4c1a03b12b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/033ac4c1a03b12b) marco.spasiano *November 08, 2024*
+
+>**Migliorata la ricerca delle variazioni sul documentale**
+>
+>[55e3ae7d291199d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/55e3ae7d291199d) marco.spasiano *November 07, 2024*
+
+>**Nella firma delle variazioni se nei parametri CdS è impostato che non è necessaria la firma digitale viene abilitata la selezione multipla**
+>
+>[cd0521b29f59e6b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd0521b29f59e6b) marco.spasiano *November 07, 2024*
+
+>**Nell'associazione mandato reversale ora sono visibili anche le reversali trasmesse con esito operazione acquisito.**
+>
+>[5c778624a2ec355](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c778624a2ec355) marco.spasiano *November 07, 2024*
+
+>**Aggiunto alla ricerca dell'anticipo il numero e la data di emissione del mandato e inoltre resa disponibile la funzione anche dalla UO Ente in sola visualizzazione.**
+>
+>[4ed74b759e0ab1d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ed74b759e0ab1d) marco.spasiano *November 07, 2024*
 
 >**Aggiunto alla ricerca dell'anticipo il numero e la data di emissione del mandato e inoltre resa disponibile la funzione anche dalla UO Ente in sola visualizzazione.**
 >
