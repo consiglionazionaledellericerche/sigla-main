@@ -237,6 +237,11 @@
 	<columnFieldProperty name="cd_regione" />
 	<columnFieldProperty name="cd_provincia" />
 	<columnFieldProperty name="pg_comune" />
+	<columnFieldProperty
+			name="cd_catastale"
+			property="comune.cd_catastale"
+			inputType="TEXT"
+			label="Cod. Catastale"/>
 	<columnFieldProperty name="ti_anagrafico" />
 	<columnFieldProperty name="ti_ente_percipiente" />
 	<columnFieldProperty name="im_inferiore" />

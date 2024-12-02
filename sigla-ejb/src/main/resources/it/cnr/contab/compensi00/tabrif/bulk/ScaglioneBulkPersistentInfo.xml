@@ -35,7 +35,16 @@
 			columnName="CD_CONTRIBUTO_RITENUTA"
 			propertyName="contributo_ritenuta.cd_contributo_ritenuta" />								
 	</defaultColumnMap>
-	
+	<columnMap name="COMUNE"
+			   tableName="SCAGLIONE"
+			   extends="default">
+		<columnMapping
+				columnName="COMUNE.CD_CATASTALE"
+				propertyName="comune.cd_catastale"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="false" />
+	</columnMap>
 	<persistentProperty
 		name="cd_contributo_ritenuta"
 		partOfOid="true" />
