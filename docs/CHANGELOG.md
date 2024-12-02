@@ -1,5 +1,9 @@
-## Release 6.6.17  -- _December 02, 2024_ 
+## Release 6.6.18  -- _December 02, 2024_ 
 **Changes**
+
+>**Aggiunta la descrizione del comune e il codice provincia nella ricerca dello scaglione**
+>
+>[55be199713c02df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/55be199713c02df) marco.spasiano *December 02, 2024*
 
 >**Aggiunto il codice catastale del comune nella ricerca dello scaglione**
 >
