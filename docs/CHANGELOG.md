@@ -1,5 +1,9 @@
-## Release 6.6.18  -- _December 02, 2024_ 
+## Release 6.6.19  -- _December 03, 2024_ 
 **Changes**
+
+>**Aggiunta la descrizione del comune e il codice provincia nella ricerca delle addizionali comunali**
+>
+>[4230107c4be97b3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4230107c4be97b3) marco.spasiano *December 03, 2024*
 
 >**Aggiunta la descrizione del comune e il codice provincia nella ricerca dello scaglione**
 >
