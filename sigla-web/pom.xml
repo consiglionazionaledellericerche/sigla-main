@@ -22,7 +22,7 @@
     <parent>
         <groupId>it.cnr.si.sigla</groupId>
         <artifactId>sigla-parent</artifactId>
-        <version>6.6.19</version>
+        <version>6.6.20-SNAPSHOT</version>
     </parent>
     <dependencyManagement>
         <dependencies>
