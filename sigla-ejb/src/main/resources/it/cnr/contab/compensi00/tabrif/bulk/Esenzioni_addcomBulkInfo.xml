@@ -116,4 +116,14 @@
 		name="dt_fine_validita" />
 	<columnFieldProperty
 		name="pg_comune" />
+	<columnFieldProperty
+			name="ds_comune"
+			property="comune.ds_comune"
+			inputType="TEXT"
+			label="Desc. Comune"/>
+	<columnFieldProperty
+			name="cd_provincia"
+			property="comune.cd_provincia"
+			inputType="TEXT"
+			label="Cod. Provincia"/>
 </bulkInfo>

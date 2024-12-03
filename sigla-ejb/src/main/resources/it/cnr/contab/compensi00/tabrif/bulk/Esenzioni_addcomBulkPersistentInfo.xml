@@ -34,6 +34,20 @@
 			columnSize="10"
 			nullable="true" />	
 	</defaultColumnMap>
+	<columnMap name="COMUNE"
+			   tableName="ESENZIONI_ADDCOM"
+			   extends="default">
+		<columnMapping
+				columnName="COMUNE.CD_PROVINCIA"
+				propertyName="comune.cd_provincia"
+				sqlTypeName="VARCHAR"
+				columnSize="10" />
+		<columnMapping
+				columnName="COMUNE.DS_COMUNE"
+				propertyName="comune.ds_comune"
+				sqlTypeName="VARCHAR"
+				columnSize="100" />
+	</columnMap>
 	<persistentProperty
 		name="comune" />
 </SQLPersistentInfo>
