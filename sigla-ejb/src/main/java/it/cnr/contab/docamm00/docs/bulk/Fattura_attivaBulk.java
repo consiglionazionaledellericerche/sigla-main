@@ -1837,8 +1837,11 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase
      * @return java.util.Vector
      */
     public boolean isStampataSuRegistroIVA() {
+        return false;
+        /*
         return STATO_IVA_B.equalsIgnoreCase(getStatoIVA()) ||
                 STATO_IVA_C.equalsIgnoreCase(getStatoIVA());
+         */
     }
 
     /**
