@@ -1,5 +1,13 @@
-## Release 6.6.20  -- _December 17, 2024_ 
+## Release 6.6.21  -- _December 23, 2024_ 
 **Changes**
+
+>**Aggiunta la possibilità di cambiare esercizio nella liduidazione definitiva e massiva dell'IVA**
+>
+>[ea91ded1e96f48f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ea91ded1e96f48f) marco.spasiano *December 23, 2024*
+
+>**Aggiunta la possibilità di cambiare esercizio nella liduidazione definitiva e massiva dell'IVA**
+>
+>[b9c39dd032f0127](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b9c39dd032f0127) marco.spasiano *December 23, 2024*
 
 >**Sbloccato il controllo sulla stampa dei registri IVA della fattura attiva**
 >
