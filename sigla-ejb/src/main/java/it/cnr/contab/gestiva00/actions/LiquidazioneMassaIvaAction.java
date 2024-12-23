@@ -24,6 +24,7 @@ import it.cnr.contab.gestiva00.core.bulk.IPrintable;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_massa_provvisoria_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.MTUWrapper;
@@ -69,6 +70,7 @@ protected Forward basicDoCercaConfermato(
 
 		LiquidazioneMassaIvaBP bp= (LiquidazioneMassaIvaBP) context.getBusinessProcess();
 		Stampa_registri_ivaVBulk bulk = (Stampa_registri_ivaVBulk)bp.getModel();
+		bulk.setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 
 		bulk.setRistampa(false);
 	       	
@@ -76,7 +78,7 @@ protected Forward basicDoCercaConfermato(
 			MTUWrapper wrapper = manageStampa(context, bulk);
 
 			Liquidazione_massa_ivaVBulk stampaBulk= (Liquidazione_massa_ivaVBulk) wrapper.getBulk();
-
+			stampaBulk.setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 			bp.setModel(context, stampaBulk);
 
 			String message = getMessageFrom(wrapper);

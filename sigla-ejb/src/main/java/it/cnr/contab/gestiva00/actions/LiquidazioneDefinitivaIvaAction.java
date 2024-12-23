@@ -28,6 +28,7 @@ import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_provvisoria_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -56,6 +57,7 @@ protected Forward basicDoCerca(
 		throws Throwable {
 		LiquidazioneDefinitivaIvaBP bp= (LiquidazioneDefinitivaIvaBP) context.getBusinessProcess();
 		Liquidazione_definitiva_ivaVBulk bulk = (Liquidazione_definitiva_ivaVBulk)bp.getModel();
+		bulk.setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 		if (!bp.isUoEnte() && bulk.getTipoSezionaleFlag().equals(bulk.SEZIONALI_COMMERCIALI))
 		{
 			bp.saveRipartizioneFinanziaria(context);
