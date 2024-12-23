@@ -1,5 +1,9 @@
-## Release 6.6.19  -- _December 03, 2024_ 
+## Release 6.6.20  -- _December 17, 2024_ 
 **Changes**
+
+>**Sbloccato il controllo sulla stampa dei registri IVA della fattura attiva**
+>
+>[d017cfa8119a4f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d017cfa8119a4f9) marco.spasiano *December 17, 2024*
 
 >**Aggiunta la descrizione del comune e il codice provincia nella ricerca delle addizionali comunali**
 >
