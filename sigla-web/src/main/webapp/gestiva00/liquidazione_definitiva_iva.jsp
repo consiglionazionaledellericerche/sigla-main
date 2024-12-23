@@ -47,6 +47,12 @@
 				 <% } %>
 			</tr>     	
 			<% if (!richiamaChiusuraMode) { %>
+			    <tr>
+					<td>
+						<% bp.getController().writeFormLabel(out,"esercizio");%>
+					</td>
+			        <td><% bp.getController().writeFormInput(out,"esercizio");%></td>
+			    </tr>
 				<tr>
 					<td>
 						<% bp.getController().writeFormLabel(out,"mese");%>

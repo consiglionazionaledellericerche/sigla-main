@@ -275,6 +275,15 @@
 
 	<!-- ************************ FORM FIELD PROPERTY ******************** -->
 
+	<formFieldProperty
+			name="esercizio"
+			property="esercizio"
+			inputType="TEXT"
+			enabledOnSearch="true"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			label="Esercizio"
+			command="doOnMeseChange"/>
 
 	<formFieldProperty name="data_da" />
 	<formFieldProperty name="data_a" />

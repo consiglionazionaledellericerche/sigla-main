@@ -19,6 +19,8 @@ package it.cnr.contab.gestiva00.actions;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Optional;
+
 import it.cnr.contab.gestiva00.bp.LiquidazioneDefinitivaIvaBP;
 import it.cnr.contab.gestiva00.bp.LiquidazioneIvaBP;
 import it.cnr.contab.gestiva00.core.bulk.IPrintable;
@@ -228,7 +230,10 @@ protected it.cnr.jada.action.Forward setDataDaA(
 
     try {
 	    int esercizio = stampaBulk.getEsercizio().intValue();
-	    int meseIndex = ((Integer)stampaBulk.getMesi_int().get(stampaBulk.getMese())).intValue();
+		int meseIndex = Optional.ofNullable(stampaBulk.getMese())
+				.map(s -> {
+					return ((Integer)stampaBulk.getMesi_int().get(s)).intValue();
+				}).orElse(12);
 		java.util.GregorianCalendar gc = getGregorianCalendar();
 		gc.set(java.util.Calendar.DAY_OF_MONTH, 1);
 		gc.set(java.util.Calendar.YEAR, esercizio);
