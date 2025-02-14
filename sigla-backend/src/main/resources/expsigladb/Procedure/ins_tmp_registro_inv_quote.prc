@@ -360,9 +360,9 @@ Select Inventario_Beni.Cd_Unita_Organizzativa, Inventario_Beni.Cd_Cds,
  	Dett.Ti_Documento  = 'S'					And
  	(Dett.Esercizio  >  To_Char(Data_A,'yyyy') or
  	 Dett.pg_buono_c_s > Buono_Carico_Scarico_Dett.pg_buono_c_s))       And
-  Inventario_Beni.Pg_Inventario =  Ass.Pg_Inventario_Origine		And
-  Inventario_Beni.Nr_Inventario =  Ass.Nr_Inventario_Origine		And
-  Inventario_Beni.Progressivo   =  Ass.Progressivo_Origine And
+  Inventario_Beni.Pg_Inventario =  Ass.Pg_Inventario_Dest		And
+  Inventario_Beni.Nr_Inventario =  Ass.Nr_Inventario_Dest		And
+  Inventario_Beni.Progressivo   =  Ass.Progressivo_Dest And
    Not Exists( Select 1 From AMMORTAMENTO_BENE_INV AMM Where
        Inventario_Beni.Pg_Inventario =  Amm.Pg_Inventario
    And Inventario_Beni.Nr_Inventario =	Amm.Nr_Inventario
