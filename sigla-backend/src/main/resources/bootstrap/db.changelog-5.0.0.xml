@@ -27,7 +27,7 @@
 
     <property name="fine_esercizio" value="to_number(to_char(SYSDATE, 'YYYY')) + 100" dbms="oracle"/>
     <property name="fine_esercizio" value="date_part('year', now()) + 100" dbms="postgresql"/>
-    <property name="fine_esercizio" value="YEAR(CURRENT_DATE + 36500)" dbms="h2"/>
+    <property name="fine_esercizio" value="YEAR(CURRENT_DATE() + 36500)" dbms="h2"/>
 
     <changeSet author="marco.spasiano" id="addColumn-ti_bollo-voce_iva">
         <addColumn tableName="voce_iva">
