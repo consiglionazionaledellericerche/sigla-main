@@ -1,5 +1,13 @@
-## Release 6.6.21  -- _December 23, 2024_ 
+## Release 6.6.22  -- _January 02, 2025_ 
 **Changes**
+
+>**Eliminato il tipo riscossione "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA" secondo le nuove regole OPI**
+>
+>[a621a979f6d17a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a621a979f6d17a8) marco.spasiano *January 02, 2025*
+
+>**Aggiunto l'importo incassato delle note di credito nel da pagare delle fatture [CI SKIP]**
+>
+>[88c4d9560d2b360](https://github.com/consiglionazionaledellericerche/sigla-main/commit/88c4d9560d2b360) marco.spasiano *December 23, 2024*
 
 >**Aggiunta la possibilità di cambiare esercizio nella liduidazione definitiva e massiva dell'IVA**
 >
