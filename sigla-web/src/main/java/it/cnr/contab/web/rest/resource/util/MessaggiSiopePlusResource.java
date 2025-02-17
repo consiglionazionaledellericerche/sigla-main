@@ -28,6 +28,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.si.siopeplus.model.Esito;
 import it.cnr.si.siopeplus.model.MessaggioXML;
 import it.cnr.si.siopeplus.model.Risultato;
+import it.cnr.si.siopeplus.service.GiornaleDiCassaSiopePlusService;
 import it.cnr.si.siopeplus.service.OrdinativiSiopePlusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +45,7 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -182,6 +180,31 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
                     }
                     return risultato;
                 });
+        if (esito.equals(Esito.GIORNALEDICASSA)) {
+            GiornaleDiCassaSiopePlusService giornaleDiCassaSiopePlusService = SpringUtil.getBean("giornaleDiCassaSiopePlusService", GiornaleDiCassaSiopePlusService.class);
+            Stream<Risultato> risultatoGiornaliera = Optional.ofNullable(giornaleDiCassaSiopePlusService.getListaMessaggi(Optional.ofNullable(dataDa)
+                                    .map(s -> LocalDateTime.parse(dataDa, DateTimeFormatter.ISO_DATE_TIME))
+                                    .orElse(null),
+                            Optional.ofNullable(dataA)
+                                    .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
+                                    .orElse(null), download, null).getRisultati()).orElseGet(() -> Collections.emptyList())
+                    .stream()
+                    .map(risultato -> {
+                        try {
+                            final MessaggioXML<Object> messaggioXML =
+                                    giornaleDiCassaSiopePlusService.getLocation(risultato.getLocation(), Object.class);
+                                Files.write(
+                                        Files.createFile(
+                                                Paths.get(localFolder.concat(File.separator).concat(messaggioXML.getName()))),
+                                        messaggioXML.getContent()
+                                );
+                        } catch (Exception _ex) {
+                            logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                        }
+                        return risultato;
+                    });
+            return Response.ok(Stream.concat(risultatoStream, risultatoGiornaliera).collect(Collectors.toList())).build();
+        }
         return Response.ok(risultatoStream.collect(Collectors.toList())).build();
     }
 
