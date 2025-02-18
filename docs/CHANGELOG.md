@@ -1,5 +1,17 @@
-## Release 6.6.23  -- _February 17, 2025_ 
+## Release 6.6.24  -- _February 18, 2025_ 
 **Changes**
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[cbc7a42d1ea01c8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cbc7a42d1ea01c8) marco.spasiano *February 18, 2025*
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[14459c16c1dfecc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/14459c16c1dfecc) marco.spasiano *February 18, 2025*
+
+>**Fix views**
+>
+>[cec31227f728c74](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cec31227f728c74) raffaele.pagano *February 18, 2025*
 
 >**Aggiunto l'esercizio di chiusura**
 >
