@@ -366,11 +366,7 @@ Select Inventario_Beni.Cd_Unita_Organizzativa, Inventario_Beni.Cd_Cds,
    Not Exists( Select 1 From AMMORTAMENTO_BENE_INV AMM Where
        Inventario_Beni.Pg_Inventario =  Amm.Pg_Inventario
    And Inventario_Beni.Nr_Inventario =	Amm.Nr_Inventario
-   And Inventario_Beni.Progressivo  = 	Amm.Progressivo) And
-   Not Exists( Select 1 From AMMORTAMENTO_BENE_INV AMM Where
-       Amm.Pg_Inventario = Ass.Pg_Inventario_Origine
-   And Amm.Nr_Inventario = Ass.Nr_Inventario_Origine
-   And Amm.Progressivo = Ass.Progressivo_Origine)
+   And Inventario_Beni.Progressivo  = 	Amm.Progressivo)
   );
   End;
 /
