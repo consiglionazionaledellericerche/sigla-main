@@ -1,5 +1,37 @@
-## Release 6.6.22  -- _January 02, 2025_ 
+## Release 6.6.23  -- _February 17, 2025_ 
 **Changes**
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[71c18bec8ad188f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/71c18bec8ad188f) marco.spasiano *February 17, 2025*
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[ea48f3e99787ad5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ea48f3e99787ad5) marco.spasiano *February 17, 2025*
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[0e6a5036da2598e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0e6a5036da2598e) marco.spasiano *February 17, 2025*
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[31d252a509f882c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31d252a509f882c) marco.spasiano *February 17, 2025*
+
+>**Aggiunto l'esercizio di chiusura**
+>
+>[008af85d3e6f33f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/008af85d3e6f33f) marco.spasiano *February 17, 2025*
+
+>**Fix views**
+>
+>[0f1997e17bcd611](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f1997e17bcd611) raffaele.pagano *February 14, 2025*
+
+>**Fix views**
+>
+>[7bacbcb39048081](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bacbcb39048081) raffaele.pagano *February 14, 2025*
+
+>**Fix views**
+>
+>[87ba4b34864b0e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/87ba4b34864b0e6) raffaele.pagano *February 11, 2025*
 
 >**Eliminato il tipo riscossione "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA" secondo le nuove regole OPI**
 >
