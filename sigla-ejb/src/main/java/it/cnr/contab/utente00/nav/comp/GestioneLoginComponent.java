@@ -233,10 +233,8 @@ public class GestioneLoginComponent
             it.cnr.jada.persistency.sql.SQLBuilder sql = new it.cnr.jada.persistency.sql.SQLBuilder();
             sql.setHeader("SELECT DISTINCT ESERCIZIO.ESERCIZIO");
             sql.addTableToHeader("V_UTENTE_UNITA_ORGANIZZATIVA");
-            if (utente.isUtenteComune()) {
-                sql.addSQLClause("AND", "CD_UTENTE", SQLBuilder.EQUALS, utente.getCd_utente());
-            }
             sql.addTableToHeader("ESERCIZIO");
+            sql.addSQLClause("AND", "CD_UTENTE", SQLBuilder.EQUALS, utente.getCd_utente());
             sql.addSQLJoin("V_UTENTE_UNITA_ORGANIZZATIVA.ESERCIZIO","ESERCIZIO.ESERCIZIO");
             sql.addSQLClause("AND", "ESERCIZIO.ESERCIZIO >= ( SELECT IM01 FROM CONFIGURAZIONE_CNR WHERE CD_CHIAVE_PRIMARIA = 'ESERCIZIO_SPECIALE' AND CD_CHIAVE_SECONDARIA = 'ESERCIZIO_PARTENZA' )");
             sql.addSQLClause("AND", "ESERCIZIO.ESERCIZIO < ( SELECT IM01 FROM CONFIGURAZIONE_CNR WHERE CD_CHIAVE_PRIMARIA = 'ESERCIZIO_SPECIALE' AND CD_CHIAVE_SECONDARIA = 'ESERCIZIO_CHIUSURA' )");
