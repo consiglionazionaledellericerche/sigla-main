@@ -80,7 +80,7 @@ public abstract class Deployments {
 
         WebArchive webArchive = ShrinkWrap.create(WebArchive.class, name.concat(".war"))
                 .addPackages(true, testPackage)
-                .addPackages(true, "it.cnr.contab", "it.cnr.jada", "it.cnr.si", "it.cnr.test.util")
+                .addPackages(true, "it.cnr.contab", "it.cnr.jada", "it.cnr.si", "it.cnr.test.util", "it.cnr.perlapa")
                 .addPackages(true, "it.gov")
                 .addPackages(true, "it.siopeplus")
                 .addPackages(true, "org.apache")
