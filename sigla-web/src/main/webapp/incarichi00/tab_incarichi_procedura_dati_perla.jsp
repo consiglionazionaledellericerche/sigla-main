@@ -38,10 +38,11 @@
 		<tr><% bp.getController().writeFormField(out,"procedura_amministrativa_beneficiario");%></tr>
 	</table>
 </div>
-<% if (incarico!=null && (incarico.getIdPerla()!=null || incarico.getAnomalia_perla()!=null)) { %>
+<% if (incarico!=null && (incarico.getIdPerla()!=null || incarico.getIdPerlaNew()!=null || incarico.getAnomalia_perla()!=null)) { %>
 <div class="Group card m-2 p-2">
     <table class="Panel w-100" cellspacing=2>
 		<tr><% controller.writeFormField(out,"idPerla");%></tr>
+		<tr><% controller.writeFormField(out,"idPerlaNew");%></tr>
 		<tr><% controller.writeFormField(out,"anomalia_perla");%></tr>
 	</table>
 </div>

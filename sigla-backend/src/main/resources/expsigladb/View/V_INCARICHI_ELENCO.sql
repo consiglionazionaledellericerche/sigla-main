@@ -2,7 +2,7 @@
 --  DDL for View V_INCARICHI_ELENCO
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_INCARICHI_ELENCO" ("ESERCIZIO", "PG_REPERTORIO", "CD_TIPO_ATTIVITA", "CD_CDS", "DS_CDS", "CD_UNITA_ORGANIZZATIVA", "DS_UNITA_ORGANIZZATIVA", "BENEF_CODICE_FISCALE", "BENEF_PARTITA_IVA", "BENEF_DENOMINAZIONE_SEDE", "RESP_DENOMINAZIONE_SEDE", "FIRM_DENOMINAZIONE_SEDE", "NOMINATIVO", "OGGETTO", "IMPORTO_LORDO", "IMPORTO_VARIAZIONE", "DT_INIZIO_VALIDITA", "DT_FINE_VALIDITA", "DT_PROROGA", "DT_FINE_VALIDITA_VARIAZIONE", "DT_STIPULA", "DS_PROVVEDIMENTO", "ESERCIZIO_PROCEDURA", "PG_PROCEDURA", "DS_TIPO_NORMA", "DS_PROC_AMM", "DT_DICHIARAZIONE", "IDPERLA", "CODICEAOOIPA") AS
+  CREATE OR REPLACE FORCE VIEW "V_INCARICHI_ELENCO" ("ESERCIZIO", "PG_REPERTORIO", "CD_TIPO_ATTIVITA", "CD_CDS", "DS_CDS", "CD_UNITA_ORGANIZZATIVA", "DS_UNITA_ORGANIZZATIVA", "BENEF_CODICE_FISCALE", "BENEF_PARTITA_IVA", "BENEF_DENOMINAZIONE_SEDE", "RESP_DENOMINAZIONE_SEDE", "FIRM_DENOMINAZIONE_SEDE", "NOMINATIVO", "OGGETTO", "IMPORTO_LORDO", "IMPORTO_VARIAZIONE", "DT_INIZIO_VALIDITA", "DT_FINE_VALIDITA", "DT_PROROGA", "DT_FINE_VALIDITA_VARIAZIONE", "DT_STIPULA", "DS_PROVVEDIMENTO", "ESERCIZIO_PROCEDURA", "PG_PROCEDURA", "DS_TIPO_NORMA", "DS_PROC_AMM", "DT_DICHIARAZIONE", "IDPERLA", "IDPERLANEW", "CODICEAOOIPA") AS
   (SELECT incarichi_repertorio.esercizio, incarichi_repertorio.pg_repertorio,
            incarichi_procedura.cd_tipo_attivita, incarichi_repertorio.cd_cds,
            cds.ds_unita_organizzativa, uo.cd_unita_organizzativa,
@@ -57,6 +57,7 @@
             incarichi_repertorio.esercizio =  incarichi_repertorio_rapp.esercizio(+) and
        			incarichi_repertorio.pg_repertorio =  incarichi_repertorio_rapp.pg_repertorio(+)) dt_dichiarazione,
        	   incarichi_repertorio.idperla,
+       	   incarichi_repertorio.idperlanew,
        	   cds.codiceaooipa
 --
 -- Date: 05/03/2010

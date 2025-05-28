@@ -53,7 +53,7 @@
 		</property>
 	</bean>
 
-	<context:component-scan base-package="it.cnr.contab.config, it.cnr.contab.spring, it.cnr.contab.service, it.cnr.si" />
+	<context:component-scan base-package="it.cnr.contab.config, it.cnr.contab.spring, it.cnr.contab.service, it.cnr.si, it.cnr.perlapa" />
 
 	<import resource="classpath*:it/cnr/contab/storage/service/storage-service-context.xml"/>
 	<import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>
@@ -135,6 +135,7 @@
 	<bean id="arubaSignServiceClient" class="it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient">
 		<property name="props" ref="props-aruba"></property>
 	</bean>
+	<bean id="perlaService" class="it.cnr.perlapa.service.PerlaService"/>
 
 
 	<!-- scheduler -->

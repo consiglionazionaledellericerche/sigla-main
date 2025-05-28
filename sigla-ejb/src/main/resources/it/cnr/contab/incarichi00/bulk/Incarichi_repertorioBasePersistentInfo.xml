@@ -222,6 +222,12 @@
 			columnSize="20"
 			nullable="true" />
 		<columnMapping
+			columnName="idPerlaNew"
+			propertyName="idPerlaNew"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
 			columnName="anomalia_perla"
 			propertyName="anomalia_perla"
 			sqlTypeName="VARCHAR"
@@ -294,6 +300,8 @@
 	    name="dt_efficacia" />
 	<persistentProperty
 		name="idPerla" />
+	<persistentProperty
+		name="idPerlaNew" />
 	<persistentProperty
 		name="anomalia_perla" />
 </SQLPersistentInfo>

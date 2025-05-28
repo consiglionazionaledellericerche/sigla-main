@@ -178,6 +178,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="20"
 			nullable="true" />
+		<columnMapping
+			columnName="IDPERLANEW"
+			propertyName="idPerlaNew"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -232,4 +238,6 @@
 		name="codiceAooIpa" />
 	<persistentProperty
 		name="idPerla" />
+	<persistentProperty
+		name="idPerlaNew" />
 </SQLPersistentInfo>

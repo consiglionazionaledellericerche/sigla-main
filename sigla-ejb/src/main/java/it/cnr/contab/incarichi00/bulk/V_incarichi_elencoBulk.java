@@ -125,6 +125,8 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 
 	private Integer idPerla;
 
+	private String idPerlaNew;
+
 	private String codiceAooIpa;
 
 	public java.lang.Integer getEsercizio() {
@@ -334,6 +336,14 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 
 	public void setIdPerla(Integer idPerla) {
 		this.idPerla = idPerla;
+	}
+
+	public String getIdPerlaNew() {
+		return idPerlaNew;
+	}
+
+	public void setIdPerlaNew(String idPerlaNew) {
+		this.idPerlaNew = idPerlaNew;
 	}
 
 	public String getCodiceAooIpa() {

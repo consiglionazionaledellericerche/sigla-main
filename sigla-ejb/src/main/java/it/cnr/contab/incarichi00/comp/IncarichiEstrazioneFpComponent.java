@@ -23,6 +23,7 @@ package it.cnr.contab.incarichi00.comp;
  */
 
 import com.opencsv.CSVReader;
+import feign.FeignException;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -57,25 +58,21 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.perlapa.PerlaIncarico;
-import it.cnr.perlapa.incarico.*;
-import it.cnr.perlapa.incarico.consulente.Allegati;
-import it.cnr.perlapa.incarico.consulente.DatiIncarico;
-import it.cnr.perlapa.incarico.consulente.PercettorePf;
-import it.cnr.perlapa.incarico.consulente.PercettorePg;
-import it.cnr.perlapa.utils.PerlaException;
+import it.cnr.perlapa.service.PerlaService;
+import it.cnr.perlapa.service.dto.anagrafica.*;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.bulk.StorageFile;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.xml.sax.InputSource;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.*;
 import java.io.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.rmi.RemoteException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -767,6 +764,58 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		return pagato;
 	}
 
+	public Map<Integer,BigDecimal> getPagatoIncaricoByAnno(UserContext userContext, Incarichi_repertorioBulk incarico) throws ComponentException
+	{
+		Map<Integer,BigDecimal> mapPagato = new HashMap<>();
+		CompensoHome cHome = (CompensoHome)getHome(userContext, CompensoBulk.class);
+		Mandato_rigaHome mrHome = (Mandato_rigaHome)getHome(userContext, Mandato_rigaIBulk.class);
+		Iterator listacomp_incarico;
+		try {
+			listacomp_incarico = cHome.findCompensoIncaricoList(userContext,incarico).iterator();
+
+			for (Iterator x =listacomp_incarico;x.hasNext();) {
+				CompensoBulk dett = (CompensoBulk) x.next();
+
+				SQLBuilder sqlMr = mrHome.createSQLBuilder();
+				sqlMr.addClause(FindClause.AND, "esercizio_obbligazione", SQLBuilder.EQUALS, dett.getEsercizio_obbligazione());
+				sqlMr.addClause(FindClause.AND, "pg_obbligazione", SQLBuilder.EQUALS, dett.getPg_obbligazione());
+				sqlMr.addClause(FindClause.AND, "pg_obbligazione_scadenzario", SQLBuilder.EQUALS, dett.getPg_obbligazione_scadenzario());
+				sqlMr.addClause(FindClause.AND, "esercizio_ori_obbligazione", SQLBuilder.EQUALS, dett.getEsercizio_ori_obbligazione());
+				sqlMr.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, dett.getCd_cds());
+				sqlMr.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, dett.getCd_unita_organizzativa());
+				sqlMr.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, dett.getEsercizio());
+				sqlMr.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, dett.getPg_compenso());
+
+				List listMr = mrHome.fetchAll(sqlMr);
+				getHomeCache(userContext).fetchAll(userContext);
+
+				Timestamp dataPagamento = null;
+				for (Iterator iterator = listMr.iterator(); iterator.hasNext(); ) {
+					Mandato_rigaBulk mrBulk = (Mandato_rigaBulk) iterator.next();
+					if (!mrBulk.getMandato().getStato().equals(MandatoBulk.STATO_MANDATO_ANNULLATO) &&
+							mrBulk.getMandato().getDt_trasmissione() != null) {
+						dataPagamento = mrBulk.getMandato().getDt_trasmissione();
+						break;
+					}
+				}
+				if (dataPagamento != null) {
+					long timestamp = dataPagamento.getTime();
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(timestamp);
+					int annoPag = cal.get(Calendar.YEAR);
+					if (mapPagato.containsKey(annoPag))
+						mapPagato.replace(annoPag, mapPagato.get(annoPag).add(dett.getIm_lordo_percipiente()));
+					else
+						mapPagato.put(annoPag, dett.getIm_lordo_percipiente());
+				}
+			}
+		} catch (it.cnr.jada.persistency.PersistencyException | it.cnr.jada.persistency.IntrospectionException e) {
+			throw handleException(e);
+		}
+		return mapPagato;
+	}
+
+	/*
 	private IncaricoConsulente generaNuovoConsulentePerla2018(UserContext userContext, V_incarichi_elenco_fpBulk v_incarico) throws ComponentException {
 		Incarichi_repertorioBulk incarico = v_incarico.getIncaricoRepertorio();
 		IncaricoConsulente incaricoPerla = new IncaricoConsulente();
@@ -977,85 +1026,342 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		}
 		return incaricoPerla;
 	}
+*/
+	private IncaricoConsulenteWebDto generaNuovoConsulentePerla2018(UserContext userContext, V_incarichi_elenco_fpBulk v_incarico) throws ComponentException {
+		Incarichi_repertorioBulk incarico = v_incarico.getIncaricoRepertorio();
+		IncaricoConsulenteWebDto incaricoPerla = new IncaricoConsulenteWebDto();
 
-	public List<String> getAnomalie(V_incarichi_elenco_fpBulk v_incarico, IncaricoConsulente consulentePerla) {
+		//ATTESTAZIONE VERIFICA INSUSSISTENZA
+		if (incarico.getConflittoInteressi()!=null && incarico.getConflittoInteressi().getCms_node_ref()!=null)
+			incaricoPerla.setVerificaInsussistenza(Boolean.TRUE);
+		else
+			incaricoPerla.setVerificaInsussistenza(Boolean.FALSE);
+
+		//TODO
+		//Metto UsoRiferimentoRegolamento a FALSE altrimenti chiede anche campo RiferimentoRegolamento
+		//RIFERIMENTO REGOLAMENTO
+		//Y= si è fatto riferimento ad un regolamento adottato dall'amministrazione,
+		//N= non si è fatto riferimento ad un regolamento adottato dall'amministrazione
+		incaricoPerla.setUsoRiferimentoRegolamento(Boolean.FALSE);
+		//incaricoPerla.setRiferimentoRegolamento("Y");
+
+		//ComponentiVariabilCompenso
+		incaricoPerla.setComponenteVariabileCompenso(Boolean.FALSE);
+
+		//TODO
+		//Sono obbligato a mettere consulenteInformato a TRUE
+		incaricoPerla.setConsulenteInformato(Boolean.TRUE);
+
+		PerlaService perlaService = SpringUtil.getBean(PerlaService.class);
+
+		List<ConfigurazioneWebDto> configurazioni = perlaService.getConfigurazioneConsulente();
+
+		//TODO
+		//DA DOVE PRENDO I VALORI??
+		incaricoPerla.setServizioIstituzionePubblicaId(configurazioni.stream()
+				.filter(el->el.getDescrizione().equals("servizioIstituzionePubblica"))
+				.flatMap(el-> el.getElementi().stream())
+				.filter(el->el.getCodice().equals("016"))
+				.flatMap(el-> el.getChildren().stream())
+				.filter(el->el.getCodice().equals("59"))
+				.findFirst().map(ElementiChildrenWebDto::getId).orElse(null));
+
+		//TIPO DI RAPPORTO
+		if (incarico.getIncarichi_procedura().getTipo_incarico().getTipoRapporto().getFl_inquadramento().booleanValue())
+			incaricoPerla.setTipoRapportoId(configurazioni.stream()
+					.filter(el->el.getDescrizione().equals("tipoRapporto"))
+					.flatMap(el-> el.getElementi().stream())
+					.filter(el->el.getDescrizione().equals("collaborazione"))
+					.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null));
+		else
+			incaricoPerla.setTipoRapportoId(configurazioni.stream()
+					.filter(el->el.getDescrizione().equals("tipoRapporto"))
+					.flatMap(el-> el.getElementi().stream())
+					.filter(el->el.getDescrizione().equals("prestazioneoccasionale"))
+					.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null));
+
+		// NATURA CONFERIMENTO
+		if (incarico.getIncarichi_procedura().getTipo_prestazione()!=null && incarico.getIncarichi_procedura().getTipo_prestazione().getTipo_classificazione()!=null) {
+			if (incarico.getIncarichi_procedura().getTipo_prestazione().isPrevistaDaNormeDiLegge())
+				incaricoPerla.setNaturaConferimentoId(configurazioni.stream()
+						.filter(el->el.getDescrizione().equals("naturaConferimento"))
+						.flatMap(el-> el.getElementi().stream())
+						.filter(el->el.getDescrizione().equals("vincolata"))
+						.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //DI NATURA VINCOLATA
+			else
+				incaricoPerla.setNaturaConferimentoId(configurazioni.stream()
+						.filter(el->el.getDescrizione().equals("naturaConferimento"))
+						.flatMap(el-> el.getElementi().stream())
+						.filter(el->el.getDescrizione().equals("discrezionale"))
+						.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //DI NATURA DISCREZIONALE
+		} else
+			incaricoPerla.setNaturaConferimentoId(configurazioni.stream()
+					.filter(el->el.getDescrizione().equals("naturaConferimento"))
+					.flatMap(el-> el.getElementi().stream())
+					.filter(el->el.getDescrizione().equals("discrezionale"))
+					.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //DI NATURA DISCREZIONALE
+
+		//PERCETTORE
+
+		//ESTERO
+		//Se trattasi di consulente estero che ha il codice fiscale valorizzato metto il campo estero a "false" così come indicato dalla Dott.ssa Paola Sarti
+		//della Funzione Pubblica altrimenti metto quello corretto
+		boolean terzoEstero=false;
+		if (incarico.getTerzo().getAnagrafico().getCodice_fiscale()==null ||
+				incarico.getTerzo().getAnagrafico().getCodice_fiscale().length()!=16){
+			try{
+				terzoEstero = !NazioneBulk.ITALIA.equals(incarico.getTerzo().getAnagrafico().getComune_nascita().getTi_italiano_estero());
+			} catch (Exception e){
+			}
+		}
+
+		if (incarico.getTerzo().getAnagrafico().isPersonaFisica()) {
+			PersonaFisicaWebDto percettorePf = new PersonaFisicaWebDto();
+
+			percettorePf.setEstero(terzoEstero);
+			if (!terzoEstero) {
+				//CODICE FISCALE
+				try {
+					percettorePf.setCodiceFiscale(incarico.getTerzo().getAnagrafico().getCodice_fiscale());
+				} catch (Exception e) {
+				}
+			} else {
+				//COGNOME
+				try {
+					percettorePf.setCognome(incarico.getTerzo().getAnagrafico().getCognome());
+				} catch (Exception e) {
+				}
+				//NOME
+				try {
+					percettorePf.setNome(incarico.getTerzo().getAnagrafico().getNome());
+				} catch (Exception e) {
+				}
+				//SESSO
+				try {
+					percettorePf.setGenere(incarico.getTerzo().getAnagrafico().getTi_sesso());
+				} catch (Exception e) {
+				}
+				//DATA NASCITA
+				percettorePf.setDataNascita(incarico.getTerzo().getAnagrafico().getDt_nascita());
+			}
+			incaricoPerla.setPercettorePersonaFisica(percettorePf);
+		} else {
+			PersonaGiuridicaWebDto percettorePg = new PersonaGiuridicaWebDto();
+			percettorePg.setEstero(terzoEstero);
+
+			if (!terzoEstero) {
+				//CODICE FISCALE
+				try {
+					percettorePg.setCodiceFiscale(incarico.getTerzo().getAnagrafico().getCodice_fiscale());
+				} catch (Exception e) {
+				}
+			} else
+				percettorePg.setDenominazione(incarico.getTerzo().getDenominazione_sede());
+			incaricoPerla.setPercettorePersonaGiuridica(percettorePg);
+		}
+		//FINE PERCETTORE
+
+		//DESCRIZIONE INCARICO
+		StringBuffer descrizione = new StringBuffer();
+		descrizione.append("("+incarico.getEsercizio()+'/'+incarico.getPg_repertorio()+")");
+		descrizione.append(" - "+incarico.getIncarichi_procedura().getOggetto());
+		incaricoPerla.setCampoTestualeOggetto(descrizione.length()>200?descrizione.substring(0, 199):descrizione.toString());
+
+		//TODO
+		//DA DOVE PRENDO I VALORI??
+		//DESCRIZIONE INCARICO
+		incaricoPerla.setOggettoIncaricoConsulenteId(configurazioni.stream()
+				.filter(el->el.getDescrizione().equals("oggettoIncarico"))
+				.flatMap(el-> el.getElementi().stream())
+				.filter(el->el.getDescrizione().equals("Altre Tipologie"))
+				.findFirst().map(ElementiWebDto::getId).orElse(null));
+
+
+		//TODO - Obbligatorio
+		//DA DOVE PRENDO I VALORI??
+		/*
+		incaricoPerla.setAmbitoTematicoConsulenteId(configurazioni.stream()
+				.filter(el->el.getDescrizione().equals("ambitoTematico"))
+				.flatMap(el-> el.getElementi().stream())
+				.filter(el->el.getDescrizione().equals("Altre Tipologie"))
+				.findFirst().map(ElementiWebDto::getId).orElse(null)); //DI NATURA DISCREZIONALE
+*/
+		//ALLEGATI
+		//CURRICULUM VITAE
+		try {
+			Optional.ofNullable(incarico.getCurriculumVincitore()).flatMap(el->Optional.ofNullable(el.getCms_node_ref())).ifPresent(cmsNodeRef-> {
+				InputStream inputStream = SpringUtil.getBean("storeService", StoreService.class).getResource(cmsNodeRef);
+                try {
+                    incaricoPerla.setCurriculumVitaeBase64(convert(inputStream));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+		} catch (Throwable e) {
+		}
+
+		//DICHIARAZIONE INCARICHI - VIENE ALLEGATA LA DICHIARAZIONE DI INSUSSISTENZA CONFLITTI DI INTERESSI CHE AL SUO INTERNO HA LA DICHIARAZIONE ALTRI RAPPORTI
+		try {
+			Optional.ofNullable(incarico.getConflittoInteressi()).flatMap(el->Optional.ofNullable(el.getCms_node_ref())).ifPresent(cmsNodeRef-> {
+				InputStream inputStream = SpringUtil.getBean("storeService", StoreService.class).getResource(cmsNodeRef);
+				try {
+					incaricoPerla.setDichiarazioneSvolgimentoAltriIncarichiBase64(convert(inputStream));
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
+		} catch (Throwable e) {
+		}
+
+		//DATA INIZIO
+		incaricoPerla.setDataInizio(v_incarico.getDt_inizio_validita());
+
+		incaricoPerla.setSitoTrasparenza("https://www.cnr.it/it/amministrazione-trasparente");
+
+		//DATA FINE
+		GregorianCalendar gcdf = new GregorianCalendar();
+		gcdf.setTime(v_incarico.getDt_fine_validita_variazione()==null?v_incarico.getDt_fine_validita():v_incarico.getDt_fine_validita_variazione());
+		incaricoPerla.setDataFine(gcdf.getTime());
+
+		//DATA AFFIDAMENTO
+		GregorianCalendar gcds = new GregorianCalendar();
+		gcds.setTime(v_incarico.getDt_stipula());
+		incaricoPerla.setDataConferimento(gcds.getTime());
+		incaricoPerla.setAnnoRiferimento(gcds.get(Calendar.YEAR));
+
+		//COMPENSO
+		incaricoPerla.setCompenso(v_incarico.getImporto_lordo_con_variazioni().setScale(2));
+
+		// TIPO COMPENSO
+		// 1 PREVISTO, 2 PRESUNTO
+		incaricoPerla.setTipoCompensoId(configurazioni.stream()
+					.filter(el->el.getDescrizione().equals("tipoCompenso"))
+					.flatMap(el-> el.getElementi().stream())
+					.filter(el->el.getDescrizione().equals("previsto"))
+					.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //PREVISTO
+
+		//PAGATO
+		incaricoPerla.setConcludiIncarico(Boolean.FALSE);
+		if (incaricoPerla.getCompenso().compareTo(BigDecimal.ZERO) != 0) {
+			Map<Integer,BigDecimal> importoPagato = this.getPagatoIncaricoByAnno(userContext, incarico);
+			BigDecimal totPagato = importoPagato.values().stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+			if (totPagato.compareTo(incaricoPerla.getCompenso()) < 0)
+				incaricoPerla.setTipoSaldoId(configurazioni.stream()
+						.filter(el->el.getDescrizione().equals("tipoSaldo"))
+						.flatMap(el-> el.getElementi().stream())
+						.filter(el->el.getDescrizione().equals("nonsaldato"))
+						.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //NON SALDATO
+			else {
+				incaricoPerla.setTipoSaldoId(configurazioni.stream()
+						.filter(el -> el.getDescrizione().equals("tipoSaldo"))
+						.flatMap(el -> el.getElementi().stream())
+						.filter(el -> el.getDescrizione().equals("saldato"))
+						.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //SALDATO
+				//TODO
+				//Metto il compenso uguale al pagato se pagato maggiore compenso
+				incaricoPerla.setCompenso(totPagato);
+				incaricoPerla.setConcludiIncarico(Boolean.TRUE);
+			}
+
+			//PAGAMENTI
+			List<PagamentoWebDto> listPagamenti = new ArrayList<>();
+			importoPagato.keySet().forEach(anno->{
+				PagamentoWebDto pagamentoWebDto = new PagamentoWebDto();
+				pagamentoWebDto.setAnnoRiferimento(anno);
+				pagamentoWebDto.setCompenso(importoPagato.get(anno));
+				listPagamenti.add(pagamentoWebDto);
+			});
+			incaricoPerla.setPagamenti(listPagamenti);
+		} else
+			incaricoPerla.setTipoSaldoId(configurazioni.stream()
+					.filter(el->el.getDescrizione().equals("tipoSaldo"))
+					.flatMap(el-> el.getElementi().stream())
+					.filter(el->el.getDescrizione().equals("gratuito"))
+					.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //GRATUITO
+
+		//ATTO CONFERIMENTO - estremiIncarico
+		StringBuilder atto = new StringBuilder();
+		if (incarico.getCd_provv()!=null)
+			atto.append(incarico.getCd_provv());
+		if (atto.length()>0 && incarico.getNr_provv()!=null)
+			atto.append("/");
+		atto.append(incarico.getNr_provv());
+		if (atto.length()>0 && incarico.getDt_provv()!=null)
+			atto.append(" del ");
+		atto.append(new java.text.SimpleDateFormat("dd/MM/yyyy").format(incarico.getDt_provv()));
+		incaricoPerla.setEstremiIncarico(atto.toString());
+
+		//RIFERIMENTO NORMATIVO (Obbligatorio soltanto se l’incarico è stato conferito in applicazione di una specifica norma)
+		if (Optional.ofNullable(incarico.getIncarichi_procedura().getTipo_norma_perla()).isPresent() &&
+				incarico.getIncarichi_procedura().getTipo_norma_perla().getCd_tipo_norma().equals("67")) {
+			//RIFERIMENTO NORMATIVO (GESTIONE TABELLA TIPO_NORMA_PERLA)
+			incaricoPerla.setDataRiferimentoNorma(incarico.getIncarichi_procedura().getTipo_norma_perla().getDt_tipo_norma());
+			incaricoPerla.setNumeroRiferimentoNorma(incarico.getIncarichi_procedura().getTipo_norma_perla().getNumero_tipo_norma());
+			incaricoPerla.setArticoloRiferimentoNorma(incarico.getIncarichi_procedura().getTipo_norma_perla().getArticolo_tipo_norma());
+			incaricoPerla.setCommaRiferimentoNorma(incarico.getIncarichi_procedura().getTipo_norma_perla().getComma_tipo_norma());
+			incaricoPerla.setTipologiaNormaId(configurazioni.stream()
+					.filter(el->el.getDescrizione().equals("tipologiaNorma"))
+					.flatMap(el-> el.getElementi().stream())
+					.filter(el->el.getCodice().equals("34"))
+					.findFirst().map(ElementiWebDto::getId).orElse(null)); //34 - D.Lgs.
+		}
+
+		return incaricoPerla;
+	}
+
+	public List<String> getAnomalie(V_incarichi_elenco_fpBulk v_incarico, IncaricoConsulenteWebDto consulentePerla) {
 		List<String> listAnomalie = new ArrayList<String>();
 		Incarichi_repertorioBulk incarico = v_incarico.getIncaricoRepertorio();
-		if (Optional.ofNullable(consulentePerla.getPercettorePf()).isPresent()) {
-			if (consulentePerla.getPercettorePf().getCodiceFiscale() == null)
-				listAnomalie.add("Manca il codice fiscale del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
-			if (consulentePerla.getPercettorePf().getCognome() == null)
-				listAnomalie.add("Manca il cognome del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
-			if (consulentePerla.getPercettorePf().getNome() == null)
-				listAnomalie.add("Manca il nome del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
-			if (consulentePerla.getPercettorePf().getGenere() == null)
-				listAnomalie.add("Manca il sesso del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
-			if (consulentePerla.getPercettorePf().getDataNascita() == null)
-				listAnomalie.add("Manca la data di nascita del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
-			if (consulentePerla.getPercettorePf().getEstero().equals(YesNoEnum.N) &&
-					(consulentePerla.getPercettorePf().getComuneNascita() == null || consulentePerla.getPercettorePf().getComuneNascita().equals("*")))
-				listAnomalie.add("Manca il codice catastale del comune di nascita del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
+		if (Optional.ofNullable(consulentePerla.getPercettorePersonaFisica()).isPresent()) {
+			if (consulentePerla.getPercettorePersonaFisica().getEstero()) {
+				if (consulentePerla.getPercettorePersonaFisica().getCognome() == null)
+					listAnomalie.add("Manca il cognome del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
+				if (consulentePerla.getPercettorePersonaFisica().getNome() == null)
+					listAnomalie.add("Manca il nome del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
+				if (consulentePerla.getPercettorePersonaFisica().getGenere() == null)
+					listAnomalie.add("Manca il sesso del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
+				if (consulentePerla.getPercettorePersonaFisica().getDataNascita() == null)
+					listAnomalie.add("Manca la data di nascita del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
+			} else {
+				if (consulentePerla.getPercettorePersonaFisica().getCodiceFiscale() == null)
+					listAnomalie.add("Manca il codice fiscale del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
+			}
 		}
-		if (Optional.ofNullable(consulentePerla.getPercettorePg()).isPresent()) {
-			if (consulentePerla.getPercettorePg().getEstero().equals(YesNoEnum.N) && consulentePerla.getPercettorePg().getCodiceFiscale() == null)
+		if (Optional.ofNullable(consulentePerla.getPercettorePersonaGiuridica()).isPresent()) {
+			if (consulentePerla.getPercettorePersonaGiuridica().getEstero() && consulentePerla.getPercettorePersonaGiuridica().getCodiceFiscale() == null)
 				listAnomalie.add("Manca il codice fiscale del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
-			if (consulentePerla.getPercettorePg().getDenominazione() == null)
+			if (consulentePerla.getPercettorePersonaGiuridica().getDenominazione() == null)
 				listAnomalie.add("Manca il nominativo del terzo (cod." + incarico.getTerzo().getCd_terzo() + ")");
 		}
-		if (consulentePerla.getDatiIncarico().getOggettoIncarico()==null)
+		if (consulentePerla.getCampoTestualeOggetto()==null)
 			listAnomalie.add("Manca l'oggetto dell'incarico.");
-		if (consulentePerla.getDatiIncarico().getDataConferimento()==null)
+		if (consulentePerla.getDataConferimento()==null)
 			listAnomalie.add("Manca la data di conferimento dell'incarico.");
-		if (consulentePerla.getDatiIncarico().getDataInizio()==null)
+		if (consulentePerla.getDataInizio()==null)
 			listAnomalie.add("Manca la data di inizio dell'incarico.");
-		if (consulentePerla.getDatiIncarico().getEstremiAttoConferimento()==null)
-			listAnomalie.add("Mancano gli estremi dell'atto di conferimento dell'incarico.");
-		if (consulentePerla.getDatiIncarico().getTipoRapporto()==null)
+
+		if (consulentePerla.getTipoRapportoId()==null)
 			listAnomalie.add("Manca l'indicazione del tipo di rapporto dell'incarico.");
-		if (consulentePerla.getDatiIncarico().getNaturaConferimento()==null)
+		if (consulentePerla.getNaturaConferimentoId()==null)
 			listAnomalie.add("Manca l'indicazione della natura conferimento dell'incarico.");
-		if (Optional.ofNullable(consulentePerla.getPercettorePf()).isPresent()) {
-			if (consulentePerla.getDatiIncarico().getAttestazioneVerificaInsussistenza()==null)
+		if (Optional.ofNullable(consulentePerla.getPercettorePersonaFisica()).isPresent()) {
+			if (consulentePerla.getDichiarazioneSvolgimentoAltriIncarichiBase64()==null)
 				listAnomalie.add("Manca l'indicazione della presenza dell'attestazione verifica insussistenza.");
 		}
-		if (consulentePerla.getDatiIncarico().getRiferimentoRegolamento()==null)
-			listAnomalie.add("Manca l'indicazione se l'incarico è stato assegnato con riferimento ad un regolamento dell'amministrazione.");
+//		if (consulentePerla.getRiferimentoRegolamento()==null)
+//			listAnomalie.add("Manca l'indicazione se l'incarico è stato assegnato con riferimento ad un regolamento dell'amministrazione.");
 
-		if (consulentePerla.getDatiEconomici().getTipoCompenso()==null)
+		if (consulentePerla.getTipoCompensoId()==null)
 			listAnomalie.add("Manca l'indicazione della tipologia di compenso.");
-		if (consulentePerla.getDatiEconomici().getCompenso()==null)
+		if (consulentePerla.getCompenso()==null)
 			listAnomalie.add("Manca l'indicazione dell'importo del compenso.");
-		if (consulentePerla.getDatiEconomici().getAmmontareErogato()==null)
-			listAnomalie.add("Manca l'indicazione dell'importo del compenso erogato.");
-		if (consulentePerla.getDatiEconomici().getIncaricoSaldato()==null)
+		if (consulentePerla.getTipoSaldoId()==null)
 			listAnomalie.add("Manca l'indicazione se il compenso è stato saldato.");
-		if (consulentePerla.getDatiEconomici().getIncaricoSaldato().equals(YesNoEnum.Y) && consulentePerla.getDatiEconomici().getDataFine()==null)
-			listAnomalie.add("Manca l'indicazione della data di fine dell'incarico saldato.");
-		if (consulentePerla.getDatiEconomici().getTipoCompenso().equals(TipoCompensoEnum.GRATUITO)) {
-			if (consulentePerla.getDatiEconomici().getAmmontareErogato().compareTo(BigDecimal.ZERO) > 0)
-				listAnomalie.add("L'incarico gratuito deve risultare di importo zero.");
-			if (!consulentePerla.getDatiEconomici().getIncaricoSaldato().equals(YesNoEnum.N))
-				listAnomalie.add("L'incarico gratuito deve risultare non saldato.");
-			if (!consulentePerla.getDatiEconomici().getComponentiVariabilCompenso().equals(YesNoEnum.N))
-				listAnomalie.add("'incarico gratuito non deve avere componenti variabili del compenso.");
-		}
 
-		if (consulentePerla.getRiferimentoNormativo()!=null) {
-			if (consulentePerla.getRiferimentoNormativo().getRiferimento()==null)
-				listAnomalie.add("Manca l'indicazione del riferimento normativo.");
-			if (consulentePerla.getRiferimentoNormativo().getNumero()==null)
-				listAnomalie.add("Manca l'indicazione del numero del riferimento normativo.");
-			if (consulentePerla.getRiferimentoNormativo().getArticolo()==null)
-				listAnomalie.add("Manca l'indicazione dell'articolo del riferimento normativo.");
-			if (consulentePerla.getRiferimentoNormativo().getComma()==null)
-				listAnomalie.add("Manca l'indicazione del comma del riferimento normativo.");
-			if (consulentePerla.getRiferimentoNormativo().getData()==null)
-				listAnomalie.add("Manca l'indicazione della data del riferimento normativo.");
-		}
-		if (Optional.ofNullable(consulentePerla.getPercettorePf()).isPresent()) {
-			if (consulentePerla.getAllegati().getCurriculumVitae()==null)
+		if (Optional.ofNullable(consulentePerla.getPercettorePersonaFisica()).isPresent()) {
+			if (consulentePerla.getCurriculumVitaeBase64()==null)
 				listAnomalie.add("Manca l'allegato di tipo Curriculum Vitae.");
-			if (consulentePerla.getAllegati().getDichiarazioneIncarichi()==null)
+			if (consulentePerla.getDichiarazioneSvolgimentoAltriIncarichiBase64()==null)
 				listAnomalie.add("Manca l'allegato di tipo Dichiarazione Altri Incarichi.");
 		}
 		return listAnomalie;
@@ -1098,6 +1404,8 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 
 		IncarichiRepertorioComponentSession incRepComponent = Utility.createIncarichiRepertorioComponentSession();
 		IncarichiProceduraComponentSession incProcComponent = Utility.createIncarichiProceduraComponentSession();
+		Incarichi_repertorioBulk incarico = incaricoElenco.getIncaricoRepertorio();
+
 		try{
 			Incarichi_parametriBulk incarichiParametriBulk = incProcComponent.getIncarichiParametri(userContext, incaricoElenco.getIncaricoRepertorio().getIncarichi_procedura());
 
@@ -1105,86 +1413,38 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 			if (incarichiParametriBulk.getFl_invio_fp().equals("N"))
 				return;
 
-			IncaricoConsulente elementNuovoConsulentePerla = this.generaNuovoConsulentePerla2018(userContext, incaricoElenco);
-			if (elementNuovoConsulentePerla!=null) {
-				Incarichi_repertorioBulk incarico = incaricoElenco.getIncaricoRepertorio();
-
-				List<String> listaAnomalie = this.getAnomalie(incaricoElenco, elementNuovoConsulentePerla);
+			IncaricoConsulenteWebDto incaricoSigla = this.generaNuovoConsulentePerla2018(userContext, incaricoElenco);
+			if (incaricoSigla!=null) {
+				List<String> listaAnomalie = this.getAnomalie(incaricoElenco, incaricoSigla);
 				if (listaAnomalie.isEmpty()) {
-					if (incarico.getIdPerla()==null) {
-						try {
-							Long idPerla = PerlaIncarico.getInstance().inserisci(elementNuovoConsulentePerla);
-							incRepComponent.aggiornaDatiPerla(userContext, incarico, idPerla, null);
+					PerlaService perlaService = SpringUtil.getBean(PerlaService.class);
+					String idPerla;
+					if (!Optional.ofNullable(incarico.getIdPerla()).isPresent() && !Optional.ofNullable(incarico.getIdPerlaNew()).isPresent())
+						idPerla = perlaService.saveConsulente(incaricoSigla);
+					else {
+						idPerla = incarico.getIdPerlaNew();
+						if (!Optional.ofNullable(idPerla).isPresent())
+							idPerla = perlaService.getIdNewConsulente(incarico.getIdPerla());
+						IncaricoConsulenteWebDto incaricoPerla = perlaService.getConsulente(idPerla);
 
-							String xmlInserimento = PerlaIncarico.getInstance().getXmlInserimento(elementNuovoConsulentePerla);
-							storeXmlPerla(xmlInserimento, incarico.getCMISFolder().getCMISPath());
-						} catch(PerlaException perlaException){
-							throw new ApplicationException("Errore Inserimento WEB Perla: " + perlaException.getMessage());
-						}
-					} else {
-						ContrattiService contrattiService = SpringUtil.getBean(ContrattiService.class);
-
-						elementNuovoConsulentePerla.setId(incarico.getIdPerla().longValue());
-
-						//devo verificare che non è cambiato-.... se cambiato devo fare aggiornamento
-						InputStream inputStreamLastInserimento = contrattiService.getChildren(contrattiService.getStorageObjectByPath(incarico.getCMISFolder().getCMISPath()).getKey())
-								.stream()
-								.filter(doc->doc.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_COMUNICAZIONE_PERLAPA.value()))
-								.filter(doc->{
-									try {
-										return Optional.ofNullable(this.unmarshal(contrattiService.getResource(doc), it.gov.perlapa.incarichi.Comunicazione.class).getInserimentoincaricoconsulente()).isPresent();
-									} catch (Exception e) {
-									}
-									return false;
-								})
-								.max(Comparator.comparing(doc->doc.getPropertyValue("cmis:creationDate")))
-								.map(doc->contrattiService.getResource(doc)).orElse(null);
-
-						InputStream inputStreamLastVariazione = contrattiService.getChildren(contrattiService.getStorageObjectByPath(incarico.getCMISFolder().getCMISPath()).getKey())
-								.stream().filter(doc->doc.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_COMUNICAZIONE_PERLAPA.value()))
-								.filter(doc->{
-									try {
-										return Optional.ofNullable(this.unmarshal(contrattiService.getResource(doc), it.gov.perlapa.incarichi.Comunicazione.class).getVariazioneincaricococonsulente()).isPresent();
-									} catch (Exception e) {
-									}
-									return false;
-								})
-								.max(Comparator.comparing(doc->doc.getPropertyValue("cmis:creationDate")))
-								.map(doc->contrattiService.getResource(doc)).orElse(null);
-
-						//devo verificare che l'ultimo comando non sia la cancellazione.... vuol dire che si è verificato un problema durante un aggiornamento precedente e quindi procedo direttamente alla creazione dell'incarico
-						InputStream inputStreamLastComando = contrattiService.getChildren(contrattiService.getStorageObjectByPath(incarico.getCMISFolder().getCMISPath()).getKey())
-								.stream()
-								.filter(doc->doc.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_COMUNICAZIONE_PERLAPA.value()))
-								.max(Comparator.comparing(doc->doc.getPropertyValue("cmis:creationDate")))
-								.map(doc->contrattiService.getResource(doc)).orElse(null);
-
-						int tipoAzione = this.findAzione(elementNuovoConsulentePerla, inputStreamLastInserimento, inputStreamLastVariazione, inputStreamLastComando);
-
-						try {
-							if (tipoAzione == OggettoBulk.TO_BE_DELETED) {
-								PerlaIncarico.getInstance().elimina(elementNuovoConsulentePerla);
-								String xmlCancellazione = PerlaIncarico.getInstance().getXmlCancellazione(elementNuovoConsulentePerla);
-								storeXmlPerla(xmlCancellazione, incarico.getCMISFolder().getCMISPath());
-							}
-							if (tipoAzione == OggettoBulk.TO_BE_DELETED || tipoAzione == OggettoBulk.TO_BE_CREATED) {
-								Long idPerla = PerlaIncarico.getInstance().inserisci(elementNuovoConsulentePerla);
-								incRepComponent.aggiornaDatiPerla(userContext, incarico, idPerla, null);
-								String xmlInserimento = PerlaIncarico.getInstance().getXmlInserimento(elementNuovoConsulentePerla);
-								storeXmlPerla(xmlInserimento, incarico.getCMISFolder().getCMISPath());
-							} else if (tipoAzione == OggettoBulk.TO_BE_UPDATED) {
-								PerlaIncarico.getInstance().modifica(elementNuovoConsulentePerla);
-								String xmlVariazione = PerlaIncarico.getInstance().getXmlVariazione(elementNuovoConsulentePerla);
-								storeXmlPerla(xmlVariazione, incarico.getCMISFolder().getCMISPath());
-							}
-						} catch(PerlaException perlaException) {
-							throw new ApplicationException("Errore Aggiornamento WEB Perla: " + perlaException.getMessage());
-						}
+						if (!Objects.equals(incaricoPerla, incaricoSigla))
+							perlaService.updateConsulente(idPerla, incaricoSigla);
 					}
+
+					incRepComponent.aggiornaDatiPerla(userContext, incarico, idPerla, null);
 				} else
 					throw new ApplicationException(listaAnomalie.toString());
-			}else
+			} else
 				throw new ApplicationException("Errore generico - Contattare il servizio assistenza.");
+		} catch (FeignException e) {
+			String errorMessage = Optional.ofNullable(e.getMessage()).orElse("Errore generico - Contattare il servizio assistenza: "+e);
+			if (Optional.ofNullable(incarico).isPresent()) {
+                try {
+                    incRepComponent.aggiornaDatiPerla(userContext, incarico, null, errorMessage);
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
 		} catch (Exception e){
 			throw handleException(e);
 		}
@@ -1216,67 +1476,6 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 				true);
 	}
 
-	private int findAzione(IncaricoConsulente newIncaricoConsulente, InputStream inputStreamLastInserimento, InputStream inputStreamLastVariazione, InputStream inputStreamLastComando) throws Exception{
-		it.gov.perlapa.incarichi.Comunicazione lastComunicazione = this.unmarshal(inputStreamLastComando, it.gov.perlapa.incarichi.Comunicazione.class);
-		if (Optional.ofNullable(lastComunicazione.getCancellazioneincarico()).isPresent())
-			return OggettoBulk.TO_BE_CREATED;
-
-		String xmlLastInserimento = this.refreshXMLIncarico(IOUtils.toString(inputStreamLastInserimento));
-		String xmlLastVariazione = null;
-		if (inputStreamLastVariazione!=null)
-			xmlLastVariazione = this.refreshXMLIncarico(IOUtils.toString(inputStreamLastVariazione));
-
-		String xmlNewInserimento = this.refreshXMLIncarico(PerlaIncarico.getInstance().getXmlInserimento(newIncaricoConsulente));
-
-		String oldPercettore = this.getTag(xmlLastInserimento, "percettore");
-		String newPercettore = this.getTag(xmlNewInserimento, "percettore");
-
-		if (!oldPercettore.equals(newPercettore))
-			return OggettoBulk.TO_BE_DELETED;
-
-		if (!Optional.ofNullable(xmlLastVariazione).isPresent()) {
-			String oldIncarico = this.getTag(xmlLastInserimento, "datiincarico");
-			String newIncarico = this.getTag(xmlNewInserimento, "datiincarico");
-
-			if (!oldIncarico.equals(newIncarico))
-				return OggettoBulk.TO_BE_UPDATED;
-
-			String oldRifnorma = this.getTag(xmlLastInserimento, "riferimentonormativo");
-			String newRifnorma = this.getTag(xmlNewInserimento, "riferimentonormativo");
-
-			if (Optional.ofNullable(oldRifnorma).map(el->!el.equals(newRifnorma)).orElse(Optional.ofNullable(newRifnorma).isPresent()))
-				return OggettoBulk.TO_BE_UPDATED;
-
-			String oldAllegati = this.getTag(xmlLastInserimento, "allegati");
-			String newAllegati = this.getTag(xmlNewInserimento, "allegati");
-
-			if (Optional.ofNullable(oldAllegati).map(el->!el.equals(newAllegati)).orElse(Optional.ofNullable(newAllegati).isPresent()))
-				return OggettoBulk.TO_BE_UPDATED;
-
-		} else {
-			String xmlNewVariazione = StringUtils.substringBetween(PerlaIncarico.getInstance().getXmlVariazione(newIncaricoConsulente), "<incarico>", "</incarico>");
-
-			String oldIncarico = this.getTag(xmlLastVariazione, "datiincarico");
-			String newIncarico = this.getTag(xmlNewVariazione, "datiincarico");
-
-			if (!oldIncarico.equals(newIncarico))
-				return OggettoBulk.TO_BE_UPDATED;
-
-			String oldRifnorma = this.getTag(xmlLastVariazione, "riferimentonormativo");
-			String newRifnorma = this.getTag(xmlNewVariazione, "riferimentonormativo");
-
-			if (Optional.ofNullable(oldRifnorma).map(el->!el.equals(newRifnorma)).orElse(Optional.ofNullable(newRifnorma).isPresent()))
-				return OggettoBulk.TO_BE_UPDATED;
-
-			String oldAllegati = this.getTag(xmlLastVariazione, "allegati");
-			String newAllegati = this.getTag(xmlNewVariazione, "allegati");
-
-			if (Optional.ofNullable(oldAllegati).map(el->!el.equals(newAllegati)).orElse(Optional.ofNullable(newAllegati).isPresent()))
-				return OggettoBulk.TO_BE_UPDATED;
-		}
-		return OggettoBulk.UNDEFINED;
-	}
-
 	private String marshal(Object obj) throws Exception {
 		JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
 		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -1297,15 +1496,26 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		return (T)jaxbUnmarshaller.unmarshal(new InputSource(new StringReader(xml)));
 	}
 
-	//Questo metodo parte da un xml ed effettua un refresh dello stesso per evitare che eventuali modifiche manuali del file possanno compromettere i confronti tra le versioni
-	//Lo ritrasforma in oggetto e quindi rieffettua il marshal.
-	private String refreshXMLIncarico(String xml) throws Exception {
-		it.gov.perlapa.incarichi.Comunicazione comunicazione = this.unmarshal(StringUtils.substringBetween(xml, "<incarico>", "</incarico>"), it.gov.perlapa.incarichi.Comunicazione.class);
-		return this.marshal(comunicazione);
-	}
-
 	//Questo metodo ritorna la parte string compresa tra 2 tag
 	private String getTag(String xml, String tagName) {
 		return StringUtils.substringBetween(xml, "<"+tagName, "</"+tagName+">");
+	}
+
+	public static String convert(InputStream inputStream) throws IOException {
+		// Legge tutti i byte dall'InputStream
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		byte[] data = new byte[8192];
+		int bytesRead;
+		while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
+			buffer.write(data, 0, bytesRead);
+		}
+
+		// Chiude l'InputStream se non lo gestisci esternamente
+		inputStream.close();
+
+		byte[] byteArray = buffer.toByteArray();
+
+		// Codifica in Base64
+		return Base64.getEncoder().encodeToString(byteArray);
 	}
 }

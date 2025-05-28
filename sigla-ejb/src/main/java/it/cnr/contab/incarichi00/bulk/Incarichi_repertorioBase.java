@@ -102,6 +102,8 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
 
 	private java.lang.Integer idPerla;
 
+	private java.lang.String idPerlaNew;
+
 	private java.lang.String anomalia_perla;
 
 	public Incarichi_repertorioBase() {
@@ -288,5 +290,13 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
 
 	public void setAnomalia_perla(String anomalia_perla) {
 		this.anomalia_perla = anomalia_perla;
+	}
+
+	public String getIdPerlaNew() {
+		return idPerlaNew;
+	}
+
+	public void setIdPerlaNew(String idPerlaNew) {
+		this.idPerlaNew = idPerlaNew;
 	}
 }

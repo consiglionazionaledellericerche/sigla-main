@@ -1049,13 +1049,13 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
         }
     }
 
-    public void aggiornaDatiPerla(UserContext aUC, Incarichi_repertorioBulk bulk, Long idPerla, String anomaliaPerla) throws ComponentException {
+    public void aggiornaDatiPerla(UserContext aUC, Incarichi_repertorioBulk bulk, String idPerla, String anomaliaPerla) throws ComponentException {
         try {
             Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) getHome(aUC, Incarichi_repertorioBulk.class).findByPrimaryKey(bulk);
             if (incarico == null)
                 throw new ApplicationException("L'incarico e' stato cancellato");
             if (Optional.ofNullable(idPerla).isPresent())
-                incarico.setIdPerla(idPerla.intValue());
+                incarico.setIdPerlaNew(idPerla);
             incarico.setAnomalia_perla(anomaliaPerla);
             incarico.setToBeUpdated();
             updateBulk(aUC, incarico);

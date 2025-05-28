@@ -5420,4 +5420,9 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="add-riferimenti-perla2018-bis">
+        <addColumn tableName="incarichi_repertorio">
+            <column name="idperlanew" type="STRING" remarks="Nuovo Identificativo attribuito dal sistema perla all'incarico."/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

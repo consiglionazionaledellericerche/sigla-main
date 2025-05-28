@@ -230,7 +230,7 @@ public class IncarichiRepertorioComponentSessionBean extends it.cnr.jada.ejb.CRU
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public void aggiornaDatiPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1,Long param2, String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public void aggiornaDatiPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1,String param2, String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			((IncarichiRepertorioComponent)componentObj).aggiornaDatiPerla(param0,param1,param2,param3);

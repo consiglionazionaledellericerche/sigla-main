@@ -32,6 +32,6 @@ boolean hasVariazioneIntegrazioneIncaricoProvvisoria(it.cnr.jada.UserContext par
 void controllaCancellazioneAssociazioneUo(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void salvaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void annullaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void aggiornaDatiPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1,Long param2, String param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void aggiornaDatiPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1,String param2, String param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void comunicaPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

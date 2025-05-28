@@ -498,6 +498,17 @@
 		nullable="false"
 		label="Identificativo PerlaPa" />
 	<fieldProperty
+		name="idPerlaNew"
+		property="idPerlaNew"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="40"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Nuovo Identificativo PerlaPa" />
+	<fieldProperty
 		name="anomalia_perla"
 		property="anomalia_perla"
 		inputType="TEXTAREA"
@@ -638,6 +649,8 @@
 		name="dt_efficacia" />
 	<formFieldProperty
 		name="idPerla" />
+	<formFieldProperty
+		name="idPerlaNew" />
 	<formFieldProperty
 		name="anomalia_perla" />
 
