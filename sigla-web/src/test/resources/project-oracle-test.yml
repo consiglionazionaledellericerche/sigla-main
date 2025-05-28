@@ -120,3 +120,14 @@ siopeplus:
 cnr:
   storage:
     driver: filesystem
+
+spring:
+  perla:
+    incarichi:
+      url: "https://adp-api.perlapa.gov.it/api"
+      appId:
+      secret:
+    lg104:
+      url: "https://legge104-api.perlapa.gov.it/api"
+      appId:
+      secret:
