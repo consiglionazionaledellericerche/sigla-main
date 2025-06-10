@@ -55,36 +55,15 @@
 	</table>
 	</div> 
 <%
-   // Il BENE selezionato è un bene accessorio: NON viene visualizzato il tab UTILIZZATORI
-   if (bene != null && bene.isBeneAccessorio()){
-	   JSPUtils.tabbed(
+   JSPUtils.tabbed(
 			pageContext,
 			"tab",
-			new String[][] {
-				{ "tabInventarioBeniTestata","Bene","/inventario00/tab_inv_bene.jsp" },
-				{ "tabInventarioBeniAmmortamento","Ammortamento","/inventario00/tab_inv_bene_ammortamento.jsp" }
-			},
+			bp.getTabs(),
 			bp.getTab("tab"),
 			"center",
 			"100%",
 			null );
-   }
-   // Il BENE selezionato NON è un bene accessorio: viene visualizzato il tab UTILIZZATORI
-   else {
-	    JSPUtils.tabbed(
-			pageContext,
-			"tab",
-			new String[][] {
-				{ "tabInventarioBeniTestata","Bene","/inventario00/tab_inv_bene.jsp" },			
-				{ "tabInventarioBeniUtilizzatori","Utilizzatori","/inventario00/tab_inv_bene_utilizzatori.jsp" },
-				{ "tabInventarioBeniAmmortamento","Ammortamento","/inventario00/tab_inv_bene_ammortamento.jsp" }
-			},
-			bp.getTab("tab"),
-			"center",
-			"100%",
-			null );
-   }
-	bp.closeFormWindow(pageContext); 
+	bp.closeFormWindow(pageContext);
 %>
 </body>
 </html>

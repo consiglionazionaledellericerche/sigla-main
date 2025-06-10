@@ -26,17 +26,30 @@ package it.cnr.contab.inventario00.bp;
  *	Le operazioni di Creazione, (Carico) e Cancellazione, (Scarico), sono competenza di
  *	CRUDCaricoInventarioBP, per il Carico e CRUDScaricoInventarioBP, per lo Scarico.
 **/
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.*;
- 
+
 import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.jsp.Button;
- 
+import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
+
+import javax.servlet.ServletException;
+
 public class CRUDInventarioBeniBP extends SimpleCRUDBP {
 	private boolean isVisualizzazione=false;
 	
@@ -298,8 +311,7 @@ public boolean isFattura_collButtonEnabled() {
 
 /**
  * Imposta come attivi i tab di default.
- *
- * @param context <code>ActionContext</code>
+
  */
 
 public void resetTabs() {
@@ -321,7 +333,7 @@ public void setIsPubblicazione(boolean newIsPubblicazione) {
  * CdR, è valida.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
- * @param bulk il <code>OggettoBulk</code> Bene che si sta modificando
+ * @param model il <code>OggettoBulk</code> Bene che si sta modificando
 **/ 
 public void validate_Percentuali_LA(ActionContext context,OggettoBulk model) throws ValidationException {
 
@@ -402,4 +414,57 @@ public void setVisualizzazione(boolean b) {
 public boolean isEditable() {
 		return !isVisualizzazione()&&super.isEditable();
 }
+
+	public String[][] getTabs() {
+		TreeMap<Integer, String[]> hash = new TreeMap<>();
+		int i=0;
+		Inventario_beniBulk bene = (Inventario_beniBulk)this.getModel();
+
+		hash.put(i++, new String[]{"tabInventarioBeniTestata","Bene","/inventario00/tab_inv_bene.jsp"});
+
+		// Il BENE selezionato NON è un bene accessorio: viene visualizzato il tab UTILIZZATORI
+		if (bene == null || !bene.isBeneAccessorio())
+			hash.put(i++, new String[]{"tabInventarioBeniUtilizzatori","Utilizzatori","/inventario00/tab_inv_bene_utilizzatori.jsp"});
+
+		hash.put(i++, new String[]{"tabInventarioBeniAmmortamento","Ammortamento","/inventario00/tab_inv_bene_ammortamento.jsp"});
+
+		// Il BENE selezionato ha valorizzato lo stato: viene visualizzato il tab STATO
+		if (bene.getStato()!=null)
+			hash.put(i++, new String[]{"tabInventarioBeniStato","Stato","/inventario00/tab_inv_bene_stato.jsp"});
+
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+		return tabs;
+	}
+
+	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+		Inventario_beniBulk bene = (Inventario_beniBulk) this.getModel();
+		String path = String.join(StorageDriver.SUFFIX, Arrays.asList(
+                SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+                bene.getCd_unita_organizzativa(),
+                "Inventario Beni",
+                bene.getEtichetta(),
+				bene.getEtichetta()+"-ProvvedimentoDenuncia.pdf"));
+
+		StorageObject storageObject = SpringUtil.getBean("storeService", StoreService.class).getStorageObjectByPath(path);
+		InputStream is = SpringUtil.getBean("storeService", StoreService.class).getResource(storageObject.getKey());
+		((HttpActionContext) actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+		((HttpActionContext) actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
+		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer, 0, buflength);
+		}
+		is.close();
+		os.flush();
+	}
+
+	@Override
+	public void resetForSearch(ActionContext context) throws BusinessProcessException {
+		super.resetForSearch(context);
+		resetTabs();
+	}
 }

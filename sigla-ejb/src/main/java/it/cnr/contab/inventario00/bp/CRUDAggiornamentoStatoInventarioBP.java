@@ -70,7 +70,7 @@ public class CRUDAggiornamentoStatoInventarioBP extends CRUDAggiornamentoInventa
 		Aggiornamento_inventarioBulk allegato = (Aggiornamento_inventarioBulk)this.getModel();
 		UploadedFile file = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter(getInputPrefix()+".blob");
 
-		if (file == null || file.getName().equals(""))
+		if (allegato.isBeneSmarrito() && (file == null || file.getName().equals("")))
 			throw new ValidationException("Attenzione: selezionare un File da caricare.");
 
 		if (!(file == null || file.getName().equals(""))) {

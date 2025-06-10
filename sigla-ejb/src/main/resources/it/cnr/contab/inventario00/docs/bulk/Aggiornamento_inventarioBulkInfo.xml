@@ -61,6 +61,7 @@
 		inputType="SELECT"
 		inputSize="10"
 		maxLength="3"
+		command="doDefault"
 		keysProperty="statoKeys"
 		label="Stato" />
 	<fieldProperty

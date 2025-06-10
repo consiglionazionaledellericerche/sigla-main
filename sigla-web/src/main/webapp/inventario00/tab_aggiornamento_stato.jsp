@@ -22,9 +22,11 @@
 				<% bp.getController().writeFormInput(out,"stato"); %>
 			</td>
 		</tr>
+		<% if (aggiornamenti!=null && aggiornamenti.isBeneSmarrito()) { %>
 		<tr>
    	        <td><% bp.getController().writeFormLabel(out,"default","blob"); %></td>
    	        <td colspan=4><% bp.getController().writeFormInput(out,"default","blob"); %></td>
    	    </tr>
+   	    <% } %>
 	</table>
    </div>	 

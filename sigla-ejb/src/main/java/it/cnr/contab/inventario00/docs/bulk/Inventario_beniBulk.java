@@ -930,4 +930,18 @@ public void setHa_dettagli(Boolean boolean1) {
 	public final java.util.Dictionary getStatoKeys() {
 		return statoKeys;
 	}
+
+	private java.lang.String blob;
+
+	public String getBlob() {
+		return blob;
+	}
+
+	public void setBlob(String blob) {
+		this.blob = blob;
+	}
+
+	public boolean isBeneSmarrito() {
+		return STATO_SMARRITO.equals(this.getStato());
+	}
 }

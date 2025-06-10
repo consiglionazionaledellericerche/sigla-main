@@ -192,4 +192,8 @@ public int addToDettagli (Inventario_beniBulk nuovobene)
 	public void setFile(File file) {
 		this.file = file;
 	}
+
+	public boolean isBeneSmarrito() {
+		return Inventario_beniBulk.STATO_SMARRITO.equals(this.getStato());
+	}
 }

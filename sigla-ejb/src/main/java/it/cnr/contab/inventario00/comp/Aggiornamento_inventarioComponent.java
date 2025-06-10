@@ -689,26 +689,28 @@ public Aggiornamento_inventarioBulk aggiornaBeni(UserContext userContext, Aggior
 				bene.setStato(aggiorno.getStato());
 				bene.setToBeUpdated();
 
-				String path = SpringUtil.getBean("storeService", StoreService.class)
-						.createFolderIfNotPresent(
-								Arrays.asList(
-										SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
-										bene.getCd_unita_organizzativa(),
-										"Inventario Beni")
-										.stream().collect(
-												Collectors.joining(StorageDriver.SUFFIX)
-										),
-						bene.getEtichetta(),
-						null, null, null);
+				if (aggiorno.getStato().equals(Inventario_beniBulk.STATO_SMARRITO)) {
+					String path = SpringUtil.getBean("storeService", StoreService.class)
+							.createFolderIfNotPresent(
+									Arrays.asList(
+													SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+													bene.getCd_unita_organizzativa(),
+													"Inventario Beni")
+											.stream().collect(
+													Collectors.joining(StorageDriver.SUFFIX)
+											),
+									bene.getEtichetta(),
+									null, null, null);
 
-				StorageFile storageFile = new StorageFile(aggiorno.getFile(), bene.getEtichetta()+"-ProvvedimentoDenuncia.pdf");
+					StorageFile storageFile = new StorageFile(aggiorno.getFile(), bene.getEtichetta() + "-ProvvedimentoDenuncia.pdf");
 
-				contrattiService.restoreSimpleDocument(
-						storageFile,
-						storageFile.getInputStream(),
-						storageFile.getContentType(),
-						storageFile.getFileName(),
-						path, true);
+					contrattiService.restoreSimpleDocument(
+							storageFile,
+							storageFile.getInputStream(),
+							storageFile.getContentType(),
+							storageFile.getFileName(),
+							path, true);
+				}
 
 				super.modificaConBulk(userContext,bene);
 			}

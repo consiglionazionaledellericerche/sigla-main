@@ -558,11 +558,21 @@
 	<fieldProperty
 			name="stato"
 			property="stato"
-			inputType="TEXT"
+			inputType="SELECT"
 			inputSize="10"
 			maxLength="3"
 			keysProperty="statoKeys"
 			label="Stato" />
+	<fieldProperty
+			name="attivaFile_blob"
+			property="blob"
+			inputType="BUTTON"
+			enabledOnView="true"
+			img="img/import24.gif"
+			buttonClass="btn-outline-primary btn-title w-100"
+			iconClass="fa fa-fw fa-cloud-download"
+			href="javascript:doScaricaFile()"
+			label="Apri Provvedimento Denuncia" />
 
 	<formFieldProperty
 		name="codiceCompleto" />
@@ -697,6 +707,8 @@
 			name="estremiOrdine" />
 	<formFieldProperty
 			name="stato" />
+	<formFieldProperty
+			name="attivaFile_blob"/>
 
 	<columnFieldProperty
 		name="etichetta" 
@@ -731,6 +743,9 @@
 	<columnFieldProperty
 		name="seriale"   
 		style="width:20px"/>
+	<columnFieldProperty
+			name="stato"
+			style="width:40px"/>
 
 	<columnSet name="byStato">
 		<columnFieldProperty
