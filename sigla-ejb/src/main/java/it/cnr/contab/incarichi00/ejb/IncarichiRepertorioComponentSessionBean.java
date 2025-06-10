@@ -17,11 +17,13 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
 import it.cnr.contab.incarichi00.comp.IncarichiRepertorioComponent;
 import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRINCARICHI00_EJB_IncarichiRepertorioComponentSession
@@ -252,6 +254,24 @@ public class IncarichiRepertorioComponentSessionBean extends it.cnr.jada.ejb.CRU
 		try {
 			((IncarichiRepertorioComponent)componentObj).comunicaPerla(param0,param1);
 			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List<V_incarichi_elenco_fpBulk> getAllIncarichiPerla(it.cnr.jada.UserContext param0) throws ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List<V_incarichi_elenco_fpBulk> result = ((IncarichiRepertorioComponent)componentObj).getAllIncarichiPerla(param0);
+			component_invocation_succes(param0,componentObj);
+			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0,componentObj);
 			throw e;

@@ -17,7 +17,11 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
+import it.cnr.jada.UserContext;
+
 import javax.ejb.Remote;
+import java.util.List;
 
 @Remote
 public interface IncarichiRepertorioComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
@@ -34,4 +38,5 @@ void salvaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi
 void annullaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void aggiornaDatiPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1,String param2, String param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void comunicaPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+List<V_incarichi_elenco_fpBulk> getAllIncarichiPerla(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

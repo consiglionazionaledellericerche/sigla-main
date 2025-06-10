@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.action.*,
+		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.contab.incarichi00.bp.*"
 %>
@@ -44,6 +45,20 @@
 		<tr><% controller.writeFormField(out,"idPerla");%></tr>
 		<tr><% controller.writeFormField(out,"idPerlaNew");%></tr>
 		<tr><% controller.writeFormField(out,"anomalia_perla");%></tr>
+	</table>
+</div>
+<div class="Group card m-2 p-2">
+    <table class="Panel w-30" cellspacing=2>
+		<tr><% Button.write(out,
+						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-horizontal" : "img/book_opened.gif",
+						"Comunica Perla",
+						"javascript:submitForm('doComunicaPerla')",
+						"btn-outline-primary btn-title btn-block faa-parent animated-hover",
+						"Comunica Perla",
+						true,
+						bp.getParentRoot().isBootstrap()); %>
+		</tr>
 	</table>
 </div>
 <% } %>

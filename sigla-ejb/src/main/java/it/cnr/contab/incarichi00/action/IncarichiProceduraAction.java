@@ -1459,4 +1459,30 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			return handleException(context,e);
 		}
 	}
+	public Forward doComunicaPerla(ActionContext context){
+		try
+		{
+			fillModel( context );
+			return openConfirm(context, "Attenzione! Desideri inviare i dati dell'incarico selezionato Perla?", OptionBP.CONFIRM_YES_NO, "doConfirmComunicaPerla");
+		}
+		catch(Throwable e)
+		{
+			return handleException(context,e);
+		}
+	}
+	public Forward doConfirmComunicaPerla(ActionContext context,int option) {
+		try
+		{
+			if ( option == OptionBP.YES_BUTTON)
+			{
+				CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+				bp.comunicaIncaricoPerla(context);
+			}
+			return context.findDefaultForward();
+		}
+		catch(Throwable e)
+		{
+			return handleException(context,e);
+		}
+	}
 }

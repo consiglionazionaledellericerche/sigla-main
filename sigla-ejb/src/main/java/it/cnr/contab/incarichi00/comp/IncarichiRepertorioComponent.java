@@ -1076,4 +1076,18 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
             throw handleException(e);
         }
     }
+
+    public List<V_incarichi_elenco_fpBulk> getAllIncarichiPerla(UserContext userContext) throws ComponentException {
+        try {
+            SQLBuilder sql = getHome(userContext, V_incarichi_elenco_fpBulk.class).createSQLBuilder();
+            sql.addSQLClause(FindClause.AND,"to_number(to_char(DT_STIPULA,'yyyy')) >= to_number('2018')");
+            sql.addSQLClause(FindClause.AND, "idperla", SQLBuilder.ISNULL, null);
+            sql.addSQLClause(FindClause.AND, "idperlanew", SQLBuilder.ISNULL, null);
+
+            return getHome(userContext, V_incarichi_elenco_fpBulk.class).fetchAll(sql);
+
+        } catch (Exception e){
+            throw handleException(e);
+        }
+    }
 }

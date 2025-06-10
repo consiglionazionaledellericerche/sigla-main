@@ -25,7 +25,6 @@ package it.cnr.contab.incarichi00.comp;
 import com.opencsv.CSVReader;
 import feign.FeignException;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -64,14 +63,20 @@ import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.http.HttpStatus;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.PDXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.xml.sax.InputSource;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -1037,18 +1042,17 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		else
 			incaricoPerla.setVerificaInsussistenza(Boolean.FALSE);
 
-		//TODO
 		//Metto UsoRiferimentoRegolamento a FALSE altrimenti chiede anche campo RiferimentoRegolamento
 		//RIFERIMENTO REGOLAMENTO
 		//Y= si è fatto riferimento ad un regolamento adottato dall'amministrazione,
 		//N= non si è fatto riferimento ad un regolamento adottato dall'amministrazione
-		incaricoPerla.setUsoRiferimentoRegolamento(Boolean.FALSE);
-		//incaricoPerla.setRiferimentoRegolamento("Y");
+		incaricoPerla.setUsoRiferimentoRegolamento(Boolean.TRUE);
+		//Indicazioni fornite da Pietro Piro con mail di Silvio Scipioni del 28/05/2025
+		incaricoPerla.setRiferimentoRegolamento("Regolamento di cui alla deliberazione 198/2008 – verb. 85 del 30 luglio 2008 e successive circolari CNR: n. 2/2019; n. 1/2017; n. 27/2016; n. 2/2015");
 
 		//ComponentiVariabilCompenso
 		incaricoPerla.setComponenteVariabileCompenso(Boolean.FALSE);
 
-		//TODO
 		//Sono obbligato a mettere consulenteInformato a TRUE
 		incaricoPerla.setConsulenteInformato(Boolean.TRUE);
 
@@ -1056,14 +1060,14 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 
 		List<ConfigurazioneWebDto> configurazioni = perlaService.getConfigurazioneConsulente();
 
-		//TODO
 		//DA DOVE PRENDO I VALORI??
+		//Indicazioni fornite da Pietro Piro con mail di Silvio Scipioni del 28/05/2025
 		incaricoPerla.setServizioIstituzionePubblicaId(configurazioni.stream()
 				.filter(el->el.getDescrizione().equals("servizioIstituzionePubblica"))
 				.flatMap(el-> el.getElementi().stream())
-				.filter(el->el.getCodice().equals("016"))
+				.filter(el->el.getDescrizione().equals("Servizi generali di amministrazione pubblica"))
 				.flatMap(el-> el.getChildren().stream())
-				.filter(el->el.getCodice().equals("59"))
+				.filter(el->el.getDescrizione().equals("Consulenze tecniche"))
 				.findFirst().map(ElementiChildrenWebDto::getId).orElse(null));
 
 		//TIPO DI RAPPORTO
@@ -1107,10 +1111,11 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		//Se trattasi di consulente estero che ha il codice fiscale valorizzato metto il campo estero a "false" così come indicato dalla Dott.ssa Paola Sarti
 		//della Funzione Pubblica altrimenti metto quello corretto
 		boolean terzoEstero=false;
-		if (incarico.getTerzo().getAnagrafico().getCodice_fiscale()==null ||
-				incarico.getTerzo().getAnagrafico().getCodice_fiscale().length()!=16){
+		if (!incarico.getTerzo().getAnagrafico().isItaliano() ||
+				(incarico.getTerzo().getAnagrafico().getCodice_fiscale()==null ||
+				incarico.getTerzo().getAnagrafico().getCodice_fiscale().length()!=16)){
 			try{
-				terzoEstero = !NazioneBulk.ITALIA.equals(incarico.getTerzo().getAnagrafico().getComune_nascita().getTi_italiano_estero());
+				terzoEstero = Boolean.TRUE;
 			} catch (Exception e){
 			}
 		}
@@ -1161,31 +1166,30 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		}
 		//FINE PERCETTORE
 
-		//DESCRIZIONE INCARICO
-		StringBuffer descrizione = new StringBuffer();
-		descrizione.append("("+incarico.getEsercizio()+'/'+incarico.getPg_repertorio()+")");
-		descrizione.append(" - "+incarico.getIncarichi_procedura().getOggetto());
-		incaricoPerla.setCampoTestualeOggetto(descrizione.length()>200?descrizione.substring(0, 199):descrizione.toString());
-
-		//TODO
 		//DA DOVE PRENDO I VALORI??
 		//DESCRIZIONE INCARICO
+		//Indicazioni fornite da Pietro Piro con mail di Silvio Scipioni del 28/05/2025
 		incaricoPerla.setOggettoIncaricoConsulenteId(configurazioni.stream()
 				.filter(el->el.getDescrizione().equals("oggettoIncarico"))
 				.flatMap(el-> el.getElementi().stream())
 				.filter(el->el.getDescrizione().equals("Altre Tipologie"))
 				.findFirst().map(ElementiWebDto::getId).orElse(null));
 
+		//DESCRIZIONE INCARICO
+		//Indicazioni fornite da Pietro Piro con mail di Silvio Scipioni del 28/05/2025
+		StringBuffer descrizione = new StringBuffer();
+		descrizione.append("("+incarico.getEsercizio()+'/'+incarico.getPg_repertorio()+")");
+		descrizione.append(" - "+incarico.getIncarichi_procedura().getOggetto());
+		incaricoPerla.setCampoTestualeOggetto(descrizione.length()>200?descrizione.substring(0, 199):descrizione.toString());
 
-		//TODO - Obbligatorio
 		//DA DOVE PRENDO I VALORI??
-		/*
+		//Indicazioni fornite da Pietro Piro con mail di Silvio Scipioni del 28/05/2025
 		incaricoPerla.setAmbitoTematicoConsulenteId(configurazioni.stream()
 				.filter(el->el.getDescrizione().equals("ambitoTematico"))
 				.flatMap(el-> el.getElementi().stream())
-				.filter(el->el.getDescrizione().equals("Altre Tipologie"))
+				.filter(el->el.getDescrizione().equals("Amministrazione"))
 				.findFirst().map(ElementiWebDto::getId).orElse(null)); //DI NATURA DISCREZIONALE
-*/
+
 		//ALLEGATI
 		//CURRICULUM VITAE
 		try {
@@ -1232,17 +1236,17 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		//COMPENSO
 		incaricoPerla.setCompenso(v_incarico.getImporto_lordo_con_variazioni().setScale(2));
 
-		// TIPO COMPENSO
-		// 1 PREVISTO, 2 PRESUNTO
-		incaricoPerla.setTipoCompensoId(configurazioni.stream()
+		//PAGATO
+		incaricoPerla.setConcludiIncarico(Boolean.FALSE);
+		if (incaricoPerla.getCompenso().compareTo(BigDecimal.ZERO) != 0) {
+			// TIPO COMPENSO
+			// 1 PREVISTO, 2 PRESUNTO
+			incaricoPerla.setTipoCompensoId(configurazioni.stream()
 					.filter(el->el.getDescrizione().equals("tipoCompenso"))
 					.flatMap(el-> el.getElementi().stream())
 					.filter(el->el.getDescrizione().equals("previsto"))
 					.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //PREVISTO
 
-		//PAGATO
-		incaricoPerla.setConcludiIncarico(Boolean.FALSE);
-		if (incaricoPerla.getCompenso().compareTo(BigDecimal.ZERO) != 0) {
 			Map<Integer,BigDecimal> importoPagato = this.getPagatoIncaricoByAnno(userContext, incarico);
 			BigDecimal totPagato = importoPagato.values().stream().reduce(BigDecimal.ZERO, BigDecimal::add);
 			if (totPagato.compareTo(incaricoPerla.getCompenso()) < 0)
@@ -1257,8 +1261,8 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 						.flatMap(el -> el.getElementi().stream())
 						.filter(el -> el.getDescrizione().equals("saldato"))
 						.findFirst().map(ElementiWebDto::getId).map(Integer::valueOf).orElse(null)); //SALDATO
-				//TODO
 				//Metto il compenso uguale al pagato se pagato maggiore compenso
+				//Indicazioni fornite da Pietro Piro con mail di Silvio Scipioni del 28/05/2025
 				incaricoPerla.setCompenso(totPagato);
 				incaricoPerla.setConcludiIncarico(Boolean.TRUE);
 			}
@@ -1351,7 +1355,8 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 //		if (consulentePerla.getRiferimentoRegolamento()==null)
 //			listAnomalie.add("Manca l'indicazione se l'incarico è stato assegnato con riferimento ad un regolamento dell'amministrazione.");
 
-		if (consulentePerla.getTipoCompensoId()==null)
+		if (consulentePerla.getCompenso().compareTo(BigDecimal.ZERO)!=0 &&
+				consulentePerla.getTipoCompensoId()==null)
 			listAnomalie.add("Manca l'indicazione della tipologia di compenso.");
 		if (consulentePerla.getCompenso()==null)
 			listAnomalie.add("Manca l'indicazione dell'importo del compenso.");
@@ -1513,9 +1518,48 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		// Chiude l'InputStream se non lo gestisci esternamente
 		inputStream.close();
 
-		byte[] byteArray = buffer.toByteArray();
+		byte[] byteArray = PDFCompressor(buffer.toByteArray());
 
 		// Codifica in Base64
 		return Base64.getEncoder().encodeToString(byteArray);
+	}
+
+	private static byte[] PDFCompressor(byte[] byteArray) throws IOException {
+		final long MAX_SIZE_BYTES = 1_048_576; // 1MB
+		final float MIN_QUALITY = 0.1f;
+		float quality = 0.8f;
+
+		if (byteArray.length <= MAX_SIZE_BYTES)
+			return byteArray;
+
+		while (quality >= MIN_QUALITY) {
+			try (PDDocument document = PDDocument.load(byteArray)) {
+				for (PDPage page : document.getPages()) {
+					PDResources resources = page.getResources();
+
+					for (COSName name : resources.getXObjectNames()) {
+						PDXObject xobject = resources.getXObject(name);
+						if (xobject instanceof PDImageXObject) {
+							PDImageXObject image = (PDImageXObject) xobject;
+							BufferedImage bimg = image.getImage();
+							PDImageXObject compressedImage = JPEGFactory.createFromImage(document, bimg, quality);
+							resources.put(name, compressedImage);
+						}
+					}
+				}
+
+				// Salva su byte array per controllare la dimensione
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				document.save(baos);
+				byte[] compressedBytes = baos.toByteArray();
+
+				if (compressedBytes.length <= MAX_SIZE_BYTES)
+					return compressedBytes;
+				else
+					// Troppo grande (" + compressedBytes.length + " bytes), abbasso la qualità...");
+					quality -= 0.1f;
+			}
+		}
+		return byteArray;
 	}
 }

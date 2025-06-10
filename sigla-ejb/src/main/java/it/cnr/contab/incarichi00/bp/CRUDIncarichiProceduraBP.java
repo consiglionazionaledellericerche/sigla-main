@@ -32,8 +32,11 @@ import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 
+import it.cnr.contab.incarichi00.bulk.*;
+import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
+import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
+import it.cnr.jada.action.*;
 import it.cnr.jada.comp.ApplicationRuntimeException;
-import it.cnr.jada.util.action.Selection;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,20 +48,6 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_noteBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rapp_detBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
-import it.cnr.contab.incarichi00.bulk.Repertorio_limitiBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
@@ -68,10 +57,6 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Config;
-import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -2712,5 +2697,41 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	protected boolean isAmministra() {
 		return Boolean.FALSE;
+	}
+
+	private void comunicaAllIncarichiPerla(UserContext userContext)  throws it.cnr.jada.action.BusinessProcessException {
+		try {
+			IncarichiRepertorioComponentSession incComponent = Utility.createIncarichiRepertorioComponentSession();
+			List<V_incarichi_elenco_fpBulk> list = incComponent.getAllIncarichiPerla(userContext);
+
+			IncarichiEstrazioneFpComponentSession comp = Utility.createIncarichiEstrazioneFpComponentSession();
+			for (V_incarichi_elenco_fpBulk result:list) {
+				Incarichi_repertorioBulk incarico = new Incarichi_repertorioBulk(result.getEsercizio(), result.getPg_repertorio());
+				try {
+					comp.comunicaPerla2018(userContext, incarico);
+				} catch (Exception e) {
+					incComponent.aggiornaDatiPerla(userContext, incarico, null, e.getMessage());
+				}
+			}
+		} catch (Exception e){
+			throw handleException(e);
+		}
+	}
+
+	public void comunicaIncaricoPerla(ActionContext context)  throws it.cnr.jada.action.BusinessProcessException {
+		try {
+			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)this.getIncarichiColl().getModel();
+			if (incarico!=null && incarico.getEsercizio()!=null && incarico.getPg_repertorio()!=null) {
+				IncarichiRepertorioComponentSession incComponent = Utility.createIncarichiRepertorioComponentSession();
+				IncarichiEstrazioneFpComponentSession comp = Utility.createIncarichiEstrazioneFpComponentSession();
+				try {
+					comp.comunicaPerla2018(context.getUserContext(), incarico);
+				} catch (Exception e) {
+					incComponent.aggiornaDatiPerla(context.getUserContext(), incarico, null, e.getMessage());
+				}
+			}
+		} catch (Exception e){
+			throw handleException(e);
+		}
 	}
 }
