@@ -21,6 +21,9 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.SimpleBulkList;
+
+import java.io.File;
+
 /**
  * Insert the type's description here.
  * @author: RPucciarelli
@@ -39,8 +42,14 @@ private SimpleBulkList utilizzatori = new SimpleBulkList();
 private SimpleBulkList v_utilizzatoriColl = new SimpleBulkList();
 
 private SimpleBulkList dettagli= new SimpleBulkList();
-  	
-/**
+
+	private String stato;
+
+	private java.lang.String blob;
+
+	private File file;
+
+	/**
  * Aggiornamento_inventarioBulk constructor comment.
  */
 public Aggiornamento_inventarioBulk() {
@@ -156,4 +165,31 @@ public int addToDettagli (Inventario_beniBulk nuovobene)
 		return getDettagli().size()-1;
 }
 
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public final java.util.Dictionary getStatoKeys() {
+		return Inventario_beniBulk.statoKeys;
+	}
+
+	public java.lang.String getBlob () {
+		return blob;
+	}
+
+	public void setBlob(java.lang.String blob)  {
+		this.blob=blob;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
 }

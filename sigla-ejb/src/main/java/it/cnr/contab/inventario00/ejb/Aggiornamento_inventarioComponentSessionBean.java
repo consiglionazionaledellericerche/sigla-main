@@ -88,10 +88,10 @@ public class Aggiornamento_inventarioComponentSessionBean extends it.cnr.jada.ej
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk AggiornaBeni(it.cnr.jada.UserContext param0,it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk param1) throws	it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException,it.cnr.jada.bulk.OutdatedResourceException,it.cnr.jada.bulk.BusyResourceException {
+	public it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk aggiornaBeni(it.cnr.jada.UserContext param0,it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk param1) throws	it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException,it.cnr.jada.bulk.OutdatedResourceException,it.cnr.jada.bulk.BusyResourceException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk result=((Aggiornamento_inventarioComponent)componentObj).AggiornaBeni(param0,param1);
+			it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk result=((Aggiornamento_inventarioComponent)componentObj).aggiornaBeni(param0,param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -106,7 +106,24 @@ public class Aggiornamento_inventarioComponentSessionBean extends it.cnr.jada.ej
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-
+	public it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk aggiornaStatoBeni(it.cnr.jada.UserContext param0,it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk param1) throws	it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException,it.cnr.jada.bulk.OutdatedResourceException,it.cnr.jada.bulk.BusyResourceException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk result=((Aggiornamento_inventarioComponent)componentObj).aggiornaStatoBeni(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 	public it.cnr.jada.util.RemoteIterator cercaBeniAggiornabili(it.cnr.jada.UserContext param0,it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk param1,it.cnr.jada.persistency.sql.CompoundFindClause param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {

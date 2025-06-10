@@ -21,10 +21,7 @@
 	JSPUtils.tabbed(
 			pageContext,
 			"tab",
-			new String[][] {
-				{ "tabAggiornamentoInventarioTestata","Beni","/inventario00/tab_aggiornamento_testata.jsp" },
-				{ "tabAggiornamentoInventarioDettaglio","Aggiornamenti","/inventario00/tab_aggiornamento_dettaglio.jsp"},
-			},
+			bp.getTabs(),
 			bp.getTab("tab"),
 			"center",
 			"100%",

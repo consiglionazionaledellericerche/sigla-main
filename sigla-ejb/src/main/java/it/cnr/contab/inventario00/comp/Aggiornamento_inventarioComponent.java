@@ -17,10 +17,13 @@
 
 package it.cnr.contab.inventario00.comp;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
@@ -28,6 +31,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniHome;
@@ -37,6 +41,8 @@ import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk;
 import it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioHome;
 import it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollections;
@@ -55,7 +61,10 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
- 
+import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+
 public class Aggiornamento_inventarioComponent 
 		extends it.cnr.jada.comp.CRUDDetailComponent 
 			implements  Serializable, Cloneable {
@@ -270,7 +279,7 @@ public SQLBuilder selectLinea_attivitaByClause(UserContext userContext, Inventar
   *		ed è stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param bene il <code>Inventario_beniBulk</code> bene di riferimento
+  * @param aggiorno il <code>Aggiornamento_inventarioBulk</code> bene di riferimento
   * @param ubicazione la <code>Ubicazione_beneBulk</code> ubicazione di riferimento  
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione
   *
@@ -350,7 +359,7 @@ public SQLBuilder selectUbicazione_destinazioneByClause(UserContext userContext,
   *      Un messaggio di errore viene visualizzato all'utente per segnalare che il totale deve essere 100.
   *    
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
-  * @param bene il <code>Inventario_beniBulk</code> bene di cui controllare gli Utilizzatori
+  * @param aggiorno il <code>Aggiornamento_inventarioBulk</code> bene di cui controllare gli Utilizzatori
 **/
 public void validaUtilizzatori (UserContext aUC,Aggiornamento_inventarioBulk aggiorno) 
 	throws ComponentException
@@ -462,7 +471,7 @@ public void validaUtilizzatori (UserContext aUC,Aggiornamento_inventarioBulk agg
   *      Vengono caricate le Condizioni_bene valide.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
-  * @param bulk <code>OggettoBulk</code> il bene che deve essere istanziato
+  * @param oggettoBulk <code>OggettoBulk</code> il bene che deve essere istanziato
   *
   * @return <code>OggettoBulk</code> il bene inizializzato
 **/
@@ -510,7 +519,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC, OggettoBulk o
   *      Consente di proseguire con le operazioni di salvataggio.
   * 
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
-  * @param Aggiornamento_inventario il <code>Aggiornamento_inventarioBulk</code> Aggiornamento inventario.
+  * @param aggiorno il <code>Aggiornamento_inventarioBulk</code> Aggiornamento inventario.
 **/
 private void valida (UserContext userContext, Aggiornamento_inventarioBulk aggiorno) throws ComponentException {
 	if (aggiorno.getDettagli().size() ==0 )
@@ -604,7 +613,7 @@ public Aggiornamento_inventarioBulk aggiornaTuttiBeni(UserContext userContext,Ag
   *     Viene costruito e restituito l'Iteratore sui beni disponibili.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
-  * @param buonoS <code>Buono_scaricoBulk</code> il Buono di Scarico.  
+  * @param aggiorno <code>Aggiornamento_inventarioBulk</code> il Buono di Scarico.
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione.
   *
   * @return l'Iteratore <code>RemoteIterator</code> sui beni trovati.
@@ -621,7 +630,7 @@ public RemoteIterator cercaBeniAggiornabili(UserContext userContext, Aggiornamen
 
 	return iterator(userContext,sql,Inventario_beniBulk.class,null);	
 }
-public Aggiornamento_inventarioBulk AggiornaBeni(UserContext userContext, Aggiornamento_inventarioBulk aggiorno)
+public Aggiornamento_inventarioBulk aggiornaBeni(UserContext userContext, Aggiornamento_inventarioBulk aggiorno)
 	throws	ComponentException {
 	
 		validaUtilizzatori(userContext,aggiorno);
@@ -661,6 +670,60 @@ public Aggiornamento_inventarioBulk AggiornaBeni(UserContext userContext, Aggior
 		throw new ComponentException (e);
 	}	     				
 }
+	public Aggiornamento_inventarioBulk aggiornaStatoBeni(UserContext userContext, Aggiornamento_inventarioBulk aggiorno)
+			throws	ComponentException {
+		if (aggiorno.getDettagli().isEmpty())
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è necessario specificare almeno un bene da aggiornare!");
+		if (aggiorno.getStato() == null)
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è necessario specificare lo stato da assegnare ai beni!");
+		if (aggiorno.getStato().equals(Inventario_beniBulk.STATO_SMARRITO) && aggiorno.getFile()==null)
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è necessario allegare un file per lo stato selezionato!");
+
+		ContrattiService contrattiService = SpringUtil.getBean(ContrattiService.class);
+
+		try {
+			for (java.util.Iterator i = aggiorno.getDettagli().iterator();i.hasNext();) {
+				it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk bene=(it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk) i.next();
+
+				lockBulk(userContext,bene);
+				bene.setStato(aggiorno.getStato());
+				bene.setToBeUpdated();
+
+				String path = SpringUtil.getBean("storeService", StoreService.class)
+						.createFolderIfNotPresent(
+								Arrays.asList(
+										SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+										bene.getCd_unita_organizzativa(),
+										"Inventario Beni")
+										.stream().collect(
+												Collectors.joining(StorageDriver.SUFFIX)
+										),
+						bene.getEtichetta(),
+						null, null, null);
+
+				StorageFile storageFile = new StorageFile(aggiorno.getFile(), bene.getEtichetta()+"-ProvvedimentoDenuncia.pdf");
+
+				contrattiService.restoreSimpleDocument(
+						storageFile,
+						storageFile.getInputStream(),
+						storageFile.getContentType(),
+						storageFile.getFileName(),
+						path, true);
+
+				super.modificaConBulk(userContext,bene);
+			}
+			return aggiorno;
+		} catch (IOException e) {
+			throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
+		} catch (PersistencyException e) {
+			throw new ComponentException (e);
+		} catch (OutdatedResourceException e) {
+			throw new ApplicationException ("Risorsa non pi\371 valida. Ripetere la selezione dei beni.");
+		} catch (BusyResourceException e) {
+			throw new ComponentException (e);
+		}
+	}
+
 public void aggiorna_utilizzatori(UserContext context,Aggiornamento_inventarioBulk aggiorno,Inventario_beniBulk bene)
 throws  it.cnr.jada.comp.ComponentException {
 	

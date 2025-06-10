@@ -102,6 +102,19 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	
 	// Flag che indica, durante un trasferimento intra UO, che un bene accessorio diventa bene principale.
 	private Boolean fl_trasf_come_principale;
+
+	public final static Dictionary statoKeys = new it.cnr.jada.util.OrderedHashtable();
+
+	final public static String STATO_FUNZIONANTE = "FUN";
+	final public static String STATO_OBSOLETO = "OBS";
+	final public static String STATO_SMARRITO = "SMR";
+
+	static {
+		statoKeys.put(STATO_FUNZIONANTE, "Bene rinvenuto e funzionante");
+		statoKeys.put(STATO_OBSOLETO, "Bene non funzionante/obsoleto");
+		statoKeys.put(STATO_SMARRITO, "Bene non rinvenuto/smarrito/oggetto di furto");
+	}
+
 	public Inventario_beniBulk() {
 	super();
 }
@@ -912,5 +925,9 @@ public void setHa_dettagli(Boolean boolean1) {
 	}
 	public Boolean isDaOrdini(){
 		return Optional.ofNullable(getTransito_beni_ordini()).isPresent();
+	}
+
+	public final java.util.Dictionary getStatoKeys() {
+		return statoKeys;
 	}
 }

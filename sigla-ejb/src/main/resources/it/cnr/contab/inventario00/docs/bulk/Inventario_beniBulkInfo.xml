@@ -555,6 +555,15 @@
 			maxLength="30"
 			inputSize="20"
 			label="Ordine"  />
+	<fieldProperty
+			name="stato"
+			property="stato"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="3"
+			keysProperty="statoKeys"
+			label="Stato" />
+
 	<formFieldProperty
 		name="codiceCompleto" />
 	<formFieldProperty
@@ -686,6 +695,9 @@
 			name="numeroBolla" />
 	<formFieldProperty
 			name="estremiOrdine" />
+	<formFieldProperty
+			name="stato" />
+
 	<columnFieldProperty
 		name="etichetta" 
 		style="width:130px" />
@@ -719,6 +731,40 @@
 	<columnFieldProperty
 		name="seriale"   
 		style="width:20px"/>
+
+	<columnSet name="byStato">
+		<columnFieldProperty
+				name="etichetta"
+				style="width:130px" />
+		<columnFieldProperty
+				name="nr_inventario"
+				style="width:80px" />
+		<columnFieldProperty
+				name="progressivo"
+				style="width:30px" />
+		<columnFieldProperty
+				name="ds_bene"
+				style="width:300px" />
+		<columnFieldProperty
+				name="cd_categoria_bene"
+				style="width:50px" />
+		<columnFieldProperty
+				name="valore_bene"
+				style="width:80px"/>
+		<columnFieldProperty
+				name="ds_condizione_bene"
+				style="width:70px"/>
+		<columnFieldProperty
+				name="cd_assegnatario"
+				style="width:300px"/>
+		<columnFieldProperty
+				name="cd_ubicazione"
+				style="width:40px"/>
+		<columnFieldProperty
+				name="stato"
+				style="width:40px"/>
+	</columnSet>
+
 	<findFieldProperty
 		name="etichetta" />
 	<findFieldProperty
@@ -748,7 +794,10 @@
 	<findFieldProperty
 		name="seriale" />	
 	<findFieldProperty
-		name="fl_totalmente_scaricato" />	
+		name="fl_totalmente_scaricato" />
+	<findFieldProperty
+			name="stato" />
+
 	<freeSearchSet name="freeSearchWithoutProgressivoSet">
 		<findFieldProperty
 			name="etichetta" />

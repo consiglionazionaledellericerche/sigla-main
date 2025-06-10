@@ -227,6 +227,7 @@ public Forward doSalva(ActionContext context) {
 	try {
 		fillModel(context);
 		CRUDAggiornamentoInventarioBP bp = (CRUDAggiornamentoInventarioBP)context.getBusinessProcess();
+		bp.validate(context);
 		bp.aggiornamento_beni(context);
 		return context.findDefaultForward();
 	} catch(Throwable e) {

@@ -131,6 +131,11 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="3" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="categoria" />
@@ -166,6 +171,8 @@
 		name="totalmenteScaricato" />
 	<persistentProperty
 		name="valore" />
+	<persistentProperty
+		name="stato" />
 	<persistentProperty
 		name="dataScaricoDef" />	
 	<columnMap 	name="BASECONS"	tableName="V_INVENTARIO_RICOGNIZIONE">
@@ -267,5 +274,10 @@
 			columnSize="20"
 			columnScale="2"
 			nullable="true" />
-	</columnMap>		
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="3" />
+	</columnMap>
 </SQLPersistentInfo>

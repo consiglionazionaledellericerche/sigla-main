@@ -55,7 +55,24 @@
 		readonlyProperty="ROassegnatarioBene"
 		caseSensitiveSearch="false"
 		nullable="false" />
-<!--  commento -->
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="SELECT"
+		inputSize="10"
+		maxLength="3"
+		keysProperty="statoKeys"
+		label="Stato" />
+	<fieldProperty
+		name="blob"
+		property="blob"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		label="Allegato" />
+
+	<!--  commento -->
 	<formFieldProperty
 		name="find_assegnatario" />
 	<formFieldProperty
@@ -64,4 +81,8 @@
 		name="findUbicazioneDestinazione" />
 	<formFieldProperty 
 		name="cdUbicazioneDestinazione" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="blob" />
 </bulkInfo>

@@ -22,6 +22,7 @@
 package it.cnr.contab.inventario00.consultazioni.bulk;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
@@ -78,6 +79,8 @@ public class VInventarioRicognizioneBulk extends OggettoBulk implements Persiste
 
 //  VALORE DECIMAL(22,0)
 	private java.math.BigDecimal valore;
+
+	private java.lang.String stato;
 	
 	private java.lang.Long assegnatario;
 	
@@ -365,5 +368,16 @@ public class VInventarioRicognizioneBulk extends OggettoBulk implements Persiste
 	public void setDataScaricoDef(java.sql.Timestamp dataScaricoDef) {
 		this.dataScaricoDef = dataScaricoDef;
 	}
-	
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public final java.util.Dictionary getStatoKeys() {
+		return Inventario_beniBulk.statoKeys;
+	}
 }

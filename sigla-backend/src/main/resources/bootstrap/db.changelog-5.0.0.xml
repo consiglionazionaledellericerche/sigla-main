@@ -5428,4 +5428,11 @@ IVAS = IVA ACQUISTO SPLIT; GEN = GENERICO; RIC = RICAVO; IVAA = IVA ACQUISTO; CR
     <changeSet author="raffaele.pagano" id="modify-riferimenti-perla2018-bis">
         <modifyDataType tableName="incarichi_repertorio" columnName="idperlanew" newDataType="VARCHAR(50)"/>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="add-column-stato-on-inventario-beni">
+        <addColumn tableName="inventario_beni">
+            <column name="stato" remarks="Stato del bene. FUN: Bene rinvenuto e funzionante; - OBS: Bene non funzionante/obsoleto; - SMR: Bene non rinvenuto/smarrito/oggetto di furto." type="CHAR(3)"/>
+        </addColumn>
+    </changeSet>
+    <!-- Autore : RAFFAELE PAGANO - Aggiunto accesso funzione per cambiare campo stato su inventario beni -->
+    <include file="bootstrap/add_accesso_aggiorna_stato_inventario_beni.xml"/>
 </databaseChangeLog>

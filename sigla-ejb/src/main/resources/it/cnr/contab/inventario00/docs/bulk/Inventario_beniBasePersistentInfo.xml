@@ -210,6 +210,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="25" />
 		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="3" />
+		<columnMapping
 				columnName="ID_TRANSITO_BENI_ORDINI"
 				propertyName="id_transito_beni_ordini"
 				sqlTypeName="DECIMAL"
@@ -280,6 +285,8 @@
 		name="targa" />	
 	<persistentProperty
 		name="seriale" />
+	<persistentProperty
+		name="stato" />
 	<persistentProperty
 			name="id_transito_beni_ordini" />
 </SQLPersistentInfo>

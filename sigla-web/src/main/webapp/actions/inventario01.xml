@@ -127,4 +127,10 @@
 	<init-param name="defaultAction" value="CRUDAggiornamentoInventarioAction"/>
   </businessProcess>
 
+	<businessProcess name="CRUDAggiornamentoStatoInventarioBP" className="it.cnr.contab.inventario00.bp.CRUDAggiornamentoStatoInventarioBP">
+		<forward name="default" path="/inventario00/aggiornamento_inventario.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk" />
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Aggiornamento_inventarioComponentSession"/>
+		<init-param name="defaultAction" value="CRUDAggiornamentoInventarioAction"/>
+	</businessProcess>
 </action-mappings>

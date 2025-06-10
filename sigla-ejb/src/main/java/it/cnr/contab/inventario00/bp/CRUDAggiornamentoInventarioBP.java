@@ -19,7 +19,10 @@ package it.cnr.contab.inventario00.bp;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.TreeMap;
 import java.util.Vector;
+
+import it.cnr.contab.coepcoan00.bp.CRUDScritturaPDoppiaBP;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk;
 import it.cnr.contab.inventario00.docs.bulk.Utilizzatore_CdrVBulk;
@@ -163,7 +166,7 @@ private final SimpleDetailCRUDController dettagliCRUDController = new SimpleDeta
 public void aggiornamento_beni (ActionContext context) throws BusinessProcessException, DetailedRuntimeException, ComponentException, RemoteException, PersistencyException, OutdatedResourceException, BusyResourceException{
 	it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk aggiorno = (it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk)getModel();		
 	it.cnr.contab.inventario00.ejb.Aggiornamento_inventarioComponentSession h = (it.cnr.contab.inventario00.ejb.Aggiornamento_inventarioComponentSession)createComponentSession();
-	setModel(context,h.AggiornaBeni(context.getUserContext(),aggiorno));
+	setModel(context,h.aggiornaBeni(context.getUserContext(),aggiorno));
 	setMessage("Salvataggio eseguito in modo corretto.");
 }
 public void validate_Percentuali_LA(ActionContext context,OggettoBulk model) throws ValidationException {
@@ -312,6 +315,23 @@ public void deselectAll(it.cnr.jada.action.ActionContext context) {}
 
 		  return ((Aggiornamento_inventarioComponentSession)createComponentSession()).cercaBeniAggiornabili(userContext, (Aggiornamento_inventarioBulk)this.getModel(),  clauses);	 
   }
- 
+
+	protected static final String[] TAB_TESTATA = new String[]{ "tabAggiornamentoInventarioTestata","Beni","/inventario00/tab_aggiornamento_testata.jsp" };
+	private static final String[] TAB_DETTAGLIO = new String[]{ "tabAggiornamentoInventarioDettaglio","Aggiornamenti","/inventario00/tab_aggiornamento_dettaglio.jsp" };
+
+	public String[][] getTabs() {
+		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+		int i = 0;
+		pages.put(i++, TAB_TESTATA);
+		pages.put(i++, TAB_DETTAGLIO);
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+		return tabs;
+	}
+
+	public String getColumnSetName() {
+		return "default";
+	}
 }
 

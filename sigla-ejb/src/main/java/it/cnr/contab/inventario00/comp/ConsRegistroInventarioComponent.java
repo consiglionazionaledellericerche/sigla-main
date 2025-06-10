@@ -286,6 +286,7 @@ public class ConsRegistroInventarioComponent extends CRUDComponent {
 			sql.addColumn("DS_UBICAZIONE");
 			sql.addColumn("ASSEGNATARIO");
 			sql.addColumn("DS_ASSEGNATARIO");
+			sql.addColumn("STATO");
 			sql.addColumn("SUM(VALORE) VALORE");
 			
 			addSQLGroupBy(sql,"totalmente_scaricato",true);
@@ -303,6 +304,7 @@ public class ConsRegistroInventarioComponent extends CRUDComponent {
 			addSQLGroupBy(sql,"ds_ubicazione",true);
 			addSQLGroupBy(sql,"assegnatario",true);
 			addSQLGroupBy(sql,"ds_assegnatario",true);
+			addSQLGroupBy(sql,"stato",true);
 			sql.addOrderBy("nr_inventario");
 			sql.addOrderBy("progressivo");
 		}

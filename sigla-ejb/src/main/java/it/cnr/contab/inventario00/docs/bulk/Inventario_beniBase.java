@@ -110,6 +110,8 @@ public class Inventario_beniBase extends Inventario_beniKey implements Keyed {
 
 	private java.lang.Long id_transito_beni_ordini;
 
+	private java.lang.String stato;
+
 	public Inventario_beniBase() {
 	super();
 }
@@ -416,4 +418,12 @@ public java.lang.String getSeriale() {
 public void setSeriale(java.lang.String seriale) {
 	this.seriale = seriale;
 }
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
 }

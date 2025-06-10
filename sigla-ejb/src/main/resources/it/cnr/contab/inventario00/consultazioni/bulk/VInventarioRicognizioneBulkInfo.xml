@@ -239,7 +239,15 @@
 		inputSize="60"
 		inputType="ROTEXT"
 		label="Descrizione UO" />
-	
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="3"
+		keysProperty="statoKeys"
+		label="Stato" />
+
 	<formFieldProperty
 		name="uo" />
 	<formFieldProperty
@@ -284,7 +292,9 @@
 	<formFieldProperty name="ds_categoria" />	
 	<formFieldProperty name="findUoForPrint" />
 	<formFieldProperty name="cdUoForPrint" />
-	<formFieldProperty name="dsUoForPrint" />	
+	<formFieldProperty name="dsUoForPrint" />
+	<formFieldProperty name="stato" />
+
 	<findFieldProperty
 		name="uo" />
 	<findFieldProperty
@@ -310,11 +320,13 @@
 	<findFieldProperty
 		name="assegnatario" />
 	<findFieldProperty
-		name="dsAssegnatario" />		
-	
+		name="dsAssegnatario" />
+
 	<findFieldProperty
 		name="valore" />
-	
+	<findFieldProperty
+			name="stato" />
+
 	<columnFieldProperty
 		name="uo" />
 	<columnFieldProperty
@@ -343,7 +355,10 @@
 		name="dsAssegnatario" />		
 	<columnFieldProperty
 		name="valore" />
-	<columnSet name="BASECONS">	
+	<columnFieldProperty
+		name="stato" />
+
+	<columnSet name="BASECONS">
 		<columnFieldProperty 	name="uo" />
 		<columnFieldProperty  	name="esercizioCaricoBene" />
 		<columnFieldProperty	name="nrInventario" />
@@ -357,6 +372,7 @@
 		<columnFieldProperty	name="ubicazione" />
 		<columnFieldProperty	name="dsUbicazione" />
 		<columnFieldProperty	name="assegnatario" />
-		<columnFieldProperty	name="dsAssegnatario" />	
-	</columnSet>	
+		<columnFieldProperty	name="dsAssegnatario" />
+		<columnFieldProperty	name="stato" />
+	</columnSet>
 </bulkInfo>

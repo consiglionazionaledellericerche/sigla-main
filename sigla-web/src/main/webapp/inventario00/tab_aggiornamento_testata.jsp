@@ -14,7 +14,7 @@
 	  	<td colspan = "4">
 		  <% bp.getDettagliCRUDController().writeHTMLTable(
 				pageContext,
-				"default",
+				bp.getColumnSetName(),
 				bp.isInserting(),
 				false,
 				bp.isInserting(),
