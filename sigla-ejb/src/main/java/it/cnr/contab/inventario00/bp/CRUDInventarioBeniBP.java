@@ -128,14 +128,17 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 
 	super.init(config,context);
 	resetTabs();
-	try {	
-		BuonoCaricoScaricoComponentSession session = (BuonoCaricoScaricoComponentSession)createComponentSession("CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession",BuonoCaricoScaricoComponentSession.class);
-		setVisualizzazione(session.isEsercizioCOEPChiuso(context.getUserContext()));			
-	} catch (ComponentException e) {
-		throw handleException(e);
-	} catch (RemoteException e) {
-		throw handleException(e);
-	}			
+	if (isEditable()) {
+		try {
+			BuonoCaricoScaricoComponentSession session = (BuonoCaricoScaricoComponentSession)createComponentSession("CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession",BuonoCaricoScaricoComponentSession.class);
+			setVisualizzazione(session.isEsercizioCOEPChiuso(context.getUserContext()));
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
 }
 /**
  * Reimplementato per consentire di abilitare o disabilitare il campo <I>Collocazione</I>,

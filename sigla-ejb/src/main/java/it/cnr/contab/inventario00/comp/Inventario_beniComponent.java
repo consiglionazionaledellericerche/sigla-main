@@ -24,6 +24,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -153,12 +154,15 @@ public Id_inventarioBulk caricaInventario(UserContext aUC)
 		it.cnr.jada.persistency.PersistencyException,
 		it.cnr.jada.persistency.IntrospectionException 
 {
-	
+	Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome(aUC, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	boolean isUOEnte = CNRUserContext.getCd_unita_organizzativa(aUC).equals(uoEnte.getCd_unita_organizzativa());
+
+
 	Id_inventarioHome inventarioHome = (Id_inventarioHome) getHome(aUC, Id_inventarioBulk.class);
 	Id_inventarioBulk inventario = inventarioHome.findInventarioFor(aUC,false);
 
 	// NON ESISTE UN INVENTARIO ASSOCIATO ALLA UO DI SCRIVANIA
-	if (inventario == null)
+	if (inventario == null && !isUOEnte)
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non esiste alcun inventario associato alla UO");
 		
 
@@ -960,8 +964,10 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	
 	SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses, bulk);	
 	Inventario_beniBulk bene = (Inventario_beniBulk)bulk;
-	
-	sql.addSQLClause("AND", "PG_INVENTARIO", sql.EQUALS, inventario.getPg_inventario());
+	Optional.ofNullable(inventario)
+		.ifPresent(inv -> sql.addSQLClause(FindClause.AND, "PG_INVENTARIO", SQLBuilder.EQUALS, inv.getPg_inventario()));
+	if (inventario == null)
+		sql.addSQLClause(FindClause.AND, "FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, "N");
 	// Aggiunta clausola che visualizzi solo i beni che abbiano 
 	//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
 	sql.addClause("AND", "esercizio_carico_bene", sql.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));

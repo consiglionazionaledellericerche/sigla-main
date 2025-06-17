@@ -746,6 +746,8 @@
 	<columnFieldProperty
 			name="stato"
 			style="width:40px"/>
+	<columnFieldProperty
+			name="fl_totalmente_scaricato"/>
 
 	<columnSet name="byStato">
 		<columnFieldProperty
