@@ -108,11 +108,13 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	final public static String STATO_FUNZIONANTE = "FUN";
 	final public static String STATO_OBSOLETO = "OBS";
 	final public static String STATO_SMARRITO = "SMR";
+	final public static String STATO_TRASFERIMENTO = "TRA";
 
 	static {
 		statoKeys.put(STATO_FUNZIONANTE, "Bene rinvenuto e funzionante");
 		statoKeys.put(STATO_OBSOLETO, "Bene non funzionante/obsoleto");
 		statoKeys.put(STATO_SMARRITO, "Bene non rinvenuto/smarrito/oggetto di furto");
+		statoKeys.put(STATO_TRASFERIMENTO, "Bene oggetto di trasferimento");
 	}
 
 	public Inventario_beniBulk() {
