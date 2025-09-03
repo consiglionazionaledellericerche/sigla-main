@@ -711,6 +711,9 @@
 			name="attivaFile_blob"/>
 
 	<columnFieldProperty
+		name="cd_unita_organizzativa"
+		style="width:130px" />
+	<columnFieldProperty
 		name="etichetta" 
 		style="width:130px" />
 	<columnFieldProperty
