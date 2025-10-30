@@ -159,15 +159,13 @@ public Forward doAddToCRUDMain_dettaglioCRUDController(ActionContext context) {
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		
 		int count = ri.countElements();
-
-		
 		if (count == 0) {
 			bp.setMessage("Nessun Bene aggiornabile");
 			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);		
 			context.closeBusinessProcess();
 		} else {
-			
-			RicercaLiberaBP rlbp = (RicercaLiberaBP)context.createBusinessProcess("RicercaLibera");
+            it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
+            RicercaLiberaBP rlbp = (RicercaLiberaBP)context.createBusinessProcess("RicercaLibera");
 			//rlbp.setCanPerformSearchWithoutClauses(true);
 			
 			it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession inventario_component = (it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)bp.createComponentSession("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class);
