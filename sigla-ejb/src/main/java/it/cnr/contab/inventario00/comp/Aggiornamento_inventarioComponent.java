@@ -193,8 +193,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	}
 	
 	SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses, bulk);	
-	Inventario_beniBulk bene = (Inventario_beniBulk)bulk;
-	
+
 	sql.addSQLClause("AND", "PG_INVENTARIO", sql.EQUALS, inventario.getPg_inventario());
 	sql.addSQLClause("AND", "FL_TOTALMENTE_SCARICATO", sql.EQUALS, Inventario_beniBulk.ISNOTTOTALMENTESCARICATO);
 	// Aggiunta clausola che visualizzi solo i beni che abbiano 
