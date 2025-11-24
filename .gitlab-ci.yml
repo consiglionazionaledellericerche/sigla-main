@@ -76,7 +76,7 @@ docker-build-push-master:
   stage: build
   script:
     - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker tag $CONTAINER_TEST_IMAGE $CI_REGISTRY/$CONTAINER_RELEASE_IMAGE
     - docker push $CI_REGISTRY/$CONTAINER_RELEASE_IMAGE
   only:
@@ -91,7 +91,7 @@ docker-build-push-branches:
   stage: build
   script:
     - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker tag $CONTAINER_TEST_IMAGE $CI_REGISTRY/$CONTAINER_TEST_IMAGE
     - docker push $CI_REGISTRY/$CONTAINER_TEST_IMAGE
   except:
