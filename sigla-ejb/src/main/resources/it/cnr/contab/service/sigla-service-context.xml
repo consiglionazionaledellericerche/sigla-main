@@ -135,8 +135,6 @@
 	<bean id="arubaSignServiceClient" class="it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient">
 		<property name="props" ref="props-aruba"></property>
 	</bean>
-	<bean id="perlaService" class="it.cnr.perlapa.service.PerlaService"/>
-
 
 	<!-- scheduler -->
 	<task:scheduled-tasks scheduler="siglaScheduler">

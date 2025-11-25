@@ -21,6 +21,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk;
+import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
@@ -97,5 +98,9 @@ public class CRUDAggiornamentoStatoInventarioBP extends CRUDAggiornamentoInventa
 		setMessage("Salvataggio eseguito in modo corretto.");
 	}
 
-}
+    @Override
+    public OggettoBulk createEmptyModelForFreeSearch(ActionContext actioncontext) throws BusinessProcessException {
+        return new Inventario_beniBulk();
+    }
 
+}
